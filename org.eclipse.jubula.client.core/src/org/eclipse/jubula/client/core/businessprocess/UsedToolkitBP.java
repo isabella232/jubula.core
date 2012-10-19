@@ -751,7 +751,7 @@ public class UsedToolkitBP {
         for (IReusedProjectPO reused : reusedProjects) {
             IProjectPO reusedProject;
             try {
-                reusedProject = ProjectPM.loadProject(reused);
+                reusedProject = ProjectPM.loadProjectFromMaster(reused);
                 // If the project cannot be found in the db, then we cannot consider
                 // it in our computations.
                 if (reusedProject != null) {

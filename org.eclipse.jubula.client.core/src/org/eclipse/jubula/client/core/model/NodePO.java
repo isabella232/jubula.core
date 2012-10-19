@@ -507,12 +507,6 @@ abstract class NodePO implements INodePO {
     }
     
     /**
-     * @return if parameter of Node may be modified or not
-     */
-    @Transient
-    public abstract Boolean isReused();
-
-    /**
      * 
      * {@inheritDoc}
      */

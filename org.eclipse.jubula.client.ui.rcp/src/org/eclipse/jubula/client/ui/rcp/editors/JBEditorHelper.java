@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.Validate;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
@@ -31,6 +32,7 @@ import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -89,9 +91,11 @@ public class JBEditorHelper implements ILockedObjects,
     /**
      * Constructor
      * 
-     * @param editor The editor that will be assisted by this helper.
+     * @param editor The editor that will be assisted by this helper. May not
+     *               be <code>null</code>.
      */
     public JBEditorHelper(IJBEditor editor) {
+        Validate.notNull(editor);
         m_editor = editor;
     }
     
@@ -459,4 +463,31 @@ public class JBEditorHelper implements ILockedObjects,
         return m_clipboard;
     }
 
+    /**
+     * Performs the given <code>operation</code> within the context of the
+     * receiver's editor. The operation is "wrapped" between a request for an
+     * editable state and a reset of editable state (if the editor is not marked
+     * as dirty by the end of the operation. The operation is executed in the
+     * same thread in which this method is called. 
+     * 
+     * @param operation The operation to perform.
+     */
+    public void doEditorOperation(IEditorOperation operation) {
+        if (requestEditableState() == EditableState.OK) {
+            try {
+                operation.run(getEditSupport().getWorkVersion());
+            } finally {
+                if (!m_editor.isDirty()) {
+                    try {
+                        resetEditableState();
+                        getEditSupport().reloadEditSession();
+                    } catch (PMException e) {
+                        PMExceptionHandler.handlePMExceptionForEditor(
+                                e, m_editor);
+                    }
+                }
+            }
+            
+        }
+    }
 }

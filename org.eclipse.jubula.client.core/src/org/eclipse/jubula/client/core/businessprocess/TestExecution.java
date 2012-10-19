@@ -39,9 +39,9 @@ import org.eclipse.jubula.client.core.commands.DisplayManualTestStepResponseComm
 import org.eclipse.jubula.client.core.commands.EndTestExecutionResponseCommand;
 import org.eclipse.jubula.client.core.commands.TakeScreenshotResponseCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -1512,8 +1512,7 @@ public class TestExecution {
                             m_currentCap);
                 ITestDataPO date = 
                     tdManager.getCell(0, desc);
-                String varName = this.getValueForParam(date, m_currentCap, 
-                    desc);
+                String varName = getValueForParam(date, m_currentCap, desc);
                 m_varStore.store(varName, m_varStore.getValue(
                     LAST_ACTION_RETURN));
                 return null;

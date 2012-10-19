@@ -78,6 +78,12 @@
 			https://bugs.eclipse.org/bugs/show_bug.cgi?id=379221
 			 -->
 			<property name="eclipselink.jpql.parser" value="org.eclipse.persistence.queries.ANTLRQueryBuilder"/>
+			<!--  Since writing of test results involves lots of insert/update statements a batch writing
+			might speed things up -->
+			<property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
+			<!-- for very large batches the size might be increased from the default 100 to whatever
+			seems meaningful -->
+			<property name="eclipselink.jdbc.batch-writing.size" value="1000"/>
 		</properties>
 		
 	</persistence-unit>

@@ -39,7 +39,6 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.persistence.annotations.BatchFetch;
@@ -651,22 +650,6 @@ class ExecTestCasePO extends TestCasePO implements
         if (specTestCase != null) {
             specTestCase.setToolkitLevel(toolkitLevel);            
         }
-    }
-    
-    /** {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.model.NodePO#isInterfaceLocked()
-     */
-    @Transient
-    public Boolean isReused() {
-        if (getParentNode() != null) {
-            return getParentNode().isReused();
-        }
-        // could be happens, if the given ExecTestCase was fetched per database statement
-        // parent will be set only in memory
-        Assert.notReached(
-                Messages.UnexpectedErrorBecauseExecTestCaseHasNoParent
-                + StringConstants.DOT);
-        return null;
     }
     
     /**

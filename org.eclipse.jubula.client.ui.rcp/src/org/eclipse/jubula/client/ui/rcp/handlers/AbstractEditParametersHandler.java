@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.AbstractParamInterfaceBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
@@ -25,14 +26,13 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AbstractEditParametersDialog.Parameter;
-import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
+import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
@@ -42,29 +42,29 @@ import org.eclipse.ui.IWorkbenchPart;
 public abstract class AbstractEditParametersHandler extends AbstractHandler {
     
     /**
-     * @return a valid AbstractGDEditor in the editable state; null if editing
-     *         is not possible
+     * 
+     * @param event The execution event containing the context in which the
+     *              receiver was executed.
+     * @return the editor on which the receiver should operate.
      */
-    protected AbstractJBEditor getEditorInEditableState() {
-        final IWorkbenchPart activePart = Plugin.getActivePart();
-        if (activePart == null) {
-            return null;
-        }
-        final Object adapter = activePart.getAdapter(AbstractJBEditor.class);
-        if (adapter != null) {
-            final AbstractJBEditor editor = (AbstractJBEditor)adapter;
-            final JBEditorHelper.EditableState state = editor.getEditorHelper()
-                    .getEditableState();
-            if (state == JBEditorHelper.EditableState.OK
-                    || editor.getEditorHelper().requestEditableState() 
-                    == JBEditorHelper.EditableState.OK) {
-                return editor;
+    protected IJBEditor getEditor(ExecutionEvent event) {
+        // Use activePart rather than activeEditor because we want to make sure
+        // that the editor is the active part. It is possible, for example, for
+        // an editor to be the active editor (editor label is rendered with
+        // a different background color than the labels for the other editors)
+        // even though it is *not* the active part because a view is currently 
+        // active (view's label is highlighted).
+        final IWorkbenchPart activeEditor = HandlerUtil.getActivePart(event);
+        if (activeEditor != null) {
+            final Object adapter = 
+                    activeEditor.getAdapter(IJBEditor.class);
+            if (adapter != null) {
+                return (IJBEditor)adapter;
             }
         }
         return null;
     }
-    
-    
+
     /**
      * Gets the new index of the Parameter with the given paramDesc. 
      * @param paramDesc the paramDesc
@@ -231,4 +231,5 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
         return editParameters(paramIntObj, parameters, false, mapper,
                 paramInterfaceBP);
     }
+    
 }

@@ -20,11 +20,12 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PersistenceManager;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -44,15 +45,16 @@ public class DeleteTreeItemHandlerTCEditor
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         
         if (activePart instanceof AbstractJBEditor) {
-            AbstractJBEditor tce = (AbstractJBEditor)activePart;
-            IStructuredSelection structuredSelection = getSelection();
-            if (confirmDelete(structuredSelection)) {
-                if (tce.getEditorHelper().requestEditableState() 
-                        != JBEditorHelper.EditableState.OK) {
-                    return null;
+            final AbstractJBEditor tce = (AbstractJBEditor)activePart;
+            tce.getEditorHelper().doEditorOperation(new IEditorOperation() {
+                public void run(IPersistentObject workingPo) {
+                    IStructuredSelection structuredSelection = getSelection();
+                    if (confirmDelete(structuredSelection)) {
+                        deleteNodesFromEditor(
+                                structuredSelection.toList(), tce);
+                    }
                 }
-                deleteNodesFromEditor(structuredSelection.toList(), tce);
-            }
+            });
 
         }
         return null;

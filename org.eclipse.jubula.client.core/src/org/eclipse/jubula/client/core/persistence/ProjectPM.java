@@ -50,6 +50,7 @@ import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBFatalAbortException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -263,15 +264,51 @@ public class ProjectPM extends PersistenceManager {
      * IProjectPO is therefore detached from its session.
      * @param reused
      *            The reused project information for this project.
-     * @return proj
-     * @throws JBException
+     * @return the ProjectPO or null if no project in db 
+     * @throws JBException in case of general db access errors (db disconnect, shutdown, etc)
      */
     public static synchronized IProjectPO loadProject(IReusedProjectPO reused)
         throws JBException {
 
-        EntityManager session = null;
+        EntityManager session = Persistor.instance().openSession();
         try {
-            session = Persistor.instance().openSession();
+            return loadProjectInSession(reused, session);
+        } finally {
+            Persistor.instance().dropSessionWithoutLockRelease(session);
+        }
+    }
+    /**
+     * Loads the project from the master session. The returned
+     * IProjectPO MUST only be used in the master session or read only.
+     * @param reused
+     *            The reused project information for this project.
+     * @return the ProjectPO or null if no project in db 
+     * @throws JBException in case of general db access errors (db disconnect, shutdown, etc)
+     */
+    public static synchronized IProjectPO loadProjectFromMaster(
+            IReusedProjectPO reused) throws JBException {
+
+        EntityManager session = GeneralStorage.getInstance().getMasterSession();
+
+        return loadProjectInSession(reused, session);
+    }
+
+    /**
+     * Loads the project in a session. This is shared code for detached in 
+     * master session loading.
+     * @param reused
+     *            The reused project information for this project.
+     * @param session 
+     *            Session context for db ops
+     * @return the ProjectPO or null if no project in db 
+     * @throws JBFatalAbortException
+     * @throws OperationCanceledException
+     * @throws JBException in case of general db access errors (db disconnect, shutdown, etc)
+     */
+    private static IProjectPO loadProjectInSession(IReusedProjectPO reused,
+            EntityManager session) throws JBFatalAbortException,
+            OperationCanceledException, JBException {
+        try {
             Query query = session.createQuery("select project from ProjectPO as project" //$NON-NLS-1$
                     + " inner join fetch project.properties where project.guid = :guid" //$NON-NLS-1$
                     + " and project.properties.majorNumber = :majorNumber and project.properties.minorNumber = :minorNumber"); //$NON-NLS-1$           
@@ -289,9 +326,7 @@ public class ProjectPM extends PersistenceManager {
             log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
                 MessageIDs.E_PERSISTENCE_LOAD_FAILED);
-        } finally {
-            Persistor.instance().dropSessionWithoutLockRelease(session);
-        }
+        } 
     }
 
     /**
@@ -561,7 +596,7 @@ public class ProjectPM extends PersistenceManager {
     private static void findReusedProjects(Set<Long> reused,
             Set<IReusedProjectPO> check) throws JBException {
         for (IReusedProjectPO ru : check) {
-            IProjectPO ruP = loadProject(ru);
+            IProjectPO ruP = loadProjectFromMaster(ru);
             if (ruP != null) { // check for dangling reference
                 if (reused.add(ruP.getId())) {
                     findReusedProjects(reused, 

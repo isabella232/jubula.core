@@ -16,11 +16,12 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AbstractEditParametersDialog.Parameter;
 import org.eclipse.jubula.client.ui.rcp.dialogs.EditParametersDialog;
-import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
+import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 
 
@@ -33,25 +34,21 @@ public class EditParametersHandler extends AbstractEditParametersHandler {
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        final AbstractJBEditor editor = getEditorInEditableState();
+        final IJBEditor editor = getEditor(event);
         if (editor != null) {
-            final JBEditorHelper.EditableState state = editor.getEditorHelper()
-                    .getEditableState();
-            final ISpecTestCasePO workTC = (ISpecTestCasePO)editor
-                    .getEditorHelper().getEditSupport().getWorkVersion();
-            final EditParametersDialog dialog = new EditParametersDialog(
-                    getActiveShell(), workTC);
-            dialog.create();
-            DialogUtils.setWidgetNameForModalDialog(dialog);
-            dialog.open();
-            if (Window.OK == dialog.getReturnCode()) {
-                performChanges(editor, state, workTC, dialog);
-            } else {
-                if (state == JBEditorHelper.EditableState.NotChecked) {
-                    workTC.setIsReused(null);
-                    editor.getEditorHelper().resetEditableState();
+            editor.getEditorHelper().doEditorOperation(new IEditorOperation() {
+                public void run(IPersistentObject workingPo) {
+                    final ISpecTestCasePO workTC = 
+                            (ISpecTestCasePO)workingPo;
+                    final EditParametersDialog dialog = 
+                            new EditParametersDialog(getActiveShell(), workTC);
+                    dialog.create();
+                    DialogUtils.setWidgetNameForModalDialog(dialog);
+                    if (dialog.open() ==  Window.OK) {
+                        performChanges(editor, workTC, dialog);
+                    }
                 }
-            }
+            });
         }
         return null;
     }
@@ -59,13 +56,11 @@ public class EditParametersHandler extends AbstractEditParametersHandler {
     /**
      * Performs the changes done in the EditParametersDialog
      * @param editor the TestCaseEditor
-     * @param state the EditableState
      * @param workTC the working ISpecTestCasePO
      * @param dialog the EditParametersDialog
      */
-    private static void performChanges(AbstractJBEditor editor, 
-        JBEditorHelper.EditableState state, ISpecTestCasePO workTC, 
-        EditParametersDialog dialog) {
+    private static void performChanges(IJBEditor editor, 
+        ISpecTestCasePO workTC, EditParametersDialog dialog) {
         
         final List<Parameter> parameters = dialog.getParameters();
         final boolean isInterfaceLocked = dialog.isInterfaceLocked();
@@ -78,11 +73,6 @@ public class EditParametersHandler extends AbstractEditParametersHandler {
             DataEventDispatcher.getInstance()
                 .fireParamChangedListener();
             DataEventDispatcher.getInstance().firePropertyChanged(false);
-        } else {
-            if (state == JBEditorHelper.EditableState.NotChecked) {
-                workTC.setIsReused(null);
-                editor.getEditorHelper().resetEditableState();
-            }  
         }
     }
 }

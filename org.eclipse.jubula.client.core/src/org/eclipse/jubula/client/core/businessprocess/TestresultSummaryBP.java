@@ -38,7 +38,6 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -273,13 +272,7 @@ public class TestresultSummaryBP {
             List<TestResultParameter> parameters = node.getParameters();
             if (parameters.size() >= index + 1) {
                 final String value = parameters.get(index).getValue();
-                if (value != null) {
-                    if (value.length() == 0) {
-                        paramValue = TestDataConstants.EMPTY_SYMBOL;
-                    } else {
-                        paramValue = value;                        
-                    }
-                }
+                paramValue = StringUtils.defaultString(value);
             }
             parameter.setParameterValue(paramValue);
             keyword.addParameter(parameter);

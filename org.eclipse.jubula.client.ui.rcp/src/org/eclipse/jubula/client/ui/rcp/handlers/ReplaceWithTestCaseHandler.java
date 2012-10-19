@@ -15,9 +15,10 @@ import java.util.List;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.ReplaceTCRWizard;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.DialogUtils.SizeType;
@@ -35,22 +36,23 @@ public class ReplaceWithTestCaseHandler extends AbstractSelectionBasedHandler {
     public Object executeImpl(ExecutionEvent event) {
         final AbstractTestCaseEditor tce = 
             (AbstractTestCaseEditor)HandlerUtil.getActiveEditor(event);
-        if (tce.getEditorHelper().requestEditableState() 
-                == JBEditorHelper.EditableState.OK) {
-            List<IExecTestCasePO> listOfExecsToReplace = 
-                    getSelection().toList();
-            WizardDialog dialog = new WizardDialog(getActiveShell(),
-                    new ReplaceTCRWizard(tce, listOfExecsToReplace)) {
-                /** {@inheritDoc} */
-                protected void configureShell(Shell newShell) {
-                    super.configureShell(newShell);
-                    DialogUtils.adjustShellSizeRelativeToClientSize(newShell,
-                            .6f, .6f, SizeType.SIZE);
-                }
-            };
-            dialog.setHelpAvailable(true);
-            dialog.open();
-        }
+        tce.getEditorHelper().doEditorOperation(new IEditorOperation() {
+            public void run(IPersistentObject workingPo) {
+                List<IExecTestCasePO> listOfExecsToReplace = 
+                        getSelection().toList();
+                WizardDialog dialog = new WizardDialog(getActiveShell(),
+                        new ReplaceTCRWizard(tce, listOfExecsToReplace)) {
+                    /** {@inheritDoc} */
+                    protected void configureShell(Shell newShell) {
+                        super.configureShell(newShell);
+                        DialogUtils.adjustShellSizeRelativeToClientSize(
+                                newShell, .6f, .6f, SizeType.SIZE);
+                    }
+                };
+                dialog.setHelpAvailable(true);
+                dialog.open();
+            }
+        });
  
         return null;
     }

@@ -15,14 +15,15 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.ui.IWorkbenchPart;
@@ -40,7 +41,7 @@ public class RenameTestDataCategoryInEditorHandler
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        ITestDataCategoryPO toRename = 
+        final ITestDataCategoryPO toRename = 
                 getFirstElement(ITestDataCategoryPO.class);
         if (toRename == null) {
             return null;
@@ -49,36 +50,41 @@ public class RenameTestDataCategoryInEditorHandler
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         
         if (activePart instanceof CentralTestDataEditor) {
-            CentralTestDataEditor editor = (CentralTestDataEditor)activePart;
-            InputDialog dialog = new InputDialog(getActiveShell(), 
-                    Messages.RenameCategoryActionOMEditorTitle,
-                    toRename.getName(), 
-                    Messages.RenameCategoryActionOMEditorMessage,
-                    Messages.RenameCategoryActionOMEditorLabel,
-                    Messages.RenameCategoryActionOMEditorError1,
-                    Messages.RenameCategoryActionOMEditorDoubleCatName,
-                    IconConstants.RENAME_CAT_DIALOG_STRING, 
-                    Messages.RenameCategoryActionOMEditorShell,
-                    false);
+            final CentralTestDataEditor editor = 
+                    (CentralTestDataEditor)activePart;
+            editor.getEditorHelper().doEditorOperation(new IEditorOperation() {
+                
+                public void run(IPersistentObject workingPo) {
+                    InputDialog dialog = new InputDialog(getActiveShell(), 
+                            Messages.RenameCategoryActionOMEditorTitle,
+                            toRename.getName(), 
+                            Messages.RenameCategoryActionOMEditorMessage,
+                            Messages.RenameCategoryActionOMEditorLabel,
+                            Messages.RenameCategoryActionOMEditorError1,
+                            Messages.RenameCategoryActionOMEditorDoubleCatName,
+                            IconConstants.RENAME_CAT_DIALOG_STRING, 
+                            Messages.RenameCategoryActionOMEditorShell,
+                            false);
+                    
+                    dialog.setHelpAvailable(true);
+                    dialog.create();
+                    DialogUtils.setWidgetNameForModalDialog(dialog);
+                    Plugin.getHelpSystem().setHelp(dialog.getShell(), 
+                        ContextHelpIds.DIALOG_RENAME);
+
+                    if (dialog.open() == Window.OK) {
+                        if (!toRename.getName().equals(dialog.getName())) {
+                            toRename.setName(dialog.getName());
+                            editor.getEditorHelper().setDirty(true);
+                            DataEventDispatcher.getInstance()
+                                .fireDataChangedListener(
+                                        toRename, DataState.Renamed, 
+                                        UpdateState.onlyInEditor);
+                        }
+                    }
+                }
+            });
             
-            dialog.setHelpAvailable(true);
-            dialog.create();
-            DialogUtils.setWidgetNameForModalDialog(dialog);
-            Plugin.getHelpSystem().setHelp(dialog.getShell(), 
-                ContextHelpIds.DIALOG_RENAME);
-            dialog.open();
-            if (dialog.getReturnCode() == Window.OK) {
-                if (editor.getEditorHelper().requestEditableState() 
-                        != EditableState.OK) {
-                    return null;
-                }
-                if (!toRename.getName().equals(dialog.getName())) {
-                    toRename.setName(dialog.getName());
-                    editor.getEditorHelper().setDirty(true);
-                    DataEventDispatcher.getInstance().fireDataChangedListener(
-                        toRename, DataState.Renamed, UpdateState.onlyInEditor);
-                }
-            }
         }
         
         return null;

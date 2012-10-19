@@ -21,13 +21,14 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.dialogs.TestCaseTreeDialog;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -41,6 +42,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
@@ -74,15 +76,17 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
     
     /** {@inheritDoc} */
     public Object executeImpl(ExecutionEvent event) {
-        IEditorPart editor = Plugin.getActiveEditor();
+        IEditorPart editor = HandlerUtil.getActiveEditor(event);
         Assert.verify(editor instanceof TestCaseEditor, 
             Messages.WrongEditorType + StringConstants.EXCLAMATION_MARK);
-        TestCaseEditor testCaseEditor = 
-            (TestCaseEditor) editor;
-        if (JBEditorHelper.EditableState.OK == testCaseEditor.getEditorHelper()
-                .requestEditableState()) {
-            openTestCasePopUp(testCaseEditor);
-        }
+        final TestCaseEditor testCaseEditor = (TestCaseEditor)editor;
+        testCaseEditor.getEditorHelper().doEditorOperation(
+                new IEditorOperation() {
+                    public void run(IPersistentObject workingPo) {
+                        openTestCasePopUp(testCaseEditor);
+                    }
+                });
+
         return null;
     }
         

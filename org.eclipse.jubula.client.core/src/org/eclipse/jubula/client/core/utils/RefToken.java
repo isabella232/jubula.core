@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -18,24 +17,21 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
-import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter.ConvValidationState;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 
@@ -290,60 +286,15 @@ public class RefToken extends AbstractParamValueToken {
     public String getExecutionString(List<ExecObject> stack, Locale locale) 
         throws InvalidDataException {
         String refGuid = extractCore(getModelString());
-        IParamNodePO execNode = null;
         ListIterator <ExecObject> it = stack.listIterator(stack.size());
-        final String refName = extractCore(getGuiString());
         while (it.hasPrevious()) {
             ExecObject obj = it.previous();
-            if (obj.getExecNode() instanceof IParamNodePO) {
-                execNode = (IParamNodePO)obj.getExecNode();
-                int dsNumber = obj.getNumberDs();
-                for (IParamDescriptionPO parDesc 
-                        : execNode.getParameterList()) {
-                    if (parDesc.getUniqueId().equals(refGuid)) {
-                        ITDManager man = null;
-                        try {
-                            // FIXME zeb instantiating a new BP object every 
-                            //           time means that we do absolutely *NO* 
-                            //           caching of retrieved test data. figure
-                            //           out a way to allow caching in this 
-                            //           situation.
-                            man = new ExternalTestDataBP()
-                                    .getExternalCheckedTDManager(execNode);
-                        } catch (JBException e) {
-                            throwInvalidDataException(refName);
-                        }
-
-                        // further reference?
-                        ITestDataPO data = null;
-
-                        // FIXME Andreas : this is only a hack for a TC with multiple
-                        // parameters with a mix of refs and fixed values!!!
-                        if (dsNumber < man.getDataSetCount()) {
-                            data = TestDataBP.instance().getTestData(
-                                    execNode, man, parDesc, dsNumber);
-                        } else {
-                            // FIXME Andreas : this is the data for the fixed value
-                            data = TestDataBP.instance().getTestData(
-                                    execNode, man, parDesc, 0);
-                        }
-                        ParamValueConverter conv = new ModelParamValueConverter(
-                            data.getValue(locale), 
-                            execNode, locale, getParamDescription());
-
-                        // Look for the reference value further up (or down, 
-                        // actually) the execution stack. We initialize a new 
-                        // list here in order to avoid modifying the provided 
-                        // list, which was the cause of bug 375632.
-                        List<ExecObject> reducedStack = 
-                                new ArrayList<ExecObject>(stack);
-                        reducedStack.remove(reducedStack.size() - 1);
-                        return conv.getExecutionString(reducedStack, locale); 
-                    }
-                }
+            String parameterValue = obj.getParameterValue(refGuid);
+            if (parameterValue != null) {
+                return parameterValue;
             }
         }
-        throwInvalidDataException(refName);
+        throwInvalidDataException(extractCore(getGuiString()));
         return null;
     }
     
@@ -412,5 +363,31 @@ public class RefToken extends AbstractParamValueToken {
         m_modelString = modelString;
     }
     
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        RefToken otherObj = (RefToken)obj;
+
+        return new EqualsBuilder()
+            .append(getModelString(), otherObj.getModelString())
+            .isEquals();
+    }
     
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public int hashCode() {
+        return new HashCodeBuilder().append(getModelString()).toHashCode();
+    }
 }

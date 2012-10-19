@@ -18,10 +18,6 @@ import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
  */
 public interface ISpecTestCasePO extends ITestCasePO, ISpecPersistable,
     IEventHandlerContainer, IModifiableParameterInterfacePO {
-    /**
-     * @param isReused the isReused to set
-     */
-    public abstract void setIsReused(Boolean isReused); 
     
     /**
      * @return the isInterfaceLocked

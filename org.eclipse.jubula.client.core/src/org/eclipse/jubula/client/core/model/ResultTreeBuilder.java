@@ -82,12 +82,6 @@ public class ResultTreeBuilder implements IExecStackModificationListener {
                 CompSystemI18n.getString(cap.getComponentType()));
     }
     /**
-     * @return Returns the lastCap.
-     */
-    public TestResultNode getLastCap() {
-        return m_lastCap;
-    }
-    /**
      * @return Returns the rootNode.
      */
     public TestResultNode getRootNode() {

@@ -22,6 +22,7 @@ import java.util.Vector;
 
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.list.UnmodifiableList;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -38,6 +39,7 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
+import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -47,6 +49,7 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.IncompleteDataException;
+import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.slf4j.Logger;
@@ -441,6 +444,8 @@ public class Traverser {
      *  @param node node, which was added to stack
      */
     private void fireExecStackIncremented(INodePO node) {
+        addParameters(m_execStack.peek());
+        
         Iterator<IExecStackModificationListener> it = 
             m_execListenerList.iterator();
         while (it.hasNext()) {
@@ -505,6 +510,8 @@ public class Traverser {
      *  event for next dataset iteration
      */
     private void fireNextDataSetIteration() {
+        addParameters(m_execStack.peek());
+        
         Iterator<IExecStackModificationListener> it = 
             m_execListenerList.iterator();
         while (it.hasNext()) {
@@ -909,5 +916,82 @@ public class Traverser {
                 m_execStack.peek().getExecNode().getNodeListIterator());
         return nodeList.get(m_execStack.peek().getIndex());
 
+    }
+
+    /**
+     * Adds parameter values to the given execution object. If 
+     * <code>execObject</code> already has parameters assigned, this method
+     * may overwrite them. 
+     * 
+     * @param execObject The execution object to which the parameters will
+     *                   be added.
+     */
+    private void addParameters(ExecObject execObject) {
+        INodePO execNode = execObject.getExecNode();
+        if (execNode instanceof IParamNodePO) {
+            IParamNodePO paramNode = (IParamNodePO)execNode;
+            List<IParamDescriptionPO> parameterList = 
+                    paramNode.getParameterList();
+            String value = null;
+            for (IParamDescriptionPO desc : parameterList) {
+                String descriptionId = desc.getUniqueId();
+                ITDManager tdManager = null;
+                try {
+                    tdManager = 
+                        m_externalTestDataBP.getExternalCheckedTDManager(
+                                paramNode);
+                } catch (JBException e) {
+                    LOG.error(
+                        Messages.TestDataNotAvailable + StringConstants.DOT, e);
+                }
+                TestExecution te = TestExecution.getInstance();
+
+                List <ExecObject> stackList = 
+                    new ArrayList<ExecObject>(getExecStackAsList());
+                int dataSetIndex = getDataSetNumber();
+
+                // Special handling for Test Case References that are repeated 
+                // via Data Set. The test data manager for such References only has 
+                // information about a single Data Set, so we need to ignore the 
+                // actual current Data Set number.
+                if (tdManager.getDataSetCount() <= 1) {
+                    dataSetIndex = 0;
+                }
+                
+                // Special handling for Test Steps. Their test data manager has 
+                // information about multiple Data Sets, but we are only interested 
+                // in the first one.
+                if (paramNode instanceof ICapPO) {
+                    dataSetIndex = 0;
+                }
+
+                if (tdManager.findColumnForParam(desc.getUniqueId()) == -1) {
+                    IParameterInterfacePO referencedDataCube = paramNode
+                            .getReferencedDataCube();
+                    if (referencedDataCube != null) {
+                        desc = referencedDataCube.getParameterForName(desc
+                                .getName());
+                    }
+                }
+                ITestDataPO date = tdManager.getCell(dataSetIndex, desc);
+                ParamValueConverter conv = new ModelParamValueConverter(
+                        date.getValue(te.getLocale()), paramNode, 
+                        te.getLocale(), desc);
+                try {
+                    value = conv.getExecutionString(
+                            stackList, te.getLocale());
+                } catch (InvalidDataException e) {
+                    LOG.error(e.getMessage());
+                    value = MessageIDs.getMessageObject(e.getErrorId()).
+                        getMessage(new Object[] {});
+                }
+
+                // It's important to use 'descriptionId' here instead of 
+                // 'desc.getUniqueId()', as 'desc' may have changed between
+                // its definition and here.
+                execObject.addParameter(descriptionId, 
+                        StringUtils.defaultString(value));
+            }
+        }
     }
 }

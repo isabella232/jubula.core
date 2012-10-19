@@ -22,18 +22,19 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.NewCAPDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 
 /**
@@ -45,26 +46,27 @@ public class NewCAP extends AbstractSelectionBasedHandler {
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        IWorkbenchPart activePart = Plugin.getActivePart();
+        IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         if (activePart instanceof AbstractTestCaseEditor) {
-            AbstractTestCaseEditor tse = (AbstractTestCaseEditor)activePart;
-            if (tse.getEditorHelper().requestEditableState() 
-                    == JBEditorHelper.EditableState.OK) {
-                ISpecTestCasePO workTC = (ISpecTestCasePO)tse.getEditorHelper()
-                        .getEditSupport().getWorkVersion();
-                IStructuredSelection selection = getSelection();
-                INodePO selectedNodeGUI = (INodePO)selection.getFirstElement();
-                if (selectedNodeGUI != null) { // using the CTRL modifier, you
-                    // may get a click without a selection
-                    ISpecTestCasePO specTcGUI = null;
-                    int posistionToAdd = workTC.indexOf(selectedNodeGUI);
-                    while (!(selectedNodeGUI instanceof ISpecTestCasePO)) {
-                        selectedNodeGUI = selectedNodeGUI.getParentNode();
+            final AbstractTestCaseEditor tce = 
+                    (AbstractTestCaseEditor)activePart;
+            tce.getEditorHelper().doEditorOperation(new IEditorOperation() {
+                
+                public void run(IPersistentObject workingPo) {
+                    ISpecTestCasePO workTC = (ISpecTestCasePO)workingPo;
+                    IStructuredSelection selection = getSelection();
+                    INodePO selectedNode = (INodePO)selection.getFirstElement();
+                    if (selectedNode != null) {
+                        ISpecTestCasePO specTcGUI = null;
+                        int posistionToAdd = workTC.indexOf(selectedNode);
+                        while (!(selectedNode instanceof ISpecTestCasePO)) {
+                            selectedNode = selectedNode.getParentNode();
+                        }
+                        specTcGUI = (ISpecTestCasePO)selectedNode;
+                        addCap(specTcGUI, workTC, posistionToAdd, tce);
                     }
-                    specTcGUI = (ISpecTestCasePO)selectedNodeGUI;
-                    addCap(specTcGUI, workTC, posistionToAdd, tse);
                 }
-            }
+            });
         }
         return null;
     }

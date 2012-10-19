@@ -23,13 +23,14 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -66,7 +67,7 @@ public class OMNewCategoryHandler extends AbstractSelectionBasedHandler {
      */
     private void createNewCategory(Object selElement, 
             final ObjectMappingMultiPageEditor editor, 
-            ISelectionProvider selectionProvider) {
+            final ISelectionProvider selectionProvider) {
         
         IObjectMappingCategoryPO category = null;
         if (selElement instanceof IObjectMappingCategoryPO) {
@@ -79,56 +80,61 @@ public class OMNewCategoryHandler extends AbstractSelectionBasedHandler {
                     (IComponentNamePO)selElement);
         }
         final IObjectMappingCategoryPO node = category;
-        InputDialog dialog = 
-            new InputDialog(getActiveShell(), 
-                Messages.OMNewCategoryActionTitle,
-                Messages.OMNewCategoryActionName,
-                Messages.OMNewCategoryActionMessage,
-                Messages.OMNewCategoryActionLabel,
-                Messages.OMNewCategoryActionError1,
-                Messages.OMNewCategoryActionDoubleCatName,
-                IconConstants.NEW_CAT_DIALOG_STRING,
-                Messages.OMNewCategoryActionShell,
-                false) {
-
-                /**
-                 * @return False, if the input name already exists.
-                 */
-                protected boolean isInputAllowed() {
-                    return !editor.getOmEditorBP().existCategory(
-                            node, getInputFieldText());
-                }
-            };
         if (node != null) {
-            dialog.setHelpAvailable(true);
-            dialog.create();
-            DialogUtils.setWidgetNameForModalDialog(dialog);
-            Plugin.getHelpSystem().setHelp(dialog.getShell(), 
-                ContextHelpIds.DIALOG_OM_CAT_NEW);
-            dialog.open();
-            if (dialog.getReturnCode() == Window.OK) {
-                if (editor.getEditorHelper().requestEditableState() 
-                        != EditableState.OK) {
-                    return;
-                }
+            editor.getEditorHelper().doEditorOperation(new IEditorOperation() {
+                public void run(IPersistentObject workingPo) {
+                    InputDialog dialog = 
+                            new InputDialog(getActiveShell(), 
+                                Messages.OMNewCategoryActionTitle,
+                                Messages.OMNewCategoryActionName,
+                                Messages.OMNewCategoryActionMessage,
+                                Messages.OMNewCategoryActionLabel,
+                                Messages.OMNewCategoryActionError1,
+                                Messages.OMNewCategoryActionDoubleCatName,
+                                IconConstants.NEW_CAT_DIALOG_STRING,
+                                Messages.OMNewCategoryActionShell,
+                                false) {
 
-                IObjectMappingCategoryPO newCategory = 
-                    PoMaker.createObjectMappingCategoryPO(dialog.getName());
-                node.addCategory(newCategory);
-                editor.getEditorHelper().setDirty(true);
+                                /**
+                                 * @return False, if the input name already 
+                                 *         exists.
+                                 */
+                                protected boolean isInputAllowed() {
+                                    return !editor.getOmEditorBP()
+                                            .existCategory(node, 
+                                                    getInputFieldText());
+                                }
+                            };
+                    dialog.setHelpAvailable(true);
+                    dialog.create();
+                    DialogUtils.setWidgetNameForModalDialog(dialog);
+                    Plugin.getHelpSystem().setHelp(dialog.getShell(), 
+                        ContextHelpIds.DIALOG_OM_CAT_NEW);
 
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        node, DataState.StructureModified, 
-                        UpdateState.onlyInEditor);
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        newCategory, DataState.Added, 
-                        UpdateState.onlyInEditor);
-                StructuredSelection newSel = 
-                    new StructuredSelection(newCategory);
-                if (selectionProvider != null) {
-                    selectionProvider.setSelection(newSel);
+                    if (dialog.open() == Window.OK) {
+                        IObjectMappingCategoryPO newCategory = 
+                            PoMaker.createObjectMappingCategoryPO(
+                                    dialog.getName());
+                        node.addCategory(newCategory);
+                        editor.getEditorHelper().setDirty(true);
+
+                        DataEventDispatcher.getInstance()
+                            .fireDataChangedListener(
+                                node, DataState.StructureModified, 
+                                UpdateState.onlyInEditor);
+                        DataEventDispatcher.getInstance()
+                            .fireDataChangedListener(
+                                newCategory, DataState.Added, 
+                                UpdateState.onlyInEditor);
+                        StructuredSelection newSel = 
+                            new StructuredSelection(newCategory);
+                        if (selectionProvider != null) {
+                            selectionProvider.setSelection(newSel);
+                        }
+                    }
                 }
-            }
+            });
+            
         }
     }
 }

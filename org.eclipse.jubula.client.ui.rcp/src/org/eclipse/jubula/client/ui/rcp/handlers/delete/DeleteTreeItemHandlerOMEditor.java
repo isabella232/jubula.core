@@ -20,9 +20,10 @@ import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.sourceprovider.AbstractJBSourceProvider;
@@ -48,41 +49,42 @@ public class DeleteTreeItemHandlerOMEditor
         if (!(activePart instanceof ObjectMappingMultiPageEditor)) {
             return null;
         }
-        IStructuredSelection selection = getSelection();
-        ObjectMappingMultiPageEditor editor = 
+
+        final ObjectMappingMultiPageEditor editor = 
             (ObjectMappingMultiPageEditor)activePart;
-        if (editor.getEditorHelper().requestEditableState() 
-                != EditableState.OK) {
-            return null;
-        }
-        Class classType = null;
-        for (Object obj : selection.toArray()) {
-            //selectionitems must be same type 
-            if (classType == null) {
-                classType = obj.getClass();
+        editor.getEditorHelper().doEditorOperation(new IEditorOperation() {
+            public void run(IPersistentObject workingPo) {
+                IStructuredSelection selection = getSelection();
+                Class classType = null;
+                for (Object obj : selection.toArray()) {
+                    //selectionitems must be same type 
+                    if (classType == null) {
+                        classType = obj.getClass();
+                    }
+                    if (obj.getClass() != classType) {
+                        return;
+                    }
+                }
+                Object lastParent = null;
+                if (selection.size() == 1) { 
+                    lastParent = deleteSingleElement(
+                            selection.getFirstElement(), editor);
+                } else if (selection.size() > 1) {
+                    boolean delete = false;
+                    delete = MessageDialog.openConfirm(getActiveShell(),
+                        Messages.DeleteTreeItemActionOMEditorOMTitle,
+                        Messages.DeleteTreeItemActionOMEditorOMText3);
+                    if (delete) {
+                        lastParent = deleteMultipleElements(
+                                selection.toArray(), editor);
+                    }
+                }
+                
+                if (lastParent != null) {
+                    refreshViewer(editor, lastParent);
+                }
             }
-            if (obj.getClass() != classType) {
-                return null;
-            }
-        }
-        Object lastParent = null;
-        if (selection.size() == 1) { 
-            lastParent = deleteSingleElement(
-                    selection.getFirstElement(), editor);
-        } else if (selection.size() > 1) {
-            boolean delete = false;
-            delete = MessageDialog.openConfirm(getActiveShell(),
-                Messages.DeleteTreeItemActionOMEditorOMTitle,
-                Messages.DeleteTreeItemActionOMEditorOMText3);
-            if (delete) {
-                lastParent = deleteMultipleElements(
-                        selection.toArray(), editor);
-            }
-        }
-        
-        if (lastParent != null) {
-            refreshViewer(editor, lastParent);
-        }
+        });
         
         return null;
     }

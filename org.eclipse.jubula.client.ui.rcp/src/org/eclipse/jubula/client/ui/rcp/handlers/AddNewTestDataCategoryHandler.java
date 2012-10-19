@@ -18,15 +18,16 @@ import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.ui.IWorkbenchPart;
@@ -41,47 +42,51 @@ public class AddNewTestDataCategoryHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object executeImpl(ExecutionEvent event) {
+    public Object executeImpl(final ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         if (activePart instanceof CentralTestDataEditor) {
             CentralTestDataEditor ctdEditor = (CentralTestDataEditor)activePart;
-            if (ctdEditor.getEditorHelper().requestEditableState() 
-                    != EditableState.OK) {
-                return null;
-            }
-            
-            ITestDataCategoryPO rootCategory = 
-                    (ITestDataCategoryPO)ctdEditor.getEditorHelper()
-                        .getEditSupport().getWorkVersion();
-            
-            final ITestDataCategoryPO categoryParent = getParent(
-                    HandlerUtil.getCurrentSelection(event), rootCategory);
-            
-            InputDialog dialog = new InputDialog(
-                getActiveShell(), 
-                Messages.CreateNewCategoryActionCatTitle,
-                InitialValueConstants.DEFAULT_CATEGORY_NAME,
-                Messages.CreateNewCategoryActionCatMessage,
-                Messages.CreateNewCategoryActionCatLabel,
-                Messages.CreateNewCategoryActionCatError,
-                Messages.CreateNewCategoryActionDoubleCatName,
-                IconConstants.NEW_CAT_DIALOG_STRING,
-                Messages.CreateNewCategoryActionNewCategory, false);
-
-            dialog.setHelpAvailable(true);
-            dialog.create();
-            DialogUtils.setWidgetNameForModalDialog(dialog);
-            Plugin.getHelpSystem().setHelp(dialog.getShell(),
-                ContextHelpIds.NEW_TEST_DATA_CATEGORY);
-            dialog.open();
-            if (Window.OK == dialog.getReturnCode()) {
-                ITestDataCategoryPO category = 
-                        PoMaker.createTestDataCategoryPO(dialog.getName());
-                categoryParent.addCategory(category);
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        category, DataState.Added, 
-                        UpdateState.onlyInEditor);
-            }
+            ctdEditor.getEditorHelper().doEditorOperation(
+                    new IEditorOperation() {
+                
+                        public void run(IPersistentObject workingPo) {
+                            ITestDataCategoryPO rootCategory = 
+                                    (ITestDataCategoryPO)workingPo;
+                            
+                            ITestDataCategoryPO categoryParent = getParent(
+                                    HandlerUtil.getCurrentSelection(event), 
+                                    rootCategory);
+                            
+                            InputDialog dialog = new InputDialog(
+                                getActiveShell(), 
+                                Messages.CreateNewCategoryActionCatTitle,
+                                InitialValueConstants.DEFAULT_CATEGORY_NAME,
+                                Messages.CreateNewCategoryActionCatMessage,
+                                Messages.CreateNewCategoryActionCatLabel,
+                                Messages.CreateNewCategoryActionCatError,
+                                Messages.CreateNewCategoryActionDoubleCatName,
+                                IconConstants.NEW_CAT_DIALOG_STRING,
+                                Messages.CreateNewCategoryActionNewCategory, 
+                                false);
+        
+                            dialog.setHelpAvailable(true);
+                            dialog.create();
+                            DialogUtils.setWidgetNameForModalDialog(dialog);
+                            Plugin.getHelpSystem().setHelp(dialog.getShell(),
+                                ContextHelpIds.NEW_TEST_DATA_CATEGORY);
+                            dialog.open();
+                            if (Window.OK == dialog.getReturnCode()) {
+                                ITestDataCategoryPO category = 
+                                        PoMaker.createTestDataCategoryPO(
+                                                dialog.getName());
+                                categoryParent.addCategory(category);
+                                DataEventDispatcher.getInstance()
+                                    .fireDataChangedListener(
+                                        category, DataState.Added, 
+                                        UpdateState.onlyInEditor);
+                            }
+                        }
+                    });
             
         }
 

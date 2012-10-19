@@ -597,34 +597,6 @@ public class NodePM extends PersistenceManager {
     }
     
     /**
-     * validates, if given SpecTestCase is reused in any other SpecTestcase
-     * reusage in a testsuite is unconsidered
-     * @param specTc SpecTestCase to validate the reusage
-     * @param s session to use
-     * @return result of validation
-     */
-    public static boolean isReused(ISpecTestCasePO specTc, EntityManager s) {
-        boolean result = false;
-        Long id = specTc.getId();
-        Long parentProj = specTc.getParentProjectId();
-        if (id != null) {
-            if (parentProj == null) {
-                parentProj = GeneralStorage.getInstance().getProject().getId();
-            }
-            Query query = s.createNativeQuery(
-                        "select ID from Node where ID IN " +  //$NON-NLS-1$
-                        "(select parent from Node_List where Child IN " +  //$NON-NLS-1$
-                        "(select ID from Node where PARENT_PROJ = " + parentProj  +  //$NON-NLS-1$
-                        " AND SPEC_TC_GUID = " + //$NON-NLS-1$
-                        "(select GUID from Node where id= " + id + "))) AND " + //$NON-NLS-1$ //$NON-NLS-2$
-                        "classid=\'S\'"); //$NON-NLS-1$
-            List list = query.setMaxResults(1).getResultList();
-            result = !(list.isEmpty());
-        }
-        return result;
-    }
-    
-    /**
      * Returns test cases that reference the test case given information. 
      * Only returns test cases that are <em>NOT</em> in the same project 
      * as the given test case.

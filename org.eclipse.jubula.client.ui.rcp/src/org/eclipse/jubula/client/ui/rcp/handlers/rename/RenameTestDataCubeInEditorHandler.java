@@ -18,13 +18,14 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.dialogs.EnterTestDataManagerDialog;
 import org.eclipse.jubula.client.ui.rcp.dialogs.RenameTestDataManagerDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
-import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.handlers.AddNewTestDataManagerHandler;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.swt.widgets.Shell;
@@ -42,31 +43,34 @@ public class RenameTestDataCubeInEditorHandler extends
     /**
      * {@inheritDoc}
      */
-    public Object executeImpl(ExecutionEvent event) {
+    public Object executeImpl(final ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         if (activePart instanceof CentralTestDataEditor) {
-            IStructuredSelection structuredSelection = getSelection();
-            CentralTestDataEditor editor = (CentralTestDataEditor)activePart;
-            if (editor.getEditorHelper().requestEditableState() 
-                    != EditableState.OK) {
-                return null;
-            }
-
-            Object firstElement = structuredSelection.getFirstElement();
-            if (firstElement instanceof ITestDataCubePO) {
-                ITestDataCubePO tdc = (ITestDataCubePO)firstElement;
-                String newName = getNewTestDataCubeName(tdc, editor, event);
-                if (newName != null) {
-                    tdc.setName(newName);
-                    editor.getEditorHelper().setDirty(true);
-                    DataEventDispatcher ded = DataEventDispatcher.getInstance();
-                    ded.fireDataChangedListener(tdc, 
-                            DataState.Renamed, UpdateState.onlyInEditor);
-                    ded.fireParamChangedListener();
-                    ded.firePropertyChanged(false);
+            final CentralTestDataEditor editor = 
+                    (CentralTestDataEditor)activePart;
+            editor.getEditorHelper().doEditorOperation(new IEditorOperation() {
+                public void run(IPersistentObject workingPo) {
+                    IStructuredSelection structuredSelection = getSelection();
+                    Object firstElement = structuredSelection.getFirstElement();
+                    if (firstElement instanceof ITestDataCubePO) {
+                        ITestDataCubePO tdc = (ITestDataCubePO)firstElement;
+                        String newName = 
+                                getNewTestDataCubeName(tdc, editor, event);
+                        if (newName != null) {
+                            tdc.setName(newName);
+                            editor.getEditorHelper().setDirty(true);
+                            DataEventDispatcher ded = 
+                                    DataEventDispatcher.getInstance();
+                            ded.fireDataChangedListener(tdc, DataState.Renamed, 
+                                    UpdateState.onlyInEditor);
+                            ded.fireParamChangedListener();
+                            ded.firePropertyChanged(false);
+                        }
+                    }
                 }
-            }
+            });
         }
+
         return null;
     }
 

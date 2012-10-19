@@ -1219,14 +1219,6 @@
       <command
         commandId="org.eclipse.jubula.client.ui.commands.monitoring.OpenMonitoringReport"
         style="push" />
-      <command
-        commandId="org.eclipse.ui.file.export"
-        label="Export"
-        style="push">
-        <parameter
-          name="exportWizardId"
-          value="org.eclipse.jubula.client.ui.rcp.exportWizard.ExportTestResultDetailsWizard" />
-      </command>
     </menuContribution>
     <menuContribution locationURI="popup:ComponentNameBrowserContextMenuID">
       <command
@@ -1653,17 +1645,6 @@
         <visibleWhen checkEnabled="false">
           <reference definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
         </visibleWhen>
-      </command>
-    </menuContribution>
-    <menuContribution
-      allPopups="false"
-      locationURI="popup:org.eclipse.jubula.client.ui.views.TestresultSummaryView?after=additions">
-      <command
-        commandId="org.eclipse.ui.file.export"
-        style="push">
-        <parameter
-          name="exportWizardId"
-          value="org.eclipse.jubula.client.ui.rcp.exportWizard.ExportTestResultDetailsWizard" />
       </command>
     </menuContribution>
     <menuContribution
@@ -2641,6 +2622,24 @@
                 </instanceof>
              </or>
             <test property="org.eclipse.jubula.client.ui.rcp.model.isEditable" />
+          </iterate>
+       </enabledWhen>
+    </handler>
+    <handler
+          class="org.eclipse.jubula.client.ui.rcp.handlers.ExportTestResultsHandler"
+          commandId="org.eclipse.jubula.client.ui.commands.ExportTestResults">
+       <enabledWhen>
+          <iterate
+                ifEmpty="false"
+                operator="or">
+             <and>
+                <instanceof
+                      value="org.eclipse.jubula.client.core.model.ITestResultSummaryPO">
+                </instanceof>
+                <test
+                      property="org.eclipse.jubula.client.ui.propertytester.TestResultSummary.hasTestResultDetails">
+                </test>
+             </and>
           </iterate>
        </enabledWhen>
     </handler>
