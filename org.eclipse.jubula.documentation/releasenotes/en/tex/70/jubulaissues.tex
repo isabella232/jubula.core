@@ -1,0 +1,17 @@
+\textbf{Changes to resolving of referenced parameters}\\
+\begin{itemize}
+\item In previous versions, there was an error in the way referenced parameters were resolved, which lead to the data for the parameter being read each time the parameter was referenced. This could lead to problems with e.g. time-sensitive functions. If a \gdcase{} was structured to enter the date using the ?now() function and then check the entered text (where the data for the text entry and the check were referenced and ?now() entered at the parent \gdcase{}), then the entered value and checked value would not be the same.
+\item This has been changed for this version, so that references are resolved at the place where the parameter is defined. 
+\item Any users who have \gdcases{} whose parameters define variables which are declared within the \gdcase{} itself will have to restructure such \gdcases{} so that the variable is not set before it is called, e.g.
+\begin{quote}
+-TC1 [VARIABLE\_SET=VAR1;VARIABLE\_CHECK=\$VAR1]\\
+-- Set variable =VARIABLE\_SET\\
+-- Check variable =VARIABLE\_CHECK
+\end{quote}
+\item The correct way to structure such \gdcases{} is as follows:
+\begin{quote}
+-TC1\\
+-- Set variable: VAR1\\
+-- Check variable:\$VAR1
+\end{quote}
+\end{itemize}
