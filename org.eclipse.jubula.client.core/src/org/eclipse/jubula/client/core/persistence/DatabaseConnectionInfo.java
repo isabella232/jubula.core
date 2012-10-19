@@ -14,6 +14,9 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Properties;
 
+import org.eclipse.persistence.config.BatchWriting;
+import org.eclipse.persistence.config.PersistenceUnitProperties;
+
 /**
  * 
  * @author BREDEX GmbH
@@ -90,4 +93,26 @@ public abstract class DatabaseConnectionInfo {
     public void removePropertyChangeListener(PropertyChangeListener l) {
         m_propChangeSupport.removePropertyChangeListener(l);
     }
+
+    /**
+     * Get a configuration parameter. This method is intended to be overwritten 
+     * in DB specific subclasses.
+     * @return the batch writing value. EclipseLinks default is "None".
+     */
+	public String getBatchWriting() {
+		return BatchWriting.DEFAULT;
+	}
+	
+    /**
+     * Get a configuration parameter. This method is intended to be overwritten 
+     * in DB specific subclasses.
+     * @return the batch writing size value. EclipseLinks default depends on 
+     * the kind of BatchWriting. Null should be interpreted as "Don't use the value,
+     * stick to the default". The return value is a String because it is used in
+     * a properties map.
+     */
+	
+	public String getBatchWritingSize() {
+		return null;
+	}
 }
