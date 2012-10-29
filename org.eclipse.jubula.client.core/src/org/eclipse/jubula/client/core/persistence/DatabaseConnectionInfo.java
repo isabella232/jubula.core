@@ -15,7 +15,6 @@ import java.beans.PropertyChangeSupport;
 import java.util.Properties;
 
 import org.eclipse.persistence.config.BatchWriting;
-import org.eclipse.persistence.config.PersistenceUnitProperties;
 
 /**
  * 
@@ -95,14 +94,15 @@ public abstract class DatabaseConnectionInfo {
     }
 
     /**
-     * Get a configuration parameter. This method is intended to be overwritten 
+     * Get a configuration parameter. This method is intended to be overwritten
      * in DB specific subclasses.
+     * 
      * @return the batch writing value. EclipseLinks default is "None".
      */
-	public String getBatchWriting() {
-		return BatchWriting.DEFAULT;
-	}
-	
+    public String getBatchWriting() {
+        return BatchWriting.DEFAULT;
+    }
+
     /**
      * Get a configuration parameter. This method is intended to be overwritten 
      * in DB specific subclasses.
@@ -111,8 +111,7 @@ public abstract class DatabaseConnectionInfo {
      * stick to the default". The return value is a String because it is used in
      * a properties map.
      */
-	
-	public String getBatchWritingSize() {
-		return null;
-	}
+    public String getBatchWritingSize() {
+        return null;
+    }
 }

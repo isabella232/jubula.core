@@ -55,6 +55,6 @@ public class PostGreSQLConnectionInfo extends AbstractHostBasedConnectionInfo {
     
     @Override
     public String getBatchWriting() {
-    		return BatchWriting.JDBC;
+        return BatchWriting.JDBC;
     }
 }

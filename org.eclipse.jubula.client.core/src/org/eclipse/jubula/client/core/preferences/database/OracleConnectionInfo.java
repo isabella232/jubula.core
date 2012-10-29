@@ -31,7 +31,7 @@ public class OracleConnectionInfo extends AbstractHostBasedConnectionInfo {
     public static final String JDBC_PRE = "jdbc:oracle:thin:@"; //$NON-NLS-1$
 
     /** do batch writes in large chunks */
-	private static final String ORACLE_BATCH_WRITING_SIZE = "1000";
+    private static final String ORACLE_BATCH_WRITING_SIZE = "1000"; //$NON-NLS-1$
 
     /**
      * Constructor
@@ -58,11 +58,11 @@ public class OracleConnectionInfo extends AbstractHostBasedConnectionInfo {
     
     @Override
     public String getBatchWriting() {
-    		return BatchWriting.OracleJDBC;
+        return BatchWriting.OracleJDBC;
     }
-    
+
     @Override
     public String getBatchWritingSize() {
-    		return ORACLE_BATCH_WRITING_SIZE;
+        return ORACLE_BATCH_WRITING_SIZE;
     }
 }

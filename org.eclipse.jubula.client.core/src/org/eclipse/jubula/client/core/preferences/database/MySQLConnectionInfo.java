@@ -55,6 +55,6 @@ public class MySQLConnectionInfo extends AbstractHostBasedConnectionInfo {
     
     @Override
     public String getBatchWriting() {
-    		return BatchWriting.Buffered;
+        return BatchWriting.Buffered;
     }
 }

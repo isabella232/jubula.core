@@ -1154,10 +1154,12 @@ public class Persistor {
         properties.put(PersistenceUnitProperties.JDBC_URL, 
                 StringUtils.defaultString(url, 
                         connectionInfo.getConnectionUrl()));
-        properties.put(PersistenceUnitProperties.BATCH_WRITING, connectionInfo.getBatchWriting());
-        String batchWritingSize = connectionInfo .getBatchWritingSize();
+        properties.put(PersistenceUnitProperties.BATCH_WRITING,
+                connectionInfo.getBatchWriting());
+        String batchWritingSize = connectionInfo.getBatchWritingSize();
         if (batchWritingSize != null) {
-        		properties.put(PersistenceUnitProperties.BATCH_WRITING_SIZE, batchWritingSize);
+            properties.put(PersistenceUnitProperties.BATCH_WRITING_SIZE,
+                    batchWritingSize);
         }
         return new PersistenceProvider().createEntityManagerFactory(
                 DEFAULT_PU_NAME, 
