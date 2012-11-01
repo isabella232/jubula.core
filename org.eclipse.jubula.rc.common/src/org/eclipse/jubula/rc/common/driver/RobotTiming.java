@@ -237,9 +237,13 @@ public class RobotTiming extends TimingConstantsServer {
     }
     
     /**
-     * sleep the pre show popup delay
+     * sleep the post show popup delay
+     * 
+     * @param lookAndFeelSpecific
+     *            a look and feel specific delay
      */
-    public static final void sleepPostShowSubMenuItem() {
+    public static final void sleepPostShowSubMenuItem(int lookAndFeelSpecific) {
+        delay(lookAndFeelSpecific);
         delay(POST_SHOW_SUB_MENU_DELAY);
     }
     

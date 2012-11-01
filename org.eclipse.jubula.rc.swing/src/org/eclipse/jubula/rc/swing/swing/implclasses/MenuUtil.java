@@ -132,7 +132,7 @@ public abstract class MenuUtil extends MenuUtilBase {
         
         for (int j = 0; j < mn.getItemCount(); j++) {
             JMenuItem itn = mn.getItem(j);
-            // don't know why itn can become null, perhaps
+            // don't know why it can become null, perhaps
             // seperator = null
             if (itn != null && itn.isShowing() && MatchUtil.getInstance()
                     .match(itn.getText(), name, operator)) {
@@ -373,9 +373,10 @@ public abstract class MenuUtil extends MenuUtilBase {
             throw new StepExecutionException("unexpected item found", //$NON-NLS-1$
                     EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
         }
-        clickMenuItem(robot, item);
-        RobotTiming.sleepPostShowSubMenuItem();
-        JMenuItem next = findMenuItem((JMenu)item, path[idx], operator);
+        JMenu menu = (JMenu) item;
+        clickMenuItem(robot, menu);
+        RobotTiming.sleepPostShowSubMenuItem(menu.getDelay());
+        JMenuItem next = findMenuItem(menu, path[idx], operator);
         
         return navigateToMenuItem(robot, next, path, operator, idx + 1);
     }
@@ -400,9 +401,10 @@ public abstract class MenuUtil extends MenuUtilBase {
             throw new StepExecutionException("unexpected item found", //$NON-NLS-1$
                     EventFactory.createActionError());
         }
-        clickMenuItem(robot, item);
-        RobotTiming.sleepPostShowSubMenuItem();
-        JMenuItem next = findMenuItem((JMenu)item, path[idx]);
+        JMenu menu = (JMenu) item;
+        clickMenuItem(robot, menu);
+        RobotTiming.sleepPostShowSubMenuItem(menu.getDelay());
+        JMenuItem next = findMenuItem(menu, path[idx]);
 
         return navigateToMenuItem(robot, next, path, idx + 1);
     }
