@@ -811,6 +811,9 @@ class XmlImporter {
             for (IExecPersistable exec : tsAndCats) {
                 proj.getExecObjCont().addExecObject(exec);
             }
+        }
+        for (ExecCategory catXml : xml.getExecCategoriesList()) {
+            checkCancel();
             List<IExecPersistable> tjs = createListOfTestJobs(catXml,
                     assignNewGuid);
             for (IExecPersistable exec : tjs) {
@@ -822,15 +825,25 @@ class XmlImporter {
     /**
      * Handle "old"-XML data structure for pre 1.2 datamodel
      * 
-     * @param proj the project
-     * @param xml the project xml
-     * @param attrDescSession the attribute description
-     * @param assignNewGuid whether new GUIDs should be assigned or not
-     * @throws InterruptedException in case of an interruption
+     * @param proj
+     *            the project
+     * @param xml
+     *            the project xml
+     * @param attrDescSession
+     *            the attribute description
+     * @param assignNewGuid
+     *            whether new GUIDs should be assigned or not
+     * @throws InterruptedException
+     *             in case of an interruption
+     * @throws InvalidDataException
+     *             if some data is invalid when constructing an object. This
+     *             should not happen for exported project, but may happen when
+     *             someone generates XML project description outside of
+     *             GUIdancer.
      */
     private void handleOldTestSuitesAndTestJobs(IProjectPO proj, Project xml,
         EntityManager attrDescSession, boolean assignNewGuid)
-        throws InterruptedException {
+        throws InterruptedException, InvalidDataException {
         if (!xml.getTestsuiteList().isEmpty()) {
             ICategoryPO catTS = NodeMaker.createCategoryPO("Test Suites");
             for (TestSuite tsXml : xml.getTestsuiteList()) {
@@ -1953,8 +1966,12 @@ class XmlImporter {
      *                      <code>false</code>.
      * @return a persistent object generated from the information in the XML
      * element
+     * @throws InvalidDataException if some data is invalid when constructing
+     * an object. This should not happen for exported project, but may happen
+     * when someone generates XML project description outside of GUIdancer.
      */
-    private ITestJobPO createTestJob(TestJobs xml, boolean assignNewGuid) {
+    private ITestJobPO createTestJob(TestJobs xml, boolean assignNewGuid) 
+        throws InvalidDataException {
         ITestJobPO tj;
         if (xml.getGUID() != null && !assignNewGuid) {
             tj = NodeMaker.createTestJobPO(xml.getName(), xml.getGUID());
@@ -1973,7 +1990,9 @@ class XmlImporter {
                 // the old to new GUID map.
                 String testSuiteGuid = m_oldToNewGuids.get(xmlRts.getTsGuid());
                 if (testSuiteGuid == null) {
-                    log.error("Test Suite Reference: No new GUID found for Test Suite with old GUID: " + xmlRts.getTsGuid()); //$NON-NLS-1$
+                    throw new InvalidDataException(
+                            "Test Suite Reference: No new GUID found for Test Suite with old GUID: " + xmlRts.getTsGuid(),  //$NON-NLS-1$ 
+                            MessageIDs.E_IMPORT_PROJECT_XML_FAILED);
                 }
                 rts = NodeMaker.createRefTestSuitePO(xmlRts.getName(), 
                         testSuiteGuid, xmlRts.getAutId());
