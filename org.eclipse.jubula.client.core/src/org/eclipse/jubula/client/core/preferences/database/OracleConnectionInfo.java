@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.core.preferences.database;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.persistence.config.BatchWriting;
 
 /**
  * 
@@ -28,6 +29,9 @@ public class OracleConnectionInfo extends AbstractHostBasedConnectionInfo {
      * the JDBC connection prefix 
      */
     public static final String JDBC_PRE = "jdbc:oracle:thin:@"; //$NON-NLS-1$
+
+    /** do batch writes in large chunks */
+    private static final String ORACLE_BATCH_WRITING_SIZE = "1000"; //$NON-NLS-1$
 
     /**
      * Constructor
@@ -50,5 +54,15 @@ public class OracleConnectionInfo extends AbstractHostBasedConnectionInfo {
     @Override
     public String getDriverClassName() {
         return DRIVER_CLASS_NAME;
+    }
+    
+    @Override
+    public String getBatchWriting() {
+        return BatchWriting.OracleJDBC;
+    }
+
+    @Override
+    public String getBatchWritingSize() {
+        return ORACLE_BATCH_WRITING_SIZE;
     }
 }

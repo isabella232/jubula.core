@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.preferences.database;
 
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.persistence.config.BatchWriting;
 
 /**
  * 
@@ -50,5 +51,10 @@ public class PostGreSQLConnectionInfo extends AbstractHostBasedConnectionInfo {
     @Override
     public String getDriverClassName() {
         return DRIVER_CLASS_NAME;
+    }
+    
+    @Override
+    public String getBatchWriting() {
+        return BatchWriting.JDBC;
     }
 }
