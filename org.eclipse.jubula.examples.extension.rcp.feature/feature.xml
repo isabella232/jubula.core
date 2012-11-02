@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.jubula.examples.extension.rcp.feature"
       label="Jubula Example - Toolkit Extension - RCP"
-      version="1.3.0.qualifier"
+      version="2.0.0.qualifier"
       provider-name="Eclipse Jubula">
 
    <description url="http://www.eclipse.org/jubula">
