@@ -155,7 +155,8 @@ public class OMLogicNameGUIPropertySource
                         compName.getGuid());
             }
             if (compName != null && compName.getComponentType() != null) {
-                return CompSystemI18n.getString(compName.getComponentType());
+                return CompSystemI18n.getString(
+                        compName.getComponentType(), true);
             }
             return StringConstants.EMPTY;
         }  

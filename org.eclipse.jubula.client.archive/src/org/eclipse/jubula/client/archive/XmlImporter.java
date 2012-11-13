@@ -1633,11 +1633,12 @@ class XmlImporter {
                 msgSb.append(xmlCap.getComponentType());
                 msgSb.append(StringConstants.NEWLINE + Messages.Action);
                 msgSb.append(StringConstants.COLON + StringConstants.SPACE);
-                msgSb.append(CompSystemI18n.getString(xmlCap.getActionName()));
+                msgSb.append(CompSystemI18n.getString(
+                        xmlCap.getActionName(), true));
                 msgSb.append(StringConstants.NEWLINE + Messages.Parameter);
                 msgSb.append(StringConstants.COLON + StringConstants.SPACE);
                 msgSb.append(CompSystemI18n.getString(
-                        parDescList.get(tdRow).getName()));
+                        parDescList.get(tdRow).getName(), true));
                 final String msg = msgSb.toString();
                 log.error(msg, ioobe);
                 continue;

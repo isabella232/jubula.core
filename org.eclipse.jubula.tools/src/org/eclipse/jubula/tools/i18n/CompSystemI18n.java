@@ -13,7 +13,6 @@ package org.eclipse.jubula.tools.i18n;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class to internationalize all compSystem strings
+ * Class to internationalize all CompSystem strings
  * @author BREDEX GmbH
  * @created 02.01.2007
  */
@@ -71,32 +70,49 @@ public class CompSystemI18n {
     
     /**
      * Gets the internationalized String by a given key.
-     * @param key the key for the internationalized String.
+     * 
+     * @param key
+     *            the key for the internationalized String.
      * @return a internationalized <code>String</code>.
      */
     public static String getString(String key) {
-
-        try {
-            return getStringInternal(key);
-        } catch (MissingResourceException mre) {
-            logError(key, mre);
-        }
-        
-        return key;
-        
+        return getString(key, false);
     }
 
     /**
+     * Gets the internationalized String by a given key.
+     * 
+     * @param key
+     *            the key for the internationalized String.
+     * @param fallBack
+     *            returns the key if no value found
+     * @return a internationalized <code>String</code>.
+     */
+    public static String getString(String key, boolean fallBack) {
+        try {
+            return getStringInternal(key);
+        } catch (MissingResourceException mre) {
+            if (!fallBack) {
+                logError(key, mre);
+            }
+        }
+        return key;
+    }
+    
+    /**
      * Logs in error log
-     * @param key the I18n-key
-     * @param throwable the Throwable
+     * 
+     * @param key
+     *            the I18n-key
+     * @param throwable
+     *            the throwable
      */
     private static void logError(String key, Throwable throwable) {
         log.error("Cannot find I18N-key in resource bundles: " + key, throwable); //$NON-NLS-1$
     }
     
     /**
-     * Searches for th evalue of th egiven key in all bundles.<br>
+     * Searches for the value of the given key in all bundles.<br>
      * throws MissingResourceException if the key was not found. 
      * @param key the key
      * @return the value for the given key
@@ -164,15 +180,8 @@ public class CompSystemI18n {
     }
     
     /**
-     * @return the Bundles.
-     */
-    public static List getPluginBundles() {
-        return new ArrayList(PLUGIN_BUNDLES);
-    }
-    
-    /**
      * 
-     * @return a String repesentation of the ResourceBundles to use for
+     * @return a String representation of the ResourceBundles to use for
      * fromString(String string)
      * @see fromString(String string)
      */
@@ -198,7 +207,7 @@ public class CompSystemI18n {
     
     /**
      * Creates a ResourceBundle from the given String.<br>
-     * The given String must have the specification of a Propeties-File:<br>
+     * The given String must have the specification of a properties-file:<br>
      * key=value<br>
      * key=value<br>
      * ...<br>

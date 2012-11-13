@@ -45,7 +45,7 @@ class CapParamDescriptionPO extends ParamDescriptionPO implements
      */
     @Transient
     public String getName() {
-        return CompSystemI18n.getString(getUniqueId());
+        return CompSystemI18n.getString(getUniqueId(), true);
     }
 
 }

@@ -919,7 +919,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
         String message = NLS.bind(Messages.ProblemCheckerCompDoesNotExist,
                         new String[] { cap.getName(), tcPO.getName(),
                                 CompSystemI18n.getString(
-                                        cap.getComponentType()) });
+                                        cap.getComponentType(), true) });
         m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
                 new Status(IStatus.ERROR, Activator.PLUGIN_ID, message),
                 message, cap, ProblemType.REASON_COMP_DOES_NOT_EXIST));
@@ -1044,7 +1044,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
                 } else if (cap.getMetaAction() instanceof InvalidAction) {
                     String message = Messages.CouldNotFindAction
                         + StringConstants.SPACE
-                        + CompSystemI18n.getString(cap.getActionName())
+                        + CompSystemI18n.getString(cap.getActionName(), true)
                         + StringConstants.NEWLINE + "in" + StringConstants.SPACE //$NON-NLS-1$
                         + Messages.Component + StringConstants.COLON
                         + StringConstants.SPACE + cap.getComponentType();
@@ -1062,12 +1062,13 @@ public class ProblemsBP implements ICompletenessCheckListener,
                             + Messages.Action
                             + StringConstants.COLON
                             + StringConstants.SPACE
-                            + CompSystemI18n.getString(cap.getActionName())
+                            + CompSystemI18n.getString(cap.getActionName(), 
+                                true)
                             + StringConstants.NEWLINE
                             + Messages.Parameter
                             + StringConstants.COLON
                             + StringConstants.SPACE
-                            + CompSystemI18n.getString(param.getName());
+                            + CompSystemI18n.getString(param.getName(), true);
                         log.error(Messages.CouldNotFind + StringConstants.SPACE
                                + message);
                         problemParamDoesNotExist(cap);

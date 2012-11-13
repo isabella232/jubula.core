@@ -1036,7 +1036,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
                 
             case TYPE_TABLE_COLUMN:
                 final String paramType = parameter.getType();
-                return CompSystemI18n.getString(paramType);
+                return CompSystemI18n.getString(paramType, true);
 
             default:
                 StringBuilder msg = new StringBuilder();

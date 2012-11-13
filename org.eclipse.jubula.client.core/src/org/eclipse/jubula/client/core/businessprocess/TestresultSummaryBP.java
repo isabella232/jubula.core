@@ -265,7 +265,7 @@ public class TestresultSummaryBP {
             parameter.setParameterName(param.getName());
             parameter.setInternalParameterType(param.getType());
             parameter.setParameterType(CompSystemI18n.getString(
-                    param.getType()));
+                    param.getType(), true));
             
             String paramValue = StringConstants.EMPTY;
             //parameter-value
