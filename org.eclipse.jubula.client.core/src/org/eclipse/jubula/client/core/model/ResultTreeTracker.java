@@ -283,7 +283,8 @@ public class ResultTreeTracker implements IExecStackModificationListener {
             }
 
             resultNode.addParameter(new TestResultParameter(
-                    desc.getUniqueId(), desc.getType(), 
+                    CompSystemI18n.getString(desc.getUniqueId()), 
+                    CompSystemI18n.getString(desc.getType()), 
                     StringUtils.defaultString(value)));
         }
     }
