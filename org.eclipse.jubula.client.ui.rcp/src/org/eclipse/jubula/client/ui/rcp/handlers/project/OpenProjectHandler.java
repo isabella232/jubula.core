@@ -533,7 +533,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                 project = ProjectUIBP.getMostRecentProjectData();
             } else {
                 dialog = openProjectOpenDialog(projList);
-                if (dialog.getReturnCode() == Window.CANCEL) {
+                if (dialog == null || dialog.getReturnCode() == Window.CANCEL) {
                     cancelPressed = true;
                 } else {
                     project = dialog.getSelection();
