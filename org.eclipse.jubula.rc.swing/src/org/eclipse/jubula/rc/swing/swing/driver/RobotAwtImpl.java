@@ -51,6 +51,7 @@ import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.driver.InterceptorOptions;
 import org.eclipse.jubula.rc.common.driver.KeyTyper;
+import org.eclipse.jubula.rc.common.driver.MouseMovementStrategy;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -471,12 +472,14 @@ public class RobotAwtImpl implements IRobot {
             InterceptorOptions options = new InterceptorOptions(new long[]{
                 AWTEvent.MOUSE_MOTION_EVENT_MASK});
             IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
-            Point ap = getAdjacentPoint(component, p);
-            m_robot.mouseMove(ap.x, ap.y);
-            m_eventFlusher.flush();
+            Point startpoint = m_mouseMotionTracker.getLastMousePointOnScreen();
+            Point[] mouseMove = MouseMovementStrategy.
+                        getMovementPath(startpoint, p, true);
             
-            m_robot.mouseMove(p.x, p.y);
-            m_eventFlusher.flush();
+            for (int i = 0; i < mouseMove.length; i++) {
+                m_robot.mouseMove(mouseMove[i].x, mouseMove[i].y);
+                m_eventFlusher.flush();
+            }
 
             if (clickOptions.isConfirmClick()) {
                 confirmer.waitToConfirm(component, 
@@ -485,28 +488,6 @@ public class RobotAwtImpl implements IRobot {
         }
     }
     
-    /**
-     * Returns an adjacent point of <code>a</code> mostly
-     * inside <code>comp</code>
-     * @param comp a component
-     * @param p a point
-     * @return an adjacent point
-     */
-    private Point getAdjacentPoint(Component comp, Point p) {
-        Point result = new Point(p);
-        if (p.x > comp.getX()) {
-            --result.x;
-        } else {
-            ++result.x;
-        }
-        if (p.y > comp.getY()) {
-            --result.y;
-        } else {
-            ++result.y;
-        }
-        return result;
-    }
-
     /**
      * {@inheritDoc}
      */
