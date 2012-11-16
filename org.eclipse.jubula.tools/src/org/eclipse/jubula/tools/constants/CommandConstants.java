@@ -50,6 +50,8 @@ public abstract class CommandConstants {
     public static final String RAP_TOOLKIT = "ui.toolkit.aria.RapToolkitPlugin"; //$NON-NLS-1$
     /** constant: ".NET" */
     public static final String DOTNET_TOOLKIT = "ui.toolkit.DotnetToolkitPlugin"; //$NON-NLS-1$
+    /** constant: "iOS" */
+    public static final String IOS_TOOLKIT = "ui.toolkit.mobile.IOSToolkitPlugin"; //$NON-NLS-1$
     /** ID of the SLF4J API bundle */
     public static final String SLF4J_API_BUNDLE_ID = "org.slf4j.api"; //$NON-NLS-1$
     /** ID of the SLF4J JCL bundle */
@@ -120,6 +122,8 @@ public abstract class CommandConstants {
     public static final String HTML_SEND_COMPONENTS_COMMAND = "com.bredexsw.jubula.rc.html.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
     /** constant: "com.bredexsw.guidancer.rc.dotnet.message.SendDotNetAUTListOfSupportedComponentsMessage" */
     public static final String DOTNET_SEND_COMPONENTS_COMMAND = "com.bredexsw.guidancer.rc.dotnet.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
+    /** command constant */
+    public static final String IOS_SEND_COMPONENTS_COMMAND = "com.bredexsw.guidancer.rc.mobile.ios.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.AUTHighlightComponentCommand" */
     public static final String HIGHLIGHT_COMPONENT_COMMAND = "org.eclipse.jubula.client.core.commands.AUTHighlightComponentCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.AUTModeChangedCommand" */

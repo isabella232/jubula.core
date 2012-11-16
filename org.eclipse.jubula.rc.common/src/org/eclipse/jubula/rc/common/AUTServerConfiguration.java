@@ -13,10 +13,12 @@ package org.eclipse.jubula.rc.common;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 
 import org.apache.commons.lang.Validate;
@@ -29,6 +31,7 @@ import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.MappingConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.xml.businessmodell.ComponentClass;
 import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.xml.businessmodell.Profile;
 
@@ -53,13 +56,13 @@ public class AUTServerConfiguration {
     /** the singleton instance */
     private static AUTServerConfiguration instance = null;
     
-    /** the map for the implementaion class names: 
+    /** the map for the implementation class names: 
      * key = component class name, value = implementation class name
      */
     private Map m_implClassNames;
     
     /**
-     * A cache for implementaion class instances
+     * A cache for implementation class instances
      * key = implementation class name value = implementation class instance
      */
     private Map m_implClassCache;
@@ -133,6 +136,12 @@ public class AUTServerConfiguration {
      * the complete list of supported components, what actions are supported etc.
      */
     private List m_components;
+
+    /**
+     * the set of actually supported component class names
+     */
+    private Set m_supportedComponentTypes;
+    
     /**
      * private constructor (singleton) <br>
      * initializes the cache 
@@ -621,5 +630,31 @@ public class AUTServerConfiguration {
      */
     public void setProjectToolkit(String projectToolkit) {
         m_projectToolkit = projectToolkit;
+    }
+    
+    /**
+     * @return a set of supported type identifier
+     */
+    public Set getSupportedTypes() {
+        if (m_supportedComponentTypes != null) {
+            return m_supportedComponentTypes;
+        }
+        m_supportedComponentTypes = new HashSet();
+        List supportedComponents = AUTServerConfiguration
+                .getInstance().getComponents();
+        Iterator iterator = supportedComponents.iterator();
+        while (iterator.hasNext()) {
+            ConcreteComponent c = (ConcreteComponent) iterator.next();
+            if (!c.hasDefaultMapping()) {
+                List ccl = c.getCompClass();
+                Iterator compClassIterator = ccl.iterator();
+                while (compClassIterator.hasNext()) {
+                    ComponentClass cc = (ComponentClass) 
+                            compClassIterator.next();
+                    m_supportedComponentTypes.add(cc);
+                }
+            }
+        }
+        return m_supportedComponentTypes;
     }
 }

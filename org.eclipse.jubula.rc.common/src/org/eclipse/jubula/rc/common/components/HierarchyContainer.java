@@ -134,16 +134,20 @@ public abstract class HierarchyContainer {
     }
     
     /**
-     * Adds GDContainerListener to listener list.
-     * @param listener the gdContainerListener
+     * Adds container listener to listener list.
+     * 
+     * @param listener
+     *            the container listener
      */
     protected void addContainerListnr(EventListener listener) {
         m_listenerList.add(listener);
     }
-    
+
     /**
-     * Removess GDContainerListener from listener list.
-     * @param listener the gdContainerListener
+     * Removes container listener from listener list.
+     * 
+     * @param listener
+     *            the container listener
      */
     protected void removeContainerListener(EventListener listener) {
         m_listenerList.remove(listener);

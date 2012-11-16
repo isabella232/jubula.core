@@ -270,7 +270,6 @@ public class MessageFactory {
     public static SendAUTListOfSupportedComponentsMessage 
     getSendAUTListOfSupportedComponentsMessage() 
         throws UnknownMessageException {
-        
         final String autToolKit = getAutToolkit();
         String messageClassName = "null"; //$NON-NLS-1$
         try {
@@ -284,13 +283,14 @@ public class MessageFactory {
                 messageClassName = "org.eclipse.jubula.communication.message.html.SendHtmlAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$
             } else if (CommandConstants.DOTNET_TOOLKIT.equals(autToolKit)) {
                 messageClassName = "org.eclipse.jubula.communication.message.dotnet.SenddotnetAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$) {
-            }                
+            } else if (CommandConstants.IOS_TOOLKIT.equals(autToolKit)) {
+                messageClassName = "org.eclipse.jubula.communication.message.ios.SendIOSAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$) {
+            }               
             Class messageClass = Class.forName(messageClassName, false, 
                     SendAUTListOfSupportedComponentsMessage.class
                     .getClassLoader());
             if (!SendAUTListOfSupportedComponentsMessage.class.isAssignableFrom(
                     messageClass)) {
-                
                 throw new UnknownMessageException(messageClass.getName()
                         + Messages.IsNotAssignableTo + StringConstants.SPACE
                         + SendAUTListOfSupportedComponentsMessage.class
