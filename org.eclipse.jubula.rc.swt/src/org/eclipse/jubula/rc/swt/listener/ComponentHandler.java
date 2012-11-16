@@ -24,7 +24,6 @@ import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.components.SwtAUTHierarchy;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -97,7 +96,7 @@ public class ComponentHandler extends BaseSwtEventListener
         try {
             return autHierarchy.getComponentIdentifier(component);
         } catch (ComponentNotManagedException cnme) {
-            log.warn(DebugConstants.ERROR, cnme);
+            log.warn(cnme.getLocalizedMessage(), cnme);
             throw new NoIdentifierForComponentException(
                     "unable to create an identifier for '" //$NON-NLS-1$
                     + component + "'", //$NON-NLS-1$
@@ -152,7 +151,7 @@ public class ComponentHandler extends BaseSwtEventListener
         try {
             return autHierarchy.findComponent(componentIdentifier);
         } catch (ComponentNotManagedException cnme) {
-            log.warn(DebugConstants.ERROR, cnme);
+            log.warn(cnme.getLocalizedMessage(), cnme);
             if (retry) {
 
                 while (System.currentTimeMillis() - start < timeout) {
@@ -195,10 +194,10 @@ public class ComponentHandler extends BaseSwtEventListener
             throw new ComponentNotFoundException(
                         cnme.getMessage(), MessageIDs.E_COMPONENT_NOT_FOUND);
         } catch (IllegalArgumentException iae) {
-            log.error(DebugConstants.ERROR, iae);
+            log.error(iae.getLocalizedMessage(), iae);
             throw iae;
         } catch (InvalidDataException ide) {
-            log.error(DebugConstants.ERROR, ide);
+            log.error(ide.getLocalizedMessage(), ide);
             throw new ComponentNotFoundException(
                     ide.getMessage(), MessageIDs.E_COMPONENT_NOT_FOUND);
         }

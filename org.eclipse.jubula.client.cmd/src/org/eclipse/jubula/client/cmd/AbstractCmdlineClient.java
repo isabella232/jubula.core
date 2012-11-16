@@ -47,7 +47,6 @@ import org.eclipse.jubula.client.core.preferences.database.OracleConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionInfo;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.Message;
@@ -396,10 +395,10 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
                 return EXIT_CODE_ERROR;
             }
         } catch (ParseException e) {
-            log.error(DebugConstants.ERROR, e);
+            log.error(e.getLocalizedMessage(), e);
             return EXIT_CODE_ERROR;
         } catch (IOException e) {
-            log.error(DebugConstants.ERROR, e);
+            log.error(e.getLocalizedMessage(), e);
             return EXIT_CODE_ERROR;
         }
         preRun();
@@ -417,7 +416,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
             // Assume that, if an exception has bubbled up this far, then it is 
             // a big enough problem to warrant telling the user and returning a
             // generic error exit code.
-            log.error(DebugConstants.ERROR, t);
+            log.error(t.getLocalizedMessage(), t);
             printlnConsoleError(t.getLocalizedMessage());
             return EXIT_CODE_ERROR;
         }

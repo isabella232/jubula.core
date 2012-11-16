@@ -18,7 +18,6 @@ import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ConnectAutAgentBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionGUIController;
 import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager.AutAgent;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.menus.UIElement;
 
@@ -56,7 +55,7 @@ public class AUTAgentConnectHandler extends AbstractHandler
             AutAgent autAgent = new AutAgent(name, portNo);
             TestExecutionGUIController.connectToAutAgent(autAgent);
         } catch (Exception e) {
-            throw new ExecutionException(DebugConstants.ERROR, e);
+            throw new ExecutionException(e.getLocalizedMessage(), e);
         }
         return null;
     }

@@ -36,7 +36,6 @@ import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.MessageHeader;
 import org.eclipse.jubula.communication.message.MessageIdentifier;
 import org.eclipse.jubula.communication.parser.MessageSerializer;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.AssertException;
 import org.eclipse.jubula.tools.exception.CommunicationException;
@@ -313,13 +312,13 @@ public class Communicator {
                     fireConnectingFailed(m_inetAddress, m_port);
                 }
             } catch (IllegalArgumentException iae) {
-                log.debug(DebugConstants.ERROR, iae);
+                log.debug(iae.getLocalizedMessage(), iae);
                 fireConnectingFailed(m_inetAddress, m_port);
             } catch (IOException ioe) {
-                log.debug(DebugConstants.ERROR, ioe);
+                log.debug(ioe.getLocalizedMessage(), ioe);
                 fireConnectingFailed(m_inetAddress, m_port);
             } catch (SecurityException se) {
-                log.debug(DebugConstants.ERROR, se);
+                log.debug(se.getLocalizedMessage(), se);
                 fireConnectingFailed(m_inetAddress, m_port);
                 throw se;
             } 
@@ -492,17 +491,17 @@ public class Communicator {
             m_connection.send(new MessageHeader(MessageHeader.MESSAGE,
                 message), messageToSend);
         } catch (SerialisationException se) {
-            log.error(DebugConstants.ERROR, se);
+            log.error(se.getLocalizedMessage(), se);
             throw new CommunicationException(
                 "could not send message:" //$NON-NLS-1$
                 + se.getMessage(), MessageIDs.E_MESSAGE_NOT_SEND);
         } catch (IOException ioe) {
-            log.error(DebugConstants.ERROR, ioe);
+            log.error(ioe.getLocalizedMessage(), ioe);
             throw new CommunicationException(
                 "io error occured during sending a message:" //$NON-NLS-1$
                     + ioe.getMessage(), MessageIDs.E_MESSAGE_SEND);
         } catch (IllegalArgumentException iae) {
-            log.error(DebugConstants.ERROR, iae);
+            log.error(iae.getLocalizedMessage(), iae);
             throw new CommunicationException(
                 "message could not send", MessageIDs.E_MESSAGE_NOT_SEND); //$NON-NLS-1$
         }
@@ -577,12 +576,12 @@ public class Communicator {
                 messageToSend);
             awaitingCommand.start();
         } catch (SerialisationException se) {
-            log.error(DebugConstants.ERROR, se);
+            log.error(se.getLocalizedMessage(), se);
             throw new CommunicationException(
                 "could not send message as request:" //$NON-NLS-1$
                     + se.getMessage(), MessageIDs.E_MESSAGE_NOT_TO_REQUEST); 
         } catch (IOException ioe) {
-            log.error(DebugConstants.ERROR, ioe);
+            log.error(ioe.getLocalizedMessage(), ioe);
             synchronized (m_awaitingCommands) {
                 m_awaitingCommands.remove(messageIdentifier);
             }
@@ -590,11 +589,11 @@ public class Communicator {
                 "io error occured during requesting a message: "//$NON-NLS-1$
                     + ioe.getMessage(), MessageIDs.E_MESSAGE_REQUEST);
         } catch (IllegalArgumentException iae) {
-            log.error(DebugConstants.ERROR, iae);
+            log.error(iae.getLocalizedMessage(), iae);
             synchronized (m_awaitingCommands) {
                 m_awaitingCommands.remove(messageIdentifier);
             }
-            log.debug(DebugConstants.ERROR, iae);
+            log.debug(iae.getLocalizedMessage(), iae);
             throw new CommunicationException(
                 "message could not send as a request", //$NON-NLS-1$
                 MessageIDs.E_MESSAGE_NOT_TO_REQUEST); 
@@ -1048,13 +1047,13 @@ public class Communicator {
                     }
 
                 } catch (IOException ioe) {
-                    log.debug(DebugConstants.ERROR, ioe);
+                    log.debug(ioe.getLocalizedMessage(), ioe);
                     fireAcceptingFailed(m_serverSocket.getLocalPort());
                     // HERE exception manager if the IOExceptions
                     // are numerous, at the moment stop accepting
                     setAccepting(false);
                 } catch (Throwable t) {
-                    log.error(DebugConstants.ERROR, t);
+                    log.error(t.getLocalizedMessage(), t);
                     setAccepting(false);
                     // HERE exception handler for accepting ?
                     // setAccepting(getAcceptingExceptionHandler().handle(t));

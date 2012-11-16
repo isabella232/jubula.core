@@ -25,7 +25,6 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -223,7 +222,7 @@ public class CompSystemI18n {
             PLUGIN_BUNDLES.clear();
             addResourceBundle(bundle);
         } catch (IOException e) {
-            log.error(DebugConstants.ERROR, e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 

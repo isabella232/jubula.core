@@ -35,7 +35,6 @@ import org.eclipse.jubula.client.ui.rcp.handlers.delete.DeleteTreeItemHandlerOME
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.objectmapping.OMEditorTreeContentProvider;
 import org.eclipse.jubula.client.ui.rcp.search.query.ShowResponsibleNodeForComponentName;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -183,9 +182,9 @@ public class OMEDeleteUnusedComponentNamesHandler extends AbstractHandler {
                 }
             });
         } catch (InvocationTargetException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
         } catch (InterruptedException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
         }
         return null;
     }

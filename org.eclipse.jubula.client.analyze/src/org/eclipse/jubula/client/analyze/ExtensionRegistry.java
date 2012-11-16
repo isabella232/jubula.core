@@ -27,7 +27,6 @@ import org.eclipse.jubula.client.analyze.internal.AnalyzeParameter;
 import org.eclipse.jubula.client.analyze.internal.Category;
 import org.eclipse.jubula.client.analyze.internal.Context;
 import org.eclipse.jubula.client.analyze.internal.Renderer;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -216,7 +215,7 @@ public class ExtensionRegistry {
             analyzeMap.put(analyzeConfig.getAttribute(AnalyzeConstants.ANA_ID),
                     ana);
         } catch (CoreException e) {
-            log.error(DebugConstants.ERROR, e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 
@@ -245,7 +244,7 @@ public class ExtensionRegistry {
                     rendererConfig.getAttribute(AnalyzeConstants.RENDERER_ID),
                     renderer);
         } catch (CoreException e) {
-            log.error(DebugConstants.ERROR, e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 
@@ -288,7 +287,7 @@ public class ExtensionRegistry {
                     contextConfig.getAttribute(AnalyzeConstants.CONTEXT_ID),
                     context);
         } catch (CoreException e) {
-            log.error(DebugConstants.ERROR, e);
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 

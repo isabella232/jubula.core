@@ -16,7 +16,6 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +55,7 @@ public abstract class AbstractMonitoring implements IMonitoring {
         try {
             out.close();
         } catch (IOException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
         }
     }
 

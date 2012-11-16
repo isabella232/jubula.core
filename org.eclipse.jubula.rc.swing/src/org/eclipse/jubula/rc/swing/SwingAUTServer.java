@@ -29,7 +29,6 @@ import org.eclipse.jubula.rc.swing.listener.FocusTracker;
 import org.eclipse.jubula.rc.swing.listener.MappingListener;
 import org.eclipse.jubula.rc.swing.listener.RecordListener;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,10 +125,10 @@ public class SwingAUTServer extends AUTServer {
                     (AWTEventListener)listener, mask);
         } catch (AWTError awte) {
             // no default toolkit
-            LOG.error(DebugConstants.ERROR, awte);
+            LOG.error(awte.getLocalizedMessage(), awte);
         } catch (SecurityException se) {
             // no permission to add an AWTEventListener
-            LOG.error(DebugConstants.ERROR, se);
+            LOG.error(se.getLocalizedMessage(), se);
             System.exit(AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_AWT_EVENT_LISTENER);
         }
@@ -148,12 +147,12 @@ public class SwingAUTServer extends AUTServer {
                     (AWTEventListener)listener);
         } catch (AWTError awte) {
             // no default toolkit
-            LOG.error(DebugConstants.ERROR, awte);
+            LOG.error(awte.getLocalizedMessage(), awte);
         } catch (SecurityException se) {
             // no permission to remove an AWTEventListener,
             // should not occur, because addAWTEventListener() should be called 
             // first. But just in case, close the vm
-            LOG.error(DebugConstants.ERROR, se);
+            LOG.error(se.getLocalizedMessage(), se);
             System.exit(AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_AWT_EVENT_LISTENER);
         }

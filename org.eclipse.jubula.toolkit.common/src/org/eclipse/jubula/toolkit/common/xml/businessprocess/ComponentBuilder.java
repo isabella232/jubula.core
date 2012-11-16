@@ -26,7 +26,6 @@ import org.eclipse.jubula.toolkit.common.PluginStarter;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.i18n.Messages;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
@@ -155,13 +154,13 @@ public class ComponentBuilder extends AbstractComponentBuilder {
                 return descr;
             }
         } catch (NumberFormatException e) {
-            log.error(DebugConstants.ERROR, e);
+            log.error(e.getLocalizedMessage(), e);
             throw new ToolkitPluginException(
                 Messages.ErrorWhileReadingAttributes + StringConstants.COLON
                 + StringConstants.SPACE
                 + String.valueOf(toolkitId), e);
         } catch (InvalidRegistryObjectException e) {
-            log.error(DebugConstants.ERROR, e);
+            log.error(e.getLocalizedMessage(), e);
             throw new ToolkitPluginException(
                 Messages.ErrorWhileReadingAttributes + StringConstants.COLON
                 + StringConstants.SPACE

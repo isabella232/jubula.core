@@ -53,7 +53,6 @@ import org.eclipse.jubula.client.core.progress.JobChangeListener;
 import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
 import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
 import org.eclipse.jubula.client.core.utils.DatabaseStateEvent.DatabaseState;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBFatalAbortException;
@@ -240,7 +239,7 @@ public class Persistor {
         try {
             connectToDBJob.join();
         } catch (InterruptedException e) {
-            log.error(DebugConstants.ERROR, e);
+            log.error(e.getLocalizedMessage(), e);
             connectionGained.set(false);
         }
 

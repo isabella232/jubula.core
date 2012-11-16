@@ -18,7 +18,6 @@ import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.implclasses.IComponentFactory;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,7 +73,7 @@ public class SendAUTListOfSupportedComponentsCommand
                     try {
                         m_componentIds.add(createIdentifier(m_concrete));
                     } catch (UnsupportedComponentException e) {
-                        log.error(DebugConstants.ERROR, e);
+                        log.error(e.getLocalizedMessage(), e);
                     }
                 }
             });

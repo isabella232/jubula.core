@@ -36,7 +36,6 @@ import org.eclipse.jubula.client.ui.dialogs.DBLoginDialog;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.ui.PlatformUI;
@@ -110,7 +109,7 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
             try {
                 returnStatus = connectToDatabase(userName, pwd, dbInfo);
             } catch (InterruptedException e) {
-                log.error(DebugConstants.ERROR, e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
         while (performLogin && returnStatus == null) {
@@ -279,7 +278,7 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
                     });
         } catch (InvocationTargetException ite) {
             // Exception occurred during operation
-            log.error(DebugConstants.ERROR, ite.getCause());
+            log.error(ite.getLocalizedMessage(), ite.getCause());
         } catch (InterruptedException ie) {
             throw ie;
         }
@@ -317,7 +316,7 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
             try {
                 returnStatus = connectToDatabase(userName, pwd, dbInfo);
             } catch (InterruptedException e) {
-                log.error(DebugConstants.ERROR, e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
         return returnStatus;

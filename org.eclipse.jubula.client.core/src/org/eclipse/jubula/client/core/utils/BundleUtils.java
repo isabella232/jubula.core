@@ -18,7 +18,6 @@ import java.util.Properties;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -61,9 +60,9 @@ public class BundleUtils {
                 + StringConstants.SPACE + resouceName + StringConstants.SPACE
                 + Messages.NotFound + StringConstants.DOT);
         } catch (MalformedURLException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
         } catch (IOException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
         }
         return null;
     }

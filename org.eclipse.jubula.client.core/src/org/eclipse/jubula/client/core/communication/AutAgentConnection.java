@@ -20,7 +20,6 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.slf4j.Logger;
@@ -91,7 +90,7 @@ public class AutAgentConnection extends BaseConnection {
                 new Integer(port).intValue());
         } catch (UnknownHostException uhe) {
             // log on info level, the configuration may be bad typed
-            log.info(DebugConstants.ERROR, uhe);
+            log.info(uhe.getLocalizedMessage(), uhe);
             throw new ConnectionException(uhe.getMessage(),
                 MessageIDs.E_UNKNOWN_HOST);
         }
@@ -158,7 +157,7 @@ public class AutAgentConnection extends BaseConnection {
             } catch (ConnectionException ce) {
                 // the connection to the AUTServer is not established
                 // -> just log this
-                log.debug(DebugConstants.ERROR, ce);
+                log.debug(ce.getLocalizedMessage(), ce);
             }
         }
 

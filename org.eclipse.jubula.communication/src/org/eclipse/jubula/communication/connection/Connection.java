@@ -31,7 +31,6 @@ import org.eclipse.jubula.communication.message.MessageHeader;
 import org.eclipse.jubula.communication.message.MessageHeader.InvalidHeaderVersionException;
 import org.eclipse.jubula.communication.parser.MessageHeaderSerializer;
 import org.eclipse.jubula.communication.writer.MessageWriter;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.SerialisationException;
 import org.slf4j.Logger;
@@ -470,7 +469,7 @@ public class Connection {
                     log.error("invalid header length token: " //$NON-NLS-1$
                         + headerLengthToken, e); 
                 } catch (InvalidHeaderVersionException ihve) {
-                    log.error(DebugConstants.ERROR, ihve);
+                    log.error(ihve.getLocalizedMessage(), ihve);
                 } catch (Throwable t) {
                     log.error("exception raised", t); //$NON-NLS-1$
                     final IExceptionHandler exceptionHandler = 

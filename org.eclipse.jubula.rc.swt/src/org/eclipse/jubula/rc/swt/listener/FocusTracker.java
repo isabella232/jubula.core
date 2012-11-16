@@ -12,7 +12,6 @@ package org.eclipse.jubula.rc.swt.listener;
 
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.swt.SWT;
@@ -72,7 +71,7 @@ public class FocusTracker extends BaseSwtEventListener
             this.getClass().getClassLoader());
         try {
             if (log.isDebugEnabled()) {
-                log.debug(DebugConstants.ERROR, event);
+                log.debug("Event: ", event);
             }
             switch (event.type) {
                 case SWT.FocusIn:

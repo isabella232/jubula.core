@@ -14,7 +14,6 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -40,7 +39,7 @@ public class NewViewInstanceHandler extends AbstractHandler {
                     SECONDARY_ID_PREFIX + System.currentTimeMillis(),
                     IWorkbenchPage.VIEW_ACTIVATE);
         } catch (PartInitException e) {
-            new ExecutionException(DebugConstants.ERROR, e);
+            new ExecutionException(e.getLocalizedMessage(), e);
         }
         return null;
     }

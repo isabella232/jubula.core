@@ -17,7 +17,6 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.ProjectDialog.ProjectData;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,7 +82,7 @@ public class ProjectUIBP {
                         StringConstants.EMPTY));
                 
             } catch (StorageException e) {
-                LOG.error(DebugConstants.ERROR, e);
+                LOG.error(e.getLocalizedMessage(), e);
             }
         }
         return projectData;
@@ -104,10 +103,10 @@ public class ProjectUIBP {
                 node.put(Constants.MOST_RECENT_PROJECTDATA_VERSION_KEY, 
                         projectData.getVersionString(), true);
             } catch (StorageException e1) {
-                LOG.error(DebugConstants.ERROR, e1);
+                LOG.error(e1.getLocalizedMessage(), e1);
             }
         } else {
-            LOG.error(DebugConstants.ERROR);
+            LOG.error("Node not found");
         }
     }
     

@@ -15,7 +15,6 @@ import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.swt.SWT;
@@ -125,7 +124,7 @@ public class MappingListener extends AbstractAutSwtEventListener {
                 // no identifier for the component, LOG this as an error
                 LOG.error("no identifier for '" + currComp); //$NON-NLS-1$
             } catch (CommunicationException ce) {
-                LOG.error(DebugConstants.ERROR, ce);
+                LOG.error(ce.getLocalizedMessage(), ce);
                 // do nothing here: a closed connection 
                 // is handled by the AUTServer
             }

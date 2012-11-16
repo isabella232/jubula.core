@@ -84,7 +84,6 @@ import org.eclipse.jubula.communication.message.RestartAutMessage;
 import org.eclipse.jubula.communication.message.TakeScreenshotMessage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
@@ -1004,11 +1003,11 @@ public class TestExecution {
                     TimeoutConstants.CLIENT_SERVER_TIMEOUT_TAKE_SCREENSHOT);
         } catch (NotConnectedException nce) {
             if (LOG.isErrorEnabled()) {
-                LOG.error(DebugConstants.ERROR, nce);
+                LOG.error(nce.getLocalizedMessage(), nce);
             }
         } catch (CommunicationException ce) {
             if (LOG.isErrorEnabled()) {
-                LOG.error(DebugConstants.ERROR, ce);
+                LOG.error(ce.getLocalizedMessage(), ce);
             }
         }
     }
@@ -1207,9 +1206,9 @@ public class TestExecution {
                                         .getExecutableName());
                         AutAgentConnection.getInstance().send(message);
                     } catch (NotConnectedException nce) {
-                        LOG.error(DebugConstants.ERROR, nce);
+                        LOG.error(nce.getLocalizedMessage(), nce);
                     } catch (CommunicationException ce) {
-                        LOG.error(DebugConstants.ERROR, ce);
+                        LOG.error(ce.getLocalizedMessage(), ce);
                     }
                 }
             }
@@ -1228,12 +1227,12 @@ public class TestExecution {
                     EndTestExecutionMessage.TIMEOUT);
         } catch (NotConnectedException nce) {
             if (LOG.isWarnEnabled()) {
-                LOG.warn(DebugConstants.ERROR, nce);
+                LOG.warn(nce.getLocalizedMessage(), nce);
             }
             stopExecution();
         } catch (CommunicationException ce) {
             if (LOG.isWarnEnabled()) {
-                LOG.warn(DebugConstants.ERROR, ce);
+                LOG.warn(ce.getLocalizedMessage(), ce);
             }
             stopExecution();
         }

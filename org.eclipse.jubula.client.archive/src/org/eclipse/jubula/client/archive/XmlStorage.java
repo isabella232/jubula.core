@@ -46,7 +46,6 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
@@ -225,9 +224,10 @@ public class XmlStorage {
                 msgs.append(msg);
             }
             if (log.isDebugEnabled()) {
-                log.debug(Messages.ValidateFailed + StringConstants.COLON);
-                log.debug(DebugConstants.ERROR, msgs);
-                log.debug(DebugConstants.ERROR, contentDoc);
+                log.debug(Messages.ValidateFailed 
+                        + StringConstants.COLON, msgs);
+                log.debug(Messages.ValidateFailed 
+                        + StringConstants.COLON, contentDoc);
             }
             throw new PMSaveException(
                 "XML" + Messages.ValidateFailed + msgs.toString(), //$NON-NLS-1$
@@ -443,9 +443,10 @@ public class XmlStorage {
                 msgs.append(msg);
             }
             if (log.isDebugEnabled()) {
-                log.debug(Messages.ValidateFailed + StringConstants.COLON);
-                log.debug(DebugConstants.ERROR, msgs);
-                log.debug(DebugConstants.ERROR, contentDoc);
+                log.debug(Messages.ValidateFailed 
+                        + StringConstants.COLON, msgs);
+                log.debug(Messages.ValidateFailed 
+                        + StringConstants.COLON, contentDoc);
             }
             throw new PMReadException(Messages.InvalidImportFile
                     + msgs.toString(), MessageIDs.E_LOAD_PROJECT);

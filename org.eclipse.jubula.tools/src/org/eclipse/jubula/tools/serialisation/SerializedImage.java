@@ -17,7 +17,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +61,7 @@ public class SerializedImage {
             si.setData(imageByteOutputStream.toByteArray());
             imageByteOutputStream.close();
         } catch (IOException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
         }
         return si;
     }
@@ -80,7 +79,7 @@ public class SerializedImage {
                     si.getData());
             bi = ImageIO.read(imageByteInputStream);
         } catch (IOException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
         }
         return bi;
     }

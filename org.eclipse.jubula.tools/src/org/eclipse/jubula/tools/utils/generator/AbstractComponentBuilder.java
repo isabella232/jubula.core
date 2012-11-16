@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.GDConfigXmlException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.utils.ClassPathHacker;
@@ -127,7 +126,7 @@ public class AbstractComponentBuilder {
                 setToolkitDescriptorToComponents(compSystem, descr);
                 addToolkitToCompSystem(compSystem);
             } catch (IOException e) {
-                log.error(DebugConstants.ERROR, e);
+                log.error(e.getLocalizedMessage(), e);
             }
             String resourceBundlePath = 
                 config.getResourceBundlePath(configName);
@@ -136,7 +135,7 @@ public class AbstractComponentBuilder {
                         new File(resourceBundlePath)
                             .getCanonicalFile());
             } catch (IOException e) {
-                log.error(DebugConstants.ERROR, e);
+                log.error(e.getLocalizedMessage(), e);
                 e.printStackTrace();
             }
             String resourceBundleFQN = config

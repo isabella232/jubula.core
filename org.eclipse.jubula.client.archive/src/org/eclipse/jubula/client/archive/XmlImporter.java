@@ -133,7 +133,6 @@ import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
@@ -954,9 +953,9 @@ class XmlImporter {
                             BEAN_UTILS.setProperty(summary, 
                                     propertyNameToSet, sa.getValue());
                         } catch (IllegalAccessException e) {
-                            log.warn(DebugConstants.ERROR, e);
+                            log.warn(e.getLocalizedMessage(), e);
                         } catch (InvocationTargetException e) {
-                            log.warn(DebugConstants.ERROR, e);
+                            log.warn(e.getLocalizedMessage(), e);
                         }
                     }
                 } else {

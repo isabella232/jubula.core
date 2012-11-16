@@ -47,7 +47,6 @@ import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -481,7 +480,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         try {
             ComponentNamesBP.getInstance().init();
         } catch (PMException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
             ErrorHandlingUtil.createMessageDialog(e, null, null);
         }
     }

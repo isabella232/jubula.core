@@ -48,7 +48,6 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.jarutils.IVersion;
@@ -343,7 +342,7 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 fireReady();
             } catch (InvocationTargetException ite) {
                 // Exception occurred during operation
-                log.error(DebugConstants.ERROR, ite.getCause());
+                log.error(ite.getLocalizedMessage(), ite.getCause());
             } catch (InterruptedException e) {
                 // Operation was canceled.
                 // We have to clear the GUI because all of

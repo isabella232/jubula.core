@@ -19,7 +19,6 @@ import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.listener.AUTEventListener;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.swt.SWT;
@@ -170,7 +169,7 @@ public abstract class AbstractAutSwtEventListener extends BaseSwtEventListener
                     componentClass);
             }
         } catch (IllegalArgumentException e) {
-            LOG.warn(DebugConstants.ERROR, e);
+            LOG.warn(e.getLocalizedMessage(), e);
         } catch (UnsupportedComponentException uce) {
             closeBorderShell();
             return;
@@ -306,7 +305,7 @@ public abstract class AbstractAutSwtEventListener extends BaseSwtEventListener
                 + String.valueOf(comp) + "' not found!", e); //$NON-NLS-1$
             return false;
         } catch (IllegalArgumentException e) {
-            LOG.debug(DebugConstants.ERROR, e);
+            LOG.debug(e.getLocalizedMessage(), e);
             return false;
         }
         return component != null;

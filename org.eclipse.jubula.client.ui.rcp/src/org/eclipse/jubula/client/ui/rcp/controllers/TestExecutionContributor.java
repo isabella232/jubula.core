@@ -53,7 +53,6 @@ import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.OMEditorTreeLabel
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsClient;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -804,7 +803,7 @@ public class TestExecutionContributor
             AUTConnection.getInstance().getCommunicator()
                 .interruptAllTimeouts();
         } catch (ConnectionException e) {
-            log.error(DebugConstants.ERROR, e);
+            log.error(e.getLocalizedMessage(), e);
         }
         setClientMinimized(false);
     }

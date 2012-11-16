@@ -28,7 +28,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
@@ -126,9 +125,9 @@ public class CompletenessBP implements IProjectOpenedListener,
                 PlatformUI.getWorkbench().getProgressService().run(true, false,
                         new UICompletenessCheckOperation());
             } catch (InvocationTargetException e) {
-                log.error(DebugConstants.ERROR, e);
+                log.error(e.getLocalizedMessage(), e);
             } catch (InterruptedException e) {
-                log.error(DebugConstants.ERROR, e);
+                log.error(e.getLocalizedMessage(), e);
             } finally {
                 Plugin.stopLongRunning();
             }

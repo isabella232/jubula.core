@@ -100,7 +100,6 @@ import org.eclipse.jubula.toolkit.common.monitoring.MonitoringAttribute;
 import org.eclipse.jubula.toolkit.common.monitoring.MonitoringRegistry;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.InputConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -281,12 +280,12 @@ public class ClientTest implements IClientTest {
             // initialising the server, so there must be a shutdown(). The 
             // listeners are already notified from the ConnectionListener of
             // the AutAgentConnection, -> just log.
-            log.info(DebugConstants.ERROR, nce);
+            log.info(nce.getLocalizedMessage(), nce);
         } catch (ConnectionException ce) {
             // This exception is thrown from AutAgentConnection.getInstance(). See comment above.
-            log.info(DebugConstants.ERROR, ce);
+            log.info(ce.getLocalizedMessage(), ce);
         } catch (CommunicationException cce) {
-            log.error(DebugConstants.ERROR, cce);
+            log.error(cce.getLocalizedMessage(), cce);
             // message could not send for any reason, close the connections
             try {
                 closeConnections();
@@ -294,7 +293,7 @@ public class ClientTest implements IClientTest {
                 log.error(Messages.ClosingTheConnectionsFailed, ce);
             }
         } catch (UnknownHostException uhe) {
-            log.error(DebugConstants.ERROR, uhe);
+            log.error(uhe.getLocalizedMessage(), uhe);
             try {
                 // from InetAdress.getLocalHost().getName(), should not occur 
                 // -> no communication possible -> close the connections as a 
@@ -475,11 +474,11 @@ public class ClientTest implements IClientTest {
         } catch (UnknownMessageException ume) {
             fireAUTServerStateChanged(new AUTServerEvent(ume.getErrorId()));
         } catch (NotConnectedException nce) {
-            log.error(DebugConstants.ERROR, nce);
-            // HERE: notify the listeners about unsuccessfull mode change
+            log.error(nce.getLocalizedMessage(), nce);
+            // HERE: notify the listeners about unsuccessful mode change
         } catch (CommunicationException ce) {
-            log.error(DebugConstants.ERROR, ce);
-            // HERE: notify the listeners about unsuccessfull mode change
+            log.error(ce.getLocalizedMessage(), ce);
+            // HERE: notify the listeners about unsuccessful mode change
         }
     }
 
@@ -502,12 +501,12 @@ public class ClientTest implements IClientTest {
                     fireAUTServerStateChanged(new AUTServerEvent(
                             ume.getErrorId()));
                 } catch (NotConnectedException nce) {
-                    log.error(DebugConstants.ERROR, nce);
-                    // HERE: notify the listeners about unsuccessfull mode
+                    log.error(nce.getLocalizedMessage(), nce);
+                    // HERE: notify the listeners about unsuccessful mode
                     // change
                 } catch (CommunicationException ce) {
-                    log.error(DebugConstants.ERROR, ce);
-                    // HERE: notify the listeners about unsuccessfull mode
+                    log.error(ce.getLocalizedMessage(), ce);
+                    // HERE: notify the listeners about unsuccessful mode
                     // change
                 }
                 AUTConnection.getInstance().close();
@@ -979,9 +978,9 @@ public class ClientTest implements IClientTest {
         try {
             AutAgentConnection.getInstance().send(message);
         } catch (NotConnectedException nce) {
-            log.error(DebugConstants.ERROR, nce);
+            log.error(nce.getLocalizedMessage(), nce);
         } catch (CommunicationException ce) {
-            log.error(DebugConstants.ERROR, ce);
+            log.error(ce.getLocalizedMessage(), ce);
         }
          
     }
@@ -998,9 +997,9 @@ public class ClientTest implements IClientTest {
         try {
             AutAgentConnection.getInstance().send(message);
         } catch (NotConnectedException nce) {
-            log.error(DebugConstants.ERROR, nce);
+            log.error(nce.getLocalizedMessage(), nce);
         } catch (CommunicationException ce) {
-            log.error(DebugConstants.ERROR, ce);
+            log.error(ce.getLocalizedMessage(), ce);
         }
          
     } 
@@ -1029,9 +1028,9 @@ public class ClientTest implements IClientTest {
             }
             autConfigMap = response.getAutConfigMap();
         } catch (NotConnectedException nce) {
-            log.error(DebugConstants.ERROR, nce);
+            log.error(nce.getLocalizedMessage(), nce);
         } catch (CommunicationException ce) {
-            log.error(DebugConstants.ERROR, ce);
+            log.error(ce.getLocalizedMessage(), ce);
         }
         return autConfigMap;
     }
@@ -1323,7 +1322,7 @@ public class ClientTest implements IClientTest {
         } catch (BaseConnection.AlreadyConnectedException ae) {
             // The connection is already established.
             if (log.isDebugEnabled()) {
-                log.debug(DebugConstants.ERROR, ae);
+                log.debug(ae.getLocalizedMessage(), ae);
             }
             return false;
         }

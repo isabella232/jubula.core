@@ -19,7 +19,6 @@ import org.eclipse.jubula.client.cmd.JobConfiguration;
 import org.eclipse.jubula.client.cmd.constants.ClientStrings;
 import org.eclipse.jubula.client.cmd.i18n.Messages;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
@@ -86,10 +85,10 @@ public class Client extends AbstractCmdlineClient {
             log.error(e.getLocalizedMessage(), e);
             printlnConsoleError(e.getMessage());
         } catch (IllegalArgumentException e) {
-            log.error(DebugConstants.ERROR, e);
+            log.error(e.getLocalizedMessage(), e);
             printlnConsoleError(e.getMessage());
         } catch (JBFatalException e) {
-            log.error(DebugConstants.ERROR, e);
+            log.error(e.getLocalizedMessage(), e);
             printlnConsoleError(e.getMessage());
         } catch (Throwable t) {
             log.error(ClientStrings.ERR_UNEXPECTED, t);

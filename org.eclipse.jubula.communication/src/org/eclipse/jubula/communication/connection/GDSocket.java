@@ -19,7 +19,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.utils.TimeUtil;
@@ -111,7 +110,7 @@ public class GDSocket extends Socket {
             handleState(false);
             throw gdve;
         } catch (IOException ioe) {
-            log.error(DebugConstants.ERROR, ioe);
+            log.error(ioe.getLocalizedMessage(), ioe);
             handleState(false);
         }
     }
@@ -189,7 +188,7 @@ public class GDSocket extends Socket {
                 setConnectionEstablished(false);
             }
         } catch (IOException ioe) {
-            log.error(DebugConstants.ERROR, ioe);
+            log.error(ioe.getLocalizedMessage(), ioe);
             handleState(false);
         }
     }

@@ -21,7 +21,6 @@ import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -199,7 +198,7 @@ public class SecurePreferenceBP {
                 node.put(Constants.SECURE_STORAGE_USERNAME_KEY, userName, 
                         false);
             } catch (StorageException e1) {
-                LOG.error(DebugConstants.ERROR, e1);
+                LOG.error(e1.getLocalizedMessage(), e1);
             }
         }
     }
@@ -215,7 +214,7 @@ public class SecurePreferenceBP {
             try {
                 node.put(Constants.SECURE_STORAGE_PASSWORD_KEY, password, true);
             } catch (StorageException e2) {
-                LOG.error(DebugConstants.ERROR, e2);
+                LOG.error(e2.getLocalizedMessage(), e2);
             }
         }
     }
@@ -246,7 +245,7 @@ public class SecurePreferenceBP {
         // rename secure storage
         ISecurePreferences root = SecurePreferencesFactory.getDefault();
         if (root == null) {
-            LOG.error(DebugConstants.ERROR);
+            LOG.error("No root node found");
         }
         if (oldProfileName != null) {
             ISecurePreferences node = root
@@ -259,14 +258,14 @@ public class SecurePreferenceBP {
                 node.put(Constants.SECURE_STORAGE_USERNAME_KEY, userName,
                         false);
             } catch (StorageException e1) {
-                LOG.error(DebugConstants.ERROR, e1);
+                LOG.error(e1.getLocalizedMessage(), e1);
             }
             if (isSaveCredentialsActive(oldProfileName)) {
                 try {
                     node.put(Constants.SECURE_STORAGE_PASSWORD_KEY, password,
                             true);
                 } catch (StorageException e2) {
-                    LOG.error(DebugConstants.ERROR, e2);
+                    LOG.error(e2.getLocalizedMessage(), e2);
                 }
             }
             // rename preference store
@@ -336,7 +335,7 @@ public class SecurePreferenceBP {
                     StringConstants.EMPTY);
 
         } catch (StorageException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
         }
         return userName;
     }
@@ -361,7 +360,7 @@ public class SecurePreferenceBP {
                             StringConstants.EMPTY);
 
         } catch (StorageException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
         }
         return dbPwd;
     }
@@ -403,7 +402,7 @@ public class SecurePreferenceBP {
         ISecurePreferences root = SecurePreferencesFactory.getDefault();
         ISecurePreferences node = root;
         if (root == null) {
-            LOG.error(DebugConstants.ERROR);
+            LOG.error("No root node found");
         } else if (profileName != null) {
             node = root
                     .node(getSecureStorageProfilePath(profileName));

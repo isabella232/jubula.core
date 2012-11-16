@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.i18n.Messages;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
@@ -197,37 +196,37 @@ public class ToolkitUtils {
             autConfigDialog = constructor.newInstance(
                 new Object[]{parent, style, autConfig, autName});
         } catch (SecurityException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
             throw new ToolkitPluginException(
                 logMsg.toString()
                 + String.valueOf(className), e);
         } catch (IllegalArgumentException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
             throw new ToolkitPluginException(
                 logMsg.toString()
                 + String.valueOf(className), e);
         } catch (ClassNotFoundException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
             throw new ToolkitPluginException(
                 logMsg.toString()
                 + String.valueOf(className), e);
         } catch (NoSuchMethodException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
             throw new ToolkitPluginException(
                 logMsg.toString()
                 + String.valueOf(className), e);
         } catch (InstantiationException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
             throw new ToolkitPluginException(
                 logMsg.toString()
                 + String.valueOf(className), e);
         } catch (IllegalAccessException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
             throw new ToolkitPluginException(
                 logMsg.toString()
                 + String.valueOf(className), e);
         } catch (InvocationTargetException e) {
-            LOG.error(DebugConstants.ERROR, e);
+            LOG.error(e.getLocalizedMessage(), e);
             throw new ToolkitPluginException(
                 logMsg.toString()
                 + String.valueOf(className), e);

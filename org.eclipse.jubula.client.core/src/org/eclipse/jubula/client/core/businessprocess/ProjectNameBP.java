@@ -28,7 +28,6 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PersistenceManager;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.NameValidationUtil;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -96,7 +95,7 @@ public class ProjectNameBP {
             try {
                 res = readProjectNameFromDB(guid);
             } catch (PMException e) {
-                log.warn(DebugConstants.ERROR, e);
+                log.warn(e.getLocalizedMessage(), e);
             }
         }
         

@@ -37,7 +37,6 @@ import org.eclipse.jubula.rc.common.registration.AgentRegisterAut;
 import org.eclipse.jubula.rc.common.registration.IRegisterAut;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.CommunicationException;
@@ -658,13 +657,13 @@ public abstract class AUTServer {
             m_autMainMethod.invoke(null, new Object[] {m_autArgs});
         } catch (IllegalArgumentException iae) {
             m_isAutRunning = false;
-            log.error(DebugConstants.ERROR, iae);
+            log.error(iae.getLocalizedMessage(), iae);
         } catch (IllegalAccessException iae) {
             m_isAutRunning = false;
-            log.error(DebugConstants.ERROR, iae);
+            log.error(iae.getLocalizedMessage(), iae);
         } catch (NullPointerException npe) {
             m_isAutRunning = false;
-            log.error(DebugConstants.ERROR, npe);
+            log.error(npe.getLocalizedMessage(), npe);
         } catch (RuntimeException re) {
             m_isAutRunning = false;
             log.error("unexpected exception thrown by AUT: ", re); //$NON-NLS-1$

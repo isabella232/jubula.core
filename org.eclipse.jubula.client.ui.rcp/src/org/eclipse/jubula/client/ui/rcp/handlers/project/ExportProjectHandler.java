@@ -28,7 +28,6 @@ import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -150,7 +149,7 @@ public class ExportProjectHandler extends AbstractProjectHandler {
             PlatformUI.getWorkbench().getProgressService().busyCursorWhile(op);
         } catch (InvocationTargetException ite) {
             // Exception occurred during operation
-            log.error(DebugConstants.ERROR, ite.getCause());
+            log.error(ite.getLocalizedMessage(), ite.getCause());
         } catch (InterruptedException ie) {
             // Operation canceled. 
             // Do nothing.

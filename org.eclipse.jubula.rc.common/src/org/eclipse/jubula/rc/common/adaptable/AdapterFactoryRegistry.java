@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -152,9 +151,9 @@ public class AdapterFactoryRegistry {
                         .newInstance();
                 getInstance().registerFactory(factory);
             } catch (IllegalAccessException e) {
-                log.error(DebugConstants.ERROR, e);
+                log.error(e.getLocalizedMessage(), e);
             } catch (InstantiationException e) {
-                log.error(DebugConstants.ERROR, e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }

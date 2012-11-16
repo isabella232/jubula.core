@@ -112,7 +112,6 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -580,11 +579,11 @@ class XmlExporter {
                     }
                     xmlSummaryAttribute.setType(pType.getName());
                 } catch (NoSuchMethodException e) {
-                    log.warn(DebugConstants.ERROR, e);
+                    log.warn(e.getLocalizedMessage(), e);
                 } catch (IllegalAccessException e) {
-                    log.warn(DebugConstants.ERROR, e);
+                    log.warn(e.getLocalizedMessage(), e);
                 } catch (InvocationTargetException e) {
-                    log.warn(DebugConstants.ERROR, e);
+                    log.warn(e.getLocalizedMessage(), e);
                 }
             }           
             Map<String, IMonitoringValue> 

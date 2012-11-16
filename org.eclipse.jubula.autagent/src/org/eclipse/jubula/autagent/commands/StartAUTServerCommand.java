@@ -18,7 +18,6 @@ import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,27 +115,27 @@ public class StartAUTServerCommand implements ICommand {
             return autStarter.startAut(m_message.getAutConfiguration());
             
         } catch (IllegalArgumentException iae) {
-            log.error(DebugConstants.ERROR, iae);
+            log.error(iae.getLocalizedMessage(), iae);
             return new StartAUTServerStateMessage(
                 StartAUTServerStateMessage.EXECUTION,
                 iae.getMessage());
         } catch (NullPointerException npe) {
-            log.error(DebugConstants.ERROR, npe);
+            log.error(npe.getLocalizedMessage(), npe);
             return new StartAUTServerStateMessage(
                 StartAUTServerStateMessage.DATA,
                 npe.getMessage());
         } catch (SecurityException se) {
-            log.error("security violation", se); //$NON-NLS-1$
+            log.error(se.getLocalizedMessage(), se);
             return new StartAUTServerStateMessage(
                 StartAUTServerStateMessage.SECURITY,
                 "security violation:" + se.getMessage()); //$NON-NLS-1$
         } catch (IOException ioe) {
-            log.error("could not start AUTServer", ioe); //$NON-NLS-1$
+            log.error("Could not start AUTServer", ioe); //$NON-NLS-1$
             return new StartAUTServerStateMessage(
                 StartAUTServerStateMessage.IO,
                 ioe.getMessage());
         } catch (ClassNotFoundException cnfe) {
-            log.error("could not find class for AUTServer", cnfe); //$NON-NLS-1$
+            log.error("Could not find class for AUTServer", cnfe); //$NON-NLS-1$
             return new StartAUTServerStateMessage(
                 StartAUTServerStateMessage.NO_SERVER_CLASS,
                 cnfe.getMessage());

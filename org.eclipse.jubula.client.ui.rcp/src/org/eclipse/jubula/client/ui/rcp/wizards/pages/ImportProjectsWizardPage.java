@@ -28,7 +28,6 @@ import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -397,7 +396,7 @@ public class ImportProjectsWizardPage extends WizardPage
             try {
                 m_fileURLs.add(new File(fileName).toURI().toURL());
             } catch (MalformedURLException e) {
-                log.error(DebugConstants.ERROR, e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
         

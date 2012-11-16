@@ -29,7 +29,6 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ExportAllBP;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -164,7 +163,7 @@ public class ExportAllHandler extends AbstractProjectHandler {
                     .busyCursorWhile(op);
             } catch (InvocationTargetException ite) {
                 // Exception occurred during operation
-                log.error(DebugConstants.ERROR, ite.getCause());
+                log.error(ite.getLocalizedMessage(), ite.getCause());
             } catch (InterruptedException ie) {
                 // Operation was canceled. This is already handled by the 
                 // operation. Do nothing.

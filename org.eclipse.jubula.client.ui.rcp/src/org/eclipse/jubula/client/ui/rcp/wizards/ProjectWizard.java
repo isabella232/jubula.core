@@ -46,7 +46,6 @@ import org.eclipse.jubula.client.ui.rcp.wizards.pages.ProjectInfoWizardPage;
 import org.eclipse.jubula.client.ui.rcp.wizards.pages.ProjectSettingWizardPage;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -169,7 +168,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
                 });
         } catch (InvocationTargetException ite) {
             // Exception occurred during operation
-            log.error(DebugConstants.ERROR, ite.getCause());
+            log.error(ite.getLocalizedMessage(), ite.getCause());
         } catch (InterruptedException ie) {
             // Operation was canceled.
             // Do nothing.

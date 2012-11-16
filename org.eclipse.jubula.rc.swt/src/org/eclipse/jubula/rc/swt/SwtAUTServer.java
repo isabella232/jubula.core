@@ -26,7 +26,6 @@ import org.eclipse.jubula.rc.swt.listener.MappingListener;
 import org.eclipse.jubula.rc.swt.listener.RecordListener;
 import org.eclipse.jubula.rc.swt.listener.TableSelectionTracker;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
 import org.slf4j.Logger;
@@ -171,7 +170,7 @@ public class SwtAUTServer extends AUTServer {
             // no permission to remove an SWTEventListener,
             // should not occur, because addSWTEventListener() should be called 
             // first. But just in case, close the vm
-            LOG.error(DebugConstants.ERROR, se);
+            LOG.error(se.getLocalizedMessage(), se);
             System.exit(AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_AWT_EVENT_LISTENER);
         }
@@ -204,7 +203,7 @@ public class SwtAUTServer extends AUTServer {
             // no permission to remove an SWTEventListener,
             // should not occur, because addSWTEventListener() should be called 
             // first. But just in case, close the vm
-            LOG.error(DebugConstants.ERROR, se);
+            LOG.error(se.getLocalizedMessage(), se);
             System.exit(AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_AWT_EVENT_LISTENER);
         }

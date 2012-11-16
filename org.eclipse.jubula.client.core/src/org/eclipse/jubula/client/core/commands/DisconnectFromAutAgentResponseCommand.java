@@ -16,7 +16,6 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.DisconnectFromAutAgentResponseMessage;
 import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.tools.constants.DebugConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +52,7 @@ public class DisconnectFromAutAgentResponseCommand implements ICommand {
             AutAgentConnection.getInstance().close();
         } catch (ConnectionException e) {
             if (log.isInfoEnabled()) {
-                log.info(DebugConstants.ERROR, e);
+                log.info(e.getLocalizedMessage(), e);
             }
         }
         return null;
