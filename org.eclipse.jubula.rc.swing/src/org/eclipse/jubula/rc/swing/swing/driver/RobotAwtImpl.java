@@ -51,6 +51,7 @@ import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.driver.InterceptorOptions;
 import org.eclipse.jubula.rc.common.driver.KeyTyper;
+import org.eclipse.jubula.rc.common.driver.MouseMovementStrategy;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -376,24 +377,6 @@ public class RobotAwtImpl implements IRobot {
     }
 
     /**
-     * Performs a mouse move only if the mouse motion tracker returns no latest
-     * motion event. In this case, the mouse is moved into the middle of the
-     * given component's root, or, if the root cannot be determined, into the
-     * middle of the component itself. 
-     * @param component The AWT/Swing component
-     * @throws RobotException If the component's location cannot be calculated.
-     */
-    private void preMove(Component component) throws RobotException {
-        if (m_mouseMotionTracker.getLastMouseMotionEvent() == null) {
-            Component root = SwingUtilities.getRoot(component);
-            Component c = (root != null) ? root : component;
-            Point p = getLocation(c, null);
-            m_robot.mouseMove(p.x, p.y);
-            m_eventFlusher.flush();
-        }
-    }
-
-    /**
      * Checks if the mouse has to be moved on <code>p</code> or if the mouse
      * pointer already resides on this location. 
      * @param p The point to move to
@@ -446,7 +429,6 @@ public class RobotAwtImpl implements IRobot {
         }
         
         Component component = (Component)graphicsComponent;
-        preMove(component);
 
         Rectangle bounds = null;
         bounds = new Rectangle(getLocation(component, new Point(0, 0)));
@@ -471,12 +453,20 @@ public class RobotAwtImpl implements IRobot {
             InterceptorOptions options = new InterceptorOptions(new long[]{
                 AWTEvent.MOUSE_MOTION_EVENT_MASK});
             IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
-            Point ap = getAdjacentPoint(component, p);
-            m_robot.mouseMove(ap.x, ap.y);
-            m_eventFlusher.flush();
+            Point startpoint = m_mouseMotionTracker.getLastMousePointOnScreen();
+            if (startpoint == null) {
+                // If there is no starting point the center of the root component is used
+                Component root = SwingUtilities.getRoot(component);
+                Component c = (root != null) ? root : component;
+                startpoint = getLocation(c, null);
+            }
+            Point[] mouseMove = MouseMovementStrategy.
+                        getMovementPath(startpoint, p, true);
             
-            m_robot.mouseMove(p.x, p.y);
-            m_eventFlusher.flush();
+            for (int i = 0; i < mouseMove.length; i++) {
+                m_robot.mouseMove(mouseMove[i].x, mouseMove[i].y);
+                m_eventFlusher.flush();
+            }
 
             if (clickOptions.isConfirmClick()) {
                 confirmer.waitToConfirm(component, 
@@ -485,28 +475,6 @@ public class RobotAwtImpl implements IRobot {
         }
     }
     
-    /**
-     * Returns an adjacent point of <code>a</code> mostly
-     * inside <code>comp</code>
-     * @param comp a component
-     * @param p a point
-     * @return an adjacent point
-     */
-    private Point getAdjacentPoint(Component comp, Point p) {
-        Point result = new Point(p);
-        if (p.x > comp.getX()) {
-            --result.x;
-        } else {
-            ++result.x;
-        }
-        if (p.y > comp.getY()) {
-            --result.y;
-        } else {
-            ++result.y;
-        }
-        return result;
-    }
-
     /**
      * {@inheritDoc}
      */
