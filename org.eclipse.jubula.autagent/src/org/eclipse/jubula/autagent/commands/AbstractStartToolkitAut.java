@@ -268,47 +268,59 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      *         an empty array will be returned.
      */
     public static String[] getClasspathEntriesForBundleId(String bundleId) {
-        Bundle bundle = Platform.getBundle(bundleId);
+        Bundle mainBundle = Platform.getBundle(bundleId);
         
-        if (bundle == null) {
+        if (mainBundle == null) {
             log.error("No bundle found for ID '" + bundleId + "'."); //$NON-NLS-1$//$NON-NLS-2$
             return new String[0];
         }
         
-        List<String> classpathEntries = new ArrayList<String>();
-        try {
-            File bundleFile = FileLocator.getBundleFile(bundle);
-            if (bundleFile.isFile()) {
-                // bundle file is not a directory, so we assume it's a JAR file
-                classpathEntries.add(bundleFile.getAbsolutePath());
-
-                // since the classloader cannot handle nested JARs, we need to extract
-                // all known nested JARs and add them to the classpath
-                try {
-                    // assuming that it's a JAR/ZIP file
-                    File[] createdFiles = ZipUtil.unzipTempJars(bundleFile);
-                    for (int i = 0; i < createdFiles.length; i++) {
-                        classpathEntries.add(createdFiles[i].getAbsolutePath());
-                    }
-                } catch (IOException e) {
-                    log.error("An error occurred while trying to extract nested JARs from " + bundleId, e); //$NON-NLS-1$
-                }
-            } else {
-                Enumeration<URL> e = bundle.findEntries(
-                        "/", "*.jar", true); //$NON-NLS-1$//$NON-NLS-2$
-                if (e != null) {
-                    while (e.hasMoreElements()) {
-                        URL jarUrl = e.nextElement();
-                        classpathEntries.add(
-                                new File(bundleFile + jarUrl.getFile())
-                                .getAbsolutePath());
-                    }
-                }
+        List<Bundle> bundleAndFragmentList = new ArrayList<Bundle>();
+        bundleAndFragmentList.add(mainBundle);
+        
+        Bundle[] mainBundleFragments = Platform.getFragments(mainBundle);
+        if (mainBundleFragments != null) {
+            for (Bundle fragment : mainBundleFragments) {
+                bundleAndFragmentList.add(fragment);
             }
-        } catch (IOException ioe) {
-            log.error("Bundle with ID '" + bundleId + "' could not be resolved to a file.", ioe); //$NON-NLS-1$//$NON-NLS-2$
         }
-
+        
+        List<String> classpathEntries = new ArrayList<String>();
+        for (Bundle bundle : bundleAndFragmentList) {
+            try {
+                File bundleFile = FileLocator.getBundleFile(bundle);
+                if (bundleFile.isFile()) {
+                    // bundle file is not a directory, so we assume it's a JAR file
+                    classpathEntries.add(bundleFile.getAbsolutePath());
+    
+                    // since the classloader cannot handle nested JARs, we need to extract
+                    // all known nested JARs and add them to the classpath
+                    try {
+                        // assuming that it's a JAR/ZIP file
+                        File[] createdFiles = ZipUtil.unzipTempJars(bundleFile);
+                        for (int i = 0; i < createdFiles.length; i++) {
+                            classpathEntries.add(
+                                    createdFiles[i].getAbsolutePath());
+                        }
+                    } catch (IOException e) {
+                        log.error("An error occurred while trying to extract nested JARs from " + bundleId, e); //$NON-NLS-1$
+                    }
+                } else {
+                    Enumeration<URL> e = bundle.findEntries(
+                            "/", "*.jar", true); //$NON-NLS-1$//$NON-NLS-2$
+                    if (e != null) {
+                        while (e.hasMoreElements()) {
+                            URL jarUrl = e.nextElement();
+                            classpathEntries.add(
+                                    new File(bundleFile + jarUrl.getFile())
+                                    .getAbsolutePath());
+                        }
+                    }
+                }
+            } catch (IOException ioe) {
+                log.error("Bundle with ID '" + bundleId + "' could not be resolved to a file.", ioe); //$NON-NLS-1$//$NON-NLS-2$
+            }
+        }
         return classpathEntries.toArray(new String[classpathEntries.size()]);
     }
     
