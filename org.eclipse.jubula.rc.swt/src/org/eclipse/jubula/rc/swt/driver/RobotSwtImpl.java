@@ -1562,12 +1562,14 @@ public class RobotSwtImpl implements IRobot {
         int clickCount = clickOptions.getClickCount();
         int[] modifierMask = getModifierMask(clickOptions.getClickModifier());
         if (clickCount > 0) {
-            final InterceptorOptions options = new InterceptorOptions(
-                    new long[]{SWT.MouseUp, SWT.MouseDown});
             final IEventMatcher matcher = 
                 new ClickSwtEventMatcher(clickOptions);
-            final IRobotEventConfirmer confirmer = m_interceptor
-                .intercept(options);
+            IRobotEventConfirmer confirmer = null;
+            if (clickOptions.isConfirmClick()) {
+                final InterceptorOptions options = new InterceptorOptions(
+                    new long[]{SWT.MouseUp, SWT.MouseDown});
+                confirmer = m_interceptor.intercept(options);
+            }
             try {
                 pressModifier(modifierMask);
                 RobotTiming.sleepPreClickDelay();
@@ -1578,7 +1580,7 @@ public class RobotSwtImpl implements IRobot {
                     m_robot.mouseRelease(buttonMask);
                     RobotTiming.sleepPostMouseUpDelay();
                 }
-                if (clickOptions.isConfirmClick()) {
+                if (confirmer != null) {
                     try {
                         confirmer.waitToConfirm(graphicsComponent, matcher);
                     } catch (RobotException re) {

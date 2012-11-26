@@ -200,7 +200,7 @@ class RobotEventConfirmerAwtImpl implements IRobotEventConfirmer,
     /**
      * Enables or disables the confirmer. If the confirmer is enabled, the AWT
      * listener is added to the AWT event queue so that the confirmer starts
-     * storing events of the configuered class of events. If it is disabled, the
+     * storing events of the configured class of events. If it is disabled, the
      * listener is removed from the AWT event queue.
      * 
      * @param enabled

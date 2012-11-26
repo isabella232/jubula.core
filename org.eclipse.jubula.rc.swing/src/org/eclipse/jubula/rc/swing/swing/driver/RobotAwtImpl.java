@@ -305,9 +305,12 @@ public class RobotAwtImpl implements IRobot {
         int clickCount = clickOptions.getClickCount();
         int[] modifierMask = getModifierMask(clickOptions.getClickModifier());
         if (clickCount > 0) {
-            InterceptorOptions options = new InterceptorOptions(
+            IRobotEventConfirmer confirmer = null;
+            if (clickOptions.isConfirmClick()) {
+                InterceptorOptions options = new InterceptorOptions(
                     new long[] { AWTEvent.MOUSE_EVENT_MASK });
-            IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
+                confirmer = m_interceptor.intercept(options);
+            }
             try {
                 pressModifier(modifierMask);
                 RobotTiming.sleepPreClickDelay();
@@ -321,7 +324,7 @@ public class RobotAwtImpl implements IRobot {
                     RobotTiming.sleepPostMouseUpDelay();
                     m_eventFlusher.flush();
                 }
-                if (clickOptions.isConfirmClick()) {
+                if (confirmer != null) {
                     confirmer.waitToConfirm(graphicsComponent,
                             new ClickAwtEventMatcher(clickOptions));
                 }
@@ -450,9 +453,12 @@ public class RobotAwtImpl implements IRobot {
             if (log.isDebugEnabled()) {
                 log.debug("Moving mouse to: " + p); //$NON-NLS-1$
             }
-            InterceptorOptions options = new InterceptorOptions(new long[]{
-                AWTEvent.MOUSE_MOTION_EVENT_MASK});
-            IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
+            IRobotEventConfirmer confirmer = null;
+            if (clickOptions.isConfirmClick()) {
+                InterceptorOptions options = new InterceptorOptions(new long[]{
+                    AWTEvent.MOUSE_MOTION_EVENT_MASK});
+                confirmer = m_interceptor.intercept(options);
+            }
             Point startpoint = m_mouseMotionTracker.getLastMousePointOnScreen();
             if (startpoint == null) {
                 // If there is no starting point the center of the root component is used
@@ -468,7 +474,7 @@ public class RobotAwtImpl implements IRobot {
                 m_eventFlusher.flush();
             }
 
-            if (clickOptions.isConfirmClick()) {
+            if (confirmer != null) {
                 confirmer.waitToConfirm(component, 
                         new MouseMovedAwtEventMatcher());
             }
