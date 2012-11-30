@@ -68,27 +68,34 @@
       <mergemapper to="org.slf4j.jcl.jar"/>
     </copy>
 
+  	<!-- 
+  	The "SNAPSHOT" in the include selector ensures that only the non-source 
+  	JAR is used. Without it, the corresponding source JAR was being used,
+  	and it was either being used exclusively or was *overwriting* the content
+  	provided by the non-source JAR. This caused compilation to fail when also
+  	building source bundles. 
+  	-->
     <copy todir="lib">
       <fileset dir="../org.eclipse.jubula.rc.common/target">
-        <include name="org.eclipse.jubula.rc.common*.jar" />
+        <include name="org.eclipse.jubula.rc.common*SNAPSHOT.jar" />
       </fileset>
       <mergemapper to="org.eclipse.jubula.rc.common.jar"/>
     </copy>
     <copy todir="lib">
       <fileset dir="../org.eclipse.jubula.rc.swt/target">
-        <include name="org.eclipse.jubula.rc.swt*.jar" />
+        <include name="org.eclipse.jubula.rc.swt*SNAPSHOT.jar" />
       </fileset>
       <mergemapper to="org.eclipse.jubula.rc.swt.jar"/>
     </copy>
     <copy todir="lib">
       <fileset dir="../org.eclipse.jubula.tools/target">
-        <include name="org.eclipse.jubula.tools*.jar" />
+        <include name="org.eclipse.jubula.tools*SNAPSHOT.jar" />
       </fileset>
       <mergemapper to="org.eclipse.jubula.tools.jar"/>
     </copy>
     <copy todir="lib">
       <fileset dir="../org.eclipse.jubula.communication/target">
-        <include name="org.eclipse.jubula.communication*.jar" />
+        <include name="org.eclipse.jubula.communication*SNAPSHOT.jar" />
       </fileset>
       <mergemapper to="org.eclipse.jubula.communication.jar"/>
     </copy>
