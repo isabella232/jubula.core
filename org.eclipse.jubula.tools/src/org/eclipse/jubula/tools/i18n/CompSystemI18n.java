@@ -50,7 +50,7 @@ public class CompSystemI18n {
      * Constructor
      */
     private CompSystemI18n() {
-        // private constructor to prevent instantiation of class utitlity
+        // private constructor to prevent instantiation of class utility
     }
     
     /**

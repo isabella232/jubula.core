@@ -57,19 +57,22 @@ public class ToolkitUtils {
     }
 
     /**
-     * Returns an absolute (resolved) path of the given Plugin and the
-     * given Plugin-relative path.
-     * @param plugin the Plugin
-     * @param pluginRelPath the relative path
-     * @return an absolute (resolved) path or null if the path could 
-     * not be resolved.
+     * Returns a (resolved) URL of the given Plugin and the given
+     * Plugin-relative path.
+     * 
+     * @param plugin
+     *            the Plugin
+     * @param pluginRelPath
+     *            the relative path
+     * @return a (resolved) URL or null if the path could not be
+     *         resolved.
      */
     public static URL getURL(Plugin plugin, String pluginRelPath) {
         
         URL unresolvedUrl = plugin.getBundle().getEntry(pluginRelPath);
         URL fileURL = null;
         try {
-            fileURL = FileLocator.toFileURL(unresolvedUrl);
+            fileURL = FileLocator.resolve(unresolvedUrl);
         } catch (IOException e) {
             StringBuilder logMsg = new StringBuilder();
             logMsg.append(Messages.CouldNotResolvePath);
