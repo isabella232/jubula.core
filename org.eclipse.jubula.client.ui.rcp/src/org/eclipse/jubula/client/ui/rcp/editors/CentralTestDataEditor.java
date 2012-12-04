@@ -41,6 +41,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IParamChangedLi
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
@@ -346,6 +347,21 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
         EditSupport editSupport = getEditorHelper().getEditSupport();
         try {
             editSupport.saveWorkVersion();
+            final EntityManager masterSession = GeneralStorage.getInstance()
+                    .getMasterSession();
+            IPersistentObject original = editSupport.getOriginal();
+            if (original != null) {
+                masterSession.refresh(original);
+                if (original instanceof ITestDataCategoryPO) {
+                    for (ITestDataCubePO dataCube 
+                            : ((ITestDataCategoryPO) original)
+                            .getTestDataChildren()) {
+                        masterSession.refresh(dataCube);
+                        ITDManager manager = dataCube.getDataManager();
+                        masterSession.refresh(manager);
+                    }    
+                }
+            }
             updateReferencedParamNodes();
 
             getEditorHelper().resetEditableState();
