@@ -467,7 +467,8 @@ public class RobotAwtImpl implements IRobot {
                 startpoint = getLocation(c, null);
             }
             Point[] mouseMove = MouseMovementStrategy.
-                        getMovementPath(startpoint, p, true);
+                        getMovementPath(startpoint, p,
+                                clickOptions.getStepMovement());
             
             for (int i = 0; i < mouseMove.length; i++) {
                 m_robot.mouseMove(mouseMove[i].x, mouseMove[i].y);

@@ -423,7 +423,7 @@ public abstract class MenuUtil extends MenuUtilBase {
                             TestErrorEvent.MENU_ITEM_NOT_ENABLED));
         }
         robot.click(item, null, ClickOptions.create().setClickType(
-            ClickOptions.ClickType.RELEASED));
+            ClickOptions.ClickType.RELEASED).setStepMovement(false));
     }
 
 }
