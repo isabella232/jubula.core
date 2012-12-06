@@ -532,7 +532,6 @@ public class TestExecutionContributor
                 break;
             case TestExecutionEvent.TEST_EXEC_RESULT_TREE_READY:
                 message = Messages.TestExecutionContributorSuiteRun;
-                TestExecution.getInstance().setStepSpeed(getStepSpeed());
                 break;
             case TestExecutionEvent.TEST_EXEC_FINISHED:
                 message = Messages.TestExecutionContributorSuiteFinished;
@@ -689,13 +688,6 @@ public class TestExecutionContributor
                 }
             });
         }
-    }
-    
-    /**
-     * @return Returns the stepSpeed 
-     */
-    private int getStepSpeed() {
-        return TestExecution.getInstance().getStartedTestSuite().getStepDelay();
     }
     
     /**

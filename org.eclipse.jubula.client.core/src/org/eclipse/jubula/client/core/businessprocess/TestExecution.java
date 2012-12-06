@@ -528,7 +528,9 @@ public class TestExecution {
                     m_expectedNumberOfSteps);
             m_stepCounter = new StepCounter(subMonitor);
             addTestExecutionListener();
-            
+
+            // set global delay for each test step
+            setStepSpeed(testSuite.getStepDelay());
             ClientTestFactory.getClientTest().
                 fireTestExecutionChanged(new TestExecutionEvent(
                         TestExecutionEvent.TEST_EXEC_RESULT_TREE_READY));
