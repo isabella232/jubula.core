@@ -64,8 +64,9 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
      * Constructor.
      */
     public ActiveProjectSourceProvider() {
-        DataEventDispatcher.getInstance().addProjectLoadedListener(this, true);
-        DataEventDispatcher.getInstance().addDataChangedListener(this, true);
+        final DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addProjectLoadedListener(this, true);
+        ded.addDataChangedListener(this, true);
         DatabaseStateDispatcher.addDatabaseStateListener(this);
         MultipleTCBTracker.getInstance().setProvider(this);
     }
@@ -75,8 +76,9 @@ public class ActiveProjectSourceProvider extends AbstractJBSourceProvider
      * {@inheritDoc}
      */
     public void dispose() {
-        DataEventDispatcher.getInstance().removeProjectLoadedListener(this);
-        DataEventDispatcher.getInstance().removeDataChangedListener(this);
+        final DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.removeProjectLoadedListener(this);
+        ded.removeDataChangedListener(this);
         DatabaseStateDispatcher.removeDatabaseStateListener(this);
         MultipleTCBTracker.getInstance().setProvider(null);
     }

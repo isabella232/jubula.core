@@ -194,30 +194,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     
     /**
      * 
-     * to notify clients, that a project is created (new project, import project,
-     * create new version, save project as)
-     */
-    public interface IProjectCreatedListener {
-        
-        /**
-         * callback method
-         */
-        public void handleProjectCreated();
-    }
-    
-    /**
-     * to notify clients, that the project properties are modified
-     */
-    public interface IProjectPropertiesModifyListener {
-        /**
-         * callback method
-         */
-        public void handleProjectPropsChanged();
-        
-    }
-    
-    /**
-     * 
      * to notify clients, that the connection to server is established
      */
     public interface IServerConnectionListener {
@@ -294,13 +270,16 @@ public class DataEventDispatcher implements IReloadedSessionListener,
          */
         public void handleTestresultChanged(TestresultState state);
     }
-    /**to notify that project is opened */
-    public interface IProjectOpenedListener {
+    
+    /** to notify that project state has been changed */
+    public interface IProjectStateListener {
         /**
+         * called if a project state has been changed
          * 
+         * @param state
+         *            the new project state
          */
-        public void handleProjectOpened();
-        
+        public void handleProjectStateChanged(ProjectState state);
     }
     
     /**
@@ -372,6 +351,16 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         running, 
         /** Record Mode is not running */
         notRunning
+    }
+    
+    /** specifies the state of a project */
+    public enum ProjectState {
+        /** project has been opened */
+        opened,
+        /** project properties have been modified */
+        prop_modified,
+        /** project has been closed */
+        closed
     }
     
     /** listeners to observe button status of a dialog or wizard page */
@@ -449,38 +438,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      */
     private Set<IProjectLoadedListener> m_projectLoadedListenersPost = 
         new HashSet<IProjectLoadedListener>();
-    
-    /**
-     * <code>m_projectCreatedListeners</code>listener for creation of a project 
-     * (not available in database before)
-     */
-    private Set<IProjectCreatedListener> m_projectCreatedListeners = 
-        new HashSet<IProjectCreatedListener>();
-    
-    /**
-     * <code>m_projectCreatedListenersPost</code> listener for a new project
-     *  POST-Event for gui updates 
-     */
-    private Set<IProjectCreatedListener> m_projectCreatedListenersPost = 
-        new HashSet<IProjectCreatedListener>();
-    
-    
-    /**
-     * <code>m_projectPropertiesModifyListeners</code> listener for modification 
-     *       of project properties
-     */
-    private Set<IProjectPropertiesModifyListener> 
-    m_projectPropertiesModifyListeners = 
-            new HashSet<IProjectPropertiesModifyListener>();
-    /**
-     * <code>m_projectPropertiesModifyListeners</code> listener for modification 
-     *       of project properties
-     *  POST-Event for gui updates 
-     */
-    private Set<IProjectPropertiesModifyListener> 
-    m_projectPropertiesModifyListenersPost = 
-            new HashSet<IProjectPropertiesModifyListener>();
-
     
     /**
      * <code>m_autAgentConnectionListener</code>listener for state of server connection
@@ -577,18 +534,18 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     private Set<IProblemPropagationListener> m_problemPropagationListeners = 
         new HashSet<IProblemPropagationListener>();
     
-    /** The IProjectOpenedListener */
-    private Set<IProjectOpenedListener> m_projectOpenedListeners =
-        new HashSet<IProjectOpenedListener>();
+    /** The IProjectStateListener */
+    private Set<IProjectStateListener> m_projectStateListeners =
+        new HashSet<IProjectStateListener>();
     
     /**
      * private constructor
      */
     private DataEventDispatcher() {
-        
         // the DataEventDispatcher wrappes events from GeneralStorage
-        GeneralStorage.getInstance().addReloadedSessListener(this);
-        GeneralStorage.getInstance().addDataModifiedListener(this);
+        final GeneralStorage gs = GeneralStorage.getInstance();
+        gs.addReloadedSessListener(this);
+        gs.addDataModifiedListener(this);
     }
     
     /**
@@ -926,59 +883,10 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     /**
      * notify listener about loading of a project
      * 
-     * @param monitor The progress monitor for this poperation.
+     * @param monitor The progress monitor for this operation.
      */
     public void fireProjectLoadedListener(IProgressMonitor monitor) {
         new LoadProjectDataOperation().run(monitor);
-    }
-    
-    /**
-     * @param l listener for new project
-     * @param guiMode
-     *      should this listener be called after the model listener 
-     */
-    public void addProjectCreatedListener(IProjectCreatedListener l, 
-        boolean guiMode) {
-        if (guiMode) {
-            m_projectCreatedListenersPost.add(l);
-        } else {
-            m_projectCreatedListeners.add(l);
-        }
-    }
-    
-    /**
-     * @param l listener for reply to create a new project
-     */
-    public void removeProjectCreatedListener(IProjectCreatedListener l) {
-        m_projectCreatedListeners.remove(l);
-        m_projectCreatedListenersPost.remove(l);
-    }
-    
-    /**
-     * notify listener about loading of a project
-     */
-    public void fireProjectCreatedListener() {
-        // model updates
-        final Set<IProjectCreatedListener> stableListeners = 
-            new HashSet<IProjectCreatedListener>(m_projectCreatedListeners);
-        for (IProjectCreatedListener l : stableListeners) {
-            try {
-                l.handleProjectCreated();
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }        
-
-        // gui updates
-        final Set<IProjectCreatedListener> stableListenersPost = 
-            new HashSet<IProjectCreatedListener>(m_projectCreatedListenersPost);
-        for (IProjectCreatedListener l : stableListenersPost) {
-            try {
-                l.handleProjectCreated();
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }
     }
     
     /**
@@ -1085,58 +993,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         }
     }
 
-    /**
-     * 
-     */
-    public void fireProjectPropertiesModified() {
-        // model updates
-        final Set<IProjectPropertiesModifyListener> stableListeners = 
-            new HashSet<IProjectPropertiesModifyListener>(
-                m_projectPropertiesModifyListeners);
-        for (IProjectPropertiesModifyListener l : stableListeners) {
-            try {
-                l.handleProjectPropsChanged();
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }
-
-        // gui updates
-        final Set<IProjectPropertiesModifyListener> stableListenersPost = 
-            new HashSet<IProjectPropertiesModifyListener>(
-                m_projectPropertiesModifyListenersPost);
-        for (IProjectPropertiesModifyListener l : stableListenersPost) {
-            try {
-                l.handleProjectPropsChanged();
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }
-    }
-    
-    /**
-     * @param l listener for for reacting on changes in PropView or DataSetView
-     * @param guiMode
-     *      should this listener be called after the model listener 
-     */
-    public void addProjectPropertiesModifyListener(
-        IProjectPropertiesModifyListener l, boolean guiMode) {
-        if (guiMode) {
-            m_projectPropertiesModifyListenersPost.add(l);
-        } else {
-            m_projectPropertiesModifyListeners.add(l);
-        }
-    }
-
-    /**
-     * @param l listener for modification of project properties
-     */
-    public void removeProjectPropertiesModifyListener(
-        IProjectPropertiesModifyListener l) {
-        m_projectPropertiesModifyListeners.remove(l);
-        m_projectPropertiesModifyListenersPost.remove(l);
-    }
-    
     /**
      * @param l listener for Record Mode state
      * @param guiMode
@@ -1432,14 +1288,18 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     }     
 
     /**
-     * notify listeners that a project is opened
+     * notify listeners that the project state has changed
+     * 
+     * @param state
+     *            the new project state
      */
-    public void fireProjectOpenedListener() {
-        final Set<IProjectOpenedListener> projectOpenedListeners =
-            new HashSet<IProjectOpenedListener>(m_projectOpenedListeners);
-        for (IProjectOpenedListener l : projectOpenedListeners) {
+    public void fireProjectStateChanged(ProjectState state) {
+        final Set<IProjectStateListener> projectStateListeners = 
+                new HashSet<IProjectStateListener>(
+                m_projectStateListeners);
+        for (IProjectStateListener l : projectStateListeners) {
             try {
-                l.handleProjectOpened();
+                l.handleProjectStateChanged(state);
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
@@ -1447,16 +1307,19 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     }
     
     /**
-     * @param l listener for project is opened
+     * @param l
+     *            listener for project state changed events
      */
-    public void addProjectOpenedListener(IProjectOpenedListener l) {
-        m_projectOpenedListeners.add(l);
+    public void addProjectStateListener(IProjectStateListener l) {
+        m_projectStateListeners.add(l);
     }
+    
     /**
-     * @param l listener for project is opened
+     * @param l
+     *            listener for project state changed events
      */
-    public void removeProjectOpenedListener(IProjectOpenedListener l) {
-        m_projectOpenedListeners.remove(l);
+    public void removeProjectStateListener(IProjectStateListener l) {
+        m_projectStateListeners.remove(l);
     }
     
     /**

@@ -29,10 +29,11 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedLis
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IOMStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectPropertiesModifyListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IRecordModeStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestSuiteStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.OMState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.RecordModeState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -108,12 +109,13 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
     /**
      * <code>m_projPropModifyListener</code> listener for modification of project properties
      */
-    private IProjectPropertiesModifyListener m_projPropModifyListener =
-        new IProjectPropertiesModifyListener() {
-            
-            @SuppressWarnings("synthetic-access") 
-            public void handleProjectPropsChanged() {
-                updateTestSuiteButtonState(true);
+    private IProjectStateListener m_projPropModifyListener =
+        new IProjectStateListener() {
+            /** {@inheritDoc} */
+            public void handleProjectStateChanged(ProjectState state) {
+                if (ProjectState.prop_modified.equals(state)) {
+                    updateTestSuiteButtonState(true);
+                }
             }
         };
     
@@ -121,9 +123,7 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
     private IProjectLoadedListener m_projLoadedListener = 
         new IProjectLoadedListener() {
         
-        /**
-         * {@inheritDoc}
-         */
+            /** {@inheritDoc} */
             @SuppressWarnings("synthetic-access") 
             public void handleProjectLoaded() {
                 m_isProjectLoaded = true;
@@ -418,24 +418,16 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
      * 
      */
     private void init() {
-        final DataEventDispatcher dataEventDispatcher = 
-            DataEventDispatcher.getInstance();
-        dataEventDispatcher.addProjectLoadedListener(
-            m_projLoadedListener, true);
-        dataEventDispatcher.addDataChangedListener(
-            m_currentProjDeletedListener, true);
-        dataEventDispatcher.addAutStateListener(m_autStateListener, true);
-        dataEventDispatcher.addLanguageChangedListener(m_langChangedListener, 
-            true);
-        dataEventDispatcher.addProjectPropertiesModifyListener(
-            m_projPropModifyListener, true);
-        dataEventDispatcher.addTestSuiteStateListener(
-            m_testSuiteStateListener, true);
-        dataEventDispatcher.addOMStateListener(m_omStateListener, true);
-        dataEventDispatcher.addRecordModeStateListener(
-            m_recordModeStateListener, true);
-        dataEventDispatcher.addDataChangedListener(
-            m_dataChangedListener, true);
+        final DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addProjectLoadedListener(m_projLoadedListener, true);
+        ded.addDataChangedListener(m_currentProjDeletedListener, true);
+        ded.addAutStateListener(m_autStateListener, true);
+        ded.addLanguageChangedListener(m_langChangedListener, true);
+        ded.addProjectStateListener(m_projPropModifyListener);
+        ded.addTestSuiteStateListener(m_testSuiteStateListener, true);
+        ded.addOMStateListener(m_omStateListener, true);
+        ded.addRecordModeStateListener(m_recordModeStateListener, true);
+        ded.addDataChangedListener(m_dataChangedListener, true);
     }
     
     /**

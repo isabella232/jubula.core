@@ -32,6 +32,7 @@ import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
@@ -314,8 +315,10 @@ public class OpenProjectHandler extends AbstractProjectHandler {
             if (clearedProject != null) {
                 Utils.clearClient();
                 GeneralStorage.getInstance().setProject(null);
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        clearedProject, DataState.Deleted, UpdateState.all);
+                final DataEventDispatcher ded = DataEventDispatcher
+                        .getInstance();
+                ded.fireDataChangedListener(clearedProject, DataState.Deleted,
+                        UpdateState.all);
             }
         }
 
@@ -454,7 +457,8 @@ public class OpenProjectHandler extends AbstractProjectHandler {
             try {
                 PlatformUI.getWorkbench().getProgressService()
                         .busyCursorWhile(openOperation);
-                DataEventDispatcher.getInstance().fireProjectOpenedListener();
+                DataEventDispatcher.getInstance().fireProjectStateChanged(
+                        ProjectState.opened);
                 checkAndNagForMissingProjects();
             } catch (InvocationTargetException ite) {
                 openOperation.handleOperationException();

@@ -21,7 +21,8 @@ import org.eclipse.jubula.client.core.agent.AutRegistrationEvent;
 import org.eclipse.jubula.client.core.agent.IAutRegistrationListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectPropertiesModifyListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.RunningAutsViewLabelProvider;
@@ -39,7 +40,7 @@ import org.eclipse.ui.part.ViewPart;
  * @created Jan 26, 2010
  */
 public class RunningAutsView extends ViewPart 
-    implements IProjectLoadedListener, IProjectPropertiesModifyListener {
+    implements IProjectLoadedListener, IProjectStateListener {
 
     /** listens for changes in AUT registration */
     private IAutRegistrationListener m_autRegListener;
@@ -98,7 +99,7 @@ public class RunningAutsView extends ViewPart
                 new RunningAutsViewLabelProvider());
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addProjectLoadedListener(this, true);
-        ded.addProjectPropertiesModifyListener(this, true);
+        ded.addProjectStateListener(this);
         
         Plugin.getHelpSystem().setHelp(m_runningAutComponent.getControl(),
                 ContextHelpIds.RUNNING_AUTS_VIEW);
@@ -127,7 +128,7 @@ public class RunningAutsView extends ViewPart
         AutAgentRegistration.getInstance().removeListener(m_autRegListener);
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.removeProjectLoadedListener(this);
-        ded.removeProjectPropertiesModifyListener(this);
+        ded.removeProjectStateListener(this);
         super.dispose();
     }
 
@@ -139,7 +140,7 @@ public class RunningAutsView extends ViewPart
     }
 
     /**
-     * refreshes the viewer incl. the labels
+     * refreshes the viewer and the labels
      */
     private void refreshViewer() {
         Plugin.getDisplay().syncExec(new Runnable() {
@@ -149,10 +150,10 @@ public class RunningAutsView extends ViewPart
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void handleProjectPropsChanged() {
-        refreshViewer();
+    /** {@inheritDoc} */
+    public void handleProjectStateChanged(ProjectState state) {
+        if (ProjectState.prop_modified.equals(state)) {
+            refreshViewer();
+        }
     }
 }

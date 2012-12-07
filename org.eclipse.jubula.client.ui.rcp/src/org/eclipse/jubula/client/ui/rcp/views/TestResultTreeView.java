@@ -154,9 +154,9 @@ public class TestResultTreeView extends ViewPart
         getTreeViewer().getControl().setLayoutData(layoutData);
         getSite().setSelectionProvider(getTreeViewer());
         createContextMenu();
-        DataEventDispatcher.getInstance().addDataChangedListener(this, true);
-        DataEventDispatcher.getInstance().addProjectLoadedListener(this, 
-            true);
+        final DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addDataChangedListener(this, true);
+        ded.addProjectLoadedListener(this, true);
     }
     
     /**

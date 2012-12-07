@@ -18,6 +18,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.RunningAutBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
@@ -91,7 +92,8 @@ public class CreateAutDefinitionHandler
                             .refresh(GeneralStorage.getInstance()
                                 .getProject().getAutCont());
                         DataEventDispatcher.getInstance()
-                            .fireProjectPropertiesModified();
+                                .fireProjectStateChanged(
+                                        ProjectState.prop_modified);
                     }
                 } catch (PMException e) {
                     ErrorHandlingUtil.createMessageDialog(e, null, null);

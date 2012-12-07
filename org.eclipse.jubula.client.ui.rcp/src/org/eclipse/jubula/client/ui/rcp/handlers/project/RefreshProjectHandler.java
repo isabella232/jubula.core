@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -154,7 +155,8 @@ public class RefreshProjectHandler extends AbstractProjectHandler {
             return Status.CANCEL_STATUS;
         } finally {
             Plugin.stopLongRunning();
-            DataEventDispatcher.getInstance().fireProjectOpenedListener();
+            DataEventDispatcher.getInstance().fireProjectStateChanged(
+                    ProjectState.opened);
         }
         
         return Status.OK_STATUS;

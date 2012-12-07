@@ -24,8 +24,9 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectPropertiesModifyListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IServerConnectionListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -47,7 +48,7 @@ import org.eclipse.ui.ISources;
  */
 public class AvailableAutSourceProvider extends AbstractJBSourceProvider 
         implements ILanguageChangedListener, IServerConnectionListener, 
-                   IProjectPropertiesModifyListener, 
+                   IProjectStateListener, 
                    IProjectLoadedListener, IDataChangedListener {
 
     /** 
@@ -61,12 +62,12 @@ public class AvailableAutSourceProvider extends AbstractJBSourceProvider
      * Constructor.
      */
     public AvailableAutSourceProvider() {
-        DataEventDispatcher dispatcher = DataEventDispatcher.getInstance();
-        dispatcher.addLanguageChangedListener(this, true);
-        dispatcher.addAutAgentConnectionListener(this, true);
-        dispatcher.addProjectPropertiesModifyListener(this, true);
-        dispatcher.addProjectLoadedListener(this, true);
-        dispatcher.addDataChangedListener(this, true);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addLanguageChangedListener(this, true);
+        ded.addAutAgentConnectionListener(this, true);
+        ded.addProjectStateListener(this);
+        ded.addProjectLoadedListener(this, true);
+        ded.addDataChangedListener(this, true);
     }
 
     /**
@@ -74,12 +75,12 @@ public class AvailableAutSourceProvider extends AbstractJBSourceProvider
      * {@inheritDoc}
      */
     public void dispose() {
-        DataEventDispatcher dispatcher = DataEventDispatcher.getInstance();
-        dispatcher.removeLanguageChangedListener(this);
-        dispatcher.removeAutAgentConnectionListener(this);
-        dispatcher.removeProjectPropertiesModifyListener(this);
-        dispatcher.removeProjectLoadedListener(this);
-        dispatcher.removeDataChangedListener(this);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.removeLanguageChangedListener(this);
+        ded.removeAutAgentConnectionListener(this);
+        ded.removeProjectStateListener(this);
+        ded.removeProjectLoadedListener(this);
+        ded.removeDataChangedListener(this);
     }
 
     /**
@@ -139,19 +140,17 @@ public class AvailableAutSourceProvider extends AbstractJBSourceProvider
     private boolean isAutAvailable() {
         return !StartAutBP.getInstance().getAllAUTs().isEmpty();
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void handleProjectPropsChanged() {
-        fireSourceChanged();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
+    
+    /** {@inheritDoc} */
     public void handleProjectLoaded() {
         fireSourceChanged();
+    }
+    
+    /** {@inheritDoc} */
+    public void handleProjectStateChanged(ProjectState state) {
+        if (ProjectState.prop_modified.equals(state)) {
+            fireSourceChanged();
+        }
     }
 
     /** {@inheritDoc} */

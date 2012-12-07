@@ -21,7 +21,8 @@ import org.eclipse.jubula.client.core.agent.AutRegistrationEvent;
 import org.eclipse.jubula.client.core.agent.IAutRegistrationListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectPropertiesModifyListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.sourceprovider.AbstractJBSourceProvider;
@@ -38,7 +39,7 @@ import org.eclipse.ui.ISources;
  */
 public class InspectableAutSourceProvider extends AbstractJBSourceProvider 
         implements IAutRegistrationListener, IProjectLoadedListener, 
-                   IProjectPropertiesModifyListener {
+                   IProjectStateListener {
 
     /** 
      * ID of variable that indicates which AUTs are currently running
@@ -50,9 +51,9 @@ public class InspectableAutSourceProvider extends AbstractJBSourceProvider
      * Constructor
      */
     public InspectableAutSourceProvider() {
-        DataEventDispatcher.getInstance().addProjectLoadedListener(this, true);
-        DataEventDispatcher.getInstance().addProjectPropertiesModifyListener(
-                this, true);
+        final DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addProjectLoadedListener(this, true);
+        ded.addProjectStateListener(this);
         AutAgentRegistration.getInstance().addListener(this);
     }
     
@@ -60,9 +61,9 @@ public class InspectableAutSourceProvider extends AbstractJBSourceProvider
      * {@inheritDoc}
      */
     public void dispose() {
-        DataEventDispatcher.getInstance().removeProjectLoadedListener(this);
-        DataEventDispatcher.getInstance().removeProjectPropertiesModifyListener(
-                this);
+        final DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.removeProjectLoadedListener(this);
+        ded.removeProjectStateListener(this);
         AutAgentRegistration.getInstance().removeListener(this);
     }
 
@@ -122,11 +123,10 @@ public class InspectableAutSourceProvider extends AbstractJBSourceProvider
         gdFireSourceChanged(ISources.WORKBENCH, getCurrentState());
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void handleProjectPropsChanged() {
-        gdFireSourceChanged(ISources.WORKBENCH, getCurrentState());
+    /** {@inheritDoc} */
+    public void handleProjectStateChanged(ProjectState state) {
+        if (ProjectState.prop_modified.equals(state)) {
+            gdFireSourceChanged(ISources.WORKBENCH, getCurrentState());
+        }
     }
-
 }

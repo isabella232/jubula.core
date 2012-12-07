@@ -19,7 +19,8 @@ import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectPropertiesModifyListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -42,22 +43,23 @@ public class WorkingLanguageBP extends AbstractActionBP
     
     /**
      * <code>m_projectPropertiesModifyListener</code> listener for modification 
-     * of project properties (in this case escpecially for modification of 
+     * of project properties (in this case especially for modification of 
      * project languages
      */
-    private IProjectPropertiesModifyListener m_projectPropertiesModifyListener =
-        new IProjectPropertiesModifyListener() {
-        
-            public void handleProjectPropsChanged() {
-                List <Locale> langs = GeneralStorage.getInstance().getProject()
-                    .getLangHelper().getLanguageList();
-                if (m_currentLanguage != null 
-                    && !langs.contains(m_currentLanguage)) {
-                    m_currentLanguage = null;
-                    setCurrentLanguage(getWorkingLanguage());
+    private IProjectStateListener m_projectPropertiesModifyListener =
+        new IProjectStateListener() {
+            /** {@inheritDoc} */
+            public void handleProjectStateChanged(ProjectState state) {
+                if (ProjectState.prop_modified.equals(state)) {
+                    List <Locale> langs = GeneralStorage.getInstance()
+                            .getProject().getLangHelper().getLanguageList();
+                    if (m_currentLanguage != null 
+                            && !langs.contains(m_currentLanguage)) {
+                        m_currentLanguage = null;
+                        setCurrentLanguage(getWorkingLanguage());
+                    }
                 }
             }
-        
         };
 
     /**
@@ -78,11 +80,10 @@ public class WorkingLanguageBP extends AbstractActionBP
      * private constructor
      */
     private WorkingLanguageBP() {
-        DataEventDispatcher dispatcher = DataEventDispatcher.getInstance();
-        dispatcher.addProjectLoadedListener(this, true);
-        dispatcher.addProjectPropertiesModifyListener(
-                m_projectPropertiesModifyListener, true);
-        dispatcher.addDataChangedListener(m_dataChangedListener, true);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addProjectLoadedListener(this, true);
+        ded.addProjectStateListener(m_projectPropertiesModifyListener);
+        ded.addDataChangedListener(m_dataChangedListener, true);
     }
     
     /**

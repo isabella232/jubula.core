@@ -20,7 +20,8 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectPropertiesModifyListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -49,7 +50,7 @@ import org.eclipse.jubula.client.teststyle.problems.ProblemCont;
  * 
  */
 public final class TeststyleHandler implements IDataChangedListener,
-        IProjectLoadedListener, IProjectPropertiesModifyListener {
+        IProjectLoadedListener, IProjectStateListener {
 
     /** singleton */
     private static TeststyleHandler instance;
@@ -77,7 +78,7 @@ public final class TeststyleHandler implements IDataChangedListener,
      */
     public void handleProjectLoaded() {
         if (GeneralStorage.getInstance().getProject() == null) {
-            return; // if theres no project, don't proceed
+            return; // if there is no project, don't proceed
         }
         ExtensionHelper.initCheckConfiguration();
         checkEverything();
@@ -203,18 +204,18 @@ public final class TeststyleHandler implements IDataChangedListener,
      * Adds the handler to the important listeners.
      */
     public void addToListener() {
-        DataEventDispatcher eventDispatcher = DataEventDispatcher.getInstance();
-        eventDispatcher.addDataChangedListener(this, true);
-        eventDispatcher.addProjectPropertiesModifyListener(this, true);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addDataChangedListener(this, true);
+        ded.addProjectStateListener(this);
     }
 
     /**
      * Removes the handler to the important listeners.
      */
     public void removeFromListener() {
-        DataEventDispatcher eventDispatcher = DataEventDispatcher.getInstance();
-        eventDispatcher.removeDataChangedListener(this);
-        eventDispatcher.removeProjectPropertiesModifyListener(this);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.removeDataChangedListener(this);
+        ded.removeProjectStateListener(this);
     }
 
     /**
@@ -260,11 +261,18 @@ public final class TeststyleHandler implements IDataChangedListener,
         return project.getProjectProperties().getCheckConfCont().getEnabled();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void handleProjectPropsChanged() {
-        checkEverything();
+    /** {@inheritDoc} */
+    public void handleProjectStateChanged(ProjectState state) {
+        switch (state) {
+            case prop_modified:
+                checkEverything();
+                break;
+            case closed:
+                ProblemCont.getInstance().clear();
+                break;
+            case opened:
+            default:
+                break;
+        }
     }
-
 }

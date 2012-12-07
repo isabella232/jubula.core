@@ -141,8 +141,10 @@ public class PMExceptionHandler {
                 Utils.clearClient();
                 GeneralStorage.getInstance().setProject(null);
                 if (oldProj != null) {
-                    DataEventDispatcher.getInstance().fireDataChangedListener(
-                            oldProj, DataState.Deleted, UpdateState.all);
+                    final DataEventDispatcher ded = 
+                            DataEventDispatcher.getInstance();
+                    ded.fireDataChangedListener(oldProj, 
+                            DataState.Deleted, UpdateState.all);
                 }
             }
         });

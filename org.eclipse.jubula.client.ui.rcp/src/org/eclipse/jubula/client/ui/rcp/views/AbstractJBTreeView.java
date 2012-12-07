@@ -256,10 +256,9 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         getSite().setSelectionProvider(getTreeViewer());
         getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION);
         
-        final DataEventDispatcher dispatcher = 
-            DataEventDispatcher.getInstance();
-        dispatcher.addProjectLoadedListener(this, false);
-        dispatcher.addDataChangedListener(this, true);
+        final DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addProjectLoadedListener(this, false);
+        ded.addDataChangedListener(this, true);
         
         getViewSite().getActionBars().getToolBarManager().add(
                 new ToggleLinkingAction());

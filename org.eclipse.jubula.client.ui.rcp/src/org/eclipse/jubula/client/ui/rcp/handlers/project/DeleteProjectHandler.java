@@ -129,6 +129,8 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                         monitor);
                 ProjectPM.deleteProject(m_project, m_deleteCurrentProject);
                 final String jobName = Messages.UIJobDeletingTestResultDetails;
+                final DataEventDispatcher ded = DataEventDispatcher
+                        .getInstance();
                 Job job = new Job(jobName) {
                     public IStatus run(IProgressMonitor mon) {
                         mon.beginTask(jobName, IProgressMonitor.UNKNOWN);
@@ -144,17 +146,15 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                                     m_project.getMinorProjectVersion(), false);
                         }
                         mon.done();
-                        DataEventDispatcher.getInstance()
-                            .fireTestresultChanged(TestresultState.Refresh);
+                        ded.fireTestresultChanged(TestresultState.Refresh);
                         return Status.OK_STATUS;
                     }
                 };
                 if (m_deleteCurrentProject) {
                     Utils.clearClient();
                     GeneralStorage.getInstance().setProject(null);
-                    DataEventDispatcher.getInstance()
-                        .fireDataChangedListener(m_project, DataState.Deleted,
-                            UpdateState.all);
+                    ded.fireDataChangedListener(m_project,
+                            DataState.Deleted, UpdateState.all);
                 } else if (isRefreshRequired) {
                     GeneralStorage.getInstance().reloadMasterSession(
                             new NullProgressMonitor());

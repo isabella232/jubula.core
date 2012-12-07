@@ -279,7 +279,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
     /**
      * remove all old problems
      */
-    private void clearOldProblems() {
+    public void clearOldProblems() {
         for (IProblem problem : m_localProblemsToShow) {
             Object data = problem.getData();
             if (data instanceof INodePO) {
@@ -599,7 +599,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
     /**
      * Deletes all problems in the problems view.
      */
-    private void cleanupProblems() {
+    public void cleanupProblems() {
         boolean doLoop = true;
         while (doLoop) {
             doLoop = false;

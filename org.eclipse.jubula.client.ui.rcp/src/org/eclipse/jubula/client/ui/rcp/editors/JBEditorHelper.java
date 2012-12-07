@@ -345,9 +345,9 @@ public class JBEditorHelper implements ILockedObjects,
         m_activeListener  = new ActiveListener();
         m_editor.getSite().getPage().getWorkbenchWindow().getSelectionService()
             .addSelectionListener(m_activeListener);
-        DataEventDispatcher.getInstance().addDataChangedListener(
-                m_editor, true);
-        DataEventDispatcher.getInstance().addProjectLoadedListener(this, true);
+        final DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addDataChangedListener(m_editor, true);
+        ded.addProjectLoadedListener(this, true);
     }
     
     /**

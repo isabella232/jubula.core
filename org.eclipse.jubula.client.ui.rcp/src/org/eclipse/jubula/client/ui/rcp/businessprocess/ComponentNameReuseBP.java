@@ -49,8 +49,9 @@ public class ComponentNameReuseBP
      * Adds this instance as a listener for data events.
      */
     private ComponentNameReuseBP() {
-        DataEventDispatcher.getInstance().addDataChangedListener(this, false);
-        DataEventDispatcher.getInstance().addProjectLoadedListener(this, false);
+        final DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addDataChangedListener(this, false);
+        ded.addProjectLoadedListener(this, false);
     }
 
     /**

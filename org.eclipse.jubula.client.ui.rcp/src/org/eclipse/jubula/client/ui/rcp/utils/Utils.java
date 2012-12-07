@@ -25,6 +25,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.OMState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.RecordModeState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -37,6 +38,7 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.ProblemsBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.editors.PersistableEditorInput;
@@ -255,10 +257,14 @@ public class Utils {
         }
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
+                final ProblemsBP problemsBP = ProblemsBP.getInstance();
+                problemsBP.clearOldProblems();
+                problemsBP.cleanupProblems();
                 TestExecutionContributor.getInstance().getClientTest()
                         .resetToTesting();
                 ded.fireRecordModeStateChanged(RecordModeState.notRunning);
                 ded.fireOMStateChanged(OMState.notRunning);
+                ded.fireProjectStateChanged(ProjectState.closed);
                 Plugin.closeAllOpenedJubulaEditors(alsoProjectIndependent);
                 ded.fireTestresultChanged(TestresultState.Refresh);
                 setTreeViewerInputNull(Constants.TESTRE_ID);

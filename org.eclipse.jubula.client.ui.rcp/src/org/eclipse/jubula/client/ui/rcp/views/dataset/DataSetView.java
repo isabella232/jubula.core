@@ -131,10 +131,10 @@ public class DataSetView extends PageBookView
      */
     public void init(IViewSite site) throws PartInitException {
         site.getPage().addSelectionListener(this);
-        DataEventDispatcher dispatcher = DataEventDispatcher.getInstance();
-        dispatcher.addParamChangedListener(this, true);
-        dispatcher.addLanguageChangedListener(this, true);
-        dispatcher.addProjectLoadedListener(this, true);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addParamChangedListener(this, true);
+        ded.addLanguageChangedListener(this, true);
+        ded.addProjectLoadedListener(this, true);
         super.init(site);
     }
 

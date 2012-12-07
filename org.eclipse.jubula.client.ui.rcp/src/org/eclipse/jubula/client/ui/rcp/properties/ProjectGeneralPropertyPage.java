@@ -21,6 +21,7 @@ import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
@@ -527,7 +528,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             newReused.removeAll(origReused);
             getEditSupport().saveWorkVersion();
             refreshAutMainList();
-            DataEventDispatcher.getInstance().fireProjectPropertiesModified();
+            DataEventDispatcher.getInstance().fireProjectStateChanged(
+                    ProjectState.prop_modified);
             for (IReusedProjectPO reused : newReused) {
                 try {
                     IProjectPO reusedProject = 

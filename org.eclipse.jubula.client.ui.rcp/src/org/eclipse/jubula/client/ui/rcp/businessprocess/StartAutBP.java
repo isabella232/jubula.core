@@ -26,8 +26,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.AutAgentConnection;
+import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.AutState;
@@ -36,8 +36,9 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IAutStateListen
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectPropertiesModifyListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IServerConnectionListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
@@ -220,31 +221,32 @@ public class StartAutBP extends AbstractActionBP {
     /**
      * <code>m_projPropModifyListener</code> listener for modification of project properties
      */
-    private IProjectPropertiesModifyListener m_projPropModifyListener =
-        new IProjectPropertiesModifyListener() {
-            
-            @SuppressWarnings("synthetic-access") 
-            public void handleProjectPropsChanged() {
-                if (getLastUsedAut() == null || getLastUsedConf() == null) {
-                    fireAUTButtonStateCouldBeChanged();
-                    return;
-                }
-                String autName = getLastUsedAut().getName();
-                String confName = getLastUsedConf().getName();
-                for (IAUTMainPO aut : GeneralStorage.getInstance().getProject()
-                        .getAutMainList()) {
-                    
-                    if (autName.equals(aut.getName())) {
-                        for (IAUTConfigPO conf : aut.getAutConfigSet()) {
-                            if (confName.equals(conf.getName())) {
-                                setLastUsedAut(aut);
-                                setLastUsedAutConf(conf);
-                                return;
+    private IProjectStateListener m_projPropModifyListener =
+        new IProjectStateListener() {
+            /** {@inheritDoc} */
+            public void handleProjectStateChanged(ProjectState state) {
+                if (ProjectState.prop_modified.equals(state)) {
+                    if (getLastUsedAut() == null || getLastUsedConf() == null) {
+                        fireAUTButtonStateCouldBeChanged();
+                        return;
+                    }
+                    String autName = getLastUsedAut().getName();
+                    String confName = getLastUsedConf().getName();
+                    for (IAUTMainPO aut : GeneralStorage.getInstance()
+                            .getProject().getAutMainList()) {
+    
+                        if (autName.equals(aut.getName())) {
+                            for (IAUTConfigPO conf : aut.getAutConfigSet()) {
+                                if (confName.equals(conf.getName())) {
+                                    setLastUsedAut(aut);
+                                    setLastUsedAutConf(conf);
+                                    return;
+                                }
                             }
                         }
-                    } 
+                    }
+                    fireAUTButtonStateCouldBeChanged();
                 }
-                fireAUTButtonStateCouldBeChanged();
             }
         };
     
@@ -257,23 +259,16 @@ public class StartAutBP extends AbstractActionBP {
     }
     
     /**
-     * 
+     * init this BP instance
      */
     private void init() {
-        final DataEventDispatcher dataEventDispatcher = 
-            DataEventDispatcher.getInstance();
-        dataEventDispatcher.addProjectLoadedListener(
-            m_projLoadedListener, true);
-        dataEventDispatcher.addDataChangedListener(
-            m_currentProjDeletedListener, true);
-        dataEventDispatcher.addAutAgentConnectionListener(
-            m_serverConnectListener, true);
-        dataEventDispatcher.addAutStateListener(m_autStateListener, true);
-        dataEventDispatcher.addLanguageChangedListener(m_langChangedListener, 
-            true);
-        dataEventDispatcher.addProjectPropertiesModifyListener(
-            m_projPropModifyListener, true);
-        
+        final DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addProjectLoadedListener(m_projLoadedListener, true);
+        ded.addDataChangedListener(m_currentProjDeletedListener, true);
+        ded.addAutAgentConnectionListener(m_serverConnectListener, true);
+        ded.addAutStateListener(m_autStateListener, true);
+        ded.addLanguageChangedListener(m_langChangedListener, true);
+        ded.addProjectStateListener(m_projPropModifyListener);
     }
 
     /**

@@ -22,7 +22,8 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectOpenedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -39,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 12.03.2007
  */
-public class CompletenessBP implements IProjectOpenedListener,
+public class CompletenessBP implements IProjectStateListener,
     ILanguageChangedListener {
     /** for log messages */
     private static Logger log = LoggerFactory.getLogger(CompletenessBP.class);
@@ -53,7 +54,7 @@ public class CompletenessBP implements IProjectOpenedListener,
     private CompletenessBP() {
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addLanguageChangedListener(this, false);
-        ded.addProjectOpenedListener(this);
+        ded.addProjectStateListener(this);
         ICommandService commandService = (ICommandService) PlatformUI
                 .getWorkbench().getService(ICommandService.class);
 
@@ -106,11 +107,11 @@ public class CompletenessBP implements IProjectOpenedListener,
         return instance;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void handleProjectOpened() {
-        completeProjectCheck(); 
+    /** {@inheritDoc} */
+    public void handleProjectStateChanged(ProjectState state) {
+        if (ProjectState.opened.equals(state)) {
+            completeProjectCheck(); 
+        }
     }
 
     /**

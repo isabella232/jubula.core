@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.core.businessprocess.ProjectComponentNameMapper
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -211,8 +212,9 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
             if (clearedProject != null) {
                 Utils.clearClient();
                 GeneralStorage.getInstance().setProject(null);
-                DataEventDispatcher.getInstance()
-                    .fireDataChangedListener(clearedProject, DataState.Deleted,
+                final DataEventDispatcher ded = DataEventDispatcher
+                        .getInstance();
+                ded.fireDataChangedListener(clearedProject, DataState.Deleted,
                         UpdateState.all);
             }
             List<INameMapper> mapperList = new ArrayList<INameMapper>();
@@ -288,9 +290,9 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
      * call this if the "save as" has ended to update the GUI.
      */
     private void fireReady() {
-        DataEventDispatcher dispatcher = DataEventDispatcher.getInstance();
-        dispatcher.fireProjectLoadedListener(new NullProgressMonitor());
-        dispatcher.fireProjectOpenedListener();
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.fireProjectLoadedListener(new NullProgressMonitor());
+        ded.fireProjectStateChanged(ProjectState.opened);
     }
 
     /**
