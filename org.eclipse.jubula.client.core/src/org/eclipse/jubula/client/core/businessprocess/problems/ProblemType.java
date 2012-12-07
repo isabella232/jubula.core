@@ -37,15 +37,9 @@ public enum ProblemType {
     /** Project used that does not exist in DB - repair : OPEN REUSED PROJECTS SETTINGS PAGE */
     REASON_PROJECT_DOES_NOT_EXIST,
 
-    /** No Server Connection - repair : CALL CONNECT ACTION */
-    REASON_CONNECTED_TO_NO_SERVER,
-
     /** Protected Project is currently loaded - repair : nothing */
     REASON_PROTECTED_PROJECT,
     
-    /** No Project - repair : CALL CREATE PROJECT ACTION */
-    REASON_NO_PROJECT,
-
     /** No TS in Project - repair : CALL CREATE TS ACTION */
     REASON_NO_TESTSUITE,
 

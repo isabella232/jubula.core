@@ -56,9 +56,6 @@ public interface RCPCommandIDs {
     public static final String FIND_COMMAND_ID = 
             ActionFactory.FIND.getCommandId();
     
-    /** the ID of the "import project" command */
-    public static final String IMPORT_PROJECT_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.ImportProject"; //$NON-NLS-1$
-
     /**
      * <code>IMPORT_WIZARD_PARAM_ID</code>
      */
@@ -72,9 +69,6 @@ public interface RCPCommandIDs {
 
     /** the ID of the "new component name" command */
     public static final String NEW_COMPONENT_NAME_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.CreateNewLogicalNameCommand"; //$NON-NLS-1$
-    
-    /** the ID of the "new project" command */
-    public static final String NEW_PROJECT_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.NewProject"; //$NON-NLS-1$
     
     /** the ID of the "add new test data manager" command */
     public static final String NEW_TESTDATACUBE_COMMAND_ID = "org.eclipse.jubula.client.ui.rcp.commands.AddNewTestDataManager"; //$NON-NLS-1$

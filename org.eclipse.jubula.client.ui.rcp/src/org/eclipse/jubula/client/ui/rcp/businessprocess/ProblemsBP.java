@@ -187,10 +187,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
         
         // Is Project open ?
         IProjectPO project = GeneralStorage.getInstance().getProject();
-        if (project == null) {
-            // Problem View
-            problemNoProjectExists();
-        } else {
+        if (project != null) {
             
             // checks if actual server and aut fit together
             if (TestSuiteBP.getListOfTestSuites().isEmpty()) {
@@ -507,32 +504,9 @@ public class ProblemsBP implements ICompletenessCheckListener,
         final String serverPortPref = 
                 Plugin.getDefault().getPreferenceStore().getString(
                         Constants.AUT_AGENT_SETTINGS_KEY);
-        boolean isConnected = false;
         boolean isServerDefined = (serverPortPref.length() != 0);
-        if (state == null) {
-            try {
-                isConnected = AutAgentConnection.getInstance().isConnected();
-            } catch (ConnectionException e) {
-                // ok
-            }
-        } else {
-            switch (state) {
-                case Connected :
-                    isConnected = true;
-                    break;
-                case Disconnected :
-                    isConnected = false;
-                    break;
-                default:
-                    break;
-            }
-            
-        }
         if (!isServerDefined) {
             problemNoServerDefined();
-
-        } else if (!isConnected) {
-            problemNoAutStarterConnection();
         }
     }
     
@@ -657,17 +631,6 @@ public class ProblemsBP implements ICompletenessCheckListener,
     }
 
     /**
-     * Shows the status of the server connection in GDProblemView.
-     */
-    private void problemNoAutStarterConnection() {
-        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
-                new Status(IStatus.INFO, Activator.PLUGIN_ID,
-                        Messages.ProblemCheckerConnectToGDServer),
-                Messages.ProblemCheckerConnectToGDServer, Messages.Connection,
-                ProblemType.REASON_CONNECTED_TO_NO_SERVER));
-    }
-    
-    /**
      * Shows the status of the project protection in GDProblemView.
      */
     private void problemProtectedProjectLoaded() {
@@ -691,19 +654,6 @@ public class ProblemsBP implements ICompletenessCheckListener,
                     Messages.ProblemCheckerNoServer,
                     Messages.NoServer, 
                     ProblemType.REASON_NO_SERVER_DEFINED));
-    }
-
-    /**
-     * Shows the existance of a project in GDProblemView.
-     */
-    private void problemNoProjectExists() {
-        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
-                new Status(
-                    IStatus.INFO, Activator.PLUGIN_ID,
-                    Messages.GDStateControllerInfoNoProject),
-                    Messages.GDStateControllerInfoNoProject,
-                    Messages.Project, 
-                    ProblemType.REASON_NO_PROJECT));
     }
 
     /**

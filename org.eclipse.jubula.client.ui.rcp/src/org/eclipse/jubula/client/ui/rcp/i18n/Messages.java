@@ -355,13 +355,9 @@ public class Messages extends NLS {
     public static String GDDataSetViewLanguage;
     public static String GDDataSetViewNoDataSetInfo;
     public static String GDDataSetViewParameter;
-    public static String GDProblemViewConnectToAutStarter;
-    public static String GDProblemViewCreate;
     public static String GDProblemViewCreateTestSuite;
-    public static String GDProblemViewImport;
     public static String GDProblemViewLabel;
     public static String GDProblemViewMessage;
-    public static String GDProblemViewOpen;
     public static String GDProblemViewOpenAutSettings;
     public static String GDProblemViewOpenAutStarterPreferences;
     public static String GDProblemViewOpenObjectMappingEditor;
@@ -369,7 +365,6 @@ public class Messages extends NLS {
     public static String GDProblemViewOpenEditor;
     public static String GDProblemViewShellTitle;
     public static String GDProblemViewTitle;
-    public static String GDStateControllerInfoNoProject;
     public static String GeneralGDLabelProviderUnnamedNode;
     public static String GeneralLabelProvier_NoActiveProject;
     public static String GenericType;
@@ -627,7 +622,6 @@ public class Messages extends NLS {
     public static String ProblemCheckerAutConfigMissesJar;
     public static String ProblemCheckerAutNoConfigurationForServer;
     public static String ProblemCheckerCompDoesNotExist;
-    public static String ProblemCheckerConnectToGDServer;
     public static String ProblemCheckerDeprecatedAction;
     public static String ProblemCheckerDeprecatedComp;
     public static String ProblemCheckerMissingSpecTc;

@@ -194,8 +194,6 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             String objectName, String nodeGUID) {
 
         switch (type) {
-            case REASON_CONNECTED_TO_NO_SERVER:
-                return getNoServerConnectionResolutions();
             case REASON_EMPTY_TESTSUITE:
             case REASON_NO_COMPTYPE:
             case REASON_TD_INCOMPLETE:
@@ -209,8 +207,6 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             case REASON_NO_JAR_FOR_AUTCONFIG:
             case REASON_NO_SERVER_FOR_AUTCONFIG:
                 return getNoAUTResolutions();
-            case REASON_NO_PROJECT:
-                return getNoProjectResolutions();
             case REASON_NO_TESTSUITE:
                 return getNoTestSuiteResolutions();
             case REASON_OM_INCOMPLETE:
@@ -222,25 +218,6 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             default:
                 return new IMarkerResolution[0];
         }
-    }
-
-    /**
-     * 
-     * @return resolutions for no connection to server.
-     */
-    private IMarkerResolution[] getNoServerConnectionResolutions() {
-        return new IMarkerResolution [] {new IMarkerResolution() {
-
-            public String getLabel() {
-                return Messages.GDProblemViewConnectToAutStarter;
-            }
-
-            public void run(IMarker marker) {
-                CommandHelper.executeCommand(
-                        RCPCommandIDs.CONNECT_TO_AUT_AGENT_COMMAND_ID);
-            }
-        }
-        };
     }
 
     /**
@@ -326,50 +303,6 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
         };
     }
 
-     /**
-      * 
-      * @return resolutions for no opened project.
-      */
-    private IMarkerResolution[] getNoProjectResolutions() {
-        return new IMarkerResolution [] {
-            new IMarkerResolution() {
-
-                public String getLabel() {
-                    return Messages.GDProblemViewCreate;
-                }
-
-                public void run(IMarker marker) {
-                    CommandHelper.executeCommand(
-                            RCPCommandIDs.NEW_PROJECT_COMMAND_ID);
-                }
-                
-            },
-            new IMarkerResolution() {
-
-                public String getLabel() {
-                    return Messages.GDProblemViewImport;
-                }
-
-                public void run(IMarker marker) {
-                    CommandHelper.executeCommand(
-                            RCPCommandIDs.IMPORT_PROJECT_COMMAND_ID);
-                }
-                
-            },
-            new IMarkerResolution() {
-
-                public String getLabel() {
-                    return Messages.GDProblemViewOpen;
-                }
-
-                public void run(IMarker marker) {
-                    CommandHelper.executeCommand(
-                            RCPCommandIDs.OPEN_PROJECT_COMMAND_ID);
-                }
-            },
-        };
-    }
-    
     /**
      * @param nodeName displayed name of the node for the quickfix dialog
      * @return resolutions for incomplete object mapping.
