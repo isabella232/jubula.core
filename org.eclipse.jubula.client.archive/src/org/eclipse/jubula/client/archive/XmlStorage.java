@@ -192,7 +192,8 @@ public class XmlStorage {
         genOpts.setSaveInner();
         genOpts.setSaveAggressiveNamespaces();
         genOpts.setUseDefaultNamespace();
-        genOpts.setSavePrettyPrint();
+        // Don't make use of pretty print due to 395788
+        // genOpts.setSavePrettyPrint();
 
         ContentDocument contentDoc = ContentDocument.Factory
             .newInstance(genOpts);
