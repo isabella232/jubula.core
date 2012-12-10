@@ -128,13 +128,13 @@ public class XmlStorage {
     }
     
     /** XML header encoding definition */
-    public static final String RECOMMENDED_CHAR_ENCODING = "UTF-16"; //$NON-NLS-1$
+    public static final String RECOMMENDED_CHAR_ENCODING = "UTF-8"; //$NON-NLS-1$
     
     /**
      * The supported character encodings.
      */
     private static final String[] SUPPORTED_CHAR_ENCODINGS = 
-        new String[]{RECOMMENDED_CHAR_ENCODING, "UTF-8"};  //$NON-NLS-1$
+        new String[]{RECOMMENDED_CHAR_ENCODING, "UTF-16"};  //$NON-NLS-1$
     
     /** XML header intro */
     private static final String XML_HEADER_START = "<?xml"; //$NON-NLS-1$
