@@ -422,8 +422,16 @@ public abstract class MenuUtil extends MenuUtilBase {
                     EventFactory.createActionError(
                             TestErrorEvent.MENU_ITEM_NOT_ENABLED));
         }
-        robot.click(item, null, ClickOptions.create().setClickType(
-            ClickOptions.ClickType.RELEASED).setStepMovement(false));
+        if (item.getParent() instanceof JPopupMenu 
+                && ((JPopupMenu)item.getParent())
+                .getInvoker().getParent() instanceof JMenuBar) {
+            
+            robot.click(item, null, ClickOptions.create().setClickType(
+                    ClickOptions.ClickType.RELEASED).setFirstHorizontal(true));
+        } else {
+            robot.click(item, null, ClickOptions.create().setClickType(
+                    ClickOptions.ClickType.RELEASED));
+        }
     }
 
 }

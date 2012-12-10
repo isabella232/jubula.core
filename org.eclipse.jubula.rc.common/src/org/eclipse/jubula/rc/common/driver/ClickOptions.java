@@ -164,7 +164,10 @@ public class ClickOptions {
      * before clicking and release after clicking
      */
     private ClickModifier m_clickModifier = ClickModifier.create();
-
+    
+    /** which axis first */
+    private boolean m_firstHorizontal = true;
+    
     /**
      * Creates a new <code>ClickOptions</code> instance.
      * 
@@ -255,7 +258,24 @@ public class ClickOptions {
     public ClickOptions setStepMovement(boolean isMoveInSteps) {
         m_isMoveInSteps = isMoveInSteps;
         return this;
+    }    
+    /**
+     * Configures on which axis the movement begins. Standard is horizontal.
+     * Also on the x axis.
+     * 
+     * @param firstHorizontal  <code>true</code> if the movement strategy 
+     *                        should be executed by going first on the x
+     *                        axis.
+     *                        <code>false</code> when first going on the y
+     *                        axis
+     *            
+     * @return The <code>ClickOptions</code> instance.
+     */
+    public ClickOptions setFirstHorizontal(boolean firstHorizontal) {
+        m_firstHorizontal = firstHorizontal;
+        return this;
     }
+    
     /**
      * @return <code>true</code> if the movement strategy should be executed in 
      *         steps. Otherwise, <code>false</code> (the pointer should "jump" 
@@ -316,5 +336,14 @@ public class ClickOptions {
      */
     public ClickModifier getClickModifier() {
         return m_clickModifier;
+    }
+    
+    /**
+     * 
+     * @return <code>true</code> if the mouse movement should go first
+     *          along the x axis.
+     */
+    public boolean getFirstHorizontal() {
+        return m_firstHorizontal;
     }
 }

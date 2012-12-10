@@ -599,7 +599,8 @@ public class RobotSwtImpl implements IRobot {
                 MouseMovementStrategy.getMovementPath(
                         new java.awt.Point(initialPoint.x, initialPoint.y), 
                         new java.awt.Point(pointToGo.x, pointToGo.y),
-                        clickOptions.getStepMovement());
+                        clickOptions.getStepMovement(),
+                        clickOptions.getFirstHorizontal());
             
             for (int i = 0; i < path.length; i++) {
                 m_robot.mouseMove(path[i].x, path[i].y);

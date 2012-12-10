@@ -30,7 +30,7 @@ public class MouseMovementStrategy {
     private MouseMovementStrategy() {
         // Do nothing
     }
-   
+       
     /**
      * 
      * @param from The point from which the mouse pointer is being moved.
@@ -41,13 +41,16 @@ public class MouseMovementStrategy {
      *           non-negative.
      * @param isMoveInSteps <code>true</code> if the movement strategy should 
      *                      be executed in steps. Otherwise, <code>false</code>.
+     * @param firstHorizontal <code>true</code> if the movement strategy should
+     *                      be executed using first the x axis. Otherwise, 
+     *                      <code>false</code>.
      * @return an array of <code>Point</code>s indicating the path the pointer
      *         should follow in order to reach the destination point 
      *         <code>to</code>. This path includes the point <code>to</code>, 
      *         but does not contain <code>from</code>.
      */
     public static Point [] getMovementPath(Point from, Point to, 
-            boolean isMoveInSteps) {
+            boolean isMoveInSteps, boolean firstHorizontal) {
         
         Validate.notNull(from, "Initial point must not be null."); //$NON-NLS-1$
         Validate.notNull(to, "End point must not be null."); //$NON-NLS-1$
@@ -64,13 +67,22 @@ public class MouseMovementStrategy {
         List path = new ArrayList();
         int [] xCoords = getMovementPath(from.x, to.x);
         int [] yCoords = getMovementPath(from.y, to.y);
-        
-        for (int i = 0; i < xCoords.length; i++) {
-            path.add(new Point(xCoords[i], from.y));
+        if (firstHorizontal) {
+            for (int i = 0; i < xCoords.length; i++) {
+                path.add(new Point(xCoords[i], from.y));
+            }
+            for (int i = 0; i < yCoords.length; i++) {
+                path.add(new Point(to.x, yCoords[i]));
+            }            
+        } else {
+            for (int i = 0; i < yCoords.length; i++) {
+                path.add(new Point(to.x, yCoords[i]));
+            }
+            for (int i = 0; i < xCoords.length; i++) {
+                path.add(new Point(xCoords[i], from.y));
+            }
         }
-        for (int i = 0; i < yCoords.length; i++) {
-            path.add(new Point(to.x, yCoords[i]));
-        }
+
 
         if (path.isEmpty() || !to.equals(path.get(path.size() - 1))) {
             path.add(new Point(to));
