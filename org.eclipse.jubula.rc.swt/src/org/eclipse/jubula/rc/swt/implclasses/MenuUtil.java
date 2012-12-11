@@ -473,7 +473,8 @@ public abstract class MenuUtil extends MenuUtilBase {
                 "isMenuBar", new IRunnable() { //$NON-NLS-1$
                     public Object run() throws StepExecutionException {
                         try {                            
-                            if ((item.getParent().getParentMenu().getStyle() & SWT.BAR) != 0) {
+                            if ((item.getParent().getParentMenu().getStyle() 
+                                    & SWT.BAR) != 0) {
                                 return Boolean.TRUE;
                             }
                             Menu parent = item.getMenu().getParentMenu();
