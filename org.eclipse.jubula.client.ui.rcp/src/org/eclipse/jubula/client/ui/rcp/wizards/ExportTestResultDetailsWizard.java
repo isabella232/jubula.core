@@ -16,6 +16,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.dom4j.Document;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
@@ -123,14 +125,15 @@ public class ExportTestResultDetailsWizard extends Wizard
                 SubMonitor.convert(monitor, "Exporting...",  //$NON-NLS-1$
                         m_selectedSummaries.length * 2);
             
+            final Persistor persistor = Persistor.instance();
+            EntityManager session = persistor.openSession();
             try {
                 for (ITestResultSummaryPO summary : m_selectedSummaries) {
                     GenerateTestResultTreeOperation operation =
                         new GenerateTestResultTreeOperation(
                                 summary.getId(), 
                                 summary.getInternalProjectID(),
-                                GeneralStorage.getInstance()
-                                    .getMasterSession());
+                                session);
                     
                     operation.run(subMonitor.newChild(1));
 
@@ -144,6 +147,7 @@ public class ExportTestResultDetailsWizard extends Wizard
                             subMonitor);
                 }
             } finally {
+                persistor.dropSession(session);
                 monitor.done();
             }
         }

@@ -76,10 +76,10 @@ public class MouseMovementStrategy {
             }            
         } else {
             for (int i = 0; i < yCoords.length; i++) {
-                path.add(new Point(to.x, yCoords[i]));
+                path.add(new Point(from.x, yCoords[i]));
             }
             for (int i = 0; i < xCoords.length; i++) {
-                path.add(new Point(xCoords[i], from.y));
+                path.add(new Point(xCoords[i], to.y));
             }
         }
 
