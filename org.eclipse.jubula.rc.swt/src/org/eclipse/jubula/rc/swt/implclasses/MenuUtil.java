@@ -469,10 +469,42 @@ public abstract class MenuUtil extends MenuUtilBase {
                             TestErrorEvent.MENU_ITEM_NOT_ENABLED));
         }
 
-        robot.click(item, null, 
-            ClickOptions.create()
-                .setClickType(ClickOptions.ClickType.RELEASED)
-                .setStepMovement(false).setClickCount(clickCount));
+        boolean isSecondInMenu = ((Boolean) EVENT_THREAD_QUEUER.invokeAndWait(
+                "isMenuBar", new IRunnable() { //$NON-NLS-1$
+                    public Object run() throws StepExecutionException {
+                        try {                            
+                            if ((item.getParent().getParentMenu().getStyle() & SWT.BAR) != 0) {
+                                return Boolean.TRUE;
+                            }
+                            Menu parent = item.getMenu().getParentMenu();
+                            if (parent != null) {                            
+                                Menu preparent = parent.getParentMenu();
+
+                                if (preparent != null) {
+                                    return (preparent.getStyle() & SWT.BAR) 
+                                            != 0 
+                                            ? Boolean.TRUE : Boolean.FALSE;
+                                }
+                            }
+                        } catch (NullPointerException ne) {
+                            // Nothing here, there is no parent of parent.
+                        }
+                        return Boolean.FALSE;
+                    }    
+                })).booleanValue();
+        if (isSecondInMenu) {
+            robot.click(item, null, 
+                    ClickOptions.create()
+                    .setClickType(ClickOptions.ClickType.RELEASED)
+                    .setStepMovement(true).setClickCount(clickCount)
+                    .setFirstHorizontal(false)); 
+
+        } else {
+            robot.click(item, null, 
+                    ClickOptions.create()
+                    .setClickType(ClickOptions.ClickType.RELEASED)
+                    .setStepMovement(true).setClickCount(clickCount));
+        }  
         
     }
     
