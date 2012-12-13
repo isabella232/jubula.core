@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
+import org.eclipse.jubula.rc.common.uiadapter.factory.GUIAdapterFactoryRegistry;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swt.driver.RobotFactorySwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotSwtImpl;
@@ -25,6 +26,7 @@ import org.eclipse.jubula.rc.swt.listener.FocusTracker;
 import org.eclipse.jubula.rc.swt.listener.MappingListener;
 import org.eclipse.jubula.rc.swt.listener.RecordListener;
 import org.eclipse.jubula.rc.swt.listener.TableSelectionTracker;
+import org.eclipse.jubula.rc.swt.uiadapter.factory.SWTAdapterFactory;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
@@ -214,7 +216,11 @@ public class SwtAUTServer extends AUTServer {
      */
     protected void startTasks() throws ExceptionInInitializerError, 
         InvocationTargetException, NoSuchMethodException {
-
+        
+        // FIXME Better place to put the registration of the factory
+        GUIAdapterFactoryRegistry.getInstance().
+            registerFactory(new SWTAdapterFactory());
+        
         super.invokeAUT();
         if (getCommunicator() != null) {
             getCommunicator().close();

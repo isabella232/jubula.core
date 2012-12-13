@@ -30,6 +30,10 @@ public class DragAndDropHelper {
     /** Flag if the Mouse is in drag mode (pressed key) */
     private boolean m_isDragMode = false;
     
+    /** The Component to drag */
+    private Object m_dragComponent = null;
+    
+    
     /**
      * hidden singleton constructor.
      */
@@ -90,6 +94,20 @@ public class DragAndDropHelper {
      */
     public void setDragMode(boolean drag) {
         m_isDragMode = drag;
+    }
+    
+    /**
+     * @return the dragComponent
+     */
+    public Object getDragComponent() {
+        return m_dragComponent;
+    }
+
+    /**
+     * @param dragComponent the dragComponent to set
+     */
+    public void setDragComponent(Object dragComponent) {
+        m_dragComponent = dragComponent;
     }
     
 }

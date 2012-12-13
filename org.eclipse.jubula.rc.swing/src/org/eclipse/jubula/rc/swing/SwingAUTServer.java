@@ -22,12 +22,14 @@ import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
+import org.eclipse.jubula.rc.common.uiadapter.factory.GUIAdapterFactoryRegistry;
 import org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swing.listener.CheckListener;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swing.listener.FocusTracker;
 import org.eclipse.jubula.rc.swing.listener.MappingListener;
 import org.eclipse.jubula.rc.swing.listener.RecordListener;
+import org.eclipse.jubula.rc.swing.swing.uiadapter.factory.SwingAdapterFactory;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.slf4j.Logger;
@@ -219,6 +221,10 @@ public class SwingAUTServer extends AUTServer {
         }
         
         AUTServer.getInstance().invokeAUT();
+        
+        // FIXME don't know where to put
+        GUIAdapterFactoryRegistry.getInstance().
+            registerFactory(new SwingAdapterFactory());
     }
 
     /**
