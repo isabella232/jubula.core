@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.swt.implclasses;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
-import org.eclipse.jubula.rc.swt.interfaces.IButtonImplClass;
+import org.eclipse.jubula.rc.swt.interfaces.IButton;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Control;
  * @created 19.04.2006
  */
 public class ButtonImplClass extends AbstractControlImplClass 
-    implements IButtonImplClass {
+    implements IButton {
     
     /** the Button from the AUT */
     private Button m_button;

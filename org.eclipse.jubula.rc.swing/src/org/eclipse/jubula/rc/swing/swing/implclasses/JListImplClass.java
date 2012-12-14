@@ -25,7 +25,7 @@ import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
 import org.eclipse.jubula.rc.common.implclasses.ListSelectionVerifier;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
-import org.eclipse.jubula.rc.swing.swing.interfaces.IJListImplClass;
+import org.eclipse.jubula.rc.swing.swing.interfaces.IJList;
 import org.eclipse.jubula.rc.swing.utils.SwingUtils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
@@ -40,7 +40,7 @@ import org.eclipse.jubula.tools.utils.StringParsing;
  * @created 11.08.2005
  */
 public class JListImplClass extends AbstractSwingImplClass 
-    implements IJListImplClass {
+    implements IJList {
 
     /** The <code>JList</code> component. */
     private JList m_list;

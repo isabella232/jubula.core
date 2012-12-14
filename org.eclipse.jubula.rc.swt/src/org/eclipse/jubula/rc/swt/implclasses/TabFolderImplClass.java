@@ -15,7 +15,7 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
-import org.eclipse.jubula.rc.swt.interfaces.ITabFolderImplClass;
+import org.eclipse.jubula.rc.swt.interfaces.ITabFolder;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.TabItem;
  * @created Oct 30, 2006
  */
 public class TabFolderImplClass extends AbstractTabFolderImplClass 
-    implements ITabFolderImplClass {
+    implements ITabFolder {
 
     /** the tabFolder from the AUT */
     private TabFolder m_tabFolder;

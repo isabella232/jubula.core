@@ -31,7 +31,7 @@ import org.eclipse.jubula.rc.common.implclasses.tree.SiblingTraverser;
 import org.eclipse.jubula.rc.common.implclasses.tree.StringNodePath;
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperationConstraint;
-import org.eclipse.jubula.rc.swt.interfaces.ITableTreeImplClass;
+import org.eclipse.jubula.rc.swt.interfaces.ITree;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -53,7 +53,7 @@ import org.eclipse.swt.widgets.TreeItem;
 //            issue that only one ImplClass per component class can be defined 
 //            in config.xml.
 public class TableTreeImplClass extends TreeImplClass 
-    implements ITableTreeImplClass {
+    implements ITree {
 
     /** The component */
     private Tree m_treeTable;

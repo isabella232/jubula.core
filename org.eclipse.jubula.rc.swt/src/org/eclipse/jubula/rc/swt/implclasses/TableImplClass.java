@@ -23,7 +23,7 @@ import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
-import org.eclipse.jubula.rc.swt.interfaces.ITableImplClass;
+import org.eclipse.jubula.rc.swt.interfaces.ITable;
 import org.eclipse.jubula.rc.swt.listener.TableSelectionTracker;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.InputConstants;
@@ -49,7 +49,7 @@ import org.eclipse.swt.widgets.TableItem;
  * @created Oct 30, 2006
  */
 public class TableImplClass extends AbstractControlImplClass 
-    implements ITableImplClass {
+    implements ITable {
     /**
      * The logger.
      */

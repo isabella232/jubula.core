@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.implclasses;
 
-import org.eclipse.jubula.rc.swt.interfaces.ICComboImplClass;
+import org.eclipse.jubula.rc.swt.interfaces.ICCombo;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.widgets.Control;
 
@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Control;
  * @created Oct 30, 2006
  */
 public class CComboImplClass extends AbstractComboBoxImplClass
-    implements ICComboImplClass {
+    implements ICCombo {
 
     /** the CCombo from the AUT */
     private CCombo m_ccombo;

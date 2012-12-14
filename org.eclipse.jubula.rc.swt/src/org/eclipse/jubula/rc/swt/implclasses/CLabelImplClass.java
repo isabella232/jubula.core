@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.swt.implclasses;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
-import org.eclipse.jubula.rc.swt.interfaces.ICLabelImplClass;
+import org.eclipse.jubula.rc.swt.interfaces.ICLabel;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.widgets.Control;
@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Control;
  * @created Oct 30, 2006
  */
 public class CLabelImplClass extends LabelImplClass
-    implements ICLabelImplClass {
+    implements ICLabel {
 
     /** the CLabel from the AUT */
     private CLabel m_clabel;

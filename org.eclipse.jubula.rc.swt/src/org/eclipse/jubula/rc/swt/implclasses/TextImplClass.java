@@ -15,7 +15,7 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.rc.swt.interfaces.ITextImplClass;
+import org.eclipse.jubula.rc.swt.interfaces.IText;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -33,7 +33,7 @@ import org.eclipse.swt.widgets.Text;
  * @created 19.04.2006
  */
 public class TextImplClass extends AbstractControlImplClass 
-    implements ITextImplClass {
+    implements IText {
     
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(

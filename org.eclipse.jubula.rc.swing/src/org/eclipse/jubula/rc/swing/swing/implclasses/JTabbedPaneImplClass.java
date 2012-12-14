@@ -21,7 +21,7 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
-import org.eclipse.jubula.rc.swing.swing.interfaces.IJTabbedPaneImplClass;
+import org.eclipse.jubula.rc.swing.swing.interfaces.IJTabbedPane;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -33,7 +33,7 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * @created 20.05.2005
  */
 public class JTabbedPaneImplClass extends AbstractSwingImplClass 
-    implements IJTabbedPaneImplClass {
+    implements IJTabbedPane {
 
     /** The JTabbedPane on which the actions are performed. */
     private JTabbedPane m_pane;

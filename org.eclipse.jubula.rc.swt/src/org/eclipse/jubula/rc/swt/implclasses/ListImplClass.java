@@ -24,7 +24,7 @@ import org.eclipse.jubula.rc.common.implclasses.ListSelectionVerifier;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
-import org.eclipse.jubula.rc.swt.interfaces.IListImplClass;
+import org.eclipse.jubula.rc.swt.interfaces.IList;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -43,7 +43,7 @@ import org.eclipse.swt.widgets.List;
  * @created Oct 30, 2006
  */
 public class ListImplClass extends AbstractControlImplClass 
-    implements IListImplClass {
+    implements IList {
 
     /** the List from the AUT */
     private List m_list;

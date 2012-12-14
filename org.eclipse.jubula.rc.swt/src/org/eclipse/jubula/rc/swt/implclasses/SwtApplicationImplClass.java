@@ -35,7 +35,7 @@ import org.eclipse.jubula.rc.swt.components.SwtComponent;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swt.implclasses.EventListener.Condition;
-import org.eclipse.jubula.rc.swt.interfaces.ISwtApplicationImplClass;
+import org.eclipse.jubula.rc.swt.interfaces.IGraphicApplication;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swt.listener.FocusTracker;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
@@ -59,7 +59,7 @@ import org.eclipse.swt.widgets.Widget;
  * @created Oct 30, 2006
  */
 public class SwtApplicationImplClass extends AbstractApplicationImplClass 
-    implements ISwtApplicationImplClass {
+    implements IGraphicApplication {
     
     /** The logging. */
     private static AutServerLogger log = 

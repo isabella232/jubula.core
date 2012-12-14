@@ -20,7 +20,7 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
-import org.eclipse.jubula.rc.swing.swing.interfaces.IJComboBoxImplClass;
+import org.eclipse.jubula.rc.swing.swing.interfaces.IJComboBox;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.utils.StringParsing;
 
@@ -32,7 +32,7 @@ import org.eclipse.jubula.tools.utils.StringParsing;
  * @created 08.03.2005
  */
 public class JComboBoxImplClass extends AbstractSwingImplClass 
-    implements IJComboBoxImplClass {
+    implements IJComboBox {
 
     /**
      * <code>INVALID_MAX_WIDTH</code>

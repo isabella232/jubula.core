@@ -33,7 +33,7 @@ import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.rc.swing.swing.interfaces.IJTableImplClass;
+import org.eclipse.jubula.rc.swing.swing.interfaces.IJTable;
 import org.eclipse.jubula.rc.swing.utils.SwingUtils;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -46,7 +46,7 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * @created 23.03.2005
  */
 public class JTableImplClass extends AbstractSwingImplClass 
-    implements IJTableImplClass {
+    implements IJTable {
 
     /**
      * The logger.

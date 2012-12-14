@@ -41,7 +41,7 @@ import org.eclipse.jubula.rc.swing.components.SwingComponent;
 import org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swing.listener.FocusTracker;
-import org.eclipse.jubula.rc.swing.swing.interfaces.ISwingApplicationImplClass;
+import org.eclipse.jubula.rc.swing.swing.interfaces.IGraphicApplication;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -57,7 +57,7 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
  * @created 03.06.2005
  */
 public class SwingApplicationImplClass extends AbstractApplicationImplClass 
-    implements IImplementationClass, ISwingApplicationImplClass {
+    implements IImplementationClass, IGraphicApplication {
     
     /**
      * This condition is true if the event is an 'window opened' event

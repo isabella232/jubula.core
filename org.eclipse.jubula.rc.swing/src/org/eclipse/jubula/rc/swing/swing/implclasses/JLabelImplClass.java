@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
-import org.eclipse.jubula.rc.swing.swing.interfaces.IJLabelImplClass;
+import org.eclipse.jubula.rc.swing.swing.interfaces.IJLabel;
 
 
 /**
@@ -26,7 +26,7 @@ import org.eclipse.jubula.rc.swing.swing.interfaces.IJLabelImplClass;
  * @created 13.09.2004
  */
 public class JLabelImplClass extends AbstractSwingImplClass 
-    implements IJLabelImplClass {
+    implements IJLabel {
 
     /** the JLabel from the AUT */
     private JLabel m_label;

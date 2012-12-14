@@ -19,7 +19,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
-import org.eclipse.jubula.rc.swing.swing.interfaces.IJTextComponentImplClass;
+import org.eclipse.jubula.rc.swing.swing.interfaces.IJTextComponent;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
@@ -31,7 +31,7 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * @created 05.08.2005
  */
 public class JTextComponentImplClass extends AbstractSwingImplClass 
-    implements IJTextComponentImplClass {
+    implements IJTextComponent {
     /**
      * The <code>JTextComponent</code> instance.
      */

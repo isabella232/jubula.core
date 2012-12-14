@@ -18,7 +18,7 @@ import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
-import org.eclipse.jubula.rc.swt.interfaces.IToolItemImplClass;
+import org.eclipse.jubula.rc.swt.interfaces.IToolItem;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.ToolItem;
  * @created 23.03.2007
  */
 public class ToolItemImplClass extends AbstractSwtImplClass 
-    implements IToolItemImplClass {
+    implements IToolItem {
     /** 
      * The dropdown menu, or <code>null</code> when the dropdown
      * menu is not showing.

@@ -42,7 +42,7 @@ import org.eclipse.jubula.rc.common.implclasses.tree.SiblingTraverser;
 import org.eclipse.jubula.rc.common.implclasses.tree.StringNodePath;
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperationConstraint;
-import org.eclipse.jubula.rc.swing.swing.interfaces.IJTreeImplClass;
+import org.eclipse.jubula.rc.swing.swing.interfaces.IJTree;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -57,7 +57,7 @@ import org.eclipse.jubula.tools.utils.StringParsing;
  * @created 15.03.2005
  */
 public class JTreeImplClass extends AbstractSwingImplClass 
-    implements IJTreeImplClass {
+    implements IJTree {
     /** Constant for no pre-ascend */
     public static final int NO_PRE_ASCEND = 0;
 

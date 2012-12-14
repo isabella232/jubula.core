@@ -11,7 +11,7 @@
 package org.eclipse.jubula.rc.swt.implclasses;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
-import org.eclipse.jubula.rc.swt.interfaces.IStyledTextImplClass;
+import org.eclipse.jubula.rc.swt.interfaces.IStyledText;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Control;
 
@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Control;
  * @created Oct 30, 2006
  */
 public class StyledTextImplClass extends TextImplClass 
-    implements IStyledTextImplClass {
+    implements IStyledText {
 
     /** the styled text from the AUT */
     private StyledText m_styledText;

@@ -15,7 +15,7 @@ import javax.swing.JComponent;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
-import org.eclipse.jubula.rc.swing.swing.interfaces.IAbstractButtonImplClass;
+import org.eclipse.jubula.rc.swing.swing.interfaces.IAbstractButton;
 
 
 /**
@@ -29,7 +29,7 @@ import org.eclipse.jubula.rc.swing.swing.interfaces.IAbstractButtonImplClass;
  * @created 22.09.2004
  */
 public class AbstractButtonImplClass extends AbstractSwingImplClass 
-    implements IAbstractButtonImplClass {
+    implements IAbstractButton {
 
     /** the Button from the AUT */
     private AbstractButton m_button;

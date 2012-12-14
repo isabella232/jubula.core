@@ -14,7 +14,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
-import org.eclipse.jubula.rc.swt.interfaces.ILabelImplClass;
+import org.eclipse.jubula.rc.swt.interfaces.ILabel;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.swt.widgets.Control;
@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Label;
  * @created 19.04.2006
  */
 public class LabelImplClass extends AbstractControlImplClass
-    implements ILabelImplClass {
+    implements ILabel {
     
     /** the Label from the AUT */
     private Label m_label;
