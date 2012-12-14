@@ -123,6 +123,12 @@ public interface ITableAdapter extends ITextVerifiable {
      */
     public Rectangle scrollCellToVisible (int row , int col)
         throws StepExecutionException;
+
+    /**
+     * @return the TableHeader if there is one,otherwise
+     *                  the table is returned.
+     */
+    public Object getTableHeader();
     
 
 }

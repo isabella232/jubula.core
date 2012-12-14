@@ -155,9 +155,11 @@ public abstract class AbstractTableCAPs extends AbstractTextInputSupport {
         }
         
         Rectangle cellBounds;
+        Object source = getRealTable();
         //if row is header and col is existing
         if (implRow == -1 && implCol > -1) {
             cellBounds = adapter.getHeaderBounds(implCol);
+            source = adapter.getTableHeader();
         } else {
             cellBounds = adapter.scrollCellToVisible(implRow, implCol);
         }        
@@ -170,7 +172,7 @@ public abstract class AbstractTableCAPs extends AbstractTextInputSupport {
                 getRobot().keyPress(getRealTable(),
                         getExtendSelectionModifier());
             }
-            getRobot().click(getRealTable(), o, clickOptions, 
+            getRobot().click(source, o, clickOptions, 
                     xPos, xUnits.equalsIgnoreCase(POS_UNIT_PIXEL), 
                     yPos, yUnits.equalsIgnoreCase(POS_UNIT_PIXEL));
         } finally {

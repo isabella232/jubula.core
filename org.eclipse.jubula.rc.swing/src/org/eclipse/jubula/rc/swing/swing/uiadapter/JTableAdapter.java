@@ -231,12 +231,12 @@ public class JTableAdapter extends WidgetAdapter implements ITableAdapter {
     /**
      * {@inheritDoc}
      */
-    public Rectangle getHeaderBounds(int col) {
+    public Rectangle getHeaderBounds(final int col) {
         Rectangle returnvalue = (Rectangle) getEventThreadQueuer()
                 .invokeAndWait("getHeaderBounds", //$NON-NLS-1$
                     new IRunnable() {                     
                         public Object run() throws StepExecutionException {
-                            return m_table.getTableHeader().getBounds();
+                            return m_table.getTableHeader().getHeaderRect(col);
                         }
                     });
         
@@ -381,5 +381,19 @@ public class JTableAdapter extends WidgetAdapter implements ITableAdapter {
     public String getText() {
         final Cell selectedCell = getSelectedCell();
         return getCellText(selectedCell.getRow(), selectedCell.getCol());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Object getTableHeader() {
+        return getEventThreadQueuer()
+                .invokeAndWait("getHeaderBounds", //$NON-NLS-1$
+                    new IRunnable() {                     
+                        public Object run() throws StepExecutionException {
+                            return m_table.getTableHeader();
+                        }
+                    });
+        
     }
 }

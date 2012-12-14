@@ -531,4 +531,11 @@ public class TableAdapter extends WidgetAdapter implements ITableAdapter {
         final Cell selectedCell = getSelectedCell();
         return getCellText(selectedCell.getRow(), selectedCell.getCol());
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Object getTableHeader() {
+        return m_table;
+    }
 }
