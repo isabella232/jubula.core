@@ -625,8 +625,10 @@ public abstract class AbstractTableCAPs extends AbstractTextInputSupport {
         if (cell != null) {
             Rectangle cellRect = 
                     adapter.scrollCellToVisible(cell.getRow(), cell.getCol());
-            getRobot().click(getRealTable(), cellRect, ClickOptions.create()
-                .setClickCount(count).setMouseButton(button));
+            Object robotSpecifcRectangle = getSpecificRectangle(cellRect);
+            getRobot().click(getRealTable(), robotSpecifcRectangle,
+                    ClickOptions.create().setClickCount(count)
+                    .setMouseButton(button));
         } else {
             super.gdClick(count, button);
         }
