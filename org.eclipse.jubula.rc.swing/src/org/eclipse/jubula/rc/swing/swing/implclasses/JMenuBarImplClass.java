@@ -30,7 +30,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.rc.swing.swing.interfaces.IJMenuBarDefaultMapping;
+import org.eclipse.jubula.rc.swing.swing.interfaces.IJMenuBar;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -43,7 +43,7 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
  * @created 12.04.2005
  */
 public class JMenuBarImplClass extends AbstractSwingImplClass 
-    implements IJMenuBarDefaultMapping {
+    implements IJMenuBar {
 
     /** the logger */
     private static AutServerLogger log =

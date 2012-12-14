@@ -18,7 +18,7 @@ import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotSwtImpl;
-import org.eclipse.jubula.rc.swt.interfaces.IMenuDefaultMapping;
+import org.eclipse.jubula.rc.swt.interfaces.IMenu;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.Widget;
  * @created Oct 30, 2006
  */
 public class MenuImplClass extends AbstractWidgetImplClass 
-    implements IMenuDefaultMapping {
+    implements IMenu {
 
     /** the logger */
     private static AutServerLogger log = 

@@ -190,7 +190,7 @@ public class GenerateInterfaces {
                 continue;
             }
             ConcreteComponent cc = (ConcreteComponent)cc0;
-            String cctype = cc.getComponentClass();
+            String cctype = cc.getType();
             String ccsingletype = cctype.substring(cctype.lastIndexOf("."));
             ccsingletype = ccsingletype.replace(".", StringConstants.EMPTY);
             String methodbegin = "    public ";
