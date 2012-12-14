@@ -29,10 +29,12 @@ import org.eclipse.jface.preference.IPreferenceNode;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.common.uiadapter.factory.GUIAdapterFactoryRegistry;
 import org.eclipse.jubula.rc.rcp.gef.inspector.GefInspectorListenerAppender;
 import org.eclipse.jubula.rc.rcp.gef.listener.GefPartListener;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
+import org.eclipse.jubula.rc.swt.uiadapter.factory.SWTAdapterFactory;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.AutEnvironmentConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
@@ -554,7 +556,9 @@ public class Startup implements IStartup {
                 }
 
             });
-
+            // Registering the AdapterFactory for SWT at the registry
+            GUIAdapterFactoryRegistry.getInstance()
+                .registerFactory(new SWTAdapterFactory());
             // add listener to AUT
             AUTServer.getInstance().addToolKitEventListenerToAUT();
 
