@@ -33,6 +33,7 @@ import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
@@ -485,7 +486,8 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         event.widget = menuItem;
         event.display = menuItem.getDisplay();
         event.type = SWT.Selection;
-        
+        closeUnderMac();
+
         getEventThreadQueuer().invokeLater(
                 "selectProgramatically", new Runnable() { //$NON-NLS-1$
                     public void run() {  
@@ -526,6 +528,28 @@ public class MenuItemAdapter extends AbstractComponentAdapter
             throw re;
         }
     
+    }
+    /**
+     * "close" (hide) the context menu. this is necessary because if you
+     * select programatically the contextmenu is not closed.
+     */
+    private void closeUnderMac() {
+        if (EnvironmentUtils.isMacOS()) {
+            // "close" (hide) the context menu. this is necessary because
+            // the selection event will not close the context menu.
+            // we do this before firing the selection event so that the menu
+            // disappears before the effects of the selection event (e.g.
+            // showing a dialog) are presented.
+            m_menuItem.getDisplay().syncExec(new Runnable() {
+                public void run() {
+                    Menu parentMenu = m_menuItem.getParent();
+                    while (parentMenu.getParentMenu() != null) {
+                        parentMenu = parentMenu.getParentMenu();
+                    }
+                    parentMenu.setVisible(false);
+                }
+            });
+        }
     }
     
     

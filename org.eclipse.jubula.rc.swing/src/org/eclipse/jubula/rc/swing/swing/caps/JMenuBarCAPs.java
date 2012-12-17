@@ -158,8 +158,11 @@ public class JMenuBarCAPs extends AbstractMenuCAPs {
             String operator) {
         if (menuBar.getRealComponent() instanceof JPopupMenu) {
             for (int i = 0; i < textPath.length; i++) {
-                getRobot().keyType(menuBar.getRealComponent(),
-                        KeyEvent.VK_ESCAPE);
+                if (((JPopupMenu)menuBar.getRealComponent()).isVisible()) {
+                    getRobot().keyType(menuBar.getRealComponent(),
+                            KeyEvent.VK_ESCAPE);    
+                }
+                
             }
             return;
         }
@@ -173,8 +176,10 @@ public class JMenuBarCAPs extends AbstractMenuCAPs {
     protected void closeMenu(IMenuAdapter menuBar, int[] path) {
         if (menuBar.getRealComponent() instanceof JPopupMenu) {
             for (int i = 0; i < path.length; i++) {
-                getRobot().keyType(menuBar.getRealComponent(),
-                        KeyEvent.VK_ESCAPE);
+                if (((JPopupMenu)menuBar.getRealComponent()).isVisible()) {
+                    getRobot().keyType(menuBar.getRealComponent(),
+                            KeyEvent.VK_ESCAPE);    
+                }
             }
             return;
         }
