@@ -64,7 +64,8 @@ public class CTabFolderAdapter extends WidgetAdapter
                 "verifyTextOfTabByIndex", //$NON-NLS-1$
                 new IRunnable() {
                     public Object run() throws StepExecutionException {
-                        return m_ctabFolder.getItem(index).getText();
+                        return SwtUtils.removeMnemonics(
+                                m_ctabFolder.getItem(index).getText());
                     }
                 });
     }

@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.swt.uiadapter;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.uiadapter.interfaces.IButtonAdapter;
+import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.swt.widgets.Button;
 /**
  * Implements the Button interface for adapting a <code>SWT.Button</code>
@@ -40,7 +41,8 @@ public class ButtonAdapter extends WidgetAdapter implements IButtonAdapter {
         return (String)getEventThreadQueuer()
                 .invokeAndWait("getText", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
-                        return m_button.getText(); // see findBugs;
+                        return SwtUtils.removeMnemonics(m_button.getText()); 
+                            // see findBugs;
                     }
                 });
     }

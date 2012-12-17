@@ -57,7 +57,8 @@ public class TabFolderAdapter extends WidgetAdapter implements ITabPaneAdapter {
                 "verifyTextOfTabByIndex", //$NON-NLS-1$
                 new IRunnable() {
                     public Object run() throws StepExecutionException {
-                        return m_tabFolder.getItem(index).getText();
+                        return SwtUtils.removeMnemonics(m_tabFolder
+                                .getItem(index).getText());
                     }
                 });
     }

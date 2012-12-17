@@ -101,7 +101,7 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         return (String) getEventThreadQueuer().invokeAndWait(
                 "getText", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
-                        return m_menuItem.getText();
+                        return SwtUtils.removeMnemonics(m_menuItem.getText());
                     }
                 });
     }
