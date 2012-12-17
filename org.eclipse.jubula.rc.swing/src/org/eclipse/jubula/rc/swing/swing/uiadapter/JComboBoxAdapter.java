@@ -402,4 +402,26 @@ public class JComboBoxAdapter extends WidgetAdapter implements
         }
         return maxWidth;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public boolean hasFocus() {
+        Boolean returnvalue = (Boolean) getEventThreadQueuer().invokeAndWait(
+                "hasFocus", new IRunnable() { //$NON-NLS-1$
+                    public Object run() {
+                        if (m_comboBox.isEditable()) {
+                            boolean editorFocus  = m_comboBox.getEditor()
+                                .getEditorComponent().hasFocus();
+                            if (editorFocus) {
+                                return Boolean.TRUE;
+                            }
+                        }                
+                        // see findBugs
+                        return m_comboBox.hasFocus() 
+                                ? Boolean.TRUE : Boolean.FALSE;
+                    }
+                });
+        return (boolean) returnvalue.booleanValue();
+    }
 }
