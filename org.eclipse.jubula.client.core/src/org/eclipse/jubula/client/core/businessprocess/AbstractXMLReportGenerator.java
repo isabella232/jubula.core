@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.core.businessprocess;
 import java.util.Date;
 import java.util.Map;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.dom4j.Document;
@@ -308,6 +309,12 @@ public abstract class AbstractXMLReportGenerator {
                         }
                     }
                 }
+            }
+            final byte[] screenshotData = resultNode.getScreenshot();
+            if (screenshotData != null) {
+                Element screenshotElement = error.addElement("screenshot"); //$NON-NLS-1$
+                screenshotElement.addText(new String(
+                        Base64.encodeBase64(screenshotData, false)));
             }
         }
     }

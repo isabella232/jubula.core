@@ -478,9 +478,20 @@
 					<td><xsl:value-of select="description"/></td>
 				</tr>
 			</xsl:when>
-
 		</xsl:choose>
-		
+        <xsl:choose>
+          <xsl:when test="screenshot != ''">
+            <tr><td colspan="3"><hr/></td></tr>
+            <tr><th colspan="3">Screenshot</th></tr>
+            <tr>
+              <td colspan="3">
+                <img width="400">
+                  <xsl:attribute name="src">data:image/png;base64,<xsl:value-of select="screenshot"/></xsl:attribute>
+                </img>
+              </td>
+            </tr>
+          </xsl:when>
+        </xsl:choose>
 	</xsl:template>
 	
 	<xsl:template match="eventhandler">
