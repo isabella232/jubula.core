@@ -79,7 +79,7 @@ public class TableCAPs extends AbstractTableCAPs {
             getRobot().clickAtCurrentPosition(editor, 3, 
                     InputConstants.MOUSE_BUTTON_LEFT);
         } else {
-            getRobot().clickAtCurrentPosition(editor, 1, 
+            getRobot().clickAtCurrentPosition(editor, 2, 
                     InputConstants.MOUSE_BUTTON_LEFT);
         }
         return editor;
