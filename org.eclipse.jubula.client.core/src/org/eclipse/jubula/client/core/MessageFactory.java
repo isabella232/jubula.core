@@ -56,6 +56,8 @@ public class MessageFactory {
             "org.eclipse.jubula.communication.message.swing.ActivateSwingApplicationMessage"); //$NON-NLS-1$
         toolkitToActivationMessageClassName.put(CommandConstants.DOTNET_TOOLKIT,
                 "org.eclipse.jubula.communication.message.dotnet.ActivateDotNetApplicationMessage"); //$NON-NLS-1$
+        toolkitToActivationMessageClassName.put(CommandConstants.IOS_TOOLKIT,
+                "org.eclipse.jubula.communication.message.ios.IOSActivateApplicationMessage"); //$NON-NLS-1$
     }
     
     /** 
@@ -78,6 +80,8 @@ public class MessageFactory {
             "org.eclipse.jubula.communication.message.html.CAPHtmlTestMessage"); //$NON-NLS-1$
         toolkitToTestMessageClassName.put(CommandConstants.DOTNET_TOOLKIT, 
                 "org.eclipse.jubula.communication.message.dotnet.CAPDotNetTestMessage"); //$NON-NLS-1$
+        toolkitToTestMessageClassName.put(CommandConstants.IOS_TOOLKIT, 
+                "org.eclipse.jubula.communication.message.ios.IOSCAPTestMessage"); //$NON-NLS-1$
     }
     
     /**

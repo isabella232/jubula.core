@@ -104,9 +104,10 @@ public abstract class AbstractWidgetCAPs extends AbstractUICAPs {
      * Clicks the center of the component with the MouseButton 1
      * @param count Number of mouse clicks
      */
-    public void gdclick(int count) {
+    public void gdClick(int count) {
         gdClick(count, 1);
     }
+    
     /**
      * clicks into a component.
      *
