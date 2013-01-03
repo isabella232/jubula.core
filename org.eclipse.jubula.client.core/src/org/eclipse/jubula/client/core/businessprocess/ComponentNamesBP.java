@@ -250,41 +250,43 @@ public class ComponentNamesBP
     /**
      * reads all paramNames of the current Project and its reused Projects 
      * from database into names map
-     * @throws PMException in case of any db problem
+     * @throws PMException in case of an (unexpected) DB access problem
      */
     public final void init() throws PMException {
         clearAllNamePOs();
         final IProjectPO currProject = GeneralStorage.getInstance()
             .getProject();
-        init(currProject, new HashSet<Long>());
+        initCompNamesTransitive(currProject.getId(), new HashSet<Long>());
     }
     
     /**
      * reads all paramNames of the given Project and its reused Projects 
      * from database into names map
-     * @param project an IProjectPO
+     * @param projectID an IProjectPO id
      * @param loadedProjectIds Accumulated IDs of reused projects that have 
      *                         been loaded.
-     * @throws PMException in case of any db problem
+     * @throws PMException in case of an (unexpected) DB access problem
      */
-    private void init(IProjectPO project, Set<Long> loadedProjectIds) 
-        throws PMException {
+    private void initCompNamesTransitive(Long projectID, 
+        Set<Long> loadedProjectIds) throws PMException { 
         
-        if (project == null) {
+        if (projectID == null) {
             return;
         }
-        init(project.getId());
-        for (IReusedProjectPO usedProj : project.getUsedProjects()) {
+        readCompNamesForProjectID(projectID);
+        for (IReusedProjectPO usedProj : ProjectPM
+                .getReusedProjectsForProject(projectID)) {
             final String reusedGuid = usedProj.getProjectGuid();
             final int reuseMajVers = usedProj.getMajorNumber();
             final int reuseMinVers = usedProj.getMinorNumber();
             try {
-                final IProjectPO usedProjPo = ProjectPM
-                    .loadProjectByGuidAndVersion(reusedGuid, reuseMajVers, 
+                final Long usedProjPo = ProjectPM
+                    .findProjectIDByGuidAndVersion(reusedGuid, reuseMajVers, 
                         reuseMinVers);
                 if (usedProjPo != null 
-                        && loadedProjectIds.add(usedProjPo.getId())) {
-                    init(usedProjPo, loadedProjectIds);
+                        && loadedProjectIds.add(usedProjPo)) {
+                    initCompNamesTransitive(usedProjPo,
+                            loadedProjectIds);
                 }
             } catch (JBException e) {
                 // Continue! Maybe the Project is not present in DB.
@@ -298,7 +300,7 @@ public class ComponentNamesBP
      * @param projId the Project ID.
      * @throws PMException PMException in case of any db problem
      */
-    private void init(Long projId) throws PMException {
+    private void readCompNamesForProjectID(Long projId) throws PMException {
         List<IComponentNamePO> names = CompNamePM.readAllCompNames(projId);
         for (IComponentNamePO compNamePO : names) {
             addNamePO(compNamePO);
@@ -312,7 +314,7 @@ public class ComponentNamesBP
      * @throws PMException PMException PMException in case of any db problem
      */
     public final void refreshNames(Long projId) throws PMException {
-        init(projId);
+        readCompNamesForProjectID(projId);
     }
     
     /**

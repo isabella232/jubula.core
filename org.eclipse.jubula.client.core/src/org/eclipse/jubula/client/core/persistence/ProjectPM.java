@@ -173,6 +173,51 @@ public class ProjectPM extends PersistenceManager {
     }
 
     /**
+     * @param guid
+     *            GUID of the project to load
+     * @param majorVersion
+     *            Major version number of the project to load
+     * @param minorVersion
+     *            Minor version number of the project to load
+     * @return the Project with the given attributes, or <code>null</code> if  
+     *         no such Project could be found. The returned Project is not 
+     *         associated with an Entity Manager.
+     * @throws JBException
+     *             ...
+     */
+    public static synchronized Long findProjectIDByGuidAndVersion(
+        String guid, int majorVersion, int minorVersion) throws JBException {
+
+        EntityManager session = null;
+        try {
+            session = Persistor.instance().openSession();
+            Query query = session.createQuery("select project.id from ProjectPO as project" //$NON-NLS-1$
+                    + " inner join fetch project.properties where project.guid = :guid" //$NON-NLS-1$
+                    + " and project.properties.majorNumber = :majorNumber and project.properties.minorNumber = :minorNumber"); //$NON-NLS-1$           
+            query.setParameter("guid", guid); //$NON-NLS-1$
+            query.setParameter("majorNumber", majorVersion); //$NON-NLS-1$
+            query.setParameter("minorNumber", minorVersion); //$NON-NLS-1$
+            
+            try {
+                Long projectID = (Long)query.getSingleResult();
+                return projectID;
+            } catch (NoResultException nre) {
+                // No result found. Return null as per the javadoc.
+                return null;
+            }
+        } catch (PersistenceException e) {
+            OperationCanceledException oce = checkForCancel(e);
+            if (oce != null) {
+                throw oce;
+            }
+            log.error(Messages.PersistenceLoadFailed, e);
+            throw new JBException(e.getMessage(),
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
+        } finally {
+            Persistor.instance().dropSessionWithoutLockRelease(session);
+        }
+    }
+    /**
      * @param name
      *            Name of the project to load
      * @param majorVersion
@@ -607,6 +652,66 @@ public class ProjectPM extends PersistenceManager {
     }
 
     /**
+     * @see ProjectPM#getReusedProjectsForProject(EntityManager, long)
+     * @param projectID
+     *            Object id for the project to be used
+     * @return A List of IReusedProjectPOs for the submitted projectID. The Set
+     *         may be empty. Since the session is closed after this call the
+     *         resulting entities are detached.
+     */
+    public static List<IReusedProjectPO> getReusedProjectsForProject(
+            long projectID) throws PMException {
+        EntityManager session = null;
+        try {
+            session = Persistor.instance().openSession();
+            return getReusedProjectsForProject(session, projectID);
+        } catch (PersistenceException e) {
+            log.error(Messages.PersistenceLoadFailed, e);
+            throw new PMException(e.getMessage(),
+                    MessageIDs.E_PERSISTENCE_LOAD_FAILED);
+        } finally {
+            Persistor.instance().dropSessionWithoutLockRelease(session);
+        }
+
+    }
+    /**
+     * @see ProjectPM#getReusedProjectsForProject(EntityManager, long)
+     * @param projectID
+     *            Object id for the project to be used
+     * @return A List of IReusedProjectPOs for the submitted projectID. The Set
+     *         may be empty. 
+     */
+    public static List<IReusedProjectPO> getReusedProjectsForProjectRO(
+            long projectID) throws PMException {
+        EntityManager session = GeneralStorage.getInstance().getMasterSession();
+        try {
+            return getReusedProjectsForProject(session, projectID);
+        } catch (PersistenceException e) {
+            log.error(Messages.PersistenceLoadFailed, e);
+            throw new PMException(e.getMessage(),
+                    MessageIDs.E_PERSISTENCE_LOAD_FAILED);
+        } 
+    }
+
+    /**
+     * Loads a Set<IReusedProject> in a session.
+     * 
+     * @param s Session to be used for DB access
+     * @param projectID Object id for the project to be used
+     * @return A Set of IReusedProjectPOs for the submitted projectID. The Set may be empty.
+     */
+    public static List<IReusedProjectPO> getReusedProjectsForProject(
+            EntityManager s, long projectID) {
+        Query q = 
+                s.createQuery("select project from ReusedProjectPO project where project.hbmParentProjectId = :projectID"); //$NON-NLS-1$
+        q.setParameter("projectID", projectID); //$NON-NLS-1$
+                
+        @SuppressWarnings("unchecked")
+        List<IReusedProjectPO> result = q.getResultList();
+        return result;
+    }
+
+    /**
      * @param s Session to use
      * @param key If of Project to preload
      */
@@ -642,6 +747,8 @@ public class ProjectPM extends PersistenceManager {
         List<IExecTestCasePO> testCaseRefs = 
                 preloadDataForClass(s, projectIds, "ExecTestCasePO");
         preloadDataForClass(s, projectIds, "CategoryPO");
+        preloadDataForClass(s, projectIds, "TestDataPO");
+        
         
         // for performance reasons, we prefill the cachedSpecTestCase
         // in ExecTestCasePOs

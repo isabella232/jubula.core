@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -70,7 +71,6 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
      */
     public Object[] getChildren(Object parentO) {
         Object[] children = DUMMY;
-
         if (parentO instanceof IProjectPO
                 || parentO instanceof IReusedProjectPO) {
             Long parentProjectID = null;
@@ -93,14 +93,17 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
                 UnusedCompnamesCategory unCat = new UnusedCompnamesCategory(
                         parentProjectID, parentO);
                 try {
-                    IProjectPO project;
+                    boolean areThereReusedProjects;
                     if (parentO instanceof IProjectPO) {
-                        project = (IProjectPO)parentO;
+                        IProjectPO project = (IProjectPO) parentO;
+                        areThereReusedProjects = project.getUsedProjects()
+                                .size() > 0;
                     } else {
-                        project = ProjectPM.loadProjectById(parentProjectID);
+                        areThereReusedProjects =
+                                ProjectPM.getReusedProjectsForProjectRO(
+                                        parentProjectID).size() > 0;
                     }
-
-                    if (project.getUsedProjects().size() > 0) {
+                    if (areThereReusedProjects) {
                         ReusedCompnamesCategory reusedCat = 
                             new ReusedCompnamesCategory(
                                 parentProjectID, parentO);
@@ -149,8 +152,9 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
      */
     private Object[] findAllReusedProjects(AbstractCompNamesCategory pe) {
         try {
-            IProjectPO rp = ProjectPM.loadProjectById(pe.getParentProjectID());
-            return rp.getUsedProjects().toArray();
+            List<IReusedProjectPO> usedProjects = ProjectPM
+                    .getReusedProjectsForProjectRO(pe.getParentProjectID());
+            return usedProjects.toArray();
         } catch (JBException e) {
             // nothing to catch here
         }
