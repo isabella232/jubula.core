@@ -16,6 +16,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
@@ -524,7 +525,8 @@ public class SwtApplicationImplClass extends AbstractApplicationImplClass
         getRobot().click(FocusTracker.getFocusOwner(), null, 
             ClickOptions.create().setClickCount(2).left());
         if (StringConstants.EMPTY.equals(text)) {
-            getRobot().keyStroke("DELETE"); //$NON-NLS-1$
+            getRobot().keyStroke(
+                    CompSystemConstants.KEY_STROKE_DELETE);
         }
         gdInputText(text);
     }

@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.swt.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.swt.SWT;
@@ -70,7 +71,8 @@ public class SwtKeyCodeConverter {
         KEY_MAP.put("HOME", new Integer(SWT.HOME));  //$NON-NLS-1$
         KEY_MAP.put("END", new Integer(SWT.END));  //$NON-NLS-1$
         KEY_MAP.put("INSERT", new Integer(SWT.INSERT));  //$NON-NLS-1$
-        KEY_MAP.put("DELETE", new Integer(SWT.DEL));  //$NON-NLS-1$
+        KEY_MAP.put(CompSystemConstants.KEY_STROKE_DELETE, 
+                new Integer(SWT.DEL));
         KEY_MAP.put("PAGE_UP", new Integer(SWT.PAGE_UP));  //$NON-NLS-1$
         KEY_MAP.put("PAGE_DOWN", new Integer(SWT.PAGE_DOWN));  //$NON-NLS-1$
         KEY_MAP.put("DOWN", new Integer(SWT.ARROW_DOWN));  //$NON-NLS-1$
@@ -120,7 +122,8 @@ public class SwtKeyCodeConverter {
         KEYCODE_MAP.put(new Integer(SWT.END), new String("END"));  //$NON-NLS-1$
         KEYCODE_MAP.put(new Integer(SWT.HOME), new String("HOME"));  //$NON-NLS-1$
         KEYCODE_MAP.put(new Integer(SWT.INSERT), new String("INSERT"));  //$NON-NLS-1$
-        KEYCODE_MAP.put(new Integer(SWT.DEL), new String("DELETE"));  //$NON-NLS-1$
+        KEYCODE_MAP.put(new Integer(SWT.DEL), new String(
+                CompSystemConstants.KEY_STROKE_DELETE));
         KEYCODE_MAP.put(new Integer(SWT.ARROW_UP), new String("UP"));  //$NON-NLS-1$
         KEYCODE_MAP.put(new Integer(SWT.ARROW_DOWN), new String("DOWN"));  //$NON-NLS-1$
         KEYCODE_MAP.put(new Integer(SWT.ARROW_LEFT), new String("LEFT"));  //$NON-NLS-1$

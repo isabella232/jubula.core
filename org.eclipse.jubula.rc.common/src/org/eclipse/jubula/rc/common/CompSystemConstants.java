@@ -82,4 +82,7 @@ public interface CompSystemConstants {
     public static final String MODIFIER_CMD = "cmd"; //$NON-NLS-1$
     /** */
     public static final String MODIFIER_MOD = "mod"; //$NON-NLS-1$
+    
+    /** */
+    public static final String KEY_STROKE_DELETE = "DELETE"; //$NON-NLS-1$
 }

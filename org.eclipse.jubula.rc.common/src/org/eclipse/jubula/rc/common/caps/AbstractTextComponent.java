@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.common.caps;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
@@ -69,7 +70,8 @@ public class AbstractTextComponent extends AbstractTextInputSupport {
     public void gdReplaceText(String text) {
         gdSelect();
         if (StringUtils.EMPTY.equals(text)) {
-            getRobot().keyStroke("DELETE"); //$NON-NLS-1$
+            getRobot().keyStroke(
+                    CompSystemConstants.KEY_STROKE_DELETE);
         }
         insertText(text);
     }

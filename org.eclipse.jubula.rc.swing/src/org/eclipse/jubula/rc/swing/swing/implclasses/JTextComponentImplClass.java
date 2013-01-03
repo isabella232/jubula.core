@@ -14,6 +14,7 @@ import javax.swing.JComponent;
 import javax.swing.text.JTextComponent;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -144,7 +145,8 @@ public class JTextComponentImplClass extends AbstractSwingImplClass
     public void gdReplaceText(String text) {
         gdSelect();
         if (StringUtils.EMPTY.equals(text)) {
-            getRobot().keyStroke("DELETE"); //$NON-NLS-1$
+            getRobot().keyStroke(
+                    CompSystemConstants.KEY_STROKE_DELETE);
         }
         insertText(text);
     }
