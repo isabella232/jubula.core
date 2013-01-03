@@ -27,7 +27,7 @@
 	
 	<toolkitComponent type="javax.swing.AbstractButton" visible="false">
 		<realizes>guidancer.concrete.Button</realizes>
-		<testerClass>org.eclipse.jubula.rc.swing.swing.caps.AbstractButtonCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.caps.AbstractButtonCAPs</testerClass>
 		<componentClass name="javax.swing.AbstractButton" />
 	</toolkitComponent>
 

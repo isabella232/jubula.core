@@ -22,7 +22,7 @@ import org.eclipse.jubula.rc.common.uiadapter.interfaces.IButtonAdapter;
  * @author BREDEX GmbH
  *
  */
-public abstract class AbstractButtonCAPs extends AbstractTextVerifiable {
+public class AbstractButtonCAPs extends AbstractTextVerifiable {
 
     /**
      * 
@@ -51,4 +51,8 @@ public abstract class AbstractButtonCAPs extends AbstractTextVerifiable {
         gdVerifyText(text, MatchUtil.DEFAULT_OPERATOR);
     }
 
+    /** {@inheritDoc} */
+    public String[] getTextArrayFromComponent() {
+        return new String[] { getButtonAdapter().getText() };
+    }
 }
