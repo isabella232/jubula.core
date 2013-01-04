@@ -194,7 +194,7 @@
 			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.GraphicApplication</realizes>
-		<testerClass>org.eclipse.jubula.rc.swt.implclasses.SwtApplicationImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swt.caps.SwtApplicationCAPs</testerClass>
 		<componentClass name="com.bredexsw.guidancer.autswtserver.implclasses.GraphicApplication" />
 	</toolkitComponent>
 

@@ -21,7 +21,7 @@
 			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.GraphicApplication</realizes>
-		<testerClass>org.eclipse.jubula.rc.swing.swing.implclasses.SwingApplicationImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swing.swing.caps.SwingApplicationCAPs</testerClass>
 		<componentClass name="com.bredexsw.guidancer.autserver.swing.implclasses.GraphicApplication" />
 	</toolkitComponent>
 	
