@@ -34,7 +34,7 @@ import org.eclipse.jubula.tools.utils.StringParsing;
  * @author BREDEX GmbH
  *
  */
-public abstract class AbstractListCAPs extends AbstractTextVerifiable {
+public class AbstractListCAPs extends AbstractTextVerifiable {
 
     /** The default separator for enumerations of list values. */
     public static final char INDEX_LIST_SEP_CHAR = 
@@ -471,6 +471,7 @@ public abstract class AbstractListCAPs extends AbstractTextVerifiable {
      * 
      * @return -
      */
-    protected abstract int getSystemDefaultModifier();
-    
+    protected int getSystemDefaultModifier() {
+        return -1;
+    }
 }
