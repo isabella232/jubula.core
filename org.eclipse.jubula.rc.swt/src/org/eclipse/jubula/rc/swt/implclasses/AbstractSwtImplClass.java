@@ -17,15 +17,12 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.exception.RobotException;
-import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.IBaseImplementationClass;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.swt.driver.KeyCodeConverter;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.swt.widgets.Item;
 
@@ -113,17 +110,6 @@ public abstract class AbstractSwtImplClass implements IBaseImplementationClass {
         TimeUtil.delay(delayBeforeDrop);
     }
 
-    /**
-     * for action which have no valid implementation in this toolkit this
-     * method is called and an appropriate exception is thrown.
-     */
-    protected void throwUnsupportedAction() {
-        throw new StepExecutionException(TestErrorEvent
-                .UNSUPPORTED_OPERATION_IN_TOOLKIT_ERROR, 
-                EventFactory.createUnsupportedActionError());
-    }
-
-    
     /**
      * Returns an array of representation strings that corresponds to the given
      * array of items or null if the given array is null;

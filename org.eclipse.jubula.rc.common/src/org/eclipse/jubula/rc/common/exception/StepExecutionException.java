@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.common.exception;
 
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
 
@@ -54,5 +55,15 @@ public class StepExecutionException extends EventSupportException {
      */
     public StepExecutionException(Throwable cause) {
         super(cause, MessageIDs.E_STEP_EXEC);
+    }
+    
+    /**
+     * for action which have no valid implementation in the current toolkit this
+     * method is called and an appropriate exception is thrown.
+     */
+    public static void throwUnsupportedAction() {
+        throw new StepExecutionException(
+                TestErrorEvent.UNSUPPORTED_OPERATION_IN_TOOLKIT_ERROR,
+                EventFactory.createUnsupportedActionError());
     }
 }

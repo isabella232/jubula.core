@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.tools.objects.event;
 
+
 /**
  * This factory creates test error events. The event represents a failure
  * condition during a test step execution.

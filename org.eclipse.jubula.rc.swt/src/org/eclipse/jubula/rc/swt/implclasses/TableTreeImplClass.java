@@ -714,14 +714,14 @@ public class TableTreeImplClass extends TreeImplClass
      */
     public void gdPopupByIndexPathAtIndexNode(String treeIndexPath,
             String popupIndexPath) {
-        throwUnsupportedAction();
+        StepExecutionException.throwUnsupportedAction();
     }
 
     /**
      * {@inheritDoc}
      */
     public void gdPopupByIndexPathAtSelectedNode(String indexPath) {
-        throwUnsupportedAction();
+        StepExecutionException.throwUnsupportedAction();
     }
 
     /**
@@ -729,7 +729,7 @@ public class TableTreeImplClass extends TreeImplClass
      */
     public void gdPopupByIndexPathAtTextNode(String treeTextPath,
             String operator, String popupIndexPath) {
-        throwUnsupportedAction();
+        StepExecutionException.throwUnsupportedAction();
     }
 
     /**
@@ -737,14 +737,14 @@ public class TableTreeImplClass extends TreeImplClass
      */
     public void gdPopupByTextPathAtIndexNode(String treeIndexPath,
             String popupTextPath) {
-        throwUnsupportedAction();
+        StepExecutionException.throwUnsupportedAction();
     }
 
     /**
      * {@inheritDoc}
      */
     public void gdPopupByTextPathAtSelectedNode(String textPath) {
-        throwUnsupportedAction();
+        StepExecutionException.throwUnsupportedAction();
     }
 
     /**
@@ -752,7 +752,7 @@ public class TableTreeImplClass extends TreeImplClass
      */
     public void gdPopupByTextPathAtTextNode(String treeTextPath,
             String operator, String popupTextPath) {
-        throwUnsupportedAction();
+        StepExecutionException.throwUnsupportedAction();
     }
 
     /**

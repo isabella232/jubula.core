@@ -2287,28 +2287,28 @@ public class TableImplClass extends AbstractControlImplClass
      */
     public void gdPopupByIndexPathAtCell(int row, int column, 
             String indexPath) {
-        throwUnsupportedAction();
+        StepExecutionException.throwUnsupportedAction();
     }
 
     /**
      * {@inheritDoc}
      */
     public void gdPopupByIndexPathAtSelectedCell(String indexPath) {
-        throwUnsupportedAction();
+        StepExecutionException.throwUnsupportedAction();
     }
 
     /**
      * {@inheritDoc}
      */
     public void gdPopupByTextPathAtCell(int row, int column, String textPath) {
-        throwUnsupportedAction();
+        StepExecutionException.throwUnsupportedAction();
     }
 
     /**
      * {@inheritDoc}
      */
     public void gdPopupByTextPathAtSelectedCell(String textPath) {
-        throwUnsupportedAction();
+        StepExecutionException.throwUnsupportedAction();
     }
 
     /**
@@ -2316,7 +2316,7 @@ public class TableImplClass extends AbstractControlImplClass
      */
     public void gdSelectCellByRowValue(int column, String cellValue,
             boolean useRegularExpression) {
-        throwUnsupportedAction();
+        StepExecutionException.throwUnsupportedAction();
     }
 
     /**
