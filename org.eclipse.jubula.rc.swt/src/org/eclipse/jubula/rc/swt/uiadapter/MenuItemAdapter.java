@@ -372,20 +372,47 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      * @param item the menu item
      * @param clickCount the number of times to click the menu item
      */
-    public static void clickMenuItem(IRobot robot, final MenuItem item, 
+    private void clickMenuItem(IRobot robot, final MenuItem item, 
             int clickCount) {
-        // FIXME existiert so schon und kann man benutzen
-//        if (!isMenuItemEnabled(item)) {
-//            throw new StepExecutionException("menu item not enabled", //$NON-NLS-1$
-//                    EventFactory.createActionError(
-//                            TestErrorEvent.MENU_ITEM_NOT_ENABLED));
-//        }
+        boolean isSecondInMenu = ((Boolean) getEventThreadQueuer()
+                .invokeAndWait(
+                    "isMenuBar", new IRunnable() { //$NON-NLS-1$
+                        public Object run() throws StepExecutionException {
+                            try {                            
+                                if ((item.getParent()
+                                        .getParentMenu().getStyle() 
+                                    & SWT.BAR) != 0) {
+                                    return Boolean.TRUE;
+                                }
+                                Menu parent = item.getMenu().getParentMenu();
+                                if (parent != null) {
+                                    Menu preparent = parent.getParentMenu();
 
-        robot.click(item, null, 
-            ClickOptions.create()
-                .setClickType(ClickOptions.ClickType.RELEASED)
-                .setStepMovement(false).setClickCount(clickCount));
-        
+                                    if (preparent != null) {
+                                        return (preparent.getStyle() & SWT.BAR) 
+                                            != 0 
+                                            ? Boolean.TRUE : Boolean.FALSE;
+                                    }
+                                }
+                            } catch (NullPointerException ne) {
+                            // Nothing here, there is no parent of parent.
+                            }
+                            return Boolean.FALSE;
+                        }    
+                    })).booleanValue();
+        if (isSecondInMenu) {
+            robot.click(item, null, 
+                    ClickOptions.create()
+                    .setClickType(ClickOptions.ClickType.RELEASED)
+                    .setStepMovement(true).setClickCount(clickCount)
+                    .setFirstHorizontal(false)); 
+
+        } else {
+            robot.click(item, null, 
+                    ClickOptions.create()
+                    .setClickType(ClickOptions.ClickType.RELEASED)
+                    .setStepMovement(true).setClickCount(clickCount));
+        }  
     }
     /**
      * 

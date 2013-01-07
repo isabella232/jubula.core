@@ -427,7 +427,7 @@ public abstract class MenuUtil extends MenuUtilBase {
                 .getInvoker().getParent() instanceof JMenuBar) {
             
             robot.click(item, null, ClickOptions.create().setClickType(
-                    ClickOptions.ClickType.RELEASED).setFirstHorizontal(true));
+                    ClickOptions.ClickType.RELEASED).setFirstHorizontal(false));
         } else {
             robot.click(item, null, ClickOptions.create().setClickType(
                     ClickOptions.ClickType.RELEASED));

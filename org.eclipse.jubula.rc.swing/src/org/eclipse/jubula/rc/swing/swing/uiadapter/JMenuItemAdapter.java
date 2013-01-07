@@ -11,7 +11,9 @@
 package org.eclipse.jubula.rc.swing.swing.uiadapter;
 
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
@@ -201,8 +203,7 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
                     EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
         }
         JMenu menu = (JMenu) m_menuItem;        
-        getRobot().click(m_menuItem, null, ClickOptions.create().setClickType(
-            ClickOptions.ClickType.RELEASED));
+        clickMenuItem(getRobot(), m_menuItem);
         RobotTiming.sleepPostShowSubMenuItem(menu.getDelay());
         return getMenu();
     }
@@ -219,7 +220,15 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
                     EventFactory.createActionError(
                             TestErrorEvent.MENU_ITEM_NOT_ENABLED));
         }
-        robot.click(item, null, ClickOptions.create().setClickType(
-            ClickOptions.ClickType.RELEASED));
+        if (item.getParent() instanceof JPopupMenu 
+                && ((JPopupMenu)item.getParent())
+                .getInvoker().getParent() instanceof JMenuBar) {
+            
+            robot.click(item, null, ClickOptions.create().setClickType(
+                    ClickOptions.ClickType.RELEASED).setFirstHorizontal(false));
+        } else {
+            robot.click(item, null, ClickOptions.create().setClickType(
+                    ClickOptions.ClickType.RELEASED));
+        }
     }
 }
