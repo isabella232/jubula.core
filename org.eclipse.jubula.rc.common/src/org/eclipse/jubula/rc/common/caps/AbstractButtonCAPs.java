@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.caps;
 
+import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.uiadapter.interfaces.IButtonAdapter;
@@ -53,6 +54,12 @@ public class AbstractButtonCAPs extends AbstractTextVerifiable {
 
     /** {@inheritDoc} */
     public String[] getTextArrayFromComponent() {
-        return new String[] { getButtonAdapter().getText() };
+        String[] textArray = null;
+        try {
+            textArray = new String[] { getButtonAdapter().getText() };
+        } catch (StepExecutionException e) {
+            // ok here - getText() might be an unsupported action
+        }
+        return textArray;
     }
 }
