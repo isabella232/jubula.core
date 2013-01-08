@@ -27,9 +27,7 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
  * 
  * @author BREDEX GmbH
  */
-public abstract class AbstractWidgetCAPs extends AbstractUICAPs {
-
-    
+public class AbstractWidgetCAPs extends AbstractUICAPs {
     /**
      * Casts the IComponentAdapter to an IWidgetAdapter for better access
      * @return The widgetAdapter
@@ -536,5 +534,10 @@ public abstract class AbstractWidgetCAPs extends AbstractUICAPs {
      */
     public static void waitBeforeDrop(int delayBeforeDrop) {
         TimeUtil.delay(delayBeforeDrop);
+    }
+
+    /** {@inheritDoc} */
+    public String[] getTextArrayFromComponent() {
+        return null;
     }
 }
