@@ -54,12 +54,8 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
         Vector<String> commands = new Vector<String>();
         commands.add(baseCmd);
 
-        if (BXDEBUG != null) {
-            commands.add("-Xdebug"); //$NON-NLS-1$
-            commands.add("-agentlib:jdwp=transport=dt_socket,address="  //$NON-NLS-1$
-                    + BXDEBUG + ",server=y,suspend=y"); //$NON-NLS-1$
-        }
-
+        addDebugParams(commands, false);
+        
         StringBuilder serverClasspath = new StringBuilder();
         String [] bundlesToAddToClasspath = getBundlesForClasspath();
             
