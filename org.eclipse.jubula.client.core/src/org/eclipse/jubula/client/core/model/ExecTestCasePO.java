@@ -251,8 +251,10 @@ class ExecTestCasePO extends TestCasePO implements
                     // Referenced TC is in a different project
                     Set<IReusedProjectPO> reusedProjects = 
                         new HashSet<IReusedProjectPO>();
-                    reusedProjects.addAll(
-                            ProjectPM.loadReusedProjects(getParentProjectId()));
+                    reusedProjects
+                            .addAll(
+                            ProjectPM.loadReusedProjectsRO(
+                                    getParentProjectId()));
                     specTc = NodePM.getSpecTestCase(
                             reusedProjects, getProjectGuid(), 
                             getSpecTestCaseGuid());
