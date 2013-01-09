@@ -344,5 +344,25 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
         return pathBuilder.substring(
                 0, pathBuilder.lastIndexOf(PATH_SEPARATOR));
     }
-    
+ 
+    /**
+     * Adds the parameters for remote debugging to the given command List
+     * 
+     * @param cmds
+     *            the command List
+     * @param isDirectExec
+     *            true if the AUT is started by exec and not by a JVM
+     */
+    protected void addDebugParams(List cmds, boolean isDirectExec) {
+        final String rcDebug = IStartAut.RC_DEBUG;
+        if (rcDebug != null) {
+            if (isDirectExec) {
+                cmds.add("-vmargs -Xms128m -Xmx512m"); //$NON-NLS-1$
+            }
+            cmds.add("-Xdebug"); //$NON-NLS-1$
+            cmds.add("-Xnoagent"); //$NON-NLS-1$
+            cmds.add("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=" + rcDebug); //$NON-NLS-1$
+            cmds.add("-Djava.compiler=NONE"); //$NON-NLS-1$
+        }
+    }
 }
