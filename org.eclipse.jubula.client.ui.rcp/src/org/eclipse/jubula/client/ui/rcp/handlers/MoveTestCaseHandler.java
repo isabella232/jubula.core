@@ -297,6 +297,10 @@ public class MoveTestCaseHandler extends AbstractHandler {
                 GeneralStorage.getInstance().getMasterSession().refresh(
                         GeneralStorage.getInstance().getProject()
                             .getSpecObjCont());
+                IProjectPO referencedProject = ProjectPM
+                        .loadReusedProjectInMasterSession(selectedProject);
+                GeneralStorage.getInstance().getMasterSession().refresh(
+                       referencedProject.getSpecObjCont());
                 
                 tcb.getTreeViewer().refresh();
             } else {
