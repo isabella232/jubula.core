@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -70,39 +71,6 @@ import org.eclipse.ui.IEditorReference;
  * @created Oct 15, 2007
  */
 public class MoveTestCaseHandler extends AbstractHandler {
-
-    /**
-     * A problem with moving a node.
-     *
-     * @author BREDEX GmbH
-     * @created Oct 17, 2007
-     */
-    private static class MoveProblem {
-        
-        /** indicated problem node */
-        private INodePO m_problemNode; 
-
-        /**
-         * Constructor
-         * 
-         * @param problemNode The node that is causing the 
-         *                    problem.
-         */
-        public MoveProblem(INodePO problemNode) {
-            
-            m_problemNode = problemNode;
-        }
-
-        /**
-         * 
-         * @return The node that iscausing the problem.
-         */
-        public INodePO getCause() {
-            return m_problemNode;
-        }
-        
-    }
-    
     /**
      * Represents problems with moving one or more Test Cases.
      *
@@ -112,7 +80,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
     private static class ProblemSet {
         
         /** valid problems */
-        private List<MoveProblem> m_problems = new ArrayList<MoveProblem>();
+        private Set<INodePO> m_problems = new HashSet<INodePO>();
         
         /** list of nodes that are being moved */
         private List<INodePO> m_nodesToMove;
@@ -123,33 +91,31 @@ public class MoveTestCaseHandler extends AbstractHandler {
          * @param nodesToMove The nodes that are to be moved.
          */
         public ProblemSet(List<INodePO> nodesToMove) {
-            m_nodesToMove = new ArrayList<INodePO>();
+            setNodesToMove(new ArrayList<INodePO>());
             for (INodePO node : nodesToMove) {
-                addCatChildren(node, m_nodesToMove);
+                addCatChildren(node, getNodesToMove());
             }
         }
         
         /**
-         * Adds a problem to the set, if it is recognized as a valid problem.
-         * If the problem is determined to be invalid, it will not actually be
-         * added to the set.
-         * 
-         * @param problemNode The node that is causing the 
-         *                    problem.
-         */
-        public void addProblem(INodePO problemNode) {
-            
-            if (!m_nodesToMove.contains(problemNode)) {
-                m_problems.add(new MoveProblem(problemNode.getParentNode()));
-            }
-        }
-        
-        /**
-         * 
          * @return List of valid problems.
          */
-        public List<MoveProblem> getProblems() {
+        public Set<INodePO> getProblems() {
             return m_problems;
+        }
+
+        /**
+         * @return the nodesToMove
+         */
+        public List<INodePO> getNodesToMove() {
+            return m_nodesToMove;
+        }
+
+        /**
+         * @param nodesToMove the nodesToMove to set
+         */
+        private void setNodesToMove(List<INodePO> nodesToMove) {
+            m_nodesToMove = nodesToMove;
         }
     }
 
@@ -167,12 +133,17 @@ public class MoveTestCaseHandler extends AbstractHandler {
         IStructuredSelection sel = (IStructuredSelection)tcb.getSelection();
         List<INodePO> selectionList = sel.toList();
 
-        if (!closeRelatedEditors(selectionList)) {
+        List <INodePO> nodesToMove = new ArrayList<INodePO>();
+        for (INodePO node : selectionList) {
+            MultipleNodePM.collectAffectedNodes(nodesToMove, node);
+        }
+        
+        if (!closeRelatedEditors(nodesToMove)) {
             return null;
         }
         
         // Check if move is valid
-        ProblemSet moveProblems = getMoveProblem(selectionList);
+        ProblemSet moveProblems = getMoveProblem(nodesToMove);
 
         if (moveProblems.getProblems().isEmpty()) {
             Set<IReusedProjectPO> reusedProjects = 
@@ -220,10 +191,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
         return null;
     }
     
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setEnabled(boolean enabled) {
         IProjectPO currentProject = GeneralStorage.getInstance().getProject();
         boolean projectAvailable = currentProject == null ? false
@@ -375,8 +343,8 @@ public class MoveTestCaseHandler extends AbstractHandler {
     private void showProblems(ProblemSet moveProblems) {
         // Display info as to why TCs could not be moved
         StringBuilder sb = new StringBuilder();
-        for (MoveProblem moveProblem : moveProblems.getProblems()) {
-            sb.append(moveProblem.getCause().getName());
+        for (INodePO moveProblem : moveProblems.getProblems()) {
+            sb.append(moveProblem.getName());
             sb.append(StringConstants.NEWLINE);
         }
         ErrorHandlingUtil.createMessageDialog(MessageIDs.I_CANNOT_MOVE_TC, 
@@ -395,48 +363,45 @@ public class MoveTestCaseHandler extends AbstractHandler {
      * @return The commands necessary to move the given nodes.
      */
     private List<MultipleNodePM.AbstractCmdHandle> createCommands(
-        List<INodePO> selectionList, 
-        ISpecObjContPO newParent, IProjectPO extProject) throws JBException {
-        
+            List<INodePO> selectionList, ISpecObjContPO newParent,
+            IProjectPO extProject) throws JBException {
+
         List<MultipleNodePM.AbstractCmdHandle> commands = 
-            new ArrayList<MultipleNodePM.AbstractCmdHandle>();
-        
+                new ArrayList<MultipleNodePM.AbstractCmdHandle>();
+
         CompNameUsageMap usageMap = new CompNameUsageMap();
-        final String projGuid = 
-            GeneralStorage.getInstance().getProject().getGuid();
-        final Long projId = GeneralStorage.getInstance().getProject().getId();
+        final IProjectPO currenProject = GeneralStorage.getInstance()
+                .getProject();
+        final String projGuid = currenProject.getGuid();
+        final Long projId = currenProject.getId();
         for (INodePO selNode : selectionList) {
-            commands.add(new MultipleNodePM.MoveNodeHandle(
-                selNode, selNode.getParentNode(), newParent));
-            
+            commands.add(new MultipleNodePM.MoveNodeHandle(selNode, selNode
+                    .getParentNode(), newParent));
+
             List<INodePO> specTcs = new ArrayList<INodePO>();
             List<ISpecTestCasePO> specTcPOs = new ArrayList<ISpecTestCasePO>();
             addCatChildren(selNode, specTcs);
             for (INodePO spec : specTcs) {
-                ISpecTestCasePO specTestCasePo = (ISpecTestCasePO)spec;
+                ISpecTestCasePO specTestCasePo = (ISpecTestCasePO) spec;
                 specTcPOs.add(specTestCasePo);
                 CollectComponentNameUsersOp op = 
-                    new CollectComponentNameUsersOp(projGuid, projId);
-                TreeTraverser trav = 
-                    new TreeTraverser(specTestCasePo, op, true, 2);
-                trav.traverse();
+                        new CollectComponentNameUsersOp(projGuid, projId);
+                new TreeTraverser(specTestCasePo, op, true, 2).traverse();
                 usageMap.addAll(op.getUsageMap());
-                for (IExecTestCasePO execTc 
-                    : NodePM.getInternalExecTestCases(
-                        specTestCasePo.getGuid(), 
+                for (IExecTestCasePO execTc : NodePM.getInternalExecTestCases(
+                        specTestCasePo.getGuid(),
                         specTestCasePo.getParentProjectId())) {
-                    
+
                     commands.add(new MultipleNodePM.UpdateTestCaseRefHandle(
                             execTc, specTestCasePo));
                 }
             }
-            commands.add(new MultipleNodePM.UpdateParamNamesHandle(
-                specTcPOs, extProject));
+            commands.add(new MultipleNodePM.UpdateParamNamesHandle(specTcPOs,
+                    extProject));
         }
-        commands.add(new MultipleNodePM.TransferCompNameHandle(
-                usageMap, GeneralStorage.getInstance().getProject().getId(),
-                extProject));
-        
+        commands.add(new MultipleNodePM.TransferCompNameHandle(usageMap,
+                projId, extProject));
+
         return commands;
     }
     
@@ -444,10 +409,9 @@ public class MoveTestCaseHandler extends AbstractHandler {
      * Indicates whether there is a problem with moving the given selection. If
      * there is a problem, it is described by the return value.
      * 
-     * @param selectionList The elements that are to be moved
-     * @return <code>null</code> if their is no problem with moving the given
-     *         items. Otherwise, returns a <code>String</code> that represents
-     *         the problem.
+     * @param selectionList
+     *            The elements that are to be moved
+     * @return a set of problems
      */
     private ProblemSet getMoveProblem(List<INodePO> selectionList) {
         ProblemSet problems = new ProblemSet(selectionList);
@@ -456,26 +420,24 @@ public class MoveTestCaseHandler extends AbstractHandler {
     }
 
     /**
-     * Indicates whether there is a problem with moving the given selection. If
-     * there is a problem, it is described by the return value.
+     * Indicates whether there is a problem with moving the given selection.
      * 
-     * @param selectionList The elements that are to be moved
-     * @param problems All problems with moving the given nodes.
+     * @param selectionList
+     *            The elements that are to be moved
+     * @param problems
+     *            All problems with moving the given nodes.
      */
     private void getMoveProblem(List<INodePO> selectionList, 
         ProblemSet problems) {
         
+        Long cProjId = GeneralStorage.getInstance().getProject().getId();
         for (INodePO node : selectionList) {
             if (node instanceof IExecTestCasePO) {
                 ISpecTestCasePO refTestCase = 
-                    ((IExecTestCasePO)node).getSpecTestCase();
-                if (refTestCase != null) {
-                    Long curProjectId = 
-                        GeneralStorage.getInstance().getProject().getId();
-                    if (refTestCase.getParentProjectId().equals(curProjectId)) {
-                        problems.addProblem(node);
-                        
-                    }
+                        ((IExecTestCasePO)node).getSpecTestCase();
+                if (!problems.getNodesToMove().contains(refTestCase)
+                        && cProjId.equals(refTestCase.getParentProjectId())) {
+                    problems.getProblems().add(refTestCase);
                 }
             } else {
                 getMoveProblem(node.getUnmodifiableNodeList(), problems);

@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.handlers.delete;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.ListUtils;
@@ -77,18 +76,6 @@ public class DeleteTreeItemHandlerTSBrowser extends
             cmds.add(cmd);
         }
         return cmds;
-    }
-
-    /** {@inheritDoc} */
-    protected void collectNodesToDelete(List<INodePO> nodesToDelete,
-            INodePO node) {
-        nodesToDelete.add(node);
-        if (node instanceof ICategoryPO) {
-            Iterator iter = node.getNodeListIterator();
-            while (iter.hasNext()) {
-                collectNodesToDelete(nodesToDelete, (INodePO) iter.next());
-            }
-        }
     }
 
     /**

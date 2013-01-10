@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.core.persistence;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -997,5 +998,61 @@ public class MultipleNodePM  extends PersistenceManager {
             isNested = true;
         }
         return isNested;
+    }
+    
+    /**
+     * collects all nodes of a specified node, that are required for the current
+     * operation
+     * 
+     * @param affectedNodes
+     *            Set<INodePO>
+     * @param node
+     *            INodePO
+     */
+    public static void collectAffectedNodes(List<INodePO> affectedNodes,
+            INodePO node) {
+        affectedNodes.add(node);
+        if (node instanceof ICategoryPO) {
+            Iterator iter = node.getNodeListIterator();
+            while (iter.hasNext()) {
+                collectAffectedNodes(affectedNodes, (INodePO) iter.next());
+            }
+        } else if (node instanceof ISpecTestCasePO) {
+            ISpecTestCasePO specTcPO = (ISpecTestCasePO) node;
+            if (!specTcPO.getAllEventEventExecTC().isEmpty()) {
+                affectedNodes.addAll(specTcPO.getAllEventEventExecTC());
+            }
+        }
+    }
+    
+    /**
+     * Checks if all ExecTestCases are used in SpecTestCases, that are going
+     * to be affected
+     * 
+     * @param affectedNodes
+     *      List<INodePO>
+     * @param execTestCases
+     *      List<IExecTestCasePO>
+     * @return
+     *      true, if no conflict exists. That means, there are no IExecTestCasePO 
+     *      or all located in other nodes, which are going to be affected
+     */
+    public static boolean allExecsFromList(List<INodePO> affectedNodes, 
+        List<IExecTestCasePO> execTestCases) {
+        if (execTestCases.isEmpty()) {
+            return true;
+        }
+        for (IExecTestCasePO execTc : execTestCases) {
+            INodePO parent;
+            if (execTc instanceof IEventExecTestCasePO) {
+                parent = ((IEventExecTestCasePO) execTc).getParentNode();
+            } else {
+                parent = execTc.getParentNode();
+            }
+            if (!affectedNodes.contains(parent)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

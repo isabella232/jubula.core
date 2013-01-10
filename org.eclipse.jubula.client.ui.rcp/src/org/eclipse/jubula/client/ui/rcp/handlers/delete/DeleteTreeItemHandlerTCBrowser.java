@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.handlers.delete;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -24,12 +23,13 @@ import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteCatHandle;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteEvHandle;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteTCHandle;
+import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
+import org.eclipse.jubula.client.core.persistence.NodePM;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -42,55 +42,6 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  */
 public class DeleteTreeItemHandlerTCBrowser 
         extends AbstractDeleteBrowserTreeItemHandler {
-
-    /**
-     * Checks if all ExecTestCases are used in SpecTestCases, that are going
-     * to be deleted, too
-     * 
-     * @param nodesToDelete
-     *      List<INodePO>
-     * @param execTestCases
-     *      List<IExecTestCasePO>
-     * @return
-     *      true, if no conflict exists. That means, there are no IExecTestCasePO 
-     *      or all located in other nodes, which are going to be deleted
-     */
-    private boolean allExecsFromList(List<INodePO> nodesToDelete, 
-        List<IExecTestCasePO> execTestCases) {
-        if (execTestCases.isEmpty()) {
-            return true;
-        }
-        for (IExecTestCasePO execTc : execTestCases) {
-            INodePO parent;
-            if (execTc instanceof IEventExecTestCasePO) {
-                parent = ((IEventExecTestCasePO) execTc).getParentNode();
-            } else {
-                parent = execTc.getParentNode();
-            }
-            if (!nodesToDelete.contains(parent)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /** {@inheritDoc} */    
-    protected void collectNodesToDelete(List<INodePO> nodesToDelete, 
-        INodePO node) {
-        nodesToDelete.add(node);
-        if (node instanceof ICategoryPO) {
-            Iterator iter = node.getNodeListIterator();
-            while (iter.hasNext()) {
-                collectNodesToDelete(nodesToDelete, (INodePO)iter.next());
-            }
-        } else if (node instanceof ISpecTestCasePO) {
-            ISpecTestCasePO specTcPO = (ISpecTestCasePO)node;
-            if (!specTcPO.getAllEventEventExecTC().isEmpty()) {
-                nodesToDelete.addAll(specTcPO.getAllEventEventExecTC());
-            }
-        }
-    }
-
     /**
      * Creates a String with the locations of use of the given ISpecTestCasePO.
      * @param specTcPO a SpecTestCasePO
@@ -142,7 +93,8 @@ public class DeleteTreeItemHandlerTCBrowser
                 List<IExecTestCasePO> execTestCases;
                 execTestCases = NodePM.getInternalExecTestCases(
                     specTcPO.getGuid(), specTcPO.getParentProjectId());
-                if (!allExecsFromList(nodesToDelete, execTestCases)) {
+                if (!MultipleNodePM.allExecsFromList(
+                        nodesToDelete, execTestCases)) {
                     ErrorHandlingUtil.createMessageDialog(
                         MessageIDs.I_REUSED_SPEC_TCS, 
                         createLocOfUseArray(specTcPO, execTestCases,
