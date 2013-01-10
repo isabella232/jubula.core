@@ -33,9 +33,8 @@ public interface IStartAut {
     public static final Message ERROR_MESSAGE = new StartAUTServerStateMessage(
         StartAUTServerStateMessage.ERROR, "Unexpected error, no detail available."); //$NON-NLS-1$
     
-    
-    /** <code>BXDEBUG</code> */
-    public static final String BXDEBUG = System.getProperty("BXDEBUG"); //$NON-NLS-1$
+    /** <code>RC_DEBUG</code> */
+    public static final String RC_DEBUG = System.getProperty("RC_DEBUG"); //$NON-NLS-1$
 
     /** <code>PATH_SEPARATOR</code> */
     public static final String PATH_SEPARATOR = System.getProperty("path.separator"); //$NON-NLS-1$

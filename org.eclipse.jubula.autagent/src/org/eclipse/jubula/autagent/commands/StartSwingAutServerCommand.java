@@ -153,7 +153,7 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
         // add locale
         addLocale(cmds, (Locale)parameters.get(IStartAut.LOCALE)); 
         
-        // add jre params
+        // add JRE params
         final String jreParams = (String)parameters.get(
                 AutConfigConstants.JRE_PARAMETER);
         if (jreParams != null && jreParams.length() > 0) {
@@ -165,7 +165,7 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
         }
                 
         // add debug options (if neccessary)
-        addDebugParams(cmds);
+        addDebugParams(cmds, false);
         // add -Duser.dir and workingDir here
     }
     /**
@@ -336,19 +336,6 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
         }
         
         return argsList;
-    }
-    
-    /**
-     * Adds the parameters for remote debugging to the given command List.
-     * @param cmds the command List
-     */
-    private void addDebugParams(List cmds) {
-        if (BXDEBUG != null) {
-            cmds.add("-Xdebug"); //$NON-NLS-1$
-            cmds.add("-Xnoagent"); //$NON-NLS-1$
-            cmds.add("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=" + BXDEBUG); //$NON-NLS-1$
-            cmds.add("-Djava.compiler=NONE"); //$NON-NLS-1$
-        }
     }
     
     /**

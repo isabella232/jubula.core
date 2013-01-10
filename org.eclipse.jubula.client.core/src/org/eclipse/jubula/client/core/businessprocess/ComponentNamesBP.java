@@ -333,7 +333,7 @@ public class ComponentNamesBP
     public final Collection<IComponentNamePO> getAllComponentNamePOs(
             Long projId) throws PMException {
         
-        return CompNamePM.readAllCompNames(projId);
+        return CompNamePM.readAllCompNamesRO(projId);
     }
     
     /**
@@ -444,7 +444,7 @@ public class ComponentNamesBP
             }
         }
         
-        List<IReusedProjectPO> reusedProjList = ProjectPM.loadReusedProjects(
+        List<IReusedProjectPO> reusedProjList = ProjectPM.loadReusedProjectsRO(
                 projToSearchGuid, projMajVers, projMinVers);
         for (IReusedProjectPO reusedProj : reusedProjList) {
             final Integer reusedMajVers = reusedProj.getMajorNumber();

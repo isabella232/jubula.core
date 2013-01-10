@@ -76,6 +76,12 @@ public class ProjectPM extends PersistenceManager {
     /** standard logging */
     private static Logger log = LoggerFactory.getLogger(ProjectPM.class);
 
+    /** project guid cache */
+    private static Map<Long, String> guidCache = new HashMap<Long, String>(17);
+    
+    /** reused projects cache */
+    private static Map<Long, List<IReusedProjectPO>> rpCache = 
+            new HashMap<Long, List<IReusedProjectPO>>(17);
     /**
      * constructor must be hidden for class utilities (per CheckStyle)
      */
@@ -521,11 +527,12 @@ public class ProjectPM extends PersistenceManager {
      * @return a List of IReusedProjectPO or an empty List of nothing found. 
      * @throws JBException ...
      */
-    public static final synchronized List<IReusedProjectPO> loadReusedProjects(
+    public static final synchronized List<IReusedProjectPO> 
+    loadReusedProjectsRO(
         String projGuid, Integer projMajVers, Integer projMinVers) 
         throws JBException {
         
-        return loadReusedProjects(
+        return loadReusedProjectsRO(
                 findProjectId(projGuid, projMajVers, projMinVers));
     }
     
@@ -535,14 +542,16 @@ public class ProjectPM extends PersistenceManager {
      * @return a List of IReusedProjectPO or an empty List of nothing found. 
      * @throws JBException ...
      */
-    public static final List<IReusedProjectPO> loadReusedProjects(
+    public static final List<IReusedProjectPO> loadReusedProjectsRO(
             Long projectId) throws JBException {
-        
-        EntityManager session = null;
+        final List<IReusedProjectPO> cachedList = rpCache.get(projectId);
+        if (cachedList != null) {
+            return cachedList;
+        }
+        EntityManager session = GeneralStorage.getInstance().getMasterSession();
         final List<IReusedProjectPO> list = new ArrayList<IReusedProjectPO>();
         try {
             if (projectId != null) {
-                session = Persistor.instance().openSession();
                 final Query query = 
                     session.createQuery(
                         "select reusedProj from ReusedProjectPO reusedProj" //$NON-NLS-1$
@@ -554,9 +563,8 @@ public class ProjectPM extends PersistenceManager {
             log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
                     MessageIDs.E_PERSISTENCE_LOAD_FAILED);
-        } finally {
-            Persistor.instance().dropSessionWithoutLockRelease(session);
-        }
+        } 
+        rpCache.put(projectId, list);
         return list;
         
     }
@@ -723,7 +731,7 @@ public class ProjectPM extends PersistenceManager {
         Set<Long> projectIds = new HashSet<Long>(17);
         projectIds.add(key.getId());
         // adds all project ids of reused projects to set
-        findReusedProjects(projectIds, 
+        findReusedProjects(projectIds,
                 key.getProjectProperties().getUsedProjects());
 
         preloadDataForClass(s, projectIds, "CompNamesPairPO");
@@ -739,17 +747,15 @@ public class ProjectPM extends PersistenceManager {
         preloadDataForClass(s, projectIds, "TestDataCubePO");
 
         preloadDataForClass(s, projectIds, "CapPO");
-        List<ISpecTestCasePO> testCases = 
+        List<ISpecTestCasePO> testCases =
                 preloadDataForClass(s, projectIds, "SpecTestCasePO");
         preloadDataForClass(
                 s, projectIds, "EventExecTestCasePO");
         preloadDataForClass(s, projectIds, "TestSuitePO");
-        List<IExecTestCasePO> testCaseRefs = 
+        List<IExecTestCasePO> testCaseRefs =
                 preloadDataForClass(s, projectIds, "ExecTestCasePO");
         preloadDataForClass(s, projectIds, "CategoryPO");
-        preloadDataForClass(s, projectIds, "TestDataPO");
-        
-        
+
         // for performance reasons, we prefill the cachedSpecTestCase
         // in ExecTestCasePOs
         Map<String, ISpecTestCasePO> sTc = 
@@ -1738,7 +1744,10 @@ public class ProjectPM extends PersistenceManager {
      */
     public static final synchronized String getGuidOfProjectId(Long projId) 
         throws JBException {
-        
+        String cachedGuid = guidCache.get(projId);
+        if (cachedGuid != null) {
+            return cachedGuid;
+        }
         EntityManager session = null;
         String projGuid = null;
         try {
@@ -1755,6 +1764,7 @@ public class ProjectPM extends PersistenceManager {
         } finally {
             Persistor.instance().dropSessionWithoutLockRelease(session);
         }
+        guidCache.put(projId, projGuid);
         return projGuid;
     }
     

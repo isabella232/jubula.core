@@ -130,23 +130,6 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
     }
 
     /**
-     * Adds the parameters for remote debuggingto the given command List
-     * @param cmds the command List
-     * @param isDirectExec true if the AUT is started by exec and not by a JVM
-     */
-    private void addDebugParams(List cmds, boolean isDirectExec) {
-        if (IStartAut.BXDEBUG != null) {
-            if (isDirectExec) {
-                cmds.add("-vmargs -Xms128m -Xmx512m"); //$NON-NLS-1$
-            }
-            cmds.add("-Xdebug"); //$NON-NLS-1$
-            cmds.add("-Xnoagent"); //$NON-NLS-1$
-            cmds.add("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=" + IStartAut.BXDEBUG); //$NON-NLS-1$
-            cmds.add("-Djava.compiler=NONE"); //$NON-NLS-1$
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     protected String getServerClassName() {

@@ -67,7 +67,7 @@ public abstract class AbstractDeleteBrowserTreeItemHandler
         // (children of selected nodes which are CategoryPO or SpecTestCasePO
         List <INodePO> nodesToDelete = new ArrayList<INodePO>();
         for (INodePO node : topNodesToDelete) {
-            collectNodesToDelete(nodesToDelete, node);
+            MultipleNodePM.collectAffectedNodes(nodesToDelete, node);
         }
         
         // reverse List, to get the right order of deletion (child first)
@@ -101,18 +101,6 @@ public abstract class AbstractDeleteBrowserTreeItemHandler
     protected abstract List<AbstractCmdHandle> getDeleteCommands(
             List<INodePO> nodesToDelete);
     
-    /**
-     * collects all nodes of a specified node, that are required for the current
-     * delete operation
-     * 
-     * @param nodesToDelete
-     *            Set<INodePO>
-     * @param node
-     *            INodePO
-     */     
-    protected abstract void collectNodesToDelete(List<INodePO> nodesToDelete,
-            INodePO node);
-
     /**
      * checks if a set contains any parent node of a  specified node
      * @param set

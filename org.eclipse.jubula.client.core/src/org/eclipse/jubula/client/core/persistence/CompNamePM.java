@@ -242,6 +242,21 @@ public class CompNamePM extends AbstractNamePM {
             Persistor.instance().dropSessionWithoutLockRelease(s);
         }
     }
+    
+    /**
+     * Read component names from the master session
+     * @param parentProjectId id from root project
+     * @return list of all param name objects for given project
+     * @throws PMException in case of any db problem
+     */
+    public static final List<IComponentNamePO> readAllCompNamesRO(
+            Long parentProjectId) throws PMException {
+
+        EntityManager s = GeneralStorage.getInstance().getMasterSession();
+
+        return readAllCompNames(parentProjectId, s);
+
+    }
 
     /**
      * @param parentProjectId id from root project

@@ -23,6 +23,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -146,7 +147,14 @@ public class ComponentNameBrowser extends ViewPart implements
         final IProjectPO cProject = GeneralStorage.getInstance().getProject();
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
+                boolean isCachingOn = NodePM.getInstance().isUseCache();
+                if (!isCachingOn) {
+                    NodePM.getInstance().setUseCache(true);
+                }
                 getTreeViewer().setInput(cProject);
+                if (!isCachingOn) {
+                    NodePM.getInstance().setUseCache(false);
+                }
             }
         });
     }
