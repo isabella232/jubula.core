@@ -156,15 +156,25 @@ public class MoveTestCaseHandler extends AbstractHandler {
 
             String [] projectNames = 
                 projectNamesList.toArray(new String [projectNamesList.size()]);
-
-            ReusedProjectSelectionDialog dialog = 
-                new ReusedProjectSelectionDialog(
-                    Plugin.getShell(), projectNames, 
-                    Messages.MoveTestCaseDialogShellTitle,
-                    Messages.MoveTestCaseDialogMessage,
-                    IconConstants.MOVE_TC_DIALOG_STRING, 
-                    Messages.MoveTestCaseDialogShellTitle);
-
+            ReusedProjectSelectionDialog dialog;
+            if (hasRefDataCube(selectionList)) {
+                dialog = 
+                        new ReusedProjectSelectionDialog(
+                            Plugin.getShell(), projectNames, 
+                            Messages.MoveTestCaseDialogShellTitle,
+                            Messages.MoveTestCaseDialogCTDHint,
+                            true,
+                            IconConstants.MOVE_TC_DIALOG_STRING, 
+                            Messages.MoveTestCaseDialogShellTitle);
+            } else {
+                dialog = 
+                        new ReusedProjectSelectionDialog(
+                            Plugin.getShell(), projectNames, 
+                            Messages.MoveTestCaseDialogShellTitle,
+                            Messages.MoveTestCaseDialogMessage,
+                            IconConstants.MOVE_TC_DIALOG_STRING, 
+                            Messages.MoveTestCaseDialogShellTitle);
+            }
             dialog.setHelpAvailable(true);
             dialog.create();
             DialogUtils.setWidgetNameForModalDialog(dialog);
@@ -181,7 +191,6 @@ public class MoveTestCaseHandler extends AbstractHandler {
                         break;
                     }
                 }
-
                 doMove(tcb, selectionList, selectedProject);
             }
         } else {
@@ -444,7 +453,25 @@ public class MoveTestCaseHandler extends AbstractHandler {
             }
         }
     }
-
+    /**
+     * checks if any of the node has ReferencedDataCubes
+     * @param selectionList the list to be checked
+     * @return returns <code>true</code> if there is one PO with a refDataCube 
+     */
+    private boolean hasRefDataCube(List<INodePO> selectionList) {
+        for (INodePO selNode : selectionList) {            
+            List<INodePO> specTcs = new ArrayList<INodePO>();
+            addCatChildren(selNode, specTcs);
+            for (INodePO spec : specTcs) {
+                ISpecTestCasePO specTestCasePo = (ISpecTestCasePO)spec;
+                if (specTestCasePo.getReferencedDataCube() != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     /**
      * Adds all spec testcase descendants of the given node to the given 
      * list.

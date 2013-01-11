@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.dialogs;
 
 import java.util.Arrays;
 
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -61,6 +62,9 @@ public class ReusedProjectSelectionDialog extends TitleAreaDialog {
 
     /** initial dialog message */
     private String m_message;
+    
+    /** initial dialog hint */
+    private boolean m_isWarning;
 
     /** path to dialog title image */
     private String m_titleImage;
@@ -68,6 +72,24 @@ public class ReusedProjectSelectionDialog extends TitleAreaDialog {
     /** title of dialog shell */
     private String m_shellTitle;
         
+    /**
+     * Constructor
+     * 
+     * @param parentShell The parent of the dialog.
+     * @param projectNames The project names to display. 
+     * @param title Title of the dialog.
+     * @param message Message of the dialog.
+     * @param isWarning is the dialog with a warning message?.
+     * @param titleImage Title image of the dialog.
+     * @param shellTitle Title of the dialog shell.
+     */
+    public ReusedProjectSelectionDialog(Shell parentShell, 
+        String [] projectNames, String title, String message, boolean isWarning,
+        String titleImage, String shellTitle) {
+        this(parentShell, projectNames, title, message, titleImage, shellTitle);
+        m_isWarning = isWarning;
+    }
+    
     /**
      * Constructor
      * 
@@ -108,7 +130,12 @@ public class ReusedProjectSelectionDialog extends TitleAreaDialog {
     protected Control createDialogArea(Composite parent) {
 
         setTitle(m_title);
-        setMessage(m_message);
+        if (m_isWarning) {
+            setMessage(m_message, IMessageProvider.WARNING);
+        } else {
+            setMessage(m_message);
+        }
+        
         setTitleImage(Plugin.getImage(m_titleImage));
         getShell().setText(m_shellTitle);
 

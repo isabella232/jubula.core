@@ -450,6 +450,7 @@ public class Messages extends NLS {
     public static String MonitoringAgentAddInfo;
     public static String MoveTestCaseDialogLabel;
     public static String MoveTestCaseDialogMessage;
+    public static String MoveTestCaseDialogCTDHint;
     public static String MoveTestCaseDialogShellTitle;
     public static String MoveTestCaseDialogTitle;
     public static String NewCAPDialogActionLabel;

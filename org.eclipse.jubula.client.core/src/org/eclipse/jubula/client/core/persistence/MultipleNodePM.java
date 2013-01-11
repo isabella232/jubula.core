@@ -568,6 +568,14 @@ public class MultipleNodePM  extends PersistenceManager {
                 node = sess.find(node.getClass(), node.getId());
             }
 
+            // remove CentralTestData if the project changes.
+            if (node instanceof ISpecTestCasePO 
+                    && !(oldParent.getParentProjectId().equals(
+                            newParent.getParentProjectId()))) {
+                
+                ((ISpecTestCasePO) node).setReferencedDataCube(null);
+            }
+            
             // remove from old parent
             if (oldParent instanceof ISpecObjContPO) {
                 ((ISpecObjContPO)oldParent).removeSpecObject(
