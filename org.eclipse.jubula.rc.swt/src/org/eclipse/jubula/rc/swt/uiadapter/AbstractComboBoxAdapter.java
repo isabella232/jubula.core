@@ -183,13 +183,6 @@ public abstract class AbstractComboBoxAdapter extends WidgetAdapter
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public boolean containsValue(String value) {
-        return containsValue(value, MatchUtil.EQUALS);
-    }
-
-    /**
      * Returns the number of items contained in the combo list.
      * @return  the number of items.
      */

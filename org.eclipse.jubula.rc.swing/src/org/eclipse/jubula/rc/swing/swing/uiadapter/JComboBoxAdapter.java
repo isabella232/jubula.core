@@ -29,7 +29,6 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.uiadapter.interfaces.IComboBoxAdapter;
 import org.eclipse.jubula.rc.swing.swing.caps.CapUtil;
 import org.eclipse.jubula.rc.swing.swing.implclasses.JComboBoxHelper;
@@ -115,13 +114,6 @@ public class JComboBoxAdapter extends WidgetAdapter implements
         return list.containsValue(value, operator);
     }
     
-    /**
-     * {@inheritDoc}
-     */
-    public boolean containsValue(String value) {
-        return containsValue(value, MatchUtil.EQUALS);
-    }
-
     /**
      * select the whole text of  the textfield by clicking three times.
      */

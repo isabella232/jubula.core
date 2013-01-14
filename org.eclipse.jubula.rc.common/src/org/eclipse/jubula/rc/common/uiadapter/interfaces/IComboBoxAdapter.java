@@ -19,23 +19,17 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
  *
  */
 public interface IComboBoxAdapter extends ITextVerifiable {
-
     /**
-     * 
      * @return the value if the Text Component is editable
      */
     boolean isEditable();
+
     /**
      * @param value The value to check
      * @param operator The operator used to verify
      * @return <code>true</code> if the combobox contains an element rendered with the passed value
      */
     public boolean containsValue(String value, String operator);
-    /**
-     * @param value The value to check
-     * @return <code>true</code> if the combobox contains an element rendered with the passed value
-     */
-    public boolean containsValue(String value);
     
     /**
      * select the whole text of  the textfield by clicking three times.

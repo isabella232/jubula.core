@@ -58,7 +58,8 @@ public class AbstractComboBoxCAPs extends AbstractTextInputSupport {
      * @param text check if this text is in the combobox
      */
     public void gdVerifyContainsValue(final String text) {
-        Verifier.equals(true, getCBAdapter().containsValue(text));
+        Verifier.equals(true, 
+                getCBAdapter().containsValue(text, MatchUtil.EQUALS));
     }
     
     /**
