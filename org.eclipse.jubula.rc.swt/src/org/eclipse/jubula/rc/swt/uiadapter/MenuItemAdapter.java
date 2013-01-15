@@ -21,6 +21,7 @@ import org.eclipse.jubula.rc.common.driver.InterceptorOptions;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.listener.EventLock;
+import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.uiadapter.interfaces.IMenuAdapter;
 import org.eclipse.jubula.rc.common.uiadapter.interfaces.IMenuItemAdapter;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
@@ -33,6 +34,7 @@ import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
+import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
@@ -49,10 +51,13 @@ import org.eclipse.swt.widgets.MenuItem;
 public class MenuItemAdapter extends AbstractComponentAdapter
     implements IMenuItemAdapter {
 
+    /** The logging. */
+    private static AutServerLogger log = 
+        new AutServerLogger(MenuItemAdapter.class);
+    
     /** the MenuItem from the AUT*/
     private MenuItem m_menuItem;
     
-
     /**
      * 
      * @param component graphics component which will be adapted
@@ -80,12 +85,10 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         return getRobotFactory().getEventThreadQueuer();
     }
     
-    
     /**
      * {@inheritDoc}
      */
     public Object getRealComponent() {
-       
         return m_menuItem;
     }
     /**
@@ -93,7 +96,6 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      */
     public void setComponent(Object element) {
         m_menuItem = (MenuItem) element;
-
     }
     /**
      * {@inheritDoc}
@@ -145,11 +147,14 @@ public class MenuItemAdapter extends AbstractComponentAdapter
     }
 
     /**
-     * @return -
+     * {@inheritDoc}
+     * 
      */
     public boolean isShowing() {
-
-        return true; //FIXME is here a Showing implementation?
+        if (m_menuItem == null) { // There is no check for showing            
+            return false;
+        }
+        return true; 
     }
     /**
      * {@inheritDoc}
@@ -179,7 +184,6 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         }
         return false;
     }
-
 
     /**
      * Checks whether the given menu item is a separator. 
@@ -316,7 +320,6 @@ public class MenuItemAdapter extends AbstractComponentAdapter
                 })).booleanValue();
     }
     
-    
     /**
      * Waits for a submenu to appear. Examples of submenus are cascading menus
      * and pulldown menus.
@@ -414,6 +417,7 @@ public class MenuItemAdapter extends AbstractComponentAdapter
                     .setStepMovement(true).setClickCount(clickCount));
         }  
     }
+    
     /**
      * 
      * @return bounds of MenuItem
@@ -433,11 +437,11 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      * @param menu the Menu
      */
     public void openSubMenuProgramatically(final Menu menu) {
-//        if (!isMenuEnabled(menu)) {
-//            throw new StepExecutionException("menu item not enabled", //$NON-NLS-1$
-//                    EventFactory.createActionError(
-//                            TestErrorEvent.MENU_ITEM_NOT_ENABLED));
-//        }
+        if (!isMenuEnabled(menu)) {
+            throw new StepExecutionException("menu item not enabled", //$NON-NLS-1$
+                    EventFactory.createActionError(
+                            TestErrorEvent.MENU_ITEM_NOT_ENABLED));
+        }
         
         final InterceptorOptions options = new InterceptorOptions(
                 new long[]{SWT.Show});
@@ -482,7 +486,7 @@ public class MenuItemAdapter extends AbstractComponentAdapter
                             return null;
                         }
                     });
-//            log.error(sb.toString(), re);
+            log.error(sb.toString(), re);
             throw re;
         }
     }
@@ -491,12 +495,11 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      * select MenuItem programatically (for Mac OS)
      */
     public void selectProgramatically() {
-//        FIXME must implement this check case
-//        if (!isMenuItemEnabled(menuItem)) {
-//            throw new StepExecutionException("menu item not enabled", //$NON-NLS-1$
-//                    EventFactory.createActionError(
-//                            TestErrorEvent.MENU_ITEM_NOT_ENABLED));
-//        }
+        if (!isMenuItemEnabled(m_menuItem)) {
+            throw new StepExecutionException("menu item not enabled", //$NON-NLS-1$
+                   EventFactory.createActionError(
+                            TestErrorEvent.MENU_ITEM_NOT_ENABLED));
+        }
         final MenuItem menuItem = m_menuItem;
         final InterceptorOptions options = new InterceptorOptions(
                 new long[]{SWT.Selection});
@@ -550,12 +553,13 @@ public class MenuItemAdapter extends AbstractComponentAdapter
                         return null;
                     }
                 });
-//  FIXME LOG IS MISSING HERE
-//            log.error(sb.toString(), re);
+
+            log.error(sb.toString(), re);
             throw re;
         }
     
     }
+    
     /**
      * "close" (hide) the context menu. this is necessary because if you
      * select programatically the contextmenu is not closed.
@@ -579,5 +583,36 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         }
     }
     
+    /**
+     * Calls MenuItem.isEnabled() in the GUI-Thread
+     * @param menuItem the MenuItem
+     * @return true if enabled, false otherwise
+     * @see MenuItem#isEnabled()
+     */
+    private boolean isMenuItemEnabled(final MenuItem menuItem) {
+        final Boolean isEnabled = (Boolean)getEventThreadQueuer().invokeAndWait(
+            MenuItemAdapter.class + ".isMenuItemEnabled", new IRunnable() { //$NON-NLS-1$
+                public Object run() throws StepExecutionException {
+                    return menuItem.isEnabled() ? Boolean.TRUE : Boolean.FALSE;
+                }
+            });
+        return isEnabled.booleanValue();
+    }
+    
+    /**
+     * Calls MenuItem.isEnabled() in the GUI-Thread
+     * @param menu the Menu
+     * @return true if enabled, false otherwise
+     * @see MenuItem#isEnabled()
+     */
+    private boolean isMenuEnabled(final Menu menu) {
+        final Boolean isEnabled = (Boolean)getEventThreadQueuer().invokeAndWait(
+            MenuItemAdapter.class + ".isMenuEnabled", new IRunnable() { //$NON-NLS-1$
+                public Object run() throws StepExecutionException {
+                    return menu.isEnabled() ? Boolean.TRUE : Boolean.FALSE;
+                }
+            });
+        return isEnabled.booleanValue();
+    }
     
 }
