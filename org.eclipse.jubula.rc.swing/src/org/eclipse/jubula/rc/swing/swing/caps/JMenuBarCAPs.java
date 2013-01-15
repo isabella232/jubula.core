@@ -29,8 +29,8 @@ import org.eclipse.jubula.rc.common.caps.AbstractMenuCAPs;
 import org.eclipse.jubula.rc.common.uiadapter.interfaces.IComponentAdapter;
 import org.eclipse.jubula.rc.common.uiadapter.interfaces.IMenuAdapter;
 import org.eclipse.jubula.rc.common.uiadapter.interfaces.IMenuItemAdapter;
+import org.eclipse.jubula.rc.swing.swing.caps.uiadapter.JMenuItemAdapter;
 import org.eclipse.jubula.rc.swing.swing.implclasses.WindowHelper;
-import org.eclipse.jubula.rc.swing.swing.uiadapter.JMenuItemAdapter;
 
 /**
  * Toolkit specific commands for the <code>JMenuBar</code>.
