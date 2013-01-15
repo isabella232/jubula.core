@@ -314,7 +314,7 @@ public class JTableAdapter extends WidgetAdapter implements ITableAdapter {
     }
 
     /**
-     * Checks wether <code>0 <= value < count</code>.
+     * Checks whether <code>0 <= value < count</code>.
      *
      * @param value
      *            The value to check.

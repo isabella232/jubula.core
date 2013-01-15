@@ -27,13 +27,11 @@ import org.eclipse.swt.widgets.Display;
  * @author BREDEX GmbH
  */
 public class CAPUtil {
-
        
     /**
      * 
      */
-    private CAPUtil() { }
-    
+    private CAPUtil() { }    
     
     /**
      * Gets the Robot. 

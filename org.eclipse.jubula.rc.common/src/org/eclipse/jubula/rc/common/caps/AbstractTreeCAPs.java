@@ -53,7 +53,6 @@ public abstract class AbstractTreeCAPs extends AbstractWidgetCAPs {
      * {@inheritDoc}
      */
     public String[] getTextArrayFromComponent() {
-        //FIXME is here an TextArray?
         return null;
     }
 
@@ -221,7 +220,7 @@ public abstract class AbstractTreeCAPs extends AbstractWidgetCAPs {
     
     /**
      * Clicks the tree.
-     * If the mouse pointer is in the tree no mouse move will be perfomed.
+     * If the mouse pointer is in the tree no mouse move will be performed.
      * Otherwise, the mouse is first moved to the center of the tree.
      *
      * @param count Number of mouse clicks
@@ -240,7 +239,7 @@ public abstract class AbstractTreeCAPs extends AbstractWidgetCAPs {
     }
     
     /**
-     * Collapses the JTree. The passed tree path is a slash-seperated list of
+     * Collapses the JTree. The passed tree path is a slash-separated list of
      * nodes that specifies a valid top-down path in the JTree. The last node of
      * the tree path is collapsed if it is currently expanded. Otherwise, the JTree is
      * left unchanged.
@@ -298,7 +297,7 @@ public abstract class AbstractTreeCAPs extends AbstractWidgetCAPs {
      * Expands the Tree. Any node defined by the passed tree path is expanded,
      * if it is collapsed. The node is expanded by performing a double click
      * onto the node. If the node is already expanded, the JTree is left
-     * unchanged. The tree path is a slash-seperated list of nodes that specifies
+     * unchanged. The tree path is a slash-separated list of nodes that specifies
      * a valid top-down path in the JTree.
      * </p>
      *
@@ -369,9 +368,7 @@ public abstract class AbstractTreeCAPs extends AbstractWidgetCAPs {
             throw new StepExecutionException(e.getMessage(), EventFactory
                     .createActionError(TestErrorEvent.INVALID_INDEX));
         }
-    }
-    
-    
+    }   
     
     /**
      * Selects a node relative to the currently selected node.
@@ -617,8 +614,6 @@ public abstract class AbstractTreeCAPs extends AbstractWidgetCAPs {
         checkNodeText(getSelectedNode(context), pattern, operator);
     }
     
-
-
     /**
      * Checks the text for the given node against the given pattern and 
      * operator.
@@ -747,8 +742,6 @@ public abstract class AbstractTreeCAPs extends AbstractWidgetCAPs {
         String pathType, 
         int preAscend, 
         String treeIndexPath, 
-        int delayBeforeDrop);
-
-    
+        int delayBeforeDrop);    
     
 }

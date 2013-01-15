@@ -22,6 +22,7 @@ public interface ITextComponentAdapter extends ITextVerifiable {
      * @param start The index at which the selection begins.
      */
     void setSelection(int start);
+    
     /**
      * Selects text in the component.
      * 
@@ -29,7 +30,6 @@ public interface ITextComponentAdapter extends ITextVerifiable {
      * @param end   The index at which the selection ends.
      */
     void setSelection(int start, int end);
-
     
     /**
      * 
@@ -47,6 +47,4 @@ public interface ITextComponentAdapter extends ITextVerifiable {
      * @return the value if the Text Component is editable
      */
     boolean isEditable();
-
-
 }

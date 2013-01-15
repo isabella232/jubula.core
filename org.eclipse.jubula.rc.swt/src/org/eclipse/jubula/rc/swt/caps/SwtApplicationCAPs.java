@@ -144,7 +144,7 @@ public class SwtApplicationCAPs extends AbstractApplicationCAPs implements
      * @param text the text to type in
      * @deprecated Removed without substitution:
      * Testcases with this action are fragile, because this action assumes the
-     * availabality of a text component. Any other case breaks the test.
+     * availability of a text component. Any other case breaks the test.
      */
     public void gdReplaceText(String text) {
         // The number of clicks differs from the Swing implementation
@@ -468,8 +468,8 @@ public class SwtApplicationCAPs extends AbstractApplicationCAPs implements
                 && keySpecification.charAt(0) == WorkaroundUtil.CHAR_B) {
             gdNativeKeyStroke(modifierSpec, keySpec);
         } else {
-            // at this the key stroke specification is not fully fullfilled as the
-            // key stroke spec base key is not definitly upper case
+            // at this the key stroke specification is not fully fulfilled as the
+            // key stroke spec base key is not definitely upper case
             getRobot().keyStroke(keyStrokeSpec);
         }
     }
@@ -538,8 +538,7 @@ public class SwtApplicationCAPs extends AbstractApplicationCAPs implements
                     "(SwtApplicationImplClass#isWindowActive(String, String))"); //$NON-NLS-1$
             }
             return false;
-        }
-        
+        }        
         final String windowTitle = activeWindow.getText();
         
         return MatchUtil.getInstance().match(windowTitle, title, operator);

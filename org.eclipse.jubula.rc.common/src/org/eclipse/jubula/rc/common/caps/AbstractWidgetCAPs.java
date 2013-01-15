@@ -46,7 +46,6 @@ public class AbstractWidgetCAPs extends AbstractUICAPs {
         Verifier.equals(exists, getWidgetAdapter().isShowing());
     }
 
-
     /**
      * Verifies if the component has the focus.
      * @param hasFocus <code>True</code> if the component is expected to has 
@@ -144,7 +143,6 @@ public class AbstractWidgetCAPs extends AbstractUICAPs {
                 yPos, yUnits);
     }
 
-
     /**
      * Performs a Drop. Moves into the middle of the Component and releases
      * the modifier and mouse button pressed by gdDrag.
@@ -205,6 +203,7 @@ public class AbstractWidgetCAPs extends AbstractUICAPs {
         AbstractMenuCAPs popup = getWidgetAdapter().showPopup(button);
         popup.selectMenuItemByIndexpath(indexPath);
     }
+    
     /**
      * Selects an item in the popup menu
      * @param textPath path of item texts
@@ -218,6 +217,7 @@ public class AbstractWidgetCAPs extends AbstractUICAPs {
         AbstractMenuCAPs popup = getWidgetAdapter().showPopup(button);
         popup.selectMenuItem(textPath, operator);
     }
+    
     /**
      * Selects an item in the popup menu
      *
@@ -269,8 +269,7 @@ public class AbstractWidgetCAPs extends AbstractUICAPs {
         throws StepExecutionException {
         AbstractMenuCAPs popup = getWidgetAdapter().showPopup(button);        
         popup.verifyEnabledByIndexpath(indexPath, enabled);
-    }
-    
+    }    
   
     /**
      * Opens the popup menu at the given position relative the current component
@@ -468,9 +467,7 @@ public class AbstractWidgetCAPs extends AbstractUICAPs {
      *            the string to indicate that the selection should be extended
      * @return a ClickModifier for the given extend selection
      */
-    protected ClickModifier getClickModifier(String extendSelection) {
-        // FIXME This is a method which belongs in an upper class
-        
+    protected ClickModifier getClickModifier(String extendSelection) {        
         ClickModifier cm = ClickModifier.create();
         if (CompSystemConstants.EXTEND_SELECTION_YES
                 .equalsIgnoreCase(extendSelection)) {

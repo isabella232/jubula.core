@@ -117,9 +117,6 @@ public abstract class AbstractTableCAPs extends AbstractTextInputSupport {
             current = getCellText(implRow, implCol);
         }
         
-        
-
-        
         Verifier.match(current, text, operator);
     }
     
@@ -190,7 +187,6 @@ public abstract class AbstractTableCAPs extends AbstractTextInputSupport {
      * @return the rectangle in the type for the specific robot
      */
     protected Object getSpecificRectangle(Rectangle rectangle) {
-        //FIXME changing the Robots might be useful here
         return rectangle;
     }
     /**
@@ -561,17 +557,6 @@ public abstract class AbstractTableCAPs extends AbstractTextInputSupport {
                 co, extendSelection);
         
     }
-//FIXME    
-//    /**
-//     * Action to read the value of the current selected cell of the JTable 
-//     * to store it in a variable in the Client
-//     * @param variable the name of the variable
-//     * @return the text value.
-//     */
-//    public String gdReadValue(String variable) {
-//        final Cell selectedCell = getTableAdapter().getSelectedCell();
-//        return getCellText(selectedCell.getRow(), selectedCell.getCol());
-//    }
     
     /**
      * Action to read the value of the passed cell of the JTable
@@ -1052,8 +1037,6 @@ public abstract class AbstractTableCAPs extends AbstractTextInputSupport {
         return true;
     }
     
-
-    
     /**
      * Sets the specific editor to an replace mode. Means that the next key
      * input will override the complete text of the editor.
@@ -1093,6 +1076,5 @@ public abstract class AbstractTableCAPs extends AbstractTextInputSupport {
      * @return true if mouse is on header
      */
     protected abstract boolean isMouseOnHeader();
-
 
 }

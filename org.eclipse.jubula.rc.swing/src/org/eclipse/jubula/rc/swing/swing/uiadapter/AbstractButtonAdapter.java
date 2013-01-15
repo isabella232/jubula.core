@@ -91,7 +91,6 @@ public class AbstractButtonAdapter extends WidgetAdapter
      * {@inheritDoc}
      */
     public String readValue(String variable) {
-
         return (String) getEventThreadQueuer().invokeAndWait(
                 "isShowing", new IRunnable() { //$NON-NLS-1$
                     public Object run() {

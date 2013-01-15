@@ -478,10 +478,10 @@ public class TreeCAPs extends AbstractTreeCAPs {
         }
     }
 
-        /**
-         * Runs in the GUI thread.
-         * @return the number of columns in the receivers component.
-         */
+    /**
+     * Runs in the GUI thread.
+     * @return the number of columns in the receivers component.
+     */
     private int getColumnCount() {
         return ((Integer)getEventThreadQueuer().invokeAndWait(
                     "getColumnCount", new IRunnable() { //$NON-NLS-1$
@@ -858,8 +858,6 @@ public class TreeCAPs extends AbstractTreeCAPs {
         super.gdClick(count, button);
         
     }
-    
-
     
     /**
      * Forces all outstanding paint requests for the receiver's component's 

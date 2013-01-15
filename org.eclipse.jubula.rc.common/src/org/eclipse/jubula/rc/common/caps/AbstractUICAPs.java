@@ -33,6 +33,11 @@ public abstract class AbstractUICAPs implements IBaseImplementationClass {
     
     /** constants for communication */
     protected static final String POS_UNI_PERCENT = "Percent"; //$NON-NLS-1$
+    /** The default separator for enumerations of list values. */
+
+    /** The default separator of a list of values */
+    protected static final char VALUE_SEPARATOR = 
+        TestDataConstants.VALUE_CHAR_DEFAULT;
     
     /** The default separator for enumerations of list values. */
     protected static final char INDEX_LIST_SEP_CHAR = 
@@ -43,7 +48,6 @@ public abstract class AbstractUICAPs implements IBaseImplementationClass {
 
     /**    */
     private IComponentAdapter m_component;
-
 
     /**
      * Gets the Robot. 
@@ -79,10 +83,5 @@ public abstract class AbstractUICAPs implements IBaseImplementationClass {
     public IComponentAdapter getComponent() {
         return m_component;
     }
-
-    
-    
-    
-
     
 }

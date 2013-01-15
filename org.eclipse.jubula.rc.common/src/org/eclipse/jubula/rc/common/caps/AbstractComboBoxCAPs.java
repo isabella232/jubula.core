@@ -24,10 +24,6 @@ import org.eclipse.jubula.tools.utils.StringParsing;
  *
  */
 public class AbstractComboBoxCAPs extends AbstractTextInputSupport {
-
-    /** The dafault separator of a list of values */
-    public static final char VALUE_SEPARATOR =
-        TestDataConstants.VALUE_CHAR_DEFAULT;
     
     /**
      * 
@@ -127,7 +123,7 @@ public class AbstractComboBoxCAPs extends AbstractTextInputSupport {
      * @param valueList
      *            the item(s) which should be (not)selected.
      * @param separator
-     *            The seperator if <code>text</code> is an enumeration of
+     *            The separator if <code>text</code> is an enumeration of
      *            values. Not supported by this implementation class
      * @param operator
      *            if regular expressions are used

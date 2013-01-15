@@ -214,7 +214,7 @@ public class SwingApplicationCAPs extends AbstractApplicationCAPs implements
      * @param text the text to type in
      * @deprecated Removed without substitution:
      * Testcases with this action are fragile, because this action assumes the
-     * availabality of a text component. Any other case breaks the test.
+     * availability of a text component. Any other case breaks the test.
      */
     public void gdReplaceText(String text) {
         getRobot().click(FocusTracker.getFocusOwner(), null, 

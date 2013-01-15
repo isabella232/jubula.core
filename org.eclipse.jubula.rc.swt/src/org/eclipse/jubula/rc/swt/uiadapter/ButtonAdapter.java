@@ -65,8 +65,7 @@ public class ButtonAdapter extends WidgetAdapter implements IButtonAdapter {
      * {@inheritDoc}
      * 
      */
-    public String readValue(String variable) {
-        
+    public String readValue(String variable) {        
         return getText();
     }
 }

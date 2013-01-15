@@ -29,6 +29,7 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.uiadapter.interfaces.IComboBoxAdapter;
 import org.eclipse.jubula.rc.swing.swing.caps.CapUtil;
 import org.eclipse.jubula.rc.swing.swing.implclasses.JComboBoxHelper;
@@ -47,6 +48,10 @@ public class JComboBoxAdapter extends WidgetAdapter implements
      * <code>INVALID_MAX_WIDTH</code>
      */
     public static final int NO_MAX_WIDTH = -1;
+    
+    /** the logger */
+    private static AutServerLogger log = new AutServerLogger(
+            JComboBoxAdapter.class);
     
     /**   */
     private JComboBox m_comboBox;
@@ -271,13 +276,13 @@ public class JComboBoxAdapter extends WidgetAdapter implements
                 c = m_comboBox;
                 r = findArrowIconArea();
             }
-//            if (log.isDebugEnabled()) {
-//                log.debug("Opening popup by clicking on: " + c); //$NON-NLS-1$
-//            }
+            if (log.isDebugEnabled()) {
+                log.debug("Opening popup by clicking on: " + c); //$NON-NLS-1$
+            }
             getRobot().click(c, r);
         }
         if (!isPopupVisible()) {
-//            log.debug("Dropdown list still not visible, must be an error"); //$NON-NLS-1$
+            log.debug("Dropdown list still not visible, must be an error"); //$NON-NLS-1$
             throw new StepExecutionException("dropdown list not visible", //$NON-NLS-1$
                 EventFactory.createActionError(
                         TestErrorEvent.DROPDOWN_LIST_NOT_FOUND));

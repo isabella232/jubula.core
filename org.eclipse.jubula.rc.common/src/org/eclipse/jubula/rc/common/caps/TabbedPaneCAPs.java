@@ -75,9 +75,7 @@ public class TabbedPaneCAPs extends AbstractWidgetCAPs {
                 "The tab index doesn't exist: " + index, EventFactory //$NON-NLS-1$
                     .createActionError(TestErrorEvent.INVALID_INDEX));
         }
-    }
-    
-    
+    }    
     
     /**
      * {@inheritDoc}
@@ -112,7 +110,6 @@ public class TabbedPaneCAPs extends AbstractWidgetCAPs {
         getRobot().click(getTabPane().getRealComponent(),
                 getTabPane().getBoundsAt(index), 
             ClickOptions.create().left(), 25, false, 50, false);
-
     }
     
     /**
@@ -145,7 +142,6 @@ public class TabbedPaneCAPs extends AbstractWidgetCAPs {
         throws StepExecutionException {
 
         selectTabByImplIndex(getIndexOfTab(title, operator));
-
     }
     
     /**
@@ -301,7 +297,6 @@ public class TabbedPaneCAPs extends AbstractWidgetCAPs {
                 EventFactory.createActionError(TestErrorEvent.NO_SELECTION));
         }
         Verifier.match(selectedTabTitle, tabTitlePattern, operator, selected);
-    }
-    
+    }    
     
 }

@@ -52,10 +52,6 @@ public abstract class WidgetAdapter extends AbstractComponentAdapter
     /** constants for communication */
     protected static final String POS_UNI_PERCENT = "Percent"; //$NON-NLS-1$
     
-
-    
-
-     
     /** */
     private JComponent m_component;
 

@@ -27,8 +27,7 @@ import org.eclipse.swt.widgets.MenuItem;
 public class MenuAdapter extends AbstractComponentAdapter
     implements IMenuAdapter {
     /** the Menu from the AUT */
-    private Menu m_menu;
-    
+    private Menu m_menu;    
 
     /**
      * 
@@ -99,8 +98,4 @@ public class MenuAdapter extends AbstractComponentAdapter
                 });
         return itemCount.intValue();
     }
-
-
-    
-
 }

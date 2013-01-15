@@ -222,7 +222,7 @@ public class SwingAUTServer extends AUTServer {
         
         AUTServer.getInstance().invokeAUT();
         
-        // FIXME don't know where to put
+     // FIXME need better place to put the registration of the factory
         GUIAdapterFactoryRegistry.getInstance().
             registerFactory(new SwingAdapterFactory());
     }

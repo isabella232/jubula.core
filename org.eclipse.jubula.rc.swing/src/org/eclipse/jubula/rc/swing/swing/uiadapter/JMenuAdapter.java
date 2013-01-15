@@ -85,7 +85,4 @@ public class JMenuAdapter extends AbstractComponentAdapter
     public int getItemCount() {
         return m_menu.getItemCount();
     }
-    
-
-
 }

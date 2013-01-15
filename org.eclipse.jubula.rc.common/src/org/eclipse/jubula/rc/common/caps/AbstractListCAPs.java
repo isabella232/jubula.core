@@ -35,14 +35,6 @@ import org.eclipse.jubula.tools.utils.StringParsing;
  *
  */
 public class AbstractListCAPs extends AbstractTextVerifiable {
-
-    /** The default separator for enumerations of list values. */
-    public static final char INDEX_LIST_SEP_CHAR = 
-        TestDataConstants.VALUE_CHAR_DEFAULT; 
-    //FIXME this should be in an upper class or Util
-    /** The default separator of a list of values */
-    public static final char VALUE_SEPARATOR = 
-        TestDataConstants.VALUE_CHAR_DEFAULT;
     
     /**
      * Splits the enumeration of values.

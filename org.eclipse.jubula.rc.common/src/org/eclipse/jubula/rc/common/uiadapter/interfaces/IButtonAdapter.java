@@ -17,7 +17,6 @@ package org.eclipse.jubula.rc.common.uiadapter.interfaces;
  * 
  * @author BREDEX GmbH
  */
-
 public interface IButtonAdapter extends ITextVerifiable {
     /**
      * Gets the text from the button

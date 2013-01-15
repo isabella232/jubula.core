@@ -76,7 +76,6 @@ public class CComboAdapter extends AbstractComboBoxAdapter {
                 }
             
             });
-
     }
 
     /**
@@ -93,7 +92,6 @@ public class CComboAdapter extends AbstractComboBoxAdapter {
 
         return selectedIndex;
     }
-
 
     /**
      * {@inheritDoc}

@@ -18,6 +18,7 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
+import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.uiadapter.interfaces.ITableAdapter;
 import org.eclipse.jubula.rc.swt.listener.TableSelectionTracker;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
@@ -38,6 +39,11 @@ import org.eclipse.swt.widgets.TableItem;
  * @author BREDEX GmbH
  */
 public class TableAdapter extends WidgetAdapter implements ITableAdapter {
+    
+    /** the logger */
+    private static AutServerLogger log = new AutServerLogger(
+        TableAdapter.class);
+    
     /**   */
     private Table m_table;
     
@@ -78,11 +84,11 @@ public class TableAdapter extends WidgetAdapter implements ITableAdapter {
                 new IRunnable() {
                     public Object run() {
                         String value = m_table.getItem(row).getText(column);
-//                        if (log.isDebugEnabled()) {
-//                            log.debug("Getting cell text:"); //$NON-NLS-1$
-//                            log.debug("Row, col: " + row + ", " + col); //$NON-NLS-1$ //$NON-NLS-2$
-//                            log.debug("Value: " + value); //$NON-NLS-1$
-//                        }
+                        if (log.isDebugEnabled()) {
+                            log.debug("Getting cell text:"); //$NON-NLS-1$
+                            log.debug("Row, col: " + row + ", " + column); //$NON-NLS-1$ //$NON-NLS-2$
+                            log.debug("Value: " + value); //$NON-NLS-1$
+                        }
                         return value;
                     }
                 });

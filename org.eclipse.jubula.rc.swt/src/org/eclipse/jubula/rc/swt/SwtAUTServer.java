@@ -217,7 +217,7 @@ public class SwtAUTServer extends AUTServer {
     protected void startTasks() throws ExceptionInInitializerError, 
         InvocationTargetException, NoSuchMethodException {
         
-        // FIXME Better place to put the registration of the factory
+        // FIXME need better place to put the registration of the factory
         GUIAdapterFactoryRegistry.getInstance().
             registerFactory(new SWTAdapterFactory());
         

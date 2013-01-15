@@ -48,7 +48,7 @@ public abstract class AbstractMenuCAPs extends AbstractUICAPs {
     }
 
     /**
-     * This method gets the object which should implementet the menu Interface.
+     * This method gets the object which should implemented the menu Interface.
      * It is saved as Component so it must be casted.
      * @return the MenuAdapter
      */
@@ -88,7 +88,7 @@ public abstract class AbstractMenuCAPs extends AbstractUICAPs {
 
     }
     /**
-     * Checks if the given MenuItemAdapter is null and thorws an Exception
+     * Checks if the given MenuItemAdapter is null and throws an Exception
      * 
      * @param item the MenuItemAdapter which should be checked
      */
@@ -132,7 +132,7 @@ public abstract class AbstractMenuCAPs extends AbstractUICAPs {
     /**
      * Verifies if the specified menu item exists
      * 
-     * @param menuItem the menu item to verifiy against
+     * @param menuItem the menu item to verify against
      * @param operator operator used for matching
      * @param exists  should the menu item exist?
      */
@@ -159,10 +159,9 @@ public abstract class AbstractMenuCAPs extends AbstractUICAPs {
         }
     }
 
-
     /**
      * Verifies if the specified menu item exists
-     * @param menuItem the menu item to verifiy against
+     * @param menuItem the menu item to verify against
      * @param exists should the menu item exist?
      */
     public void verifyExistsByIndexpath(String menuItem, boolean exists) {
@@ -184,7 +183,6 @@ public abstract class AbstractMenuCAPs extends AbstractUICAPs {
         } finally {
             closeMenu(getAndCheckMenu(), menuItem);
         }
-
     }
 
     /**
@@ -218,7 +216,6 @@ public abstract class AbstractMenuCAPs extends AbstractUICAPs {
         } finally {
             closeMenu(getAndCheckMenu(), menuItem, operator);
         }
-
     }
 
     /**
@@ -248,9 +245,7 @@ public abstract class AbstractMenuCAPs extends AbstractUICAPs {
 
         } finally {
             closeMenu(getAndCheckMenu(), menuItem);
-
         }
-
     }
     
     /**
@@ -518,14 +513,6 @@ public abstract class AbstractMenuCAPs extends AbstractUICAPs {
         return currentMenuItem;
     }
 
-    
-    
-
-    
-
-
-
-
     /**
      * @param menu menu 
      * @param idx index of the current wanted item
@@ -541,18 +528,14 @@ public abstract class AbstractMenuCAPs extends AbstractUICAPs {
             if (menuitem.getRealComponent() != null && !menuitem.isSeparator() 
                     && menuitem.isShowing()) {
                 visibleSubMenus.add(menuitem);
-            }
-            
-        }
+            }            
+        }      
         
         if (idx >= visibleSubMenus.size() || idx < 0) {
             return newMenuItemAdapter(null);
-        }
-        
-        return (IMenuItemAdapter) visibleSubMenus.get(idx);
-        
-    }
-    
+        }        
+        return (IMenuItemAdapter) visibleSubMenus.get(idx);        
+    }    
     
     /**
      * Checks the path for it length and throws and StepExecutionExecption if it is 0

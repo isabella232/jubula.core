@@ -26,7 +26,6 @@ public abstract class AbstractTextInputSupport extends AbstractTextVerifiable {
      * @param editable The editable property to verify.
      */
     public abstract void gdVerifyEditable(boolean editable);
- // FIXME this is only a pattern because only Tables uses this at the moment
     /**
      * Types <code>text</code> into the component. This replaces the shown
      * content.<br>
@@ -38,7 +37,6 @@ public abstract class AbstractTextInputSupport extends AbstractTextVerifiable {
      */
     public abstract void gdReplaceText(String text) 
         throws StepExecutionException;
- // FIXME this is only a pattern because only Tables uses this at the moment
     /**
      * Writes the passed text into the currently component.<br>
      * If it is a complex component, it is always the selected object.
@@ -49,5 +47,4 @@ public abstract class AbstractTextInputSupport extends AbstractTextVerifiable {
      */
     public abstract void gdInputText(final String text) 
         throws StepExecutionException;
- // FIXME this is only a pattern because only Tables uses this at the moment
 }

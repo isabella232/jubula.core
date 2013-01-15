@@ -76,41 +76,28 @@ public class SwingAdapterFactory implements IUIAdapterFactory {
             
         } else if (objectToAdapt instanceof JRadioButton) {
             returnvalue = new AbstractButtonAdapter(objectToAdapt);
-            
         } else if (objectToAdapt instanceof JCheckBox) {
             returnvalue = new AbstractButtonAdapter(objectToAdapt);
-            
-        } else if (objectToAdapt instanceof JMenuBar) {
-        
-            returnvalue = new JMenuBarAdapter(objectToAdapt); 
-            
+        } else if (objectToAdapt instanceof JMenuBar) {        
+            returnvalue = new JMenuBarAdapter(objectToAdapt);
         } else if (objectToAdapt instanceof JMenuItem) {
             returnvalue = new JMenuItemAdapter(objectToAdapt);            
-            
         } else if (objectToAdapt instanceof JTree) {
             returnvalue = new JTreeAdapter(objectToAdapt);
-            
         } else if (objectToAdapt instanceof JTable) {
             returnvalue = new JTableAdapter(objectToAdapt);
-            
         } else if (objectToAdapt instanceof JList) {
             returnvalue = new JListAdapter(objectToAdapt);
-            
         } else if (objectToAdapt instanceof JPopupMenu) {
             returnvalue = new JPopupMenuAdapter(objectToAdapt);
-        
         } else if (objectToAdapt instanceof JTextComponent) {
             returnvalue = new JTextComponentAdapter(objectToAdapt);
-        
         } else if (objectToAdapt instanceof JComboBox) {
             returnvalue = new JComboBoxAdapter(objectToAdapt);
-        
         } else if (objectToAdapt instanceof JLabel) {
             returnvalue = new JLabelAdapter(objectToAdapt);
-        
         } else if (objectToAdapt instanceof JTabbedPane) {
             returnvalue = new JTabbedPaneAdapter(objectToAdapt);
-        
         }
         
         return returnvalue;

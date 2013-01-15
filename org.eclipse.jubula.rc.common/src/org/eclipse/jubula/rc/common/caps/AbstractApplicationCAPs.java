@@ -68,12 +68,6 @@ public abstract class AbstractApplicationCAPs
      */
     private static final String EXTENSION_SEPARATOR = "."; //$NON-NLS-1$
     
-    /** constants for communication */
-    private static final String POS_UNIT_PIXEL = "Pixel"; //$NON-NLS-1$
-    
-    /** constants for communication */
-    private static final String POS_UNI_PERCENT = "Percent"; //$NON-NLS-1$
-        
     /**
      * The logging.
      */
@@ -138,7 +132,7 @@ public abstract class AbstractApplicationCAPs
      * {@inheritDoc}
      */
     public void setComponent(Object graphicsComponent) {
-        // Do nothing; Application has no correspaonding component
+        // Do nothing; Application has no corresponding component
     }
 
     /**
@@ -648,31 +642,15 @@ public abstract class AbstractApplicationCAPs
                     .setConfirmClick(false)
                     .setMouseButton(button), 
                 xPos, 
-                xUnits.equalsIgnoreCase(POS_UNIT_PIXEL), 
+                xUnits.equalsIgnoreCase(AbstractUICAPs.POS_UNIT_PIXEL), 
                 yPos, 
-                yUnits.equalsIgnoreCase(POS_UNIT_PIXEL));
+                yUnits.equalsIgnoreCase(AbstractUICAPs.POS_UNIT_PIXEL));
         } else {
             throw new StepExecutionException("No active window.", //$NON-NLS-1$
                 EventFactory.createActionError(
                     TestErrorEvent.NO_ACTIVE_WINDOW));
         }
     }
-
-    /**
-     * Checks for the existence of a window with the given title
-     * 
-     * @param title
-     *            the title
-     * @param operator
-     *            the comparing operator
-     * @param exists
-     *            <code>True</code> if the window is expected to exist and be
-     *            visible, otherwise <code>false</code>.
-     */
-//    public void gdCheckExistenceOfWindow(final String title, String operator,
-//            boolean exists) {
-//        Verifier.equals(exists, isWindowOpen(title, operator));
-//    }
     
     /**
      * Just a server side method, not useable as action.
