@@ -34,11 +34,9 @@ public class AbstractComboBoxCAPs extends AbstractTextInputSupport {
     }
     
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String[] getTextArrayFromComponent() {
-        return null;
+        return new String [] {getText()};
     }
 
     /**
@@ -166,7 +164,7 @@ public class AbstractComboBoxCAPs extends AbstractTextInputSupport {
      *            The separator, may be <code>null</code>
      * @return The array of values
      */
-    private String[] split(String values, String separator) {
+    protected String[] split(String values, String separator) {
         String[] list = StringParsing.splitToArray(values, ((separator == null)
             || (separator.length() == 0) ? INDEX_LIST_SEP_CHAR
                 : separator.charAt(0)),
