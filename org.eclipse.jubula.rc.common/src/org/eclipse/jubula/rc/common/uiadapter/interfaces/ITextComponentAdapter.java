@@ -19,21 +19,23 @@ public interface ITextComponentAdapter extends ITextVerifiable {
     /**
      * Sets the caret to a specific position.
      * 
-     * @param start The index at which the selection begins.
+     * @param start The zero based index at which the selection begins.
      */
     void setSelection(int start);
     
     /**
      * Selects text in the component.
      * 
-     * @param start The index at which the selection begins.
-     * @param end   The index at which the selection ends.
+     * @param start
+     *            the zero based index at which the selection begins.
+     * @param end
+     *            the zero based index at which the selection ends.
      */
     void setSelection(int start, int end);
     
     /**
      * 
-     * @return the selectes text
+     * @return the selected text
      */
     String getSelectionText();
 

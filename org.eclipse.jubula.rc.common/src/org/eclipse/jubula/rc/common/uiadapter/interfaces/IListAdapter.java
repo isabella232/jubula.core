@@ -26,8 +26,11 @@ public interface IListAdapter extends ITextVerifiable {
 
     /**
      * Clicks on the index of the passed list.
-     * @param i The index to click
-     * @param co the click options to use for selecting an index item
+     * 
+     * @param i
+     *            zero based index to click
+     * @param co
+     *            the click options to use for selecting an index item
      */
     public void clickOnIndex(Integer i, ClickOptions co);
     
@@ -37,14 +40,18 @@ public interface IListAdapter extends ITextVerifiable {
     public String[] getSelectedValues();
     
     /**
-     * Finds the indices of the list elements that are rendered with the passed values.
-     * @param values The values
-     * @param operator operator to use
-     * @param searchType 
+     * Finds the indices of the list elements that are rendered with the passed
+     * values.
+     * 
+     * @param values
+     *            The values
+     * @param operator
+     *            operator to use
+     * @param searchType
      *            Determines where the search begins ("relative" or "absolute")
      * @return The array of indices. It's length is equal to the length of the
-     *         values array, but may contains <code>null</code> elements for
-     *         all values that are not found in the list
+     *         values array, but may contains <code>null</code> elements for all
+     *         values that are not found in the list
      */
     public Integer[] findIndicesOfValues(final String[] values,
         final String operator, final String searchType);

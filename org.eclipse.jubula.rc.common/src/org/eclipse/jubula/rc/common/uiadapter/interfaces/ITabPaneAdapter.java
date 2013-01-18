@@ -25,28 +25,31 @@ public interface ITabPaneAdapter extends IWidgetAdapter {
     
     /**
      * 
-     * @param index of the tab
+     * @param index
+     *            zero based index of the tab
      * @return the title of the wanted tab.
      */
     public String getTitleofTab(int index);
 
     /**
      * 
-     * @param index of the tab
+     * @param index
+     *            zero based index of the tab
      * @return the bounds of the tabs.
      */
     public Object getBoundsAt(int index);
 
     /**
      * 
-     * @param index index of the tab
+     * @param index
+     *            zero based index of the tab
      * @return the enablement of the specific tab.
      */
     public boolean isEnabledAt(int index);
 
     /**
      * 
-     * @return the index of the selected tab.
+     * @return the zero based index of the selected tab.
      */
     public int getSelectedIndex();
 }

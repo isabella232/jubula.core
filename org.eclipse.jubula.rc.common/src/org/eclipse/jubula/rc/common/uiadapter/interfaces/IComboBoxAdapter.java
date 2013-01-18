@@ -20,19 +20,23 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
  */
 public interface IComboBoxAdapter extends ITextVerifiable {
     /**
-     * @return the value if the Text Component is editable
+     * @return <code>true</code> if the combobox is editable, <code>false</code>
+     *         otherwise
      */
     boolean isEditable();
 
     /**
-     * @param value The value to check
-     * @param operator The operator used to verify
-     * @return <code>true</code> if the combobox contains an element rendered with the passed value
+     * @param value
+     *            The value to check
+     * @param operator
+     *            The operator used to verify
+     * @return <code>true</code> if the combobox contains an element rendered
+     *         with the passed value
      */
     public boolean containsValue(String value, String operator);
     
     /**
-     * select the whole text of  the textfield by clicking three times.
+     * select the whole text of the component.
      */
     void selectAll();
     
@@ -45,7 +49,9 @@ public interface IComboBoxAdapter extends ITextVerifiable {
         
     /**
      * Selects the combobox element with the passed index.
-     * @param index The index to select
+     * 
+     * @param index
+     *            the zero based index of the entry
      */
     public void select(int index);
     
@@ -67,11 +73,16 @@ public interface IComboBoxAdapter extends ITextVerifiable {
         throws StepExecutionException, IllegalArgumentException; 
     
     /**
-     * Inputs <code>text</code> to <code>component</code>.<br> 
-     * @param text the text to type
-     * @param replace whether to replace the text or not
-     * @throws StepExecutionException if an error occurs during typing <code>text</code>
-     * @throws IllegalArgumentException if <code>component</code> or <code>text</code> are null
+     * Inputs <code>text</code> to <code>component</code>.<br>
+     * 
+     * @param text
+     *            the text to type
+     * @param replace
+     *            whether to replace the text or not
+     * @throws StepExecutionException
+     *             if an error occurs during typing <code>text</code>
+     * @throws IllegalArgumentException
+     *             if <code>component</code> or <code>text</code> are null
      */
     public void input(String text, boolean replace)
         throws StepExecutionException, IllegalArgumentException;

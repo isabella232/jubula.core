@@ -38,94 +38,114 @@ public interface ITableAdapter extends ITextVerifiable {
     public int getRowCount();
     
     /**
-     * @param row the zero based index of the row
-     * @param column the zero based index of the column
+     * @param row
+     *            the zero based index of the row
+     * @param column
+     *            the zero based index of the column
      * @return the text of the cell of the given coordinates
      */
     public String getCellText(int row, int column);
      
     /**
-     * Returns the name of the column appearing in the view at
-     * column position <code>column</code>.
-     *
-     * @param  column    the column in the view being queried
-     * @return the name of the column at position <code>column</code>
-            in the view where the first column is column 0
+     * Returns the name of the column appearing in the view at column position
+     * <code>column</code>.
+     * 
+     * @param column
+     *            the zero based index of the column in the view being queried
+     * @return the name of the column at position <code>column</code> in the
+     *         view where the first column is column 0
      */
     public String getColumnName(int column);
-    
+
     /**
      * Gets column index from string with header name or index
-     *
-     * @param col Headername or index of column 
-     * @param operator The operation used to verify
-     * @return column index 
+     * 
+     * @param col
+     *            Headername or index of column
+     * @param operator
+     *            the operation used to verify
+     * @return column index
      */
     public int getColumnFromString(String col, String operator);
     
     /**
-     * This is only for a specific case where tables could act
-     * like lists. And the getText is not working.
-     * If this is not the case for the component return <code>null</code>
-     * @param row the row
+     * This is only for a specific case where tables could act like lists. And
+     * the getText is not working. If this is not the case for the component
+     * return <code>null</code>
+     * 
+     * @param row
+     *            the zero based index of the row
      * @return the text of the row
      */
     public String getRowName(int row);
     
     /**
      * Gets row index from string with index or text of first row
-     *
-     * @param row index or value in first col
-     * @param operator The operation used to verify
-     * @return integer of String of row 
+     * 
+     * @param row
+     *            index or value in first col
+     * @param operator
+     *            the operation used to verify
+     * @return integer of String of row
      */
     public int getRowFromString(String row, String operator);
     
     /**
      * gets header bounds for column
-     * @param col The column.
+     * 
+     * @param col
+     *            the zero based index of the column.
      * @return The rectangle of the header
      */
     public Rectangle getHeaderBounds(int col);
 
     /**
      * @return The currently selected cell of the Table.
-     * @throws StepExecutionException If no cell is selected.
+     * @throws StepExecutionException
+     *             If no cell is selected.
      */
     public Cell getSelectedCell() throws StepExecutionException;
     
     /**
      * 
-     * @return <code>true</code> if the Header is visible, <code>false</code> otherwise
+     * @return <code>true</code> if the header is visible, <code>false</code> otherwise
      */
     public boolean isHeaderVisible();
 
     /**
      * 
-     * @param row the row
-     * @param col the column
-     * @return <code>true</code> if the Cell is editable, <code>false</code> otherwise
+     * @param row
+     *            zero based index of the row
+     * @param col
+     *            zero based index of the column
+     * @return <code>true</code> if the Cell is editable, <code>false</code>
+     *         otherwise
      */
     public boolean isCellEditable(int row, int col);
 
     /**
-     * @return true, if there is any cell selection in the table, false otherwise.
+     * @return <code>true</code>, if there is any cell selection in the table,
+     *         <code>false</code> otherwise.
      */
     public boolean hasCellSelection();
     
     /**
      * Scrolls the passed cell (as row and column) to visible.<br>
      * This method must return null if there is no scrolling.
-     * @param row The row.
-     * @param col The column.
+     * 
+     * @param row
+     *            zero based index of the row.
+     * @param col
+     *            zero based index of the column.
      * @return The rectangle of the cell.
-     * @throws StepExecutionException If getting the cell rectangle or the scrolling fails.
+     * @throws StepExecutionException
+     *             If getting the cell rectangle or the scrolling fails.
      */
     public Rectangle scrollCellToVisible (int row , int col)
         throws StepExecutionException;
 
     /**
-     * @return the TableHeader if there is one,otherwise
+     * @return The TableHeader if there is one,otherwise
      *                  the table is returned.
      */
     public Object getTableHeader();

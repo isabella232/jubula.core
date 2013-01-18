@@ -39,9 +39,12 @@ public interface IMenuItemAdapter extends IComponentAdapter {
      * 
      */
     public boolean isSelected();
+    
     /**
      * 
-     * @return <code>true</code> if the component is Showing
+     * @return <code>true</code> if the component is showing. If there is no
+     *         implementation for getting the display status also return
+     *         <code>true</code>
      */
     public boolean isShowing();
     
@@ -52,7 +55,7 @@ public interface IMenuItemAdapter extends IComponentAdapter {
     
     /**
      * 
-     * @return <code>true</code> if the menuitem has a menu
+     * @return <code>true</code> if the menuitem has a submenu
      */
     public boolean hasSubMenu();
     /**
@@ -65,7 +68,7 @@ public interface IMenuItemAdapter extends IComponentAdapter {
     
     /**
      * This Methods selects the specific menuItem with an click
-     * or in another toolkit specitif way
+     * or in another toolkit specific way
      */
     public void selectMenuItem();
     
