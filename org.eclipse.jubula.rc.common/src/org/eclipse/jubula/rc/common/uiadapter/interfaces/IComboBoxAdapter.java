@@ -51,14 +51,19 @@ public interface IComboBoxAdapter extends ITextVerifiable {
     
     /**
      * Selects the specified item in the combobox.
-     * @param values the values which should be (not) selected
-     * @param operator if regular expressions are used
-     * @param searchType Determines where the search begins ("relative" or "absolute")
-     * @throws StepExecutionException if an error occurs during selecting the item
-     * @throws IllegalArgumentException if <code>component</code> or <code>text</code> are null
+     * 
+     * @param value
+     *            the value which should be selected
+     * @param operator
+     *            if regular expressions are used
+     * @param searchType
+     *            Determines where the search begins ("relative" or "absolute")
+     * @throws StepExecutionException
+     *             if an error occurs during selecting the item
+     * @throws IllegalArgumentException
+     *             if <code>component</code> or <code>text</code> are null
      */
-    public void select(final String[] values, String operator,
-        String searchType)
+    public void select(final String value, String operator, String searchType)
         throws StepExecutionException, IllegalArgumentException; 
     
     /**

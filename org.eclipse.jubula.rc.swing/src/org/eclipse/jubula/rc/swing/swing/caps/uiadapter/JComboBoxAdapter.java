@@ -153,26 +153,23 @@ public class JComboBoxAdapter extends WidgetAdapter implements
 
     /**
      * Selects the specified item in the combobox.
-     * @param values the values which should be (not) selected
+     * @param value the value which should be selected
      * @param operator if regular expressions are used
      * @param searchType Determines where the search begins ("relative" or "absolute")
      * @throws StepExecutionException if an error occurs during selecting the item
      * @throws IllegalArgumentException if <code>component</code> or <code>text</code> are null
      */
-    public void select(final String[] values, String operator,
+    public void select(final String value, String operator,
         String searchType)
         throws StepExecutionException, IllegalArgumentException {
         try {
-            for (int i = 0; i < values.length; i++) {
-                String text = values[i];
-                Validate.notNull(text, "text must not be null"); //$NON-NLS-1$
-            }
+            Validate.notNull(value, "text must not be null"); //$NON-NLS-1$
             JListAdapter list = new JListAdapter(findJList());
-            Integer[] indices = list.findIndicesOfValues(values,
-                    operator, searchType);
+            Integer[] indices = list.findIndicesOfValues(
+                    new String[] { value }, operator, searchType);
             Arrays.sort(indices);
             if (indices.length == 0) {
-                throw new StepExecutionException("Text '" + Arrays.asList(values).toString() //$NON-NLS-1$
+                throw new StepExecutionException("Text '" + value //$NON-NLS-1$
                     + "' not found", //$NON-NLS-1$
                     EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
             }

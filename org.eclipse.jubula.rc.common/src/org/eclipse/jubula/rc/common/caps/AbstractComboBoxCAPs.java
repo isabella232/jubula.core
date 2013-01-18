@@ -15,8 +15,6 @@ import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.uiadapter.interfaces.IComboBoxAdapter;
-import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.utils.StringParsing;
 
 /**
  * General implementation for ComboBoxes and ComboBox like components.
@@ -24,9 +22,7 @@ import org.eclipse.jubula.tools.utils.StringParsing;
  *
  */
 public class AbstractComboBoxCAPs extends AbstractTextInputSupport {
-    
     /**
-     * 
      * @return the <code>IComboBoxAdapter</code>
      */
     private IComboBoxAdapter getCBAdapter() {
@@ -105,36 +101,19 @@ public class AbstractComboBoxCAPs extends AbstractTextInputSupport {
     
     /**
      * Selects a value from the list of the combobox
-     * @param valueList The value or list of values to (not)select
-     * @param operator if regular expressions are used
-     * @param searchType Determines where the search begins ("relative" or "absolute")
-     */
-    public void gdSelectValue(String valueList, String operator,
-        final String searchType) {
-        gdSelectValue(valueList, String.valueOf(VALUE_SEPARATOR), operator,
-            searchType);
-    }
-    
-    /**
-     * Selects a value from the list of the combobox
-     *
-     * @param valueList
-     *            the item(s) which should be (not)selected.
-     * @param separator
-     *            The separator if <code>text</code> is an enumeration of
-     *            values. Not supported by this implementation class
+     * 
+     * @param value
+     *            The value to select
      * @param operator
      *            if regular expressions are used
      * @param searchType
      *            Determines where the search begins ("relative" or "absolute")
      */
-    private void gdSelectValue(String valueList, String separator,
-        String operator, final String searchType) {
-        String[] values = split(valueList, separator);
-        getCBAdapter().select(values, operator, searchType);
-
+    public void gdSelectValue(String value, String operator,
+            final String searchType) {
+        getCBAdapter().select(value, operator, searchType);
     }
-
+    
     /**
      * Verifies if the combobox has <code>index</code> selected.
      * @param index The index to verify
@@ -154,22 +133,4 @@ public class AbstractComboBoxCAPs extends AbstractTextInputSupport {
     public void gdVerifyText(String text) {
         gdVerifyText(text, MatchUtil.DEFAULT_OPERATOR);
     }
-    
-    /**
-     * Splits the enumeration of values.
-     *
-     * @param values
-     *            The values to split
-     * @param separator
-     *            The separator, may be <code>null</code>
-     * @return The array of values
-     */
-    protected String[] split(String values, String separator) {
-        String[] list = StringParsing.splitToArray(values, ((separator == null)
-            || (separator.length() == 0) ? INDEX_LIST_SEP_CHAR
-                : separator.charAt(0)),
-            TestDataConstants.ESCAPE_CHAR_DEFAULT);
-        return list;
-    }
-
 }

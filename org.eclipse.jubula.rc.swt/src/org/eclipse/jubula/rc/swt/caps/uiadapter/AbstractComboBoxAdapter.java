@@ -55,23 +55,17 @@ public abstract class AbstractComboBoxAdapter extends WidgetAdapter
         super(objectToAdapt);
     }
     
-    /**
-     * {@inheritDoc}
-     */
-    public void select(final String[] values, String operator, 
+    /** {@inheritDoc} */
+    public void select(final String value, String operator, 
         final String searchType) 
         throws StepExecutionException, IllegalArgumentException {
     
-        for (int i = 0; i < values.length; i++) {
-            String text = values[i];
-            Validate.notNull(text, "text must not be null"); //$NON-NLS-1$
-        }
+        Validate.notNull(value, "text must not be null"); //$NON-NLS-1$
         
-        Integer[] indices = findIndicesOfValues(values, 
-                operator, searchType);
+        Integer[] indices = findIndicesOfValue(value, operator, searchType);
         Arrays.sort(indices);
         if (indices.length == 0) {
-            throw new StepExecutionException("Text '" + Arrays.asList(values).toString() //$NON-NLS-1$ 
+            throw new StepExecutionException("Text '" + value //$NON-NLS-1$ 
                 + "' not found", //$NON-NLS-1$ 
                 EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
         }
@@ -120,8 +114,8 @@ public abstract class AbstractComboBoxAdapter extends WidgetAdapter
      * Finds the indices of the list elements that are rendered with the passed
      * values.
      * 
-     * @param values
-     *            The values
+     * @param value
+     *            the value
      * @param operator
      *            operator to use
      * @param searchType 
@@ -130,27 +124,21 @@ public abstract class AbstractComboBoxAdapter extends WidgetAdapter
      *         values array, but may contains <code>null</code> elements for
      *         all values that are not found in the list
      */
-    private Integer[] findIndicesOfValues(final String [] values, 
+    private Integer[] findIndicesOfValue(final String value, 
             final String operator, final String searchType) {
         
         final Set indexSet = new HashSet();
 
-        for (int i = getStartingIndex(searchType); 
-                i < getItemCount(); 
-                ++i) {
-            
+        for (int i = getStartingIndex(searchType); i < getItemCount(); ++i) {
             String str = getItem(i);
-            if (MatchUtil.getInstance().
-                match(str, values, operator)) {
+            if (MatchUtil.getInstance().match(str, value, operator)) {
                 indexSet.add(new Integer(i));
             }
         }
-                    
         
         Integer[] indices = new Integer[indexSet.size()];
         indexSet.toArray(indices);
         return indices;
-
     }
 
     /**
@@ -173,11 +161,11 @@ public abstract class AbstractComboBoxAdapter extends WidgetAdapter
     public boolean containsValue(String value, String operator) {
         Integer[] indices = null;
         if (operator.equals(MatchUtil.NOT_EQUALS)) {
-            indices = findIndicesOfValues(new String[] { value },
+            indices = findIndicesOfValue(value,
                 MatchUtil.EQUALS, CompSystemConstants.SEARCH_TYPE_ABSOLUTE);
             return indices.length == 0;
         } 
-        indices = findIndicesOfValues(new String[] { value },
+        indices = findIndicesOfValue(value,
             operator, CompSystemConstants.SEARCH_TYPE_ABSOLUTE);
         return indices.length > 0;
     }
