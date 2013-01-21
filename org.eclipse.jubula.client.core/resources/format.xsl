@@ -381,6 +381,7 @@
 								<td>:</td>
 								<td><xsl:value-of select="action-type"/></td>
 							</tr>
+                            <tr><td colspan="3"><hr/></td></tr>
 							<xsl:apply-templates select="parameter"/>
 							<xsl:apply-templates select="error"/>
 						</table>
@@ -420,6 +421,7 @@
 								<td>:</td>
 								<td><xsl:value-of select="action-type"/></td>
 							</tr>
+                            <tr><td colspan="3"><hr/></td></tr>
 							<xsl:apply-templates select="parameter"/>
 							<xsl:apply-templates select="error"/>
 						</table>
@@ -431,19 +433,8 @@
 	</xsl:template>
 
 	<xsl:template match="parameter">
-		<tr><td colspan="3"><hr/></td></tr>
 		<tr>
-			<td>Parameter Name</td>
-			<td>:</td>
-			<td><xsl:value-of select="parameter-name"/></td>
-		</tr>
-		<tr>
-			<td>Parameter Type</td>
-			<td>:</td>
-			<td><xsl:value-of select="parameter-type"/></td>
-		</tr>
-		<tr>
-			<td>Parameter Value</td>
+			<td><xsl:value-of select="parameter-name"/> [<xsl:value-of select="parameter-type"/>]</td>
 			<td>:</td>
 			<td><xsl:value-of select="parameter-value"/></td>
 		</tr>

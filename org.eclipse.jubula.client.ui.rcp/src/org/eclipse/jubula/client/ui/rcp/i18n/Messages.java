@@ -793,9 +793,6 @@ public class Messages extends NLS {
     public static String SpecTestCaseGUIPropertySourceDataSource;
     public static String SpecTestCaseGUIPropertySourceLockedParameters;
     public static String SpecTestCaseGUIPropertySourceParameter;
-    public static String SpecTestCaseGUIPropertySourceParameterName;
-    public static String SpecTestCaseGUIPropertySourceParameterType;
-    public static String SpecTestCaseGUIPropertySourceParameterValue;
     public static String SpecTestCaseGUIPropertySourceTestCaseFileName;
     public static String SpecTestCaseGUIPropertySourceTestCaseName;
     public static String SpecTestCaseGUIPropertySourceTestCaseReferencedTestData;

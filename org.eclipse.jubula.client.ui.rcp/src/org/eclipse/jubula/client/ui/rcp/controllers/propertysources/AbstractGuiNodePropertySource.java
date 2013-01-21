@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
 import org.eclipse.jubula.client.core.utils.NullValidator;
+import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.IVerifiable;
@@ -439,5 +440,20 @@ public abstract class AbstractGuiNodePropertySource
         }
         
         return ParameterInputType.LOCAL;
+    }
+    
+    /**
+     * @param desc
+     *            the param description
+     * @return a string representing the parameter name
+     */
+    protected String getParameterNameDescr(IParamDescriptionPO desc) {
+        StringBuilder sb = new StringBuilder(desc.getName());
+        sb.append(StringConstants.SPACE);
+        sb.append(StringConstants.LEFT_BRACKET);
+        sb.append(StringHelper.getInstance().getMap()
+                .get(desc.getType()));
+        sb.append(StringConstants.RIGHT_BRACKET);
+        return sb.toString();
     }
 }

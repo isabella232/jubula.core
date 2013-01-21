@@ -198,9 +198,6 @@ public class EventExecTestCaseGUIPropertySource extends
             addPropertyDescriptor(m_maxRetriesPropDesc);
         }
 
-        // empty line
-        addPropertyDescriptor(new JBPropertyDescriptor(
-                new DummyController(), StringConstants.EMPTY));
         // Get the ExecTcDescriptors and add them to this descriptors
         addPropertyDescriptor(super.createParamDescriptors());
     }

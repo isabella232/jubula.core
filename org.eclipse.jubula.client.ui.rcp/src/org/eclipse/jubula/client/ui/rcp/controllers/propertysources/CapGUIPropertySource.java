@@ -46,7 +46,6 @@ import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBProper
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.PopupCompNameTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.factory.TestDataControlFactory;
-import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.DisabledLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.ParameterValueLabelProvider;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -414,29 +413,7 @@ public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
             clearControllerLists();
             IParamNameMapper activeParamNameMapper = getActiveParamNameMapper();
             IParamNodePO paramNode = getParamNode();
-            final int parameterListSize = paramNode.getParameterList().size();
-            for (int i = 0; i < parameterListSize; i++) {
-                IParamDescriptionPO desc = paramNode.getParameterList().get(i);
-                // Parameter Name
-                ParameterNameController pnc = new ParameterNameController(i, 
-                        desc.getUniqueId());
-                m_paramNameControllerList.add(pnc);
-                JBPropertyDescriptor propDes = new JBPropertyDescriptor(
-                    pnc, P_ELEMENT_DISPLAY_PARAMETERNAME);
-                propDes.setCategory(P_PARAMETER_CAT);
-                propDes.setLabelProvider(new DisabledLabelProvider());
-                m_initializedParamDescriptors.add(propDes);
-                
-                // Parameter Type
-                ParameterTypeController ptc = new ParameterTypeController(i,
-                        desc.getUniqueId());
-                m_paramTypeControllerList.add(ptc);
-                propDes = new JBPropertyDescriptor(
-                    ptc, P_ELEMENT_DISPLAY_PARAMETERTYPE);
-                propDes.setCategory(P_PARAMETER_CAT);
-                propDes.setLabelProvider(new DisabledLabelProvider());
-                m_initializedParamDescriptors.add(propDes);
-                
+            for (IParamDescriptionPO desc : paramNode.getParameterList()) {
                 // Parameter Value
                 ParameterValueController paramCtrl = 
                     new ParameterValueController(this, desc, 
@@ -454,24 +431,17 @@ public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
                     values.toArray(new String[values.size()]);
                 PropertyDescriptor descr = 
                     TestDataControlFactory.createValuePropertyDescriptor(
-                            paramCtrl, P_ELEMENT_DISPLAY_PARAMETERVALUE, 
+                            paramCtrl, getParameterNameDescr(desc), 
                             valArray, param.getValueSet().isCombinable());
                 descr.setLabelProvider(
                         new ParameterValueLabelProvider(INCOMPL_DATA_IMAGE));
                 descr.setCategory(P_PARAMETER_CAT);                
                 m_initializedParamDescriptors.add(descr);
-                
-                // empty line
-                propDes = new JBPropertyDescriptor(new DummyController(),
-                    StringConstants.EMPTY);
-                propDes.setCategory(P_PARAMETER_CAT);
-                m_initializedParamDescriptors.add(propDes);
             }
         }
         addPropertyDescriptor(m_initializedParamDescriptors);
-    
     }
-    
+
     /**
      * clears the controller lists. 
      */

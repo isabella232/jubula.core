@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
@@ -35,7 +34,6 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.contentassist.TestDataCubeRefContentProposalProvider;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.ContentAssistedTextPropertyDescriptor;
@@ -85,20 +83,8 @@ public class SpecTestCaseGUIPropertySource
         Messages.SpecTestCaseGUIPropertySourceTestCaseReferencedTestData;
 
     /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_PARAMETERNAME = 
-        Messages.SpecTestCaseGUIPropertySourceParameterName;
-    
-    /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_DATASOURCE = 
         Messages.SpecTestCaseGUIPropertySourceDataSource;
-    
-    /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_PARAMETERVALUE = 
-        Messages.SpecTestCaseGUIPropertySourceParameterValue;
-    
-    /** Property m_text on display */
-    public static final String P_ELEMENT_DISPLAY_PARAMETERTYPE = 
-        Messages.SpecTestCaseGUIPropertySourceParameterType;
     
     /** Constant for Category Parameter */
     public static final String P_PARAMETER_CAT = 
@@ -212,36 +198,15 @@ public class SpecTestCaseGUIPropertySource
                 .getParameterList();
         IParamNameMapper activeParamNameMapper = getActiveParamNameMapper();
         for (IParamDescriptionPO paramDescr : paramList) {
-            PropertyDescriptor propDes = null;
-
-            // Parameter name
-            propDes = new JBPropertyDescriptor(new ParameterNameController(
-                    this, paramDescr), P_ELEMENT_DISPLAY_PARAMETERNAME);
-            propDes.setCategory(P_PARAMETER_CAT);
-            propDes.setLabelProvider(new DisabledLabelProvider());
-            paramPropDescList.add(propDes);
-
-            // Parameter type
-            propDes = new JBPropertyDescriptor(new ParameterTypeController(
-                    this, paramDescr), P_ELEMENT_DISPLAY_PARAMETERTYPE);
-            propDes.setCategory(P_PARAMETER_CAT);
-            propDes.setLabelProvider(new DisabledLabelProvider());
-            paramPropDescList.add(propDes);
-
-            // Parameter value
-            propDes = TestDataControlFactory.createValuePropertyDescriptor(
-                    new ParameterValueController(this, paramDescr,
-                            activeParamNameMapper),
-                    P_ELEMENT_DISPLAY_PARAMETERVALUE, new String[0], false);
+            PropertyDescriptor propDes = TestDataControlFactory
+                    .createValuePropertyDescriptor(
+                            new ParameterValueController(this, paramDescr,
+                                    activeParamNameMapper),
+                            getParameterNameDescr(paramDescr), new String[0],
+                            false);
             propDes.setCategory(P_PARAMETER_CAT);
             propDes.setLabelProvider(new ParameterValueLabelProvider(
                     WARNING_IMAGE));
-            paramPropDescList.add(propDes);
-
-            // empty line
-            propDes = new JBPropertyDescriptor(new DummyController(),
-                    StringConstants.EMPTY);
-            propDes.setCategory(P_PARAMETER_CAT);
             paramPropDescList.add(propDes);
         }
 
@@ -599,55 +564,7 @@ public class SpecTestCaseGUIPropertySource
             return false;
         }
     }
-    /**
-     * Class to control parameter name.
-     * It has to be public!
-     * @author BREDEX GmbH
-     * @created 07.02.2005
-     */    
-    public static class ParameterNameController extends
-        AbstractPropertyController {
-        
-        /**
-         * Parameter description
-         */
-        private IParamDescriptionPO m_paramDescr;
-        
-        /**
-         * Constructor
-         * @param paramDescr the Parameter description.
-         * @param parent AbstractGuiNodePropertySource
-         */
-        public ParameterNameController(AbstractGuiNodePropertySource parent, 
-            IParamDescriptionPO paramDescr) {
-            super(parent);
-            m_paramDescr = paramDescr;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public boolean setProperty(Object value) {
-            // parameter names cannot be set manually
-            return true;
-        }
-        
-        /**
-         * {@inheritDoc}
-         * @return the user defined name for the parameter. 
-         */
-        public Object getProperty() {
-            return m_paramDescr.getName();
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public Image getImage() {
-            return DEFAULT_IMAGE;
-        }
-    }
-    
+
     /**
      * Class to control parameter value.
      * @author BREDEX GmbH
@@ -674,52 +591,6 @@ public class SpecTestCaseGUIPropertySource
         }
     }
 
-    /**
-     * Class to control parameter type.
-     * @author BREDEX GmbH
-     * @created 08.02.2005
-     */
-    protected static class ParameterTypeController 
-        extends AbstractPropertyController {
-        
-        /** Parameter description */
-        private IParamDescriptionPO m_paramDescr;
-        /**
-         * Constructor.
-         * @param paramDescr the Parameter description.
-         * @param parent AbstractGuiNodePropertySource
-         */
-        public ParameterTypeController(AbstractGuiNodePropertySource parent, 
-            IParamDescriptionPO paramDescr) {
-            super(parent);
-            m_paramDescr = paramDescr;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public boolean setProperty(Object value) {
-            // do nothing
-            return true;
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public Object getProperty() {
-            Map<String, String> map = StringHelper.getInstance().getMap();
-            String type = m_paramDescr.getType();
-            return map.get(type);
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public Image getImage() {
-            return DEFAULT_IMAGE;
-        }
-    }
-    
     /**
      * 
      * @author BREDEX GmbH

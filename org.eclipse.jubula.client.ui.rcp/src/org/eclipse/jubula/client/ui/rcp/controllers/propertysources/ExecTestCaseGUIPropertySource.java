@@ -184,42 +184,19 @@ public class ExecTestCaseGUIPropertySource extends
                 paramNodePO.getParameterList();
             IParamNameMapper activeParamNameMapper = getActiveParamNameMapper();
             for (IParamDescriptionPO paramDescr : paramList) {
-                // Parameter name
-                propDes = new JBPropertyDescriptor(
-                        new ParameterNameController(this, paramDescr),
-                        P_ELEMENT_DISPLAY_PARAMETERNAME);
-                propDes.setLabelProvider(new DisabledLabelProvider());
-                propDes.setCategory(P_PARAMETER_CAT);
-                m_paramPropDescList.add(propDes);
-                
-                //Parameter type
-                propDes = 
-                    new JBPropertyDescriptor(new ParameterTypeController(
-                            this, paramDescr), P_ELEMENT_DISPLAY_PARAMETERTYPE);
-                propDes.setLabelProvider(new DisabledLabelProvider());
-                propDes.setCategory(P_PARAMETER_CAT);
-                m_paramPropDescList.add(propDes);
-                
-                // Parameter value
                 ParamValueSet valueSet = 
                     ParamTextPropertyDescriptor.getValuesSet(
                             paramNodePO, paramDescr.getUniqueId());
                 propDes = TestDataControlFactory.createValuePropertyDescriptor(
                         new ParameterValueController(this, 
                                 paramDescr, activeParamNameMapper), 
-                                P_ELEMENT_DISPLAY_PARAMETERVALUE, 
+                                getParameterNameDescr(paramDescr), 
                                 ParamTextPropertyDescriptor.getValues(valueSet),
                                 valueSet != null 
                                     ? valueSet.isCombinable() : false);
                 propDes.setCategory(P_PARAMETER_CAT);
                 propDes.setLabelProvider(
                         new ParameterValueLabelProvider(INCOMPL_DATA_IMAGE));
-                m_paramPropDescList.add(propDes);
-                
-                // empty line
-                propDes = new JBPropertyDescriptor(new DummyController(),
-                        StringConstants.EMPTY);
-                propDes.setCategory(P_PARAMETER_CAT);
                 m_paramPropDescList.add(propDes);
             }
         }
