@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -64,62 +65,36 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
     private TreeViewer m_viewer;
 
     /** the child <-> parent relationship map */
-    private Map<Object, Object> m_relationShip = new HashMap<Object, Object>();
+    private Map<Object, Object> m_relationShip = 
+            new HashMap<Object, Object>(117);
+    
+    /** the parent->children cache */
+    private Map<Object, List<Object>> m_children = 
+            new HashMap<Object, List<Object>>(79);
+    
+    /** cache for hasChildren method */
+    private Map<Object, Boolean> m_hasChildren = new HashMap<Object, Boolean>();
 
+    /**
+     * Drops all cached data.
+     */
+    private void clearCaches() {
+        m_relationShip.clear();
+        m_children.clear();
+        m_hasChildren.clear();
+    }
     /**
      * {@inheritDoc}
      */
     public Object[] getChildren(Object parentO) {
+        List<Object> cachedChildren = m_children.get(parentO);
+        if (cachedChildren != null) {
+            return cachedChildren.toArray();
+        }
         Object[] children = DUMMY;
         if (parentO instanceof IProjectPO
                 || parentO instanceof IReusedProjectPO) {
-            Long parentProjectID = null;
-
-            if (parentO instanceof IProjectPO) {
-                parentProjectID = ((IProjectPO)parentO).getId();
-            } else {
-                IReusedProjectPO rp = ((IReusedProjectPO)parentO);
-                try {
-                    parentProjectID = ProjectPM.findProjectId(rp
-                            .getProjectGuid(), rp.getMajorNumber(), rp
-                            .getMinorNumber());
-                } catch (JBException e) {
-                    // do nothing
-                }
-            }
-            if (parentProjectID != null) {
-                UsedCompnamesCategory usedCat = new UsedCompnamesCategory(
-                        parentProjectID, parentO);
-                UnusedCompnamesCategory unCat = new UnusedCompnamesCategory(
-                        parentProjectID, parentO);
-                try {
-                    boolean areThereReusedProjects;
-                    if (parentO instanceof IProjectPO) {
-                        IProjectPO project = (IProjectPO) parentO;
-                        areThereReusedProjects = project.getUsedProjects()
-                                .size() > 0;
-                    } else {
-                        areThereReusedProjects =
-                                ProjectPM.getReusedProjectsForProjectRO(
-                                        parentProjectID).size() > 0;
-                    }
-                    if (areThereReusedProjects) {
-                        ReusedCompnamesCategory reusedCat = 
-                            new ReusedCompnamesCategory(
-                                parentProjectID, parentO);
-                        children = 
-                            new AbstractCompNamesCategory[] { usedCat,
-                                                              unCat, 
-                                                              reusedCat };
-                    } else {
-                        children = 
-                            new AbstractCompNamesCategory[] { usedCat, 
-                                                              unCat };
-                    }
-                } catch (JBException e) {
-                    // nothing to catch here
-                }
-            } 
+            children = handleProjectTree(parentO); 
         }
 
         if (parentO instanceof AbstractCompNamesCategory) {
@@ -137,11 +112,68 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
         }
 
         if (children != DUMMY) {
+            List <Object>childrenList = new ArrayList<Object>(children.length);
             for (Object o : children) {
                 m_relationShip.put(o, parentO);
+                childrenList.add(o);
             }
+            m_children.put(parentO, childrenList);
         }
 
+        return children;
+    }
+    /**
+     * @param parentO a Project or ReusedProject as root
+     * @return an array of the parent children
+     */
+    private Object[] handleProjectTree(Object parentO) {
+        Long parentProjectID = null;
+        Object[] children = DUMMY;
+        if (parentO instanceof IProjectPO) {
+            parentProjectID = ((IProjectPO)parentO).getId();
+        } else {
+            IReusedProjectPO rp = ((IReusedProjectPO)parentO);
+            try {
+                parentProjectID = ProjectPM.findProjectId(rp
+                        .getProjectGuid(), rp.getMajorNumber(), rp
+                        .getMinorNumber());
+            } catch (JBException e) {
+                // do nothing
+            }
+        }
+        if (parentProjectID != null) {
+            UsedCompnamesCategory usedCat = new UsedCompnamesCategory(
+                    parentProjectID, parentO);
+            UnusedCompnamesCategory unCat = new UnusedCompnamesCategory(
+                    parentProjectID, parentO);
+            try {
+                boolean areThereReusedProjects;
+                if (parentO instanceof IProjectPO) {
+                    IProjectPO project = (IProjectPO) parentO;
+                    areThereReusedProjects = project.getUsedProjects()
+                            .size() > 0;
+                } else {
+                    areThereReusedProjects =
+                            ProjectPM.getReusedProjectsForProjectRO(
+                                    parentProjectID).size() > 0;
+                }
+                if (areThereReusedProjects) {
+                    ReusedCompnamesCategory reusedCat = 
+                        new ReusedCompnamesCategory(
+                            parentProjectID, parentO);
+                    children = 
+                        new AbstractCompNamesCategory[] { usedCat,
+                                                          unCat, 
+                                                          reusedCat };
+                } else {
+                    children = 
+                        new AbstractCompNamesCategory[] { usedCat, 
+                                                          unCat };
+                }
+            } catch (JBException e) {
+                // nothing to catch here
+            }
+        }
         return children;
     }
 
@@ -230,14 +262,21 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
      * {@inheritDoc}
      */
     public boolean hasChildren(Object element) {
-        return getChildren(element).length > 0;
+        List<Object> children = m_children.get(element);
+        if (children != null) {
+            return !children.isEmpty();
+        }
+        return getChildren(element).length != 0;
     }
 
     /**
      * {@inheritDoc}
      */
     public Object[] getElements(Object inputElement) {
-        m_relationShip.clear();
+        List<Object> children = m_children.get(inputElement);
+        if (children != null) {
+            return children.toArray();
+        }
         return getChildren(inputElement);
     }
 
@@ -245,7 +284,7 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
      * {@inheritDoc}
      */
     public void dispose() {
-        m_relationShip.clear();
+        clearCaches();
     }
 
     /**
@@ -254,6 +293,9 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
         if (viewer instanceof TreeViewer) {
             setViewer((TreeViewer)viewer);
+        }
+        if (oldInput != newInput) {
+            clearCaches();
         }
     }
     
