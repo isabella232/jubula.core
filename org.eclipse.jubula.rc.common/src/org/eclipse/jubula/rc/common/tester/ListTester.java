@@ -1,0 +1,469 @@
+/*******************************************************************************
+ * Copyright (c) 2012 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation 
+ *******************************************************************************/
+package org.eclipse.jubula.rc.common.tester;
+
+import java.util.Arrays;
+
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.rc.common.CompSystemConstants;
+import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
+import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
+import org.eclipse.jubula.rc.common.implclasses.ListSelectionVerifier;
+import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
+import org.eclipse.jubula.rc.common.implclasses.Verifier;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListAdapter;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.constants.TestDataConstants;
+import org.eclipse.jubula.tools.objects.event.EventFactory;
+import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.utils.StringParsing;
+
+/**
+ * 
+ * @author BREDEX GmbH
+ *
+ */
+public class ListTester extends AbstractTextVerifiableTester {
+    
+    /**
+     * Splits the enumeration of values.
+     * @param values The values to split
+     * @param separator The separator, may be <code>null</code>
+     * @return The array of values
+     */
+    private String[] split(String values, String separator) {
+        String[] list = StringParsing.splitToArray(values, ((separator == null)
+            || (separator.length() == 0) ? INDEX_LIST_SEP_CHAR
+                : separator.charAt(0)),
+            TestDataConstants.ESCAPE_CHAR_DEFAULT);
+        list = StringUtils.stripAll(list);
+        return list;
+    }
+    
+    /**
+     * @return The array of selected indices
+     * @throws StepExecutionException If there are no indices selected
+     */
+    private int[] getCheckedSelectedIndices() throws StepExecutionException {
+        int[] selected = getListAdapter().getSelectedIndices();
+        if (selected.length == 0) {
+            throw new StepExecutionException("No list element selected", //$NON-NLS-1$
+                EventFactory.createActionError(TestErrorEvent.NO_SELECTION));
+        }
+        return selected;
+    }
+
+    /**
+     * 
+     * @return the List Adapter
+     */
+    private IListAdapter getListAdapter() {
+        return ((IListAdapter) getComponent());
+    }
+    
+    /**
+     * Verifies if the passed index is selected.
+     * 
+     * @param index The index to verify
+     * @param expectSelected Whether the index should be selected.
+     */
+    public void gdVerifySelectedIndex(String index, boolean expectSelected) {
+        int[] selected = getCheckedSelectedIndices();
+        int implIndex = IndexConverter.toImplementationIndex(
+                Integer.parseInt(index));
+
+        boolean isSelected = ArrayUtils.contains(selected, implIndex);
+        if (expectSelected != isSelected) {
+            throw new StepExecutionException(
+                    "Selection check failed for index: " + index,  //$NON-NLS-1$
+                    EventFactory.createVerifyFailed(
+                            String.valueOf(expectSelected), 
+                            String.valueOf(isSelected)));
+        }
+    }
+    
+    /**
+     * Verifies if the passed value or enumeration of values is selected. By
+     * default, the enumeration separator is <code>,</code>
+     * @param valueList The value or list of values to verify
+     */
+    public void gdVerifySelectedValue(String valueList) {
+        gdVerifySelectedValue(valueList, MatchUtil.DEFAULT_OPERATOR, true);
+    }
+    
+    /**
+     * Verifies if the passed value is selected.
+     * 
+     * @param value The value to verify
+     * @param operator The operator to use when comparing the 
+     *                 expected and actual values.
+     *  @param isSelected if the value should be selected or not.
+     */
+    public void gdVerifySelectedValue(String value, String operator,
+            boolean isSelected) {
+
+        final String[] current = getListAdapter().getSelectedValues();
+        final ListSelectionVerifier listSelVerifier =
+            new ListSelectionVerifier();
+        for (int i = 0; i < current.length; i++) {
+            listSelVerifier.addItem(i, current[i], true);
+        }
+        listSelVerifier.verifySelection(value, operator, isSelected);
+    }
+    
+    /**
+     * Verifies if all selected elements of a list match a text.
+     * @param text The text to verify
+     * @param operator The operator used to verify
+     */
+    public void gdVerifyText(String text, String operator) {
+        String[] selected = getListAdapter().getSelectedValues();
+        final int selCount = selected.length;
+        if (selCount < 1) {
+            throw new StepExecutionException("No selection", //$NON-NLS-1$
+                EventFactory.createActionError(TestErrorEvent.NO_SELECTION));
+        }
+        for (int i = 0; i < selCount; i++) {
+            Verifier.match(selected[i], text, operator);
+        }
+    }
+    
+    /**
+     * Selects the passed index or enumeration of indices. The enumeration must
+     * be separated by <code>,</code>, e.g. <code>1, 3,6</code>.
+     * @param indexList The index or indices to select
+     * @param extendSelection Whether this selection extends a previous 
+     *                        selection.
+     * @param button what mouse button should be used
+     */
+    public void gdSelectIndex(String indexList, final String extendSelection,
+            int button) {
+        final boolean isExtendSelection = extendSelection
+                .equals(CompSystemConstants.EXTEND_SELECTION_YES);
+        selectIndices(IndexConverter
+                .toImplementationIndices(parseIndices(indexList)), ClickOptions
+                .create().setClickCount(1).setMouseButton(button),
+                isExtendSelection);
+    }
+    
+    /**
+     * Selects the passed value or enumeration of values. By default, the
+     * enumeration separator is <code>,</code>.
+     * @param valueList The value or list of values to select
+     * @param operator If regular expressions are used
+     * @param searchType Determines where the search begins ("relative" or "absolute")
+     * @param extendSelection Whether this selection extends a previous 
+     *                          selection. If <code>true</code>, the first 
+     *                          element will be selected with CONTROL as a 
+     *                          modifier.
+     * @param button what mouse button should be used
+     */
+    public void gdSelectValue(String valueList, String operator, 
+            String searchType, final String extendSelection, int button) {
+        final boolean isExtendSelection = 
+            extendSelection.equals(CompSystemConstants.EXTEND_SELECTION_YES);
+        selectValue(valueList, String.valueOf(VALUE_SEPARATOR), operator, 
+            searchType, ClickOptions.create()
+                .setClickCount(1)
+                .setMouseButton(button), isExtendSelection); 
+    }
+    
+    /**
+     * Selects the passed value or enumeration of values. By default, the
+     * enumeration separator is <code>,</code>, but may be changed by
+     * <code>separator</code>.
+     * @param valueList The value or list of values to select
+     * @param separator The separator, optional
+     * @param operator If regular expressions are used
+     * @param searchType Determines where the search begins ("relative" or "absolute")
+     * @param clickCount the amount of clicks to use
+     * @param extendSelection Whether this selection extends a previous 
+     *                        selection.
+     */
+    public void gdSelectValue(String valueList, String separator,
+            String operator, final String searchType, int clickCount, 
+            final String extendSelection) {
+        final boolean isExtendSelection = 
+            extendSelection.equals(CompSystemConstants.EXTEND_SELECTION_YES);
+        selectValue(valueList, separator, operator, searchType, ClickOptions
+                .create().setClickCount(clickCount), isExtendSelection);
+    }
+    
+    /**
+     * Verifies if the list contains an element that renderes <code>value</code>.
+     * @param value The text to verify
+     */
+    public void gdVerifyContainsValue(String value) {
+        Verifier.equals(true, containsValue(value));
+    }
+
+    /**
+     * Verifies if the list contains an element that renderes <code>value</code>.
+     * @param value The text to verify
+     * @param operator The operator used to verify
+     * @param exists if the wanted value should exist or not.
+     */
+    public void gdVerifyContainsValue(String value, String operator,
+            boolean exists) {
+
+        Verifier.equals(exists, containsValue(value, operator));
+    }
+    
+    /**
+     * Action to read the value of the current selected item of the JList
+     * to store it in a variable in the Client
+     * @param variable the name of the variable
+     * @return the text value.
+     */
+    public String gdReadValue(String variable) {
+        String[] selected = getListAdapter().getSelectedValues();
+        if (selected.length > 0) {
+            return selected[0];
+        }
+        throw new StepExecutionException("No list item selected", //$NON-NLS-1$
+            EventFactory.createActionError(TestErrorEvent.NO_SELECTION));
+    }
+    
+    /**
+     * Drags the passed value.
+     *
+     * @param mouseButton the mouseButton.
+     * @param modifier the modifier.
+     * @param value The value to drag
+     * @param operator If regular expressions are used
+     * @param searchType Determines where the search begins ("relative" or "absolute")
+     */
+    public void gdDragValue(int mouseButton, String modifier, String value,
+            String operator, final String searchType) {
+
+        DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+        dndHelper.setModifier(modifier);
+        dndHelper.setMouseButton(mouseButton);
+
+        Integer [] indices = getListAdapter().findIndicesOfValues(
+            new String [] {value}, operator, searchType);
+        selectIndices(ArrayUtils.toPrimitive(indices), 
+                ClickOptions.create().setClickCount(0), false);
+
+        pressOrReleaseModifiers(modifier, true);
+        getRobot().mousePress(null, null, mouseButton);
+    }
+
+    /**
+     * Drops on the passed value.
+     *
+     * @param value The value on which to drop
+     * @param operator If regular expressions are used
+     * @param searchType Determines where the search begins ("relative" or "absolute")
+     * @param delayBeforeDrop the amount of time (in milliseconds) to wait
+     *                        between moving the mouse to the drop point and
+     *                        releasing the mouse button
+     */
+    public void gdDropValue(String value, String operator,
+        final String searchType, int delayBeforeDrop) {
+
+        DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+        try {
+            Integer [] indices = getListAdapter().findIndicesOfValues(
+                new String [] {value}, operator, searchType);
+            selectIndices(ArrayUtils.toPrimitive(indices), 
+                    ClickOptions.create().setClickCount(0), false);
+            waitBeforeDrop(delayBeforeDrop);
+        } finally {
+            getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
+            pressOrReleaseModifiers(dndHelper.getModifier(), false);
+        }
+    }
+
+    /**
+     * Drags the passed index.
+     *
+     * @param mouseButton the mouseButton.
+     * @param modifier the modifier.
+     * @param index The index to drag
+     */
+    public void gdDragIndex(final int mouseButton, final String modifier,
+            int index) {
+
+        DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+        dndHelper.setModifier(modifier);
+        dndHelper.setMouseButton(mouseButton);
+
+        selectIndices(
+                new int [] {IndexConverter.toImplementationIndex(index)}, 
+                ClickOptions.create().setClickCount(0), false);
+
+        pressOrReleaseModifiers(modifier, true);
+        getRobot().mousePress(null, null, mouseButton);
+    }
+
+    /**
+     * Drops onto the passed index.
+     *
+     * @param index The index on which to drop
+     * @param delayBeforeDrop the amount of time (in milliseconds) to wait
+     *                        between moving the mouse to the drop point and
+     *                        releasing the mouse button
+     */
+    public void gdDropIndex(final int index, int delayBeforeDrop) {
+
+        DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+
+        try {
+            selectIndices(
+                    new int [] {IndexConverter.toImplementationIndex(index)}, 
+                    ClickOptions.create().setClickCount(0), false);
+            waitBeforeDrop(delayBeforeDrop);
+        } finally {
+            getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
+            pressOrReleaseModifiers(dndHelper.getModifier(), false);
+        }
+    }
+
+    /**
+     * @param value The value
+     * @return <code>true</code> if the list contains an element that is rendered with <code>value</code>
+     */
+    public boolean containsValue(String value) {
+        Integer[] indices = getListAdapter().findIndicesOfValues(
+                new String[] { value },
+                MatchUtil.EQUALS, CompSystemConstants.SEARCH_TYPE_ABSOLUTE);
+        return indices.length > 0;
+    }
+    
+    /**
+     * @param value The value
+     * @param operator The operator used to verify
+     * @return <code>true</code> if the list contains an element that is rendered with <code>value</code>
+     */
+    public boolean containsValue(String value, String operator) {
+        Integer[] indices = null;
+        if (operator.equals(MatchUtil.NOT_EQUALS)) {
+            indices = getListAdapter().findIndicesOfValues(
+                    new String[] { value },
+                MatchUtil.EQUALS, CompSystemConstants.SEARCH_TYPE_ABSOLUTE);
+            return indices.length == 0;
+        } 
+        indices = getListAdapter().findIndicesOfValues(new String[] { value },
+            operator, CompSystemConstants.SEARCH_TYPE_ABSOLUTE);
+        return indices.length > 0;
+    }
+    
+    /**
+     * Selects the passed value or enumeration of values. By default, the
+     * enumeration separator is <code>,</code>, but may be changed by
+     * <code>separator</code>.
+     * @param valueList The value or list of values to select
+     * @param separator The separator, optional
+     * @param operator If regular expressions are used
+     * @param searchType Determines where the search begins ("relative" or "absolute")
+     * @param co the click options to use
+     * @param isExtendSelection Whether this selection extends a previous 
+     *                        selection.
+     */
+    private void selectValue(String valueList, String separator,
+            String operator, final String searchType, ClickOptions co, 
+            final boolean isExtendSelection) {
+
+        String[] values = null;
+        if (StringConstants.EMPTY.equals(valueList)) {
+            values = new String[1];
+            values[0] = StringConstants.EMPTY;
+        } else {
+            values = split(valueList, separator);
+        }
+        Integer[] indices = getListAdapter().findIndicesOfValues(values,
+                operator, searchType);
+        Arrays.sort(indices);
+        if (!operator.equals(MatchUtil.NOT_EQUALS) 
+                && (indices.length < values.length)) {
+            throw new StepExecutionException("One or more values not found of set: " //$NON-NLS-1$
+                + Arrays.asList(values).toString(),
+                EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
+        }
+        selectIndices(ArrayUtils.toPrimitive(indices), co, isExtendSelection);
+    }
+    
+    /**
+     * Parses the enumeration of indices.
+     * @param indexList The enumeration of indices
+     * @return The array of parsed indices
+     */
+    private int[] parseIndices(String indexList) {
+        String[] list = StringParsing.splitToArray(indexList,
+                INDEX_LIST_SEP_CHAR, TestDataConstants.ESCAPE_CHAR_DEFAULT);
+        int[] indices = new int[list.length];
+        for (int i = 0; i < list.length; i++) {
+            indices[i] = IndexConverter.intValue(list[i]);
+        }
+        return indices;
+    }
+    
+    /**
+     * @param indices The indices to select
+     * @param co the click options to use
+     * @param isExtendSelection Whether this selection extends a previous 
+     *                          selection. If <code>true</code>, the first 
+     *                          element will be selected with CONTROL as a 
+     *                          modifier.
+     */
+    private void selectIndices(int[] indices, ClickOptions co, 
+            boolean isExtendSelection) {
+        Object list = getListAdapter().getRealComponent();
+        if (indices.length > 0) {
+            try {
+                if (isExtendSelection) {
+                    getRobot().keyPress(list,
+                            getSystemDefaultModifier());
+                }
+
+                // first selection
+                getListAdapter().clickOnIndex(
+                        new Integer(indices[0]), co);
+            } finally {
+                if (isExtendSelection) {
+                    getRobot().keyRelease(list,
+                            getSystemDefaultModifier());
+                }
+            }
+        }
+        try {
+            getRobot().keyPress(list,
+                    getSystemDefaultModifier());
+            // following selections
+            for (int i = 1; i < indices.length; i++) {
+                getListAdapter().clickOnIndex(
+                        new Integer(indices[i]), co);
+            }
+        } finally {
+            getRobot().keyRelease(list,
+                    getSystemDefaultModifier());
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String[] getTextArrayFromComponent() {
+        return null;
+    }
+    
+    /**
+     * 
+     * @return -
+     */
+    protected int getSystemDefaultModifier() {
+        return -1;
+    }
+}
