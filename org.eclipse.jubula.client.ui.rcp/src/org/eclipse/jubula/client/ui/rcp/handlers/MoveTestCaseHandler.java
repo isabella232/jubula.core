@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -463,9 +464,21 @@ public class MoveTestCaseHandler extends AbstractHandler {
             List<INodePO> specTcs = new ArrayList<INodePO>();
             addCatChildren(selNode, specTcs);
             for (INodePO spec : specTcs) {
-                ISpecTestCasePO specTestCasePo = (ISpecTestCasePO)spec;
-                if (specTestCasePo.getReferencedDataCube() != null) {
-                    return true;
+                if (spec instanceof ISpecTestCasePO) {
+    
+                    ISpecTestCasePO specTestCasePo = (ISpecTestCasePO)spec;
+                    if (specTestCasePo.getReferencedDataCube() != null) {
+                        return true;
+                    }
+                    Iterator<INodePO> execTcs = specTestCasePo
+                            .getNodeListIterator();
+                    while (execTcs.hasNext()) {
+                        INodePO exec = execTcs.next();
+                        IExecTestCasePO execTestCasePo = (IExecTestCasePO)exec; 
+                        if (execTestCasePo.getReferencedDataCube() != null) {
+                            return true;
+                        }
+                    }
                 }
             }
         }

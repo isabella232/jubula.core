@@ -572,9 +572,17 @@ public class MultipleNodePM  extends PersistenceManager {
             if (node instanceof ISpecTestCasePO 
                     && !(oldParent.getParentProjectId().equals(
                             newParent.getParentProjectId()))) {
-                
+                Iterator iter = node.getNodeListIterator();
+                while (iter.hasNext()) {
+                    INodePO child = (INodePO)iter.next();
+                    if (Persistor.isPoSubclass(child, IExecTestCasePO.class)) {
+                        IExecTestCasePO execTC = (IExecTestCasePO)child;
+                        execTC.setReferencedDataCube(null);
+                    }
+                }
                 ((ISpecTestCasePO) node).setReferencedDataCube(null);
             }
+            
             
             // remove from old parent
             if (oldParent instanceof ISpecObjContPO) {
