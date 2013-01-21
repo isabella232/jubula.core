@@ -160,31 +160,31 @@
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.Label" visible="false">
 		<realizes>guidancer.abstract.SwtLabel</realizes>
-		<testerClass>org.eclipse.jubula.rc.common.caps.LabelCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.LabelTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Label" />
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.custom.CLabel" visible="false">
 		<realizes>guidancer.abstract.SwtLabel</realizes>
-		<testerClass>org.eclipse.jubula.rc.common.caps.LabelCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.LabelTester</testerClass>
 		<componentClass name="org.eclipse.swt.custom.CLabel" />
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.Text" visible="false">
 		<realizes>guidancer.abstract.SwtText</realizes>
-		<testerClass>org.eclipse.jubula.rc.common.caps.AbstractTextComponent</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.AbstractTextComponentTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Text" />
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.custom.StyledText" visible="false">
 		<realizes>guidancer.abstract.SwtText</realizes>
-		<testerClass>org.eclipse.jubula.rc.common.caps.AbstractTextComponent</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.AbstractTextComponentTester</testerClass>
 		<componentClass name="org.eclipse.swt.custom.StyledText" />
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.Button" visible="false">
 		<realizes>guidancer.abstract.SwtButton</realizes>
-		<testerClass>org.eclipse.jubula.rc.swt.caps.ButtonCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swt.tester.ButtonTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Button" />
 	</toolkitComponent>
 	
@@ -194,7 +194,7 @@
 			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.GraphicApplication</realizes>
-		<testerClass>org.eclipse.jubula.rc.swt.caps.SwtApplicationCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swt.tester.SwtApplicationTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.autswtserver.implclasses.GraphicApplication" />
 	</toolkitComponent>
 
@@ -203,49 +203,49 @@
 			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.MenuBar</realizes>
-		<testerClass>org.eclipse.jubula.rc.swt.caps.MenuCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swt.tester.MenuTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.autswtserver.implclasses.MenuDefaultMapping" />
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.Combo" visible="false">
 		<realizes>guidancer.abstract.SwtCombo</realizes>
-		<testerClass>org.eclipse.jubula.rc.common.caps.AbstractComboBoxCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ComboBoxTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Combo" />
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.custom.CCombo" visible="false">
 		<realizes>guidancer.abstract.SwtCombo</realizes>
-		<testerClass>org.eclipse.jubula.rc.common.caps.AbstractComboBoxCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ComboBoxTester</testerClass>
 		<componentClass name="org.eclipse.swt.custom.CCombo" />
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.List" visible="false">
 		<realizes>guidancer.concrete.List</realizes>
-		<testerClass>org.eclipse.jubula.rc.swt.caps.ListCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swt.tester.ListTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.List" />
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.TabFolder" visible="false">
 		<realizes>guidancer.abstract.SwtTabFolder</realizes>
-		<testerClass>org.eclipse.jubula.rc.common.caps.TabbedPaneCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.TabbedPaneTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.TabFolder" />
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.custom.CTabFolder" visible="false">
 		<realizes>guidancer.abstract.SwtTabFolder</realizes>
-		<testerClass>org.eclipse.jubula.rc.common.caps.TabbedPaneCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.TabbedPaneTester</testerClass>
 		<componentClass name="org.eclipse.swt.custom.CTabFolder" />
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.Table" visible="false">
 		<realizes>guidancer.concrete.Table</realizes>
-		<testerClass>org.eclipse.jubula.rc.swt.caps.TableCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swt.tester.TableTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Table" />
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.Tree" observable="false">
 		<realizes>guidancer.concrete.Tree</realizes>
-		<testerClass>org.eclipse.jubula.rc.swt.caps.TreeCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Tree" />
 		<action name="CompSystem.VerifyCheckboxOfSelectedEntry" changed="4.1">
 			<method>gdVerifySelectedCheckbox</method>
@@ -370,7 +370,7 @@
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.SwtTree">
 		<realizes>org.eclipse.swt.widgets.Tree</realizes>
-		<testerClass>org.eclipse.jubula.rc.swt.caps.TreeCAPs</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Tree" />
 		<action name="CompSystem.SelectByTextPathAtColumn" changed="1.22">
 			<method>gdSelect</method>
