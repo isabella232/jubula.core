@@ -151,9 +151,12 @@ public class ComponentNameBrowser extends ViewPart implements
                 if (!isCachingOn) {
                     NodePM.getInstance().setUseCache(true);
                 }
-                getTreeViewer().setInput(cProject);
-                if (!isCachingOn) {
-                    NodePM.getInstance().setUseCache(false);
+                try {
+                    getTreeViewer().setInput(cProject);
+                } finally {
+                    if (!isCachingOn) {
+                        NodePM.getInstance().setUseCache(false);
+                    }
                 }
             }
         });

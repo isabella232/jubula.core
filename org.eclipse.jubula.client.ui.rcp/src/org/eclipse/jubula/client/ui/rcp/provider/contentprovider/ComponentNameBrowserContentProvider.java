@@ -72,16 +72,12 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
     private Map<Object, List<Object>> m_children = 
             new HashMap<Object, List<Object>>(79);
     
-    /** cache for hasChildren method */
-    private Map<Object, Boolean> m_hasChildren = new HashMap<Object, Boolean>();
-
     /**
      * Drops all cached data.
      */
     private void clearCaches() {
         m_relationShip.clear();
         m_children.clear();
-        m_hasChildren.clear();
     }
     /**
      * {@inheritDoc}
