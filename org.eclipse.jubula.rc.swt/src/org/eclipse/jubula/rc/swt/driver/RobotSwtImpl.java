@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.swt.driver;
 
 import java.awt.event.InputEvent;
+import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
@@ -43,6 +44,7 @@ import org.eclipse.jubula.rc.common.exception.OsNotSupportedException;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.util.LocalScreenshotUtil;
 import org.eclipse.jubula.rc.common.util.WorkaroundUtil;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.implclasses.SwtApplicationImplClass;
@@ -1672,5 +1674,10 @@ public class RobotSwtImpl implements IRobot {
         }
         
         return propertyValue;
+    }
+    
+    /** {@inheritDoc} */
+    public BufferedImage createFullScreenCapture() {
+        return LocalScreenshotUtil.createFullScreenCapture();
     }
 }

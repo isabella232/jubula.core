@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.common.driver;
 
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 import org.eclipse.jubula.rc.common.exception.OsNotSupportedException;
 import org.eclipse.jubula.rc.common.exception.RobotException;
@@ -278,4 +279,11 @@ public interface IRobot {
      */
     public String getPropertyValue(Object graphicsComponent,
         String propertyName) throws RobotException;
+    
+    /**
+     * Create an image containing pixels read from the full screen.
+     * 
+     * @return The captured image
+     */
+    public BufferedImage createFullScreenCapture();
 }

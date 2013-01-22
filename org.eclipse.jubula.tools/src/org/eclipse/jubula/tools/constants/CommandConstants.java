@@ -70,6 +70,8 @@ public abstract class CommandConstants {
     public static final String COMMONS_BEAN_UTILS_BUNDLE_ID = "org.apache.commons.beanutils"; //$NON-NLS-1$
     /** ID of the Apache Commons Collections bundle */
     public static final String COMMONS_COLLECTIONS_BUNDLE_ID = "org.apache.commons.collections"; //$NON-NLS-1$
+    /** ID of the Apache Commons Codec bundle */
+    public static final String COMMONS_CODEC_BUNDLE_ID = "org.apache.commons.codec"; //$NON-NLS-1$
     /** ID of the Tools bundle */
     public static final String TOOLS_BUNDLE_ID = "org.eclipse.jubula.tools"; //$NON-NLS-1$
     /** ID of the Communication bundle */

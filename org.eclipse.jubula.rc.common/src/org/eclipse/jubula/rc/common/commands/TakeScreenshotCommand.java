@@ -10,17 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.commands;
 
-import java.awt.AWTException;
-import java.awt.Dimension;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.TakeScreenshotMessage;
 import org.eclipse.jubula.communication.message.TakeScreenshotResponseMessage;
+import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.tools.serialisation.SerializedImage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,20 +40,12 @@ public class TakeScreenshotCommand implements ICommand {
      */
     public Message execute() {
         TakeScreenshotResponseMessage response = 
-            new TakeScreenshotResponseMessage();
-        try {
-            Robot robot = new Robot();
-            // Determine current screen size
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            Dimension screenSize = toolkit.getScreenSize();
-            Rectangle screenRect = new Rectangle(screenSize);
-            BufferedImage bi = robot.createScreenCapture(screenRect);
-            response.setScreenshot(SerializedImage.computeSerializeImage(bi));
-        } catch (AWTException e) {
-            if (LOG.isErrorEnabled()) {
-                LOG.error(e.getLocalizedMessage(), e);
-            }
-        }
+                new TakeScreenshotResponseMessage();
+        final BufferedImage createScreenCapture = AUTServer.getInstance()
+                .getRobot().createFullScreenCapture();
+        final SerializedImage computedSerializeImage = SerializedImage
+                .computeSerializeImage(createScreenCapture);
+        response.setScreenshot(computedSerializeImage);
         return response;
     }
 

@@ -60,6 +60,8 @@ public class SerializedImage {
             imageByteOutputStream.flush();
             si.setData(imageByteOutputStream.toByteArray());
             imageByteOutputStream.close();
+        } catch (IllegalArgumentException e) {
+            LOG.error(e.getLocalizedMessage(), e);
         } catch (IOException e) {
             LOG.error(e.getLocalizedMessage(), e);
         }

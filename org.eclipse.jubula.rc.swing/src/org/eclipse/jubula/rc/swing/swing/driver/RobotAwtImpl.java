@@ -25,6 +25,7 @@ import java.awt.Window;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,7 @@ import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.util.LocalScreenshotUtil;
 import org.eclipse.jubula.rc.common.util.PointUtil;
 import org.eclipse.jubula.rc.swing.components.SwingHierarchyContainer;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
@@ -926,5 +928,10 @@ public class RobotAwtImpl implements IRobot {
         }
         
         return propertyValue;
+    }
+    
+    /** {@inheritDoc} */
+    public BufferedImage createFullScreenCapture() {
+        return LocalScreenshotUtil.createFullScreenCapture();
     }
 }
