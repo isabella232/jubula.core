@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -21,14 +22,19 @@ import javax.persistence.EntityManager;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.CapBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
+import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
 import org.eclipse.jubula.client.core.businessprocess.treeoperations.CollectComponentNameUsersOp;
 import org.eclipse.jubula.client.core.datastructure.CompNameUsageMap;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -42,13 +48,13 @@ import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
+import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.ReusedProjectSelectionDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
@@ -60,11 +66,13 @@ import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.messagehandling.MessageInfo;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.PlatformUI;
 
 
 /**
@@ -119,6 +127,54 @@ public class MoveTestCaseHandler extends AbstractHandler {
             m_nodesToMove = nodesToMove;
         }
     }
+    /**
+     * @author BREDEX GmbH
+     * @created 22.01.2013
+     */
+    private static class RefreshReusedProjectOperation 
+        implements IRunnableWithProgress {
+        /** the selected project  */
+        private IReusedProjectPO m_selectedProject;
+
+        /**
+         * 
+         * @param reusedProject
+         *            the reused project which should be refreshed
+         */
+        public RefreshReusedProjectOperation(IReusedProjectPO reusedProject) {
+            m_selectedProject = reusedProject;
+            
+        }
+        /**
+         * {@inheritDoc}
+         */
+        public void run(IProgressMonitor monitor) {
+        
+        
+            monitor.beginTask(
+                    Messages.RefreshProjectOperationRefreshing,
+                    IProgressMonitor.UNKNOWN);
+        
+            ProgressMonitorTracker.getInstance().setProgressMonitor(monitor);
+            try {
+                IProjectPO referencedProject = ProjectPM
+                        .loadReusedProjectInMasterSession(m_selectedProject);
+                GeneralStorage.getInstance().getMasterSession().refresh(
+                      referencedProject.getSpecObjCont());
+                DataEventDispatcher.getInstance()
+                    .fireDataChangedListener(new DataChangedEvent(
+                            referencedProject,
+                        DataState.StructureModified, UpdateState.all));
+            } catch (ProjectDeletedException e) {
+                PMExceptionHandler.handleGDProjectDeletedException();
+            } catch (JBException e) {
+                ErrorHandlingUtil.createMessageDialog(e, null, null);
+            } finally {
+                ProgressMonitorTracker.getInstance().setProgressMonitor(null);
+                monitor.done();
+            }
+        }
+    }
 
     /**
      * 
@@ -138,11 +194,9 @@ public class MoveTestCaseHandler extends AbstractHandler {
         for (INodePO node : selectionList) {
             MultipleNodePM.collectAffectedNodes(nodesToMove, node);
         }
-        
         if (!closeRelatedEditors(nodesToMove)) {
             return null;
         }
-        
         // Check if move is valid
         ProblemSet moveProblems = getMoveProblem(nodesToMove);
 
@@ -247,7 +301,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
         try {
             IProjectPO extProject = ProjectPM.loadReusedProject(
                 selectedProject);
-            sess = Persistor.instance().openSession();
+            sess = GeneralStorage.getInstance().getEntityManager();
             extProject = sess.find(NodeMaker.getProjectPOClass(),
                     extProject.getId());
             List<ICapPO> moveProblem = getMoveProblem(extProject, 
@@ -275,11 +329,21 @@ public class MoveTestCaseHandler extends AbstractHandler {
                 GeneralStorage.getInstance().getMasterSession().refresh(
                         GeneralStorage.getInstance().getProject()
                             .getSpecObjCont());
-                IProjectPO referencedProject = ProjectPM
-                        .loadReusedProjectInMasterSession(selectedProject);
-                GeneralStorage.getInstance().getMasterSession().refresh(
-                       referencedProject.getSpecObjCont());
-                
+                Plugin.startLongRunning(Messages
+                        .RefreshTSBrowserActionProgressMessage);
+                try {
+                    PlatformUI.getWorkbench().getProgressService()
+                        .run(true, false,
+                            new RefreshReusedProjectOperation(selectedProject));
+                } catch (InvocationTargetException e) {
+                    // Already handled within the operation.
+                } catch (InterruptedException e) {
+                    Utils.clearClient();
+                } finally {
+                    Plugin.stopLongRunning();
+                    DataEventDispatcher.getInstance().fireProjectStateChanged(
+                            ProjectState.opened);
+                }
                 tcb.getTreeViewer().refresh();
             } else {
                 ErrorHandlingUtil.createMessageDialog(
@@ -292,8 +356,6 @@ public class MoveTestCaseHandler extends AbstractHandler {
         } catch (ToolkitPluginException tpie) {
             ErrorHandlingUtil.createMessageDialog(
                     MessageIDs.E_GENERAL_TOOLKIT_ERROR);
-        } finally {
-            Persistor.instance().dropSession(sess);
         }
     }
 
@@ -387,7 +449,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
         for (INodePO selNode : selectionList) {
             commands.add(new MultipleNodePM.MoveNodeHandle(selNode, selNode
                     .getParentNode(), newParent));
-
+            
             List<INodePO> specTcs = new ArrayList<INodePO>();
             List<ISpecTestCasePO> specTcPOs = new ArrayList<ISpecTestCasePO>();
             addCatChildren(selNode, specTcs);
