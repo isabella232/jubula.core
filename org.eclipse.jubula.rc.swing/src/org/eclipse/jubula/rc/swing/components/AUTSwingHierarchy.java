@@ -363,7 +363,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
 
         if (comp != null && comp.isShowing()) {
             Window window = SwingUtilities.getWindowAncestor(comp);
-            if (window != null && window.isShowing()) {
+            if (window != null && window.isShowing() && !window.isActive()) {
                 window.toFront();
             }
             return comp; 
