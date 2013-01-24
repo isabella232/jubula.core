@@ -1583,46 +1583,59 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
     /**
      * inserts a new Technical Name into GUIModel
-     * @param component IComponentIdentifier
+     * 
+     * @param components
+     *            IComponentIdentifier
      */
-    private void createNewTechnicalName(final IComponentIdentifier component) {
+    private void createNewTechnicalNames(
+        final IComponentIdentifier[] components) {
         if (getEditorHelper().requestEditableState() != EditableState.OK) {
             return;
         }
-        IObjectMappingAssoziationPO techNameAssoc = 
-            getAut().getObjMap().addTechnicalName(component, getAut());
-        if (techNameAssoc != null) {
-            getEditorHelper().setDirty(true);
-            if (m_omEditorBP.getCategoryToCreateIn() != null) {
-                m_omEditorBP.getCategoryToCreateIn()
-                    .addAssociation(techNameAssoc);
+        List<IObjectMappingAssoziationPO> alteredOMAs = 
+                new ArrayList<IObjectMappingAssoziationPO>();
+        final IObjectMappingPO objMap = getAut().getObjMap();
+        for (IComponentIdentifier component : components) {
+            IObjectMappingAssoziationPO techNameAssoc = objMap
+                    .addTechnicalName(component, getAut());
+            if (techNameAssoc != null) {
+                final IObjectMappingCategoryPO categoryToCreateIn = m_omEditorBP
+                        .getCategoryToCreateIn();
+                if (categoryToCreateIn != null) {
+                    categoryToCreateIn.addAssociation(techNameAssoc);
+                } else {
+                    objMap.getUnmappedTechnicalCategory().addAssociation(
+                            techNameAssoc);
+                }
+                alteredOMAs.add(techNameAssoc);
             } else {
-                getAut().getObjMap().getUnmappedTechnicalCategory()
-                    .addAssociation(techNameAssoc);
-            }
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                techNameAssoc.getCategory(), DataState.StructureModified, 
-                UpdateState.onlyInEditor);
-            m_tableViewer.refresh();
-        } else {
-            // Technical Name already exists
-            for (IObjectMappingAssoziationPO assoc : getAut().getObjMap()
-                    .getMappings()) {
-                IComponentIdentifier techName = assoc.getTechnicalName();
-                if (techName != null && techName.equals(component)) {
-                    techNameAssoc = assoc;
-                    techNameAssoc.setCompIdentifier(component);
-                    break;
+                // Technical Name already exists
+                for (IObjectMappingAssoziationPO assoc : objMap.getMappings()) {
+                    IComponentIdentifier techName = assoc.getTechnicalName();
+                    if (techName != null && techName.equals(component)) {
+                        techNameAssoc = assoc;
+                        techNameAssoc.setCompIdentifier(component);
+                        alteredOMAs.add(techNameAssoc);
+                        break;
+                    }
                 }
             }
         }
-
-        if (techNameAssoc != null) {
+        
+        for (IObjectMappingAssoziationPO alteredOMA : alteredOMAs) {
+            DataEventDispatcher.getInstance().fireDataChangedListener(
+                alteredOMA.getCategory(), DataState.StructureModified, 
+                UpdateState.onlyInEditor);
+            
             IStructuredSelection techNameSelection = 
-                new StructuredSelection(techNameAssoc);
+                    new StructuredSelection(alteredOMA);
             m_treeViewer.setSelection(techNameSelection);
             m_uiElementTreeViewer.setSelection(techNameSelection);
             m_mappedComponentTreeViewer.setSelection(techNameSelection);
+        }
+        
+        if (!alteredOMAs.isEmpty()) {
+            getEditorHelper().setDirty(true);
             refreshAllViewer();
         }
     }
@@ -1656,8 +1669,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 IAUTMainPO connectedAut = 
                     TestExecution.getInstance().getConnectedAut();
                 if (getAut().equals(connectedAut)) {
-                    IComponentIdentifier comp = (IComponentIdentifier)obj;
-                    createNewTechnicalName(comp);
+                    IComponentIdentifier[] comp = (IComponentIdentifier[])obj;
+                    createNewTechnicalNames(comp);
                 }
                 break;
             default:

@@ -64,39 +64,45 @@ public class ObjectMappedCommand implements ICommand {
      * {@inheritDoc}
      */
     public Message execute() {
-        mapObject(m_message.getComponentIdentifier());
+        mapObject(m_message.getComponentIdentifiers());
         return null;
     }
 
     /**
-     * @param componentIdentifier The identifier to be mapped
+     * @param componentIdentifiers The identifiers to be mapped
      */
-    private void mapObject(IComponentIdentifier componentIdentifier) {
+    private void mapObject(IComponentIdentifier[] componentIdentifiers) {
         if (log.isInfoEnabled()) {
-            try {
-                String logMessage = Messages.MappedObject 
-                    + StringConstants.SPACE + StringConstants.APOSTROPHE
-                    + componentIdentifier.getComponentName()
-                    + StringConstants.APOSTROPHE + StringConstants.SPACE
-                    + Messages.OfType + StringConstants.SPACE
-                    + StringConstants.APOSTROPHE
-                    + componentIdentifier.getComponentClassName() 
-                    + StringConstants.APOSTROPHE + StringConstants.SPACE
-                    + Messages.InHierachy + StringConstants.COLON 
-                    + StringConstants.SPACE; 
-                for (Iterator iter = componentIdentifier.getHierarchyNames()
-                        .iterator(); iter.hasNext();) {
-                    String element = (String)iter.next();
-                    logMessage = logMessage + element + StringConstants.COMMA;
+            for (IComponentIdentifier componentIdentifier 
+                    : componentIdentifiers) {
+                try {
+                    String logMessage = Messages.MappedObject
+                            + StringConstants.SPACE
+                            + StringConstants.APOSTROPHE
+                            + componentIdentifier.getComponentName()
+                            + StringConstants.APOSTROPHE
+                            + StringConstants.SPACE + Messages.OfType
+                            + StringConstants.SPACE
+                            + StringConstants.APOSTROPHE
+                            + componentIdentifier.getComponentClassName()
+                            + StringConstants.APOSTROPHE
+                            + StringConstants.SPACE + Messages.InHierachy
+                            + StringConstants.COLON + StringConstants.SPACE;
+                    for (Iterator iter = componentIdentifier
+                            .getHierarchyNames().iterator(); iter.hasNext();) {
+                        String element = (String) iter.next();
+                        logMessage = logMessage + element
+                                + StringConstants.COMMA;
+                    }
+                    log.info(logMessage);
+                } catch (ClassCastException cce) {
+                    log.error(Messages.ComponentIdentifiersDoes);
                 }
-                log.info(logMessage);
-            } catch (ClassCastException cce) {
-                log.error(Messages.ComponentIdentifiersDoes);
             }
         }
         if (TestExecution.getInstance().getConnectedAut() != null) {
             ObjectMappingEventDispatcher.notifyObjectMappedObserver(
-                componentIdentifier);
+                componentIdentifiers);
         }
     }
 

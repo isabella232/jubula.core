@@ -26,8 +26,8 @@ public class ObjectMappedMessage extends Message {
     public static final double VERSION = 1.0;
 
     // the data of this message BEGIN
-    /** the identifier of the component. */
-    private IComponentIdentifier m_componentIdentifier;
+    /** the identifier of the components */
+    private IComponentIdentifier[] m_componentIdentifiers;
 
     // the data of this message END
 
@@ -46,17 +46,27 @@ public class ObjectMappedMessage extends Message {
         return VERSION;
     }
 
-    /** @return Returns the componentIdentifier. */
-    public IComponentIdentifier getComponentIdentifier() {
-        return m_componentIdentifier;
+    /** @return the componentIdentifiers */
+    public IComponentIdentifier[] getComponentIdentifiers() {
+        return m_componentIdentifiers;
     }
 
     /**
-     * @param componentIdentifier
-     *            The componentIdentifier to set.
+     * @param componentIdentifiers
+     *            the componentIdentifiers to set.
      */
-    public void setComponentIdentifier(IComponentIdentifier 
-        componentIdentifier) {
-        m_componentIdentifier = componentIdentifier;
+    public void setComponentIdentifiers(IComponentIdentifier[] 
+        componentIdentifiers) {
+        m_componentIdentifiers = componentIdentifiers;
+    }
+    
+    /**
+     * @param componentIdentifier
+     *            the componentIdentifier to set.
+     */
+    public void setComponentIdentifier(
+            IComponentIdentifier componentIdentifier) {
+        m_componentIdentifiers = new IComponentIdentifier[] { 
+            componentIdentifier };
     }
 }

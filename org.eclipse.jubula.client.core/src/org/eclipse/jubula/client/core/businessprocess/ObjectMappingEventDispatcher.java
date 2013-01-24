@@ -88,9 +88,9 @@ public class ObjectMappingEventDispatcher {
      * adds a technical name to any open editor registered here with listener
      * 
      * @param tech
-     *      ComponentIdentifier
+     *      ComponentIdentifiers
      */
-    public static void notifyObjectMappedObserver(IComponentIdentifier tech) {
+    public static void notifyObjectMappedObserver(IComponentIdentifier[] tech) {
         List <IObjectMappingObserver> obs = 
             Collections.unmodifiableList(observer);
         for (IObjectMappingObserver obsvr : obs) {
