@@ -20,9 +20,9 @@ The following functions are available directly in \app{}:
 The following functions give their results as decimal numbers, e.g. 1.0, 1.2 etc. 
 \begin{description}
 \item [add]{Adds 0 or more numbers to 0, e.g.: \bxshell{?add(1,2)}.}
-\item [sub]{Subtracts the second number from the first: \bxshell{?sub(3,2). This function only accepts two numbers.}}
+\item [sub]{Subtracts the second number from the first: \bxshell{?sub(3,2)}. \\This function only accepts two numbers.}
 \item [mult]{Multiplies 0 or more numbers by 1 e.g.: \bxshell{?mult(2,4)}.}
-\item [div]{Divides the first number by the second: \bxshell{?div(2,1)}. This function only accepts two numbers.}
+\item [div]{Divides the first number by the second: \bxshell{?div(2,1)}. \\This function only accepts two numbers.}
 \item [trunc]{Takes two arguments, the decimal to be truncated and the precision (as an integer) to truncate the decimal to. Use \bxshell{0} to cut off the number to no decimal places (i.e. to receive a plain integer), and use \bxshell{1} to cut off the decimal to one decimal place etc: \bxshell{?trunc(2.396,0)} gives \bxshell{2} and \bxshell{?trunc(2.789,1) gives \bxshell{2.7}}.}
 \item [round]{Takes two arguments, the decimal to be rounded and the precision (as an integer) to round to. This function uses \bxname{half-up} rounding to round the number so that if the final decimal place after rounding is 5 or higher, the final number will be incremented by 1 e.g.: \bxshell{?round(2.56,1)} gives \bxshell{2.6}. If the final number after rounding is 4 or less, there is no incrementation, eg. \bxshell{?round(2.46,1)} gives \bxshell{2.4}. }
 \bxwarn{It is currently only possible to use numbers formatted with the decimal mark \bxname{period} or \bxname{fullstop} (\bxshell{.}). Thousands separators may not be used. For example, \bxshell{1.5} is accepted, but \bxshell{1,5} is not. \bxshell{1000} can be entered but \bxshell{1,000} cannot. Entering \bxshell{1.000} is equivalent to entering \bxshell{1}.}
@@ -46,12 +46,18 @@ Results in \bxshell{1.0 + 1}, i.e. \bxshell{1.0}\\
 \subsubsection{Useful examples for functions}
 Especially when it comes to the date functions, it is often necessary to use multiple functions embedded within each other. 
 \begin{description}
-\item [?formatDate(?now(), dd''MMMM''yyyy)]{e.g. 29 February 2012}
-\item [?formatDate(?now(), dd''MMM''yyyy)]{e.g. 29 Feb 2012}
+\item [?formatDate(?now(), dd' MMMM 'yyyy)]{e.g. 29 February 2012}
+\item [?formatDate(?now(), dd' MMM 'yyyy)]{e.g. 29 Feb 2012}
+\item [?formatDate(?now(), dd-MMM-yyyy)]{e.g. 29-Feb-2012}
 \item [?formatDate(?now(), dd.MM.yyyy)]{e.g. 29.02.2012}
-\item [?formatDate(?modifyDate(?parseDate(22.2.2012, dd.MM.yyyy),-1d),dd.MM.yy)]{This function will parse the date 22.2.2012 into an internal format, subtract one day and then format it as a dd.MM.yy, in this case: 21.2.12.}
+\item [?formatDate(?now(), dd/MM/yyyy)]{e.g. 29/02/2012}
 \end{description}
+A more complex example involving embedded functions is e.g.:
 
+\begin{quote}
+\textbf{?formatDate(?modifyDate(?parseDate\\(22.2.2012, dd.MM.yyyy),-1d),dd.MM.yy)}\\
+This function will parse the date 22.2.2012 into an internal format, subtract one day and then format it as a dd.MM.yy, in this case: 21.2.12.
+\end{quote}
 \subsubsection{Adding your own functions}
 You can also add your own functions using an extension point. This is described in the Extension Manual. 
 
