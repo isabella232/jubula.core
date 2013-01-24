@@ -11,35 +11,24 @@
 package org.eclipse.jubula.toolkit.provider.base;
 
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.eclipse.jubula.toolkit.common.IToolKitProvider;
+import org.eclipse.jubula.toolkit.common.AbstractToolkitProvider;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
-import org.eclipse.swt.widgets.Composite;
 
 
 /**
  * @author BREDEX GmbH
  * @created 26.04.2007
  */
-public class ToolkitProvider implements IToolKitProvider {
+public class ToolkitProvider extends AbstractToolkitProvider {
 
     /**
      * <code>I18N_PROPERTIES</code>
      */
     private static final String I18N_PROPERTIES = 
         "org.eclipse.jubula.toolkit.provider.base.I18nStrings"; //$NON-NLS-1$
-
-    /**
-     * {@inheritDoc}
-     */
-    public Composite getAutConfigDialog(Composite parent, int style,
-        Map<String, String> autConfig, String autName) {
-        
-        return null;
-    }
 
     /**
      * {@inheritDoc}
