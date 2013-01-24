@@ -435,16 +435,16 @@ public class JTableImplClass extends AbstractSwingImplClass
         }
         int newCol = currCell.getCol();
         int newRow = currCell.getRow();
-        if (CompSystemConstants.TABLE_MOVE_UP
+        if (CompSystemConstants.DIRECTION_UP
                 .equalsIgnoreCase(direction)) {
             newRow -= cellCount;
-        } else if (CompSystemConstants.TABLE_MOVE_DOWN
+        } else if (CompSystemConstants.DIRECTION_DOWN
                 .equalsIgnoreCase(direction)) {
             newRow += cellCount;
-        } else if (CompSystemConstants.TABLE_MOVE_LEFT
+        } else if (CompSystemConstants.DIRECTION_LEFT
                 .equalsIgnoreCase(direction)) {
             newCol -= cellCount;
-        } else if (CompSystemConstants.TABLE_MOVE_RIGHT
+        } else if (CompSystemConstants.DIRECTION_RIGHT
                 .equalsIgnoreCase(direction)) {
             newCol += cellCount;
         }
