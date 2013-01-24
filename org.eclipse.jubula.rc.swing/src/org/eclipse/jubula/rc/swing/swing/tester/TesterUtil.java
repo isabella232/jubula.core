@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.swing.swing.tester;
 
 import java.awt.AWTEvent;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ContainerEvent;
@@ -32,10 +33,12 @@ import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swing.swing.driver.KeyCodeConverter;
 import org.eclipse.jubula.rc.swing.swing.implclasses.EventListener;
+import org.eclipse.jubula.rc.swing.swing.implclasses.HighLighter;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
@@ -45,7 +48,7 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * @author BREDEX GmbH
  */
 public class TesterUtil {
-
+    
     /**
      * <code>RENDERER_FALLBACK_TEXT_GETTER_METHOD_1</code>
      */
@@ -55,8 +58,14 @@ public class TesterUtil {
      * <code>RENDERER_FALLBACK_TEXT_GETTER_METHOD_2</code>
      */
     public static final String RENDERER_FALLBACK_TEXT_GETTER_METHOD_2 = "getText"; //$NON-NLS-1$
-      
-   
+  
+    /** the logger */
+    private static AutServerLogger log = new AutServerLogger(
+            TesterUtil.class);
+    
+    /** the high lighter for object mapping */
+    private static final HighLighter HIGHLIGHTER = new HighLighter();
+    
     /**
      * Is true, if a popup menu is shown
      */
@@ -298,4 +307,43 @@ public class TesterUtil {
             return text;
         }
     }
+    
+    /**
+     * High light the given component, called during object mapping
+     * @param component the component to high light
+     * @param border the color we want to highlight with
+     */
+    public static void highLight(Component component, Color border) {
+        try {
+            final Component comp = component;
+            final Color col = border;
+            getEventThreadQueuer().invokeLater(
+                    "highLight", new Runnable() { //$NON-NLS-1$
+                        public void run() {
+                            HIGHLIGHTER.highLight(comp, col);
+                        }
+                    });
+        } catch (StepExecutionException bsee) {
+            log.error(bsee);
+        }
+    }
+
+    /**
+     * Low light the given component, called during object mapping
+     * @param component the component to remove the 'hight light'
+     */
+    public static void lowLight(Component component) {
+        try {
+            final Component comp = component;
+            getEventThreadQueuer().invokeLater(
+                    "lowLight", new Runnable() { //$NON-NLS-1$
+                        public void run() {
+                            HIGHLIGHTER.lowLight(comp);
+                        }
+                    });
+        } catch (StepExecutionException bsee) {
+            log.error(bsee);
+        }
+    }
+    
 }

@@ -26,9 +26,9 @@ import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.businessprocess.ReflectionBP;
 import org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand;
-import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.listener.AUTEventListener;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.tester.adapter.factory.GUIAdapterFactoryRegistry;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 
 
@@ -135,19 +135,16 @@ public abstract class AbstractAutSwingEventListener
         // after removing as AWTEventListener
         synchronized (m_componentLock) {
             if (getCurrentComponent() != null) {
-                Object implClass;
                 try {
-                    implClass = AUTServerConfiguration
-                            .getInstance().getImplementationClass(
-                                getComponentClass(m_currentComponent));
-                    if (implClass != null) {
-                        ReflectionBP.invokeMethod("lowLight", implClass, //$NON-NLS-1$
+                    Object adapter = GUIAdapterFactoryRegistry
+                            .getInstance()
+                            .getAdapter(getCurrentComponent());
+                    if (adapter != null) {
+                        ReflectionBP.invokeMethod("lowLight", adapter, //$NON-NLS-1$
                             new Class[] {Component.class}, 
                             new Object[] {m_currentComponent});
                         setHighLighted(false);
                     }
-                } catch (UnsupportedComponentException uce) {
-                    log.warn(uce);
                 } catch (IllegalArgumentException iae) {
                     log.error(iae);
                 }
@@ -265,12 +262,13 @@ public abstract class AbstractAutSwingEventListener
      */
     protected void highlight(Component source, final Object implClass, 
         final Color highlightColor) {
-        
+        Object adapter = GUIAdapterFactoryRegistry
+                 .getInstance().getAdapter(source);
         synchronized (getComponentLock()) {
             if (getCurrentComponent() != null 
                 && getCurrentComponent() != source) {
                 
-                ReflectionBP.invokeMethod("lowLight", implClass, //$NON-NLS-1$ 
+                ReflectionBP.invokeMethod("lowLight", adapter, //$NON-NLS-1$ 
                     new Class[] {Component.class}, 
                     new Object[] {getCurrentComponent()});
                 setHighLighted(false);
@@ -282,7 +280,7 @@ public abstract class AbstractAutSwingEventListener
                     && windowAncestor.getFocusOwner() != null) {
                 
                 ReflectionBP.invokeMethod("highLight", //$NON-NLS-1$
-                    implClass, new Class[] {Component.class, Color.class}, 
+                        adapter, new Class[] {Component.class, Color.class}, 
                     new Object[] {getCurrentComponent(), highlightColor});
                 setHighLighted(true);
             }
@@ -310,9 +308,11 @@ public abstract class AbstractAutSwingEventListener
                                 && SwingUtilities.getWindowAncestor(
                                         getCurrentComponent()).getFocusOwner() 
                                             != null) {
-                            
+                            Object adapter = GUIAdapterFactoryRegistry
+                                    .getInstance()
+                                    .getAdapter(getCurrentComponent());
                             ReflectionBP.invokeMethod("highLight", //$NON-NLS-1$
-                                implClass, new Class[] {Component.class,
+                                adapter, new Class[] {Component.class,
                                     Color.class}, 
                                 new Object[] {getCurrentComponent(), 
                                     highlightColor});

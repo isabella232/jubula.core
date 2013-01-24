@@ -31,6 +31,7 @@ import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.tester.adapter.factory.GUIAdapterFactoryRegistry;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 
@@ -230,23 +231,17 @@ public class MappingListener extends AbstractAutSwingEventListener {
      *
      */
     public void update() {
-        Object implClass;
         final Color highlightColor = null;
         if (getCurrentComponent() != null) {
             try {
-                implClass = AUTServerConfiguration.getInstance()
-                    .getImplementationClass(getComponentClass(
-                        getCurrentComponent()));
-                if (implClass != null) {
+
+                Object adapter = GUIAdapterFactoryRegistry
+                        .getInstance().getAdapter(getCurrentComponent());
+                if (adapter != null) {
                     ReflectionBP.invokeMethod("highLight", //$NON-NLS-1$
-                        implClass, new Class[] {Component.class, Color.class}, 
+                        adapter, new Class[] {Component.class, Color.class}, 
                         new Object[] {getCurrentComponent(), highlightColor});
                 }
-            } catch (UnsupportedComponentException e) { // NOPMD by zeb on 10.04.07 12:18
-                /* This means that the component that we wish to highlight is not
-                 * supported.
-                 * The component will not be highlighted.
-                 */
             } catch (IllegalArgumentException e) {
                 log.error("unexpected exception", e); //$NON-NLS-1$
             }
@@ -259,18 +254,16 @@ public class MappingListener extends AbstractAutSwingEventListener {
      * @return boolean succsessful?
      */
     public boolean highlightComponent(IComponentIdentifier compId) {
-        Object implClass;
         final Color highlightColor = null;
         Component component = null;
 
         try {
             // lowlight old lightened
             if (getCurrentComponent() != null) {
-                implClass = AUTServerConfiguration.getInstance()
-                    .getImplementationClass(getComponentClass(
-                        getCurrentComponent()));
-                if (implClass != null) {
-                    ReflectionBP.invokeMethod("lowLight", implClass, //$NON-NLS-1$ 
+                Object adapter = GUIAdapterFactoryRegistry.getInstance()
+                        .getAdapter(getCurrentComponent());
+                if (adapter != null) {
+                    ReflectionBP.invokeMethod("lowLight", adapter, //$NON-NLS-1$ 
                         new Class[] {Component.class}, 
                         new Object[] {getCurrentComponent()});
                     setHighLighted(false);
@@ -282,11 +275,10 @@ public class MappingListener extends AbstractAutSwingEventListener {
                 if (getCurrentComponent() != null
                         && getCurrentComponent().isShowing()
                         && getCurrentComponent().isVisible()) {
-                    implClass = AUTServerConfiguration.getInstance()
-                        .getImplementationClass(getComponentClass(
-                            getCurrentComponent()));
+                    Object adapter = GUIAdapterFactoryRegistry
+                            .getInstance().getAdapter(getCurrentComponent());
                     ReflectionBP.invokeMethod("highLight", //$NON-NLS-1$
-                        implClass, new Class[] {Component.class, Color.class}, 
+                        adapter, new Class[] {Component.class, Color.class}, 
                         new Object[] {getCurrentComponent(), highlightColor});
                     setHighLighted(true);
                     return true;
@@ -299,8 +291,6 @@ public class MappingListener extends AbstractAutSwingEventListener {
             log.warn(e);
         } catch (IllegalArgumentException e) {
             log.warn(e);
-        } catch (UnsupportedComponentException uce) {
-            log.warn(uce);
         }
         return false;
     }
