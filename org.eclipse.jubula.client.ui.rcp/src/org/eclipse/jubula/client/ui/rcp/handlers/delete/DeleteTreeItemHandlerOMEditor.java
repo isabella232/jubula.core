@@ -112,6 +112,8 @@ public class DeleteTreeItemHandlerOMEditor
                             (IObjectMappingCategoryPO)node);
                 }
             }
+        }
+        if (toDelete.length > 0) {
             editor.getEditorHelper().setDirty(true);
         }
         return lastParent;
