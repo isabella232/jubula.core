@@ -93,6 +93,9 @@ public class LayoutUtil {
     // Colors
     // -------------------------------------------------------------
     /** color gray for disabled gui elements (foreground) */
+    public static final Color LIGHT_GRAY_COLOR = new Color(
+            Display.getDefault(), new RGB(238, 238, 238));
+    /** color gray for disabled gui elements (foreground) */
     public static final Color GRAY_COLOR = new Color(
             Display.getDefault(), new RGB(100, 100, 100));
     /** color for inactive gui elements */
