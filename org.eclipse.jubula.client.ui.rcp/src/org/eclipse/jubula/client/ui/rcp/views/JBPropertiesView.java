@@ -651,6 +651,14 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
      */
     void setViewEnabled(boolean enabled) {
         m_isEditable = enabled;
+        Color bColor = null;
+        Color fColor = null;
+        if (!enabled) {
+            bColor = LayoutUtil.LIGHT_GRAY_COLOR;
+            fColor = LayoutUtil.GRAY_COLOR;
+        }
+        getControl().setBackground(bColor);
+        getControl().setForeground(fColor);
     }
 
     /**
