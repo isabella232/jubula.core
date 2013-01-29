@@ -40,20 +40,8 @@ public interface IListAdapter extends ITextVerifiable {
     public String[] getSelectedValues();
     
     /**
-     * Finds the indices of the list elements that are rendered with the passed
-     * values.
      * 
-     * @param values
-     *            The values
-     * @param operator
-     *            operator to use
-     * @param searchType
-     *            Determines where the search begins ("relative" or "absolute")
-     * @return The array of indices. It's length is equal to the length of the
-     *         values array, but may contains <code>null</code> elements for all
-     *         values that are not found in the list
+     * @return the list items as String array
      */
-    public Integer[] findIndicesOfValues(final String[] values,
-        final String operator, final String searchType);
-
+    public String[] getValues();
 }

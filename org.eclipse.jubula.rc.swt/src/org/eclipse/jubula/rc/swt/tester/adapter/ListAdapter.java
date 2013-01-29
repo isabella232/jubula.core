@@ -10,13 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.tester.adapter;
 
-import java.util.ArrayList;
-
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListAdapter;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -118,40 +114,6 @@ public class ListAdapter extends WidgetAdapter implements IListAdapter {
                     }
                 });
     }
-    /**
-     * {@inheritDoc}
-     */
-    public Integer[] findIndicesOfValues(final String[] values,
-            final String operator, final String searchType) {
-        final java.util.List indexList = (java.util.List)
-                getEventThreadQueuer().invokeAndWait("findIndices", //$NON-NLS-1$
-                    new IRunnable() {
-                        public Object run() {
-                            final int valuesLength = values.length;
-                            final java.util.List idxList = new ArrayList(
-                                values.length);
-                            final int listItemCount = m_list.getItemCount();
-                            final MatchUtil matchUtil = MatchUtil.getInstance();
-                            for (int i = 0; i < valuesLength; i++) {
-                                final String value = values[i];
-                                for (int j = getStartingIndex(searchType); 
-                                    j < listItemCount; j++) {
-                                    
-                                    final String listItem = m_list.getItem(j);
-                                    if (matchUtil.match(listItem, value, 
-                                        operator)) {
-                                        
-                                        idxList.add(new Integer(j));
-                                    }
-                                }
-                            }
-                            return idxList;
-                        }
-                    });
-        Integer[] indices = new Integer[indexList.size()];
-        indexList.toArray(indices);
-        return indices;
-    }
 
     /**
      * @return  the number of items displayed in the list.
@@ -188,21 +150,22 @@ public class ListAdapter extends WidgetAdapter implements IListAdapter {
             
             });
     }
+    
     /**
-     * @param searchType Determines where the search begins ("relative" or "absolute")
-     * @return The index from which to begin a search, based on the search type
-     *         and (if appropriate) the currently selected cell.
+     * {@inheritDoc}
      */
-    private int getStartingIndex(final String searchType) {
-        int startingIndex = 0;
-        if (searchType.equalsIgnoreCase(
-                CompSystemConstants.SEARCH_TYPE_RELATIVE)) {
-            int [] selectedIndices = getSelectedIndices();
-            // Start from the last selected item, if any item(s) are selected
-            if (selectedIndices.length > 0) {
-                startingIndex = selectedIndices[selectedIndices.length - 1] + 1;
-            }
-        }
-        return startingIndex;
+    public String[] getValues() {        
+        return  (String[]) getEventThreadQueuer().invokeAndWait("findIndices", //$NON-NLS-1$
+                new IRunnable() {
+                    public Object run() {
+                            
+                        final int listItemCount = m_list.getItemCount();
+                        String[] values = new String[m_list.getItemCount()];
+                        for (int i = 0; i < listItemCount; i++) {
+                            values[i] = m_list.getItem(i);
+                        }
+                        return values;
+                    }
+                });
     }
 }

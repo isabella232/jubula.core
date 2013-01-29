@@ -14,7 +14,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.util.Arrays;
 
 import javax.accessibility.Accessible;
 import javax.accessibility.AccessibleContext;
@@ -29,6 +28,7 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboBoxAdapter;
 import org.eclipse.jubula.rc.swing.swing.implclasses.JComboBoxHelper;
@@ -165,15 +165,22 @@ public class JComboBoxAdapter extends WidgetAdapter implements
         try {
             Validate.notNull(value, "text must not be null"); //$NON-NLS-1$
             JListAdapter list = new JListAdapter(findJList());
-            Integer[] indices = list.findIndicesOfValues(
-                    new String[] { value }, operator, searchType);
-            Arrays.sort(indices);
-            if (indices.length == 0) {
+            String[] listValues = list.getValues();
+            int index = -1;
+            for (int i = 0; i < listValues.length; i++) {
+                String string = listValues[i];
+                if (MatchUtil.getInstance().match(string, value, operator)) {
+                    index = i;
+                    break;
+                }                
+            }
+
+            if (index < 0) {
                 throw new StepExecutionException("Text '" + value //$NON-NLS-1$
                     + "' not found", //$NON-NLS-1$
                     EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
             }
-            list.clickOnIndex(indices[0], ClickOptions
+            list.clickOnIndex(new Integer(index), ClickOptions
                     .create().setClickCount(1), getMaxWidth());
         } catch (StepExecutionException e) {
             m_comboBox.hidePopup();

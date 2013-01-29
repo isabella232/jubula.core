@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -251,7 +252,7 @@ public class ListTester extends AbstractTextVerifiableTester {
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
 
-        Integer [] indices = getListAdapter().findIndicesOfValues(
+        Integer [] indices = findIndicesOfValues(
             new String [] {value}, operator, searchType);
         selectIndices(ArrayUtils.toPrimitive(indices), 
                 ClickOptions.create().setClickCount(0), false);
@@ -275,7 +276,7 @@ public class ListTester extends AbstractTextVerifiableTester {
 
         DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         try {
-            Integer [] indices = getListAdapter().findIndicesOfValues(
+            Integer [] indices = findIndicesOfValues(
                 new String [] {value}, operator, searchType);
             selectIndices(ArrayUtils.toPrimitive(indices), 
                     ClickOptions.create().setClickCount(0), false);
@@ -336,7 +337,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @return <code>true</code> if the list contains an element that is rendered with <code>value</code>
      */
     public boolean containsValue(String value) {
-        Integer[] indices = getListAdapter().findIndicesOfValues(
+        Integer[] indices = findIndicesOfValues(
                 new String[] { value },
                 MatchUtil.EQUALS, CompSystemConstants.SEARCH_TYPE_ABSOLUTE);
         return indices.length > 0;
@@ -350,12 +351,12 @@ public class ListTester extends AbstractTextVerifiableTester {
     public boolean containsValue(String value, String operator) {
         Integer[] indices = null;
         if (operator.equals(MatchUtil.NOT_EQUALS)) {
-            indices = getListAdapter().findIndicesOfValues(
+            indices = findIndicesOfValues(
                     new String[] { value },
                 MatchUtil.EQUALS, CompSystemConstants.SEARCH_TYPE_ABSOLUTE);
             return indices.length == 0;
         } 
-        indices = getListAdapter().findIndicesOfValues(new String[] { value },
+        indices = findIndicesOfValues(new String[] { value },
             operator, CompSystemConstants.SEARCH_TYPE_ABSOLUTE);
         return indices.length > 0;
     }
@@ -383,7 +384,7 @@ public class ListTester extends AbstractTextVerifiableTester {
         } else {
             values = split(valueList, separator);
         }
-        Integer[] indices = getListAdapter().findIndicesOfValues(values,
+        Integer[] indices = findIndicesOfValues(values,
                 operator, searchType);
         Arrays.sort(indices);
         if (!operator.equals(MatchUtil.NOT_EQUALS) 
@@ -465,5 +466,63 @@ public class ListTester extends AbstractTextVerifiableTester {
      */
     protected int getSystemDefaultModifier() {
         return -1;
+    }
+    
+    /**
+     * Finds the indices of the list elements that are rendered with the passed
+     * values.
+     * 
+     * @param values
+     *            The values
+     * @param operator
+     *            operator to use
+     * @param searchType
+     *            Determines where the search begins ("relative" or "absolute")
+     * @return The array of indices. It's length is equal to the length of the
+     *         values array, but may contains <code>null</code> elements for all
+     *         values that are not found in the list
+     */
+    private Integer[] findIndicesOfValues(
+            final String[] values, final String  operator,
+            final String searchType) {
+        String[] listValues = getListAdapter().getValues();
+        int startIndex = getStartingIndex(searchType);
+        final java.util.List indexList = new ArrayList(
+                values.length);
+        final MatchUtil matchUtil = MatchUtil.getInstance();
+        for (int i = 0; i < values.length; i++) {
+            final String value = values[i];
+            for (int j = startIndex; 
+                j < listValues.length; j++) {
+                
+                final String listItem = listValues[j];
+                if (matchUtil.match(listItem, value, 
+                    operator)) {
+                    
+                    indexList.add(new Integer(j));
+                }
+            }
+        }
+        Integer[] indices = new Integer[indexList.size()];
+        indexList.toArray(indices);
+        return indices;
+    }
+    
+    /**
+     * @param searchType Determines where the search begins ("relative" or "absolute")
+     * @return The index from which to begin a search, based on the search type
+     *         and (if appropriate) the currently selected cell.
+     */
+    private int getStartingIndex(final String searchType) {
+        int startingIndex = 0;
+        if (searchType.equalsIgnoreCase(
+                CompSystemConstants.SEARCH_TYPE_RELATIVE)) {
+            int [] selectedIndices = getListAdapter().getSelectedIndices();
+            // Start from the last selected item, if any item(s) are selected
+            if (selectedIndices.length > 0) {
+                startingIndex = selectedIndices[selectedIndices.length - 1] + 1;
+            }
+        }
+        return startingIndex;
     }
 }

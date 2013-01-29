@@ -13,14 +13,10 @@ package org.eclipse.jubula.rc.swing.swing.tester.adapter;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -147,71 +143,20 @@ public class JListAdapter extends WidgetAdapter implements IListAdapter {
                 }
             });
     }
-    /**
-     * {@inheritDoc}
-     */
-    public Integer[] findIndicesOfValues(
-            final String[] values, final String  operator,
-            final String searchType) {
-
-        final Set indexSet = new HashSet();
-        getEventThreadQueuer().invokeAndWait("findIndices", //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() {
-                    ListCellRenderer renderer = m_list.getCellRenderer();
-                    ListModel model = m_list.getModel();
-                    for (int i = getStartingIndex(searchType);
-                            i < model.getSize(); ++i) {
-                        Object obj = model.getElementAt(i);
-                        m_list.ensureIndexIsVisible(i);
-                        Component comp = renderer
-                                .getListCellRendererComponent(
-                            m_list, obj, i, false, false);
-                        String str = TesterUtil.getRenderedText(comp);
-                        if (MatchUtil.getInstance().
-                            match(str, values, operator)) {
-                            indexSet.add(new Integer(i));
-                        }
-                    }
-                    return null; // return value is not used
-                }
-            });
-
-        Integer[] indices = new Integer[indexSet.size()];
-        indexSet.toArray(indices);
-        return indices;
-    }
-    
-    /**
-     * Finds the indices of the list elements that are rendered with the passed
-     * values.
-     *
-     * @param values The values
-     * @param operator operator to use
-     * @return The array of indices. It's length is equal to the length of the
-     *         values array, but may contains <code>null</code> elements for
-     *         all values that are not found in the list
-     */
-    public Integer[] findIndicesOfValues(
-        final String[] values, final String  operator) {
-
-        return findIndicesOfValues(values, operator, 
-                CompSystemConstants.SEARCH_TYPE_ABSOLUTE);
-    }
     
     /**
      * {@inheritDoc}
      */
     public boolean containsValue(String value, String operator) {
-        Integer[] indices = null;
-        if (operator.equals(MatchUtil.NOT_EQUALS)) {
-            indices = findIndicesOfValues(new String[] { value },
-                MatchUtil.EQUALS);
-            return indices.length == 0;
+        String[] listValues = getValues();
+        for (int i = 0; i < listValues.length; i++) {
+            boolean contains = MatchUtil.getInstance()
+                    .match(listValues[i], value, operator);
+            if (contains) {
+                return contains;
+            }
         }
-        indices = findIndicesOfValues(new String[] { value },
-            operator);
-        return indices.length > 0;
+        return false;
     }
     
     /**
@@ -226,18 +171,27 @@ public class JListAdapter extends WidgetAdapter implements IListAdapter {
     }
 
     /**
-     * @param searchType Determines where the search begins ("relative" or "absolute")
-     * @return The index from which to begin a search, based on the search type
-     *         and (if appropriate) the currently selected cell.
+     * {@inheritDoc}
      */
-    private int getStartingIndex(final String searchType) {
-        int startingIndex = 0;
-        if (searchType.equalsIgnoreCase(
-                CompSystemConstants.SEARCH_TYPE_RELATIVE)) {
-            int [] selectedIndices = getSelectedIndices();
-            // Start from the last selected item
-            startingIndex = selectedIndices[selectedIndices.length - 1] + 1;
-        }
-        return startingIndex;
+    public String[] getValues() {
+        return (String[]) getEventThreadQueuer().invokeAndWait("getValues", //$NON-NLS-1$
+                new IRunnable() {
+                    public Object run() {
+                        String[] values;
+                        ListCellRenderer renderer = m_list.getCellRenderer();
+                        ListModel model = m_list.getModel();
+                        values = new String[model.getSize()];
+                        for (int i = 0; i < model.getSize(); ++i) {
+                            Object obj = model.getElementAt(i);
+                            m_list.ensureIndexIsVisible(i);
+                            Component comp = renderer
+                                    .getListCellRendererComponent(
+                                m_list, obj, i, false, false);
+                            String str = TesterUtil.getRenderedText(comp);
+                            values[i] = str;
+                        }
+                        return values; // return value is not used
+                    }
+                });
     }
 }
