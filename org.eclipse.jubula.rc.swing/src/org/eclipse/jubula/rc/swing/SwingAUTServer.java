@@ -220,11 +220,13 @@ public class SwingAUTServer extends AUTServer {
             addToolKitEventListenerToAUT();
         }
         
-        AUTServer.getInstance().invokeAUT();
-        
-     // FIXME need better place to put the registration of the factory
+        // FIXME need better place to put the registration of the factory
         GUIAdapterFactoryRegistry.getInstance().
             registerFactory(new SwingAdapterFactory());
+        
+        AUTServer.getInstance().invokeAUT();
+        
+
     }
 
     /**
