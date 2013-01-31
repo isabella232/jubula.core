@@ -960,7 +960,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     protected void fillConfigContextMenu(IMenuManager mgr) {
         CommandHelper.createContributionPushItem(mgr, 
-                RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
+                RCPCommandIDs.REVERT_CHANGES);
     }
 
     /**
@@ -988,7 +988,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     protected void fillTableContextMenu(IMenuManager mgr) {
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
+                RCPCommandIDs.REVERT_CHANGES);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.REFRESH_COMMAND_ID);
         mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));

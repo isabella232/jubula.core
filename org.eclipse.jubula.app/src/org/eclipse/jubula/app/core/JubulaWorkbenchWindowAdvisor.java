@@ -226,7 +226,7 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         if (performAutoDBConnect) {
             final String commandID;
             if (performAutoProjectLoad) {
-                commandID = RCPCommandIDs.OPEN_PROJECT_COMMAND_ID;
+                commandID = RCPCommandIDs.OPEN_PROJECT;
             } else {
                 commandID = CommandIDs.SELECT_DATABASE_COMMAND_ID;
             }

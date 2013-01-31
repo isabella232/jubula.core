@@ -234,7 +234,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             public void run(IMarker marker) {
                 Command projectPropertiesCommand = CommandHelper
                         .getCommandService().getCommand(
-                                RCPCommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
+                                RCPCommandIDs.PROJECT_PROPERTIES);
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put(ProjectPropertiesHandler.SECTION_TO_OPEN,
                         Constants.REUSED_PROJECT_PROPERTY_ID);
@@ -257,7 +257,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             public void run(IMarker marker) {
                 Command projectPropertiesCommand = CommandHelper
                         .getCommandService().getCommand(
-                                RCPCommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
+                                RCPCommandIDs.PROJECT_PROPERTIES);
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put(ProjectPropertiesHandler.SECTION_TO_OPEN,
                         Constants.AUT_PROPERTY_ID);
@@ -337,7 +337,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
 
             public void run(IMarker marker) {
                 CommandHelper
-                        .executeCommand(RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
+                        .executeCommand(RCPCommandIDs.NEW_TESTSUITE);
             }
         }
         };

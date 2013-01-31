@@ -249,26 +249,26 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         MenuManager submenuRefactor = new MenuManager(
             Messages.TestCaseEditorRefactor, REFACTOR_ID);
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.REFERENCE_TC_COMMAND_ID);
+                RCPCommandIDs.REFERENCE_TC);
         mgr.add(submenuAdd);
         mgr.add(submenuRefactor);
         CommandHelper.createContributionPushItem(submenuRefactor,
-                RCPCommandIDs.EXTRACT_TESTCASE_COMMAND_ID);
+                RCPCommandIDs.EXTRACT_TESTCASE);
         CommandHelper.createContributionPushItem(submenuRefactor,
-                RCPCommandIDs.REPLACE_WITH_TESTCASE_COMMAND_ID);
+                RCPCommandIDs.REPLACE_WITH_TESTCASE);
         CommandHelper.createContributionPushItem(submenuRefactor,
-                RCPCommandIDs.SAVE_AS_NEW_COMMAND_ID);
+                RCPCommandIDs.SAVE_AS_NEW);
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
+                RCPCommandIDs.REVERT_CHANGES);
         mgr.add(new Separator());
         mgr.add(getCutTreeItemAction());
         mgr.add(getPasteTreeItemAction());
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.TOGGLE_ACTIVE_STATE_COMMAND_ID);
+                RCPCommandIDs.TOGGLE_ACTIVE_STATE);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.SHOW_WHERE_USED_COMMAND_ID);
+                RCPCommandIDs.SHOW_WHERE_USED);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,

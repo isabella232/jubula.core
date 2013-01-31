@@ -145,8 +145,7 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
      * @return the editor ID
      */
     protected static String getEditorId(Object node) {
-        if (node instanceof ISpecTestCasePO
-                || node instanceof ISpecTestCasePO) {
+        if (node instanceof ISpecTestCasePO) {
             return Constants.TEST_CASE_EDITOR_ID;
         }
         if (node instanceof ITestSuitePO) {

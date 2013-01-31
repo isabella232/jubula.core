@@ -51,9 +51,7 @@ public class OpenObjectMappingEditorHandler extends AbstractOpenHandler {
         return null;
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     protected boolean isEditableImpl(INodePO selected) {
         return (selected instanceof ITestSuitePO);
     }

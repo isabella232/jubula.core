@@ -135,7 +135,7 @@ public class TestJobEditor extends AbstractJBEditor {
      */
     protected void fillContextMenu(IMenuManager mgr) {
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
+                RCPCommandIDs.REVERT_CHANGES);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
@@ -144,7 +144,7 @@ public class TestJobEditor extends AbstractJBEditor {
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
         mgr.add(CommandHelper.createContributionItem(
-                RCPCommandIDs.FIND_COMMAND_ID,
+                RCPCommandIDs.FIND,
                 null, Messages.FindContextMenu,
                 CommandContributionItem.STYLE_PUSH));
         CommandHelper.createContributionPushItem(mgr,

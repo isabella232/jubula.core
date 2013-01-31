@@ -453,21 +453,21 @@ public class BasicSearchResult implements ISearchResult {
                 || node instanceof ICapPO) {
             if (gdtv instanceof TestSuiteBrowser) {
                 CommandHelper.executeCommand(
-                        RCPCommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
+                        RCPCommandIDs.OPEN_TESTSUITE_EDITOR);
             } else {
                 CommandHelper.executeCommand(
-                        RCPCommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID);
+                        RCPCommandIDs.OPEN_TESTCASE_EDITOR);
             }
         } else if (node instanceof ITestSuitePO) {
             CommandHelper.executeCommand(
-                    RCPCommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
+                    RCPCommandIDs.OPEN_TESTSUITE_EDITOR);
         } else if (node instanceof IRefTestSuitePO
                 || node instanceof ITestJobPO) {
             CommandHelper.executeCommand(
-                    RCPCommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
+                    RCPCommandIDs.OPEN_TESTJOB_EDITOR);
         } else if (node instanceof ITestDataCubePO) {
             CommandHelper.executeCommand(
-                    RCPCommandIDs.OPEN_CENTRAL_TESTDATA_EDITOR_COMMAND_ID);
+                    RCPCommandIDs.OPEN_CENTRAL_TESTDATA_EDITOR);
         }
     }
 

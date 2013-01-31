@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.editors;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -629,8 +630,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
 
         m_eventHandlerTreeViewer.setContentProvider(
                 new EventHandlerContentProvider());  
-        ISpecTestCasePO workVersion = (ISpecTestCasePO)getEditorHelper()
-            .getEditSupport().getWorkVersion();
+        ISpecTestCasePO workVersion = getWorkVersion();
         m_eventHandlerTreeViewer.setInput(workVersion);
         m_eventHandlerTreeViewer.expandAll();
         m_eventHandlerTreeViewer.getTree().addFocusListener(
@@ -667,11 +667,40 @@ public class TestCaseEditor extends AbstractTestCaseEditor
     /** {@inheritDoc} */
     protected void runLocalChecks() {
         super.runLocalChecks();
-        ISpecTestCasePO workVersion = (ISpecTestCasePO)getEditorHelper()
-                .getEditSupport().getWorkVersion();
+        ISpecTestCasePO workVersion = getWorkVersion();
         for (INodePO child : workVersion.getAllEventEventExecTC()) {
             CompletenessGuard.checkLocalTestData(child, WorkingLanguageBP
                     .getInstance().getWorkingLanguage());
+        }
+    }
+
+    /**
+     * @return the work version to use for this editor
+     */
+    protected ISpecTestCasePO getWorkVersion() {
+        return (ISpecTestCasePO)super.getWorkVersion();
+    }
+
+    @Override
+    protected Iterator<? extends INodePO> getIteratorForNode(INodePO node) {
+        if (node instanceof IEventExecTestCasePO) {
+            return getWorkVersion().getAllEventEventExecTC().iterator();
+        }
+
+        return super.getIteratorForNode(node);
+    }
+    
+    /** {@inheritDoc} */
+    public void setSelectionImpl(ISelection selection) {
+        if (selection instanceof StructuredSelection) {
+            StructuredSelection ss = (StructuredSelection) selection;
+            Object firstElement = ss.getFirstElement();
+            if (firstElement instanceof IEventExecTestCasePO) {
+                getEventHandlerTreeViewer().getTree().setFocus();
+                getEventHandlerTreeViewer().setSelection(selection);
+            } else {
+                super.setSelectionImpl(selection);
+            }
         }
     }
 }

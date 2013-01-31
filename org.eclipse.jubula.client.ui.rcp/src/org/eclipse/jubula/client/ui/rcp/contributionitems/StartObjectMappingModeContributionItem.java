@@ -66,7 +66,7 @@ public class StartObjectMappingModeContributionItem extends
         StringBuilder labelBuilder = new StringBuilder();
         labelBuilder.append(autId.getExecutableName());
         return CommandHelper.createContributionItem(
-                RCPCommandIDs.START_OBJECT_MAPPING_MODE_COMMAND_ID, 
+                RCPCommandIDs.START_OBJECT_MAPPING_MODE, 
                 params, labelBuilder.toString(), 
                 CommandContributionItem.STYLE_PUSH);
     }

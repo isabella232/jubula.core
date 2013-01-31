@@ -150,7 +150,7 @@ public class RunningAutsStartTestSuiteContributionItem extends
             .append(StringConstants.SPACE)
             .append(suiteToStart.getName());
         return CommandHelper.createContributionItem(
-                RCPCommandIDs.START_TEST_SUITE_COMMAND_ID, params, labelBuilder
+                RCPCommandIDs.START_TEST_SUITE, params, labelBuilder
                         .toString(), CommandContributionItem.STYLE_CHECK);
     }
 }

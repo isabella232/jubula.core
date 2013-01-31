@@ -27,8 +27,10 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChange
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProblemPropagationListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -123,7 +125,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
     }
 
     /**
-     * Adds DoubleClickListener to Treeview.
+     * Adds a double click listener to the tree view.
      */
     protected void addTreeListener() {
         getTreeViewer().addDoubleClickListener(new IDoubleClickListener() {
@@ -131,13 +133,23 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                 IStructuredSelection selection = getSuiteTreeSelection();
                 Object firstElement = selection.getFirstElement();
                 if (firstElement instanceof ITestSuitePO) {
-                    runCommand(RCPCommandIDs.OPEN_TESTSUITE_EDITOR_COMMAND_ID);
-                } else if (firstElement instanceof ITestJobPO) {
-                    runCommand(RCPCommandIDs.OPEN_TESTJOB_EDITOR_COMMAND_ID);
+                    runCommand(RCPCommandIDs.OPEN_TESTSUITE_EDITOR);
+                } else if (firstElement instanceof IExecTestCasePO) {
+                    IExecTestCasePO exec = (IExecTestCasePO) firstElement;
+                    if (exec.getParentNode() instanceof ITestSuitePO) {
+                        runCommand(RCPCommandIDs.OPEN_TESTSUITE_EDITOR);
+                    } else {
+                        runCommand(RCPCommandIDs.OPEN_TESTCASE_EDITOR);
+                    }
+                } else if (firstElement instanceof ITestJobPO 
+                        || firstElement instanceof IRefTestSuitePO) {
+                    runCommand(RCPCommandIDs.OPEN_TESTJOB_EDITOR);
                 } else if (firstElement instanceof IExecObjContPO) {
-                    runCommand(RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
+                    runCommand(RCPCommandIDs.NEW_TESTSUITE);
+                }  else if (firstElement instanceof ICapPO) {
+                    runCommand(RCPCommandIDs.OPEN_TESTCASE_EDITOR);
                 } else if (firstElement instanceof ICategoryPO) {
-                    runCommand(RCPCommandIDs.NEW_TESTSUITE_COMMAND_ID);
+                    runCommand(RCPCommandIDs.NEW_TESTSUITE);
                 }
             }
             

@@ -67,7 +67,7 @@ public class ConnectToAutAgentContributionItem
             params.put(AUTAgentConnectHandler.AUT_AGENT_PORT_TO_CONNECT, 
                     String.valueOf(port));
             contributionItems.add(CommandHelper.createContributionItem(
-                    RCPCommandIDs.CONNECT_TO_AUT_AGENT_COMMAND_ID, params,
+                    RCPCommandIDs.CONNECT_TO_AUT_AGENT, params,
                     itemName, CommandContributionItem.STYLE_CHECK));
         }
         

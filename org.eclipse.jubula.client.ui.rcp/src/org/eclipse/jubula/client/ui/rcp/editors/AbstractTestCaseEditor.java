@@ -142,7 +142,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 new Transfer[] {LocalSelectionTransfer.getInstance()});
         getEditorHelper().addListeners();
         setActionHandlers();
-        addTreeDoubleClickListener(RCPCommandIDs.REFERENCE_TC_COMMAND_ID);
+        addTreeDoubleClickListener(RCPCommandIDs.REFERENCE_TC);
         GuiEventDispatcher.getInstance()
             .addEditorDirtyStateListener(this, true);
         ded.addDataChangedListener(
@@ -644,26 +644,26 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
         MenuManager submenuRefactor = new MenuManager(
                 Messages.TestCaseEditorRefactor, REFACTOR_ID);
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.REFERENCE_TC_COMMAND_ID);
+                RCPCommandIDs.REFERENCE_TC);
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.NEW_CAP_COMMAND_ID);
+                RCPCommandIDs.NEW_CAP);
         mgr.add(submenuAdd);
         mgr.add(getCutTreeItemAction());
         mgr.add(getPasteTreeItemAction());
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.TOGGLE_ACTIVE_STATE_COMMAND_ID);
+                RCPCommandIDs.TOGGLE_ACTIVE_STATE);
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.EDIT_PARAMETERS_COMMAND_ID);
+                RCPCommandIDs.EDIT_PARAMETERS);
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
+                RCPCommandIDs.REVERT_CHANGES);
         mgr.add(new Separator());
         mgr.add(submenuRefactor);
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
         mgr.add(CommandHelper.createContributionItem(
-                RCPCommandIDs.FIND_COMMAND_ID,
+                RCPCommandIDs.FIND,
                 null, Messages.FindContextMenu,
                 CommandContributionItem.STYLE_PUSH));
         CommandHelper.createContributionPushItem(mgr,
@@ -671,19 +671,19 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.SHOW_WHERE_USED_COMMAND_ID);
+                RCPCommandIDs.SHOW_WHERE_USED);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
         CommandHelper.createContributionPushItem(submenuAdd,
-                RCPCommandIDs.NEW_TESTCASE_COMMAND_ID);
+                RCPCommandIDs.NEW_TESTCASE);
         CommandHelper.createContributionPushItem(submenuAdd,
-                RCPCommandIDs.ADD_EVENT_HANDLER_COMMAND_ID);
+                RCPCommandIDs.ADD_EVENT_HANDLER);
         CommandHelper.createContributionPushItem(submenuRefactor,
-                RCPCommandIDs.EXTRACT_TESTCASE_COMMAND_ID);
+                RCPCommandIDs.EXTRACT_TESTCASE);
         CommandHelper.createContributionPushItem(submenuRefactor,
-                RCPCommandIDs.REPLACE_WITH_TESTCASE_COMMAND_ID);
+                RCPCommandIDs.REPLACE_WITH_TESTCASE);
         CommandHelper.createContributionPushItem(submenuRefactor,
-                RCPCommandIDs.SAVE_AS_NEW_COMMAND_ID);
+                RCPCommandIDs.SAVE_AS_NEW);
         mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
     }
 

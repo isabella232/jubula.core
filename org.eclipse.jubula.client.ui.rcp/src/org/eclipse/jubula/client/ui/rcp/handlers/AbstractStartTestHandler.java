@@ -85,7 +85,7 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
                 .getSite().getService(ICommandService.class);
         if (cmdService != null) {
             final Command command = cmdService
-                    .getCommand(RCPCommandIDs.PAUSE_TEST_SUITE_COMMAND_ID);
+                    .getCommand(RCPCommandIDs.PAUSE_TEST_SUITE);
             if (command != null) {
                 final Display display = Plugin.getDisplay();
                 ITestExecutionEventListener l = new 

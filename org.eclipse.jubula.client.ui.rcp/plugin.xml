@@ -3180,7 +3180,10 @@
           <iterate
             ifEmpty="false"
             operator="and">
-            <instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
+            <or>
+              <instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
+            </or>
           </iterate>
         </and>
       </activeWhen>
@@ -3196,7 +3199,34 @@
           <iterate
             ifEmpty="false"
             operator="and">
-            <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
+            <or>
+              <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.IRefTestSuitePO" />
+            </or>
+          </iterate>
+        </and>
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenTestCaseEditorHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestcaseEditor">
+      <activeWhen>
+        <and>
+          <with variable="activePartId">
+            <equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser" />
+          </with>
+          <iterate
+            ifEmpty="false"
+            operator="and">
+            <and>
+              <or>
+                <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
+                <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
+              </or>
+              <test
+                property="org.eclipse.jubula.client.ui.rcp.model.isEditable"
+                value="true" />
+            </and>
           </iterate>
         </and>
       </activeWhen>

@@ -65,7 +65,7 @@ public class StartObservationModeContributionItem extends
         StringBuilder labelBuilder = new StringBuilder();
         labelBuilder.append(autId.getExecutableName());
         return CommandHelper.createContributionItem(
-                RCPCommandIDs.START_OBSERVATION_MODE_COMMAND_ID, params,
+                RCPCommandIDs.START_OBSERVATION_MODE, params,
                 labelBuilder.toString(), CommandContributionItem.STYLE_PUSH);
     }
 }

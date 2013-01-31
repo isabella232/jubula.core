@@ -138,7 +138,7 @@ public class TSBStartTestSuiteContributionItem
             .append(autId.getExecutableName())
             .append(StringConstants.RIGHT_PARENTHESES);
         return CommandHelper.createContributionItem(
-                RCPCommandIDs.START_TEST_SUITE_COMMAND_ID, params, labelBuilder
+                RCPCommandIDs.START_TEST_SUITE, params, labelBuilder
                         .toString(), CommandContributionItem.STYLE_CHECK);
     }
 
@@ -157,7 +157,7 @@ public class TSBStartTestSuiteContributionItem
         StringBuilder labelBuilder = new StringBuilder();
         labelBuilder.append(jobToStart.getName());
         return CommandHelper.createContributionItem(
-                RCPCommandIDs.START_TEST_JOB_COMMAND_ID, params, labelBuilder
+                RCPCommandIDs.START_TEST_JOB, params, labelBuilder
                         .toString(), CommandContributionItem.STYLE_CHECK);
     }
     

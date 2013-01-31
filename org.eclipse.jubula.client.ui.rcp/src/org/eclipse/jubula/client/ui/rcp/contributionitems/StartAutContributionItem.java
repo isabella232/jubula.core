@@ -67,7 +67,7 @@ public class StartAutContributionItem extends CompoundContributionItem {
                     }
                     itemName += " : " + conf.getName(); //$NON-NLS-1$;
                     contributionItems.add(CommandHelper.createContributionItem(
-                            RCPCommandIDs.START_AUT_COMMAND_ID, 
+                            RCPCommandIDs.START_AUT, 
                             params,
                             itemName, CommandContributionItem.STYLE_CHECK));
                 }

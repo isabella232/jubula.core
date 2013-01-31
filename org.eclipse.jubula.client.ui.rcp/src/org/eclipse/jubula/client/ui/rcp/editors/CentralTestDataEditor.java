@@ -249,7 +249,7 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
                 new LimitingDragSourceListener(getMainTreeViewer(), null));
         getMainTreeViewer().addDropSupport(ops, transfers, dropSupport);
         
-        addTreeDoubleClickListener(RCPCommandIDs.EDIT_PARAMETERS_COMMAND_ID);
+        addTreeDoubleClickListener(RCPCommandIDs.EDIT_PARAMETERS);
         addFocusListener(getMainTreeViewer());
         getEditorHelper().addListeners();
         setActionHandlers();
@@ -293,22 +293,22 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
     /** {@inheritDoc} */
     protected void fillContextMenu(IMenuManager mgr) {
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.NEW_TESTDATACUBE_COMMAND_ID);
+                RCPCommandIDs.NEW_TESTDATACUBE);
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.NEW_CATEGORY_COMMAND_ID);
+                RCPCommandIDs.NEW_CATEGORY);
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.RENAME_COMMAND_ID);
+                RCPCommandIDs.RENAME);
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.EDIT_PARAMETERS_COMMAND_ID);
+                RCPCommandIDs.EDIT_PARAMETERS);
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.SHOW_WHERE_USED_COMMAND_ID);
+                RCPCommandIDs.SHOW_WHERE_USED);
         CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.REVERT_CHANGES_COMMAND_ID);
+                RCPCommandIDs.REVERT_CHANGES);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
         mgr.add(CommandHelper.createContributionItem(
-                RCPCommandIDs.FIND_COMMAND_ID,
+                RCPCommandIDs.FIND,
                 null, Messages.FindContextMenu,
                 CommandContributionItem.STYLE_PUSH));
         mgr.add(new Separator());
@@ -316,7 +316,7 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
         params.put(RCPCommandIDs.IMPORT_WIZARD_PARAM_ID, 
                 ImportTestDataSetsWizard.ID);
         mgr.add(CommandHelper.createContributionItem(
-                RCPCommandIDs.ECLIPSE_RCP_FILE_IMPORT_COMMAND_ID, 
+                RCPCommandIDs.ECLIPSE_RCP_FILE_IMPORT, 
                 params, null,
                 CommandContributionItem.STYLE_PUSH));
     }

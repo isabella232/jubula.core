@@ -70,7 +70,7 @@ public class ShowInHandler extends AbstractHandler {
         if (attribute instanceof String) {
             Command projectPropertiesCommand = CommandHelper
                     .getCommandService().getCommand(
-                            RCPCommandIDs.PROJECT_PROPERTIES_COMMAND_ID);
+                            RCPCommandIDs.PROJECT_PROPERTIES);
             Map<String, String> parameters = new HashMap<String, String>();
             parameters.put(ProjectPropertiesHandler.SECTION_TO_OPEN,
                     TESTSTYLE_PROJECT_PROPERTY_PAGE_ID);

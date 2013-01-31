@@ -232,19 +232,17 @@ public class TestCaseBrowser extends AbstractJBTreeView
      * @created Jan 22, 2007
      */
     private final class DoubleClickListener implements IDoubleClickListener {
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void doubleClick(DoubleClickEvent event) {
             IStructuredSelection selection = getActualSelection();
             int[] counter = SelectionChecker.selectionCounter(selection);
             if (counter[SelectionChecker.SPEC_CONT] == selection.size()
                     || counter[SelectionChecker.CATEGORY] == selection.size()) {
                 CommandHelper.executeCommand(
-                        RCPCommandIDs.NEW_TESTCASE_COMMAND_ID, getSite());
+                        RCPCommandIDs.NEW_TESTCASE, getSite());
             } else {
                 CommandHelper.executeCommand(
-                        RCPCommandIDs.OPEN_TESTCASE_EDITOR_COMMAND_ID,
+                        RCPCommandIDs.OPEN_TESTCASE_EDITOR,
                         getSite());
             }
         }
@@ -256,7 +254,6 @@ public class TestCaseBrowser extends AbstractJBTreeView
      * @created 02.03.2006
      */
     private final class ActionListener implements ISelectionListener {
-
         /**
          * en-/disable cut-action
          * @param selList actual selection list

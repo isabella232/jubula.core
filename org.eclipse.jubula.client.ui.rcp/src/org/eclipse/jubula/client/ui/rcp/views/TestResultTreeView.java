@@ -196,7 +196,7 @@ public class TestResultTreeView extends ViewPart
      */
     protected void fillContextMenu(IMenuManager mgr) {
         mgr.add(CommandHelper.createContributionItem(
-                RCPCommandIDs.FIND_COMMAND_ID,
+                RCPCommandIDs.FIND,
                 null, Messages.FindContextMenu,
                 CommandContributionItem.STYLE_PUSH));
         CommandHelper.createContributionPushItem(mgr,

@@ -31,6 +31,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IPropertyChangedListener;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -239,11 +240,56 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         getSelectionChangedListenerList().remove(listener);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setSelection(ISelection selection) {
-    // do nothing
+        ISelection newSelection = getMainTreeViewer().getSelection();
+        if (selection instanceof StructuredSelection) {
+            Object firstElement = ((StructuredSelection) selection)
+                    .getFirstElement();
+            if (firstElement instanceof INodePO) {
+                INodePO node = (INodePO) firstElement;
+                final IPersistentObject editorRoot = getWorkVersion();
+                if (editorRoot.getId().equals(node.getId())) {
+                    newSelection = new StructuredSelection(editorRoot);
+                } else {
+                    Iterator<? extends INodePO> nodeListIterator = 
+                            getIteratorForNode(node);
+                    while (nodeListIterator.hasNext()) {
+                        INodePO child = nodeListIterator.next();
+                        if (node.getId().equals(child.getId())) {
+                            newSelection = new StructuredSelection(child);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        setSelectionImpl(newSelection);
+    }
+
+    /**
+     * @return the work version to use for this editor
+     */
+    protected IPersistentObject getWorkVersion() {
+        return getEditorHelper().getEditSupport().getWorkVersion();
+    }
+    
+    /**
+     * @param node
+     *            the node to get the correct iterator for
+     * @return the iterator for the given node type
+     */
+    protected Iterator<? extends INodePO> getIteratorForNode(INodePO node) {
+        return ((INodePO) getWorkVersion()).getNodeListIterator();
+    }
+
+    /**
+     * Sets the current selection for this selection provider.
+     *
+     * @param selection the new selection
+     */
+    protected void setSelectionImpl(ISelection selection) {
+        getMainTreeViewer().setSelection(selection);
     }
 
     /**
@@ -297,8 +343,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      * creates and sets the partName
      */
     protected void createPartName() {
-        String nodeName = 
-            getEditorHelper().getEditSupport().getWorkVersion().getName();
+        String nodeName = getWorkVersion().getName();
         if (nodeName == null) {
             nodeName = StringConstants.EMPTY;
         }
@@ -429,6 +474,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         getTreeViewer().getTree().setFocus();
         Plugin.showStatusLine(this);
     }
+    
     /**
      * Does nothing.
      */
@@ -632,10 +678,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         createPartName();
     }
     
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public EntityManager getEntityManager() {
         return getEditorHelper().getEditSupport().getSession();
     }

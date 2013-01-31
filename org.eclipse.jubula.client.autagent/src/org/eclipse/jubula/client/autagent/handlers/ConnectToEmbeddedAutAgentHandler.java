@@ -81,7 +81,7 @@ public class ConnectToEmbeddedAutAgentHandler extends AbstractHandler
         
         Command connectToAutAgentCommand = CommandHelper
                 .getCommandService().getCommand(
-                        RCPCommandIDs.CONNECT_TO_AUT_AGENT_COMMAND_ID);
+                        RCPCommandIDs.CONNECT_TO_AUT_AGENT);
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put(AUTAgentConnectHandler.AUT_AGENT_NAME_TO_CONNECT,
                 hostname);
