@@ -152,26 +152,6 @@ public class ComboAdapter extends AbstractComboBoxAdapter {
                 })).intValue();
 
     }
-
-    /**
-     * Returns the item at the given, zero-relative index in the combo list. 
-     * Throws an exception if the index is out of range.
-     * @param index the index of the item to return
-     * @return  the item at the given index
-     */
-    protected String getItem(final int index) {
-        return (String)getEventThreadQueuer().invokeAndWait(
-                "getItem", //$NON-NLS-1$
-                new IRunnable() {
-                    
-                    public Object run() {
-                    
-                        return m_combobox.getItem(index); 
-                    }
-                    
-                });
-
-    }
         
     /**
      * 
@@ -191,6 +171,19 @@ public class ComboAdapter extends AbstractComboBoxAdapter {
                 return null;
             }
         });   
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String[] getValues() {
+        return (String[])getEventThreadQueuer().invokeAndWait(
+                "getItem", //$NON-NLS-1$
+                new IRunnable() {                    
+                    public Object run() {                    
+                        return m_combobox.getItems(); 
+                    }                    
+                });
     }
     
 }

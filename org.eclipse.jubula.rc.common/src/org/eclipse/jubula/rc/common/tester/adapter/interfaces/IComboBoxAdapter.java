@@ -24,16 +24,6 @@ public interface IComboBoxAdapter extends ITextVerifiable {
      *         otherwise
      */
     boolean isEditable();
-
-    /**
-     * @param value
-     *            The value to check
-     * @param operator
-     *            The operator used to verify
-     * @return <code>true</code> if the combobox contains an element rendered
-     *         with the passed value
-     */
-    public boolean containsValue(String value, String operator);
     
     /**
      * select the whole text of the component.
@@ -56,23 +46,6 @@ public interface IComboBoxAdapter extends ITextVerifiable {
     public void select(int index);
     
     /**
-     * Selects the specified item in the combobox.
-     * 
-     * @param value
-     *            the value which should be selected
-     * @param operator
-     *            if regular expressions are used
-     * @param searchType
-     *            Determines where the search begins ("relative" or "absolute")
-     * @throws StepExecutionException
-     *             if an error occurs during selecting the item
-     * @throws IllegalArgumentException
-     *             if <code>component</code> or <code>text</code> are null
-     */
-    public void select(final String value, String operator, String searchType)
-        throws StepExecutionException, IllegalArgumentException; 
-    
-    /**
      * Inputs <code>text</code> to <code>component</code>.<br>
      * 
      * @param text
@@ -86,4 +59,10 @@ public interface IComboBoxAdapter extends ITextVerifiable {
      */
     public void input(String text, boolean replace)
         throws StepExecutionException, IllegalArgumentException;
+    
+    /**
+     * Gets all Values from the <code>component</code> as <code>String</code> array
+     * @return the values from the component
+     */
+    public String[] getValues();
 }

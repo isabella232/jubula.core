@@ -10,11 +10,15 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
+import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboBoxAdapter;
+import org.eclipse.jubula.tools.objects.event.EventFactory;
+import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
 /**
  * General implementation for ComboBoxes and ComboBox like components.
@@ -48,8 +52,7 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      * @param text check if this text is in the combobox
      */
     public void gdVerifyContainsValue(final String text) {
-        Verifier.equals(true, 
-                getCBAdapter().containsValue(text, MatchUtil.EQUALS));
+        Verifier.equals(true, containsValue(text, MatchUtil.EQUALS));
     }
     
     /**
@@ -60,10 +63,31 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      */
     public void gdVerifyContainsValue(String value, String operator, 
             boolean exists) {        
-        final boolean contains = getCBAdapter().containsValue(value, operator);
+        final boolean contains = containsValue(value, operator);
         Verifier.equals(exists, contains);
     }
     
+  /**
+  * @param value
+  *            The value to check
+  * @param operator
+  *            The operator used to verify
+  * @return <code>true</code> if the combobox contains an element rendered
+  *         with the passed value
+  */
+    private boolean containsValue(String value, String operator) {
+        String[] comboValues = getCBAdapter().getValues();
+        for (int i = 0; i < comboValues.length; i++) {
+            boolean contains = MatchUtil.getInstance()
+                    .match(comboValues[i], value, operator);
+            if (contains) {
+                return contains;
+            }
+        }
+        return false;
+    }
+
+
     /**
      * @see org.eclipse.jubula.rc.swing.swing.implclasses.AbstractSwingImplClass#getText()
      * @return value from ComboBoxHelper
@@ -111,7 +135,26 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      */
     public void gdSelectValue(String value, String operator,
             final String searchType) {
-        getCBAdapter().select(value, operator, searchType);
+        String[] comboValues = getCBAdapter().getValues();
+        Validate.notNull(value, "text must not be null"); //$NON-NLS-1$
+        
+        int index = -1;
+
+        for (int i = getStartingIndex(searchType);
+                i < comboValues.length; ++i) {
+            String str = comboValues[i];
+            if (MatchUtil.getInstance().match(str, value, operator)) {
+                index = i;
+                break;
+            }
+        }
+        if (index < 0) {
+            throw new StepExecutionException("Text '" + value //$NON-NLS-1$
+                + "' not found", //$NON-NLS-1$
+                EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
+        }
+
+        getCBAdapter().select(index);
     }
     
     /**
@@ -132,5 +175,19 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      */
     public void gdVerifyText(String text) {
         gdVerifyText(text, MatchUtil.DEFAULT_OPERATOR);
+    }
+    
+    /**
+     * @param searchType Determines where the search begins ("relative" or "absolute")
+     * @return The index from which to begin a search, based on the search type
+     *         and (if appropriate) the currently selected item.
+     */
+    private int getStartingIndex(final String searchType) {
+        int startingIndex = 0;
+        if (searchType.equalsIgnoreCase(
+                CompSystemConstants.SEARCH_TYPE_RELATIVE)) {
+            startingIndex = getCBAdapter().getSelectedIndex();
+        }
+        return startingIndex;
     }
 }

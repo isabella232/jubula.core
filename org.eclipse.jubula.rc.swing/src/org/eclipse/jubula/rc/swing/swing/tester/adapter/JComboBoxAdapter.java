@@ -28,7 +28,6 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboBoxAdapter;
 import org.eclipse.jubula.rc.swing.swing.implclasses.JComboBoxHelper;
@@ -110,14 +109,6 @@ public class JComboBoxAdapter extends WidgetAdapter implements
             });
         return editable.booleanValue();
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean containsValue(String value, String operator) {
-        JListAdapter list = new JListAdapter(findJList());
-        return list.containsValue(value, operator);
-    }
     
     /**
      * select the whole text of  the textfield by clicking three times.
@@ -149,46 +140,6 @@ public class JComboBoxAdapter extends WidgetAdapter implements
         JListAdapter list = new JListAdapter(findJList());
         list.clickOnIndex(new Integer(index), ClickOptions
                 .create().setClickCount(1), getMaxWidth());
-    }
-
-    /**
-     * Selects the specified item in the combobox.
-     * @param value the value which should be selected
-     * @param operator if regular expressions are used
-     * @param searchType Determines where the search begins ("relative" or "absolute")
-     * @throws StepExecutionException if an error occurs during selecting the item
-     * @throws IllegalArgumentException if <code>component</code> or <code>text</code> are null
-     */
-    public void select(final String value, String operator,
-        String searchType)
-        throws StepExecutionException, IllegalArgumentException {
-        try {
-            Validate.notNull(value, "text must not be null"); //$NON-NLS-1$
-            JListAdapter list = new JListAdapter(findJList());
-            String[] listValues = list.getValues();
-            int index = -1;
-            for (int i = 0; i < listValues.length; i++) {
-                String string = listValues[i];
-                if (MatchUtil.getInstance().match(string, value, operator)) {
-                    index = i;
-                    break;
-                }                
-            }
-
-            if (index < 0) {
-                throw new StepExecutionException("Text '" + value //$NON-NLS-1$
-                    + "' not found", //$NON-NLS-1$
-                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
-            }
-            list.clickOnIndex(new Integer(index), ClickOptions
-                    .create().setClickCount(1), getMaxWidth());
-        } catch (StepExecutionException e) {
-            m_comboBox.hidePopup();
-            throw e;
-        } catch (IllegalArgumentException e) {
-            m_comboBox.hidePopup();
-            throw e;
-        }
     }
 
     /**
@@ -424,5 +375,13 @@ public class JComboBoxAdapter extends WidgetAdapter implements
                     }
                 });
         return (boolean) returnvalue.booleanValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String[] getValues() {
+        JListAdapter list = new JListAdapter(findJList());
+        return list.getValues();
     }
 }
