@@ -86,6 +86,7 @@ public class TestJobEditor extends AbstractJBEditor {
         addDragAndDropSupport();
         getEditorHelper().addListeners();
         setActionHandlers();
+        addTreeDoubleClickListener(CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
         setInitialInput();
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addPropertyChangedListener(this, true);
