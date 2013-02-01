@@ -249,7 +249,8 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
                 new LimitingDragSourceListener(getMainTreeViewer(), null));
         getMainTreeViewer().addDropSupport(ops, transfers, dropSupport);
         
-        addTreeDoubleClickListener(RCPCommandIDs.EDIT_PARAMETERS);
+        addDoubleClickListener(RCPCommandIDs.EDIT_PARAMETERS, 
+                getMainTreeViewer());
         addFocusListener(getMainTreeViewer());
         getEditorHelper().addListeners();
         setActionHandlers();

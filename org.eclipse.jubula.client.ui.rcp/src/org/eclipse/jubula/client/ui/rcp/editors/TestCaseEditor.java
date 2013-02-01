@@ -58,6 +58,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.client.core.utils.StringHelper;
+import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -130,6 +131,8 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                 new EventHandlerContentProvider());
         m_eventHandlerTreeViewer.getControl().setMenu(
                 createContextMenu());
+        addDoubleClickListener(CommandIDs.OPEN_SPECIFICATION_COMMAND_ID, 
+                m_eventHandlerTreeViewer);
         ActionListener actionListener = new ActionListener();
         getTreeViewer().addSelectionChangedListener(actionListener);
         getEventHandlerTreeViewer().addSelectionChangedListener(actionListener);

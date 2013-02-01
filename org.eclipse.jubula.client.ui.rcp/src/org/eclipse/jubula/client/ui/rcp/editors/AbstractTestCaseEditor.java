@@ -142,7 +142,9 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 new Transfer[] {LocalSelectionTransfer.getInstance()});
         getEditorHelper().addListeners();
         setActionHandlers();
-        addTreeDoubleClickListener(CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
+        addDoubleClickListener(CommandIDs.OPEN_SPECIFICATION_COMMAND_ID, 
+                getMainTreeViewer());
+
         GuiEventDispatcher.getInstance()
             .addEditorDirtyStateListener(this, true);
         ded.addDataChangedListener(

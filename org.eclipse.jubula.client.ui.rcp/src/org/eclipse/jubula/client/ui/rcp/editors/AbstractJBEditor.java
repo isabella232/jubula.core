@@ -27,6 +27,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -567,13 +568,16 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     }
 
     /**
-     * Adds DoubleClickListener to Treeview.
+     * Adds DoubleClickListener to the given tree viewer.
      * 
      * @param commandId
      *            the command to execute on double click event
+     * @param viewer
+     *            the viewer to register the listener for
      */
-    protected void addTreeDoubleClickListener(final String commandId) {
-        getMainTreeViewer().addDoubleClickListener(new IDoubleClickListener() {
+    protected void addDoubleClickListener(final String commandId,
+        StructuredViewer viewer) {
+        viewer.addDoubleClickListener(new IDoubleClickListener() {
             public void doubleClick(DoubleClickEvent event) {
                 CommandHelper.executeCommand(commandId, getSite());
             }
