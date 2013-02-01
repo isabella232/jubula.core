@@ -26,15 +26,15 @@ public class AUTServerExitConstants {
     /** exit state in case of not enough arguments */
     public static final int EXIT_INVALID_NUMBER_OF_ARGS = 2;
     
-    /** exit state when the aut could not loaded */
+    /** exit state when the AUT could not loaded */
     public static final int EXIT_AUT_NOT_FOUND = 3;
-    /** exit state when the aut could not loaded */
+    /** exit state when the AUT could not loaded */
     public static final int EXIT_AUT_WRONG_CLASS_VERSION = 4;
     /** exit state when the process was already closed **/
     public static final int EXIT_AUT_STOP_FAILED = 5;
     
-    /** exit state in case of an UnknownHostException during connecting the GUIdancerClient */
-    public static final int EXIT_UNKNOWN_GUIDANCERCLIENT = 10;
+    /** exit state in case of an UnknownHostException during connecting the ITE client */
+    public static final int EXIT_UNKNOWN_ITE_CLIENT = 10;
     
     /** exit state in case of a communication error */
     public static final int EXIT_COMMUNICATION_ERROR = 11;
@@ -42,7 +42,7 @@ public class AUTServerExitConstants {
     /** exit code in case of missing AUT Agent connection information */
     public static final int EXIT_MISSING_AGENT_INFO = 12;
 
-    /** exit state in case of a SecurityException during conneting the 
+    /** exit state in case of a SecurityException during connecting the 
      * JubulaClient 
      */ 
     public static final int EXIT_SECURITY_VIOLATION_COMMUNICATION = 20;
@@ -66,8 +66,8 @@ public class AUTServerExitConstants {
     /** exit state in case of an error while starting the AUT */
     public static final int AUT_START_ERROR = 25;
     
-    /** exit state in case that the started aut is not supported
-     * through the ui automation framework */
+    /** exit state in case that the started AUT is not supported
+     * through the UI automation framework */
     public static final int AUT_NOT_UIA_SUPPORTED = 26;
 
     /**

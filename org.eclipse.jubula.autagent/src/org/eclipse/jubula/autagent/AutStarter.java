@@ -511,7 +511,7 @@ public class AutStarter {
                             StartAUTServerStateMessage.INVALID_ARGUMENTS,
                             "invalid number of arguments"); //$NON-NLS-1$
                     break;
-                case AUTServerExitConstants.EXIT_UNKNOWN_GUIDANCERCLIENT:
+                case AUTServerExitConstants.EXIT_UNKNOWN_ITE_CLIENT:
                     message = new StartAUTServerStateMessage(
                             StartAUTServerStateMessage.COMMUNICATION,
                             "establishing communication failed: invalid client"); //$NON-NLS-1$

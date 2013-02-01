@@ -432,7 +432,7 @@ public abstract class AUTServer {
         } catch (JBVersionException ve) {
             sendExitReason(ve, 
                     AUTServerStateMessage.EXIT_AUT_WRONG_CLASS_VERSION);
-            System.exit(AUTServerExitConstants.EXIT_UNKNOWN_GUIDANCERCLIENT);
+            System.exit(AUTServerExitConstants.EXIT_UNKNOWN_ITE_CLIENT);
         }
     }
     
