@@ -85,7 +85,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
     /**
      * Prefix for unbound modules project names
      */
-    private static final String UNBOUND_MODULES_PREFIX = "unbound_modules_"; //$NON-NLS-1$
+    private static final String LIBRARY_PREFIX = "unbound_modules_"; //$NON-NLS-1$
     
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(ProjectWizard.class);
@@ -301,8 +301,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
 
         while (desc != null) {
             try {
-                String moduleName = 
-                    UNBOUND_MODULES_PREFIX + desc.getName().toLowerCase();
+                String moduleName = LIBRARY_PREFIX + desc.getName();
                 IProjectPO ubmProject = 
                     ProjectPM.loadLatestVersionOfProjectByName(moduleName);
                 if (ubmProject != null) {
