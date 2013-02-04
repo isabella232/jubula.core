@@ -4,7 +4,7 @@
 \begin{itemize}
 \item In the \gdpropview{} for a \gdcase{}, you can enter a \bxname{concrete value} as a parameter e.g. \bxshell{Hello}. 
 \item This means that this particular parameter cannot be changed when you reuse its parent \gdcase{}. 
-\item Enter concrete values for things that you expect to stay the same, like your choice of \bxname{operator} (i.e. matches, equals) or the click count. Deciding which data not to parametrize is an important decision is test creation. See the Best Practices section for more information on this \bxpref{BPKeywordData}.
+\item Enter concrete values for things that you expect to stay the same, like your choice of \bxname{operator} (i.e. matches, equals) or the click count. Deciding which data not to parametrize is an important decision is test creation.
 \bxtipp{Press \bxkey{Ctrl+SPACE} to get content assist in the \gdpropview{} for certain parameters. }
 \item Depending on your test structure, you may want to use concrete values for all the parameters in a keyword. If, for example, you have a keyword to open the \bxcaption{New Category} dialog from a menu, you will probably want to write the menupath as a concrete value. After all, this \gdcase{} is designed to open this specific dialog, so the menupath is fixed. 
 \bxtipp{Any concrete values you enter into a \gdcase{} are valid whenever you reuse this \gdcase{}. If you change the concrete values in the original \gdcase{}, all of the places you have reused it will change as well. }
