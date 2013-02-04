@@ -257,7 +257,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
                             getIteratorForNode(node);
                     while (nodeListIterator.hasNext()) {
                         INodePO child = nodeListIterator.next();
-                        if (node.getId().equals(child.getId())) {
+                        if (node.getGuid().equals(child.getGuid())) {
                             newSelection = new StructuredSelection(child);
                             break;
                         }
