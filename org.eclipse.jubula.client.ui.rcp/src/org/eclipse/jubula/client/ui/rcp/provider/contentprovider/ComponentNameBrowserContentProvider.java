@@ -26,6 +26,11 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -54,7 +59,8 @@ import org.eclipse.swt.graphics.Image;
  * @created 06.02.2009
  */
 public class ComponentNameBrowserContentProvider extends LabelProvider
-        implements ITreeContentProvider, IColorProvider {
+        implements ITreeContentProvider, IColorProvider, 
+        IProjectLoadedListener, IDataChangedListener {
     /** The color for disabled elements */
     private static final Color DISABLED_COLOR = LayoutUtil.GRAY_COLOR;
     
@@ -71,7 +77,15 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
     /** the parent->children cache */
     private Map<Object, List<Object>> m_children = 
             new HashMap<Object, List<Object>>(79);
-    
+    /**
+     * register handler for project load and data change to clear caches
+     */
+    public ComponentNameBrowserContentProvider() {
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addProjectLoadedListener(this, true);
+        ded.addDataChangedListener(this, true);
+
+    }
     /**
      * Drops all cached data.
      */
@@ -79,6 +93,29 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
         m_relationShip.clear();
         m_children.clear();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void handleProjectLoaded() {
+        clearCaches();
+    }
+
+    /** {@inheritDoc} */
+    public void handleDataChanged(DataChangedEvent... events) {
+        boolean refreshView = false;
+        for (DataChangedEvent e : events) {
+            if (e.getUpdateState() != UpdateState.onlyInEditor
+                    && e.getPo() instanceof IComponentNamePO) {
+                refreshView = true;
+                break;
+            }
+        }
+        if (refreshView) {
+            clearCaches();
+        }
+    }
+    
     /**
      * {@inheritDoc}
      */
