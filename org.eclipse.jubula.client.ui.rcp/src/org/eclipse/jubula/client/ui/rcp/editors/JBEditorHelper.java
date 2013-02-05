@@ -477,17 +477,16 @@ public class JBEditorHelper implements ILockedObjects,
             try {
                 operation.run(getEditSupport().getWorkVersion());
             } finally {
-                if (!m_editor.isDirty()) {
+                final IJBEditor editor = m_editor;
+                if (!editor.isDirty()) {
                     try {
-                        resetEditableState();
-                        getEditSupport().reloadEditSession();
+                        editor.reOpenEditor(getEditSupport().getOriginal());
                     } catch (PMException e) {
                         PMExceptionHandler.handlePMExceptionForEditor(
-                                e, m_editor);
+                                e, editor);
                     }
                 }
             }
-            
         }
     }
 }

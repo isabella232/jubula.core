@@ -423,12 +423,14 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      * @throws PMException if the node can not be loaded
      */
     public void reOpenEditor(IPersistentObject node) throws PMException {
+        ISelection previousSelection = getSelection();
         getEditorHelper().setDirty(false);
         getEditorHelper().getEditSupport().reloadEditSession();
         ((PersistableEditorInput)getEditorInput()).refreshNode();
         try {
             init(getEditorSite(), getEditorInput());
             setInitialInput();
+            setSelection(previousSelection);
         } catch (PartInitException e) {
             getSite().getPage().closeEditor(this, false);
         }
