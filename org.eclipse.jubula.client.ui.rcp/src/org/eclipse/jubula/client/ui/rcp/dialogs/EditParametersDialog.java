@@ -33,7 +33,7 @@ public final class EditParametersDialog extends AbstractEditParametersDialog {
     /** The ITestCasePO */
     private ISpecTestCasePO m_specTc;
     
-    /** true if imterface is locked, false otherwise */
+    /** true if interface is locked, false otherwise */
     private boolean m_isInterfaceLocked;
 
     /** The Lock Interface CheckBox */
