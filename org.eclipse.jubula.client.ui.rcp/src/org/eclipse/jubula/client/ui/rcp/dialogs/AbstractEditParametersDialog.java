@@ -1155,7 +1155,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
     }
     
     /**
-     * @return the OK-Button of this dialaog.
+     * @return the OK-Button of this dialog.
      */
     private Button getOkButton() {
         return getButton(IDialogConstants.OK_ID);
