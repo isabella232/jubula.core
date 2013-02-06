@@ -114,4 +114,14 @@ public abstract class DatabaseConnectionInfo {
     public String getBatchWritingSize() {
         return null;
     }
+    
+    /**
+     * We discovered that on initial db load or after large imports the Oracle query
+     * optimizer would use outdated statistics. This is especially annoying when
+     * setting up new schemas. To update the statistics a SQL/PLSQL statement is needed.
+     * @return a statement which when send to the db will update the statistics.
+     */
+    public String getStatisticsCommand() {
+        return null;
+    }
 }

@@ -26,6 +26,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
@@ -631,6 +632,27 @@ public class Persistor {
         return instance;
     }
 
+    /**
+     * Update internal db statistics after mass changes in the db.
+     * This is often needed to help the query optimizer doing the right things.
+     */
+    public void updateDbStatistics() {
+        String cmd = dbConnectionInfo.getStatisticsCommand();
+        if (cmd != null) {
+            EntityManager em = openSession();
+            try {
+                Query q = em.createNativeQuery(cmd);
+                EntityTransaction tx = getTransaction(em);
+                q.executeUpdate();
+                commitTransaction(em, tx);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            } finally {
+                dropSession(em);
+            }
+        }
+    }
+    
     /**
      * @return a new Session for the standard configuration
      * @throws JBFatalAbortException

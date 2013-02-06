@@ -65,4 +65,17 @@ public class OracleConnectionInfo extends AbstractHostBasedConnectionInfo {
     public String getBatchWritingSize() {
         return ORACLE_BATCH_WRITING_SIZE;
     }
+    
+    @Override
+    public String getStatisticsCommand() {
+        return
+            "begin\n" + //$NON-NLS-1$
+            "for tab in (\n" + //$NON-NLS-1$
+                "select * from USER_TABLES tab order by TAB.TABLE_NAME\n" + //$NON-NLS-1$
+            ") loop\n" + //$NON-NLS-1$
+                "execute immediate 'analyze table ' || TAB.TABLE_NAME || ' compute statistics';\n" + //$NON-NLS-1$
+            "end loop;\n" + //$NON-NLS-1$
+            "end;\n"; //$NON-NLS-1$
+    }
+     
 }
