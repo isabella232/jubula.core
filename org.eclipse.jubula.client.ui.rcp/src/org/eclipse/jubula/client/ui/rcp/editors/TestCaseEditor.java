@@ -200,12 +200,17 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         for (IExecTestCasePO execTc : execTcRefs) {
             try {
                 INodePO parentNode = execTc.getParentNode();
-                INodePO editorSessionParentNode = editorSession.find(
-                        parentNode.getClass(), parentNode.getId());
-                
-                if (LockManager.instance().lockPO(editorSession, 
-                        editorSessionParentNode, true)) {
-                    lockedNodePOs.add(editorSessionParentNode);
+                if (parentNode != null) {
+                    INodePO editorSessionParentNode = editorSession.find(
+                            parentNode.getClass(), parentNode.getId());
+                    
+                    if (LockManager.instance().lockPO(editorSession, 
+                            editorSessionParentNode, true)) {
+                        lockedNodePOs.add(editorSessionParentNode);
+                    }
+                } else {
+                    LOG.error("The parent of ExecTestCase (GUID " + execTc.getGuid()  //$NON-NLS-1$
+                            + ") is null. Skipped removal of incorrect compNamePairs."); //$NON-NLS-1$
                 }
             } catch (PMDirtyVersionException e) {
                 // Unable to successfully acquire lock

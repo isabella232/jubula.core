@@ -38,6 +38,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.progress.ElementLoadedProgressListener;
 import org.eclipse.jubula.client.core.businessprocess.progress.InsertProgressListener;
@@ -49,11 +50,12 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.persistence.annotations.BatchFetch;
 import org.eclipse.persistence.annotations.BatchFetchType;
 import org.eclipse.persistence.annotations.Index;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
- * base class for all kinds of nodes in test tree (with the exception
- * of testsuite nodes
+ * Base class for all kinds of nodes in test tree
  * 
  * @author BREDEX GmbH
  * @created 17.08.2004
@@ -68,6 +70,9 @@ import org.eclipse.persistence.annotations.Index;
         ElementLoadedProgressListener.class, 
         InsertProgressListener.class, RemoveProgressListener.class })
 abstract class NodePO implements INodePO {
+    /** the logger */
+    protected static final Logger LOG = LoggerFactory
+            .getLogger(NodePO.class);
     
     /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
@@ -216,6 +221,16 @@ abstract class NodePO implements INodePO {
      * @param parent parent to set
      */
     public void setParentNode(INodePO parent) {
+        if (LOG.isErrorEnabled() && parent == null) {
+            try {
+                throw new IllegalArgumentException(
+                        "The parent of the INodePO (GUID " + getGuid() 
+                            + ") is not intended to be set to null."); //$NON-NLS-1$
+            } catch (IllegalArgumentException e) {
+                LOG.error(ExceptionUtils.getFullStackTrace(e), e);
+            }
+            
+        }
         m_parentNode = parent;
     }
 
