@@ -41,6 +41,7 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
         BROWSER_TO_CMD_MAP.put("Firefox", "*firefox"); //$NON-NLS-1$ //$NON-NLS-2$
         BROWSER_TO_CMD_MAP.put("InternetExplorer", "*iexplore"); //$NON-NLS-1$ //$NON-NLS-2$
         BROWSER_TO_CMD_MAP.put("Safari", "*safari"); //$NON-NLS-1$ //$NON-NLS-2$
+        BROWSER_TO_CMD_MAP.put("Chrome", "*googlechrome"); //$NON-NLS-1$ //$NON-NLS-2$
     }
     
     /** the logger */

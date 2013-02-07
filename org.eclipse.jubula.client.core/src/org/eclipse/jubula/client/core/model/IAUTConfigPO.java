@@ -93,7 +93,9 @@ public interface IAUTConfigPO extends IPersistentObject, Comparable {
         /** Firefox */
         Firefox, 
         /** Safari */
-        Safari
+        Safari,
+        /** Chrome */
+        Chrome
     }
     
     /**
