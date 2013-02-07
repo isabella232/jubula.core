@@ -645,8 +645,8 @@ public class Persistor {
                 EntityTransaction tx = getTransaction(em);
                 q.executeUpdate();
                 commitTransaction(em, tx);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+            } catch (Throwable t) {
+                log.error("Updating DB statistics failed. This isn't critical,  but will degrade performance.", t); //$NON-NLS-1$
             } finally {
                 dropSession(em);
             }
