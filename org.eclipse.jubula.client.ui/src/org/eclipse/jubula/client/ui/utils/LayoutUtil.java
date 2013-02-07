@@ -92,16 +92,16 @@ public class LayoutUtil {
     // -------------------------------------------------------------
     // Colors
     // -------------------------------------------------------------
-    /** color gray for disabled gui elements (foreground) */
+    /** color gray for disabled GUI elements (foreground) */
     public static final Color LIGHT_GRAY_COLOR = new Color(
             Display.getDefault(), new RGB(238, 238, 238));
-    /** color gray for disabled gui elements (foreground) */
+    /** color gray for disabled GUI elements (foreground) */
     public static final Color GRAY_COLOR = new Color(
             Display.getDefault(), new RGB(100, 100, 100));
-    /** color for inactive gui elements */
+    /** color for inactive GUI elements */
     public static final Color INACTIVE_COLOR = Display.getDefault()
         .getSystemColor(SWT.COLOR_DARK_GREEN);
-    /** default color (mostly black) for gui elements */
+    /** default color (mostly black) for GUI elements */
     public static final Color DEFAULT_OS_COLOR = null;
     
     // -------------------------------------------------------------

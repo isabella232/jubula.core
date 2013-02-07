@@ -394,20 +394,6 @@
         data from an external source.
       </description>
     </decorator>
-    <decorator
-      class="org.eclipse.jubula.client.ui.rcp.provider.labelprovider.decorators.ActiveElementDecorator"
-      id="org.eclipse.jubula.client.ui.rcp.decorators.activeElementDecorator"
-      label="Active Element Decorator"
-      lightweight="true"
-      location="BOTTOM_RIGHT"
-      state="true">
-      <enablement>
-        <objectClass name="org.eclipse.jubula.client.core.model.INodePO" />
-      </enablement>
-      <description> Decorates Test Steps or Test Case References which have been marked as
-        active / inactive.
-      </description>
-    </decorator>
   </extension>
   <extension point="org.eclipse.ui.actionSets">
     <actionSet

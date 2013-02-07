@@ -71,6 +71,10 @@ import org.slf4j.LoggerFactory;
  */
 public class GeneralLabelProvider extends ColumnLabelProvider 
     implements IColorProvider, ILabelProvider {
+    /**
+     * <code>INACTIVE_PREFIX</code>
+     */
+    public static final String INACTIVE_PREFIX = "// "; //$NON-NLS-1$
     
     /** close bracked */
     public static final String CLOSE_BRACKED = "]"; //$NON-NLS-1$
@@ -114,7 +118,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
 
     /** {@inheritDoc} */
     public String getText(Object element) {
-        return getGDText(element);
+        return getTextImpl(element);
     }
 
     /** {@inheritDoc} */
@@ -198,29 +202,30 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * @param element the element to get the text for 
      * @return a descriptive text for the given element
      */
-    public static String getGDText (Object element) {
+    public static String getTextImpl (Object element) {
         if (element instanceof INodePO) {
+            String prefix = StringConstants.EMPTY;
+            String name = null;
             INodePO node = (INodePO)element;
+            if (!node.isActive()) {
+                prefix = INACTIVE_PREFIX;
+            }
+            
             if (node.getName() == null) {
-                return UNNAMED_NODE;
-            }
-            if (node instanceof ICapPO) {
-                return getText((ICapPO)node);
-            } 
-            
-            if (node instanceof IExecTestCasePO) {
-                return getText((IExecTestCasePO)node);
-            }
-
-            if (node instanceof ISpecTestCasePO) {
-                return getText((ISpecTestCasePO)node);
-            }
-            
-            if (node instanceof IRefTestSuitePO) {
-                return getText((IRefTestSuitePO)node);
+                name = UNNAMED_NODE;
+            } else if (node instanceof ICapPO) {
+                name = getText((ICapPO)node);
+            } else if (node instanceof IExecTestCasePO) {
+                name = getText((IExecTestCasePO)node);
+            } else if (node instanceof ISpecTestCasePO) {
+                name = getText((ISpecTestCasePO)node);
+            } else if (node instanceof IRefTestSuitePO) {
+                name = getText((IRefTestSuitePO)node);
+            } else {
+                name = node.getName();
             }
             
-            return node.getName();
+            return new StringBuilder(prefix).append(name).toString();
         }
 
         if (element instanceof IReusedProjectPO) {
@@ -309,8 +314,12 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * {@inheritDoc}
      */
     public Color getForeground(Object element) {
-        if (element instanceof IExecTestCasePO || element instanceof ICapPO
+        if (element instanceof IExecTestCasePO 
+                || element instanceof ICapPO
                 || element instanceof IRefTestSuitePO) { 
+            if (!((INodePO)element).isActive()) {
+                return LayoutUtil.INACTIVE_COLOR;
+            }
             return DISABLED_COLOR;
         }
 
@@ -460,6 +469,4 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     
         return nameBuilder.toString();
     }
-
-    
 }

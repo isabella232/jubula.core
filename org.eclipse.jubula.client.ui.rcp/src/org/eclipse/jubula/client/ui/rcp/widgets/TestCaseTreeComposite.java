@@ -176,7 +176,7 @@ public class TestCaseTreeComposite extends Composite {
          * {@inheritDoc}
          */
         public String getText(Object element) {
-            return GeneralLabelProvider.getGDText(element);
+            return GeneralLabelProvider.getTextImpl(element);
         }
 
         /**
