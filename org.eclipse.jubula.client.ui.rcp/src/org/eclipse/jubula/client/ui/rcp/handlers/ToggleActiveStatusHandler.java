@@ -34,7 +34,8 @@ public class ToggleActiveStatusHandler extends AbstractSelectionBasedHandler {
 
         if (activePart instanceof AbstractJBEditor) {
             AbstractJBEditor tce = (AbstractJBEditor)activePart;
-            if (tce.getEditorHelper().requestEditableState() 
+            final JBEditorHelper editorHelper = tce.getEditorHelper();
+            if (editorHelper.requestEditableState() 
                     != JBEditorHelper.EditableState.OK) {
                 return null;
             }
@@ -42,8 +43,8 @@ public class ToggleActiveStatusHandler extends AbstractSelectionBasedHandler {
                     .hasNext();) {
                 INodePO node = it.next();
                 node.setActive(!node.isActive());
-                tce.getEditorHelper().setDirty(true);
             }
+            editorHelper.setDirty(true);
             DataEventDispatcher.getInstance().firePropertyChanged(false);
         }
         return null;
