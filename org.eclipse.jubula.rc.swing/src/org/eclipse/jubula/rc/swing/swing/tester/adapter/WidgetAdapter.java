@@ -12,8 +12,6 @@ package org.eclipse.jubula.rc.swing.swing.tester.adapter;
 
 
 import java.awt.AWTEvent;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Toolkit;
 
 import javax.swing.JComponent;
@@ -46,7 +44,7 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
  * 
  * @author BREDEX GmbH 
  */
-public abstract class WidgetAdapter extends AbstractComponentAdapter
+public class WidgetAdapter extends AbstractComponentAdapter
     implements IWidgetAdapter {
       
     /** constants for communication */
@@ -325,20 +323,4 @@ public abstract class WidgetAdapter extends AbstractComponentAdapter
         return KeyCodeConverter.getKeyCode(mod);
     }
     
-    /**
-     * High light the given component, called during object mapping
-     * @param component the component to high light
-     * @param border the color we want to highlight with
-     */
-    public void highLight(Component component, Color border) {
-        TesterUtil.highLight(component, border);
-    }
-
-    /**
-     * Low light the given component, called during object mapping
-     * @param component the component to remove the 'hight light'
-     */
-    public void lowLight(Component component) {
-        TesterUtil.lowLight(component);
-    }
 }

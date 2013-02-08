@@ -24,11 +24,11 @@ import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
-import org.eclipse.jubula.rc.common.businessprocess.ReflectionBP;
 import org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.listener.AUTEventListener;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.rc.common.tester.adapter.factory.GUIAdapterFactoryRegistry;
+import org.eclipse.jubula.rc.swing.swing.tester.TesterUtil;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 
 
@@ -136,17 +136,17 @@ public abstract class AbstractAutSwingEventListener
         synchronized (m_componentLock) {
             if (getCurrentComponent() != null) {
                 try {
-                    Object adapter = GUIAdapterFactoryRegistry
-                            .getInstance()
-                            .getAdapter(getCurrentComponent());
-                    if (adapter != null) {
-                        ReflectionBP.invokeMethod("lowLight", adapter, //$NON-NLS-1$
-                            new Class[] {Component.class}, 
-                            new Object[] {m_currentComponent});
-                        setHighLighted(false);
-                    }
+                    AUTServerConfiguration.getInstance()
+                            .getImplementationClass(
+                                    getComponentClass(
+                                            getCurrentComponent()));
+                    
+                    TesterUtil.lowLight(m_currentComponent);
+
                 } catch (IllegalArgumentException iae) {
                     log.error(iae);
+                } catch (UnsupportedComponentException uce) {
+                    log.warn(uce);
                 }
             }
         }
@@ -262,15 +262,10 @@ public abstract class AbstractAutSwingEventListener
      */
     protected void highlight(Component source, final Object implClass, 
         final Color highlightColor) {
-        Object adapter = GUIAdapterFactoryRegistry
-                 .getInstance().getAdapter(source);
         synchronized (getComponentLock()) {
             if (getCurrentComponent() != null 
                 && getCurrentComponent() != source) {
-                
-                ReflectionBP.invokeMethod("lowLight", adapter, //$NON-NLS-1$ 
-                    new Class[] {Component.class}, 
-                    new Object[] {getCurrentComponent()});
+                TesterUtil.lowLight(getCurrentComponent());
                 setHighLighted(false);
             }
             setCurrentComponent(source);
@@ -278,11 +273,21 @@ public abstract class AbstractAutSwingEventListener
                 SwingUtilities.getWindowAncestor(getCurrentComponent());
             if (windowAncestor != null 
                     && windowAncestor.getFocusOwner() != null) {
-                
-                ReflectionBP.invokeMethod("highLight", //$NON-NLS-1$
-                        adapter, new Class[] {Component.class, Color.class}, 
-                    new Object[] {getCurrentComponent(), highlightColor});
-                setHighLighted(true);
+                try {
+                    AUTServerConfiguration.getInstance()
+                        .getImplementationClass(
+                            getComponentClass(getCurrentComponent()));
+ 
+                    TesterUtil.highLight(getCurrentComponent(), highlightColor);
+                    setHighLighted(true);
+                } catch (IllegalArgumentException e) {
+                    log.error("unexpected exception", e); //$NON-NLS-1$
+                } catch (UnsupportedComponentException e) {
+                    /* This means that the component that we wish to highlight is 
+                     * not supported.
+                     * The component will not be highlighted
+                     */
+                }
             }
         }
     }
@@ -308,15 +313,22 @@ public abstract class AbstractAutSwingEventListener
                                 && SwingUtilities.getWindowAncestor(
                                         getCurrentComponent()).getFocusOwner() 
                                             != null) {
-                            Object adapter = GUIAdapterFactoryRegistry
-                                    .getInstance()
-                                    .getAdapter(getCurrentComponent());
-                            ReflectionBP.invokeMethod("highLight", //$NON-NLS-1$
-                                adapter, new Class[] {Component.class,
-                                    Color.class}, 
-                                new Object[] {getCurrentComponent(), 
-                                    highlightColor});
-                            setHighLighted(true);
+                            try {
+                                AUTServerConfiguration.getInstance()
+                                    .getImplementationClass(
+                                            getComponentClass(
+                                                    getCurrentComponent()));
+                                TesterUtil.highLight(
+                                        getCurrentComponent(), highlightColor);
+                            } catch (IllegalArgumentException iae) {
+                                log.error("unexpected exception", iae); //$NON-NLS-1$
+                            } catch (UnsupportedComponentException uce) {
+                                /* This means that the component that we wish to highlight is 
+                                 * not supported.
+                                 * The component will not be highlighted
+                                 */
+                            }
+     
                         }
                     }
                 }
@@ -354,7 +366,5 @@ public abstract class AbstractAutSwingEventListener
     protected void setHighLighted(boolean isHighLighted) {
         m_isHighLighted = isHighLighted;
     }
-
-    
 
 }

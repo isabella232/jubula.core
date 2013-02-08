@@ -95,7 +95,10 @@ public class GUIAdapterFactoryRegistry {
             superclass = superclass.getSuperclass();
         }
         // FIXME Here is missing the right Exception!!!
-        return factory.getAdapter(objectToAdapt);
+        if (factory != null) {
+            return factory.getAdapter(objectToAdapt);
+        }
+        return null;
         
     }
 }

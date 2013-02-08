@@ -26,12 +26,11 @@ import javax.swing.plaf.basic.ComboPopup;
 import org.eclipse.jubula.communication.message.ObjectMappedMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
-import org.eclipse.jubula.rc.common.businessprocess.ReflectionBP;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.rc.common.tester.adapter.factory.GUIAdapterFactoryRegistry;
+import org.eclipse.jubula.rc.swing.swing.tester.TesterUtil;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 
@@ -235,15 +234,18 @@ public class MappingListener extends AbstractAutSwingEventListener {
         if (getCurrentComponent() != null) {
             try {
 
-                Object adapter = GUIAdapterFactoryRegistry
-                        .getInstance().getAdapter(getCurrentComponent());
-                if (adapter != null) {
-                    ReflectionBP.invokeMethod("highLight", //$NON-NLS-1$
-                        adapter, new Class[] {Component.class, Color.class}, 
-                        new Object[] {getCurrentComponent(), highlightColor});
-                }
+                AUTServerConfiguration.getInstance()
+                        .getImplementationClass(
+                                getComponentClass(getCurrentComponent()));
+                TesterUtil.highLight(getCurrentComponent(), highlightColor);
+
             } catch (IllegalArgumentException e) {
                 log.error("unexpected exception", e); //$NON-NLS-1$
+            } catch (UnsupportedComponentException e) {
+                /* This means that the component that we wish to highlight is 
+                 * not supported.
+                 * The component will not be highlighted
+                 */
             }
         }
         
@@ -260,14 +262,14 @@ public class MappingListener extends AbstractAutSwingEventListener {
         try {
             // lowlight old lightened
             if (getCurrentComponent() != null) {
-                Object adapter = GUIAdapterFactoryRegistry.getInstance()
-                        .getAdapter(getCurrentComponent());
-                if (adapter != null) {
-                    ReflectionBP.invokeMethod("lowLight", adapter, //$NON-NLS-1$ 
-                        new Class[] {Component.class}, 
-                        new Object[] {getCurrentComponent()});
-                    setHighLighted(false);
-                }
+                AUTServerConfiguration.getInstance()
+                    .getImplementationClass(
+                            getComponentClass(
+                                    getCurrentComponent()));
+                TesterUtil.lowLight(getCurrentComponent());
+
+                setHighLighted(false);
+
             }
             component = ComponentHandler.findComponent(compId, false, 0);
             if (component != null) {
@@ -275,11 +277,13 @@ public class MappingListener extends AbstractAutSwingEventListener {
                 if (getCurrentComponent() != null
                         && getCurrentComponent().isShowing()
                         && getCurrentComponent().isVisible()) {
-                    Object adapter = GUIAdapterFactoryRegistry
-                            .getInstance().getAdapter(getCurrentComponent());
-                    ReflectionBP.invokeMethod("highLight", //$NON-NLS-1$
-                        adapter, new Class[] {Component.class, Color.class}, 
-                        new Object[] {getCurrentComponent(), highlightColor});
+                    
+                    AUTServerConfiguration.getInstance()
+                            .getImplementationClass(
+                                    getComponentClass(
+                                            getCurrentComponent()));
+                    TesterUtil.highLight(getCurrentComponent(), highlightColor);
+                    
                     setHighLighted(true);
                     return true;
                 }
@@ -291,6 +295,8 @@ public class MappingListener extends AbstractAutSwingEventListener {
             log.warn(e);
         } catch (IllegalArgumentException e) {
             log.warn(e);
+        } catch (UnsupportedComponentException uce) {
+            log.warn(uce);
         }
         return false;
     }
