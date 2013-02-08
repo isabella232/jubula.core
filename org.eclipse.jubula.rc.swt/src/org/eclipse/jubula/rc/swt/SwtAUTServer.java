@@ -12,10 +12,10 @@ package org.eclipse.jubula.rc.swt;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.common.AbstractAdapterBasedRemoteController;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
-import org.eclipse.jubula.rc.common.tester.adapter.factory.GUIAdapterFactoryRegistry;
+import org.eclipse.jubula.rc.common.tester.adapter.factory.IUIAdapterFactory;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swt.driver.RobotFactorySwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotSwtImpl;
@@ -58,7 +58,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 20.04.2006
  */
-public class SwtAUTServer extends AUTServer {
+public class SwtAUTServer extends AbstractAdapterBasedRemoteController {
     
     /** the logger */
     private static final Logger LOG = 
@@ -217,16 +217,19 @@ public class SwtAUTServer extends AUTServer {
     protected void startTasks() throws ExceptionInInitializerError, 
         InvocationTargetException, NoSuchMethodException {
         
-        // FIXME need better place to put the registration of the factory
-        GUIAdapterFactoryRegistry.getInstance().
-            registerFactory(new SWTAdapterFactory());
-        
         super.invokeAUT();
         if (getCommunicator() != null) {
             getCommunicator().close();
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    public IUIAdapterFactory getToolkitFactory() {
+        return new SWTAdapterFactory();
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -248,4 +251,5 @@ public class SwtAUTServer extends AUTServer {
     public void setDisplay(Display display) {
         m_display = display;
     }
+
 }

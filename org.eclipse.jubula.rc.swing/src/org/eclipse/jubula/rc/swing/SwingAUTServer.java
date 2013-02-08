@@ -19,10 +19,11 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.common.AbstractAdapterBasedRemoteController;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
-import org.eclipse.jubula.rc.common.tester.adapter.factory.GUIAdapterFactoryRegistry;
+import org.eclipse.jubula.rc.common.tester.adapter.factory.IUIAdapterFactory;
 import org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swing.listener.CheckListener;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
@@ -63,7 +64,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 26.07.2004
  */
-public class SwingAUTServer extends AUTServer {
+public class SwingAUTServer extends AbstractAdapterBasedRemoteController {
     
     /** the logger */
     private static final Logger LOG = 
@@ -220,13 +221,14 @@ public class SwingAUTServer extends AUTServer {
             addToolKitEventListenerToAUT();
         }
         
-        // FIXME need better place to put the registration of the factory
-        GUIAdapterFactoryRegistry.getInstance().
-            registerFactory(new SwingAdapterFactory());
-        
         AUTServer.getInstance().invokeAUT();
-        
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    public IUIAdapterFactory getToolkitFactory() {
+        return new SwingAdapterFactory();
     }
 
     /**
@@ -264,4 +266,6 @@ public class SwingAUTServer extends AUTServer {
         
         return returnArray;
     }
+
+
 }
