@@ -363,8 +363,6 @@ public class Messages extends NLS {
     public static String GDProblemViewOpenObjectMappingEditor;
     public static String GDProblemViewOpenReusedProjectSettings;
     public static String GDProblemViewOpenEditor;
-    public static String GDProblemViewShellTitle;
-    public static String GDProblemViewTitle;
     public static String GeneralGDLabelProviderUnnamedNode;
     public static String GeneralLabelProvier_NoActiveProject;
     public static String GenericType;

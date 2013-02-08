@@ -84,7 +84,7 @@ public class PMExceptionHandler {
       
     /**
      * @param exc PMException
-     * @param editor editor caused this excpetion
+     * @param editor editor caused this exception
      */
     public static void handlePMExceptionForEditor(PMException exc, 
         IJBEditor editor) {

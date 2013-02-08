@@ -25,6 +25,7 @@ import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.osgi.util.NLS;
 
 
@@ -83,12 +84,7 @@ public class StartAutJob extends Job {
         }
         
         while (!monitor.isCanceled() && !m_isAutStarted) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                // Do nothing. The condition will be checked on the next 
-                // iteration of the loop.
-            }
+            TimeUtil.delay(500);
         }
 
         if (monitor.isCanceled()) {

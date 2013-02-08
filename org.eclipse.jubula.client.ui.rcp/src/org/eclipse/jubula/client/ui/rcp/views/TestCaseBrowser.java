@@ -51,7 +51,6 @@ import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TreeViewerContainerDragS
 import org.eclipse.jubula.client.ui.rcp.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.TestCaseBrowserContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TestCaseBrowserLabelProvider;
-import org.eclipse.jubula.client.ui.rcp.utils.SelectionChecker;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
@@ -235,16 +234,15 @@ public class TestCaseBrowser extends AbstractJBTreeView
         /** {@inheritDoc} */
         public void doubleClick(DoubleClickEvent event) {
             IStructuredSelection selection = getActualSelection();
-            int[] counter = SelectionChecker.selectionCounter(selection);
-            if (counter[SelectionChecker.SPEC_CONT] == selection.size()
-                    || counter[SelectionChecker.CATEGORY] == selection.size()) {
-                CommandHelper.executeCommand(
-                        RCPCommandIDs.NEW_TESTCASE, getSite());
+            Object firstElement = selection.getFirstElement();
+            String commandId;
+            if (firstElement instanceof ISpecObjContPO
+                    || firstElement instanceof ICategoryPO) {
+                commandId = RCPCommandIDs.NEW_TESTCASE;
             } else {
-                CommandHelper.executeCommand(
-                        RCPCommandIDs.OPEN_TESTCASE_EDITOR,
-                        getSite());
+                commandId = RCPCommandIDs.OPEN_TESTCASE_EDITOR;
             }
+            CommandHelper.executeCommand(commandId, getSite());
         }
     }
 

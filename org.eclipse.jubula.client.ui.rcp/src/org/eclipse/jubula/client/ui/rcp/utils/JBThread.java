@@ -19,7 +19,7 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 public abstract class JBThread extends Thread {
 
     /**
-     * Contructor
+     * Constructor
      */
     public JBThread() {
         addErrorHandler();
@@ -47,7 +47,7 @@ public abstract class JBThread extends Thread {
     }
 
     /**
-     * do sth after an error occured.
+     * do sth after an error occurred.
      *
      */
     protected abstract void errorOccured();
