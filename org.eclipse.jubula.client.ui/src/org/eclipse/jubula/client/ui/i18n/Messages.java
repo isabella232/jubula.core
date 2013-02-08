@@ -60,7 +60,6 @@ public class Messages extends NLS {
     public static String EnterCommentDialogTitleLabel;
     public static String ErrorFetchingTestResultInformation;
     public static String ErrorOccurredWhileExecutingCommand;
-    public static String Export;
     public static String InputElementHasInvalidTypeReturningEmptyArray;
     public static String JobFilterSummaryView;
     public static String NoEditorInputCouldBeCreated;
@@ -82,7 +81,6 @@ public class Messages extends NLS {
     public static String TestResultNodePropertySourceErrorType;
     public static String TestResultNodeGUIPropertySourceEventhandler;
     public static String TestResultNodePropertySourceEventTestCase;
-    public static String TestResultNodeGUIPropertySourceParameters;
     public static String TestResultNodeGUIPropertySourceReentry;
     public static String TestResultNodePropertySourceResultStep;
     public static String TestResultNodePropertySourceStepName;
@@ -102,11 +100,7 @@ public class Messages extends NLS {
     public static String TestresultSummaryAutOS;
     public static String TestresultSummaryCmdParam;
     public static String TestresultSummaryCommentTitle;
-    public static String TestresultSummaryConnectToDb;
     public static String TestresultSummaryDate;
-    public static String TestresultSummaryDeleteTestrun;
-    public static String TestresultSummaryDeleteTestrunDialogMessage;
-    public static String TestresultSummaryDeleteTestrunDialogTitle;
     public static String TestresultSummaryDetailsAvailable;
     public static String TestresultSummaryDuration;
     public static String TestresultSummaryEndTime;
@@ -126,7 +120,6 @@ public class Messages extends NLS {
     public static String TestresultSummaryNoData;
     public static String TestresultSummaryNumberOfFailedCaps;
     public static String TestresultSummaryProjectName;
-    public static String TestresultSummaryRefreshButton;
     public static String TestresultSummaryStartTime;
     public static String TestresultSummaryTestJob;
     public static String TestresultSummaryTestJobStartTime;
