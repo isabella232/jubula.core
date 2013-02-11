@@ -12,10 +12,11 @@ Require-Bundle: org.apache.commons.beanutils;bundle-version="[1.7.0,2.0.0)",
  org.eclipse.jubula.tools;bundle-version="[2.0.0,2.1.0)",
  org.eclipse.jubula.communication;bundle-version="[2.0.0,2.1.0)",
  org.eclipse.jubula.rc.common;bundle-version="[2.0.0,2.1.0)",
- org.eclipse.swt;bundle-version="[3.1.0,4.0.0)"
+ org.eclipse.swt;bundle-version="[3.3.0,5.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.4
 Export-Package: com.bredexsw.guidancer.autswtserver.implclasses,
  org.eclipse.jubula.rc.swt,
+ org.eclipse.jubula.rc.swt.tester,
  org.eclipse.jubula.rc.swt.commands,
  org.eclipse.jubula.rc.swt.components,
  org.eclipse.jubula.rc.swt.driver,
@@ -23,4 +24,6 @@ Export-Package: com.bredexsw.guidancer.autswtserver.implclasses,
  org.eclipse.jubula.rc.swt.implclasses.tree,
  org.eclipse.jubula.rc.swt.interfaces,
  org.eclipse.jubula.rc.swt.listener,
+ org.eclipse.jubula.rc.swt.tester.adapter,
+ org.eclipse.jubula.rc.swt.tester.adapter.factory,
  org.eclipse.jubula.rc.swt.utils

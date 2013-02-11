@@ -1,0 +1,105 @@
+<!--
+    Copyright (c) 2004, 2013 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<project name="org.eclipse.jubula.rc.rcp.common" default="gen-lib" basedir=".">
+
+  <property name="OrbitStorage" value="../org.eclipse.jubula.rc.common.orbit" />
+  <property name="SiteStorage" value="../org.eclipse.jubula.site/target/site/plugins" />
+
+  <target name="gen-lib">
+
+    <mkdir dir="lib" />
+    <delete>
+      <fileset dir="lib" includes="**/*"/>
+    </delete>
+
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="ch.qos.logback.classic*.jar" />
+      </fileset>
+      <mergemapper to="ch.qos.logback.classic.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="ch.qos.logback.core*.jar" />
+      </fileset>
+      <mergemapper to="ch.qos.logback.core.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="ch.qos.logback.slf4j*.jar" />
+      </fileset>
+      <mergemapper to="ch.qos.logback.slf4j.jar"/>
+    </copy>
+
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="org.apache.commons.beanutils*.jar" />
+      </fileset>
+      <mergemapper to="org.apache.commons.beanutils.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="org.apache.commons.lang*.jar" />
+      </fileset>
+      <mergemapper to="org.apache.commons.lang.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="org.apache.oro*.jar" />
+      </fileset>
+      <mergemapper to="org.apache.oro.jar"/>
+    </copy>
+
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="org.slf4j.api*.jar" />
+      </fileset>
+      <mergemapper to="org.slf4j.api.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="${OrbitStorage}">
+        <include name="org.slf4j.jcl*.jar" />
+      </fileset>
+      <mergemapper to="org.slf4j.jcl.jar"/>
+    </copy>
+
+	<!--
+	The "SNAPSHOT" in the include selector ensures that only the non-source
+	JAR is used. Without it, the corresponding source JAR was being used,
+	and it was either being used exclusively or was *overwriting* the content
+	provided by the non-source JAR. This caused compilation to fail when also
+	building source bundles.
+	-->
+    <copy todir="lib">
+      <fileset dir="../org.eclipse.jubula.rc.common/target">
+        <include name="org.eclipse.jubula.rc.common*SNAPSHOT.jar" />
+      </fileset>
+      <mergemapper to="org.eclipse.jubula.rc.common.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="../org.eclipse.jubula.tools/target">
+        <include name="org.eclipse.jubula.tools*SNAPSHOT.jar" />
+      </fileset>
+      <mergemapper to="org.eclipse.jubula.tools.jar"/>
+    </copy>
+    <copy todir="lib">
+      <fileset dir="../org.eclipse.jubula.communication/target">
+        <include name="org.eclipse.jubula.communication*SNAPSHOT.jar" />
+      </fileset>
+      <mergemapper to="org.eclipse.jubula.communication.jar"/>
+    </copy>
+
+	<copy todir="lib">
+          <fileset dir="../org.eclipse.jubula.tools/lib">
+            <include name="xpp3*.jar" />
+            <include name="xstream*.jar" />
+          </fileset>
+	</copy>
+  </target>
+
+</project>

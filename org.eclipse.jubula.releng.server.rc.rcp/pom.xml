@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2004, 2013 BREDEX GmbH. All rights reserved. This program
+    and the accompanying materials are made available under the terms of the
+    Eclipse Public License v1.0 which accompanies this distribution, and is available
+    at http://www.eclipse.org/legal/epl-v10.html -->
+<project
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>org.eclipse.jubula.releng.server</artifactId>
+        <groupId>org.eclipse.jubula</groupId>
+        <version>2.0.0-SNAPSHOT</version>
+        <relativePath>../org.eclipse.jubula.releng.server</relativePath>
+    </parent>
+    <groupId>org.eclipse.jubula</groupId>
+    <artifactId>org.eclipse.jubula.releng.server.rc.rcp</artifactId>
+    <name>Eclipse Jubula Server Remote Control Components</name>
+    <description>Release engineering for Jubula server remote control components.</description>
+    <version>2.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>../org.eclipse.jubula.rc.rcp.feature</module>
+        <module>../org.eclipse.jubula.rc.rcp.common</module>
+        <module>../org.eclipse.jubula.rc.rcp.swt</module>
+        <module>../org.eclipse.jubula.rc.rcp.e3</module>
+        <module>../org.eclipse.jubula.rc.rcp.e3.specific</module>
+        <module>../org.eclipse.jubula.rc.rcp.site</module>
+        <module>../org.eclipse.jubula.rc.rcp.e4.releng</module>
+    </modules>
+    <build>
+        <plugins>
+            <!-- Compile only necessary sources. -->
+            <plugin>
+                <groupId>net.java.maven-incremental-build</groupId>
+                <artifactId>incremental-build-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>incremental-build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

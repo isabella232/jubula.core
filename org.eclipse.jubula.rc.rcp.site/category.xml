@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.eclipse.jubula.rc.rcp.feature_2.0.0.qualifier.jar" id="org.eclipse.jubula.rc.rcp.feature" version="2.0.0.qualifier">
+      <category name="org.eclipse.jubula.rc.rcp"/>
+   </feature>
+   <category-def name="org.eclipse.jubula.rc.rcp" label="Testing"/>
+</site>

@@ -20,7 +20,7 @@
 			noindex="false" 
 			nonavbar="false" 
 			notree="false" 
-			packagenames="org.eclipse.jubula.rc.rcp.gef.identifier" 
+			packagenames="org.eclipse.jubula.rc.rcp.e3.gef.identifier"
 			sourcepathref="rc.gef.extension.sourcepath"
 			splitindex="true" 
 			use="true" 

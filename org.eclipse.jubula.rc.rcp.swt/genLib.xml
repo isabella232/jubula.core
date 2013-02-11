@@ -1,0 +1,35 @@
+<!--
+    Copyright (c) 2004, 2013 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<project name="org.eclipse.jubula.rc.rcp.swt" default="gen-lib" basedir=".">
+
+  <property name="SiteStorage" value="../org.eclipse.jubula.site/target/site/plugins" />
+
+  <target name="gen-lib">
+
+    <mkdir dir="lib" />
+    <delete>
+      <fileset dir="lib" includes="**/*"/>
+    </delete>
+
+	<!--
+	The "SNAPSHOT" in the include selector ensures that only the non-source
+	JAR is used. Without it, the corresponding source JAR was being used,
+	and it was either being used exclusively or was *overwriting* the content
+	provided by the non-source JAR. This caused compilation to fail when also
+	building source bundles.
+	-->
+    <copy todir="lib">
+      <fileset dir="../org.eclipse.jubula.rc.swt/target">
+        <include name="org.eclipse.jubula.rc.swt*SNAPSHOT.jar" />
+      </fileset>
+      <mergemapper to="org.eclipse.jubula.rc.swt.jar"/>
+    </copy>
+
+  </target>
+
+</project>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2004, 2013 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<project name="org.eclipse.jubula.rc.rcp" default="gen-bundles" basedir=".">
+
+    <property name="bundlesSourceDirE3" value="../org.eclipse.jubula.rc.rcp.site/target/repository/plugins/" />
+    <property name="bundlesSourceDirE4" value="../org.eclipse.jubula.rc.rcp.e4.site/target/repository/plugins/" />
+
+    <property name="bundlesTargetDir" value="bundles" />
+    <property name="bundlesTargetDir.swt" value="bundles.swt" />
+    <property name="bundlesTargetDir.e3" value="bundles.e3" />
+    <property name="bundlesTargetDir.e4" value="bundles.e4" />
+    <property name="bundlesTargetDir.e4.swt" value="bundles.e4.swt" />
+
+    <!-- Function for copying a bundle into the bundles/ dir. -->
+    <target name="copyBundleToBundlesDir">
+        <copy todir="${targetDir}">
+            <fileset dir="${sourceDir}">
+                <include name="${bundleName}_*.jar" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="gen-bundles">
+        <!-- Remove previously copied files -->
+        <mkdir dir="${bundlesTargetDir}" />
+        <mkdir dir="${bundlesTargetDir.swt}" />
+        <mkdir dir="${bundlesTargetDir.e3}" />
+        <mkdir dir="${bundlesTargetDir.e4}" />
+        <mkdir dir="${bundlesTargetDir.e4.swt}" />
+        <delete>
+            <fileset dir="${bundlesTargetDir}" includes="**/*" />
+        </delete>
+        <delete>
+            <fileset dir="${bundlesTargetDir.swt}" includes="**/*" />
+        </delete>
+        <delete>
+            <fileset dir="${bundlesTargetDir.e3}" includes="**/*" />
+        </delete>
+        <delete>
+            <fileset dir="${bundlesTargetDir.e4}" includes="**/*" />
+        </delete>
+        <delete>
+            <fileset dir="${bundlesTargetDir.e4.swt}" includes="**/*" />
+        </delete>
+
+        <!-- Copy common bundles into bundles/ folder. -->
+        <antcall target="copyBundleToBundlesDir">
+            <param name="sourceDir" value="${bundlesSourceDirE3}" />
+            <param name="targetDir" value="${bundlesTargetDir}" />
+            <param name="bundleName" value="org.eclipse.jubula.rc.rcp.common" />
+        </antcall>
+
+        <!-- Copy common bundles into bundles.swt/ folder. -->
+        <antcall target="copyBundleToBundlesDir">
+            <param name="sourceDir" value="${bundlesSourceDirE3}" />
+            <param name="targetDir" value="${bundlesTargetDir.swt}" />
+            <param name="bundleName" value="org.eclipse.jubula.rc.rcp.swt" />
+        </antcall>
+
+        <!-- Copy e3 specific bundles into bundles.e3/ folder. -->
+        <antcall target="copyBundleToBundlesDir">
+            <param name="sourceDir" value="${bundlesSourceDirE3}" />
+            <param name="targetDir" value="${bundlesTargetDir.e3}" />
+            <param name="bundleName" value="org.eclipse.jubula.rc.rcp.e3" />
+        </antcall>
+        <antcall target="copyBundleToBundlesDir">
+            <param name="sourceDir" value="${bundlesSourceDirE3}" />
+            <param name="targetDir" value="${bundlesTargetDir.e3}" />
+            <param name="bundleName" value="org.eclipse.jubula.rc.rcp.e3.specific" />
+        </antcall>
+
+        <!-- Copy e4 bundles into bundles.e4/ folder. -->
+        <antcall target="copyBundleToBundlesDir">
+            <param name="sourceDir" value="${bundlesSourceDirE4}" />
+            <param name="targetDir" value="${bundlesTargetDir.e4}" />
+            <param name="bundleName" value="org.eclipse.jubula.rc.rcp.e4" />
+        </antcall>
+
+        <!-- Copy e4 with SWT specific bundles into bundles.e4.swt/ folder. -->
+        <antcall target="copyBundleToBundlesDir">
+            <param name="sourceDir" value="${bundlesSourceDirE4}" />
+            <param name="targetDir" value="${bundlesTargetDir.e4.swt}" />
+            <param name="bundleName" value="org.eclipse.jubula.rc.rcp.e4.swt" />
+        </antcall>
+
+    </target>
+
+</project>
