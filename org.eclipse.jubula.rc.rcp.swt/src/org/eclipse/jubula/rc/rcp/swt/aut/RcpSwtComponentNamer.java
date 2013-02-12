@@ -343,7 +343,7 @@ public abstract class RcpSwtComponentNamer implements Listener {
      */
     public static void setToolbarComponentName(Widget partToolbar,
             String finalPartId) {
-        RcpSwtComponentNamer.setToolbarComponentName(
+        setComponentName(
                 partToolbar,
                 finalPartId + TOOLBAR_ID_SUFFIX);
     }
