@@ -52,6 +52,7 @@ import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.Message;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,11 +141,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         try {
             while (AutAgentConnection.getInstance().isConnected()) {
                 ClientTestFactory.getClientTest().disconnectFromAutAgent();
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    // do nothing
-                }
+                TimeUtil.delay(200);
             }
         } catch (ConnectionException e) {
             log.info(Messages.ErrorWhileShuttingDownDisconnecting, e);

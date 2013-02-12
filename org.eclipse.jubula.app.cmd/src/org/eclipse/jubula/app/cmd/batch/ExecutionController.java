@@ -918,6 +918,7 @@ public class ExecutionController implements IAUTServerEventListener,
             String errorMsg = 
                 I18n.getString(event.getException().getMessage(), true);
             AbstractCmdlineClient.printlnConsoleError(errorMsg);
+            stopProcessing();
         }
 
         switch (event.getState()) {
