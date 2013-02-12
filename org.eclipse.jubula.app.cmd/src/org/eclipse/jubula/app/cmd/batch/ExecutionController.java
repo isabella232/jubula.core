@@ -449,11 +449,7 @@ public class ExecutionController implements IAUTServerEventListener,
         while (m_job.getActualTestSuite() != null 
                 && !m_stopProcessing) {
             while (m_idle && !m_stopProcessing) {
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    // do nothing
-                }
+                TimeUtil.delay(50);
             }
             if (m_job.getActualTestSuite() != null 
                     && !m_stopProcessing
@@ -612,11 +608,7 @@ public class ExecutionController implements IAUTServerEventListener,
                         autConf, m_job.getLanguage());
                 m_startedAutId = autToStart;
                 while (!asl.autStarted() && !asl.hasAutStartFailed()) {
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        // ignore
-                    }
+                    TimeUtil.delay(500);
                 }
                 waitExternalTime();
             }

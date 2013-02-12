@@ -49,15 +49,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class represents the connection to the AUTServer which controls the
- * aplication under test.
+ * application under test.
  * 
- * This class is implemeted as a singleton. The server configuration contains
- * detailied information, how this instance can be contacted.
+ * This class is implemented as a singleton. The server configuration contains
+ * detailed information, how this instance can be contacted.
  * 
  * @author BREDEX GmbH
  * @created 22.07.2004
  */
 public class AUTConnection extends BaseConnection {
+    /**
+     * the timeout used for establishing a connection to a running AUT
+     */
+    public static final int CONNECT_TO_AUT_TIMEOUT = 10000;
+
     /** the logger */
     static final Logger LOG = LoggerFactory
             .getLogger(AUTConnection.class);
@@ -79,7 +84,7 @@ public class AUTConnection extends BaseConnection {
      * 
      * @throws ConnectionException
      *             containing a detailed message why the connection could not
-     *             initialised
+     *             initialized
      */
     private AUTConnection() throws ConnectionException {
         super();
@@ -107,10 +112,10 @@ public class AUTConnection extends BaseConnection {
     }
     
     /**
-     * handles the fatal errors occurs during initialisation
+     * handles the fatal errors occurs during initialization
      * 
      * @param throwable
-     *            the occured exception
+     *            the occurred exception
      * @throws ConnectionException
      *             a ConnectionException containing a detailed message
      */
@@ -127,7 +132,7 @@ public class AUTConnection extends BaseConnection {
      * Method to get the single instance of this class.
      * 
      * @throws ConnectionException
-     *             if an error occurs during initialisation.
+     *             if an error occurs during initialization.
      * @return the instance of this Singleton
      */
     public static synchronized AUTConnection getInstance()
@@ -203,11 +208,11 @@ public class AUTConnection extends BaseConnection {
                             ServerState.Disconnected);
                     return false;
                 }
-                long timeout = 10000;
                 long startTime = System.currentTimeMillis();
                 while (!monitor.isCanceled() && !isConnected() 
                         && AutAgentConnection.getInstance().isConnected()
-                        && startTime + timeout > System.currentTimeMillis()) {
+                        && startTime + CONNECT_TO_AUT_TIMEOUT 
+                            > System.currentTimeMillis()) {
                     TimeUtil.delay(200);
                 }
                 if (isConnected()) {
