@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation 
  *******************************************************************************/
-package org.eclipse.jubula.rc.swing.swing.tester.adapter.factory;
+package org.eclipse.jubula.rc.common.adapter;
 
 
 import javax.swing.JButton;
@@ -25,7 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.text.JTextComponent;
 
-import org.eclipse.jubula.rc.common.tester.adapter.factory.IUIAdapterFactory;
+import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
 import org.eclipse.jubula.rc.swing.swing.tester.adapter.AbstractButtonAdapter;
 import org.eclipse.jubula.rc.swing.swing.tester.adapter.JComboBoxAdapter;
@@ -48,7 +48,7 @@ import org.eclipse.jubula.rc.swing.swing.tester.adapter.JTreeAdapter;
  * @author BREDEX GmbH
  *
  */
-public class SwingAdapterFactory implements IUIAdapterFactory {
+public class SwingAdapterFactory implements IAdapterFactory {
     /**
      * 
      */
@@ -69,11 +69,10 @@ public class SwingAdapterFactory implements IUIAdapterFactory {
     /**
      * {@inheritDoc}
      */
-    public IComponentAdapter getAdapter(Object objectToAdapt) {
+    public Object getAdapter(Class targetedClass, Object objectToAdapt) {
         IComponentAdapter returnvalue = null;
         if (objectToAdapt instanceof JButton) {
             returnvalue = new AbstractButtonAdapter(objectToAdapt);
-            
         } else if (objectToAdapt instanceof JRadioButton) {
             returnvalue = new AbstractButtonAdapter(objectToAdapt);
         } else if (objectToAdapt instanceof JCheckBox) {

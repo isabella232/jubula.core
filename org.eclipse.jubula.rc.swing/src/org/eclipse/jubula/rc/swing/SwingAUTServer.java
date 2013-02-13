@@ -19,18 +19,15 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.rc.common.AbstractAdapterBasedRemoteController;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
-import org.eclipse.jubula.rc.common.tester.adapter.factory.IUIAdapterFactory;
 import org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swing.listener.CheckListener;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swing.listener.FocusTracker;
 import org.eclipse.jubula.rc.swing.listener.MappingListener;
 import org.eclipse.jubula.rc.swing.listener.RecordListener;
-import org.eclipse.jubula.rc.swing.swing.tester.adapter.factory.SwingAdapterFactory;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.slf4j.Logger;
@@ -64,7 +61,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 26.07.2004
  */
-public class SwingAUTServer extends AbstractAdapterBasedRemoteController {
+public class SwingAUTServer extends AUTServer {
     
     /** the logger */
     private static final Logger LOG = 
@@ -224,12 +221,6 @@ public class SwingAUTServer extends AbstractAdapterBasedRemoteController {
         AUTServer.getInstance().invokeAUT();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public IUIAdapterFactory getToolkitFactory() {
-        return new SwingAdapterFactory();
-    }
 
     /**
      * {@inheritDoc}

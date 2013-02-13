@@ -8,9 +8,9 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation 
  *******************************************************************************/
-package org.eclipse.jubula.rc.swt.tester.adapter.factory;
+package org.eclipse.jubula.rc.common.adapter;
 
-import org.eclipse.jubula.rc.common.tester.adapter.factory.IUIAdapterFactory;
+import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.ButtonAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.CComboAdapter;
@@ -47,7 +47,7 @@ import org.eclipse.swt.widgets.Tree;
  * 
  * @author BREDEX GmbH
  */
-public class SWTAdapterFactory implements IUIAdapterFactory {
+public class SWTAdapterFactory implements IAdapterFactory {
     /** */
     private static final Class[] SUPPORTEDCLASSES = 
             new Class[]{Button.class, Menu.class, MenuItem.class, Tree.class,
@@ -66,7 +66,7 @@ public class SWTAdapterFactory implements IUIAdapterFactory {
     /**
      * {@inheritDoc}
      */
-    public IComponentAdapter getAdapter(Object objectToAdapt) {
+    public Object getAdapter(Class targetedObject, Object objectToAdapt) {
         IComponentAdapter returnvalue = null;
         if (objectToAdapt instanceof Button) {
             returnvalue = new ButtonAdapter(objectToAdapt);

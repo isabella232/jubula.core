@@ -12,11 +12,11 @@ package org.eclipse.jubula.rc.common.tester;
 
 
 import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.implclasses.IBaseImplementationClass;
-import org.eclipse.jubula.rc.common.tester.adapter.factory.GUIAdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 /**
@@ -70,11 +70,10 @@ public abstract class AbstractUITester implements IBaseImplementationClass {
      * {@inheritDoc}
      */
     public void setComponent(Object graphicsComponent) {
-        GUIAdapterFactoryRegistry afr = GUIAdapterFactoryRegistry.getInstance();
+        AdapterFactoryRegistry afr =  AdapterFactoryRegistry.getInstance();
         m_component = null;
-        IComponentAdapter adapter = 
-                (IComponentAdapter)afr.getAdapter(graphicsComponent);
-        m_component = adapter;
+        m_component = (IComponentAdapter) afr.getAdapter(
+                graphicsComponent.getClass(), graphicsComponent);
     }
     /**
      * Getter for the stored GraphicalComponent

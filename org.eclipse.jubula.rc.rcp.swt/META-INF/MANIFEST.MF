@@ -18,5 +18,4 @@ Export-Package: org.eclipse.jubula.rc.swt,
  org.eclipse.jubula.rc.swt.driver,
  org.eclipse.jubula.rc.swt.implclasses,
  org.eclipse.jubula.rc.swt.listener,
- org.eclipse.jubula.rc.swt.tester.adapter.factory,
  org.eclipse.jubula.rc.rcp.swt.aut

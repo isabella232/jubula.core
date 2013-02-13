@@ -17,12 +17,11 @@ import java.util.Properties;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.rc.common.tester.adapter.factory.GUIAdapterFactoryRegistry;
+import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.rcp.e3.gef.inspector.GefInspectorListenerAppender;
 import org.eclipse.jubula.rc.rcp.e3.gef.listener.GefPartListener;
 import org.eclipse.jubula.rc.rcp.swt.aut.RcpSwtComponentNamer;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
-import org.eclipse.jubula.rc.swt.tester.adapter.factory.SWTAdapterFactory;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
@@ -269,8 +268,7 @@ public abstract class E3Startup implements IStartup {
 
             });
             // Registering the AdapterFactory for SWT at the registry
-            GUIAdapterFactoryRegistry.getInstance()
-                .registerFactory(new SWTAdapterFactory());
+            AdapterFactoryRegistry.initRegistration();
             // add listener to AUT
             AUTServer.getInstance().addToolKitEventListenerToAUT();
 

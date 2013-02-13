@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.common.adaptable;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,6 +21,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,8 +119,13 @@ public class AdapterFactoryRegistry {
      *         handle the objectToAdapt
      */
     public Object getAdapter(Class targetAdapterClass, Object objectToAdapt) {
-        Collection registeredFactories = (Collection) m_registrationMap
-                .get(targetAdapterClass);
+        Collection registeredFactories = null;
+        Class superClass = targetAdapterClass;
+        while (registeredFactories == null && superClass != Object.class) {
+            registeredFactories = (Collection) m_registrationMap
+                    .get(superClass);
+            superClass = superClass.getSuperclass();
+        }
         if (registeredFactories == null) {
             return null;
         }
@@ -219,13 +227,18 @@ public class AdapterFactoryRegistry {
         String path = packageName.replace('.', '/');
         Enumeration resources = classLoader.getResources(path);
         List dirs = new ArrayList();
+
         while (resources.hasMoreElements()) {
             URL resource = (URL) resources.nextElement();
-            dirs.add(new File(resource.getFile()));
+            dirs.add(resource);
         }
         List classes = new ArrayList();
         for (int i = 0; i < dirs.size(); i++) {
-            classes.addAll(findClasses((File) dirs.get(i), packageName));
+            if (dirs.get(i).toString().startsWith("jar:")) { //$NON-NLS-1$
+                classes.addAll(findClassesInJar((URL)dirs.get(i), packageName));
+            } else {
+                classes.addAll(findClasses((URL) dirs.get(i), packageName));
+            }
         }
         return castListToClassArray(classes);
     }
@@ -235,16 +248,17 @@ public class AdapterFactoryRegistry {
      * Recursive method used to find all classes in a given directory and
      * subdirectories.
      * 
-     * @param directory
+     * @param directoryUrl
      *            The base directory
      * @param packageName
      *            The package name for classes found inside the base directory
      * @return The classes
      * @throws ClassNotFoundException
      */
-    private static List findClasses(File directory, String packageName)
+    private static List findClasses(URL directoryUrl, String packageName)
         throws ClassNotFoundException {
         List classes = new ArrayList();
+        File directory = new File(directoryUrl.getFile());
         if (!directory.exists()) {
             return classes;
         }
@@ -253,8 +267,12 @@ public class AdapterFactoryRegistry {
             File file = files[i];
             String fileName = file.getName();
             if (file.isDirectory()) {
-                classes.addAll(findClasses(file, packageName + '.'
-                        + fileName));
+                try {
+                    classes.addAll(findClasses(file.toURI().toURL(),
+                            packageName + '.' + fileName));
+                } catch (MalformedURLException e) {
+                    log.error(e.getLocalizedMessage(), e);
+                }
             } else if (fileName.endsWith(".class")) { //$NON-NLS-1$
                 classes.add(Class.forName(packageName + '.'
                         + fileName.substring(0, fileName.length() - 6)));
@@ -263,4 +281,46 @@ public class AdapterFactoryRegistry {
         return classes;
     }
 
+    /**
+     * method to find all classes in a given jar
+     * 
+     * @param resource
+     *            The url to the jar file
+     * @param pkgname
+     *            The package name for classes found inside the base directory
+     * @return The classes
+     */
+    private static List findClassesInJar(URL resource, String pkgname) {
+        String relPath = pkgname.replace('.', '/');
+        String path = resource.getPath()
+                .replaceFirst("[.]jar[!].*", ".jar") //$NON-NLS-1$ //$NON-NLS-2$
+                .replaceFirst("file:", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        List classes = new ArrayList();
+        try {            
+            JarFile jarFile = new JarFile(path);        
+            Enumeration entries = jarFile.entries();
+            while (entries.hasMoreElements()) {
+                JarEntry entry = (JarEntry) entries.nextElement();
+                String entryName = entry.getName();
+                String className = null;
+                if (entryName.endsWith(".class")  //$NON-NLS-1$
+                        && entryName.startsWith(relPath)) {
+                    className = entryName.replace('/', '.').replace('\\', '.')
+                            .replaceAll(".class", ""); //$NON-NLS-1$ //$NON-NLS-2$
+                
+                    if (className != null) {
+                        try {
+                            classes.add(Class.forName(className));
+                        } catch (ClassNotFoundException cnfe) {
+                            log.error(cnfe.getLocalizedMessage(), cnfe);
+                        }
+                    }
+                }
+            }
+        } catch (IOException ioe) {            
+            log.warn(ioe.getLocalizedMessage(), ioe);
+        }
+        return classes;
+    }
+    
 }

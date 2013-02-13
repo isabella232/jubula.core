@@ -4,9 +4,7 @@ import java.util.Properties;
 
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
-import org.eclipse.jubula.rc.common.tester.adapter.factory.GUIAdapterFactoryRegistry;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
-import org.eclipse.jubula.rc.swt.tester.adapter.factory.SWTAdapterFactory;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.widgets.Display;
@@ -88,9 +86,6 @@ public class SwtRemoteControlService extends SwtAUTServer {
      * Prepare the SwtAUTServer for SWT components.
      */
     private static void prepareRemoteControlService() {
-        // Registering the AdapterFactory for SWT at the registry
-        GUIAdapterFactoryRegistry.getInstance()
-            .registerFactory(new SWTAdapterFactory());
         // add listener to AUT
         AUTServer.getInstance().addToolKitEventListenerToAUT();
     }

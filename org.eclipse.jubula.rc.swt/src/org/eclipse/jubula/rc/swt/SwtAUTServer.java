@@ -12,10 +12,9 @@ package org.eclipse.jubula.rc.swt;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.jubula.rc.common.AbstractAdapterBasedRemoteController;
+import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
-import org.eclipse.jubula.rc.common.tester.adapter.factory.IUIAdapterFactory;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swt.driver.RobotFactorySwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotSwtImpl;
@@ -26,7 +25,6 @@ import org.eclipse.jubula.rc.swt.listener.FocusTracker;
 import org.eclipse.jubula.rc.swt.listener.MappingListener;
 import org.eclipse.jubula.rc.swt.listener.RecordListener;
 import org.eclipse.jubula.rc.swt.listener.TableSelectionTracker;
-import org.eclipse.jubula.rc.swt.tester.adapter.factory.SWTAdapterFactory;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
@@ -58,7 +56,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 20.04.2006
  */
-public class SwtAUTServer extends AbstractAdapterBasedRemoteController {
+public class SwtAUTServer extends AUTServer {
     
     /** the logger */
     private static final Logger LOG = 
@@ -222,14 +220,7 @@ public class SwtAUTServer extends AbstractAdapterBasedRemoteController {
             getCommunicator().close();
         }
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public IUIAdapterFactory getToolkitFactory() {
-        return new SWTAdapterFactory();
-    }
-    
+        
     /**
      * {@inheritDoc}
      */
