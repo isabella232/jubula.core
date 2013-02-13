@@ -221,9 +221,10 @@ public class JListImplClass extends AbstractSwingImplClass
      * @param extendSelection Whether this selection extends a previous 
      *                        selection.
      * @param button what mouse button should be used
+     * @param clickCount clickCount
      */
     public void gdSelectIndex(String indexList, final String extendSelection,
-            int button) {
+            int button, int clickCount) {
         final boolean isExtendSelection = extendSelection
                 .equals(CompSystemConstants.EXTEND_SELECTION_YES);
         selectIndices(IndexConverter
@@ -243,9 +244,11 @@ public class JListImplClass extends AbstractSwingImplClass
      *                          element will be selected with CONTROL as a 
      *                          modifier.
      * @param button what mouse button should be used
+     * @param clickCount clickCount
      */
     public void gdSelectValue(String valueList, String operator,
-        final String searchType, final String isExtendSelection, int button) {
+        final String searchType, final String isExtendSelection, int button, 
+        int clickCount) {
         selectValue(valueList, String.valueOf(VALUE_SEPARATOR), operator,
                 searchType, ClickOptions.create().setClickCount(1)
                         .setMouseButton(button), isExtendSelection);

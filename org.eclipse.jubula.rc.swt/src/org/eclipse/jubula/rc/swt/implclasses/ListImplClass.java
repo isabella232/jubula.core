@@ -223,9 +223,10 @@ public class ListImplClass extends AbstractControlImplClass
      * @param extendSelection Whether this selection extends a previous 
      *                        selection.
      * @param button what mouse button should be used
+     * @param clickCount clickCount
      */
     public void gdSelectIndex(String indexList, final String extendSelection,
-            int button) {
+            int button, int clickCount) {
         final boolean isExtendSelection = 
             extendSelection.equals(CompSystemConstants.EXTEND_SELECTION_YES);
         selectIndices(IndexConverter.toImplementationIndices(parseIndices(
@@ -244,9 +245,11 @@ public class ListImplClass extends AbstractControlImplClass
      * @param extendSelection Whether this selection extends a previous 
      *                        selection.
      * @param button what mouse button should be used
+     * @param clickCount clickCount
      */
     public void gdSelectValue(String valueList, String operator, 
-            String searchType, final String extendSelection, int button) {
+            String searchType, final String extendSelection, int button, 
+            int clickCount) {
         final boolean isExtendSelection = 
             extendSelection.equals(CompSystemConstants.EXTEND_SELECTION_YES);
         selectValue(valueList, String.valueOf(VALUE_SEPARATOR), operator, 
