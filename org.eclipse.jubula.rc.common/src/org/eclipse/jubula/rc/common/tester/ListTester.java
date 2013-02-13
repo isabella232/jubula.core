@@ -147,14 +147,15 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param extendSelection Whether this selection extends a previous 
      *                        selection.
      * @param button what mouse button should be used
+     * @param clickCount the click count
      */
     public void gdSelectIndex(String indexList, final String extendSelection,
-            int button) {
+            int button, int clickCount) {
         final boolean isExtendSelection = extendSelection
                 .equals(CompSystemConstants.EXTEND_SELECTION_YES);
         selectIndices(IndexConverter
                 .toImplementationIndices(parseIndices(indexList)), ClickOptions
-                .create().setClickCount(1).setMouseButton(button),
+                .create().setClickCount(clickCount).setMouseButton(button),
                 isExtendSelection);
     }
     
@@ -169,40 +170,21 @@ public class ListTester extends AbstractTextVerifiableTester {
      *                          element will be selected with CONTROL as a 
      *                          modifier.
      * @param button what mouse button should be used
+     * @param clickCount the click count
      */
     public void gdSelectValue(String valueList, String operator, 
-            String searchType, final String extendSelection, int button) {
+            String searchType, final String extendSelection, int button,
+            int clickCount) {
         final boolean isExtendSelection = 
             extendSelection.equals(CompSystemConstants.EXTEND_SELECTION_YES);
         selectValue(valueList, String.valueOf(VALUE_SEPARATOR), operator, 
             searchType, ClickOptions.create()
-                .setClickCount(1)
+                .setClickCount(clickCount)
                 .setMouseButton(button), isExtendSelection); 
     }
     
     /**
-     * Selects the passed value or enumeration of values. By default, the
-     * enumeration separator is <code>,</code>, but may be changed by
-     * <code>separator</code>.
-     * @param valueList The value or list of values to select
-     * @param separator The separator, optional
-     * @param operator If regular expressions are used
-     * @param searchType Determines where the search begins ("relative" or "absolute")
-     * @param clickCount the amount of clicks to use
-     * @param extendSelection Whether this selection extends a previous 
-     *                        selection.
-     */
-    public void gdSelectValue(String valueList, String separator,
-            String operator, final String searchType, int clickCount, 
-            final String extendSelection) {
-        final boolean isExtendSelection = 
-            extendSelection.equals(CompSystemConstants.EXTEND_SELECTION_YES);
-        selectValue(valueList, separator, operator, searchType, ClickOptions
-                .create().setClickCount(clickCount), isExtendSelection);
-    }
-    
-    /**
-     * Verifies if the list contains an element that renderes <code>value</code>.
+     * Verifies if the list contains an element that renders <code>value</code>.
      * @param value The text to verify
      */
     public void gdVerifyContainsValue(String value) {
@@ -210,7 +192,7 @@ public class ListTester extends AbstractTextVerifiableTester {
     }
 
     /**
-     * Verifies if the list contains an element that renderes <code>value</code>.
+     * Verifies if the list contains an element that renders <code>value</code>.
      * @param value The text to verify
      * @param operator The operator used to verify
      * @param exists if the wanted value should exist or not.

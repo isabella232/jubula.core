@@ -758,7 +758,7 @@
                 </valueSet>
             </param>
 		</action>
-		<action name="CompSystem.SelectIndices" changed="1.3">
+		<action name="CompSystem.SelectIndices" changed="1.4">
 			<method>gdSelectIndex</method>
 			<param name="CompSystem.Index">
 				<type>java.lang.String</type>
@@ -779,9 +779,9 @@
 					<element name="CompSystem.MouseButtonMiddle" value="2"/>
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
-			</param>
+			</param>			<param name="CompSystem.ClickCount">				<type>java.lang.Integer</type>				<defaultValue>1</defaultValue>			</param>
 		</action>
-		<action name="CompSystem.SelectValues" changed="1.20">
+		<action name="CompSystem.SelectValues" changed="1.4">
 			<method>gdSelectValue</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
@@ -820,7 +820,7 @@
 					<element name="CompSystem.MouseButtonMiddle" value="2"/>
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
-			</param>
+			</param>			<param name="CompSystem.ClickCount">				<type>java.lang.Integer</type>				<defaultValue>1</defaultValue>			</param>
 		</action>
 		<action name="CompSystem.DragByValue" changed="4.2">
 			<method>gdDragValue</method>
