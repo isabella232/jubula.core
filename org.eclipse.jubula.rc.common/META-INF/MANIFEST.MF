@@ -19,7 +19,6 @@ Export-Package: org.eclipse.jubula.rc.common,
  org.eclipse.jubula.rc.common.logger,
  org.eclipse.jubula.rc.common.registration,
  org.eclipse.jubula.rc.common.tester,
- org.eclipse.jubula.rc.common.tester.adapter.factory,
  org.eclipse.jubula.rc.common.tester.adapter.interfaces,
  org.eclipse.jubula.rc.common.util
 Require-Bundle: org.apache.commons.beanutils;bundle-version="[1.7.0,2.0.0)",
