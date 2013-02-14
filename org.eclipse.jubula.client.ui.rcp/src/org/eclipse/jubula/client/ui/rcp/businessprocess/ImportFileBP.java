@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.archive.errorhandling.IProjectNameConflictResol
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
+import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.progress.AbstractRunnableWithProgress;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
@@ -129,6 +130,7 @@ public class ImportFileBP implements IProjectNameConflictResolver,
                                 elements, fileURLs, 
                                 monitor, Plugin.getDefault(), openProject));
                             Persistor.instance().updateDbStatistics();
+                            ProjectPM.clearCaches();
                         } catch (PMException pme) {
                             PMExceptionHandler
                                 .handlePMExceptionForMasterSession(pme);

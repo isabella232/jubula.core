@@ -37,6 +37,8 @@ import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -63,7 +65,8 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 15.07.2005
  */
-public class ProjectPM extends PersistenceManager {
+public class ProjectPM extends PersistenceManager 
+    implements IProjectLoadedListener {
 
     /** 
      * number of add/insert-related Persistence event types with 
@@ -86,9 +89,31 @@ public class ProjectPM extends PersistenceManager {
      * constructor must be hidden for class utilities (per CheckStyle)
      */
     private ProjectPM() {
-    // nothing
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addProjectLoadedListener(this, true);
     }
 
+    // provide a base for cache clearing when projects are loaded
+    static {
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ProjectPM anchor = new ProjectPM();
+        ded.addProjectLoadedListener(anchor, true);      
+    }
+    
+    /**
+     * @see IProjectLoadedListener#handleProjectLoaded()
+     */
+    public void handleProjectLoaded() {
+        clearCaches();        
+    }
+    
+    /**
+     * drop all cached data
+     */
+    public static void clearCaches() {
+        rpCache.clear();
+        guidCache.clear();
+    }
     /**
      * @return list with all available projects from database the project
      *         instances are detached from their session
@@ -545,7 +570,7 @@ public class ProjectPM extends PersistenceManager {
     public static final List<IReusedProjectPO> loadReusedProjectsRO(
             Long projectId) throws JBException {
         final List<IReusedProjectPO> cachedList = rpCache.get(projectId);
-        if (cachedList != null) {
+        if (cachedList != null && !cachedList.isEmpty()) {
             return cachedList;
         }
         EntityManager session = GeneralStorage.getInstance().getMasterSession();
