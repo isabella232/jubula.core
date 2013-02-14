@@ -26,6 +26,7 @@ import org.eclipse.jubula.rc.swt.tester.adapter.TabFolderAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TableAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TextComponentAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TreeAdapter;
+import org.eclipse.jubula.rc.swt.tester.adapter.WidgetAdapter;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.CTabFolder;
@@ -33,9 +34,13 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Scale;
+import org.eclipse.swt.widgets.Slider;
+import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
@@ -96,6 +101,14 @@ public class SWTAdapterFactory implements IAdapterFactory {
             returnvalue = new TabFolderAdapter(objectToAdapt);
         } else if (objectToAdapt instanceof CTabFolder) {
             returnvalue = new CTabFolderAdapter(objectToAdapt);
+        } else if (objectToAdapt instanceof Link) {
+            returnvalue = new WidgetAdapter(objectToAdapt);
+        } else if (objectToAdapt instanceof Spinner) {
+            returnvalue = new WidgetAdapter(objectToAdapt);
+        } else if (objectToAdapt instanceof Slider) {
+            returnvalue = new WidgetAdapter(objectToAdapt);
+        } else if (objectToAdapt instanceof Scale) {
+            returnvalue = new WidgetAdapter(objectToAdapt);
         }
         
         return returnvalue;

@@ -51,7 +51,7 @@ import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.NameValidator;
-import org.eclipse.jubula.rc.swing.swing.implclasses.AbstractSwingImplClass;
+import org.eclipse.jubula.rc.swing.swing.tester.util.TesterUtil;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.MappingConstants;
@@ -662,7 +662,7 @@ public class RecordHelper {
      */
     private String getRenderedText(Component renderer)
         throws StepExecutionException {
-        return AbstractSwingImplClass.getRenderedText(renderer);
+        return TesterUtil.getRenderedText(renderer);
     }
         
     /**

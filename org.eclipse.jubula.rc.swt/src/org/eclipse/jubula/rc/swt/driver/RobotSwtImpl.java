@@ -47,7 +47,7 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.LocalScreenshotUtil;
 import org.eclipse.jubula.rc.common.util.WorkaroundUtil;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
-import org.eclipse.jubula.rc.swt.implclasses.SwtApplicationImplClass;
+import org.eclipse.jubula.rc.swt.tester.SwtApplicationTester;
 import org.eclipse.jubula.rc.swt.utils.SwtKeyCodeConverter;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
@@ -744,7 +744,7 @@ public class RobotSwtImpl implements IRobot {
         // Workaround for issue 342718
         if (EnvironmentUtils.isMacOS()
                 && Character.toLowerCase(character) == WorkaroundUtil.CHAR_B) {
-            SwtApplicationImplClass impClass = new SwtApplicationImplClass();
+            SwtApplicationTester impClass = new SwtApplicationTester();
             impClass.gdNativeInputText(String.valueOf(character));
             return;
         }

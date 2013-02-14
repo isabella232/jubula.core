@@ -29,8 +29,8 @@ import org.eclipse.jubula.rc.common.tester.AbstractMenuTester;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuAdapter;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
-import org.eclipse.jubula.rc.swing.swing.implclasses.WindowHelper;
 import org.eclipse.jubula.rc.swing.swing.tester.adapter.JMenuItemAdapter;
+import org.eclipse.jubula.rc.swing.swing.tester.util.WindowHelper;
 
 /**
  * Toolkit specific commands for the <code>JMenuBar</code>.

@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.swt.implclasses;
+package org.eclipse.jubula.rc.swt.tester.tree;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;

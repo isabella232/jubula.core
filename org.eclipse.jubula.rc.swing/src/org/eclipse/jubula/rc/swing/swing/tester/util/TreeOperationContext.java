@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.swing.swing.implclasses;
+package org.eclipse.jubula.rc.swing.swing.tester.util;
 
 import java.awt.Component;
 import java.awt.Rectangle;
@@ -151,8 +151,8 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                                 .getTreeCellRendererComponent(tree, node,
                                         false, tree.isExpanded(row),
                                         m_model.isLeaf(node), row, false);
-                        return AbstractSwingImplClass
-                                .resolveRenderedText(cellRendererComponent);
+                        return TesterUtil
+                                .getRenderedText(cellRendererComponent);
                     }
                 });
     }

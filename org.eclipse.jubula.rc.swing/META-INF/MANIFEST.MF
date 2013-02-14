@@ -21,6 +21,6 @@ Export-Package: com.bredexsw.guidancer.autserver.swing.implclasses,
  org.eclipse.jubula.rc.swing.listener,
  org.eclipse.jubula.rc.swing.swing,
  org.eclipse.jubula.rc.swing.swing.driver,
- org.eclipse.jubula.rc.swing.swing.implclasses,
+ org.eclipse.jubula.rc.swing.swing.tester,
  org.eclipse.jubula.rc.swing.swing.interfaces,
  org.eclipse.jubula.rc.swing.utils

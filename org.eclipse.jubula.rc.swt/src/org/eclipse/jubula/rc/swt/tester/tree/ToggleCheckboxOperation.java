@@ -8,12 +8,11 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.swt.implclasses.tree;
+package org.eclipse.jubula.rc.swt.tester.tree;
 
 
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeOperation;
-import org.eclipse.jubula.rc.swt.implclasses.TreeOperationContext;
 
 
 /**
@@ -22,12 +21,7 @@ import org.eclipse.jubula.rc.swt.implclasses.TreeOperationContext;
  * @author BREDEX GmbH
  * @created 16.03.2005
  */
-public class VerifyCheckboxOperation extends AbstractTreeNodeOperation {
-    /**
-     * selection state of node chackbox
-     */
-    private boolean m_checked = true;
-    
+public class ToggleCheckboxOperation extends AbstractTreeNodeOperation {    
     /**
      * The tree operation context.
      */
@@ -35,12 +29,9 @@ public class VerifyCheckboxOperation extends AbstractTreeNodeOperation {
     
     /**
      * Constructor
-     * @param checked boolean
      * @param context TreeOperationContext
      */
-    public VerifyCheckboxOperation(boolean checked,
-            TreeOperationContext context) {
-        m_checked = checked;
+    public ToggleCheckboxOperation(TreeOperationContext context) {
         m_context = context;
     } 
     
@@ -56,7 +47,7 @@ public class VerifyCheckboxOperation extends AbstractTreeNodeOperation {
      * been selected (invalid node).
      */
     public boolean operate(final Object node) throws StepExecutionException {
-        m_context.verifyCheckboxSelection(node, m_checked);
+        m_context.toggleNodeCheckbox(node);
         return true;
     }
 }

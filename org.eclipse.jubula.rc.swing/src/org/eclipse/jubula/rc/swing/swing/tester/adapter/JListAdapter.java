@@ -22,8 +22,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListAdapter;
-import org.eclipse.jubula.rc.swing.swing.implclasses.JComboBoxImplClass;
-import org.eclipse.jubula.rc.swing.swing.tester.TesterUtil;
+import org.eclipse.jubula.rc.swing.swing.tester.util.TesterUtil;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 /**
@@ -110,7 +109,7 @@ public class JListAdapter extends WidgetAdapter implements IListAdapter {
             r.setSize(preferredSize);
         }
         
-        if (maxWidth != JComboBoxImplClass.NO_MAX_WIDTH
+        if (maxWidth != JComboBoxAdapter.NO_MAX_WIDTH
                 && r.getWidth() > maxWidth) {
             Dimension d = new Dimension();
             d.setSize(maxWidth, r.getHeight());
@@ -167,7 +166,7 @@ public class JListAdapter extends WidgetAdapter implements IListAdapter {
      * @param co the click options to use
      */
     public void clickOnIndex(final Integer i, ClickOptions co) {
-        clickOnIndex(i, co, JComboBoxImplClass.NO_MAX_WIDTH);
+        clickOnIndex(i, co, JComboBoxAdapter.NO_MAX_WIDTH);
     }
 
     /**

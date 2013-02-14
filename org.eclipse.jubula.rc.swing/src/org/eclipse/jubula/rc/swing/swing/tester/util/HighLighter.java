@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.swing.swing.implclasses;
+package org.eclipse.jubula.rc.swing.swing.tester.util;
 
 import java.awt.Color;
 import java.awt.Component;

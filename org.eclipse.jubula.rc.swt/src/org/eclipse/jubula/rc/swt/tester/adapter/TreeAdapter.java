@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.swt.tester.adapter;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeAdapter;
-import org.eclipse.jubula.rc.swt.implclasses.TreeOperationContext;
+import org.eclipse.jubula.rc.swt.tester.tree.TreeOperationContext;
 import org.eclipse.swt.widgets.Tree;
 /**
  * Implements the Tree interface for adapting a <code>SWT.Tree</code>

@@ -25,10 +25,10 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IWidgetAdapter;
 import org.eclipse.jubula.rc.swt.driver.KeyCodeConverter;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
-import org.eclipse.jubula.rc.swt.implclasses.EventListener;
-import org.eclipse.jubula.rc.swt.implclasses.SimulatedTooltip;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.tester.MenuTester;
+import org.eclipse.jubula.rc.swt.tester.util.EventListener;
+import org.eclipse.jubula.rc.swt.tester.util.SimulatedTooltip;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -46,7 +46,7 @@ import org.eclipse.swt.widgets.Widget;
  * 
  *  @author BREDEX GmbH
  */
-public abstract class WidgetAdapter extends AbstractComponentAdapter
+public class WidgetAdapter extends AbstractComponentAdapter
     implements IWidgetAdapter {
     
     /** constants for communication */
@@ -97,7 +97,7 @@ public abstract class WidgetAdapter extends AbstractComponentAdapter
      * 
      * @param objectToAdapt 
      */
-    protected WidgetAdapter(Object objectToAdapt) {
+    public WidgetAdapter(Object objectToAdapt) {
         m_component = (Control) objectToAdapt;
     }
     

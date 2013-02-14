@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation 
  *******************************************************************************/
-package org.eclipse.jubula.rc.swing.swing.tester;
+package org.eclipse.jubula.rc.swing.swing.tester.util;
 
 import java.awt.AWTEvent;
 import java.awt.Color;
@@ -37,8 +37,6 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swing.swing.driver.KeyCodeConverter;
-import org.eclipse.jubula.rc.swing.swing.implclasses.EventListener;
-import org.eclipse.jubula.rc.swing.swing.implclasses.HighLighter;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 

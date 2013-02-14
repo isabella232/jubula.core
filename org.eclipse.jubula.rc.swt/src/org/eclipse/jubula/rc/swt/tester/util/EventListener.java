@@ -8,21 +8,18 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.swing.swing.implclasses;
-
-import java.awt.AWTEvent;
-import java.awt.event.AWTEventListener;
+package org.eclipse.jubula.rc.swt.tester.util;
 
 import org.eclipse.jubula.rc.common.listener.EventLock;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 
 /**
- * This Listener waits for a condition in the AWT event queue. If this
- * happens it calls notifyAll on the lock object.
- *
  * @author BREDEX GmbH
- * @created 18.01.2006
+ * @created 08.05.2007
  */
-public class EventListener implements AWTEventListener {
+public class EventListener implements Listener {
+
     /**
      * Object that checks if a condition about an event is true or false
      */
@@ -35,7 +32,7 @@ public class EventListener implements AWTEventListener {
          * @return
          *          true or false
          */
-        public boolean isTrue(AWTEvent event);
+        public boolean isTrue(Event event);
     }
 
     /**
@@ -46,6 +43,7 @@ public class EventListener implements AWTEventListener {
      * This condition defines about which events the caller gets informed.
      */
     private final Condition m_condition;
+    
     /**
      * constructor
      * 
@@ -62,7 +60,7 @@ public class EventListener implements AWTEventListener {
     /**
      * {@inheritDoc}
      */
-    public void eventDispatched(AWTEvent event) {
+    public void handleEvent(Event event) {
         synchronized (m_lock) {
             try {
                 if (m_condition.isTrue(event)) {
@@ -75,4 +73,5 @@ public class EventListener implements AWTEventListener {
             }
         }
     }
+
 }

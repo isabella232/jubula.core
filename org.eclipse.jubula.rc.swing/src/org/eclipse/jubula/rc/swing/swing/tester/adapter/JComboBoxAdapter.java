@@ -30,9 +30,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboBoxAdapter;
-import org.eclipse.jubula.rc.swing.swing.implclasses.JComboBoxHelper;
-import org.eclipse.jubula.rc.swing.swing.implclasses.JComboBoxImplClass;
-import org.eclipse.jubula.rc.swing.swing.tester.TesterUtil;
+import org.eclipse.jubula.rc.swing.swing.tester.util.TesterUtil;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 /**
@@ -124,7 +122,7 @@ public class JComboBoxAdapter extends WidgetAdapter implements
     public int getSelectedIndex() {
         Integer actual = (Integer)getEventThreadQueuer()
                 .invokeAndWait(
-                    JComboBoxImplClass.class.getName() + ".getSelectedIndex", //$NON-NLS-1$
+                    JComboBoxAdapter.class.getName() + ".getSelectedIndex", //$NON-NLS-1$
                     new IRunnable() {
                         public Object run() {
                             return new Integer(m_comboBox.getSelectedIndex());
@@ -294,7 +292,7 @@ public class JComboBoxAdapter extends WidgetAdapter implements
      */
     private boolean isPopupVisible() {
         Boolean visible = (Boolean)getEventThreadQueuer().invokeAndWait(
-            JComboBoxHelper.class.getName()
+            JComboBoxAdapter.class.getName()
             + "isPopupVisible", new IRunnable() { //$NON-NLS-1$
                 public Object run() throws StepExecutionException {
                     return m_comboBox.isPopupVisible()
