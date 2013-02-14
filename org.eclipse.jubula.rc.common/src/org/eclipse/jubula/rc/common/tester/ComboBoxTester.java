@@ -43,7 +43,7 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      * Verifies the editable property. 
      * @param editable The editable property to verify.
      */
-    public void gdVerifyEditable(boolean editable) {
+    public void rcVerifyEditable(boolean editable) {
         Verifier.equals(editable, getCBAdapter().isEditable());
     }
     
@@ -51,7 +51,7 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      * Checks if the component contains the specified text.
      * @param text check if this text is in the combobox
      */
-    public void gdVerifyContainsValue(final String text) {
+    public void rcVerifyContainsValue(final String text) {
         Verifier.equals(true, containsValue(text, MatchUtil.EQUALS));
     }
     
@@ -61,7 +61,7 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      * @param operator The operator used to verify
      * @param exists If the value should exist or not.
      */
-    public void gdVerifyContainsValue(String value, String operator, 
+    public void rcVerifyContainsValue(String value, String operator, 
             boolean exists) {        
         final boolean contains = containsValue(value, operator);
         Verifier.equals(exists, contains);
@@ -99,14 +99,14 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
     /**
      * {@inheritDoc}
      */
-    public void gdInputText(String text) {        
+    public void rcInputText(String text) {        
         getCBAdapter().input(text, false);
     }
    
     /**
      * {@inheritDoc}
      */
-    public void gdReplaceText(String text) throws StepExecutionException {
+    public void rcReplaceText(String text) throws StepExecutionException {
         getCBAdapter().input(text, true);
     }
     
@@ -116,7 +116,7 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      * @param index
      *            The index to select
      */
-    public void gdSelectIndex(String index) {
+    public void rcSelectIndex(String index) {
         int implIdx = IndexConverter.toImplementationIndex(
                 IndexConverter.intValue(index)); 
         getCBAdapter().select(implIdx);
@@ -133,7 +133,7 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      * @param searchType
      *            Determines where the search begins ("relative" or "absolute")
      */
-    public void gdSelectValue(String value, String operator,
+    public void rcSelectValue(String value, String operator,
             final String searchType) {
         String[] comboValues = getCBAdapter().getValues();
         Validate.notNull(value, "text must not be null"); //$NON-NLS-1$
@@ -162,7 +162,7 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      * @param index The index to verify
      * @param isSelected If the index should be selected or not.
      */
-    public void gdVerifySelectedIndex(String index, boolean isSelected) {
+    public void rcVerifySelectedIndex(String index, boolean isSelected) {
         int implIdx = IndexConverter.toImplementationIndex(
                 IndexConverter.intValue(index));
         int actual = getCBAdapter().getSelectedIndex();
@@ -173,8 +173,8 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      * Verifies if the passed text is currently selected in the combobox.
      * @param text The text to verify.
      */
-    public void gdVerifyText(String text) {
-        gdVerifyText(text, MatchUtil.DEFAULT_OPERATOR);
+    public void rcVerifyText(String text) {
+        rcVerifyText(text, MatchUtil.DEFAULT_OPERATOR);
     }
     
     /**

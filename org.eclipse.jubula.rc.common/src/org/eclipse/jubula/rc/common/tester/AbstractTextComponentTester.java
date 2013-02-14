@@ -68,8 +68,8 @@ public class AbstractTextComponentTester
      *
      * @param text the text to type in
      */
-    public void gdReplaceText(String text) {
-        gdSelect();
+    public void rcReplaceText(String text) {
+        rcSelect();
         if (StringUtils.EMPTY.equals(text)) {
             getRobot().keyStroke(
                     CompSystemConstants.KEY_STROKE_DELETE);
@@ -82,10 +82,10 @@ public class AbstractTextComponentTester
      *
      * @param text the text to type in
      */
-    public void gdInputText(String text) {
+    public void rcInputText(String text) {
         if (!getTextCompAdapter().hasFocus()) {
             TimeUtil.delay(100);
-            gdClick(1, 1);
+            rcClick(1, 1);
         }
         insertText(text);
     }
@@ -96,8 +96,8 @@ public class AbstractTextComponentTester
      * @param text The text to insert
      * @param index The position for insertion
      */
-    public void gdInsertText(String text, int index) {
-        gdClick(1, 1);
+    public void rcInsertText(String text, int index) {
+        rcClick(1, 1);
         setCaretPosition(index);
         insertText(text);
     }
@@ -112,7 +112,7 @@ public class AbstractTextComponentTester
      *            pattern, otherwise before the pattern.
      * @throws StepExecutionException If the pattern is invalid or cannot be found
      */
-    public void gdInsertText(String text, String pattern, String operator, 
+    public void rcInsertText(String text, String pattern, String operator, 
             boolean after)
         throws StepExecutionException {
         
@@ -133,7 +133,7 @@ public class AbstractTextComponentTester
         int index = matchedText.getPos();
         
         int insertPos = after ? index + matchedText.getStr().length() : index;
-        gdInsertText(text, insertPos);
+        rcInsertText(text, insertPos);
     }
     
 
@@ -141,8 +141,8 @@ public class AbstractTextComponentTester
     /**
      * select the whole text of the textfield by calling "selectAll()".
      */
-    public void gdSelect() {
-        gdClick(1, 1);
+    public void rcSelect() {
+        rcClick(1, 1);
         // Wait a while. Without this, we got no selectAll sometimes!
         TimeUtil.delay(100);
         getTextCompAdapter().selectAll();
@@ -152,7 +152,7 @@ public class AbstractTextComponentTester
      * Verifies the editable property.
      * @param editable The editable property to verify.
      */
-    public void gdVerifyEditable(boolean editable) {
+    public void rcVerifyEditable(boolean editable) {
         Verifier.equals(editable, getTextCompAdapter().isEditable());
     }
         
@@ -165,9 +165,9 @@ public class AbstractTextComponentTester
      * @throws StepExecutionException
      *             If the pattern is invalid or cannot be found
      */
-    public void gdSelect(final String pattern, String operator)
+    public void rcSelect(final String pattern, String operator)
         throws StepExecutionException {
-        gdClick(1, 1);
+        rcClick(1, 1);
         final MatchUtil.FindResult matchedText = MatchUtil.getInstance().
             find(getTextCompAdapter().getText(), pattern, operator);
         if ((matchedText == null) || (matchedText.getStr().length() == 0)) {

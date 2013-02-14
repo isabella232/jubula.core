@@ -79,7 +79,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param index The index to verify
      * @param expectSelected Whether the index should be selected.
      */
-    public void gdVerifySelectedIndex(String index, boolean expectSelected) {
+    public void rcVerifySelectedIndex(String index, boolean expectSelected) {
         int[] selected = getCheckedSelectedIndices();
         int implIndex = IndexConverter.toImplementationIndex(
                 Integer.parseInt(index));
@@ -99,8 +99,8 @@ public class ListTester extends AbstractTextVerifiableTester {
      * default, the enumeration separator is <code>,</code>
      * @param valueList The value or list of values to verify
      */
-    public void gdVerifySelectedValue(String valueList) {
-        gdVerifySelectedValue(valueList, MatchUtil.DEFAULT_OPERATOR, true);
+    public void rcVerifySelectedValue(String valueList) {
+        rcVerifySelectedValue(valueList, MatchUtil.DEFAULT_OPERATOR, true);
     }
     
     /**
@@ -111,7 +111,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      *                 expected and actual values.
      *  @param isSelected if the value should be selected or not.
      */
-    public void gdVerifySelectedValue(String value, String operator,
+    public void rcVerifySelectedValue(String value, String operator,
             boolean isSelected) {
 
         final String[] current = getListAdapter().getSelectedValues();
@@ -128,7 +128,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param text The text to verify
      * @param operator The operator used to verify
      */
-    public void gdVerifyText(String text, String operator) {
+    public void rcVerifyText(String text, String operator) {
         String[] selected = getListAdapter().getSelectedValues();
         final int selCount = selected.length;
         if (selCount < 1) {
@@ -149,7 +149,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param button what mouse button should be used
      * @param clickCount the click count
      */
-    public void gdSelectIndex(String indexList, final String extendSelection,
+    public void rcSelectIndex(String indexList, final String extendSelection,
             int button, int clickCount) {
         final boolean isExtendSelection = extendSelection
                 .equals(CompSystemConstants.EXTEND_SELECTION_YES);
@@ -172,7 +172,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param button what mouse button should be used
      * @param clickCount the click count
      */
-    public void gdSelectValue(String valueList, String operator, 
+    public void rcSelectValue(String valueList, String operator, 
             String searchType, final String extendSelection, int button,
             int clickCount) {
         final boolean isExtendSelection = 
@@ -187,7 +187,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      * Verifies if the list contains an element that renders <code>value</code>.
      * @param value The text to verify
      */
-    public void gdVerifyContainsValue(String value) {
+    public void rcVerifyContainsValue(String value) {
         Verifier.equals(true, containsValue(value));
     }
 
@@ -197,7 +197,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param operator The operator used to verify
      * @param exists if the wanted value should exist or not.
      */
-    public void gdVerifyContainsValue(String value, String operator,
+    public void rcVerifyContainsValue(String value, String operator,
             boolean exists) {
 
         Verifier.equals(exists, containsValue(value, operator));
@@ -209,7 +209,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param variable the name of the variable
      * @return the text value.
      */
-    public String gdReadValue(String variable) {
+    public String rcReadValue(String variable) {
         String[] selected = getListAdapter().getSelectedValues();
         if (selected.length > 0) {
             return selected[0];
@@ -227,7 +227,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param operator If regular expressions are used
      * @param searchType Determines where the search begins ("relative" or "absolute")
      */
-    public void gdDragValue(int mouseButton, String modifier, String value,
+    public void rcDragValue(int mouseButton, String modifier, String value,
             String operator, final String searchType) {
 
         DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
@@ -253,7 +253,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      *                        between moving the mouse to the drop point and
      *                        releasing the mouse button
      */
-    public void gdDropValue(String value, String operator,
+    public void rcDropValue(String value, String operator,
         final String searchType, int delayBeforeDrop) {
 
         DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
@@ -276,7 +276,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param modifier the modifier.
      * @param index The index to drag
      */
-    public void gdDragIndex(final int mouseButton, final String modifier,
+    public void rcDragIndex(final int mouseButton, final String modifier,
             int index) {
 
         DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
@@ -299,7 +299,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      *                        between moving the mouse to the drop point and
      *                        releasing the mouse button
      */
-    public void gdDropIndex(final int index, int delayBeforeDrop) {
+    public void rcDropIndex(final int index, int delayBeforeDrop) {
 
         DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
 

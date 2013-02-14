@@ -121,7 +121,7 @@ public class TabbedPaneTester extends WidgetTester {
      * @throws StepExecutionException
      *             If the tab index is invalid.
      */
-    public void gdSelectTabByIndex(int index)
+    public void rcSelectTabByIndex(int index)
         throws StepExecutionException {
         int implIdx = IndexConverter.toImplementationIndex(index);
 
@@ -138,7 +138,7 @@ public class TabbedPaneTester extends WidgetTester {
      * @throws StepExecutionException
      *             If the tab title is invalid.
      */
-    public void gdSelectTab(final String title, String operator)
+    public void rcSelectTab(final String title, String operator)
         throws StepExecutionException {
 
         selectTabByImplIndex(getIndexOfTab(title, operator));
@@ -153,7 +153,7 @@ public class TabbedPaneTester extends WidgetTester {
      * @throws StepExecutionException
      *             If the tab title is invalid.
      */
-    public void gdVerifyTextOfTabByIndex(final int index, final String text,
+    public void rcVerifyTextOfTabByIndex(final int index, final String text,
             final String operator)
         throws StepExecutionException {        
         final int tabIndex = IndexConverter.toImplementationIndex(index);
@@ -169,7 +169,7 @@ public class TabbedPaneTester extends WidgetTester {
      * @param exists boolean, tab exists
      * @throws StepExecutionException if tab does not exist.
      */
-    public void gdVerifyExistenceOfTab(String tab, String operator,
+    public void rcVerifyExistenceOfTab(String tab, String operator,
             boolean exists)
         throws StepExecutionException {
         final int tabIdx = getTabIndexFromString(tab, operator);
@@ -214,7 +214,7 @@ public class TabbedPaneTester extends WidgetTester {
      * @throws StepExecutionException
      *             If the tab title is invalid.
      */
-    public void gdVerifyEnabled(String title, String operator,
+    public void rcVerifyEnabled(String title, String operator,
         boolean isEnabled)
 
         throws StepExecutionException {
@@ -233,7 +233,7 @@ public class TabbedPaneTester extends WidgetTester {
      * @throws StepExecutionException
      *             If the tab index is invalid.
      */
-    public void gdVerifyEnabledByIndex(int index, boolean enabled)
+    public void rcVerifyEnabledByIndex(int index, boolean enabled)
         throws StepExecutionException {
         final int implIdx = IndexConverter.toImplementationIndex(index);
         verifyIndexExists(implIdx);
@@ -250,7 +250,7 @@ public class TabbedPaneTester extends WidgetTester {
      * @throws StepExecutionException
      *             If the tab index is invalid.
      */
-    public void gdVerifySelectedTabByIndex(int index, boolean selected)
+    public void rcVerifySelectedTabByIndex(int index, boolean selected)
         throws StepExecutionException {
         int implIdx = IndexConverter.toImplementationIndex(index);
         int selIndex = getTabPane().getSelectedIndex();
@@ -279,7 +279,7 @@ public class TabbedPaneTester extends WidgetTester {
      * @throws StepExecutionException
      *             If the tab title is invalid.
      */
-    public void gdVerifySelectedTab(String tabTitlePattern, String operator,
+    public void rcVerifySelectedTab(String tabTitlePattern, String operator,
             boolean selected)
         throws StepExecutionException {
         String selectedTabTitle = null; // for no Selection

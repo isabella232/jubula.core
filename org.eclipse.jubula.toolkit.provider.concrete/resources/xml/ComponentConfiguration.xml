@@ -21,7 +21,7 @@
 			<typeFactory>com.bredexsw.guidancer.autserverbase.implclasses.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<action name="CompSystem.ClickInActiveWindow" changed="1.27">
-			<method>gdClickDirect</method>
+			<method>rcClickDirect</method>
 			<param name="CompSystem.ClickCount">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -61,7 +61,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.Activate" changed="1.3">
-			<method>gdActivate</method>
+			<method>rcActivate</method>
 			<param name="CompSystem.ActivationMethod">
 				<type>java.lang.String</type>
 				<defaultValue>AUT_DEFAULT</defaultValue>
@@ -78,14 +78,14 @@
 		</action>
 		
 		<action name="CompSystem.InputTextDirect" changed="1.25">
-			<method>gdInputText</method>
+			<method>rcInputText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		
 		<action name="CompSystem.KeyStroke" changed="1.17">
-			<method>gdKeyStroke</method>
+			<method>rcKeyStroke</method>
 			<param name="CompSystem.ModifierSpecification">
 				<type>java.lang.String</type>
 				<defaultValue>none</defaultValue>
@@ -105,7 +105,7 @@
 		</action>
 
 		<action name="CompSystem.KeyToogle" changed="1.3">
-			<method>gdToggle</method>
+			<method>rcToggle</method>
 			<param name="CompSystem.ToogleKey">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -126,23 +126,23 @@
 		</action>
 		
 		<action name="CompSystem.InputTextDepr" changed="1.25" deprecated="true">
-			<method>gdReplaceText</method>
+			<method>rcReplaceText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		
 		<action name="CompSystem.Wait" changed="1.3">
-			<method>gdWait</method>
+			<method>rcWait</method>
 			<param name="CompSystem.TimeMillSec">
 				<type>java.lang.Integer</type>
 			</param>
 		</action>
 		<action name="CompSystem.Pause" changed="1.3">
-			<method>gdPause</method>
+			<method>rcPause</method>
 		</action>
 		<action name="CompSystem.WaitForWindow" changed="1.11">
-			<method>gdWaitForWindow</method>
+			<method>rcWaitForWindow</method>
 			<param name="CompSystem.Title">
 				<type>java.lang.String</type>
 			</param>
@@ -167,7 +167,7 @@
 		</action>
 				
 		<action name="CompSystem.WaitForWindowActivation" changed="1.16">
-			<method>gdWaitForWindowActivation</method>
+			<method>rcWaitForWindowActivation</method>
 			<param name="CompSystem.Title">
 				<type>java.lang.String</type>
 			</param>
@@ -192,7 +192,7 @@
 		</action>
 
 		<action name="CompSystem.WaitForWindowToClose" changed="1.21">
-			<method>gdWaitForWindowToClose</method>
+			<method>rcWaitForWindowToClose</method>
 			<param name="CompSystem.Title">
 				<type>java.lang.String</type>
 			</param>
@@ -217,12 +217,12 @@
 		</action>
 
 		<action name="CompSystem.Restart" changed="1.3" clientAction="true">
-			<method>gdRestart</method>
+			<method>rcRestart</method>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$RestartCmd</postExecutionCommand>
 		</action>
 
 		<action name="CompSystem.TakeScreenshot" changed="1.15">
-			<method>gdTakeScreenshot</method>
+			<method>rcTakeScreenshot</method>
 			<param name="CompSystem.Destination">
 				<type>java.lang.String</type>
 			</param>
@@ -253,7 +253,7 @@
 		</action>
 		
 		<action name="CompSystem.ExecuteCommand" changed="1.38">
-			<method>gdExecuteExternalCommand</method>
+			<method>rcExecuteExternalCommand</method>
 			<param name="CompSystem.Command">
 				<type>java.lang.String</type>
 			</param>
@@ -277,7 +277,7 @@
 		</action>
 
 		<action name="CompSystem.NativeKeyStroke" changed="1.39">
-			<method>gdNativeKeyStroke</method>
+			<method>rcNativeKeyStroke</method>
 			<param name="CompSystem.ModifierSpecification">
 				<type>java.lang.String</type>
 				<defaultValue>none</defaultValue>
@@ -297,13 +297,13 @@
 		</action>
 
 		<action name="CompSystem.NativeInputText" changed="1.39">
-			<method>gdNativeInputText</method>
+			<method>rcNativeInputText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.ReadValue" changed="4.0">
-			<method>gdSetValue</method>
+			<method>rcSetValue</method>
 			<param name="CompSystem.Variable">
 				<type>guidancer.datatype.Variable</type>
 			</param>
@@ -313,13 +313,13 @@
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
 		</action>
 		<action name="CompSystem.CopyToClipboard" changed="4.1">
-			<method>gdCopyToClipboard</method>
+			<method>rcCopyToClipboard</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.StartTimer" changed="4.2">
-            <method>gdStartTimer</method>
+            <method>rcStartTimer</method>
             <param name="CompSystem.TimerName">
                 <type>java.lang.String</type>
             </param>
@@ -329,7 +329,7 @@
             <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$StartTimerCmd</postExecutionCommand>
         </action>
         <action name="CompSystem.ReadTimer" changed="4.2">
-            <method>gdReadTimer</method>
+            <method>rcReadTimer</method>
             <param name="CompSystem.TimerName">
                 <type>java.lang.String</type>
             </param>
@@ -339,7 +339,7 @@
             <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$ReadTimerCmd</postExecutionCommand>
         </action>
         <action name="CompSystem.CheckValues" changed="4.2">
-            <method>gdCheckValues</method>
+            <method>rcCheckValues</method>
             <param name="CompSystem.Value1">
                 <type>java.lang.String</type>
             </param>
@@ -359,7 +359,7 @@
             </param>
         </action>
         <action name="CompSystem.TakeScreenshotOfActiveWindow" changed="4.3">
-            <method>gdTakeScreenshotOfActiveWindow</method>
+            <method>rcTakeScreenshotOfActiveWindow</method>
             <param name="CompSystem.Destination">
                 <type>java.lang.String</type>
             </param>
@@ -405,7 +405,7 @@
             </param>
         </action>
         <action name="CompSystem.CheckStringValues" changed="4.4">
-            <method>gdCheckStringValues</method>
+            <method>rcCheckStringValues</method>
             <param name="CompSystem.Value1">
                 <type>java.lang.String</type>
             </param>
@@ -424,7 +424,7 @@
             </param>
         </action>
      	<action name="CompSystem.CheckExistenceOfWindow" changed="4.5">
-			<method>gdCheckExistenceOfWindow</method>
+			<method>rcCheckExistenceOfWindow</method>
 			<param name="CompSystem.Title">
 				<type>java.lang.String</type>
 			</param>
@@ -448,7 +448,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.ManualTestStep" changed="4.5">
-			<method>gdManualTestStep</method>
+			<method>rcManualTestStep</method>
 			<param name="CompSystem.ActionToPerfom">
 				<type>java.lang.String</type>
 			</param>
@@ -623,7 +623,7 @@
 	<concreteComponent type="guidancer.concrete.ComboBox">
 		<realizes>guidancer.abstract.TextInputSupport</realizes>
 		<action name="CompSystem.VerifyContainsValue" changed="2.2">
-			<method>gdVerifyContainsValue</method>
+			<method>rcVerifyContainsValue</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -647,7 +647,7 @@
             </param>
 		</action>
 		<action name="CompSystem.VerifySelectedIndex" changed="2.2">
-			<method>gdVerifySelectedIndex</method>
+			<method>rcVerifySelectedIndex</method>
 			<param name="CompSystem.OneIndex">
 				<type>java.lang.String</type>
 			</param>
@@ -661,13 +661,13 @@
             </param>
 		</action>
 		<action name="CompSystem.SelectIndex" changed="1.3">
-			<method>gdSelectIndex</method>
+			<method>rcSelectIndex</method>
 			<param name="CompSystem.OneIndex">
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.SelectValue" changed="1.20">
-			<method>gdSelectValue</method>
+			<method>rcSelectValue</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -696,7 +696,7 @@
 	<concreteComponent type="guidancer.concrete.List">
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
 		<action name="CompSystem.VerifySelectedValue" changed="2.2">
-			<method>gdVerifySelectedValue</method>
+			<method>rcVerifySelectedValue</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -721,7 +721,7 @@
 		</action>
 		
 		<action name="CompSystem.VerifyContainsValue" changed="2.2">
-			<method>gdVerifyContainsValue</method>
+			<method>rcVerifyContainsValue</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -745,7 +745,7 @@
             </param>
 		</action>
 		<action name="CompSystem.VerifySelectedIndices" changed="2.2">
-			<method>gdVerifySelectedIndex</method>
+			<method>rcVerifySelectedIndex</method>
 			<param name="CompSystem.Index">
 				<type>java.lang.String</type>
 			</param>
@@ -759,7 +759,7 @@
             </param>
 		</action>
 		<action name="CompSystem.SelectIndices" changed="1.4">
-			<method>gdSelectIndex</method>
+			<method>rcSelectIndex</method>
 			<param name="CompSystem.Index">
 				<type>java.lang.String</type>
 			</param>
@@ -782,7 +782,7 @@
 			</param>			<param name="CompSystem.ClickCount">				<type>java.lang.Integer</type>				<defaultValue>1</defaultValue>			</param>
 		</action>
 		<action name="CompSystem.SelectValues" changed="1.4">
-			<method>gdSelectValue</method>
+			<method>rcSelectValue</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -823,7 +823,7 @@
 			</param>			<param name="CompSystem.ClickCount">				<type>java.lang.Integer</type>				<defaultValue>1</defaultValue>			</param>
 		</action>
 		<action name="CompSystem.DragByValue" changed="4.2">
-			<method>gdDragValue</method>
+			<method>rcDragValue</method>
 			<param name="CompSystem.MouseButton">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -869,7 +869,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.DragByIndex" changed="4.2">
-			<method>gdDragIndex</method>
+			<method>rcDragIndex</method>
 			<param name="CompSystem.MouseButton">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -897,7 +897,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.DropByValue" changed="2.0">
-			<method>gdDropValue</method>
+			<method>rcDropValue</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -925,7 +925,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.DropByIndex" changed="2.0">
-			<method>gdDropIndex</method>
+			<method>rcDropIndex</method>
 			<param name="CompSystem.IndexOnly">
 				<type>java.lang.Integer</type>
 			</param>
@@ -943,7 +943,7 @@
 	<concreteComponent type="guidancer.concrete.TabbedPane">
 		<realizes>guidancer.abstract.Widget</realizes>
 		<action name="CompSystem.VerifySelectedTab" changed="1.11">
-			<method>gdVerifySelectedTab</method>
+			<method>rcVerifySelectedTab</method>
 			<param name="CompSystem.Title">
 				<type>java.lang.String</type>
 			</param>
@@ -967,7 +967,7 @@
             </param>
 		</action>
 		<action name="CompSystem.SelectTab" changed="1.11">
-			<method>gdSelectTab</method>
+			<method>rcSelectTab</method>
 			<param name="CompSystem.Title">
 				<type>java.lang.String</type>
 			</param>
@@ -983,7 +983,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyEnabledTab" changed="1.12">
-			<method>gdVerifyEnabled</method>
+			<method>rcVerifyEnabled</method>
 			<param name="CompSystem.Title">
 				<type>java.lang.String</type>
 			</param>
@@ -1007,7 +1007,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifySelectedTabByIndex" changed="1.3">
-			<method>gdVerifySelectedTabByIndex</method>
+			<method>rcVerifySelectedTabByIndex</method>
 			<param name="CompSystem.OneIndex">
 				<type>java.lang.Integer</type>
 			</param>
@@ -1021,13 +1021,13 @@
 			</param>
 		</action>
 		<action name="CompSystem.SelectTabByIndex" changed="1.3">
-			<method>gdSelectTabByIndex</method>
+			<method>rcSelectTabByIndex</method>
 			<param name="CompSystem.OneIndex">
 				<type>java.lang.Integer</type>
 			</param>
 		</action>
 		<action name="CompSystem.VerifyEnabledTabByIndex" changed="1.3">
-			<method>gdVerifyEnabledByIndex</method>
+			<method>rcVerifyEnabledByIndex</method>
 			<param name="CompSystem.OneIndex">
 				<type>java.lang.Integer</type>
 			</param>
@@ -1041,7 +1041,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyTextOfTabByIndex" changed="4.2">
-			<method>gdVerifyTextOfTabByIndex</method>
+			<method>rcVerifyTextOfTabByIndex</method>
 			<param name="CompSystem.OneIndex">
 				<type>java.lang.Integer</type>
 			</param>
@@ -1060,7 +1060,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyExistenceOfTab" changed="4.2">
-			<method>gdVerifyExistenceOfTab</method>
+			<method>rcVerifyExistenceOfTab</method>
 			<param name="CompSystem.Tab">
 				<type>java.lang.String</type>
 			</param>
@@ -1088,7 +1088,7 @@
 	<concreteComponent type="guidancer.concrete.Table">
 		<realizes>guidancer.abstract.TextInputSupport</realizes>
 		<action name="CompSystem.InputTextInTableCellNew" changed="4.5">
-			<method>gdInputText</method>
+			<method>rcInputText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -1121,7 +1121,7 @@
 		</action>
 		
 		<action name="CompSystem.InputTextInTableCell" changed="4.2" deprecated="true">
-			<method>gdInputText</method>
+			<method>rcInputText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -1134,7 +1134,7 @@
 		</action>
 		
 		<action name="CompSystem.ReplaceTextInTableCellNew" changed="4.5">
-			<method>gdReplaceText</method>
+			<method>rcReplaceText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -1166,7 +1166,7 @@
 			</param>
 		</action>		
 		<action name="CompSystem.ReplaceTextInTableCell" changed="4.2" deprecated="true">
-			<method>gdReplaceText</method>
+			<method>rcReplaceText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -1179,7 +1179,7 @@
 		</action>
 			
 		<action name="CompSystem.SelectCellNew" changed="4.5">
-			<method>gdSelectCell</method>
+			<method>rcSelectCell</method>
 			<param name="CompSystem.Row">
 				<type>java.lang.String</type>
 			</param>
@@ -1254,7 +1254,7 @@
 		</action>
 			
 		<action name="CompSystem.SelectCell" changed="4.2" deprecated="true">
-			<method>gdSelectCell</method>
+			<method>rcSelectCell</method>
 			<param name="CompSystem.Row">
 				<type>java.lang.Integer</type>
 			</param>
@@ -1300,7 +1300,7 @@
 		</action>
 				
 		<action name="CompSystem.Move" changed="1.9">
-			<method>gdMove</method>
+			<method>rcMove</method>
 			<param name="CompSystem.Direction">
 				<type>java.lang.String</type>
 				<defaultValue>right</defaultValue>
@@ -1354,7 +1354,7 @@
 		</action>
 			
 		<action name="CompSystem.SelectRow" changed="4.2" deprecated="true">
-			<method>gdSelectRow</method>
+			<method>rcSelectRow</method>
 			<param name="CompSystem.Row">
 				<type>java.lang.Integer</type>
 			</param>
@@ -1369,7 +1369,7 @@
 		</action>
 		
 		<action name="CompSystem.VerifyTableCellEditableNew" changed="4.5">
-			<method>gdVerifyEditable</method>
+			<method>rcVerifyEditable</method>
 			<param name="CompSystem.IsEditable">
 				<type>java.lang.Boolean</type>
 				<defaultValue>false</defaultValue>
@@ -1407,7 +1407,7 @@
 		</action>
 		
 		<action name="CompSystem.VerifyTableCellEditable" changed="4.2" deprecated="true">
-			<method>gdVerifyEditable</method>
+			<method>rcVerifyEditable</method>
 			<param name="CompSystem.IsEditable">
 				<type>java.lang.Boolean</type>
 				<defaultValue>false</defaultValue>
@@ -1425,7 +1425,7 @@
 		</action>
 		
 		<action name="CompSystem.VerifySelectedTableCellEditable" changed="4.2">
-			<method>gdVerifyEditableSelected</method>
+			<method>rcVerifyEditableSelected</method>
 			<param name="CompSystem.IsEditable">
 				<type>java.lang.Boolean</type>
 				<defaultValue>false</defaultValue>
@@ -1437,7 +1437,7 @@
 		</action>
 		
 		<action name="CompSystem.VerifyTableCellEditableMousePosition" changed="4.2">
-			<method>gdVerifyEditableMousePosition</method>
+			<method>rcVerifyEditableMousePosition</method>
 			<param name="CompSystem.IsEditable">
 				<type>java.lang.Boolean</type>
 				<defaultValue>false</defaultValue>
@@ -1449,7 +1449,7 @@
 		</action>
 		
 		<action name="CompSystem.VerifyTableCellTextNew" changed="4.5">
-			<method>gdVerifyText</method>
+			<method>rcVerifyText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -1492,7 +1492,7 @@
 		</action>
 		
 		<action name="CompSystem.VerifyTableCellText" changed="4.2" deprecated="true">
-			<method>gdVerifyText</method>
+			<method>rcVerifyText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -1515,7 +1515,7 @@
 		</action>
 		
 		<action name="CompSystem.VerifyTableCellTextAtMousePosition" changed="1.11">
-			<method>gdVerifyTextAtMousePosition</method>
+			<method>rcVerifyTextAtMousePosition</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -1532,7 +1532,7 @@
 		</action>
 		
 		<action name="CompSystem.VerifyValueInRow" changed="4.5">
-			<method>gdVerifyValueInRow</method>
+			<method>rcVerifyValueInRow</method>
 			<param name="CompSystem.Row">
 				<type>java.lang.String</type>
 			</param>
@@ -1578,7 +1578,7 @@
 		</action>
 		
 		<action name="CompSystem.VerifyValueInColumn" changed="4.5">
-			<method>gdVerifyValueInColumn</method>
+			<method>rcVerifyValueInColumn</method>
 			<param name="CompSystem.Column">
 				<type>java.lang.String</type>
 			</param>
@@ -1624,7 +1624,7 @@
 		</action>
 		
 		<action name="CompSystem.SelectRowByValueNew" changed="4.5">
-			<method>gdSelectRowByValue</method>
+			<method>rcSelectRowByValue</method>
 			<param name="CompSystem.Column">
 				<type>java.lang.String</type>
 			</param>
@@ -1683,7 +1683,7 @@
 		</action>
 		
 		<action name="CompSystem.SelectRowByValue" changed="4.2" deprecated="true">
-			<method>gdSelectRowByValue</method>
+			<method>rcSelectRowByValue</method>
 			<param name="CompSystem.Column">
 				<type>java.lang.Integer</type>
 			</param>
@@ -1723,7 +1723,7 @@
 		</action>
 		
 		<action name="CompSystem.SelectCellByColValueNew" changed="4.5">
-			<method>gdSelectCellByColValue</method>
+			<method>rcSelectCellByColValue</method>
 			<param name="CompSystem.Row">
 				<type>java.lang.String</type>
 			</param>
@@ -1782,7 +1782,7 @@
 		</action>
 		
 		<action name="CompSystem.SelectCellByColValue" changed="4.2" deprecated="true">
-			<method>gdSelectCellByColValue</method>
+			<method>rcSelectCellByColValue</method>
 			<param name="CompSystem.Row">
 				<type>java.lang.Integer</type>
 			</param>
@@ -1822,7 +1822,7 @@
 		</action>
 		
 		<action name="CompSystem.SelectCellByRowValue" changed="1.3" deprecated="true">
-			<method>gdSelectCellByRowValue</method>
+			<method>rcSelectCellByRowValue</method>
 			<param name="CompSystem.Column">
 				<type>java.lang.Integer</type>
 			</param>
@@ -1839,7 +1839,7 @@
 			</param>		
 		</action>
 		<action name="CompSystem.PopupByIndexPathAtCell" changed="1.3" deprecated="true">
-			<method>gdPopupByIndexPathAtCell</method>
+			<method>rcPopupByIndexPathAtCell</method>
 			<param name="CompSystem.Row">
 				<type>java.lang.Integer</type>
 			</param>
@@ -1851,7 +1851,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupByTextPathAtCell" changed="1.3" deprecated="true">
-			<method>gdPopupByTextPathAtCell</method>
+			<method>rcPopupByTextPathAtCell</method>
 			<param name="CompSystem.Row">
 				<type>java.lang.Integer</type>
 			</param>
@@ -1863,20 +1863,20 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupByIndexPathAtSelectedCell" changed="1.3" deprecated="true">
-			<method>gdPopupByIndexPathAtSelectedCell</method>
+			<method>rcPopupByIndexPathAtSelectedCell</method>
 			<param name="CompSystem.IndexPath">
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.PopupByTextPathAtSelectedCell" changed="1.3" deprecated="true">
-			<method>gdPopupByTextPathAtSelectedCell</method>
+			<method>rcPopupByTextPathAtSelectedCell</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		
 		<action name="CompSystem.ReadTableCellValueNew" changed="4.5">
-			<method>gdReadValue</method>
+			<method>rcReadValue</method>
 			<param name="CompSystem.Variable">
 				<type>guidancer.datatype.Variable</type>
 			</param>
@@ -1910,7 +1910,7 @@
 		</action>
 		
 		<action name="CompSystem.ReadTableCellValue" changed="4.2" deprecated="true">
-			<method>gdReadValue</method>
+			<method>rcReadValue</method>
 			<param name="CompSystem.Variable">
 				<type>guidancer.datatype.Variable</type>
 			</param>
@@ -1924,7 +1924,7 @@
 		</action>
 
 		<action name="CompSystem.ReadTableCellValueAtMousePosition" changed="4.5">
-			<method>gdReadValueAtMousePosition</method>
+			<method>rcReadValueAtMousePosition</method>
 			<param name="CompSystem.Variable">
 				<type>guidancer.datatype.Variable</type>
 			</param>
@@ -1932,7 +1932,7 @@
 		</action>
 		
 		<action name="CompSystem.DragCellNew" changed="4.5">
-			<method>gdDragCell</method>
+			<method>rcDragCell</method>
 			<param name="CompSystem.MouseButton">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -2008,7 +2008,7 @@
 		</action>
 		
 		<action name="CompSystem.DragCell" changed="4.2" deprecated="true">
-			<method>gdDragCell</method>
+			<method>rcDragCell</method>
 			<param name="CompSystem.MouseButton">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -2066,7 +2066,7 @@
 		</action>
 		
 		<action name="CompSystem.DropCellNew" changed="4.5">
-			<method>gdDropCell</method>
+			<method>rcDropCell</method>
 			<param name="CompSystem.Row">
 				<type>java.lang.String</type>
 			</param>
@@ -2124,7 +2124,7 @@
 		</action>
 		
 		<action name="CompSystem.DropCell" changed="4.2" deprecated="true">
-			<method>gdDropCell</method>
+			<method>rcDropCell</method>
 			<param name="CompSystem.Row">
 				<type>java.lang.Integer</type>
 			</param>
@@ -2162,7 +2162,7 @@
 		</action>
 		
 		<action name="CompSystem.DragRowByValueNew" changed="4.5">
-			<method>gdDragRowByValue</method>
+			<method>rcDragRowByValue</method>
 			<param name="CompSystem.MouseButton">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -2222,7 +2222,7 @@
 		</action>
 		
 		<action name="CompSystem.DragRowByValue" changed="4.2" deprecated="true">
-			<method>gdDragRowByValue</method>
+			<method>rcDragRowByValue</method>
 			<param name="CompSystem.MouseButton">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -2274,7 +2274,7 @@
 		</action>
 		
 		<action name="CompSystem.DropRowByValueNew" changed="4.5">
-			<method>gdDropRowByValue</method>
+			<method>rcDropRowByValue</method>
 			<param name="CompSystem.Column">
 				<type>java.lang.String</type>
 			</param>
@@ -2316,7 +2316,7 @@
 		</action>
 		
 		<action name="CompSystem.DropRowByValue" changed="4.2" deprecated="true">
-			<method>gdDropRowByValue</method>
+			<method>rcDropRowByValue</method>
 			<param name="CompSystem.Column">
 				<type>java.lang.Integer</type>
 			</param>
@@ -2348,7 +2348,7 @@
 		</action>
 		
 		<action name="CompSystem.DragCellByColValueNew" changed="4.5">
-			<method>gdDragCellByColValue</method>
+			<method>rcDragCellByColValue</method>
 			<param name="CompSystem.MouseButton">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -2408,7 +2408,7 @@
 		</action>
 		
 		<action name="CompSystem.DragCellByColValue" changed="4.2" deprecated="true">
-			<method>gdDragCellByColValue</method>
+			<method>rcDragCellByColValue</method>
 			<param name="CompSystem.MouseButton">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -2460,7 +2460,7 @@
 		</action>
 		
 		<action name="CompSystem.DropCellByColValueNew" changed="4.5">
-			<method>gdDropCellByColValue</method>
+			<method>rcDropCellByColValue</method>
 			<param name="CompSystem.Row">
 				<type>java.lang.String</type>
 			</param>
@@ -2502,7 +2502,7 @@
 		</action>
 		
 		<action name="CompSystem.DropCellByColValue" changed="4.2" deprecated="true">
-			<method>gdDropCellByColValue</method>
+			<method>rcDropCellByColValue</method>
 			<param name="CompSystem.Row">
 				<type>java.lang.Integer</type>
 			</param>
@@ -2537,7 +2537,7 @@
 	<concreteComponent type="guidancer.concrete.TextComponent">
 		<realizes>guidancer.abstract.TextInputSupport</realizes>
 		<action name="CompSystem.InsertTextAtIndex" changed="1.3">
-			<method>gdInsertText</method>
+			<method>rcInsertText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -2546,7 +2546,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.InsertTextAtPattern" changed="1.12">
-			<method>gdInsertText</method>
+			<method>rcInsertText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -2573,10 +2573,10 @@
 			</param>
 		</action>
 		<action name="CompSystem.SelectAll" changed="1.3">
-			<method>gdSelect</method>
+			<method>rcSelect</method>
 		</action>
 		<action name="CompSystem.Select" changed="1.11">
-			<method>gdSelect</method>
+			<method>rcSelect</method>
 			<param name="CompSystem.Pattern">
 				<type>java.lang.String</type>
 			</param>
@@ -2597,7 +2597,7 @@
 	<concreteComponent type="guidancer.concrete.Tree">
 		<realizes>guidancer.abstract.Widget</realizes>
 		<action name="CompSystem.CollapseByTextPath" changed="1.22">
-			<method>gdCollapse</method>
+			<method>rcCollapse</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -2625,7 +2625,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.CollapseByIndexPath" changed="1.22">
-			<method>gdCollapseByIndices</method>
+			<method>rcCollapseByIndices</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -2643,7 +2643,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.ExpandByTextPath" changed="1.22">
-			<method>gdExpand</method>
+			<method>rcExpand</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -2671,7 +2671,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.ExpandByIndexPath" changed="1.22">
-			<method>gdExpandByIndices</method>
+			<method>rcExpandByIndices</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -2689,7 +2689,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.SelectByTextPath" changed="1.22">
-			<method>gdSelect</method>
+			<method>rcSelect</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -2738,7 +2738,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.SelectByIndexPath" changed="1.22">
-			<method>gdSelectByIndices</method>
+			<method>rcSelectByIndices</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -2777,7 +2777,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.Move" changed="1.10">
-			<method>gdMove</method>
+			<method>rcMove</method>
 			<param name="CompSystem.Direction">
 				<type>java.lang.String</type>
 				<defaultValue>up</defaultValue>
@@ -2798,7 +2798,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyPath" changed="1.22">
-			<method>gdVerifyPath</method>
+			<method>rcVerifyPath</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -2834,7 +2834,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyPathByIndices" changed="1.22">
-			<method>gdVerifyPathByIndices</method>
+			<method>rcVerifyPathByIndices</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -2860,7 +2860,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyTextOfSelectedEntry" changed="1.41">
-			<method>gdVerifySelectedValue</method>
+			<method>rcVerifySelectedValue</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -2876,7 +2876,7 @@
 			</param>	
 		</action>
 		<action name="CompSystem.VerifyTextAtMousePosition" changed="4.6">
-			<method>gdVerifyTextAtMousePosition</method>
+			<method>rcVerifyTextAtMousePosition</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -2892,19 +2892,19 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupByIndexPathAtSelectedNode" changed="1.3" deprecated="true">
-			<method>gdPopupByIndexPathAtSelectedNode</method>
+			<method>rcPopupByIndexPathAtSelectedNode</method>
 			<param name="CompSystem.IndexPath">
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.PopupByTextPathAtSelectedNode" changed="1.3" deprecated="true">
-			<method>gdPopupByTextPathAtSelectedNode</method>
+			<method>rcPopupByTextPathAtSelectedNode</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.PopupByIndexPathAtIndexNode" changed="1.3" deprecated="true">
-			<method>gdPopupByIndexPathAtIndexNode</method>
+			<method>rcPopupByIndexPathAtIndexNode</method>
 			<param name="CompSystem.TreeIndexPath">
 				<type>java.lang.String</type>
 			</param>
@@ -2913,7 +2913,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupByTextPathAtIndexNode" changed="1.3" deprecated="true">
-			<method>gdPopupByTextPathAtIndexNode</method>
+			<method>rcPopupByTextPathAtIndexNode</method>
 			<param name="CompSystem.TreeIndexPath">
 				<type>java.lang.String</type>
 			</param>
@@ -2922,7 +2922,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupByIndexPathAtTextNode" changed="1.3" deprecated="true">
-			<method>gdPopupByIndexPathAtTextNode</method>
+			<method>rcPopupByIndexPathAtTextNode</method>
 			<param name="CompSystem.TreeTextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -2939,7 +2939,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupByTextPathAtTextNode" changed="1.3" deprecated="true">
-			<method>gdPopupByTextPathAtTextNode</method>
+			<method>rcPopupByTextPathAtTextNode</method>
 			<param name="CompSystem.TreeTextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -2957,7 +2957,7 @@
 		</action>
 		
 		<action name="CompSystem.DragByTextPath" changed="4.2">
-			<method>gdDragByTextPath</method>
+			<method>rcDragByTextPath</method>
 			<param name="CompSystem.MouseButton">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -3008,7 +3008,7 @@
 		</action>
 		
 		<action name="CompSystem.DropByTextPath" changed="">
-			<method>gdDropByTextPath</method>
+			<method>rcDropByTextPath</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -3041,7 +3041,7 @@
 		</action>
 		
 		<action name="CompSystem.DragByIndexPath" changed="4.2">
-			<method>gdDragByIndexPath</method>
+			<method>rcDragByIndexPath</method>
 			<param name="CompSystem.MouseButton">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -3082,7 +3082,7 @@
 		</action>
 		
 		<action name="CompSystem.DropByIndexPath" changed="">
-			<method>gdDropByIndexPath</method>
+			<method>rcDropByIndexPath</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -3104,14 +3104,14 @@
 			</param>
 		</action>
 		<action name="CompSystem.ReadTextOfSelectedEntry" changed="4.5">
-			<method>gdStoreSelectedNodeValue</method>
+			<method>rcStoreSelectedNodeValue</method>
 			<param name="CompSystem.Variable">
 				<type>guidancer.datatype.Variable</type>
 			</param>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
 		</action>
 		<action name="CompSystem.ReadTextAtMousePosition" changed="4.5">
-			<method>gdStoreValueAtMousePosition</method>
+			<method>rcStoreValueAtMousePosition</method>
 			<param name="CompSystem.Variable">
 				<type>guidancer.datatype.Variable</type>
 			</param>

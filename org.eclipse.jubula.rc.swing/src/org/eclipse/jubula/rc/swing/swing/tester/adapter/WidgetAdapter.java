@@ -264,7 +264,7 @@ public class WidgetAdapter extends AbstractComponentAdapter
     /**
      * {@inheritDoc}
      */
-    public void gdDrag(int mouseButton, String modifier, int xPos,
+    public void rcDrag(int mouseButton, String modifier, int xPos,
             String xUnits, int yPos, String yUnits) {
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         dndHelper.setMouseButton(mouseButton);
@@ -279,7 +279,7 @@ public class WidgetAdapter extends AbstractComponentAdapter
     /**
      * {@inheritDoc}
      */
-    public void gdDrop(int xPos, String xUnits, int yPos, String yUnits,
+    public void rcDrop(int xPos, String xUnits, int yPos, String yUnits,
             int delayBeforeDrop) {
 
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();

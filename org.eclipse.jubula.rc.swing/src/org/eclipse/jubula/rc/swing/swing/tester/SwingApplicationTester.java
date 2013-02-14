@@ -216,13 +216,13 @@ public class SwingApplicationTester extends AbstractApplicationTester implements
      * Testcases with this action are fragile, because this action assumes the
      * availability of a text component. Any other case breaks the test.
      */
-    public void gdReplaceText(String text) {
+    public void rcReplaceText(String text) {
         getRobot().click(FocusTracker.getFocusOwner(), null, 
             ClickOptions.create().setClickCount(3).left());
         if (StringConstants.EMPTY.equals(text)) {
             getRobot().keyStroke("DELETE"); //$NON-NLS-1$
         }
-        gdInputText(text);
+        rcInputText(text);
     }
 
     /**
@@ -234,7 +234,7 @@ public class SwingApplicationTester extends AbstractApplicationTester implements
      * @param pTimeout the time in ms
      * @param delay delay after the window is shown
      */
-    public void gdWaitForWindow(final String title, String operator, 
+    public void rcWaitForWindow(final String title, String operator, 
         int pTimeout, int delay) {
         
         EventListener.Condition cond = 
@@ -281,7 +281,7 @@ public class SwingApplicationTester extends AbstractApplicationTester implements
      * @param pTimeout the time in ms
      * @param delay delay after the window is activated
      */
-    public void gdWaitForWindowActivation(final String title, String operator, 
+    public void rcWaitForWindowActivation(final String title, String operator, 
         int pTimeout, int delay) {
         
         EventListener.Condition cond = new WindowActivatedCondition(title, 
@@ -331,7 +331,7 @@ public class SwingApplicationTester extends AbstractApplicationTester implements
      * @param pTimeout the time in ms
      * @param delay delay after the window is closed
      */
-    public void gdWaitForWindowToClose(final String title, String operator, 
+    public void rcWaitForWindowToClose(final String title, String operator, 
         int pTimeout, int delay) {
         
         EventListener.Condition cond = 
@@ -383,7 +383,7 @@ public class SwingApplicationTester extends AbstractApplicationTester implements
      *            <code>True</code> if the window is expected to exist and be
      *            visible, otherwise <code>false</code>.
      */
-    public void gdCheckExistenceOfWindow(final String title, String operator,
+    public void rcCheckExistenceOfWindow(final String title, String operator,
             boolean exists) {
         Verifier.equals(exists, isWindowOpen(title, operator));
     }
@@ -417,7 +417,7 @@ public class SwingApplicationTester extends AbstractApplicationTester implements
      * @param modifierSpec the string representation of the modifiers
      * @param keySpec the string representation of the key
      */
-    public void gdKeyStroke(String modifierSpec, String keySpec) {
+    public void rcKeyStroke(String modifierSpec, String keySpec) {
         if (keySpec == null || keySpec.trim().length() == 0) {
             throw new StepExecutionException(
                 "The base key of the key stroke must not be null or empty", //$NON-NLS-1$
@@ -430,7 +430,7 @@ public class SwingApplicationTester extends AbstractApplicationTester implements
         } else {
             int code = getKeyCode(key);
             if (code != -1) {
-                gdKeyType(code);
+                rcKeyType(code);
             } else {
                 getRobot().keyStroke(key);
             }

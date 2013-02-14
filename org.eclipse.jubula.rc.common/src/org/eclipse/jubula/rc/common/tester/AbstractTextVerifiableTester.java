@@ -29,7 +29,7 @@ public abstract class AbstractTextVerifiableTester extends WidgetTester {
      * @param variable the name of the variable
      * @return the text value.
      */
-    public String gdReadValue(String variable) {
+    public String rcReadValue(String variable) {
         return ((ITextVerifiable)getComponent()).getText();
     }
 
@@ -40,7 +40,7 @@ public abstract class AbstractTextVerifiableTester extends WidgetTester {
      * @param operator The operation used to verify
      * @throws StepExecutionException If the rendered text cannot be extracted.
      */
-    public void gdVerifyText(String text, String operator)
+    public void rcVerifyText(String text, String operator)
         throws StepExecutionException {
         Verifier.match(((ITextVerifiable)getComponent()).getText(), text,
                                     operator);

@@ -248,7 +248,7 @@
 		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Tree" />
 		<action name="CompSystem.VerifyCheckboxOfSelectedEntry" changed="4.1">
-			<method>gdVerifySelectedCheckbox</method>
+			<method>rcVerifySelectedCheckbox</method>
 			<param name="CompSystem.Checked">
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
@@ -259,7 +259,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.ToggleCheckboxByTextpath" changed="4.1">
-			<method>gdToggleCheckbox</method>
+			<method>rcToggleCheckbox</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -287,7 +287,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.ToggleCheckboxByIndexpath" changed="4.1">
-			<method>gdToggleCheckboxByIndices</method>
+			<method>rcToggleCheckboxByIndices</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -305,7 +305,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyCheckboxOfNodeByTextpath" changed="4.1">
-			<method>gdVerifyCheckbox</method>
+			<method>rcVerifyCheckbox</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -341,7 +341,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyCheckboxOfNodeByIndexpath" changed="4.1">
-			<method>gdVerifyCheckboxByIndices</method>
+			<method>rcVerifyCheckboxByIndices</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -373,7 +373,7 @@
 		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Tree" />
 		<action name="CompSystem.SelectByTextPathAtColumn" changed="1.22">
-			<method>gdSelect</method>
+			<method>rcSelect</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -418,7 +418,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.SelectByIndexPathAtColumn" changed="1.22">
-			<method>gdSelectByIndices</method>
+			<method>rcSelectByIndices</method>
 			<param name="CompSystem.PathType">
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
@@ -453,7 +453,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifySelectedValueAtColumn" changed="1.24">
-			<method>gdVerifySelectedValue</method>
+			<method>rcVerifySelectedValue</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>

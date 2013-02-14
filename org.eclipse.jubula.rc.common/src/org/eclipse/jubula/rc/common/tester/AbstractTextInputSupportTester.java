@@ -26,7 +26,7 @@ public abstract class AbstractTextInputSupportTester
      * If it is a complex component, it is always the selected object.
      * @param editable The editable property to verify.
      */
-    public abstract void gdVerifyEditable(boolean editable);
+    public abstract void rcVerifyEditable(boolean editable);
     /**
      * Types <code>text</code> into the component. This replaces the shown
      * content.<br>
@@ -36,7 +36,7 @@ public abstract class AbstractTextInputSupportTester
      *  If there is no selected cell, or if the cell is not editable,
      *  or if the table cell editor permits the text to be written.
      */
-    public abstract void gdReplaceText(String text) 
+    public abstract void rcReplaceText(String text) 
         throws StepExecutionException;
     /**
      * Writes the passed text into the currently component.<br>
@@ -46,6 +46,6 @@ public abstract class AbstractTextInputSupportTester
      *             If there is no selected cell, or if the cell is not editable,
      *             or if the table cell editor permits the text to be written.
      */
-    public abstract void gdInputText(final String text) 
+    public abstract void rcInputText(final String text) 
         throws StepExecutionException;
 }

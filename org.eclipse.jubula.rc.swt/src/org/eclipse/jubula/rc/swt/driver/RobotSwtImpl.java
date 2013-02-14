@@ -745,7 +745,7 @@ public class RobotSwtImpl implements IRobot {
         if (EnvironmentUtils.isMacOS()
                 && Character.toLowerCase(character) == WorkaroundUtil.CHAR_B) {
             SwtApplicationTester impClass = new SwtApplicationTester();
-            impClass.gdNativeInputText(String.valueOf(character));
+            impClass.rcNativeInputText(String.valueOf(character));
             return;
         }
         if (m_keyboardHelper == null) {

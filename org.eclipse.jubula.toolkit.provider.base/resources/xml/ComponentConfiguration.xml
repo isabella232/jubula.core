@@ -17,7 +17,7 @@
 	
 	<abstractComponent type="guidancer.abstract.Widget">
 		<action name="CompSystem.ShowText" changed="1.36">
-			<method>gdShowText</method>
+			<method>rcShowText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -35,7 +35,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyExists" changed="1.23">
-			<method>gdVerifyExists</method>
+			<method>rcVerifyExists</method>
 			<param name="CompSystem.IsExisting">
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
@@ -46,7 +46,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyEnabled" changed="1.3">
-			<method>gdVerifyEnabled</method>
+			<method>rcVerifyEnabled</method>
 			<param name="CompSystem.IsEnabled">
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
@@ -57,7 +57,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyProperty" changed="1.3">
-			<method>gdVerifyProperty</method>
+			<method>rcVerifyProperty</method>
 			<param name="CompSystem.PropertyName">
 				<type>java.lang.String</type>
 			</param>
@@ -74,9 +74,9 @@
                     <element name="CompSystem.SimpleMatch" value="simple match"/>
                 </valueSet>
             </param>
-		</action>		<action name="CompSystem.StorePropertyValue" changed="1.3">			<method>gdStorePropertyValue</method>			<param name="CompSystem.Variable">				<type>guidancer.datatype.Variable</type>			</param>			<param name="CompSystem.PropertyName">				<type>java.lang.String</type>			</param>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>		</action>
+		</action>		<action name="CompSystem.StorePropertyValue" changed="1.3">			<method>rcStorePropertyValue</method>			<param name="CompSystem.Variable">				<type>guidancer.datatype.Variable</type>			</param>			<param name="CompSystem.PropertyName">				<type>java.lang.String</type>			</param>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>		</action>
 		<action name="CompSystem.VerifyFocus" changed="1.3">
-			<method>gdVerifyFocus</method>
+			<method>rcVerifyFocus</method>
 			<param name="CompSystem.HasFocus">
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
@@ -87,7 +87,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.WaitForComponent" changed="1.18">
-			<method>gdWaitForComponent</method>
+			<method>rcWaitForComponent</method>
 			<param name="CompSystem.Timeout">
 				<type>java.lang.Integer</type>
 				<defaultValue>1000</defaultValue>
@@ -98,7 +98,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.Click" changed="1.26">
-			<method>gdClick</method>
+			<method>rcClick</method>
 			<param name="CompSystem.ClickCount">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -114,7 +114,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.ClickDirect" changed="1.4">
-			<method>gdClickDirect</method>
+			<method>rcClickDirect</method>
 			<param name="CompSystem.ClickCount">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -154,7 +154,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupSelectByTextPathPositionNew" changed="2.1">
-			<method>gdPopupSelectByTextPath</method>
+			<method>rcPopupSelectByTextPath</method>
 			<param name="CompSystem.XPos">
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
@@ -203,7 +203,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupSelectByTextPathPosition" changed="1.12" deprecated="true">
-			<method>gdPopupSelectByTextPath</method>
+			<method>rcPopupSelectByTextPath</method>
 			<param name="CompSystem.XPos">
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
@@ -235,7 +235,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupSelectByIndexPathNew" changed="2.1">
-			<method>gdPopupSelectByIndexPath</method>
+			<method>rcPopupSelectByIndexPath</method>
 			<param name="CompSystem.IndexPath">
 				<type>java.lang.String</type>
 			</param>
@@ -250,13 +250,13 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupSelectByIndexPath" changed="1.4" deprecated="true">
-			<method>gdPopupSelectByIndexPath</method>
+			<method>rcPopupSelectByIndexPath</method>
 			<param name="CompSystem.IndexPath">
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.PopupSelectByTextPathNew" changed="2.1">
-			<method>gdPopupSelectByTextPath</method>
+			<method>rcPopupSelectByTextPath</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -281,7 +281,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupSelectByTextPath" changed="1.12" deprecated="true">
-			<method>gdPopupSelectByTextPath</method>
+			<method>rcPopupSelectByTextPath</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -297,7 +297,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupSelectByIndexPathPositionNew" changed="2.1">
-			<method>gdPopupSelectByIndexPath</method>
+			<method>rcPopupSelectByIndexPath</method>
 			<param name="CompSystem.XPos">
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
@@ -336,7 +336,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupSelectByIndexPathPosition" changed="1.3" deprecated="true">
-			<method>gdPopupSelectByIndexPath</method>
+			<method>rcPopupSelectByIndexPath</method>
 			<param name="CompSystem.XPos">
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
@@ -358,7 +358,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupVerifyEnabledByIndexpath" changed="2.1">
-			<method>gdPopupVerifyEnabledByIndexPath</method>
+			<method>rcPopupVerifyEnabledByIndexPath</method>
 			<param name="CompSystem.IndexPath">
 				<type>java.lang.String</type>
 			</param>
@@ -381,7 +381,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupVerifyEnabledByIndexpathPosition" changed="2.1">
-			<method>gdPopupVerifyEnabledByIndexPath</method>
+			<method>rcPopupVerifyEnabledByIndexPath</method>
 			<param name="CompSystem.XPos">
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
@@ -428,7 +428,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupVerifyEnabledByTextpath" changed="2.1">
-			<method>gdPopupVerifyEnabledByTextPath</method>
+			<method>rcPopupVerifyEnabledByTextPath</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -461,7 +461,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupVerifyEnabledByTextpathPosition" changed="2.1">
-			<method>gdPopupVerifyEnabledByTextPath</method>
+			<method>rcPopupVerifyEnabledByTextPath</method>
 			<param name="CompSystem.XPos">
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
@@ -518,7 +518,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupVerifyExistsByIndexpath" changed="2.1">
-			<method>gdPopupVerifyExistsByIndexPath</method>
+			<method>rcPopupVerifyExistsByIndexPath</method>
 			<param name="CompSystem.IndexPath">
 				<type>java.lang.String</type>
 			</param>
@@ -541,7 +541,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupVerifyExistsByIndexpathPosition" changed="2.1">
-			<method>gdPopupVerifyExistsByIndexPath</method>
+			<method>rcPopupVerifyExistsByIndexPath</method>
 			<param name="CompSystem.XPos">
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
@@ -588,7 +588,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupVerifyExistsByTextpath" changed="2.1">
-			<method>gdPopupVerifyExistsByTextPath</method>
+			<method>rcPopupVerifyExistsByTextPath</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -621,7 +621,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupVerifyExistsByTextpathPosition" changed="2.1">
-			<method>gdPopupVerifyExistsByTextPath</method>
+			<method>rcPopupVerifyExistsByTextPath</method>
 			<param name="CompSystem.XPos">
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
@@ -678,7 +678,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupVerifySelectedByIndexpath" changed="2.1">
-			<method>gdPopupVerifySelectedByIndexPath</method>
+			<method>rcPopupVerifySelectedByIndexPath</method>
 			<param name="CompSystem.IndexPath">
 				<type>java.lang.String</type>
 			</param>
@@ -701,7 +701,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupVerifySelectedByIndexpathPosition" changed="2.1">
-			<method>gdPopupVerifySelectedByIndexPath</method>
+			<method>rcPopupVerifySelectedByIndexPath</method>
 			<param name="CompSystem.XPos">
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
@@ -748,7 +748,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupVerifySelectedByTextpath" changed="2.1">
-			<method>gdPopupVerifySelectedByTextPath</method>
+			<method>rcPopupVerifySelectedByTextPath</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -781,7 +781,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.PopupVerifySelectedByTextpathPosition" changed="2.1">
-			<method>gdPopupVerifySelectedByTextPath</method>
+			<method>rcPopupVerifySelectedByTextPath</method>
 			<param name="CompSystem.XPos">
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
@@ -839,7 +839,7 @@
 		</action>
 		
 		<action name="CompSystem.Drag" changed="2.0">
-			<method>gdDrag</method>
+			<method>rcDrag</method>
 			<param name="CompSystem.MouseButton">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
@@ -889,7 +889,7 @@
 		</action>
 		
 		<action name="CompSystem.Drop" changed="2.0">
-			<method>gdDrop</method>
+			<method>rcDrop</method>
 						<param name="CompSystem.XPos">
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
@@ -924,7 +924,7 @@
 	<abstractComponent type="guidancer.abstract.TextInputSupport">
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
 		<action name="CompSystem.VerifyEditable" changed="1.26">
-			<method>gdVerifyEditable</method>
+			<method>rcVerifyEditable</method>
 			<param name="CompSystem.IsEditable">
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
@@ -935,13 +935,13 @@
 			</param>
 		</action>
 		<action name="CompSystem.InputText" changed="1.3">
-			<method>gdReplaceText</method>
+			<method>rcReplaceText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.InputTextDirect" changed="1.3">
-			<method>gdInputText</method>
+			<method>rcInputText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -951,7 +951,7 @@
 	<abstractComponent type="guidancer.abstract.TextVerifiable">
 		<realizes>guidancer.abstract.Widget</realizes>
 		<action name="CompSystem.VerifyText" changed="1.11">
-			<method>gdVerifyText</method>
+			<method>rcVerifyText</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -967,7 +967,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.ReadValue" changed="1.3">
-			<method>gdReadValue</method>
+			<method>rcReadValue</method>
 			<param name="CompSystem.Variable">
 				<type>guidancer.datatype.Variable</type>
 			</param>
@@ -978,7 +978,7 @@
 	<abstractComponent type="guidancer.abstract.ButtonComp">
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
 		<action name="CompSystem.VerifySelected" changed="1.26">
-			<method>gdVerifySelected</method>
+			<method>rcVerifySelected</method>
 			<param name="CompSystem.IsSelected">
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>

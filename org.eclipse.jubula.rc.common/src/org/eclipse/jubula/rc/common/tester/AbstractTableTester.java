@@ -67,10 +67,10 @@ public abstract class AbstractTableTester
      *      If there is no selected cell, or if the rendered text cannot
      *      be extracted.
      */
-    public void gdVerifyText(String text)
+    public void rcVerifyText(String text)
         throws StepExecutionException {
 
-        gdVerifyText(text, MatchUtil.DEFAULT_OPERATOR);
+        rcVerifyText(text, MatchUtil.DEFAULT_OPERATOR);
     }
     
     /**
@@ -79,7 +79,7 @@ public abstract class AbstractTableTester
      * @param operator The operation used to verify
      * @throws StepExecutionException If there is no selected cell, or if the rendered text cannot be extracted.
      */
-    public void gdVerifyText(String text, String operator)
+    public void rcVerifyText(String text, String operator)
         throws StepExecutionException {
         ITableAdapter adapter = getTableAdapter();
         Cell cell = adapter.getSelectedCell();
@@ -102,7 +102,7 @@ public abstract class AbstractTableTester
      * @param operator The operation used to verify
      * @throws StepExecutionException If the row or the column is invalid, or if the rendered text cannot be extracted.
      */
-    public void gdVerifyText(String text, String operator, final String row,
+    public void rcVerifyText(String text, String operator, final String row,
             final String rowOperator, final String col,
             final String colOperator) throws StepExecutionException {
         ITableAdapter adapter = getTableAdapter();
@@ -137,7 +137,7 @@ public abstract class AbstractTableTester
      * @param button what mouse button should be used
      * @throws StepExecutionException If the row or the column is invalid
      */
-    public void gdSelectCell(final String row, final String rowOperator,
+    public void rcSelectCell(final String row, final String rowOperator,
         final String col, final String colOperator,
         final int clickCount, final int xPos, final String xUnits,
         final int yPos, final String yUnits, final String extendSelection,
@@ -203,7 +203,7 @@ public abstract class AbstractTableTester
      *             If the row or the column is invalid, or if the rendered text
      *             cannot be extracted.
      */
-    public void gdVerifyValueInColumn(final String col,
+    public void rcVerifyValueInColumn(final String col,
             final String colOperator, final String value,
             final String operator, final String searchType, boolean exists)
         throws StepExecutionException {
@@ -261,7 +261,7 @@ public abstract class AbstractTableTester
      *             If the row or the column is invalid, or if the rendered text
      *             cannot be extracted.
      */
-    public void gdVerifyValueInRow(final String row, final String rowOperator,
+    public void rcVerifyValueInRow(final String row, final String rowOperator,
             final String value, final String operator, final String searchType,
             boolean exists)
         throws StepExecutionException {
@@ -319,7 +319,7 @@ public abstract class AbstractTableTester
      * @param col the column to select
      * @param colOperator the column header operator
      */
-    public void gdVerifyEditable(boolean editable, String row,
+    public void rcVerifyEditable(boolean editable, String row,
             String rowOperator, String col, String colOperator) {
         //if row is header row
         
@@ -330,7 +330,7 @@ public abstract class AbstractTableTester
         }        
         gdSelectCell(row, rowOperator, col, colOperator, ClickOptions.create(),
                 CompSystemConstants.EXTEND_SELECTION_NO);
-        gdVerifyEditable(editable);
+        rcVerifyEditable(editable);
     }
     
     
@@ -347,7 +347,7 @@ public abstract class AbstractTableTester
             final String col, final String colOperator,
             final ClickOptions co, final String extendSelection) {
             
-        gdSelectCell(row, rowOperator, col, colOperator, co.getClickCount(),
+        rcSelectCell(row, rowOperator, col, colOperator, co.getClickCount(),
                     50, POS_UNI_PERCENT, 50, POS_UNI_PERCENT, extendSelection, 
                     co.getMouseButton());
     }
@@ -361,7 +361,7 @@ public abstract class AbstractTableTester
      * @throws StepExecutionException If there is no selected cell, or if the
      *                              rendered text cannot be extracted.
      */
-    public void gdVerifyTextAtMousePosition(String text, String operator)
+    public void rcVerifyTextAtMousePosition(String text, String operator)
         throws StepExecutionException {        
         if (isMouseOnHeader()) {
             throw new StepExecutionException("Unsupported Header Action", //$NON-NLS-1$
@@ -369,7 +369,7 @@ public abstract class AbstractTableTester
                             TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
         }        
         Cell cell = getCellAtMousePosition();
-        gdVerifyText(text, operator, 
+        rcVerifyText(text, operator, 
                 Integer.toString(IndexConverter.toUserIndex(cell.getRow())),
                 MatchUtil.EQUALS, 
                 Integer.toString(IndexConverter.toUserIndex(cell.getCol())),
@@ -381,8 +381,8 @@ public abstract class AbstractTableTester
      *
      * @param editable the editable property to verify.
      */
-    public void gdVerifyEditableSelected(boolean editable) {
-        gdVerifyEditable(editable);
+    public void rcVerifyEditableSelected(boolean editable) {
+        rcVerifyEditable(editable);
     }
     
     /**
@@ -390,7 +390,7 @@ public abstract class AbstractTableTester
      *
      * @param editable The editable property to verify.
      */
-    public void gdVerifyEditable(boolean editable) {
+    public void rcVerifyEditable(boolean editable) {
         Cell cell = getTableAdapter().getSelectedCell();
         
         Verifier.equals(editable, getTableAdapter()
@@ -402,7 +402,7 @@ public abstract class AbstractTableTester
      *
      * @param editable the editable property to verify.
      */
-    public void gdVerifyEditableMousePosition(boolean editable) {
+    public void rcVerifyEditableMousePosition(boolean editable) {
         //if row is header row
         if (isMouseOnHeader()) {
             throw new StepExecutionException("Unsupported Header Action", //$NON-NLS-1$
@@ -426,7 +426,7 @@ public abstract class AbstractTableTester
      * @param searchType Determines where the search begins ("relative" or "absolute")
      * @param button what mouse button should be used
      */
-    public void gdSelectRowByValue(String col, String colOperator,
+    public void rcSelectRowByValue(String col, String colOperator,
             final String value, final String regexOp, int clickCount,
             final String extendSelection, final String searchType, int button) {
         gdSelectRowByValue(col, colOperator, value, regexOp, extendSelection,
@@ -497,7 +497,7 @@ public abstract class AbstractTableTester
      * @param searchType Determines where the search begins ("relative" or "absolute")
      * @param button what mouse button should be used
      */
-    public void gdSelectCellByColValue(String row, String rowOperator,
+    public void rcSelectCellByColValue(String row, String rowOperator,
         final String value, final String regex, int clickCount,
         final String extendSelection, final String searchType, int button) {
         gdSelectCellByColValue(row, rowOperator, value, regex, extendSelection,
@@ -569,7 +569,7 @@ public abstract class AbstractTableTester
      * @param colOperator the column header operator
      * @return the text value.
      */
-    public String gdReadValue(String variable, String row, String rowOperator,
+    public String rcReadValue(String variable, String row, String rowOperator,
             String col, String colOperator) {
         ITableAdapter adapter = getTableAdapter();
         final int implRow = adapter.getRowFromString(row, rowOperator);
@@ -589,7 +589,7 @@ public abstract class AbstractTableTester
     /**
      * {@inheritDoc}
      */
-    public String gdReadValueAtMousePosition(String variable) {
+    public String rcReadValueAtMousePosition(String variable) {
         Cell cellAtMousePosition = getTableAdapter().getSelectedCell();
         return getCellText(cellAtMousePosition.getRow(), 
                 cellAtMousePosition.getCol());
@@ -602,7 +602,7 @@ public abstract class AbstractTableTester
      * @param count Number of clicks
      * @param button The mouse button
      */
-    public void gdClick(int count, int button) {
+    public void rcClick(int count, int button) {
         ITableAdapter adapter = getTableAdapter();
         Cell cell = null;
         if (isMouseOverCell()) {
@@ -618,7 +618,7 @@ public abstract class AbstractTableTester
                     ClickOptions.create().setClickCount(count)
                     .setMouseButton(button));
         } else {
-            super.gdClick(count, button);
+            super.rcClick(count, button);
         }
     }
    
@@ -635,7 +635,7 @@ public abstract class AbstractTableTester
      * @param extendSelection Should this selection be part of a multiple selection
      * @throws StepExecutionException if any error occurs
      */
-    public void gdMove(String direction, int cellCount, int clickCount,
+    public void rcMove(String direction, int cellCount, int clickCount,
         final int xPos, final String xUnits,
         final int yPos, final String yUnits, final String extendSelection)
         throws StepExecutionException {
@@ -669,7 +669,7 @@ public abstract class AbstractTableTester
         newCol = IndexConverter.toUserIndex(newCol);
         String row = Integer.toString(newRow);
         String col = Integer.toString(newCol);
-        gdSelectCell(row, MatchUtil.DEFAULT_OPERATOR , col, 
+        rcSelectCell(row, MatchUtil.DEFAULT_OPERATOR , col, 
                 MatchUtil.DEFAULT_OPERATOR, clickCount, xPos,
                 xUnits, yPos, yUnits, extendSelection, 
                 InputConstants.MOUSE_BUTTON_LEFT);
@@ -686,7 +686,7 @@ public abstract class AbstractTableTester
      *             If there is no selected cell, or if the cell is not editable,
      *             or if the table cell editor permits the text to be written.
      */
-    public void gdInputText(final String text) throws StepExecutionException {
+    public void rcInputText(final String text) throws StepExecutionException {
         inputText(text, false);
     }
     
@@ -699,7 +699,7 @@ public abstract class AbstractTableTester
      * @param colOperator The column operator
      * @throws StepExecutionException If the text input fails
      */
-    public void gdInputText(String text, String row, String rowOperator,
+    public void rcInputText(String text, String row, String rowOperator,
             String col, String colOperator)
         throws StepExecutionException {
         //if row is header row
@@ -711,7 +711,7 @@ public abstract class AbstractTableTester
         gdSelectCell(row, rowOperator, col, colOperator, 
                 ClickOptions.create().setClickCount(1), 
                 CompSystemConstants.EXTEND_SELECTION_NO);
-        gdInputText(text);
+        rcInputText(text);
     }
     
     /**
@@ -723,7 +723,7 @@ public abstract class AbstractTableTester
      *  If there is no selected cell, or if the cell is not editable,
      *  or if the table cell editor permits the text to be written.
      */
-    public void gdReplaceText(String text) throws StepExecutionException {
+    public void rcReplaceText(String text) throws StepExecutionException {
         inputText(text, true);
     }
     
@@ -735,7 +735,7 @@ public abstract class AbstractTableTester
      * @param col The column of the cell.
      * @param colOperator The column operator
      */
-    public void gdReplaceText(String text, String row, String rowOperator,
+    public void rcReplaceText(String text, String row, String rowOperator,
             String col, String colOperator) {
         //if row is header row
         if (getTableAdapter().getRowFromString(row, rowOperator) == -1) {
@@ -767,7 +767,7 @@ public abstract class AbstractTableTester
      * @throws StepExecutionException
      *             If the row or the column is invalid
      */
-    public void gdDragCell(final int mouseButton, final String modifier,
+    public void rcDragCell(final int mouseButton, final String modifier,
             final String row, final String rowOperator,
             final String col, final String colOperator, final int xPos,
             final String xUnits, final int yPos, final String yUnits)
@@ -777,7 +777,7 @@ public abstract class AbstractTableTester
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
         dndHelper.setDragComponent(null);
-        gdSelectCell(row, rowOperator, col, colOperator, 0, xPos, xUnits, yPos,
+        rcSelectCell(row, rowOperator, col, colOperator, 0, xPos, xUnits, yPos,
                 yUnits, CompSystemConstants.EXTEND_SELECTION_NO, 1);
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
@@ -802,14 +802,14 @@ public abstract class AbstractTableTester
      * @throws StepExecutionException
      *             If the row or the column is invalid
      */
-    public void gdDropCell(final String row, final String rowOperator,
+    public void rcDropCell(final String row, final String rowOperator,
             final String col, final String colOperator, final int xPos,
             final String xUnits, final int yPos, final String yUnits,
             int delayBeforeDrop) throws StepExecutionException {
 
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         try {
-            gdSelectCell(row, rowOperator, col, colOperator, 0, xPos, xUnits,
+            rcSelectCell(row, rowOperator, col, colOperator, 0, xPos, xUnits,
                     yPos, yUnits, CompSystemConstants.EXTEND_SELECTION_NO, 1);
             waitBeforeDrop(delayBeforeDrop);
         } finally {
@@ -830,14 +830,14 @@ public abstract class AbstractTableTester
      * @param regexOp the regex operator
      * @param searchType Determines where the search begins ("relative" or "absolute")
      */
-    public void gdDragRowByValue(int mouseButton, String modifier, String col,
+    public void rcDragRowByValue(int mouseButton, String modifier, String col,
             String colOperator, final String value, final String regexOp,
             final String searchType) {
 
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
-        gdSelectRowByValue(col, colOperator, value, regexOp, 1,
+        rcSelectRowByValue(col, colOperator, value, regexOp, 1,
                 CompSystemConstants.EXTEND_SELECTION_NO, searchType, 1);
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
@@ -856,7 +856,7 @@ public abstract class AbstractTableTester
      *                        between moving the mouse to the drop point and
      *                        releasing the mouse button
      */
-    public void gdDropRowByValue(String col, String colOperator,
+    public void rcDropRowByValue(String col, String colOperator,
             final String value, final String regexOp, final String searchType,
             int delayBeforeDrop) {
         
@@ -885,7 +885,7 @@ public abstract class AbstractTableTester
      * @param regex search using regex
      * @param searchType Determines where the search begins ("relative" or "absolute")
      */
-    public void gdDragCellByColValue(int mouseButton, String modifier,
+    public void rcDragCellByColValue(int mouseButton, String modifier,
             String row, String rowOperator, final String value,
             final String regex, final String searchType) {
 
@@ -913,7 +913,7 @@ public abstract class AbstractTableTester
      *                        between moving the mouse to the drop point and
      *                        releasing the mouse button
      */
-    public void gdDropCellByColValue(String row, String rowOperator,
+    public void rcDropCellByColValue(String row, String rowOperator,
             final String value, final String regex, final String searchType,
             int delayBeforeDrop) {
 

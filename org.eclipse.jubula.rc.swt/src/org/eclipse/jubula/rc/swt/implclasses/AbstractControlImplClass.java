@@ -80,7 +80,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param delay the time to wait after the component is found
      * {@inheritDoc}
      */
-    public void gdWaitForComponent (int timeout, int delay) {
+    public void rcWaitForComponent (int timeout, int delay) {
         // do NOT delete this method!
         // do nothing, implementation is in class CAPTestCommand.getImplClass
         // because this action needs a special implementation!
@@ -157,7 +157,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * Verifies the <code>enabled</code> property.
      * @param enabled The <code>enabled</code> property value to verify
      */
-    public void gdVerifyEnabled(boolean enabled) {
+    public void rcVerifyEnabled(boolean enabled) {
         verify(enabled, "isEnabled", new IRunnable() { //$NON-NLS-1$
             public Object run() {
                 return getComponent().isEnabled()
@@ -173,7 +173,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      *            <code>True</code> if the component is expected to exist
      *            and be visible, otherwise <code>false</code>.
      */
-    public void gdVerifyExists(boolean exists) {
+    public void rcVerifyExists(boolean exists) {
         /*
          * The actual testing of the component's existence/non-existence is 
          * implemented in CAPTestCommand.getImplClass. This method only checks
@@ -191,7 +191,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * Verifies if the textfield has the focus.
      * @param hasFocus The hasFocus property to verify.
      */
-    public void gdVerifyFocus(boolean hasFocus) {
+    public void rcVerifyFocus(boolean hasFocus) {
         verify(hasFocus, "hasFocus", new IRunnable() { //$NON-NLS-1$
             public Object run() {
                 return getComponent().isFocusControl()
@@ -211,7 +211,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param value The value of the property as a string
      * @param operator The operator used to verify
      */
-    public void gdVerifyProperty(final String name, String value, 
+    public void rcVerifyProperty(final String name, String value, 
             String operator) {
         final Control bean = getComponent();
         Object prop = getEventThreadQueuer().invokeAndWait("getProperty",  //$NON-NLS-1$
@@ -242,7 +242,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param propertyName The name of the property
      * @return the property value.
      */
-    public String gdStorePropertyValue(String variableName, 
+    public String rcStorePropertyValue(String variableName, 
         final String propertyName) {
         final Control bean = getComponent();
         Object prop = getEventThreadQueuer().invokeAndWait("getProperty",  //$NON-NLS-1$
@@ -264,7 +264,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
     /**
      * {@inheritDoc}
      */
-    public void gdClick(int count, int button) {
+    public void rcClick(int count, int button) {
         getRobot().click(
                 getComponent(),
                 null,
@@ -275,8 +275,8 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
     /**
      * {@inheritDoc}
      */
-    public void gdClick(int count) {
-        gdClick(count, 1);
+    public void rcClick(int count) {
+        rcClick(count, 1);
     }
     
     /**
@@ -289,7 +289,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param yUnits should y position be pixel or percent values
      * @throws StepExecutionException if step execution fails.
      */
-    public void gdClickDirect(int count, int button, int xPos, String xUnits, 
+    public void rcClickDirect(int count, int button, int xPos, String xUnits, 
         int yPos, String yUnits) throws StepExecutionException {
         
         clickDirect(count, button, xPos, xUnits, yPos, yUnits, null);
@@ -345,9 +345,9 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @deprecated Will be removed with gdPopupSelectByIndexPath with int parameter
      * for MouseButton
      */
-    public void gdPopupSelectByIndexPath(int xPos, int yPos, String units,
+    public void rcPopupSelectByIndexPath(int xPos, int yPos, String units,
             String indexPath) throws StepExecutionException {
-        gdPopupSelectByIndexPath(xPos, units, yPos, units, indexPath, 3);
+        rcPopupSelectByIndexPath(xPos, units, yPos, units, indexPath, 3);
     }
     
     /**
@@ -362,7 +362,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param button MouseButton
      * @throws StepExecutionException error
      */
-    public void gdPopupSelectByIndexPath(int xPos, String xUnits, int yPos, 
+    public void rcPopupSelectByIndexPath(int xPos, String xUnits, int yPos, 
             String yUnits, String indexPath, 
             int button) throws StepExecutionException {
         Menu popup = PopupMenuUtil.showPopup(getComponent(), getRobot(),
@@ -378,9 +378,9 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @deprecated Will be removed with gdPopupSelectByIndexPath with int parameter
      * for MouseButton
      */
-    public void gdPopupSelectByIndexPath(String indexPath) 
+    public void rcPopupSelectByIndexPath(String indexPath) 
         throws StepExecutionException {
-        gdPopupSelectByIndexPath(indexPath, 3);
+        rcPopupSelectByIndexPath(indexPath, 3);
     }
     
     /**
@@ -389,7 +389,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param button MouseButton
      * @throws StepExecutionException error
      */
-    public void gdPopupSelectByIndexPath(String indexPath, int button) 
+    public void rcPopupSelectByIndexPath(String indexPath, int button) 
         throws StepExecutionException {
         
         Menu popup = PopupMenuUtil.showPopup(getComponent(), getRobot(),
@@ -406,9 +406,9 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @deprecated Will be removed with gdPopupSelectByTextPath with int parameter
      * for MouseButton
      */
-    public void gdPopupSelectByTextPath(String textPath, String operator) 
+    public void rcPopupSelectByTextPath(String textPath, String operator) 
         throws StepExecutionException {
-        gdPopupSelectByTextPath(textPath, operator, 3);
+        rcPopupSelectByTextPath(textPath, operator, 3);
     }
     
     /**
@@ -418,7 +418,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param button MouseButton
      * @throws StepExecutionException error
      */
-    public void gdPopupSelectByTextPath(String textPath, String operator,
+    public void rcPopupSelectByTextPath(String textPath, String operator,
             int button) 
         throws StepExecutionException {
         
@@ -440,10 +440,10 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @deprecated Will be removed with gdPopupSelectByTextPath with int parameter
      * for MouseButton
      */
-    public void gdPopupSelectByTextPath(final int xPos, final int yPos,
+    public void rcPopupSelectByTextPath(final int xPos, final int yPos,
             final String units, String textPath, String operator)
         throws StepExecutionException {
-        gdPopupSelectByTextPath(xPos, units, 
+        rcPopupSelectByTextPath(xPos, units, 
                 yPos, units, textPath, operator, 3);
     }
     
@@ -459,7 +459,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param button MouseButton
      * @throws StepExecutionException error
      */
-    public void gdPopupSelectByTextPath(final int xPos, final String xUnits, 
+    public void rcPopupSelectByTextPath(final int xPos, final String xUnits, 
             final int yPos, final String yUnits, 
             String textPath, String operator, int button)
         throws StepExecutionException {
@@ -476,7 +476,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param enabled for checking enabled or disabled
      * @param button MouseButton
      */
-    public void gdPopupVerifyEnabledByIndexPath(String indexPath,
+    public void rcPopupVerifyEnabledByIndexPath(String indexPath,
             boolean enabled, int button)
         throws StepExecutionException {
         Menu popup = PopupMenuUtil.showPopup(getComponent(), getRobot(),
@@ -495,7 +495,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param enabled for checking enabled or disabled
      * @param button MouseButton
      */
-    public void gdPopupVerifyEnabledByIndexPath(int xPos, String xUnits, 
+    public void rcPopupVerifyEnabledByIndexPath(int xPos, String xUnits, 
             int yPos, String yUnits, String indexPath, 
             boolean enabled, int button) throws StepExecutionException {
         Menu popup = PopupMenuUtil.showPopup(getComponent(), getRobot(),
@@ -510,7 +510,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param enabled for checking enabled or disabled
      * @param button MouseButton
      */
-    public void gdPopupVerifyEnabledByTextPath(String textPath,
+    public void rcPopupVerifyEnabledByTextPath(String textPath,
             String operator, boolean enabled, int button)
         throws StepExecutionException {
         Menu popup = PopupMenuUtil.showPopup(getComponent(), getRobot(),
@@ -530,7 +530,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param enabled for checking enabled or disabled
      * @param button MouseButton
      */
-    public void gdPopupVerifyEnabledByTextPath(final int xPos, 
+    public void rcPopupVerifyEnabledByTextPath(final int xPos, 
             final String xUnits, final int yPos,
             final String yUnits, String textPath, String operator,
                 boolean enabled, int button)
@@ -546,7 +546,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param exists for checking if entry exists
      * @param button MouseButton
      */
-    public void gdPopupVerifyExistsByIndexPath(String indexPath,
+    public void rcPopupVerifyExistsByIndexPath(String indexPath,
             boolean exists, int button)
         throws StepExecutionException {
         Menu popup = PopupMenuUtil.showPopup(getComponent(), getRobot(),
@@ -565,7 +565,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param exists for checking if entry exists
      * @param button MouseButton
      */
-    public void gdPopupVerifyExistsByIndexPath(int xPos, String xUnits, 
+    public void rcPopupVerifyExistsByIndexPath(int xPos, String xUnits, 
             int yPos, String yUnits, String indexPath, 
             boolean exists, int button)
         throws StepExecutionException {
@@ -581,7 +581,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param exists for checking if entry exists
      * @param button MouseButton
      */
-    public void gdPopupVerifyExistsByTextPath(String textPath,
+    public void rcPopupVerifyExistsByTextPath(String textPath,
             String operator, boolean exists, int button)
         throws StepExecutionException {
         Menu popup = PopupMenuUtil.showPopup(getComponent(), getRobot(),
@@ -601,7 +601,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param exists for checking if entry exists
      * @param button MouseButton
      */
-    public void gdPopupVerifyExistsByTextPath(final int xPos, 
+    public void rcPopupVerifyExistsByTextPath(final int xPos, 
             final String xUnits, final int yPos,
             final String yUnits, String textPath, String operator,
             boolean exists, int button)
@@ -617,7 +617,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param selected for checking if entry is selected
      * @param button MouseButton
      */
-    public void gdPopupVerifySelectedByIndexPath(String indexPath,
+    public void rcPopupVerifySelectedByIndexPath(String indexPath,
             boolean selected, int button)
         throws StepExecutionException {
         Menu popup = PopupMenuUtil.showPopup(getComponent(), getRobot(),
@@ -636,7 +636,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param selected for checking if entry is selected
      * @param button MouseButton
      */
-    public void gdPopupVerifySelectedByIndexPath(int xPos, String xUnits, 
+    public void rcPopupVerifySelectedByIndexPath(int xPos, String xUnits, 
             int yPos, String yUnits, String indexPath, 
             boolean selected, int button)
         throws StepExecutionException {
@@ -652,7 +652,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param selected for checking if entry is selected
      * @param button MouseButton
      */
-    public void gdPopupVerifySelectedByTextPath(String textPath,
+    public void rcPopupVerifySelectedByTextPath(String textPath,
             String operator, boolean selected, int button)
         throws StepExecutionException {
         Menu popup = PopupMenuUtil.showPopup(getComponent(), getRobot(),
@@ -672,7 +672,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param selected for checking if entry is selected
      * @param button MouseButton
      */
-    public void gdPopupVerifySelectedByTextPath(final int xPos, 
+    public void rcPopupVerifySelectedByTextPath(final int xPos, 
             final String xUnits, final int yPos,
             final String yUnits, String textPath, String operator,
                 boolean selected, int button)
@@ -876,7 +876,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      *                    by whitespace.
      * @param windowWidth The width of the tooltip window in pixels.
      */
-    public void gdShowText(final String text, final int textSize, 
+    public void rcShowText(final String text, final int textSize, 
         final int timePerWord, final int windowWidth) {
 
         final Rectangle bounds = (Rectangle)getEventThreadQueuer()
@@ -914,7 +914,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      * @param yPos what y position
      * @param yUnits should y position be pixel or percent values
      */
-    public void gdDrag(int mouseButton, String modifier, int xPos, 
+    public void rcDrag(int mouseButton, String modifier, int xPos, 
             String xUnits, int yPos, String yUnits) {
         // Only store the Drag-Information. Otherwise the GUI-Eventqueue
         // blocks after performed Drag!
@@ -923,7 +923,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
         dndHelper.setMouseButton(mouseButton);
         dndHelper.setModifier(modifier);
         dndHelper.setDragComponent(null);
-        gdClickDirect(0, mouseButton, xPos, xUnits, yPos, yUnits);
+        rcClickDirect(0, mouseButton, xPos, xUnits, yPos, yUnits);
     }
     
     /**
@@ -937,7 +937,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
      *                        between moving the mouse to the drop point and
      *                        releasing the mouse button                       
      */
-    public void gdDrop(final int xPos, final String xUnits, final int yPos, 
+    public void rcDrop(final int xPos, final String xUnits, final int yPos, 
             final String yUnits, int delayBeforeDrop) {
         final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
             .getInstance();
@@ -959,7 +959,7 @@ public abstract class AbstractControlImplClass extends AbstractSwtImplClass {
                     shakeMouse();
                     
                     // drop
-                    gdClickDirect(0, mouseButton, xPos, xUnits, yPos, yUnits);
+                    rcClickDirect(0, mouseButton, xPos, xUnits, yPos, yUnits);
                     return null;
                 }            
             });

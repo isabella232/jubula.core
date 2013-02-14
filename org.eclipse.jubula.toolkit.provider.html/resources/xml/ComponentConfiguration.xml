@@ -208,7 +208,7 @@
             <property name="selector" value="a" />
         </componentClass>
 		<action name="html.AnchorFollow" changed="1.1" deprecated="true">
-			<method>gdFollow</method>
+			<method>rcFollow</method>
 			<param name="html.AnchorOpenIn">
 				<type>java.lang.String</type>
 				<defaultValue>here</defaultValue>
@@ -220,7 +220,7 @@
 			</param>		
 		</action>
 		<action name="html.VerifyURL" changed="1.0">
-			<method>gdVerifyURL</method>
+			<method>rcVerifyURL</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>
 			</param>
@@ -267,19 +267,19 @@
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.HtmlApplicationImplClass</testerClass>
 		<componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.WebBrowser" />
 		<action name="html.BrowserGotoAction" changed="1.0">
-			<method>gdGotoUrl</method>
+			<method>rcGotoUrl</method>
 			<param name="html.BrowserGotoUrl">
 				<type>java.lang.String</type>
 			</param>		
 		</action>
 		<action name="html.BrowserBackAction" changed="1.0">
-			<method>gdBack</method>
+			<method>rcBack</method>
 		</action>
 		<action name="html.BrowserReloadAction" changed="1.0">
-			<method>gdReload</method>	
+			<method>rcReload</method>	
 		</action>
 		<action name="html.BrowserSelectWindowAction" changed="1.1" deprecated="true">
-			<method>gdSelectWindow</method>
+			<method>rcSelectWindow</method>
 			<param name="html.BrowserTitle">
 				<type>java.lang.String</type>
 			</param>

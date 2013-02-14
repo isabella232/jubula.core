@@ -409,11 +409,11 @@ public class TableTester extends AbstractTableTester {
     /**
      * {@inheritDoc}
      */
-    public void gdClickDirect(int count, int button, int xPos, String xUnits, 
+    public void rcClickDirect(int count, int button, int xPos, String xUnits, 
         int yPos, String yUnits) throws StepExecutionException {
         
         int correctedYPos = correctYPos(yPos, yUnits);
-        super.gdClickDirect(count, button, xPos, xUnits, correctedYPos, yUnits);
+        super.rcClickDirect(count, button, xPos, xUnits, correctedYPos, yUnits);
     }
     
     /**
@@ -486,7 +486,7 @@ public class TableTester extends AbstractTableTester {
      * @throws StepExecutionException
      *             If the row or the column is invalid
      */
-    public void gdDragCell(final int mouseButton, final String modifier, 
+    public void rcDragCell(final int mouseButton, final String modifier, 
             final String row, String rowOperator, final String col,
             final String colOperator, final int xPos, final String xUnits,
             final int yPos, final String yUnits) 
@@ -498,7 +498,7 @@ public class TableTester extends AbstractTableTester {
         dndHelper.setModifier(modifier);
         dndHelper.setDragComponent(null);
         
-        gdSelectCell(row, rowOperator, col, colOperator, 0, xPos,
+        rcSelectCell(row, rowOperator, col, colOperator, 0, xPos,
                 xUnits, yPos, yUnits, 
                 CompSystemConstants.EXTEND_SELECTION_NO, 1);
     }
@@ -522,7 +522,7 @@ public class TableTester extends AbstractTableTester {
      * @throws StepExecutionException
      *             If the row or the column is invalid
      */
-    public void gdDropCell(final String row, final String rowOperator,
+    public void rcDropCell(final String row, final String rowOperator,
             final String col, final String colOperator, final int xPos, 
             final String xUnits, final int yPos, final String yUnits,
             int delayBeforeDrop) throws StepExecutionException {
@@ -543,7 +543,7 @@ public class TableTester extends AbstractTableTester {
                     CAPUtil.shakeMouse();
 
                     // drop
-                    gdSelectCell(row, rowOperator, col, colOperator, 0, xPos,
+                    rcSelectCell(row, rowOperator, col, colOperator, 0, xPos,
                             xUnits, yPos, yUnits, 
                             CompSystemConstants.EXTEND_SELECTION_NO, 1);
                     return null;
@@ -571,7 +571,7 @@ public class TableTester extends AbstractTableTester {
      * @param regexOp the regex operator
      * @param searchType Determines where the search begins ("relative" or "absolute")
      */
-    public void gdDragRowByValue(int mouseButton, String modifier, String col,
+    public void rcDragRowByValue(int mouseButton, String modifier, String col,
             String colOperator, final String value, final String regexOp,
             final String searchType) {
         
@@ -581,7 +581,7 @@ public class TableTester extends AbstractTableTester {
         dndHelper.setModifier(modifier);
         dndHelper.setDragComponent(null);
         
-        gdSelectRowByValue(col, colOperator, value, regexOp, 1, 
+        rcSelectRowByValue(col, colOperator, value, regexOp, 1, 
                 CompSystemConstants.EXTEND_SELECTION_NO,
                 searchType, 1);
     }
@@ -599,7 +599,7 @@ public class TableTester extends AbstractTableTester {
      *                        between moving the mouse to the drop point and
      *                        releasing the mouse button                       
      */
-    public void gdDropRowByValue(final String col, final String colOperator,
+    public void rcDropRowByValue(final String col, final String colOperator,
             final String value, final String regexOp, final String searchType, 
             int delayBeforeDrop) {
         
@@ -648,7 +648,7 @@ public class TableTester extends AbstractTableTester {
      * @param regex search using regex
      * @param searchType Determines where the search begins ("relative" or "absolute")
      */
-    public void gdDragCellByColValue(int mouseButton, String modifier,
+    public void rcDragCellByColValue(int mouseButton, String modifier,
             String row, String rowOperator, final String value,
             final String regex, final String searchType) {
         
@@ -675,7 +675,7 @@ public class TableTester extends AbstractTableTester {
      *                        between moving the mouse to the drop point and
      *                        releasing the mouse button                       
      */
-    public void gdDropCellByColValue(final String row, final String rowOperator,
+    public void rcDropCellByColValue(final String row, final String rowOperator,
             final String value, final String regex, final String searchType,
             int delayBeforeDrop) {
         

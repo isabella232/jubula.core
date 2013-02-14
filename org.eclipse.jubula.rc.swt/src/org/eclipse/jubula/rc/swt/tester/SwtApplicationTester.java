@@ -146,7 +146,7 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
      * Testcases with this action are fragile, because this action assumes the
      * availability of a text component. Any other case breaks the test.
      */
-    public void gdReplaceText(String text) {
+    public void rcReplaceText(String text) {
         // The number of clicks differs from the Swing implementation
         // because a double-click selects all of the text
         getRobot().click(FocusTracker.getFocusOwner(), null, 
@@ -154,7 +154,7 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
         if (StringConstants.EMPTY.equals(text)) {
             getRobot().keyStroke("DELETE"); //$NON-NLS-1$
         }
-        gdInputText(text);
+        rcInputText(text);
     }
 
     /**
@@ -164,7 +164,7 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
      * @param timeout the time in ms
      * @param delay delay after the window is shown
      */
-    public void gdWaitForWindow(final String title, final String operator, 
+    public void rcWaitForWindow(final String title, final String operator, 
         int timeout, int delay) {
 
         final EventListener.Condition cond = 
@@ -229,7 +229,7 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
      * @param timeout the time in ms
      * @param delay delay after the window is activated
      */
-    public void gdWaitForWindowActivation(final String title, 
+    public void rcWaitForWindowActivation(final String title, 
             final String operator, final int timeout, int delay) {
         
         final EventListener.Condition cond = 
@@ -293,7 +293,7 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
      * @param timeout the time in ms
      * @param delay delay after the window is activated
      */
-    public void gdWaitForWindowToClose(final String title, 
+    public void rcWaitForWindowToClose(final String title, 
             final String operator, int timeout, int delay) {
 
         final EventListener.Condition cond = 
@@ -404,7 +404,7 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
      *            <code>True</code> if the component is expected to exist and be
      *            visible, otherwise <code>false</code>.
      */
-    public void gdCheckExistenceOfWindow(final String title,
+    public void rcCheckExistenceOfWindow(final String title,
             final String operator, final boolean exists) {
         IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
         Boolean windowExists = (Boolean)queuer.invokeAndWait(
@@ -451,7 +451,7 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
      * @param modifierSpec the string representation of the modifiers
      * @param keySpec the string representation of the key
      */
-    public void gdKeyStroke(String modifierSpec, String keySpec) {
+    public void rcKeyStroke(String modifierSpec, String keySpec) {
         if (keySpec == null || keySpec.trim().length() == 0) {
             throw new StepExecutionException(
                 "The base key of the key stroke must not be null or empty", //$NON-NLS-1$
@@ -466,7 +466,7 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
         String keySpecification = keySpec.trim().toLowerCase();
         if (EnvironmentUtils.isMacOS() && keySpecification.length() == 1
                 && keySpecification.charAt(0) == WorkaroundUtil.CHAR_B) {
-            gdNativeKeyStroke(modifierSpec, keySpec);
+            rcNativeKeyStroke(modifierSpec, keySpec);
         } else {
             // at this the key stroke specification is not fully fulfilled as the
             // key stroke spec base key is not definitely upper case

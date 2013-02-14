@@ -33,13 +33,13 @@ public class JTreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public void gdDragByTextPath(int mouseButton,
+    public void rcDragByTextPath(int mouseButton,
             String modifier, String pathType, int preAscend,
             String treeTextPath, String operator) {
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
-        gdSelect(pathType, preAscend, treeTextPath, operator, 0, 1, 
+        rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1, 
                 CompSystemConstants.EXTEND_SELECTION_NO);
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
@@ -49,10 +49,10 @@ public class JTreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public void gdDropByTextPath(String pathType, int preAscend,
+    public void rcDropByTextPath(String pathType, int preAscend,
             String treeTextPath, String operator, int delayBeforeDrop) {
         try {
-            gdSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
+            rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
                     CompSystemConstants.EXTEND_SELECTION_NO);
             waitBeforeDrop(delayBeforeDrop);
         } finally {
@@ -66,13 +66,13 @@ public class JTreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public void gdDragByIndexPath(int mouseButton,
+    public void rcDragByIndexPath(int mouseButton,
             String modifier, String pathType, int preAscend,
             String treeIndexPath) {
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
-        gdSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
+        rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
                 CompSystemConstants.EXTEND_SELECTION_NO);
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
@@ -82,10 +82,10 @@ public class JTreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public void gdDropByIndexPath(String pathType, int preAscend,
+    public void rcDropByIndexPath(String pathType, int preAscend,
             String treeIndexPath, int delayBeforeDrop) {
         try {
-            gdSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
+            rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
                     CompSystemConstants.EXTEND_SELECTION_NO);
             waitBeforeDrop(delayBeforeDrop);
         } finally {
@@ -98,7 +98,7 @@ public class JTreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public void gdVerifyTextAtMousePosition(String text, String operator) {
+    public void rcVerifyTextAtMousePosition(String text, String operator) {
         checkNodeText(getNodeAtMousePosition(), text, operator);
     }
     /**

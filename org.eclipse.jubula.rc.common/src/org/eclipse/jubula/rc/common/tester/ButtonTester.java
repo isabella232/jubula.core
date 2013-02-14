@@ -38,7 +38,7 @@ public class ButtonTester extends AbstractTextVerifiableTester {
      * 
      * @param selected The selected property value to verify.
      */
-    public void gdVerifySelected(boolean selected) {
+    public void rcVerifySelected(boolean selected) {
 
         Verifier.equals(selected, getButtonAdapter().isSelected());
     }
@@ -48,8 +48,8 @@ public class ButtonTester extends AbstractTextVerifiableTester {
      * 
      * @param text The text to verify
      */
-    public void gdVerifyText(String text) {
-        gdVerifyText(text, MatchUtil.DEFAULT_OPERATOR);
+    public void rcVerifyText(String text) {
+        rcVerifyText(text, MatchUtil.DEFAULT_OPERATOR);
     }
 
     /** {@inheritDoc} */

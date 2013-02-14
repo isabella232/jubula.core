@@ -42,7 +42,7 @@ public class WidgetTester extends AbstractUITester {
      * @param exists  <code>True</code> if the component is expected to exist
      *            and be visible, otherwise <code>false</code>.
      */
-    public void gdVerifyExists(boolean exists) {
+    public void rcVerifyExists(boolean exists) {
         Verifier.equals(exists, getWidgetAdapter().isShowing());
     }
 
@@ -51,7 +51,7 @@ public class WidgetTester extends AbstractUITester {
      * @param hasFocus <code>True</code> if the component is expected to has 
      *                  the focus, otherwise <code>false</code>
      */
-    public void gdVerifyFocus(boolean hasFocus) {
+    public void rcVerifyFocus(boolean hasFocus) {
         Verifier.equals(hasFocus, getWidgetAdapter().hasFocus());
     }
     /**
@@ -59,7 +59,7 @@ public class WidgetTester extends AbstractUITester {
      * @param enabled <code>True</code> if the component is expected to be 
      *                  enabled, otherwise <code>false</code>
      */
-    public void gdVerifyEnabled(boolean enabled) {
+    public void rcVerifyEnabled(boolean enabled) {
         Verifier.equals(enabled, getWidgetAdapter().isEnabled());
     }
     
@@ -74,7 +74,7 @@ public class WidgetTester extends AbstractUITester {
      * @param value The value of the property as a string
      * @param operator The operator used to verify
      */
-    public void gdVerifyProperty(final String name, String value,
+    public void rcVerifyProperty(final String name, String value,
             String operator) {
         
         final IWidgetAdapter bean = (IWidgetAdapter) getComponent();
@@ -90,7 +90,7 @@ public class WidgetTester extends AbstractUITester {
      * @param count Number of mouse clicks
      * @param button Pressed button
      */
-    public void gdClick(int count, int button) {
+    public void rcClick(int count, int button) {
         getRobot().click(getComponent().getRealComponent(), null,
                 ClickOptions.create()
                     .setClickCount(count)
@@ -101,8 +101,8 @@ public class WidgetTester extends AbstractUITester {
      * Clicks the center of the component with the MouseButton 1
      * @param count Number of mouse clicks
      */
-    public void gdClick(int count) {
-        gdClick(count, 1);
+    public void rcClick(int count) {
+        rcClick(count, 1);
     }
     
     /**
@@ -116,7 +116,7 @@ public class WidgetTester extends AbstractUITester {
      * @param yUnits should y position be pixel or percent values
      * @throws StepExecutionException error
      */
-    public void gdClickDirect(int count, int button, int xPos, String xUnits,
+    public void rcClickDirect(int count, int button, int xPos, String xUnits,
             int yPos, String yUnits) throws StepExecutionException {
 
         getRobot().click(getComponent().getRealComponent(), null,
@@ -137,9 +137,9 @@ public class WidgetTester extends AbstractUITester {
      * @param yPos what y position
      * @param yUnits should y position be pixel or percent values
      */
-    public void gdDrag(int mouseButton, String modifier, int xPos,
+    public void rcDrag(int mouseButton, String modifier, int xPos,
             String xUnits, int yPos, String yUnits) {
-        getWidgetAdapter().gdDrag(mouseButton, modifier, xPos, xUnits,
+        getWidgetAdapter().rcDrag(mouseButton, modifier, xPos, xUnits,
                 yPos, yUnits);
     }
 
@@ -154,10 +154,10 @@ public class WidgetTester extends AbstractUITester {
      *                        between moving the mouse to the drop point and
      *                        releasing the mouse button
      */
-    public void gdDrop(int xPos, String xUnits, int yPos, String yUnits,
+    public void rcDrop(int xPos, String xUnits, int yPos, String yUnits,
             int delayBeforeDrop) {
 
-        getWidgetAdapter().gdDrop(xPos, xUnits, yPos, yUnits,
+        getWidgetAdapter().rcDrop(xPos, xUnits, yPos, yUnits,
                delayBeforeDrop);
     }
     
@@ -167,7 +167,7 @@ public class WidgetTester extends AbstractUITester {
      * @param delay the time to wait after the component is found
      * {@inheritDoc}
      */
-    public void gdWaitForComponent (int timeout, int delay) {
+    public void rcWaitForComponent (int timeout, int delay) {
         // do NOT delete this method!
         // do nothing, implementation is in class CAPTestCommand.getImplClass
         // because this action needs a special implementation!
@@ -184,7 +184,7 @@ public class WidgetTester extends AbstractUITester {
      * @param propertyName The name of the property
      * @return the property value.
      */
-    public String gdStorePropertyValue(String variableName, 
+    public String rcStorePropertyValue(String variableName, 
         final String propertyName) {
         IWidgetAdapter bean = (IWidgetAdapter) getComponent();
 
@@ -197,7 +197,7 @@ public class WidgetTester extends AbstractUITester {
      * @param button MouseButton
      * @throws StepExecutionException error
      */
-    public void gdPopupSelectByIndexPath(String indexPath, int button)
+    public void rcPopupSelectByIndexPath(String indexPath, int button)
         throws StepExecutionException {
 
         AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
@@ -211,7 +211,7 @@ public class WidgetTester extends AbstractUITester {
      * @param button MouseButton
      * @throws StepExecutionException error
      */
-    public void gdPopupSelectByTextPath(String textPath, String operator,
+    public void rcPopupSelectByTextPath(String textPath, String operator,
             int button)
         throws StepExecutionException {
         AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
@@ -230,7 +230,7 @@ public class WidgetTester extends AbstractUITester {
      * @param button MouseButton
      * @throws StepExecutionException error
      */
-    public void gdPopupSelectByTextPath(final int xPos, final String xUnits, 
+    public void rcPopupSelectByTextPath(final int xPos, final String xUnits, 
             final int yPos, final String yUnits, 
             String textPath, String operator, int button)
         throws StepExecutionException {
@@ -251,7 +251,7 @@ public class WidgetTester extends AbstractUITester {
      * @param button MouseButton
      * @throws StepExecutionException error
      */
-    public void gdPopupSelectByIndexPath(
+    public void rcPopupSelectByIndexPath(
             int xPos, String xUnits, int yPos, String yUnits, 
             String indexPath, int button) throws StepExecutionException {
         AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
@@ -264,7 +264,7 @@ public class WidgetTester extends AbstractUITester {
      * @param enabled for checking enabled or disabled
      * @param button MouseButton
      */
-    public void gdPopupVerifyEnabledByIndexPath(String indexPath,
+    public void rcPopupVerifyEnabledByIndexPath(String indexPath,
             boolean enabled, int button)
         throws StepExecutionException {
         AbstractMenuTester popup = getWidgetAdapter().showPopup(button);        
@@ -282,7 +282,7 @@ public class WidgetTester extends AbstractUITester {
      * @param enabled for checking enabled or disabled
      * @param button MouseButton
      */
-    public void gdPopupVerifyEnabledByIndexPath(int xPos, String xUnits, 
+    public void rcPopupVerifyEnabledByIndexPath(int xPos, String xUnits, 
             int yPos, String yUnits, String indexPath, 
             boolean enabled, int button) throws StepExecutionException {
         AbstractMenuTester popup = getWidgetAdapter()
@@ -297,7 +297,7 @@ public class WidgetTester extends AbstractUITester {
      * @param enabled for checking enabled or disabled
      * @param button MouseButton
      */
-    public void gdPopupVerifyEnabledByTextPath(String textPath,
+    public void rcPopupVerifyEnabledByTextPath(String textPath,
             String operator, boolean enabled, int button)
         throws StepExecutionException {
         AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
@@ -316,7 +316,7 @@ public class WidgetTester extends AbstractUITester {
      * @param enabled for checking enabled or disabled
      * @param button MouseButton
      */
-    public void gdPopupVerifyEnabledByTextPath(final int xPos, 
+    public void rcPopupVerifyEnabledByTextPath(final int xPos, 
             final String xUnits, final int yPos,
             final String yUnits, String textPath, String operator,
                 boolean enabled, int button)
@@ -332,7 +332,7 @@ public class WidgetTester extends AbstractUITester {
      * @param selected for checking if entry is selected
      * @param button MouseButton
      */
-    public void gdPopupVerifySelectedByIndexPath(String indexPath,
+    public void rcPopupVerifySelectedByIndexPath(String indexPath,
             boolean selected, int button)
         throws StepExecutionException {
         AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
@@ -350,7 +350,7 @@ public class WidgetTester extends AbstractUITester {
      * @param selected for checking if entry is selected
      * @param button MouseButton
      */
-    public void gdPopupVerifySelectedByIndexPath(int xPos, String xUnits, 
+    public void rcPopupVerifySelectedByIndexPath(int xPos, String xUnits, 
             int yPos, String yUnits, String indexPath, boolean selected, 
             int button) throws StepExecutionException {
         AbstractMenuTester popup = getWidgetAdapter()
@@ -365,7 +365,7 @@ public class WidgetTester extends AbstractUITester {
      * @param selected for checking if entry is selected
      * @param button MouseButton
      */
-    public void gdPopupVerifySelectedByTextPath(String textPath,
+    public void rcPopupVerifySelectedByTextPath(String textPath,
             String operator, boolean selected, int button)
         throws StepExecutionException {
         AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
@@ -384,7 +384,7 @@ public class WidgetTester extends AbstractUITester {
      * @param selected for checking if entry is selected
      * @param button MouseButton
      */
-    public void gdPopupVerifySelectedByTextPath(final int xPos, 
+    public void rcPopupVerifySelectedByTextPath(final int xPos, 
             final String xUnits, final int yPos,
             final String yUnits, String textPath, String operator,
                 boolean selected, int button)
@@ -400,7 +400,7 @@ public class WidgetTester extends AbstractUITester {
      * @param exists for checking if entry exists
      * @param button MouseButton
      */
-    public void gdPopupVerifyExistsByIndexPath(String indexPath,
+    public void rcPopupVerifyExistsByIndexPath(String indexPath,
             boolean exists, int button)
         throws StepExecutionException {
         AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
@@ -418,7 +418,7 @@ public class WidgetTester extends AbstractUITester {
      * @param exists for checking if entry exists
      * @param button MouseButton
      */
-    public void gdPopupVerifyExistsByIndexPath(int xPos, String xUnits, 
+    public void rcPopupVerifyExistsByIndexPath(int xPos, String xUnits, 
             int yPos, String yUnits, String indexPath, 
             boolean exists, int button) throws StepExecutionException {
         AbstractMenuTester popup = getWidgetAdapter()
@@ -433,7 +433,7 @@ public class WidgetTester extends AbstractUITester {
      * @param exists for checking if entry exists
      * @param button MouseButton
      */
-    public void gdPopupVerifyExistsByTextPath(String textPath,
+    public void rcPopupVerifyExistsByTextPath(String textPath,
             String operator, boolean exists, int button)
         throws StepExecutionException {
         AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
@@ -452,7 +452,7 @@ public class WidgetTester extends AbstractUITester {
      * @param exists for checking if entry exists
      * @param button MouseButton
      */
-    public void gdPopupVerifyExistsByTextPath(final int xPos, 
+    public void rcPopupVerifyExistsByTextPath(final int xPos, 
             final String xUnits, final int yPos,
             final String yUnits, String textPath, String operator,
             boolean exists, int button)
@@ -486,7 +486,7 @@ public class WidgetTester extends AbstractUITester {
      *                    by whitespace.
      * @param windowWidth The width of the tooltip window in pixels.
      */
-    public void gdShowText(final String text, final int textSize,
+    public void rcShowText(final String text, final int textSize,
         final int timePerWord, final int windowWidth) {
         getWidgetAdapter().showToolTip(text, textSize,
                 timePerWord, windowWidth);

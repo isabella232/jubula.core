@@ -110,7 +110,7 @@ public interface IWidgetAdapter extends IComponentAdapter {
      * @param yUnits
      *            should y position be pixel or percent values
      */
-    public void gdDrag(int mouseButton, String modifier, int xPos,
+    public void rcDrag(int mouseButton, String modifier, int xPos,
             String xUnits, int yPos, String yUnits);
     
     /**
@@ -129,7 +129,7 @@ public interface IWidgetAdapter extends IComponentAdapter {
      *            the amount of time (in milliseconds) to wait between moving
      *            the mouse to the drop point and releasing the mouse button
      */
-    public void gdDrop(int xPos, String xUnits, int yPos, String yUnits,
+    public void rcDrop(int xPos, String xUnits, int yPos, String yUnits,
             int delayBeforeDrop);
     
     /**

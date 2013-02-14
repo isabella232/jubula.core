@@ -147,7 +147,7 @@ public class TreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public void gdVerifyTextAtMousePosition(String pattern, String operator) {
+    public void rcVerifyTextAtMousePosition(String pattern, String operator) {
         TreeItem itemAtMousePosition = (TreeItem) getNodeAtMousePosition();
         int column = getMouseColumn();
         AbstractTreeOperationContext context;
@@ -175,7 +175,7 @@ public class TreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public void gdDragByTextPath(int mouseButton, String modifier, 
+    public void rcDragByTextPath(int mouseButton, String modifier, 
             String pathType, int preAscend, String treePath, String operator) {
         
         final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
@@ -187,7 +187,7 @@ public class TreeTester extends AbstractTreeTester {
 
         SwtUtils.waitForDisplayIdle(getTree().getDisplay());
 
-        gdSelect(pathType, preAscend, treePath, operator, 0, 1, 
+        rcSelect(pathType, preAscend, treePath, operator, 0, 1, 
                 CompSystemConstants.EXTEND_SELECTION_NO);
 
         SwtUtils.waitForDisplayIdle(getTree().getDisplay());
@@ -196,7 +196,7 @@ public class TreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public void gdDropByTextPath(final String pathType, final int preAscend, 
+    public void rcDropByTextPath(final String pathType, final int preAscend, 
             final String treePath, final String operator, int delayBeforeDrop) {
         
         final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
@@ -230,7 +230,7 @@ public class TreeTester extends AbstractTreeTester {
             waitForDisplayUpdate();
 
             // drop
-            gdSelect(pathType, preAscend, treePath, operator, 0, 1,
+            rcSelect(pathType, preAscend, treePath, operator, 0, 1,
                     CompSystemConstants.EXTEND_SELECTION_NO);
 
             SwtUtils.waitForDisplayIdle(getTree().getDisplay());
@@ -247,7 +247,7 @@ public class TreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public void gdDragByIndexPath(int mouseButton, String modifier, 
+    public void rcDragByIndexPath(int mouseButton, String modifier, 
             String pathType, int preAscend, String indexPath) {
         
         final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
@@ -259,7 +259,7 @@ public class TreeTester extends AbstractTreeTester {
         
         SwtUtils.waitForDisplayIdle(getTree().getDisplay());
 
-        gdSelectByIndices(pathType, preAscend, indexPath, 0, 1, 
+        rcSelectByIndices(pathType, preAscend, indexPath, 0, 1, 
                 CompSystemConstants.EXTEND_SELECTION_NO);
         
         SwtUtils.waitForDisplayIdle(getTree().getDisplay());
@@ -268,7 +268,7 @@ public class TreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public void gdDropByIndexPath(final String pathType, final int preAscend, 
+    public void rcDropByIndexPath(final String pathType, final int preAscend, 
             final String indexPath, int delayBeforeDrop) {
         
         final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
@@ -301,7 +301,7 @@ public class TreeTester extends AbstractTreeTester {
             waitForDisplayUpdate();
 
             // drop
-            gdSelectByIndices(pathType, preAscend, indexPath, 0, 1, 
+            rcSelectByIndices(pathType, preAscend, indexPath, 0, 1, 
                     CompSystemConstants.EXTEND_SELECTION_NO);
 
             SwtUtils.waitForDisplayIdle(getTree().getDisplay());
@@ -416,7 +416,7 @@ public class TreeTester extends AbstractTreeTester {
      * @param clickCount the click count to select the new cell.
      * @throws StepExecutionException if any error occurs
      */
-    public void gdMove(String direction, int distance, int clickCount) 
+    public void rcMove(String direction, int distance, int clickCount) 
         throws StepExecutionException {
 
         if (getColumnCount() > 0) {
@@ -474,7 +474,7 @@ public class TreeTester extends AbstractTreeTester {
                 traverser.traversePath(selectOp, selectedNode);
             }
         } else {
-            super.gdMove(direction, distance, clickCount);
+            super.rcMove(direction, distance, clickCount);
         }
     }
 
@@ -511,7 +511,7 @@ public class TreeTester extends AbstractTreeTester {
      * @throws StepExecutionException If the tree path is invalid, if the
      * double-click to expand the node fails, or if the selection is invalid.
      */
-    public void gdSelect(String pathType, int preAscend, String treePath, 
+    public void rcSelect(String pathType, int preAscend, String treePath, 
                          String operator, int clickCount, int column,
                          int button)
         throws StepExecutionException {
@@ -541,7 +541,7 @@ public class TreeTester extends AbstractTreeTester {
      * @throws StepExecutionException if <code>indexPath</code> is not a valid
      * path
      */
-    public void gdSelectByIndices(String pathType, int preAscend, 
+    public void rcSelectByIndices(String pathType, int preAscend, 
                                   String indexPath, int clickCount, int column,
                                   int button)
         throws StepExecutionException {
@@ -564,10 +564,10 @@ public class TreeTester extends AbstractTreeTester {
      *            The column containing the text to verify
      * @throws StepExecutionException If no node is selected or the verification fails.
      */
-    public void gdVerifySelectedValue(String pattern, int column)
+    public void rcVerifySelectedValue(String pattern, int column)
         throws StepExecutionException {
 
-        gdVerifySelectedValue(pattern, MatchUtil.DEFAULT_OPERATOR, column);
+        rcVerifySelectedValue(pattern, MatchUtil.DEFAULT_OPERATOR, column);
     }
     /**
      * Verifies if the selected node underneath <code>treePath</code> at column
@@ -583,7 +583,7 @@ public class TreeTester extends AbstractTreeTester {
      * @throws StepExecutionException If there is no tree node selected, the tree path contains no
      *             selection or the verification fails
      */
-    public void gdVerifySelectedValue(String pattern, String operator, 
+    public void rcVerifySelectedValue(String pattern, String operator, 
         int column) throws StepExecutionException {
         
         final int implCol = IndexConverter.toImplementationIndex(column);
@@ -683,7 +683,7 @@ public class TreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public String gdStoreValueAtMousePosition(String variable) {
+    public String rcStoreValueAtMousePosition(String variable) {
         TreeItem itemAtMousePosition = (TreeItem) getNodeAtMousePosition();
         int column = getMouseColumn();
         AbstractTreeOperationContext context;
@@ -715,7 +715,7 @@ public class TreeTester extends AbstractTreeTester {
      * @throws StepExecutionException If the tree path is invalid, if the
      * double-click to expand the node fails, or if the selection is invalid.
      */
-    public void gdToggleCheckbox(String pathType, int preAscend, String
+    public void rcToggleCheckbox(String pathType, int preAscend, String
             treePath, String operator)
         throws StepExecutionException {
         toggleCheckBoxByPath(pathType, preAscend, 
@@ -733,7 +733,7 @@ public class TreeTester extends AbstractTreeTester {
      * @throws StepExecutionException if <code>indexPath</code> is not a valid
      * path
      */
-    public void gdToggleCheckboxByIndices(String pathType, int preAscend, 
+    public void rcToggleCheckboxByIndices(String pathType, int preAscend, 
                     String indexPath)
         throws StepExecutionException {
     
@@ -756,7 +756,7 @@ public class TreeTester extends AbstractTreeTester {
      * @throws StepExecutionException If the tree path is invalid, if the
      * double-click to expand the node fails, or if the selection is invalid.
      */
-    public void gdVerifyCheckbox(String pathType, int preAscend, String
+    public void rcVerifyCheckbox(String pathType, int preAscend, String
             treePath, String operator, boolean checked)
         throws StepExecutionException {
         verifyCheckBoxByPath(pathType, preAscend, 
@@ -776,7 +776,7 @@ public class TreeTester extends AbstractTreeTester {
      * @throws StepExecutionException if <code>indexPath</code> is not a valid
      * path
      */
-    public void gdVerifyCheckboxByIndices(String pathType, int preAscend, 
+    public void rcVerifyCheckboxByIndices(String pathType, int preAscend, 
                     String indexPath, boolean checked)
         throws StepExecutionException {
     
@@ -791,7 +791,7 @@ public class TreeTester extends AbstractTreeTester {
      * @param checked true if checkbox of node is selected, false otherwise
      * @throws StepExecutionException If no node is selected or the verification fails.
      */
-    public void gdVerifySelectedCheckbox(boolean checked)
+    public void rcVerifySelectedCheckbox(boolean checked)
         throws StepExecutionException {        
         Boolean checkSelected = ((Boolean)getEventThreadQueuer().invokeAndWait(
                 "gdVerifyTreeCheckbox", new IRunnable() { //$NON-NLS-1$
@@ -854,8 +854,8 @@ public class TreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public void gdClick(int count, int button) {
-        super.gdClick(count, button);
+    public void rcClick(int count, int button) {
+        super.rcClick(count, button);
         
     }
     

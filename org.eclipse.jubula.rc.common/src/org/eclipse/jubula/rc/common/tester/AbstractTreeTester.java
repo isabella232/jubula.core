@@ -70,7 +70,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param text the text to check
      * @param operator the operator for the verification
      */
-    public abstract void gdVerifyTextAtMousePosition(
+    public abstract void rcVerifyTextAtMousePosition(
             String text, 
             String operator);
     /**
@@ -226,7 +226,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param count Number of mouse clicks
      * @param button Pressed button
      */
-    public void gdClick(int count, int button) {
+    public void rcClick(int count, int button) {
         if (getRobot().isMouseInComponent(
                 getTreeAdapter().getRealComponent())) {
             getRobot().clickAtCurrentPosition(
@@ -256,7 +256,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      *             If the tree path is invalid or the double click to collapse
      *             the node fails.
      */
-    public void gdCollapse(String pathType, int preAscend,
+    public void rcCollapse(String pathType, int preAscend,
         String treePath, String operator) throws StepExecutionException {
         traverseLastElementByPath(
                 createStringNodePath(splitTextTreePath(treePath), operator),
@@ -278,7 +278,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      *             If the tree path is invalid or the double-click to collapse
      *             the node fails.
      */
-    public void gdCollapseByIndices(String pathType, int preAscend,
+    public void rcCollapseByIndices(String pathType, int preAscend,
         String indexPath) throws StepExecutionException {
 
         try {
@@ -334,7 +334,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @throws StepExecutionException
      *             If the tree path is invalid or the double click fails.
      */
-    public void gdExpand(String pathType, int preAscend,
+    public void rcExpand(String pathType, int preAscend,
         String treePath, String operator) throws StepExecutionException {
         traverseTreeByPath(
                 createStringNodePath(splitTextTreePath(treePath), operator),
@@ -356,7 +356,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @throws StepExecutionException
      *             If the tree path is invalid or the double-click fails.
      */
-    public void gdExpandByIndices(String pathType, int preAscend,
+    public void rcExpandByIndices(String pathType, int preAscend,
         String indexPath) throws StepExecutionException {
 
         try {
@@ -382,7 +382,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param clickCount the click count to select the new cell.
      * @throws StepExecutionException if any error occurs
      */
-    public void gdMove(String direction, int distance, int clickCount) 
+    public void rcMove(String direction, int distance, int clickCount) 
         throws StepExecutionException {
         
         AbstractTreeOperationContext context = getTreeAdapter().getContext();
@@ -445,7 +445,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @throws StepExecutionException If the tree path is invalid, if the
      * double-click to expand the node fails, or if the selection is invalid.
      */
-    public void gdSelect(String pathType, int preAscend, String treePath,
+    public void rcSelect(String pathType, int preAscend, String treePath,
             String operator, int clickCount, int button, 
             final String extendSelection)
         throws StepExecutionException {
@@ -471,7 +471,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @throws StepExecutionException if <code>indexPath</code> is not a valid
      * path
      */
-    public void gdSelectByIndices(String pathType, int preAscend,
+    public void rcSelectByIndices(String pathType, int preAscend,
             String indexPath, int clickCount, int button,
             final String extendSelection) 
         throws StepExecutionException {
@@ -496,10 +496,10 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param exists if true, the verify succeeds if the path DOES exist.
      *  If false, the verify succeeds if the path DOES NOT exist.
      */
-    public void gdVerifyPath(String pathType, int preAscend,
+    public void rcVerifyPath(String pathType, int preAscend,
             String treePath, String operator, boolean exists) {
         try {
-            gdExpand(pathType, preAscend, treePath, operator);
+            rcExpand(pathType, preAscend, treePath, operator);
         } catch (StepExecutionException e) {
             if (exists) {
                 throw new StepVerifyFailedException(
@@ -527,10 +527,10 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param exists if true, the verify succeeds if the path DOES exist.
      *  If false, the verify succeeds if the path DOES NOT exist.
      */
-    public void gdVerifyPathByIndices(String pathType, int preAscend,
+    public void rcVerifyPathByIndices(String pathType, int preAscend,
             String treePath, boolean exists) {
         try {
-            gdExpandByIndices(pathType, preAscend, treePath);
+            rcExpandByIndices(pathType, preAscend, treePath);
         } catch (StepExecutionException e) {
             if (exists) {
                 throw new StepVerifyFailedException("Verify failed on tree-path: " //$NON-NLS-1$
@@ -550,7 +550,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
     /**
      * {@inheritDoc}
      */
-    public String gdStoreSelectedNodeValue(String variable) {
+    public String rcStoreSelectedNodeValue(String variable) {
         AbstractTreeOperationContext context = getTreeAdapter().getContext();
         Object selectedNode = 
             getSelectedNode(context);
@@ -567,7 +567,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param variable -
      * @return the text from the node at mouse position
      */
-    public String gdStoreValueAtMousePosition(String variable) {
+    public String rcStoreValueAtMousePosition(String variable) {
         AbstractTreeOperationContext context = getTreeAdapter().getContext();
         
         return context.getRenderedText(getNodeAtMousePosition());
@@ -590,9 +590,9 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @throws StepExecutionException
      *             If no node is selected or the verification fails.
      */
-    public void gdVerifySelectedValue(String selection)
+    public void rcVerifySelectedValue(String selection)
         throws StepExecutionException {
-        gdVerifySelectedValue(selection, MatchUtil.DEFAULT_OPERATOR);
+        rcVerifySelectedValue(selection, MatchUtil.DEFAULT_OPERATOR);
     }
 
     /**
@@ -607,7 +607,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @throws StepExecutionException
      *             If no node is selected or the verification fails.
      */
-    public void gdVerifySelectedValue(String pattern, String operator)
+    public void rcVerifySelectedValue(String pattern, String operator)
         throws StepExecutionException {
 
         AbstractTreeOperationContext context = getTreeAdapter().getContext();
@@ -699,7 +699,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param preAscend preAscend
      * @param treeTextPath treeTextPath
      * @param operator operator */ 
-    public abstract void gdDragByTextPath(
+    public abstract void rcDragByTextPath(
         int mouseButton, 
         String modifierSpecification, 
         String pathType, 
@@ -713,7 +713,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param treeTextPath treeTextPath
      * @param operator operator
      * @param delayBeforeDrop delayBeforeDrop */ 
-    public abstract void gdDropByTextPath(
+    public abstract void rcDropByTextPath(
         String pathType, 
         int preAscend, 
         String treeTextPath, 
@@ -726,7 +726,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param pathType pathType
      * @param preAscend preAscend
      * @param treeIndexPath treeIndexPath */ 
-    public abstract void gdDragByIndexPath(
+    public abstract void rcDragByIndexPath(
         int mouseButton, 
         String modifierSpecification, 
         String pathType, 
@@ -738,7 +738,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param preAscend preAscend
      * @param treeIndexPath treeIndexPath
      * @param delayBeforeDrop delayBeforeDrop */ 
-    public abstract void gdDropByIndexPath(
+    public abstract void rcDropByIndexPath(
         String pathType, 
         int preAscend, 
         String treeIndexPath, 

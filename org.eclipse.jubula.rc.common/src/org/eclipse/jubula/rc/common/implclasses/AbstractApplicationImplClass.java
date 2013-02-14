@@ -85,7 +85,7 @@ public abstract class AbstractApplicationImplClass implements
      * @param timeout The amount of time (in milliseconds) to wait for the 
      *        execution to finish.
      */
-    public void gdExecuteExternalCommand(String cmd, int expectedExitCode, 
+    public void rcExecuteExternalCommand(String cmd, int expectedExitCode, 
         boolean local, int timeout) {
 
         if (!local) {
@@ -153,7 +153,7 @@ public abstract class AbstractApplicationImplClass implements
      *          exist. A value of <code>true</code> means that all necessary 
      *          directories that do not exist will be created automatically.
      */
-    public void gdTakeScreenshot(String destination, int delay,
+    public void rcTakeScreenshot(String destination, int delay,
             String fileAccess, int scaling, boolean createDirs) {
         // Determine current screen size
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -214,7 +214,7 @@ public abstract class AbstractApplicationImplClass implements
      * @param marginLeft
      *            the extra left margin
      */
-    public void gdTakeScreenshotOfActiveWindow(String destination, int delay,
+    public void rcTakeScreenshotOfActiveWindow(String destination, int delay,
             String fileAccess, int scaling, boolean createDirs, int marginTop,
             int marginRight, int marginBottom, int marginLeft) {
         Rectangle activeWindowBounds = getActiveWindowBounds();
@@ -414,7 +414,7 @@ public abstract class AbstractApplicationImplClass implements
      * Waits a specified time. 
      * @param timeMilliSec the time to wait in MilliSec
      */
-    public void gdWait(int timeMilliSec) {
+    public void rcWait(int timeMilliSec) {
         TimeUtil.delay(timeMilliSec);
     }
 
@@ -422,7 +422,7 @@ public abstract class AbstractApplicationImplClass implements
      * shows a ConfirmDialog and Pause the Execution of the Test until Window 
      * is closed
      */
-    public void gdPause() {
+    public void rcPause() {
         throw new ExecutionEvent(ExecutionEvent.PAUSE_EXECUTION);
     }
 
@@ -430,7 +430,7 @@ public abstract class AbstractApplicationImplClass implements
      * Does nothing! The restart is implemented in the client but the server
      * must have an action to execute.
      */
-    public void gdRestart() {
+    public void rcRestart() {
         // nothing
     }
     
@@ -439,7 +439,7 @@ public abstract class AbstractApplicationImplClass implements
      * 
      * @param text The text to type.
      */
-    public void gdNativeInputText(String text) {
+    public void rcNativeInputText(String text) {
         try {
             KeyTyper.getInstance().nativeTypeString(text);
         } catch (AWTException e) {
@@ -458,7 +458,7 @@ public abstract class AbstractApplicationImplClass implements
      * @param timeout
      *            the timeout
      */
-    public void gdManualTestStep(String actionToPerform, 
+    public void rcManualTestStep(String actionToPerform, 
             String expectedBehavior, int timeout) {
     // empty implementation: implementation can be found in the corresponding
     // postExecutionCommand
@@ -474,7 +474,7 @@ public abstract class AbstractApplicationImplClass implements
      * @param modifierSpec the string representation of the modifiers
      * @param keySpec the string representation of the key
      */
-    public void gdNativeKeyStroke(String modifierSpec, String keySpec) {        
+    public void rcNativeKeyStroke(String modifierSpec, String keySpec) {        
         if (keySpec == null || keySpec.trim().length() == 0) {
             throw new StepExecutionException("The base key of the key stroke " //$NON-NLS-1$
                 + "must not be null or empty", //$NON-NLS-1$
@@ -505,7 +505,7 @@ public abstract class AbstractApplicationImplClass implements
      * @param value The new value for the variable.
      * @return the new value for the variable.
      */
-    public String gdSetValue(String variable, String value) {
+    public String rcSetValue(String variable, String value) {
         return value;
     }
     
@@ -537,7 +537,7 @@ public abstract class AbstractApplicationImplClass implements
      * 
      * @param text The text to copy
      */
-    public void gdCopyToClipboard(final String text) {      
+    public void rcCopyToClipboard(final String text) {      
         StringSelection strSel = new StringSelection(text);
         try {
             Toolkit.getDefaultToolkit().getSystemClipboard()
@@ -560,7 +560,7 @@ public abstract class AbstractApplicationImplClass implements
      * @param value2
      *            the second value for comparison
      */
-    public void gdCheckValues(final String value1,
+    public void rcCheckValues(final String value1,
             final String comparisonMethod, final String value2) {
         Comparer.compare(value1, value2, comparisonMethod);
     }
@@ -575,7 +575,7 @@ public abstract class AbstractApplicationImplClass implements
      * @param value2
      *            the second value for comparison
      */
-    public void gdCheckStringValues(final String value1,
+    public void rcCheckStringValues(final String value1,
             final String operator, final String value2) {
         Verifier.match(value1, value2, operator);
     }
@@ -586,7 +586,7 @@ public abstract class AbstractApplicationImplClass implements
      * @param timerName the name for the timer
      * @param variableName the variable name to store the current time in millisecs in
      */
-    public void gdStartTimer(String timerName, String variableName) {
+    public void rcStartTimer(String timerName, String variableName) {
     // empty
     }
 
@@ -596,7 +596,7 @@ public abstract class AbstractApplicationImplClass implements
      * @param timerName the name for the timer
      * @param variableName the variable name to store the current time delta in millisecs in
      */
-    public void gdReadTimer(String timerName, String variableName) {
+    public void rcReadTimer(String timerName, String variableName) {
     // empty
     }
 }

@@ -340,7 +340,7 @@ public class WidgetAdapter extends AbstractComponentAdapter
     /**
      * {@inheritDoc}
      */
-    public void gdDrag(int mouseButton, String modifier, int xPos, 
+    public void rcDrag(int mouseButton, String modifier, int xPos, 
             String xUnits, int yPos, String yUnits) {
         // Only store the Drag-Information. Otherwise the GUI-Eventqueue
         // blocks after performed Drag!
@@ -355,7 +355,7 @@ public class WidgetAdapter extends AbstractComponentAdapter
     /**
      * {@inheritDoc}                  
      */
-    public void gdDrop(final int xPos, final String xUnits, final int yPos, 
+    public void rcDrop(final int xPos, final String xUnits, final int yPos, 
             final String yUnits, int delayBeforeDrop) {
         final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
             .getInstance();

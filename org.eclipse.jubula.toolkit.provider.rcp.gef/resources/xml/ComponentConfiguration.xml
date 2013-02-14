@@ -20,7 +20,7 @@
 		<testerClass>org.eclipse.jubula.rc.rcp.e3.gef.implclasses.FigureCanvasImplClass</testerClass>
 		<componentClass name="org.eclipse.draw2d.FigureCanvas" />
 		<action name="CompSystem.CheckFigureExists" changed="4.0">
-			<method>gdCheckFigureExists</method>
+			<method>rcCheckFigureExists</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -44,7 +44,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.CheckToolExists" changed="4.0">
-			<method>gdCheckToolExists</method>
+			<method>rcCheckToolExists</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -68,7 +68,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.ClickFigure" changed="4.0">
-			<method>gdClickFigure</method>
+			<method>rcClickFigure</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -97,7 +97,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.ClickInFigure" changed="1.4">
-			<method>gdClickInFigure</method>
+			<method>rcClickInFigure</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -150,7 +150,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.SelectToolByTextPath" changed="4.0">
-			<method>gdSelectTool</method>
+			<method>rcSelectTool</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -170,7 +170,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.ClickConnection" changed="4.0">
-			<method>gdClickConnection</method>
+			<method>rcClickConnection</method>
 			<param name="CompSystem.SourceTextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -212,7 +212,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.DragFigure" changed="4.0">
-			<method>gdDragFigure</method>
+			<method>rcDragFigure</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -275,7 +275,7 @@
 		</action>
 		
 		<action name="CompSystem.DropOnFigure" changed="4.0">
-			<method>gdDropOnFigure</method>
+			<method>rcDropOnFigure</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
@@ -319,7 +319,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyFigureProperty" changed="4.1">
-			<method>gdVerifyFigureProperty</method>
+			<method>rcVerifyFigureProperty</method>
 			<param name="CompSystem.TextPath">
 				<type>java.lang.String</type>
 			</param>
