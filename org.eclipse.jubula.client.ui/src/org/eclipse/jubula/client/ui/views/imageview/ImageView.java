@@ -27,6 +27,12 @@ import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.NonSortedPropertySheetPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.DragSourceListener;
+import org.eclipse.swt.dnd.ImageTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -148,6 +154,37 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
         m_child.setLayout(new FillLayout());
         
         m_imgWidget = new Label(m_child, SWT.NONE);
+        // Allow data to be copied or moved from the drag source
+        int operations = DND.DROP_COPY;
+        DragSource source = new DragSource(m_imgWidget, operations);
+
+        // Provide data in Text format
+        Transfer[] types = new Transfer[] { ImageTransfer.getInstance() };
+        source.setTransfer(types);
+
+        source.addDragListener(new DragSourceListener() {
+            public void dragStart(DragSourceEvent event) {
+                // Only start the drag if there is actually text in the
+                // label - this text will be what is dropped on the target.
+                if (m_imgWidget.getImage() == null) {
+                    event.doit = false;
+                }
+            }
+
+            public void dragSetData(DragSourceEvent event) {
+                // Provide the data of the requested type.
+                if (ImageTransfer.getInstance().
+                        isSupportedType(event.dataType)) {
+                    event.data = m_imgWidget.getImage().getImageData();
+                }
+            }
+
+            public void dragFinished(DragSourceEvent event) {
+                // nothing needed here
+            }
+
+        });
+        
         m_scrollComposite.setExpandHorizontal(true);
         m_scrollComposite.setExpandVertical(true);
         m_scrollComposite.setMinSize(m_child.computeSize(
