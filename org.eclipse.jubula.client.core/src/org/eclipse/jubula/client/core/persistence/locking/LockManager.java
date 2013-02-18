@@ -229,8 +229,8 @@ public final class LockManager {
                 
                 public void run() {
                     while (m_keepRunning) {
-                        // the timestamp is maintained in the m_application
-                        // instance, therefor the order of the following
+                        // The timestamp is maintained in the m_application
+                        // instance, therefore the order of the following
                         // statements is crucial.
                         updateTimestamp();
                         checkForTimeouts();
@@ -263,7 +263,18 @@ public final class LockManager {
         runInSession(new DBRunnable() {
 
             public Result run(EntityManager sess) {
-                removeApp(sess, m_application);
+                // Shutdown may be called several times depending on the
+                // application running (ITE, testexec, ...). During shutdown 
+                // the application might have been deleted before. Therefore 
+                // some checking is required.
+                try {
+                    if (m_application != null) {
+                        removeApp(sess, m_application);
+                        m_application = null;
+                    }
+                } catch (Throwable t) {
+                    log.debug("application already removed", t); //$NON-NLS-1$
+                }
                 return Result.OK;
             }
         });
