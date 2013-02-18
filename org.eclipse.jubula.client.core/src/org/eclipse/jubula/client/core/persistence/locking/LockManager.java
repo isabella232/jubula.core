@@ -163,30 +163,33 @@ public final class LockManager {
      * bulk queries don't synchronize the in memory state of POJOs.
      */
     void updateTimestamp() {
-        runInSession(new DBRunnable() {
+        // check for disposed LockManager
+        if (LockManager.isRunning() && m_application != null) {
+            runInSession(new DBRunnable() {
 
-            public Result run(EntityManager sess) {
-                Query q = sess.createQuery(
-                    "update ApplicationPO app set app.timestamp = CURRENT_TIMESTAMP where app.id = :id"); //$NON-NLS-1$
-                q.setParameter("id", m_application.getId()); //$NON-NLS-1$
-                if (q.executeUpdate() != 1) {
-                    log.error(Messages.UpdateOfTimestampFailed);
+                public Result run(EntityManager sess) {
+                    Query q = sess
+                            .createQuery("update ApplicationPO app set app.timestamp = CURRENT_TIMESTAMP where app.id = :id"); //$NON-NLS-1$
+                    q.setParameter("id", m_application.getId()); //$NON-NLS-1$
+                    if (q.executeUpdate() != 1) {
+                        log.error(Messages.UpdateOfTimestampFailed);
+                    }
+                    return Result.OK;
                 }
-                return Result.OK;
-            }
-        });
-        runInSession(new DBRunnable() {
+            });
+            runInSession(new DBRunnable() {
 
-            @SuppressWarnings("synthetic-access")
-            public Result run(EntityManager sess) {
-                sess.detach(m_application);
-                m_application = sess.find(ApplicationPO.class, 
-                        m_application.getId());
-                return Result.OK;
-            }
-        });
+                @SuppressWarnings("synthetic-access")
+                public Result run(EntityManager sess) {
+                    sess.detach(m_application);
+                    m_application = sess.find(ApplicationPO.class,
+                            m_application.getId());
+                    return Result.OK;
+                }
+            });
+        }
     }
-    
+
     /**
      * Find timed out application in the DB, if found remove any locks and the
      * application itself.
@@ -229,8 +232,8 @@ public final class LockManager {
                 
                 public void run() {
                     while (m_keepRunning) {
-                        // the timestamp is maintained in the m_application
-                        // instance, therefor the order of the following
+                        // The timestamp is maintained in the m_application
+                        // instance, therefore the order of the following
                         // statements is crucial.
                         updateTimestamp();
                         checkForTimeouts();
@@ -263,7 +266,18 @@ public final class LockManager {
         runInSession(new DBRunnable() {
 
             public Result run(EntityManager sess) {
-                removeApp(sess, m_application);
+                // Shutdown may be called several times depending on the
+                // application running (ITE, testexec, ...). During shutdown 
+                // the application might have been deleted before. Therefore 
+                // some checking is required.
+                try {
+                    if (m_application != null) {
+                        removeApp(sess, m_application);
+                        m_application = null;
+                    }
+                } catch (Throwable t) {
+                    log.debug("application already removed", t); //$NON-NLS-1$
+                }
                 return Result.OK;
             }
         });
