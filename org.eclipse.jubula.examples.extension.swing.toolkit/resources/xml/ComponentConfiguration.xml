@@ -19,7 +19,7 @@
 	
 	<toolkitComponent type="javax.swing.JSlider" visible="true">
 		<realizes>guidancer.abstract.Widget</realizes>
-		<testerClass>org.eclipse.jubula.rc.swing.swing.implclasses.JSliderImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swing.tester.JSliderTester</testerClass>
 		<componentClass name="javax.swing.JSlider" />
 	</toolkitComponent>
 	
