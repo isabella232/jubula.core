@@ -123,7 +123,6 @@
 		<ant dir="../${guidancerWS}/${Meters}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 		<ant dir="../${guidancerWS}/${GEFExample}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 		<ant dir="../${ExampleSwingExtensionAUT}" antfile="buildScript.xml" target="clean" inheritAll="false" />
-		<ant dir="../${ExampleSwingExtensionServer}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 	</target>
 
 	<target name="markAsExecutable">
@@ -167,10 +166,8 @@
 		</copy>
 		
 		<mkdir dir="${examples.development.dir}/extension/bin"/>
-		<ant dir="../${ExampleSwingExtensionServer}" antfile="buildScript.xml" target="jar" inheritAll="false" />
-		<mkdir dir="${examples.development.dir}/extension/bin"/>
 		<copy todir="${examples.development.dir}/extension/bin">
-			<fileset dir="../${ExampleSwingExtensionServer}/build/jars/"/>
+			<fileset dir="../${ExampleSwingExtensionServer}/target" includes="*.jar"/>
 		</copy>
 	</target>
 	
@@ -188,7 +185,7 @@
             <zipfileset dir="../${ExampleSwingExtensionFeature}" prefix="${ExampleSwingExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 		</zip>
 		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingServerExtension.zip">
-			<zipfileset dir="../${ExampleSwingExtensionServer}" prefix="${ExampleSwingExtensionServer}" excludes="build, build/**, buildScript.xml"/>
+			<zipfileset dir="../${ExampleSwingExtensionServer}" prefix="${ExampleSwingExtensionServer}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 		</zip>
 		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingAUT.zip">
 			<zipfileset dir="../${ExampleSwingExtensionAUT}" prefix="${ExampleSwingExtensionAUT}" />
