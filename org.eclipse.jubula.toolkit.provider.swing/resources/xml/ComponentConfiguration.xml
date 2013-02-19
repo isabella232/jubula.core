@@ -21,7 +21,7 @@
 			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.GraphicApplication</realizes>
-		<testerClass>org.eclipse.jubula.rc.swing.swing.tester.SwingApplicationTester</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swing.tester.SwingApplicationTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.autserver.swing.implclasses.GraphicApplication" />
 	</toolkitComponent>
 	
@@ -36,7 +36,7 @@
 			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.MenuBar</realizes>
-		<testerClass>org.eclipse.jubula.rc.swing.swing.tester.JMenuBarTester</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swing.tester.JMenuBarTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.autserver.swing.implclasses.JMenuBarDefaultMapping" />
 	</toolkitComponent>
 	
@@ -48,7 +48,7 @@
 	
 	<toolkitComponent type="javax.swing.JList" visible="false">
 		<realizes>guidancer.concrete.List</realizes>
-		<testerClass>org.eclipse.jubula.rc.swing.swing.tester.JListTester</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swing.tester.JListTester</testerClass>
 		<componentClass name="javax.swing.JList" />
 	</toolkitComponent>
 	
@@ -66,7 +66,7 @@
 	
 	<toolkitComponent type="javax.swing.JTable" visible="false">
 		<realizes>guidancer.concrete.Table</realizes>
-		<testerClass>org.eclipse.jubula.rc.swing.swing.tester.JTableTester</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swing.tester.JTableTester</testerClass>
 		<componentClass name="javax.swing.JTable" />
 	</toolkitComponent>
 	
@@ -78,7 +78,7 @@
 	
 	<toolkitComponent type="javax.swing.JTree" visible="false">
 		<realizes>guidancer.concrete.Tree</realizes>
-		<testerClass>org.eclipse.jubula.rc.swing.swing.tester.JTreeTester</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swing.tester.JTreeTester</testerClass>
 		<componentClass name="javax.swing.JTree" />
 	</toolkitComponent>
 	

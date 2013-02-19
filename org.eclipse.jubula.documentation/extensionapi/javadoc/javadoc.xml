@@ -21,14 +21,14 @@
 			noindex="false" 
 			nonavbar="false" 
 			notree="false" 
-			packagenames="org.eclipse.jubula.rc.swing.swing.tester,
+			packagenames="org.eclipse.jubula.rc.swing.tester,
 			com.bredexsw.guidancer.autserverbase.exception,
 			com.bredexsw.guidancer.autserverbase.driver,
 			com.bredexsw.guidancer.tools.constants,
-			org.eclipse.jubula.rc.swing.swing.tester.adapter,
+			org.eclipse.jubula.rc.swing.tester.adapter,
 			com.bredexsw.guidancer.tools.objects.event,
 			com.bredexsw.guidancer.autserverbase.implclasses,
-			org.eclipse.jubula.rc.swing.swing.tester.util" 
+			org.eclipse.jubula.rc.swing.tester.util" 
 			source="1.4"
 			sourcepathref="rc.extension.sourcepath"
 			splitindex="true" 

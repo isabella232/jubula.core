@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swing.tester;
 
-import org.eclipse.jubula.rc.swing.swing.tester.adapter.WidgetAdapter;
+import org.eclipse.jubula.rc.swing.tester.adapter.WidgetAdapter;
 /**
  * This is a adapter which wraps the graphics component (in this case the JSlider)
  * into a general form. This is needed for the TesterClasses which use the adapter

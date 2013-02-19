@@ -27,17 +27,17 @@ import javax.swing.text.JTextComponent;
 
 import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
-import org.eclipse.jubula.rc.swing.swing.tester.adapter.AbstractButtonAdapter;
-import org.eclipse.jubula.rc.swing.swing.tester.adapter.JComboBoxAdapter;
-import org.eclipse.jubula.rc.swing.swing.tester.adapter.JLabelAdapter;
-import org.eclipse.jubula.rc.swing.swing.tester.adapter.JListAdapter;
-import org.eclipse.jubula.rc.swing.swing.tester.adapter.JMenuBarAdapter;
-import org.eclipse.jubula.rc.swing.swing.tester.adapter.JMenuItemAdapter;
-import org.eclipse.jubula.rc.swing.swing.tester.adapter.JPopupMenuAdapter;
-import org.eclipse.jubula.rc.swing.swing.tester.adapter.JTabbedPaneAdapter;
-import org.eclipse.jubula.rc.swing.swing.tester.adapter.JTableAdapter;
-import org.eclipse.jubula.rc.swing.swing.tester.adapter.JTextComponentAdapter;
-import org.eclipse.jubula.rc.swing.swing.tester.adapter.JTreeAdapter;
+import org.eclipse.jubula.rc.swing.tester.adapter.AbstractButtonAdapter;
+import org.eclipse.jubula.rc.swing.tester.adapter.JComboBoxAdapter;
+import org.eclipse.jubula.rc.swing.tester.adapter.JLabelAdapter;
+import org.eclipse.jubula.rc.swing.tester.adapter.JListAdapter;
+import org.eclipse.jubula.rc.swing.tester.adapter.JMenuBarAdapter;
+import org.eclipse.jubula.rc.swing.tester.adapter.JMenuItemAdapter;
+import org.eclipse.jubula.rc.swing.tester.adapter.JPopupMenuAdapter;
+import org.eclipse.jubula.rc.swing.tester.adapter.JTabbedPaneAdapter;
+import org.eclipse.jubula.rc.swing.tester.adapter.JTableAdapter;
+import org.eclipse.jubula.rc.swing.tester.adapter.JTextComponentAdapter;
+import org.eclipse.jubula.rc.swing.tester.adapter.JTreeAdapter;
 /**
  * This is the adapter factory for all swing components. It is
  * creating the specific adapter for a swing component.

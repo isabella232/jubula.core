@@ -175,9 +175,9 @@ public abstract class CommandConstants {
     /** constant: "org.eclipse.jubula.rc.common.commands.InitTestExecutionCommand" */
     public static final String INIT_TEST_EXECUTION_COMMAND = "org.eclipse.jubula.rc.common.commands.InitTestExecutionCommand"; //$NON-NLS-1$
     /** package for swing implclasses: "org.eclipse.jubula.rc.swing.swing.implclasses" */
-    public static final String SWING_IMPLCLASS_PACKAGE = "org.eclipse.jubula.rc.swing.swing.implclasses"; //$NON-NLS-1$
+    public static final String SWING_IMPLCLASS_PACKAGE = "org.eclipse.jubula.rc.swing.tester"; //$NON-NLS-1$
     /** package for swt implclasses: "org.eclipse.jubula.rc.swt.implclasses"  */
-    public static final String SWT_IMPLCLASSES_PACKAGE = "org.eclipse.jubula.rc.swt.implclasses"; //$NON-NLS-1$
+    public static final String SWT_IMPLCLASSES_PACKAGE = "org.eclipse.jubula.rc.swt.tester"; //$NON-NLS-1$
     /** package name for Jubula extension ImplClasses (".jubulaextension.") */
     public static final String JUBULA_EXTENSION_PACKAGE = ".jubulaextension."; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.ServerLogResponseCommand"  */

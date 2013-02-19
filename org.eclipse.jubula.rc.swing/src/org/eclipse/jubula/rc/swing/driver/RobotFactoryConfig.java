@@ -11,7 +11,6 @@
 package org.eclipse.jubula.rc.swing.driver;
 
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
-import org.eclipse.jubula.rc.swing.swing.driver.RobotFactoryAwtImpl;
 
 
 
