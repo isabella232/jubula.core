@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 
+import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
@@ -89,7 +90,7 @@ public class BundleIterator {
     public Bundle next() {
         m_url = (URL) m_urls.nextElement();
         m_bundleName = getBundleName(m_url);
-        m_bundle = m_context.getBundle(m_bundleName);
+        m_bundle = Platform.getBundle(m_bundleName);
         return m_bundle;
     }
 
