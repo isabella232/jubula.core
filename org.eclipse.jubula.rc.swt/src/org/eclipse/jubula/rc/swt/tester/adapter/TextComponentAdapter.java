@@ -14,6 +14,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponentAdapter;
+import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.widgets.Text;
 
@@ -48,7 +49,8 @@ public class TextComponentAdapter extends WidgetAdapter implements
         String actual = (String)getEventThreadQueuer().invokeAndWait(
                 "getText", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
-                        return m_textComponent.getText();
+                        return CAPUtil.getWidgetText(m_textComponent,
+                                m_textComponent.getText());
                     }
                 });
         return actual;
@@ -87,7 +89,7 @@ public class TextComponentAdapter extends WidgetAdapter implements
      */
     public String getSelectionText() {
         String actual = (String)getEventThreadQueuer().invokeAndWait(
-                "getText", new IRunnable() { //$NON-NLS-1$
+                "getSelectionText", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
                         return m_textComponent.getSelectionText();
                     }

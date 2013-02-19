@@ -23,13 +23,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Widget;
+
 /**
  * Implementation of the Interface <code>IComboBoxAdapter</code> as a abstract
- * adapter for the swt comboboxes.
- * This class needs specific methods of its subclasses therefore it is abstract.
+ * adapter for the SWT Combo Boxes. This class needs specific methods of its
+ * subclasses therefore it is abstract.
  * 
  * @author BREDEX GmbH
- *
+ * 
  */
 public abstract class AbstractComboBoxAdapter extends WidgetAdapter 
     implements IComboBoxAdapter {

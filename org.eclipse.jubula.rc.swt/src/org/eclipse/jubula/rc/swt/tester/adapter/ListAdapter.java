@@ -20,16 +20,13 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.List;
 /**
- * 
  * @author BREDEX GmbH
- *
  */
 public class ListAdapter extends WidgetAdapter implements IListAdapter {
-
-    /**  */
+    /** the list */
     private List m_list;
+    
     /**
-     * 
      * @param objectToAdapt -
      */
     public ListAdapter(Object objectToAdapt) {

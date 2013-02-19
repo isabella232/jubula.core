@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.common.tester;
 
 import java.awt.Rectangle;
+
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
@@ -111,7 +112,7 @@ public abstract class AbstractTableTester
         String current;
         //if row is header and column is existing
         if (implRow == -1 && implCol > -1) {
-            current = adapter.getColumnName(implCol);        
+            current = adapter.getColumnHeaderText(implCol);        
         } else {
             checkRowColBounds(implRow, implCol);
             adapter.scrollCellToVisible(implRow, implCol);
@@ -237,7 +238,7 @@ public abstract class AbstractTableTester
             }
         }
         if (adapter.isHeaderVisible()) {
-            String header = adapter.getColumnName(implCol);
+            String header = adapter.getColumnHeaderText(implCol);
             if (MatchUtil.getInstance().match(header, value,
                                 operator)) {
                 return true;
@@ -274,7 +275,7 @@ public abstract class AbstractTableTester
             for (int k = getStartingColIndex(searchType); 
                                     k < adapter.getColumnCount(); ++k) {
                 if (MatchUtil.getInstance().match(
-                        adapter.getColumnName(k),
+                        adapter.getColumnHeaderText(k),
                         value, operator)) {
                     valueIsExisting = true;
                     break;
@@ -298,7 +299,7 @@ public abstract class AbstractTableTester
                 // No columns found. This table is used to present a
                 // list-like component.
                 if (MatchUtil.getInstance().match(
-                        adapter.getRowName(implRow),
+                        adapter.getRowText(implRow),
                             value, operator)) {
                     valueIsExisting = true;
                     
@@ -328,14 +329,14 @@ public abstract class AbstractTableTester
                     EventFactory.createActionError(
                             TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
         }        
-        gdSelectCell(row, rowOperator, col, colOperator, ClickOptions.create(),
+        selectCell(row, rowOperator, col, colOperator, ClickOptions.create(),
                 CompSystemConstants.EXTEND_SELECTION_NO);
         rcVerifyEditable(editable);
     }
     
     
     /**
-     * Selects a table cell in the given row and column via click in the midle of the cell.
+     * Selects a table cell in the given row and column via click in the middle of the cell.
      * @param row The row of the cell.
      * @param rowOperator The row header operator
      * @param col The column of the cell.
@@ -343,7 +344,7 @@ public abstract class AbstractTableTester
      * @param co the click options to use
      * @param extendSelection Should this selection be part of a multiple selection
      */
-    private void gdSelectCell(final String row, final String rowOperator,
+    private void selectCell(final String row, final String rowOperator,
             final String col, final String colOperator,
             final ClickOptions co, final String extendSelection) {
             
@@ -429,7 +430,7 @@ public abstract class AbstractTableTester
     public void rcSelectRowByValue(String col, String colOperator,
             final String value, final String regexOp, int clickCount,
             final String extendSelection, final String searchType, int button) {
-        gdSelectRowByValue(col, colOperator, value, regexOp, extendSelection,
+        selectRowByValue(col, colOperator, value, regexOp, extendSelection,
                 searchType, ClickOptions.create()
                         .setClickCount(clickCount)
                         .setMouseButton(button));
@@ -447,7 +448,7 @@ public abstract class AbstractTableTester
      * @param searchType Determines where the search begins ("relative" or "absolute")
      * @param co the clickOptions to use
      */
-    protected void gdSelectRowByValue(String col, String colOperator,
+    protected void selectRowByValue(String col, String colOperator,
         final String value, final String regexOp, final String extendSelection,
         final String searchType, ClickOptions co) {
         ITableAdapter adapter = getTableAdapter();
@@ -464,7 +465,7 @@ public abstract class AbstractTableTester
             }
         }
         if (implRow == null) {
-            String header = adapter.getColumnName(implCol);
+            String header = adapter.getColumnHeaderText(implCol);
             if (MatchUtil.getInstance().match(header, value, regexOp)) {
                 implRow = new Integer(-1);
             }
@@ -480,7 +481,7 @@ public abstract class AbstractTableTester
         String  userIdxCol = new Integer(IndexConverter.toUserIndex(
                 implCol)).toString();            
         
-        gdSelectCell(userIdxRow, MatchUtil.EQUALS, userIdxCol, colOperator, co,
+        selectCell(userIdxRow, MatchUtil.EQUALS, userIdxCol, colOperator, co,
                 extendSelection);
     }
     
@@ -500,7 +501,7 @@ public abstract class AbstractTableTester
     public void rcSelectCellByColValue(String row, String rowOperator,
         final String value, final String regex, int clickCount,
         final String extendSelection, final String searchType, int button) {
-        gdSelectCellByColValue(row, rowOperator, value, regex, extendSelection,
+        selectCellByColValue(row, rowOperator, value, regex, extendSelection,
                 searchType, ClickOptions.create()
                     .setClickCount(clickCount)
                     .setMouseButton(button));
@@ -518,7 +519,7 @@ public abstract class AbstractTableTester
      * @param searchType Determines where the search begins ("relative" or "absolute")
      * @param co the click options to use
      */
-    protected void gdSelectCellByColValue(String row, String rowOperator,
+    protected void selectCellByColValue(String row, String rowOperator,
         final String value, final String regex, final String extendSelection,
         final String searchType, ClickOptions co) { 
         ITableAdapter adapter = getTableAdapter();
@@ -528,8 +529,8 @@ public abstract class AbstractTableTester
         if (implRow == -1) {
             
             for (int i = getStartingColIndex(searchType); i < colCount; ++i) {
-                if (MatchUtil.getInstance().match(adapter.getColumnName(i), 
-                        value, regex)) {
+                if (MatchUtil.getInstance().match(
+                        adapter.getColumnHeaderText(i), value, regex)) {
                     implCol = new Integer(i);
                     break;
                 }
@@ -554,7 +555,7 @@ public abstract class AbstractTableTester
         String usrIdxColStr = new Integer(IndexConverter.toUserIndex(
                 implCol.intValue())).toString();
         
-        gdSelectCell(usrIdxRowStr, rowOperator, usrIdxColStr, MatchUtil.EQUALS,
+        selectCell(usrIdxRowStr, rowOperator, usrIdxColStr, MatchUtil.EQUALS,
                 co, extendSelection);
         
     }
@@ -577,7 +578,7 @@ public abstract class AbstractTableTester
         
         //if row is header and column is existing
         if (implRow == -1 && implCol > -1) {
-            return adapter.getColumnName(implCol); 
+            return adapter.getColumnHeaderText(implCol); 
         }
         
         checkRowColBounds(implRow, implCol);
@@ -708,7 +709,7 @@ public abstract class AbstractTableTester
                     EventFactory.createActionError(
                             TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
         }
-        gdSelectCell(row, rowOperator, col, colOperator, 
+        selectCell(row, rowOperator, col, colOperator, 
                 ClickOptions.create().setClickCount(1), 
                 CompSystemConstants.EXTEND_SELECTION_NO);
         rcInputText(text);
@@ -743,7 +744,7 @@ public abstract class AbstractTableTester
                     EventFactory.createActionError(
                             TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
         }
-        gdSelectCell(row, rowOperator, col, colOperator, 
+        selectCell(row, rowOperator, col, colOperator, 
                 ClickOptions.create().setClickCount(1), 
                 CompSystemConstants.EXTEND_SELECTION_NO);
         inputText(text, true);
@@ -862,7 +863,7 @@ public abstract class AbstractTableTester
         
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         try {
-            gdSelectRowByValue(col, colOperator, value, regexOp,
+            selectRowByValue(col, colOperator, value, regexOp,
                     CompSystemConstants.EXTEND_SELECTION_NO, 
                     searchType, ClickOptions
                     .create().setClickCount(0));
@@ -893,7 +894,7 @@ public abstract class AbstractTableTester
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
 
-        gdSelectCellByColValue(row, rowOperator, value, regex,
+        selectCellByColValue(row, rowOperator, value, regex,
                 CompSystemConstants.EXTEND_SELECTION_NO, searchType, 
                 ClickOptions.create().setClickCount(0));
         pressOrReleaseModifiers(modifier, true);
@@ -919,7 +920,7 @@ public abstract class AbstractTableTester
 
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         try {
-            gdSelectCellByColValue(row, rowOperator, value, regex, 
+            selectCellByColValue(row, rowOperator, value, regex, 
                     CompSystemConstants.EXTEND_SELECTION_NO, searchType, 
                     ClickOptions.create().setClickCount(0));
             waitBeforeDrop(delayBeforeDrop);

@@ -21,14 +21,14 @@ import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableAdapter;
 import org.eclipse.jubula.rc.swt.listener.TableSelectionTracker;
+import org.eclipse.jubula.rc.swt.tester.CAPUtil;
+import org.eclipse.jubula.rc.swt.tester.TableTester;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
+import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableCursor;
-import org.eclipse.swt.graphics.FontMetrics;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -44,7 +44,7 @@ public class TableAdapter extends WidgetAdapter implements ITableAdapter {
     private static AutServerLogger log = new AutServerLogger(
         TableAdapter.class);
     
-    /**   */
+    /** the table */
     private Table m_table;
     
     /**
@@ -58,32 +58,35 @@ public class TableAdapter extends WidgetAdapter implements ITableAdapter {
 
     /** {@inheritDoc} */
     public int getColumnCount() {
-        Integer returnvalue = (Integer) getEventThreadQueuer().invokeAndWait(
+        Integer colCount = (Integer) getEventThreadQueuer().invokeAndWait(
                 "getColumnCount", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
                         return  new Integer(m_table.getColumnCount());
                     }
                 });
-        return returnvalue.intValue();
+        return colCount.intValue();
     }
 
     /** {@inheritDoc} */
     public int getRowCount() {
-        Integer returnvalue = (Integer) getEventThreadQueuer().invokeAndWait(
+        Integer itemCount = (Integer) getEventThreadQueuer().invokeAndWait(
                 "getRowCount", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
                         return new Integer(m_table.getItemCount());
                     }
                 });
-        return returnvalue.intValue();
+        return itemCount.intValue();
     }
 
     /** {@inheritDoc} */
     public String getCellText(final int row, final int column) {
-        String current = (String)getEventThreadQueuer().invokeAndWait("getCellText", //$NON-NLS-1$
+        String cellText = (String)getEventThreadQueuer().invokeAndWait("getCellText", //$NON-NLS-1$
                 new IRunnable() {
                     public Object run() {
-                        String value = m_table.getItem(row).getText(column);
+                        final TableItem item = m_table.getItem(row);
+                        String value = CAPUtil.getWidgetText(item,
+                                SwtAUTHierarchyConstants.WIDGET_TEXT_KEY_PREFIX
+                                        + column, item.getText(column));
                         if (log.isDebugEnabled()) {
                             log.debug("Getting cell text:"); //$NON-NLS-1$
                             log.debug("Row, col: " + row + ", " + column); //$NON-NLS-1$ //$NON-NLS-2$
@@ -92,16 +95,16 @@ public class TableAdapter extends WidgetAdapter implements ITableAdapter {
                         return value;
                     }
                 });
-        return current;
+        return cellText;
     }
 
     /** {@inheritDoc} */
-    public String getColumnName(final int column) {
+    public String getColumnHeaderText(final int colIdx) {
         String current = (String)getEventThreadQueuer().invokeAndWait("getColumnName", //$NON-NLS-1$
                 new IRunnable() {
                     public Object run() {
-                        String value = m_table.getColumn(column).getText();
-                        return value;
+                        final TableColumn column = m_table.getColumn(colIdx);
+                        return CAPUtil.getWidgetText(column, column.getText());
                     }
                 });
         return current;
@@ -138,9 +141,9 @@ public class TableAdapter extends WidgetAdapter implements ITableAdapter {
                     "getColumnFromString", new IRunnable() { //$NON-NLS-1$
                         public Object run() throws StepExecutionException {
                             for (int i = 0; i < m_table.getColumnCount(); i++) {
-                                TableColumn tblCol = m_table.getColumn(i);
+                                String colHeader = getColumnHeaderText(i);
                                 if (MatchUtil.getInstance().match(
-                                        tblCol.getText(), col, operator)) {
+                                        colHeader, col, operator)) {
                                     return new Integer (i);
                                 }
                             }
@@ -156,12 +159,12 @@ public class TableAdapter extends WidgetAdapter implements ITableAdapter {
     }
 
     /** {@inheritDoc} */
-    public String getRowName(final int row) {
-        String current = (String)getEventThreadQueuer().invokeAndWait("getRowName", //$NON-NLS-1$
+    public String getRowText(final int rowIdx) {
+        String current = (String)getEventThreadQueuer().invokeAndWait("getRowText", //$NON-NLS-1$
                 new IRunnable() {
                     public Object run() {
-                        String value = m_table.getItem(row).getText();
-                        return value;
+                        final TableItem row = m_table.getItem(rowIdx);
+                        return CAPUtil.getWidgetText(row, row.getText());
                     }
                 });
         return current;
@@ -211,7 +214,7 @@ public class TableAdapter extends WidgetAdapter implements ITableAdapter {
 
     /** {@inheritDoc} */
     public Rectangle getBounds() {
-        Rectangle returnvalue = (Rectangle) getEventThreadQueuer()
+        Rectangle bounds = (Rectangle) getEventThreadQueuer()
                 .invokeAndWait("getBounds", //$NON-NLS-1$
                     new IRunnable() {                     
                         public Object run() throws StepExecutionException {
@@ -219,24 +222,23 @@ public class TableAdapter extends WidgetAdapter implements ITableAdapter {
                         }
                     });
         
-        return returnvalue;
+        return bounds;
     }
 
     /** {@inheritDoc} */
     public Rectangle getHeaderBounds(final int col) {
-        Rectangle cellBounds;
-        cellBounds = (Rectangle)getEventThreadQueuer().invokeAndWait(
-            "getHeaderBounds", //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() throws StepExecutionException {
-                    org.eclipse.swt.graphics.Rectangle rect =
-                            m_table.getItem(0).getBounds(col);
-                    rect.y = m_table.getClientArea().y;
-                    return new Rectangle(rect.x, rect.y, rect.width,
-                            rect.height);
-                }
-            });
-        return cellBounds;
+        Rectangle headerBounds = (Rectangle) getEventThreadQueuer()
+                .invokeAndWait("getHeaderBounds", //$NON-NLS-1$
+                        new IRunnable() {
+                            public Object run() throws StepExecutionException {
+                                org.eclipse.swt.graphics.Rectangle rect = 
+                                        m_table.getItem(0).getBounds(col);
+                                rect.y = m_table.getClientArea().y;
+                                return new Rectangle(rect.x, rect.y,
+                                        rect.width, rect.height);
+                            }
+                        });
+        return headerBounds;
     }
 
     /** {@inheritDoc} */
@@ -308,8 +310,10 @@ public class TableAdapter extends WidgetAdapter implements ITableAdapter {
                         return null;
                     }
                 });
-
-        final Rectangle cellBoundsRelativeToParent = getCellBounds(row, col);
+        
+        checkRowColBounds(row, col);
+        final Rectangle cellBoundsRelativeToParent = TableTester.getCellBounds(
+                getEventThreadQueuer(), m_table, row, col);
             
         getEventThreadQueuer().invokeAndWait("getCellBoundsRelativeToParent", //$NON-NLS-1$
             new IRunnable() {
@@ -340,65 +344,12 @@ public class TableAdapter extends WidgetAdapter implements ITableAdapter {
         getRobot().scrollToVisible(
                 parent, cellBoundsRelativeToParent);
         
-        return getVisibleBounds(getCellBounds(row, col));
+        return getVisibleBounds(TableTester.getCellBounds(
+                getEventThreadQueuer(), m_table, row, col));
     }
     
     /**
-     * 
-     * @param row   The row of the cell
-     * @param col   The column of the cell
-     * @return The bounding rectangle for the cell, relative to the table's 
-     *         location.
-     */
-    private Rectangle getCellBounds(final int row, final int col) {
-        Rectangle cellBounds = (Rectangle)getEventThreadQueuer().invokeAndWait(
-                "evaluateCellBounds", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
-                        checkRowColBounds(row, col);
-                        TableItem ti = m_table.getItem(row);
-                        int column = (m_table.getColumnCount() > 0 || col > 0) 
-                            ? col : 0;
-                        org.eclipse.swt.graphics.Rectangle r = 
-                                ti.getBounds(column);
-                        String text = ti.getText(column);
-                        Image image = ti.getImage(column);
-                        if (text != null && text.length() != 0) {
-                            GC gc = new GC(m_table);
-                            int charWidth = 0; 
-                            try {
-                                FontMetrics fm = gc.getFontMetrics();
-                                charWidth = fm.getAverageCharWidth();
-                            } finally {
-                                gc.dispose();
-                            }
-                            r.width = text.length() * charWidth;
-                            if (image != null) {
-                                r.width += image.getBounds().width;
-                            }
-                        } else if (image != null) {
-                            r.width = image.getBounds().width;
-                        }
-                        if (column > 0) {
-                            TableColumn tc = m_table.getColumn(column);
-                            int alignment = tc.getAlignment();
-                            if (alignment == SWT.CENTER) {
-                                r.x += ((double)tc.getWidth() / 2) 
-                                        - ((double)r.width / 2);
-                            }
-                            if (alignment == SWT.RIGHT) {
-                                r.x += tc.getWidth() - r.width;
-                            }
-                        }
-                        
-                        return new Rectangle(r.x, r.y, r.width, r.height);
-                    }
-                });
-        return cellBounds;
-    }
-
-    /**
-     * Checks wether <code>0 <= value < count</code>. 
+     * Checks whether <code>0 <= value < count</code>. 
      * @param value The value to check.
      * @param count The upper bound.
      */

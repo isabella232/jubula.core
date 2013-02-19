@@ -14,8 +14,10 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITabPaneAdapter;
+import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.widgets.Control;
 /**
  * Implementation of the Interface <code>ITabPane</code> as a
@@ -31,7 +33,7 @@ public class CTabFolderAdapter extends WidgetAdapter
         new AutServerLogger(CTabFolderAdapter.class);
 
     /** the CTabFolder from the AUT */
-    private CTabFolder m_ctabFolder;
+    private CTabFolder m_tabFolder;
     
     /**
      * 
@@ -39,7 +41,7 @@ public class CTabFolderAdapter extends WidgetAdapter
      */
     public CTabFolderAdapter(Object objectToAdapt) {
         super(objectToAdapt);
-        m_ctabFolder = (CTabFolder) objectToAdapt;
+        m_tabFolder = (CTabFolder) objectToAdapt;
     }
 
     /**
@@ -47,11 +49,11 @@ public class CTabFolderAdapter extends WidgetAdapter
      */
     public int getTabCount() {
         return ((Integer)getEventThreadQueuer().invokeAndWait(
-                "getSelectedIndex", //$NON-NLS-1$
+                "getTabCount", //$NON-NLS-1$
                 new IRunnable() {
 
                 public Object run() throws StepExecutionException {
-                    return new Integer(m_ctabFolder.getItemCount());
+                    return new Integer(m_tabFolder.getItemCount());
                 }
             })).intValue();
     }
@@ -61,11 +63,12 @@ public class CTabFolderAdapter extends WidgetAdapter
      */
     public String getTitleofTab(final int index) {
         return (String)getEventThreadQueuer().invokeAndWait(
-                "verifyTextOfTabByIndex", //$NON-NLS-1$
+                "getTitleofTab", //$NON-NLS-1$
                 new IRunnable() {
                     public Object run() throws StepExecutionException {
-                        return SwtUtils.removeMnemonics(
-                                m_ctabFolder.getItem(index).getText());
+                        final CTabItem item = m_tabFolder.getItem(index);
+                        return CAPUtil.getWidgetText(item,
+                                SwtUtils.removeMnemonics(item.getText()));
                     }
                 });
     }
@@ -78,7 +81,7 @@ public class CTabFolderAdapter extends WidgetAdapter
                 new IRunnable() {
                     public Object run() throws StepExecutionException {
                         return SwtUtils.getRelativeWidgetBounds(
-                                m_ctabFolder.getItem(index), m_ctabFolder);
+                                m_tabFolder.getItem(index), m_tabFolder);
                     }
                 });
     }
@@ -90,7 +93,7 @@ public class CTabFolderAdapter extends WidgetAdapter
         return ((Boolean) getEventThreadQueuer().invokeAndWait("isEnabledAt", //$NON-NLS-1$
                 new IRunnable() {
                 public Object run() throws StepExecutionException {
-                    Control control = m_ctabFolder.getItem(index).getControl();
+                    Control control = m_tabFolder.getItem(index).getControl();
                     if (control == null) {
                         // FIXME zeb: Strange workaround for CTabFolders,
                         // which somehow never seem to have an associated
@@ -114,7 +117,7 @@ public class CTabFolderAdapter extends WidgetAdapter
                 new IRunnable() {
 
                 public Object run() throws StepExecutionException {
-                    return new Integer(m_ctabFolder.getSelectionIndex());
+                    return new Integer(m_tabFolder.getSelectionIndex());
                 }
             })).intValue();
     }

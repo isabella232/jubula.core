@@ -21,22 +21,20 @@ import org.eclipse.swt.widgets.Tree;
  *  @author BREDEX GmbH
  */
 public class TreeAdapter extends WidgetAdapter implements ITreeAdapter {
-
-
     /**
-     * 
      * @param objectToAdapt graphics component which will be adapted
      */
     public TreeAdapter(Object objectToAdapt) {
         super(objectToAdapt);
     }
+
     /**
-     * 
-     * @return the caste object
+     * @return the casted object
      */
     private Tree getTree() {
         return (Tree) getRealComponent();
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -48,6 +46,7 @@ public class TreeAdapter extends WidgetAdapter implements ITreeAdapter {
                     }
                 });
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -55,6 +54,7 @@ public class TreeAdapter extends WidgetAdapter implements ITreeAdapter {
         return new TreeOperationContext(getEventThreadQueuer(),
                 getRobot(), getTree());
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -62,5 +62,4 @@ public class TreeAdapter extends WidgetAdapter implements ITreeAdapter {
         
         return true;
     }
-
 }

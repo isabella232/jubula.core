@@ -26,13 +26,13 @@ import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.tester.adapter.TableAdapter;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.InputConstants;
+import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -44,8 +44,6 @@ import org.eclipse.swt.widgets.Widget;
  * @author BREDEX GmbH
  */
 public class TableTester extends AbstractTableTester {
-    
-
     /**
      *  Gets the real table component
      * @return the table
@@ -96,57 +94,6 @@ public class TableTester extends AbstractTableTester {
     /**
      * {@inheritDoc}
      */
-    protected Rectangle scrollCellToVisible(final int row, final int col)
-        throws StepExecutionException {
-        final Table table = getTable();
-        getEventThreadQueuer().invokeAndWait("scrollCellToVisible", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
-                        if (table.getColumnCount() > 0 || col > 0) {
-                            table.showColumn(table.getColumn(col));
-                        }
-                        table.showItem(table.getItem(row));
-                        return null;
-                    }
-                });
-
-        final Rectangle cellBoundsRelativeToParent = getCellBounds(row, col);
-            
-        getEventThreadQueuer().invokeAndWait("getCellBoundsRelativeToParent", //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() {
-                    org.eclipse.swt.graphics.Point cellOriginRelativeToParent = 
-                        table.getDisplay().map(
-                                table, table.getParent(), 
-                                new org.eclipse.swt.graphics.Point(
-                                        cellBoundsRelativeToParent.x, 
-                                        cellBoundsRelativeToParent.y));
-                    cellBoundsRelativeToParent.x = 
-                        cellOriginRelativeToParent.x;
-                    cellBoundsRelativeToParent.y = 
-                        cellOriginRelativeToParent.y;
-                    return null;
-                }
-            });
-
-        Control parent = (Control)getEventThreadQueuer().invokeAndWait("getParent", //$NON-NLS-1$
-                new IRunnable() {
-                public Object run() {
-                    table.getParent();
-                    return null;
-                }
-            });
-
-            
-        getRobot().scrollToVisible(
-                parent, cellBoundsRelativeToParent);
-        
-        return getVisibleBounds(getCellBounds(row, col));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     protected int getExtendSelectionModifier() {
         return SWT.MOD1;
     }
@@ -172,7 +119,9 @@ public class TableTester extends AbstractTableTester {
                             final int columnCount = table.getColumnCount();
                             if (columnCount > 0) {
                                 for (int col = 0; col < columnCount; col++) {
+                                    checkRowColBounds(rowCount, col);
                                     final Rectangle itemBounds = getCellBounds(
+                                            getEventThreadQueuer(), getTable(),
                                             rowCount, col);
                                     final org.eclipse.swt.graphics.Point 
                                         absItemBounds = table
@@ -188,7 +137,9 @@ public class TableTester extends AbstractTableTester {
                                     }
                                 }
                             } else {
+                                checkRowColBounds(rowCount, 0);
                                 final Rectangle itemBounds = getCellBounds(
+                                        getEventThreadQueuer(), getTable(),
                                         rowCount, 0);
                                 final org.eclipse.swt.graphics.Point 
                                     absItemBounds = table
@@ -293,7 +244,8 @@ public class TableTester extends AbstractTableTester {
                 if (item == null) {
                     itemTextArray[i] = null;
                 } else {
-                    itemTextArray[i] = SwtUtils.removeMnemonics(item.getText());
+                    String fallback = SwtUtils.removeMnemonics(item.getText());
+                    itemTextArray[i] = CAPUtil.getWidgetText(item, fallback);
                 }
             }
         }
@@ -345,25 +297,31 @@ public class TableTester extends AbstractTableTester {
     }
         
     /**
-     * 
-     * @param row   The row of the cell
-     * @param col   The column of the cell
-     * @return The bounding rectangle for the cell, relative to the table's 
+     * @param etq
+     *            the EventThreadQueuer to use
+     * @param table
+     *            the table to use
+     * @param row
+     *            The row of the cell
+     * @param col
+     *            The column of the cell
+     * @return The bounding rectangle for the cell, relative to the table's
      *         location.
      */
-    private Rectangle getCellBounds(final int row, final int col) {
-        final Table table = getTable();
-        Rectangle cellBounds = (Rectangle)getEventThreadQueuer().invokeAndWait(
-                "evaluateCellBounds", //$NON-NLS-1$
+    public static Rectangle getCellBounds(IEventThreadQueuer etq,
+        final Table table, final int row, final int col) {
+        Rectangle cellBounds = (Rectangle)etq.invokeAndWait(
+                "getCellBounds", //$NON-NLS-1$
                 new IRunnable() {
                     public Object run() {
-                        checkRowColBounds(row, col);
                         TableItem ti = table.getItem(row);
                         int column = (table.getColumnCount() > 0 || col > 0) 
                             ? col : 0;
                         org.eclipse.swt.graphics.Rectangle r = 
                                 ti.getBounds(column);
-                        String text = ti.getText(column);
+                        String text = CAPUtil.getWidgetText(ti,
+                                SwtAUTHierarchyConstants.WIDGET_TEXT_KEY_PREFIX
+                                        + column, ti.getText(column));
                         Image image = ti.getImage(column);
                         if (text != null && text.length() != 0) {
                             GC gc = new GC(table);
@@ -619,7 +577,7 @@ public class TableTester extends AbstractTableTester {
                     CAPUtil.shakeMouse();
 
                     // drop
-                    gdSelectRowByValue(col, colOperator, value, regexOp,
+                    selectRowByValue(col, colOperator, value, regexOp,
                             CompSystemConstants.EXTEND_SELECTION_NO, 
                             searchType, 
                             ClickOptions.create().setClickCount(0));
@@ -657,7 +615,7 @@ public class TableTester extends AbstractTableTester {
         dndHelper.setMouseButton(mouseButton);
         dndHelper.setModifier(modifier);
         dndHelper.setDragComponent(null);
-        gdSelectCellByColValue(row, rowOperator, value, regex, 
+        selectCellByColValue(row, rowOperator, value, regex, 
                 CompSystemConstants.EXTEND_SELECTION_NO,
                 searchType, ClickOptions.create().setClickCount(0));
     }
@@ -695,7 +653,7 @@ public class TableTester extends AbstractTableTester {
                     CAPUtil.shakeMouse();
 
                     // drop
-                    gdSelectCellByColValue(row, rowOperator, value, regex,
+                    selectCellByColValue(row, rowOperator, value, regex,
                             CompSystemConstants.EXTEND_SELECTION_NO, 
                             searchType, 
                             ClickOptions.create().setClickCount(0));

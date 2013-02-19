@@ -14,6 +14,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponentAdapter;
+import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.custom.StyledText;
 
@@ -47,7 +48,8 @@ public class StyledTextAdapter extends WidgetAdapter
         String actual = (String)getEventThreadQueuer().invokeAndWait(
                 "getText", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
-                        return m_styledText.getText();
+                        return CAPUtil.getWidgetText(
+                                m_styledText, m_styledText.getText());
                     }
                 });
         return actual;
@@ -86,7 +88,7 @@ public class StyledTextAdapter extends WidgetAdapter
      */
     public String getSelectionText() {
         String actual = (String)getEventThreadQueuer().invokeAndWait(
-                "getText", new IRunnable() { //$NON-NLS-1$
+                "getSelectionText", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
                         return m_styledText.getSelectionText();
                     }
@@ -100,7 +102,7 @@ public class StyledTextAdapter extends WidgetAdapter
     public void selectAll() {
         final String totalText = getText();
         
-        // fix for https://bxapps.bredex.de/bugzilla/show_bug.cgi?id=201
+        // fix for http://bugzilla.bredex.de/201
         // The keystroke "command + a" sometimes causes an "a" to be entered
         // into the text field instead of selecting all text (or having no 
         // effect).

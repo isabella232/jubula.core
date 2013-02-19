@@ -12,18 +12,13 @@ package org.eclipse.jubula.rc.swt.tester;
 
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 /**
- * 
  * @author BREDEX GmbH
- *
  */
 public class ListTester extends org.eclipse.jubula.rc.common.tester.ListTester {
-
-
     /**
      * {@inheritDoc}
      */
     protected int getSystemDefaultModifier() {
         return SwtUtils.getSystemDefaultModifier();
     }
-
 }

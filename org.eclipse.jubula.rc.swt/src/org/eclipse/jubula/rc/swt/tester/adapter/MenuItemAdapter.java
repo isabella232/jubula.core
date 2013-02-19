@@ -28,6 +28,7 @@ import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotFactorySwtImpl;
 import org.eclipse.jubula.rc.swt.driver.SelectionSwtEventMatcher;
 import org.eclipse.jubula.rc.swt.driver.ShowSwtEventMatcher;
+import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.tester.util.EventListener;
 import org.eclipse.jubula.rc.swt.tester.util.EventListener.Condition;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
@@ -91,12 +92,14 @@ public class MenuItemAdapter extends AbstractComponentAdapter
     public Object getRealComponent() {
         return m_menuItem;
     }
+    
     /**
      * {@inheritDoc}
      */
     public void setComponent(Object element) {
         m_menuItem = (MenuItem) element;
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -104,7 +107,8 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         return (String) getEventThreadQueuer().invokeAndWait(
                 "getText", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
-                        return SwtUtils.removeMnemonics(m_menuItem.getText());
+                        return CAPUtil.getWidgetText(m_menuItem,
+                                SwtUtils.removeMnemonics(m_menuItem.getText()));
                     }
                 });
     }
@@ -123,6 +127,7 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         return isEnabled.booleanValue();
 
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -132,6 +137,7 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         }
         return false;
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -156,6 +162,7 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         }
         return true; 
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -172,6 +179,7 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         
         return new MenuAdapter(menu);
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -232,7 +240,6 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         queuer.invokeAndWait("addMenuShownListeners", new IRunnable() { //$NON-NLS-1$
             public Object run() {
                 d.addFilter(SWT.Show, listener);
-                
                 return null;
             }
         });
@@ -277,10 +284,11 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         if (!lock.isReleased()) {
             String itemText = (String)getEventThreadQueuer().invokeAndWait(
                     "getItemText", new IRunnable() { //$NON-NLS-1$
-
                         public Object run() throws StepExecutionException {
                             if (menuItem != null && !menuItem.isDisposed()) {
-                                return menuItem.getText();
+                                return CAPUtil.getWidgetText(menuItem,
+                                    SwtUtils.removeMnemonics(
+                                            menuItem.getText()));
                             }
                             return "unknown menu item"; //$NON-NLS-1$
                         }
@@ -474,7 +482,6 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         } catch (RobotException re) {
             final StringBuffer sb = new StringBuffer(
                 "Robot exception occurred while clicking...\n"); //$NON-NLS-1$
-//            logRobotException(menuItem, re, sb);
             sb.append("Component: "); //$NON-NLS-1$
 
             getEventThreadQueuer().invokeAndWait(

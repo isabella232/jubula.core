@@ -15,6 +15,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -59,7 +60,7 @@ public class CComboAdapter extends AbstractComboBoxAdapter {
         // Get focus
         selectNone();
 
-        // FIXME zeb: Find a platform-independant way to select all text
+        // FIXME zeb: Find a platform-independent way to select all text
         //            without calling CCombo methods directly.
         //            The current problem with clicking twice in the text area
         //            is that if there is any white space, only part of the
@@ -98,9 +99,10 @@ public class CComboAdapter extends AbstractComboBoxAdapter {
      */
     public String getText() {
         Object o = getEventThreadQueuer().invokeAndWait(
-                "getSelectedItem", new IRunnable() { //$NON-NLS-1$
+                "getText", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
-                        return m_combobox.getText();
+                        return CAPUtil.getWidgetText(
+                                m_combobox, m_combobox.getText());
                     }
                 });
         return o != null ? o.toString() : null;
@@ -335,13 +337,11 @@ public class CComboAdapter extends AbstractComboBoxAdapter {
      */
     public String[] getValues() {
         return (String[])getEventThreadQueuer().invokeAndWait(
-                "getItem", //$NON-NLS-1$
+                "getItems", //$NON-NLS-1$
                 new IRunnable() {                        
                     public Object run() {                        
                         return m_combobox.getItems(); 
                     }                        
                 });
     }
-
-
 }

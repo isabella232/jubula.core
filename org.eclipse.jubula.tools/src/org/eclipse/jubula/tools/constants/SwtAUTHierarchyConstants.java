@@ -22,6 +22,19 @@ public final class SwtAUTHierarchyConstants {
     public static final String WIDGET_NAME = "TEST_COMP_NAME"; //$NON-NLS-1$
 
     /**
+     * the key for widget.getData(key); to get a fallback widget text (-->
+     * convention)
+     */
+    public static final String WIDGET_TEXT_KEY = "TEST_TESTABLE_TEXT"; //$NON-NLS-1$
+    
+    /**
+     * the key prefix for widget.getData(key); to get a fallback widget text for
+     * index based access (--> convention)
+     */
+    public static final String WIDGET_TEXT_KEY_PREFIX = 
+            WIDGET_TEXT_KEY + StringConstants.UNDERSCORE;
+    
+    /**
      * the key for widget.getData(key); to get the hardcoded widget name (-->
      * convention) as a fallback (old key)
      */

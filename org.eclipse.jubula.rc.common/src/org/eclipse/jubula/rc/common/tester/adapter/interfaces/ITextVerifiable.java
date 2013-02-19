@@ -7,8 +7,9 @@ package org.eclipse.jubula.rc.common.tester.adapter.interfaces;
 public interface ITextVerifiable extends IWidgetAdapter {
 
     /**
-     * Gets the value of the component, or if there are more
-     * than the first selected.
+     * Gets the value of the component, or if there are more than the first
+     * selected.
+     * 
      * @return the value of the component
      */
     public String getText();

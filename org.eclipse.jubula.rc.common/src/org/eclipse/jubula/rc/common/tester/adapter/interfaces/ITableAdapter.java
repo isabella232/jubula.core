@@ -47,15 +47,15 @@ public interface ITableAdapter extends ITextVerifiable {
     public String getCellText(int row, int column);
      
     /**
-     * Returns the name of the column appearing in the view at column position
+     * Returns the text of the column appearing in the view at column position
      * <code>column</code>.
      * 
      * @param column
      *            the zero based index of the column in the view being queried
-     * @return the name of the column at position <code>column</code> in the
+     * @return the text of the column at position <code>column</code> in the
      *         view where the first column is column 0
      */
-    public String getColumnName(int column);
+    public String getColumnHeaderText(int column);
 
     /**
      * Gets column index from string with header name or index
@@ -77,7 +77,7 @@ public interface ITableAdapter extends ITextVerifiable {
      *            the zero based index of the row
      * @return the text of the row
      */
-    public String getRowName(int row);
+    public String getRowText(int row);
     
     /**
      * Gets row index from string with index or text of first row

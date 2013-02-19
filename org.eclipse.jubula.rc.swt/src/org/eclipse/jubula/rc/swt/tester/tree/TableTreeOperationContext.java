@@ -18,8 +18,10 @@ import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
+import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
+import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Tree;
@@ -99,10 +101,11 @@ public class TableTreeOperationContext extends TreeOperationContext {
             new IRunnable() {
 
                 public Object run() {
-                    return item.getText(m_column);
+                    return CAPUtil.getWidgetText(item,
+                            SwtAUTHierarchyConstants.WIDGET_TEXT_KEY_PREFIX
+                            + m_column, item.getText(m_column));
 
                 }
-
             });
 
         return nodeText;

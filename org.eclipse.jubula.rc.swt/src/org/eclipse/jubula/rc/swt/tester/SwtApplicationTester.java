@@ -51,9 +51,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 /**
- * 
  * @author BREDEX GmbH
- *
  */
 public class SwtApplicationTester extends AbstractApplicationTester implements
         IGraphicApplication {
@@ -108,7 +106,9 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
                 if (window.isDisposed()) {
                     return m_valForDisposed;
                 }
-                return MatchUtil.getInstance().match(window.getText(), 
+                String windowText = CAPUtil.getWidgetText(
+                        window, window.getText());
+                return MatchUtil.getInstance().match(windowText, 
                         m_windowTitle, m_matchingOperator);
 
             }
@@ -377,7 +377,8 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
 
                         Shell frame = (Shell)comp;
                         if (MatchUtil.getInstance().match(
-                                frame.getText(), title, operator)) {
+                                CAPUtil.getWidgetText(frame, frame.getText()),
+                                title, operator)) {
 
                             equal = true;
                             break;
@@ -439,6 +440,7 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
         }
         return null;
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -473,12 +475,14 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
             getRobot().keyStroke(keyStrokeSpec);
         }
     }
+    
     /**
      * {@inheritDoc}
      */
     protected Object getFocusOwner() {
         return FocusTracker.getFocusOwner();
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -499,6 +503,7 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
         }
         return event;
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -539,9 +544,8 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
             }
             return false;
         }        
-        final String windowTitle = activeWindow.getText();
-        
+        final String windowTitle = CAPUtil.getWidgetText(activeWindow,
+                activeWindow.getText());
         return MatchUtil.getInstance().match(windowTitle, title, operator);
     }
-
 }

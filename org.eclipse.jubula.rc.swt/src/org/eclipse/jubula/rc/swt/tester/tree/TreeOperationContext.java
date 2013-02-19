@@ -22,8 +22,10 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
+import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.swt.SWT;
@@ -59,21 +61,17 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     }
 
     /**
-     * @param node The node.
-     * @param row The node row.
+     * @param node
+     *            The node.
+     * @param row
+     *            The node row.
      * @return The converted text
-     * @throws StepExecutionException If the method call fails.
+     * @throws StepExecutionException
+     *             If the method call fails.
      */
     protected String convertValueToText(final Object node, final int row)
         throws StepExecutionException {
-        
-        final TreeItem treeNode = (TreeItem)node;
-        return (String)getQueuer().invokeAndWait(
-            "convertValueToText", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
-                    return treeNode.getText();
-                }
-            });
+        return getRenderedText(node);
     }
     
     /**
@@ -84,9 +82,9 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
         
         final TreeItem treeNode = (TreeItem)node;
         return (String)getQueuer().invokeAndWait(
-            "getRenderedText", new IRunnable() { //$NON-NLS-1$
+            "getText", new IRunnable() { //$NON-NLS-1$
                 public Object run() {
-                    return treeNode.getText();
+                    return CAPUtil.getWidgetText(treeNode, treeNode.getText());
                 }
             });
     }
@@ -518,13 +516,15 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                     int colCount = ((Tree)getTree()).getColumnCount();
                     
                     for (int i = 0; i < colCount; i++) {
-                        String textAtColumn = item.getText(i);
+                        String textAtColumn = CAPUtil.getWidgetText(item,
+                                SwtAUTHierarchyConstants.WIDGET_TEXT_KEY_PREFIX
+                                + i, item.getText(i));
                         if (textAtColumn != null) {
                             res.add(textAtColumn);
                         }
                     }
                     
-                    String text = item.getText();
+                    String text = CAPUtil.getWidgetText(item, item.getText());
                     if (text != null) {
                         res.add(text);
                     }

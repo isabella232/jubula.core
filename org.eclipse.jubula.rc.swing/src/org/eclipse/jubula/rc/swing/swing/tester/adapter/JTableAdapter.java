@@ -115,7 +115,7 @@ public class JTableAdapter extends WidgetAdapter implements ITableAdapter {
     /**
      * {@inheritDoc}
      */
-    public String getColumnName(final int column) {
+    public String getColumnHeaderText(final int column) {
         String returnvalue = (String)getEventThreadQueuer().invokeAndWait(
                 "getColumnName", //$NON-NLS-1$
                 new IRunnable() {
@@ -172,7 +172,7 @@ public class JTableAdapter extends WidgetAdapter implements ITableAdapter {
     /**
      * {@inheritDoc}
      */
-    public String getRowName(final int row) {
+    public String getRowText(final int row) {
         // JTable does not act like lists
         return null;
     }

@@ -15,32 +15,23 @@ import java.util.StringTokenizer;
 
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
-import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.swt.driver.KeyCodeConverter;
 import org.eclipse.jubula.rc.swt.driver.SwtRobot;
+import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Widget;
 /**
- * Util class for some swt specific commands.
+ * Utility class for some SWT specific commands.
  * 
  * @author BREDEX GmbH
  */
 public class CAPUtil {
-       
     /**
-     * 
+     * private constructor to prevent instantiation of utility class
      */
     private CAPUtil() { }    
-    
-    /**
-     * Gets the Robot. 
-     * @return The Robot
-     * @throws RobotException If the Robot cannot be created.
-     */
-    public static IRobot getRobot() throws RobotException {
-        return AUTServer.getInstance().getRobot();
-    }
     
     /**
      * Move the mouse pointer from its current position to a few points in
@@ -51,7 +42,8 @@ public class CAPUtil {
         /** number of pixels by which a "mouse shake" offsets the mouse cursor */
         final int mouseShakeOffset = 10;
         
-        Point origin = getRobot().getCurrentMousePosition();
+        Point origin = AUTServer.getInstance().getRobot()
+                .getCurrentMousePosition();
         SwtRobot lowLevelRobot = new SwtRobot(Display.getDefault());
         lowLevelRobot.mouseMove(
                 origin.x + mouseShakeOffset, 
@@ -76,7 +68,7 @@ public class CAPUtil {
      * if false, the modifier will be released.
      */
     public static void pressOrReleaseModifiers(String modifier, boolean press) {
-        final IRobot robot = getRobot();
+        final IRobot robot = AUTServer.getInstance().getRobot();
         final StringTokenizer modTok = new StringTokenizer(
                 KeyStrokeUtil.getModifierString(modifier), " "); //$NON-NLS-1$
         while (modTok.hasMoreTokens()) {
@@ -90,5 +82,48 @@ public class CAPUtil {
         }
     }
     
-
+    /**
+     * This method is intended to be called from within an EventThreadQueuer
+     * runnable.
+     * 
+     * @param widget
+     *            the widget to get the text for
+     * @param key
+     *            the key to use for text retrieval via getData(...).
+     * @param fallbackText
+     *            the text to use in case that the given key
+     * @return the string retrieved via the given key or the
+     *         <code>fallbackText</code> if
+     *         - if the given key is <code>null</code>
+     *         - no data with the given key found or
+     *         - object is not an instance of String
+     */
+    public static String getWidgetText(final Widget widget, final String key,
+            final String fallbackText) {
+        if (key != null) {
+            Object o = widget.getData(key);
+            if (o instanceof String) {
+                return (String) o;
+            }
+        }
+        return fallbackText;
+    }
+    
+    /**
+     * This method is intended to be called from within an EventThreadQueuer
+     * runnable.
+     * 
+     * @param widget
+     *            the widget to get the text for
+     * @param fallbackText
+     *            the fallback text to use
+     * @return the string retrieved or the <code>fallbackText</code> if 
+     *          - no text data is found or 
+     *          - data object is not an instance of String
+     */
+    public static String getWidgetText(final Widget widget,
+            final String fallbackText) {
+        return getWidgetText(widget, SwtAUTHierarchyConstants.WIDGET_TEXT_KEY,
+                fallbackText);
+    }
 }

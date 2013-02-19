@@ -60,8 +60,6 @@ import org.eclipse.swt.widgets.Tree;
  * @author BREDEX GmbH
  */
 public class TreeTester extends AbstractTreeTester {
-
-    
     /**
      * Finds the item at a given position in the tree.
      *

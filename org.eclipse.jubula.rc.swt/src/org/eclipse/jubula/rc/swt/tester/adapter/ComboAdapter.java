@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.swt.tester.adapter;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -87,9 +88,10 @@ public class ComboAdapter extends AbstractComboBoxAdapter {
      */
     public String getText() {
         Object o = getEventThreadQueuer().invokeAndWait(
-                "getSelectedItem", new IRunnable() { //$NON-NLS-1$
+                "getText", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
-                        return m_combobox.getText();
+                        return CAPUtil.getWidgetText(
+                                m_combobox, m_combobox.getText());
                     }
                 });
         return o != null ? o.toString() : null;        

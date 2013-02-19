@@ -11,20 +11,16 @@
 package org.eclipse.jubula.rc.swt.tester.adapter;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
-import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextVerifiable;
+import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.swt.custom.CLabel;
 /**
- * 
  * @author BREDEX GmbH
- *
  */
 public class CLabelAdapter extends WidgetAdapter implements ITextVerifiable {
 
     /**
-     * 
      * @param objectToAdapt the component to adapt
      */
     public CLabelAdapter(Object objectToAdapt) {
@@ -39,16 +35,9 @@ public class CLabelAdapter extends WidgetAdapter implements ITextVerifiable {
         return (String)getEventThreadQueuer().invokeAndWait(
                 "getText", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
-                        try {
-                            return SwtUtils.removeMnemonics(label.getText());
-                        } catch (NullPointerException e) {
-                            throw new StepExecutionException(
-                                    "component must not be null", //$NON-NLS-1$
-                                    EventFactory
-                                    .createComponentNotFoundErrorEvent());
-                        }
+                        return CAPUtil.getWidgetText(label, 
+                                SwtUtils.removeMnemonics(label.getText()));
                     }
                 });
     }
-
 }
