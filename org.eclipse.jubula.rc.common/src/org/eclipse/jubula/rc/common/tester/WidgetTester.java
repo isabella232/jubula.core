@@ -28,6 +28,12 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
  * @author BREDEX GmbH
  */
 public class WidgetTester extends AbstractUITester {
+    /** the name of the reflectively called remote control method to wait for a component  */
+    public static final String RC_METHOD_NAME_WAIT_FOR_COMPONENT = "rcWaitForComponent"; //$NON-NLS-1$
+
+    /** the name of the reflectively called remote control method for existence checking */
+    public static final String RC_METHOD_NAME_CHECK_EXISTENCE = "rcVerifyExists"; //$NON-NLS-1$
+
     /**
      * Casts the IComponentAdapter to an IWidgetAdapter for better access
      * @return The widgetAdapter

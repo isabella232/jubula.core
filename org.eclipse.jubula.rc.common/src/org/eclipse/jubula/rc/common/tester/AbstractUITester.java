@@ -75,6 +75,7 @@ public abstract class AbstractUITester implements IBaseImplementationClass {
         m_component = (IComponentAdapter) afr.getAdapter(
                 graphicsComponent.getClass(), graphicsComponent);
     }
+    
     /**
      * Getter for the stored GraphicalComponent
      * @return gets the stored IComponentAdapter

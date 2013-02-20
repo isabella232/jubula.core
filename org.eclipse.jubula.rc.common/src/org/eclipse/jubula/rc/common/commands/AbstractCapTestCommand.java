@@ -30,6 +30,7 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.implclasses.Verifier;
+import org.eclipse.jubula.rc.common.tester.WidgetTester;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -51,7 +52,6 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public abstract class AbstractCapTestCommand implements ICommand {
-
     /** The logger */
     private static final Logger LOG = LoggerFactory.getLogger(
         AbstractCapTestCommand.class);
@@ -104,7 +104,8 @@ public abstract class AbstractCapTestCommand implements ICommand {
      */
     protected Object getImplClass(CAPTestResponseMessage response) {
         Object implClass = null;
-        IComponentIdentifier ci = m_capTestMessage.getMessageCap().getCi();
+        final MessageCap messageCap = m_capTestMessage.getMessageCap();
+        IComponentIdentifier ci = messageCap.getCi();
         if (LOG.isInfoEnabled()) {
             LOG.info("component class name: " //$NON-NLS-1$
                 + (ci == null ? "(none)" : ci.getComponentClassName())); //$NON-NLS-1$
@@ -114,11 +115,12 @@ public abstract class AbstractCapTestCommand implements ICommand {
             // FIXME : Extra handling for waitForComponent and verifyExists
             int timeout = 500;
             
-            boolean isWaitForComponent = m_capTestMessage.getMessageCap()
-                .getMethod().equals("gdWaitForComponent"); //$NON-NLS-1$
+            boolean isWaitForComponent = 
+                    WidgetTester.RC_METHOD_NAME_WAIT_FOR_COMPONENT
+                        .equals(messageCap.getMethod());
             if (isWaitForComponent) { 
-                MessageParam timeoutParam = (MessageParam)m_capTestMessage.
-                    getMessageCap().getMessageParams().get(0);
+                MessageParam timeoutParam = (MessageParam)messageCap.
+                        getMessageParams().get(0);
                 try {
                     timeout = Integer.parseInt(timeoutParam.getValue());
                 } catch (NumberFormatException e) {
@@ -131,8 +133,8 @@ public abstract class AbstractCapTestCommand implements ICommand {
                 .prepareImplementationClass(component, component.getClass());
 
             if (isWaitForComponent) {
-                MessageParam delayParam = (MessageParam)m_capTestMessage.
-                    getMessageCap().getMessageParams().get(1);
+                MessageParam delayParam = (MessageParam)messageCap.
+                        getMessageParams().get(1);
                 try {
                     int delay = Integer.parseInt(delayParam.getValue());
                     TimeUtil.delay(delay);
@@ -145,12 +147,13 @@ public abstract class AbstractCapTestCommand implements ICommand {
         } catch (IllegalArgumentException e) {
             handleComponentNotFound(response, e);
         } catch (ComponentNotFoundException e) {
-            MessageCap cap = m_capTestMessage.getMessageCap();
-            if ("gdVerifyExists".equals(cap.getMethod())) { //$NON-NLS-1$
+            if (WidgetTester.RC_METHOD_NAME_CHECK_EXISTENCE
+                    .equals(messageCap.getMethod())) {
                 MessageParam isVisibleParam = 
-                    (MessageParam)cap.getMessageParams().get(0);
+                    (MessageParam)messageCap.getMessageParams().get(0);
                 handleComponentDoesNotExist(response, 
-                    Boolean.valueOf(isVisibleParam.getValue()).booleanValue());
+                    Boolean.valueOf(isVisibleParam.getValue())
+                        .booleanValue());
             } else {
                 handleComponentNotFound(response, e);
             }
