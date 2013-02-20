@@ -95,13 +95,14 @@ public class AdapterFactoryRegistry {
     public void signOffFactory(IAdapterFactory factory) {
         Class[] supportedClasses = factory.getSupportedClasses();
         for (int i = 0; i < supportedClasses.length; i++) {
+            final Class supportedClass = supportedClasses[i];
             Collection registeredFactories = (Collection) m_registrationMap
-                    .get(supportedClasses[i]);
+                    .get(supportedClass);
             if (registeredFactories == null) {
                 return;
             }
             registeredFactories.remove(factory);
-            m_registrationMap.put(supportedClasses[i], registeredFactories);
+            m_registrationMap.remove(supportedClass);
         }
     }
 
