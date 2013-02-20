@@ -20,7 +20,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
-import org.eclipse.jubula.rc.common.implclasses.Verifier;
+import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.driver.SwtRobot;
 import org.eclipse.jubula.rc.swt.tester.util.SimulatedTooltip;

@@ -8,19 +8,19 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.common.implclasses;
+package org.eclipse.jubula.rc.common.tester.interfaces;
 
 
 /**
- * The interface to be implemented by all implementation classes.
+ * The interface for all tester classes.
  *
  * @author BREDEX GmbH
  * @created 19.04.2006
  */
-public interface IBaseImplementationClass {
+public interface ITester {
 
     /**
-     * Set the component the methods this implementation class implements have
+     * Set the component the methods this tester class implements have
      * to work with. <br>
      * 
      * The methods are declared by the configuration file for supported
@@ -34,7 +34,7 @@ public interface IBaseImplementationClass {
     public void setComponent(Object graphicsComponent);
 
     /**
-     * Returns a descriptive text array that represents the given gui component.
+     * Returns a descriptive text array that represents the given GUI component.
      * <br>
      * Descriptive texts can be received for example from buttons, labels and
      * table headers. If text is obviously data (for example in text input 
@@ -45,7 +45,7 @@ public interface IBaseImplementationClass {
      * be returned.
      * 
      * @return array containing none, one or many texts representing the <br>
-     *         gui component or null
+     *         GUI component or null
      */
     public String[] getTextArrayFromComponent();
 }

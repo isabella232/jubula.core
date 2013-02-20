@@ -19,9 +19,6 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
-import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
-import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeTraverser;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
@@ -36,7 +33,10 @@ import org.eclipse.jubula.rc.common.implclasses.tree.StandardDepthFirstTraverser
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperationConstraint;
 import org.eclipse.jubula.rc.common.tester.AbstractTreeTester;
+import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
+import org.eclipse.jubula.rc.common.util.MatchUtil;
+import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.driver.KeyCodeConverter;
 import org.eclipse.jubula.rc.swt.tester.tree.TableTreeOperationContext;
@@ -166,9 +166,6 @@ public class TreeTester extends AbstractTreeTester {
                 pattern, operator);
 
     }
-    
-
-
 
     /**
      * {@inheritDoc}
@@ -311,6 +308,7 @@ public class TreeTester extends AbstractTreeTester {
             SwtUtils.waitForDisplayIdle(getTree().getDisplay());
         }
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -398,6 +396,7 @@ public class TreeTester extends AbstractTreeTester {
         
         return column;
     }
+    
     // 
     // Methods for Table Trees following
     // 

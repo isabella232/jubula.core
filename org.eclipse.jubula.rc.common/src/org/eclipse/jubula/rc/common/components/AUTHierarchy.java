@@ -18,9 +18,8 @@ import java.util.Map;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
-import org.eclipse.jubula.rc.common.implclasses.IBaseImplementationClass;
-import org.eclipse.jubula.rc.common.implclasses.IComponentFactory;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.tester.interfaces.ITester;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 
@@ -214,9 +213,9 @@ public abstract class AUTHierarchy {
                 Object implClass = AUTServerConfiguration
                     .getInstance().prepareImplementationClass(
                         component, component.getClass());
-                if (implClass instanceof IBaseImplementationClass) {
-                    IBaseImplementationClass baseImpl = 
-                        (IBaseImplementationClass)implClass;
+                if (implClass instanceof ITester) {
+                    ITester baseImpl = 
+                        (ITester)implClass;
                     componentTextArray = baseImpl.getTextArrayFromComponent();
                 }
             } catch (UnsupportedComponentException uce) {

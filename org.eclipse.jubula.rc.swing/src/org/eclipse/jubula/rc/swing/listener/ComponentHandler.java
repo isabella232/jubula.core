@@ -22,11 +22,11 @@ import java.util.EventListener;
 
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.common.components.IComponentFactory;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
-import org.eclipse.jubula.rc.common.implclasses.IComponentFactory;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swing.components.AUTSwingHierarchy;

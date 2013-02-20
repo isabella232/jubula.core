@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.common.implclasses;
+package org.eclipse.jubula.rc.common.util;
 
 import java.util.ArrayList;
 import java.util.Iterator;

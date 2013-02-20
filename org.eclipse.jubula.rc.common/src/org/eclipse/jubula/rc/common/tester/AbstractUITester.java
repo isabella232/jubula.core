@@ -16,8 +16,8 @@ import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.exception.RobotException;
-import org.eclipse.jubula.rc.common.implclasses.IBaseImplementationClass;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
+import org.eclipse.jubula.rc.common.tester.interfaces.ITester;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 /**
  * Implementation of basic functions for all tester classes. This class
@@ -26,7 +26,7 @@ import org.eclipse.jubula.tools.constants.TestDataConstants;
  * 
  * @author BREDEX GmbH
  */
-public abstract class AbstractUITester implements IBaseImplementationClass {
+public abstract class AbstractUITester implements ITester {
 
     /** constants for communication */
     protected static final String POS_UNIT_PIXEL = "Pixel"; //$NON-NLS-1$

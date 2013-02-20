@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
-import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
+import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.NameValidator;
 import org.eclipse.jubula.rc.swt.components.FindSWTComponentBP;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;

@@ -17,7 +17,7 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
+import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;

@@ -11,8 +11,8 @@
 package org.eclipse.jubula.rc.common.tester;
 
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextVerifiable;
+import org.eclipse.jubula.rc.common.util.Verifier;
 
 /**
  * This class represents the general implementation for components

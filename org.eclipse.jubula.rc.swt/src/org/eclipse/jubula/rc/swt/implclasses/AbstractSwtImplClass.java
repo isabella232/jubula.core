@@ -17,7 +17,7 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.exception.RobotException;
-import org.eclipse.jubula.rc.common.implclasses.IBaseImplementationClass;
+import org.eclipse.jubula.rc.common.tester.interfaces.ITester;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.swt.driver.KeyCodeConverter;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Item;
  * @author BREDEX GmbH
  * @created 30.03.2007
  */
-public abstract class AbstractSwtImplClass implements IBaseImplementationClass {
+public abstract class AbstractSwtImplClass implements ITester {
 
     /** The default separator for enumerations of list values. */
     public static final char INDEX_LIST_SEP_CHAR = 

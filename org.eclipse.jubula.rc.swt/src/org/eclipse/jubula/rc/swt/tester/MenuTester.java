@@ -14,12 +14,11 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.IBaseImplementationClass;
-import org.eclipse.jubula.rc.common.implclasses.MenuUtilBase;
 import org.eclipse.jubula.rc.common.tester.AbstractMenuTester;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuAdapter;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
+import org.eclipse.jubula.rc.common.util.MenuUtilBase;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotSwtImpl;
 import org.eclipse.jubula.rc.swt.tester.adapter.MenuItemAdapter;
@@ -37,13 +36,9 @@ import org.eclipse.swt.widgets.Shell;
  * 
  * @author BREDEX GmbH
  */
-public class MenuTester extends AbstractMenuTester 
-    implements IBaseImplementationClass {
-
-    
+public class MenuTester extends AbstractMenuTester {
     /** Test variable for contextMenus*/
     private boolean m_isCM = false;
-
 
     /**
      * @return The event thread queuer.

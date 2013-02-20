@@ -12,10 +12,10 @@ package org.eclipse.jubula.rc.common.tester;
 
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
-import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
-import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITabPaneAdapter;
+import org.eclipse.jubula.rc.common.util.IndexConverter;
+import org.eclipse.jubula.rc.common.util.MatchUtil;
+import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;

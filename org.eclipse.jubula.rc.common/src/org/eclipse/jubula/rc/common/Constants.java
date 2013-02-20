@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common;
 
-import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
+import org.eclipse.jubula.rc.common.util.MatchUtil;
 
 /**
  * Constants for all toolkit server

@@ -11,9 +11,9 @@
 package org.eclipse.jubula.rc.common.tester;
 
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
-import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonAdapter;
+import org.eclipse.jubula.rc.common.util.MatchUtil;
+import org.eclipse.jubula.rc.common.util.Verifier;
 
 
 /**

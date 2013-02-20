@@ -14,8 +14,8 @@ import java.util.List;
 
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.commands.AbstractSendAUTListOfSupportedComponentsCommand;
+import org.eclipse.jubula.rc.common.components.IComponentFactory;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
-import org.eclipse.jubula.rc.common.implclasses.IComponentFactory;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
 import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;

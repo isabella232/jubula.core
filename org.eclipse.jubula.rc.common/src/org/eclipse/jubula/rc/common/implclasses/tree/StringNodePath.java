@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.common.implclasses.tree;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
+import org.eclipse.jubula.rc.common.util.MatchUtil;
 
 
 /**

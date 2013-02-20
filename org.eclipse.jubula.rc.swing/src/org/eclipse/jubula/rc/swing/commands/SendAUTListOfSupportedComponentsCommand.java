@@ -13,8 +13,8 @@ package org.eclipse.jubula.rc.swing.commands;
 import java.util.List;
 
 import org.eclipse.jubula.rc.common.commands.AbstractSendAUTListOfSupportedComponentsCommand;
+import org.eclipse.jubula.rc.common.components.IComponentFactory;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
-import org.eclipse.jubula.rc.common.implclasses.IComponentFactory;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
 import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 

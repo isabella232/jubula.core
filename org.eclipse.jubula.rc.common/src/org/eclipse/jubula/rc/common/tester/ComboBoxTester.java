@@ -13,10 +13,10 @@ package org.eclipse.jubula.rc.common.tester;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.IndexConverter;
-import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
-import org.eclipse.jubula.rc.common.implclasses.Verifier;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboBoxAdapter;
+import org.eclipse.jubula.rc.common.util.IndexConverter;
+import org.eclipse.jubula.rc.common.util.MatchUtil;
+import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 

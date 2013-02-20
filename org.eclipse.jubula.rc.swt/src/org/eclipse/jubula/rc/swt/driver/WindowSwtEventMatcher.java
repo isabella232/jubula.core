@@ -15,7 +15,7 @@ import java.util.List;
 import org.eclipse.jubula.rc.common.driver.IEventMatcher;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
-import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
+import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 

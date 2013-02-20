@@ -27,8 +27,8 @@ import javax.swing.KeyStroke;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.MatchUtil;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 

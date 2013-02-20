@@ -29,7 +29,10 @@ import org.eclipse.jubula.rc.common.exception.ExecutionEvent;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.tester.interfaces.ITester;
+import org.eclipse.jubula.rc.common.util.Comparer;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
+import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -42,8 +45,7 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
  * @author BREDEX GmbH
  * @created Dec 19, 2006
  */
-public abstract class AbstractApplicationImplClass implements
-        IBaseImplementationClass {
+public abstract class AbstractApplicationImplClass implements ITester {
     /**
      * String for sequential numbering for screenshots
      */
