@@ -197,21 +197,26 @@ public final class LockManager {
      */
     @SuppressWarnings("unchecked")
     void checkForTimeouts() {
-        runInSession(new DBRunnable() {
+        // check for disposed LockManager
+        if (LockManager.isRunning() && m_application != null) {
+            runInSession(new DBRunnable() {
 
-            public Result run(EntityManager sess) {
-                Query deadQuery = 
-                    sess.createQuery("select app from ApplicationPO app where app.timestamp < :deadTime"); //$NON-NLS-1$
-                Date deadTime = new Date(m_application.getTimestamp().getTime()
-                    - TIMEOUT_APPLICATION * 1000);
-                deadQuery.setParameter("deadTime", deadTime, TemporalType.TIMESTAMP); //$NON-NLS-1$
-                List<ApplicationPO> deadApps = deadQuery.getResultList();
-                for (ApplicationPO appl : deadApps) {
-                    removeApp(sess, appl);
+                public Result run(EntityManager sess) {
+                    Query deadQuery =
+                            sess.createQuery("select app from ApplicationPO app where app.timestamp < :deadTime"); //$NON-NLS-1$
+                    Date deadTime = new Date(m_application.getTimestamp()
+                            .getTime()
+                            - TIMEOUT_APPLICATION * 1000);
+                    deadQuery.setParameter(
+                            "deadTime", deadTime, TemporalType.TIMESTAMP); //$NON-NLS-1$
+                    List<ApplicationPO> deadApps = deadQuery.getResultList();
+                    for (ApplicationPO appl : deadApps) {
+                        removeApp(sess, appl);
+                    }
+                    return Result.OK;
                 }
-                return Result.OK;
-            }
-        });
+            });
+        }
     }
 
     /**
@@ -308,77 +313,83 @@ public final class LockManager {
      * @throws PMObjectDeletedException if the object was deleted
      */
     public synchronized boolean lockPO(final EntityManager userSess,
-        final IPersistentObject po, final boolean checkVersion)
-        throws PMDirtyVersionException, PMObjectDeletedException {
+            final IPersistentObject po, final boolean checkVersion)
+            throws PMDirtyVersionException, PMObjectDeletedException {
+        // check for disposed LockManager
+        if (LockManager.isRunning() && m_application != null) {
 
-        final DBRunnable checkForDirty = new DBRunnable() {
-            
-            public Result run(EntityManager sess) {
-                Result result = Result.OK;
-                try {
-                    if (checkVersion) {
-                        Query versionQuery = sess.createQuery("select obj.version from " //$NON-NLS-1$
-                                + po.getClass().getSimpleName() 
-                                + " as obj where obj.id = :poID"); //$NON-NLS-1$
-                        versionQuery.setParameter("poID", po.getId()); //$NON-NLS-1$
-                        Integer version = 
-                            (Integer)versionQuery.getSingleResult();
-                        if (!po.getVersion().equals(version)) {
-                            result = Result.OBJECT_DIRTY;
+            final DBRunnable checkForDirty = new DBRunnable() {
+
+                public Result run(EntityManager sess) {
+                    Result result = Result.OK;
+                    try {
+                        if (checkVersion) {
+                            Query versionQuery = sess
+                                    .createQuery("select obj.version from " //$NON-NLS-1$
+                                            + po.getClass().getSimpleName()
+                                            + " as obj where obj.id = :poID"); //$NON-NLS-1$
+                            versionQuery.setParameter("poID", po.getId()); //$NON-NLS-1$
+                            Integer version =
+                                    (Integer) versionQuery.getSingleResult();
+                            if (!po.getVersion().equals(version)) {
+                                result = Result.OBJECT_DIRTY;
+                            }
+                        } else {
+                            Query countQuery = sess
+                                    .createQuery("select count(obj.id) from " //$NON-NLS-1$
+                                            + po.getClass().getSimpleName()
+                                            + " as obj where obj.id = :poID"); //$NON-NLS-1$
+                            countQuery.setParameter("poID", po.getId()); //$NON-NLS-1$
+                            Long count = (Long) countQuery.getSingleResult();
+                            if (count == 0) {
+                                result = Result.OBJECT_DELETED;
+                            }
                         }
-                    } else {
-                        Query countQuery = sess.createQuery("select count(obj.id) from " //$NON-NLS-1$
-                                + po.getClass().getSimpleName() 
-                                + " as obj where obj.id = :poID"); //$NON-NLS-1$
-                        countQuery.setParameter("poID", po.getId()); //$NON-NLS-1$
-                        Long count = (Long)countQuery.getSingleResult();
-                        if (count == 0) {
-                            result = Result.OBJECT_DELETED;
-                        }
+                    } catch (NoResultException nre) {
+                        result = Result.OBJECT_DELETED;
                     }
-                } catch (NoResultException nre) {
-                    result = Result.OBJECT_DELETED;
+
+                    return result;
                 }
-
-                return result;
+            };
+            final Result runResult = runInSession(checkForDirty);
+            if (runResult == Result.OBJECT_DELETED) {
+                throw new PMObjectDeletedException(po,
+                        Messages.LockFailedDueToDeletedPO,
+                        MessageIDs.E_DELETED_OBJECT);
             }
-        };
-        final Result runResult = runInSession(checkForDirty);
-        if (runResult == Result.OBJECT_DELETED) {
-            throw new PMObjectDeletedException(po,
-                Messages.LockFailedDueToDeletedPO,
-                MessageIDs.E_DELETED_OBJECT);
-        }
-        if (checkVersion && (runResult == Result.OBJECT_DIRTY)) {
-            throw new PMDirtyVersionException(po,
-                Messages.LockFailedDueToDbOutOfSync,
-                MessageIDs.E_STALE_OBJECT);
-        }
+            if (checkVersion && (runResult == Result.OBJECT_DIRTY)) {
+                throw new PMDirtyVersionException(po,
+                        Messages.LockFailedDueToDbOutOfSync,
+                        MessageIDs.E_STALE_OBJECT);
+            }
 
-        return Result.OK == runInSession(new DBRunnable() {
+            return Result.OK == runInSession(new DBRunnable() {
 
-            public Result run(EntityManager sess) {
-                Result lockOK;
-                Query lockQuery = sess.createQuery(
-                        "select lock from DbLockPO as lock where lock.poId = :poID"); //$NON-NLS-1$
-                lockQuery.setParameter("poID", po.getId()); //$NON-NLS-1$
-                
-                try {
-                    DbLockPO lock = (DbLockPO)lockQuery.getSingleResult();
-                    lockOK = (lock.getApplication().equals(m_application) 
-                        && lock.getSessionId().intValue() 
-                            == System.identityHashCode(userSess)) ? Result.OK
-                                    : Result.FAILED;
-                } catch (NoResultException nre) {
-                    DbLockPO lock = new DbLockPO(m_application, userSess, po);
-                    sess.persist(lock);
-                    lockOK = Result.OK;
+                public Result run(EntityManager sess) {
+                    Result lockOK;
+                    Query lockQuery = sess
+                            .createQuery("select lock from DbLockPO as lock where lock.poId = :poID"); //$NON-NLS-1$
+                    lockQuery.setParameter("poID", po.getId()); //$NON-NLS-1$
+
+                    try {
+                        DbLockPO lock = (DbLockPO) lockQuery.getSingleResult();
+                        lockOK = (lock.getApplication().equals(m_application)
+                                && lock.getSessionId().intValue()
+                                == System.identityHashCode(userSess)) ? Result.OK
+                                        : Result.FAILED;
+                    } catch (NoResultException nre) {
+                        DbLockPO lock = new DbLockPO(m_application, userSess,
+                                po);
+                        sess.persist(lock);
+                        lockOK = Result.OK;
+                    }
+
+                    return lockOK;
                 }
-
-                return lockOK;
-            }
-        });
-
+            });
+        }
+        return false;
     }
     
     /**
