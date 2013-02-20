@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.rcp.e3.gef.implclasses;
+package org.eclipse.jubula.rc.rcp.e3.gef.tester;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
@@ -55,8 +55,7 @@ import org.eclipse.swt.widgets.Control;
  * @author BREDEX GmbH
  * @created May 13, 2009
  */
-public class FigureCanvasImplClass extends AbstractControlImplClass {
-
+public class FigureCanvasTester extends AbstractControlImplClass {
     /**
      * the viewer that contains the EditParts corresponding to the FigureCanvas
      */
@@ -194,7 +193,7 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
      * @param operator The operator used for matching.
      * @param exists   Whether the figure is expected to exist.
      */
-    public void gdCheckFigureExists(
+    public void rcCheckFigureExists(
             String textPath, String operator, boolean exists) {
 
         boolean isExisting =
@@ -217,7 +216,7 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
      * @param expectedPropValue The value of the property as a string
      * @param valueOperator The operator used to verify
      */
-    public void gdVerifyFigureProperty(String textPath,
+    public void rcVerifyFigureProperty(String textPath,
             String textPathOperator, final String propertyName,
             String expectedPropValue, String valueOperator) {
 
@@ -267,7 +266,7 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
      * @param operator The operator used for matching.
      * @param exists   Whether the figure is expected to exist.
      */
-    public void gdCheckToolExists(
+    public void rcCheckToolExists(
             String textPath, String operator, boolean exists) {
 
         boolean isExisting = findPaletteFigure(textPath, operator) != null;
@@ -284,7 +283,7 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
      * @param count The number of times to click.
      * @param button The mouse button to use for the click.
      */
-    public void gdClickFigure(String textPath, String operator,
+    public void rcClickFigure(String textPath, String operator,
             int count, int button) {
 
         getRobot().click(getViewerControl(),
@@ -306,7 +305,7 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
      * @param count The number of times to click.
      * @param button The mouse button to use for the click.
      */
-    public void gdClickConnection(String sourceTextPath, String sourceOperator,
+    public void rcClickConnection(String sourceTextPath, String sourceOperator,
             String targetTextPath, String targetOperator,
             int count, int button) {
 
@@ -386,7 +385,7 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
      * @param yUnits should y position be pixel or percent values
      * @throws StepExecutionException if step execution fails.
      */
-    public void gdClickInFigure(String textPath, String operator,
+    public void rcClickInFigure(String textPath, String operator,
         int count, int button, int xPos, String xUnits,
         int yPos, String yUnits) throws StepExecutionException {
 
@@ -412,7 +411,7 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
      * @param yPos what y position
      * @param yUnits should y position be pixel or percent values
      */
-    public void gdDragFigure(String textPath, String operator,
+    public void rcDragFigure(String textPath, String operator,
             int mouseButton, String modifier, int xPos,
             String xUnits, int yPos, String yUnits) {
         // Only store the Drag-Information. Otherwise the GUI-Eventqueue
@@ -422,7 +421,7 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
         dndHelper.setMouseButton(mouseButton);
         dndHelper.setModifier(modifier);
         dndHelper.setDragComponent(null);
-        gdClickInFigure(textPath, operator, 0, mouseButton,
+        rcClickInFigure(textPath, operator, 0, mouseButton,
                 xPos, xUnits, yPos, yUnits);
     }
 
@@ -441,7 +440,7 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
      *                        between moving the mouse to the drop point and
      *                        releasing the mouse button
      */
-    public void gdDropOnFigure(final String textPath, final String operator,
+    public void rcDropOnFigure(final String textPath, final String operator,
             final int xPos, final String xUnits, final int yPos,
             final String yUnits, int delayBeforeDrop) {
 
@@ -465,7 +464,7 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
                     shakeMouse();
 
                     // drop
-                    gdClickInFigure(textPath, operator, 0,
+                    rcClickInFigure(textPath, operator, 0,
                             mouseButton, xPos, xUnits, yPos, yUnits);
 
                     return null;
@@ -527,7 +526,7 @@ public class FigureCanvasImplClass extends AbstractControlImplClass {
      * @param operator The operator used for matching.
      * @param count The number of times to click.
      */
-    public void gdSelectTool(String textPath, String operator, int count) {
+    public void rcSelectTool(String textPath, String operator, int count) {
         Control paletteControl = getPaletteControl();
         IFigure figure =
             findPaletteFigureChecked(textPath, operator);
