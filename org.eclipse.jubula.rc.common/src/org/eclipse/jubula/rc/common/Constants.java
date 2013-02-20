@@ -57,11 +57,6 @@ public class Constants implements CompSystemConstants {
     /**  the factor how strong name equivalenz will increase total equivalenz */
     public static final double NAME_FACTOR = 0.60;
     // ----------------------------------------------------
-    // ---------  For SWT  --------------------------------
-    // ----------------------------------------------------
-    /** the key for table.getData("CELL"); to get the cellListener (to get the selected row an d column) */
-    public static final String CELL = "GD_CELL_LISTENER"; //$NON-NLS-1$
-    // ----------------------------------------------------
     // ---------  For HTML  --------------------------------
     // ----------------------------------------------------
     /** the string for xpath (locator starts with this string) */
