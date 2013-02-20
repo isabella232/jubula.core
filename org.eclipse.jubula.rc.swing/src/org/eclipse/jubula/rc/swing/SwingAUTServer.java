@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * The AutServer controling the AUT. <br>
+ * The AutServer controlling the AUT. <br>
  * A quasi singleton: the instance is created from main(). <br>
  * Expected arguments to main are, see also
  * StartAUTServerCommand.createCmdArray():
@@ -47,14 +47,14 @@ import org.slf4j.LoggerFactory;
  * <li>The main class of the AUT.</li>
  * <li>Any further arguments are interpreted as arguments to the AUT.</li>
  * <ul>
- * When a connetion to the JubulaClient could made, any errors will send as a
+ * When a connection to the JubulaClient could made, any errors will send as a
  * message to the JubulaClient.
  * 
  * Changing the mode to OBJECT_MAPPING results in installing an AWTEventListener
  * (an instance of <code>MappingListener</code>). For simplification the
  * virtual machine is closed  without sending a message to the client when an
- * error occurs during the installation of the AWTEventListener. The exitcode is
- * the appopriate EXIT_* constant
+ * error occurs during the installation of the AWTEventListener. The exit code is
+ * the appropriate EXIT_* constant
  * 
  * Changing the mode to TESTING removes the installed MappingListener.
  * 
