@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.eclipse.jubula.rc.common.classloader.DefaultUrlLocator;
+import org.eclipse.jubula.rc.common.classloader.IUrlLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

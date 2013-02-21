@@ -29,7 +29,6 @@ public class SwtRemoteControlService extends SwtAUTServer {
         super();
         // set also static instance in parent AUTServer
         setInstance(this);
-        AdapterFactoryRegistry.initRegistration();
     }
 
     /**

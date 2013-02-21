@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.common.adaptable;
+package org.eclipse.jubula.rc.common.classloader;
 
 import java.net.URL;
 

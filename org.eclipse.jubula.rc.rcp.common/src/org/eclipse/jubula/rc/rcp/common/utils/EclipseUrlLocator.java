@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.jubula.rc.common.adaptable.IUrlLocator;
+import org.eclipse.jubula.rc.common.classloader.IUrlLocator;
 
 /**
  * This class implements the URL locator for Eclipse environments.
