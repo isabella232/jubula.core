@@ -705,12 +705,7 @@ public class ClientTest implements IClientTest {
             while (System.currentTimeMillis() <= startTime + timeoutToUse
                     && !response.wasExecuted() 
                     && AUTConnection.getInstance().isConnected()) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    // Do nothing. The exit conditions will be checked
-                    // again on the next loop iteration.
-                }
+                TimeUtil.delay(500);
             }
             if (ObjectMappingEventDispatcher.getObjMapTransient()
                     .getMappings().isEmpty()) {

@@ -758,7 +758,7 @@ public class TestExecution {
             IObjectMappingPO om = aut.getObjMap();
             IObjectMappingPO transientOm = ObjectMappingEventDispatcher.
                 getObjMapTransient();
-            // Find the component name. It may be overriden in one or
+            // Find the component name. It may be overridden in one or
             // more ExecTestCase nodes.
             logicalName = m_compNamesBP.findCompName(
                     m_trav.getExecStackAsNodeList(), cap, 

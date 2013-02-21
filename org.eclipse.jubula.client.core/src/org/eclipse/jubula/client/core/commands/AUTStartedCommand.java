@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * The comamnd object for <code>AUTComponentsMessage</code>. <br>
+ * The command object for <code>AUTComponentsMessage</code>. <br>
  * 
  * Execute() notifies the listener which was given at construction time.<br>
  * Timeout() notifies the same listener with error(ERROR_TIMEOUT)<br>.
