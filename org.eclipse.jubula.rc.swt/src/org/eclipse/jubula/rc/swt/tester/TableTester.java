@@ -396,7 +396,7 @@ public class TableTester extends AbstractTableTester {
             
                 })).intValue();
 
-        if (POS_UNIT_PIXEL.equalsIgnoreCase(units)) {
+        if (CompSystemConstants.POS_UNIT_PIXEL.equalsIgnoreCase(units)) {
             // Pixel units
             correctedPos += headerHeight;
         } else {

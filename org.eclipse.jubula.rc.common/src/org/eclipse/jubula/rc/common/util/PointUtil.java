@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.common.util;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -66,6 +67,26 @@ public class PointUtil {
                             TestErrorEvent.CLICKPOINT_INVALID));
         }
         return pointToGo;
+    }
+    
+    /**
+     * @param sRectangle
+     *            a string formatted like x:y:width:height representing a
+     *            rectangle
+     * @return a rectangle representing the given string rectangle
+     */
+    public static Rectangle stringAsRectangle(String sRectangle) {
+        String[] aBounds = StringUtils.split(sRectangle, ':');
+        if (aBounds.length != 4) {
+            throw new IllegalArgumentException(
+                    "non-well formatted sRectangle: " //$NON-NLS-1$
+                            + sRectangle);
+        }
+        int x = Integer.valueOf(aBounds[0]).intValue();
+        int y = Integer.valueOf(aBounds[1]).intValue();
+        int width = Integer.valueOf(aBounds[2]).intValue();
+        int height = Integer.valueOf(aBounds[3]).intValue();
+        return new Rectangle(x, y, width, height);
     }
     
     /**

@@ -27,14 +27,6 @@ import org.eclipse.jubula.tools.constants.TestDataConstants;
  * @author BREDEX GmbH
  */
 public abstract class AbstractUITester implements ITester {
-
-    /** constants for communication */
-    protected static final String POS_UNIT_PIXEL = "Pixel"; //$NON-NLS-1$
-    
-    /** constants for communication */
-    protected static final String POS_UNI_PERCENT = "Percent"; //$NON-NLS-1$
-    /** The default separator for enumerations of list values. */
-
     /** The default separator of a list of values */
     protected static final char VALUE_SEPARATOR = 
         TestDataConstants.VALUE_CHAR_DEFAULT;

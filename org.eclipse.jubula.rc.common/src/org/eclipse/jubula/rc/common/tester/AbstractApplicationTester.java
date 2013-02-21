@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.KeyTyper;
@@ -639,9 +640,9 @@ public abstract class AbstractApplicationTester implements ITester {
                     .setConfirmClick(false)
                     .setMouseButton(button), 
                 xPos, 
-                xUnits.equalsIgnoreCase(AbstractUITester.POS_UNIT_PIXEL), 
+                xUnits.equalsIgnoreCase(CompSystemConstants.POS_UNIT_PIXEL), 
                 yPos, 
-                yUnits.equalsIgnoreCase(AbstractUITester.POS_UNIT_PIXEL));
+                yUnits.equalsIgnoreCase(CompSystemConstants.POS_UNIT_PIXEL));
         } else {
             throw new StepExecutionException("No active window.", //$NON-NLS-1$
                 EventFactory.createActionError(

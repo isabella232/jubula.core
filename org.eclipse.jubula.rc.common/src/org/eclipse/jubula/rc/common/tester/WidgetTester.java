@@ -129,8 +129,10 @@ public class WidgetTester extends AbstractUITester {
                 ClickOptions.create()
                     .setClickCount(count)
                     .setMouseButton(button),
-                xPos, xUnits.equalsIgnoreCase(POS_UNIT_PIXEL),
-                yPos, yUnits.equalsIgnoreCase(POS_UNIT_PIXEL));
+                xPos, xUnits.equalsIgnoreCase(
+                        CompSystemConstants.POS_UNIT_PIXEL),
+                yPos, yUnits.equalsIgnoreCase(
+                        CompSystemConstants.POS_UNIT_PIXEL));
     }
     
     /**
