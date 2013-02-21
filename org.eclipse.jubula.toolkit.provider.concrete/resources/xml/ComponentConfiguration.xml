@@ -18,7 +18,7 @@
 	<concreteComponent type="guidancer.concrete.GraphicApplication">
 		<defaultMapping logicalName="CompSystem.LogicalApplicationName"
 			technicalName="Application">
-			<typeFactory>com.bredexsw.guidancer.autserverbase.implclasses.DefaultComponentFactory</typeFactory>
+			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<action name="CompSystem.ClickInActiveWindow" changed="1.27">
 			<method>rcClickDirect</method>
@@ -469,7 +469,7 @@
 
 	<concreteComponent type="guidancer.concrete.MenuBar">
 		<defaultMapping technicalName="Menu" logicalName="CompSystem.LogicalMenuName">
-			<typeFactory>com.bredexsw.guidancer.autserverbase.implclasses.DefaultComponentFactory</typeFactory>
+			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<action name="CompSystem.SelectMenuItem" changed="1.12">
 			<method>selectMenuItem</method>

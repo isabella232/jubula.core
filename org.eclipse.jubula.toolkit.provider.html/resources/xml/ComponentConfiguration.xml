@@ -253,7 +253,7 @@
 	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.GraphicApplication" visible="false">
 		<defaultMapping logicalName="CompSystem.LogicalApplicationName"
 			technicalName="Application">
-			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
+			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.GraphicApplication</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.HtmlApplicationImplClass</testerClass>
@@ -262,7 +262,7 @@
     <toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.WebBrowser" visible="true">
 		<defaultMapping logicalName="CompSystem.LogicalHtmlApplicationName"
 			technicalName="Browser">
-			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
+			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.HtmlApplicationImplClass</testerClass>
 		<componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.WebBrowser" />
@@ -297,7 +297,7 @@
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" visible="false">
 		<defaultMapping technicalName="Menu" logicalName="CompSystem.LogicalMenuName">
-			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
+			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.MenuBar</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.HtmlMenuBarImplClass</testerClass>
