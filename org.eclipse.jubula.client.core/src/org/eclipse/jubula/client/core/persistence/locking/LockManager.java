@@ -314,7 +314,7 @@ public final class LockManager {
      */
     public synchronized boolean lockPO(final EntityManager userSess,
             final IPersistentObject po, final boolean checkVersion)
-            throws PMDirtyVersionException, PMObjectDeletedException {
+        throws PMDirtyVersionException, PMObjectDeletedException {
         // check for disposed LockManager
         if (LockManager.isRunning() && m_application != null) {
 
@@ -363,9 +363,7 @@ public final class LockManager {
                         Messages.LockFailedDueToDbOutOfSync,
                         MessageIDs.E_STALE_OBJECT);
             }
-
             return Result.OK == runInSession(new DBRunnable() {
-
                 public Result run(EntityManager sess) {
                     Result lockOK;
                     Query lockQuery = sess
@@ -374,10 +372,10 @@ public final class LockManager {
 
                     try {
                         DbLockPO lock = (DbLockPO) lockQuery.getSingleResult();
-                        lockOK = (lock.getApplication().equals(m_application)
-                                && lock.getSessionId().intValue()
-                                == System.identityHashCode(userSess)) ? Result.OK
-                                        : Result.FAILED;
+                        lockOK = (lock.getApplication().equals(m_application) 
+                                && lock.getSessionId().intValue() == System
+                                .identityHashCode(userSess)) ? Result.OK
+                                : Result.FAILED;
                     } catch (NoResultException nre) {
                         DbLockPO lock = new DbLockPO(m_application, userSess,
                                 po);
