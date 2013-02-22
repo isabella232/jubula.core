@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
-import org.eclipse.jubula.rc.rcp.common.utils.EclipseUrlLocator;
+import org.eclipse.jubula.rc.rcp.common.classloader.EclipseUrlLocator;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;

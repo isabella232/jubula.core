@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.rcp.common.utils;
+package org.eclipse.jubula.rc.rcp.common.classloader;
 
 import java.io.IOException;
 import java.net.URL;

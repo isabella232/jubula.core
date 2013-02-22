@@ -18,7 +18,7 @@ import java.util.Properties;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
-import org.eclipse.jubula.rc.rcp.common.utils.EclipseUrlLocator;
+import org.eclipse.jubula.rc.rcp.common.classloader.EclipseUrlLocator;
 import org.eclipse.jubula.rc.rcp.e3.gef.inspector.GefInspectorListenerAppender;
 import org.eclipse.jubula.rc.rcp.e3.gef.listener.GefPartListener;
 import org.eclipse.jubula.rc.rcp.swt.aut.RcpSwtComponentNamer;
