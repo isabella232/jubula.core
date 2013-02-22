@@ -172,8 +172,10 @@ public abstract class AbstractTableTester
                         getExtendSelectionModifier());
             }
             getRobot().click(source, o, clickOptions, 
-                    xPos, xUnits.equalsIgnoreCase(POS_UNIT_PIXEL), 
-                    yPos, yUnits.equalsIgnoreCase(POS_UNIT_PIXEL));
+                    xPos, xUnits.equalsIgnoreCase(
+                            CompSystemConstants.POS_UNIT_PIXEL), 
+                    yPos, yUnits.equalsIgnoreCase(
+                            CompSystemConstants.POS_UNIT_PIXEL));
         } finally {
             if (isExtendSelection) {
                 getRobot().keyRelease(getRealTable(),
@@ -349,8 +351,9 @@ public abstract class AbstractTableTester
             final ClickOptions co, final String extendSelection) {
             
         rcSelectCell(row, rowOperator, col, colOperator, co.getClickCount(),
-                    50, POS_UNI_PERCENT, 50, POS_UNI_PERCENT, extendSelection, 
-                    co.getMouseButton());
+                50, CompSystemConstants.POS_UNIT_PERCENT, 50,
+                CompSystemConstants.POS_UNIT_PERCENT, extendSelection,
+                co.getMouseButton());
     }
     
     

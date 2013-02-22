@@ -18,7 +18,7 @@
 		type="com.bredexsw.guidancer.server.implclasses.GraphicApplication" visible="false">
 		<defaultMapping logicalName="CompSystem.LogicalApplicationName"
 			technicalName="Application">
-			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
+			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.GraphicApplication</realizes>
 		<testerClass>org.eclipse.jubula.rc.swing.tester.SwingApplicationTester</testerClass>
@@ -33,7 +33,7 @@
 
 	<toolkitComponent type="javax.swing.JMenuBar" visible="false">
 		<defaultMapping technicalName="Menu" logicalName="CompSystem.LogicalMenuName">
-			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
+			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.MenuBar</realizes>
 		<testerClass>org.eclipse.jubula.rc.swing.tester.JMenuBarTester</testerClass>

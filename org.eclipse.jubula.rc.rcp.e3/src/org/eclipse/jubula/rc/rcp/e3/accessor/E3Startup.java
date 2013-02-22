@@ -18,6 +18,7 @@ import java.util.Properties;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
+import org.eclipse.jubula.rc.rcp.common.classloader.EclipseUrlLocator;
 import org.eclipse.jubula.rc.rcp.e3.gef.inspector.GefInspectorListenerAppender;
 import org.eclipse.jubula.rc.rcp.e3.gef.listener.GefPartListener;
 import org.eclipse.jubula.rc.rcp.swt.aut.RcpSwtComponentNamer;
@@ -268,7 +269,7 @@ public abstract class E3Startup implements IStartup {
 
             });
             // Registering the AdapterFactory for SWT at the registry
-            AdapterFactoryRegistry.initRegistration();
+            AdapterFactoryRegistry.initRegistration(new EclipseUrlLocator());
             // add listener to AUT
             AUTServer.getInstance().addToolKitEventListenerToAUT();
 

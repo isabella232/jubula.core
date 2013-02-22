@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.eclipse.jubula.rc.common.classloader.DefaultUrlLocator;
+import org.eclipse.jubula.rc.common.classloader.IUrlLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -144,13 +146,13 @@ public class AdapterFactoryRegistry {
     }
 
     /**
-     * Must be called to initialize the registration of adapters
-     * 
-     * @throws InstantiationException
-     * @throws IllegalAccessException
+     * Use this method in eclipse environments.
+     * Must be called to initialize the registration of adapters.
+     * @param urlLocator The URL location converter needed in eclipse environments.
      */
-    public static void initRegistration() {
-        Class[] adapterFactories = findClassesOfType(ADAPTER_PACKAGE_NAME,
+    public static void initRegistration(IUrlLocator urlLocator) {
+        Class[] adapterFactories = findClassesOfType(urlLocator,
+                ADAPTER_PACKAGE_NAME,
                 IAdapterFactory.class);
 
         //Register all found factories
@@ -167,20 +169,30 @@ public class AdapterFactoryRegistry {
         }
     }
 
+    /**
+     * Use this method outside of eclipse environments. Must be called to
+     * initialize the registration of adapters. This method directly
+     * calls {@link AdapterFactoryRegistry#initRegistration(IUrlLocator)} with
+     * the {@link DefaultUrlLocator}.
+     */
+    public static void initRegistration() {
+        initRegistration(new DefaultUrlLocator());
+    }
     
     /**
      * Investigate a package of subclasses of a specific superclass
-     * 
+     * @param urlLocator
+     *            The URL location converter needed in eclipse environments.
      * @param packageName
      *            name of the package
      * @param superclass
      *            parent class for found classes
      * @return found classes
      */
-    private static Class[] findClassesOfType(String packageName,
-            Class superclass) {
+    private static Class[] findClassesOfType(IUrlLocator urlLocator,
+            String packageName, Class superclass) {
         try {
-            Class[] allClasses = getClasses(packageName);
+            Class[] allClasses = getClasses(urlLocator, packageName);
 
             List assignableClasses = new ArrayList();
             for (int i = 0; i < allClasses.length; i++) {
@@ -214,15 +226,17 @@ public class AdapterFactoryRegistry {
     
     /**
      * Scans all classes accessible from the context class loader which belong
-     * to the given package and subpackages.
-     * 
+     * to the given package and sub packages.
+     * @param urlLocator
+     *            The URL location converter needed in eclipse environments.
      * @param packageName
      *            The base package
      * @return The classes
      * @throws ClassNotFoundException
      * @throws IOException
      */
-    private static Class[] getClasses(String packageName)
+    private static Class[] getClasses(IUrlLocator urlLocator,
+            String packageName)
         throws ClassNotFoundException, IOException {
         ClassLoader classLoader = AdapterFactoryRegistry.class.getClassLoader();
         String path = packageName.replace('.', '/');
@@ -231,7 +245,12 @@ public class AdapterFactoryRegistry {
 
         while (resources.hasMoreElements()) {
             URL resource = (URL) resources.nextElement();
-            dirs.add(resource);
+            try {
+                resource = urlLocator.convertUrl(resource);
+                dirs.add(resource);
+            } catch (IOException e) {
+                log.error(e.getLocalizedMessage(), e);
+            }
         }
         List classes = new ArrayList();
         for (int i = 0; i < dirs.size(); i++) {

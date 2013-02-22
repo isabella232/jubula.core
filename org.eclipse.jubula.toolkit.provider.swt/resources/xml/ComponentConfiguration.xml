@@ -191,7 +191,7 @@
 	<toolkitComponent type="org.eclipse.swt.GraphicApplication" visible="false">
 		<defaultMapping logicalName="CompSystem.LogicalApplicationName"
 			technicalName="Application">
-			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
+			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.GraphicApplication</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.SwtApplicationTester</testerClass>
@@ -200,7 +200,7 @@
 
 	<toolkitComponent type="org.eclipse.swt.widgets.Menu" visible="false">
 		<defaultMapping technicalName="Menu" logicalName="CompSystem.LogicalMenuName">
-			<typeFactory>org.eclipse.jubula.rc.common.implclasses.DefaultComponentFactory</typeFactory>
+			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
 		</defaultMapping>
 		<realizes>guidancer.concrete.MenuBar</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.MenuTester</testerClass>
