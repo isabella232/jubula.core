@@ -3,19 +3,33 @@
 \index{RCP AUT's}
 \index{RCP!Remote Control}
 
-If you want to test a \bxname{Rich Client Platform} application, you
-must first unzip our \bxcaption{RCP Remote Control} plugin into your
-\gdaut{}. This can be done as follows:
+If you want to test a \bxname{Rich Client Platform} application, you must ensure that our \bxcaption{RCP Remote Control} plugin (org.eclipse.jubula.rc.rcp) is added to your \gdaut{} and that it will be started when the \gdaut{} starts. If you are using \app{} in a continuous build and test process, then we highly recommend doing this as a part of the product build, or just afterwards \bxpref{ToolkitRCPSetupCI}. For testing purposes, and to get started quicker, the steps can also be done manually as follows:
 
 
+\bxwarn{Please ensure that you follow all these steps!}
 \begin{enumerate}
-\item Locate the \app{} installation directory.
+\item Locate the \app{} installation directory, and open the \bxname{development} folder.
 \item Extract the content of the \bxname{rcp-support.zip} folder into the \bxname{plugins} directory for your RCP \gdaut{}.
-\bxtipp{When you install a new version of \app{}, you must repeat these steps with the new RCP remote control plugin. We recommend starting your \gdaut{} once with \bxshell{-clean} to ensure that the new remote control plugin is used. }
-\item RCP applications generally have a configuration/config.ini file which contains the parameter \bxname{osgi.bundles}. This parameter may need to be modified to allow the RCP remote control plugin to load on \gdaut{} startup. The \bxname{org.eclipse.update.configurator} plugin automatically loads all plugins found in the plugins directory, which means that the RCP remote control plugin should start with the \gdaut{} if \bxname{org.eclipse.update.configurator@3:start} is already defined in the \bxname{osgi.bundles} parameter. Otherwise, you may need to add  \bxname{org.eclipse.jubula.rc.rcp} to the end of the \bxname{osgi.bundles} parameter.
+\item RCP applications generally have a configuration/config.ini file which contains the parameter \bxname{osgi.bundles}. This parameter needs to be modified to allow the RCP remote control plugin to load on \gdaut{} startup. You must add  \bxname{org.eclipse.jubula.rc.rcp@start} to the end of the \bxname{osgi.bundles} parameter.
+\item Start your \gdaut{} \textbf{normally} (i.e. not as an \gdaut{} from \app{}). Close it, and then start it again. 
+\item In your \gdaut{}, open \bxmenu{Help}{About}{}. 
+\item In the \bxname{plugin details} for your \gdaut{}, you should be able to see that the following plugins are started:
+\begin{itemize}
+\item org.eclipse.jubula.rc.rcp
+\item org.eclipse.jubula.rc.rcp.common
+\end{itemize}
+\item If you can see these plugins, then you can continue and start your \gdaut{} via e.g. an \gdaut{} configuration \bxpref{TasksConfigureJavaAUT} or via \bxname{autrun} \bxpref{autrun}. 
+\item If you cannot see these plugins, then you should speak to a member of the development team to implement the suggestions described in the section below \bxpref{ToolkitRCpSetupCI}.
 \end{enumerate}
+\bxtipp{When you install a new version of \app{}, you must repeat these steps with the new RCP remote control plugin. We recommend starting your \gdaut{} once with \bxshell{-clean} to ensure that the new remote control plugin is used. }
+If you do not follow these steps, the \gdagent{} will not be able to communicate with your \gdaut{}!
 
-If you do not follow the above steps, the \gdagent{} will not be able to
-communicate with your \gdaut{}!
+\subsubsection{Setting up an RCP \gdaut{} for testing as a part of the build process}
+\label{ToolkitRCPSetupCI}
+We recommend adding the RCP accessor to your \gdaut{} automatically in one of the following ways. Which way you choose will depend on your \gdaut{}, build process and Eclipse version, and you should check with the development team which approach is best:
 
-
+\begin{description}
+\item [During the product build:]{Adding the RCP Accessor as a plugin to your \gdaut{} as it is being built is one way to ensure that it is present and started when the \gdaut{} starts.}
+\item [Via the OSGI console:]{If adding the Accessor during the build is not an option, then you can add it after the build via the OSGI console. The availability of this option is dependent on the version of Eclipse you use, and your \gdaut{}: It must allow this type of post-hoc inclusion of plugins for this to work.}
+\item [Via the P2 director:]{Alternatively, you can add it after the product build using the P2 director. The availability of this option is dependent on the version of Eclipse you use, and your \gdaut{}: It \gdaut{} must allow this type of post-hoc inclusion of plugins for this to work.}
+\end{description}
