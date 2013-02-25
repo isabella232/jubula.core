@@ -52,10 +52,12 @@ public class ImplClassClassLoader extends JBUrlClassLoader {
         
         Class c = null;
         // in case of c is an ImplClass
-        if (name.startsWith(CommandConstants.SWING_IMPLCLASS_PACKAGE)
+        if ((name.indexOf("tester.adapter.") == -1) //$NON-NLS-1$
+                && (name.startsWith(CommandConstants.SWING_IMPLCLASS_PACKAGE)
             || name.startsWith(CommandConstants.SWT_IMPLCLASSES_PACKAGE)
             || (name.indexOf(CommandConstants.JUBULA_EXTENSION_PACKAGE) 
-                != -1)) {
+                != -1)
+            )) { 
             
             return implLoadClass(name, resolve);
         }
