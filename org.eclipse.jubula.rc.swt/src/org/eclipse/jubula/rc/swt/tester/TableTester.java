@@ -22,14 +22,19 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.tester.AbstractTableTester;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponentAdapter;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
+import org.eclipse.jubula.rc.swt.tester.adapter.StyledTextAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TableAdapter;
+import org.eclipse.jubula.rc.swt.tester.adapter.TextComponentAdapter;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.InputConstants;
 import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -37,6 +42,7 @@ import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 /**
  * Toolkit specific commands for the <code>Table</code>
@@ -73,9 +79,28 @@ public class TableTester extends AbstractTableTester {
      * {@inheritDoc}
      */
     protected Object setEditorToReplaceMode(Object editor, boolean replace) {
+
         if (replace) {
-            getRobot().clickAtCurrentPosition(editor, 3, 
-                    InputConstants.MOUSE_BUTTON_LEFT);
+            ITextComponentAdapter textEditor = null;
+            if (editor instanceof Text) {
+                textEditor = new TextComponentAdapter(editor);
+            }
+            if (editor instanceof StyledText) {
+                textEditor = new StyledTextAdapter(editor);
+            }
+            if (EnvironmentUtils.isMacOS()) {
+                getRobot().clickAtCurrentPosition(editor, 3, 
+                        InputConstants.MOUSE_BUTTON_LEFT);
+            } else {
+                getRobot().keyStroke(getRobot().getSystemModifierSpec() + " A"); //$NON-NLS-1$
+            }
+            if (textEditor != null) {
+                if (!textEditor.getSelectionText()
+                        .equals(textEditor.getText())) {
+                    // if the whole text is not selected, select programmatic
+                    textEditor.selectAll();
+                }
+            }
         } else {
             getRobot().clickAtCurrentPosition(editor, 2, 
                     InputConstants.MOUSE_BUTTON_LEFT);
