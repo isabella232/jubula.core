@@ -24,7 +24,7 @@ import org.eclipse.swt.custom.StyledText;
  * @author BREDEX GmbH
  *
  */
-public class StyledTextAdapter extends WidgetAdapter 
+public class StyledTextAdapter extends ControlAdapter 
     implements ITextComponentAdapter {
     
     /** the logger */

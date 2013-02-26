@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Label;
 /**
  * @author BREDEX GmbH
  */
-public class LabelAdapter extends WidgetAdapter implements ITextVerifiable {
+public class LabelAdapter extends ControlAdapter implements ITextVerifiable {
 
     /**
      * @param objectToAdapt the component to adapt

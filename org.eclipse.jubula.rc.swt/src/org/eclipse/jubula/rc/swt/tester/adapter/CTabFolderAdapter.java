@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Control;
  * @author BREDEX GmbH
  *
  */
-public class CTabFolderAdapter extends WidgetAdapter 
+public class CTabFolderAdapter extends ControlAdapter 
     implements ITabPaneAdapter {
 
     /** the logger */

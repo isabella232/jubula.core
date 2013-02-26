@@ -25,8 +25,9 @@ import org.eclipse.jubula.rc.swt.tester.adapter.StyledTextAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TabFolderAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TableAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TextComponentAdapter;
+import org.eclipse.jubula.rc.swt.tester.adapter.ToolItemAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TreeAdapter;
-import org.eclipse.jubula.rc.swt.tester.adapter.WidgetAdapter;
+import org.eclipse.jubula.rc.swt.tester.adapter.ControlAdapter;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.CTabFolder;
@@ -44,6 +45,7 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 
 /**
@@ -58,7 +60,7 @@ public class SWTAdapterFactory implements IAdapterFactory {
             new Class[]{Button.class, Menu.class, MenuItem.class, Tree.class,
                 Table.class, List.class, Text.class, StyledText.class,
                 Combo.class, CCombo.class, Label.class, CLabel.class, 
-                TabFolder.class, CTabFolder.class};
+                TabFolder.class, CTabFolder.class, ToolItem.class};
     
     
     /**
@@ -102,13 +104,15 @@ public class SWTAdapterFactory implements IAdapterFactory {
         } else if (objectToAdapt instanceof CTabFolder) {
             returnvalue = new CTabFolderAdapter(objectToAdapt);
         } else if (objectToAdapt instanceof Link) {
-            returnvalue = new WidgetAdapter(objectToAdapt);
+            returnvalue = new ControlAdapter(objectToAdapt);
         } else if (objectToAdapt instanceof Spinner) {
-            returnvalue = new WidgetAdapter(objectToAdapt);
+            returnvalue = new ControlAdapter(objectToAdapt);
         } else if (objectToAdapt instanceof Slider) {
-            returnvalue = new WidgetAdapter(objectToAdapt);
+            returnvalue = new ControlAdapter(objectToAdapt);
         } else if (objectToAdapt instanceof Scale) {
-            returnvalue = new WidgetAdapter(objectToAdapt);
+            returnvalue = new ControlAdapter(objectToAdapt);
+        } else if (objectToAdapt instanceof ToolItem) {
+            returnvalue = new ToolItemAdapter(objectToAdapt);
         }
         
         return returnvalue;

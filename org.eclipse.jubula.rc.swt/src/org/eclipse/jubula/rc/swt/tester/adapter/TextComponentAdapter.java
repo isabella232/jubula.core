@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Text;
  * @author BREDEX GmbH
  *
  */
-public class TextComponentAdapter extends WidgetAdapter implements
+public class TextComponentAdapter extends ControlAdapter implements
         ITextComponentAdapter {
     
     /** the logger */

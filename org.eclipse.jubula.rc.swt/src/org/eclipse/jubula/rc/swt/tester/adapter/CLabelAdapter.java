@@ -18,7 +18,7 @@ import org.eclipse.swt.custom.CLabel;
 /**
  * @author BREDEX GmbH
  */
-public class CLabelAdapter extends WidgetAdapter implements ITextVerifiable {
+public class CLabelAdapter extends ControlAdapter implements ITextVerifiable {
 
     /**
      * @param objectToAdapt the component to adapt

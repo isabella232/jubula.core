@@ -38,7 +38,7 @@ import org.eclipse.swt.widgets.TableItem;
  * 
  * @author BREDEX GmbH
  */
-public class TableAdapter extends WidgetAdapter implements ITableAdapter {
+public class TableAdapter extends ControlAdapter implements ITableAdapter {
     
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(

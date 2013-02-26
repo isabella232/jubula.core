@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Widget;
  * @author BREDEX GmbH
  * 
  */
-public abstract class AbstractComboBoxAdapter extends WidgetAdapter 
+public abstract class AbstractComboBoxAdapter extends ControlAdapter 
     implements IComboBoxAdapter {
     
     /** number of clicks to give focus without selecting any text */

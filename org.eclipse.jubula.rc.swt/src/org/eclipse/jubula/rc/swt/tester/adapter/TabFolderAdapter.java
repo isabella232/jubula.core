@@ -23,7 +23,8 @@ import org.eclipse.swt.widgets.TabItem;
  * @author BREDEX GmbH
  *
  */
-public class TabFolderAdapter extends WidgetAdapter implements ITabPaneAdapter {
+public class TabFolderAdapter extends ControlAdapter
+    implements ITabPaneAdapter {
 
     /** the tabFolder from the AUT */
     private TabFolder m_tabFolder;

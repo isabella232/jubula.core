@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Tree;
  * 
  *  @author BREDEX GmbH
  */
-public class TreeAdapter extends WidgetAdapter implements ITreeAdapter {
+public class TreeAdapter extends ControlAdapter implements ITreeAdapter {
     /**
      * @param objectToAdapt graphics component which will be adapted
      */

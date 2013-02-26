@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Button;
  * 
  *  @author BREDEX GmbH
  */
-public class ButtonAdapter extends WidgetAdapter implements IButtonAdapter {
+public class ButtonAdapter extends ControlAdapter implements IButtonAdapter {
     
     /** the Button from the AUT */
     private Button m_button;

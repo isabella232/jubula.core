@@ -18,10 +18,10 @@
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.ToolItem">
 		<realizes>guidancer.abstract.SwtItem</realizes>
-		<testerClass>org.eclipse.jubula.rc.swt.implclasses.ToolItemImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.swt.tester.ToolItemTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.ToolItem" />
 		<action name="CompSystem.SelectMenuItem" changed="1.12">
-			<method>selectMenuItem</method>
+			<method>rcSelectContextMenuItem</method>
 			<param name="CompSystem.MenuPath">
 				<type>java.lang.String</type>
 			</param>
@@ -37,13 +37,13 @@
 			</param>
 		</action>
 		<action name="CompSystem.SelectMenuItemByIndexpath" changed="1.11">
-			<method>selectMenuItemByIndexpath</method>
+			<method>rcSelectContextMenuItemByIndexpath</method>
 			<param name="CompSystem.IndexPath">
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.VerifyEnabledByTextpath" changed="1.12">
-			<method>verifyEnabled</method>
+			<method>rcVerifyContextMenuEnabled</method>
 			<param name="CompSystem.MenuPath">
 				<type>java.lang.String</type>
 			</param>
@@ -67,7 +67,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyEnabledByIndexpath" changed="1.14">
-			<method>verifyEnabledByIndexpath</method>
+			<method>rcVerifyContextMenuEnabledByIndexpath</method>
 			<param name="CompSystem.IndexPath">
 				<type>java.lang.String</type>
 			</param>
@@ -81,7 +81,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyExistsByTextpath" changed="1.12">
-			<method>verifyExists</method>
+			<method>rcVerifyContextMenuExists</method>
 			<param name="CompSystem.MenuPath">
 				<type>java.lang.String</type>
 			</param>
@@ -105,7 +105,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifyExistsByIndexpath" changed="1.14">
-			<method>verifyExistsByIndexpath</method>
+			<method>rcVerifyContextMenuExistsByIndexpath</method>
 			<param name="CompSystem.IndexPath">
 				<type>java.lang.String</type>
 			</param>
@@ -119,7 +119,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifySelectedByTextpath" changed="1.12">
-			<method>verifySelected</method>
+			<method>rcVerifyContextMenuSelected</method>
 			<param name="CompSystem.MenuPath">
 				<type>java.lang.String</type>
 			</param>
@@ -143,7 +143,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.VerifySelectedByIndexpath" changed="1.14">
-			<method>verifySelectedByIndexpath</method>
+			<method>rcVerifyContextMenuSelectedByIndexpath</method>
 			<param name="CompSystem.IndexPath">
 				<type>java.lang.String</type>
 			</param>

@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.List;
 /**
  * @author BREDEX GmbH
  */
-public class ListAdapter extends WidgetAdapter implements IListAdapter {
+public class ListAdapter extends ControlAdapter implements IListAdapter {
     /** the list */
     private List m_list;
     
