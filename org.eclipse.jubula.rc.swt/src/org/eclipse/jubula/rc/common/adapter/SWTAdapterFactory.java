@@ -73,49 +73,51 @@ public class SWTAdapterFactory implements IAdapterFactory {
     /**
      * {@inheritDoc}
      */
-    public Object getAdapter(Class targetedObject, Object objectToAdapt) {
-        IComponentAdapter returnvalue = null;
-        if (objectToAdapt instanceof Button) {
-            returnvalue = new ButtonAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof Menu) {
-            returnvalue = new MenuAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof MenuItem) {
-            returnvalue = new MenuItemAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof Tree) {
-            returnvalue = new TreeAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof Table) {
-            returnvalue = new TableAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof List) {
-            returnvalue = new ListAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof Text) {
-            returnvalue = new TextComponentAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof StyledText) {
-            returnvalue = new StyledTextAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof Combo) {
-            returnvalue = new ComboAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof CCombo) {
-            returnvalue = new CComboAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof Label) {
-            returnvalue = new LabelAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof CLabel) {
-            returnvalue = new CLabelAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof TabFolder) {
-            returnvalue = new TabFolderAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof CTabFolder) {
-            returnvalue = new CTabFolderAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof Link) {
-            returnvalue = new ControlAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof Spinner) {
-            returnvalue = new ControlAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof Slider) {
-            returnvalue = new ControlAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof Scale) {
-            returnvalue = new ControlAdapter(objectToAdapt);
-        } else if (objectToAdapt instanceof ToolItem) {
-            returnvalue = new ToolItemAdapter(objectToAdapt);
+    public Object getAdapter(Class targetedClass, Object objectToAdapt) {
+        if (targetedClass.isAssignableFrom(IComponentAdapter.class)) {
+            IComponentAdapter returnvalue = null;
+            if (objectToAdapt instanceof Button) {
+                returnvalue = new ButtonAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof Menu) {
+                returnvalue = new MenuAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof MenuItem) {
+                returnvalue = new MenuItemAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof Tree) {
+                returnvalue = new TreeAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof Table) {
+                returnvalue = new TableAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof List) {
+                returnvalue = new ListAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof Text) {
+                returnvalue = new TextComponentAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof StyledText) {
+                returnvalue = new StyledTextAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof Combo) {
+                returnvalue = new ComboAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof CCombo) {
+                returnvalue = new CComboAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof Label) {
+                returnvalue = new LabelAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof CLabel) {
+                returnvalue = new CLabelAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof TabFolder) {
+                returnvalue = new TabFolderAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof CTabFolder) {
+                returnvalue = new CTabFolderAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof Link) {
+                returnvalue = new ControlAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof Spinner) {
+                returnvalue = new ControlAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof Slider) {
+                returnvalue = new ControlAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof Scale) {
+                returnvalue = new ControlAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof ToolItem) {
+                returnvalue = new ToolItemAdapter(objectToAdapt);
+            }            
+            return returnvalue;
         }
-        
-        return returnvalue;
+        return null;
     }
 
 }

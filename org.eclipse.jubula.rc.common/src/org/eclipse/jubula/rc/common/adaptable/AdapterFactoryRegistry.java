@@ -123,7 +123,7 @@ public class AdapterFactoryRegistry {
      */
     public Object getAdapter(Class targetAdapterClass, Object objectToAdapt) {
         Collection registeredFactories = null;
-        Class superClass = targetAdapterClass;
+        Class superClass = objectToAdapt.getClass();
         while (registeredFactories == null && superClass != Object.class) {
             registeredFactories = (Collection) m_registrationMap
                     .get(superClass);

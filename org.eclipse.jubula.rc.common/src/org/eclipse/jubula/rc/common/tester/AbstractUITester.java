@@ -65,7 +65,7 @@ public abstract class AbstractUITester implements ITester {
         AdapterFactoryRegistry afr =  AdapterFactoryRegistry.getInstance();
         m_component = null;
         m_component = (IComponentAdapter) afr.getAdapter(
-                graphicsComponent.getClass(), graphicsComponent);
+                IComponentAdapter.class, graphicsComponent);
     }
     
     /**

@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.common.adapter;
 import javax.swing.JSlider;
 
 import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
 import org.eclipse.jubula.rc.swing.tester.JSliderAdapter;
 /**
  * Adapterfactory for new adapters. 
@@ -33,9 +34,11 @@ public class ExtensionAdapterFactory implements IAdapterFactory {
     /**
      * {@inheritDoc}
      */
-    public Object getAdapter(Class targeted, Object objectToAdapt) {
-        if (objectToAdapt instanceof JSlider) {
-            return new JSliderAdapter(objectToAdapt);
+    public Object getAdapter(Class targetedClass, Object objectToAdapt) {
+        if (targetedClass.isAssignableFrom(IComponentAdapter.class)) {
+            if (objectToAdapt instanceof JSlider) {
+                return new JSliderAdapter(objectToAdapt);
+            }
         }
         return null;
     }
