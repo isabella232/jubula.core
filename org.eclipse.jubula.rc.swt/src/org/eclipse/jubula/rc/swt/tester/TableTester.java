@@ -277,33 +277,7 @@ public class TableTester extends AbstractTableTester {
         
         return itemTextArray;
     }
-    
-    /**
-     * Computes the visible cellBounds inside the visible bounds of the table.<br>
-     * The result is the intersection of the visible bounds of the table and the 
-     * bounds of the cell.
-     * @param cellBounds the bounds of the cell to click in. These bounds must
-     *                  be relative to the table's location.
-     * @return the visible cell bounds, relative to the table's location.
-     */
-    private Rectangle getVisibleBounds(Rectangle cellBounds) {
-        org.eclipse.swt.graphics.Rectangle r = 
-            (org.eclipse.swt.graphics.Rectangle)
-            getEventThreadQueuer().invokeAndWait("getVisibleCellBounds: " + cellBounds,  //$NON-NLS-1$
-                    new IRunnable() {
-
-                    public Object run() {
-                        return getTable().getClientArea();
-                    }
-                });
         
-        Rectangle visibleTableBounds = new Rectangle(
-            r.x, r.y, r.width, r.height);
-        Rectangle visibleCellBounds = 
-            visibleTableBounds.intersection(cellBounds);
-        return visibleCellBounds;
-    }
-    
     /**
      * @param constraints Rectangle
      * @return converted Location of table
