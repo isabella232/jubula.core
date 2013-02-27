@@ -265,7 +265,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
     }
     
     /**
-     * Collapses the tree. This method works like {@link #gdCollapse(String, int, String, String)},
+     * Collapses the tree. This method works like {@link #rcCollapse(String, int, String, String)},
      * but expects an enumeration of indices representing the top-down tree
      * path. Any index is the node's position at the current tree level.
      *
@@ -343,7 +343,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
     }
     
     /**
-     * Expands the tree. This method works like {@link #gdExpand(String, int, String, String)}, but
+     * Expands the tree. This method works like {@link #rcExpand(String, int, String, String)}, but
      * expects an enumeration of indices representing the top-down tree path.
      * Any index is the node's position at the current tree level.
      *

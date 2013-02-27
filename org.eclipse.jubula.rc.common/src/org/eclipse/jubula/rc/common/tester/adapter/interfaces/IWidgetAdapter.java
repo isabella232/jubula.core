@@ -115,7 +115,7 @@ public interface IWidgetAdapter extends IComponentAdapter {
     
     /**
      * Performs a Drop. Moves into the middle of the Component and releases the
-     * modifier and mouse button pressed by gdDrag.
+     * modifier and mouse button pressed by rcDrag.
      * 
      * @param xPos
      *            what x position

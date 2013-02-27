@@ -490,7 +490,7 @@ public class TableTester extends AbstractTableTester {
         
         pressOrReleaseModifiers(dndHelper.getModifier(), true);
         try {
-            getEventThreadQueuer().invokeAndWait("gdDropCell", new IRunnable() { //$NON-NLS-1$
+            getEventThreadQueuer().invokeAndWait("rcDropCell", new IRunnable() { //$NON-NLS-1$
 
                 public Object run() throws StepExecutionException {
                     // drag
@@ -566,7 +566,7 @@ public class TableTester extends AbstractTableTester {
         pressOrReleaseModifiers(dndHelper.getModifier(), true);
         
         try {
-            getEventThreadQueuer().invokeAndWait("gdDropRowByValue", new IRunnable() { //$NON-NLS-1$
+            getEventThreadQueuer().invokeAndWait("rcDropRowByValue", new IRunnable() { //$NON-NLS-1$
 
                 public Object run() throws StepExecutionException {
                     // drag
@@ -642,7 +642,7 @@ public class TableTester extends AbstractTableTester {
         pressOrReleaseModifiers(dndHelper.getModifier(), true);
 
         try {
-            getEventThreadQueuer().invokeAndWait("gdDropCellByColValue", new IRunnable() { //$NON-NLS-1$
+            getEventThreadQueuer().invokeAndWait("rcDropCellByColValue", new IRunnable() { //$NON-NLS-1$
 
                 public Object run() throws StepExecutionException {
                     // drag

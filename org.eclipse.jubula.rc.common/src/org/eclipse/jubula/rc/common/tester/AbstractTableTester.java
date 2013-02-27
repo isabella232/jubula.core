@@ -677,8 +677,6 @@ public abstract class AbstractTableTester
                 MatchUtil.DEFAULT_OPERATOR, clickCount, xPos,
                 xUnits, yPos, yUnits, extendSelection, 
                 InputConstants.MOUSE_BUTTON_LEFT);
-//        gdSelectCell(newRow, newCol, clickCount,
-//                     xPos, xUnits, yPos, yUnits, extendSelection);
     }
     
     /**

@@ -153,7 +153,7 @@ public class WidgetTester extends AbstractUITester {
 
     /**
      * Performs a Drop. Moves into the middle of the Component and releases
-     * the modifier and mouse button pressed by gdDrag.
+     * the modifier and mouse button pressed by rcDrag.
      * @param xPos what x position
      * @param xUnits should x position be pixel or percent values
      * @param yPos what y position

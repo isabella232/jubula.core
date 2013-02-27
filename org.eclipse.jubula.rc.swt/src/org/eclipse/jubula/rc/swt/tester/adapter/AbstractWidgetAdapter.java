@@ -73,7 +73,7 @@ public abstract class AbstractWidgetAdapter extends AbstractComponentAdapter {
         try {
             CAPUtil.pressOrReleaseModifiers(modifier, true);
 
-            getEventThreadQueuer().invokeAndWait("gdStartDrag", new IRunnable() { //$NON-NLS-1$
+            getEventThreadQueuer().invokeAndWait("startDrag", new IRunnable() { //$NON-NLS-1$
                 public Object run() throws StepExecutionException {
                     // drag
                     robot.mousePress(dndHelper.getDragComponent(), null, 
@@ -258,7 +258,7 @@ public abstract class AbstractWidgetAdapter extends AbstractComponentAdapter {
         final int timePerWord, final int windowWidth) {
 
         final Rectangle bounds = (Rectangle)getEventThreadQueuer()
-            .invokeAndWait("gdShowText.getBounds", new IRunnable() { //$NON-NLS-1$
+            .invokeAndWait("showToolTip.getBounds", new IRunnable() { //$NON-NLS-1$
 
                 public Object run() {
                     return SwtUtils.getWidgetBounds(m_component);
@@ -266,7 +266,7 @@ public abstract class AbstractWidgetAdapter extends AbstractComponentAdapter {
             });
 
         SimulatedTooltip sp = (SimulatedTooltip)getEventThreadQueuer()
-            .invokeAndWait("gdShowText.initToolTip", new IRunnable() { //$NON-NLS-1$
+            .invokeAndWait("showToolTip.initToolTip", new IRunnable() { //$NON-NLS-1$
 
                 public Object run() throws StepExecutionException {
                     return new SimulatedTooltip(timePerWord, text,

@@ -200,7 +200,7 @@ public class TreeTester extends AbstractTreeTester {
 
         try {
             pressOrReleaseModifiers(dndHelper.getModifier(), true);
-            getEventThreadQueuer().invokeAndWait("gdDropByTextPath - perform drag", new IRunnable() { //$NON-NLS-1$
+            getEventThreadQueuer().invokeAndWait("rcDropByTextPath - perform drag", new IRunnable() { //$NON-NLS-1$
 
                 public Object run() throws StepExecutionException {
                     // drag
@@ -271,7 +271,7 @@ public class TreeTester extends AbstractTreeTester {
         final IRobot robot = getRobot();
         try {
             pressOrReleaseModifiers(dndHelper.getModifier(), true);
-            getEventThreadQueuer().invokeAndWait("gdDropByIndexPath - perform drag", new IRunnable() { //$NON-NLS-1$
+            getEventThreadQueuer().invokeAndWait("rcDropByIndexPath - perform drag", new IRunnable() { //$NON-NLS-1$
 
                 public Object run() throws StepExecutionException {
                     // drag
@@ -791,7 +791,7 @@ public class TreeTester extends AbstractTreeTester {
     public void rcVerifySelectedCheckbox(boolean checked)
         throws StepExecutionException {        
         Boolean checkSelected = ((Boolean)getEventThreadQueuer().invokeAndWait(
-                "gdVerifyTreeCheckbox", new IRunnable() { //$NON-NLS-1$
+                "rcVerifyTreeCheckbox", new IRunnable() { //$NON-NLS-1$
                     public Object run() {             
                         TreeItem node = getTree().getSelection()[0];
                         return new Boolean(node.getChecked());
