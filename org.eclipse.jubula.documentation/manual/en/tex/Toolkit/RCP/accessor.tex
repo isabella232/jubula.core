@@ -10,7 +10,7 @@ If you want to test a \bxname{Rich Client Platform} application, you must ensure
 \begin{enumerate}
 \item Locate the \app{} installation directory, and open the \bxname{development} folder.
 \item Extract the content of the \bxname{rcp-support.zip} folder into the \bxname{plugins} directory for your RCP \gdaut{}.
-\item RCP applications generally have a configuration/config.ini file which contains the parameter \bxname{osgi.bundles}. This parameter needs to be modified to allow the RCP remote control plugin to load on \gdaut{} startup. You must add  \bxname{org.eclipse.jubula.rc.rcp@start} to the end of the \bxname{osgi.bundles} parameter.
+\item RCP applications generally have a configuration/config.ini file which contains the parameter \bxname{osgi.bundles}. This parameter needs to be modified to allow the RCP remote control plugin to load on \gdaut{} startup. You must add  \bxname{,org.eclipse.jubula.rc.rcp@start} (the comma is important to delimit this argument from the others) to the end of the \bxname{osgi.bundles} parameter.
 \item Start your \gdaut{} \textbf{normally} (i.e. not as an \gdaut{} from \app{}). Close it, and then start it again. 
 \item In your \gdaut{}, open \bxmenu{Help}{About}{}. 
 \item In the \bxname{plugin details} for your \gdaut{}, you should be able to see that the following plugins are started:
@@ -31,5 +31,5 @@ We recommend adding the RCP accessor to your \gdaut{} automatically in one of th
 \begin{description}
 \item [During the product build:]{Adding the RCP Accessor as a plugin to your \gdaut{} as it is being built is one way to ensure that it is present and started when the \gdaut{} starts.}
 \item [Via the OSGI console:]{If adding the Accessor during the build is not an option, then you can add it after the build via the OSGI console. The availability of this option is dependent on the version of Eclipse you use, and your \gdaut{}: It must allow this type of post-hoc inclusion of plugins for this to work.}
-\item [Via the P2 director:]{Alternatively, you can add it after the product build using the P2 director. The availability of this option is dependent on the version of Eclipse you use, and your \gdaut{}: It \gdaut{} must allow this type of post-hoc inclusion of plugins for this to work.}
+\item [Via the P2 director:]{Alternatively, you can add it after the product build using the P2 director. The availability of this option is dependent on the version of Eclipse you use, and your \gdaut{}: It  must allow this type of post-hoc inclusion of plugins for this to work.}
 \end{description}
