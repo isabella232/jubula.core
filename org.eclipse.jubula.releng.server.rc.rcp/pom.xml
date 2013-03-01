@@ -28,21 +28,4 @@
         <module>../org.eclipse.jubula.rc.rcp.site</module>
         <module>../org.eclipse.jubula.rc.rcp.e4.releng</module>
     </modules>
-    <build>
-        <plugins>
-            <!-- Compile only necessary sources. -->
-            <plugin>
-                <groupId>net.java.maven-incremental-build</groupId>
-                <artifactId>incremental-build-plugin</artifactId>
-                <version>1.6</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>incremental-build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>

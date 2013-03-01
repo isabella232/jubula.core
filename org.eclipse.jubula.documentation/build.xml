@@ -56,24 +56,6 @@
 			<arg value="-c" />
 			<arg value="make extensionapi &gt; ${buildLogDir}/extensionapi.log 2&gt;&amp;1" />
 		</exec>
-		<ant dir="${buildRoot}/extensionapi/javadoc" antfile="javadoc.xml" 
-			target="javadoc" inheritAll="false" inheritRefs="false">
-			<property name="outputdir" location="${buildRoot}/extensionapi/javadoc/html" />
-			<reference refid="rc.extension.sourcepath" />
-		</ant>
-		<delete dir="${buildRoot}/extensionapi/javadoc/zip" />
-		<mkdir dir="${buildRoot}/extensionapi/javadoc/zip" />
-		<zip basedir="${buildRoot}/extensionapi/javadoc/html" destfile="${buildRoot}/extensionapi/javadoc/zip/javadoc.zip">
-		</zip>
-		<ant dir="${buildRoot}/gefapi/javadoc" antfile="javadoc.xml" 
-			target="javadoc" inheritAll="false" inheritRefs="false">
-			<property name="outputdir" location="${buildRoot}/gefapi/javadoc/html" />
-			<reference refid="rc.gef.extension.sourcepath" />
-		</ant>
-		<delete dir="${buildRoot}/gefapi/javadoc/zip" />
-		<mkdir dir="${buildRoot}/gefapi/javadoc/zip" />
-		<zip basedir="${buildRoot}/gefapi/javadoc/html" destfile="${buildRoot}/gefapi/javadoc/zip/javadoc.zip">
-		</zip>
 	</target>
 
 	<target name="buildReferenceManual" depends="setupBuildDocumentation">
