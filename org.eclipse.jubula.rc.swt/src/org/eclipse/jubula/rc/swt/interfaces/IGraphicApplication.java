@@ -47,11 +47,6 @@ public interface IGraphicApplication {
         boolean selectKey);
 
     /**
-     * @param text text */ 
-    public void rcReplaceText(
-        String text);
-
-    /**
      * @param timeMillSec timeMillSec */ 
     public void rcWait(
         int timeMillSec);

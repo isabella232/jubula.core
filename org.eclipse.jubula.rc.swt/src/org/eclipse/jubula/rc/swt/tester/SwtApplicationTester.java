@@ -16,7 +16,6 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
@@ -39,7 +38,6 @@ import org.eclipse.jubula.rc.swt.listener.FocusTracker;
 import org.eclipse.jubula.rc.swt.tester.util.EventListener;
 import org.eclipse.jubula.rc.swt.tester.util.EventListener.Condition;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
@@ -136,25 +134,6 @@ public class SwtApplicationTester extends AbstractApplicationTester implements
      */
     public String[] getTextArrayFromComponent() {
         return null;
-    }
-
-    /**
-     * Types <code>text</code> into the component. This replaces the shown
-     * content.
-     * @param text the text to type in
-     * @deprecated Removed without substitution:
-     * Testcases with this action are fragile, because this action assumes the
-     * availability of a text component. Any other case breaks the test.
-     */
-    public void rcReplaceText(String text) {
-        // The number of clicks differs from the Swing implementation
-        // because a double-click selects all of the text
-        getRobot().click(FocusTracker.getFocusOwner(), null, 
-            ClickOptions.create().setClickCount(2).left());
-        if (StringConstants.EMPTY.equals(text)) {
-            getRobot().keyStroke("DELETE"); //$NON-NLS-1$
-        }
-        rcInputText(text);
     }
 
     /**

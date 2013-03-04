@@ -26,7 +26,6 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.listener.EventLock;
@@ -41,7 +40,6 @@ import org.eclipse.jubula.rc.swing.listener.FocusTracker;
 import org.eclipse.jubula.rc.swing.interfaces.IGraphicApplication;
 import org.eclipse.jubula.rc.swing.tester.util.EventListener;
 import org.eclipse.jubula.rc.swing.tester.util.WindowHelper;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.TimeUtil;
@@ -205,24 +203,6 @@ public class SwingApplicationTester extends AbstractApplicationTester implements
      */
     public String[] getTextArrayFromComponent() {
         return null;
-    }
-
-
-    /**
-     * Types <code>text</code> into the component. This replaces the shown
-     * content.
-     * @param text the text to type in
-     * @deprecated Removed without substitution:
-     * Testcases with this action are fragile, because this action assumes the
-     * availability of a text component. Any other case breaks the test.
-     */
-    public void rcReplaceText(String text) {
-        getRobot().click(FocusTracker.getFocusOwner(), null, 
-            ClickOptions.create().setClickCount(3).left());
-        if (StringConstants.EMPTY.equals(text)) {
-            getRobot().keyStroke("DELETE"); //$NON-NLS-1$
-        }
-        rcInputText(text);
     }
 
     /**
