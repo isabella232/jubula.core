@@ -11,21 +11,19 @@
 package org.eclipse.jubula.client.ui.rcp.businessprocess;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
+import org.eclipse.jubula.client.core.utils.ControlledCache;
 
 
 /**
@@ -36,14 +34,15 @@ import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
  * @created Mar 10, 2009
  */
 public class ComponentNameReuseBP 
-        implements IDataChangedListener, IProjectLoadedListener {
+        implements IDataChangedListener {
     
     /** the single instance */
     private static ComponentNameReuseBP instance = null;
     
     /** mapping from Component Name GUID to reused status */
-    private Map<String, Boolean> m_compNameGuidToIsReusedMap =
-        new HashMap<String, Boolean>();
+    private ControlledCache<String, Boolean> m_compNameGuidToIsReusedMap =
+            new ControlledCache<String, Boolean>(
+                    ControlledCache.ControlTypes.PROJECT_LOADED);
 
     /**
      * Adds this instance as a listener for data events.
@@ -51,7 +50,6 @@ public class ComponentNameReuseBP
     private ComponentNameReuseBP() {
         final DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addDataChangedListener(this, false);
-        ded.addProjectLoadedListener(this, false);
     }
 
     /**
@@ -76,7 +74,7 @@ public class ComponentNameReuseBP
                     specsToSearch, 
                     TestSuiteBP.getListOfTestSuites(currentProject), 
                     autsToSearch, compNameGuid);
-            m_compNameGuidToIsReusedMap.put(compNameGuid, isReused);
+            m_compNameGuidToIsReusedMap.add(compNameGuid, isReused);
             return isReused;
         }
         
@@ -97,13 +95,6 @@ public class ComponentNameReuseBP
                 }
             }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void handleProjectLoaded() {
-        m_compNameGuidToIsReusedMap.clear();
     }
 
     /**
