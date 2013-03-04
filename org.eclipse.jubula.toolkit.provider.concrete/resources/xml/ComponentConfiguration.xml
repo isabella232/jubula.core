@@ -125,13 +125,6 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.InputTextDepr" changed="1.25" deprecated="true">
-			<method>rcReplaceText</method>
-			<param name="CompSystem.Text">
-				<type>java.lang.String</type>
-			</param>
-		</action>
-		
 		<action name="CompSystem.Wait" changed="1.3">
 			<method>rcWait</method>
 			<param name="CompSystem.TimeMillSec">
@@ -1120,18 +1113,6 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.InputTextInTableCell" changed="4.2" deprecated="true">
-			<method>rcInputText</method>
-			<param name="CompSystem.Text">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
-			</param>
-		</action>
 		
 		<action name="CompSystem.ReplaceTextInTableCellNew" changed="4.5">
 			<method>rcReplaceText</method>
@@ -1165,18 +1146,6 @@
 				</valueSet>
 			</param>
 		</action>		
-		<action name="CompSystem.ReplaceTextInTableCell" changed="4.2" deprecated="true">
-			<method>rcReplaceText</method>
-			<param name="CompSystem.Text">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
-			</param>
-		</action>
 			
 		<action name="CompSystem.SelectCellNew" changed="4.5">
 			<method>rcSelectCell</method>
@@ -1252,52 +1221,6 @@
 				</valueSet>
 			</param>
 		</action>
-			
-		<action name="CompSystem.SelectCell" changed="4.2" deprecated="true">
-			<method>rcSelectCell</method>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.ClickCount">
-				<type>java.lang.Integer</type>
-				<defaultValue>1</defaultValue>
-			</param>
-			<param name="CompSystem.XPos">
-				<type>java.lang.Integer</type>
-				<defaultValue>50</defaultValue>
-			</param>
-			<param name="CompSystem.XUnits">
-				<type>java.lang.String</type>
-				<defaultValue>percent</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Percent" value="percent"/>
-					<element name="CompSystem.Pixel" value="pixel"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.YPos">
-				<type>java.lang.Integer</type>
-				<defaultValue>50</defaultValue>
-			</param>
-			<param name="CompSystem.YUnits">
-				<type>java.lang.String</type>
-				<defaultValue>percent</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Percent" value="percent"/>
-					<element name="CompSystem.Pixel" value="pixel"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.ExtendSelection">
-				<type>java.lang.String</type>
-				<defaultValue>no</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Yes" value="yes"/>
-					<element name="CompSystem.No" value="no"/>
-				</valueSet>
-			</param>
-		</action>
 				
 		<action name="CompSystem.Move" changed="1.9">
 			<method>rcMove</method>
@@ -1352,21 +1275,6 @@
 				</valueSet>
 			</param>
 		</action>
-			
-		<action name="CompSystem.SelectRow" changed="4.2" deprecated="true">
-			<method>rcSelectRow</method>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.ExtendSelection">
-				<type>java.lang.String</type>
-				<defaultValue>no</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Yes" value="yes"/>
-					<element name="CompSystem.No" value="no"/>
-				</valueSet>
-			</param>
-		</action>
 		
 		<action name="CompSystem.VerifyTableCellEditableNew" changed="4.5">
 			<method>rcVerifyEditable</method>
@@ -1403,24 +1311,6 @@
 					<element name="CompSystem.MatchesRegExp" value="matches"/>
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
-			</param>
-		</action>
-		
-		<action name="CompSystem.VerifyTableCellEditable" changed="4.2" deprecated="true">
-			<method>rcVerifyEditable</method>
-			<param name="CompSystem.IsEditable">
-				<type>java.lang.Boolean</type>
-				<defaultValue>false</defaultValue>
-				<valueSet>
-					<element name="CompSystem.True" value="true"/>
-					<element name="CompSystem.False" value="false"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
 			</param>
 		</action>
 		
@@ -1490,30 +1380,7 @@
 				</valueSet>
 			</param>
 		</action>
-		
-		<action name="CompSystem.VerifyTableCellText" changed="4.2" deprecated="true">
-			<method>rcVerifyText</method>
-			<param name="CompSystem.Text">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.Operator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Equals" value="equals"/>
-					<element name="CompSystem.NotEquals" value="not equals"/>
-					<element name="CompSystem.MatchesRegExp" value="matches"/>
-					<element name="CompSystem.SimpleMatch" value="simple match"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
-			</param>
-		</action>
-		
+				
 		<action name="CompSystem.VerifyTableCellTextAtMousePosition" changed="1.11">
 			<method>rcVerifyTextAtMousePosition</method>
 			<param name="CompSystem.Text">
@@ -1682,46 +1549,6 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.SelectRowByValue" changed="4.2" deprecated="true">
-			<method>rcSelectRowByValue</method>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.CellValue">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.ClickCount">
-				<type>java.lang.Integer</type>
-				<defaultValue>1</defaultValue>
-			</param>
-			<param name="CompSystem.Operator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Equals" value="equals"/>
-					<element name="CompSystem.NotEquals" value="not equals"/>
-					<element name="CompSystem.MatchesRegExp" value="matches"/>
-					<element name="CompSystem.SimpleMatch" value="simple match"/>
-				</valueSet>
-			</param>		
-			<param name="CompSystem.ExtendSelection">
-				<type>java.lang.String</type>
-				<defaultValue>no</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Yes" value="yes"/>
-					<element name="CompSystem.No" value="no"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.SearchType">
-				<type>java.lang.String</type>
-				<defaultValue>absolute</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Absolute" value="absolute"/>
-					<element name="CompSystem.Relative" value="relative"/>
-				</valueSet>
-			</param>
-		</action>
-		
 		<action name="CompSystem.SelectCellByColValueNew" changed="4.5">
 			<method>rcSelectCellByColValue</method>
 			<param name="CompSystem.Row">
@@ -1779,102 +1606,7 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
-		</action>
-		
-		<action name="CompSystem.SelectCellByColValue" changed="4.2" deprecated="true">
-			<method>rcSelectCellByColValue</method>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.CellValue">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.Operator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Equals" value="equals"/>
-					<element name="CompSystem.NotEquals" value="not equals"/>
-					<element name="CompSystem.MatchesRegExp" value="matches"/>
-					<element name="CompSystem.SimpleMatch" value="simple match"/>
-				</valueSet>
-			</param>		
-			<param name="CompSystem.ClickCount">
-				<type>java.lang.Integer</type>
-				<defaultValue>1</defaultValue>
-			</param>
-			<param name="CompSystem.ExtendSelection">
-				<type>java.lang.String</type>
-				<defaultValue>no</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Yes" value="yes"/>
-					<element name="CompSystem.No" value="no"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.SearchType">
-				<type>java.lang.String</type>
-				<defaultValue>absolute</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Absolute" value="absolute"/>
-					<element name="CompSystem.Relative" value="relative"/>
-				</valueSet>
-			</param>
-		</action>
-		
-		<action name="CompSystem.SelectCellByRowValue" changed="1.3" deprecated="true">
-			<method>rcSelectCellByRowValue</method>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.CellValue">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.UseRegularExpression">
-				<type>java.lang.Boolean</type>
-				<defaultValue>false</defaultValue>
-				<valueSet>
-					<element name="CompSystem.True" value="true"/>
-					<element name="CompSystem.False" value="false"/>
-				</valueSet>
-			</param>		
-		</action>
-		<action name="CompSystem.PopupByIndexPathAtCell" changed="1.3" deprecated="true">
-			<method>rcPopupByIndexPathAtCell</method>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.IndexPath">
-				<type>java.lang.String</type>
-			</param>
-		</action>
-		<action name="CompSystem.PopupByTextPathAtCell" changed="1.3" deprecated="true">
-			<method>rcPopupByTextPathAtCell</method>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.TextPath">
-				<type>java.lang.String</type>
-			</param>
-		</action>
-		<action name="CompSystem.PopupByIndexPathAtSelectedCell" changed="1.3" deprecated="true">
-			<method>rcPopupByIndexPathAtSelectedCell</method>
-			<param name="CompSystem.IndexPath">
-				<type>java.lang.String</type>
-			</param>
-		</action>
-		<action name="CompSystem.PopupByTextPathAtSelectedCell" changed="1.3" deprecated="true">
-			<method>rcPopupByTextPathAtSelectedCell</method>
-			<param name="CompSystem.TextPath">
-				<type>java.lang.String</type>
-			</param>
-		</action>
-		
+		</action>  
 		<action name="CompSystem.ReadTableCellValueNew" changed="4.5">
 			<method>rcReadValue</method>
 			<param name="CompSystem.Variable">
@@ -1905,20 +1637,6 @@
 					<element name="CompSystem.MatchesRegExp" value="matches"/>
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
-			</param>
-			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
-		</action>
-		
-		<action name="CompSystem.ReadTableCellValue" changed="4.2" deprecated="true">
-			<method>rcReadValue</method>
-			<param name="CompSystem.Variable">
-				<type>guidancer.datatype.Variable</type>
-			</param>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
 			</param>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
 		</action>
@@ -2007,64 +1725,6 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.DragCell" changed="4.2" deprecated="true">
-			<method>rcDragCell</method>
-			<param name="CompSystem.MouseButton">
-				<type>java.lang.Integer</type>
-				<defaultValue>1</defaultValue>
-				<valueSet>
-					<element name="CompSystem.MouseButtonLeft" value="1"/>
-					<element name="CompSystem.MouseButtonMiddle" value="2"/>
-					<element name="CompSystem.MouseButtonRight" value="3"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.ModifierSpecification">
-				<type>java.lang.String</type>
-				<defaultValue>none</defaultValue>
-				<valueSet>
-					<element name="CompSystem.None" value="none"/>
-					<element name="CompSystem.Shift" value="shift"/>
-					<element name="CompSystem.Ctrl" value="control"/>
-					<element name="CompSystem.Alt" value="alt"/>
-					<element name="CompSystem.Meta" value="meta"/>
-					<element name="CompSystem.Cmd" value="cmd"/>
-					<element name="CompSystem.Mod" value="mod"/>
-					<element name="CompSystem.CtrlShift" value="control shift"/>
-					<element name="CompSystem.CtrlAlt" value="control alt"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.XPos">
-				<type>java.lang.Integer</type>
-				<defaultValue>50</defaultValue>
-			</param>
-			<param name="CompSystem.XUnits">
-				<type>java.lang.String</type>
-				<defaultValue>percent</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Percent" value="percent"/>
-					<element name="CompSystem.Pixel" value="pixel"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.YPos">
-				<type>java.lang.Integer</type>
-				<defaultValue>50</defaultValue>
-			</param>
-			<param name="CompSystem.YUnits">
-				<type>java.lang.String</type>
-				<defaultValue>percent</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Percent" value="percent"/>
-					<element name="CompSystem.Pixel" value="pixel"/>
-				</valueSet>
-			</param>
-		</action>
-		
 		<action name="CompSystem.DropCellNew" changed="4.5">
 			<method>rcDropCell</method>
 			<param name="CompSystem.Row">
@@ -2092,44 +1752,6 @@
 					<element name="CompSystem.MatchesRegExp" value="matches"/>
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
-			</param>
-			<param name="CompSystem.XPos">
-				<type>java.lang.Integer</type>
-				<defaultValue>50</defaultValue>
-			</param>
-			<param name="CompSystem.XUnits">
-				<type>java.lang.String</type>
-				<defaultValue>percent</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Percent" value="percent"/>
-					<element name="CompSystem.Pixel" value="pixel"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.YPos">
-				<type>java.lang.Integer</type>
-				<defaultValue>50</defaultValue>
-			</param>
-			<param name="CompSystem.YUnits">
-				<type>java.lang.String</type>
-				<defaultValue>percent</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Percent" value="percent"/>
-					<element name="CompSystem.Pixel" value="pixel"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.DelayBeforeDrop">
-				<type>java.lang.Integer</type>
-				<defaultValue>100</defaultValue>
-			</param>
-		</action>
-		
-		<action name="CompSystem.DropCell" changed="4.2" deprecated="true">
-			<method>rcDropCell</method>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
 			</param>
 			<param name="CompSystem.XPos">
 				<type>java.lang.Integer</type>
@@ -2220,59 +1842,7 @@
 				</valueSet>
 			</param>
 		</action>
-		
-		<action name="CompSystem.DragRowByValue" changed="4.2" deprecated="true">
-			<method>rcDragRowByValue</method>
-			<param name="CompSystem.MouseButton">
-				<type>java.lang.Integer</type>
-				<defaultValue>1</defaultValue>
-				<valueSet>
-					<element name="CompSystem.MouseButtonLeft" value="1"/>
-					<element name="CompSystem.MouseButtonMiddle" value="2"/>
-					<element name="CompSystem.MouseButtonRight" value="3"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.ModifierSpecification">
-				<type>java.lang.String</type>
-				<defaultValue>none</defaultValue>
-				<valueSet>
-					<element name="CompSystem.None" value="none"/>
-					<element name="CompSystem.Shift" value="shift"/>
-					<element name="CompSystem.Ctrl" value="control"/>
-					<element name="CompSystem.Alt" value="alt"/>
-					<element name="CompSystem.Meta" value="meta"/>
-					<element name="CompSystem.Cmd" value="cmd"/>
-					<element name="CompSystem.Mod" value="mod"/>
-					<element name="CompSystem.CtrlShift" value="control shift"/>
-					<element name="CompSystem.CtrlAlt" value="control alt"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.CellValue">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.Operator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Equals" value="equals"/>
-					<element name="CompSystem.NotEquals" value="not equals"/>
-					<element name="CompSystem.MatchesRegExp" value="matches"/>
-					<element name="CompSystem.SimpleMatch" value="simple match"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.SearchType">
-				<type>java.lang.String</type>
-				<defaultValue>absolute</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Absolute" value="absolute"/>
-					<element name="CompSystem.Relative" value="relative"/>
-				</valueSet>
-			</param>
-		</action>
-		
+			
 		<action name="CompSystem.DropRowByValueNew" changed="4.5">
 			<method>rcDropRowByValue</method>
 			<param name="CompSystem.Column">
@@ -2292,38 +1862,6 @@
 				<type>java.lang.String</type>
 			</param>
 			<param name="CompSystem.ValueOperator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Equals" value="equals"/>
-					<element name="CompSystem.NotEquals" value="not equals"/>
-					<element name="CompSystem.MatchesRegExp" value="matches"/>
-					<element name="CompSystem.SimpleMatch" value="simple match"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.SearchType">
-				<type>java.lang.String</type>
-				<defaultValue>absolute</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Absolute" value="absolute"/>
-					<element name="CompSystem.Relative" value="relative"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.DelayBeforeDrop">
-				<type>java.lang.Integer</type>
-				<defaultValue>100</defaultValue>
-			</param>
-		</action>
-		
-		<action name="CompSystem.DropRowByValue" changed="4.2" deprecated="true">
-			<method>rcDropRowByValue</method>
-			<param name="CompSystem.Column">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.CellValue">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.Operator">
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -2407,58 +1945,6 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.DragCellByColValue" changed="4.2" deprecated="true">
-			<method>rcDragCellByColValue</method>
-			<param name="CompSystem.MouseButton">
-				<type>java.lang.Integer</type>
-				<defaultValue>1</defaultValue>
-				<valueSet>
-					<element name="CompSystem.MouseButtonLeft" value="1"/>
-					<element name="CompSystem.MouseButtonMiddle" value="2"/>
-					<element name="CompSystem.MouseButtonRight" value="3"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.ModifierSpecification">
-				<type>java.lang.String</type>
-				<defaultValue>none</defaultValue>
-				<valueSet>
-					<element name="CompSystem.None" value="none"/>
-					<element name="CompSystem.Shift" value="shift"/>
-					<element name="CompSystem.Ctrl" value="control"/>
-					<element name="CompSystem.Alt" value="alt"/>
-					<element name="CompSystem.Meta" value="meta"/>
-					<element name="CompSystem.Cmd" value="cmd"/>
-					<element name="CompSystem.Mod" value="mod"/>
-					<element name="CompSystem.CtrlShift" value="control shift"/>
-					<element name="CompSystem.CtrlAlt" value="control alt"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.CellValue">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.Operator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Equals" value="equals"/>
-					<element name="CompSystem.NotEquals" value="not equals"/>
-					<element name="CompSystem.MatchesRegExp" value="matches"/>
-					<element name="CompSystem.SimpleMatch" value="simple match"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.SearchType">
-				<type>java.lang.String</type>
-				<defaultValue>absolute</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Absolute" value="absolute"/>
-					<element name="CompSystem.Relative" value="relative"/>
-				</valueSet>
-			</param>
-		</action>
-		
 		<action name="CompSystem.DropCellByColValueNew" changed="4.5">
 			<method>rcDropCellByColValue</method>
 			<param name="CompSystem.Row">
@@ -2501,37 +1987,6 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.DropCellByColValue" changed="4.2" deprecated="true">
-			<method>rcDropCellByColValue</method>
-			<param name="CompSystem.Row">
-				<type>java.lang.Integer</type>
-			</param>
-			<param name="CompSystem.CellValue">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.Operator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Equals" value="equals"/>
-					<element name="CompSystem.NotEquals" value="not equals"/>
-					<element name="CompSystem.MatchesRegExp" value="matches"/>
-					<element name="CompSystem.SimpleMatch" value="simple match"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.SearchType">
-				<type>java.lang.String</type>
-				<defaultValue>absolute</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Absolute" value="absolute"/>
-					<element name="CompSystem.Relative" value="relative"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.DelayBeforeDrop">
-				<type>java.lang.Integer</type>
-				<defaultValue>100</defaultValue>
-			</param>
-		</action>
 	</concreteComponent>
 	
 	<concreteComponent type="guidancer.concrete.TextComponent">
@@ -2889,70 +2344,6 @@
 					<element name="CompSystem.MatchesRegExp" value="matches"/>
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
-			</param>
-		</action>
-		<action name="CompSystem.PopupByIndexPathAtSelectedNode" changed="1.3" deprecated="true">
-			<method>rcPopupByIndexPathAtSelectedNode</method>
-			<param name="CompSystem.IndexPath">
-				<type>java.lang.String</type>
-			</param>
-		</action>
-		<action name="CompSystem.PopupByTextPathAtSelectedNode" changed="1.3" deprecated="true">
-			<method>rcPopupByTextPathAtSelectedNode</method>
-			<param name="CompSystem.TextPath">
-				<type>java.lang.String</type>
-			</param>
-		</action>
-		<action name="CompSystem.PopupByIndexPathAtIndexNode" changed="1.3" deprecated="true">
-			<method>rcPopupByIndexPathAtIndexNode</method>
-			<param name="CompSystem.TreeIndexPath">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.PopupIndexPath">
-				<type>java.lang.String</type>
-			</param>
-		</action>
-		<action name="CompSystem.PopupByTextPathAtIndexNode" changed="1.3" deprecated="true">
-			<method>rcPopupByTextPathAtIndexNode</method>
-			<param name="CompSystem.TreeIndexPath">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.PopupTextPath">
-				<type>java.lang.String</type>
-			</param>
-		</action>
-		<action name="CompSystem.PopupByIndexPathAtTextNode" changed="1.3" deprecated="true">
-			<method>rcPopupByIndexPathAtTextNode</method>
-			<param name="CompSystem.TreeTextPath">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.Operator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Equals" value="equals"/>
-					<element name="CompSystem.MatchesRegExp" value="matches"/>
-				</valueSet>
-			</param>		
-			<param name="CompSystem.PopupIndexPath">
-				<type>java.lang.String</type>
-			</param>
-		</action>
-		<action name="CompSystem.PopupByTextPathAtTextNode" changed="1.3" deprecated="true">
-			<method>rcPopupByTextPathAtTextNode</method>
-			<param name="CompSystem.TreeTextPath">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.Operator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Equals" value="equals"/>
-					<element name="CompSystem.MatchesRegExp" value="matches"/>
-				</valueSet>
-			</param>		
-			<param name="CompSystem.PopupTextPath">
-				<type>java.lang.String</type>
 			</param>
 		</action>
 		

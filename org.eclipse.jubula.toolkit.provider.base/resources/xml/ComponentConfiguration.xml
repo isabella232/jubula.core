@@ -202,38 +202,6 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupSelectByTextPathPosition" changed="1.12" deprecated="true">
-			<method>rcPopupSelectByTextPath</method>
-			<param name="CompSystem.XPos">
-				<type>java.lang.Integer</type>
-				<defaultValue>50</defaultValue>
-			</param>
-			<param name="CompSystem.YPos">
-				<type>java.lang.Integer</type>
-				<defaultValue>50</defaultValue>
-			</param>
-			<param name="CompSystem.Units">
-				<type>java.lang.String</type>
-				<defaultValue>percent</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Percent" value="percent"/>
-					<element name="CompSystem.Pixel" value="pixel"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.MenuPath">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.Operator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Equals" value="equals"/>
-					<element name="CompSystem.NotEquals" value="not equals"/>
-					<element name="CompSystem.MatchesRegExp" value="matches"/>
-					<element name="CompSystem.SimpleMatch" value="simple match"/>
-				</valueSet>
-			</param>
-		</action>
 		<action name="CompSystem.PopupSelectByIndexPathNew" changed="2.1">
 			<method>rcPopupSelectByIndexPath</method>
 			<param name="CompSystem.IndexPath">
@@ -247,12 +215,6 @@
 					<element name="CompSystem.MouseButtonMiddle" value="2"/>
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
-			</param>
-		</action>
-		<action name="CompSystem.PopupSelectByIndexPath" changed="1.4" deprecated="true">
-			<method>rcPopupSelectByIndexPath</method>
-			<param name="CompSystem.IndexPath">
-				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.PopupSelectByTextPathNew" changed="2.1">
@@ -277,22 +239,6 @@
 					<element name="CompSystem.MouseButtonLeft" value="1"/>
 					<element name="CompSystem.MouseButtonMiddle" value="2"/>
 					<element name="CompSystem.MouseButtonRight" value="3"/>
-				</valueSet>
-			</param>
-		</action>
-		<action name="CompSystem.PopupSelectByTextPath" changed="1.12" deprecated="true">
-			<method>rcPopupSelectByTextPath</method>
-			<param name="CompSystem.TextPath">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.Operator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Equals" value="equals"/>
-					<element name="CompSystem.NotEquals" value="not equals"/>
-					<element name="CompSystem.MatchesRegExp" value="matches"/>
-					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
 		</action>
@@ -333,28 +279,6 @@
 					<element name="CompSystem.MouseButtonMiddle" value="2"/>
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
-			</param>
-		</action>
-		<action name="CompSystem.PopupSelectByIndexPathPosition" changed="1.3" deprecated="true">
-			<method>rcPopupSelectByIndexPath</method>
-			<param name="CompSystem.XPos">
-				<type>java.lang.Integer</type>
-				<defaultValue>50</defaultValue>
-			</param>
-			<param name="CompSystem.YPos">
-				<type>java.lang.Integer</type>
-				<defaultValue>50</defaultValue>
-			</param>
-			<param name="CompSystem.Units">
-				<type>java.lang.String</type>
-				<defaultValue>percent</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Percent" value="percent"/>
-					<element name="CompSystem.Pixel" value="pixel"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.IndexPath">
-				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.PopupVerifyEnabledByIndexpath" changed="2.1">

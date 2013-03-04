@@ -207,18 +207,6 @@
 		<componentClass name="html.forms.Anchor">
             <property name="selector" value="a" />
         </componentClass>
-		<action name="html.AnchorFollow" changed="1.1" deprecated="true">
-			<method>rcFollow</method>
-			<param name="html.AnchorOpenIn">
-				<type>java.lang.String</type>
-				<defaultValue>here</defaultValue>
-				<valueSet>
-					<element name="html.AnchorHere" value="here"/>
-					<element name="html.AnchorNewWindow" value="newWindow"/>
-					<element name="html.AnchorNewTab" value="newTab"/>
-				</valueSet>
-			</param>		
-		</action>
 		<action name="html.VerifyURL" changed="1.0">
 			<method>rcVerifyURL</method>
 			<param name="CompSystem.Text">
@@ -277,22 +265,6 @@
 		</action>
 		<action name="html.BrowserReloadAction" changed="1.0">
 			<method>rcReload</method>	
-		</action>
-		<action name="html.BrowserSelectWindowAction" changed="1.1" deprecated="true">
-			<method>rcSelectWindow</method>
-			<param name="html.BrowserTitle">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.Operator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Equals" value="equals"/>
-					<element name="CompSystem.NotEquals" value="not equals"/>
-					<element name="CompSystem.MatchesRegExp" value="matches"/>
-					<element name="CompSystem.SimpleMatch" value="simple match"/>
-				</valueSet>
-			</param>
 		</action>
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" visible="false">
