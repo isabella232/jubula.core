@@ -39,6 +39,7 @@ import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ShellAdapter;
@@ -323,12 +324,18 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
                     Shell shell = SwtUtils.getShell(comp);
-                    if (shell != null && shell.isVisible()) {
-                        Shell activeShell = shell.getDisplay().getActiveShell();
-                        if (activeShell != shell 
-                                && !SwtUtils.isDropdownListShell(activeShell)) {
-                            shell.setActive();
+                    try {
+                        if (shell != null && shell.isVisible()) {
+                            Shell activeShell = shell.getDisplay()
+                                    .getActiveShell();
+                            if (activeShell != shell
+                                    && !SwtUtils.isDropdownListShell(
+                                            activeShell)) {
+                                shell.setActive();
+                            }
                         }
+                    } catch (SWTException swte) {
+                        // do nothing if a shell is disposed while accessing
                     }
                 }
             });
@@ -427,6 +434,39 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
     public synchronized void refreshComponentName(Widget toRefresh) {
         rename(getHierarchyContainer(toRefresh));
     }
+
+    /**
+     * Check if a control is visible. An SWTException is not thrown, if the widget is disposed.
+     * @param widget The widget to check.
+     * @return True, if the widget is a control and it is currently visible, otherwise false.
+     */
+    private boolean isControlVisible(Widget widget) {
+        if (widget instanceof Control) {
+            try {
+                Control c = (Control) widget;
+                return (!c.isDisposed()) && c.isVisible();
+            } catch (SWTException swte) {
+                // do nothing
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if a shell is visible. An SWTException is not thrown, if the shell is disposed.
+     * @param shell The shell to check.
+     * @return True, if the shell is not null and currently visible, otherwise false.
+     */
+    private boolean isShellVisible(Shell shell) {
+        if (shell != null) {
+            try {
+                return (!shell.isDisposed()) && shell.isVisible();
+            } catch (SWTException swte) {
+                // do nothing
+            }
+        }
+        return false;
+    }
     
     /**
      * Add the new component to the hierarchy if it is not already there.
@@ -437,7 +477,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
             // Do not add null or disposed components
             return;
         }
-        if (toAdd instanceof Control && !((Control)toAdd).isVisible()) {
+        if (!isControlVisible(toAdd)) {
             // Do not add invisible components
             return;
         }
@@ -531,9 +571,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
             for (int i = 0; i < childContainers.length; i++) {
                 Widget child = 
                     childContainers[i].getComponentID().getRealComponent();
-                if (child.isDisposed() 
-                        || (child instanceof Control 
-                                && !((Control)child).isVisible())) {
+                if (!isControlVisible(child)) {
                     componentRemoved(child);
                 }
             }
@@ -944,8 +982,8 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
             Thread.currentThread().setContextClassLoader(
                 AUTServer.getInstance().getClass().getClassLoader());
             try {
-                Shell window = (Shell)e.widget;  
-                if (!window.isVisible()) {
+                Shell window = (Shell)e.widget;
+                if (!isShellVisible(window)) {
                     remove(window);
                 }
             } finally {
@@ -963,9 +1001,9 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
             Thread.currentThread().setContextClassLoader(
                 AUTServer.getInstance().getClass().getClassLoader());
             try {
-                Shell window = (Shell)e.widget; 
-                if (window.isVisible() 
-                    && getHierarchyContainer(window) == null) {
+                Shell window = (Shell)e.widget;
+                if (isShellVisible(window)
+                        && getHierarchyContainer(window) == null) {
                     add(window);
                 }
             } finally {
