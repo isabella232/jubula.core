@@ -79,8 +79,8 @@ public abstract class AbstractMenuTester extends AbstractUITester {
         checkPathLength(menuItem.length);
         final IMenuItemComponent item = navigateToMenuItem(
                 getAndCheckMenu(), menuItem, operator);
-        checkIsNull(item);
         try {
+            checkIsNull(item);
             Verifier.equals(enabled, item.isEnabled());
         } finally {
             closeMenu(getAndCheckMenu(), menuItem, operator);
@@ -119,8 +119,8 @@ public abstract class AbstractMenuTester extends AbstractUITester {
         checkPathLength(menuItem.length);
         final IMenuItemComponent item = navigateToMenuItem(
                 getAndCheckMenu(), menuItem);
-        checkIsNull(item);
         try {
+            checkIsNull(item);
             Verifier.equals(enabled, item.isEnabled());
         } finally {
             closeMenu(getAndCheckMenu(), menuItem);
@@ -209,8 +209,8 @@ public abstract class AbstractMenuTester extends AbstractUITester {
         checkPathLength(menuItem.length);
         final IMenuItemComponent item = navigateToMenuItem(
                 getAndCheckMenu(), menuItem, operator);
-        checkIsNull(item);
         try {
+            checkIsNull(item);
             Verifier.equals(selected, item.isSelected());
 
         } finally {
@@ -239,8 +239,8 @@ public abstract class AbstractMenuTester extends AbstractUITester {
         checkPathLength(menuItem.length);
         final IMenuItemComponent item = navigateToMenuItem(
                 getAndCheckMenu(), menuItem);
-        checkIsNull(item);
         try {
+            checkIsNull(item);
             Verifier.equals(selected, item.isSelected());
 
         } finally {
