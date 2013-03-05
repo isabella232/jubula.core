@@ -15,7 +15,6 @@ import java.util.StringTokenizer;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
-import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -52,8 +51,8 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ScrollBar;
-import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 /**
  * Toolkit specific commands for the <code>Tree</code>
  *
@@ -128,12 +127,6 @@ public class TreeTester extends AbstractTreeTester {
         }
     }
         
-    /**
-     * @return The event thread queuer.
-     */
-    protected IEventThreadQueuer getEventThreadQueuer() {
-        return getRobotFactory().getEventThreadQueuer();
-    }
     /**
      * 
      * @return the Tree

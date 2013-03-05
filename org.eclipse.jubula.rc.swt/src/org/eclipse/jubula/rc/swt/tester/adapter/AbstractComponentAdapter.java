@@ -49,6 +49,4 @@ public abstract class AbstractComponentAdapter implements IComponent {
     public int getKeyCode(String mod) {
         return KeyCodeConverter.getKeyCode(mod);
     }
-
-    
 }

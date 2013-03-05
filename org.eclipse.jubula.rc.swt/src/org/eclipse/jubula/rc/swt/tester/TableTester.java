@@ -59,13 +59,6 @@ public class TableTester extends AbstractTableTester {
     }
     
     /**
-     * @return The event thread queuer.
-     */
-    public IEventThreadQueuer getEventThreadQueuer() {
-        return getRobotFactory().getEventThreadQueuer();
-    }
-    
-    /**
      * {@inheritDoc}
      */
     public String[] getTextArrayFromComponent() {

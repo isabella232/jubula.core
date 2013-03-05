@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.common.tester;
 
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
+import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.exception.RobotException;
@@ -33,9 +34,6 @@ public abstract class AbstractUITester implements ITester {
     protected static final char INDEX_LIST_SEP_CHAR = 
         TestDataConstants.VALUE_CHAR_DEFAULT;
     
-    /** the robot factory */
-    private IRobotFactory m_robotFactory;    
-
     /** the component adapter */
     private IComponent m_adapter;
 
@@ -47,13 +45,20 @@ public abstract class AbstractUITester implements ITester {
     protected IRobot getRobot() throws RobotException {
         return AUTServer.getInstance().getRobot();
     }
+    
     /**
      * Gets the Robot factory. The factory is created once per instance.
      * @return The Robot factory.
      */
     protected IRobotFactory getRobotFactory() {
-        m_robotFactory = m_adapter.getRobotFactory();
-        return m_robotFactory;
+        return m_adapter.getRobotFactory();
+    }
+    
+    /**
+     * @return The event thread queuer.
+     */
+    protected IEventThreadQueuer getEventThreadQueuer() {
+        return getRobotFactory().getEventThreadQueuer();
     }
     
     /**
@@ -76,7 +81,7 @@ public abstract class AbstractUITester implements ITester {
     /**
      * @return the "real" graphical component instance
      */
-    public Object getRealComponent() {
+    protected Object getRealComponent() {
         return m_adapter.getRealComponent();
     }
 }

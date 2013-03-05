@@ -10,7 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swing.tester;
 
+import javax.swing.JSlider;
+
+import org.eclipse.jubula.rc.common.driver.IRunnable;
+import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.WidgetTester;
+import org.eclipse.jubula.rc.common.util.Verifier;
 
 /**
  * Tester Class for the AUT-Agent. This class realizes the technical access to
@@ -25,7 +30,27 @@ import org.eclipse.jubula.rc.common.tester.WidgetTester;
  */
 public class JSliderTester extends WidgetTester {
     /**
-     * this could really be empty if you only want to support JSlider as an
-     * graphics component.
+     * @return the casted slider instance
      */
+    protected JSlider getSlider() {
+        return (JSlider) getRealComponent();
+    }
+
+    /**
+     * Verifies the whether the labels of the UI JSlider are to be shown
+     * 
+     * @param shown
+     *            The shown status to verify.
+     */
+    public void rcVerifyLabelsExists(boolean shown) {
+        final JSlider slider = getSlider();
+        final Boolean labelsShown = (Boolean) getEventThreadQueuer()
+                .invokeAndWait("doesPaintLabels", new IRunnable() { //$NON-NLS-1$
+                        public Object run() throws StepExecutionException {
+                            return slider.getPaintLabels() ? Boolean.TRUE
+                                    : Boolean.FALSE;
+                        }
+                    });
+        Verifier.equals(shown, labelsShown.booleanValue());
+    }
 }

@@ -19,6 +19,22 @@
 		<realizes>guidancer.abstract.Widget</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.GroupTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Group" />
+        <action name="CompSystem.VerifyText" changed="1.11">
+          <method>rcVerifyText</method>
+          <param name="CompSystem.Text">
+            <type>java.lang.String</type>
+          </param>
+          <param name="CompSystem.Operator">
+            <type>java.lang.String</type>
+            <defaultValue>equals</defaultValue>
+            <valueSet>
+              <element name="CompSystem.Equals" value="equals"/>
+              <element name="CompSystem.NotEquals" value="not equals"/>
+              <element name="CompSystem.MatchesRegExp" value="matches"/>
+              <element name="CompSystem.SimpleMatch" value="simple match"/>
+            </valueSet>
+          </param>
+        </action>
 	</toolkitComponent>
 
 </compSystem>

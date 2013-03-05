@@ -41,13 +41,6 @@ public class MenuTester extends AbstractMenuTester {
     private boolean m_isCM = false;
 
     /**
-     * @return The event thread queuer.
-     */
-    public IEventThreadQueuer getEventThreadQueuer() {
-        return getRobotFactory().getEventThreadQueuer();
-    }
-    
-    /**
      * {@inheritDoc}
      */
     public IComponent getComponent() {

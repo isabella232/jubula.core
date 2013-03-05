@@ -21,7 +21,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
-import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
@@ -50,13 +49,6 @@ public class JTableTester extends AbstractTableTester {
      */
     private JTable getTable() {
         return (JTable) getComponent().getRealComponent();
-    }
-    
-    /**
-     * @return The event thread queuer.
-     */
-    public IEventThreadQueuer getEventThreadQueuer() {
-        return getRobotFactory().getEventThreadQueuer();
     }
     
     /**

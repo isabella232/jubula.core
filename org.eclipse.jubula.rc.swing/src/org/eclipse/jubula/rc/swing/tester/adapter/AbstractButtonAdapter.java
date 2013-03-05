@@ -12,7 +12,6 @@ package org.eclipse.jubula.rc.swing.tester.adapter;
 
 import javax.swing.AbstractButton;
 
-import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonComponent;
 /**
@@ -34,19 +33,12 @@ public class AbstractButtonAdapter extends JComponentAdapter
     }
     
     /**
-     * 
      * @return the casted Object 
      */
     private AbstractButton getAbstractButton() {
         return (AbstractButton) getRealComponent();
     }
-    /**
-     * @return The event thread queuer.
-     */
-    public IEventThreadQueuer getEventThreadQueuer() {
-        return getRobotFactory().getEventThreadQueuer();
-    }
-   
+
     /**
      * {@inheritDoc}
      */

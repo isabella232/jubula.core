@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.tester.adapter;
 
-import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.RobotException;
@@ -48,12 +47,6 @@ public class MenuAdapter extends AbstractComponentAdapter
         return getRobotFactory().getRobot();
     }
 
-    /**
-     * @return The event thread queuer.
-     */
-    public IEventThreadQueuer getEventThreadQueuer() {
-        return getRobotFactory().getEventThreadQueuer();
-    }
     /**
      * {@inheritDoc}
      */   

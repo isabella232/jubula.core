@@ -11,12 +11,12 @@
 package org.eclipse.jubula.rc.swing.tester;
 
 import java.awt.Point;
+
 import javax.swing.JTree;
 import javax.swing.tree.TreePath;
 
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
-import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.AbstractTreeTester;
@@ -146,12 +146,5 @@ public class JTreeTester extends AbstractTreeTester {
      */
     private JTree getTreeComponent() {
         return (JTree) getComponent().getRealComponent();
-    }
-    
-    /**
-     * @return The event thread queuer.
-     */
-    protected IEventThreadQueuer getEventThreadQueuer() {
-        return getRobotFactory().getEventThreadQueuer();
     }
 }

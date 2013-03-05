@@ -10,7 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.tester;
 
+import org.eclipse.jubula.rc.common.driver.IRunnable;
+import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.WidgetTester;
+import org.eclipse.jubula.rc.common.util.Verifier;
+import org.eclipse.jubula.rc.swt.utils.SwtUtils;
+import org.eclipse.swt.widgets.Group;
 
 /**
  * Tester Class for the RcpAccessor. This class realizes the technical access to
@@ -24,7 +29,31 @@ import org.eclipse.jubula.rc.common.tester.WidgetTester;
  */
 public class GroupTester extends WidgetTester {
     /**
-     * this could really be empty if you only want to support Group as an
-     * graphics component.
+     * @return the casted Group instance
      */
+    protected Group getGroup() {
+        return (Group) getRealComponent();
+    }
+    
+    /**
+     * Verifies the group title text
+     * 
+     * @param text
+     *            The text to verify.
+     * @param operator
+     *            The operation used to verify
+     * @throws StepExecutionException
+     *             if an error occurs
+     */
+    public void rcVerifyText(String text, String operator)
+        throws StepExecutionException {
+        final Group group = getGroup();
+        String groupLabelText = (String)getEventThreadQueuer()
+                .invokeAndWait("getText", new IRunnable() { //$NON-NLS-1$
+                    public Object run() {
+                        return SwtUtils.removeMnemonics(group.getText());
+                    }
+                });
+        Verifier.match(groupLabelText, text, operator);
+    }
 }

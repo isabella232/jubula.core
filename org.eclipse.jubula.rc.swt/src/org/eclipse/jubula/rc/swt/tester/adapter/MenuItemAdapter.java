@@ -80,13 +80,6 @@ public class MenuItemAdapter extends AbstractComponentAdapter
     }
 
     /**
-     * @return The event thread queuer.
-     */
-    public IEventThreadQueuer getEventThreadQueuer() {
-        return getRobotFactory().getEventThreadQueuer();
-    }
-    
-    /**
      * {@inheritDoc}
      */
     public Object getRealComponent() {

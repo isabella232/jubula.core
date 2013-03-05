@@ -11,7 +11,6 @@
 package org.eclipse.jubula.rc.swt.tester;
 
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
-import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.listener.EventLock;
@@ -98,13 +97,6 @@ public class ToolItemTester extends ButtonTester {
         return (ToolItemAdapter) getComponent();
     }
 
-    /**
-     * @return The event thread queuer.
-     */
-    protected IEventThreadQueuer getEventThreadQueuer() {
-        return getRobotFactory().getEventThreadQueuer();
-    }
-    
     /**
      * Opens the dropdown menu for this component by clicking on its chevron on
      * the righthand side.

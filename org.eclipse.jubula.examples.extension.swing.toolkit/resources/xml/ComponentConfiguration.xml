@@ -18,7 +18,7 @@
 	<toolkitComponent type="javax.swing.JSlider" visible="true">
 		<realizes>guidancer.abstract.Widget</realizes>
 		<testerClass>org.eclipse.jubula.rc.swing.tester.JSliderTester</testerClass>
-		<componentClass name="javax.swing.JSlider" />
+		<componentClass name="javax.swing.JSlider" />        <action name="CompSystem.VerifyLabelsExists" changed="2.0.0">          <method>rcVerifyLabelsExists</method>          <param name="CompSystem.IsExisting">            <type>java.lang.Boolean</type>            <defaultValue>true</defaultValue>            <valueSet>              <element name="CompSystem.True" value="true"/>              <element name="CompSystem.False" value="false"/>            </valueSet>          </param>        </action>
 	</toolkitComponent>
 	
 </compSystem>
