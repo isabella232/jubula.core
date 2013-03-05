@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.common.tester;
 
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITabPaneAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITabbedComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
@@ -31,8 +31,8 @@ public class TabbedPaneTester extends WidgetTester {
      * 
      * @return the <code>ITabPane</code>
      */
-    public ITabPaneAdapter getTabPane() {
-        return (ITabPaneAdapter)getComponent();
+    public ITabbedComponent getTabPane() {
+        return (ITabbedComponent)getComponent();
     }
     
     /**

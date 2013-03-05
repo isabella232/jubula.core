@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.swt.tester.adapter;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponentAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextInputComponent;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.widgets.Text;
@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Text;
  *
  */
 public class TextComponentAdapter extends ControlAdapter implements
-        ITextComponentAdapter {
+        ITextInputComponent {
     
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(

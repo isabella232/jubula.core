@@ -11,7 +11,7 @@
 package org.eclipse.jubula.rc.common.adapter;
 
 import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.swt.tester.adapter.ButtonAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.CComboAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.CLabelAdapter;
@@ -74,8 +74,8 @@ public class SWTAdapterFactory implements IAdapterFactory {
      * {@inheritDoc}
      */
     public Object getAdapter(Class targetedClass, Object objectToAdapt) {
-        if (targetedClass.isAssignableFrom(IComponentAdapter.class)) {
-            IComponentAdapter returnvalue = null;
+        if (targetedClass.isAssignableFrom(IComponent.class)) {
+            IComponent returnvalue = null;
             if (objectToAdapt instanceof Button) {
                 returnvalue = new ButtonAdapter(objectToAdapt);
             } else if (objectToAdapt instanceof Menu) {

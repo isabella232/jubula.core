@@ -17,8 +17,8 @@ import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuAdapter;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.MenuUtilBase;
 import org.eclipse.jubula.rc.common.util.Verifier;
@@ -52,8 +52,8 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * It is saved as Component so it must be casted.
      * @return the MenuAdapter
      */
-    public IMenuAdapter getMenuAdapter() {
-        return (IMenuAdapter) getComponent(); 
+    public IMenuComponent getMenuAdapter() {
+        return (IMenuComponent) getComponent(); 
     }
     /**
      * Checks if the specified menu item is enabled.
@@ -77,7 +77,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
     public void verifyEnabled(String[] menuItem, String operator,
             boolean enabled) {
         checkPathLength(menuItem.length);
-        final IMenuItemAdapter item = navigateToMenuItem(
+        final IMenuItemComponent item = navigateToMenuItem(
                 getAndCheckMenu(), menuItem, operator);
         checkIsNull(item);
         try {
@@ -92,7 +92,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * 
      * @param item the MenuItemAdapter which should be checked
      */
-    private void checkIsNull(final IMenuItemAdapter item) {
+    private void checkIsNull(final IMenuItemComponent item) {
         if (item.getRealComponent() == null) {
             throwMenuItemNotFound();
         }
@@ -117,7 +117,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      */
     public void verifyEnabledByIndexpath(int[] menuItem, boolean enabled) {
         checkPathLength(menuItem.length);
-        final IMenuItemAdapter item = navigateToMenuItem(
+        final IMenuItemComponent item = navigateToMenuItem(
                 getAndCheckMenu(), menuItem);
         checkIsNull(item);
         try {
@@ -150,7 +150,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
     public void verifyExists(String[] menuItem, String operator, boolean exists)
     {
         checkPathLength(menuItem.length);
-        final IMenuItemAdapter item = navigateToMenuItem(
+        final IMenuItemComponent item = navigateToMenuItem(
                 getAndCheckMenu(), menuItem, operator);
         try {
             Verifier.equals(exists, item.isExisting());
@@ -176,7 +176,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      */
     public void verifyExistsByIndexpath(int[] menuItem, boolean exists) {
         checkPathLength(menuItem.length);
-        final IMenuItemAdapter item = navigateToMenuItem(
+        final IMenuItemComponent item = navigateToMenuItem(
                         getAndCheckMenu(), menuItem);
         try {
             Verifier.equals(exists, item.isExisting());
@@ -207,7 +207,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
     public void verifySelected(String[] menuItem, String operator,
             boolean selected) {
         checkPathLength(menuItem.length);
-        final IMenuItemAdapter item = navigateToMenuItem(
+        final IMenuItemComponent item = navigateToMenuItem(
                 getAndCheckMenu(), menuItem, operator);
         checkIsNull(item);
         try {
@@ -237,7 +237,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      */
     public void verifySelectedByIndexpath(int[] menuItem, boolean selected) {
         checkPathLength(menuItem.length);
-        final IMenuItemAdapter item = navigateToMenuItem(
+        final IMenuItemComponent item = navigateToMenuItem(
                 getAndCheckMenu(), menuItem);
         checkIsNull(item);
         try {
@@ -257,7 +257,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
         checkPathLength(indexItems.length);
         
         try {
-            final IMenuItemAdapter item = navigateToMenuItem(
+            final IMenuItemComponent item = navigateToMenuItem(
                     getAndCheckMenu(), indexItems);
         
             checkIsNull(item);
@@ -289,7 +289,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
             throw new StepExecutionException("empty path to menuitem not allowed", //$NON-NLS-1$
                 EventFactory.createActionError());
         }
-        IMenuItemAdapter item = navigateToMenuItem(getAndCheckMenu(), 
+        IMenuItemComponent item = navigateToMenuItem(getAndCheckMenu(), 
                 menuItems, operator);
         if (item == null) {
             try {
@@ -312,7 +312,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @throws StepExecutionException
      *             if the active window has no menu bar.
      */
-    protected IMenuAdapter getAndCheckMenu() throws StepExecutionException {
+    protected IMenuComponent getAndCheckMenu() throws StepExecutionException {
         Object menu = getMenuAdapter().getRealComponent();
         // Verify that the active window has a menu bar
         if (menu == null) {
@@ -340,9 +340,9 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param textPath the text path used for opening the menu
      * @param operator the operator which was used for opening the menu
      */
-    protected void closeMenu(IMenuAdapter menuBar, String[] textPath,
+    protected void closeMenu(IMenuComponent menuBar, String[] textPath,
             String operator) {
-        IMenuItemAdapter menuitem = findMenu(menuBar,
+        IMenuItemComponent menuitem = findMenu(menuBar,
                 getIndexForName(menuBar, textPath[0], operator));
         if (menuitem.getRealComponent() != null) {
             getRobot().click(
@@ -361,8 +361,8 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param menuBar the main menu
      * @param path the integer based path used for opening the menu
      */
-    protected void closeMenu(IMenuAdapter menuBar, int[] path) {
-        IMenuItemAdapter menuitem = findMenu(menuBar, path[0]);
+    protected void closeMenu(IMenuComponent menuBar, int[] path) {
+        IMenuItemComponent menuitem = findMenu(menuBar, path[0]);
         if (menuitem.getRealComponent() != null) {
             getRobot().click(
                 menuitem.getRealComponent(),
@@ -381,12 +381,12 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param operator the operator for the matching
      * @return the index for the specific menu entry
      */
-    protected int getIndexForName(IMenuAdapter menu, String name,
+    protected int getIndexForName(IMenuComponent menu, String name,
             String operator) {
-        IMenuItemAdapter [] subElements = menu.getItems();
+        IMenuItemComponent [] subElements = menu.getItems();
         int downcount = 0;
         for (int j = 0; j < subElements.length; j++) {               
-            IMenuItemAdapter tempMenu = (IMenuItemAdapter)subElements[j];
+            IMenuItemComponent tempMenu = (IMenuItemComponent)subElements[j];
             if (tempMenu.isSeparator()) {
                 downcount++;
             }
@@ -429,11 +429,11 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param operator operator used for matching
      * @return the adapter at the end of the specified path or a adapter that contains no component.
      */
-    protected IMenuItemAdapter navigateToMenuItem(
-            IMenuAdapter menuBar, String[] path, String operator) {
+    protected IMenuItemComponent navigateToMenuItem(
+            IMenuComponent menuBar, String[] path, String operator) {
         checkPathLength(path.length);
-        IMenuAdapter currentmenu = menuBar;
-        IMenuItemAdapter currentMenuItem = null;
+        IMenuComponent currentmenu = menuBar;
+        IMenuItemComponent currentMenuItem = null;
         final int pathLength = path.length;
         final int beforeLast = pathLength - 1;
         
@@ -465,12 +465,12 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param path the path where to navigate in the menu.
      * @return -the adapter at the end of the specified path or a adapter that contains no component.
      */
-    protected IMenuItemAdapter navigateToMenuItem(
-            IMenuAdapter menubar, int[] path) {
+    protected IMenuItemComponent navigateToMenuItem(
+            IMenuComponent menubar, int[] path) {
         checkPathLength(path.length);
         
-        IMenuAdapter currentmenu = menubar;
-        IMenuItemAdapter currentMenuItem = null;
+        IMenuComponent currentmenu = menubar;
+        IMenuItemComponent currentMenuItem = null;
         final int pathLength = path.length;
         final int beforeLast = pathLength - 1;
             
@@ -503,9 +503,9 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param pathIndex the index from the next menu item
      * @return the wanted menu item in a adapter
      */
-    private IMenuItemAdapter getNextMenuItem(IMenuAdapter currentmenu,
+    private IMenuItemComponent getNextMenuItem(IMenuComponent currentmenu,
             final int pathIndex) {
-        IMenuItemAdapter currentMenuItem;
+        IMenuItemComponent currentMenuItem;
         if (pathIndex < 0) {
             throwInvalidPathException();            
         }
@@ -518,13 +518,13 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param idx index of the current wanted item
      * @return the next IMenuItemAdapter from the next cascade
      */
-    private IMenuItemAdapter findMenu(IMenuAdapter menu, int idx) {
+    private IMenuItemComponent findMenu(IMenuComponent menu, int idx) {
         List visibleSubMenus = new ArrayList();
-        IMenuItemAdapter[] subElements = menu.getItems();
+        IMenuItemComponent[] subElements = menu.getItems();
         
         for (int i = 0; i < subElements.length; ++i) {
             
-            IMenuItemAdapter menuitem = subElements[i];
+            IMenuItemComponent menuitem = subElements[i];
             if (menuitem.getRealComponent() != null && !menuitem.isSeparator() 
                     && menuitem.isShowing()) {
                 visibleSubMenus.add(menuitem);
@@ -534,7 +534,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
         if (idx >= visibleSubMenus.size() || idx < 0) {
             return newMenuItemAdapter(null);
         }        
-        return (IMenuItemAdapter) visibleSubMenus.get(idx);        
+        return (IMenuItemComponent) visibleSubMenus.get(idx);        
     }    
     
     /**
@@ -562,6 +562,6 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param component the new MenuItem which is used by the next step
      * @return the adapted or casted MenuItem
      */
-    protected abstract IMenuItemAdapter newMenuItemAdapter(Object component);
+    protected abstract IMenuItemComponent newMenuItemAdapter(Object component);
 
 }

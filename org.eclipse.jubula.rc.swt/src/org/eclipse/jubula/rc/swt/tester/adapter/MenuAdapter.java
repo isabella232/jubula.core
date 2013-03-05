@@ -14,8 +14,8 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.RobotException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuAdapter;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.MenuItem;
  * @author BREDEX GmbH
  */
 public class MenuAdapter extends AbstractComponentAdapter
-    implements IMenuAdapter {
+    implements IMenuComponent {
     /** the Menu from the AUT */
     private Menu m_menu;    
 
@@ -70,7 +70,7 @@ public class MenuAdapter extends AbstractComponentAdapter
     /**
      * {@inheritDoc}
      */
-    public IMenuItemAdapter[] getItems() {
+    public IMenuItemComponent[] getItems() {
         
         MenuItem[] items =
                 (MenuItem[]) getEventThreadQueuer().invokeAndWait(
@@ -79,9 +79,9 @@ public class MenuAdapter extends AbstractComponentAdapter
                                 return m_menu.getItems();
                             }
                         });
-        IMenuItemAdapter[] adapters = new IMenuItemAdapter[items.length];
+        IMenuItemComponent[] adapters = new IMenuItemComponent[items.length];
         for (int i = 0; i < items.length; i++) {
-            IMenuItemAdapter menuItem = new MenuItemAdapter(items[i]);
+            IMenuItemComponent menuItem = new MenuItemAdapter(items[i]);
             adapters[i] = menuItem;
         }
         return adapters;

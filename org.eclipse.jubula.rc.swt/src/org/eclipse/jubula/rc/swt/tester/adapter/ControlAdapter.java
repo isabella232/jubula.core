@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.swt.tester.adapter;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IWidgetAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IWidgetComponent;
 import org.eclipse.jubula.rc.swt.tester.util.EventListener;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -27,8 +27,8 @@ import org.eclipse.swt.widgets.Menu;
  * 
  *  @author BREDEX GmbH
  */
-public class ControlAdapter extends AbstractWidgetAdapter
-    implements IWidgetAdapter {
+public class ControlAdapter extends WidgetAdapter
+    implements IWidgetComponent {
     
  
     /**   */

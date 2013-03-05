@@ -11,7 +11,7 @@
 package org.eclipse.jubula.rc.common.tester;
 
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextVerifiable;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.common.util.Verifier;
 
 /**
@@ -30,7 +30,7 @@ public abstract class AbstractTextVerifiableTester extends WidgetTester {
      * @return the text value.
      */
     public String rcReadValue(String variable) {
-        return ((ITextVerifiable)getComponent()).getText();
+        return ((ITextComponent)getComponent()).getText();
     }
 
     /**
@@ -42,7 +42,7 @@ public abstract class AbstractTextVerifiableTester extends WidgetTester {
      */
     public void rcVerifyText(String text, String operator)
         throws StepExecutionException {
-        Verifier.match(((ITextVerifiable)getComponent()).getText(), text,
+        Verifier.match(((ITextComponent)getComponent()).getText(), text,
                                     operator);
     }
 

@@ -17,8 +17,8 @@ import java.util.List;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuAdapter;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 /**
  * Implementation of the menu interface for adapting the <code>JMenu</code>.
  * In Swing we have three implementations of the menu interface because
@@ -29,7 +29,7 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
  *
  */
 public class JMenuAdapter extends AbstractComponentAdapter
-    implements IMenuAdapter {
+    implements IMenuComponent {
     /** The JMenu from the AUT */
     private JMenu m_menu;
     
@@ -51,7 +51,7 @@ public class JMenuAdapter extends AbstractComponentAdapter
     /**
      * {@inheritDoc}
      */
-    public IMenuItemAdapter[] getItems() {
+    public IMenuItemComponent[] getItems() {
         List adapters = new LinkedList();
         
         for (int i = 0; i < m_menu.getItemCount(); i++) {
@@ -63,14 +63,14 @@ public class JMenuAdapter extends AbstractComponentAdapter
         }
         
 
-        IMenuItemAdapter[] allitems = null;
+        IMenuItemComponent[] allitems = null;
         if (adapters.size() > 0) {
-            allitems = new IMenuItemAdapter[adapters.size()];
+            allitems = new IMenuItemComponent[adapters.size()];
             int i = 0;
             for (Iterator iterator = adapters.iterator(); iterator.hasNext();) {
                 Object object = (Object) iterator.next();
                 
-                allitems[i] = (IMenuItemAdapter) object;
+                allitems[i] = (IMenuItemComponent) object;
                 i++;
             }
 

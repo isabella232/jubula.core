@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextVerifiable;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 
 /**
  * 
@@ -23,7 +23,7 @@ public class LabelTester extends AbstractTextVerifiableTester {
      * {@inheritDoc}
      */
     public String[] getTextArrayFromComponent() {
-        ITextVerifiable label = (ITextVerifiable) getComponent();
+        ITextComponent label = (ITextComponent) getComponent();
         return new String[] {label.getText()};
     }
 

@@ -11,7 +11,7 @@
 package org.eclipse.jubula.rc.common.tester;
 
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonComponent;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 
@@ -24,13 +24,11 @@ import org.eclipse.jubula.rc.common.util.Verifier;
  *
  */
 public class ButtonTester extends AbstractTextVerifiableTester {
-
     /**
-     * 
      * @return the IButtonAdapter for the component. 
      */
-    private IButtonAdapter getButtonAdapter() {
-        return (IButtonAdapter)getComponent();
+    private IButtonComponent getButtonAdapter() {
+        return (IButtonComponent)getComponent();
     }
 
     /**

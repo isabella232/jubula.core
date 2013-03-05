@@ -13,15 +13,15 @@ package org.eclipse.jubula.rc.swing.tester.adapter;
 import javax.swing.text.JTextComponent;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponentAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextInputComponent;
 /**
  * Implementation of the Interface <code>ITextComponentAdapter</code> as a
  * adapter for the <code>JTextComponent</code> component.
  * @author BREDEX GmbH
  *
  */
-public class JTextComponentAdapter extends WidgetAdapter
-    implements ITextComponentAdapter {
+public class JTextComponentAdapter extends JComponentAdapter
+    implements ITextInputComponent {
     
     /** */
     private JTextComponent m_textComponent;

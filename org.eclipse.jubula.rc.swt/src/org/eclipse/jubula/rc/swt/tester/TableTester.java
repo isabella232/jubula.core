@@ -21,8 +21,8 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.tester.AbstractTableTester;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableAdapter;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponentAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextInputComponent;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.tester.adapter.StyledTextAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TableAdapter;
@@ -81,7 +81,7 @@ public class TableTester extends AbstractTableTester {
     protected Object setEditorToReplaceMode(Object editor, boolean replace) {
 
         if (replace) {
-            ITextComponentAdapter textEditor = null;
+            ITextInputComponent textEditor = null;
             if (editor instanceof Text) {
                 textEditor = new TextComponentAdapter(editor);
             }
@@ -195,7 +195,7 @@ public class TableTester extends AbstractTableTester {
      */
     protected boolean isMouseOnHeader() {
         final Table table = getTable();
-        final ITableAdapter adapter = (ITableAdapter)getComponent();
+        final ITableComponent adapter = (ITableComponent)getComponent();
         Boolean isVisible;
         isVisible = (Boolean)getEventThreadQueuer().invokeAndWait(
                 "isMouseOnHeader", //$NON-NLS-1$

@@ -16,8 +16,8 @@ import java.util.List;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuAdapter;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 
 /**
  * Implementation of the menu interface for adapting the <code>JMenuBar</code>.
@@ -29,7 +29,7 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
  *
  */
 public class JMenuBarAdapter extends AbstractComponentAdapter
-    implements IMenuAdapter {
+    implements IMenuComponent {
     /** The JMenuBar */
     private JMenuBar m_menuBar;
     
@@ -51,7 +51,7 @@ public class JMenuBarAdapter extends AbstractComponentAdapter
      * {@inheritDoc}
      */
 
-    public IMenuItemAdapter[] getItems() {
+    public IMenuItemComponent[] getItems() {
         Object[] menus = m_menuBar.getSubElements();
         List adapters = new LinkedList();
         for (int i = 0; i < menus.length; i++) {
@@ -59,7 +59,7 @@ public class JMenuBarAdapter extends AbstractComponentAdapter
                 adapters.add(new JMenuItemAdapter(menus[i]));
             }
         }
-        IMenuItemAdapter[] allitems = new IMenuItemAdapter[adapters.size()];
+        IMenuItemComponent[] allitems = new IMenuItemComponent[adapters.size()];
         adapters.toArray(allitems);
         return allitems;
     }

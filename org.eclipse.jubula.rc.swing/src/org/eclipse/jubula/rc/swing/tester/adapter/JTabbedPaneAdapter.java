@@ -13,18 +13,20 @@ package org.eclipse.jubula.rc.swing.tester.adapter;
 import javax.swing.JTabbedPane;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITabPaneAdapter;
-/**
- * Implementation of the Interface <code>ITabPaneAdapter</code> as a
- * adapter for the <code>JTabbedPane</code> component.
- * @author BREDEX GmbH
- *
- */
-public class JTabbedPaneAdapter extends WidgetAdapter 
-    implements ITabPaneAdapter {
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITabbedComponent;
 
+/**
+ * Implementation of the Interface <code>ITabPaneAdapter</code> as a adapter for
+ * the <code>JTabbedPane</code> component.
+ * 
+ * @author BREDEX GmbH
+ * 
+ */
+public class JTabbedPaneAdapter extends JComponentAdapter 
+    implements ITabbedComponent {
     /** The JTabbedPane on which the actions are performed. */
     private JTabbedPane m_pane;
+    
     /**
      * 
      * @param objectToAdapt 

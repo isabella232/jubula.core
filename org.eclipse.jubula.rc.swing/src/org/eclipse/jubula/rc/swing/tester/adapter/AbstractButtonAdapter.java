@@ -14,15 +14,15 @@ import javax.swing.AbstractButton;
 
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonComponent;
 /**
  * Implementation of the button interface as an adapter which holds
  * the <code>javax.swing.AbstractButton</code>.
  * 
  * @author BREDEX GmbH
  */
-public class AbstractButtonAdapter extends WidgetAdapter
-    implements IButtonAdapter {
+public class AbstractButtonAdapter extends JComponentAdapter
+    implements IButtonComponent {
 
     /**
      * Creates an object with the adapted JMenu.
@@ -86,17 +86,4 @@ public class AbstractButtonAdapter extends WidgetAdapter
                 });
         return (boolean) returnvalue.booleanValue();
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public String readValue(String variable) {
-        return (String) getEventThreadQueuer().invokeAndWait(
-                "isShowing", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return getAbstractButton().getText();
-                    }
-                });
-    }
-
 }

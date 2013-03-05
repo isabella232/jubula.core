@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 BREDEX GmbH.
+ * Copyright (c) 2013 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,19 +10,17 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
-
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.exception.RobotException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.interfaces.ITester;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
 /**
  * Implementation of basic functions for all tester classes. This class
  * gives the basic functions which are needed for testing.
- * 
  * 
  * @author BREDEX GmbH
  */
@@ -35,11 +33,11 @@ public abstract class AbstractUITester implements ITester {
     protected static final char INDEX_LIST_SEP_CHAR = 
         TestDataConstants.VALUE_CHAR_DEFAULT;
     
-    /** */
+    /** the robot factory */
     private IRobotFactory m_robotFactory;    
 
-    /**    */
-    private IComponentAdapter m_component;
+    /** the component adapter */
+    private IComponent m_adapter;
 
     /**
      * Gets the Robot. 
@@ -54,7 +52,7 @@ public abstract class AbstractUITester implements ITester {
      * @return The Robot factory.
      */
     protected IRobotFactory getRobotFactory() {
-        m_robotFactory = m_component.getRobotFactory();
+        m_robotFactory = m_adapter.getRobotFactory();
         return m_robotFactory;
     }
     
@@ -63,17 +61,22 @@ public abstract class AbstractUITester implements ITester {
      */
     public void setComponent(Object graphicsComponent) {
         AdapterFactoryRegistry afr =  AdapterFactoryRegistry.getInstance();
-        m_component = null;
-        m_component = (IComponentAdapter) afr.getAdapter(
-                IComponentAdapter.class, graphicsComponent);
+        m_adapter = null;
+        m_adapter = (IComponent) afr.getAdapter(
+                IComponent.class, graphicsComponent);
     }
     
     /**
-     * Getter for the stored GraphicalComponent
-     * @return gets the stored IComponentAdapter
+     * @return the adapted graphical component instance
      */
-    public IComponentAdapter getComponent() {
-        return m_component;
+    public IComponent getComponent() {
+        return m_adapter;
     }
     
+    /**
+     * @return the "real" graphical component instance
+     */
+    public Object getRealComponent() {
+        return m_adapter.getRealComponent();
+    }
 }

@@ -33,14 +33,15 @@ public abstract class AbstractMonitoring implements IMonitoring {
     
     /** the autId */
     private String m_autId;  
-    /** 
-     * File referring the installtion directory. Used to find support
-     * files.
+    
+    /**
+     * File referring the installation directory. Used to find support files.
      */
     private File m_installationDir;
     
     /** MonitoringDataStore which contains the configuration maps */
     private MonitoringDataStore m_mds = MonitoringDataStore.getInstance();
+   
     /**
      * {@inheritDoc}
      */

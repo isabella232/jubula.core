@@ -34,7 +34,6 @@ import org.eclipse.jubula.rc.swing.utils.SwingUtils;
  * @author BREDEX GmbH
  */
 public class JTableTester extends AbstractTableTester {
-
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
             JTableTester.class);
@@ -45,10 +44,8 @@ public class JTableTester extends AbstractTableTester {
     public static AutServerLogger getLog() {
         return log;
     }    
-
     
     /**
-     * 
      * @return the real AUT JTable
      */
     private JTable getTable() {
@@ -62,7 +59,6 @@ public class JTableTester extends AbstractTableTester {
         return getRobotFactory().getEventThreadQueuer();
     }
     
-
     /**
      * {@inheritDoc}
      */
@@ -89,6 +85,7 @@ public class JTableTester extends AbstractTableTester {
         }
         return componentTextArray;
     }
+    
     /**
      * {@inheritDoc}
      */

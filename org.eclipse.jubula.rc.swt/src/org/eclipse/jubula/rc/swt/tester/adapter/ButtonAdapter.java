@@ -11,7 +11,7 @@
 package org.eclipse.jubula.rc.swt.tester.adapter;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonComponent;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.swt.widgets.Button;
@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Button;
  * 
  *  @author BREDEX GmbH
  */
-public class ButtonAdapter extends ControlAdapter implements IButtonAdapter {
+public class ButtonAdapter extends ControlAdapter implements IButtonComponent {
     
     /** the Button from the AUT */
     private Button m_button;

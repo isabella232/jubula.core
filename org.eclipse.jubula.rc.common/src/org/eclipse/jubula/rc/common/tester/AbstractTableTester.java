@@ -18,7 +18,7 @@ import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
@@ -56,8 +56,8 @@ public abstract class AbstractTableTester
      * 
      * @return the ITableAdapter of this table
      */
-    private ITableAdapter getTableAdapter() {
-        return (ITableAdapter) getComponent();
+    private ITableComponent getTableAdapter() {
+        return (ITableComponent) getComponent();
     }
     
     /**
@@ -82,7 +82,7 @@ public abstract class AbstractTableTester
      */
     public void rcVerifyText(String text, String operator)
         throws StepExecutionException {
-        ITableAdapter adapter = getTableAdapter();
+        ITableComponent adapter = getTableAdapter();
         Cell cell = adapter.getSelectedCell();
         final int implRow = cell.getRow();
         final int implCol = cell.getCol();
@@ -106,7 +106,7 @@ public abstract class AbstractTableTester
     public void rcVerifyText(String text, String operator, final String row,
             final String rowOperator, final String col,
             final String colOperator) throws StepExecutionException {
-        ITableAdapter adapter = getTableAdapter();
+        ITableComponent adapter = getTableAdapter();
         final int implRow = adapter.getRowFromString(row, rowOperator);
         final int implCol = adapter.getColumnFromString(col, colOperator);
         String current;
@@ -144,7 +144,7 @@ public abstract class AbstractTableTester
         final int yPos, final String yUnits, final String extendSelection,
         int button) 
         throws StepExecutionException {
-        ITableAdapter adapter = getTableAdapter();
+        ITableComponent adapter = getTableAdapter();
         final int implRow = adapter.getRowFromString(row, rowOperator);
         final int implCol = adapter.getColumnFromString(col, colOperator);
         final boolean isExtendSelection = extendSelection.equals(
@@ -210,7 +210,7 @@ public abstract class AbstractTableTester
             final String colOperator, final String value,
             final String operator, final String searchType, boolean exists)
         throws StepExecutionException {
-        ITableAdapter adapter = getTableAdapter();
+        ITableComponent adapter = getTableAdapter();
         final int implCol = adapter.getColumnFromString(col, colOperator);
         
         
@@ -229,7 +229,7 @@ public abstract class AbstractTableTester
      * @param searchType searchType Determines where the search begins ("relative" or "absolute")
      * @return <code>true</code> it the value exists in the column
      */
-    private boolean isValueExisting(ITableAdapter adapter, int implCol, 
+    private boolean isValueExisting(ITableComponent adapter, int implCol, 
             String value, String operator, final String searchType) {
         final int rowCount = adapter.getRowCount();
         for (int i = getStartingRowIndex(searchType);
@@ -268,7 +268,7 @@ public abstract class AbstractTableTester
             final String value, final String operator, final String searchType,
             boolean exists)
         throws StepExecutionException {
-        final ITableAdapter adapter = getTableAdapter();
+        final ITableComponent adapter = getTableAdapter();
         final int implRow = adapter.getRowFromString(row, rowOperator);
         boolean valueIsExisting = false;
         //if row is header
@@ -454,7 +454,7 @@ public abstract class AbstractTableTester
     protected void selectRowByValue(String col, String colOperator,
         final String value, final String regexOp, final String extendSelection,
         final String searchType, ClickOptions co) {
-        ITableAdapter adapter = getTableAdapter();
+        ITableComponent adapter = getTableAdapter();
         final int implCol = adapter.getColumnFromString(col, colOperator);
         Integer implRow = null;
         final int rowCount = adapter.getRowCount();
@@ -525,7 +525,7 @@ public abstract class AbstractTableTester
     protected void selectCellByColValue(String row, String rowOperator,
         final String value, final String regex, final String extendSelection,
         final String searchType, ClickOptions co) { 
-        ITableAdapter adapter = getTableAdapter();
+        ITableComponent adapter = getTableAdapter();
         final int implRow = adapter.getRowFromString(row, rowOperator);
         int colCount = adapter.getColumnCount();
         Integer implCol = null;
@@ -575,7 +575,7 @@ public abstract class AbstractTableTester
      */
     public String rcReadValue(String variable, String row, String rowOperator,
             String col, String colOperator) {
-        ITableAdapter adapter = getTableAdapter();
+        ITableComponent adapter = getTableAdapter();
         final int implRow = adapter.getRowFromString(row, rowOperator);
         final int implCol = adapter.getColumnFromString(col, colOperator);
         
@@ -607,7 +607,7 @@ public abstract class AbstractTableTester
      * @param button The mouse button
      */
     public void rcClick(int count, int button) {
-        ITableAdapter adapter = getTableAdapter();
+        ITableComponent adapter = getTableAdapter();
         Cell cell = null;
         if (isMouseOverCell()) {
             cell = getCellAtMousePosition();
@@ -965,7 +965,7 @@ public abstract class AbstractTableTester
      */
     protected void checkRowColBounds(int row, int column)
         throws StepExecutionException {
-        ITableAdapter adapter = getTableAdapter();
+        ITableComponent adapter = getTableAdapter();
         checkBounds(row, adapter.getRowCount());
         
         // Corner case: Only check the bounds if the table is not being
@@ -1015,7 +1015,7 @@ public abstract class AbstractTableTester
      */
     private void inputText(final String text, boolean replace) 
         throws StepExecutionException {
-        ITableAdapter adapter = getTableAdapter();
+        ITableComponent adapter = getTableAdapter();
         
         final Cell cell = adapter.getSelectedCell();
         // Ensure that the cell is visible.

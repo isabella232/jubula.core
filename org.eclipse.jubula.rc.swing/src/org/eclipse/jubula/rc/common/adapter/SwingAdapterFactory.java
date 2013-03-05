@@ -26,7 +26,7 @@ import javax.swing.JTree;
 import javax.swing.text.JTextComponent;
 
 import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.swing.tester.adapter.AbstractButtonAdapter;
 import org.eclipse.jubula.rc.swing.tester.adapter.JComboBoxAdapter;
 import org.eclipse.jubula.rc.swing.tester.adapter.JLabelAdapter;
@@ -50,7 +50,7 @@ import org.eclipse.jubula.rc.swing.tester.adapter.JTreeAdapter;
  */
 public class SwingAdapterFactory implements IAdapterFactory {
     /**
-     * 
+     * the supported classes
      */
     private static final Class[] SUPPORTEDCLASSES = new Class[] { 
         JButton.class, JCheckBox.class, JRadioButton.class,
@@ -59,20 +59,16 @@ public class SwingAdapterFactory implements IAdapterFactory {
         JList.class, JTextComponent.class, JComboBox.class,
         JLabel.class , JTabbedPane.class};
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Class[] getSupportedClasses() {
 
         return SUPPORTEDCLASSES;
     }
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Object getAdapter(Class targetedClass, Object objectToAdapt) {
-        if (targetedClass.isAssignableFrom(IComponentAdapter.class)) {
+        if (targetedClass.isAssignableFrom(IComponent.class)) {
 
-            IComponentAdapter returnvalue = null;
+            IComponent returnvalue = null;
             if (objectToAdapt instanceof JButton) {
                 returnvalue = new AbstractButtonAdapter(objectToAdapt);
             } else if (objectToAdapt instanceof JRadioButton) {

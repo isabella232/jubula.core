@@ -22,8 +22,8 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuAdapter;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
@@ -33,7 +33,7 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * 
  */
 public class JMenuItemAdapter extends AbstractComponentAdapter
-    implements IMenuItemAdapter {
+    implements IMenuItemComponent {
 
     /** the JMenuItem from the AUT    */
     private JMenuItem m_menuItem;
@@ -155,7 +155,7 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
     /**
      * {@inheritDoc}
      */
-    public IMenuAdapter getMenu() {
+    public IMenuComponent getMenu() {
         if (m_menuItem instanceof JMenu) {
             return new JMenuAdapter(m_menuItem);
         }
@@ -192,7 +192,7 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
     /**
      * {@inheritDoc}
      */
-    public IMenuAdapter openSubMenu() {
+    public IMenuComponent openSubMenu() {
         if (!m_menuItem.isEnabled()) {
             throw new StepExecutionException("menu item not enabled", //$NON-NLS-1$
                     EventFactory.createActionError(

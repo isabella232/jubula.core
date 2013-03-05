@@ -20,7 +20,7 @@ import javax.swing.ListModel;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -30,7 +30,7 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * @author BREDEX GmbH
  *
  */
-public class JListAdapter extends WidgetAdapter implements IListAdapter {
+public class JListAdapter extends JComponentAdapter implements IListComponent {
     /** */
     private JList m_list;
     

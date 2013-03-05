@@ -15,9 +15,9 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.AbstractMenuTester;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuAdapter;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.rc.common.util.MenuUtilBase;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotSwtImpl;
@@ -50,7 +50,7 @@ public class MenuTester extends AbstractMenuTester {
     /**
      * {@inheritDoc}
      */
-    public IComponentAdapter getComponent() {
+    public IComponent getComponent() {
         if (m_isCM) {
             return super.getComponent();
         }
@@ -165,7 +165,7 @@ public class MenuTester extends AbstractMenuTester {
      * @throws StepExecutionException
      *             if the active window has no menu bar.
      */
-    protected IMenuAdapter getAndCheckMenu() throws StepExecutionException {
+    protected IMenuComponent getAndCheckMenu() throws StepExecutionException {
         // Verify that there is an active window
         if (((RobotSwtImpl)getRobot()).getActiveWindow() == null) {
             throw new StepExecutionException(
@@ -188,14 +188,14 @@ public class MenuTester extends AbstractMenuTester {
     /**
      * {@inheritDoc}
      */
-    protected IMenuItemAdapter newMenuItemAdapter(Object component) {
+    protected IMenuItemComponent newMenuItemAdapter(Object component) {
         return new MenuItemAdapter(component);
     }
     
     /**
      * {@inheritDoc}
      */
-    protected void closeMenu(IMenuAdapter menuBar, int[] path) {
+    protected void closeMenu(IMenuComponent menuBar, int[] path) {
         Validate.notNull(getMenu(menuBar));
         closeMenu(menuBar, path.length);
         
@@ -204,7 +204,7 @@ public class MenuTester extends AbstractMenuTester {
     /**
      * {@inheritDoc}
      */
-    protected void closeMenu(IMenuAdapter menuBar, String[] textPath,
+    protected void closeMenu(IMenuComponent menuBar, String[] textPath,
             String operator) {
         Validate.notNull(getMenu(menuBar));
         closeMenu(menuBar, textPath.length);
@@ -215,7 +215,7 @@ public class MenuTester extends AbstractMenuTester {
      * @param menuBar menu
      * @param maxCascadeLength an integer so that the closing operation is not infinite
      */
-    private void closeMenu(final IMenuAdapter menuBar, int maxCascadeLength) {
+    private void closeMenu(final IMenuComponent menuBar, int maxCascadeLength) {
         final MenuHiddenListener menuListener = 
                 new MenuHiddenListener();
         getMenu(menuBar).getDisplay().syncExec(new Runnable() {
@@ -240,7 +240,7 @@ public class MenuTester extends AbstractMenuTester {
      * @param menu the menu adapter
      * @return the real SWT menu 
      */
-    private Menu getMenu(final IMenuAdapter menu) {
+    private Menu getMenu(final IMenuComponent menu) {
         return (Menu) menu.getRealComponent();
     }
     /**

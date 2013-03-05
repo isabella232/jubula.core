@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.common.tester;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboBoxAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
@@ -29,8 +29,8 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
     /**
      * @return the <code>IComboBoxAdapter</code>
      */
-    private IComboBoxAdapter getCBAdapter() {
-        return (IComboBoxAdapter) getComponent();
+    private IComboComponent getCBAdapter() {
+        return (IComboComponent) getComponent();
     }
     
     

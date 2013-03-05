@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.swt.tester.adapter;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonComponent;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -23,8 +23,8 @@ import org.eclipse.swt.widgets.ToolItem;
  * @author BREDEX GmbH
  * @created 18.02.2013
  */
-public class ToolItemAdapter extends AbstractWidgetAdapter implements
-        IButtonAdapter {
+public class ToolItemAdapter extends WidgetAdapter implements
+        IButtonComponent {
 
     /** The ToolItem */
     private ToolItem m_item = null;

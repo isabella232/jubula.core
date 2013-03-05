@@ -31,7 +31,7 @@ import org.eclipse.jubula.rc.common.implclasses.tree.SiblingTraverser;
 import org.eclipse.jubula.rc.common.implclasses.tree.StringNodePath;
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperationConstraint;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
@@ -60,8 +60,8 @@ public abstract class AbstractTreeTester extends WidgetTester {
      *  This method is only casting the IComponentAdapter to the wanted ITreeAdapter
      * @return The ITreeAdapter out of the stored IComponentAdapter
      */
-    private ITreeAdapter getTreeAdapter() {
-        return (ITreeAdapter)getComponent();
+    private ITreeComponent getTreeAdapter() {
+        return (ITreeComponent)getComponent();
         
     }
     
@@ -150,7 +150,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
         Validate.notNull(treePath);
         Validate.notNull(operation);
 
-        ITreeAdapter adapter = getTreeAdapter();
+        ITreeComponent adapter = getTreeAdapter();
         AbstractTreeOperationContext context = adapter.getContext();
 
         AbstractTreeNodeTraverser traverser =
@@ -656,7 +656,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
     protected Object getStartNode(String pathType, int preAscend,
             AbstractTreeOperationContext context) {
         Object startNode;
-        ITreeAdapter tree = getTreeAdapter();
+        ITreeComponent tree = getTreeAdapter();
         if (pathType.equals(
                 CompSystemConstants.TREE_PATH_TYPE_RELATIVE)) {
             startNode = getSelectedNode(context);

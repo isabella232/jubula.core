@@ -12,16 +12,13 @@ package org.eclipse.jubula.rc.swing.tester.adapter;
 
 import javax.swing.JLabel;
 
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextVerifiable;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 /**
- * 
  * @author BREDEX GmbH
- *
  */
-public class JLabelAdapter extends WidgetAdapter implements ITextVerifiable {
-
+public class JLabelAdapter extends JComponentAdapter 
+    implements ITextComponent {
     /**
-     * 
      * @param objectToAdapt the component
      */
     public JLabelAdapter(Object objectToAdapt) {
@@ -35,5 +32,4 @@ public class JLabelAdapter extends WidgetAdapter implements ITextVerifiable {
     public String getText() {
         return ((JLabel) getRealComponent()).getText();
     }
-
 }

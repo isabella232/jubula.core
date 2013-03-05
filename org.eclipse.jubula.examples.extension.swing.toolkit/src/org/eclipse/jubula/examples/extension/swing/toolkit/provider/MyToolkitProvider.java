@@ -36,7 +36,7 @@ public class MyToolkitProvider implements IToolKitProvider {
     public static final String BUNDLE = "org.eclipse.jubula.examples.extension.swing.toolkit.i18n.i18n"; //$NON-NLS-1$
 
     /**
-     * As this should be a toolkit extension instead of a seperated toolkit, you
+     * As this should be a toolkit extension instead of a separated toolkit, you
      * do not have to implement your own AUT-Configuration dialog. {@inheritDoc}
      */
     public Composite getAutConfigDialog(Composite arg0, int arg1,

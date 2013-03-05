@@ -17,7 +17,7 @@ import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IWidgetAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IWidgetComponent;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.tools.utils.TimeUtil;
@@ -38,8 +38,8 @@ public class WidgetTester extends AbstractUITester {
      * Casts the IComponentAdapter to an IWidgetAdapter for better access
      * @return The widgetAdapter
      */
-    private IWidgetAdapter getWidgetAdapter() {
-        return (IWidgetAdapter) getComponent();
+    private IWidgetComponent getWidgetAdapter() {
+        return (IWidgetComponent) getComponent();
     }
     
     /**
@@ -83,7 +83,7 @@ public class WidgetTester extends AbstractUITester {
     public void rcVerifyProperty(final String name, String value,
             String operator) {
         
-        final IWidgetAdapter bean = (IWidgetAdapter) getComponent();
+        final IWidgetComponent bean = (IWidgetComponent) getComponent();
         bean.getPropteryValue(name);
 
         final String propToStr = bean.getPropteryValue(name);
@@ -194,7 +194,7 @@ public class WidgetTester extends AbstractUITester {
      */
     public String rcStorePropertyValue(String variableName, 
         final String propertyName) {
-        IWidgetAdapter bean = (IWidgetAdapter) getComponent();
+        IWidgetComponent bean = (IWidgetComponent) getComponent();
 
         return bean.getPropteryValue(propertyName);
     }

@@ -16,8 +16,8 @@ import java.util.List;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuAdapter;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 /**
  * Implementation of the menu interface for adapting the <code>JPopupMenu</code>.
  * In Swing we have three implementations of the menu interface because
@@ -28,7 +28,7 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
  *
  */
 public class JPopupMenuAdapter extends AbstractComponentAdapter
-    implements IMenuAdapter {
+    implements IMenuComponent {
     /** */
     private JPopupMenu m_contextMenu;
     
@@ -46,7 +46,7 @@ public class JPopupMenuAdapter extends AbstractComponentAdapter
     }
 
     /** {@inheritDoc} */
-    public IMenuItemAdapter[] getItems() {
+    public IMenuItemComponent[] getItems() {
         Object[] menuItems = m_contextMenu.getSubElements();
         List adapters = new LinkedList();
         for (int i = 0; i < menuItems.length; i++) {
@@ -54,7 +54,7 @@ public class JPopupMenuAdapter extends AbstractComponentAdapter
                 adapters.add(new JMenuItemAdapter(menuItems[i]));
             }
         }
-        IMenuItemAdapter[] allitems = new IMenuItemAdapter[adapters.size()];
+        IMenuItemComponent[] allitems = new IMenuItemComponent[adapters.size()];
         adapters.toArray(allitems);
         return allitems;
     }

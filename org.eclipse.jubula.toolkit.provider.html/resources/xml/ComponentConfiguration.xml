@@ -12,8 +12,7 @@
 		tabs or newlines, making them unusable for class or data lookup!
 		Browser independent WEB configuration
 	-->
-<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="ComponentConfiguration.xsd">
+<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../org.eclipse.jubula.toolkit.common/resources/xml/ToolkitComponentConfiguration.xsd">
 	<configVersion>
 		<majorVersion>1</majorVersion>
 		<minorVersion>1</minorVersion>

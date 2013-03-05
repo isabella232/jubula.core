@@ -26,9 +26,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
 
 import org.eclipse.jubula.rc.common.tester.AbstractMenuTester;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuAdapter;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.rc.swing.tester.adapter.JMenuItemAdapter;
 import org.eclipse.jubula.rc.swing.tester.util.WindowHelper;
 
@@ -122,7 +122,7 @@ public class JMenuBarTester extends AbstractMenuTester {
     /**
      * @return the component
      */
-    public IComponentAdapter getComponent() {
+    public IComponent getComponent() {
         if (super.getComponent().getRealComponent() instanceof JPopupMenu) {
             return super.getComponent();
         }
@@ -154,7 +154,7 @@ public class JMenuBarTester extends AbstractMenuTester {
     /**
      *{@inheritDoc}
      */
-    protected void closeMenu(IMenuAdapter menuBar, String[] textPath,
+    protected void closeMenu(IMenuComponent menuBar, String[] textPath,
             String operator) {
         if (menuBar.getRealComponent() instanceof JPopupMenu) {
             for (int i = 0; i < textPath.length; i++) {
@@ -173,7 +173,7 @@ public class JMenuBarTester extends AbstractMenuTester {
     /**
      *{@inheritDoc}
      */
-    protected void closeMenu(IMenuAdapter menuBar, int[] path) {
+    protected void closeMenu(IMenuComponent menuBar, int[] path) {
         if (menuBar.getRealComponent() instanceof JPopupMenu) {
             for (int i = 0; i < path.length; i++) {
                 if (((JPopupMenu)menuBar.getRealComponent()).isVisible()) {
@@ -189,7 +189,7 @@ public class JMenuBarTester extends AbstractMenuTester {
     /**
      * {@inheritDoc}
      */
-    protected IMenuItemAdapter newMenuItemAdapter(Object component) {
+    protected IMenuItemComponent newMenuItemAdapter(Object component) {
         return new JMenuItemAdapter(component);
     }
 

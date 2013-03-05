@@ -11,14 +11,14 @@
 package org.eclipse.jubula.rc.swt.tester.adapter;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextVerifiable;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.swt.custom.CLabel;
 /**
  * @author BREDEX GmbH
  */
-public class CLabelAdapter extends ControlAdapter implements ITextVerifiable {
+public class CLabelAdapter extends ControlAdapter implements ITextComponent {
 
     /**
      * @param objectToAdapt the component to adapt

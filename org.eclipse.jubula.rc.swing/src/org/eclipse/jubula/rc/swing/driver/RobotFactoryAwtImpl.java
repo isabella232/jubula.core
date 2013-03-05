@@ -26,21 +26,25 @@ import org.eclipse.jubula.rc.common.exception.RobotException;
  */
 public class RobotFactoryAwtImpl implements IRobotFactory {
     /**
-     * The AWT/Swing Robot.
+     * The Robot.
      */
     private IRobot m_robot;
+    
     /**
      * The AWT/Swing interceptor.
      */
     private IRobotEventInterceptor m_interceptor;
+    
     /**
      * The AWT/Swing mouse motion tracker.
      */
     private IMouseMotionTracker m_mouseMotionTracker;
+    
     /**
      * The AWT event thread queuer.
      */
     private IEventThreadQueuer m_eventThreadQueuer;
+    
     /**
      * {@inheritDoc}
      */
@@ -50,6 +54,7 @@ public class RobotFactoryAwtImpl implements IRobotFactory {
         }
         return m_interceptor;
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -59,6 +64,7 @@ public class RobotFactoryAwtImpl implements IRobotFactory {
         }
         return m_robot;
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -68,6 +74,7 @@ public class RobotFactoryAwtImpl implements IRobotFactory {
         }
         return m_mouseMotionTracker;
     }
+    
     /**
      * {@inheritDoc}
      */

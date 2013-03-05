@@ -20,7 +20,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil;
@@ -31,8 +31,8 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  *
  * @author BREDEX GmbH
  */
-public class JTableAdapter extends WidgetAdapter implements ITableAdapter {
-
+public class JTableAdapter extends JComponentAdapter 
+    implements ITableComponent {
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
             JTableAdapter.class);

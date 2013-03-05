@@ -1,14 +1,14 @@
 package org.eclipse.jubula.rc.swing.tester.adapter;
 
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponentAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig;
 /**
  * 
  * @author BREDEX GmbH
  *
  */
-public abstract class AbstractComponentAdapter implements IComponentAdapter {
+public abstract class AbstractComponentAdapter implements IComponent {
 
     /** the RobotFactory from the AUT */
     private IRobotFactory m_robotFactory;

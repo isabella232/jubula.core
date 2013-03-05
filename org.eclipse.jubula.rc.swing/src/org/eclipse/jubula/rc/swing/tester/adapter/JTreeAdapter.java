@@ -14,7 +14,7 @@ import javax.swing.JTree;
 
 //import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.swing.tester.util.TreeOperationContext;
 /**
  * Implementation of the Tree interface as an adapter for <code>JTree</code>.
@@ -22,7 +22,7 @@ import org.eclipse.jubula.rc.swing.tester.util.TreeOperationContext;
  * @author BREDEX GmbH
  *
  */
-public class JTreeAdapter extends WidgetAdapter implements ITreeAdapter {
+public class JTreeAdapter extends JComponentAdapter implements ITreeComponent {
     
    
     /**

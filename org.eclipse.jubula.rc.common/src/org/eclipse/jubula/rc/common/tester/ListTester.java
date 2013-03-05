@@ -19,7 +19,7 @@ import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.ListSelectionVerifier;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
@@ -69,8 +69,8 @@ public class ListTester extends AbstractTextVerifiableTester {
      * 
      * @return the List Adapter
      */
-    private IListAdapter getListAdapter() {
-        return ((IListAdapter) getComponent());
+    private IListComponent getListAdapter() {
+        return ((IListComponent) getComponent());
     }
     
     /**

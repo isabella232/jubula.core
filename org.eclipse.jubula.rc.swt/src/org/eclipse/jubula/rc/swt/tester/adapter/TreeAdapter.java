@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.swt.tester.adapter;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.swt.tester.tree.TreeOperationContext;
 import org.eclipse.swt.widgets.Tree;
 /**
@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Tree;
  * 
  *  @author BREDEX GmbH
  */
-public class TreeAdapter extends ControlAdapter implements ITreeAdapter {
+public class TreeAdapter extends ControlAdapter implements ITreeComponent {
     /**
      * @param objectToAdapt graphics component which will be adapted
      */

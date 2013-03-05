@@ -15,7 +15,7 @@ import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboBoxAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboComponent;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -33,7 +33,7 @@ import org.eclipse.swt.widgets.Widget;
  * 
  */
 public abstract class AbstractComboBoxAdapter extends ControlAdapter 
-    implements IComboBoxAdapter {
+    implements IComboComponent {
     
     /** number of clicks to give focus without selecting any text */
     public static final int CLICK_COUNT_FOR_SELECTING_NONE = 3;

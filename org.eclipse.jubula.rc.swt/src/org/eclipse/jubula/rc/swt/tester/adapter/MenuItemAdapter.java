@@ -22,8 +22,8 @@ import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.listener.EventLock;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuAdapter;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotFactorySwtImpl;
 import org.eclipse.jubula.rc.swt.driver.SelectionSwtEventMatcher;
@@ -50,7 +50,7 @@ import org.eclipse.swt.widgets.MenuItem;
  *  @author BREDEX GmbH
  */
 public class MenuItemAdapter extends AbstractComponentAdapter
-    implements IMenuItemAdapter {
+    implements IMenuItemComponent {
 
     /** The logging. */
     private static AutServerLogger log = 
@@ -166,7 +166,7 @@ public class MenuItemAdapter extends AbstractComponentAdapter
     /**
      * {@inheritDoc}
      */
-    public IMenuAdapter getMenu() {
+    public IMenuComponent getMenu() {
         
         Menu menu =
                 (Menu) getEventThreadQueuer().invokeAndWait(
@@ -229,7 +229,7 @@ public class MenuItemAdapter extends AbstractComponentAdapter
     /**
      * {@inheritDoc}
      */
-    public IMenuAdapter openSubMenu() {
+    public IMenuComponent openSubMenu() {
         final MenuItem menuItem = m_menuItem;
         MenuShownCondition cond = new MenuShownCondition(menuItem);
         EventLock lock = new EventLock();

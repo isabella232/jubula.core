@@ -23,12 +23,17 @@
 	<property name="Meters"				value="com.bredexsw.guidancer.examples.aut.meters"/>
 	<property name="GEFExample"         value="com.bredexsw.guidancer.examples.aut.gef"/>
 	
-	<property name="ExampleSwingExtensionClient" value="org.eclipse.jubula.examples.extension.swing.toolkit"/>
-    <property name="ExampleSwingExtensionFeature" value="org.eclipse.jubula.examples.extension.swing.feature"/>
-	<property name="ExampleSwingExtensionServer" value="org.eclipse.jubula.examples.extension.swing.rc"/>
-	<property name="ExampleSwingExtensionAUT"    value="org.eclipse.jubula.examples.extension.swing.aut"/>
+	<property name="ExampleSwingExtensionAUT"       value="org.eclipse.jubula.examples.extension.swing.aut"/>
+	<property name="ExampleSwingExtensionClient"    value="org.eclipse.jubula.examples.extension.swing.toolkit"/>
+	<property name="ExampleSwingExtensionRC"        value="org.eclipse.jubula.examples.extension.swing.rc"/>
+	<property name="ExampleSwingExtensionFeature"   value="org.eclipse.jubula.examples.extension.swing.feature"/>
 	
-	<property name="ExampleGEFIdentifierExample" value="org.eclipse.jubula.examples.extension.rcp.gef.logic.identifier"/>
+	<property name="ExampleRCPExtensionClient"      value="org.eclipse.jubula.examples.extension.rcp.toolkit"/>
+	<property name="ExampleRCPExtensionRC"          value="org.eclipse.jubula.examples.extension.rcp.rc"/>
+	<property name="ExampleRCPExtensionFeature"     value="org.eclipse.jubula.examples.extension.rcp.feature"/>
+	
+	<property name="ExampleSwingRendererAdapterRC"  value="org.eclipse.jubula.examples.extension.swing.rc.renderer"/>
+	<property name="ExampleGEFIdentifierExample"    value="org.eclipse.jubula.examples.extension.rcp.gef.logic.identifier"/>
 	
 	<target name="build"   depends="clean, 
 									createDirStructure,
@@ -122,7 +127,6 @@
 		<ant dir="../${DvdTool}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 		<ant dir="../${guidancerWS}/${Meters}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 		<ant dir="../${guidancerWS}/${GEFExample}" antfile="buildScript.xml" target="clean" inheritAll="false" />
-		<ant dir="../${ExampleSwingExtensionAUT}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 	</target>
 
 	<target name="markAsExecutable">
@@ -149,29 +153,7 @@
 		</copy>
 	</target>
 	
-	<target name="releaseExampleSwingServerExtension">
-		<copy todir="../${ExampleSwingExtensionServer}/lib" overwrite="true">
-			<fileset file="${release}/server/plugins/org.eclipse.jubula.rc.common_*.jar"/>
-			<mapper type="merge" to="org.eclipse.jubula.rc.common.jar"/>
-		</copy>
-		<copy todir="../${ExampleSwingExtensionServer}/lib" overwrite="true">
-			<fileset file="${release}/server/plugins/org.eclipse.jubula.rc.swing_*.jar"/>
-			<mapper type="merge" to="org.eclipse.jubula.rc.swing.jar"/>
-		</copy>
-		<copy todir="../${ExampleSwingExtensionServer}/lib" overwrite="true">
-			<fileset dir="${release}/server/plugins/">
-				<include name="org.eclipse.jubula.tools_*.jar"/>
-			</fileset>
-			<mapper type="merge" to="org.eclipse.jubula.tools.jar"/>
-		</copy>
-		
-		<mkdir dir="${examples.development.dir}/extension/bin"/>
-		<copy todir="${examples.development.dir}/extension/bin">
-			<fileset dir="../${ExampleSwingExtensionServer}/target" includes="*.jar"/>
-		</copy>
-	</target>
-	
-	<target name="releaseDevelopment" depends="releaseExampleSwingExtensionAUT, releaseExampleSwingServerExtension">
+	<target name="releaseDevelopment" depends="releaseExampleSwingExtensionAUT">
 		<mkdir dir="${examples.development.dir}/gef"/>
 		<zip destfile="${examples.development.dir}/gef/${ExampleGEFIdentifierExample}.zip">
 			<zipfileset dir="../${ExampleGEFIdentifierExample}" prefix="${ExampleGEFIdentifierExample}"/>
@@ -180,13 +162,22 @@
 		<mkdir dir="${examples.development.dir}/extension"/>
 		<property name="extensionSourceDir" value="${examples.development.dir}/extension/src"/>
 		<mkdir dir="${extensionSourceDir}"/>
-		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingClientExtension.zip">
+		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingExtension.zip">
 			<zipfileset dir="../${ExampleSwingExtensionClient}" prefix="${ExampleSwingExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-            <zipfileset dir="../${ExampleSwingExtensionFeature}" prefix="${ExampleSwingExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+			<zipfileset dir="../${ExampleSwingExtensionRC}" prefix="${ExampleSwingExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+			<zipfileset dir="../${ExampleSwingExtensionFeature}" prefix="${ExampleSwingExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 		</zip>
-		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingServerExtension.zip">
-			<zipfileset dir="../${ExampleSwingExtensionServer}" prefix="${ExampleSwingExtensionServer}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+		
+		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleRCPExtension.zip">
+			<zipfileset dir="../${ExampleRCPExtensionClient}" prefix="${ExampleRCPExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+			<zipfileset dir="../${ExampleRCPExtensionRC}" prefix="${ExampleRCPExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+			<zipfileset dir="../${ExampleRCPExtensionFeature}" prefix="${ExampleRCPExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 		</zip>
+
+		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingRendererExtension.zip">
+			<zipfileset dir="../${ExampleSwingRendererAdapterRC}" prefix="${ExampleSwingRendererAdapterRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+		</zip>
+		
 		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingAUT.zip">
 			<zipfileset dir="../${ExampleSwingExtensionAUT}" prefix="${ExampleSwingExtensionAUT}" />
 		</zip>

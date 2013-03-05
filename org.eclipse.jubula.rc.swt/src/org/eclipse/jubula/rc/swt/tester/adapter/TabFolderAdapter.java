@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.swt.tester.adapter;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITabPaneAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITabbedComponent;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.swt.widgets.TabFolder;
@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.TabItem;
  *
  */
 public class TabFolderAdapter extends ControlAdapter
-    implements ITabPaneAdapter {
+    implements ITabbedComponent {
 
     /** the tabFolder from the AUT */
     private TabFolder m_tabFolder;

@@ -29,7 +29,7 @@ import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboBoxAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboComponent;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -39,8 +39,8 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * @author BREDEX GmbH
  *
  */
-public class JComboBoxAdapter extends WidgetAdapter implements
-        IComboBoxAdapter {
+public class JComboBoxAdapter extends JComponentAdapter implements
+        IComboComponent {
     /**
      * <code>INVALID_MAX_WIDTH</code>
      */

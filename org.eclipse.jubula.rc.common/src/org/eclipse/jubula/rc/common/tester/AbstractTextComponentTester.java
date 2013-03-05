@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.common.tester;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponentAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextInputComponent;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -31,8 +31,8 @@ public class AbstractTextComponentTester
      * Gets the specific adapter
      * @return the specific adapter
      */
-    private ITextComponentAdapter getTextCompAdapter() {
-        return (ITextComponentAdapter) getComponent();
+    private ITextInputComponent getTextCompAdapter() {
+        return (ITextInputComponent) getComponent();
     }
     
     /**

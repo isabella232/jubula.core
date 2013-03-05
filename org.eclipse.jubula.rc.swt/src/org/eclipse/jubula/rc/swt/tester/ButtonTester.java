@@ -11,7 +11,7 @@
 package org.eclipse.jubula.rc.swt.tester;
 
 
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonAdapter;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonComponent;
 
 
 /**
@@ -26,6 +26,6 @@ public class ButtonTester extends
      * {@inheritDoc}
      */
     public String[] getTextArrayFromComponent() {
-        return new String[] { ((IButtonAdapter)getComponent()).getText()};
+        return new String[] { ((IButtonComponent)getComponent()).getText()};
     }
 }
