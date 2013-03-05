@@ -30,12 +30,4 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-   
-   <fragment
-         id="org.eclipse.jubula.examples.extension.rcp.rc"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
 </feature>
