@@ -1655,7 +1655,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * @param event
      *      int
      * @param obj
-     *      Obbject
+     *      Object
      */
     private void switchEvent(int event, Object obj) {
         switch(event) {
@@ -1770,6 +1770,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * {@inheritDoc}
      */
     public void dispose() {
+        ObjectMappingEventDispatcher.removeObserver(this);
         getEditorSite().getActionBars().setGlobalActionHandler(
                 ActionFactory.REFRESH.getId(), null);
         IAUTMainPO connectedAut = TestExecution.getInstance().getConnectedAut();
@@ -1782,7 +1783,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             DataEventDispatcher.getInstance()
                 .fireOMStateChanged(OMState.notRunning);
         }        
-        ObjectMappingEventDispatcher.removeObserver(this);
         getSite().setSelectionProvider(null);
         GuiEventDispatcher.getInstance().removeEditorDirtyStateListener(this);
         
