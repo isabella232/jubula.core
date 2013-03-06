@@ -30,18 +30,22 @@ import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.ui.palette.PaletteViewer;
+import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.tester.WidgetTester;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
+import org.eclipse.jubula.rc.common.util.MenuUtilBase;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.rcp.e3.gef.factory.DefaultEditPartAdapterFactory;
 import org.eclipse.jubula.rc.rcp.e3.gef.identifier.IEditPartIdentifier;
 import org.eclipse.jubula.rc.rcp.e3.gef.listener.GefPartListener;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
-import org.eclipse.jubula.rc.swt.implclasses.AbstractControlImplClass;
-import org.eclipse.jubula.rc.swt.implclasses.MenuUtil;
+import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
+import org.eclipse.jubula.rc.swt.tester.CAPUtil;
+import org.eclipse.jubula.rc.swt.tester.adapter.ControlAdapter;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.swt.graphics.Rectangle;
@@ -55,22 +59,12 @@ import org.eclipse.swt.widgets.Control;
  * @author BREDEX GmbH
  * @created May 13, 2009
  */
-public class FigureCanvasTester extends AbstractControlImplClass {
+public class FigureCanvasTester extends WidgetTester {    
     /**
      * the viewer that contains the EditParts corresponding to the FigureCanvas
      */
     private GraphicalViewer m_viewer = null;
-
-    /** the composite in which the IFigures are displayed */
-    private Composite m_composite = null;
-
-    /**
-     * {@inheritDoc}
-     */
-    public Control getComponent() {
-        return m_composite;
-    }
-
+    
     /**
      *
      * @return the viewer associated with the canvas to test.
@@ -114,7 +108,7 @@ public class FigureCanvasTester extends AbstractControlImplClass {
     private GraphicalEditPart findPaletteEditPart(
             String textPath, String operator) {
 
-        final String[] pathItems = MenuUtil.splitPath(textPath);
+        final String[] pathItems = MenuUtilBase.splitPath(textPath);
         boolean isExisting = true;
 
         EditPart currentEditPart = getPaletteRoot().getContents();
@@ -153,36 +147,35 @@ public class FigureCanvasTester extends AbstractControlImplClass {
     /**
      * {@inheritDoc}
      */
-    public String[] getTextArrayFromComponent() {
-        return null;
-    }
+    public void setComponent(final Object graphicsComponent) {        
+        Composite composite = (Composite) new RobotFactoryConfig()
+            .getRobotFactory().getEventThreadQueuer()
+                .invokeAndWait(getClass().getName() + ".setComponent", new IRunnable() { //$NON-NLS-1$
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setComponent(final Object graphicsComponent) {
-        getEventThreadQueuer().invokeAndWait(getClass().getName() + ".setComponent", new IRunnable() { //$NON-NLS-1$
+                    public Object run() throws StepExecutionException {
+                        FigureCanvas figureCanvas = 
+                                (FigureCanvas)graphicsComponent;
+                        Composite parent = figureCanvas;
+                        while (parent != null
+                                && !(parent.getData(
+                                       GefPartListener
+                                           .TEST_GEF_VIEWER_DATA_KEY)
+                                                instanceof GraphicalViewer)) {
+                            parent = parent.getParent();
+                        }
+        
+                        if (parent != null) {
+                            m_viewer =
+                                (GraphicalViewer)parent.getData(
+                                        GefPartListener
+                                            .TEST_GEF_VIEWER_DATA_KEY);
+                            return parent;
+                        }
+                        return null;
+                    }
 
-            public Object run() throws StepExecutionException {
-                FigureCanvas figureCanvas = (FigureCanvas)graphicsComponent;
-                Composite parent = figureCanvas;
-                while (parent != null
-                        && !(parent.getData(
-                                GefPartListener.TEST_GEF_VIEWER_DATA_KEY)
-                                        instanceof GraphicalViewer)) {
-                    parent = parent.getParent();
-                }
-
-                if (parent != null) {
-                    m_composite = parent;
-                    m_viewer =
-                        (GraphicalViewer)parent.getData(
-                                GefPartListener.TEST_GEF_VIEWER_DATA_KEY);
-                }
-                return null;
-            }
-
-        });
+                });
+        setAdapter(new ControlAdapter(composite));
     }
 
     /**
@@ -393,8 +386,10 @@ public class FigureCanvasTester extends AbstractControlImplClass {
                 getFigureBoundsChecked(textPath, operator),
                 ClickOptions.create().setScrollToVisible(false)
                     .setClickCount(count).setMouseButton(button),
-                xPos, xUnits.equalsIgnoreCase(POS_UNIT_PIXEL),
-                yPos, yUnits.equalsIgnoreCase(POS_UNIT_PIXEL));
+                xPos, xUnits.equalsIgnoreCase(
+                        CompSystemConstants.POS_UNIT_PIXEL),
+                yPos, yUnits.equalsIgnoreCase(
+                        CompSystemConstants.POS_UNIT_PIXEL));
     }
 
     /**
@@ -461,7 +456,7 @@ public class FigureCanvasTester extends AbstractControlImplClass {
                     robot.mousePress(dndHelper.getDragComponent(), null,
                             mouseButton);
 
-                    shakeMouse();
+                    CAPUtil.shakeMouse();
 
                     // drop
                     rcClickInFigure(textPath, operator, 0,
@@ -496,7 +491,7 @@ public class FigureCanvasTester extends AbstractControlImplClass {
             // Try to find a connection anchor instead
             anchor = findConnectionAnchor(textPath, operator);
             if (anchor != null) {
-                final String[] pathItems = MenuUtil.splitPath(textPath);
+                final String[] pathItems = MenuUtilBase.splitPath(textPath);
                 final String[] editPartPathItems =
                     new String[pathItems.length - 1];
                 System.arraycopy(
@@ -593,7 +588,7 @@ public class FigureCanvasTester extends AbstractControlImplClass {
      *         the found EditPart is not a GraphicalEditPart.
      */
     private GraphicalEditPart findEditPart(String textPath, String operator) {
-        final String[] pathItems = MenuUtil.splitPath(textPath);
+        final String[] pathItems = MenuUtilBase.splitPath(textPath);
         return findEditPart(operator, pathItems);
     }
 
@@ -708,7 +703,7 @@ public class FigureCanvasTester extends AbstractControlImplClass {
     private ConnectionAnchor findConnectionAnchor(
             String textPath, String operator) {
 
-        final String[] pathItems = MenuUtil.splitPath(textPath);
+        final String[] pathItems = MenuUtilBase.splitPath(textPath);
         final String[] editPartPathItems = new String[pathItems.length - 1];
         System.arraycopy(
                 pathItems, 0, editPartPathItems, 0, editPartPathItems.length);
@@ -760,4 +755,5 @@ public class FigureCanvasTester extends AbstractControlImplClass {
             });
         }
     }
+    
 }

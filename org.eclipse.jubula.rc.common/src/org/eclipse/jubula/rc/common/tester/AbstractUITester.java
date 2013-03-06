@@ -66,9 +66,20 @@ public abstract class AbstractUITester implements ITester {
      */
     public void setComponent(Object graphicsComponent) {
         AdapterFactoryRegistry afr =  AdapterFactoryRegistry.getInstance();
-        m_adapter = null;
         m_adapter = (IComponent) afr.getAdapter(
                 IComponent.class, graphicsComponent);
+    }
+    
+    /**
+     * This methods is only for special cases. If you only have one tester class
+     * which reuses one of our adapters. Otherwise write an adapterfactory if
+     * you have more tester classes and adapter.
+     * 
+     * @param adapter
+     *            the specific adapter to set
+     */
+    protected void setAdapter(IComponent adapter) {
+        m_adapter = adapter;
     }
     
     /**
