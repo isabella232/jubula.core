@@ -318,24 +318,31 @@ which contains the following sub folders:
 
 \begin{description}
  \item[src] It contains some zip-files with example source code projects, which
-            can be imported by Eclipse:
+ can be imported by Eclipse:
  \begin{itemize}
-   \item \bxshell{SwingAUT.zip}\\
-         An AUT using \bxshell{JSlider} from Swing.
-   \item \bxshell{SwingExtension.zip}\\
-         The \app{} extension supporting \bxshell{JSlider} for Swing including
-         client and remote control projects. After deploying these projects you
-         should be able to test the \bxshell{JSlider} in the Swing example AUT
-         with \app{}.
-   \item \bxshell{SwingRendererExtension.zip}\\
-         A \app{} remote control extension supporting a custom graphics
-         component for Swing.
+   \item \bxshell{eclipseProjects\_ExampleSwingAUT.zip} \\
+   An AUT using \bxshell{JSlider} from Swing.
+   \item \bxshell{eclipseProjects\_ExampleSwingExtension.zip} \\
+   A \app{} extension supporting \bxshell{JSlider} for Swing including
+   client and remote control projects.
+   \item \bxshell{eclipseProjects\_ExampleSwingRendererExtension.zip} \\
+   A \app{} remote control extension supporting an own graphics component for
+   Swing.
  \end{itemize}
  \item[AUT] It contains the binary file \bxshell{JSlider.jar}, which is a simple
  example AUT using the normally unsupported component \bxshell{JSlider}. After
  installing the \bxshell{JSlider} example extension from the \textbf{src}
  folder, \app{} will be able to test this new component.
 \end{description}
+
+\subsection{Example for extending Swing toolkit support}
+
+In the examples you will find an extension to support the Swing component
+\bxshell{JSlider} in \app{}. After deploying the \app{} client extension and the
+\app{} remote control extension you should be able to test the Swing component
+\bxshell{JSlider} within \app{}.
+
+\subsection{Example for extending SWT toolkit support}
 
 \section{Migration steps}
 If you have an existing implementation, which inherits from our old classes,

@@ -162,23 +162,23 @@
 		<mkdir dir="${examples.development.dir}/extension"/>
 		<property name="extensionSourceDir" value="${examples.development.dir}/extension/src"/>
 		<mkdir dir="${extensionSourceDir}"/>
-		<zip destfile="${extensionSourceDir}/SwingExtension.zip">
+		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingExtension.zip">
 			<zipfileset dir="../${ExampleSwingExtensionClient}" prefix="${ExampleSwingExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 			<zipfileset dir="../${ExampleSwingExtensionRC}" prefix="${ExampleSwingExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 			<zipfileset dir="../${ExampleSwingExtensionFeature}" prefix="${ExampleSwingExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 		</zip>
 		
-		<zip destfile="${extensionSourceDir}/RCPExtension.zip">
+		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleRCPExtension.zip">
 			<zipfileset dir="../${ExampleRCPExtensionClient}" prefix="${ExampleRCPExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 			<zipfileset dir="../${ExampleRCPExtensionRC}" prefix="${ExampleRCPExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 			<zipfileset dir="../${ExampleRCPExtensionFeature}" prefix="${ExampleRCPExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 		</zip>
 
-		<zip destfile="${extensionSourceDir}/SwingRendererExtension.zip">
+		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingRendererExtension.zip">
 			<zipfileset dir="../${ExampleSwingRendererAdapterRC}" prefix="${ExampleSwingRendererAdapterRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 		</zip>
 		
-		<zip destfile="${extensionSourceDir}/SwingAUT.zip">
+		<zip destfile="${extensionSourceDir}/eclipseProjects_ExampleSwingAUT.zip">
 			<zipfileset dir="../${ExampleSwingExtensionAUT}" prefix="${ExampleSwingExtensionAUT}" />
 		</zip>
 	</target>
