@@ -128,10 +128,8 @@ Note that the following steps are all completed based on the requirements for th
          </task>
          <task kind="cheatsheet" name="Start and connect to the AUT Agent" skip="false">
             <intro>
-               The AUT Agent should be installed on the machine or machines you want to run your test on. <br/><br/>
-You need to start and connect to the AUT Agent in order to run tests. 
-<br/><br/>
-By default, the AUT Agent was installed on the same machine as the client.
+               You can use the embedded AUT Agent to run tests locally on the same machine as the ITE.  <br/><br/>
+To perform distributed testing, you can install and start the separate AUT Agent on each machine you want to run tests on.
             </intro>
             <param name="path" value="AUTStarter.xml">
             </param>

@@ -6,23 +6,22 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 
-<cheatsheet title="Start and connect to the AUT Agent">
+<cheatsheet title="Connect to the embedded AUT Agent">
    <intro>
       <description>
-         These steps guide you in starting the AUT Agent and connecting to it.
+         These steps guide you in connecting to the embedded AUT Agent.
       </description>
    </intro>
-   <item title="Starting the AUT Agent" dialog="true" skip="false">
+   <item title="Connecting to the embedded AUT Agent" dialog="true" skip="false">
       <description>
-         Start the AUT Agent via the start menu in windows: <br/>
-<b>Start AUT Agent</b>
-<br/>
-or start it from the command line on Unix systems.
+         Connect to the embedded AUT Agent using the toolbar button. Select <b>Connect to embedded AUT Agent</b> from the drop-down list.
       </description>
    </item>
-   <item title="Connect to the AUT Agent" dialog="true" skip="false">
+
+   <item
+         skip="true"
+         title="Change the port number in the preferences if necessary">
       <description>
-         Connect to the AUT Agent using the toolbar button.
+         The standard port for the embedded AUT Agent is 60000. If this is already in use, change the port number via: Window/Preferences. <br/><br/>The setting is found under the <b>Test/AUT Agent/Embedded AUT Agent</b> section.
       </description>
-   </item>
-</cheatsheet>
+   </item></cheatsheet>
