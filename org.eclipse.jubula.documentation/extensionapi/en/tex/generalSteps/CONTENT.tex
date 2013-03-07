@@ -25,12 +25,12 @@ which can be used in \app{} tests.
 The following chapter describes the general steps to take for creating a \app{}
 toolkit extensions with custom defined components and actions. This chapter
 begins with listing the requirements followed by showing the necessary steps
-for creating the \app{} client and remote control extension. The extension for
-the \app{} client is described in section \ref{clientExtension} and the
-implementation for the \app{} remote control extension in section
-\ref{serverExtension}.
+for creating the \app{} client and remote control extension. The extension for the
+\app{} client is described in section \ref{clientExtension} and the
+implementation for the \app{} remote control extension in section \ref{serverExtension}.
 
-Extension examples with source code can be found in the sub directory\\
+Extension examples with source code can
+be found in the sub directory\\
 \bxshell{examples/development/extension/src/}\\
 of a \app{} installation.
 
@@ -43,7 +43,7 @@ In general you always have to extend two parts of \app{}:
 \end{itemize}
 
 In this chapter normally all used directory names are located in the
-installation directory of \app{} as long as nothing else is specified.
+installation directory of \app{}.
 
 \section{Requirements}
 To create your own \app{} extension, you need:
@@ -54,7 +54,6 @@ To create your own \app{} extension, you need:
 \item Write access in the following directories:\\
 \bxshell{\MakeLowercase{\app{}}/plugins/}\\
 \bxshell{server/plugins/}
-\item git or even egit, if Java documentation for Jubula is desired
 \end{itemize}
 
 \section{\app{} client extension}
@@ -189,16 +188,10 @@ The following steps have to be done to extend the \app{} remote control:
   \item Write your own adapter and \gdtesterclasses.
 \end{enumerate}
 
-We recommend downloading the source code to benefit from the Java
-documentation of Jubula. This requires an installed version of git or even egit.
-You can retrieve the full Jubula source code with git or egit by using the URI\\
-http://git.eclipse.org/gitroot/jubula/org.eclipse.jubula.core.git
-
-Adapters are used for all supported toolkits, i. e. Swing, SWT, GEF and RCP.
-They wrap and specify graphic components in a form we need for our
-\gdtesterclasses. You can write your own adapter or reuse our existing
-adaptors. We recommend reusing our adapters to take advantage of the already
-existing code.
+Adapters are used throughout the whole Swing, SWT and GEF implementation. They
+wrap and specify graphic components in a form we need for our \gdtesterclasses. You
+can write your own adapter or reuse our existing adaptors. We recommend
+reusing our adapters to take advantage of the already existing code.
 
 Before we have a look at the \app{} remote control examples in section
 \ref{remoteControlExamples}, we describe in general, how to create an
@@ -223,8 +216,8 @@ own graphical component, you should at least use the interface
 \bxshell{IWidgetComponent} as the targeted type, which is a child of
 \bxshell{IComponent}. Both interfaces are defined in the same package.
 
-Now we know, how to create an own adapter in general. The next step is to
-implement one or more \gdtesterclass.
+Now we know, how to create an own adapter. The next step is to implement one
+or more \gdtesterclass.
 
 \subsubsection{Creating a \gdtesterclass}
 
@@ -232,8 +225,8 @@ The functionally important aspect of a \gdtesterclass is, that it
 contains public methods for the \app{} test actions, which will appear in
 the client. These methods are linked to testable actions within a user-defined
 \app{} client plug-in. Each \app{} client extension provides an XML
-configuration file, which defines the available methods with parameters, as
-well as information for string externalization.
+configuration file, which defines the available methods with parameters, as well as
+information for string externalization.
 
 You can write your own \gdtesterclasses, but if you only want to support a new
 component with existing actions, you could use one of our existing
@@ -266,73 +259,41 @@ Please take the following guidelines into consideration for creating
 
 Once you have written your fragment, you still need to make \app{}
 aware of its presence. This is done by exporting the fragment and
-deploying it into the \app{} remote control.
+deploying it into the plug-ins folder from \app{} or the \gdagent.
+After you have done this you must change some configurations.
 
-There are different ways for installing your fragment into the \app{} remote
-control, depending on the used AUT agent and the specific AUT. You are free to
-use either the embedded AUT agent or the standalone AUT agent. Also your AUT
-can be based upon the OSGi framework or not. The following table shows an
-overview, where to deploy your fragment:
+If you only want to deploy it to the \gdagent you have to modify
+the file \bxshell{config.ini} located in the directory\\
+\bxshell{server/configuration/}\\
+by appending \bxshell{,Bundle\_name@start} at the end of the line starting with
+\bxshell{osgi.bundles=}. Make sure, that the bundles are divided by comma.
 
-\begin{center}
-\begin{tabular}{|c||c|c|}
-\hline
-~ & without OSGi & with OSGi\\
-~ & (Swing, SWT) & (RCP, GEF)\\
-\hline\hline
-embedded & \multirow{2}{*}{\app{} client} & \multirow{4}{*}{AUT}\\
-AUT agent & & \\
-\hhline{--~}
-standalone & standalone & \\
-AUT agent  & AUT agent  & \\
-\hline
-\end{tabular}
-\end{center}
-
-It shows, in which case you usually deploy your fragment into
-\begin{itemize}
-  \item the \app{} client with a feature including your fragment,
-  \item the standalone AUT agent by adding your fragment to its configuration,
-        or
-  \item the AUT with a feature including your fragment.
-\end{itemize}
-
-The configuration of the standalone AUT agent can be done by modifying the
-file\\
-\bxshell{server/configuration/config.ini}\\
-There you have to append \bxshell{,Bundle\_name@start} at the end of the line
-starting with \bxshell{osgi.bundles=}. Make sure, that the bundles are divided
-by comma. Beside from the mentioned deploying methods, it is also possible
-to install your fragment by using a p2 repository or the OSGi console.
-
-You should be able to test your new component, if you have installed the
-toolkit feature into the \app{} client and the fragment as described below.
+If you have installed the Feature and done the steps for the fragment, you
+should be able to test your component.
 
 \section{\app{} example extension}
 \label{remoteControlExamples}
 
-\app{} comes with source code examples for extending supported toolkits. The
-examples can be found in the directory\\
-\bxshell{examples/development/extension},\\
-which contains the following sub folders:
+\app{} comes with examples for extending supported toolkits including the
+source code. The examples can be found in the directory\\
+\bxshell{examples/development/extension},
+which contains the following sub directories:
 
 \begin{description}
- \item[src] It contains some zip-files with example source code projects, which
- can be imported by Eclipse:
+ \item[aut] This directory contains a simple example AUT, which uses the
+ originally unsupported component \bxshell{JSlider}. After installing the
+ extensions, \app{} will be able to test this new component.
+ \item[src] In this directory you will find some zip-files containing
+ projects, which can be imported by Eclipse:
  \begin{itemize}
    \item \bxshell{eclipseProjects\_ExampleSwingAUT.zip} \\
-   An AUT using \bxshell{JSlider} from Swing.
-   \item \bxshell{eclipseProjects\_ExampleSwingExtension.zip} \\
-   A \app{} extension supporting \bxshell{JSlider} for Swing including
-   client and remote control projects.
-   \item \bxshell{eclipseProjects\_ExampleSwingRendererExtension.zip} \\
-   A \app{} remote control extension supporting an own graphics component for
-   Swing.
+   This is the source code project for the example Swing AUT.
+   \item \bxshell{eclipseProjects\_ExampleSwingClientExtension.zip} \\
+   This is the source code project of the extension plug-in for the \app{}
+   client.
+   \item \bxshell{eclipseProjects\_ExampleSwingServerExtension.zip} \\
+   This is the source code project of the extension for the \app{} server.
  \end{itemize}
- \item[AUT] It contains the binary file \bxshell{JSlider.jar}, which is a simple
- example AUT using the normally unsupported component \bxshell{JSlider}. After
- installing the \bxshell{JSlider} example extension from the \textbf{src}
- folder, \app{} will be able to test this new component.
 \end{description}
 
 \subsection{Example for extending Swing toolkit support}
