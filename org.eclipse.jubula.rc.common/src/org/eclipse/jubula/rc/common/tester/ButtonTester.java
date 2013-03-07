@@ -54,7 +54,11 @@ public class ButtonTester extends AbstractTextVerifiableTester {
     public String[] getTextArrayFromComponent() {
         String[] textArray = null;
         try {
-            textArray = new String[] { getButtonAdapter().getText() };
+            if (getComponent() instanceof IButtonComponent) {
+                // This is needed because the observation modus try to use a MenuItem as Button.
+                // Because in Swing the MenuItem is a child of AbstractButton.
+                textArray = new String[] { getButtonAdapter().getText() };
+            }
         } catch (StepExecutionException e) {
             // ok here - getText() might be an unsupported action
         }
