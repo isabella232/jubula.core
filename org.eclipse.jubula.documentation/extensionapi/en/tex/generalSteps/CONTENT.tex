@@ -54,6 +54,7 @@ To create your own \app{} extension, you need:
 \item Write access in the following directories:\\
 \bxshell{\MakeLowercase{\app{}}/plugins/}\\
 \bxshell{server/plugins/}
+\item git or even egit, if Java documentation for Jubula is desired
 \end{itemize}
 
 \section{\app{} client extension}
@@ -169,11 +170,9 @@ You need to write a fragment for your component, which contains the
 The following steps have to be done to extend the \app{} remote control:
 
 \begin{enumerate}
-  \item Install the zip-file\\
-        \bxshell{development/extension-toolkit-rc.zip}\\
-        as an update site. This includes the target and the Java documention of
-        the source code.
-  \item Set the installed update site as your target platform.
+  \item Extract the feature contained in the zip-file\\
+    \bxshell{development/extension-toolkit-rc.zip}
+  \item Set the extracted feature as your target platform.
   \item Create a fragment project with one of the following bundles as host:
     \begin{itemize}
       \item \bxshell{org.eclipse.jubula.rc.swing}\\
@@ -189,6 +188,11 @@ The following steps have to be done to extend the \app{} remote control:
    \end{itemize}
   \item Write your own adapter and \gdtesterclasses.
 \end{enumerate}
+
+We recommend downloading the source code to benefit from the Java
+documentation of Jubula. This requires an installed version of git or even egit.
+You can retrieve the full Jubula source code with git or egit by using the URI\\
+http://git.eclipse.org/gitroot/jubula/org.eclipse.jubula.core.git
 
 Adapters are used for all supported toolkits, i. e. Swing, SWT, GEF and RCP.
 They wrap and specify graphic components in a form we need for our
@@ -316,10 +320,6 @@ which contains the following sub folders:
  \item[src] It contains some zip-files with example source code projects, which
             can be imported by Eclipse:
  \begin{itemize}
-   \item \bxshell{RCPExtension.zip}\\
-         A \app{} extension supporting \bxshell{Group} for SWT including client
-         and remote control projects. After deploying these projects you should
-         be able to test the \bxshell{Group} in RCP applications with \app{}.
    \item \bxshell{SwingAUT.zip}\\
          An AUT using \bxshell{JSlider} from Swing.
    \item \bxshell{SwingExtension.zip}\\
