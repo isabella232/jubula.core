@@ -71,3 +71,9 @@
 \begin{itemize}
 \item Windows 8 is now supported for testing \gdauts{}.
 \end{itemize}
+
+\textbf{Support for own text renderers in SWT}
+\begin{itemize}
+\item If you have components with text that cannot be read due to it being rendered differently, you can now allow the text to be read.
+\item Use \bxshell{setData(TEST\_TESTABLE\_TEXT), text} on the instance of the item or component whose text you want to read in your test. 
+\end{itemize}
