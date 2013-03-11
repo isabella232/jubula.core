@@ -1,32 +1,67 @@
-If a new version of \app{} uses a new \gddb{} scheme, you will be informed of this when attempting to connect to the \gddb{}.
-
-%From the information dialog, you can start the migration wizard. This wizard removes the old \gddb{} scheme (and any \gdprojects{} in it) and automatically creates the new scheme for the current version. 
-
-%You can choose which \gdprojects{} (exported from the old version) you want to import into the new \gddb{}.
-
-%If you do not have sufficient privileges to clear your \gddb{}, then you must manually clear it using a \gddb{} administration tool.
-
-If this is the case, please follow these instructions:
-
+\subsection{Backup up the old version and installing the new version}
 \begin{enumerate}
-\item From the old version of \app{}, export and backup all the \gdprojects{} from the database. 
-\bxtipp{Make sure you also export and back up any library \gdprojects{} used in your tests, e.g. the unbound modules \gdprojects{}. }
-\item Back up any extensions you have made to \app{}: any customized plugins and implementation classes you have written.  
-\item Export your \gddb{} preferences from the workspace \bxpref{TasksPrefsImport}.
-\item Uninstall the old version of \app{}. 
-\item Clear (empty) the \gddb{} schema for all necessary \app{} users. You can do this via a database administration tool which will let you carry out the action \bxname{Drop Tables}. 
-%\bxtipp{The \gddb{} migration assistant will automatically notify you if your \gddb{} scheme is incompatible with the new version. }
-%The migration assistant can carry out the \gddb{} migration for you in most cases.}
-\item Install the new version of \app{}.
-\bxtipp{If you have \gdagents{} running on other machines, be sure to install the new version of the \gdagent{} there too.}
-\item Add any extension plugins you backed up from the old version.
-\item Import your \gddb{} preferences into \app{}.
-\bxtipp{If you are testing RCP \gdauts{}, bear in mind that you will need to remove the old version of the RCP Remote Control plugin  from your application and insert the new version in its place. We also recommend starting your application with \bxshell{-clean} to ensure that the old RCP Remote Remote Control plugin is no longer used.}
-\item Start \app{}.  
-%\item When you first connect to the \gddb{}, you will be informed whether your \gddb{} scheme is compatible with the new version. If not, the migration wizard will guide you through the migration process.
-
+\item Before installing the new version of \app{}:
+\begin{enumerate}
+\item Perform an \bxname{export all} of your \gdprojects{} from your current database(s) with the current version of \app{} \bxpref{exportall}. This ensures that all projects (including the unbound modules and any other library projects you use) are backed up.
+\item Export your database preferences from your workspace \bxpref{TasksPrefsImport}.
+\item Back up any extensions you have written.
+\item Delete the logs from your home directory (\app{} and the \gdagent{} must not be running for this to be performed)
+\end{enumerate}
+\item \textbf{Standalone users}: Follow the instructions in the installation manual and the graphical installer to install the new version. We recommend installing each new version of \app{} in a new folder, whose name includes the version number. In this way, you can keep the older version until the migration is complete. 
+\item \textbf{Plugin users}: Install the update into your current Eclipse. If you use tools from the standalone version in your environment (the \gdagent{}, for example), ensure that you update (install) these as well. 
 \end{enumerate}
 
+\subsection{Setting up the new version}
+\begin{enumerate}
+\item Start the new version of \app{}. We recommend using a new workspace for each new version. 
+\item Import your exported database preferences into your new workspace  \bxpref{TasksPrefsImport}.
+\item Configure any other preferences that you require
+\item Add any extensions that you have written. 
+\end{enumerate}
+
+\subsection{Migrating your \gdprojects{} to a new \gddb{}}
+\begin{enumerate}
+\item \textbf{If you use the embedded \gddb{}}: We recommend creating a new location for a new embedded database in the preferences \bxpref{TasksPrefsDB}. You should name the new folder with the version number of \app{} you are using. 
+\item \textbf{Users of other (e.g. Oracle) databases}: Create a new database scheme. We recommend naming the scheme with the version number of \app{} you are using. 
+\item Connect to the newly created \gddb{} from the new version of \app{}. The \gddb{} tables will be created and the new versions of the unbound modules projects will be imported.  
+\item Import all of the \gdprojects{} you exported from the older version, including the unbound modules projects (your projects still reference them, and the version can be switched in the next steps). You can use the import dialog to import multiple projects at once \bxpref{importproject}, we recommend ordering the projects so that any library projects (unbound modules, your own reused projects) are listed first.
+\end{enumerate}
+
+\subsection{Updating your \gdprojects{} to use the new version of the unbound modules}
+\begin{enumerate}
+\item Open the \gdproject{} you wish to update.
+\item In the \gdproject{} properties, select \bxname{Used Projects}. You will see the old version of any used \gdprojects{} on the right hand side, and the new versions on the left hand side.
+\item To perform a switch, select the new version and the old version of a \gdproject{}, and press the switch button with the two arrows pointing in different directions.
+\item Press \bxcaption{OK}. 
+\item In the new versions of the unbound modules, check the category \bxname{deprecated} for any modules that are marked as deprecated for this version number. You should find these modules (using e.g. \bxkey{F7} or \bxname{Show where used}) or any \gdsteps{} in your \gdproject{} and replace them with the newer version. Where possible, the new module will be referenced in the deprecated modules. Otherwise, search in the relevant category of the unbound modules to find the newer version. 
+\item Once the switch has been performed for all unbound modules in all \gdprojects{}, then you can delete the old versions of the unbound modules from the \gddb{}. 
+\end{enumerate}
+
+\subsection{Updating your continuous integration scripts}
+ As the name of the \gddb{} and the workspace have changed, you should update any scripts for your continuous integration that use these properties. These can include, but not be limited to, \bxname{testexec} and \bxname{dbtool}, as well as scripts within your build management tool.
 
 
-\bxtipp{You will also need to follow the instructions on updating the version of the unbound modules projects you use \bxpref{changingreusedprojectversion}}.
+\subsection{Updating your RCP and / or iOS \gdauts{}} 
+Each new version of \app{} contains a new RCP Accessor and a new version of the library for testing iOS applications. If you test RCP or iOS \gdauts{}, ensure that the old version of these is replaced with the new version in your \gdaut{}.
+
+\subsection{Updating your test machines}
+If you have installed the \gdagent{} on other machines in the network in order to run distributed tests, then you will also need to update the \gdagent{} on those machines as well. You can install the \gdagent{} separately as an option during installation. Bear in mind that if you use scripts to start the \gdagent{} that contain the version number in them, these may also have to be updated. 
+
+
+If you have the dashboard (\gd{} users only) in use, then you may have to update this as well. You can install the Dashboard separately as a part of the installation.
+ 
+\subsection{Uninstalling the old version of \app{}}
+Once you have successfully performed all migration steps, you can uninstall the old version of \app{}. 
+
+
+
+
+
+
+
+
+
+
+
+
+
