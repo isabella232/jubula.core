@@ -49,7 +49,7 @@ installation directory of \app{} as long as nothing else is specified.
 To create your own \app{} extension, you need:
 \begin{itemize}
 \item \app{} 2.0 or later
-\item Eclipse 3.4 or later
+\item Eclipse 3.4 or later (4.2 recommanded)
 \item JDK 5.0
 \item Write access in the following directories:\\
 \bxshell{\MakeLowercase{\app{}}/plugins/}\\
@@ -66,23 +66,34 @@ steps to create the toolkit plug-in and how it can be exported into \app{}.
 
 The following steps have to be done to extend the \app{} client:
 \begin{enumerate}
- \item Create an Eclipse plug-in project and a corresponding feature project.
- \item Set \bxshell{\MakeLowercase{\app{}}/plugins/} as your
- target platform.
- \item Define the plug-in dependencies to the toolkit support plug-in.
- \item Enter the toolkit support plug-in in your toolkit plug-in project.
- \item Create your own toolkit provider class, e.g. named\\
- \bxshell{MyToolkitProvider}.
- \item Define and configure the toolkit extension at the extension point
- \bxname{org.eclipse.jubula.toolkit.common.toolkitsupport}.
+ \item Create a \textbf{Plug-in Project} for your toolkit project.
+ \item Create a \textbf{Feature Project} referencing your toolkit project from
+ the previous step.
+ \item Set the features
+       \begin{itemize}
+        \item \bxname{org.exclipse.rcp} and
+        \item \bxname{org.exclipse.jubula.feature}
+       \end{itemize}
+       from the \app{} installation folder \bxshell{\MakeLowercase{\app{}}/} as
+       your \textbf{Target Platform} in the workspace preferences.
+ \item Add the following dependencies to your toolkit project:
+       \begin{itemize}
+        \item \bxname{org.eclipse.jubula.tools} and
+        \item \bxname{org.eclipse.jubula.toolkit.common}
+       \end{itemize}
+ \item Use and configure the following extension point in your toolkit
+       project:\\
+       \bxname{org.eclipse.jubula.toolkit.common.toolkitsupport}.
+ \item Implement the interface \bxshell{ITookitProvider} from the extension
+ point of the previous step.
  \item Create the definition of your own toolkit in the file\\
- \bxshell{ComponentExtension.xml} by choosing one or more of the following
- possibilities:
- \begin{itemize}
-  \item Extend existing \app{} components with new actions,
-  \item derive new components from existing \app{} components, or
-  \item define a new component.
- \end{itemize}
+       \bxshell{ComponentExtension.xml} by choosing one or more of the following
+       possibilities:
+       \begin{itemize}
+        \item Extend existing \app{} components with new actions,
+        \item derive new components from existing \app{} components, or
+        \item define a new component.
+       \end{itemize}
  \item Manage the i18n keys in the properties file.
 \end{enumerate}
 
@@ -93,7 +104,7 @@ Each zip-file contains an example for a specific toolkit, e.g. a Swing example
 extends the \bxshell{JSlider} component.
 
 These example projects can be simply imported into your Eclipse workspace. Set
-the target after importing the projects as described in step 2. All other steps
+the target after importing the projects as described in step 3. All other steps
 have already be done in the examples.
 
 \subsection{Deploying the toolkit plug-in in \app{}}
@@ -102,24 +113,17 @@ After creating the toolkit feature, we describe the steps to take for deploying
 it in the \app{} client. At first we export the toolkit feature to an update
 site and then we use the update site to install the feature into \app{}.
  
-\subsubsection{Export the toolkit feature to an update site}
+\subsubsection{Create an update site for the toolkit feature}
 
 \begin{enumerate}
-\item In the package explorer, right click on the feature project 
- (e.g. org.eclipse.jubula.examples.extension.swing.feature) and
- select \bxmenu{Export...}{}{}.
-\item Select \bxname{Deployable features} and click
-\bxmenu{Next}{}{} in the dialog that appears.
-\item In the next dialog, ensure that the check box next to the feature you wish
-to export is selected in the \bxname{Available Features} area.
-\item In the \bxname{Destination} tab, select the \bxname{Directory}
- field to define the location, where the update site of the feature should be
- exported to. Ensure, that the entered location is a writable directory. This
- directory serves as an update site, which can later be used to install your
- feature into \app{}.
-\item In the \bxname{Options} tab, ensure that the check box named
-\bxname{Package as individual JAR archives} is selected and click
-\bxmenu{Finish}{}{}.
+\item Create an \textbf{Update Site Project}.
+\item Add a category to your update site with defining its \bxname{ID} and
+      \bxname{Name}.
+\item Add your toolkit feature to the category created in the previous step.
+\item Build the created toolkit update site. The directory of the toolkit
+      update site project serves as an update site, which is later used to
+      install your toolkit feature into \app{}. Remember to build and then
+      synchronize this update site, if you have changed the toolkit feature.
 \end{enumerate}
 
 \subsubsection{Install the toolkit feature from the update site}
@@ -339,7 +343,7 @@ which contains the following sub folders:
 
 \section{Migration steps}
 If you have an existing implementation, which inherits from our old classes,
-you have to change them. We have modified our testerclasses in a way, that they
-do not use the concrete components anymore. Now the testerclasses take
+you have to change them. We have modified our \gdtesterclasses in a way, that they
+do not use the concrete components anymore. Now the \gdtesterclasses take
 advantage of the adapter class instead. If you want to migrate your old
 classes, you must implement the new adapter described in the previous section.
