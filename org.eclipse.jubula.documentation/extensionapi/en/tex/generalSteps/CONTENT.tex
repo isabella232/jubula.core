@@ -175,8 +175,9 @@ The following steps have to be done to extend the \app{} remote control:
 \begin{enumerate}
   \item Install the zip-file\\
         \bxshell{development/extension-toolkit-rc.zip}\\
-        as an update site. This includes the target and the Java documention of
-        the source code.
+        as an update site. Verify, that the check box \textbf{Include required
+        software} is not checked, while adding the update site. This includes
+        the target and the Java documention of the source code.
   \item Set the installed update site as your target platform.
   \item Create a fragment project with one of the following bundles as host:
     \begin{itemize}
@@ -223,8 +224,13 @@ own graphical component, you should at least use the interface
 \bxshell{IWidgetComponent} as the targeted type, which is a child of
 \bxshell{IComponent}. Both interfaces are defined in the same package.
 
+For Swing and SWT there are also specific implementations of different
+adapters in the following packages, which can be used for your own component:\\
+\bxname{org.eclipse.jubula.rc.swing.tester.adapter}\\
+\bxname{org.eclipse.jubula.rc.swt.tester.adapter}
+
 Now we know, how to create an own adapter in general. The next step is to
-implement one or more \gdtesterclass.
+implement one or more \gdtesterclass. 
 
 \subsubsection{Creating a \gdtesterclass}
 
@@ -238,7 +244,10 @@ well as information for string externalization.
 You can write your own \gdtesterclasses, but if you only want to support a new
 component with existing actions, you could use one of our existing
 \gdtesterclasses, which you can find in the package named\\
-\bxname{org.eclipse.jubula.rc.common.tester}.
+\bxname{org.eclipse.jubula.rc.common.tester}. For Swing and SWT there are also
+specific implementations in the following packages:\\
+\bxname{org.eclipse.jubula.rc.swing.tester}\\
+\bxname{org.eclipse.jubula.rc.swt.tester}
 
 Please take the following guidelines into consideration for creating
 \gdtesterclasses:
