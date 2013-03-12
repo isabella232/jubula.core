@@ -196,7 +196,7 @@ public class MappingListener extends AbstractAutSwingEventListener {
         if (log.isInfoEnabled()) {
             log.info("handleKeyEvent: event = " + event.paramString()); //$NON-NLS-1$
         }
-        synchronized (getCurrentComponent()) {
+        synchronized (getComponentLock()) {
             // is a component selected? AND the right keys pressed?
             if (getCurrentComponent() != null 
                     && getAcceptor().accept(event) == KeyAcceptor
