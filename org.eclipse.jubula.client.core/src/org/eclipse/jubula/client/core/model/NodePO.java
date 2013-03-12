@@ -227,7 +227,7 @@ abstract class NodePO implements INodePO {
                         "The parent of the INodePO (GUID " + getGuid() 
                             + ") is not intended to be set to null."); //$NON-NLS-1$
             } catch (IllegalArgumentException e) {
-                LOG.error(ExceptionUtils.getFullStackTrace(e), e);
+                LOG.info(ExceptionUtils.getFullStackTrace(e), e);
             }
             
         }

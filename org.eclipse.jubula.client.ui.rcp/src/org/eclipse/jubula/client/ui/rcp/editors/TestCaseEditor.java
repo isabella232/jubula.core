@@ -209,7 +209,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                         lockedNodePOs.add(editorSessionParentNode);
                     }
                 } else {
-                    LOG.error("The parent of ExecTestCase (GUID " + execTc.getGuid()  //$NON-NLS-1$
+                    LOG.info("The parent of ExecTestCase (GUID " + execTc.getGuid()  //$NON-NLS-1$
                             + ") is null. Skipped removal of incorrect compNamePairs."); //$NON-NLS-1$
                 }
             } catch (PMDirtyVersionException e) {
