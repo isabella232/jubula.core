@@ -536,9 +536,13 @@ public class MoveTestCaseHandler extends AbstractHandler {
                             .getNodeListIterator();
                     while (execTcs.hasNext()) {
                         INodePO exec = execTcs.next();
-                        IExecTestCasePO execTestCasePo = (IExecTestCasePO)exec; 
-                        if (execTestCasePo.getReferencedDataCube() != null) {
-                            return true;
+                        if (exec instanceof IExecTestCasePO) {
+                            IExecTestCasePO execTestCasePo = 
+                                    (IExecTestCasePO)exec; 
+                            if (execTestCasePo
+                                    .getReferencedDataCube() != null) {
+                                return true;
+                            }
                         }
                     }
                 }
