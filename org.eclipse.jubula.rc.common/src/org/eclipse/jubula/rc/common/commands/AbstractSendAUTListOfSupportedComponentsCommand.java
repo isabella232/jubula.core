@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.AUTStartStateMessage;
 import org.eclipse.jubula.communication.message.Message;
@@ -133,8 +134,14 @@ public abstract class AbstractSendAUTListOfSupportedComponentsCommand
             ConcreteComponent concrete = (ConcreteComponent)component;
             
             try {
-                AUTServerConfiguration.getInstance().registerComponent(
-                    concrete);
+                String testerClass = concrete.getTesterClass();
+                String componentClass = concrete.getComponentClass();
+                if (!(StringUtils.isEmpty(testerClass) 
+                        && StringUtils.isEmpty(componentClass))) {
+                    AUTServerConfiguration.getInstance().registerComponent(
+                            concrete);
+                }
+                
                 
                 // Create an identifier for components with a default mapping
                 // and store in the message (see below). These identifiers
