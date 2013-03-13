@@ -5,7 +5,7 @@
 order for the \gdagent to know how to control each element of a GUI, we have
 outfitted the \gdagent with a pluggable interface for graphic components. An
 adapter factory containing one or more components must be implemented for and
-deployed with the \gdaut. On the client site each GUI toolkit that \app{}
+deployed with the \gdaut. On the client site each GUI toolkit that the ITE
 supports is described in a toolkit plug-in.
 
 We have opened up an interface to our users to allow great and flexible
@@ -13,22 +13,21 @@ customizations. You can extend existing functionality, or provide support for
 in-house graphic components by implementing your own so-called
 \textbf{\gdtesterclasses.}
 
-This handbook shows general steps for creating \app{} toolkit extensions, which
+This handbook shows general steps for creating ITE toolkit extensions, which
 is described in chapter \ref{toolkitExtension}. In this chapter you will find
-also an example and some hints for a migrating to the new API. Last but not
-least chapter \ref{functions} describes how to create a custom \app{} function,
-which can be used in \app{} tests.
+also  a short description of extension examples. Last but not least chapter
+\ref{functions} describes how to create a custom ITE function, which can be
+used in tests.
 
-\chapter{Creating \app{} toolkit extensions}
+\chapter{Creating toolkit extensions}
 \label{toolkitExtension}
 
-The following chapter describes the general steps to take for creating a \app{}
+The following chapter describes the general steps to take for creating an ITE
 toolkit extensions with custom defined components and actions. This chapter
 begins with listing the requirements followed by showing the necessary steps
-for creating the \app{} client and remote control extension. The extension for
-the \app{} client is described in section \ref{clientExtension} and the
-implementation for the \app{} remote control extension in section
-\ref{serverExtension}.
+for creating an ITE and remote control extension. The ITE toolkit extension is
+described in section \ref{iteExtension} and the implementation for the remote
+control extension in section \ref{remoteControlExtension}.
 
 Extension examples with source code can be found in the sub directory\\
 \bxshell{examples/development/extension/src/}\\
@@ -36,9 +35,10 @@ of a \app{} installation.
 
 In general you always have to extend two parts of \app{}:
 \begin{itemize}
-\item The \app{} client by writing your own \textbf{toolkit} plug-in:\\
-      This will tell the client, which new components and actions are available.
-\item The \app{} remote control by writing your own \textbf{fragment}:\\
+\item The ITE toolkit extension by writing your own \textbf{toolkit} plug-in:\\
+      This will tell the ITE, which new components and actions are
+      available.
+\item The remote control extension by writing your own \textbf{fragment}:\\
       This part actually performs the actions on the new components.
 \end{itemize}
 
@@ -46,33 +46,32 @@ In this chapter normally all used directory names are located in the
 installation directory of \app{} as long as nothing else is specified.
 
 \section{Requirements}
-To create your own \app{} extension, you need:
+To create your own ITE toolkit and remote control extensions, you need:
 \begin{itemize}
-\item \app{} 2.0 or later
-\item Eclipse 3.4 or later (4.2 recommanded)
+\item \textbf{GUI}\emph{dancer} 7.0 / Jubula 2.0 or later
+\item Eclipse 3.4 or later (4.2 recommended)
 \item JDK 5.0
-\item Write access in the following directories:\\
-\bxshell{\MakeLowercase{\app{}}/plugins/}\\
-\bxshell{server/plugins/}
+\item Full write access in the \app{} installation directory for deploying the
+extension.
 \end{itemize}
 
-\section{\app{} client extension}
-\label{clientExtension}
+\section{ITE extension}
+\label{iteExtension}
 
-This section shows how to develop the \app{} client extension. We describe the
+This section shows how to develop the ITE toolkit extension. We describe the
 steps to create the toolkit plug-in and how it can be exported into \app{}.
 
-\subsection{Creating the toolkit plug-in for \app{}}
+\subsection{Creating the toolkit plug-in for the ITE}
 
-The following steps have to be done to extend the \app{} client:
+The following steps have to be done to extend the ITE toolkit:
 \begin{enumerate}
  \item Create a \textbf{Plug-in Project} for your toolkit project.
  \item Create a \textbf{Feature Project} referencing your toolkit project from
- the previous step.
+ the previous step for an easier installation into the ITE.
  \item Set the features
        \begin{itemize}
-        \item \bxname{org.exclipse.rcp} and
-        \item \bxname{org.exclipse.jubula.feature}
+        \item \bxname{org.eclipse.rcp} and
+        \item \bxname{org.eclipse.jubula.feature}
        \end{itemize}
        from the \app{} installation folder \bxshell{\MakeLowercase{\app{}}/} as
        your \textbf{Target Platform} in the workspace preferences.
@@ -90,9 +89,9 @@ The following steps have to be done to extend the \app{} client:
        \bxshell{ComponentExtension.xml} by choosing one or more of the following
        possibilities:
        \begin{itemize}
-        \item Extend existing \app{} components with new actions,
-        \item derive new components from existing \app{} components, or
-        \item define a new component.
+        \item Extend existing toolkit components with new actions,
+        \item derive new components from existing toolkit components, or
+        \item define a new toolkit component.
        \end{itemize}
  \item Manage the i18n keys in the properties file.
 \end{enumerate}
@@ -107,11 +106,11 @@ These example projects can be simply imported into your Eclipse workspace. Set
 the target after importing the projects as described in step 3. All other steps
 have already be done in the examples.
 
-\subsection{Deploying the toolkit plug-in in \app{}}
+\subsection{Deploying the toolkit plug-in in the ITE}
 
 After creating the toolkit feature, we describe the steps to take for deploying
-it in the \app{} client. At first we export the toolkit feature to an update
-site and then we use the update site to install the feature into \app{}.
+it in the ITE. At first we export the toolkit feature to an update
+site and then we use the update site to install the feature into teh ITE.
  
 \subsubsection{Create an update site for the toolkit feature}
 
@@ -122,7 +121,7 @@ site and then we use the update site to install the feature into \app{}.
 \item Add your toolkit feature to the category created in the previous step.
 \item Build the created toolkit update site. The directory of the toolkit
       update site project serves as an update site, which is later used to
-      install your toolkit feature into \app{}. Remember to build and then
+      install your toolkit feature into the ITE. Remember to build and then
       synchronize this update site, if you have changed the toolkit feature.
 \end{enumerate}
 
@@ -152,17 +151,17 @@ deselected. Your feature should be visible in the central table of the dialog.
  Then the installation process begins.
 \item Click the \bxmenu{Restart Now}{}{} button to perform a restart of \app{},
  when a dialog appears, which suggests restarting \app{} in order to safely
- finish the update / installation.  After the restart your \app{} extension
+ finish the update / installation.  After the restart your ITE toolkit extension
  feature is installed.
 \end{enumerate}
 
-\section{\app{} remote control extension}
-\label{serverExtension}
+\section{Remote control extension}
+\label{remoteControlExtension}
 
-\gdauts{} are controlled by the remote control called \gdagent. The \app{}
-client is also executing the \app{} remote control, if the embedded agent is
+\gdauts{} are controlled by the remote control called \gdagent. The ITE
+is also executing the remote control, if the embedded agent is
 used. Apart from that, the normal AUT agent runs as a remote control in a
-separate process independently from the \app{} client.
+separate process independently from the ITE.
 For each supported component known to \app{} a \gdtesterclass must exist.
 This class implements the test actions, that can be carried out on the component.
 You need to write a fragment for your component, which contains the
@@ -170,16 +169,17 @@ You need to write a fragment for your component, which contains the
 
 \subsection{Creating the fragment}
 
-The following steps have to be done to extend the \app{} remote control:
+The following steps have to be done to extend the remote control:
 
 \begin{enumerate}
-  \item Install the zip-file\\
+  \item Reference the zip-file\\
         \bxshell{development/extension-toolkit-rc.zip}\\
-        as an update site. Verify, that the check box \textbf{Include required
-        software} is not checked, while adding the update site. This includes
-        the target and the Java documention of the source code.
-  \item Set the installed update site as your target platform.
-  \item Create a fragment project with one of the following bundles as host:
+        as a \textbf{Software Site} in your \textbf{Target Platform}.
+        Verify while adding the software site, that the check box
+        \textbf{Include required software} is not checked. This software site
+        includes also the Java documention of the source code.
+  \item Set the installed software site as your target platform.
+  \item Create a fragment project with one of the following IDs as host:
     \begin{itemize}
       \item \bxshell{org.eclipse.jubula.rc.swing}\\
             for extending Swing support.
@@ -198,11 +198,11 @@ The following steps have to be done to extend the \app{} remote control:
 Adapters are used for all supported toolkits, i. e. Swing, SWT, GEF and RCP.
 They wrap and specify graphic components in a form we need for our
 \gdtesterclasses. You can write your own adapter or reuse our existing
-adaptors. We recommend reusing our adapters to take advantage of the already
+adapters. We recommend reusing our adapters to take advantage of the already
 existing code.
 
-Before we have a look at the \app{} remote control examples in section
-\ref{remoteControlExamples}, we describe in general, how to create an
+Before we have a look at the remote control extension examples in section
+\ref{extensionExamples}, we describe in general, how to create an
 adapter and \gdtesterclasses.
 
 \subsubsection{Creating an adapter}
@@ -213,8 +213,8 @@ For using an adapter you have to implement the interface
 It is necessary, that the implementation of this interface resists in a package
 named\\
 \bxname{org.eclipse.jubula.rc.common.adapter}.\\
-The package naming is important for the \app{} remote control, because adapters
-can only be found, if they are located in a package with the mentioned name.
+The package naming is important for the remote control extension, because
+adapters can only be found, if they are located in a package with the mentioned name.
 
 In order to support your own components, the targeted type must be an instance
 of \bxshell{IComponent}, which is defined in the package named\\
@@ -235,11 +235,15 @@ implement one or more \gdtesterclass.
 \subsubsection{Creating a \gdtesterclass}
 
 The functionally important aspect of a \gdtesterclass is, that it
-contains public methods for the \app{} test actions, which will appear in
+contains public methods for the test actions, which will appear in
 the client. These methods are linked to testable actions within a user-defined
-\app{} client plug-in. Each \app{} client extension provides an XML
-configuration file, which defines the available methods with parameters, as
-well as information for string externalization.
+ITE toolkit plug-in.
+
+Each ITE toolkit extension provides an XML configuration file, which defines the
+available methods with parameters, as well as information for string
+externalization. Reflection is used to call these methods. For this reason, the
+signature of a defined method including its name, and the ordered parameter
+types are important for the remote control extension.
 
 You can write your own \gdtesterclasses, but if you only want to support a new
 component with existing actions, you could use one of our existing
@@ -257,13 +261,13 @@ Please take the following guidelines into consideration for creating
   \begin{itemize}
     \item the interface \bxshell{ITester} defined in the package named\\
         \bxname{org.eclipse.jubula.rc.common.tester.interfaces},\\
-	 \item or the abstract class \bxshell{AbsstractUITester}
+	 \item or the abstract class \bxshell{AbstractUITester}
 	     defined in the package named\\
 	     \bxname{org.eclipse.jubula.rc.common.tester}.
   \end{itemize}
   \item The component must provide \textbf{public} methods for all actions
-        declared by the XML configuration file of the corresponding \app{}
-        client extension.
+        declared by the XML configuration file of the corresponding ITE
+        toolkit extension.
   \item Each method, that implements an action, must throw a\\
         \bxshell{StepExecutionException}\\
         defined in the package named\\
@@ -277,7 +281,7 @@ Once you have written your fragment, you still need to make \app{}
 aware of its presence. This is done by exporting the fragment and
 deploying it into the \app{} remote control.
 
-There are different ways for installing your fragment into the \app{} remote
+There are different ways for installing your fragment into the remote
 control, depending on the used AUT agent and the specific AUT. You are free to
 use either the embedded AUT agent or the standalone AUT agent. Also your AUT
 can be based upon the OSGi framework or not. The following table shows an
@@ -289,7 +293,7 @@ overview, where to deploy your fragment:
 ~ & without OSGi & with OSGi\\
 ~ & (Swing, SWT) & (RCP, GEF)\\
 \hline\hline
-embedded & \multirow{2}{*}{\app{} client} & \multirow{4}{*}{AUT}\\
+embedded & \multirow{2}{*}{ITE} & \multirow{4}{*}{AUT}\\
 AUT agent & & \\
 \hhline{--~}
 standalone & standalone & \\
@@ -300,7 +304,7 @@ AUT agent  & AUT agent  & \\
 
 It shows, in which case you usually deploy your fragment into
 \begin{itemize}
-  \item the \app{} client with a feature including your fragment,
+  \item the ITE with a feature including your fragment,
   \item the standalone AUT agent by adding your fragment to its configuration,
         or
   \item the AUT with a feature including your fragment.
@@ -309,16 +313,16 @@ It shows, in which case you usually deploy your fragment into
 The configuration of the standalone AUT agent can be done by modifying the
 file\\
 \bxshell{server/configuration/config.ini}\\
-There you have to append \bxshell{,Bundle\_name@start} at the end of the line
-starting with \bxshell{osgi.bundles=}. Make sure, that the bundles are divided
-by comma. Beside from the mentioned deploying methods, it is also possible
-to install your fragment by using a p2 repository or the OSGi console.
+There you have to append \bxshell{,fragment\_id@start} at the end of the
+line starting with \bxshell{osgi.bundles=}. Make sure, that the bundles are
+divided by comma. Beside from the mentioned deploying methods, it is also
+possible to install your fragment by using a p2 repository or the OSGi console.
 
 You should be able to test your new component, if you have installed the
-toolkit feature into the \app{} client and the fragment as described below.
+toolkit feature into the ITE and the fragment as described below.
 
-\section{\app{} example extension}
-\label{remoteControlExamples}
+\section{ITE and remote control extension examples}
+\label{extensionExamples}
 
 \app{} comes with source code examples for extending supported toolkits. The
 examples can be found in the directory\\
@@ -341,7 +345,7 @@ which contains the following sub folders:
          should be able to test the \bxshell{JSlider} in the Swing example AUT
          with \app{}.
    \item \bxshell{SwingRendererExtension.zip}\\
-         A \app{} remote control extension supporting a custom graphics
+         A remote control extension supporting a custom graphics
          component for Swing.
  \end{itemize}
  \item[AUT] It contains the binary file \bxshell{JSlider.jar}, which is a simple
@@ -349,10 +353,3 @@ which contains the following sub folders:
  installing the \bxshell{JSlider} example extension from the \textbf{src}
  folder, \app{} will be able to test this new component.
 \end{description}
-
-\section{Migration steps}
-If you have an existing implementation, which inherits from our old classes,
-you have to change them. We have modified our \gdtesterclasses in a way, that they
-do not use the concrete components anymore. Now the \gdtesterclasses take
-advantage of the adapter class instead. If you want to migrate your old
-classes, you must implement the new adapter described in the previous section.
