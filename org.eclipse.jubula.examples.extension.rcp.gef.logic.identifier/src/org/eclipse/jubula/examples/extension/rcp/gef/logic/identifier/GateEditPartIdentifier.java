@@ -18,8 +18,8 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.gef.examples.logicdesigner.edit.GateEditPart;
 import org.eclipse.gef.examples.logicdesigner.figures.GateFigure;
 import org.eclipse.gef.examples.logicdesigner.model.Gate;
-import org.eclipse.jubula.rc.rcp.gef.identifier.ClassCountEditPartIdentifier;
-import org.eclipse.jubula.rc.rcp.gef.identifier.IEditPartIdentifier;
+import org.eclipse.jubula.rc.rcp.e3.gef.identifier.ClassCountEditPartIdentifier;
+import org.eclipse.jubula.rc.rcp.e3.gef.identifier.IEditPartIdentifier;
 
 
 /**

@@ -2,7 +2,7 @@ package org.eclipse.jubula.examples.extension.rcp.gef.logic.identifier;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.gef.examples.logicdesigner.edit.GateEditPart;
-import org.eclipse.jubula.rc.rcp.gef.identifier.IEditPartIdentifier;
+import org.eclipse.jubula.rc.rcp.e3.gef.identifier.IEditPartIdentifier;
 
 
 /**
