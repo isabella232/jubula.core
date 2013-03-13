@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.2.3 Combo Box</title>
-    <meta content="5.2.3 Combo Box" name="description" />
+    <title>5.2.3 Combo Component</title>
+    <meta content="5.2.3 Combo Component" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,10 +10,10 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00623000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Combo Box</a></h2><a name="5421"></a> <a name="5422"></a><p><b>Description</b>:<p><a name="CONCRETE_ComboBox"></a><p>
+    <h2><a name="SECTION00623000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Combo Component</a></h2><a name="5423"></a> <a name="5424"></a><p><b>Description</b>:<p><a name="CONCRETE_ComboBox"></a><p>
       <ul>
         <li>A <i>combo box</i> is a component which consists of a field or button and a drop down list: <p>
-            <div align="CENTER"><a name="Combobox"></a><a name="5430"></a><table>
+            <div align="CENTER"><a name="Combobox"></a><a name="5432"></a><table>
                 <caption align="BOTTOM"><strong>Figure 5.4:</strong> Combo Box</caption>
                 <tr>
                   <td>
@@ -24,8 +24,8 @@
             </div>
           <p>
         <li>When the field or button is clicked, the list opens, allowing you to select one of a number of values. </ul>
-    <p> Because the comma (,) is a special symbol for combo boxes, if you want to use a comma as part of your parameter value, you have to mask it. See the section later in this document <a href="node39.html#specialchar">9</a> for more details. <p><span class="textbf">Mapping combo boxes</span><p> In the Object Mapping Mode , a combo box to be mapped looks like this: <p>
-      <div align="CENTER"><a name="mapcombobox"></a><a name="5441"></a><table>
+    <p> Because the comma (,) is a special symbol for combo boxes, if you want to use a comma as part of your parameter value, you have to mask it. See the section later in this document <a href="node38.html#specialchar">9</a> for more details. <p><span class="textbf">Mapping combo boxes</span><p> In the Object Mapping Mode , a combo box to be mapped looks like this: <p>
+      <div align="CENTER"><a name="mapcombobox"></a><a name="5443"></a><table>
           <caption align="BOTTOM"><strong>Figure 5.5:</strong> Combo Box</caption>
           <tr>
             <td>
@@ -44,7 +44,7 @@
     <p>
     <p><b>Synopsis</b>: <br />
       <ul>
-        <li>Combo Box (concrete)<ul>
+        <li>Combo Component (concrete)<ul>
           <li>Component with Text Input (abstract)<ul>
             <li>Component with Text (abstract)<ul>
               <li>Graphics Component (abstract)</ul>
@@ -305,7 +305,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(Combo Box)</small></tt> <a name="44598"></a><a name="44599"></a><p><a name="CONCRETE_ComboBox_VerifyContainsValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(Combo Component)</small></tt> <a name="44409"></a><a name="44410"></a><p><a name="CONCRETE_ComboBox_VerifyContainsValue"></a><p>
       <ul>
         <li>Use this action to check whether a value you enter is contained in the combo box. </ul>
     <p>
@@ -342,7 +342,7 @@
         </tr>
       </table><a name="CONCRETE_ComboBox_VerifyContainsValue_Operator"></a><p>
       <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If there is more than one match, the first found will be chosen. </ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -364,7 +364,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(Combo Box)</small></tt> <a name="44605"></a><a name="44606"></a><p><a name="CONCRETE_ComboBox_VerifySelectedIndex"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(Combo Component)</small></tt> <a name="44416"></a><a name="44417"></a><p><a name="CONCRETE_ComboBox_VerifySelectedIndex"></a><p>
       <ul>
         <li>Use this action to test whether the item at the given index is currently selected in the combo box. </ul>
     <p>
@@ -406,7 +406,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Select Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(Combo Box)</small></tt> <a name="44612"></a><a name="44613"></a><p><a name="CONCRETE_ComboBox_SelectIndex"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Select Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(Combo Component)</small></tt> <a name="44423"></a><a name="44424"></a><p><a name="CONCRETE_ComboBox_SelectIndex"></a><p>
       <ul>
         <li>Use this action to select an item from the combo box using its index as a parameter. <li>Jubula realises this by: <ul>
             <li>Clicking once on the combo box to open the list. <li>Selecting the item specified by clicking it once. </ul>
@@ -433,7 +433,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Select Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(Combo Box)</small></tt> <a name="44619"></a><a name="44620"></a><p><a name="CONCRETE_ComboBox_SelectValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Select Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(Combo Component)</small></tt> <a name="44430"></a><a name="44431"></a><p><a name="CONCRETE_ComboBox_SelectValue"></a><p>
       <ul>
         <li>Use this action to select an item from the combo box using the name of the item as a parameter. <li>Jubula realises this by: <ul>
             <li>Clicking once on the combo box to open the list. <li>Selecting the item specified by clicking it once. </ul>
@@ -472,7 +472,7 @@
         </tr>
       </table><a name="CONCRETE_ComboBox_SelectValue_Operator"></a><p>
       <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If there is more than one match, the first found will be chosen. </ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -494,6 +494,6 @@
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

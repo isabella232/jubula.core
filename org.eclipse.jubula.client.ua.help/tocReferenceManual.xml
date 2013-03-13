@@ -15,14 +15,14 @@
           </topic>
           <topic label="5.2 concrete Toolkit" href="html/reference/node12.html">
                <topic label="5.2.1 Application" href="html/reference/node13.html"></topic>
-               <topic label="5.2.2 Button/Check Box/Radio Button" href="html/reference/node14.html"></topic>
-               <topic label="5.2.3 Combo Box" href="html/reference/node15.html"></topic>
+               <topic label="5.2.2 Button Component" href="html/reference/node14.html"></topic>
+               <topic label="5.2.3 Combo Component" href="html/reference/node15.html"></topic>
                <topic label="5.2.4 Label" href="html/reference/node16.html"></topic>
                <topic label="5.2.5 List" href="html/reference/node17.html"></topic>
                <topic label="5.2.6 Menu Bar" href="html/reference/node18.html"></topic>
-               <topic label="5.2.7 Tabbed Pane" href="html/reference/node19.html"></topic>
+               <topic label="5.2.7 Tabbed Component" href="html/reference/node19.html"></topic>
                <topic label="5.2.8 Table" href="html/reference/node20.html"></topic>
-               <topic label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane" href="html/reference/node21.html"></topic>
+               <topic label="5.2.9 Text Component" href="html/reference/node21.html"></topic>
                <topic label="5.2.10 Tree" href="html/reference/node22.html"></topic>
           </topic>
           <topic label="5.3 gef Toolkit" href="html/reference/node23.html">
@@ -39,26 +39,25 @@
                <topic label="5.7.2 Toolbar Item" href="html/reference/node32.html"></topic>
                <topic label="5.7.3 Tree Table" href="html/reference/node33.html"></topic>
           </topic>
-          <topic label="5.8 Deprecated Actions" href="html/reference/node34.html"></topic>
      </topic>
-     <topic label="6. Constants for lists, combo boxes, trees and menus" href="html/reference/node35.html">
-          <topic label="6.1 Parameters which use Indices" href="html/reference/node36.html"></topic>
+     <topic label="6. Constants for lists, combo boxes, trees and menus" href="html/reference/node34.html">
+          <topic label="6.1 Parameters which use Indices" href="html/reference/node35.html"></topic>
      </topic>
-     <topic label="7. Overview of Components" href="html/reference/node37.html"></topic>
-     <topic label="8. Using Relative Paths" href="html/reference/node38.html"></topic>
-     <topic label="9. Special characters in Jubula" href="html/reference/node39.html">
-          <topic label="9.1 Verbatim text symbol" href="html/reference/node40.html"></topic>
-          <topic label="9.2 General special characters" href="html/reference/node41.html"></topic>
-          <topic label="9.3 Symbols with special meanings for certain parameters" href="html/reference/node42.html"></topic>
+     <topic label="7. Overview of Components" href="html/reference/node36.html"></topic>
+     <topic label="8. Using Relative Paths" href="html/reference/node37.html"></topic>
+     <topic label="9. Special characters in Jubula" href="html/reference/node38.html">
+          <topic label="9.1 Verbatim text symbol" href="html/reference/node39.html"></topic>
+          <topic label="9.2 General special characters" href="html/reference/node40.html"></topic>
+          <topic label="9.3 Symbols with special meanings for certain parameters" href="html/reference/node41.html"></topic>
      </topic>
-     <topic label="10. Language Codes" href="html/reference/node43.html"></topic>
-     <topic label="11. Keyboard layout files" href="html/reference/node44.html">
-          <topic label="11.1 Creating a keyboard layout file" href="html/reference/node45.html"></topic>
+     <topic label="10. Language Codes" href="html/reference/node42.html"></topic>
+     <topic label="11. Keyboard layout files" href="html/reference/node43.html">
+          <topic label="11.1 Creating a keyboard layout file" href="html/reference/node44.html"></topic>
      </topic>
-     <topic label="12. Debugging" href="html/reference/node46.html">
-          <topic label="12.1 Remote Debugging" href="html/reference/node47.html">
-               <topic label="12.1.1 Configuring Eclipse for remote debugging" href="html/reference/node48.html"></topic>
+     <topic label="12. Debugging" href="html/reference/node45.html">
+          <topic label="12.1 Remote Debugging" href="html/reference/node46.html">
+               <topic label="12.1.1 Configuring Eclipse for remote debugging" href="html/reference/node47.html"></topic>
           </topic>
      </topic>
-     <topic label="Index" href="html/reference/node49.html"></topic>
+     <topic label="Index" href="html/reference/node48.html"></topic>
 </toc>

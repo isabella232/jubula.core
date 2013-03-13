@@ -1,35 +1,47 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.11.3 Opening existing Test Cases </title>
-    <meta content="3.11.3 Opening existing Test Cases " name="description" />
+    <title>3.11.2.1 Using the library to create tests</title>
+    <meta content="3.11.2.1 Using the library to create tests" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerSpecTestCaseEditorContextId"></a><a name="testCaseOpenExistingContextId"></a><h2><a name="SECTION004113000000000000000"> <span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">3</span> Opening existing Test Cases </a></h2><a name="TasksOpenExistingTC"></a><p> You can open an existing Test Case without having to select it from the Test Case Browser using the <i>Open Test Case</i> dialog. <p>
+  <body>
+    <h3><a name="SECTION004112100000000000000"></a> <a name="UseLibrary"></a><br /><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Using the library to create tests </h3> Creating tests with Jubula is really just a matter of: <ul>
+      <li>Deciding how to structure your tests (i.e. what keywords to create and how to combine them). <li>Choosing the Test Cases from the library (or from your own set of Test Cases ) that you need to create these keywords. </ul>
+    <p> To use the Test Cases from the library, you will first need to create a Test Case of your own <a href="node111.html#TasksCreateTC">3.11.1</a>. <p>
       <ol>
-        <li>This dialog can be opened using the shortcut <tt>&raquo;CTRL+SHIFT+T&laquo;</tt> or from the menu: <br />
+        <li>Open the Test Case Editor by double-clicking on the Test Case you want to edit in the Test Case Browser . <li>In the Test Case Browser , browse to a Test Case that you want to add. For help on finding your way around the library, see the later section <a href="node115.html#UnderstandingLibrary">3.11.2.3</a>. <li>You can add the Test Case by dragging and dropping from the Test Case Browser to the Test Case Editor or you can right click on the Test Case in the Test Case Editor and select: <br />
           <table border="0" style="margin:0px;padding:0px;">
             <tr>
-              <td bgcolor="#DDDDDD">Edit</td>
+              <td bgcolor="#DDDDDD">Reference Existing Test Case </td>
               <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">Open Test Case</td>
+              <td bgcolor="#DDDDDD">
+                <br />
+              </td>
             </tr>
-          </table>
-        <li>In the dialog, you can search for a Test Case or Test Cases in the tree or using the filter <a href="node270.html#TasksFilters">3.28.8</a>. <li>Select the Test Cases you want to add, and click &quot;<i>OK</i>&quot;. <li>The selected Test Cases will be opened in indidivual Test Case editors. </ol>
-    <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>You can use this option to open a Test Case even if a filter is active in the Test Case Browser .</b></td>
-        </tr>
-      </table>
+          </table> to see a list of all Test Cases that you can add to this Test Case . <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>You can filter in this dialog using the field at the top. Use star <tt>&quot;*&quot;</tt> as a wild card.</b></td>
+              </tr>
+            </table>
+          <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>You can open the dialog to reference an existing Test Case by pressing <tt>&raquo;ENTER&laquo;</tt> on a Test Case in the Test Case Editor .</b></td>
+              </tr>
+            </table>
+          <p>
+        <li>Once you have added the Test Case , you will need to enter a component name in the Component Names View <a href="node155.html#TasksReassignCompName">3.13.2</a> and you will need to enter data for the Test Case in the Properties View <a href="node120.html#WorkingWithData">3.12</a>. </ol>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

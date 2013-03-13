@@ -1,23 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.30.1 Stopping the AUT </title>
-    <meta content="3.30.1 Stopping the AUT " name="description" />
+    <title>3.29.8 My Test Suite failed when using rdesktop</title>
+    <meta content="3.29.8 My Test Suite failed when using rdesktop" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="testExecViewContextId"></a><a name="runningAUTsViewContextId"></a><h2><a name="SECTION004301000000000000000"> <span class="arabic">3</span>.<span class="arabic">30</span>.<span class="arabic">1</span> Stopping the AUT </a></h2>
-    <p><a name="5664"></a> <a name="5665"></a><ol>
-        <li>When you stop the AUT Agent , any AUT&#39;s that were connected to this AUT Agent are closed. <li>AUT&#39;s which were started from a configuration are automatically closed when the test execution via the test executor stops. <li>To stop the AUT manually, select the AUT you want to stop from the Running AUT&#39;s View and then click the Stop AUT button. <br />
-          <div class="margin"><img align="BOTTOM" alt="Image stopAUT" border="0" height="256" src="./stopAUT.png" width="256" />&nbsp; stop AUT </div>
-          <br />
-        <li>A dialog will appear to ask you if you are sure you want to stop the AUT . Click &quot;<i>yes</i>&quot;. <li>You can opt to not see this dialog in the preferences <a href="node218.html#gdprefs">3.26</a>. </ol>
-    <p><span class="textbf">Stopping an AUT in a test</span><br /> Stopping an AUT as part of a test is generally not possible. The AUT will be stopped automatically at the end of testing according to the points mentioned above. <p> You can use the <i>restart</i> action to restart the AUT during the test. You may be able to use the action <i>External Key Combination</i> to send an unconfirmed keystroke to the AUT (i.e. <tt>&raquo;ENTER&laquo;</tt> on a prompt dialog for closing the AUT ) to close the AUT at the end of your test, however, the success of this is dependent on the AUT and environment as well as timing and synchronization issues. <p>
+  <body>
+    <h2><a name="SECTION004298000000000000000"></a> <a name="troublerdesktop"></a><br /><span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">8</span> My Test Suite failed when using <span class="textit">rdesktop</span></h2>
+    <p><a name="5694"></a><ul>
+        <li>Under a very specific configuration involving <span class="textit">rdesktop 1.5</span>, Jubula is known to frequently fail tests with an action error: &#39;Timeout received before confirming the posted event&#39;. <li>This occurs when <span class="textit">rdesktop 1.5</span> is used to log into a user account used for the ITE as well as a separate account for the AUT Agent . <li>The problem does not occur under <span class="textit">rdesktop 1.4.1</span>. </ul>
+    <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

@@ -1,20 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.8 Viewing and changing data sources for Test Cases </title>
-    <meta content="3.12.8 Viewing and changing data sources for Test Cases " name="description" />
+    <title>3.12.6.4 Useful examples for functions</title>
+    <meta content="3.12.6.4 Useful examples for functions" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><h2><a name="SECTION004128000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">8</span> Viewing and changing data sources for Test Cases </a></h2><a name="TasksDataSources"></a><p> The Properties View shows the currently used <i>data source</i> for each Test Case . The following data sources are available: <p><span class="textbf">Referenced Test Case</span><br /> The data have come directly from the original specification of this Test Case . If the data in the referenced Test Case change, then the changes will also take effect here. <p><span class="textbf">Local Test Case</span><br /> The data being used were entered for this Test Case . Any changes made in the original specifiation of the Test Case will not affect the data here. <p> You can change from <i>local</i> to <i>referenced</i> test data using the combo box to reset the default value from the referenced Test Case . <p><span class="textbf">Central test data set</span><br /> The data have come from a central test data set <a href="node135.html#TasksCentralData">3.12.9</a>. <p><span class="textbf">Excel data file</span><br /> An Excel file has been entered as the data source <a href="node142.html#TasksExcel">3.12.10</a><p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node134.html" name="tex2html2802"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">8</span>.<span class="arabic">1</span> Changing the data source for a Test Case </a></ul>
+  <body>
+    <h3><a name="SECTION004126400000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">6</span>.<span class="arabic">4</span> Useful examples for functions</a></h3> Especially when it comes to the date functions, it is often necessary to use multiple functions embedded within each other. <dl>
+      <dt><strong>?formatDate(?now(), dd&#39; MMMM &#39;yyyy)</strong><dd>e.g. 29 February 2012 <dt><strong>?formatDate(?now(), dd&#39; MMM &#39;yyyy)</strong><dd>e.g. 29 Feb 2012 <dt><strong>?formatDate(?now(), dd-MMM-yyyy)</strong><dd>e.g. 29-Feb-2012 <dt><strong>?formatDate(?now(), dd.MM.yyyy)</strong><dd>e.g. 29.02.2012 <dt><strong>?formatDate(?now(), dd/MM/yyyy)</strong><dd>e.g. 29/02/2012 </dl> A more complex example involving embedded functions is e.g.: <p>
+      <blockquote><span class="textbf">?formatDate(?modifyDate(?parseDate <br />(22.2.2012, dd.MM.yyyy),-1d),dd.MM.yy)</span><br /> This function will parse the date 22.2.2012 into an internal format, subtract one day and then format it as a dd.MM.yy, in this case: 21.2.12. </blockquote>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

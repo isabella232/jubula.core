@@ -10,8 +10,8 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00625000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">5</span> List</a></h2><a name="6531"></a> <a name="6532"></a><p><b>Description</b>:<p><a name="CONCRETE_List"></a><p> A <i>List</i> is a component which displays a number of values. Lists allow single or multiple values to be selected. <p> Because the comma (,) is a special symbol for lists, if you want to use a comma as part of your parameter value, you have to mask it. See the section later in this document <a href="node39.html#specialchar">9</a> for more details. <p>
-      <div align="CENTER"><a name="list"></a><a name="6540"></a><table>
+    <h2><a name="SECTION00625000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">5</span> List</a></h2><a name="6533"></a> <a name="6534"></a><p><b>Description</b>:<p><a name="CONCRETE_List"></a><p> A <i>List</i> is a component which displays a number of values. Lists allow single or multiple values to be selected. <p> Because the comma (,) is a special symbol for lists, if you want to use a comma as part of your parameter value, you have to mask it. See the section later in this document <a href="node38.html#specialchar">9</a> for more details. <p>
+      <div align="CENTER"><a name="list"></a><a name="6542"></a><table>
           <caption align="BOTTOM"><strong>Figure 5.8:</strong> List</caption>
           <tr>
             <td>
@@ -21,7 +21,7 @@
         </table>
       </div>
     <p><span class="textbf">Mapping lists</span><p> In the Object Mapping Mode , a list to be mapped looks like this: <p>
-      <div align="CENTER"><a name="maplist"></a><a name="6549"></a><table>
+      <div align="CENTER"><a name="maplist"></a><a name="6551"></a><table>
           <caption align="BOTTOM"><strong>Figure 5.9:</strong> List</caption>
           <tr>
             <td>
@@ -59,7 +59,7 @@
           <td> CONCRETE_List_VerifyContainsValue </td>
         </tr>
         <tr>
-          <td><small>Check Selection of Entry by Index/Indices</small></td>
+          <td><small>Check Selection of Entry by Index</small></td>
           <td><small>c</small></td>
           <td><small><p> String:Index/Indices <br /> Boolean:Selected <br /></small></td>
         </tr>
@@ -67,7 +67,7 @@
           <td> CONCRETE_List_VerifySelectedIndices </td>
         </tr>
         <tr>
-          <td><small>Check Selection of Entry by Value(s)</small></td>
+          <td><small>Check Selection of Entry by Value</small></td>
           <td><small>c</small></td>
           <td><small><p> String:Text <br /> String:Operator <br /> Boolean:Selected <br /></small></td>
         </tr>
@@ -109,7 +109,7 @@
         <tr>
           <td><small>Select Entry by Index/Indices</small></td>
           <td><small>e</small></td>
-          <td><small><p> String:Index/Indices <br /> String:Extend Selection <br /> Integer:Mouse Button <br /></small></td>
+          <td><small><p> String:Index/Indices <br /> String:Extend Selection <br /> Integer:Mouse Button <br /> Integer:Number of Clicks <br /></small></td>
         </tr>
         <tr>
           <td> CONCRETE_List_SelectIndices </td>
@@ -117,7 +117,7 @@
         <tr>
           <td><small>Select Entry by Value(s)</small></td>
           <td><small>e</small></td>
-          <td><small><p> String:Text <br /> String:Operator <br /> String:Search Type <br /> String:Extend Selection <br /> Integer:Mouse Button <br /></small></td>
+          <td><small><p> String:Text <br /> String:Operator <br /> String:Search Type <br /> String:Extend Selection <br /> Integer:Mouse Button <br /> Integer:Number of Clicks <br /></small></td>
         </tr>
         <tr>
           <td> CONCRETE_List_SelectValues </td>
@@ -314,7 +314,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44837"></a><a name="44838"></a><p><a name="CONCRETE_List_VerifyContainsValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44650"></a><a name="44651"></a><p><a name="CONCRETE_List_VerifyContainsValue"></a><p>
       <ul>
         <li>This action tests whether a value you specify is contained in the list. </ul>
     <p>
@@ -352,7 +352,7 @@
         </tr>
       </table><a name="CONCRETE_List_VerifyContainsValue_Operator"></a><p>
       <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If there is more than one match, the first found will be chosen. </ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -374,9 +374,9 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Index/Indices</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44844"></a><a name="44845"></a><p><a name="CONCRETE_List_VerifySelectedIndices"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44657"></a><a name="44658"></a><p><a name="CONCRETE_List_VerifySelectedIndices"></a><p>
       <ul>
-        <li>Use this action to test whether an item or items in a list is/are currently selected. <li>The items you want to test are given using their index. </ul>
+        <li>Use this action to test whether an item in a list is currently selected. <li>The item you want to test is given using its index. </ul>
     <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
@@ -394,7 +394,8 @@
         </tr>
       </table><a name="CONCRETE_List_VerifySelectedIndices_Index"></a><p>
       <ul>
-        <li>Enter the index or indices for the items you want to check. <li>For example, if you want to check that the first and third values are selected, enter <tt>&quot;1,3&quot;</tt>. <li>The first item is always <tt>&quot;1&quot;</tt>. <li>Separate items using commas <tt>&#39;,&#39;</tt></ul>
+        <li>Enter the index for the item you want to check. <li>For example, if you want to check that the first value is selected, enter <tt>&quot;1&quot;</tt>. <li>The first item is always <tt>&quot;1&quot;</tt>. <p>
+      </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -416,9 +417,9 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Value(s)</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44851"></a><a name="44852"></a><p><a name="CONCRETE_List_VerifySelectedValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44664"></a><a name="44665"></a><p><a name="CONCRETE_List_VerifySelectedValue"></a><p>
       <ul>
-        <li>Use this action to test whether an item or items in a list is/are currently selected. <li>The items you want to test are given using their value (name). Each value given is compared (in order) to the corresponding element of the current selection. <li>If you only want to check that one value is selected, or to check several selected elements using a single value, you can use the &quot;<i>check text</i>&quot; action. <li>This checks whether each value you specify is selected in the list. </ul>
+        <li>Use this action to test whether an item in a list is currently selected. <li>The item you want to test is given using its value (name). </ul>
     <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
@@ -436,7 +437,7 @@
         </tr>
       </table><a name="CONCRETE_List_VerifySelectedValue_Text"></a><p>
       <ul>
-        <li>Enter the name(s) of the items you want to check. <li>For example, if you want to check that &quot;<i>England</i>&quot; and &quot;<i>Germany</i>&quot; are selected, enter <tt>&quot;England,Germany&quot;</tt>. <li>Separate items using commas <tt>&#39;,&#39;</tt></ul>
+        <li>Enter the name of the item you want to check. <li>For example, if you want to check that &quot;<i>England</i>&quot; and &quot;<i>Germany</i>&quot; are selected, enter <tt>&quot;England&quot;</tt> in one Data Set and <tt>&quot;Germany&quot;</tt> in the next. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -453,7 +454,7 @@
         </tr>
       </table><a name="CONCRETE_List_VerifySelectedValue_Operator"></a><p>
       <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If there is more than one match, the first found will be chosen. </ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -470,12 +471,12 @@
         </tr>
       </table><a name="CONCRETE_List_VerifySelectedValue_IsSelected"></a><p>
       <ul>
-        <li>Set this parameter to <i>true</i> if you expect this entry or these entries to be selected. <li>Set this parameter to <i>false</i> if you expect this entry or these entries not to be selected. </ul>
+        <li>Set this parameter to <i>true</i> if you expect this entry to be selected. <li>Set this parameter to <i>false</i> if you expect this entry not to be selected. </ul>
     <p>
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drag Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44858"></a><a name="44859"></a><p><a name="CONCRETE_List_DragByIndex"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Drag Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44671"></a><a name="44672"></a><p><a name="CONCRETE_List_DragByIndex"></a><p>
       <ul>
         <li>This action drags the list item you specify. <li>The item is specified by its index in the list. <li>The cursor is moved over the component. <li>The mouse button you specify is held, and the item is dragged. <li>Follow this action with a <i>drop</i> action </ul>
     <p> If you want to drag multiple items, use an action to select the items you want to drag before using the drag action. <p>
@@ -553,7 +554,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drag Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44865"></a><a name="44866"></a><p><a name="CONCRETE_List_DragByValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Drag Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44678"></a><a name="44679"></a><p><a name="CONCRETE_List_DragByValue"></a><p>
       <ul>
         <li>This action drags the list item you specify. <li>The item is specified by its value in the list. <li>The cursor is moved over the component. <li>The mouse button you specify is held, and the item is dragged. <li>Follow this action with a <i>drop</i> action. </ul>
     <p> If you want to drag multiple items, use an action to select the items you want to drag before using the drag action. <p>
@@ -643,7 +644,7 @@
         </tr>
       </table><a name="CONCRETE_List_DragByValue_Operator"></a><p>
       <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If there is more than one match, the first found will be chosen. </ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -665,7 +666,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drop on Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44872"></a><a name="44873"></a><p><a name="CONCRETE_List_DropByIndex"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Drop on Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44685"></a><a name="44686"></a><p><a name="CONCRETE_List_DropByIndex"></a><p>
       <ul>
         <li>This action drops a list item. <li>The item on which to drop the dragged item is specified by its index in the list. <li>The cursor is moved over the component. <li>The mouse button is let loose, and the item is dropped. <li>Precede this action with a <i>drag</i> action </ul>
     <p>
@@ -707,7 +708,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drop on Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44879"></a><a name="44880"></a><p><a name="CONCRETE_List_DropByValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Drop on Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44692"></a><a name="44693"></a><p><a name="CONCRETE_List_DropByValue"></a><p>
       <ul>
         <li>This action drops a list item. <li>The item on which to drop the dragged item is specified by its value in the list. <li>The cursor is moved over the component. <li>The mouse button is let loose, and the item is dropped. <li>Precede this action with a <i>drag</i> action </ul>
     <p>
@@ -744,7 +745,7 @@
         </tr>
       </table><a name="CONCRETE_List_DropByValue_Operator"></a><p>
       <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If there is more than one match, the first found will be chosen. </ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -783,7 +784,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Select Entry by Index/Indices</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44886"></a><a name="44887"></a><p><a name="CONCRETE_List_SelectIndices"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Select Entry by Index/Indices</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44699"></a><a name="44700"></a><p><a name="CONCRETE_List_SelectIndices"></a><p>
       <ul>
         <li>Use this action to select an item or items from the list. <li>Enter the items you want to select using their indices. <li>Jubula realizes this action by: <ul>
             <li>Pressing and holding <tt>&raquo;CTRL&laquo;</tt><li>Clicking on the indicated items <li>Releasing <tt>&raquo;CTRL&laquo;</tt></ul>
@@ -855,10 +856,27 @@
           </table>
       </ul>
     <p>
+      <table border="1" cellpadding="3">
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Data Type</small></td>
+          <td><small>Values</small></td>
+          <td><small>Default</small></td>
+        </tr>
+        <tr>
+          <td><small>Number of Clicks</small></td>
+          <td><small>Integer</small></td>
+          <td><small>-</small></td>
+          <td><small>1</small></td>
+        </tr>
+      </table><a name="CONCRETE_List_SelectIndices_ClickCount"></a><p>
+      <ul>
+        <li>Enter the amount of clicks that should be performed on the component or item. <li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item. <li>Entering <tt>&quot;1&quot;</tt> (without quotes) will single-click on the component or item. <li>Entering <tt>&quot;2&quot;</tt> (without quotes) will double-click on the component or item. </ul>
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Select Entry by Value(s)</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44893"></a><a name="44894"></a><p><a name="CONCRETE_List_SelectValues"></a><p>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Select Entry by Value(s)</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44706"></a><a name="44707"></a><p><a name="CONCRETE_List_SelectValues"></a><p>
       <ul>
         <li>Use this action to select an item or items from the list. <li>Enter the items you want to select using their names (values). <li>Jubula realizes this action by: <ul>
             <li>Pressing and holding <tt>&raquo;CTRL&laquo;</tt><li>Clicking on the indicated items <li>Releasing <tt>&raquo;CTRL&laquo;</tt></ul>
@@ -903,7 +921,7 @@
         </tr>
       </table><a name="CONCRETE_List_SelectValues_Operator"></a><p>
       <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If there is more than one match, the first found will be chosen. </ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -964,9 +982,26 @@
           </table>
       </ul>
     <p>
+      <table border="1" cellpadding="3">
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Data Type</small></td>
+          <td><small>Values</small></td>
+          <td><small>Default</small></td>
+        </tr>
+        <tr>
+          <td><small>Number of Clicks</small></td>
+          <td><small>Integer</small></td>
+          <td><small>-</small></td>
+          <td><small>1</small></td>
+        </tr>
+      </table><a name="CONCRETE_List_SelectValues_ClickCount"></a><p>
+      <ul>
+        <li>Enter the amount of clicks that should be performed on the component or item. <li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item. <li>Entering <tt>&quot;1&quot;</tt> (without quotes) will single-click on the component or item. <li>Entering <tt>&quot;2&quot;</tt> (without quotes) will double-click on the component or item. </ul>
+    <p>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

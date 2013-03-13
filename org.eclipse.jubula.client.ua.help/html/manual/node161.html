@@ -1,46 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.14.2 Configuring Test Suites in the Properties View </title>
-    <meta content="3.14.2 Configuring Test Suites in the Properties View " name="description" />
+    <title>3.13.6 Understanding the component hierarchy</title>
+    <meta content="3.13.6 Understanding the component hierarchy" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><a name="testSuiteEditorContextId"></a><a name="testExecViewContextId"></a><h2><a name="SECTION004142000000000000000"> <span class="arabic">3</span>.<span class="arabic">14</span>.<span class="arabic">2</span> Configuring Test Suites in the Properties View </a></h2><a name="TestSuiteEdit"></a><p><a name="3202"></a> <a name="3203"></a> <a name="3204"></a> <a name="3205"></a> <a name="3206"></a> <a name="3207"></a> <a name="3208"></a> <a name="3209"></a> <a name="3210"></a> <a name="3211"></a> <a name="3212"></a> <a name="3213"></a> <a name="3214"></a> <a name="3215"></a> <a name="3216"></a> <a name="3217"></a> <a name="3218"></a> <a name="3219"></a> <a name="confsuite"></a><p> To configure a Test Suite , you must first create one <a href="node160.html#TSeditor">3.14.1</a>. <p>
+  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="compNameViewContextId"></a><a name="objectMapEditorContextId"></a><h2><a name="SECTION004136000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">6</span> Understanding the component hierarchy</a></h2><a name="TasksCompNameType"></a><p><a name="3151"></a> <a name="3152"></a> <a name="3153"></a> The component hierarchy in Jubula is designed to allow flexible test specification and robust tests. For a graphical overview of the component hierarchy, see the reference manual --&gt;<i>Reference Manual</i> <a href="../reference/node36.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
+    <p>
+      <br />
+    <p><span class="textbf">Abstract components</span><br />
+    <p> Jubula lets you write tests very abstractly at the beginning, only adding detail later. You will notice that the library contains categories such as <i>Component with Text Input</i> and <i>Graphics Component</i>. <p> These are <i>abstract components</i> - actions in these categories can be used on a wide range of actual components in the AUT . You can use a <i>Click</i> action on the <i>Graphics Component</i> to click any component in the AUT . You just need to enter different component names for it in the Component Names View . <p>
+    <p>
+      <br /><span class="textbf">Using the same component name for different component types</span><br />
+    <p> What happens if you want to specify a test that clicks in a table and then selects a cell in the table? <p> The click action is on the <i>Graphics Component</i> and the select cell action is on the <i>Table</i> component - but you don&#39;t want to have two different component names. <p> This isn&#39;t a problem for Jubula . You can use the same component name for different components as long as these are compatible. So, in this case, the <i>Graphics Component</i> and the <i>Table</i> component can both use the component name e.g. <i>TableView_MainTable_tbl</i>. <p>
       <table>
         <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>If you are editing the Test Suite , the working language (which is specified via the globe button on the toolbar) must be set to a language supported by the chosen AUT for the Test Suite . Otherwise the Test Suite will be uneditable. </b></td>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>You cannot use the same component name for incompatible types, for example, trees and tables.</b></td>
         </tr>
       </table>
-    <p>
-      <ol>
-        <li>Open the Test Suite Editor by double-clicking on the Test Suite you want to configure. <li>In the Properties View , you can: <ol>
-            <li>Change the Test Suite name by entering a new name in the <i>Test Suite name</i> field. <li>Add a comment to the Test Suite <a href="node98.html#TasksEditorAddComment">3.9.5</a>. <li>Enter a value in the <i>step delay</i> field. <p>
-                <table>
-                  <tr>
-                    <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                    <td><b>The step delay is the time Jubula leaves between each Test Step during test execution. The default is 0 milliseconds <a href="node200.html#TasksExecSpeed">3.19.5</a>.</b></td>
-                  </tr>
-                </table>
-              <p>
-            <li>Select the AUT for this Test Suite . To be able to select an AUT (and object map, and execute your test) you must have added at least one AUT to the Project <a href="node71.html#Defineaut">3.6</a>. <p>
-                <table>
-                  <tr>
-                    <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                    <td><b>You don&#39;t have to choose an AUT for a Test Suite as soon as you have created it, but you will have to choose one before object mapping, for example.</b></td>
-                  </tr>
-                </table>
-              <p>
-            <li>Choose a default reentry type for each of the four error types in Jubula from the combo-boxes. <p> Event Handlers are Test Cases used to deal with errors during test execution. When an error occurs, the current Test Case is searched for an Event Handler for that error type. If none is found, the parent Test Case is searched, and so on. If no Event Handler for the test is found, then a default Event Handler (specified in the Test Suite properties)is activated. <p> As a general rule, you should avoid default Event Handlers being executed. See the sections on Event Handlers for information on the event types <a href="node215.html#eventtype">3.21.2</a>, reentry types <a href="node216.html#reentrytype">3.21.3</a> and creating your own Event Handlers . <li>Save the changes in the Test Suite Editor . </ol>
-      </ol>
-    <p>
+    <p> An overview of the component hierarchy can be seen in: --&gt;<i>Reference Manual</i> <a href="../reference/node36.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

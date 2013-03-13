@@ -1,54 +1,39 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.18.5 Mapping (assigning) collected technical names to component names</title>
-    <meta content="3.18.5 Mapping (assigning) collected technical names to component names" name="description" />
+    <title>3.18.3.1 Removing unused component names from the Object Mapping Editor </title>
+    <meta content="3.18.3.1 Removing unused component names from the Object Mapping Editor " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="objectMapEditorContextId"></a><h2><a name="SECTION004185000000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">5</span> Mapping (assigning) collected technical names to component names</a></h2><a name="TasksOMMap"></a><p><a name="3953"></a> Once you have collected the components from the AUT that you will use during the test <a href="node186.html#TasksOMCollect">3.18.4</a>, you can then map them to the component names you used in your Test Cases . <p>
+  <body><a name="objectMapEditorContextId"></a><h3><a name="SECTION004183100000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Removing unused component names from the Object Mapping Editor </a></h3><a name="TasksOMCleanup"></a><a name="3861"></a> <a name="3862"></a><p> Over time, your Project will change, and these changes may mean that component names you had previously used in Test Suites , then mapped to technical names via the Object Mapping, are no longer used. This results in object mappings in which the component name is no longer used in the test for this AUT . Such component names can be recognized by the fact that <i>Show corresponding specification</i> in the Object Mapping Editor <a href="node267.html#TasksSearchCompNameCorresponding">3.28.3</a> returns no search results in the search result view (i.e. the component name is no longer used in the test), or if the search result view shows only Test Cases that are used in other AUT&#39;s . If you perform <i>Show where used</i> in the Component Name Browser &nbsp; <a href="node267.html#TasksSearchCompNameBrowserShowWhereUsed">3.28.3</a> and the only search result is a mapping, then this is also a component name that is no longer used in the test. <p> You can delete any component names from the Object Mapping Editor that are unused in the Project for this AUT : <p>
       <ol>
-        <li>In the Object Mapping Editor , in the split view or the tree view <a href="node179.html#TasksOMViews">3.18.2.2</a>, you will see the component names you have created <a href="node151.html#TasksCreateNewCompName">3.13.1</a> and/or used in your Test Cases , as well as the names you have collected from the AUT . The names are grouped into categories of unassigned and assigned names <a href="node180.html#TasksOMDefaultCats">3.18.2.3</a>. <li>To map a component name to a technical name, you must drag the <i>unassigned component name</i> onto the corresponding <i>unassigned technical name</i> that you want this component name to refer to. <p>
-        <li>When a component name has been assigned to a techical name, the joined names appear in the <i>assigned names</i> category. The component type for the component name is adjusted so that it reflects the type of component it hasbeen mapped to <a href="node158.html#TasksCompNameType">3.13.6</a>. <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>You can also &#39;&#39;unassign&#39;&#39; component names from technical names by dragging the component name back into the <i>unassigned component names</i> category</b></td>
-              </tr>
-            </table>
-        <li>Save the changes in the editor. <table>
+        <li>In the Object Mapping Editor , select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
             <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>You will only be able to map component names to technical names if their types are compatible <a href="node158.html#TasksCompNameType">3.13.6</a>.</b></td>
+              <td bgcolor="#DDDDDD">Cleanup</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">unused component names</td>
             </tr>
           </table>
-      </ol>
-    <p>
-      <div align="CENTER"><a name="objectmappingeditor"></a><a name="3974"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.23:</strong> Object Mapping Editor</caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image objectmappinghowto" border="0" height="428" src="./objectmappinghowto.png" width="529" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <p>
-      <div align="CENTER"><a name="greenborders"></a><a name="3981"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.24:</strong> Green Border around Supported Component</caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image greenborders" border="0" height="180" src="./greenborders.png" width="200" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
+          <br /> from the context-sensitive menu. <li>The cleanup operation starts, and a progress dialog is shown while unused names are being searched for. Depending on the size of your Project , this search may take some time. <li>If the Object Mapping Editor contains component names that are not used in any of the Test Suites for this AUT (either component names that are already mapped, or are still unassigned), then they are shown in a <i>Delete unused component names</i> dialog. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>If no component names are found, then you will see a message informing you of this.</b></td>
+            </tr>
+          </table>
+        <li>In the dialog to delete unused component names, you can see which component names have been identified for deletion. You can deselect individual component names to opt not to delete them. Once you have specified which component names should be deleted, click &quot;<i>OK</i>&quot;. <li>The component names you specify will be deleted from the Object Mapping Editor . Save the editor to save the changes. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>Removing component names from the Object Mapping Editor does not mean that the component names are deleted from the Project . However, if the deletion from the object map means that the component name is now used nowhere in the Project , then it will appear under the <i>Unused Component Names</i> category in the Component Name Browser &nbsp; and can be deleted from the whole Project <a href="node160.html#TasksDeleteCompName">3.13.5</a></b></td>
+            </tr>
+          </table>. </ol>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

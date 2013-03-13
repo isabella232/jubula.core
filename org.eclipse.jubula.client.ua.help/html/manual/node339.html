@@ -1,22 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.2.1 Naming conventions for Test Cases </title>
-    <meta content="5.2.1 Naming conventions for Test Cases " name="description" />
+    <title>4.2.6 Best practices for testing RCP AUT&#39;s </title>
+    <meta content="4.2.6 Best practices for testing RCP AUT&#39;s " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="testcaseNewContextId"></a><h2><a name="SECTION00621000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Naming conventions for Test Cases </a></h2><a name="BPTestCaseNames"></a><p> You should name your Test Cases so that it is clear from the name what the Test Case does. Instead of vague or ambiguous names (e.g. Select), try and write names that describe the Test Case in terms of the action and the component it deals with. A few good examples are: <p>
-      <ul>
-        <li>Close Search Dialog with OK Button <li>Select Project Language from Combo Box <li>Fill in Project Wizard, containing: <ul>
-            <li>Enter Project Name in Wizard <li>Select Project Language from List <li>Select Default Language from Combo Box <li>Close Project Wizard with Finish Button </ul>
-      </ul>
-    <p> The Test Case names do not have to exhaustively describe the component, or where it is in the AUT - using categories for the different areas of your AUT saves you having to do this <a href="node344.html#BPCategories">5.3.1</a>. The aim with naming your Test Cases is to make your tests readable and easy to understand. <p> You do not have to write Test Case names in CamelCase or with underscores - Test Case names are not used in the test executor, so there is no problem if they have spaces in them. <p>
+  <body>
+    <h2><a name="SECTION00526000000000000000"> <span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">6</span> Best practices for testing RCP AUT&#39;s </a></h2>
+    <p><a name="6423"></a> <a name="6424"></a><p><span class="textbf">Perspective layout reset</span><br /> One of the features of RCP AUT&#39;s is that they generally remember the state of the AUT (position of views, which perspective was open) when the AUT is closed. In order to make tests as robust as possible, we recommend starting each use case with a module to reset the perspective to its defaults, and testing with this default perspective. <p><span class="textbf">Workspace choice</span><br /> RCP AUT&#39;s use a workspace to save user-specific preferences. The choice of workspace is usually offered before the AUT starts. This dialog is not currently testable by Jubula , so we recommend adding the desired workspace as an AUT argument in the AUT configuration <a href="node74.html#configuringaut">3.7.1</a>. The parameter used to specify the workspace is <tt>&quot;-data &#39;&#39;WORKSPACE&#39;&#39;&quot;</tt>. <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

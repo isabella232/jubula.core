@@ -7,7 +7,7 @@
      </context>
      <context id="CONCRETE_ComboBox_VerifyContainsValue_Operator">
           <description>Operator</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifyContainsValue_Operator" label="5.2.3 Combo Box&#10;"></topic>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifyContainsValue_Operator" label="5.2.3 Combo Component&#10;"></topic>
      </context>
      <context id="CONCRETE_GraphicApplication_CheckValues">
           <description>Check Numeric Values</description>
@@ -23,7 +23,7 @@
      </context>
      <context id="CONCRETE_TextComponent_InsertTextAtIndex_Text">
           <description>Text</description>
-          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtIndex_Text" label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane&#10;"></topic>
+          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtIndex_Text" label="5.2.9 Text Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_SelectCellByColValueNew_RowOperator">
           <description>Row Operator</description>
@@ -43,7 +43,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifyTextOfTabByIndex_Operator">
           <description>Operator</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyTextOfTabByIndex_Operator" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyTextOfTabByIndex_Operator" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Tree_CollapseByTextPath_Operator">
           <description>Operator</description>
@@ -183,7 +183,7 @@
      </context>
      <context id="CONCRETE_ComboBox_VerifySelectedIndex_IsSelected">
           <description>Selected</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifySelectedIndex_IsSelected" label="5.2.3 Combo Box&#10;"></topic>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifySelectedIndex_IsSelected" label="5.2.3 Combo Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_ShowText_TimePerWord">
           <description>Time per Word (in milliseconds)</description>
@@ -203,7 +203,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifySelectedTabByIndex">
           <description>Check Selection of Tab by Index</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTabByIndex" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTabByIndex" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_PopupVerifySelectedByIndexpathPosition">
           <description>Check Selection of Context Menu Entry by Indexpath (Specify Position)</description>
@@ -211,7 +211,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifyEnabledTab_IsEnabled">
           <description>Enabled</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTab_IsEnabled" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTab_IsEnabled" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_VerifyValueInColumn">
           <description>Check Existence of Value in Column</description>
@@ -294,8 +294,8 @@
           <topic href="html/reference/node13.html#CONCRETE_GraphicApplication_WaitForWindow_DelayAfterVisibility" label="5.2.1 Application&#10;"></topic>
      </context>
      <context id="CONCRETE_TextComponent">
-          <description>Text Field/Text Area/Editor Pane/Text Pane</description>
-          <topic href="html/reference/node21.html#CONCRETE_TextComponent" label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane&#10;"></topic>
+          <description>Text Component</description>
+          <topic href="html/reference/node21.html#CONCRETE_TextComponent" label="5.2.9 Text Component&#10;"></topic>
      </context>
      <context id="CONCRETE_List_DragByValue">
           <description>Drag Entry by Value</description>
@@ -335,7 +335,7 @@
      </context>
      <context id="CONCRETE_ComboBox_SelectValue_Operator">
           <description>Operator</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox_SelectValue_Operator" label="5.2.3 Combo Box&#10;"></topic>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox_SelectValue_Operator" label="5.2.3 Combo Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_PopupVerifySelectedByTextpathPosition_TextPath">
           <description>Textpath</description>
@@ -443,7 +443,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifyTextOfTabByIndex_Title">
           <description>Title</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyTextOfTabByIndex_Title" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyTextOfTabByIndex_Title" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Tree_VerifyPathByIndices_IndexPath">
           <description>Indexpath</description>
@@ -455,7 +455,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifyEnabledTabByIndex">
           <description>Check Enablement of Tab by Index</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTabByIndex" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTabByIndex" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Tree_DragByIndexPath_ModifierSpecification">
           <description>Modifier Keys</description>
@@ -467,7 +467,7 @@
      </context>
      <context id="CONCRETE_TextComponent_InsertTextAtPattern_Pattern">
           <description>Pattern</description>
-          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtPattern_Pattern" label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane&#10;"></topic>
+          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtPattern_Pattern" label="5.2.9 Text Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_VerifyTableCellTextNew_Text">
           <description>Text</description>
@@ -475,7 +475,7 @@
      </context>
      <context id="guidancerDataSetViewContextId">
           <description>Data Sets View</description>
-          <topic href="html/reference/node39.html#guidancerDataSetViewContextId" label="9. Special characters in Jubula &#10;"></topic>
+          <topic href="html/reference/node38.html#guidancerDataSetViewContextId" label="9. Special characters in Jubula &#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_PopupVerifyEnabledByIndexpathPosition_XUnits">
           <description>x-units</description>
@@ -486,8 +486,8 @@
           <topic href="html/reference/node20.html#CONCRETE_Table_VerifyTableCellEditableNew_Row" label="5.2.8 Table&#10;"></topic>
      </context>
      <context id="CONCRETE_Button">
-          <description>Button/Check Box/Radio Button</description>
-          <topic href="html/reference/node14.html#CONCRETE_Button" label="5.2.2 Button/Check Box/Radio Button&#10;"></topic>
+          <description>Button Component</description>
+          <topic href="html/reference/node14.html#CONCRETE_Button" label="5.2.2 Button Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_SelectCellNew">
           <description>Select Cell</description>
@@ -535,7 +535,7 @@
      </context>
      <context id="CONCRETE_ComboBox_SelectIndex_OneIndex">
           <description>Index</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox_SelectIndex_OneIndex" label="5.2.3 Combo Box&#10;"></topic>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox_SelectIndex_OneIndex" label="5.2.3 Combo Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_SelectCellByColValueNew_Row">
           <description>Row</description>
@@ -555,7 +555,7 @@
      </context>
      <context id="CONCRETE_ComboBox_VerifyContainsValue">
           <description>Check Existence of Entry by Value</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifyContainsValue" label="5.2.3 Combo Box&#10;"></topic>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifyContainsValue" label="5.2.3 Combo Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_PopupVerifyEnabledByIndexpathPosition_IndexPath">
           <description>Indexpath</description>
@@ -775,7 +775,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifyExistenceOfTab_Tab">
           <description>Tab</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyExistenceOfTab_Tab" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyExistenceOfTab_Tab" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_CreateDirs">
           <description>Create Directories</description>
@@ -878,7 +878,7 @@
           <topic href="html/reference/node13.html#CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_MarginRight" label="5.2.1 Application&#10;"></topic>
      </context>
      <context id="CONCRETE_List_VerifySelectedIndices">
-          <description>Check Selection of Entry by Index/Indices</description>
+          <description>Check Selection of Entry by Index</description>
           <topic href="html/reference/node17.html#CONCRETE_List_VerifySelectedIndices" label="5.2.5 List&#10;"></topic>
      </context>
      <context id="CONCRETE_GraphicApplication_WaitForWindowActivation">
@@ -954,12 +954,12 @@
           <topic href="html/reference/node17.html#CONCRETE_List_SelectValues" label="5.2.5 List&#10;"></topic>
      </context>
      <context id="CONCRETE_List_VerifySelectedValue">
-          <description>Check Selection of Entry by Value(s)</description>
+          <description>Check Selection of Entry by Value</description>
           <topic href="html/reference/node17.html#CONCRETE_List_VerifySelectedValue" label="5.2.5 List&#10;"></topic>
      </context>
      <context id="CONCRETE_TextComponent_InsertTextAtIndex_Index">
           <description>Index/Indices</description>
-          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtIndex_Index" label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane&#10;"></topic>
+          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtIndex_Index" label="5.2.9 Text Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_PopupVerifyExistsByIndexpath_IsExisting">
           <description>Exists</description>
@@ -975,7 +975,7 @@
      </context>
      <context id="CONCRETE_TextComponent_InsertTextAtPattern">
           <description>Insert Text before/after Pattern</description>
-          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtPattern" label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane&#10;"></topic>
+          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtPattern" label="5.2.9 Text Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_Drop_DelayBeforeDrop">
           <description>Delay before drop (milliseconds)</description>
@@ -987,7 +987,7 @@
      </context>
      <context id="CONCRETE_ComboBox_SelectValue">
           <description>Select Entry by Value</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox_SelectValue" label="5.2.3 Combo Box&#10;"></topic>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox_SelectValue" label="5.2.3 Combo Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Tree_ExpandByIndexPath">
           <description>Expand Node by Indexpath</description>
@@ -1023,7 +1023,7 @@
      </context>
      <context id="CONCRETE_ComboBox_VerifyContainsValue_Exists">
           <description>Exists</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifyContainsValue_Exists" label="5.2.3 Combo Box&#10;"></topic>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifyContainsValue_Exists" label="5.2.3 Combo Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_SelectRowByValueNew_Column">
           <description>Column</description>
@@ -1063,7 +1063,7 @@
      </context>
      <context id="CONCRETE_ComboBox_VerifySelectedIndex_OneIndex">
           <description>Index</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifySelectedIndex_OneIndex" label="5.2.3 Combo Box&#10;"></topic>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifySelectedIndex_OneIndex" label="5.2.3 Combo Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_DropCellByColValueNew_SearchType">
           <description>Search Type</description>
@@ -1083,11 +1083,11 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifyTextOfTabByIndex_OneIndex">
           <description>Index</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyTextOfTabByIndex_OneIndex" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyTextOfTabByIndex_OneIndex" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_TabbedPane_VerifyExistenceOfTab_Operator">
           <description>Operator</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyExistenceOfTab_Operator" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyExistenceOfTab_Operator" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_ReadTableCellValueNew_Row">
           <description>Row</description>
@@ -1143,7 +1143,7 @@
      </context>
      <context id="CONCRETE_ComboBox_SelectValue_Text">
           <description>Text</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox_SelectValue_Text" label="5.2.3 Combo Box&#10;"></topic>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox_SelectValue_Text" label="5.2.3 Combo Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_PopupVerifySelectedByTextpathPosition_IsSelected">
           <description>Selected</description>
@@ -1183,11 +1183,11 @@
      </context>
      <context id="CONCRETE_TextComponent_SelectAll">
           <description>Select All</description>
-          <topic href="html/reference/node21.html#CONCRETE_TextComponent_SelectAll" label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane&#10;"></topic>
+          <topic href="html/reference/node21.html#CONCRETE_TextComponent_SelectAll" label="5.2.9 Text Component&#10;"></topic>
      </context>
      <context id="autConfigPropDialogContextId">
           <description>AUT Configuration Settings</description>
-          <topic href="html/reference/node38.html#autConfigPropDialogContextId" label="8. Using Relative Paths&#10;"></topic>
+          <topic href="html/reference/node37.html#autConfigPropDialogContextId" label="8. Using Relative Paths&#10;"></topic>
      </context>
      <context id="CONCRETE_GraphicApplication_KeyStroke_KeySpecification">
           <description>Base Key</description>
@@ -1211,7 +1211,7 @@
      </context>
      <context id="CONCRETE_TextComponent_InsertTextAtPattern_AfterPattern">
           <description>Insert after Pattern</description>
-          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtPattern_AfterPattern" label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane&#10;"></topic>
+          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtPattern_AfterPattern" label="5.2.9 Text Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_VerifyProperty_PropertyName">
           <description>Property Name</description>
@@ -1227,7 +1227,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_SelectTab_Operator">
           <description>Operator</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_SelectTab_Operator" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_SelectTab_Operator" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_Drag">
           <description>Drag</description>
@@ -1255,7 +1255,7 @@
      </context>
      <context id="CONCRETE_TextComponent_InsertTextAtIndex">
           <description>Insert Text after Index</description>
-          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtIndex" label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane&#10;"></topic>
+          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtIndex" label="5.2.9 Text Component&#10;"></topic>
      </context>
      <context id="CONCRETE_GraphicApplication_KeyToogle">
           <description>Set Toggle Key</description>
@@ -1286,8 +1286,8 @@
           <topic href="html/reference/node20.html#CONCRETE_Table_ReplaceTextInTableCellNew_ColumnOperator" label="5.2.8 Table&#10;"></topic>
      </context>
      <context id="CONCRETE_ComboBox">
-          <description>Combo Box</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox" label="5.2.3 Combo Box&#10;"></topic>
+          <description>Combo Component</description>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox" label="5.2.3 Combo Component&#10;"></topic>
      </context>
      <context id="CONCRETE_MenuBar_VerifyEnabledByIndexpath">
           <description>Check Enablement of Entry by Indexpath</description>
@@ -1319,7 +1319,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifyExistenceOfTab_Exists">
           <description>Exists</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyExistenceOfTab_Exists" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyExistenceOfTab_Exists" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_GraphicApplication_WaitForWindow_Title">
           <description>Title</description>
@@ -1331,7 +1331,7 @@
      </context>
      <context id="CONCRETE_ComboBox_SelectIndex">
           <description>Select Entry by Index</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox_SelectIndex" label="5.2.3 Combo Box&#10;"></topic>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox_SelectIndex" label="5.2.3 Combo Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Tree_DragByTextPath_PathType">
           <description>Path Type</description>
@@ -1401,6 +1401,10 @@
           <description>Operator</description>
           <topic href="html/reference/node11.html#ABSTRACT_Widget_VerifyProperty_Operator" label="5.1.4 Graphics Component&#10;"></topic>
      </context>
+     <context id="CONCRETE_List_SelectIndices_ClickCount">
+          <description>Number of Clicks</description>
+          <topic href="html/reference/node17.html#CONCRETE_List_SelectIndices_ClickCount" label="5.2.5 List&#10;"></topic>
+     </context>
      <context id="CONCRETE_Table_InputTextInTableCellNew_Row">
           <description>Row</description>
           <topic href="html/reference/node20.html#CONCRETE_Table_InputTextInTableCellNew_Row" label="5.2.8 Table&#10;"></topic>
@@ -1439,7 +1443,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifyEnabledTab_Operator">
           <description>Operator</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTab_Operator" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTab_Operator" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_SelectCellNew_ClickCount">
           <description>Number of Clicks</description>
@@ -1503,7 +1507,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifyExistenceOfTab">
           <description>Check Existence of Tab</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyExistenceOfTab" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyExistenceOfTab" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_MarginLeft">
           <description>Margin Left</description>
@@ -1515,11 +1519,11 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifyTextOfTabByIndex">
           <description>Check Text of Tab by Index</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyTextOfTabByIndex" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyTextOfTabByIndex" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_ComboBox_VerifyContainsValue_Text">
           <description>Text</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifyContainsValue_Text" label="5.2.3 Combo Box&#10;"></topic>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifyContainsValue_Text" label="5.2.3 Combo Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_PopupVerifyExistsByTextpathPosition_TextPath">
           <description>Textpath</description>
@@ -1599,7 +1603,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifySelectedTabByIndex_IsSelected">
           <description>Selected</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTabByIndex_IsSelected" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTabByIndex_IsSelected" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_SelectCellByColValueNew_MouseButton">
           <description>Mouse Button</description>
@@ -1643,7 +1647,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifyEnabledTab">
           <description>Check Enablement of Tab by Value</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTab" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTab" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Tree_ExpandByTextPath">
           <description>Expand Node by Textpath</description>
@@ -1667,7 +1671,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifyEnabledTabByIndex_OneIndex">
           <description>Index</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTabByIndex_OneIndex" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTabByIndex_OneIndex" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_GraphicApplication_Restart">
           <description>Restart</description>
@@ -1711,7 +1715,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_SelectTab_Title">
           <description>Title</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_SelectTab_Title" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_SelectTab_Title" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Tree_CollapseByIndexPath_PathType">
           <description>Path Type</description>
@@ -1731,7 +1735,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_SelectTab">
           <description>Select Tab by Value</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_SelectTab" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_SelectTab" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_TextInputSupport_InputTextDirect_Text">
           <description>Text</description>
@@ -1747,11 +1751,11 @@
      </context>
      <context id="CONCRETE_TextComponent_Select">
           <description>Select Pattern</description>
-          <topic href="html/reference/node21.html#CONCRETE_TextComponent_Select" label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane&#10;"></topic>
+          <topic href="html/reference/node21.html#CONCRETE_TextComponent_Select" label="5.2.9 Text Component&#10;"></topic>
      </context>
      <context id="CONCRETE_TabbedPane_VerifyEnabledTab_Title">
           <description>Title</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTab_Title" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTab_Title" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_PopupVerifySelectedByTextpathPosition_Operator">
           <description>Operator</description>
@@ -1811,7 +1815,7 @@
      </context>
      <context id="CONCRETE_TextComponent_Select_Pattern">
           <description>Pattern</description>
-          <topic href="html/reference/node21.html#CONCRETE_TextComponent_Select_Pattern" label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane&#10;"></topic>
+          <topic href="html/reference/node21.html#CONCRETE_TextComponent_Select_Pattern" label="5.2.9 Text Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_DragRowByValueNew">
           <description>Drag Cell from Column</description>
@@ -1823,8 +1827,8 @@
      </context>
      <context id="guidancerPropertiesViewContextId">
           <description>Properties View</description>
-          <topic href="html/reference/node38.html#guidancerPropertiesViewContextId" label="8. Using Relative Paths&#10;"></topic>
-          <topic href="html/reference/node39.html#guidancerPropertiesViewContextId" label="9. Special characters in Jubula &#10;"></topic>
+          <topic href="html/reference/node37.html#guidancerPropertiesViewContextId" label="8. Using Relative Paths&#10;"></topic>
+          <topic href="html/reference/node38.html#guidancerPropertiesViewContextId" label="9. Special characters in Jubula &#10;"></topic>
           <topic href="html/reference/node4.html#guidancerPropertiesViewContextId" label="3. Using Regular Expressions for Text Verification&#10;"></topic>
           <topic href="html/reference/node5.html#guidancerPropertiesViewContextId" label="4. Using Simple Match for Text Verification&#10;"></topic>
      </context>
@@ -1838,7 +1842,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifyEnabledTabByIndex_IsEnabled">
           <description>Enabled</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTabByIndex_IsEnabled" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifyEnabledTabByIndex_IsEnabled" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Tree_VerifyPathByIndices">
           <description>Check Existence of Node by Indexpath</description>
@@ -1906,7 +1910,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifySelectedTab_Operator">
           <description>Operator</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTab_Operator" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTab_Operator" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_GraphicApplication_InputTextDirect">
           <description>Input Text</description>
@@ -1974,7 +1978,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_SelectTabByIndex">
           <description>Select Tab by Index</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_SelectTabByIndex" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_SelectTabByIndex" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Tree_DropByTextPath_PathType">
           <description>Path Type</description>
@@ -1994,7 +1998,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_SelectTabByIndex_OneIndex">
           <description>Index</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_SelectTabByIndex_OneIndex" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_SelectTabByIndex_OneIndex" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Tree_DragByIndexPath_TreeIndexPath">
           <description>Tree Indexpath</description>
@@ -2090,7 +2094,7 @@
      </context>
      <context id="CONCRETE_TextComponent_InsertTextAtPattern_Text">
           <description>Text</description>
-          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtPattern_Text" label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane&#10;"></topic>
+          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtPattern_Text" label="5.2.9 Text Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_VerifyFocus_HasFocus">
           <description>Has Focus</description>
@@ -2134,7 +2138,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifySelectedTabByIndex_OneIndex">
           <description>Index</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTabByIndex_OneIndex" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTabByIndex_OneIndex" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_DropCellNew_Row">
           <description>Row</description>
@@ -2150,7 +2154,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifySelectedTab_IsSelected">
           <description>Selected</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTab_IsSelected" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTab_IsSelected" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_PopupSelectByIndexPathNew_MouseButton">
           <description>Mouse Button</description>
@@ -2174,7 +2178,7 @@
      </context>
      <context id="CONCRETE_TextComponent_Select_Operator">
           <description>Operator</description>
-          <topic href="html/reference/node21.html#CONCRETE_TextComponent_Select_Operator" label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane&#10;"></topic>
+          <topic href="html/reference/node21.html#CONCRETE_TextComponent_Select_Operator" label="5.2.9 Text Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table">
           <description>Table</description>
@@ -2242,7 +2246,11 @@
      </context>
      <context id="CONCRETE_ComboBox_VerifySelectedIndex">
           <description>Check Selection of Entry by Index</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifySelectedIndex" label="5.2.3 Combo Box&#10;"></topic>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox_VerifySelectedIndex" label="5.2.3 Combo Component&#10;"></topic>
+     </context>
+     <context id="CONCRETE_List_SelectValues_ClickCount">
+          <description>Number of Clicks</description>
+          <topic href="html/reference/node17.html#CONCRETE_List_SelectValues_ClickCount" label="5.2.5 List&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_DropCellByColValueNew">
           <description>Drop on Cell from Row</description>
@@ -2276,21 +2284,21 @@
           <description>Path Type</description>
           <topic href="html/reference/node22.html#CONCRETE_Tree_DragByIndexPath_PathType" label="5.2.10 Tree&#10;"></topic>
      </context>
-     <context id="CONCRETE_TextComponent_InsertTextAtPattern_Operator">
-          <description>Operator</description>
-          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtPattern_Operator" label="5.2.9 Text Field/Text Area/Editor Pane/Text Pane&#10;"></topic>
-     </context>
      <context id="CONCRETE_TabbedPane_VerifySelectedTab">
           <description>Check Selection of Tab by Value</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTab" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTab" label="5.2.7 Tabbed Component&#10;"></topic>
+     </context>
+     <context id="CONCRETE_TextComponent_InsertTextAtPattern_Operator">
+          <description>Operator</description>
+          <topic href="html/reference/node21.html#CONCRETE_TextComponent_InsertTextAtPattern_Operator" label="5.2.9 Text Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Tree_VerifyTextAtMousePosition">
           <description>Check Text (Mouse Position)</description>
           <topic href="html/reference/node22.html#CONCRETE_Tree_VerifyTextAtMousePosition" label="5.2.10 Tree&#10;"></topic>
      </context>
      <context id="CONCRETE_TabbedPane">
-          <description>Tabbed Pane</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <description>Tabbed Component</description>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_VerifyValueInRow_Exists">
           <description>Exists</description>
@@ -2342,7 +2350,7 @@
      </context>
      <context id="autConfigSettingWizardPagePageContextId">
           <description>Configuring an AUT</description>
-          <topic href="html/reference/node38.html#autConfigSettingWizardPagePageContextId" label="8. Using Relative Paths&#10;"></topic>
+          <topic href="html/reference/node37.html#autConfigSettingWizardPagePageContextId" label="8. Using Relative Paths&#10;"></topic>
      </context>
      <context id="CONCRETE_GraphicApplication_CheckValues_Value1">
           <description>Value 1</description>
@@ -2390,7 +2398,7 @@
      </context>
      <context id="CONCRETE_TabbedPane_VerifySelectedTab_Title">
           <description>Title</description>
-          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTab_Title" label="5.2.7 Tabbed Pane&#10;"></topic>
+          <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTab_Title" label="5.2.7 Tabbed Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Tree_Move_NodeCount">
           <description>Number of Nodes</description>
@@ -2426,7 +2434,7 @@
      </context>
      <context id="CONCRETE_ComboBox_SelectValue_SearchType">
           <description>Search Type</description>
-          <topic href="html/reference/node15.html#CONCRETE_ComboBox_SelectValue_SearchType" label="5.2.3 Combo Box&#10;"></topic>
+          <topic href="html/reference/node15.html#CONCRETE_ComboBox_SelectValue_SearchType" label="5.2.3 Combo Component&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_SelectRowByValueNew_SearchType">
           <description>Search Type</description>

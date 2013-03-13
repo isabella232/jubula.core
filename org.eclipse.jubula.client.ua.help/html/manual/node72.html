@@ -1,30 +1,61 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.7 Starting and configuring AUT&#39;s </title>
-    <meta content="3.7 Starting and configuring AUT&#39;s " name="description" />
+    <title>3.6 Defining applications under test (AUT&#39;s )</title>
+    <meta content="3.6 Defining applications under test (AUT&#39;s )" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h1><a name="SECTION00470000000000000000"></a> <a name="StartAUT"></a><br /><span class="arabic">3</span>.<span class="arabic">7</span> Starting and configuring AUT&#39;s </h1>
+  <body><a name="autSettingWizardPagePageContextId"></a><a name="runningAutsViewContextId"></a><h1><a name="SECTION00460000000000000000"></a> <a name="Defineaut"></a><br /><span class="arabic">3</span>.<span class="arabic">6</span> Defining applications under test (AUT&#39;s ) </h1>
+    <p> Once you have created a Project , you can define (and edit) AUT&#39;s . You can define a new AUT straight after creating the Project in the Project wizard or you can do it later on via the Project properties <a href="node53.html#projectproperties">3.5.2</a>. <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>If you will be starting your AUT with the <i>autrun</i> command <a href="node82.html#autrun">3.7.2.6</a>, then you can automatically define your AUT <a href="node83.html#createAUTDef">3.7.2.7</a></b></td>
+        </tr>
+      </table>
+    <p> The AUT dialog (<a href="#autdialog">3.10</a>) appears when you define or edit an AUT . <p>
+      <div align="CENTER"><a name="autdialog"></a><a name="1104"></a><table>
+          <caption align="BOTTOM"><strong>Figure 3.10:</strong> AUT Dialog</caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image autdialog" border="0" height="503" src="./autdialog.png" width="493" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>If you know that you will be working with multiple versions of the same AUT (e.g. a version for Windows and Linux, or two versions that use different databases), then define <i>one</i> AUT here and create multiple configurations <a href="node74.html#configuringaut">3.7.1</a> for this AUT . This means that your different configurations will all share one object map. If you are working with multiple completely different AUT&#39;s , then define the different AUT&#39;s here.</b></td>
+        </tr>
+      </table>
+    <p>
+      <ol>
+        <li>Enter a meaningful and unique AUT name. This is used to easily identify the AUT later. <li>Select the toolkit the AUT uses from the combo box. <li>If you choose RCP, decide whether or not Jubula should generate names for components in the AUT which have not been named by your developers <a href="node338.html#RCPgenerate">4.2.5</a>. We recommend leaving this option checked, as it increases the robustness of your tests. <li>If you are starting a Java AUT and will be starting it using the <i>autrun</i> command <a href="node82.html#autrun">3.7.2.6</a>, or if the AUT will be launched from another AUT during the test <a href="node169.html#TasksLenientTest">3.15.2.2</a>, then enter the ID(s) for these AUT&#39;s here. <span class="textbf">IDs for AUT&#39;s started by the <i>autrun</i> command</span><br /> Enter the AUT IDs you will use for any AUT&#39;s started by the <i>autrun</i> command (the AUT ID for the AUT is given as a parameter in the <i>autrun</i> command <a href="node82.html#autrun">3.7.2.6</a>. <p><span class="textbf">IDs for AUT&#39;s launched by other AUT&#39;s </span><br /> The AUT ID will take a specific form <a href="node169.html#TasksLenientTest">3.15.2.2</a> and must be defined as such in the AUT definition. <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>If you will be starting your AUT from Jubula (i.e. via an AUT configuration <a href="node74.html#configuringaut">3.7.1</a>) then you do not need to enter any IDs here.</b></td>
+              </tr>
+            </table>
+        <li>From the list of Project languages, select which languages are supported by the AUT . <p> The languages you select are the languages the AUT can be started in. You will be able to translate the data in your Test Cases into these languages so that a Test Suite will test the AUT in the right language. <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+                <td><b>If you are editing the AUT and remove an AUT language for which you have already specified data, this will result in the data for that language being lost. </b></td>
+              </tr>
+            </table>
+          <p>
+        <li>If you want to start this AUT via Jubula , you can do so in the Project properties <a href="node74.html#configuringaut">3.7.1</a>. </ol>
+    <p> If you do not require an AUT configuration, because you will be starting the AUT using the <i>autrun</i> command <a href="node82.html#autrun">3.7.2.6</a>, then you do not need to create an AUT configuration. <p>
     <p>
       <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node73.html" name="tex2html1998"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">1</span> Configuring AUT&#39;s to be started with Jubula </a><ul>
-            <li><a href="node74.html" name="tex2html1999"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">1</span>.<span class="arabic">1</span> AUT activation</a></ul>
-          <br />
-        <li><a href="node75.html" name="tex2html2000"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span> Starting Java AUT&#39;s (Swing, SWT/RCP/GEF) with Jubula </a><ul>
-            <li><a href="node76.html" name="tex2html2001"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Two options to start Java AUT&#39;s </a><li><a href="node77.html" name="tex2html2002"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Configuring a Java AUT to be started by Jubula </a><li><a href="node78.html" name="tex2html2003"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Basic Java AUT configuration</a><li><a href="node79.html" name="tex2html2004"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Advanced AUT configuration</a><li><a href="node80.html" name="tex2html2005"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">5</span> Expert AUT configuration</a><li><a href="node81.html" name="tex2html2006"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">6</span> Starting Java AUT&#39;s with the <i>autrun</i> command</a><li><a href="node82.html" name="tex2html2007"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">7</span> Creating an AUT definition from a running AUT </a></ul>
-          <br />
-        <li><a href="node83.html" name="tex2html2008"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">3</span> Starting Web AUT&#39;s (HTML, RAP) with Jubula </a><ul>
-            <li><a href="node84.html" name="tex2html2009"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Basic HTML and RAP AUT configuration</a><li><a href="node85.html" name="tex2html2010"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Advanced HTML and RAP AUT configuration</a><li><a href="node86.html" name="tex2html2011"><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Expert HTML and RAP AUT configuration</a></ul>
-      </ul>
-      <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

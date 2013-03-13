@@ -1,37 +1,22 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.22.2 AUT Agent preferences</title>
-    <meta content="3.22.2 AUT Agent preferences" name="description" />
+    <title>3.21.3 Reentry types</title>
+    <meta content="3.21.3 Reentry types" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="prefPageServerContextId"></a><a name="autConfigPropDialogContextId"></a><a name="autConfigSettingWizardPagePageContextId"></a><h2><a name="SECTION004222000000000000000"> <span class="arabic">3</span>.<span class="arabic">22</span>.<span class="arabic">2</span> AUT Agent preferences</a></h2>
-    <p><a name="TasksPrefsAgent"></a><a name="4555"></a> <a name="4556"></a> <a name="4557"></a> <a name="4558"></a><p> You can find the AUT Agent preference page under: <br /><i>Test-AUT Agent </i><br /> in the preferences dialog. <p>
-      <ol>
-        <li>In the AUT Agent preference page, you can add, edit and delete AUT Agent s and port numbers. <li>The hostnames and port numbers you enter here are displayed in the drop-down list for the &quot;<i>Connect to AUT Agent </i>&quot; button on the toolbar. You will be able to connect to these hostnames on these port numbers when you have started an AUT Agent on them <a href="node35.html#TasksAgentExternal">3.1.1</a>. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>The AUT Agent preference page can also be accessed from the AUT configuration dialog which you can open from the Project properties.</b></td>
-            </tr>
-          </table>
-      </ol>
-    <p>
-      <div align="CENTER"><a name="serverconfig"></a><a name="4573"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.27:</strong> AUT Agent Configuration Dialog</caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image serverconfig" border="0" height="536" src="./serverconfig.png" width="694" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
+  <body>
+    <h2><a name="SECTION004213000000000000000"> <span class="arabic">3</span>.<span class="arabic">21</span>.<span class="arabic">3</span> Reentry types</a></h2>
+    <p><a name="4502"></a> <a name="4503"></a> <a name="4504"></a> <a name="4505"></a> <a name="4506"></a> <a name="4507"></a> <a name="4508"></a> <a name="4509"></a><p><a name="reentrytype"></a>The reentry type specifies how the test should continue once the Event Handler Test Case has been executed. <p>
+      <dl>
+        <dt><strong>Break</strong><dd>The test execution leaves the Test Case in which the error occurred and continues at the next Test Case or Test Step . <dt><strong>Continue</strong><dd>The test execution carries on at the next Test Case or Test Step . This is a good option when the error is relatively unimportant and does not affect the following Test Steps . <dt><strong>Exit</strong><dd>The test execution is stopped. Use this when the error is so severe that the test cannot be continued. <dt><strong>Return</strong><dd>The test execution leaves the Test Case in which the activated Event Handler is nested. This could be the current Test Case or one higher up in the hierarchy. This option is useful if you have a use case, which contains Test Cases to test a particular area or function. You can decide to leave this part of the test, and carry on at the next use case. <i>Return</i> will continue at the next Test Suite in a Test Job if it is activated as a default Event Handler or if there are no further steps in the current Test Suite . <dt><strong>Pause</strong><dd>The test execution is paused. To restart the test, click the <i>pause</i> button in the toolbar in the Jubula client . <dt><strong>Retry</strong><dd>The failed Test Step is repeated as many times as you specify in the Properties View . If the Test Step is successful on repeating, it is marked as successful after retrying. If the Test Step fails on all retries, the error type is passed on to the next parent Test Case and this Test Step (and therefore the test) is marked as failed. </dl>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

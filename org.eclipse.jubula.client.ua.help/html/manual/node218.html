@@ -1,36 +1,22 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.22.1 Test preferences</title>
-    <meta content="3.22.1 Test preferences" name="description" />
+    <title>3.21.2 Event types</title>
+    <meta content="3.21.2 Event types" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="prefPageBasicContextId"></a><h2><a name="SECTION004221000000000000000"> <span class="arabic">3</span>.<span class="arabic">22</span>.<span class="arabic">1</span> Test preferences</a></h2>
-    <p><a name="4511"></a> <a name="4512"></a> <a name="gdprefs"></a><p>
-      <div align="CENTER"><a name="gdprefs"></a><a name="8141"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.26:</strong> Jubula Preference Dialog</caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image gdprefs" border="0" height="536" src="./gdprefs.png" width="694" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <p> In the preferences dialog, select <i>Test</i> from the tree on the left hand side. <p> From this page, you can configure your preferences for: <dl>
-        <dt><strong>Auto-scrolling and -expanding:</strong><dd>When the checkbox is marked, the views and browsers in Jubula automatically scroll in the direction you move the mouse when you are dragging and dropping. Trees will also be automatically expanded when you hover over them while dragging items. <dt><strong>Minimizing the ITE :</strong><dd>When the checkbox is marked, Jubula is automatically minimized when test execution begins. This is useful if you are letting tests run on the same machine you are specifying on. <dt><strong>AUT confirmation dialog:</strong><dd>When the checkbox is marked, a dialog appears to check if you are sure when you click the &quot;<i>stop AUT </i>&quot; button. <dt><strong>Original Test Case name:</strong><dd>When the checkbox is activated, you can see the original name of a referenced Test Case in brackets behind a new name you enter for the Test Case . This can help you to see and search for Test Cases you have reused. <dt><strong>Test Step information:</strong><dd>When this checkbox is activated, you see the details about the Test Step (the component name and type, and the action) in square brackets behind the Test Step name. If you do not want to see these details, you can deactivate this checkbox. <dt><strong>Show referenced children:</strong><dd>When this option is not active, you can only see referenced parent Test Cases in the Test Case Browser . The referenced Test Cases contained in these Test Cases are not displayed. This action can be useful if you want to improve the speed of working with the ITE . <dt><strong>Switching to the Functional Test Execution Perspective :</strong><dd>When the test begins, Jubula can automatically change to the Functional Test Execution Perspective . You can choose to always be asked, to always change, or to never change. <dt><strong>Data files location:</strong><dd>You can specify a location where external data files (e.g. Excel files) are held, or use the workspace directory as the base location. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>The advantage of using the workspace as a location for your data files is that you can view these in the navigator view directly in the ITE . Windows users can even open Excel files from the ITE using the In-Place editor.</b></td>
-            </tr>
-          </table>
-      </dl>
+  <body>
+    <h2><a name="SECTION004212000000000000000"> <span class="arabic">3</span>.<span class="arabic">21</span>.<span class="arabic">2</span> Event types</a></h2>
+    <p><a name="4486"></a> <a name="4487"></a> <a name="4488"></a> <a name="4489"></a> <a name="4490"></a> <a name="4491"></a><p><a name="eventtype"></a><p> The event type is the type of error the Event Handler will react to. There are four events in Jubula . They correspond to common errors which happen during test execution. <p>
+      <dl>
+        <dt><strong>Component not found</strong><dd>If a component in the AUT cannot be found, an error occurs. The component might not be found if it has been changed, is not (yet) visible or has been deleted. <dt><strong>Check failed</strong><dd>For some actions, you can specify an expected value to check. If the value you specify is not true, then a <i>check failed</i> error occurs. <dt><strong>Action error</strong><dd>Action errors occur when an action cannot be carried out on a component, when the data is invalid (e.g. an invalid menu path) or when an action takes too long and there is a timeout. <dt><strong>Configuration error</strong><dd>Configuration errors occur when there is an internal problem, for example a changed implementation class in the XML file. </dl>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

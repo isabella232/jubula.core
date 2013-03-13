@@ -1,37 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.11.5 Adding and inserting new Test Cases to a Test Case </title>
-    <meta content="3.11.5 Adding and inserting new Test Cases to a Test Case " name="description" />
+    <title>3.11.2.3 Tips and tricks for using the Test Case library</title>
+    <meta content="3.11.2.3 Tips and tricks for using the Test Case library" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="dialogTestcaseAddNewContextId"></a><a name="dialogTestcaseInsertNewContextId"></a><h2><a name="SECTION004115000000000000000"> <span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">5</span> Adding and inserting new Test Cases to a Test Case </a></h2>
-    <p>
-      <ol>
-        <li>Open the Test Case Editor by double-clicking on the Test Case you want to edit in the Test Case Browser . <li>From the context-sensitive menu, select: <table border="0" style="margin:0px;padding:0px;">
-            <tr>
-              <td bgcolor="#DDDDDD">Add</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">New Test Case </td>
-            </tr>
-          </table>
-          <br />(This places the Test Case after any other items in the Test Case Editor .) or <br />
-          <table border="0" style="margin:0px;padding:0px;">
-            <tr>
-              <td bgcolor="#DDDDDD">Insert</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">New Test Case </td>
-            </tr>
-          </table>
-          <br />(This places the Test Case above the currently selected item in the Test Case Editor .) <p>
-        <li>In the dialog that appears, enter a meaningful name for the new Test Case . <li>Click &quot;<i>OK</i>&quot;. <li>The Test Case appears in the Test Case Editor in the parent Test Case and also appears in the Test Case Browser . The Test Case is marked with a small arrow to show that it is reused here. The name of the Test Case is contained in angled brackets (<tt>&quot;&lt; &gt;&quot;</tt>) to show that it is the same name that you used when you specified the Test Case . <li>Save the changes in the editor. </ol>
-    <p>
+  <body>
+    <h3><a name="SECTION004112300000000000000"></a> <a name="UnderstandingLibrary"></a><br /><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Tips and tricks for using the Test Case library </h3> The Test Cases in the library are organised into actions. In the <i>basic</i> category, you will find the various actions offered by Jubula . The <i>complex</i> category contains some example keywords which are built up of more than one Test Case . <p> When specifying your tests, you need to find and choose which actions you will need. This takes some practice, but there are some hints which can help you: <p><span class="textbf">High-Level Actions</span><br /> Jubula executes <i>high-level</i> actions. This means that if you want to select something from a menu using the menupath, for example, you need to look in the category: <br /><i>Actions (basic)/Select/Menu Bar</i><br /> and select the Test Case : <br /><i>ub_mbr_selectEntry_byTextpath</i><br /> The Test Case finds the menu, opens it, and clicks the item you specify. <br />
+    <p><span class="textbf">Abstract components</span><br /> There are some actions which are executable on many different components. Clicks, for example can be executed on pratically all components in the interface. You can also check text on labels, combo boxes and text fields. Obviously, it makes sense to specify your Test Cases as abstractly as possible so that they can be reused in more places. This helps keep the maintenance low later. <p> You will notice in the library that there is no <i>Button</i> category under the <i>Click</i> category. Instead, you will find various click actions specified for <i>Graphics Component (grc)</i>. This is because all components which support clicks belong to the <i>Graphics Component</i> group. <p> In the same way, you will find the category <i>Check/Component with Text</i>. You can use the check actions from this category to check text on any component with text - buttons, text fields, combo boxes, labels. <br />
+    <p><span class="textbf">Parameters</span><br /> Different actions require different data. Some Test Cases in the library have been pre-configured with data to make test specification easier (look in the category <i>Input via Keyboard/Application/Key Combination</i> for a long list). <p> Some actions let you choose whether you want to enter data using an <i>indexpath</i> or a <i>textpath</i>. We recommend using the textpath so that you are not dependent on the order of e.g. menu entries or tabbed panes. <p> To make text-based parameters more robust, Jubula often lets you choose an <i>operator</i>. You can choose between <i>equals, matches, simple match, not equals</i>. Using matches lets you use regular expressions so that you don&#39;t have to hard-code the whole text parameter. <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

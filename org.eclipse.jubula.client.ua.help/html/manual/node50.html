@@ -9,39 +9,12 @@
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="databaseMigrationAssistantContextId"></a><h1><a name="SECTION00440000000000000000"></a> <a name="DBMigrate"></a><br /><span class="arabic">3</span>.<span class="arabic">4</span> Migrating to newer versions of Jubula </h1>
-    <p> If a new version of Jubula uses a new Database scheme, you will be informed of this when attempting to connect to the Database . <p> If this is the case, please follow these instructions: <p>
-      <ol>
-        <li>From the old version of Jubula , export and backup all the Projects from the database. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>Make sure you also export and back up any library Projects used in your tests, e.g. the unbound modules Projects . </b></td>
-            </tr>
-          </table>
-        <li>Back up any extensions you have made to Jubula : any customized plugins and implementation classes you have written. <li>Export your Database preferences from the workspace <a href="node227.html#TasksPrefsImport">3.22.9</a>. <li>Uninstall the old version of Jubula . <li>Clear (empty) the Database schema for all necessary Jubula users. You can do this via a database administration tool which will let you carry out the action <i>Drop Tables</i>. <li>Install the new version of Jubula . <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>If you have AUT Agents running on other machines, be sure to install the new version of the AUT Agent there too.</b></td>
-            </tr>
-          </table>
-        <li>Add any extension plugins you backed up from the old version. <li>Import your Database preferences into Jubula . <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>If you are testing RCP AUT&#39;s , bear in mind that you will need to remove the old version of the RCP Remote Control plugin from your application and insert the new version in its place. We also recommend starting your application with <tt>&quot;-clean&quot;</tt> to ensure that the old RCP Remote Remote Control plugin is no longer used.</b></td>
-            </tr>
-          </table>
-        <li>Start Jubula . <p>
-      </ol>
-    <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>You will also need to follow the instructions on updating the version of the unbound modules projects you use <a href="node61.html#changingreusedprojectversion">3.5.3.1</a></b></td>
-        </tr>
-      </table>. <p>
+  <body>
+    <h1><a name="SECTION00440000000000000000"> <span class="arabic">3</span>.<span class="arabic">4</span> Migrating to newer versions of Jubula </a></h1>
+    <p> There are various steps that need to be taken to update your environment and your Projects to a new version of Jubula . Instructions on performing the necessary updates are in the Installation Manual in the chapter: <i>Migrating to new versions of Jubula </i>. <p>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

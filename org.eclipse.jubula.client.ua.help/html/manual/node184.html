@@ -1,31 +1,41 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.18.3 Deleting from the Object Mapping Editor </title>
-    <meta content="3.18.3 Deleting from the Object Mapping Editor " name="description" />
+    <title>3.18.2.4 The configuration view in the Object Mapping Editor </title>
+    <meta content="3.18.2.4 The configuration view in the Object Mapping Editor " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="objectMapEditorContextId"></a><h2><a name="SECTION004183000000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">3</span> Deleting from the Object Mapping Editor </a></h2>
+  <body><a name="objectMapEditorContextId"></a><h3><a name="SECTION004182400000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">2</span>.<span class="arabic">4</span> The configuration view in the Object Mapping Editor </a></h3>
+    <p><a name="3768"></a> <a name="3769"></a> <a name="3770"></a> <a name="TasksOMConfiguration"></a><p> In the configuration view in the Object Mapping Editor you can alter the object recognition for the test execution. <p><span class="textbf">Understanding object recognition</span><br /> Object recognition in Jubula is based on a calculation which takes various factors into account. For some applications, some factors may be more important than others, and you can change their weighting accordingly. <p> The factors Jubula uses in the calculation are: <p>
+      <dl>
+        <dt><strong>Name:</strong><dd>The name of the object within the AUT code, as given by the developer (if a name was given). <dt><strong>Path:</strong><dd>The route through the AUT hierarchy to get to this component. <dt><strong>Context:</strong><dd>The components in the vicinity of this component. <dt><strong>Threshold:</strong><dd>This determines what percentage value a component in the AUT must have in order to be considered as the originally mapped component. Components with a value under the threshold are not considered. The component with the highest value above the threshold is chosen during execution. </dl>
+    <p><span class="textbf">Options for object recognition</span> You can change the profile used during test execution using the combo box: <p>
+      <dl>
+        <dt><strong>Standard:</strong><dd>This is the default profile. It has a high value for name weight and lower values for context and path. The threshold is 85%. <dt><strong>Strict:</strong><dd>In this profile, the values for name, path and context are the same as in the standard profile. The threshold is at 100%. This means that a component must exactly correspond to the originally mapped component. <dt><strong>Given names:</strong><dd>In this profile, only the component name is considered. A component will only be selected if it has the same name as the originally mapped component. This profile can be used when you are sure that all of the components in the AUT have unique names. <dt><strong>Custom:</strong><dd>This profile lets you move the sliders yourself. You can lock sliders to stop them being affected by other sliders. </dl>
     <p>
-      <ol>
-        <li>You can delete items from the Object Mapping Editor using the &quot;<i>delete</i>&quot; option from the context-sensitive menu. <li>You can also select the item you want to delete and press <tt>&raquo;DELETE&laquo;</tt>. <li>If you delete a component name that is still used in a Test Case for this Test Suite it will reappear when you select &quot;<i>refresh</i>&quot; from the context-sensitive menu. </ol>
+      <div align="CENTER"><a name="objectmappingpref"></a><a name="3792"></a><table>
+          <caption align="BOTTOM"><strong>Figure 3.23:</strong> Object Mapping Configuration</caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image objectmappingpref" border="0" height="397" src="./objectmappingpref.png" width="345" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
     <p>
       <table>
         <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>If you want to remove all unused mappings from the Object Mapping Editor , then use the <i>Cleanup</i> option <a href="node185.html#TasksOMCleanup">3.18.3.1</a>.</b></td>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>Take care when manually customizing the object mapping settings. You may have test execution problems if you have set the values too strictly, or not strictly enough.</b></td>
         </tr>
       </table>
     <p>
       <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node185.html" name="tex2html3443"><span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Removing unused component names from the Object Mapping Editor </a></ul>
-      <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

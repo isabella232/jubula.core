@@ -1,125 +1,30 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.2.2 Naming conventions for component names</title>
-    <meta content="5.2.2 Naming conventions for component names" name="description" />
+    <title>4.3 Testing GEF AUT&#39;s </title>
+    <meta content="4.3 Testing GEF AUT&#39;s " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="newComponentNameContextId"></a><a name="compNameViewContextId"></a><h2><a name="SECTION00622000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Naming conventions for component names</a></h2><a name="BPComponentNames"></a><p> Component names in Jubula are your link between the test specification and the object mapping. Naming components well means that your mapping will be easy to understand and maintain, as you will always be able to tell what components you are referring to from the names alone. <p> We suggest the following three-part structure for naming components: <br /><tt>&quot;&lt;LOCATION&gt;_&lt;FUNCTION&gt;_&lt;TYPE&gt;&quot;</tt><p> So the components in a login dialog could be named: <ul>
-        <li><i>LoginDialog_Username_cti</i><li><i>LoginDialog_Password_cti</i><li><i>LoginDialog_Language_cbx</i><li><i>LoginDialog_OK_btn</i><li><i>LoginDialog_Cancel_btn</i></ul>
-    <p>
+  <body><a name="projectWizardContextId"></a><a name="autConfigSettingWizardPagePageContextId"></a><a name="autConfigPropDialogContextId"></a><h1><a name="SECTION00530000000000000000"></a> <a name="geftest"></a><br /><span class="arabic">4</span>.<span class="arabic">3</span> Testing GEF AUT&#39;s </h1>
+    <p> The GEF toolkit is a sub-toolkit of RCP. To be able to test AUT&#39;s that contain GEF components, you must select <i>RCP</i> as the toolkit in the Project properties. <p> The same points about the RCP Remote Control plugin and the keyboard files mentioned in the section on RCP AUT&#39;s <a href="node330.html#rcpaut">4.2</a> are also valid for testing AUT&#39;s with GEF components. <p> Testing GEF components is a little different to testing other components in Jubula , because we highly recommend that the software developers use our accessibility plug-in in the AUT to make the testing of GEF components more robust. <p>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>Using the <i>New Component Name</i> feature in Jubula , <a href="node151.html#TasksCreateNewCompName">3.13.1</a>, you can create component names for your AUT at the beginning to set conventions the whole team should use.</b></td>
+          <td><b>GEF testing is supported from GEF version 3.0 up to but not including 4.0. We test our GEF support on GEF version 3.7.2.</b></td>
         </tr>
       </table>
-    <p> The table below gives some common abbreviations to distinguish between component types. <p>
-      <br />
-    <p>
-    <div align="CENTER"><a name="6554"></a><table>
-        <caption><strong>Table 5.1:</strong> Component Naming</caption>
-        <tr>
-          <td>
-            <div align="CENTER">
-            </div>
-            <table border="1" cellpadding="3">
-              <tr valign="BASELINE">
-                <td align="LEFT"><b>Abbreviation</b></td>
-                <td align="LEFT"><b>Component</b></td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>app</tt></td>
-                <td align="LEFT">Application</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>btc</tt></td>
-                <td align="LEFT">Button Component</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>btn</tt></td>
-                <td align="LEFT">Button / RadioButton / CheckBox</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>cbx</tt></td>
-                <td align="LEFT">ComboBox</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>grc</tt></td>
-                <td align="LEFT">Graphics Component</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>hyl</tt></td>
-                <td align="LEFT">HTML Hyperlink</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>ctx</tt></td>
-                <td align="LEFT">Component with Text</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>cti</tt></td>
-                <td align="LEFT">Component with Text Input</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>lbl</tt></td>
-                <td align="LEFT">Label</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>lst</tt></td>
-                <td align="LEFT">List</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>mbr</tt></td>
-                <td align="LEFT">Menu Bar</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>tpn</tt></td>
-                <td align="LEFT">Tabbed Pane</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>tbl</tt></td>
-                <td align="LEFT">Table</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>tbi</tt></td>
-                <td align="LEFT">Toolbar Item</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>txf</tt></td>
-                <td align="LEFT">TextField / TextArea / EditorPane / TextPane</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>tre</tt></td>
-                <td align="LEFT">Tree</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>trt</tt></td>
-                <td align="LEFT">Tree Table</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT"><tt>brw</tt></td>
-                <td align="LEFT">Web Browser</td>
-              </tr>
-              <tr valign="BASELINE">
-                <td align="LEFT">&nbsp;</td>
-                <td align="LEFT">&nbsp;</td>
-              </tr>
-            </table><a name="compconventions"></a></td>
-        </tr>
-      </table>
-    </div>
-    <p>
-    <br />
-    <p>
     <p>
       <br />
-    <p>
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node341.html" name="tex2html5441"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Testing GEF components</a><li><a href="node342.html" name="tex2html5442"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Using the GEF inspector</a><li><a href="node343.html" name="tex2html5443"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Adding GEF accessibility to your AUT </a><ul>
+            <li><a href="node344.html" name="tex2html5444"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Setting up your Workspace</a><li><a href="node345.html" name="tex2html5445"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Walkthrough</a><li><a href="node346.html" name="tex2html5446"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">3</span>.<span class="arabic">3</span> References</a></ul>
+      </ul>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

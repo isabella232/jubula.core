@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.6.5 Adding your own functions</title>
-    <meta content="3.12.6.5 Adding your own functions" name="description" />
+    <title>3.12.6.2 Pre-defined functions</title>
+    <meta content="3.12.6.2 Pre-defined functions" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,9 +10,32 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION004126500000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">6</span>.<span class="arabic">5</span> Adding your own functions</a></h3> You can also add your own functions using an extension point. This is described in the Extension Manual. <p>
+    <h3><a name="SECTION004126200000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">6</span>.<span class="arabic">2</span> Pre-defined functions</a></h3> The following functions are available directly in Jubula : <p><span class="textbf">Mathematical functions</span><br /> The following functions give their results as decimal numbers, e.g. 1.0, 1.2 etc. <dl>
+        <dt><strong>add</strong><dd>Adds 0 or more numbers to 0, e.g.: <tt>&quot;?add(1,2)&quot;</tt>. <dt><strong>sub</strong><dd>Subtracts the second number from the first: <tt>&quot;?sub(3,2)&quot;</tt>. <br /> This function only accepts two numbers. <dt><strong>mult</strong><dd>Multiplies 0 or more numbers by 1 e.g.: <tt>&quot;?mult(2,4)&quot;</tt>. <dt><strong>div</strong><dd>Divides the first number by the second: <tt>&quot;?div(2,1)&quot;</tt>. <br /> This function only accepts two numbers. <dt><strong>trunc</strong><dd>Takes two arguments, the decimal to be truncated and the precision (as an integer) to truncate the decimal to. Use <tt>&quot;0&quot;</tt> to cut off the number to no decimal places (i.e. to receive a plain integer), and use <tt>&quot;1&quot;</tt> to cut off the decimal to one decimal place etc: <tt>&quot;?trunc(2.396,0)&quot;</tt> gives <tt>&quot;2&quot;</tt> and <tt>&quot;?trunc(2.789,1) gives <tt>&quot;2.7&quot;</tt>&quot;</tt>. <dt><strong>round</strong><dd>Takes two arguments, the decimal to be rounded and the precision (as an integer) to round to. This function uses <i>half-up</i> rounding to round the number so that if the final decimal place after rounding is 5 or higher, the final number will be incremented by 1 e.g.: <tt>&quot;?round(2.56,1)&quot;</tt> gives <tt>&quot;2.6&quot;</tt>. If the final number after rounding is 4 or less, there is no incrementation, eg. <tt>&quot;?round(2.46,1)&quot;</tt> gives <tt>&quot;2.4&quot;</tt>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>It is currently only possible to use numbers formatted with the decimal mark <i>period</i> or <i>fullstop</i> (<tt>&quot;.&quot;</tt>). Thousands separators may not be used. For example, <tt>&quot;1.5&quot;</tt> is accepted, but <tt>&quot;1,5&quot;</tt> is not. <tt>&quot;1000&quot;</tt> can be entered but <tt>&quot;1,000&quot;</tt> cannot. Entering <tt>&quot;1.000&quot;</tt> is equivalent to entering <tt>&quot;1&quot;</tt>.</b></td>
+            </tr>
+          </table>
+      </dl>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>Use single quotes around negative numbers, e.g. &#39;-0.5&#39;.</b></td>
+        </tr>
+      </table>
+    <p><span class="textbf">Date functions</span><br />
+      <dl>
+        <dt><strong>now</strong><dd>Saves the current date in an internal format that can be used as a basis for the formatDate and modifyDate functions. This function takes no arguments: <tt>&quot;?now()&quot;</tt>. <dt><strong>formatDate</strong><dd>Puts a date into a specific format. The date to be formatted is entered as the first argument, followed by the format string e.g. <tt>&quot;?formatDate(?now(), dd-MM-yyyy)&quot;</tt>. The formats that can used here are the formats from the SimpleDateFormat class in Java. <dt><strong>parseDate</strong><dd>Reads a value that is a date and parses it into an internal format based on the format string given (i.e. how the date should be understood by Jubula ). The first argument is the date, and the second is the format string <tt>&quot;?parseDate(2011.06.25,yyyy.MM.dd)&quot;</tt>. This function should be used when reading and working with dates shown in the AUT . <dt><strong>modifyDate</strong><dd>This function can add days (d), months (M), and years (y) to a given date. The date must first be parsed (i.e. using parseDate) so that the correct internal format is used. This function takes two arguments: the first is the date to modify, and the second is the modification to perform, e.g. <tt>&quot;?modifyDate(?now(),1d)&quot;</tt>. Additions are entered as positive integers (but without a plus sign, e.g. 1d, 1M, 1y) and subtractions are entered as negative integers, e.g. -1d, -1M, -1y. </dl>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>If you want to use the result of a date function as a part of your test data (i.e. to enter or check), then you will most likely need to use formatDate on any date modifications you have performed.</b></td>
+        </tr>
+      </table>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

@@ -1,27 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.18.1 Object mapping</title>
-    <meta content="3.18.1 Object mapping" name="description" />
+    <title>3.17.1 Creating manual tests</title>
+    <meta content="3.17.1 Creating manual tests" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="objectMapEditorContextId"></a><h2><a name="SECTION004181000000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">1</span> Object mapping</a></h2><a name="objectmappingtasks"></a><p><a name="3595"></a><p> Object mapping is the joining of the component names you have specified in Test Steps to the real components in the AUT . Each component name you have specified in your Test Cases and used in a Test Suite will be shown in the Object Mapping Editor to be mapped. <p>
+  <body><a name="testSpecificationViewContextId"></a><h2><a name="SECTION004171000000000000000"> <span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">1</span> Creating manual tests</a></h2><a name="TasksManualCreate"></a><p> Jubula also lets you create manual tests to be executed and analyzed. <p> A Test Case containing manual Test Steps is the same as an automated Test Case for all intents and purposes. You can add data, reuse it in other Test Cases , and add it to Test Suites to be executed. The only difference is during execution: manual tests are executed in an interactive mode <a href="node177.html#TasksManualExec">3.17.2</a>. <p> To create a manual test: <ol>
+        <li>Create a Test Case <a href="node111.html#TasksCreateTC">3.11.1</a><li>Add the module for <i>manual Test Case </i> from the library of Test Cases (category: Manual Test Step ). <li>In the Properties View , you can enter three pieces of data: <dl>
+            <dt><strong>The action(s) to perform:</strong><dd>Enter a short description which should appear when the test is being executed. You can also enter referenced parameters <a href="node123.html#TasksTestdataReferences">3.12.3</a> or variables <a href="node125.html#TasksVariables">3.12.5</a> here to specify different data for the test. <dt><strong>The expected behaviour:</strong><dd>Enter the description (any any data) of the expected outcome of the Test Step . <dt><strong>Timeout:</strong><dd>Enter how long the test execution should wait before receiving the information that the Test Step passed or failed. We recommend setting this timeout value high enough for a manual tester to be able to complete the Test Step and enter any comments. </dl>
+        <li>Once your manual Test Case is finished, then you can add it to a Test Suite <a href="node98.html#TasksEditorAdd">3.9.2</a> to be executed <a href="node177.html#TasksManualExec">3.17.2</a>. </ol>
+    <p>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>New component names you have created in the Object Mapping Editor but have not yet used in Test Cases will also be shown in the Object Mapping Editor . </b></td>
+          <td><b>We recommend keeping manual Test Cases in a separate category to automated Test Cases . Although it is possible to combine manual and automated Test Cases in one test, make sure you know which Test Suites can be run completely automatically for your unattended tests!</b></td>
         </tr>
       </table>
-    <p> To be able to carry out object mapping, you must have: <p>
-      <ul>
-        <li>started and connected to the AUT Agent <a href="node34.html#Agent">3.1</a><li>created a Test Case containing Test Steps <a href="node108.html#TasksCreateTC">3.11.1</a><li>added Test Cases to a Test Suite <a href="node159.html#WorkingWithSuites">3.14</a><li>specified an AUT <a href="node71.html#Defineaut">3.6</a><li>configured an AUT if you want to start the AUT via Jubula <a href="node73.html#configuringaut">3.7.1</a><li>chosen an AUT for the Test Suite <a href="node161.html#confsuite">3.14.2</a><li>checked that your current working language is supported by the chosen AUT . <li>connected to the AUT Agent <a href="node39.html#TasksAgentConnect">3.1.2</a><li>started the AUT to be mapped <a href="node192.html#startaut">3.19.2</a><li>opened the Object Mapping Editor <a href="node178.html#TasksOpenOME">3.18.2.1</a></ul>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

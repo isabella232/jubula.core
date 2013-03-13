@@ -1,33 +1,38 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.9.9 Saving Test Cases from an editor as a new Test Case </title>
-    <meta content="3.9.9 Saving Test Cases from an editor as a new Test Case " name="description" />
+    <title>3.9.6 Commenting out items in editors</title>
+    <meta content="3.9.6 Commenting out items in editors" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerSpecTestCaseEditorContextId"></a><a name="testSuiteEditorContextId"></a><h2><a name="SECTION00499000000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">9</span> Saving Test Cases from an editor as a new Test Case </a></h2><a name="TasksSaveAsTC"></a><p><a name="1857"></a> <a name="1858"></a><p> Jubula lets you save selected Test Cases from other Test Cases and from Test Suites . This lets you create a new keyword that contains the selected modules without having to manually find them and reuse them. <p>
+  <body><a name="guidancerSpecTestCaseEditorContextId"></a><a name="testSuiteEditorContextId"></a><h2><a name="SECTION00496000000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">6</span> Commenting out items in editors</a></h2><a name="TasksEditorDeactivate"></a><p> In the Test Case Editor and the Test Suite Editor , you can deactivate and reactivate Test Cases and Test Steps . <p>
       <ol>
-        <li>Open the Test Case Editor or Test Suite Editor by double-clicking on the Test Case or Test Suite you want to edit. <li>Select the Test Cases you want to save into the new Test Case by single-clicking them. Use <tt>&raquo;CTRL&laquo;</tt> to select more than one item. <li>Right-click in the editor and select: <br />
+        <li>Select the Test Steps or Test Cases you want to deactivate and select: <br />
           <table border="0" style="margin:0px;padding:0px;">
             <tr>
-              <td bgcolor="#DDDDDD">Refactor</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">Save as new...</td>
+              <td bgcolor="#DDDDDD">Set as active / inactive</td>
             </tr>
-          </table> . <li>When prompted, enter a name for the new Test Case . <li>A new Test Case will be created containing the Test Cases you selected, with the data and component names they used in the current editor. <li>The Test Case you just created is visible in the Test Case Browser . </ol>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-          <td><b>Use this feature if you have created reusable Test Cases that are correctly modularized, but you require them again (e.g. prerequisites for another Test Case ). If the sequence of actions you require is a recurring logical sequence (e.g. enter username, enter password, then click OK for a login dialog), then we strongly recommend using the <i>Extract</i> function <a href="node100.html#TasksEditorExtract">3.9.7</a> instead. This will give you one reusable module, and therefore one central place to make any changes should this sequence change.</b></td>
-        </tr>
-      </table>
+          </table>
+          <br /> from the context menu. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You can also use <tt>&raquo;CTRL+7&laquo;</tt> to toggle the items as active or inactive.</b></td>
+            </tr>
+          </table>
+        <li>The items you selected will be set as inactive. They are shown with green text and the sign <code>//</code> before the Test Case or Test Step name. <li>Any inactive items are not considered in Test Suite validation, nor are they executed during a test run. <li>You can reactivate the items by selecting: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Set as active / inactive</td>
+            </tr>
+          </table>
+          <br /> from the context menu. </ol>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

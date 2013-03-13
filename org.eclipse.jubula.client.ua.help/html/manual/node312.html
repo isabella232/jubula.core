@@ -1,28 +1,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>4.2 Testing RCP AUT&#39;s </title>
-    <meta content="4.2 Testing RCP AUT&#39;s " name="description" />
+    <title>3.33.2.3 Adapting tests to improve data collection</title>
+    <meta content="3.33.2.3 Adapting tests to improve data collection" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="projectWizardContextId"></a><a name="autSettingWizardPagePageContextId"></a><a name="autConfigSettingWizardPagePageContextId"></a><a name="supportRCPAUTStartDelayContextId"></a><a name="autConfigPropDialogContextId"></a><h1><a name="SECTION00520000000000000000"></a> <a name="rcpaut"></a><br /><span class="arabic">4</span>.<span class="arabic">2</span> Testing RCP AUT&#39;s </h1>
-    <p> You can write tests for RCP AUT&#39;s by selecting the toolkit <i>concrete</i> or <i>RCP</i> from the Project properties. If you will need to test RCP-specific components (such as toolbars with drop-down menus, or tree-tables), you will need to select <i>RCP</i> as the toolkit for the Project . <p> When you select RCP as the Project toolkit, the library Projects <i>unbound_modules_concrete</i>, <i>unbound_modules_swt</i> and <i>unbound_modules_rcp</i> are automatically reused in your Project . The actions in these libraries are described in the reference manual --&gt;<i>Reference Manual</i> <a href="../reference/node6.html#actparam"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>The GEF toolkit is a subset of the <i>RCP</i> toolkit and is described in a later section <a href="node319.html#geftest">4.3</a>. </b></td>
-        </tr>
-      </table>
+  <body>
+    <h3><a name="SECTION004332300000000000000"> <span class="arabic">3</span>.<span class="arabic">33</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Adapting tests to improve data collection</a></h3> You should bear the following in mind when using Chronon for recording information in automated tests. <br />
+    <p><span class="textbf">Performance in the AUT may be affected</span><ul>
+        <li>The recordings that Chronon performs are very memory-intensive. For this reason, you may notice performance differences in your AUT . It may also be necessary to increase the step delay for your tests, and / or add extra synchronization to compensate for the performance differences when Chronon is running. <li>For these reasons, we do not recommend having Chronon configured as a part of your standard AUT configuration. Instead, we suggest running tests with Chronon monitoring when needed. <li>We also strongly suggest ensuring that your AUT and the machine it is running on have sufficient memory to cope with the increased monitoring activity. </ul>
+    <p><span class="textbf">Stopping or restarting the AUT will cause the previously recorded information to be lost</span><ul>
+        <li>The recording files are written when the AUT is stopped. This means either stopping the AUT by hand, using the &quot;<i>Stop AUT</i>&quot; button in Jubula or when you use the <i>restart</i> action. <li>Because of this, we recommend executing individual Test Cases (use cases) in Test Suites that you want to analyze with Chronon. You should ensure that any Event Handlers in the Test Suite will not cause the AUT to restart. </ul>
     <p>
       <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node313.html" name="tex2html5074"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Supported RCP AUT&#39;s </a><li><a href="node314.html" name="tex2html5075"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Setting up an RCP AUT for testing</a><li><a href="node315.html" name="tex2html5076"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Keyboard Layouts</a><li><a href="node316.html" name="tex2html5077"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Design for testability in RCP</a><li><a href="node317.html" name="tex2html5078"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">5</span> Component name generation in RCP</a><li><a href="node318.html" name="tex2html5079"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">6</span> Best practices for testing RCP AUT&#39;s </a></ul>
-      <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

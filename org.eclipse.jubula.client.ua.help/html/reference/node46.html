@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>12. Debugging</title>
-    <meta content="12. Debugging" name="description" />
+    <title>12.1 Remote Debugging</title>
+    <meta content="12.1 Remote Debugging" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,15 +10,28 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h1><a name="SECTION001300000000000000000"></a> <a name="debugging"></a><br /><span class="arabic">12</span>. Debugging </h1>
+    <h1><a name="SECTION001310000000000000000"> <span class="arabic">12</span>.<span class="arabic">1</span> Remote Debugging</a></h1>
+    <p> You can remote debug an AUT which has been started by Jubula by simply modifying or creating a AUT configuration. The following options must be added to your JRE Arguments: <p><pre>
+-Xdebug 
+-Xnoagent 
+-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=4711 
+-Djava.compiler=NONE
+</pre><p>
+      <ul>
+        <li>The &#39;&#39;suspend=y/n&#39;&#39; option determines whether the JVM waits with the execution of the program until the debugger has connected itself or not. <li>The &#39;&#39;address=&lt;portNo&gt;&#39;&#39; determines the port the debugger has to connect to. </ul>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+          <td><b>Not all JREs support the arguments listed above. If you are not using a Java Standard Edition JRE to start your AUT , you will likely not be able to use this method to remotely debug your AUT .</b></td>
+        </tr>
+      </table>
     <p>
       <br />
       <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node47.html" name="tex2html726"><span class="arabic">12</span>.<span class="arabic">1</span> Remote Debugging</a><ul>
-            <li><a href="node48.html" name="tex2html727"><span class="arabic">12</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Configuring Eclipse for remote debugging</a></ul>
-      </ul>
+        <li><a href="node47.html" name="tex2html723"><span class="arabic">12</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Configuring Eclipse for remote debugging</a></ul>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

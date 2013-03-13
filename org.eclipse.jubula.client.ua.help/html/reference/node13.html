@@ -10,7 +10,7 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00621000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Application</a></h2><a name="3715"></a> <a name="3716"></a><p><b>Description</b>:<p><a name="CONCRETE_GraphicApplication"></a><p>
+    <h2><a name="SECTION00621000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Application</a></h2><a name="3717"></a> <a name="3718"></a><p><b>Description</b>:<p><a name="CONCRETE_GraphicApplication"></a><p>
       <ul>
         <li>The <i>Application</i> component is the container for all other components. <li>It represents the AUT as a whole. </ul>
     <p>
@@ -224,8 +224,8 @@
     <p><b>Inherited Actions</b><p><i>none</i><p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Activate</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44269"></a><a name="44270"></a><p><a name="CONCRETE_GraphicApplication_Activate"></a><p><a name="activate"></a><ul>
-        <li>When the ITE and AUT Agent are running on the same computer, you may need to bring the AUT into focus before a test can begin. <li>Exactly how to <i>activate</i> the application can vary from one system to another. <li>This action offers various different ways of activating the application. <li>Jubula realises this action by clicking in the location indicated in the <i>activation method</i> parameter. <li>In the AUT configuration --&gt;<i>User Manual</i> <a href="../manual/node73.html#configuringaut"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>, the default is that no activation is carried out. <li>You can set an activation method for the whole AUT in its configuration, and use this in your Test Steps (e.g. set the activation method parameter to &quot;<i>AUT_DEFAULT</i>&quot;) or you can use a different activation method. <li>In this way, you can centrally define a default for a given operating system, which you can easily change when you test on another operating system. <li>Using the activate action, you can also specify activation methods which differ from the default. <p>
+      <br /><span class="textbf"><big class="LARGE">Activate</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44080"></a><a name="44081"></a><p><a name="CONCRETE_GraphicApplication_Activate"></a><p><a name="activate"></a><ul>
+        <li>When the ITE and AUT Agent are running on the same computer, you may need to bring the AUT into focus before a test can begin. <li>Exactly how to <i>activate</i> the application can vary from one system to another. <li>This action offers various different ways of activating the application. <li>Jubula realises this action by clicking in the location indicated in the <i>activation method</i> parameter. <li>In the AUT configuration --&gt;<i>User Manual</i> <a href="../manual/node74.html#configuringaut"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>, the default is that no activation is carried out. <li>You can set an activation method for the whole AUT in its configuration, and use this in your Test Steps (e.g. set the activation method parameter to &quot;<i>AUT_DEFAULT</i>&quot;) or you can use a different activation method. <li>In this way, you can centrally define a default for a given operating system, which you can easily change when you test on another operating system. <li>Using the activate action, you can also specify activation methods which differ from the default. <p>
             <table>
               <tr>
                 <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
@@ -289,7 +289,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Existence of Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44276"></a><a name="44277"></a><p><a name="CONCRETE_GraphicApplication_CheckExistenceOfWindow"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44087"></a><a name="44088"></a><p><a name="CONCRETE_GraphicApplication_CheckExistenceOfWindow"></a><p>
       <ul>
         <li>Use this action to check the existence of a window based on its title. </ul>
     <p>
@@ -326,7 +326,7 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_CheckExistenceOfWindow_Operator"></a><p>
       <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If there is more than one match, the first found will be chosen. </ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -348,7 +348,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Numeric Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44283"></a><a name="44284"></a><p><a name="CONCRETE_GraphicApplication_CheckValues"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Numeric Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44094"></a><a name="44095"></a><p><a name="CONCRETE_GraphicApplication_CheckValues"></a><p>
       <ul>
         <li>Use this action to compare two numeric values during your test. <li>This action can be used with the <i>start timer</i> and <i>read timer</i> actions to compare the time difference to a value you specify (i.e. to measure the performance of your application). <li>You can also compare other variables you have read from your application with this action. </ul>
     <p>
@@ -407,7 +407,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check String Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44290"></a><a name="44291"></a><p><a name="CONCRETE_GraphicApplication_CheckStringValues"></a><p> Use this action to compare the values of two strings in your test. This can be used if you want to check the value of a variable, for example. <p>
+      <br /><span class="textbf"><big class="LARGE">Check String Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44101"></a><a name="44102"></a><p><a name="CONCRETE_GraphicApplication_CheckStringValues"></a><p> Use this action to compare the values of two strings in your test. This can be used if you want to check the value of a variable, for example. <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
         <tr>
@@ -441,7 +441,7 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_CheckStringValues_OperatorValue2"></a><p> Use this parameter to define the operator for the <i>value 2</i> parameter. <p>
       <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If there is more than one match, the first found will be chosen. </ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -463,7 +463,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Click in Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44297"></a><a name="44298"></a><p><a name="CONCRETE_GraphicApplication_ClickInActiveWindow"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Click in Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44108"></a><a name="44109"></a><p><a name="CONCRETE_GraphicApplication_ClickInActiveWindow"></a><p>
       <ul>
         <li>Use this action to send one or more clicks with any mouse button to the currently active window. <li>You can specify where to click, how many times, and with which mouse button. </ul>
     <p>
@@ -600,7 +600,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Copy Text to Clipboard</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44304"></a><a name="44305"></a><p><a name="CONCRETE_GraphicApplication_CopyToClipboard"></a><p> This action allows you to copy one string to the clipboard on your operating system. It can be used in combination with the key combination <tt>&raquo;CTRL+V&laquo;</tt> to paste text into your AUT , or into native dialogs (e.g. file choosers) opened by your AUT . <p>
+      <br /><span class="textbf"><big class="LARGE">Copy Text to Clipboard</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44115"></a><a name="44116"></a><p><a name="CONCRETE_GraphicApplication_CopyToClipboard"></a><p> This action allows you to copy one string to the clipboard on your operating system. It can be used in combination with the key combination <tt>&raquo;CTRL+V&laquo;</tt> to paste text into your AUT , or into native dialogs (e.g. file choosers) opened by your AUT . <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
         <tr>
@@ -617,12 +617,12 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_CopyToClipboard_Text"></a><p>
       <ul>
-        <li>Enter the text you wish you copy to the clipboard. <li>If the text contains any special characters, use the symbol for verbatim text to mask any special functions of the characters <a href="node40.html#verbatimsymbol">9.1</a>. </ul>
+        <li>Enter the text you wish you copy to the clipboard. <li>If the text contains any special characters, use the symbol for verbatim text to mask any special functions of the characters <a href="node39.html#verbatimsymbol">9.1</a>. </ul>
     <p>
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Execute External Command</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44311"></a><a name="44312"></a><p><a name="CONCRETE_GraphicApplication_ExecuteCommand"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Execute External Command</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44122"></a><a name="44123"></a><p><a name="CONCRETE_GraphicApplication_ExecuteCommand"></a><p>
       <ul>
         <li>Use this action to run an external script or command during your test. <li>You enter the command and the exit code that Jubula should wait for, as well as a timeout to tell Jubula how long to wait for the code. </ul>
     <p>
@@ -690,7 +690,7 @@
               <td><b>If you are running your AUT on the same machine as the ITE , there is no difference between running the command locally or remotely.</b></td>
             </tr>
           </table>
-        <li>For information on using relative paths to the location of the commands on local and remote machines, see the section in this document <a href="node38.html#relativepath">8</a>. </ul>
+        <li>For information on using relative paths to the location of the commands on local and remote machines, see the section in this document <a href="node37.html#relativepath">8</a>. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -712,7 +712,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">External Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44318"></a><a name="44319"></a><p><a name="CONCRETE_GraphicApplication_NativeInputText"></a><p>
+      <br /><span class="textbf"><big class="LARGE">External Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44129"></a><a name="44130"></a><p><a name="CONCRETE_GraphicApplication_NativeInputText"></a><p>
       <ul>
         <li>Use this action to input text into dialogs that are not supported by Jubula (e.g. file choosers). <li>Jubula can send keystrokes to these dialogs, but cannot check if they have arrived. <li>For this action to work, the dialog must be in focus, and the cursor must be in the text field to be filled in. <li>Combine this action with the &quot;<i>External Key Combination</i>&quot; action to send key combinations to native dialogs to be able to work with file choosers during your test. </ul>
     <p><span class="textbf">Native dialogs in SWT and RCP AUT&#39;s </span><br />
@@ -738,7 +738,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">External Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44325"></a><a name="44326"></a><p><a name="CONCRETE_GraphicApplication_NativeKeyStroke"></a><p>
+      <br /><span class="textbf"><big class="LARGE">External Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44136"></a><a name="44137"></a><p><a name="CONCRETE_GraphicApplication_NativeKeyStroke"></a><p>
       <ul>
         <li>Use this action to send a key combination to a dialog that is not supported by Jubula (e.g. file choosers). <li>Jubula can send a keystroke to these dialogs, but cannot check if it have arrived. <li>For this action to work, the dialog must be in focus. <li>Combine this action with the &quot;<i>External Input Text</i>&quot; action to be able to work with file choosers during your test. <li>Some of the keystrokes you may need include <i>ENTER</i>, <i>SPACE</i>, <i>PERIOD</i> and <i>/</i>. </ul>
       <table>
@@ -891,7 +891,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44332"></a><a name="44333"></a><p><a name="CONCRETE_GraphicApplication_InputTextDirect"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44143"></a><a name="44144"></a><p><a name="CONCRETE_GraphicApplication_InputTextDirect"></a><p>
       <ul>
         <li>Use this action to enter text into the component which currently has focus. <li>The text you want to enter is given as a parameter. <li>The difference between this action and the &quot;<i>External Input Text</i>&quot; is that Jubula can check that the keystrokes have arrived at the component. <li>Use this action for components that Jubula supports, and the &quot;<i>External Input Text</i>&quot; action for components in external dialogs, such as file choosers. </ul>
     <p>
@@ -923,7 +923,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44339"></a><a name="44340"></a><p><a name="CONCRETE_GraphicApplication_KeyStroke"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44150"></a><a name="44151"></a><p><a name="CONCRETE_GraphicApplication_KeyStroke"></a><p>
       <ul>
         <li>This action allows you to send a key command to the application. <li>This is useful for actions such as <tt>&raquo;DELETE&laquo;</tt>, <tt>&raquo;ENTER&laquo;</tt>, etc. </ul>
       <table>
@@ -1083,7 +1083,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Manual Test Step</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44346"></a><a name="44347"></a><p><a name="CONCRETE_GraphicApplication_ManualTestStep"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Manual Test Step</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44157"></a><a name="44158"></a><p><a name="CONCRETE_GraphicApplication_ManualTestStep"></a><p>
       <ul>
         <li>Use this action to specify a manual Test Step . <li>Manual Test Steps can be specified in Jubula and must be executed by a manual tester. <li>Jubula provides a special test execution mode for manual testing, in which the manual Test Steps are presented to the user to be executed. </ul>
     <p>
@@ -1148,14 +1148,14 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Pause Test Execution</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44353"></a><a name="44354"></a><p><a name="CONCRETE_GraphicApplication_Pause"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Pause Test Execution</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44164"></a><a name="44165"></a><p><a name="CONCRETE_GraphicApplication_Pause"></a><p>
       <ul>
         <li>This action pauses the test execution. <li>To continue a paused test, press the pause button in the ITE . </ul>
     <p>
     <p>
     <p>This action has no parameters.<p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Read Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44360"></a><a name="44361"></a><p><a name="CONCRETE_GraphicApplication_ReadTimer"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Read Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44171"></a><a name="44172"></a><p><a name="CONCRETE_GraphicApplication_ReadTimer"></a><p>
       <ul>
         <li>Use this action to read a timer (stopwatch). <li>You enter the name of the timer you want to read and enter a variable which saves the difference (in milliseconds) between the current time and the time at which the timer was started. <li>You can start timers and compare values between starting and reading timers using other actions. <li>This action is useful for measuring how long your AUT takes to execute certain actions. </ul>
       <table>
@@ -1203,7 +1203,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Restart</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44367"></a><a name="44368"></a><p><a name="CONCRETE_GraphicApplication_Restart"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Restart</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44178"></a><a name="44179"></a><p><a name="CONCRETE_GraphicApplication_Restart"></a><p>
       <ul>
         <li>Use this action to restart the AUT during the test. <li>The action closes your AUT and all windows/dialogs associated with it. <li>It then starts the same AUT with the same configuration as it had when you originally started it and carries on with the test. <li>If your AUT takes a while to load/to be ready, it is a good idea to use the &quot;<i>wait for window</i>&quot; or &quot;<i>wait for component</i>&quot; action after the restart action. <table>
             <tr>
@@ -1216,7 +1216,7 @@
     <p>
     <p>This action has no parameters.<p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Set Toggle Key</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44374"></a><a name="44375"></a><p><a name="CONCRETE_GraphicApplication_KeyToogle"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Set Toggle Key</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44185"></a><a name="44186"></a><p><a name="CONCRETE_GraphicApplication_KeyToogle"></a><p>
       <ul>
         <li>Use this action to turn the following keys on or off: <ul>
             <li>Caps-lock <li>Num-lock <li>Scroll-lock </ul>
@@ -1266,7 +1266,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Start Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44381"></a><a name="44382"></a><p><a name="CONCRETE_GraphicApplication_StartTimer"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Start Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44192"></a><a name="44193"></a><p><a name="CONCRETE_GraphicApplication_StartTimer"></a><p>
       <ul>
         <li>Use this action to start a timer (stopwatch). <li>You name the timer and enter a variable which saves the current time (in milliseconds since the January 1st 1970). <li>You can read timers and compare values between starting and reading timers using other actions. <li>This action is useful for measuring how long your AUT takes to execute certain actions. </ul>
     <p>
@@ -1308,7 +1308,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Store Value</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44388"></a><a name="44389"></a><p><a name="CONCRETE_GraphicApplication_ReadValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Store Value</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44199"></a><a name="44200"></a><p><a name="CONCRETE_GraphicApplication_ReadValue"></a><p>
       <ul>
         <li>Use this action to store a value you specify so that you can use it as data for other actions. </ul>
     <p>
@@ -1350,7 +1350,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Take Screenshot</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44395"></a><a name="44396"></a><p><a name="CONCRETE_GraphicApplication_TakeScreenshot"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Take Screenshot</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44206"></a><a name="44207"></a><p><a name="CONCRETE_GraphicApplication_TakeScreenshot"></a><p>
       <ul>
         <li>This action takes a screen capture and saves the resulting image to disk. <li>The action takes a screenshot of the whole screen on the primary monitor. To take a screenshot of only the active window, use the action <i>Take Screenshot of Active Window</i>. <li>If you do not enter a file extension, the screenshot will be saved as a <span class="textit">.png</span> file. You can also save the file as an <span class="textit">.jpeg</span> or <span class="textit">.bmp</span> file. <p>
       </ul>
@@ -1371,7 +1371,7 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_TakeScreenshot_Destination"></a><p>
       <ul>
-        <li>Use this parameter to define the path and filename of the saved image. <li>Make sure that you have write access to the destination. <li>If the destination file does not have an extension, the <span class="textit">.png</span>extension will be automatically appended. <li>For information on using relative paths to the location where screenshots should be saved, see the section in this document <a href="node38.html#relativepath">8</a>. </ul>
+        <li>Use this parameter to define the path and filename of the saved image. <li>Make sure that you have write access to the destination. <li>If the destination file does not have an extension, the <span class="textit">.png</span>extension will be automatically appended. <li>For information on using relative paths to the location where screenshots should be saved, see the section in this document <a href="node37.html#relativepath">8</a>. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -1444,7 +1444,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Take Screenshot of Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44402"></a><a name="44403"></a><p><a name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Take Screenshot of Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44213"></a><a name="44214"></a><p><a name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow"></a><p>
       <ul>
         <li>This action takes a screen capture of the active window on the primary monitor and saves the resulting image to disk. <li>To take a screenshot of thw whole screen, use the action <i>Take Screenshot</i>. <li>If you do not enter a file extension, the screenshot will be saved as a <span class="textit">.png</span> file. You can also save the file as an <span class="textit">.jpeg</span> or <span class="textit">.bmp</span> file. <li>You can specify a margin around the active window to extend the range of the screenshot. This may be necessary on some systems where the title bar of some dialogs is not included in the screenshot. </ul>
     <p>
@@ -1464,7 +1464,7 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow_Destination"></a><p>
       <ul>
-        <li>Use this parameter to define the path and filename of the saved image. <li>Make sure that you have write access to the destination. <li>If the destination file does not have an extension, the <span class="textit">.png</span>extension will be automatically appended. <li>For information on using relative paths to the location where screenshots should be saved, see the section in this document <a href="node38.html#relativepath">8</a>. </ul>
+        <li>Use this parameter to define the path and filename of the saved image. <li>Make sure that you have write access to the destination. <li>If the destination file does not have an extension, the <span class="textit">.png</span>extension will be automatically appended. <li>For information on using relative paths to the location where screenshots should be saved, see the section in this document <a href="node37.html#relativepath">8</a>. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -1605,7 +1605,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Wait</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44409"></a><a name="44410"></a><p><a name="CONCRETE_GraphicApplication_Wait"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Wait</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44220"></a><a name="44221"></a><p><a name="CONCRETE_GraphicApplication_Wait"></a><p>
       <ul>
         <li>Sometimes it is necessary to wait for a period of time before continuing. <li>Use this action to tell the AUT Agent to wait for a given amount of time before continuing with the next Test Step . <li>Jubula also offers actions to wait for a window and a component. If you are waiting for a component, or a window, use the actions specific to these events. </ul>
     <p>
@@ -1630,7 +1630,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Wait for Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44416"></a><a name="44417"></a><p><a name="CONCRETE_GraphicApplication_WaitForWindow"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Wait for Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44227"></a><a name="44228"></a><p><a name="CONCRETE_GraphicApplication_WaitForWindow"></a><p>
       <ul>
         <li>This action waits for the window you name to open. <li>This action does <span class="textit">not</span> check whether the window is active <li>Once the window is open (or if the window is already open), the test continues. <li>If the window does not open, the action fails. </ul>
     <p>
@@ -1667,7 +1667,7 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_WaitForWindow_Operator"></a><p>
       <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If there is more than one match, the first found will be chosen. </ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -1706,7 +1706,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Wait for Window Activation</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44423"></a><a name="44424"></a><p><a name="CONCRETE_GraphicApplication_WaitForWindowActivation"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Wait for Window Activation</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44234"></a><a name="44235"></a><p><a name="CONCRETE_GraphicApplication_WaitForWindowActivation"></a><p>
       <ul>
         <li>This action waits for the window you name to become active. A window is active only when it is the currently selected window. <li>Once the window is active (or if the window is already active when this test step begins), the test continues. <li>If the window does not become active, the action fails. </ul>
     <p>
@@ -1743,7 +1743,7 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_WaitForWindowActivation_Operator"></a><p>
       <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If there is more than one match, the first found will be chosen. </ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -1782,7 +1782,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Wait for Window to Close</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44430"></a><a name="44431"></a><p><a name="CONCRETE_GraphicApplication_WaitForWindowToClose"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Wait for Window to Close</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44241"></a><a name="44242"></a><p><a name="CONCRETE_GraphicApplication_WaitForWindowToClose"></a><p>
       <ul>
         <li>This action waits for the window you name to close. <li>Once the window is closed (or if no open window with a corresponding title can be found), the test continues. <li>If a window is found and does not close within the timeout period, the action fails. </ul>
     <p>
@@ -1819,7 +1819,7 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_WaitForWindowToClose_Operator"></a><p>
       <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If there is more than one match, the first found will be chosen. </ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -1858,6 +1858,6 @@
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

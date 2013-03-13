@@ -1,32 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.13.6 Understanding the component hierarchy</title>
-    <meta content="3.13.6 Understanding the component hierarchy" name="description" />
+    <title>3.13.3 Renaming component names</title>
+    <meta content="3.13.3 Renaming component names" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="compNameViewContextId"></a><a name="objectMapEditorContextId"></a><h2><a name="SECTION004136000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">6</span> Understanding the component hierarchy</a></h2><a name="TasksCompNameType"></a><p><a name="3110"></a> <a name="3111"></a> <a name="3112"></a> The component hierarchy in Jubula is designed to allow flexible test specification and robust tests. For a graphical overview of the component hierarchy, see the reference manual --&gt;<i>Reference Manual</i> <a href="../reference/node37.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
+  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="renameComponentNameContextId"></a><h2><a name="SECTION004133000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">3</span> Renaming component names</a></h2><a name="TasksRenameCompName"></a><p><a name="3079"></a> <a name="3080"></a><p> Use the rename function to change the name of a component name in your test specification. Whereas <i>reassigning</i> component names results in a new component name being created <a href="node155.html#TasksReassignCompName">3.13.2</a>, renaming just changes the name at all places where it is used. <p> You can rename component names in the Component Name Browser &nbsp; and in the Object Mapping Editor . <ol>
+        <li>Select the component name you want to rename. <li>In the context-menu, select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Rename</td>
+            </tr>
+          </table>
+        <li>In the dialog that appears, enter a new component name to replace the old name. We recommend using naming conventions for component names. <li>Press &quot;<i>OK</i>&quot;. The component name you entered will replace the old name throughout your test. </ol>
     <p>
-      <br />
-    <p><span class="textbf">Abstract components</span><br />
-    <p> Jubula lets you write tests very abstractly at the beginning, only adding detail later. You will notice that the library contains categories such as <i>Component with Text Input</i> and <i>Graphics Component</i>. <p> These are <i>abstract components</i> - actions in these categories can be used on a wide range of actual components in the AUT . You can use a <i>Click</i> action on the <i>Graphics Component</i> to click any component in the AUT . You just need to enter different component names for it in the Component Names View . <p>
-    <p>
-      <br /><span class="textbf">Using the same component name for different component types</span><br />
-    <p> What happens if you want to specify a test that clicks in a table and then selects a cell in the table? <p> The click action is on the <i>Graphics Component</i> and the select cell action is on the <i>Table</i> component - but you don&#39;t want to have two different component names. <p> This isn&#39;t a problem for Jubula . You can use the same component name for different components as long as these are compatible. So, in this case, the <i>Graphics Component</i> and the <i>Table</i> component can both use the component name e.g. <i>TableView_MainTable_tbl</i>. <p>
       <table>
         <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-          <td><b>You cannot use the same component name for incompatible types, for example, trees and tables.</b></td>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>You cannot rename a component name with a name that already exists. To merge two or more component names to the same name, see the section on merging <a href="node159.html#TasksMergeCompName">3.13.4</a>.</b></td>
         </tr>
       </table>
-    <p> An overview of the component hierarchy can be seen in: --&gt;<i>Reference Manual</i> <a href="../reference/node37.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2012. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>
