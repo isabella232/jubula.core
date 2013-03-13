@@ -1,0 +1,6 @@
+\begin{enumerate}
+\item \textbf{If you use the embedded \gddb{}}: We recommend creating a new location for a new embedded database in the preferences \bxpref{TasksPrefsDB}. You should name the new folder with the version number of \app{} you are using. 
+\item \textbf{Users of other (e.g. Oracle) databases}: Create a new database scheme. We recommend naming the scheme with the version number of \app{} you are using. 
+\item Connect to the newly created \gddb{} from the new version of \app{}. The \gddb{} tables will be created and the new versions of the unbound modules projects will be imported.  
+\item Import all of the \gdprojects{} you exported from the older version, including the unbound modules projects (your projects still reference them, and the version can be switched in the next steps). You can use the import dialog to import multiple projects at once \bxpref{importproject}, we recommend ordering the projects so that any library projects (unbound modules, your own reused projects) are listed first.
+\end{enumerate}
