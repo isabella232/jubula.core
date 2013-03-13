@@ -1,35 +1,34 @@
 \textbf{Migration of existing toolkit extensions}
 
-Due to major refactoring in the remote control you must migrate your toolkit extension. Theses changes only affect the remote control extension. The ITE extension has not changed.
-At First we recommend to read the extension manual. The most information about how the new implementation works and a simple example can be found there.
+Due to major refactoring in the remote control code of \app{} you must migrate any toolkit extensions you have written. Theses changes only affect the remote control extension. The \ite{} extensions must not be changed. As a first step, we recommend reading the Extension Manual. Most information about the new implementation and a simple example can be found there.
 
-The following steps must be performed:
+To migrate any existing extensions, the following steps must be performed:
 \begin{itemize}
 \item Define a target platform for the remote control enviroment as mentioned in the \textbf{Extension Manual 2.3.1}
 \item Alter your remote control extension project to be an OSGi-fragment and set the appropiate host bundle. See \textbf{Extension Manual 2.3.1}
 \item Adapt your current implementation as described below.
 \item Deploy your fragment as described in \textbf{Extension Manual 2.3.2}
 \end{itemize}
-All 'old' implementation classes (*ImplClass) have been removed and rewritten. If you previously used our implementation classes  you
-have to change the class you are extending:
+
+All 'old' implementation classes (*ImplClass) have been removed and rewritten. If you previously used the \app{} implementation classes  you will have to change the class you are extending:
 \begin{itemize}
 \item \bxshell{org.eclipse.jubula.rc.common.tester}\\ in this package the base classes for most of the
-  TesterClasses are located. Some toolkit specific implementations are in the toolkit bundles named below.
-\item \bxshell{org.eclipse.jubula.rc.swt.tester}\\ SWT specific implementation for \bxshell{List}, \bxshell{Table}, \bxshell{Tree}, \bxshell{Application} and \bxshell{Menus}
-\item \bxshell{org.eclipse.jubula.rc.swing.tester}\\ Swing specific implementation for \bxshell{JList}, \bxshell{JTable}, \bxshell{JTree}, \bxshell{Application} and \bxshell{Menus}
+  TesterClasses are located. Some toolkit-specific implementations are in the toolkit bundles named below.
+\item \bxshell{org.eclipse.jubula.rc.swt.tester}\\ SWT-specific implementation for \bxshell{List}, \bxshell{Table}, \bxshell{Tree}, \bxshell{Application} and \bxshell{Menus}
+\item \bxshell{org.eclipse.jubula.rc.swing.tester}\\ Swing-specific implementation for \bxshell{JList}, \bxshell{JTable}, \bxshell{JTree}, \bxshell{Application} and \bxshell{Menus}
 \end{itemize}
 
-You must also write your own adapter factory (\textbf{Extension Manual 2.3.1 Create an Adapter}). Which must be in the package \bxshell{org.eclipse.jubula.rc.common.adapter}.
-This adapter factory is managing adapters we need for our tester classes. The adapter are necessary for our tester classes because the tester classes are toolkit independent.
+You must also write your own adapter factory (\textbf{Extension Manual 2.3.1 Create an Adapter}), which must be in the package \bxshell{org.eclipse.jubula.rc.common.adapter}.
 
-With the adapter factory you must define which graphics component is adapted by which class. For this you can reuse existing SWT or Swing adapter or you can write your own.
-If you want to write your own adapter it is important to use the interfaces of the adapter. This is needed by our tester classes to use the adapter .
+This adapter factory manages adapters that are needed for the tester classes. The adapters are necessary for the tester classes because the tester classes are toolkit-independent.
+
+In the adapter factory you write, you must define which component (\bxname{widget}) is adapted by which class. For example, a \bxname{JTable} is adapted by the \bxname{JTableAdapter}. For this you can reuse existing SWT or Swing adapters or you can write your own. If you want to write your own adapter it is important that you use the \app{} interfaces of the adapter, because the tester classes require this information.  
 
 The following packages are important for adapters:
 \begin{itemize}
 \item \bxshell{org.eclipse.jubula.rc.swt.tester.adapter}\\ SWT adapter.
 \item \bxshell{org.eclipse.jubula.rc.swing.tester.adapter}\\ Swing adapter.
-\item \bxshell{org.eclipse.jubular.rc.common.tester.adapter.interfaces}\\Interfaces for all adapter.
+\item \bxshell{org.eclipse.jubular.rc.common.tester.adapter.interfaces}\\Interfaces for all adapters.
 \end{itemize}
 
 \textbf{Changes to resolving of referenced parameters}\\
