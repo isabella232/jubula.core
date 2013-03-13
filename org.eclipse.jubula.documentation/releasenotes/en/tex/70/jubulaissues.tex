@@ -1,3 +1,37 @@
+\textbf{Migration of existing toolkit extensions}
+
+Due to major refactoring in the remote control you must migrate your toolkit extension. Theses changes only affect the remote control extension. The ITE extension has not changed.
+At First we recommend to read the extension manual. The most information about how the new implementation works and a simple example can be found there.
+
+The following steps must be performed:
+\begin{itemize}
+\item Define a target platform for the remote control enviroment as mentioned in the \textbf{Extension Manual 2.3.1}
+\item Alter your remote control extension project to be an OSGi-fragment and set the appropiate host bundle. See \textbf{Extension Manual 2.3.1}
+\item Adapt your current implementation as described below.
+\item Deploy your fragment as described in \textbf{Extension Manual 2.3.2}
+\end{itemize}
+All 'old' implementation classes (*ImplClass) have been removed and rewritten. If you previously used our implementation classes  you
+have to change the class you are extending:
+\begin{itemize}
+\item \bxshell{org.eclipse.jubula.rc.common.tester}\\ in this package the base classes for most of the
+  TesterClasses are located. Some toolkit specific implementations are in the toolkit bundles named below.
+\item \bxshell{org.eclipse.jubula.rc.swt.tester}\\ SWT specific implementation for \bxshell{List}, \bxshell{Table}, \bxshell{Tree}, \bxshell{Application} and \bxshell{Menus}
+\item \bxshell{org.eclipse.jubula.rc.swing.tester}\\ Swing specific implementation for \bxshell{JList}, \bxshell{JTable}, \bxshell{JTree}, \bxshell{Application} and \bxshell{Menus}
+\end{itemize}
+
+You must also write your own adapter factory (\textbf{Extension Manual 2.3.1 Create an Adapter}). Which must be in the package \bxshell{org.eclipse.jubula.rc.common.adapter}.
+This adapter factory is managing adapters we need for our tester classes. The adapter are necessary for our tester classes because the tester classes are toolkit independent.
+
+With the adapter factory you must define which graphics component is adapted by which class. For this you can reuse existing SWT or Swing adapter or you can write your own.
+If you want to write your own adapter it is important to use the interfaces of the adapter. This is needed by our tester classes to use the adapter .
+
+The following packages are important for adapters:
+\begin{itemize}
+\item \bxshell{org.eclipse.jubula.rc.swt.tester.adapter}\\ SWT adapter.
+\item \bxshell{org.eclipse.jubula.rc.swing.tester.adapter}\\ Swing adapter.
+\item \bxshell{org.eclipse.jubular.rc.common.tester.adapter.interfaces}\\Interfaces for all adapter.
+\end{itemize}
+
 \textbf{Changes to resolving of referenced parameters}\\
 \begin{itemize}
 \item In previous versions, there was an error in the way referenced parameters were resolved, which lead to the data for the parameter being read each time the parameter was referenced. This could lead to problems with e.g. time-sensitive functions. If a \gdcase{} was structured to enter the date using the ?now() function and then check the entered text (where the data for the text entry and the check were referenced and ?now() entered at the parent \gdcase{}), then the entered value and checked value would not be the same.
@@ -47,45 +81,6 @@ The following items have been renamed in the unbound modules:
 \begin{itemize}
 \item All unbound modules that were preceded with \bxname{DEPRECATED} have been removed. These modules should be removed from use in your \gdprojects{} before switching to the new version. 
 \item All \gdsteps{} that had the status \bxname{deprecated} have also been removed. You should ensure that you no longer use deprecated \gdsteps{} before switching to the new version. 
-\end{itemize}
-
-\textbf{Migration of existing remote control Extension}
-
-A lot of changes were done in the remote control part. Firstly we recommend you
-to read the extension manual. There are the most information about how the new
-implementation works with an simple example.
-
-The following must be done.
-\begin{itemize}
-\item Change the target for the rc Enviroment as mentioned in \textbf{Extension Manual 2.3.1}
-\item Create a fragment and set the appropiate Host Bundle. See \textbf{Extension Manual 2.3.1}
-\item copy your current implementation into the fragment and adapt it as described below
-\end{itemize}
-All ImplClasses have been deleted and rewritten. If you previously used our ImplClasses you
-have to change the class you are extending.
-\begin{itemize}
-\item \bxshell{org.eclipse.jubula.rc.common.tester}\\ in this package are the
-  most TesterClasses. Some implementation are in the toolkit specific
-  bundles named below.
-\item \bxshell{org.eclipse.jubula.rc.swt.tester}\\ SWT specific implementation
- for List, Table, Tree, Application and Menus
-\item \bxshell{org.eclipse.jubula.rc.swing.tester}\\ Swing specific
-  implementation for JList, JTable, JTree, Application and Menus
-\end{itemize}
-
-If you are using graphics components, which are subclasses of supported classes
-this should already work(e.g. a subclass of an button). If your
-component is a new implementation and only a subclass of Component you must follow the Steps in the \textbf{Extension Manul 2.3.1 Create an Adapter}.
-
-If you have written your own adapter or reusing one you must write an
-adapterfactory as described in the \textbf{Extension Manual 2.3.1 Create an Adapter}. This is important to make
-the adapter usable in our classes.
-
-The following packages are important for the adapters.
-\begin{itemize}
-\item \bxshell{org.eclipse.jubula.rc.swt.tester.adapter}\\ SWT adapter.
-\item \bxshell{org.eclipse.jubula.rc.swing.tester.adapter}\\ Swing adapter.
-\item \bxshell{org.eclipse.jubular.rc.common.tester.adapter.interfaces}\\Interfaces for all adapter.
 \end{itemize}
 
 \textbf{Updated migration information}
