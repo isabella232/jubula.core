@@ -14,7 +14,7 @@ All 'old' implementation classes (*ImplClass) have been removed and rewritten. I
 \begin{itemize}
 \item \bxshell{org.eclipse.jubula.rc.common.tester}\\ in this package the base classes for most of the
   TesterClasses are located. Some toolkit-specific implementations are in the toolkit bundles named below.
-\item \bxshell{org.eclipse.jubula.rc.swt.tester}\\ SWT-specific implementation for \bxshell{List}, \bxshell{Table}, \bxshell{Tree}, \bxshell{Application} and \bxshell{Menus}
+\item \bxshell{org.eclipse.jubula.rc.swt.tester}\\ SWT-specific implementation for \bxshell{List}, \bxshell{Table}, \bxshell{Tree},\\ \bxshell{Application} and \bxshell{Menus}
 \item \bxshell{org.eclipse.jubula.rc.swing.tester}\\ Swing-specific implementation for \bxshell{JList}, \bxshell{JTable}, \bxshell{JTree}, \bxshell{Application} and \bxshell{Menus}
 \end{itemize}
 
@@ -33,11 +33,11 @@ The following packages are important for adapters:
 
 \textbf{Migration of GEF accessibility identifer}
 
-Due to changes in the structure of our RCP accessor we have changed the location of the GEF implementation. The bundle has changed to \bxshell{org.eclipse.jubula.rc.rcp.e3} and also the packages now begin with \bxshell{org.eclipse.jubula.rc.rcp.e3}. To migrate your existing plugin you have to do following steps
+Due to changes in the structure of our RCP accessor we have changed the location of the GEF implementation. The bundle has changed to \bxshell{org.eclipse.jubula.rc.rcp.e3} and also the packages now begin with\\ \bxshell{org.eclipse.jubula.rc.rcp.e3}. To migrate your existing plugin you have to do take the following steps:
 \begin{itemize}
 \item Change the target definition as described in the \textbf{Extension Manual 3.1.1}
 \item Change the bundle in the MANIFEST.MF\\ from \bxshell{org.eclipse.jubula.rc.rcp}\\ to \bxshell{org.eclipse.jubula.rc.rcp.e3}
-\item Change the adapter type in the plugin.xml to \\ \bxshell{org.eclipse.jubula.rc.rcp.e3.gef.identifier.IEditPartIdentifier}
+\item Change the adapter type in the plugin.xml to \\ \bxshell{org.eclipse.jubula.rc.rcp.e3.gef.}\\ \bxshell{identifier.IEditPartIdentifier}
 \item Change all packages in your classes to the new appropriate packages
 \end{itemize}
 
