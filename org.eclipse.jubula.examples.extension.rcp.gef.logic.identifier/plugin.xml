@@ -7,7 +7,7 @@
             adaptableType="org.eclipse.gef.examples.logicdesigner.edit.GateEditPart"
             class="org.eclipse.jubula.examples.extension.rcp.gef.logic.identifier.LogicEditPartIdentifierAdapterFactory">
          <adapter
-               type="org.eclipse.jubula.rc.rcp.gef.identifier.IEditPartIdentifier">
+               type="org.eclipse.jubula.rc.rcp.e3.gef.identifier.IEditPartIdentifier">
          </adapter>
       </factory>
    </extension>
