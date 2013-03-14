@@ -277,98 +277,97 @@
           <topic label="4.3 Testing GEF AUT's" href="html/manual/node340.html">
                <topic label="4.3.1 Testing GEF components" href="html/manual/node341.html"></topic>
                <topic label="4.3.2 Using the GEF inspector" href="html/manual/node342.html"></topic>
-               <topic label="4.3.3 Adding GEF accessibility to your AUT" href="html/manual/node343.html"></topic>
           </topic>
-          <topic label="4.4 Testing HTML AUT's" href="html/manual/node347.html">
-               <topic label="4.4.1 Supported HTML AUT's" href="html/manual/node348.html"></topic>
-               <topic label="4.4.2 Design for testability in HTML AUT's" href="html/manual/node349.html"></topic>
+          <topic label="4.4 Testing HTML AUT's" href="html/manual/node343.html">
+               <topic label="4.4.1 Supported HTML AUT's" href="html/manual/node344.html"></topic>
+               <topic label="4.4.2 Design for testability in HTML AUT's" href="html/manual/node345.html"></topic>
           </topic>
      </topic>
-     <topic label="5. User interface" href="html/manual/node350.html">
-          <topic label="5.1 Perspectives" href="html/manual/node351.html">
-               <topic label="5.1.1 The Functional Test Specification Perspective" href="html/manual/node352.html"></topic>
-               <topic label="5.1.2 The Functional Test Execution Perspective" href="html/manual/node353.html"></topic>
-               <topic label="5.1.3 The Functional Test Reporting Perspective" href="html/manual/node354.html"></topic>
-               <topic label="5.1.4 The Jubula workspace perspective" href="html/manual/node355.html"></topic>
+     <topic label="5. User interface" href="html/manual/node346.html">
+          <topic label="5.1 Perspectives" href="html/manual/node347.html">
+               <topic label="5.1.1 The Functional Test Specification Perspective" href="html/manual/node348.html"></topic>
+               <topic label="5.1.2 The Functional Test Execution Perspective" href="html/manual/node349.html"></topic>
+               <topic label="5.1.3 The Functional Test Reporting Perspective" href="html/manual/node350.html"></topic>
+               <topic label="5.1.4 The Jubula workspace perspective" href="html/manual/node351.html"></topic>
           </topic>
-          <topic label="5.2 Browsers" href="html/manual/node356.html">
-               <topic label="5.2.1 The Test Suite Browser" href="html/manual/node357.html"></topic>
-               <topic label="5.2.2 The Test Case Browser" href="html/manual/node358.html"></topic>
-               <topic label="5.2.3 The Component Name Browser  " href="html/manual/node359.html"></topic>
+          <topic label="5.2 Browsers" href="html/manual/node352.html">
+               <topic label="5.2.1 The Test Suite Browser" href="html/manual/node353.html"></topic>
+               <topic label="5.2.2 The Test Case Browser" href="html/manual/node354.html"></topic>
+               <topic label="5.2.3 The Component Name Browser  " href="html/manual/node355.html"></topic>
           </topic>
-          <topic label="5.3 Editors" href="html/manual/node360.html">
-               <topic label="5.3.1 Test Case Editor" href="html/manual/node361.html"></topic>
-               <topic label="5.3.2 Test Suite Editor" href="html/manual/node362.html"></topic>
-               <topic label="5.3.3 Object Mapping Editor" href="html/manual/node363.html"></topic>
-               <topic label="5.3.4 Central Test Data Editor" href="html/manual/node364.html"></topic>
+          <topic label="5.3 Editors" href="html/manual/node356.html">
+               <topic label="5.3.1 Test Case Editor" href="html/manual/node357.html"></topic>
+               <topic label="5.3.2 Test Suite Editor" href="html/manual/node358.html"></topic>
+               <topic label="5.3.3 Object Mapping Editor" href="html/manual/node359.html"></topic>
+               <topic label="5.3.4 Central Test Data Editor" href="html/manual/node360.html"></topic>
           </topic>
-          <topic label="5.4 Views" href="html/manual/node365.html">
-               <topic label="5.4.1 The Properties View" href="html/manual/node366.html"></topic>
-               <topic label="5.4.2 The Data Sets View" href="html/manual/node367.html"></topic>
-               <topic label="5.4.3 The Component Names View" href="html/manual/node368.html"></topic>
-               <topic label="5.4.4 The Test Result View" href="html/manual/node369.html"></topic>
-               <topic label="5.4.5 The Problem View" href="html/manual/node370.html"></topic>
-               <topic label="5.4.6 The search result view" href="html/manual/node371.html"></topic>
-               <topic label="5.4.7 The Navigator View  " href="html/manual/node372.html"></topic>
-               <topic label="5.4.8 The console" href="html/manual/node373.html"></topic>
-               <topic label="5.4.9 The Inspector View" href="html/manual/node374.html"></topic>
-               <topic label="5.4.10 The Test Result Summary View" href="html/manual/node375.html"></topic>
-               <topic label="5.4.11 The Running AUT's View" href="html/manual/node376.html"></topic>
-               <topic label="5.4.12 The Image View" href="html/manual/node377.html"></topic>
-               <topic label="5.4.13 The Progress View" href="html/manual/node378.html"></topic>
+          <topic label="5.4 Views" href="html/manual/node361.html">
+               <topic label="5.4.1 The Properties View" href="html/manual/node362.html"></topic>
+               <topic label="5.4.2 The Data Sets View" href="html/manual/node363.html"></topic>
+               <topic label="5.4.3 The Component Names View" href="html/manual/node364.html"></topic>
+               <topic label="5.4.4 The Test Result View" href="html/manual/node365.html"></topic>
+               <topic label="5.4.5 The Problem View" href="html/manual/node366.html"></topic>
+               <topic label="5.4.6 The search result view" href="html/manual/node367.html"></topic>
+               <topic label="5.4.7 The Navigator View  " href="html/manual/node368.html"></topic>
+               <topic label="5.4.8 The console" href="html/manual/node369.html"></topic>
+               <topic label="5.4.9 The Inspector View" href="html/manual/node370.html"></topic>
+               <topic label="5.4.10 The Test Result Summary View" href="html/manual/node371.html"></topic>
+               <topic label="5.4.11 The Running AUT's View" href="html/manual/node372.html"></topic>
+               <topic label="5.4.12 The Image View" href="html/manual/node373.html"></topic>
+               <topic label="5.4.13 The Progress View" href="html/manual/node374.html"></topic>
           </topic>
-          <topic label="5.5 The status bar" href="html/manual/node379.html"></topic>
+          <topic label="5.5 The status bar" href="html/manual/node375.html"></topic>
      </topic>
-     <topic label="6. Concepts" href="html/manual/node380.html">
-          <topic label="6.1 Overview" href="html/manual/node381.html"></topic>
-          <topic label="6.2 Testing with Jubula" href="html/manual/node382.html">
-               <topic label="6.2.1 Understanding how Jubula works" href="html/manual/node383.html"></topic>
-               <topic label="6.2.2 Standards conformance" href="html/manual/node386.html"></topic>
+     <topic label="6. Concepts" href="html/manual/node376.html">
+          <topic label="6.1 Overview" href="html/manual/node377.html"></topic>
+          <topic label="6.2 Testing with Jubula" href="html/manual/node378.html">
+               <topic label="6.2.1 Understanding how Jubula works" href="html/manual/node379.html"></topic>
+               <topic label="6.2.2 Standards conformance" href="html/manual/node382.html"></topic>
           </topic>
-          <topic label="6.3 Architecture" href="html/manual/node387.html">
-               <topic label="6.3.1 ITE" href="html/manual/node388.html"></topic>
-               <topic label="6.3.2 AUT Agent" href="html/manual/node389.html"></topic>
-               <topic label="6.3.3 Working with the ITE and AUT Agent on different machines" href="html/manual/node390.html"></topic>
+          <topic label="6.3 Architecture" href="html/manual/node383.html">
+               <topic label="6.3.1 ITE" href="html/manual/node384.html"></topic>
+               <topic label="6.3.2 AUT Agent" href="html/manual/node385.html"></topic>
+               <topic label="6.3.3 Working with the ITE and AUT Agent on different machines" href="html/manual/node386.html"></topic>
           </topic>
-          <topic label="6.4 Database structure" href="html/manual/node391.html">
-               <topic label="6.4.1 Supported systems" href="html/manual/node392.html"></topic>
-               <topic label="6.4.2 Single-user" href="html/manual/node393.html"></topic>
-               <topic label="6.4.3 Multi-user" href="html/manual/node394.html"></topic>
+          <topic label="6.4 Database structure" href="html/manual/node387.html">
+               <topic label="6.4.1 Supported systems" href="html/manual/node388.html"></topic>
+               <topic label="6.4.2 Single-user" href="html/manual/node389.html"></topic>
+               <topic label="6.4.3 Multi-user" href="html/manual/node390.html"></topic>
           </topic>
-          <topic label="6.5 Approaches to testing" href="html/manual/node395.html">
-               <topic label="6.5.1 Writing modules in advance" href="html/manual/node396.html"></topic>
-               <topic label="6.5.2 Creating modules from existing Test Cases" href="html/manual/node397.html"></topic>
-               <topic label="6.5.3 Choosing a method" href="html/manual/node398.html"></topic>
+          <topic label="6.5 Approaches to testing" href="html/manual/node391.html">
+               <topic label="6.5.1 Writing modules in advance" href="html/manual/node392.html"></topic>
+               <topic label="6.5.2 Creating modules from existing Test Cases" href="html/manual/node393.html"></topic>
+               <topic label="6.5.3 Choosing a method" href="html/manual/node394.html"></topic>
           </topic>
-          <topic label="6.6 Test hierarchy" href="html/manual/node399.html">
-               <topic label="6.6.1 Test Steps" href="html/manual/node400.html"></topic>
-               <topic label="6.6.2 Test Cases" href="html/manual/node401.html"></topic>
-               <topic label="6.6.3 Test Suites" href="html/manual/node402.html"></topic>
-               <topic label="6.6.4 Test Jobs" href="html/manual/node403.html"></topic>
-               <topic label="6.6.5 Projects" href="html/manual/node404.html"></topic>
+          <topic label="6.6 Test hierarchy" href="html/manual/node395.html">
+               <topic label="6.6.1 Test Steps" href="html/manual/node396.html"></topic>
+               <topic label="6.6.2 Test Cases" href="html/manual/node397.html"></topic>
+               <topic label="6.6.3 Test Suites" href="html/manual/node398.html"></topic>
+               <topic label="6.6.4 Test Jobs" href="html/manual/node399.html"></topic>
+               <topic label="6.6.5 Projects" href="html/manual/node400.html"></topic>
           </topic>
-          <topic label="6.7 Reusability" href="html/manual/node405.html"></topic>
-          <topic label="6.8 Multi-lingual testing" href="html/manual/node407.html">
-               <topic label="6.8.1 Project and AUT languages" href="html/manual/node408.html"></topic>
+          <topic label="6.7 Reusability" href="html/manual/node401.html"></topic>
+          <topic label="6.8 Multi-lingual testing" href="html/manual/node403.html">
+               <topic label="6.8.1 Project and AUT languages" href="html/manual/node404.html"></topic>
           </topic>
-          <topic label="6.9 Object mapping" href="html/manual/node409.html">
-               <topic label="6.9.1 Component names" href="html/manual/node410.html"></topic>
-               <topic label="6.9.2 Technical names" href="html/manual/node411.html"></topic>
-               <topic label="6.9.3 Assigning technical names to component names" href="html/manual/node412.html"></topic>
-               <topic label="6.9.4 Locating components during test execution" href="html/manual/node413.html"></topic>
+          <topic label="6.9 Object mapping" href="html/manual/node405.html">
+               <topic label="6.9.1 Component names" href="html/manual/node406.html"></topic>
+               <topic label="6.9.2 Technical names" href="html/manual/node407.html"></topic>
+               <topic label="6.9.3 Assigning technical names to component names" href="html/manual/node408.html"></topic>
+               <topic label="6.9.4 Locating components during test execution" href="html/manual/node409.html"></topic>
           </topic>
-          <topic label="6.10 Test execution" href="html/manual/node414.html">
-               <topic label="6.10.1 Test Step execution" href="html/manual/node415.html"></topic>
+          <topic label="6.10 Test execution" href="html/manual/node410.html">
+               <topic label="6.10.1 Test Step execution" href="html/manual/node411.html"></topic>
           </topic>
-          <topic label="6.11 Observing user actions" href="html/manual/node416.html"></topic>
-          <topic label="6.12 Event Handlers" href="html/manual/node417.html">
-               <topic label="6.12.1 How Event Handlers work" href="html/manual/node418.html"></topic>
-               <topic label="6.12.2 Default Event Handlers" href="html/manual/node419.html"></topic>
-               <topic label="6.12.3 Customized Event Handlers" href="html/manual/node420.html"></topic>
+          <topic label="6.11 Observing user actions" href="html/manual/node412.html"></topic>
+          <topic label="6.12 Event Handlers" href="html/manual/node413.html">
+               <topic label="6.12.1 How Event Handlers work" href="html/manual/node414.html"></topic>
+               <topic label="6.12.2 Default Event Handlers" href="html/manual/node415.html"></topic>
+               <topic label="6.12.3 Customized Event Handlers" href="html/manual/node416.html"></topic>
           </topic>
-          <topic label="6.13 Extensibility" href="html/manual/node421.html"></topic>
-          <topic label="6.14 Summary" href="html/manual/node422.html"></topic>
+          <topic label="6.13 Extensibility" href="html/manual/node417.html"></topic>
+          <topic label="6.14 Summary" href="html/manual/node418.html"></topic>
      </topic>
-     <topic label="7. Glossary" href="html/manual/node423.html"></topic>
-     <topic label="Index" href="html/manual/node424.html"></topic>
+     <topic label="7. Glossary" href="html/manual/node419.html"></topic>
+     <topic label="Index" href="html/manual/node420.html"></topic>
 </toc>
