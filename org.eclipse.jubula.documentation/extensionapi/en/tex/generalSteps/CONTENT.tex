@@ -60,7 +60,7 @@ extension.
 This section shows you how to develop the \ite{} toolkit extension. We describe the
 steps to create the toolkit plug-in and how it can be exported into \app{}.
 
-\subsection{Creating the toolkit plug-in for the \ite{}}
+\subsection{Creating the toolkit plug-in}
 
 The following steps have to be done to extend the \ite{} toolkit:
 \begin{enumerate}
@@ -73,7 +73,10 @@ The following steps have to be done to extend the \ite{} toolkit:
         \item \bxname{org.eclipse.jubula.feature}
        \end{itemize}
        from the \app{} installation folder \bxshell{\MakeLowercase{\app{}}/} as
-       your \textbf{Target Platform} in the workspace preferences.
+       your \textbf{Target Platform} in the workspace preferences. Information
+       on configuring the target platform can be found in Eclipse's online Help
+       under \bxname{Plug-in Development Environment Guide > Tools >
+       Preferences > Target Plug-ins}.
  \item Add the following dependencies to your toolkit project:
        \begin{itemize}
         \item \bxname{org.eclipse.jubula.tools} and
@@ -105,10 +108,11 @@ These example projects can be simply imported into your Eclipse workspace. Set
 the target after importing the projects as described in step 3. All other steps
 have already been done in the examples.
 
-\subsection{Deploying the toolkit plug-in in the \ite{}}
+\subsection{Deploying the toolkit plug-in}
 
-Once the toolkit feature has been created, it must be deployed in the \ite{}. The toolkit feature must be exported to an update
-site and then installed via this update site into  the \ite{}.
+Once the toolkit feature has been created, it must be deployed in the \ite{}.
+The toolkit feature must be exported to an update site and then installed via
+this update site into  the \ite{}.
  
 \subsubsection{Create an update site for the toolkit feature}
 
@@ -175,7 +179,7 @@ The following steps have to be done to extend the remote control:
         as a \textbf{Software Site} in your \textbf{Target Platform}.
         Verify while adding the software site, that the check box
         \textbf{Include required software} is not checked. This software site also
-        includes  the Java documention of the source code.
+        includes the Java documention of the source code.
   \item Set the installed software site as your target platform.
   \item Create a fragment project with one of the following IDs as host:
     \begin{itemize}
@@ -205,7 +209,7 @@ adapter and \gdtesterclasses.
 
 \subsubsection{Creating an adapter}
 
-To use an adapter you have to implement the interface
+To use an adapter you have to implement the interface\\
 \bxshell{IAdapterFactory}, which is defined in the package named\\
 \bxname{org.eclipse.jubula.rc.common.adaptable}.\\
 It is necessary that the implementation of this interface resists in a package
@@ -291,7 +295,7 @@ overview, where to deploy your fragment:
 ~ & without OSGi & with OSGi\\
 ~ & (Swing, SWT) & (RCP, GEF)\\
 \hline\hline
-embedded & \multirow{2}{*}{ITE} & \multirow{4}{*}{AUT}\\
+embedded & \multirow{2}{*}{\ite{}} & \multirow{4}{*}{AUT}\\
 AUT agent & & \\
 \hhline{--~}
 standalone & standalone & \\
@@ -319,7 +323,7 @@ possible to install your fragment using a p2 repository or the OSGi console.
 You should be able to test your new component once you have installed the
 toolkit feature into the \ite{} and the fragment as described below.
 
-\section{ITE and remote control extension examples}
+\section{\ite{} and remote control extension examples}
 \label{extensionExamples}
 
 \app{} comes with source code examples for extending supported toolkits. The
