@@ -76,6 +76,9 @@ public class AutConfigConstants {
     /** the browser path for the aut */
     public static final String BROWSER_PATH = "BROWSER_PATH"; //$NON-NLS-1$
     
+    /** the mode in which the AUT starts**/
+    public static final String SINGLE_WINDOW_MODE = "SINGLE_WINDOW_MODE"; //$NON-NLS-1$
+    
     /** The URL of the AUT */
     public static final String AUT_URL = "AUT_ARGUMENTS"; //$NON-NLS-1$
 

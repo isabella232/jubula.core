@@ -54,6 +54,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
     private Text m_autIdAttibuteTextField;
     /** gui button for browser path */
     private Button m_browserPathButton;
+    /** gui checkbox for the singeWindowMode */
+    private Button m_singleWindowCheckBox;
     /** gui component */
     private I18nEnumCombo<Browser> m_browserCombo;
     /** gui component */
@@ -109,6 +111,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         super.createAdvancedArea(advancedAreaComposite);
         
         createBrowserPathEditor(advancedAreaComposite);
+        
+        createSingleModeCheckBox(advancedAreaComposite);
 
     }
     
@@ -179,6 +183,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         m_browserPathButton.addSelectionListener(selectionListener);
         m_browserCombo.addSelectionListener(selectionListener);
         m_activationMethodCombo.addSelectionListener(selectionListener);
+        m_singleWindowCheckBox.addSelectionListener(selectionListener);
     }
     
     /**
@@ -197,6 +202,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         m_browserPathButton.removeSelectionListener(selectionListener);
         m_browserCombo.removeSelectionListener(selectionListener);
         m_activationMethodCombo.removeSelectionListener(selectionListener);
+        m_singleWindowCheckBox.removeSelectionListener(selectionListener);
     }
     
     /**
@@ -239,6 +245,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
                 }
 
                 return;
+            } else if (source.equals(m_singleWindowCheckBox)) {
+                checked = true;
             }
             if (checked) {
                 checkAll();
@@ -445,6 +453,14 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         if (!isDataNew(data)) {
             m_browserTextField.setText(StringUtils.defaultString(data
                     .get(AutConfigConstants.BROWSER_PATH)));
+            String selection = data.get(AutConfigConstants.SINGLE_WINDOW_MODE);
+            boolean selected = false;
+            if (StringUtils.isEmpty(selection)) {
+                selected = true;
+            } else {
+                selected = Boolean.parseBoolean(selection);
+            }
+            m_singleWindowCheckBox.setSelection(selected);
         }
     }
 
@@ -501,8 +517,38 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         addError(paramList, modifyIDAttributeTextField());
         addError(paramList, modifyBrowser());
         addError(paramList, modifyBrowserPathTextField());
+        addError(paramList, modifySingleWindowCheckBox());
 
         handleActivationComboEvent();
         //handleBrowserComboEvent();
     }
+    
+    /**
+     * @return <code>null</code> if the new value is valid. Otherwise, returns
+     *         a status parameter indicating the cause of the problem.
+     */
+    DialogStatusParameter modifySingleWindowCheckBox() {
+        DialogStatusParameter error = null;
+        Boolean checked = m_singleWindowCheckBox.getSelection();
+        putConfigValue(AutConfigConstants.SINGLE_WINDOW_MODE,
+                checked.toString());
+        
+        return error;
+    }
+
+    /**
+     * Inits the SingleWindowMode CheckBox which tells the server in which mode to run
+     * @param parent The parent Composite.
+     */
+    protected void createSingleModeCheckBox(Composite parent) {
+        Label singleWindowModeLabel = UIComponentHelper.createLabel(parent, "WebAutConfigComponent.singleWindowMode"); //$NON-NLS-1$ 
+        singleWindowModeLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.singleWindowModeLabel"); //$NON-NLS-1$
+        ControlDecorator.decorateInfo(singleWindowModeLabel,  
+                "GDControlDecorator.SingleWindowMode", false); //$NON-NLS-1$
+        m_singleWindowCheckBox = UIComponentHelper
+                .createToggleButton(parent, 1);
+        m_singleWindowCheckBox.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.SingleWindowCheckBox"); //$NON-NLS-1$ 
+        
+    }
+    
 }

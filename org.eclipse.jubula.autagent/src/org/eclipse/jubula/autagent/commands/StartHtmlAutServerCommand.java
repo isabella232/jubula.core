@@ -98,6 +98,16 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
         } else {
             commands.add(DEFAULT_AUT_ID_ATTRIBUTE_NAME);
         }
+        
+        Object singleWindowMode = 
+                parameters.get(AutConfigConstants.SINGLE_WINDOW_MODE);
+        if (singleWindowMode != null) {
+            commands.add(String.valueOf(singleWindowMode));
+        } else {
+            commands.add(String.valueOf(true));
+        }
+
+
 
         return commands.toArray(new String[commands.size()]);
     }
