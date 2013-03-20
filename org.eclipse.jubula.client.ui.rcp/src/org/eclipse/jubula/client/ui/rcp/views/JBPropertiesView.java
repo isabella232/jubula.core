@@ -512,7 +512,20 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
      */
     private void handleDataChangedImpl(final IPersistentObject po,
             final DataState dataState) {
-        if (po != null && po.equals(m_currentNode)) {
+        if (po == null) {
+            return;
+        }
+        
+        // Check if the patent of the current node has been changed.
+        // This will happen if a child of a SpecTC is displayed
+        // and the editor with that SpecTC is saved.
+        boolean parentMatch = false;
+        if (m_currentNode != null) {
+            INodePO parent = m_currentNode.getParentNode();
+            parentMatch = (parent != null) && po.equals(parent);
+        }
+        
+        if (parentMatch || po.equals(m_currentNode)) {
             switch (dataState) {
                 case Added:
                 case StructureModified:
