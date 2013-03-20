@@ -11,7 +11,7 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
 		<properties>
-			<property name="eclipselink.logging.level" value="FINER" />
+			<property name="eclipselink.logging.level" value="SEVERE" />
 			<property name="eclipselink.weaving" value="static" />
 			<property name="eclipselink.weaving.changetracking" value="false" />
 			<property name="eclipselink.weaving.fetchgroups" value="false" />
