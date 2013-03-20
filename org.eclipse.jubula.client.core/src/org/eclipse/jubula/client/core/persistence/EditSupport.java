@@ -389,7 +389,8 @@ public class EditSupport {
     }
     
     /**
-     * because of Persistence (JPA / EclipseLink)-Bug HHH-1280 we can't use refresh<br>
+     * because of Persistence (JPA / EclipseLink)-Bug HHH-1280 we can't use
+     * refresh<br>
      * therefore we use evict to remove the old object from master session and
      * reload the object<br>
      * please attend, that in this case the Java-IDs of the old and the reloaded
@@ -402,15 +403,15 @@ public class EditSupport {
     private void refreshOriginalVersions() throws ProjectDeletedException {
         try {
             final EntityManager masterSession = GeneralStorage.getInstance()
-                .getMasterSession();
+                    .getMasterSession();
             IPersistentObject original = getOriginal();
             if (original != null) {
-                masterSession.refresh(original);
+                masterSession.merge(getWorkVersion());
                 GeneralStorage.getInstance().fireDataModified(original);
             }
         } catch (PersistenceException e) {
-            log.error(Messages.RefreshOfOriginalVersionFailed 
-                + StringConstants.DOT, e);
+            log.error(Messages.RefreshOfOriginalVersionFailed
+                    + StringConstants.DOT, e);
             GeneralStorage.getInstance().reloadMasterSession(
                     new NullProgressMonitor());
         }

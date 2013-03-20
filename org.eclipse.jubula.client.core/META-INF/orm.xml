@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<entity-mappings
+	xsi:schemaLocation="http://www.eclipse.org/eclipselink/xsds/persistence/orm xsd/eclipselink_orm_1_0.xsd"
+	xmlns="http://www.eclipse.org/eclipselink/xsds/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
+	<entity
+		class="org.eclipse.jubula.client.core.persistence.locking.ApplicationPO" />
+	<entity class="org.eclipse.jubula.client.core.persistence.locking.DbGuardPO" />
+	<entity class="org.eclipse.jubula.client.core.model.DBVersionPO" />
+	<entity class="org.eclipse.jubula.client.core.persistence.locking.DbLockPO" />
+	<entity
+		class="org.eclipse.jubula.client.core.persistence.locking.LockedObjectPO" />
+	<entity class="org.eclipse.jubula.client.core.model.TestResultSummaryPO" />
+	<entity class="org.eclipse.jubula.client.core.model.TestResultPO" />
+	<entity class="org.eclipse.jubula.client.core.model.ParameterDetailsPO" />
+	<entity class="org.eclipse.jubula.client.core.model.AUTConfigPO" />
+	<entity class="org.eclipse.jubula.client.core.model.NodePO" />
+	<entity class="org.eclipse.jubula.client.core.model.ProjectPO" />
+	<entity class="org.eclipse.jubula.client.core.model.TestJobPO" />
+	<entity class="org.eclipse.jubula.client.core.model.TestSuitePO" />
+	<entity class="org.eclipse.jubula.client.core.model.CapPO" />
+	<entity class="org.eclipse.jubula.client.core.model.CategoryPO" />
+	<entity class="org.eclipse.jubula.client.core.model.EventExecTestCasePO" />
+	<entity class="org.eclipse.jubula.client.core.model.ExecTestCasePO" />
+	<entity class="org.eclipse.jubula.client.core.model.ParamNodePO" />
+	<entity class="org.eclipse.jubula.client.core.model.RefTestSuitePO" />
+	<entity class="org.eclipse.jubula.client.core.model.SpecTestCasePO" />
+	<entity class="org.eclipse.jubula.client.core.model.TestCasePO" />
+	<entity class="org.eclipse.jubula.client.core.model.AUTMainPO" />
+	<entity class="org.eclipse.jubula.client.core.model.ParamDescriptionPO" />
+	<entity class="org.eclipse.jubula.client.core.model.CapParamDescriptionPO" />
+	<entity class="org.eclipse.jubula.client.core.model.TcParamDescriptionPO" />
+	<entity class="org.eclipse.jubula.client.core.model.ReusedProjectPO" />
+	<entity class="org.eclipse.jubula.client.core.model.ProjectPropertiesPO" />
+	<entity class="org.eclipse.jubula.client.core.model.TestDataCubePO" />
+	<entity class="org.eclipse.jubula.client.core.model.TDManagerPO" />
+	<entity class="org.eclipse.jubula.client.core.model.TestDataPO" />
+	<entity class="org.eclipse.jubula.client.core.model.DataSetPO" />
+	<entity class="org.eclipse.jubula.client.core.model.CompIdentifierPO" />
+	<entity class="org.eclipse.jubula.client.core.model.ObjectMappingPO" />
+	<entity
+		class="org.eclipse.jubula.client.core.model.ObjectMappingAssoziationPO" />
+	<entity class="org.eclipse.jubula.client.core.model.ObjectMappingCategoryPO" />
+	<entity class="org.eclipse.jubula.client.core.model.CompNamesPairPO" />
+	<entity class="org.eclipse.jubula.client.core.model.AUTContPO" />
+	<entity class="org.eclipse.jubula.client.core.model.SpecObjContPO" />
+	<entity class="org.eclipse.jubula.client.core.model.ExecObjContPO" />
+	<entity class="org.eclipse.jubula.client.core.model.TestDataCategoryPO" />
+	<entity class="org.eclipse.jubula.client.core.model.ParamNamePO" />
+	<entity class="org.eclipse.jubula.client.core.model.ProjectNamePO" />
+	<entity class="org.eclipse.jubula.client.core.model.ComponentNamePO" />
+	<entity class="org.eclipse.jubula.client.core.model.UsedToolkitPO" />
+	<entity class="org.eclipse.jubula.client.core.model.ObjectMappingProfilePO" />
+	<entity class="org.eclipse.jubula.client.core.model.CheckConfContPO" />
+	<entity class="org.eclipse.jubula.client.core.model.CheckConfPO" />
+	<embeddable class="org.eclipse.jubula.client.core.model.MonitoringValuePO" />
+	<entity class="org.eclipse.jubula.client.core.model.MonitoringReportPO" />
+
+</entity-mappings>

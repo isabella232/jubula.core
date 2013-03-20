@@ -610,6 +610,7 @@ public class ProjectPM extends PersistenceManager
 
         GeneralStorage.getInstance().reset();
         EntityManager s = GeneralStorage.getInstance().getMasterSession();
+        s.clear(); // get rid of all session (cached) data
         try {
             preloadData(s, project);
             
