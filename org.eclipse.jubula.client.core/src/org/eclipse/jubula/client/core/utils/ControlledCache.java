@@ -6,7 +6,6 @@ package org.eclipse.jubula.client.core.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
@@ -28,29 +27,9 @@ public class ControlledCache<TKey, TValue> implements IDataChangedListener,
     /** List of data changed events supported for cache invalidation */
     public enum ControlTypes {
         /** project was (re)loaded */
-        PROJECT_LOADED(1), 
+        PROJECT_LOADED, 
         /** some data changed */
-        DATA_CHANGED(2);
-
-        /** value of the enum */
-        private long m_flag;
-
-        /** set values for the different types 
-         * @param flagPosition the bitwise position of the 1 in a long to
-         * allow or-ing together several flags.
-         */
-        ControlTypes(int flagPosition) {
-            Assert.isTrue(flagPosition > 0, "postion out of range 1-60"); //$NON-NLS-1$
-            Assert.isTrue(flagPosition < 60, "postion out of range 1-60"); //$NON-NLS-1$
-            m_flag = 1 << flagPosition;
-        }
-        
-        /**
-         * @return the value of the enum
-         */
-        public long getFlag() {
-            return m_flag;
-        }
+        DATA_CHANGED;
     }
     
     /** cache storage */
@@ -132,7 +111,6 @@ public class ControlledCache<TKey, TValue> implements IDataChangedListener,
      */
     public void handleDataChanged(DataChangedEvent... events) {
         m_cache.clear();
-
     }
 
 }
