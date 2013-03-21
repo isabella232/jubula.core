@@ -315,10 +315,12 @@ It shows, in which case you usually deploy your fragment into
 The configuration of the standalone \gdagent{} can be done by modifying the
 file\\
 \bxshell{server/configuration/config.ini}\\
-There you have to append \bxshell{,fragment\_id@start} at the end of the
-line starting with \bxshell{osgi.bundles=}. Make sure that the bundles are
-comma-separated. Apart from the  deploying methods mentioned, it is also
-possible to install your fragment using a p2 repository or the OSGi console.
+There you have to append \bxshell{,fragment\_id} at the end of the line starting
+with \bxshell{osgi.bundles=}. Make sure that the bundles are comma-separated.
+It is also necessary to add the argument \bxshell{-clean} in the file
+\bxshell{server/autagent.ini}, when deploying a new version with the same
+fragment ID. Apart from the deploying methods mentioned, it is also possible to
+install your fragment using a p2 repository or the OSGi console.
 
 You should be able to test your new component once you have installed the
 toolkit feature into the \ite{} and the fragment as described below.
