@@ -5,4 +5,3 @@ Bundle-SymbolicName: org.eclipse.jubula.examples.extension.rcp.rc;singleton:=tru
 Bundle-Version: 2.0.0.qualifier
 Fragment-Host: org.eclipse.jubula.rc.rcp.swt
 Bundle-RequiredExecutionEnvironment: J2SE-1.4
-Require-Bundle: org.eclipse.jubula.rc.common
