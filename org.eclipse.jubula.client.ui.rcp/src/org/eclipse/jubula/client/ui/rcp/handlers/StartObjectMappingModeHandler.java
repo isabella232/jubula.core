@@ -135,6 +135,8 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
                         m_autId, m_modifier, m_key, m_type);
                 DataEventDispatcher.getInstance()
                     .fireOMStateChanged(OMState.running);
+                DataEventDispatcher.getInstance()
+                    .fireOMAutChanged(m_autId);
                 ObjectMappingEventDispatcher.setCategoryToCreateIn(
                         m_category);
                 m_editor.getOmEditorBP().setCategoryToCreateIn(m_category);

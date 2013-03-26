@@ -155,4 +155,7 @@ public interface RCPCommandIDs {
 
     /** the ID of the "Pause on Error" command */
     public static final String TOGGLE_PAUSE_ON_ERROR = "org.eclipse.jubula.client.ui.rcp.commands.togglePauseOnErrorCommand"; //$NON-NLS-1$
+    
+    /** the ID of the "Choose html window" command */
+    public static final String CHOOSE_HTML_WINDOW = "org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow"; //$//$NON-NLS-1$
 }

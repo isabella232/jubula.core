@@ -30,6 +30,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage.IReloadedSessio
 import org.eclipse.jubula.client.core.utils.IGenericListener;
 import org.eclipse.jubula.client.core.utils.ListenerManager;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.ui.IWorkbenchPart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -246,6 +247,15 @@ public class DataEventDispatcher implements IReloadedSessionListener,
          * @param state current state of OM Mode
          */
         public void handleOMStateChanged(OMState state);
+    }
+    
+    /** to notify clients about modification of OM-Mode */
+    public interface IOMAUTListener {
+        
+        /**
+         * @param identifier current AUT identifier of OM Mode
+         */
+        public void handleAUTChanged(AutIdentifier identifier);
     }
     
     /** to notify clients about modification of Record Mode */
@@ -507,6 +517,12 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      */
     private Set<IOMStateListener> m_omStateListeners =
         new HashSet<IOMStateListener>();
+    
+    /**
+     * <code>m_omAutListeners</code> listener for autid of OM Mode
+     */
+    private Set<IOMAUTListener> m_omAUTListeners =
+        new HashSet<IOMAUTListener>();
     /**
      * <code>m_omStateListeners</code> listener for state of OM Mode
      *  POST-Event for gui updates 
@@ -1336,5 +1352,44 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     public ListenerManager<IDialogStatusListener> 
     getDialogStatusListenerMgr() {
         return m_dialogStatusListenerMgr;
+    }
+    
+    
+    /**
+     * notify listener about modification of OM Mode
+     * @param identifier of AUT in OM Mode
+     */
+    public void fireOMAutChanged(AutIdentifier identifier) {
+        // model updates
+        final Set<IOMAUTListener> stableListeners = 
+            new HashSet<IOMAUTListener>(m_omAUTListeners);
+        for (IOMAUTListener l : stableListeners) {
+            try {
+                l.handleAUTChanged(identifier);
+            } catch (Throwable t) {
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
+            }
+        }
+    }
+    
+    /**
+     * @param l listener for OM Mode state
+     * @param guiMode
+     *      should this listener be called after the model listener 
+     */
+    public void addOMAUTListener(IOMAUTListener l, 
+        boolean guiMode) {
+        if (guiMode) {
+            m_omAUTListeners.add(l);
+        } else {
+            m_omAUTListeners.add(l);
+        }
+    }
+    
+    /**
+     * @param l listener for OM Mode state
+     */
+    public void removeOMAUTListener(IOMAUTListener l) {
+        m_omAUTListeners.remove(l);
     }
 }
