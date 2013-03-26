@@ -11,26 +11,31 @@
 package org.eclipse.jubula.client.ui.rcp.sourceprovider;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IOMAUTListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IOMStateListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IOMWindowsListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.OMState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.ui.rcp.utils.HTMLAutWindowManager;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.ui.ISources;
 /**
- * 
+ * Provides variables related to the status of an HTML AuT.
+ * 1. is it an HTML AuT
+ * 2. the window count of the browser
  * @author BREDEX GmbH
  *
  */
 public class HTMLAutSourceProvider extends AbstractJBSourceProvider implements
-        IOMAUTListener, IOMStateListener {
+        IOMAUTListener, IOMStateListener, IOMWindowsListener {
 
     /**
      * the id of this source provider
@@ -49,12 +54,12 @@ public class HTMLAutSourceProvider extends AbstractJBSourceProvider implements
      * ID of variable that indicates whether the client is currently connecting 
      * to an AUT Agent
      */
-    public static final String WINDOW_COUNT = 
-        "org.eclipse.jubula.client.ui.rcp.variable.windowCount"; //$NON-NLS-1$
+    public static final String WINDOW_TITLES = 
+        "org.eclipse.jubula.client.ui.rcp.variable.html.windowCount"; //$NON-NLS-1$
     
     /** is it an HTML aut in OMM */
     private boolean m_isHTMLAut = false;
-    
+        
     /**
      * Constructor for adding listeners to the DataEventDispatcher
      */
@@ -62,6 +67,8 @@ public class HTMLAutSourceProvider extends AbstractJBSourceProvider implements
         DataEventDispatcher dispatch = DataEventDispatcher.getInstance();
         dispatch.addOMAUTListener(this, false);
         dispatch.addOMStateListener(this, true);
+        dispatch.addAUTWindowsListener(this, false);
+        HTMLAutWindowManager.getInstance();
     }
 
     /**
@@ -71,7 +78,7 @@ public class HTMLAutSourceProvider extends AbstractJBSourceProvider implements
         DataEventDispatcher dispatch = DataEventDispatcher.getInstance();
         dispatch.removeOMAUTListener(this);
         dispatch.removeOMStateListener(this);
-
+        dispatch.removeAUTWindowsListener(this);
     }
 
     /**
@@ -81,7 +88,7 @@ public class HTMLAutSourceProvider extends AbstractJBSourceProvider implements
         Map<String, Object> values = new HashMap<String, Object>();
 
         values.put(IS_HTML_AUT, m_isHTMLAut);
-
+        values.put(WINDOW_TITLES, new LinkedList<String>());
         return values;
     }
 
@@ -123,10 +130,21 @@ public class HTMLAutSourceProvider extends AbstractJBSourceProvider implements
     }
 
     /**
-     * Fires a source changed event for <code>IS_OBJECT_MAPPING_RUNNING</code>.
+     * Fires a source changed event for <code>IS_HTML_AUT</code>.
      */
     private void fireModeChanged() {
         gdFireSourceChanged(ISources.WORKBENCH, IS_HTML_AUT, m_isHTMLAut);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void handleAUTChanged(String[] windowTitles) {
+        LinkedList<String> listOfTitles = new LinkedList<String>();
+        for (int i = 0; i < windowTitles.length; i++) {
+            listOfTitles.add(windowTitles[i]);
+        }
+        gdFireSourceChanged(ISources.WORKBENCH, WINDOW_TITLES, listOfTitles);
     }
 
 }

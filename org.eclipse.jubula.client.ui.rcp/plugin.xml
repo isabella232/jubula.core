@@ -1394,8 +1394,7 @@
              <and>
               <with variable="activeEditorId">
                  <equals value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor" />
-               </with>
-        
+               </with>        
               <with variable="org.eclipse.jubula.client.ui.rcp.variable.isHtmlAut">
                  <equals value="true" />
               </with>
@@ -2364,6 +2363,10 @@
         <with variable="org.eclipse.jubula.client.ui.rcp.variable.isObjectMappingRunning">
             <equals value="true" />
         </with>
+        <with
+              variable="org.eclipse.jubula.client.ui.rcp.variable.html.windowCount">
+              <count value="2" />
+        </with>
       </and>
       </enabledWhen>
     </handler>
@@ -2694,7 +2697,8 @@
       icon="icons/addLogicalName.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow"
-      icon="icons/addLogicalName.gif" />
+      disabledIcon="icons/startOM_disabled.gif"
+      icon="icons/startOM.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.sort.name"
       icon="icons/sort.gif" />
@@ -3701,6 +3705,9 @@
       provider="org.eclipse.jubula.client.ui.rcp.sourceprovider.HTMLAutSourceProvider">
       <variable
         name="org.eclipse.jubula.client.ui.rcp.variable.isHtmlAut"
+        priorityLevel="workbench" />
+      <variable
+        name="org.eclipse.jubula.client.ui.rcp.variable.html.windowCount"
         priorityLevel="workbench" />
     </sourceProvider>
   </extension>

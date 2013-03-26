@@ -249,13 +249,23 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         public void handleOMStateChanged(OMState state);
     }
     
-    /** to notify clients about modification of OM-Mode */
+    /** to notify clients about which AUT had the OM Mode */
     public interface IOMAUTListener {
         
         /**
          * @param identifier current AUT identifier of OM Mode
          */
         public void handleAUTChanged(AutIdentifier identifier);
+    }
+    
+    /** to notify clients about modification of the Windows in the AUT
+     * mostly used in HTML */
+    public interface IOMWindowsListener {
+        
+        /**
+         * @param windowTitles identification of the different windows
+         */
+        public void handleAUTChanged(String[] windowTitles);
     }
     
     /** to notify clients about modification of Record Mode */
@@ -523,6 +533,13 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      */
     private Set<IOMAUTListener> m_omAUTListeners =
         new HashSet<IOMAUTListener>();
+    
+    /**
+     * <code>m_omAutListeners</code> listener for the Windows in OM Mode (HTML)
+     */
+    private Set<IOMWindowsListener> m_omWindowListeners =
+        new HashSet<IOMWindowsListener>();
+    
     /**
      * <code>m_omStateListeners</code> listener for state of OM Mode
      *  POST-Event for gui updates 
@@ -1356,7 +1373,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     
     
     /**
-     * notify listener about modification of OM Mode
+     * notify listener about modification of the aut in OM Mode
      * @param identifier of AUT in OM Mode
      */
     public void fireOMAutChanged(AutIdentifier identifier) {
@@ -1373,7 +1390,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     }
     
     /**
-     * @param l listener for OM Mode state
+     * @param l listener for OM Mode aut
      * @param guiMode
      *      should this listener be called after the model listener 
      */
@@ -1387,9 +1404,47 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     }
     
     /**
-     * @param l listener for OM Mode state
+     * @param l listener for OM Mode aut
      */
     public void removeOMAUTListener(IOMAUTListener l) {
         m_omAUTListeners.remove(l);
+    }
+    
+    /**
+     * notify listener about modification of changes of the window titles in OMM
+     * @param windowTitles of AUT in OM Mode
+     */
+    public void fireWindowsChanged(String[] windowTitles) {
+        // model updates
+        final Set<IOMWindowsListener> stableListeners = 
+            new HashSet<IOMWindowsListener>(m_omWindowListeners);
+        for (IOMWindowsListener l : stableListeners) {
+            try {
+                l.handleAUTChanged(windowTitles);
+            } catch (Throwable t) {
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
+            }
+        }
+    }
+    
+    /**
+     * @param l listener for OM Mode windows (HTML)
+     * @param guiMode
+     *      should this listener be called after the model listener 
+     */
+    public void addAUTWindowsListener(IOMWindowsListener l, 
+        boolean guiMode) {
+        if (guiMode) {
+            m_omWindowListeners.add(l);
+        } else {
+            m_omWindowListeners.add(l);
+        }
+    }
+    
+    /**
+     * @param l listener for OM Mode windows
+     */
+    public void removeAUTWindowsListener(IOMWindowsListener l) {
+        m_omWindowListeners.remove(l);
     }
 }

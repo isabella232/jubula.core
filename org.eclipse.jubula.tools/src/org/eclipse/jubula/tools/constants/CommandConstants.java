@@ -251,7 +251,12 @@ public abstract class CommandConstants {
     public static final String GET_KEYBOARD_LAYOUT_NAME_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.GetKeyboardLayoutNameResponseCommand"; //$NON-NLS-1$
     /** AUT Server (SWT) - sets the keyboard layout */
     public static final String SET_KEYBOARD_LAYOUT_COMMAND = "org.eclipse.jubula.rc.swt.commands.SetKeyboardLayoutCommand"; //$NON-NLS-1$
-       /** to prevent instantiation */
+    /** Client - handling of the send window titles from the browser */
+    public static final String HTML_GET_WINDOW_TITLES_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.WindowTitlesChangedCommand"; //$NON-NLS-1$
+    /** AUT Server (HTML) - in OMM selection of a specific window for the OMM */
+    public static final String HTML_OMM_SELECT_WINDOW_COMMAND = "com.bredexsw.jubula.rc.html.commands.OMSelectWindowCommand"; //$NON-NLS-1$
+    
+    /** to prevent instantiation */
     private CommandConstants() {
         // do nothing
     }
