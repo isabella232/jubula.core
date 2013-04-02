@@ -265,6 +265,12 @@
 		<action name="html.BrowserReloadAction" changed="1.0">
 			<method>rcReload</method>	
 		</action>
+        <action name="html.BrowserSelectWindow" changed="1.0">
+            <method>rcSelectWindow</method>
+            <param name="html.BrowserTitle">
+                <type>java.lang.String</type>
+            </param>        
+        </action>
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" visible="false">
 		<defaultMapping technicalName="Menu" logicalName="CompSystem.LogicalMenuName">
