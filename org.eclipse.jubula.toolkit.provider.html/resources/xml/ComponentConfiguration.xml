@@ -271,6 +271,22 @@
                 <type>java.lang.String</type>
             </param>        
         </action>
+        <action name="html.BrowserSelectWindowWithTitle" changed="1.0">
+            <method>rcSelectWindow</method>
+            <param name="html.BrowserTitle">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Operator">
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>        
+        </action>
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" visible="false">
 		<defaultMapping technicalName="Menu" logicalName="CompSystem.LogicalMenuName">
