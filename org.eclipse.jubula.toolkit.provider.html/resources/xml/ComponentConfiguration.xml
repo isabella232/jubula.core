@@ -266,10 +266,18 @@
 			<method>rcReload</method>	
 		</action>
         <action name="html.BrowserSelectWindow" changed="1.0">
-            <method>rcSelectWindow</method>
-            <param name="html.BrowserTitle">
+            <method>rcSelectWindowByIdentifier</method>
+            <param name="html.BrowserIdentifier">
                 <type>java.lang.String</type>
-            </param>        
+            </param>
+            <param name="html.BrowserIdentifierType">
+                <type>java.lang.String</type>
+                <valueSet>
+                    <element name="CompSystem.BrowserTitle" value="title"/>
+                    <element name="CompSystem.BrowserName" value="name"/>
+                    <element name="CompSystem.BrowserAnyIdentifier" value="any"/>
+                </valueSet>
+            </param>         
         </action>
         <action name="html.BrowserSelectWindowWithTitle" changed="1.0">
             <method>rcSelectWindow</method>
