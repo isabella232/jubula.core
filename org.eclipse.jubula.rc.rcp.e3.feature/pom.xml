@@ -8,24 +8,12 @@
     xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>org.eclipse.jubula.releng.server.rc.rcp</artifactId>
+        <artifactId>org.eclipse.jubula.rc.rcp.e3.releng</artifactId>
         <groupId>org.eclipse.jubula</groupId>
         <version>2.0.0-SNAPSHOT</version>
-        <relativePath>../org.eclipse.jubula.releng.server.rc.rcp</relativePath>
+        <relativePath>../org.eclipse.jubula.rc.rcp.e3.releng</relativePath>
     </parent>
-    <artifactId>org.eclipse.jubula.rc.rcp.site</artifactId>
+    <artifactId>org.eclipse.jubula.rc.rcp.e3.feature</artifactId>
     <version>2.0.0-SNAPSHOT</version>
-    <packaging>eclipse-repository</packaging>
-    <dependencies>
-        <dependency>
-            <groupId>org.eclipse.jubula</groupId>
-            <artifactId>org.eclipse.jubula.rc.rcp.common</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jubula</groupId>
-            <artifactId>org.eclipse.jubula.rc.rcp.swt</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <packaging>eclipse-feature</packaging>
 </project>

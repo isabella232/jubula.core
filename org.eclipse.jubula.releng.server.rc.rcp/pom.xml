@@ -23,9 +23,8 @@
         <module>../org.eclipse.jubula.rc.rcp.feature</module>
         <module>../org.eclipse.jubula.rc.rcp.common</module>
         <module>../org.eclipse.jubula.rc.rcp.swt</module>
-        <module>../org.eclipse.jubula.rc.rcp.e3</module>
-        <module>../org.eclipse.jubula.rc.rcp.e3.specific</module>
-        <module>../org.eclipse.jubula.rc.rcp.site</module>
+        <module>../org.eclipse.jubula.rc.rcp.e3.releng</module>
         <module>../org.eclipse.jubula.rc.rcp.e4.releng</module>
+        <module>../org.eclipse.jubula.rc.rcp.site</module>
     </modules>
 </project>

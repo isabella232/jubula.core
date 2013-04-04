@@ -8,7 +8,8 @@
  -->
 <project name="org.eclipse.jubula.rc.rcp" default="gen-bundles" basedir=".">
 
-    <property name="bundlesSourceDirE3" value="../org.eclipse.jubula.rc.rcp.site/target/repository/plugins/" />
+    <property name="bundlesSourceDirCommon" value="../org.eclipse.jubula.rc.rcp.site/target/repository/plugins/" />
+    <property name="bundlesSourceDirE3" value="../org.eclipse.jubula.rc.rcp.e3.site/target/repository/plugins/" />
     <property name="bundlesSourceDirE4" value="../org.eclipse.jubula.rc.rcp.e4.site/target/repository/plugins/" />
 
     <property name="bundlesTargetDir" value="bundles" />
@@ -17,7 +18,7 @@
     <property name="bundlesTargetDir.e4" value="bundles.e4" />
     <property name="bundlesTargetDir.e4.swt" value="bundles.e4.swt" />
 
-    <!-- Function for copying a bundle into the bundles/ dir. -->
+    <!-- Function for copying bundles into a bundles/ dir. -->
     <target name="copyBundleToBundlesDir">
         <copy todir="${targetDir}">
             <fileset dir="${sourceDir}">
@@ -51,14 +52,14 @@
 
         <!-- Copy common bundles into bundles/ folder. -->
         <antcall target="copyBundleToBundlesDir">
-            <param name="sourceDir" value="${bundlesSourceDirE3}" />
+            <param name="sourceDir" value="${bundlesSourceDirCommon}" />
             <param name="targetDir" value="${bundlesTargetDir}" />
             <param name="bundleName" value="org.eclipse.jubula.rc.rcp.common" />
         </antcall>
 
         <!-- Copy common bundles into bundles.swt/ folder. -->
         <antcall target="copyBundleToBundlesDir">
-            <param name="sourceDir" value="${bundlesSourceDirE3}" />
+            <param name="sourceDir" value="${bundlesSourceDirCommon}" />
             <param name="targetDir" value="${bundlesTargetDir.swt}" />
             <param name="bundleName" value="org.eclipse.jubula.rc.rcp.swt" />
         </antcall>

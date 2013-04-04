@@ -42,7 +42,6 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
@@ -193,28 +192,35 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
     /**
      * doing sth after Startup
      * (starts the spec perspective after the application-start)
+     * Currently the previous perspective instead of the specification
+     * perspective opens after startup.
      */
     public void postStartup() {
-        try {
-            if (PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage().getPerspective().getId()
-                .equals(Constants.SPEC_PERSPECTIVE)) {
-                return;
-            }
-            PlatformUI.getWorkbench().showPerspective(Constants
-                .SPEC_PERSPECTIVE,
-                PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-            Plugin.showStatusLine((IWorkbenchPart)null);
-        } catch (WorkbenchException e) {
-            log.error(Messages.CannotOpenThePerspective 
-                    + Constants.SPEC_PERSPECTIVE
-                + StringConstants.LEFT_PARENTHESES + e 
-                + StringConstants.RIGHT_PARENTHESES
-                + StringConstants.DOT);
-            ErrorHandlingUtil.createMessageDialog(MessageIDs.E_NO_PERSPECTIVE, 
-                    new Object[]{Constants.SPEC_PERSPECTIVE}, null);
-        }
-        Plugin.getDefault().setClientStatus(ClientStatus.RUNNING);
+// The following part does not work in Juno, but in Indigo,
+// because at this state
+//    PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+// is NULL in Juno (not in Indigo).
+//
+//        try {
+//            if (PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+//                .getActivePage().getPerspective().getId()
+//                .equals(Constants.SPEC_PERSPECTIVE)) {
+//                return;
+//            }
+//            PlatformUI.getWorkbench().showPerspective(Constants
+//                .SPEC_PERSPECTIVE,
+//                PlatformUI.getWorkbench().getActiveWorkbenchWindow());
+//        Plugin.showStatusLine((IWorkbenchPart)null);
+//        } catch (WorkbenchException e) {
+//            log.error(Messages.CannotOpenThePerspective
+//                    + Constants.SPEC_PERSPECTIVE
+//                + StringConstants.LEFT_PARENTHESES + e
+//                + StringConstants.RIGHT_PARENTHESES
+//                + StringConstants.DOT);
+//            ErrorHandlingUtil.createMessageDialog(MessageIDs.E_NO_PERSPECTIVE,
+//                    new Object[]{Constants.SPEC_PERSPECTIVE}, null);
+//        }
+//        Plugin.getDefault().setClientStatus(ClientStatus.RUNNING);
     }
 
     /**

@@ -206,7 +206,7 @@ public class ActionBuilder {
      */
     private void fillMenuBar(IMenuManager menuBar) {
         m_resetPersp.setEnabled(true);        
-        menuBar.setRemoveAllWhenShown(true);
+        // setRemoveAllWhenShow(true) is _not_ called to show the declarative main menu "Test" in Juno
         menuBar.add(createFileMenu());
         menuBar.add(createEditMenu());
         menuBar.add(createSearchMenu());

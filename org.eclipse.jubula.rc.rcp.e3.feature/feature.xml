@@ -4,7 +4,7 @@
     Eclipse Public License v1.0 which accompanies this distribution, and is available
     at http://www.eclipse.org/legal/epl-v10.html -->
 <feature
-      id="org.eclipse.jubula.rc.rcp.feature"
+      id="org.eclipse.jubula.rc.rcp.e3.feature"
       label="Jubula RCP Remote Control"
       version="2.0.0.qualifier"
       provider-name="Eclipse Jubula">
@@ -29,13 +29,13 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
    </license>
 
    <plugin
-         id="org.eclipse.jubula.rc.rcp.common"
+         id="org.eclipse.jubula.rc.rcp.e3"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
    <plugin
-         id="org.eclipse.jubula.rc.rcp.swt"
+         id="org.eclipse.jubula.rc.rcp.e3.specific"
          download-size="0"
          install-size="0"
          version="0.0.0"
