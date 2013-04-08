@@ -90,10 +90,10 @@ public abstract class AbstractXMLReportGenerator {
         general.addElement("name").//$NON-NLS-1$
             addText(m_testResult.getProjectName());
 
-		general.addElement("version").//$NON-NLS-1$
-				addText(m_testResult.getProjectMajorVersion()
-						+ StringConstants.DOT
-						+ m_testResult.getProjectMinorVersion());
+        general.addElement("version").//$NON-NLS-1$
+                addText(m_testResult.getProjectMajorVersion()
+                        + StringConstants.DOT
+                        + m_testResult.getProjectMinorVersion());
 
         Date startTime = m_testResult.getStartTime();
         if (startTime != null) {

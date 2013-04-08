@@ -119,7 +119,8 @@ public class TestresultSummaryBP {
         summary.setTestsuiteStartTime(startTime);
         Date endTime = new Date();
         summary.setTestsuiteEndTime(endTime);
-        summary.setTestsuiteDuration(TimeUtil.getDurationString(startTime, endTime));
+        summary.setTestsuiteDuration(
+                TimeUtil.getDurationString(startTime, endTime));
         summary.setTestsuiteExecutedTeststeps(te.getNumberOfTestedSteps());
         summary.setTestsuiteExpectedTeststeps(te.getExpectedNumberOfSteps());
         summary.setTestsuiteEventHandlerTeststeps(
