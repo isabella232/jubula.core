@@ -76,6 +76,16 @@
 						if (sibling) sibling.style.display = 'block';
 				    }
 				   }
+				   
+				   function toggleSize(element, defaultSize) {
+				       if (element.width == defaultSize) {
+				           element.removeAttribute("width");
+				           element.style.maxWidth = "100%";
+				       } else {
+				           element.removeAttribute("style");
+				           element.width = defaultSize;
+				       }
+				   }
 				</script>
 				<title>
 					Test Result Report
@@ -476,7 +486,7 @@
             <tr><th colspan="3">Screenshot</th></tr>
             <tr>
               <td colspan="3">
-                <img width="400">
+                <img width="400" onclick="toggleSize(this, 400)">
                   <xsl:attribute name="src">data:image/png;base64,<xsl:value-of select="screenshot"/></xsl:attribute>
                 </img>
               </td>
