@@ -41,6 +41,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.utils.TimeUtil;
 
 /**
  * Class to get keywords and summary from testresultnode to persist in database
@@ -118,7 +119,7 @@ public class TestresultSummaryBP {
         summary.setTestsuiteStartTime(startTime);
         Date endTime = new Date();
         summary.setTestsuiteEndTime(endTime);
-        summary.setTestsuiteDuration(getDurationString(startTime, endTime));
+        summary.setTestsuiteDuration(TimeUtil.getDurationString(startTime, endTime));
         summary.setTestsuiteExecutedTeststeps(te.getNumberOfTestedSteps());
         summary.setTestsuiteExpectedTeststeps(te.getExpectedNumberOfSteps());
         summary.setTestsuiteEventHandlerTeststeps(
@@ -337,28 +338,5 @@ public class TestresultSummaryBP {
             instance = new TestresultSummaryBP();
         }
         return instance;
-    }
-    
-    /**
-     * 
-     * @param startTime The start time.
-     * @param endTime The end time.
-     * @return a String representation of the difference between the provided 
-     *         times.
-     */
-    private String getDurationString(Date startTime, Date endTime) {
-        long timeInSeconds = endTime.getTime() - startTime.getTime();
-        timeInSeconds = timeInSeconds / 1000;
-        long hours, minutes, seconds;
-        hours = timeInSeconds / 3600;
-        timeInSeconds = timeInSeconds - (hours * 3600);
-        minutes = timeInSeconds / 60;
-        timeInSeconds = timeInSeconds - (minutes * 60);
-        seconds = timeInSeconds;
-        String secondsString = (seconds < 10) ? "0" + seconds : String.valueOf(seconds); //$NON-NLS-1$ 
-        String minutesString = (minutes < 10) ? "0" + minutes : String.valueOf(minutes); //$NON-NLS-1$ 
-        String hoursString = (hours < 10) ? "0" + hours : String.valueOf(hours); //$NON-NLS-1$ 
-        return hoursString + StringConstants.COLON + minutesString 
-            + StringConstants.COLON + secondsString;
     }
 }

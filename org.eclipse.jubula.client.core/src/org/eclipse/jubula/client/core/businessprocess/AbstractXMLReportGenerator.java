@@ -32,6 +32,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,11 +87,13 @@ public abstract class AbstractXMLReportGenerator {
         root.addAttribute("style", getStyleName()); //$NON-NLS-1$
         Element general = root.addElement("project"); //$NON-NLS-1$
         
-        StringBuilder nameSb = new StringBuilder(m_testResult.getProjectName());
-        nameSb.append(" ").append(m_testResult.getProjectMajorVersion()); //$NON-NLS-1$
-        nameSb.append(".").append(m_testResult.getProjectMinorVersion()); //$NON-NLS-1$
         general.addElement("name").//$NON-NLS-1$
-            addText(nameSb.toString());
+            addText(m_testResult.getProjectName());
+
+		general.addElement("version").//$NON-NLS-1$
+				addText(m_testResult.getProjectMajorVersion()
+						+ StringConstants.DOT
+						+ m_testResult.getProjectMinorVersion());
 
         Date startTime = m_testResult.getStartTime();
         if (startTime != null) {
@@ -102,20 +105,8 @@ public abstract class AbstractXMLReportGenerator {
         }
 
         if (startTime != null && endTime != null) {
-            // elapsed time while executing
-            long timeInSeconds = endTime.getTime() - startTime.getTime();
-            timeInSeconds = timeInSeconds / 1000;
-            long hours, minutes, seconds;
-            hours = timeInSeconds / 3600;
-            timeInSeconds = timeInSeconds - (hours * 3600);
-            minutes = timeInSeconds / 60;
-            timeInSeconds = timeInSeconds - (minutes * 60);
-            seconds = timeInSeconds;
-            String secondsString = (seconds < 10) ? "0" + seconds : String.valueOf(seconds); //$NON-NLS-1$ 
-            String minutesString = (minutes < 10) ? "0" + minutes : String.valueOf(minutes); //$NON-NLS-1$ 
-            String hoursString = (hours < 10) ? "0" + hours : String.valueOf(hours); //$NON-NLS-1$ 
             general.addElement("test-length").//$NON-NLS-1$
-                addText(hoursString + ":" + minutesString + ":" + secondsString);  //$NON-NLS-1$//$NON-NLS-2$
+                addText(TimeUtil.getDurationString(startTime, endTime));
         }
         
         addStepCountElements(m_testResult, general);

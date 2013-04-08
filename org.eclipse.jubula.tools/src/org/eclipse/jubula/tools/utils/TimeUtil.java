@@ -12,6 +12,8 @@ package org.eclipse.jubula.tools.utils;
 
 import java.util.Date;
 
+import org.eclipse.jubula.tools.constants.StringConstants;
+
 /**
  * Class utility for all things around time, delays, timestamps, ...
  *
@@ -49,5 +51,27 @@ public abstract class TimeUtil {
             }
             delay = endTime - (new Date().getTime());
         } while (delay > 0);
+    }
+    
+    /**
+     * @param startTime The start time.
+     * @param endTime The end time.
+     * @return a String representation of the difference between the provided 
+     *         times.
+     */
+    public static String getDurationString(Date startTime, Date endTime) {
+        long timeInSeconds = endTime.getTime() - startTime.getTime();
+        timeInSeconds = timeInSeconds / 1000;
+        long hours, minutes, seconds;
+        hours = timeInSeconds / 3600;
+        timeInSeconds = timeInSeconds - (hours * 3600);
+        minutes = timeInSeconds / 60;
+        timeInSeconds = timeInSeconds - (minutes * 60);
+        seconds = timeInSeconds;
+        String secondsString = (seconds < 10) ? "0" + seconds : String.valueOf(seconds); //$NON-NLS-1$ 
+        String minutesString = (minutes < 10) ? "0" + minutes : String.valueOf(minutes); //$NON-NLS-1$ 
+        String hoursString = (hours < 10) ? "0" + hours : String.valueOf(hours); //$NON-NLS-1$ 
+        return hoursString + StringConstants.COLON + minutesString 
+            + StringConstants.COLON + secondsString;
     }
 }

@@ -105,18 +105,26 @@
 					</h2>
 					<table border="0" width="100%">
 						<tr bgcolor="#DDDDDD">
-							<th colspan="2" align="left"> Execution Information
+							<th colspan="2" align="left">Project Information
 							</th>
 						</tr>
 						<tr>
-							<td align="left" width="200">Project Name</td>
+							<td align="left" width="200">Name</td>
 							<td><xsl:value-of select="report/project/name"/>
 							</td>
 						</tr>
 						<tr>
+							<td align="left" width="200">Version</td>
+							<td><xsl:value-of select="report/project/version"/>
+							</td>
+						</tr>
+						<tr bgcolor="#DDDDDD">
+							<th colspan="2" align="left">Execution Information
+							</th>
+						</tr>
+						<tr>
 							<td align="left" width="200">Start Time</td>
-							<td><xsl:value-of
-									select="report/project/test-start"/>
+							<td><xsl:value-of select="report/project/test-start"/>
 							</td>
 						</tr>
 						<tr>
