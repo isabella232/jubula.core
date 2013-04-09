@@ -190,37 +190,14 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
     }
     
     /**
-     * doing sth after Startup
-     * (starts the spec perspective after the application-start)
-     * Currently the previous perspective instead of the specification
-     * perspective opens after startup.
+     * This method is called after application-start, but currently it does nothing.
+     * The Indigo targeted version of Jubula (1.3) started the specification perspective
+     * after application-start in this method, instead since the Juno targeted version of
+     * Jubula (2.0.0) the previous perspective is opened automatically, which is the
+     * normal behavior of Eclipse.
      */
     public void postStartup() {
-// The following part does not work in Juno, but in Indigo,
-// because at this state
-//    PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-// is NULL in Juno (not in Indigo).
-//
-//        try {
-//            if (PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-//                .getActivePage().getPerspective().getId()
-//                .equals(Constants.SPEC_PERSPECTIVE)) {
-//                return;
-//            }
-//            PlatformUI.getWorkbench().showPerspective(Constants
-//                .SPEC_PERSPECTIVE,
-//                PlatformUI.getWorkbench().getActiveWorkbenchWindow());
-//        Plugin.showStatusLine((IWorkbenchPart)null);
-//        } catch (WorkbenchException e) {
-//            log.error(Messages.CannotOpenThePerspective
-//                    + Constants.SPEC_PERSPECTIVE
-//                + StringConstants.LEFT_PARENTHESES + e
-//                + StringConstants.RIGHT_PARENTHESES
-//                + StringConstants.DOT);
-//            ErrorHandlingUtil.createMessageDialog(MessageIDs.E_NO_PERSPECTIVE,
-//                    new Object[]{Constants.SPEC_PERSPECTIVE}, null);
-//        }
-//        Plugin.getDefault().setClientStatus(ClientStatus.RUNNING);
+        // do nothing after application-start
     }
 
     /**
