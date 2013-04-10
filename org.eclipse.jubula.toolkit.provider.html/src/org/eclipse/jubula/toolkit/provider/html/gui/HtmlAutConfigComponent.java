@@ -461,7 +461,10 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
                 selected = Boolean.parseBoolean(selection);
             }
             m_singleWindowCheckBox.setSelection(selected);
+        } else {
+            m_singleWindowCheckBox.setSelection(true);
         }
+        
     }
 
     /**
