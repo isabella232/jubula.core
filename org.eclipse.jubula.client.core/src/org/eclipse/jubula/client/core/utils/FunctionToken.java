@@ -14,10 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.eclipse.jubula.client.core.functions.AbstractFunctionEvaluator;
+import org.eclipse.jubula.client.core.functions.FunctionContext;
 import org.eclipse.jubula.client.core.functions.FunctionDefinition;
 import org.eclipse.jubula.client.core.functions.FunctionRegistry;
 import org.eclipse.jubula.client.core.functions.IFunctionEvaluator;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter.ConvValidationState;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
@@ -124,6 +128,22 @@ public class FunctionToken extends AbstractParamValueToken
         }
         
         IFunctionEvaluator evaluator = function.getEvaluator();
+        if (evaluator instanceof AbstractFunctionEvaluator) {
+            AbstractFunctionEvaluator aEvaluator = 
+                    (AbstractFunctionEvaluator) evaluator;
+            ExecObject currentExecObject = stack.get(stack.size() - 1);
+            INodePO actualNode;
+            int innerIndex = currentExecObject.getIndex();
+            INodePO execNode = currentExecObject.getExecNode();
+            if (innerIndex < 0) {
+                actualNode = execNode;
+            } else {
+                actualNode = ((IExecTestCasePO) execNode)
+                        .getSpecTestCase().getUnmodifiableNodeList()
+                        .get(innerIndex);
+            }
+            aEvaluator.setContext(new FunctionContext(actualNode));
+        }
         List<String> argList = new ArrayList<String>();
         StringBuilder argBuilder = new StringBuilder();
         for (IParamValueToken argToken : getNestedTokens()) {

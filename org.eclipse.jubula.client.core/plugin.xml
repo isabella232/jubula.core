@@ -132,6 +132,15 @@
                type="string">
          </parameter>
       </function>
+      <function
+            class="org.eclipse.jubula.client.core.functions.NodeAttributeEvaluator"
+            evaluator="local"
+            name="getNodeAttribute">
+         <parameter
+               name="attributeName"
+               type="string">
+         </parameter>
+      </function>
    </extension>
 
 </plugin>

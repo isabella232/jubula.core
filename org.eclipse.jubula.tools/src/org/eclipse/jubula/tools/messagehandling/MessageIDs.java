@@ -862,6 +862,7 @@ public class MessageIDs {
         messageMap.put(E_MISSING_FUNCTION_NAME, e, "ErrorMessage.MISSING_FUNCTION_NAME", null); //$NON-NLS-1$
         messageMap.put(E_FUNCTION_NOT_REGISTERED, e, "ErrorMessage.FUNCTION_NOT_REGISTERED", null); //$NON-NLS-1$
         messageMap.put(E_WRONG_NUM_FUNCTION_ARGS, e, "ErrorMessage.WRONG_NUM_FUNCTION_ARGS", null); //$NON-NLS-1$
+        messageMap.put(E_WRONG_PARAMETER_VALUE, e, "ErrorMessage.WRONG_PARAMETER_VALUE", null); //$NON-NLS-1$
     }
     
     /**

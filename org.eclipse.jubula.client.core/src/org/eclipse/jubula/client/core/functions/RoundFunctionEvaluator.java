@@ -21,9 +21,7 @@ import org.eclipse.jubula.tools.exception.InvalidDataException;
 public class RoundFunctionEvaluator extends AbstractFunctionEvaluator {
 
     /**
-     * 
      * {@inheritDoc}
-     * @throws InvalidDataException 
      */
     public String evaluate(String[] arguments) throws InvalidDataException {
         validateParamCount(arguments, 2);

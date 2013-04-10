@@ -17,7 +17,6 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 public final class ParseDateEvaluator extends AbstractFunctionEvaluator {
 
     /**
-     * 
      * {@inheritDoc}
      */
     public String evaluate(String[] arguments) throws InvalidDataException {
