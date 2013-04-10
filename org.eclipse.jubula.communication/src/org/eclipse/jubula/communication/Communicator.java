@@ -59,7 +59,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * <p>
  * Instances of this class can act like a server or like a client. Use the
- * appopriate constructor. As a server, the instance will accept connections
+ * appropriate constructor. As a server, the instance will accept connections
  * without any timeout. The request to connect are not queued, so if a
  * connection indication arrives when the instance is already connected, the
  * connection is refused by the operating system.
@@ -77,7 +77,7 @@ import org.slf4j.LoggerFactory;
  * @created 16.07.2004
  */
 public class Communicator {
-    /** timeout used as default value for establising a connection in seconds */
+    /** timeout used as default value for establishing a connection in seconds */
     private static final int DEFAULT_CONNECTING_TIMEOUT = 10;
     
     /** timeout used as default value for request in seconds */
@@ -158,7 +158,7 @@ public class Communicator {
      * Constructor explicitly setting the commandFactory.
      * @param inetAddress IP of target
      * @param port Port of target
-     * @param cl classloader
+     * @param cl class loader
      * @param cf CommandFactory for the communicator
      */
     public Communicator(InetAddress inetAddress, int port, 
@@ -257,7 +257,7 @@ public class Communicator {
     }
         
     /**
-     * private method for initialisation, called from the constructors.
+     * private method for initialization, called from the constructors.
      */
     private void init() {
         m_serializer = new MessageSerializer();
@@ -279,7 +279,7 @@ public class Communicator {
 
     /**
      * establish the connection, either connecting to a server or accepting
-     * connections. This method will not block. If a conection could not made,
+     * connections. This method will not block. If a connection could not made,
      * the listeners are notified with connectingFailed() and acceptingFailed
      * respectively.
      * 
@@ -329,7 +329,7 @@ public class Communicator {
 
     /**
      * creates the appropriate command object for this message per reflection.
-     * The message is set to the comand.
+     * The message is set to the command.
      * @param msg message object
      * @throws UnknownCommandException -
      *             the exception thrown if the instantiation of command failed.
@@ -358,7 +358,7 @@ public class Communicator {
     }
 
     /**
-     * deregisters the given listener
+     * de-registers the given listener
      * @param listener the listener, null objects are ignored
      */
     public void removeCommunicationErrorListener(
@@ -392,7 +392,7 @@ public class Communicator {
     }
     
     /**
-     * @param initConnectionTimeout The timeout for initialising the connection to set (in seconds).
+     * @param initConnectionTimeout The timeout for initializing the connection to set (in seconds).
      */
     public void setInitConnectionTimeout(int initConnectionTimeout) {
         m_initConnectionTimeout = initConnectionTimeout;
@@ -451,7 +451,7 @@ public class Communicator {
     /**
      * private method to check the state of this communicator 
      * @param methodName  the caller, for debugging purpose
-     * @throws CommunicationException  if this communciator is not connected
+     * @throws CommunicationException  if this communicator is not connected
      */
     private void checkConnectionState(String methodName)
         throws CommunicationException {
@@ -641,7 +641,7 @@ public class Communicator {
                 }
             }
         } catch (SerialisationException se) {
-            // serialisation failed -> log
+            // serialization failed -> log
             log.error("deserialisation of\n" + message + //$NON-NLS-1$
                 "\nduring notifying " + //$NON-NLS-1$
                 "CommunicationErrorListeners " + //$NON-NLS-1$
@@ -694,7 +694,7 @@ public class Communicator {
 
     /**
      * notifies the listener with connectingFailed() 
-     * @param inetAddress the remote inetaddress
+     * @param inetAddress the remote address
      * @param port the remote port
      */
     private synchronized void fireConnectingFailed(InetAddress inetAddress,
@@ -717,7 +717,7 @@ public class Communicator {
 
     /**
      * notifies the listeners with connectionGained <br>
-     * @param inetAddress the remote inetaddress
+     * @param inetAddress the remote address
      * @param port the remote port
      */
     private synchronized void fireConnectionGained(InetAddress inetAddress,
@@ -797,7 +797,7 @@ public class Communicator {
                 Message data = m_serializer.deserialize(header, message);
                 MessageIdentifier receivedMessageId = data.getMessageId();
                 MessageIdentifier boundedId = data.getBindId();
-                // boundedId is the key in the awaitng commands map
+                // boundedId is the key in the awaiting commands map
                 ICommand command = null;
                 AwaitingCommand awaitingCommand = null;
                 if (boundedId != null) {
@@ -827,7 +827,7 @@ public class Communicator {
                         log.warn("Received response " + awaitingCommand.getCommand() + " *after* timeout expired."); //$NON-NLS-1$ //$NON-NLS-2$
                         return;
                     }
-                    // timout not expired, stop the thread
+                    // timeout not expired, stop the thread
                     log.debug("Received command response for " + awaitingCommand.getCommand()); //$NON-NLS-1$
                     awaitingCommand.commandReceived();
                     command = awaitingCommand.getCommand();
