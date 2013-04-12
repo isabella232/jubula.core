@@ -128,7 +128,8 @@ public class FunctionToken extends AbstractParamValueToken
         }
         
         IFunctionEvaluator evaluator = function.getEvaluator();
-        if (evaluator instanceof AbstractFunctionEvaluator) {
+        if (evaluator instanceof AbstractFunctionEvaluator 
+                && stack.size() > 0) {
             AbstractFunctionEvaluator aEvaluator = 
                     (AbstractFunctionEvaluator) evaluator;
             ExecObject currentExecObject = stack.get(stack.size() - 1);

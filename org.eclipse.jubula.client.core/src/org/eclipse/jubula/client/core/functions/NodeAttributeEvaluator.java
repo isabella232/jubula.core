@@ -35,14 +35,21 @@ public class NodeAttributeEvaluator extends AbstractFunctionEvaluator {
         validateParamCount(arguments, 1);
         String arg0 = arguments[0].toLowerCase();
         String attributeValue = null;
-        INodePO node = getContext().getNode();
-        if (NAME_ATTRIBUTE.equals(arg0)) {
-            attributeValue = node.getName();
-        } else if (COMMENT_ATTRIBUTE.equals(arg0)) {
-            attributeValue = node.getComment();
+        FunctionContext context = getContext();
+        if (context != null) {
+            INodePO node = context.getNode();
+            if (NAME_ATTRIBUTE.equals(arg0)) {
+                attributeValue = node.getName();
+            } else if (COMMENT_ATTRIBUTE.equals(arg0)) {
+                attributeValue = node.getComment();
+            } else {
+                throw new InvalidDataException("Unkown attribute: " //$NON-NLS-1$
+                        + arg0, MessageIDs.E_FUNCTION_EVAL_ERROR);
+            }
         } else {
-            throw new InvalidDataException("Unkown attribute: " //$NON-NLS-1$
-                    + arg0, MessageIDs.E_FUNCTION_EVAL_ERROR);
+            throw new InvalidDataException(
+                    "Function is being called without a node context!" //$NON-NLS-1$
+                    , MessageIDs.E_FUNCTION_EVAL_ERROR);
         }
         return attributeValue;
     }

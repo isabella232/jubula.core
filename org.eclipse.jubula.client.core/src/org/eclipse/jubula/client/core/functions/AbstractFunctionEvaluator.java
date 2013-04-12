@@ -38,7 +38,7 @@ public abstract class AbstractFunctionEvaluator
     }
 
     /**
-     * @return the context
+     * @return the context; may be <code>null</code>.
      */
     public FunctionContext getContext() {
         return m_context;

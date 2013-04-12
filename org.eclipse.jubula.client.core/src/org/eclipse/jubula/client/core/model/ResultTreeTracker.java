@@ -279,7 +279,7 @@ public class ResultTreeTracker implements IExecStackModificationListener {
             } catch (InvalidDataException e) {
                 log.error(e.getMessage());
                 value = MessageIDs.getMessageObject(e.getErrorId()).
-                    getMessage(new Object[] {});
+                        getMessage(new String[] {e.getLocalizedMessage()});
             }
 
             resultNode.addParameter(new TestResultParameter(
