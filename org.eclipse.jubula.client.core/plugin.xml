@@ -141,6 +141,27 @@
                type="string">
          </parameter>
       </function>
+	  <function 
+	  		class="org.eclipse.jubula.client.core.functions.CentralTestDataSetValueFunctionEvaluator" 
+	  		evaluator="local" 
+	  		name="getCentralTestDataSetValue">
+  		 <parameter 
+  			name="dataSetName" 
+  			type="string">
+         </parameter>
+         <parameter 
+         	name="keyColumnName" 
+         	type="string">
+         </parameter>
+         <parameter 
+         	name="entryKey" 
+         	type="string">
+         </parameter>
+         <parameter 
+         	name="columnName" 
+         	type="string">
+         </parameter>
+     </function>
    </extension>
 
 </plugin>

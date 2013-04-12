@@ -983,7 +983,7 @@ public class Traverser {
                 } catch (InvalidDataException e) {
                     LOG.error(e.getMessage());
                     value = MessageIDs.getMessageObject(e.getErrorId()).
-                        getMessage(new Object[] {});
+                        getMessage(new String[] {e.getLocalizedMessage()});
                 }
 
                 // It's important to use 'descriptionId' here instead of 

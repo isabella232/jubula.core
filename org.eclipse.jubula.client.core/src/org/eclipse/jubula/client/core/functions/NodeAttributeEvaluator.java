@@ -42,7 +42,7 @@ public class NodeAttributeEvaluator extends AbstractFunctionEvaluator {
             attributeValue = node.getComment();
         } else {
             throw new InvalidDataException("Unkown attribute: " //$NON-NLS-1$
-                    + arg0, MessageIDs.E_WRONG_PARAMETER_VALUE);
+                    + arg0, MessageIDs.E_FUNCTION_EVAL_ERROR);
         }
         return attributeValue;
     }
