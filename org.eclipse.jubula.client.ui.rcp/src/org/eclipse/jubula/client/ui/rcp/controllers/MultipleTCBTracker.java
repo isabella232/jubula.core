@@ -79,7 +79,7 @@ public class MultipleTCBTracker implements IPartListener2 {
 
     /** {@inheritDoc} */
     public void partClosed(IWorkbenchPartReference partRef) {
-        if (Constants.TC_BROWSER_ID.equals(partRef.getId())) {
+        if (partRef.getId().startsWith(Constants.TC_BROWSER_ID)) {
             m_tcb.remove(partRef);
             setMainTCB(getOpenTCBs().size() > 0 ? getOpenTCBs().get(0) : null);
             fireStateChanged();
@@ -93,7 +93,7 @@ public class MultipleTCBTracker implements IPartListener2 {
 
     /** {@inheritDoc} */
     public void partOpened(IWorkbenchPartReference partRef) {
-        if (Constants.TC_BROWSER_ID.equals(partRef.getId())) {
+        if (partRef.getId().startsWith(Constants.TC_BROWSER_ID)) {
             m_tcb.add(partRef);
             if (getOpenTCBs().size() > 0) {
                 setMainTCB(getOpenTCBs().get(0));
