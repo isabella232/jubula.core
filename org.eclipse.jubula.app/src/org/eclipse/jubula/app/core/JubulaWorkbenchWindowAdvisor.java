@@ -265,15 +265,4 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         super.postWindowRestore();
         Plugin.showStatusLine((IWorkbenchPart)null);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void postWindowClose() {
-        ActionBuilder builder = (ActionBuilder)getWindowConfigurer()
-            .getData(BUILDER_KEY);
-        if (builder != null) {
-            builder.dispose();
-        }
-    }
 }
