@@ -294,7 +294,7 @@ public class AUTConnection extends BaseConnection {
         };
 
         ClientTestFactory.getClientTest()
-            .getAllComponentsFromAUT(listener, 10000);
+            .getAllComponentsFromAUT(listener, 20000);
     }
     
     /**
