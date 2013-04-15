@@ -368,9 +368,9 @@ public class ActionBuilder {
      */
     private void fillCoolBar(ICoolBarManager coolBar) {
         IToolBarManager toolBar = new ToolBarManager(SWT.FLAT | SWT.RIGHT);
-        coolBar.add(new ToolBarContributionItem(toolBar)); 
-        ActionContributionItem save = new ActionContributionItem(m_fileSave);
-        toolBar.add(save);    
+        toolBar.add(new ActionContributionItem(m_fileSave));
+        coolBar.add(new ToolBarContributionItem(toolBar, "main")); //$NON-NLS-1$
+        coolBar.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
     }
 
     /**
