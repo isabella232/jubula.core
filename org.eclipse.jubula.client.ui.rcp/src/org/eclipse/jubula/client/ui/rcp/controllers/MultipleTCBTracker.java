@@ -13,20 +13,14 @@ package org.eclipse.jubula.client.ui.rcp.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.sourceprovider.ActiveProjectSourceProvider;
 import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
-import org.eclipse.ui.IPartListener2;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartReference;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * @author BREDEX GmbH
  */
-public class MultipleTCBTracker implements IPartListener2 {
+public class MultipleTCBTracker {
     /**
      * singleton instance
      */
@@ -35,8 +29,8 @@ public class MultipleTCBTracker implements IPartListener2 {
     /**
      * the list of open test case browsers
      */
-    private List<IWorkbenchPartReference> m_tcb = 
-            new ArrayList<IWorkbenchPartReference>();
+    private List<TestCaseBrowser> m_tcb = 
+            new ArrayList<TestCaseBrowser>();
 
     /**
      * the main test case browser
@@ -67,54 +61,27 @@ public class MultipleTCBTracker implements IPartListener2 {
         return instance;
     }
 
-    /** {@inheritDoc} */
-    public void partActivated(IWorkbenchPartReference partRef) {
-        // nothing to be done in here
-    }
-
-    /** {@inheritDoc} */
-    public void partBroughtToTop(IWorkbenchPartReference partRef) {
-        // nothing to be done in here
-    }
-
-    /** {@inheritDoc} */
-    public void partClosed(IWorkbenchPartReference partRef) {
-        if (partRef.getId().startsWith(Constants.TC_BROWSER_ID)) {
-            m_tcb.remove(partRef);
-            setMainTCB(getOpenTCBs().size() > 0 ? getOpenTCBs().get(0) : null);
+    /**
+     * Add a test case browser to this tracker.
+     * @param testCaseBrowser The test case browser to add.
+     */
+    public void addTCB(TestCaseBrowser testCaseBrowser) {
+        if (testCaseBrowser != null) {
+            m_tcb.add(testCaseBrowser);
+            setMainTCB(getOpenTCBs().get(0));
             fireStateChanged();
         }
     }
 
-    /** {@inheritDoc} */
-    public void partDeactivated(IWorkbenchPartReference partRef) {
-        // nothing to be done in here
-    }
-
-    /** {@inheritDoc} */
-    public void partOpened(IWorkbenchPartReference partRef) {
-        if (partRef.getId().startsWith(Constants.TC_BROWSER_ID)) {
-            m_tcb.add(partRef);
-            if (getOpenTCBs().size() > 0) {
-                setMainTCB(getOpenTCBs().get(0));
-            }
-            fireStateChanged();
-        }
-    }
-
-    /** {@inheritDoc} */
-    public void partHidden(IWorkbenchPartReference partRef) {
-        // nothing to be done in here
-    }
-
-    /** {@inheritDoc} */
-    public void partVisible(IWorkbenchPartReference partRef) {
-        // nothing to be done in here
-    }
-
-    /** {@inheritDoc} */
-    public void partInputChanged(IWorkbenchPartReference partRef) {
-        // nothing to be done in here
+    /**
+     * Remove a test case browser from this tracker.
+     * @param testCaseBrowser The test case browser to remove.
+     */
+    public void removeTCB(TestCaseBrowser testCaseBrowser) {
+        m_tcb.remove(testCaseBrowser);
+        setMainTCB(
+                getOpenTCBs().size() > 0 ? getOpenTCBs().get(0) : null);
+        fireStateChanged();
     }
 
     /**
@@ -122,14 +89,9 @@ public class MultipleTCBTracker implements IPartListener2 {
      */
     public List<TestCaseBrowser> getOpenTCBs() {
         List<TestCaseBrowser> tcbs = new ArrayList<TestCaseBrowser>();
-
-        for (IWorkbenchPartReference ref : m_tcb) {
-            IWorkbenchPart part = ref.getPart(false);
-            if (part != null) {
-                tcbs.add((TestCaseBrowser) part);
-            }
+        for (TestCaseBrowser tcb : m_tcb) {
+            tcbs.add(tcb);
         }
-
         return tcbs;
     }
 
@@ -179,33 +141,16 @@ public class MultipleTCBTracker implements IPartListener2 {
      * fire data changed events
      */
     private void fireStateChanged() {
-        if (getProvider() != null) {
-            getProvider().handleProjectLoaded();
+        if (m_provider != null) {
+            m_provider.handleProjectLoaded();
         }
     }
     
-    /**
-     * register listener
-     */
-    public void registerListener() {
-        IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow();
-        if (activeWorkbenchWindow != null) {
-            activeWorkbenchWindow.getPartService().addPartListener(this);
-        }
-    }
-
-    /**
-     * @return the provider
-     */
-    public ActiveProjectSourceProvider getProvider() {
-        return m_provider;
-    }
-
     /**
      * @param provider the provider to set
      */
     public void setProvider(ActiveProjectSourceProvider provider) {
         m_provider = provider;
     }
+
 }

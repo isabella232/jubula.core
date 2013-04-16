@@ -121,9 +121,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
         if (GeneralStorage.getInstance().getProject() != null) {
             handleProjectLoaded();
         }
-        
-        // register active view tracker
-        MultipleTCBTracker.getInstance().registerListener();
+        // add this TCB to the tracker
+        MultipleTCBTracker.getInstance().addTCB(this);
     }
 
     /**
@@ -208,6 +207,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
                 .removeSelectionListener(m_actionListener);
             getTreeViewer().removeDoubleClickListener(m_doubleClickListener);
         } finally {
+            MultipleTCBTracker.getInstance().removeTCB(this);
             super.dispose();
         }
     }
