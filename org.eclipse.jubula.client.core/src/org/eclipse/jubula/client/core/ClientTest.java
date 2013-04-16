@@ -664,7 +664,7 @@ public class ClientTest implements IClientTest {
      * {@inheritDoc}
      */
     public void getAllComponentsFromAUT(IAUTInfoListener listener, 
-            int timeout) {
+            int timeout) throws CommunicationException {
         
         log.info(Messages.GettingAllComponentsFromAUT);
 
@@ -707,6 +707,13 @@ public class ClientTest implements IClientTest {
                     && AUTConnection.getInstance().isConnected()) {
                 TimeUtil.delay(500);
             }
+            if (!response.wasExecuted() 
+                    && AUTConnection.getInstance().isConnected()) {
+                listener.error(IAUTInfoListener.ERROR_COMMUNICATION);
+                throw new CommunicationException(
+                        Messages.CouldNotRequestComponentsFromAUT, 
+                        IAUTInfoListener.ERROR_COMMUNICATION);
+            }
             if (ObjectMappingEventDispatcher.getObjMapTransient()
                     .getMappings().isEmpty()) {
                 
@@ -717,9 +724,6 @@ public class ClientTest implements IClientTest {
             }
         } catch (UnknownMessageException ume) {
             fireAUTServerStateChanged(new AUTServerEvent(ume.getErrorId()));
-        } catch (CommunicationException bce) {
-            log.error(Messages.CouldNotRequestComponentsFromAUT, bce); 
-            listener.error(IAUTInfoListener.ERROR_COMMUNICATION);
         } 
     }
 

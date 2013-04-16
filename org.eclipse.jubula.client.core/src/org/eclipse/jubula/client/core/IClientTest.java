@@ -202,9 +202,11 @@ public interface IClientTest {
      *            maximum time in milliseconds to wait before 
      *            listener.error(ERROR_TIMEOUT) is called. For value less or 
      *            equals zero, the default timeout (from Communicator) is used
+     * @throws CommunicationException 
+     *            if an error occurs while communicating with the AUT.
      */
     public abstract void getAllComponentsFromAUT(IAUTInfoListener listener,
-        int timeout);
+        int timeout) throws CommunicationException;
 
     /**
      * Sets the keyboard layout for the currently connected AUT.

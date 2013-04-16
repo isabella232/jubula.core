@@ -270,12 +270,16 @@ public class AUTConnection extends BaseConnection {
     }
 
     /**
-     * Sends a message to the currently connected AUT to initialize all 
+     * Sends a message to the currently connected AUT to initialize all
      * supported component types.
      * 
-     * @param aut The AUT for which to get the components.
+     * @param aut
+     *            The AUT for which to get the components.
+     * @throws CommunicationException
+     *             if an error occurs while communicating with the AUT.
      */
-    private void getComponentsFromAut(IAUTMainPO aut) {
+    private void getComponentsFromAut(IAUTMainPO aut) 
+        throws CommunicationException {
         Profile profile = new Profile();
         IObjectMappingProfilePO profilePo = 
             aut.getObjMap().getProfile();
@@ -294,7 +298,7 @@ public class AUTConnection extends BaseConnection {
         };
 
         ClientTestFactory.getClientTest()
-            .getAllComponentsFromAUT(listener, 20000);
+            .getAllComponentsFromAUT(listener, 30000);
     }
     
     /**
