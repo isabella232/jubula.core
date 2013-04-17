@@ -36,7 +36,7 @@ public class SwtProcessor extends AbstractProcessor {
         Shell shell = (Shell) mWindow.getWidget();
         Display display = shell.getDisplay();
         ((SwtRemoteControlService) SwtRemoteControlService.getInstance())
-                .checkRemoteControlService(display);
+                .checkRemoteControlService(display, m_componentNamer);
     }
 
 }

@@ -15,10 +15,11 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolItem;
-import org.eclipse.e4.ui.model.application.ui.menu.impl.HandledToolItemImpl;
 import org.eclipse.jubula.rc.rcp.e4.namer.E4ComponentNamer;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jubula.rc.rcp.swt.aut.RcpSwtComponentNamer;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Widget;
 
 /**
@@ -41,7 +42,9 @@ public class E4SwtComponentNamer extends RcpSwtComponentNamer
      * @param mToolBar The created tool item of the application model.
      */
     public void onModelToolBarCreated(MToolBar mToolBar) {
-        onModelElementCreated(mToolBar);
+        if (mToolBar.getWidget() instanceof ToolBar) {
+            onModelElementCreated(mToolBar);
+        }
     }
 
     /**
@@ -49,17 +52,8 @@ public class E4SwtComponentNamer extends RcpSwtComponentNamer
      * @param mToolItem The created tool item of the application model.
      */
     public void onModelToolItemCreated(MToolItem mToolItem) {
-        if (mToolItem instanceof HandledToolItemImpl) {
-            Widget widget = (Widget) mToolItem.getWidget();
-            if (hasWidgetToBeNamed(widget)) {
-                // issue: HandledToolItemImpl internal?
-                HandledToolItemImpl handledToolItem =
-                        (HandledToolItemImpl) mToolItem;
-                String commandName = handledToolItem
-                        .getCommand().getElementId();
-                String componentName = commandName;
-                setComponentName(widget, componentName);
-            }
+        if (mToolItem.getWidget() instanceof ToolItem) {
+            onModelElementCreated(mToolItem);
         }
     }
 

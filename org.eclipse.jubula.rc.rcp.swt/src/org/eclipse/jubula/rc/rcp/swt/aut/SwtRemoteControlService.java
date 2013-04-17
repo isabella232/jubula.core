@@ -8,6 +8,7 @@ import org.eclipse.jubula.rc.rcp.common.classloader.EclipseUrlLocator;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 
 /**
@@ -47,11 +48,13 @@ public class SwtRemoteControlService extends SwtAUTServer {
      * there exists an active shell, which contains the
      * needed display.
      * @param display The model element with existing widget
+     * @param rcpSwtComonentNamer The component namer for RCP with SWT.
      */
-    public void checkRemoteControlService(Display display) {
+    public void checkRemoteControlService(Display display,
+            RcpSwtComponentNamer rcpSwtComonentNamer) {
         if (!m_hasRemoteControlServiceStarted) {
             if (startRemoteControlService(display)) {
-                prepareRemoteControlService();
+                prepareRemoteControlService(display, rcpSwtComonentNamer);
             }
         }
     }
@@ -84,12 +87,19 @@ public class SwtRemoteControlService extends SwtAUTServer {
 
     /**
      * Prepare the SwtAUTServer for SWT components.
+     * @param display The display.
+     * @param rcpSwtComponentNamer The component namer for RCP with SWT.
      */
-    private static void prepareRemoteControlService() {
+    private static void prepareRemoteControlService(
+            Display display,
+            RcpSwtComponentNamer rcpSwtComponentNamer) {
         // Registering the AdapterFactory for SWT at the registry
         AdapterFactoryRegistry.initRegistration(new EclipseUrlLocator());
         // add listener to AUT
         AUTServer.getInstance().addToolKitEventListenerToAUT();
+        // add listener for SWT specific component naming like dialog buttons
+        display.addFilter(SWT.Paint, rcpSwtComponentNamer);
+        display.addFilter(SWT.Activate, rcpSwtComponentNamer);
     }
 
     /**
