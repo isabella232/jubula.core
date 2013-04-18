@@ -32,10 +32,10 @@ import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 /**
- * This function returns the String value of a cell of a central data set.
- * Therefore you need to define an unique key for this data set with [Name of
- * the Data Set]_KEY as column name. You can get the cell value using the
- * parameters DATA_SET_NAME, ENTRY_KEY, COLUMN_NAME.
+ * This function returns the String value of a cell of a central central test
+ * data set. Therefore you need to define an unique key for this central test
+ * data set. You can get the cell value using the parameters DATA_SET_NAME,
+ * ENTRY_KEY, COLUMN_NAME.
  * 
  * @author BREDEX GmbH
  */
@@ -60,7 +60,7 @@ public class CentralTestDataSetValueFunctionEvaluator
             new HashMap<IParamDescriptionPO, Map<String, Integer>>();
 
     /**
-     * Add listener that refresh the caching of data sets every time the test
+     * Add listener that refresh the caching of central test data sets every time the test
      * execution starts
      */
     static {
@@ -78,8 +78,8 @@ public class CentralTestDataSetValueFunctionEvaluator
     }
 
     /**
-     * Register all data sets that are available and create a cache with the
-     * name of the data set as key
+     * Register all central test data sets that are available and create a cache with the
+     * name of the central test data set as key
      */
     private static void registerDataCubes() {
         DATA_CUBES.clear();
@@ -92,12 +92,12 @@ public class CentralTestDataSetValueFunctionEvaluator
     }
 
     /**
-     * Register all columns in a data set and create a cache with the name of
+     * Register all columns in a central test data set and create a cache with the name of
      * the column as key
      * 
      * @param dataSet
      *            the data table, that has different columns
-     * @return a map with all columns for this data sets
+     * @return a map with all columns for this central test data sets
      */
     private static Map<String, IParamDescriptionPO> registerParamDescription(
             ITestDataCubePO dataSet) {
@@ -113,10 +113,10 @@ public class CentralTestDataSetValueFunctionEvaluator
     }
 
     /**
-     * Register all key values for a key column of a specific data set.
+     * Register all key values for a key column of a specific central test data set.
      * 
      * @param dataSet
-     *            Data Set that contains keys and columns
+     *            central test data set that contains keys and columns
      * @param keyColumn
      *            Column where the key is stored
      * @param lang
@@ -137,7 +137,7 @@ public class CentralTestDataSetValueFunctionEvaluator
             if (keyMap.get(cellValue) != null) {
                 throw new InvalidDataException("The key '" + cellValue //$NON-NLS-1$
                         + "' for column '" + keyColumn.getName() //$NON-NLS-1$
-                        + "' is not unique in data set '" + dataSet.getName() //$NON-NLS-1$
+                        + "' is not unique in central test data set '" + dataSet.getName() //$NON-NLS-1$
                         + "'!", MessageIDs.E_FUNCTION_EVAL_ERROR); //$NON-NLS-1$
             }
             keyMap.put(cellValue, i);
@@ -159,7 +159,7 @@ public class CentralTestDataSetValueFunctionEvaluator
     }
 
     /**
-     * return the value of a data set cell identified by the given parameters
+     * return the value of a central test data set cell identified by the given parameters
      * 
      * @param dataSet
      *            where the value is stored
@@ -184,14 +184,14 @@ public class CentralTestDataSetValueFunctionEvaluator
     }
 
     /**
-     * Validate and return descriptor of a data set column. Cache will be used
-     * if available. After resolving any key from the given data set, all
+     * Validate and return descriptor of a central test data set column. Cache will be used
+     * if available. After resolving any key from the given central test data set, all
      * columns in this set should be cached.
      * 
      * @param dataSet
      *            that contains value
      * @param columnName
-     *            unique name of the column in this data set
+     *            unique name of the column in this central test data set
      * @return descriptor for this column
      * @throws InvalidDataException
      */
@@ -208,12 +208,12 @@ public class CentralTestDataSetValueFunctionEvaluator
             return column;
         }
         throw new InvalidDataException("Column '" + columnName  //$NON-NLS-1$
-                + "' is not available in data set '" + dataSet.getName() + "'!", //$NON-NLS-1$ //$NON-NLS-2$
+                + "' is not available in central test data set '" + dataSet.getName() + "'!", //$NON-NLS-1$ //$NON-NLS-2$
                 MessageIDs.E_FUNCTION_EVAL_ERROR);
     }
 
     /**
-     * Validates if a given key is available in a data set and returns the row
+     * Validates if a given key is available in a central test data set and returns the row
      * number. This method uses keys from a cache if available. If not the key
      * will be load and put to cache.
      * 
@@ -241,17 +241,17 @@ public class CentralTestDataSetValueFunctionEvaluator
         }
         throw new InvalidDataException("Key '" + key //$NON-NLS-1$
                 + "' is not available in column '" + keyColumn.getName() //$NON-NLS-1$
-                + "' in data set '" //$NON-NLS-1$ 
+                + "' in central test data set '" //$NON-NLS-1$ 
                 + dataSet.getName() + "'!", //$NON-NLS-1$
                 MessageIDs.E_FUNCTION_EVAL_ERROR);
     }
 
     /**
-     * Returns a given data set using the cache if data set exists
+     * Returns a given central test data set using the cache if central test data set exists
      * 
      * @param dataSetName
-     *            unique name of the data set
-     * @return data set with the given name
+     *            unique name of the central test data set
+     * @return central test data set with the given name
      * @throws InvalidDataException
      */
     private static ITestDataCubePO validateDataSetName(String dataSetName)
@@ -261,7 +261,7 @@ public class CentralTestDataSetValueFunctionEvaluator
             return dataCube;
         }
 
-        throw new InvalidDataException("Dataset '" + dataSetName //$NON-NLS-1$
+        throw new InvalidDataException("Central test data set '" + dataSetName //$NON-NLS-1$
                 + "' is not available!", MessageIDs.E_FUNCTION_EVAL_ERROR); //$NON-NLS-1$
     }
 
