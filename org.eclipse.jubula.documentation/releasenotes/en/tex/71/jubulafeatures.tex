@@ -6,6 +6,19 @@
 \item  When \bxname{comment} is chosen, the function reads the comment of the node (e.g. \gdcase{}, \gdstep{}) on which it is resolved and uses this for the test.
 \end{itemize}
 
+\textbf{New function for accessing values in central data sets}
+\begin{itemize}
+\item There is a new function available in the pre-defined functions in \app{}.
+\item The name of the new function is: \bxname{?getCentralDataSetValue()}, and it requires four arguments:
+\begin{description}
+\item [dataSetName:]{The name of the central data set to search in.}
+\item [keyColumnName:]{The column that is used to find the correct line of the data set.}
+\item [entryKey:]{The value to locate in the key column that will provide the correct line.}
+\item [columnName:]{The name of the column in which the value to be chosen can be found.}
+\end{description}
+\item Within the specified data set, the required value is located based on the line found using the key column and entry key, as well as the column name for the actual value. 
+\end{itemize}
+
 \textbf{Multi-window support for HTML \gdauts{}}
 \begin{itemize}
 \item If your HTML \gdaut{} uses multi windows (e.g. pop-ups), then you can now specify this in the \gdaut{} configuration. 
