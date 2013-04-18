@@ -720,7 +720,7 @@ public class Traverser {
      *         event type.
      */
     public ReentryProperty getEventHandlerReentry(String eventType) {
-        return getEventObject(eventType)
+        return getEventObject(eventType, false)
             .getEventExecTc().getReentryProp();
     }
     
@@ -733,7 +733,7 @@ public class Traverser {
     public ICapPO next(String eventType) 
         throws JBException {
         ExecObject execObj = m_execStack.peek();
-        EventObject eventObj = getEventObject(eventType);
+        EventObject eventObj = getEventObject(eventType, true);
         IEventExecTestCasePO eventExecTC = eventObj.getEventExecTc();
         
         int startIndex = 0;
@@ -776,11 +776,19 @@ public class Traverser {
     
     /**
      * find the next eventHandler for given eventType
-     * @param eventType eventType for eventHandler to find
+     * 
+     * @param eventType
+     *            eventType for eventHandler to find
+     * @param resetRetryCount
+     *            if this is set to <code>true</code> the retry count of the
+     *            EventHandler will be reset, if the EventHandler was
+     *            unsuccessful and has reached his max retry count.
+     *            This is necessary for http://bugs.eclipse.org/347275
      * @return the next eventHandler for given eventType
      */
     @SuppressWarnings("unchecked")
-    private EventObject getEventObject(String eventType) {
+    private EventObject getEventObject(String eventType,
+            boolean resetRetryCount) {
         
         List<INodePO> nodeList = IteratorUtils.toList(
             m_execStack.peek().getExecNode().getNodeListIterator());
@@ -803,12 +811,16 @@ public class Traverser {
                     eventObj = new EventObject(eventExecTc, i);
                     break;
                 }
-
                 eventExecTc = null;
             }           
         }
         // nothing found --> call defaultEventHandler
         if (eventObj == null) {
+            // reset the marker of the EventHandler
+            if (m_markerToNumRetriesMap.containsKey(marker)
+                    && resetRetryCount) {
+                m_markerToNumRetriesMap.put(marker, 0);
+            }
             IEventExecTestCasePO eventExecTc = 
                 DefaultEventHandler.getDefaultEventHandler(eventType, m_root);
             Validate.notNull(eventExecTc, 
@@ -887,24 +899,14 @@ public class Traverser {
             ExecStackMarker marker = 
                 new ExecStackMarker(m_execStack, (ICapPO)currentNode);
             if (m_markerToNumRetriesMap.containsKey(marker)) {
+                m_markerToNumRetriesMap.put(marker, 0);
                 return TestResultNode.SUCCESS_RETRY;
             }
         }
         return TestResultNode.SUCCESS;
     }
 
-    /**
-     * 
-     * @return the total number of test steps retried so far.
-     */
-    public int getNumberOfRetriedSteps() {
-        int retriedStepCount = 0;
-        for (Integer numRetries : m_markerToNumRetriesMap.values()) {
-            retriedStepCount += numRetries;
-        }
-        
-        return retriedStepCount;
-    }
+
     
     /**
      * 
