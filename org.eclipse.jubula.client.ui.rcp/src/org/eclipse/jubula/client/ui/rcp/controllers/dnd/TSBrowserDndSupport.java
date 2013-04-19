@@ -22,11 +22,8 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.ui.IViewPart;
 
 
 /**
@@ -93,20 +90,9 @@ public class TSBrowserDndSupport extends AbstractBrowserDndSupport {
     public static void moveNodes(List<INodePO> nodesToBeMoved,
             IPersistentObject target) throws PMException,
             ProjectDeletedException {
-        if (getExecView() != null) {
+        if (TestSuiteBrowser.getInstance() != null) {
             doMove(nodesToBeMoved, target);
         }
-    }
-    
-    /**
-     * @return instance of TestSuiteBrowser, or null.
-     */
-    private static TestSuiteBrowser getExecView() {
-        IViewPart viewPart = Plugin.getView(Constants.TS_BROWSER_ID);
-        if (viewPart != null) {
-            return (TestSuiteBrowser)viewPart;
-        }
-        return null;
     }
 
 }

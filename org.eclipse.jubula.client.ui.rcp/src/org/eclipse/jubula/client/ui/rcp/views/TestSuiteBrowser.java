@@ -67,6 +67,7 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IDecoratorManager;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -416,4 +417,16 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
             }
         });
     }
+
+    /**
+     * @return The instance of the TestSuiteBrowser, or null.
+     */
+    public static TestSuiteBrowser getInstance() {
+        IViewPart viewPart = Plugin.getView(Constants.TS_BROWSER_ID);
+        if (viewPart != null) {
+            return (TestSuiteBrowser) viewPart;
+        }
+        return null;
+    }
+
 }

@@ -26,14 +26,11 @@ import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
-import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor;
 import org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser;
-import org.eclipse.ui.IViewPart;
 
 
 /**
@@ -150,8 +147,9 @@ public class TJEditorDndSupport {
             return false;
         }
         if (sourceViewer != null && !sourceViewer.equals(targetViewer)) {
-            if (getTSBrowser() != null) {
-                if (!(allowFromBrowser && sourceViewer.equals(getTSBrowser()
+            TestSuiteBrowser tsb = TestSuiteBrowser.getInstance();
+            if (tsb != null) {
+                if (!(allowFromBrowser && sourceViewer.equals(tsb
                         .getTreeViewer()))) {
                     return false;
                 }
@@ -171,17 +169,6 @@ public class TJEditorDndSupport {
     }
 
     /**
-     * @return instance of TestSuiteBrowser, or null.
-     */
-    static TestSuiteBrowser getTSBrowser() {
-        IViewPart viewPart = Plugin.getView(Constants.TS_BROWSER_ID);
-        if (viewPart != null) {
-            return (TestSuiteBrowser)viewPart;
-        }
-        return null;
-    }
-
-    /**
      * @param node the node to be dropped.
      * @param target the target node.
      * @throws PMReadException in case of db read error
@@ -192,9 +179,9 @@ public class TJEditorDndSupport {
     private static void dropOnTJ(ITestSuitePO node, INodePO target)
         throws PMReadException, PMAlreadyLockedException,
             PMDirtyVersionException, PMException {
-        if (getTSBrowser() != null) {
-            getTSBrowser().addReferencedTestSuite(
-                    node, target, 0);
+        TestSuiteBrowser tsb = TestSuiteBrowser.getInstance();
+        if (tsb != null) {
+            tsb.addReferencedTestSuite(node, target, 0);
         }
     }
 
@@ -217,8 +204,10 @@ public class TJEditorDndSupport {
         if (location != ViewerDropAdapter.LOCATION_BEFORE) {
             position++;
         }
-        getTSBrowser().addReferencedTestSuite(
-                node, parentGUI, position);
+        TestSuiteBrowser tsb = TestSuiteBrowser.getInstance();
+        if (tsb != null) {
+            tsb.addReferencedTestSuite(node, parentGUI, position);
+        }
     }
 
     /**
