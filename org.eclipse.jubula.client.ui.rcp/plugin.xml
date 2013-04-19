@@ -419,7 +419,7 @@
         id="org.eclipse.jubula.client.ui.rcp.actions.ChooseLanguageAction"
         label="%ChooseLanguage"
         style="pulldown"
-        toolbarPath="org.eclipse.jubula.client.ui.rcp.toolbar.LanguageToolbar/GlobalActions"
+        toolbarPath="org.eclipse.jubula.client.ui.rcp.toolbar.LanguageToolbar"
         tooltip="%ChooseLanguageToolTip" />
       <action
         class="org.eclipse.jubula.client.ui.rcp.actions.ShowClientLogAction"
