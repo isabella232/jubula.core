@@ -208,7 +208,6 @@ public class Messages extends NLS {
     public static String IsBeingReplacedWith;
     public static String IsNotAssignableTo;
     public static String IsNotAvailable;
-    public static String IsNotManaged;
     public static String IsNotResolvable;
     public static String ItsNotAllowedToRemoveParametersFromCapPO;
     public static String JobConfigurationValidateAnyAut;
@@ -360,7 +359,7 @@ public class Messages extends NLS {
     public static String TheAUTCouldNotFound;
     public static String TheDBAllreadyUseAnotherProcess;
     public static String TheFirstNameMustNotBeNull;
-    public static String TheLogicComponent;
+    public static String TheLogicComponentIsNotManaged;
     public static String TheMainMethodCouldNotLoaded;
     public static String TheSecondNameMustNotBeNull;
     public static String TheUniqueIdMustNotBeNull;

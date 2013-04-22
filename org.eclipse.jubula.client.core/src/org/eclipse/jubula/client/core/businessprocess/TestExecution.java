@@ -1136,7 +1136,7 @@ public class TestExecution {
         ClientTestFactory.getClientTest().
             fireTestExecutionChanged(new TestExecutionEvent(
                 TestExecutionEvent.TEST_EXEC_COMPONENT_FAILED));
-        ClientTestFactory.getClientTest().fireEndTestExecution();
+        endTestExecution();
     }
     
     /**

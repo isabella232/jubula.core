@@ -34,10 +34,10 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.persistence.annotations.BatchFetch;
 import org.eclipse.persistence.annotations.BatchFetchType;
 
@@ -332,10 +332,7 @@ class ObjectMappingPO implements IObjectMappingPO {
         }
         
         throw new LogicComponentNotManagedException(
-            Messages.TheLogicComponent + StringConstants.SPACE
-            + StringConstants.APOSTROPHE + logical 
-            + StringConstants.APOSTROPHE + StringConstants.SPACE
-            + Messages.IsNotManaged + StringConstants.DOT,
+            NLS.bind(Messages.TheLogicComponentIsNotManaged, logical),
             MessageIDs.E_COMPONENT_NOT_MANAGED); 
     }
 
