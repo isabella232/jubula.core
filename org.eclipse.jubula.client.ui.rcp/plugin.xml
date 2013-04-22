@@ -491,6 +491,11 @@
         minimized="false"
         relationship="stack"
         relative="org.eclipse.ui.views.ProblemView" />
+      <view
+        id="org.eclipse.ui.console.ConsoleView"
+        minimized="false"
+        relationship="stack"
+        relative="org.eclipse.ui.views.ProblemView" />  
       <actionSet id="org.eclipse.jubula.client.ui.rcp.menu.actions" />
       <perspectiveShortcut
         id="org.eclipse.jubula.client.ui.rcp.perspectives.ExecutionPerspective" />
