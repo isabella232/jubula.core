@@ -45,7 +45,7 @@ The following functions give their results as decimal numbers, e.g. 1.0, 1.2 etc
 \item [getCentralTestDataSetValue]{Use this function to access a value saved in a central data set. This lets you combine values that you have defined centrally with values that you use locally, or lets you combine values from different central data sets in your test. It locates a single cell in a specific central data set based on a value in a column that you define as a key, and a column in which to search for the required value. It requires four arguments: the name of the central data set to search in, the name of the column which you wish to use as a ''key'' (you can name the column KEY if you require), the value in the key column (to specify the line), and the column in which the required data cell is located.}
 \end{description}
 
-\textbf{Example of the getCentralDataSetValue function}\\
+\textbf{Example of the getCentralTestDataSetValue function}\\
 The function to retrieve data from a central data set can be exemplified using this example central data set, which is named \bxname{Customer}:
 
 \tablehead{\hline\textbf{CUSTOMER\_TYPE}&\textbf{CUSTOMER\_NAME}\\\hline}
@@ -61,7 +61,8 @@ SupportUser & John Support \\
 
  To select a customer name using the customer type, you should enter:
 \begin{quote}
-\textbf{?getCentralTestDataSetValue(Customer,CUSTOMER\_TYPE,SuperUser,CUSTOMER\_NAME)}
+\textbf{?getCentralTestDataSetValue\\
+(Customer,CUSTOMER\_TYPE,SuperUser,CUSTOMER\_NAME)}
 \end{quote}
 This will look in the central data set called \bxname{Customer}, locate the value \bxname{SuperUser} in the \bxname{CUSTOMER\_TYPE} column, and use that line to choose the cell in the \bxname{CUSTOMER\_NAME} column -- Alice Super. 
 
