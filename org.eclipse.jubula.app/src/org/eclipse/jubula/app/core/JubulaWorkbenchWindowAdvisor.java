@@ -136,31 +136,28 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
      * all basic action sets that should be hidden when running Jubula as 
      * a stand-alone client 
      */
-    private static final String [] ACTION_SETS_TO_HIDE = new String [] {
+    private static final String[] ACTION_SETS_TO_HIDE = new String [] {
         "org.eclipse.ui.actionSet.openFiles", //$NON-NLS-1$
-        "org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo" //$NON-NLS-1$
+        "org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo", //$NON-NLS-1$
+        "org.eclipse.search.OpenSearchDialogPage", //$NON-NLS-1$
+        "org.eclipse.ui.edit.text.actionSet.navigation", //$NON-NLS-1$
+        "org.eclipse.ui.edit.text.actionSet.annotationNavigation" //$NON-NLS-1$
     };
-    
-    /** Key to look up the action builder on the window configurer. */
-    private static final String BUILDER_KEY = "builder"; //$NON-NLS-1$
-    /***/
-    private IWorkbenchWindowConfigurer m_windowConfigurer;
     
     /**
      * @param configurer IWorkbenchWindowConfigurer 
      */
     public JubulaWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
         super(configurer);
-        m_windowConfigurer = configurer;
     }
     
     /**
      * {@inheritDoc}
      */
     public ActionBarAdvisor createActionBarAdvisor(
-        IActionBarConfigurer configurer) {
-        
-        return new JubulaActionBarAdvisor(configurer, m_windowConfigurer);
+            IActionBarConfigurer configurer) {
+        return new JubulaActionBarAdvisor(
+                configurer, getWindowConfigurer());
     }
     
     /**
@@ -181,10 +178,8 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
      * {@inheritDoc}
      */
     public void postWindowOpen() {
-        super.postWindowOpen();
         for (IWorkbenchWindow window 
                 : PlatformUI.getWorkbench().getWorkbenchWindows()) {
-            
             IWorkbenchPage page = window.getActivePage();
             if (page != null) {
                 for (String actionSetToHide : ACTION_SETS_TO_HIDE) {
