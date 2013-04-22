@@ -63,6 +63,7 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.menus.CommandContributionItem;
 
 
 /** 
@@ -95,6 +96,15 @@ public class TestCaseBrowser extends AbstractJBTreeView
         m_cutTreeItemAction = new CutTreeItemActionTCBrowser();
         m_pasteTreeItemAction = new PasteTreeItemActionTCBrowser();
         super.createPartControl(parent);
+        getViewSite().getActionBars().getToolBarManager()
+            .add(CommandHelper.createContributionItem(
+                RCPCommandIDs.SET_MAIN_VIEW_INSTANCE, null, null,
+                CommandContributionItem.STYLE_PUSH));
+        getViewSite().getActionBars().getToolBarManager()
+            .add(CommandHelper.createContributionItem(
+                RCPCommandIDs.COLLAPSE_ALL, null, null,
+                CommandContributionItem.STYLE_PUSH));
+        
         ColumnViewerToolTipSupport.enableFor(getTreeViewer());
         getTreeViewer().setContentProvider(
                 new TestCaseBrowserContentProvider());

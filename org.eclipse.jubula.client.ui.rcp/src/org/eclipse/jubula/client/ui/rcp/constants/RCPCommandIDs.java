@@ -158,4 +158,10 @@ public interface RCPCommandIDs {
     
     /** the ID of the "Choose html window" command */
     public static final String CHOOSE_HTML_WINDOW = "org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow"; //$//$NON-NLS-1$
+    
+    /** the ID of the "set main view instance" command */
+    public static final String SET_MAIN_VIEW_INSTANCE = "org.eclipse.jubula.client.ui.rcp.commands.SetAsMainViewInstance"; //$//$NON-NLS-1$
+
+    /** the ID of the "collapse all" command */
+    public static final String COLLAPSE_ALL = "org.eclipse.jubula.client.ui.rcp.commands.CollapseAll"; //$//$NON-NLS-1$
 }

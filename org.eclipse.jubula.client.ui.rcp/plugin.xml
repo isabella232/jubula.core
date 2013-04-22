@@ -1413,22 +1413,6 @@
         style="push" />
     </menuContribution>
     <menuContribution
-      locationURI="toolbar:org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser?after=additions">
-      <command
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.SetAsMainViewInstance"
-        style="push" >
-        <visibleWhen
-          checkEnabled="false">
-          <with variable="org.eclipse.jubula.client.ui.rcp.variable.areMultipleTCBOpen">
-            <equals value="true" />
-          </with>
-        </visibleWhen>
-      </command>
-      <command
-        commandId="org.eclipse.jubula.client.ui.rcp.commands.CollapseAll"
-        style="push" />
-    </menuContribution>
-    <menuContribution
       locationURI="toolbar:org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser?after=additions">
       <command
         commandId="org.eclipse.jubula.client.ui.rcp.commands.CollapseAll"
@@ -1936,6 +1920,11 @@
     <handler
       commandId="org.eclipse.jubula.client.ui.rcp.commands.SetAsMainViewInstance"
       class="org.eclipse.jubula.client.ui.rcp.handlers.SetAsMainViewInstanceHandler">
+      <activeWhen>
+	    <with variable="org.eclipse.jubula.client.ui.rcp.variable.areMultipleTCBOpen">
+	        <equals value="true" />
+	    </with>
+	  </activeWhen>
     </handler>
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.FindHandler"
