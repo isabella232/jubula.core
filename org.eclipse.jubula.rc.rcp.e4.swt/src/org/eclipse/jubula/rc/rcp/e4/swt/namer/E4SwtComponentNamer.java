@@ -35,6 +35,7 @@ public class E4SwtComponentNamer extends RcpSwtComponentNamer
      * @param mPartStack The opened part stack of the application model.
      */
     public void onModelPartStackCreated(MPartStack mPartStack) {
+        onModelElementCreated(mPartStack);
     }
 
     /**
@@ -63,6 +64,7 @@ public class E4SwtComponentNamer extends RcpSwtComponentNamer
      * @param mPart The opened part of the application model.
      */
     public void onModelPartCreated(MPart mPart) {
+        onModelElementCreated(mPart);
     }
 
     /**
