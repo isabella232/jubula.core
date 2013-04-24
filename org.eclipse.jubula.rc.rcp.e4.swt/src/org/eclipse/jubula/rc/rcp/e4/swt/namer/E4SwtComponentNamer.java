@@ -35,7 +35,11 @@ public class E4SwtComponentNamer extends RcpSwtComponentNamer
      * @param mPartStack The opened part stack of the application model.
      */
     public void onModelPartStackCreated(MPartStack mPartStack) {
-        onModelElementCreated(mPartStack);
+        // A part stack which is visible in two perspectives,
+        // has two different representation in the application model.
+        // We do not name the widget here, because it is detected by the
+        // SWT namer as a "Tabbed Component (...)" including the
+        // titles of the tabs.
     }
 
     /**
@@ -44,7 +48,7 @@ public class E4SwtComponentNamer extends RcpSwtComponentNamer
      */
     public void onModelToolBarCreated(MToolBar mToolBar) {
         if (mToolBar.getWidget() instanceof ToolBar) {
-            onModelElementCreated(mToolBar);
+            setTechnicalName(mToolBar, mToolBar.getElementId());
         }
     }
 
@@ -54,7 +58,7 @@ public class E4SwtComponentNamer extends RcpSwtComponentNamer
      */
     public void onModelToolItemCreated(MToolItem mToolItem) {
         if (mToolItem.getWidget() instanceof ToolItem) {
-            onModelElementCreated(mToolItem);
+            setTechnicalName(mToolItem, mToolItem.getElementId());
         }
     }
 
@@ -64,21 +68,24 @@ public class E4SwtComponentNamer extends RcpSwtComponentNamer
      * @param mPart The opened part of the application model.
      */
     public void onModelPartCreated(MPart mPart) {
-        onModelElementCreated(mPart);
+        // A part has the same view name after a perspective switch,
+        // so we name it here.
+        setTechnicalName(mPart, mPart.getElementId());
     }
 
     /**
-     * Set the name of the control by using the element id of the given part stack.
-     * Called, when the given part stack of the application model has been created.
-     * @param mElement The opened part stack of the application model.
+     * Set the technical name to the widget given by the MUI element.
+     * Called, when the given MUI element of the application model has been created.
+     * @param mElement The MUI element containing the widget for naming.
+     * @param technicalName The technical name from calling getElementId()
+     *                      in original subclass of {@link MUIElment}.
      */
-    public void onModelElementCreated(MUIElement mElement) {
-        Widget widget = (Widget) mElement.getWidget();
-        if (hasWidgetToBeNamed(widget)) {
-            // Name control based on element ID
-            String componentName = mElement.getElementId();
-            if (componentName != null) {
-                setComponentName(widget, componentName);
+    private void setTechnicalName(MUIElement mElement,
+            String technicalName) {
+        if (mElement.getWidget() instanceof Widget) {
+            Widget widget = (Widget) mElement.getWidget();
+            if (hasWidgetToBeNamed(widget) && technicalName != null) {
+                setComponentName(widget, technicalName);
             }
         }
     }
