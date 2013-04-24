@@ -291,7 +291,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
         }
         IMenuItemComponent item = navigateToMenuItem(getAndCheckMenu(), 
                 menuItems, operator);
-        if (item == null) {
+        if (item == null || item.getRealComponent() == null) {
             try {
                 closeMenu(getAndCheckMenu(), menuItems, operator);
             } catch (StepExecutionException see) {
@@ -299,8 +299,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
                 // Do nothing
                 getLog().info("Tried to close a disabled or already closed menu."); //$NON-NLS-1$
             }
-            throw new StepExecutionException("no such menu item found", //$NON-NLS-1$
-                EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
+            throwMenuItemNotFound();
         }
         item.selectMenuItem();
     }
@@ -384,16 +383,17 @@ public abstract class AbstractMenuTester extends AbstractUITester {
     protected int getIndexForName(IMenuComponent menu, String name,
             String operator) {
         IMenuItemComponent [] subElements = menu.getItems();
-        int downcount = 0;
+        int ignoreElementCount = 0;
         for (int j = 0; j < subElements.length; j++) {               
             IMenuItemComponent tempMenu = (IMenuItemComponent)subElements[j];
-            if (tempMenu.isSeparator()) {
-                downcount++;
+            if (!tempMenu.isShowing() 
+                    || (tempMenu.isSeparator() && tempMenu.isShowing())) {
+                ignoreElementCount++;
             }
             if (tempMenu.isShowing()
                     && MatchUtil.getInstance().match(
                             tempMenu.getText(), name, operator)) {
-                return j - downcount;
+                return j - ignoreElementCount;
             }
         }
         return Integer.MAX_VALUE;
