@@ -16,10 +16,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
 import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
@@ -64,17 +65,21 @@ public class CentralTestDataSetValueFunctionEvaluator
      * execution starts
      */
     static {
-        DataEventDispatcher.getInstance().addTestSuiteStateListener(
-                new DataEventDispatcher.ITestSuiteStateListener() {
-                    public void handleTSStateChanged(TestExecutionEvent event) {
-                        if (event.getState() == TestExecutionEvent
-                                .TEST_EXEC_RESULT_TREE_READY) {
-                            registerDataCubes();
-                            PARAM_DESCRIPTIONS.clear();
-                            UNIQUE_KEYS.clear();
-                        }
-                    }
-                }, true);
+        ClientTestFactory.getClientTest()
+            .addTestExecutionEventListener(new ITestExecutionEventListener() {
+                public void stateChanged(TestExecutionEvent event) {
+                    if (event.getState() == TestExecutionEvent
+                            .TEST_EXEC_RESULT_TREE_READY) {
+                        registerDataCubes();
+                        PARAM_DESCRIPTIONS.clear();
+                        UNIQUE_KEYS.clear();
+                    }                
+                }            
+                public void endTestExecution() {
+                    PARAM_DESCRIPTIONS.clear();
+                    UNIQUE_KEYS.clear();
+                }
+            });
     }
 
     /**
