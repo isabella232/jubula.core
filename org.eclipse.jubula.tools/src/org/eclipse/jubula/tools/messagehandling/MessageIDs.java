@@ -590,6 +590,8 @@ public class MessageIDs {
     public static final Integer I_NO_CLIENT_LOG_FOUND = new Integer(128);
     /** if Automatic perspective changeover has been disabled */ 
     public static final Integer I_NO_PERSPECTIVE_CHANGE = new Integer(129);
+    /** if Automatic perspective changeover has been disabled */ 
+    public static final Integer I_NOT_SAME_SPEC = new Integer(130);
 
     // ---------------------------------------------------------------------
     /** key = message id, message object */
@@ -967,6 +969,7 @@ public class MessageIDs {
         messageMap.put(I_DB_BACKGROUND_JOB, i, "InfoMessage.DB_BACKGROUND_JOB", null); //$NON-NLS-1$
         messageMap.put(I_NO_CLIENT_LOG_FOUND, i, "InfoMessage.NO_CLIENT_LOG_FOUND", null); //$NON-NLS-1$
         messageMap.put(I_NO_PERSPECTIVE_CHANGE, i, "InfoMessage.NO_PERSPECTIVE_CHANGE", null); //$NON-NLS-1$
+        messageMap.put(I_NOT_SAME_SPEC, i, "InfoMessage.NOT_SAME_SPEC", null); //$NON-NLS-1$
     }
     
     /**

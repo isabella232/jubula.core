@@ -125,6 +125,12 @@
       properties="isDefined"
       type="org.eclipse.jubula.tools.registration.AutIdentifier" />
     <propertyTester
+      class="org.eclipse.jubula.client.ui.rcp.propertytester.SearchTestCasePropertyTester"
+      id="org.eclipse.jubula.client.ui.rcp.propertytester.SearchTestCaseTester"
+      namespace="org.eclipse.jubula.client.ui.rcp.propertytester.SearchTestCase"
+      properties="isExec"
+      type="java.lang.Object" />
+    <propertyTester
       class="org.eclipse.jubula.client.ui.rcp.propertytester.ParameterInterfacePropertyTester"
       id="org.eclipse.jubula.client.ui.rcp.propertytester.ParameterInterfacePropertyTester"
       namespace="org.eclipse.jubula.client.core.model.IParameterInterfacePO"
@@ -876,6 +882,10 @@
       name="Create AUT Definition" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.SearchReplaceTestCaseCommand"
+      name="Replcase Test Case" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.OpenCentralTestDataEditor"
       name="%OpenCentralTestDataEditor" />
     <command
@@ -1253,6 +1263,13 @@
       <command
         commandId="org.eclipse.jubula.client.ui.rcp.commands.StopAUTCommand"
         style="push" />
+    </menuContribution>
+    <menuContribution
+      locationURI="popup:org.eclipse.jubula.client.ui.rcp.search.searchResultPage?after=additions">
+      <command
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.SearchReplaceTestCaseCommand"
+        style="push"
+        label="%ReplaceWithTC" />
     </menuContribution>
     <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
       <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.LanguageToolbar">
@@ -2511,6 +2528,26 @@
         </and>
       </enabledWhen>
     </handler>
+    
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.SearchReplaceTestCaseHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.SearchReplaceTestCaseCommand">
+      <enabledWhen>
+        <and>
+          <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectActive">
+            <equals value="true" />
+          </with>
+              <iterate
+            ifEmpty="false"
+            operator="and">
+            <test
+              forcePluginActivation="true"
+              property="org.eclipse.jubula.client.ui.rcp.propertytester.SearchTestCase.isExec" />
+          </iterate>
+        </and>
+      </enabledWhen>
+    </handler>
+    
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenCentralTestDataEditorHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenCentralTestDataEditor">
