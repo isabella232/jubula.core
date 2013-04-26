@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.rcp.e4.namer;
 
-import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBar;
@@ -52,12 +51,5 @@ public interface E4ComponentNamer {
      * @param mPart The created model part.
      */
     public abstract void onModelPartCreated(MPart mPart);
-
-    /**
-     * This abstract method is called, when a new element is created in the
-     * application model. Implement this method to react on this event.
-     * @param mElement The created model element.
-     */
-    public abstract void onModelElementCreated(MUIElement mElement);
 
 }

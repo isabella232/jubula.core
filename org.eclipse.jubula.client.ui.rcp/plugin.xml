@@ -497,6 +497,8 @@
         relationship="stack"
         relative="org.eclipse.ui.views.ProblemView" />  
       <actionSet id="org.eclipse.jubula.client.ui.rcp.menu.actions" />
+      <hiddenToolBarItem id="org.eclipse.search.OpenSearchDialogPage" />
+      <hiddenToolBarItem id="org.eclipse.mylyn.tasks.ui.search.open" />
       <perspectiveShortcut
         id="org.eclipse.jubula.client.ui.rcp.perspectives.ExecutionPerspective" />
       <perspectiveShortcut
@@ -521,6 +523,7 @@
     <perspectiveExtension
       targetID="org.eclipse.jubula.client.ui.rcp.perspectives.ExecutionPerspective">
       <actionSet id="org.eclipse.jubula.client.ui.rcp.menu.actions" />
+      <hiddenToolBarItem id="org.eclipse.search.OpenSearchDialogPage" />
       <perspectiveShortcut
         id="org.eclipse.jubula.client.ui.rcp.perspectives.SpecificationPerspective" />
       <perspectiveShortcut
@@ -540,6 +543,7 @@
     </perspectiveExtension>
     <perspectiveExtension targetID="org.eclipse.jubula.client.ui.perspectives.ReportPerspective">
       <actionSet id="org.eclipse.jubula.client.ui.rcp.menu.actions" />
+      <hiddenToolBarItem id="org.eclipse.search.OpenSearchDialogPage" />
       <perspectiveShortcut
         id="org.eclipse.jubula.client.ui.rcp.perspectives.SpecificationPerspective" />
       <perspectiveShortcut
