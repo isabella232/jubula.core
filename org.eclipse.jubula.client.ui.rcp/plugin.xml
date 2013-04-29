@@ -129,7 +129,7 @@
       id="org.eclipse.jubula.client.ui.rcp.propertytester.SearchTestCaseTester"
       namespace="org.eclipse.jubula.client.ui.rcp.propertytester.SearchTestCase"
       properties="isExec"
-      type="java.lang.Object" />
+      type="org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult$SearchResultElement" />
     <propertyTester
       class="org.eclipse.jubula.client.ui.rcp.propertytester.ParameterInterfacePropertyTester"
       id="org.eclipse.jubula.client.ui.rcp.propertytester.ParameterInterfacePropertyTester"
@@ -883,7 +883,7 @@
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.SearchReplaceTestCaseCommand"
-      name="Replcase Test Case" />
+      name="%ReplaceTestCases" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.OpenCentralTestDataEditor"
@@ -1269,7 +1269,7 @@
       <command
         commandId="org.eclipse.jubula.client.ui.rcp.commands.SearchReplaceTestCaseCommand"
         style="push"
-        label="%ReplaceWithTC" />
+        label="%ReplaceTestCases" />
     </menuContribution>
     <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
       <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.LanguageToolbar">

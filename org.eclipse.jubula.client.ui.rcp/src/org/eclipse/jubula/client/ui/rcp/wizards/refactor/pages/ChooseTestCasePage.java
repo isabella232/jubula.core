@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.wizards.refactor.pages;
 
+import java.util.Set;
+
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -34,6 +36,11 @@ public class ChooseTestCasePage extends WizardPage {
     private INodePO m_parentTestCase;
     
     /**
+     * <code>m_parentTestCases</code>
+     */
+    private Set<INodePO> m_setOfParentTestCases;
+    
+    /**
      * <code>m_choosenTestCase</code>
      */
     private ISpecTestCasePO m_choosenTestCase = null;
@@ -49,13 +56,31 @@ public class ChooseTestCasePage extends WizardPage {
         m_parentTestCase = parentTestCase;
         setPageComplete(false);
     }
+    
+    /**
+     * @param pageId
+     *            the page id
+     * @param parentTestCases
+     *            the parent test cases
+     */
+    public ChooseTestCasePage(Set<INodePO> parentTestCases, String pageId) {
+        super(pageId, Messages.ReplaceTCRWizard_choosePage_title, null);
+        m_setOfParentTestCases = parentTestCases;
+        setPageComplete(false);
+    }
 
     /**
      * {@inheritDoc}
      */
     public void createControl(Composite parent) {
-        final TestCaseTreeComposite tctc = new TestCaseTreeComposite(parent,
-                SWT.SINGLE, m_parentTestCase);
+        final TestCaseTreeComposite tctc;
+        if (m_parentTestCase != null) {
+            tctc = new TestCaseTreeComposite(parent,
+                    SWT.SINGLE, m_parentTestCase);
+        } else {
+            tctc = new TestCaseTreeComposite(parent,
+                    SWT.SINGLE, m_setOfParentTestCases);
+        }
         tctc.getTreeViewer().addSelectionChangedListener(
                 new ISelectionChangedListener() {
                     public void selectionChanged(SelectionChangedEvent event) {

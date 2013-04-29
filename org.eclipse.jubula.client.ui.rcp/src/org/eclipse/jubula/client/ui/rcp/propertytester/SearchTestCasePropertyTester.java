@@ -10,14 +10,18 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.propertytester;
 
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 
 /**
- * PropertyTester for search results
+ * PropertyTester for search results.
+ * It checks if the selected search result element is an exec and
+ * that it is from the same and non protected project.
  * @author BREDEX GmbH
  *
  */
@@ -36,20 +40,27 @@ public class SearchTestCasePropertyTester
 
     /** {@inheritDoc} */
     public boolean testImpl(Object receiver, String property, Object[] args) {
-
         if (property.equals(IS_EXEC)) {
-            SearchResultElement<Long> searchResult =
+            SearchResultElement<Long> searchResult = 
                     (SearchResultElement<Long>) receiver;
-            if (GeneralStorage.getInstance().getProject().getIsProtected()) {
-                return false;
+            IProjectPO project = GeneralStorage.getInstance().getProject();
+            if (!project.getIsProtected()) {
+                INodePO nodePO = GeneralStorage
+                        .getInstance()
+                        .getMasterSession()
+                        .find(NodeMaker.getExecTestCasePOClass(),
+                                searchResult.getData());
+                if (nodePO != null) {
+                    try {
+                        IExecTestCasePO exec = (IExecTestCasePO) nodePO;
+                        if (exec.getParentProjectId().equals(project.getId())) {
+                            return true;
+                        }
+                    } catch (ClassCastException e) {
+                        return false;
+                    }
+                }
             }
-            INodePO nodePO = GeneralStorage.getInstance().getMasterSession()
-                    .find(NodeMaker.getNodePOClass(), searchResult.getData());
-            if (nodePO == null || !nodePO.getClass().isAssignableFrom(
-                    NodeMaker.getExecTestCasePOClass())) {
-                return false;
-            }
-            return true;
         }
         return false;
     }

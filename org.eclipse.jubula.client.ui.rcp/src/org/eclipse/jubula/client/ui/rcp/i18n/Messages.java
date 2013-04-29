@@ -589,6 +589,7 @@ public class Messages extends NLS {
     public static String RefreshTSBrowserActionProgressMessage;
     public static String RefTestSuiteGUIPropertySourceAutIdName;
     public static String RefTestSuiteGUIPropertySourceRefTSName;
+    public static String ReplaceTestCasesActionDialog;
     public static String RenameActionCatError;
     public static String RenameActionCatLabel;
     public static String RenameActionCatMessage;

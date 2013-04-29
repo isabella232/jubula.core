@@ -17,7 +17,6 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -28,7 +27,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
-import org.eclipse.jubula.client.ui.rcp.wizards.refactor.SearchReplaceTCRWizard;
+import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.SearchReplaceTCRWizard;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.DialogUtils.SizeType;
@@ -46,8 +45,7 @@ public class SearchReplaceTestCaseHandler extends
     /**
      * {@inheritDoc}
      */
-    protected Object executeImpl(ExecutionEvent event)
-        throws ExecutionException {
+    protected Object executeImpl(ExecutionEvent event) {
         IStructuredSelection selectedObject = getSelection();
         List selectionList = selectedObject.toList();
         Set<IExecTestCasePO> execList = new LinkedHashSet<IExecTestCasePO>();
@@ -75,13 +73,17 @@ public class SearchReplaceTestCaseHandler extends
                 }
             }
         } catch (Exception e) {
-            ErrorHandlingUtil.createMessageDialog(MessageIDs.I_NOT_SAME_SPEC);
+            ErrorHandlingUtil.createMessageDialog(MessageIDs.I_NO_EXEC);
             return null;
         }
         if (Plugin.getDefault().anyDirtyStar()) {
             if (Plugin.getDefault().showSaveEditorDialog()) {
-                showWizardDialog(execList, firstSpec);
+                if (!Plugin.getDefault().anyDirtyStar()) {
+                    showWizardDialog(execList);
+                }
             }
+        } else {
+            showWizardDialog(execList);
         }
 
         return null;
@@ -89,14 +91,13 @@ public class SearchReplaceTestCaseHandler extends
 
     /**
      * 
-     * @param execList Set of all exec testcases which should be replaced
-     * @param firstSpec the spec testcase of the execs
+     * @param execList
+     *            Set of all exec testcases which should be replaced
      */
-    private void showWizardDialog(Set<IExecTestCasePO> execList,
-            ISpecTestCasePO firstSpec) {
+    private void showWizardDialog(Set<IExecTestCasePO> execList) {
         WizardDialog dialog;
-        dialog = new WizardDialog(getActiveShell(), new SearchReplaceTCRWizard(
-                firstSpec, execList)) {
+        dialog = new WizardDialog(getActiveShell(), 
+                new SearchReplaceTCRWizard(execList)) {
             /** {@inheritDoc} */
             protected void configureShell(Shell newShell) {
                 super.configureShell(newShell);
