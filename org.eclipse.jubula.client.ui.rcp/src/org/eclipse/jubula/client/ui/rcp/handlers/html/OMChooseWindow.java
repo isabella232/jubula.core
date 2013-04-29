@@ -48,8 +48,8 @@ public class OMChooseWindow extends AbstractHandler implements IElementUpdater {
         String name = (String) map.get(WINDOW_TITLE_PARAMETER);
         if (lastSelectedWindowState != null && name == null) {
             name = (String) lastSelectedWindowState.getValue();
-            lastSelectedWindowState.setValue(name);
         }
+        lastSelectedWindowState.setValue(name);
         HTMLAutWindowManager.getInstance().setLastSelectedWindow(name);
         OMSelectWindowMessage message = new OMSelectWindowMessage();
         message.setWindowTitle(name);
