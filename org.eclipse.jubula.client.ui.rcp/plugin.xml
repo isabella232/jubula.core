@@ -1419,7 +1419,7 @@
           id="org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.ChooseHTMLWindowCommand"
           style="pulldown"
           icon="icons/startOM.gif"
-          tooltip="%ChooseHTMLWindow">
+          tooltip="%ChooseAUTWindow">
           <visibleWhen checkEnabled="false">
              <and>
               <with variable="activeEditorId">
