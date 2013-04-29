@@ -59,6 +59,9 @@ public class HTMLAutSourceProvider extends AbstractJBSourceProvider implements
     
     /** is it an HTML aut in OMM */
     private boolean m_isHTMLAut = false;
+    
+    /** last selected Window */
+    private String m_lastSelectedWindow = null;
         
     /**
      * Constructor for adding listeners to the DataEventDispatcher

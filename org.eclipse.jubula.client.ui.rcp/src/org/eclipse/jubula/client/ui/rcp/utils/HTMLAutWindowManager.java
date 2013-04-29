@@ -22,6 +22,8 @@ public class HTMLAutWindowManager implements IOMWindowsListener {
     private static HTMLAutWindowManager instance;
     /** the window titles of the browser*/
     private String[] m_windowTitles;
+    /** the last window selected */
+    private String m_lastSelectedWindow = null;
     
     /**
      * The constructor listens to the AUTWindowsEvents
@@ -56,6 +58,19 @@ public class HTMLAutWindowManager implements IOMWindowsListener {
         m_windowTitles  = windowTitles;        
     }
     
+    /**
+     * 
+     * @return the title of the last selected window
+     */
+    public String getLastSelectedWindow() {
+        return m_lastSelectedWindow;
+    }
     
-    
+    /**
+     * 
+     * @param lastSelectedWindowTitle the title of the last selected window
+     */
+    public void setLastSelectedWindow(String lastSelectedWindowTitle) {
+        this.m_lastSelectedWindow = lastSelectedWindowTitle;
+    }    
 }

@@ -14,11 +14,14 @@ import java.util.Map;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.State;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
+import org.eclipse.jubula.client.ui.rcp.utils.HTMLAutWindowManager;
 import org.eclipse.jubula.communication.message.html.OMSelectWindowMessage;
 import org.eclipse.jubula.tools.exception.CommunicationException;
+import org.eclipse.ui.commands.IElementUpdater;
+import org.eclipse.ui.menus.UIElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
@@ -26,9 +29,11 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  *
  */
-public class OMChooseWindow extends AbstractHandler {
+public class OMChooseWindow extends AbstractHandler implements IElementUpdater {
     /** name of the parameter used by the client */
     private static final String WINDOW_TITLE_PARAMETER = "org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow.parameter.openWindow"; //$NON-NLS-1$
+    /** */
+    private static final String LAST_SELECTED_WINDOW = "org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow.state.lastSelectedWindow"; //$NON-NLS-1$
     /** The logger */
     private static final Logger LOG = 
         LoggerFactory.getLogger(OMChooseWindow.class);
@@ -36,13 +41,22 @@ public class OMChooseWindow extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object execute(ExecutionEvent event) {
+        State lastSelectedWindowState = 
+                event.getCommand().getState(LAST_SELECTED_WINDOW);
         Map map = event.getParameters();
-        Object test = map.get(WINDOW_TITLE_PARAMETER);
+        String name = (String) map.get(WINDOW_TITLE_PARAMETER);
+        if (lastSelectedWindowState != null && name == null) {
+            name = (String) lastSelectedWindowState.getValue();
+            lastSelectedWindowState.setValue(name);
+        }
+        HTMLAutWindowManager.getInstance().setLastSelectedWindow(name);
         OMSelectWindowMessage message = new OMSelectWindowMessage();
-        message.setWindowTitle((String)test);
+        message.setWindowTitle(name);
         try {
-            AUTConnection.getInstance().send(message);
+            if (name != null) {                
+                AUTConnection.getInstance().send(message);
+            }
         } catch (NotConnectedException nce) {
             if (LOG.isErrorEnabled()) {
                 LOG.error(nce.getLocalizedMessage(), nce);
@@ -54,6 +68,20 @@ public class OMChooseWindow extends AbstractHandler {
         }
         
         return null;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void updateElement(UIElement element, Map parameters) {
+        String name = (String) parameters.get(WINDOW_TITLE_PARAMETER);
+        String lastTitle = HTMLAutWindowManager.getInstance()
+                                .getLastSelectedWindow();
+        boolean checked = false;
+        if (name != null && lastTitle != null && name.equals(lastTitle)) {
+            checked = true;
+        }
+        element.setChecked(checked);
     }
 
 }

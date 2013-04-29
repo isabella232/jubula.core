@@ -702,6 +702,9 @@
         name="Open Windows"
         optional="false"
         typeId="org.eclipse.jubula.client.ui.rcp.commands.parametertypes.WindowTitle" />
+      <state
+        class="org.eclipse.core.commands.State"
+        id="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow.state.lastSelectedWindow" />    
     </command>
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
@@ -1415,6 +1418,7 @@
           commandId="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow"
           id="org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.ChooseHTMLWindowCommand"
           style="pulldown"
+          icon="icons/startOM.gif"
           tooltip="%ChooseHTMLWindow">
           <visibleWhen checkEnabled="false">
              <and>
@@ -2730,10 +2734,6 @@
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewLogicalNameCommand"
       icon="icons/addLogicalName.gif" />
-    <image
-      commandId="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow"
-      disabledIcon="icons/startOM_disabled.gif"
-      icon="icons/startOM.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.sort.name"
       icon="icons/sort.gif" />

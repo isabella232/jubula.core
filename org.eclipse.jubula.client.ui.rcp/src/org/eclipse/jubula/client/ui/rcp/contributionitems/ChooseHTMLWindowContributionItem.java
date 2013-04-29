@@ -37,16 +37,16 @@ public class ChooseHTMLWindowContributionItem extends CompoundContributionItem {
      * {@inheritDoc}
      */
     protected IContributionItem[] getContributionItems() {
-        String[] tester = HTMLAutWindowManager.getInstance().getWindowTitles();
+        String[] titles = HTMLAutWindowManager.getInstance().getWindowTitles();
         List<IContributionItem> contributionItems = 
                 new ArrayList<IContributionItem>();
-        for (int i = 0; i < tester.length; i++) {
+        for (int i = 0; i < titles.length; i++) {
             Map<String, Object> params = new HashMap<String, Object>();
-            params.put("org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow.parameter.openWindow", tester[i]); //$NON-NLS-1$ 
+            params.put("org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow.parameter.openWindow", titles[i]); //$NON-NLS-1$ 
                     
             IContributionItem test = CommandHelper
                 .createContributionItem(RCPCommandIDs.CHOOSE_HTML_WINDOW, 
-                        params, tester[i], CommandContributionItem.STYLE_PUSH);
+                        params, titles[i], CommandContributionItem.STYLE_CHECK);
             contributionItems.add(test); 
         }
         return contributionItems
