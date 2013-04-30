@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.commands;
 
 import java.util.Iterator;
+import java.util.Set;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.AUTEvent;
@@ -30,6 +31,7 @@ import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
+import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -184,17 +186,20 @@ public class AUTStartedCommand implements ICommand {
             IComponentIdentifier id = (IComponentIdentifier)it.next();
             Component comp = ComponentBuilder.getInstance().getCompSystem()
                 .findComponent(id.getComponentClassName());
-            String logicalName = getLogicalName(comp);
-            if (logicalName != null) {
-                // adds new mapping
-                transientObjMap.addObjectMappingAssoziation(
-                    logicalName, id);
-            } else {
-                if (log.isErrorEnabled()) {
-                    log.error(Messages.NoLogicalNameForDefaultMapping
-                        + StringConstants.SPACE
-                        + Messages.DefinedByComponent + StringConstants.COLON
-                        + StringConstants.SPACE + comp);
+            Set<Component> allSyntheticComponents = comp.getAllRealized();
+            allSyntheticComponents.add(comp);
+            for (Component sComponent : allSyntheticComponents) {
+                String logicalName = getLogicalName(sComponent);
+                if (logicalName != null) {
+                    // adds new mapping
+                    transientObjMap.addObjectMappingAssoziation(
+                            logicalName, id);
+                } else {
+                    if (log.isErrorEnabled()) {
+                        log.error(NLS.bind(
+                                Messages.NoLogicalNameForDefaultMapping,
+                                sComponent));
+                    }
                 }
             }
         }

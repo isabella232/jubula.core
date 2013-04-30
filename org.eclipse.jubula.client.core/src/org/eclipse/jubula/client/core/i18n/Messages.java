@@ -118,7 +118,6 @@ public class Messages extends NLS {
     public static String DBVersionProblem;
     public static String DefaultEventHandlerDefEH;
     public static String DefaultEventHandlerUnknown;
-    public static String DefinedByComponent;
     public static String DeleteAllTestrunSummariesFailed;
     public static String DeleteTestresultElementFailed;
     public static String DeleteTestrunFailed;
