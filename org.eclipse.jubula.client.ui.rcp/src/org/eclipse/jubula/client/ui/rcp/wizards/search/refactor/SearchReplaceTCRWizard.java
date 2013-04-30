@@ -155,7 +155,10 @@ public class SearchReplaceTCRWizard extends Wizard {
         for (Iterator iterator = m_setOfExecsToReplace.iterator(); 
                 iterator.hasNext();) {
             IExecTestCasePO exec = (IExecTestCasePO) iterator.next();
-            specSet.add(exec.getParentNode());
+            if (ISpecTestCasePO.class.isAssignableFrom(
+                    exec.getParentNode().getClass())) {
+                specSet.add(exec.getParentNode());
+            }
         }
         m_choosePage = new ChooseTestCasePage(specSet, CHOOSE_PAGE_ID);
         addPage(m_choosePage);
