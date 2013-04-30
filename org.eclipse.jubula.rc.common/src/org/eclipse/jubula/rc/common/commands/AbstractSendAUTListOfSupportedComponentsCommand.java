@@ -45,7 +45,6 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractSendAUTListOfSupportedComponentsCommand 
     implements ICommand {
-
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(
         AbstractSendAUTListOfSupportedComponentsCommand.class);
@@ -161,14 +160,18 @@ public abstract class AbstractSendAUTListOfSupportedComponentsCommand
     }
 
     /**
-     * @param componentIds the list of compIDs to add
-     * @param concrete the concrete component
+     * @param componentIds
+     *            the list of compIDs to add
+     * @param concrete
+     *            the concrete component
      * @throws UnsupportedComponentException .
-     * @return the list of the supported component ids
+     * @return the list of the supported component IDs
      */
-    protected abstract List addComponentID(List componentIds, 
-        ConcreteComponent concrete) 
-        throws UnsupportedComponentException;
+    protected List addComponentID(List componentIds, ConcreteComponent concrete)
+        throws UnsupportedComponentException {
+        componentIds.add(createIdentifier(concrete));
+        return componentIds;
+    }
 
     /** 
      * {@inheritDoc}

@@ -50,14 +50,14 @@ public class AUTStartedCommand implements ICommand {
     private static Logger log = 
         LoggerFactory.getLogger(AUTStartedCommand.class);
 
-    /** the listener to notfy */
+    /** the listener to notify */
     private IAUTInfoListener m_listener;
     
     /** the message */
     private AUTStartStateMessage m_message;
 
     // HERE for the exhibition
-    /** the state of the aut */
+    /** the state of the AUT */
     private AUTStateMessage m_stateMessage;
     
     /** flag that is set at the end of execution */
@@ -142,7 +142,6 @@ public class AUTStartedCommand implements ICommand {
      * The name of the default mapping is localized. If there is no I18N value,
      * <code>DefaultMapping.getLogicalName()</code> is returned.
      * 
-     * {@inheritDoc}
      * {@inheritDoc}
      * 
      * @param comp

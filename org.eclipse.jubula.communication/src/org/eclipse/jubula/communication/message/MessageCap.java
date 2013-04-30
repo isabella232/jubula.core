@@ -25,7 +25,7 @@ public class MessageCap {
     private List m_messageParams;
 
     /**
-     * The ComponentIdentifier that hold the technicalname and the componentType
+     * The ComponentIdentifier that hold the technical name and the componentType
      */
     private IComponentIdentifier m_ci;
 

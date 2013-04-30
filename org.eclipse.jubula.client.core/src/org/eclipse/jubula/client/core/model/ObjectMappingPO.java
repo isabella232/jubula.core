@@ -136,27 +136,6 @@ class ObjectMappingPO implements IObjectMappingPO {
     }    
 
     /**
-     * Creates a new logical Name, unassigned fireing Added Event 
-     * @param compNameGuid     compNameGuid
-     * @return          ObjectMappingAssoziationPO
-     */
-    public IObjectMappingAssoziationPO addLogicalName(String compNameGuid) {
-        
-        IObjectMappingAssoziationPO assoc = 
-            getLogicalNameAssoc(compNameGuid);
-        if (assoc == null) {
-            assoc = PoMaker.createObjectMappingAssoziationPO(
-                    null, compNameGuid);
-            getUnmappedLogicalCategory().addAssociation(assoc);
-            assoc.setParentProjectId(getParentProjectId());
-            return assoc;
-        }
-        
-        assoc.setParentProjectId(getParentProjectId());
-        return assoc;
-    }
-
-    /**
      * Creates a new technical Name, unassigned
      * @param tech   ComponentIdentifier
      * @param aut AUTMainPO
@@ -280,60 +259,44 @@ class ObjectMappingPO implements IObjectMappingPO {
     }
 
     /**
-     * returns the technicalName to a logical name
-     * @param logical       String
-     * @return              String
-     * @throws LogicComponentNotManagedException error
+     * @param logical
+     *            String
+     * @throws LogicComponentNotManagedException
+     *             error
+     * @return the technicalName to a logical name or <code>null</code>
      */
     @SuppressWarnings("unchecked")
     public IComponentIdentifier getTechnicalName(String logical) throws
         LogicComponentNotManagedException {
-        IObjectMappingAssoziationPO asso = 
-            getLogicalNameAssoc(logical);
-        if (asso != null) {
-            IComponentIdentifier assoCompId = asso.getTechnicalName();
-            if (assoCompId != null) {
-                IComponentIdentifier compId = new ComponentIdentifier();
-                compId.setComponentClassName(
-                    assoCompId.getComponentClassName());
-                compId.setHierarchyNames(new ArrayList<String>(
-                    assoCompId.getHierarchyNames()));
-                compId.setNeighbours(new ArrayList<String>(
-                        assoCompId.getNeighbours()));
-                compId.setSupportedClassName(
-                    assoCompId.getSupportedClassName());
-                return compId;
+        IObjectMappingAssoziationPO asso = getLogicalNameAssoc(logical);
+        if (asso == null) {
+            // Check for default mapping
+            IComponentNamePO compNamePo = 
+                ComponentNamesBP.getInstance().getCompNamePo(logical);
+            if (compNamePo != null) {
+                asso = getLogicalNameAssoc(compNamePo.getName());
             }
-            return null; 
         } 
-    
-        // Check for default mapping
-        IComponentNamePO compNamePo = 
-            ComponentNamesBP.getInstance().getCompNamePo(logical);
-        if (compNamePo != null) {
-            String name = compNamePo.getName();
-            asso = getLogicalNameAssoc(name);
-            if (asso != null) {
-                IComponentIdentifier assoCompId = asso.getTechnicalName();
-                if (assoCompId != null) {
-                    IComponentIdentifier compId = new ComponentIdentifier();
-                    compId.setComponentClassName(
-                            assoCompId.getComponentClassName());
-                    compId.setHierarchyNames(new ArrayList<String>(
-                            assoCompId.getHierarchyNames()));
-                    compId.setNeighbours(new ArrayList<String>(
-                            assoCompId.getNeighbours()));
-                    compId.setSupportedClassName(
-                            assoCompId.getSupportedClassName());
-                    return compId;
-                }
-                return null; 
-            }
+        if (asso == null) {
+            throw new LogicComponentNotManagedException(
+                    NLS.bind(Messages.TheLogicComponentIsNotManaged, logical),
+                    MessageIDs.E_COMPONENT_NOT_MANAGED); 
         }
         
-        throw new LogicComponentNotManagedException(
-            NLS.bind(Messages.TheLogicComponentIsNotManaged, logical),
-            MessageIDs.E_COMPONENT_NOT_MANAGED); 
+        IComponentIdentifier assoCompId = asso.getTechnicalName();
+        if (assoCompId != null) {
+            IComponentIdentifier compId = new ComponentIdentifier();
+            compId.setComponentClassName(
+                    assoCompId.getComponentClassName());
+            compId.setHierarchyNames(new ArrayList<String>(
+                    assoCompId.getHierarchyNames()));
+            compId.setNeighbours(new ArrayList<String>(
+                    assoCompId.getNeighbours()));
+            compId.setSupportedClassName(
+                    assoCompId.getSupportedClassName());
+            return compId;
+        }
+        return null; 
     }
 
     /**

@@ -60,4 +60,7 @@ public interface ToolkitConstants {
 
     /** Constant for an empty extension point entry */
     public static final String EMPTY_EXTPOINT_ENTRY = "null"; //$NON-NLS-1$
+    
+    /** Constant for a toolkit ID indicating a non valid include toolkit */
+    public static final String NO_VALID_INCLUDE_TOOLKIT = "NoValidIncludeToolkit"; //$NON-NLS-1$
 }

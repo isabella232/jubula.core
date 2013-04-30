@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swing.commands;
 
-import java.util.List;
-
 import org.eclipse.jubula.rc.common.commands.AbstractSendAUTListOfSupportedComponentsCommand;
 import org.eclipse.jubula.rc.common.components.IComponentFactory;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
@@ -31,30 +29,15 @@ import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
  * 
  * @author BREDEX GmbH
  * @created 04.10.2004
- * 
  */
 public class SendAUTListOfSupportedComponentsCommand 
     extends AbstractSendAUTListOfSupportedComponentsCommand {
-
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     protected void addToHierarchy(IComponentFactory factory, 
         ConcreteComponent c, String technicalName) 
         throws UnsupportedComponentException {
         
         ComponentHandler.addToHierarchy(factory, c.getComponentClass(), 
             technicalName);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    protected List addComponentID(List componentIds, 
-        ConcreteComponent concrete) 
-        throws UnsupportedComponentException {
-        
-        componentIds.add(createIdentifier(concrete));
-        return componentIds;
     }
 }

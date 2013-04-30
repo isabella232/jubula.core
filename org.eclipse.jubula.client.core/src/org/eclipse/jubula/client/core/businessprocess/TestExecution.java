@@ -743,8 +743,7 @@ public class TestExecution {
      * and missing test data.
      */
     private MessageCap buildMessageCap(ICapPO cap, boolean runIncomplete)
-        throws InvalidDataException, 
-        LogicComponentNotManagedException {
+        throws InvalidDataException, LogicComponentNotManagedException {
         
         MessageCap messageCap;
         String logicalName = null;

@@ -150,10 +150,10 @@ public class CompSystem {
         if (includesDescriptor != null) {
             final String includesLevel = includesDescriptor.getLevel();
             if (!ToolkitConstants.LEVEL_TOOLKIT.equals(includesLevel)) {
-                includesToolkit = "NoValidIncludeToolkit"; //$NON-NLS-1$
+                includesToolkit = ToolkitConstants.NO_VALID_INCLUDE_TOOLKIT;
             }
         } else {
-            includesToolkit = "NoValidIncludeToolkit"; //$NON-NLS-1$
+            includesToolkit = ToolkitConstants.NO_VALID_INCLUDE_TOOLKIT;
         }
         final List dependsToolkits = getDependsToolkitIds(toolkitId);
         Iterator compIter = getComponents().iterator();

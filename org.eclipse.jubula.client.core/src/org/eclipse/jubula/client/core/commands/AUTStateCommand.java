@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * The command object for the AUTStateMessage, which is send by the AUTServer
  * reporting the result of the AUTSwingStartMessage. <br>
  * 
- * THe execute() - methods notifies the listeners, returns always null.
+ * The execute() - methods notifies the listeners, returns always null.
  * 
  * @author BREDEX GmbH
  * @created 12.08.2004
