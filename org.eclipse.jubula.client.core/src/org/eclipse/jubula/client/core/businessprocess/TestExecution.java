@@ -1704,6 +1704,28 @@ public class TestExecution {
     }
     
     /**
+     * @author BREDEX GmbH
+     * @created 30.04.2013
+     */
+    public class PrepareForShutdownCmd implements IPostExecutionCommand {
+        /** {@inheritDoc} */
+        public TestErrorEvent execute() throws JBException {
+            return null;
+        }
+    }
+    
+    /**
+     * @author BREDEX GmbH
+     * @created 30.04.2013
+     */
+    public class SyncShutdownAndRestartCmd implements IPostExecutionCommand {
+        /** {@inheritDoc} */
+        public TestErrorEvent execute() throws JBException {
+            return null;
+        }
+    }
+    
+    /**
      * 
      * @author BREDEX GmbH
      * @created Aug 22, 2006
@@ -1751,7 +1773,7 @@ public class TestExecution {
                 AutAgentConnection.getInstance().send(
                         new RestartAutMessage(autId));
                 while (!isAutRestarted.get()) {
-                    // wait for aut registration
+                    // wait for AUT registration
                     try {
                         Thread.sleep(250);
                     } catch (InterruptedException e) {

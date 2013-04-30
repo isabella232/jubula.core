@@ -443,6 +443,25 @@ public abstract class AbstractApplicationTester implements ITester {
     }
     
     /**
+     * Does nothing! The prepare for shutdown is implemented in the client but
+     * the server must have an action to execute.
+     */
+    public void rcPrepareForShutdown() {
+        // nothing
+    }
+    
+    /**
+     * Does nothing! The sync shutdown and restart is implemented in the client
+     * but the server must have an action to execute.
+     * 
+     * @param timeout
+     *            the timeout to use
+     */
+    public void rcSyncShutdownAndRestart(int timeout) {
+        // nothing
+    }
+    
+    /**
      * Types the given text without checking location or event confirmation.
      * 
      * @param text The text to type.
@@ -462,7 +481,7 @@ public abstract class AbstractApplicationTester implements ITester {
      * @param actionToPerform
      *            a textual description of the action to perform in the AUT
      * @param expectedBehavior
-     *            a textual description of the expected behaviour
+     *            a textual description of the expected behavior
      * @param timeout
      *            the timeout
      */
@@ -651,7 +670,7 @@ public abstract class AbstractApplicationTester implements ITester {
     }
     
     /**
-     * Just a server side method, not useable as action.
+     * Just a server side method, not usable as action.
      * 
      * @param keyCode The key code
      */
@@ -660,7 +679,7 @@ public abstract class AbstractApplicationTester implements ITester {
     }
     
     /**
-     * Just a server side method, not useable as action.
+     * Just a server side method, not usable as action.
      * 
      * note : this action only works if application got focus,
      * because using defaultToolkit does not work. You have to

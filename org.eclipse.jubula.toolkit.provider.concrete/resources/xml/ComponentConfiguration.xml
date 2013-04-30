@@ -212,7 +212,7 @@
 			<method>rcRestart</method>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$RestartCmd</postExecutionCommand>
 		</action>
-
+		<action name="CompSystem.PrepareForShutdown" changed="2.0" clientAction="true">			<method>rcPrepareForShutdown</method>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PrepareForShutdownCmd</postExecutionCommand>		</action>		<action name="CompSystem.SyncShutdownAndRestart" changed="2.0" clientAction="true">			<method>rcSyncShutdownAndRestart</method>			<param name="CompSystem.Timeout">				<type>java.lang.Integer</type>				<defaultValue>10000</defaultValue>			</param>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$SyncShutdownAndRestartCmd</postExecutionCommand>		</action>
 		<action name="CompSystem.TakeScreenshot" changed="1.15">
 			<method>rcTakeScreenshot</method>
 			<param name="CompSystem.Destination">
