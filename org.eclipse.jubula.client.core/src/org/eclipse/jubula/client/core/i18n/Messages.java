@@ -213,6 +213,7 @@ public class Messages extends NLS {
     public static String JobConfigurationValidateAutConf;
     public static String JobConfigurationValidateProjectExist;
     public static String JobConfigurationValidateTestSuiteExist;
+    public static String JobConfigurationValidateTestJobExist;
     public static String JoiningTransaction;
     public static String KeepAliveAlreadyActive;
     public static String ListenerIsNull;

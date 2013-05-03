@@ -290,10 +290,14 @@ public class JobConfiguration {
         Validate.isTrue((m_testSuiteNames.size() == m_testSuites.size()), 
             Messages.JobConfigurationValidateTestSuiteExist);
 
-        for (ITestJobPO tj : TestJobBP.getListOfTestJobs()) {
-            if (tj.getName().equals(m_testJobName)) {
-                m_testJob = tj;
+        if (m_testJobName != null && !m_testJobName.isEmpty()) {
+            for (ITestJobPO tj : TestJobBP.getListOfTestJobs()) {
+                if (tj.getName().equals(m_testJobName)) {
+                    m_testJob = tj;
+                }
             }
+            Validate.notNull(m_testJob, 
+                    Messages.JobConfigurationValidateTestJobExist);
         }
         
         if (!m_testSuites.isEmpty()) {
