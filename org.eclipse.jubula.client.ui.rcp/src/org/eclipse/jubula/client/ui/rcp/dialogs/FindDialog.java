@@ -27,7 +27,8 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.search.query.AbstractSearchQuery;
+import org.eclipse.jubula.client.ui.rcp.search.query.Operation;
+import org.eclipse.jubula.client.ui.rcp.search.query.TextFinder;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.client.ui.utils.TreeViewerIterator;
 import org.eclipse.jubula.client.ui.views.IMultiTreeViewerContainer;
@@ -467,12 +468,9 @@ public class FindDialog <NODE> implements DisposeListener {
     private Object findGuiNode(String queryString, 
             boolean caseSensitive, boolean useRegex, boolean wrapSearch, 
             boolean forward, Object nodeToStart, IProgressMonitor monitor) {
-        int operation = 1;
-        if (useRegex) {
-            operation = 3;
-        } else if (caseSensitive) {
-            operation = 2;
-        }
+        TextFinder searcher = new TextFinder(
+                queryString,
+                Operation.create(caseSensitive, useRegex));
         if (monitor.isCanceled()) {
             return null;
         }
@@ -493,8 +491,7 @@ public class FindDialog <NODE> implements DisposeListener {
                     return null;
                 }
                 Object o = iterator.next();
-                if (AbstractSearchQuery.compare(labelProv.getText(o),
-                        queryString, operation)) {
+                if (searcher.matchSearchString(labelProv.getText(o))) {
                     monitor.done();
                     return o;
                 }

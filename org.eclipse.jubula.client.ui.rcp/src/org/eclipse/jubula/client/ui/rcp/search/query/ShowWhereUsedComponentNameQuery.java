@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.ObjectMappingSearchResultElementAction;
@@ -38,8 +39,8 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  * @author BREDEX GmbH
  * @created Jul 27, 2010
  */
-public class ShowWhereUsedComponentNameQuery 
-    extends AbstractShowWhereUsedQuery {
+public class ShowWhereUsedComponentNameQuery
+        extends AbstractShowWhereUsedQuery {
     /**
      * <code>m_compName</code>
      */
@@ -48,8 +49,10 @@ public class ShowWhereUsedComponentNameQuery
     /**
      * @param compName the comp name to search
      */
-    public ShowWhereUsedComponentNameQuery(IComponentNamePO compName) {
-        setCompName(compName);
+    public ShowWhereUsedComponentNameQuery(
+            IComponentNamePO compName) {
+        super(Constants.COMPNAMESVIEW_ID);
+        m_compName = compName;
     }
 
     /**
@@ -90,7 +93,7 @@ public class ShowWhereUsedComponentNameQuery
         final List<SearchResultElement> reuseLoc = 
             new ArrayList<SearchResultElement>(
                 reuse.size());
-        reuseLoc.addAll(getSearchResultList(reuse, null));
+        reuseLoc.addAll(getSearchResultListFromNodes(reuse));
         Set<IObjectMappingAssoziationPO> reuseAssocs = 
             ComponentNamesBP.getInstance().findAssocsOfReuse(
                 GeneralStorage.getInstance().getProject().getAutMainList(), 
@@ -146,13 +149,6 @@ public class ShowWhereUsedComponentNameQuery
         return reuse;
     }
     
-    /**
-     * @param compName the compName to set
-     */
-    private void setCompName(IComponentNamePO compName) {
-        m_compName = compName;
-    }
-
     /**
      * @return the compName
      */

@@ -16,13 +16,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.functors.InstanceofPredicate;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
-import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
@@ -36,106 +33,120 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
-import org.eclipse.jubula.client.ui.rcp.search.data.AbstractSearchData.SearchableType;
-import org.eclipse.jubula.client.ui.rcp.search.data.TestDataSearchData;
-import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
-import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.TestDataCubeSearchResultElementAction;
+import org.eclipse.jubula.client.ui.rcp.search.data.SearchOptions;
+import org.eclipse.jubula.client.ui.rcp.search.data.TypeName;
 
 
 /**
+ * Test data value search query for values of nodes in Test Suite Browser or
+ * Test Case Browsers including the central test data.
  * @author BREDEX GmbH
- * @created Aug 10, 2010
+ * @created Apr 29, 2013
  */
-public class TestDataSearchQuery extends AbstractSearchQuery {
-    
+public class TestDataQuery
+        extends AbstractTraverserQuery {
+
     /**
-     * Constructor
-     * 
-     * @param searchData
-     *            the search data to use for this query
+     * @param searchData The search data to use for this query.
      */
-    public TestDataSearchQuery(TestDataSearchData searchData) {
-        setSearchData(searchData);
+    public TestDataQuery(SearchOptions searchData) {
+        super(searchData, Constants.JB_DATASET_VIEW_ID);
     }
-    
+
     /**
+     * Search in the whole project or in selected nodes for test data using the
+     * {@link TextFinder} depending on the {@link SearchOptions} given
+     * to the constructor.
      * {@inheritDoc}
      */
     public IStatus run(IProgressMonitor monitor) {
-        int operation = 1;
-        if (getSearchData().isUseRegex()) {
-            operation = 3;
-        } else if (getSearchData().isCaseSensitive()) {
-            operation = 2;
+        setMonitor(monitor);
+        // search in nodes
+        traverse(); // calls operate()
+        if (monitor.isCanceled()) {
+            return Status.CANCEL_STATUS;
         }
+        // search in central test data
+        searchInCentralTestData(collectCentralTestData());
+        if (monitor.isCanceled()) {
+            return Status.CANCEL_STATUS;
+        }
+        finished();
+        return Status.OK_STATUS;
+    }
 
-        List<SearchableType> listOfTypesToSearchIn = getSearchData()
-                .getTypesToSearchIn();
-        Set<INodePO> setOfNodes = new HashSet<INodePO>();
+    /**
+     * Add the given node to the result, if it has the matching type and
+     * one or more test data values contain the search string.
+     * {@inheritDoc}
+     */
+    protected boolean operate(INodePO node) {
+        if (node instanceof IParamNodePO) {
+            // found node with parameters
+            if (matchingSearchType(node)) {
+                // found node with matching type
+                IParamNodePO paramNode = (IParamNodePO) node;
+                if (containsTestDataValue(paramNode)) {
+                    // found node with test data value, which contains search string
+                    add((INodePO) paramNode); // add node to result list
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Collect central test data.
+     * @return The collected set of central test data.
+     */
+    private Set<IParameterInterfacePO> collectCentralTestData() {
+        List<TypeName> types = getSearchOptions()
+                .getSelectedSearchableTypes();
+        IProgressMonitor monitor = getMonitor();
         monitor.beginTask(
-                "Collecting all Elements...", listOfTypesToSearchIn.size()); //$NON-NLS-1$
-        Set<IParameterInterfacePO> centralTestData = 
-            new HashSet<IParameterInterfacePO>();
-        for (SearchableType type : listOfTypesToSearchIn) {
+                "Collecting central test data elements...", types.size()); //$NON-NLS-1$
+        Set<IParameterInterfacePO> centralTestData =
+                new HashSet<IParameterInterfacePO>();
+        for (TypeName type : types) {
             Class searchType = type.getType();
-            if (INodePO.class.isAssignableFrom(searchType)) {
-                setOfNodes.addAll(NodeBP
-                        .getAllNodesForGivenTypeInCurrentProject(searchType));
-            } else if (ITestDataCubePO.class.isAssignableFrom(searchType)) {
+            if (!INodePO.class.isAssignableFrom(searchType)
+                    && ITestDataCubePO.class.isAssignableFrom(searchType)) {
                 IProjectPO cProject = GeneralStorage.getInstance().getProject();
                 centralTestData.addAll(Arrays.asList(
                         TestDataCubeBP.getAllTestDataCubesFor(cProject)));
             }
             monitor.worked(1);
-        }
-
-        monitor.beginTask(
-                "Searching...", setOfNodes.size() + centralTestData.size()); //$NON-NLS-1$
-        String searchString = getSearchData().getSearchString();
-        Set<INodePO> nodeResultList = new HashSet<INodePO>();
-
-        // Search in Nodes
-        CollectionUtils.filter(setOfNodes,
-                InstanceofPredicate.getInstance(IParamNodePO.class));
-        for (INodePO node : setOfNodes) {
-            IParamNodePO paramNode = (IParamNodePO)node;
-            if (containsTestDataValue(paramNode, searchString, operation)) {
-                nodeResultList.add(node);
+            if (monitor.isCanceled()) {
+                break;
             }
-            monitor.worked(1);
         }
-
-        List<SearchResultElement> results = getSearchResultList(nodeResultList,
-                Constants.JB_DATASET_VIEW_ID);
-
-        // Search in central test data sets
-        for (IParameterInterfacePO testDataCube : centralTestData) {
-            if (containsTestDataValue(testDataCube, searchString, operation)) {
-                results.add(new SearchResultElement<Long>(testDataCube
-                        .getName(), testDataCube.getId(),
-                        getImageForNode(testDataCube),
-                        new TestDataCubeSearchResultElementAction(),
-                        null,
-                        Constants.JB_DATASET_VIEW_ID));
-            }
-            monitor.worked(1);
-        }
-
-        setSearchResult(results);
-        return Status.OK_STATUS;
+        return centralTestData;
     }
-    
+
+    /**
+     * Search in central test data.
+     * @param centralTestData The set of central test data.
+     */
+    private void searchInCentralTestData(
+            Set<IParameterInterfacePO> centralTestData) {
+        IProgressMonitor monitor = getMonitor();
+        for (IParameterInterfacePO testDataCube : centralTestData) {
+            if (containsTestDataValue(testDataCube)) {
+                add(testDataCube);
+            }
+            monitor.worked(1);
+            if (monitor.isCanceled()) {
+                return;
+            }
+        }
+    }
+
     /**
      * @param paramObj
      *            the param obj to search the test data value in
-     * @param searchString
-     *            the string to search in test data
-     * @param operation
-     *            the operation
      * @return true if value has been found for this node; false otherwise
      */
-    private boolean containsTestDataValue(IParameterInterfacePO paramObj,
-            String searchString, int operation) {
+    private boolean containsTestDataValue(IParameterInterfacePO paramObj) {
         Locale workingLanguage = WorkingLanguageBP.getInstance()
                 .getWorkingLanguage();
 
@@ -160,13 +171,11 @@ public class TestDataSearchQuery extends AbstractSearchQuery {
                 if (column != -1 && column < dataSet.getColumnCount()) {
                     ITestDataPO testData = dataSet.getColumn(column);
                     if (testData != null) {
-                        ModelParamValueConverter converter = 
+                        ModelParamValueConverter converter =
                             new ModelParamValueConverter(
                                 testData, paramObj, workingLanguage, null);
                         String value = converter.getGuiString();
-                        if (value != null
-                                && compare(
-                                        value, searchString, operation)) {
+                        if (value != null && matchSearchString(value)) {
                             return true;
                         }
                     }
@@ -177,17 +186,4 @@ public class TestDataSearchQuery extends AbstractSearchQuery {
         return false;
     }
 
-    /**
-     * @param searchData the searchData to set
-     */
-    private void setSearchData(TestDataSearchData searchData) {
-        super.setSearchData(searchData);
-    }
-
-    /**
-     * @return the searchData
-     */
-    public TestDataSearchData getSearchData() {
-        return (TestDataSearchData)super.getSearchData();
-    }
 }

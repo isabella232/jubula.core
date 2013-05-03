@@ -10,15 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.search.page;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.eclipse.jubula.client.core.model.NodeMaker;
+import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.search.data.AbstractSearchData;
-import org.eclipse.jubula.client.ui.rcp.search.data.AbstractSearchData.SearchableType;
-import org.eclipse.jubula.client.ui.rcp.search.data.TestDataSearchData;
-import org.eclipse.jubula.client.ui.rcp.search.query.TestDataSearchQuery;
-import org.eclipse.osgi.util.NLS;
+import org.eclipse.jubula.client.ui.rcp.search.data.SearchOptions;
+import org.eclipse.jubula.client.ui.rcp.search.data.TypeName;
+import org.eclipse.jubula.client.ui.rcp.search.query.TestDataQuery;
 import org.eclipse.search.ui.ISearchQuery;
 
 
@@ -27,33 +24,47 @@ import org.eclipse.search.ui.ISearchQuery;
  * @created Aug 10, 2010
  */
 public class TestDataSearchPage extends AbstractSearchPage {
-    /**
-     * {@inheritDoc}
-     */
-    protected ISearchQuery newQuery() {
-        List<SearchableType> typesToSearchIn = new ArrayList<SearchableType>();
-        for (SearchableType structureType : getSearchData()
-                .getTypesToSearchFor()) {
-            if (structureType.isEnabled()) {
-                typesToSearchIn.add(structureType);
-            }
-        }
-        String searchString = getSearchStringCombo().getText();
-        boolean caseSensitive = getSearchData().isCaseSensitive();
-        boolean regEx = getSearchData().isUseRegex();
-        
-        TestDataSearchData searchData = new TestDataSearchData(
-                NLS.bind(Messages.TestDataSearchPageSearchName,
-                    searchString), searchString, caseSensitive,
-                    regEx, typesToSearchIn);
 
-        return new TestDataSearchQuery(searchData);
+    /** The static list of checked state for controls. */
+    private static ButtonSelections enablements = new ButtonSelections();
+
+    /**
+     * The static search data for this test data search page
+     * while Jubula is running.
+     */
+    private static SearchOptions searchData;
+
+    static {
+        // create the static search data object
+        TypeName[] searchableTypes = new TypeName[] {
+            new TypeName(PoMaker.getTestDataCubeClass(), true),
+            new TypeName(NodeMaker.getSpecTestCasePOClass(), true),
+            new TypeName(NodeMaker.getExecTestCasePOClass(), true),
+            new TypeName(NodeMaker.getCapPOClass(), true)
+        };
+        searchData = new SearchOptions(
+                Messages.SimpleSearchPageResultTestData,
+                searchableTypes);
+    }
+
+    @Override
+    protected ButtonSelections getButtonSelections() {
+        return enablements;
     }
 
     /**
      * {@inheritDoc}
      */
-    protected AbstractSearchData getSearchData() {
-        return TestDataSearchData.getInstance();
+    protected ISearchQuery getNewQuery() {
+        return new TestDataQuery(
+                new SearchOptions(searchData));
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected SearchOptions getSearchData() {
+        return searchData;
+    }
+
 }

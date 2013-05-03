@@ -58,7 +58,7 @@ import org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.DirtyStarListContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.DirtyStarListLabelProvider;
-import org.eclipse.jubula.client.ui.rcp.search.query.AbstractSearchQuery;
+import org.eclipse.jubula.client.ui.rcp.search.query.AbstractQuery;
 import org.eclipse.jubula.client.ui.rcp.widgets.StatusLineContributionItem;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.ImageUtils;
@@ -1253,7 +1253,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
 
             /** {@inheritDoc} */
             public void queryFinished(final ISearchQuery query) {
-                if (query instanceof AbstractSearchQuery) {
+                if (query instanceof AbstractQuery) {
                     PlatformUI.getWorkbench().getDisplay().syncExec(
                             new Runnable() {
                                 public void run() {

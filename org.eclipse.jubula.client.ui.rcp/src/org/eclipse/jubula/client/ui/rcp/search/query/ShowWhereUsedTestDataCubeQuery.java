@@ -33,10 +33,11 @@ public class ShowWhereUsedTestDataCubeQuery extends AbstractShowWhereUsedQuery {
     private ITestDataCubePO m_testDataCube;
     
     /**
-     * @param tdc the test data cube to use for this query
+     * @param testDataCube the test data cube to use for this query
      */
-    public ShowWhereUsedTestDataCubeQuery(ITestDataCubePO tdc) {
-        setTestDataCube(tdc);
+    public ShowWhereUsedTestDataCubeQuery(ITestDataCubePO testDataCube) {
+        super(null);
+        m_testDataCube = testDataCube;
     }
 
     /**
@@ -50,7 +51,7 @@ public class ShowWhereUsedTestDataCubeQuery extends AbstractShowWhereUsedQuery {
         sb.append(StringConstants.SPACE);
         sb.append(Messages.UIJobSearchingTestDataCube);
         sb.append(" \"");
-        sb.append(getTestDataCube().getName());
+        sb.append(m_testDataCube.getName());
         sb.append("\"");
         return sb.toString();
     }
@@ -59,34 +60,10 @@ public class ShowWhereUsedTestDataCubeQuery extends AbstractShowWhereUsedQuery {
      * {@inheritDoc}
      */
     public IStatus run(IProgressMonitor monitor) {
-        calculateUseOfTestDataCube(getTestDataCube(), monitor);
+        addAll(new HashSet<INodePO>(
+                TestDataCubeBP.getReuser(m_testDataCube)));
+        finished();
         return Status.OK_STATUS;
     }
 
-    /**
-     * @param tdc
-     *            the test data cube to search for
-     * @param monitor
-     *            the progress monitor
-     */
-    protected void calculateUseOfTestDataCube(ITestDataCubePO tdc, 
-        IProgressMonitor monitor) {
-        setSearchResult(getSearchResultList(new HashSet<INodePO>(
-                TestDataCubeBP.getReuser(tdc)), null));
-        monitor.done();
-    }
-
-    /**
-     * @param testDataCube the testDataCube to set
-     */
-    private void setTestDataCube(ITestDataCubePO testDataCube) {
-        m_testDataCube = testDataCube;
-    }
-
-    /**
-     * @return the testDataCube
-     */
-    private ITestDataCubePO getTestDataCube() {
-        return m_testDataCube;
-    }
 }

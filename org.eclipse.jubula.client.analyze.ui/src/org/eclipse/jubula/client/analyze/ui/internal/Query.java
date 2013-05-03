@@ -23,8 +23,7 @@ import org.eclipse.jubula.client.analyze.internal.AnalyzeResult;
 import org.eclipse.jubula.client.analyze.internal.AnalyzeRun;
 import org.eclipse.jubula.client.analyze.ui.i18n.Messages;
 import org.eclipse.jubula.client.analyze.ui.internal.helper.ContextHelper;
-import org.eclipse.jubula.client.ui.rcp.search.query.AbstractSearchQuery;
-import org.eclipse.search.ui.ISearchQuery;
+import org.eclipse.jubula.client.ui.rcp.search.query.AbstractQuery;
 import org.eclipse.search.ui.ISearchResult;
 
 /**
@@ -32,7 +31,7 @@ import org.eclipse.search.ui.ISearchResult;
  * @author volker
  *
  */
-public class Query extends AbstractSearchQuery implements ISearchQuery {
+public class Query extends AbstractQuery {
     
     /** The QueryResult */
     private QueryResult m_queryResult; 
@@ -44,7 +43,7 @@ public class Query extends AbstractSearchQuery implements ISearchQuery {
      * @param analyzeRun The Analyze
      */
     public Query(AnalyzeRun analyzeRun) {
-        setAnalyzeRun(analyzeRun);
+        m_analyzeRun = analyzeRun;
     }
 
     /**
@@ -119,12 +118,6 @@ public class Query extends AbstractSearchQuery implements ISearchQuery {
     /**
      * {@inheritDoc}
      */
-    public boolean canRerun() {
-        return true;
-    }
-    /**
-     * {@inheritDoc}
-     */
     public boolean canRunInBackground() {
         return false;
     }
@@ -141,12 +134,5 @@ public class Query extends AbstractSearchQuery implements ISearchQuery {
      */
     public AnalyzeRun getAnalyzeRun() {
         return m_analyzeRun;
-    }
-    /**
-     * 
-     * @param analyzeRun The AnalyzeRun
-     */
-    public void setAnalyzeRun(AnalyzeRun analyzeRun) {
-        this.m_analyzeRun = analyzeRun;
     }
 }

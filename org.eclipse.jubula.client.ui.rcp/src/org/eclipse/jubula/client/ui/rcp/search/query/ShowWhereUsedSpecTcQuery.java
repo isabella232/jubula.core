@@ -48,14 +48,15 @@ public class ShowWhereUsedSpecTcQuery
      *            the spec tc to search the reuse for
      */
     public ShowWhereUsedSpecTcQuery(ISpecTestCasePO specTC) {
-        setSpecTC(specTC);
+        super(null);
+        m_specTC = specTC;
     }
 
     /**
      * {@inheritDoc}
      */
     public IStatus run(IProgressMonitor monitor) {
-        calculateReuseOfSpecTestCase(getSpecTC(), monitor);
+        calculateReuseOfSpecTestCase(m_specTC, monitor);
         return Status.OK_STATUS;
     }
     
@@ -67,7 +68,7 @@ public class ShowWhereUsedSpecTcQuery
      * @param monitor
      *            the progress monitor
      */
-    protected void calculateReuseOfSpecTestCase(ISpecTestCasePO specTC, 
+    private void calculateReuseOfSpecTestCase(ISpecTestCasePO specTC,
             IProgressMonitor monitor) {
         IProjectPO currentProject = GeneralStorage.getInstance().getProject();
         List<Long> parentProjectIDs = new LinkedList<Long>();
@@ -122,23 +123,9 @@ public class ShowWhereUsedSpecTcQuery
         sb.append(StringConstants.SPACE);
         sb.append(Messages.UIJobSearchingTestCases);
         sb.append(" \"");
-        sb.append(getSpecTC().getName());
+        sb.append(m_specTC.getName());
         sb.append("\"");
         return sb.toString();
     }
     
-    /**
-     * @param specTC
-     *            the specTC to set
-     */
-    private void setSpecTC(ISpecTestCasePO specTC) {
-        m_specTC = specTC;
-    }
-
-    /**
-     * @return the specTC
-     */
-    private ISpecTestCasePO getSpecTC() {
-        return m_specTC;
-    }
 }

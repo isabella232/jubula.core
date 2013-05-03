@@ -10,50 +10,63 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.search.page;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.eclipse.jubula.client.core.model.NodeMaker;
+import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.search.data.AbstractSearchData;
-import org.eclipse.jubula.client.ui.rcp.search.data.AbstractSearchData.SearchableType;
-import org.eclipse.jubula.client.ui.rcp.search.data.StructureSearchData;
-import org.eclipse.jubula.client.ui.rcp.search.query.StructureSearchQuery;
-import org.eclipse.osgi.util.NLS;
+import org.eclipse.jubula.client.ui.rcp.search.data.SearchOptions;
+import org.eclipse.jubula.client.ui.rcp.search.data.TypeName;
+import org.eclipse.jubula.client.ui.rcp.search.query.KeywordQuery;
 import org.eclipse.search.ui.ISearchQuery;
-
 
 /**
  * @author BREDEX GmbH
  * @created Jul 26, 2010
  */
 public class KeywordSearchPage extends AbstractSearchPage {
+
+    /** The static list of selected state for controls. */
+    private static ButtonSelections enablements = new ButtonSelections();
+
     /**
-     * {@inheritDoc}
+     * The static search data for this keyword search page
+     * while Jubula is running.
      */
-    protected ISearchQuery newQuery() {
-        List<SearchableType> typesToSearchIn = new ArrayList<SearchableType>();
-        for (SearchableType structureType : getSearchData()
-                .getTypesToSearchFor()) {
-            if (structureType.isEnabled()) {
-                typesToSearchIn.add(structureType);
-            }
-        }
-        String searchString = getSearchStringCombo().getText();
-        boolean caseSensitive = getSearchData().isCaseSensitive();
-        boolean regEx = getSearchData().isUseRegex();
+    private static SearchOptions searchData;
 
-        StructureSearchData searchData = new StructureSearchData(
-                NLS.bind(Messages.SimpleSearchPageSearchName,
-                        searchString), searchString,
-                caseSensitive, regEx, typesToSearchIn);
-
-        return new StructureSearchQuery(searchData);
+    static {
+        // create the static search data object
+        TypeName[] searchableTypes = new TypeName[] {
+            new TypeName(NodeMaker.getTestJobPOClass(), true),
+            new TypeName(PoMaker.getTestSuiteClass(), true),
+            new TypeName(NodeMaker.getSpecTestCasePOClass(), true),
+            new TypeName(NodeMaker.getCapPOClass(), true),
+            new TypeName(NodeMaker.getCategoryPOClass(), true),
+            new TypeName(NodeMaker.getRefTestSuitePOClass(), true),
+            new TypeName(NodeMaker.getExecTestCasePOClass(), true)};
+        searchData = new SearchOptions(
+                Messages.SimpleSearchPageResultKeyword,
+                searchableTypes);
     }
 
     /**
      * {@inheritDoc}
      */
-    protected AbstractSearchData getSearchData() {
-        return StructureSearchData.getInstance();
+    protected ButtonSelections getButtonSelections() {
+        return enablements;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected ISearchQuery getNewQuery() {
+        return new KeywordQuery(new SearchOptions(searchData));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected SearchOptions getSearchData() {
+        return searchData;
+    }
+
 }

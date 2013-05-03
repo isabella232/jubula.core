@@ -10,11 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.search.query;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -23,14 +18,11 @@ import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.treeoperations.FindResponsibleNodesForComponentNameOp;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
-import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.osgi.util.NLS;
 
@@ -77,6 +69,7 @@ public class ShowResponsibleNodeForComponentName
      */
     public IStatus run(IProgressMonitor monitor) {
         calculateUseOfLogicalName(getCompName().getGuid(), monitor);
+        finished();
         return Status.OK_STATUS;
     }
 
@@ -94,28 +87,17 @@ public class ShowResponsibleNodeForComponentName
         monitor.beginTask(NLS.bind(Messages.ShowResponsibleNodeOperation,
                 getCompName().getName()),
                 IProgressMonitor.UNKNOWN);
-        Set<INodePO> compnameUsingNodes = 
-            calculateListOfCompNameUsingNodes(logicalName, m_aut);
-        final List<SearchResultElement> reuseLoc = 
-            new ArrayList<SearchResultElement>(
-                    compnameUsingNodes.size());
-        reuseLoc.addAll(getSearchResultList(compnameUsingNodes,
-                Constants.COMPNAMESVIEW_ID));
-        setSearchResult(reuseLoc);
-        monitor.done();
+        calculateListOfComponentNamesUsingNodes(logicalName, m_aut);
     }
-    
+
     /**
      * @param logicalNameGUID
      *            the guid of the comp name to search for
      * @param searchAUT
      *            the aut to search for
-     * @return a set of nodes which make use of this logical name
      */
-    public static Set<INodePO> calculateListOfCompNameUsingNodes(
+    private void calculateListOfComponentNamesUsingNodes(
             String logicalNameGUID, IAUTMainPO searchAUT) {
-        Set<INodePO> compnameUsingNodes = new HashSet<INodePO>();
-
         IProjectPO currentProject = GeneralStorage.getInstance().getProject();
         for (ITestSuitePO ts : TestSuiteBP
                 .getListOfTestSuites(currentProject)) {
@@ -126,9 +108,9 @@ public class ShowResponsibleNodeForComponentName
                     new FindResponsibleNodesForComponentNameOp(logicalNameGUID);
                 TreeTraverser traverser = new TreeTraverser(ts, op);
                 traverser.traverse(true);
-                compnameUsingNodes.addAll(op.getNodes());
+                addAll(op.getNodes());
             }
         }
-        return compnameUsingNodes;
     }
+
 }

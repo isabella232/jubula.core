@@ -12,9 +12,19 @@ package org.eclipse.jubula.client.ui.rcp.search.query;
 
 
 /**
+ * This class provides common methods for "show where used queries".
+ * Currently it is a place holder.
+ *
  * @author BREDEX GmbH
  * @created Jul 27, 2010
  */
-public abstract class AbstractShowWhereUsedQuery extends AbstractSearchQuery {
-    // currently empty 
+public abstract class AbstractShowWhereUsedQuery extends AbstractQuery {
+
+    /**
+     * @param viewId The default view ID to open.
+     */
+    public AbstractShowWhereUsedQuery(String viewId) {
+        super(viewId);
+    }
+
 }

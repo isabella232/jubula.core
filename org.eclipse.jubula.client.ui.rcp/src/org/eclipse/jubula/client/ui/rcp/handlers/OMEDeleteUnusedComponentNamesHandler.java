@@ -84,7 +84,7 @@ public class OMEDeleteUnusedComponentNamesHandler extends AbstractHandler {
                 if (monitor.isCanceled()) {
                     return;
                 }
-                if (!getResult().containsKey(o) && isUsed(o)
+                if (!getResult().containsKey(o) && isUsed(o, monitor)
                         && o instanceof IComponentNamePO) {
                     noOfUnused++;
                     monitor.subTask(NLS.bind(Messages.
@@ -96,18 +96,21 @@ public class OMEDeleteUnusedComponentNamesHandler extends AbstractHandler {
 
         /**
          * @param element the element to check for usage
+         * @param monitor the progress monitor to use
          * @return true if used in TS for the current AUT, false otherwise
          */
-        private boolean isUsed(Object element) {
+        private boolean isUsed(Object element, IProgressMonitor monitor) {
             if (getResult().containsKey(element)) {
                 return getResult().get(element);
             }
             boolean select = true;
             if (element instanceof IComponentNamePO) {
                 IComponentNamePO compName = (IComponentNamePO)element;
-                select = ShowResponsibleNodeForComponentName
-                        .calculateListOfCompNameUsingNodes(compName.getGuid(),
-                                m_aut).isEmpty();
+                ShowResponsibleNodeForComponentName query =
+                        new ShowResponsibleNodeForComponentName(
+                                compName, m_aut);
+                query.run(monitor);
+                select = query.isEmpty();
             }
             getResult().put(element, select);
             return select;
