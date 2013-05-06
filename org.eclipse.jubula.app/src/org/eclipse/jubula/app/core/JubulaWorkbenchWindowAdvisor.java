@@ -139,7 +139,7 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     private static final String[] ACTION_SETS_TO_HIDE = new String [] {
         "org.eclipse.ui.actionSet.openFiles", //$NON-NLS-1$
         "org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo", //$NON-NLS-1$
-        "org.eclipse.search.OpenSearchDialogPage", //$NON-NLS-1$
+        "org.eclipse.mylyn.tasks.ui.navigation", //$NON-NLS-1$
         "org.eclipse.ui.edit.text.actionSet.navigation", //$NON-NLS-1$
         "org.eclipse.ui.edit.text.actionSet.annotationNavigation" //$NON-NLS-1$
     };

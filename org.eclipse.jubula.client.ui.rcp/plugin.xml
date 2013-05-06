@@ -504,7 +504,6 @@
         relative="org.eclipse.ui.views.ProblemView" />  
       <actionSet id="org.eclipse.jubula.client.ui.rcp.menu.actions" />
       <hiddenToolBarItem id="org.eclipse.search.OpenSearchDialogPage" />
-      <hiddenToolBarItem id="org.eclipse.mylyn.tasks.ui.search.open" />
       <perspectiveShortcut
         id="org.eclipse.jubula.client.ui.rcp.perspectives.ExecutionPerspective" />
       <perspectiveShortcut
