@@ -290,7 +290,7 @@ public class JobConfiguration {
         Validate.isTrue((m_testSuiteNames.size() == m_testSuites.size()), 
             Messages.JobConfigurationValidateTestSuiteExist);
 
-        if (m_testJobName != null && !m_testJobName.isEmpty()) {
+        if (m_testJobName != null && !StringUtils.isEmpty(m_testJobName)) {
             for (ITestJobPO tj : TestJobBP.getListOfTestJobs()) {
                 if (tj.getName().equals(m_testJobName)) {
                     m_testJob = tj;
