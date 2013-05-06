@@ -33,6 +33,7 @@ import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.client.ui.rcp.handlers.project.RefreshProjectHandler.RefreshProjectOperation;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.pages.ChooseTestCasePage;
+import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages.ComponentNameMappingWizardPage;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageInfo;
@@ -47,7 +48,8 @@ import org.eclipse.ui.PlatformUI;
 public class SearchReplaceTCRWizard extends Wizard {
     /** ID for the "Choose" page */
     private static final String CHOOSE_PAGE_ID = "ReplaceTCRWizard.ChoosePageId"; //$NON-NLS-1$
-    
+    /** ID for the "Component Mapping" page */
+    private static final String COMPONENT_MAPPING_PAGE_ID = "ReplaceTCRWizard.ComponentMappingPageId"; //$NON-NLS-1$
     /**
      * Operation for replacing the test cases
      * 
@@ -108,6 +110,10 @@ public class SearchReplaceTCRWizard extends Wizard {
      * <code>m_newSpec</code>
      */
     private ISpecTestCasePO m_newSpec;
+    /**
+     * Component Names matching page
+     */
+    private ComponentNameMappingWizardPage m_componentNamesPage;
     
     /**
      * Constructor for the wizard page
@@ -161,7 +167,10 @@ public class SearchReplaceTCRWizard extends Wizard {
             }
         }
         m_choosePage = new ChooseTestCasePage(specSet, CHOOSE_PAGE_ID);
+        m_componentNamesPage = new ComponentNameMappingWizardPage(
+                COMPONENT_MAPPING_PAGE_ID, m_setOfExecsToReplace);
         addPage(m_choosePage);
+        addPage(m_componentNamesPage);
 
     }
     
@@ -171,6 +180,7 @@ public class SearchReplaceTCRWizard extends Wizard {
     public IWizardPage getNextPage(IWizardPage page) {
         if (page instanceof ChooseTestCasePage) {
             m_newSpec = m_choosePage.getChoosenTestCase();
+            m_componentNamesPage.setNewSpec(m_newSpec);
         }
         return super.getNextPage(page);
     }

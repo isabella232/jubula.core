@@ -627,6 +627,8 @@ public class Messages extends NLS {
     public static String ReplaceTCRWizardTitle;
     public static String ReplaceTCRWizard_additionalInformation_title;
     public static String ReplaceTCRWizard_choosePage_title;
+    public static String ReplaceTCRWizard_ComponentNameMapping_newTC;
+    public static String ReplaceTCRWizard_ComponentNameMapping_oldTC;
     public static String ReplaceTCRWizard_matchParameter_title;
     public static String ReplaceTCRWizard_matchComponentNames_title;
     public static String ReplaceTCRWizard_matchComponentNames_oldInterface;
