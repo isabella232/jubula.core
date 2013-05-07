@@ -634,6 +634,8 @@ public class ComponentNamesBP
      *                  <code>null</code>. If this value is not 
      *                  <code>null</code>, only Component Names belonging to 
      *                  the Project with the given ID will be examined. 
+     * @param isSimpleMatch if <code>true</code> only the check for checkable
+     *                  is compatible with original is done      
      * @return appropriate error message if <code>checkableName</code> is a 
      *         reserved name or if <code>checkableName</code> is found in the 
      *         component names list and the component represented by 
@@ -641,8 +643,9 @@ public class ComponentNamesBP
      *         <code>originalCompType</code>. Otherwise, <code>null</code>.
      */
     public String isCompatible(String originalCompType, String checkableName,
-            IComponentNameMapper compNameMapper, Long projectId) {
-        
+            IComponentNameMapper compNameMapper, Long projectId,
+            boolean isSimpleMatch) {
+ 
         if (isReservedName(checkableName, originalCompType)) {
             return MessageIDs.getMessageObject(
                 MessageIDs.E_RESERVED_COMP_NAME).getMessage(
@@ -676,13 +679,18 @@ public class ComponentNamesBP
         final String computedType = 
             ComponentNamesBP.getInstance().computeComponentType(
                     checkableName, usedTypes);
-
-        
         Component originalComponent = getComponent(originalCompType);
-
         Component checkableComponent = getComponent(computedType);
         if (checkableComponent.isCompatibleWith(originalComponent.getType())) {
             return null;
+        }
+        if (isSimpleMatch) {
+            return NLS.bind(Messages.CompNameIncompatibleTypeDetail,
+                    new Object[]{checkableName, 
+                            StringHelper.getInstance()
+                            .get(checkableComponent.getType(), true),
+                            StringHelper.getInstance()
+                            .get(originalComponent.getType(), true)});
         }
         
         String compNameGuid = compNameCache.getGuidForName(checkableName);
@@ -697,21 +705,44 @@ public class ComponentNamesBP
                 checkableComponent.getType())) {
             
             return null;
-        }
-        
+        }        
         if (UNKNOWN_COMPONENT_TYPE.equals(computedType)) {
             // Computed component type is "unknown"
             return NLS.bind(Messages.CompNameUnknownTypeDetail,
                     namePO != null ? namePO.getName() : checkableName);
         }
-        
         return NLS.bind(Messages.CompNameIncompatibleTypeDetail,
                 new Object[]{namePO != null ? namePO.getName() : checkableName, 
                         StringHelper.getInstance()
                         .get(checkableComponent.getType(), true),
                         StringHelper.getInstance()
                         .get(originalComponent.getType(), true)});
-        
+    }
+    
+    /**
+     * Checks whether the given checkable name is compatible with the 
+     * given component type. Returns <code>null</code> if the types are 
+     * compatible.
+     * @param originalCompType The component type that determines the 
+     *                         compatibility.
+     * @param checkableName The component name for which to check the 
+     *                      compatibility.
+     * @param compNameMapper The mapper to use for Component Name information.
+     * @param projectId The ID of the Project to be searched. May be 
+     *                  <code>null</code>. If this value is not 
+     *                  <code>null</code>, only Component Names belonging to 
+     *                  the Project with the given ID will be examined. 
+     * @return appropriate error message if <code>checkableName</code> is a 
+     *         reserved name or if <code>checkableName</code> is found in the 
+     *         component names list and the component represented by 
+     *         <code>checkableName</code> is incompatible with 
+     *         <code>originalCompType</code>. Otherwise, <code>null</code>.
+     */
+    public String isCompatible(String originalCompType, String checkableName,
+            IComponentNameMapper compNameMapper, Long projectId) {
+        return isCompatible(originalCompType, checkableName, compNameMapper,
+                projectId, false);
+
     }
     
     /**

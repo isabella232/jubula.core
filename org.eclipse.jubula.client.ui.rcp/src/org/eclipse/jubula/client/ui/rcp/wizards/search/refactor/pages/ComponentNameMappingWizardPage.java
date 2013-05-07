@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.eclipse.jface.layout.GridDataFactory;
@@ -19,19 +20,20 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.MasterSessionComponentNameMapper;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 /**
  * 
@@ -48,7 +50,13 @@ public class ComponentNameMappingWizardPage extends WizardPage {
     private Set<IExecTestCasePO> m_listOfExecs;
     /** */
     private ISpecTestCasePO m_newSpec;
-    
+    /**
+     * 
+     */
+    private LinkedList<ICompNamesPairPO> m_oldCompNamePairs =
+            new LinkedList<ICompNamesPairPO>();
+    /** */
+    private CompNamesBP m_compNamesBP = new CompNamesBP();
     /**
      * 
      * @param pageName
@@ -61,6 +69,11 @@ public class ComponentNameMappingWizardPage extends WizardPage {
         super(pageName, Messages.ReplaceTCRWizard_matchComponentNames_title,
                 null);
         m_listOfExecs = execTCList;
+        
+        for (Iterator iterator = execTCList.iterator(); iterator.hasNext();) {
+            IExecTestCasePO exec = (IExecTestCasePO) iterator.next();
+            m_oldCompNamePairs.addAll(m_compNamesBP.getAllCompNamesPairs(exec));
+        }
     }
 
     /**
@@ -86,10 +99,6 @@ public class ComponentNameMappingWizardPage extends WizardPage {
         m_newSpec = newSpec;
         setPageComplete(false);
         
-        IExecTestCasePO newExec = NodeMaker.createExecTestCasePO(newSpec);
-        Collection<ICompNamesPairPO> compNamePairs = 
-                new CompNamesBP().getAllCompNamesPairs(newExec);        
-        
         m_composite.dispose(); // Disposing old and generating new composite
 
         Composite mappingGrid = new Composite(m_scroll, SWT.NONE);
@@ -99,7 +108,7 @@ public class ComponentNameMappingWizardPage extends WizardPage {
                 .grab(false, false).align(SWT.CENTER, SWT.CENTER).create();
         mappingGrid.setLayoutData(tableGridData);
         
-        createLayoutWithData(compNamePairs, mappingGrid);
+        createLayoutWithData(mappingGrid);
         
         m_scroll.setContent(mappingGrid);
         m_composite = mappingGrid;
@@ -108,14 +117,11 @@ public class ComponentNameMappingWizardPage extends WizardPage {
 
     /**
      * 
-     * @param compNamePairs
-     *            the component name pairs of the new Spec Test Case
      * @param parent
      *            the parent in which the data should be rendered
      */
-    private void createLayoutWithData(
-            Collection<ICompNamesPairPO> compNamePairs, Composite parent) {
-
+    private void createLayoutWithData(Composite parent) {
+        
         new Label(parent, SWT.NONE).setText(
                 Messages.ReplaceTCRWizard_ComponentNameMapping_newTC);
         new Label(parent, SWT.SEPARATOR | SWT.VERTICAL);
@@ -129,6 +135,19 @@ public class ComponentNameMappingWizardPage extends WizardPage {
                 GridData.CENTER, true, false);
         seperatorGridHorizontal.horizontalSpan = 3;
         seperatorHorizontal.setLayoutData(seperatorGridHorizontal);
+        
+        createMatchingFields(parent);
+        parent.pack();
+    }
+
+    /**
+     * Creates the GUI fields with component names
+     * @param parent the parent composite
+     */
+    private void createMatchingFields(Composite parent) {
+        IExecTestCasePO newExec = NodeMaker.createExecTestCasePO(m_newSpec);
+        Collection<ICompNamesPairPO> compNamePairs = 
+                m_compNamesBP.getAllCompNamesPairs(newExec);  
         GridData seperatorVertical = new GridData(
                 GridData.CENTER, GridData.FILL, false, true);
         seperatorVertical.verticalSpan = compNamePairs.size();
@@ -136,32 +155,91 @@ public class ComponentNameMappingWizardPage extends WizardPage {
         boolean first = true;
         for (Iterator compIterator = compNamePairs.iterator(); compIterator
                 .hasNext();) {
+            ICompNamesPairPO compNamesPair = (ICompNamesPairPO) compIterator
+                    .next();
+
             GridData leftGridData = new GridData();
             leftGridData.horizontalAlignment = SWT.LEFT;
             leftGridData.verticalAlignment = SWT.BEGINNING;
             GridData rightGridData = new GridData();
             rightGridData.horizontalAlignment = SWT.LEFT;
             rightGridData.verticalAlignment = SWT.BEGINNING;
-            ICompNamesPairPO compNamesPair = (ICompNamesPairPO) compIterator
-                    .next();
-            String type = CompSystemI18n.getString(compNamesPair.getType());
-            String name = ComponentNamesBP.getInstance().getName(
-                    compNamesPair.getName());
+            rightGridData.minimumWidth = 200;
+            rightGridData.grabExcessHorizontalSpace = true;            
+
+            IComponentNamePO newComponentName = ComponentNamesBP.getInstance()
+                    .getCompNamePo(compNamesPair.getFirstName());
+
+            String displayName = getDisplayName(newComponentName.getName(),
+                    newComponentName.getComponentType());
             Label compname = new Label(parent, NONE);
-            compname.setText(name + " [" + type + "]"); //$NON-NLS-1$ //$NON-NLS-2$
+            compname.setText(displayName); 
             compname.setLayoutData(leftGridData);
             if (first) {
-                Label seperator = new Label(parent, 
-                        SWT.VERTICAL | SWT.SEPARATOR);
+                Label seperator = new Label(parent, SWT.VERTICAL
+                        | SWT.SEPARATOR);
                 seperator.setLayoutData(seperatorVertical);
                 first = false;
             }
             
-            Combo oldCompNames = new Combo(parent, NONE);
+            Combo oldCompNames = new Combo(parent, SWT.READ_ONLY);
             oldCompNames.setLayoutData(rightGridData);
+            oldCompNames.add(StringConstants.SPACE); 
+            fillComboWithOldNames(newComponentName, oldCompNames);
+            oldCompNames.pack();
         }
-        parent.pack();
-        
+    }
+
+    /**
+     * Fills the combo box with the old component names of the right type
+     * 
+     * @param componentName
+     *            the new Component Names
+     * @param oldCompNames
+     *            the Combo Box to fill
+     */
+    private void fillComboWithOldNames(IComponentNamePO componentName,
+            Combo oldCompNames) {
+        int counter = 1;
+        for (Iterator iterator = m_oldCompNamePairs.iterator(); 
+                iterator.hasNext();) {
+            ICompNamesPairPO oldPairs = (ICompNamesPairPO) iterator.next();
+            
+            IComponentNamePO oldComponent = ComponentNamesBP.getInstance()
+                    .getCompNamePo(oldPairs.getFirstName());
+            String isCompatible = ComponentNamesBP.getInstance().isCompatible(
+                    componentName.getComponentType(), oldComponent.getName(),
+                    MasterSessionComponentNameMapper.getInstance(),
+                    m_newSpec.getParentProjectId(), true);
+            if (isCompatible == null) {
+                String displayName = getDisplayName(oldComponent.getName(),
+                        oldComponent.getComponentType());
+
+                oldCompNames.add(displayName);
+                if (componentName.getName().equals(oldComponent.getName())
+                        && componentName.getComponentType().equals(
+                                oldComponent.getComponentType())) {
+                    oldCompNames.select(counter);
+                }
+                counter++;
+            }
+        }
+    }
+    
+    /**
+     * 
+     * @param guidName guid of the name
+     * @param guidType guid of the type
+     * @return a String as <code> ComponentName [ComponentType]</code>
+     */
+    private String getDisplayName(String guidName, String guidType) {
+        String name = ComponentNamesBP.getInstance().getName(
+                guidName);
+        String type = CompSystemI18n.getString(guidType);
+        String displayName = name
+                + StringConstants.SPACE + StringConstants.LEFT_BRACKET
+                + type + StringConstants.RIGHT_BRACKET;
+        return displayName;
     }
 
 }
