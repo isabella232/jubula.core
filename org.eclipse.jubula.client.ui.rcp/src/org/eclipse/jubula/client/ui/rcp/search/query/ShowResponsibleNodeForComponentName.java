@@ -68,6 +68,7 @@ public class ShowResponsibleNodeForComponentName
      * {@inheritDoc}
      */
     public IStatus run(IProgressMonitor monitor) {
+        setMonitor(monitor);
         calculateUseOfLogicalName(getCompName().getGuid(), monitor);
         finished();
         return Status.OK_STATUS;

@@ -60,6 +60,7 @@ public class ShowWhereUsedTestDataCubeQuery extends AbstractShowWhereUsedQuery {
      * {@inheritDoc}
      */
     public IStatus run(IProgressMonitor monitor) {
+        setMonitor(monitor);
         addAll(new HashSet<INodePO>(
                 TestDataCubeBP.getReuser(m_testDataCube)));
         finished();
