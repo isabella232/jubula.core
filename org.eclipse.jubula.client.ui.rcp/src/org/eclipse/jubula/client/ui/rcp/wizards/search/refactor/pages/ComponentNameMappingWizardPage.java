@@ -11,12 +11,22 @@
 package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.jface.databinding.viewers.IViewerObservableValue;
+import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
@@ -26,6 +36,7 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
+import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
@@ -41,14 +52,14 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public class ComponentNameMappingWizardPage extends WizardPage {
-
-    /** */
+    
+    /** Map of component GUID to comboViewer with data */
+    private Map<String, ComboViewer> m_componentNamesMapping;
+    /** the scrolled composite which is used as parent */
     private ScrolledComposite m_scroll;
-    /** */
+    /** the composite with all data*/
     private Composite m_composite;
-    /** */
-    private Set<IExecTestCasePO> m_listOfExecs;
-    /** */
+    /** the new spec Test Case */
     private ISpecTestCasePO m_newSpec;
     /**
      * 
@@ -68,8 +79,6 @@ public class ComponentNameMappingWizardPage extends WizardPage {
             Set<IExecTestCasePO> execTCList) {
         super(pageName, Messages.ReplaceTCRWizard_matchComponentNames_title,
                 null);
-        m_listOfExecs = execTCList;
-        
         for (Iterator iterator = execTCList.iterator(); iterator.hasNext();) {
             IExecTestCasePO exec = (IExecTestCasePO) iterator.next();
             m_oldCompNamePairs.addAll(m_compNamesBP.getAllCompNamesPairs(exec));
@@ -100,7 +109,7 @@ public class ComponentNameMappingWizardPage extends WizardPage {
         setPageComplete(false);
         
         m_composite.dispose(); // Disposing old and generating new composite
-
+        m_componentNamesMapping = new HashMap<String, ComboViewer>();
         Composite mappingGrid = new Composite(m_scroll, SWT.NONE);
         mappingGrid.setLayout(GridLayoutFactory.fillDefaults()
                 .numColumns(3).spacing(10, 10).create());
@@ -146,8 +155,10 @@ public class ComponentNameMappingWizardPage extends WizardPage {
      */
     private void createMatchingFields(Composite parent) {
         IExecTestCasePO newExec = NodeMaker.createExecTestCasePO(m_newSpec);
+
         Collection<ICompNamesPairPO> compNamePairs = 
-                m_compNamesBP.getAllCompNamesPairs(newExec);  
+                m_compNamesBP.getAllCompNamesPairs(newExec); 
+        
         GridData seperatorVertical = new GridData(
                 GridData.CENTER, GridData.FILL, false, true);
         seperatorVertical.verticalSpan = compNamePairs.size();
@@ -157,7 +168,7 @@ public class ComponentNameMappingWizardPage extends WizardPage {
                 .hasNext();) {
             ICompNamesPairPO compNamesPair = (ICompNamesPairPO) compIterator
                     .next();
-
+            
             GridData leftGridData = new GridData();
             leftGridData.horizontalAlignment = SWT.LEFT;
             leftGridData.verticalAlignment = SWT.BEGINNING;
@@ -171,7 +182,7 @@ public class ComponentNameMappingWizardPage extends WizardPage {
                     .getCompNamePo(compNamesPair.getFirstName());
 
             String displayName = getDisplayName(newComponentName.getName(),
-                    newComponentName.getComponentType());
+                    null, newComponentName.getComponentType());
             Label compname = new Label(parent, NONE);
             compname.setText(displayName); 
             compname.setLayoutData(leftGridData);
@@ -183,10 +194,11 @@ public class ComponentNameMappingWizardPage extends WizardPage {
             }
             
             Combo oldCompNames = new Combo(parent, SWT.READ_ONLY);
-            oldCompNames.setLayoutData(rightGridData);
-            oldCompNames.add(StringConstants.SPACE); 
+            oldCompNames.setLayoutData(rightGridData); 
+            
             fillComboWithOldNames(newComponentName, oldCompNames);
             oldCompNames.pack();
+            
         }
     }
 
@@ -200,7 +212,26 @@ public class ComponentNameMappingWizardPage extends WizardPage {
      */
     private void fillComboWithOldNames(IComponentNamePO componentName,
             Combo oldCompNames) {
+        ComboViewer comboViewer = new ComboViewer(oldCompNames);
+        comboViewer.setContentProvider(new ArrayContentProvider());
+        comboViewer.setLabelProvider(new LabelProvider() {
+            @Override
+            public String getText(Object element) {
+                if (element instanceof ICompNamesPairPO) {
+                    ICompNamesPairPO pair = (ICompNamesPairPO)element;
+                    return getDisplayName(pair.getFirstName(),
+                            pair.getSecondName(), pair.getType());
+                }
+                return StringConstants.SPACE;
+            } 
+        });
+        
+        m_componentNamesMapping.put(componentName.getGuid(), comboViewer);
         int counter = 1;
+        List<ICompNamesPairPO> list = new LinkedList<ICompNamesPairPO>();
+        // this is for the empty line
+        list.add(PoMaker.createCompNamesPairPO(StringConstants.SPACE,
+                StringConstants.SPACE));
         for (Iterator iterator = m_oldCompNamePairs.iterator(); 
                 iterator.hasNext();) {
             ICompNamesPairPO oldPairs = (ICompNamesPairPO) iterator.next();
@@ -212,10 +243,7 @@ public class ComponentNameMappingWizardPage extends WizardPage {
                     MasterSessionComponentNameMapper.getInstance(),
                     m_newSpec.getParentProjectId(), true);
             if (isCompatible == null) {
-                String displayName = getDisplayName(oldComponent.getName(),
-                        oldComponent.getComponentType());
-
-                oldCompNames.add(displayName);
+                list.add(oldPairs);
                 if (componentName.getName().equals(oldComponent.getName())
                         && componentName.getComponentType().equals(
                                 oldComponent.getComponentType())) {
@@ -224,22 +252,66 @@ public class ComponentNameMappingWizardPage extends WizardPage {
                 counter++;
             }
         }
+        comboViewer.setInput(list.toArray());
     }
     
     /**
      * 
-     * @param guidName guid of the name
-     * @param guidType guid of the type
-     * @return a String as <code> ComponentName [ComponentType]</code>
+     * @param guidName
+     *            guid of the component name
+     * @param guidType
+     *            guid of the type
+     * @param secondGuidName
+     *            guid of second component name if <code>null</code> or
+     *            <code>""</code> ist will be ignored
+     * @return a String as <code> ComponentName > SecondComponentName [ComponentType]</code>
      */
-    private String getDisplayName(String guidName, String guidType) {
-        String name = ComponentNamesBP.getInstance().getName(
+    private String getDisplayName(String guidName, String secondGuidName,
+            String guidType) {
+        String firstName = ComponentNamesBP.getInstance().getName(
                 guidName);
+        String secondName = ComponentNamesBP.getInstance().getName(
+                secondGuidName);
         String type = CompSystemI18n.getString(guidType);
-        String displayName = name
-                + StringConstants.SPACE + StringConstants.LEFT_BRACKET
-                + type + StringConstants.RIGHT_BRACKET;
+        String displayName = firstName;
+        if (!StringUtils.isBlank(secondGuidName)) {
+            displayName += StringConstants.SPACE 
+                    + StringConstants.RIGHT_INEQUALITY_SING 
+                    + secondName;
+        }
+        if (!StringUtils.isBlank(type)) {
+            displayName += StringConstants.SPACE + StringConstants.LEFT_BRACKET
+                    + type + StringConstants.RIGHT_BRACKET;
+        }
         return displayName;
     }
 
+    /**
+     * 
+     * @return a list of component pairs which are matched together from the
+     *         selection
+     */
+    public List<ICompNamesPairPO> getCompMatching() {
+        List<ICompNamesPairPO> compPairs = new LinkedList<ICompNamesPairPO>();
+        for (Entry<String, ComboViewer> entry : m_componentNamesMapping
+                .entrySet()) {
+            String guidOfCompName = entry.getKey();
+            IViewerObservableValue test = ViewersObservables
+                    .observeSingleSelection(entry.getValue());
+            ICompNamesPairPO oldPair = (ICompNamesPairPO) test.getValue();
+            
+            if (oldPair != null) {
+                IComponentNamePO specComponent = ComponentNamesBP.getInstance()
+                        .getCompNamePo(guidOfCompName);
+                if (!StringUtils.isBlank(oldPair.getSecondName())) {
+                    ICompNamesPairPO pair = PoMaker.createCompNamesPairPO(
+                            guidOfCompName, oldPair.getSecondName(),
+                            specComponent.getComponentType());
+                    pair.setPropagated(oldPair.isPropagated());
+                    compPairs.add(pair);
+                }
+            }
+        }
+        return compPairs;
+    }
 }

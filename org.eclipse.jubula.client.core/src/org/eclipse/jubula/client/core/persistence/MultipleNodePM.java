@@ -511,6 +511,39 @@ public class MultipleNodePM  extends PersistenceManager {
     }
     
     /**
+     * Command to add a single Exec to a parent
+     */
+    public static class AddExecTCHandle extends AbstractCmdHandle {
+        /** parent in which the Exec should be included */
+        private INodePO m_parent;
+        /** the index at which position it should be added */
+        private Integer m_index;
+        /** the new Exec */
+        private IExecTestCasePO m_newExec;
+        /**
+         * 
+         * @param parent the parent in which the node should be added
+         * @param newExec the new ExecTestCase
+         * @param index the index or null if it should be added to the end
+         */
+        public AddExecTCHandle(INodePO parent, IExecTestCasePO newExec,
+                Integer index) {
+            getObjsToLock().add(parent);
+            m_parent = parent;
+            m_index = index;
+            m_newExec = newExec;
+        }
+        /** 
+         * {@inheritDoc}
+         */
+        public MessageInfo execute(EntityManager sess) {
+            sess.persist(m_newExec);
+            m_parent.addNode(m_index, m_newExec);
+            return null;
+        }
+        
+    }
+    /**
      * Command to move a single INodePO from one parent to another. Should work
      * for moving any type of node 
      */
@@ -863,6 +896,45 @@ public class MultipleNodePM  extends PersistenceManager {
         }
     }
 
+    /**
+     * Command to delete a single Exec
+     */
+    public static class DeleteExecTCHandle extends AbstractCmdHandle {
+
+        /** the exec node to delete */
+        private IExecTestCasePO m_execNode;
+        
+        /**
+         * constructor 
+         * @param exec
+         *      the exec node to delete
+         */
+        public DeleteExecTCHandle(IExecTestCasePO exec) {
+            m_execNode = exec;
+            getObjsToLock().add(exec);
+            
+            if (isNestedNode(exec)) {
+                getObjsToLock().add(exec.getParentNode());
+            } else {
+                IProjectPO proj = GeneralStorage.getInstance().getProject();
+                getObjsToLock().add(proj.getExecObjCont());  
+            }
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public MessageInfo execute(EntityManager sess) {
+            if (isNestedNode(m_execNode)) {
+                m_execNode.getParentNode().removeNode(m_execNode);
+            }            
+            PersistenceUtil.removeChildNodes(m_execNode, sess);
+            
+            sess.remove(m_execNode);
+            return null;
+        }
+    }
+    
     /**
      * class variable for Singleton
      */

@@ -44,7 +44,7 @@ public class SearchTestCasePropertyTester
             SearchResultElement<Long> searchResult = 
                     (SearchResultElement<Long>) receiver;
             IProjectPO project = GeneralStorage.getInstance().getProject();
-            if (!project.getIsProtected()) {
+            if (project != null && !project.getIsProtected()) {
                 INodePO nodePO = GeneralStorage
                         .getInstance()
                         .getMasterSession()

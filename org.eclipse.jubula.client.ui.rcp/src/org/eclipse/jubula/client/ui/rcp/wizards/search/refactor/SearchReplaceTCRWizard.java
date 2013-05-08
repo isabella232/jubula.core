@@ -23,14 +23,17 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.NodeMaker;
+import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
-import org.eclipse.jubula.client.ui.rcp.handlers.project.RefreshProjectHandler.RefreshProjectOperation;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.pages.ChooseTestCasePage;
 import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages.ComponentNameMappingWizardPage;
@@ -50,14 +53,14 @@ public class SearchReplaceTCRWizard extends Wizard {
     private static final String CHOOSE_PAGE_ID = "ReplaceTCRWizard.ChoosePageId"; //$NON-NLS-1$
     /** ID for the "Component Mapping" page */
     private static final String COMPONENT_MAPPING_PAGE_ID = "ReplaceTCRWizard.ComponentMappingPageId"; //$NON-NLS-1$
+
     /**
      * Operation for replacing the test cases
      * 
      * @author BREDEX GmbH
      */
-    private class ReplaceTestCaseOperation 
-        implements IRunnableWithProgress {
-                
+    private class ReplaceTestCaseOperation implements IRunnableWithProgress {
+
         /**
          * {@inheritDoc}
          */
@@ -68,23 +71,42 @@ public class SearchReplaceTCRWizard extends Wizard {
                     .getMasterSession();
             try {
                 Persistor.instance().lockPOSet(session, m_setOfExecsToReplace);
-                
+                Persistor.instance().lockPO(session, m_newSpec);
                 List<MultipleNodePM.AbstractCmdHandle> commands = 
                         new ArrayList<MultipleNodePM.AbstractCmdHandle>();
-                for (Iterator iterator = m_setOfExecsToReplace.iterator(); 
+                for (Iterator iterator = m_setOfExecsToReplace.iterator();
                         iterator.hasNext();) {
                     IExecTestCasePO exec = (IExecTestCasePO) iterator.next();
-                    commands.add(new MultipleNodePM.UpdateTestCaseRefHandle(
-                            exec, m_newSpec));
+                    INodePO parent = exec.getParentNode();
+                    int index = ((ISpecTestCasePO) exec.getParentNode())
+                            .indexOf(exec);
+                    
+                    IExecTestCasePO newExec = NodeMaker
+                            .createExecTestCasePO(m_newSpec);
+                    newExec.setComment(exec.getComment());
+                    newExec.setActive(exec.isActive());
+                    newExec.setParentProjectId(exec.getParentProjectId());
+                    if (exec.getSpecTestCase().getName() != exec.getName()) {
+                        newExec.setName(exec.getName());
+                    }
+                    for (ICompNamesPairPO pair : m_listOfNewCompNamePairs) {
+                        newExec.addCompNamesPair(createNewCompNamePair(pair));
+                    }
+                    
+                    commands.add(new MultipleNodePM.AddExecTCHandle(parent,
+                            newExec, index));
+                    commands.add(new MultipleNodePM.DeleteExecTCHandle(exec));
                 }
-                MessageInfo errorMessageInfo = 
-                        MultipleNodePM.getInstance().executeCommands(
-                                commands, session);
+                MessageInfo errorMessageInfo = MultipleNodePM.getInstance()
+                        .executeCommands(commands, session);
+                
+                // Since a lot of changes are done fire the project is "reloaded"
+                DataEventDispatcher.getInstance().fireProjectLoadedListener(
+                        monitor);
                 if ((errorMessageInfo != null)) {
                     ErrorHandlingUtil.createMessageDialog(
-                            errorMessageInfo.getMessageId(), 
-                            errorMessageInfo.getParams(), 
-                            null);
+                            errorMessageInfo.getMessageId(),
+                            errorMessageInfo.getParams(), null);
                 }
             } catch (JBException e) {
                 ErrorHandlingUtil.createMessageDialog(e, null, null);
@@ -93,14 +115,29 @@ public class SearchReplaceTCRWizard extends Wizard {
             }
             monitor.done();
         }
-        
+        /**
+         * Creates a new CompNamesPairPO
+         * @param pair the pair which want to be duplicated
+         * @return the duplicated CompNamePair
+         */
+        private ICompNamesPairPO createNewCompNamePair(ICompNamesPairPO pair) {
+            ICompNamesPairPO newPair = PoMaker.createCompNamesPairPO(
+                    pair.getFirstName(), pair.getSecondName(),
+                    pair.getType());
+            newPair.setPropagated(pair.isPropagated());
+            return newPair;
+        }
+
     }
-    
+
     /**
      * <code>m_setOfExecsToReplace</code>
      */
     private final Set<IExecTestCasePO> m_setOfExecsToReplace;
-    
+    /**
+     * 
+     */
+    private List<ICompNamesPairPO> m_listOfNewCompNamePairs;
     /**
      * <code>m_choosePage</code>
      */
@@ -114,7 +151,7 @@ public class SearchReplaceTCRWizard extends Wizard {
      * Component Names matching page
      */
     private ComponentNameMappingWizardPage m_componentNamesPage;
-    
+
     /**
      * Constructor for the wizard page
      * 
@@ -125,29 +162,24 @@ public class SearchReplaceTCRWizard extends Wizard {
     public SearchReplaceTCRWizard(Set<IExecTestCasePO> execsToReplace) {
         m_setOfExecsToReplace = execsToReplace;
     }
-    
-    /** {@inheritDoc}    */
+
+    /** {@inheritDoc} */
     public boolean performFinish() {
-        //This is needed if Finish was pressed on the first page
+        // This is needed if Finish was pressed on the first page
         m_newSpec = m_choosePage.getChoosenTestCase();
-        EntityManager session = GeneralStorage.getInstance()
-                .getMasterSession();
-        try {           
-            Persistor.instance().lockPOSet(session, m_setOfExecsToReplace);
+        m_listOfNewCompNamePairs = m_componentNamesPage.getCompMatching();
+        try {
             PlatformUI.getWorkbench().getProgressService()
-                .run(true, false, new ReplaceTestCaseOperation());
-            PlatformUI.getWorkbench().getProgressService().run(true, false,
-                    new RefreshProjectOperation());
+                    .run(true, false, new ReplaceTestCaseOperation());
         } catch (InvocationTargetException e) {
-            //Already handled;
+            // Already handled;
         } catch (InterruptedException e) {
-            //Already handled
-        } catch (JBException e) {
-            ErrorHandlingUtil.createMessageDialog(e, null, null);
+            // Already handled
         }
         return true;
     }
-    /** {@inheritDoc}    */
+
+    /** {@inheritDoc} */
     public boolean performCancel() {
         return true;
     }
@@ -158,11 +190,11 @@ public class SearchReplaceTCRWizard extends Wizard {
     public void addPages() {
         super.addPages();
         Set<INodePO> specSet = new HashSet<INodePO>();
-        for (Iterator iterator = m_setOfExecsToReplace.iterator(); 
-                iterator.hasNext();) {
+        for (Iterator iterator = m_setOfExecsToReplace.iterator(); iterator
+                .hasNext();) {
             IExecTestCasePO exec = (IExecTestCasePO) iterator.next();
-            if (ISpecTestCasePO.class.isAssignableFrom(
-                    exec.getParentNode().getClass())) {
+            if (ISpecTestCasePO.class.isAssignableFrom(exec.getParentNode()
+                    .getClass())) {
                 specSet.add(exec.getParentNode());
             }
         }
@@ -173,7 +205,7 @@ public class SearchReplaceTCRWizard extends Wizard {
         addPage(m_componentNamesPage);
 
     }
-    
+
     /**
      * {@inheritDoc}
      */
