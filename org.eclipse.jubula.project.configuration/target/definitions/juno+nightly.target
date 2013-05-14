@@ -21,12 +21,15 @@
 </location>
 <location includeAllPlatforms="false" includeMode="slicer" type="InstallableUnit">
 <unit id="org.eclipse.e4.rcp.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.persistence.jpa.feature.group" version="0.0.0"/>
 <repository id ="eclipse-juno" location="http://download.eclipse.org/releases/juno"/>
 </location>
 <location includeAllPlatforms="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jubula.feature.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/jubula/development"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.persistence.jpa.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/rt/eclipselink/milestone-updates/2.5.0.v20130425-368d603_RC1"/>
 </location>
 </locations>
 </target>
