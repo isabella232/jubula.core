@@ -534,11 +534,14 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 try {
                     IProjectPO reusedProject = 
                         ProjectPM.loadReusedProject(reused);
-                    ComponentNamesBP.getInstance().refreshNames(
-                            reusedProject.getId());
+                    if (reusedProject != null) { 
+                        // incomplete database, see https://bxapps.bredex.de/bugzilla/show_bug.cgi?id=854
+                        ComponentNamesBP.getInstance().refreshNames(
+                                reusedProject.getId());
+                    }
                 } catch (JBException e) {
                     // Could not refresh Component Name information for 
-                    // reused proejct. Log the exception.
+                    // reused project. Log the exception.
                     log.error(Messages
                             .ErrorWhileRetrievingReusedProjectInformation, e);
                 }
