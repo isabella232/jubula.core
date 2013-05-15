@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.common.adapter;
 
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -52,12 +53,14 @@ public class SwingAdapterFactory implements IAdapterFactory {
     /**
      * the supported classes
      */
-    private static final Class[] SUPPORTEDCLASSES = new Class[] { 
-        JButton.class, JCheckBox.class, JRadioButton.class,
-        JMenuBar.class, JMenuItem.class, JTree.class , 
-        JCheckBox.class, JRadioButton.class, JTable.class, JPopupMenu.class,
-        JList.class, JTextComponent.class, JComboBox.class,
-        JLabel.class , JTabbedPane.class};
+    private static final Class[] SUPPORTEDCLASSES = new Class[] {
+            AbstractButton.class, JButton.class, JCheckBox.class,
+            JRadioButton.class,
+            JMenuBar.class, JMenuItem.class, JTree.class,
+            JCheckBox.class, JRadioButton.class, JTable.class,
+            JPopupMenu.class,
+            JList.class, JTextComponent.class, JComboBox.class,
+            JLabel.class, JTabbedPane.class };
     
     /** {@inheritDoc} */
     public Class[] getSupportedClasses() {
@@ -95,6 +98,9 @@ public class SwingAdapterFactory implements IAdapterFactory {
                 returnvalue = new JLabelAdapter(objectToAdapt);
             } else if (objectToAdapt instanceof JTabbedPane) {
                 returnvalue = new JTabbedPaneAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof AbstractButton) { 
+                // pick up every button which is not specialized
+                returnvalue = new AbstractButtonAdapter(objectToAdapt);
             }
             
             return returnvalue;
