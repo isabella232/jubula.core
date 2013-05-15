@@ -18,6 +18,7 @@ import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.RestartAutMessage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
@@ -38,13 +39,15 @@ public class RestartAutCommand implements ICommand {
      * {@inheritDoc}
      */
     public Message execute() {        
+        AutIdentifier autId = m_message.getAutId();
         String monitoringId = m_cm.getConfigValue(
-            m_message.getAutId().getExecutableName(), 
+            autId.getExecutableName(), 
             AutConfigConstants.MONITORING_AGENT_ID);
         if (!StringUtils.isEmpty(monitoringId)) { 
             invokeMonitoringRestartMethod();
         }
-        AutStarter.getInstance().getAgent().restartAut(m_message.getAutId());
+        AutStarter.getInstance().getAgent()
+                .restartAut(autId, m_message.isForceAUTTermination());
         return null;
     }
     /**

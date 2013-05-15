@@ -21,9 +21,13 @@ public interface IRestartAutHandler {
 
     /**
      * 
-     * @param agent The AUT Agent with which the AUT to be restarted is 
-     *              registered. This may be used, for example, to stop the AUT.
+     * @param agent
+     *            The AUT Agent with which the AUT to be restarted is
+     *            registered. This may be used, for example, to stop the AUT.
+     * @param force
+     *            indicates whether the AUT should be forced to quit or whether
+     *            the AUT will terminate by itself
      */
-    public void restartAut(AutAgent agent);
+    public void restartAut(AutAgent agent, boolean force);
     
 }

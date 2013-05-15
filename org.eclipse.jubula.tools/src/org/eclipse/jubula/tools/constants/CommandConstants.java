@@ -223,8 +223,14 @@ public abstract class CommandConstants {
     /** AUT Server - prepares for shutdown via Stop AUT */
     public static final String PREPARE_FOR_SHUTDOWN_COMMAND = "org.eclipse.jubula.rc.common.commands.PrepareForShutdownCommand"; //$NON-NLS-1$
     
+    /** AUT Server - prepares for shutdown via Stop AUT */
+    public static final String PREPARE_FOR_SHUTDOWN_RESPONSE_COMMAND = "org.eclipse.jubula.autagent.commands.PrepareForShutdownResponseCommand"; //$NON-NLS-1$
+    
     /** AUT Server - restarts an AUT */
     public static final String RESTART_AUT_COMMAND = "org.eclipse.jubula.autagent.commands.RestartAutCommand"; //$NON-NLS-1$
+    
+    /** AUT Server - wait for termination and restart an AUT */
+    public static final String WAIT_FOR_AUT_TERMINATION_AND_RESTART_COMMAND = "org.eclipse.jubula.autagent.commands.WaitForAUTTerminationAndRestartCommand"; //$NON-NLS-1$
     
     /** AUT Agent - display the manual test step to perform */
     public static final String DISPLAY_MANUAL_TEST_STEP_COMMAND = "org.eclipse.jubula.autagent.commands.DisplayManualTestStepCommand"; //$NON-NLS-1$

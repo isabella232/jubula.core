@@ -23,6 +23,11 @@ public class RestartAutMessage extends Message {
 
     /** the ID of the Running AUT to restart */
     private AutIdentifier m_autId;
+    
+    /**
+     * flag indicating whether the AUT should be closed or not
+     */
+    private boolean m_forceAUTTermination = true;
 
     /**
      * Constructor for use in framework methods. Do not use for normal
@@ -39,9 +44,12 @@ public class RestartAutMessage extends Message {
      * 
      * @param autId
      *            The ID of the Running AUT to restart.
+     * @param forceAUTTermination
+     *            flag indicating whether the AUT should be forced to quit
      */
-    public RestartAutMessage(AutIdentifier autId) {
+    public RestartAutMessage(AutIdentifier autId, boolean forceAUTTermination) {
         m_autId = autId;
+        m_forceAUTTermination = forceAUTTermination;
     }
 
     /** {@inheritDoc} */
@@ -65,5 +73,19 @@ public class RestartAutMessage extends Message {
      */
     public void setAutId(AutIdentifier autId) {
         m_autId = autId;
+    }
+
+    /**
+     * @return the forceAUTTermination
+     */
+    public boolean isForceAUTTermination() {
+        return m_forceAUTTermination;
+    }
+
+    /**
+     * @param forceAUTTermination the forceAUTTermination to set
+     */
+    public void setForceAUTTermination(boolean forceAUTTermination) {
+        m_forceAUTTermination = forceAUTTermination;
     }
 }

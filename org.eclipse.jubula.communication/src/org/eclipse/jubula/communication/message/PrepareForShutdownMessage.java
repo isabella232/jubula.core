@@ -19,9 +19,29 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created Mar 23, 2010
  */
 public class PrepareForShutdownMessage extends Message {
-
     /** Static version */
     private static final double VERSION = 1.0;
+    /**
+     * indicates whether the AUT should be forced to quit or whether the AUT
+     * will terminate by itself
+     */
+    private boolean m_force = true;
+
+    /**
+     * necessary for deserialization
+     */
+    public PrepareForShutdownMessage() {
+        // empty
+    }
+    
+    /**
+     * @param force
+     *            indicates whether the AUT should be forced to quit or whether
+     *            the AUT will terminate by itself
+     */
+    public PrepareForShutdownMessage(boolean force) {
+        setForce(force);
+    }
 
     /** {@inheritDoc} */
     public String getCommandClass() {
@@ -31,5 +51,19 @@ public class PrepareForShutdownMessage extends Message {
     /** {@inheritDoc} */
     public double getVersion() {
         return VERSION;
+    }
+
+    /**
+     * @return the force
+     */
+    public boolean isForce() {
+        return m_force;
+    }
+
+    /**
+     * @param force the force to set
+     */
+    public void setForce(boolean force) {
+        m_force = force;
     }
 }
