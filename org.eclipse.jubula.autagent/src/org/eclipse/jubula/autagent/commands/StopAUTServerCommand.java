@@ -79,7 +79,7 @@ public class StopAUTServerCommand implements ICommand {
 
         final AutAgent agent = AutStarter.getInstance().getAgent();
         if (agent != null) {
-            agent.stopAut(m_message.getAutId());
+            agent.stopAut(m_message.getAutId(), true);
             return new StopAUTServerStateMessage();
         }
 

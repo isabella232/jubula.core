@@ -19,6 +19,7 @@ import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.AUTServerEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.IAUTInfoListener;
+import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.ServerEvent;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.commands.ConnectToAutResponseCommand;
@@ -339,14 +340,12 @@ public class AUTConnection extends BaseConnection {
             disconnectFromAut();
             DataEventDispatcher.getInstance().fireAutServerConnectionChanged(
                     ServerState.Disconnected);
-            ClientTestFactory.getClientTest().
-                fireAUTServerStateChanged(new AUTServerEvent(
-                        AUTServerEvent.TESTING_MODE));
-            ClientTestFactory.getClientTest().fireAUTStateChanged(
-                new AUTEvent(AUTEvent.AUT_STOPPED));
-            ClientTestFactory.getClientTest().fireAUTServerStateChanged(
-                new AUTServerEvent(ServerEvent.CONNECTION_CLOSED));
-
+            IClientTest clientTest = ClientTestFactory.getClientTest();
+            clientTest.fireAUTServerStateChanged(new AUTServerEvent(
+                    AUTServerEvent.TESTING_MODE));
+            clientTest.fireAUTStateChanged(new AUTEvent(AUTEvent.AUT_STOPPED));
+            clientTest.fireAUTServerStateChanged(new AUTServerEvent(
+                    ServerEvent.CONNECTION_CLOSED));
         }
 
         /**

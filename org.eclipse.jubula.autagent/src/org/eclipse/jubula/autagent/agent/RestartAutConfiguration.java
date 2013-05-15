@@ -14,10 +14,9 @@ import org.eclipse.jubula.autagent.commands.StartAUTServerCommand;
 import org.eclipse.jubula.communication.message.StartAUTServerMessage;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 
-
 /**
  * Restarts an AUT that was started via an AUT Configuration.
- *
+ * 
  * @author BREDEX GmbH
  * @created Mar 26, 2010
  */
@@ -25,31 +24,29 @@ public class RestartAutConfiguration implements IRestartAutHandler {
 
     /** the message used to start the AUT */
     private StartAUTServerMessage m_startAutMessage;
-    
+
     /** the ID of the the started AUT */
     private AutIdentifier m_autId;
 
     /**
      * Constructor
      * 
-     * @param autId The ID of the started AUT.
-     * @param startAutMessage The message used to start the AUT.
+     * @param autId
+     *            The ID of the started AUT.
+     * @param startAutMessage
+     *            The message used to start the AUT.
      */
-    public RestartAutConfiguration(AutIdentifier autId, 
+    public RestartAutConfiguration(AutIdentifier autId,
             StartAUTServerMessage startAutMessage) {
         m_startAutMessage = startAutMessage;
         m_autId = autId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void restartAut(AutAgent agent) {        
-        
-        agent.stopAut(m_autId);        
+    /** {@inheritDoc} */
+    public void restartAut(AutAgent agent, boolean force) {
+        agent.stopAut(m_autId, force);
         StartAUTServerCommand startCommand = new StartAUTServerCommand();
         startCommand.setMessage(m_startAutMessage);
         startCommand.execute();
     }
-    
 }

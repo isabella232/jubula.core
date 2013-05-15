@@ -43,25 +43,32 @@ public class AUTEvent {
     /** constant signaling that the AUT is restarted and running */
     public static final int AUT_RESTARTED = AUT_CLASS_VERSION_ERROR + 1;
 
+    /** constant signaling that the AUT is about to terminate */
+    public static final int AUT_ABOUT_TO_TERMINATE = AUT_RESTARTED + 1;
+    
     /** description of AUT_STARTED for logging purpose */
     private static final String AUT_STARTED_DESCRIPTION = 
-        "aut started";  //$NON-NLS-1$
+        "AUT started";  //$NON-NLS-1$
     
     /** description of AUT_RESTARTED for logging purpose */
     private static final String AUT_RESTARTED_DESCRIPTION =
-        "aut restarted";  //$NON-NLS-1$
+        "AUT restarted";  //$NON-NLS-1$
+    
+    /** description of AUT_ABOUT_TO_TERMINATE_DESCRIPTION for logging purpose */
+    private static final String AUT_ABOUT_TO_TERMINATE_DESCRIPTION =
+        "AUT about to terminate";  //$NON-NLS-1$
     
     /** description of AUT_STOPPED for logging purpose */
     private static final String AUT_STOPPED_DESCRIPTION = 
-        "aut stopped";  //$NON-NLS-1$
+        "AUT stopped";  //$NON-NLS-1$
 
     /** description of AUT_ABORTED for logging purpose */
     private static final String AUT_ABORTED_DESCRIPTION = 
-        "aut aborted";  //$NON-NLS-1$
+        "AUT aborted";  //$NON-NLS-1$
 
     /** description of AUT_NOT_FOUND for logging purpose */
     private static final String AUT_NOT_FOUND_DESCRIPTION = 
-        "starting aut failed: aut not found";  //$NON-NLS-1$
+        "starting AUT failed: AUT not found";  //$NON-NLS-1$
 
     /** description of AUT_MAIN_NOT_FOUND for logging purpose */
     private static final String AUT_MAIN_NOT_FOUND_DESCRIPTION = 
@@ -69,11 +76,11 @@ public class AUTEvent {
 
     /** description of AUT_START_FAILED for logging purpose */
     private static final String AUT_START_FAILED_DESCRIPTION = 
-        "starting aut failed";  //$NON-NLS-1$
+        "starting AUT failed";  //$NON-NLS-1$
 
     /** constant signaling that the AUT could not started */
     private static final String AUT_CLASS_VERSION_ERROR_DECRIPTION = 
-        "aut class version is not compatible to used JRE";  //$NON-NLS-1$
+        "AUT class version is not compatible to used JRE";  //$NON-NLS-1$
 
     /** description of unknown state (this means it's an programming error)
      *  for logging purpose */
@@ -121,6 +128,8 @@ public class AUTEvent {
                 return AUT_CLASS_VERSION_ERROR_DECRIPTION;
             case AUT_RESTARTED:
                 return AUT_RESTARTED_DESCRIPTION;
+            case AUT_ABOUT_TO_TERMINATE:
+                return AUT_ABOUT_TO_TERMINATE_DESCRIPTION;
             default:
                 return US_DESCRIPTION;
         }

@@ -59,7 +59,7 @@ public class AUTServerStateCommand implements ICommand {
      * In case of READY, the AUT is started by returning the message
      * AUTStartMessage.
      * The state "READY" is mapped to "AUT_RESTARTED" because we cannot differ
-     * whether the AUT is sarted for the first time or if it was a restart.
+     * whether the AUT is started for the first time or if it was a restart.
      * So these two events are treated equally.
      * 
      * {@inheritDoc}

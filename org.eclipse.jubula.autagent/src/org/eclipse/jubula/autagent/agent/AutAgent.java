@@ -41,6 +41,7 @@ import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.StringParsing;
+import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +54,14 @@ import org.slf4j.LoggerFactory;
  * @created Dec 1, 2009
  */
 public class AutAgent {
+    /**
+     * the default value to wait after a proper AUT termination (== de-registration) 
+     */
+    public static final int AUT_POST_DEREGISTRATION_DELAY_DEFAULT = 2000;
+    /**
+     * Name of the variable to override the AUTs proper AUT de-registration delay
+     */
+    public static final String AUT_POST_DEREGISTRATION_DELAY_VAR = "TEST_AUT_POST_DEREGISTRATION_DELAY"; //$NON-NLS-1$
 
     /** property name for collection of registered AUTs */
     public static final String PROP_NAME_AUTS = "auts"; //$NON-NLS-1$
@@ -440,7 +449,9 @@ public class AutAgent {
 
     /**
      * Removes the given AUT from the collection of registered AUTs.
-     * @param autId The ID of the AUT to deregister.
+     * 
+     * @param autId
+     *            The ID of the AUT to deregister.
      */
     private void removeAut(AutIdentifier autId) {
         boolean wasSetChanged = false;
@@ -450,7 +461,8 @@ public class AutAgent {
                 Communicator autCommunicator = m_auts.remove(autId);
                 if (autCommunicator != null) {
                     try {
-                        autCommunicator.send(new PrepareForShutdownMessage());
+                        autCommunicator.send(
+                                new PrepareForShutdownMessage());
                     } catch (CommunicationException e) {
                         // As a result of not being able to send the message,
                         // the AUT will end with a different exit code. This
@@ -569,29 +581,47 @@ public class AutAgent {
     /**
      * Stops the given AUT.
      * 
-     * @param autId The ID of the Running AUT to stop.
+     * @param autId
+     *            The ID of the Running AUT to stop.
+     * @param force
+     *            indicates whether the AUT should be forced to quit or whether
+     *            the AUT will terminate by itself
      */
-    public void stopAut(AutIdentifier autId) {
+    public void stopAut(AutIdentifier autId, boolean force) {
         synchronized (m_auts) {
             Communicator autCommunicator = m_auts.get(autId);
             if (autCommunicator != null) {
-                removeAut(autId);
-                autCommunicator.close();
+                if (force) {
+                    removeAut(autId);
+                }
             }
+        }
+        if (!force) {
+            while (m_auts.containsKey(autId)) {
+                TimeUtil.delay(250);
+            }
+            // The AUT has just unregistered itself - which must not be exactly
+            // the same as terminated - therefore we wait for another moment of time
+            TimeUtil.delayDefaultOrExternalTime(
+                    AUT_POST_DEREGISTRATION_DELAY_DEFAULT, 
+                    AUT_POST_DEREGISTRATION_DELAY_VAR);
         }
     }
 
     /**
      * Restarts the AUT with the given ID.
      * 
-     * @param autId The ID of the Running AUT to restart.
+     * @param autId
+     *            The ID of the Running AUT to restart.
+     * @param force
+     *            indicates whether the AUT should be forced to quit or whether
+     *            the AUT will terminate by itself
      */
-    public void restartAut(AutIdentifier autId) {
+    public void restartAut(AutIdentifier autId, boolean force) {
         // cache the start method
         final IRestartAutHandler message = m_autIdToRestartHandler.get(autId);
 
-        message.restartAut(this);
-        
+        message.restartAut(this, force);
     }
     
     /**

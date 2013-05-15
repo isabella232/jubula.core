@@ -52,8 +52,8 @@ import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuar
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
-import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.AutAgentConnection;
+import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -78,7 +78,6 @@ import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
-import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.jubula.tools.utils.FileUtils;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.osgi.util.NLS;
@@ -623,19 +622,8 @@ public class ExecutionController implements IAUTServerEventListener,
      * this method delays the test execution start during AUT startup
      */
     private void waitExternalTime() {
-        int timeToWait = AUT_STARTUP_DELAY_DEFAULT;
-        try {
-            String value = EnvironmentUtils.getProcessEnvironment()
-                    .getProperty(AUT_STARTUP_DELAY_VAR);
-            if (value == null) {
-                value = System.getProperty(AUT_STARTUP_DELAY_VAR);
-            }
-
-            timeToWait = Integer.valueOf(value).intValue();
-        } catch (NumberFormatException e) {
-            // ignore invalid formatted values and use default instead
-        }
-        TimeUtil.delay(timeToWait);
+        TimeUtil.delayDefaultOrExternalTime(AUT_STARTUP_DELAY_DEFAULT,
+                AUT_STARTUP_DELAY_VAR);
     }
 
     /**

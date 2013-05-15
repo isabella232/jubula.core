@@ -104,22 +104,22 @@ public class TestExecutionContributor
      * dispose()..
      */
     private void registerAsListener() {
-        ClientTestFactory.getClientTest().addTestEventListener(this);
-        ClientTestFactory.getClientTest().addAutAgentEventListener(this);
-        ClientTestFactory.getClientTest().addAUTServerEventListener(this);
-        ClientTestFactory.getClientTest().addTestExecutionEventListener(this);
+        IClientTest clientTest = ClientTestFactory.getClientTest();
+        clientTest.addTestEventListener(this);
+        clientTest.addAutAgentEventListener(this);
+        clientTest.addAUTServerEventListener(this);
+        clientTest.addTestExecutionEventListener(this);
     }
 
     /**
      * deregister this as listener
      */
     private void deregister() {
-        ClientTestFactory.getClientTest().removeTestEventListener(this);
-        ClientTestFactory.getClientTest().removeAutAgentEventListener(
-            this);
-        ClientTestFactory.getClientTest().removeAUTServerEventListener(this);
-        ClientTestFactory.getClientTest()
-            .removeTestExecutionEventListener(this);
+        IClientTest clientTest = ClientTestFactory.getClientTest();
+        clientTest.removeTestEventListener(this);
+        clientTest.removeAutAgentEventListener(this);
+        clientTest.removeAUTServerEventListener(this);
+        clientTest.removeTestExecutionEventListener(this);
     }
     
     /**
@@ -221,8 +221,12 @@ public class TestExecutionContributor
                 fireAndSetAutState(false);
                 break;  
             case AUTEvent.AUT_RESTARTED:
+                m_clientTest.addAUTServerEventListener(this);
                 fireAndSetAutState(true);
                 // only important for TestExecution
+                break;
+            case AUTEvent.AUT_ABOUT_TO_TERMINATE:
+                m_clientTest.removeAUTServerEventListener(this);
                 break;
             default:
                 Assert.notReached(Messages.UnknownAUTState 

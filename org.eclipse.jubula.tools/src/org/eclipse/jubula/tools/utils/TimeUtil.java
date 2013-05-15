@@ -54,6 +54,29 @@ public abstract class TimeUtil {
     }
     
     /**
+     * Delay for a certain amount of time. Uses if set the given keys property
+     * value as a delay
+     * 
+     * @param defaultDelay
+     *            the delay in ms, must not be negative
+     * @param delayPropertyKey
+     *            the property key; can be used to override / allow external
+     *            setting of amount of delay
+     */
+    public static void delayDefaultOrExternalTime(final long defaultDelay,
+        final String delayPropertyKey) {
+        long timeToWait = defaultDelay;
+        try {
+            String value = EnvironmentUtils
+                    .getProcessOrSystemProperty(delayPropertyKey);
+            timeToWait = Long.valueOf(value).longValue();
+        } catch (NumberFormatException e) {
+            // ignore invalid formatted values and use default instead
+        }
+        TimeUtil.delay(timeToWait);
+    }
+    
+    /**
      * @param startTime The start time.
      * @param endTime The end time.
      * @return a String representation of the difference between the provided 

@@ -164,13 +164,8 @@ public class SwingAUTServer extends AUTServer {
     protected void startTasks() throws ExceptionInInitializerError, 
         InvocationTargetException, NoSuchMethodException {
 
-        String edtNameRegEx = 
-            EnvironmentUtils.getProcessEnvironment()
-                .getProperty(EDT_NAME_REGEX_KEY);
-        if (edtNameRegEx == null) {
-            edtNameRegEx = 
-                System.getProperty(EDT_NAME_REGEX_KEY);
-        }
+        String edtNameRegEx = EnvironmentUtils
+                .getProcessOrSystemProperty(EDT_NAME_REGEX_KEY);
         if (edtNameRegEx != null) {
             // fail fast if the regex is malformed
             try {

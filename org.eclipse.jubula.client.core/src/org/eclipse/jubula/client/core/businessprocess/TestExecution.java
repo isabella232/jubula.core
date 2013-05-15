@@ -26,9 +26,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.MessageFactory;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent;
@@ -79,6 +81,7 @@ import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.MessageCap;
 import org.eclipse.jubula.communication.message.MessageParam;
 import org.eclipse.jubula.communication.message.NullMessage;
+import org.eclipse.jubula.communication.message.PrepareForShutdownMessage;
 import org.eclipse.jubula.communication.message.ResetMonitoringDataMessage;
 import org.eclipse.jubula.communication.message.RestartAutMessage;
 import org.eclipse.jubula.communication.message.TakeScreenshotMessage;
@@ -1707,9 +1710,75 @@ public class TestExecution {
      * @author BREDEX GmbH
      * @created 30.04.2013
      */
+    private static class AUTTerminationListener 
+        implements IAutRegistrationListener {
+        /**
+         * indicates whether the AUT terminated or not
+         */
+        private boolean m_autTerminated = false;
+        /**
+         * the AUTs ID to monitor
+         */
+        private AutIdentifier m_autId = null;
+        /**
+         * flag indicating that the AUT has been re-started
+         */
+        private AtomicBoolean m_hasAutRestarted = new AtomicBoolean(false);
+
+        /**
+         * @param autID
+         *            the AUTs ID to monitor
+         */
+        public AUTTerminationListener(AutIdentifier autID) {
+            m_autId = autID;
+        }
+        
+        /** {@inheritDoc} */
+        public void handleAutRegistration(
+                AutRegistrationEvent event) {
+            if (m_autId.equals(event.getAutId())) {
+                if (event.getStatus() 
+                        == RegistrationStatus.Deregister) {
+                    setAutTerminated(true);
+                }
+                if (hasAutTerminated() && event.getStatus() 
+                        == RegistrationStatus.Register) {
+                    hasAutRestarted().set(true);
+                }
+            }
+        }
+
+        /**
+         * @return the isAutRestarted
+         */
+        public AtomicBoolean hasAutRestarted() {
+            return m_hasAutRestarted;
+        }
+
+        /**
+         * @return the autTerminated
+         */
+        public boolean hasAutTerminated() {
+            return m_autTerminated;
+        }
+
+        /**
+         * @param autTerminated the autTerminated to set
+         */
+        private void setAutTerminated(boolean autTerminated) {
+            m_autTerminated = autTerminated;
+        }
+    }
+    
+    /**
+     * @author BREDEX GmbH
+     * @created 30.04.2013
+     */
     public class PrepareForShutdownCmd implements IPostExecutionCommand {
         /** {@inheritDoc} */
         public TestErrorEvent execute() throws JBException {
+            AUTConnection.getInstance().getCommunicator()
+                    .send(new PrepareForShutdownMessage(false, m_stepSpeed));
             return null;
         }
     }
@@ -1718,43 +1787,26 @@ public class TestExecution {
      * @author BREDEX GmbH
      * @created 30.04.2013
      */
-    public class SyncShutdownAndRestartCmd implements IPostExecutionCommand {
-        /** {@inheritDoc} */
-        public TestErrorEvent execute() throws JBException {
-            return null;
+    public class SyncShutdownAndRestartCmd extends AbstractRestartCmd {
+        @Override
+        protected Message getRestartMessage(AutIdentifier autId) {
+            return new RestartAutMessage(autId, false);
         }
     }
     
     /**
-     * 
      * @author BREDEX GmbH
-     * @created Aug 22, 2006
+     * @created 30.04.2013
      */
-    public class RestartCmd implements IPostExecutionCommand {
-
+    public abstract class AbstractRestartCmd implements IPostExecutionCommand {
         /**
          * {@inheritDoc}
          */
-        public TestErrorEvent execute() throws JBException {
+        public final TestErrorEvent execute() throws JBException {
             final AutIdentifier autId = getConnectedAutId();
-            final AtomicBoolean isAutRestarted = new AtomicBoolean(false);
-            IAutRegistrationListener registrationListener = 
-                new IAutRegistrationListener() {
-                    private boolean m_autEnded = false;
-                    public void handleAutRegistration(
-                            AutRegistrationEvent event) {
-                        if (autId.equals(event.getAutId())) {
-                            if (event.getStatus() 
-                                    == RegistrationStatus.Deregister) {
-                                m_autEnded = true;
-                            }
-                            if (m_autEnded && event.getStatus() 
-                                    == RegistrationStatus.Register) {
-                                isAutRestarted.set(true);
-                            }
-                        }
-                    }
-                };
+            AUTTerminationListener registrationListener = 
+                    new AUTTerminationListener(autId);
+            
             try {
                 TimeUtil.delay(2000);
                 
@@ -1770,9 +1822,13 @@ public class TestExecution {
                 boolean wasInterrupted = Thread.interrupted();
                 AutAgentRegistration.getInstance().addListener(
                         registrationListener);
+                IClientTest clientTest = ClientTestFactory.getClientTest();
+                clientTest.fireAUTStateChanged(new AUTEvent(
+                        AUTEvent.AUT_ABOUT_TO_TERMINATE));
+                
                 AutAgentConnection.getInstance().send(
-                        new RestartAutMessage(autId));
-                while (!isAutRestarted.get()) {
+                        getRestartMessage(autId));
+                while (!registrationListener.hasAutRestarted().get()) {
                     // wait for AUT registration
                     try {
                         Thread.sleep(250);
@@ -1806,6 +1862,24 @@ public class TestExecution {
                     }
                 }
             }
+        }
+
+        /**
+         * @param autId
+         *            the AUT id to use
+         * @return the message used to restart the AUT
+         */
+        protected abstract Message getRestartMessage(AutIdentifier autId);
+    }
+    
+    /**
+     * @author BREDEX GmbH
+     * @created Aug 22, 2006
+     */
+    public class RestartCmd extends AbstractRestartCmd {
+        @Override
+        protected Message getRestartMessage(AutIdentifier autId) {
+            return new RestartAutMessage(autId, true);
         }
     }
     
