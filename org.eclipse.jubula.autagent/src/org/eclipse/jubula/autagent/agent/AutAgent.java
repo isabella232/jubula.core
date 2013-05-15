@@ -54,6 +54,14 @@ import org.slf4j.LoggerFactory;
  * @created Dec 1, 2009
  */
 public class AutAgent {
+    /**
+     * the default value to wait after a proper AUT termination (== de-registration) 
+     */
+    public static final int AUT_POST_DEREGISTRATION_DELAY_DEFAULT = 2000;
+    /**
+     * Name of the variable to override the AUTs proper AUT de-registration delay
+     */
+    public static final String AUT_POST_DEREGISTRATION_DELAY_VAR = "TEST_AUT_POST_DEREGISTRATION_DELAY"; //$NON-NLS-1$
 
     /** property name for collection of registered AUTs */
     public static final String PROP_NAME_AUTS = "auts"; //$NON-NLS-1$
@@ -594,7 +602,9 @@ public class AutAgent {
             }
             // The AUT has just unregistered itself - which must not be exactly
             // the same as terminated - therefore we wait for another moment of time
-            TimeUtil.delay(2000);
+            TimeUtil.delayDefaultOrExternalTime(
+                    AUT_POST_DEREGISTRATION_DELAY_DEFAULT, 
+                    AUT_POST_DEREGISTRATION_DELAY_VAR);
         }
     }
 

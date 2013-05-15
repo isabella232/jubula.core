@@ -23,7 +23,6 @@ import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.objects.ComponentIdentifier;
-import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +39,56 @@ public class PrepareForShutdownCommand implements ICommand {
     /**
      * Amount of milliseconds to delay the AUTs termination
      */
-    public static final int AUT_TERMINATION_DELAY = 2000;
+    public static final int AUT_KEEP_ALIVE_DELAY_DEFAULT = 2000;
+
+    /**
+     * Name of the variable to override the AUTs termination delay
+     */
+    public static final String AUT_KEEP_ALIVE_DELAY_VAR = "TEST_AUT_KEEP_ALIVE_DELAY"; //$NON-NLS-1$
+    
+    /**
+     * @author BREDEX GmbH
+     * Shutdown hook runnable to allow a proper AUT termination 
+     */
+    private static class AUTProperTerminationShutdownHook implements Runnable {
+        /** {@inheritDoc} */
+        public void run() {
+            AUTServer autRC = AUTServer.getInstance();
+            // FIXME improve AUT toolkit handling 
+            if (!autRC.isRcpAccessible()) {
+                // send fake message back - say last CAP execution went OK
+                // this is necessary as e.g. in Swing the AUT event thread blocks 
+                // and thereby our event confirming until the AUT terminates
+                sendFakeCAPTestReponseMessage(autRC);
+            }
+
+            // keep the AUT alive to perform proper AUT termination synchronization
+            TimeUtil.delayDefaultOrExternalTime(
+                    AUT_KEEP_ALIVE_DELAY_DEFAULT,
+                    AUT_KEEP_ALIVE_DELAY_VAR);
+        }
+
+        /**
+         * @param autRC
+         *            the AUT-Server instance to use
+         */
+        private void sendFakeCAPTestReponseMessage(AUTServer autRC) {
+            Communicator iteCom = autRC.getCommunicator();
+            CAPTestResponseMessage fakeMessage = 
+                    new CAPTestResponseMessage();
+            MessageCap fakeMessageCap = new MessageCap();
+            fakeMessageCap.setCi(new ComponentIdentifier());
+            fakeMessage.setMessageCap(fakeMessageCap);
+            try {
+                iteCom.send(fakeMessage);
+            } catch (CommunicationException e) {
+                // This might also occur if hook has been registered but
+                // AUT terminates without a connection to the ITE e.g.
+                // normal AUT shutdown 
+                LOG.error(e.getLocalizedMessage(), e);
+            }
+        }
+    }
 
     /** the logger */
     private static final Logger LOG = 
@@ -82,35 +130,8 @@ public class PrepareForShutdownCommand implements ICommand {
                 });
             }
         } else {
-            Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-                public void run() {
-                    AUTServer autRC = AUTServer.getInstance();
-                    // FIXME improve AUT toolkit handling 
-                    if (!autRC.isRcpAccessible()) {
-                        // send fake message back - say last CAP execution went OK
-                        // this is necessary as e.g. in Swing the AUT event thread blocks 
-                        // and thereby our event confirming until the AUT terminates
-                        Communicator iteCom = autRC
-                                .getCommunicator();
-                        CAPTestResponseMessage fakeMessage = 
-                                new CAPTestResponseMessage();
-                        MessageCap fakeMessageCap = new MessageCap();
-                        fakeMessageCap.setCi(new ComponentIdentifier());
-                        fakeMessage.setMessageCap(fakeMessageCap);
-                        try {
-                            iteCom.send(fakeMessage);
-                        } catch (CommunicationException e) {
-                            // This might also occur if hook has been registered but
-                            // AUT terminates without a connection to the ITE e.g.
-                            // normal AUT shutdown 
-                            LOG.error(e.getLocalizedMessage(), e);
-                        }
-                    }
-
-                    // keep the AUT alive to perform proper AUT termination synchronization
-                    TimeUtil.delay(AUT_TERMINATION_DELAY);
-                }
-            }));
+            Runtime.getRuntime().addShutdownHook(
+                    new Thread(new AUTProperTerminationShutdownHook()));
         }
         return null;
     }
@@ -135,5 +156,4 @@ public class PrepareForShutdownCommand implements ICommand {
     public void timeout() {
         LOG.error(this.getClass().getName() + "timeout() called"); //$NON-NLS-1$
     }
-
 }
