@@ -279,7 +279,7 @@ public class AutAgent {
 
             if (!registeredAutSetWasModified && m_killDuplicateAuts) {
                 try {
-                    m_autCommunicator.send(new PrepareForShutdownMessage(true));
+                    m_autCommunicator.send(new PrepareForShutdownMessage());
                 } catch (CommunicationException e) {
                     // As a result of not being able to send the message,
                     // the AUT will end with a different exit code. This
@@ -462,7 +462,7 @@ public class AutAgent {
                 if (autCommunicator != null) {
                     try {
                         autCommunicator.send(
-                                new PrepareForShutdownMessage(true));
+                                new PrepareForShutdownMessage());
                     } catch (CommunicationException e) {
                         // As a result of not being able to send the message,
                         // the AUT will end with a different exit code. This

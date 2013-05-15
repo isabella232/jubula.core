@@ -1777,8 +1777,8 @@ public class TestExecution {
     public class PrepareForShutdownCmd implements IPostExecutionCommand {
         /** {@inheritDoc} */
         public TestErrorEvent execute() throws JBException {
-            AUTConnection.getInstance().getCommunicator().send(
-                    new PrepareForShutdownMessage(false));
+            AUTConnection.getInstance().getCommunicator()
+                    .send(new PrepareForShutdownMessage(false, m_stepSpeed));
             return null;
         }
     }

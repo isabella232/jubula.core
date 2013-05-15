@@ -26,6 +26,10 @@ public class PrepareForShutdownMessage extends Message {
      * will terminate by itself
      */
     private boolean m_force = true;
+    /**
+     * the additional delay to use when AUT terminates normally
+     */
+    private int m_additionalDelay;
 
     /**
      * necessary for deserialization
@@ -38,8 +42,11 @@ public class PrepareForShutdownMessage extends Message {
      * @param force
      *            indicates whether the AUT should be forced to quit or whether
      *            the AUT will terminate by itself
+     * @param additionalDelay
+     *            an additional delay to use if the AUT terminates non-forced 
      */
-    public PrepareForShutdownMessage(boolean force) {
+    public PrepareForShutdownMessage(boolean force, int additionalDelay) {
+        setAdditionalDelay(additionalDelay);
         setForce(force);
     }
 
@@ -65,5 +72,19 @@ public class PrepareForShutdownMessage extends Message {
      */
     public void setForce(boolean force) {
         m_force = force;
+    }
+
+    /**
+     * @return the additionalDelay
+     */
+    public int getAdditionalDelay() {
+        return m_additionalDelay;
+    }
+
+    /**
+     * @param additionalDelay the additionalDelay to set
+     */
+    public void setAdditionalDelay(int additionalDelay) {
+        m_additionalDelay = additionalDelay;
     }
 }
