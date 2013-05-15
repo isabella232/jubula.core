@@ -51,14 +51,9 @@ public class WorkaroundUtil {
      *         Otherwise <code>false</code>.
      */
     public static boolean isIgnoreTimeout() {
-        String value = 
-            EnvironmentUtils.getProcessEnvironment().getProperty(
-                    IGNORE_TIMEOUT_VAR);
-        if (value == null) {
-            value = System.getProperty(IGNORE_TIMEOUT_VAR);
-        }
-        
-        return Boolean.valueOf(value).booleanValue();
+        String value = EnvironmentUtils
+                .getProcessOrSystemProperty(IGNORE_TIMEOUT_VAR);
 
+        return Boolean.valueOf(value).booleanValue();
     }
 }

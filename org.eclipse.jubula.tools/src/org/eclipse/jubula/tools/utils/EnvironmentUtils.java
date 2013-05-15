@@ -317,4 +317,19 @@ public class EnvironmentUtils {
         }
         return port;
     }
+    
+    /**
+     * @param key
+     *            the key to retrieve the property for
+     * @return if set either the process environment property or if not set the
+     *         system environment property. Returns <code>null</code> if non of
+     *         both is set
+     */
+    public static String getProcessOrSystemProperty(final String key) {
+        String value = getProcessEnvironment().getProperty(key);
+        if (value == null) {
+            value = System.getProperty(key);
+        }
+        return value;
+    }
 }

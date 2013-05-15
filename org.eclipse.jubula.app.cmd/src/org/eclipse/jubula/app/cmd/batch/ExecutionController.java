@@ -625,11 +625,8 @@ public class ExecutionController implements IAUTServerEventListener,
     private void waitExternalTime() {
         int timeToWait = AUT_STARTUP_DELAY_DEFAULT;
         try {
-            String value = EnvironmentUtils.getProcessEnvironment()
-                    .getProperty(AUT_STARTUP_DELAY_VAR);
-            if (value == null) {
-                value = System.getProperty(AUT_STARTUP_DELAY_VAR);
-            }
+            String value = EnvironmentUtils
+                    .getProcessOrSystemProperty(AUT_STARTUP_DELAY_VAR);
 
             timeToWait = Integer.valueOf(value).intValue();
         } catch (NumberFormatException e) {

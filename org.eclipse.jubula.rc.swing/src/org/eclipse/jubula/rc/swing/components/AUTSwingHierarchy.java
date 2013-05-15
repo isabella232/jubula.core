@@ -118,18 +118,11 @@ public class AUTSwingHierarchy extends AUTHierarchy
      * Constructor
      */
     public AUTSwingHierarchy() {
-        String syncListenersRegistrationValue = 
-            EnvironmentUtils.getProcessEnvironment().getProperty(
-                    ENV_VAR_SYNC_REGISTER_LISTENERS);
-        
-        if (syncListenersRegistrationValue == null) {
-            // Use JVM property as fallback
-            syncListenersRegistrationValue = 
-                System.getProperty(ENV_VAR_SYNC_REGISTER_LISTENERS);
-        }
+        String syncListenersRegistrationValue = EnvironmentUtils
+                .getProcessOrSystemProperty(ENV_VAR_SYNC_REGISTER_LISTENERS);
 
-        m_syncListenerRegistration = 
-            Boolean.valueOf(syncListenersRegistrationValue).booleanValue();
+        m_syncListenerRegistration = Boolean.valueOf(
+                syncListenersRegistrationValue).booleanValue();
 
         if (!m_syncListenerRegistration) {
             Thread registrationThread = 
