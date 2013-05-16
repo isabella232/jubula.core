@@ -57,9 +57,17 @@ You will need to set environment variables which have the form:\\
 
 To use the variable in your tests, enter the variable name (everything after the underscore) preceded by a dollar sign. Do not enter the \bxcaption{TEST\_UDV\_} part.
 
-\bxwarn{After entering or changing an environment variable, you will need to restart \app{}. Environment variables are only read from the machine on which the client part of \app{} is running, not from the machine where the \gdagent{} is running.}
+\bxwarn{After entering or changing an environment variable, you will need to restart \app{}. Environment variables for the \ite{} (i.e. for the test) are only read from the machine on which the client part of \app{} is running, not from the machine where the \gdagent{} is running.}
 
 Your system administrator will be able to help you with operating-system specific ways of setting environment variables. 
+
+\textbf{Useful variables}
+These variables can be used as environment variables on your machine or as JVM properties in your \gdaut{} configuration. 
+
+\begin{description}
+\item [TEST\_AUT\_KEEP\_ALIVE\_DELAY]{This can be useful if you are using the action to \bxname{prepare for termination}. You can use this variable to configure (in millseconds) how long the \gdaut{} should be ''kept alive'' after the termination command (e.g. pressing \bxcaption{Exit} in order for the correct communication between the \ite{} and the \gdaut{} to occur. The value is set to 2000ms per default. }
+\item [TEST\_AUT\_POST\_DEREGISTRATION\_DELAY]{This can be useful if you are using the action \bxname{synchronize shutdown and re-start}. You can use this variable to configure (in milliseconds) how long your \gdaut{} requires after closing to perform tasks such as saving resources and settings. }
+\end{description}
 
 
 

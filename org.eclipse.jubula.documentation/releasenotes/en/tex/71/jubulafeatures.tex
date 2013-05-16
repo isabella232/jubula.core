@@ -50,3 +50,12 @@
 \item It is now possible to test \gdauts{} that are based on Kepler.
 \item Due to improvements in the object recognition, some components for RCP \gdauts{} may need to be remapped.
 \end{itemize}
+
+\textbf{New actions to correctly shutdown and restart an \gdaut{}}
+\begin{itemize}
+\item Users testing Swing and RCP \gdauts{} now have two new actions to \bxname{Prepare an \gdaut{} for Termination} and to \bxname{Synchronize the termination and re-start}. 
+\item These actions can be used instead of the \bxname{restart} action for cases where the \gdaut{} cannot be restarted using this action, or when an \gdaut{} needs to be correctly shutdown and restarted as part of a test (e.g. to save a workspace, settings etc.).
+\item The actions must be placed on either side of any action that will cause the \gdaut{} to terminate (not to restart). The \bxname{prepare for termination} action must come first, followed (not necessarily directly) by an action to close the \gdaut{} (e.g. selecting \bxcaption{Exit}). Directly after this action, the \bxname{synchronize termination and re-start} action must be used.
+\item The action to close the \gdaut{} must be an action that causes the \gdaut{} to run through the JVM shutdown hooks to properly terminate. Do not use the \bxname{restart} action to shut your \gdaut{} down.
+\item The combination of these three actions allows the \gdaut{} to be shutdown correctly and restarted. 
+\end{itemize}

@@ -1,2 +1,12 @@
 % CAP description for Application --> Synchronize termination and re-start of AUT
-% TODO: enter description for Application --> Synchronize termination and re-start of AUT
+
+\begin{itemize}
+\item Use this action together with the action to prepare for \gdaut{} termination and an action to close your \gdaut{}. 
+\item Using these actions, you can close your \gdaut{} using e.g. \bxmenu{File}{Exit}{} and have it automatically restarted via \app{}.
+\item Use this action sometime after using the prepare for termination action, and directly after the action to close the \gdaut{}. 
+\bxwarn{The shutdown method you choose must run through the JVM shutdown hooks to properly terminate the \gdaut{}. Do not use the \bxname{restart} action to shut your \gdaut{} down.}
+\item The action works by waiting for the \gdaut{} to terminate (configurable via a parameter), then re-starting the \gdaut{} using the same configuration / autrun parameters as it was originally started with.
+\item You may want to follow this action with a module that waits for your \gdaut{} to be started completely.
+\end{itemize}
+
+\bxwarn{This action is currently supported on the Swing and RCP toolkits}
