@@ -54,14 +54,14 @@ public class SwingAdapterFactory implements IAdapterFactory {
      * the supported classes
      */
     private static final Class[] SUPPORTEDCLASSES = new Class[] {
-            AbstractButton.class, JButton.class, JCheckBox.class,
-            JRadioButton.class,
-            JMenuBar.class, JMenuItem.class, JTree.class,
-            JCheckBox.class, JRadioButton.class, JTable.class,
-            JPopupMenu.class,
-            JList.class, JTextComponent.class, JComboBox.class,
-            JLabel.class, JTabbedPane.class };
-    
+        AbstractButton.class, JButton.class, JCheckBox.class,
+        JRadioButton.class,
+        JMenuBar.class, JMenuItem.class, JTree.class,
+        JCheckBox.class, JRadioButton.class, JTable.class,
+        JPopupMenu.class,
+        JList.class, JTextComponent.class, JComboBox.class,
+        JLabel.class, JTabbedPane.class };
+   
     /** {@inheritDoc} */
     public Class[] getSupportedClasses() {
 
