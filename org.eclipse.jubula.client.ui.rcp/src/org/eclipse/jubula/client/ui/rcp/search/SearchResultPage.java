@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.search;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
@@ -38,7 +37,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.dialogs.FilteredTree;
 
 
@@ -95,12 +93,12 @@ public class SearchResultPage extends AbstractSearchResultPage
                 ContextHelpIds.JB_SEARCH_RESULT_VIEW);
         
         // Create menu manager and menu
-        MenuManager menuMgr = new MenuManager();
-        Menu menu = menuMgr.createContextMenu(
-                getTreeViewer().getControl());
-        getTreeViewer().getControl().setMenu(menu);
+        // MenuManager menuMgr = new MenuManager();
+        // Menu menu = menuMgr.createContextMenu(
+        //         getTreeViewer().getControl());
+        // getTreeViewer().getControl().setMenu(menu);
         // Register menu for extension.
-        getSite().registerContextMenu(getID(), menuMgr, getTreeViewer());
+        // getSite().registerContextMenu(getID(), menuMgr, getTreeViewer());
         
     }
 
