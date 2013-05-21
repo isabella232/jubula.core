@@ -79,8 +79,7 @@ public class SearchReplaceTCRWizard extends Wizard {
                         iterator.hasNext();) {
                     IExecTestCasePO exec = (IExecTestCasePO) iterator.next();
                     INodePO parent = exec.getParentNode();
-                    int index = ((ISpecTestCasePO) exec.getParentNode())
-                            .indexOf(exec);
+                    int index = parent.indexOf(exec);
                     
                     IExecTestCasePO newExec;
                     if (IEventExecTestCasePO.class.isAssignableFrom(
