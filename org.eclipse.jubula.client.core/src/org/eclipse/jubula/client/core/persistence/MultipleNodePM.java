@@ -50,6 +50,7 @@ import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.messagehandling.MessageInfo;
@@ -538,7 +539,22 @@ public class MultipleNodePM  extends PersistenceManager {
          */
         public MessageInfo execute(EntityManager sess) {
             sess.persist(m_newExec);
+            if (m_newExec instanceof IEventExecTestCasePO) {
+                if (m_parent instanceof ISpecTestCasePO) {
+
+                    ISpecTestCasePO spec = (ISpecTestCasePO) m_parent;
+                    try {
+                        spec.addEventTestCase((IEventExecTestCasePO) m_newExec);
+                        return null;
+                    } catch (InvalidDataException e) {
+                        return new MessageInfo(e.getErrorId(), null);
+                    }
+                }
+                // This secures that no IEventExecTC is added in a wrong PO
+                return new MessageInfo(MessageIDs.E_EVENT_SUPPORT, null);
+            } 
             m_parent.addNode(m_index, m_newExec);
+            
             return null;
         }
         

@@ -25,6 +25,7 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
+import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
@@ -81,8 +82,23 @@ public class SearchReplaceTCRWizard extends Wizard {
                     int index = ((ISpecTestCasePO) exec.getParentNode())
                             .indexOf(exec);
                     
-                    IExecTestCasePO newExec = NodeMaker
-                            .createExecTestCasePO(m_newSpec);
+                    IExecTestCasePO newExec;
+                    if (IEventExecTestCasePO.class.isAssignableFrom(
+                            exec.getClass())) {
+                        IEventExecTestCasePO newEventExec = NodeMaker
+                                .createEventExecTestCasePO(m_newSpec, parent);
+                        IEventExecTestCasePO oldEventExec = 
+                                (IEventExecTestCasePO) exec;
+                        newEventExec.setEventType(oldEventExec.getEventType());
+                        newEventExec.setReentryProp(oldEventExec
+                                .getReentryProp());
+                        newEventExec
+                                .setMaxRetries(oldEventExec.getMaxRetries());
+                        newExec = newEventExec;
+                    } else {
+                        newExec = NodeMaker.createExecTestCasePO(m_newSpec);
+                    }
+
                     newExec.setComment(exec.getComment());
                     newExec.setActive(exec.isActive());
                     newExec.setParentProjectId(exec.getParentProjectId());
@@ -93,9 +109,9 @@ public class SearchReplaceTCRWizard extends Wizard {
                         newExec.addCompNamesPair(createNewCompNamePair(pair));
                     }
                     
+                    commands.add(new MultipleNodePM.DeleteExecTCHandle(exec));
                     commands.add(new MultipleNodePM.AddExecTCHandle(parent,
                             newExec, index));
-                    commands.add(new MultipleNodePM.DeleteExecTCHandle(exec));
                 }
                 MessageInfo errorMessageInfo = MultipleNodePM.getInstance()
                         .executeCommands(commands, session);
@@ -203,7 +219,7 @@ public class SearchReplaceTCRWizard extends Wizard {
                 COMPONENT_MAPPING_PAGE_ID, m_setOfExecsToReplace);
         addPage(m_choosePage);
         addPage(m_componentNamesPage);
-
+        
     }
 
     /**
