@@ -213,6 +213,7 @@ public class SearchReplaceTCRWizard extends Wizard {
      */
     public SearchReplaceTCRWizard(Set<IExecTestCasePO> execsToReplace) {
         m_setOfExecsToReplace = execsToReplace;
+        setWindowTitle(Messages.ReplaceTCRWizardTitle);
     }
 
     /** {@inheritDoc} */
@@ -251,8 +252,12 @@ public class SearchReplaceTCRWizard extends Wizard {
             }
         }
         m_choosePage = new ChooseTestCasePage(specSet, CHOOSE_PAGE_ID);
+        m_choosePage.setDescription(
+                Messages.replaceTCRWizard_choosePage_multi_description);
         m_componentNamesPage = new ComponentNameMappingWizardPage(
                 COMPONENT_MAPPING_PAGE_ID, m_setOfExecsToReplace);
+        m_componentNamesPage.setDescription(Messages
+                .ReplaceTCRWizard_matchComponentNames_multi_description);
         addPage(m_choosePage);
         addPage(m_componentNamesPage);
         
