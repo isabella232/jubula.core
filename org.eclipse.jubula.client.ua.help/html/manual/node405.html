@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>6.9 Object mapping</title>
-    <meta content="6.9 Object mapping" name="description" />
+    <title>6.9.4 Locating components during test execution</title>
+    <meta content="6.9.4 Locating components during test execution" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,20 +10,7 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h1><a name="SECTION00790000000000000000"> <span class="arabic">6</span>.<span class="arabic">9</span> Object mapping</a></h1>
-    <p><a name="7293"></a> <a name="7294"></a> <a name="7295"></a> <a name="7296"></a> <a name="7297"></a> <a name="7298"></a> <a name="objectmapping1"></a><p> Object mapping is the process which joins your <i>component names</i> from your Test Steps to the actual <i>technical names</i> for the components in the AUT . Because object mapping can be the last step before execution, you can start specifying tests before the software is even available. <p> Object mapping consists of two steps: <ol>
-        <li>Collecting the technical names for the components from the AUT . <li>Assigning these technical names to the component names you used in your Test Steps . </ol>
-    <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>Object mapping is bound to the AUT , not to a Test Suite . All Test Suites which use the same AUT share an object map. </b></td>
-        </tr>
-      </table>
-    <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node406.html" name="tex2html6297"><span class="arabic">6</span>.<span class="arabic">9</span>.<span class="arabic">1</span> Component names</a><li><a href="node407.html" name="tex2html6298"><span class="arabic">6</span>.<span class="arabic">9</span>.<span class="arabic">2</span> Technical names</a><li><a href="node408.html" name="tex2html6299"><span class="arabic">6</span>.<span class="arabic">9</span>.<span class="arabic">3</span> Assigning technical names to component names</a><li><a href="node409.html" name="tex2html6300"><span class="arabic">6</span>.<span class="arabic">9</span>.<span class="arabic">4</span> Locating components during test execution</a></ul>
+    <h2><a name="SECTION00794000000000000000"> <span class="arabic">6</span>.<span class="arabic">9</span>.<span class="arabic">4</span> Locating components during test execution</a></h2> The component recognition system used by Jubula uses various details about mapped components to find the right component during the test. The location of the component in the AUT hierarchy, the components near to it and the name of the component all play a role in component recognition. For each possible component, Jubula calculates the similarity to the originally mapped component. The component with the highest result is selected. <p> This method makes object mapping generally resilient to changes in the AUT . <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>

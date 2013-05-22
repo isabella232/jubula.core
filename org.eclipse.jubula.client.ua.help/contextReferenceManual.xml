@@ -1341,6 +1341,10 @@
           <description>Destination</description>
           <topic href="html/reference/node13.html#CONCRETE_GraphicApplication_TakeScreenshot_Destination" label="5.2.1 Application&#10;"></topic>
      </context>
+     <context id="CONCRETE_GraphicApplication_SyncShutdownAndRestart">
+          <description>Synchronize termination and re-start of AUT</description>
+          <topic href="html/reference/node13.html#CONCRETE_GraphicApplication_SyncShutdownAndRestart" label="5.2.1 Application&#10;"></topic>
+     </context>
      <context id="CONCRETE_GraphicApplication_CheckExistenceOfWindow_Title">
           <description>Title</description>
           <topic href="html/reference/node13.html#CONCRETE_GraphicApplication_CheckExistenceOfWindow_Title" label="5.2.1 Application&#10;"></topic>
@@ -1388,6 +1392,10 @@
      <context id="ABSTRACT_Widget_VerifyEnabled">
           <description>Check Enablement</description>
           <topic href="html/reference/node11.html#ABSTRACT_Widget_VerifyEnabled" label="5.1.4 Graphics Component&#10;"></topic>
+     </context>
+     <context id="CONCRETE_GraphicApplication_PrepareForShutdown">
+          <description>Prepare for AUT termination</description>
+          <topic href="html/reference/node13.html#CONCRETE_GraphicApplication_PrepareForShutdown" label="5.2.1 Application&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_PopupVerifyEnabledByTextpathPosition_IsEnabled">
           <description>Enabled</description>
@@ -1604,6 +1612,10 @@
      <context id="CONCRETE_TabbedPane_VerifySelectedTabByIndex_IsSelected">
           <description>Selected</description>
           <topic href="html/reference/node19.html#CONCRETE_TabbedPane_VerifySelectedTabByIndex_IsSelected" label="5.2.7 Tabbed Component&#10;"></topic>
+     </context>
+     <context id="CONCRETE_GraphicApplication_SyncShutdownAndRestart_Timeout">
+          <description>Timeout in ms</description>
+          <topic href="html/reference/node13.html#CONCRETE_GraphicApplication_SyncShutdownAndRestart_Timeout" label="5.2.1 Application&#10;"></topic>
      </context>
      <context id="CONCRETE_Table_SelectCellByColValueNew_MouseButton">
           <description>Mouse Button</description>

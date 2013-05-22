@@ -11,7 +11,7 @@
   </head>
   <body>
     <h3><a name="SECTION004126200000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">6</span>.<span class="arabic">2</span> Pre-defined functions</a></h3> The following functions are available directly in Jubula : <p><span class="textbf">Mathematical functions</span><br /> The following functions give their results as decimal numbers, e.g. 1.0, 1.2 etc. <dl>
-        <dt><strong>add</strong><dd>Adds 0 or more numbers to 0, e.g.: <tt>&quot;?add(1,2)&quot;</tt>. <dt><strong>sub</strong><dd>Subtracts the second number from the first: <tt>&quot;?sub(3,2)&quot;</tt>. <br /> This function only accepts two numbers. <dt><strong>mult</strong><dd>Multiplies 0 or more numbers by 1 e.g.: <tt>&quot;?mult(2,4)&quot;</tt>. <dt><strong>div</strong><dd>Divides the first number by the second: <tt>&quot;?div(2,1)&quot;</tt>. <br /> This function only accepts two numbers. <dt><strong>trunc</strong><dd>Takes two arguments, the decimal to be truncated and the precision (as an integer) to truncate the decimal to. Use <tt>&quot;0&quot;</tt> to cut off the number to no decimal places (i.e. to receive a plain integer), and use <tt>&quot;1&quot;</tt> to cut off the decimal to one decimal place etc: <tt>&quot;?trunc(2.396,0)&quot;</tt> gives <tt>&quot;2&quot;</tt> and <tt>&quot;?trunc(2.789,1) gives <tt>&quot;2.7&quot;</tt>&quot;</tt>. <dt><strong>round</strong><dd>Takes two arguments, the decimal to be rounded and the precision (as an integer) to round to. This function uses <i>half-up</i> rounding to round the number so that if the final decimal place after rounding is 5 or higher, the final number will be incremented by 1 e.g.: <tt>&quot;?round(2.56,1)&quot;</tt> gives <tt>&quot;2.6&quot;</tt>. If the final number after rounding is 4 or less, there is no incrementation, eg. <tt>&quot;?round(2.46,1)&quot;</tt> gives <tt>&quot;2.4&quot;</tt>. <table>
+        <dt><strong>add</strong><dd>Adds 0 or more numbers to 0, e.g.: <tt>&quot;?add(1,2)&quot;</tt>. <dt><strong>sub</strong><dd>Subtracts the second number from the first: <tt>&quot;?sub(3,2)&quot;</tt>. <br /> This function only accepts two numbers. <dt><strong>mult</strong><dd>Multiplies 0 or more numbers by 1 e.g.: <tt>&quot;?mult(2,4)&quot;</tt>. <dt><strong>div</strong><dd>Divides the first number by the second: <tt>&quot;?div(2,1)&quot;</tt>. <br /> This function only accepts two numbers. <dt><strong>trunc</strong><dd>Takes two arguments, the decimal to be truncated and the precision (as an integer) to truncate the decimal to. Use <tt>&quot;0&quot;</tt> to cut off the number to no decimal places (i.e. to receive a plain integer), and use <tt>&quot;1&quot;</tt> to cut off the decimal to one decimal place etc: <tt>&quot;?trunc(2.396,0)&quot;</tt> gives <tt>&quot;2&quot;</tt> and <tt>&quot;?trunc(2.789,1) gives <tt>&quot;2.7&quot;</tt>&quot;</tt>. <dt><strong>round</strong><dd>Takes two arguments, the decimal to be rounded and the precision (as an integer) to round to. This function uses <i>half-up</i> rounding to round the number so that if the final decimal place after rounding is 5 or higher, the final number will be incremented by 1 e.g.: <tt>&quot;?round(2.56,1)&quot;</tt> gives <tt>&quot;2.6&quot;</tt>. If the final number after rounding is 4 or less, there is no incrementation, eg. <tt>&quot;?round(2.43,1)&quot;</tt> gives <tt>&quot;2.4&quot;</tt>. <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
               <td><b>It is currently only possible to use numbers formatted with the decimal mark <i>period</i> or <i>fullstop</i> (<tt>&quot;.&quot;</tt>). Thousands separators may not be used. For example, <tt>&quot;1.5&quot;</tt> is accepted, but <tt>&quot;1,5&quot;</tt> is not. <tt>&quot;1000&quot;</tt> can be entered but <tt>&quot;1,000&quot;</tt> cannot. Entering <tt>&quot;1.000&quot;</tt> is equivalent to entering <tt>&quot;1&quot;</tt>.</b></td>
@@ -34,6 +34,30 @@
           <td><b>If you want to use the result of a date function as a part of your test data (i.e. to enter or check), then you will most likely need to use formatDate on any date modifications you have performed.</b></td>
         </tr>
       </table>
+    <p><span class="textbf">Test functions</span><br />
+      <dl>
+        <dt><strong>getNodeAttribute</strong><dd>Reads the value on the node (e.g. Test Case , Test Step ) on which this function is resolved, and uses this as the data for the Test Step . It has two possible arguments, <i>name</i> reads the name of the node, and <i>comment</i> reads the comment on the node. If the comment is empty, the value used is <i>null</i>. If you have overwritten either the name or the comment at this place of reuse, then these new details are used. <dt><strong>getCentralTestDataSetValue</strong><dd>Use this function to access a value saved in a central data set. This lets you combine values that you have defined centrally with values that you use locally, or lets you combine values from different central data sets in your test. It locates a single cell in a specific central data set based on a value in a column that you define as a key, and a column in which to search for the required value. It requires four arguments: the name of the central data set to search in, the name of the column which you wish to use as a &#39;&#39;key&#39;&#39; (you can name the column KEY if you require), the value in the key column (to specify the line), and the column in which the required data cell is located. </dl>
+    <p><span class="textbf">Example of the getCentralTestDataSetValue function</span><br /> The function to retrieve data from a central data set can be exemplified using this example central data set, which is named <i>Customer</i>: <p>
+      <table border="1" cellpadding="3">
+        <tr valign="BASELINE">
+          <th align="LEFT" valign="TOP" width="170"><span class="textbf">CUSTOMER_TYPE</span></th>
+          <th align="LEFT" valign="TOP" width="170"><span class="textbf">CUSTOMER_NAME</span><br />
+          </th>
+        </tr>
+        <tr valign="BASELINE">
+          <td align="LEFT" valign="TOP" width="170">NormalUser</td>
+          <td align="LEFT" valign="TOP" width="170">Bob Normal</td>
+        </tr>
+        <tr valign="BASELINE">
+          <td align="LEFT" valign="TOP" width="170">SuperUser</td>
+          <td align="LEFT" valign="TOP" width="170">Alice Super</td>
+        </tr>
+        <tr valign="BASELINE">
+          <td align="LEFT" valign="TOP" width="170">SupportUser</td>
+          <td align="LEFT" valign="TOP" width="170">John Support</td>
+        </tr>
+      </table>
+    <p> To select a customer name using the customer type, you should enter: <blockquote><span class="textbf">?getCentralTestDataSetValue <br />(Customer,CUSTOMER_TYPE,SuperUser,CUSTOMER_NAME)</span></blockquote> This will look in the central data set called <i>Customer</i>, locate the value <i>SuperUser</i> in the <i>CUSTOMER_TYPE</i> column, and use that line to choose the cell in the <i>CUSTOMER_NAME</i> column - Alice Super. <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
