@@ -238,10 +238,11 @@ public class ComponentNameMappingWizardPage extends WizardPage {
             
             IComponentNamePO oldComponent = ComponentNamesBP.getInstance()
                     .getCompNamePo(oldPairs.getFirstName());
+            
             String isCompatible = ComponentNamesBP.getInstance().isCompatible(
                     componentName.getComponentType(), oldComponent.getName(),
                     MasterSessionComponentNameMapper.getInstance(),
-                    m_newSpec.getParentProjectId(), true);
+                    null, true);   
             if (isCompatible == null) {
                 list.add(oldPairs);
                 if (componentName.getName().equals(oldComponent.getName())
