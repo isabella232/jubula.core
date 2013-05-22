@@ -36,7 +36,6 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
-import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
@@ -182,7 +181,7 @@ public class ComponentNameMappingWizardPage extends WizardPage {
                     .getCompNamePo(compNamesPair.getFirstName());
 
             String displayName = getDisplayName(newComponentName.getName(),
-                    null, newComponentName.getComponentType());
+                    newComponentName.getComponentType());
             Label compname = new Label(parent, NONE);
             compname.setText(displayName); 
             compname.setLayoutData(leftGridData);
@@ -217,10 +216,14 @@ public class ComponentNameMappingWizardPage extends WizardPage {
         comboViewer.setLabelProvider(new LabelProvider() {
             @Override
             public String getText(Object element) {
-                if (element instanceof ICompNamesPairPO) {
-                    ICompNamesPairPO pair = (ICompNamesPairPO)element;
-                    return getDisplayName(pair.getFirstName(),
-                            pair.getSecondName(), pair.getType());
+                if (element instanceof String) {
+                    String guid = (String) element;
+                    if (!StringUtils.isBlank((String)element)) {
+                        IComponentNamePO newComponentName = ComponentNamesBP
+                                .getInstance().getCompNamePo(guid);
+                        return getDisplayName(newComponentName.getGuid(),
+                                newComponentName.getComponentType());
+                    }
                 }
                 return StringConstants.SPACE;
             } 
@@ -228,10 +231,9 @@ public class ComponentNameMappingWizardPage extends WizardPage {
         
         m_componentNamesMapping.put(componentName.getGuid(), comboViewer);
         int counter = 1;
-        List<ICompNamesPairPO> list = new LinkedList<ICompNamesPairPO>();
+        List<String> listOfMatchingCompNames = new LinkedList<String>();
         // this is for the empty line
-        list.add(PoMaker.createCompNamesPairPO(StringConstants.SPACE,
-                StringConstants.SPACE));
+        listOfMatchingCompNames.add(StringConstants.SPACE);
         for (Iterator iterator = m_oldCompNamePairs.iterator(); 
                 iterator.hasNext();) {
             ICompNamesPairPO oldPairs = (ICompNamesPairPO) iterator.next();
@@ -243,8 +245,10 @@ public class ComponentNameMappingWizardPage extends WizardPage {
                     componentName.getComponentType(), oldComponent.getName(),
                     MasterSessionComponentNameMapper.getInstance(),
                     null, true);   
-            if (isCompatible == null) {
-                list.add(oldPairs);
+            if (isCompatible == null 
+                    && !listOfMatchingCompNames
+                        .contains(oldComponent.getGuid())) {
+                listOfMatchingCompNames.add(oldComponent.getGuid());
                 if (componentName.getName().equals(oldComponent.getName())
                         && componentName.getComponentType().equals(
                                 oldComponent.getComponentType())) {
@@ -253,7 +257,7 @@ public class ComponentNameMappingWizardPage extends WizardPage {
                 counter++;
             }
         }
-        comboViewer.setInput(list.toArray());
+        comboViewer.setInput(listOfMatchingCompNames.toArray());
     }
     
     /**
@@ -262,24 +266,13 @@ public class ComponentNameMappingWizardPage extends WizardPage {
      *            guid of the component name
      * @param guidType
      *            guid of the type
-     * @param secondGuidName
-     *            guid of second component name if <code>null</code> or
-     *            <code>""</code> ist will be ignored
      * @return a String as <code> ComponentName > SecondComponentName [ComponentType]</code>
      */
-    private String getDisplayName(String guidName, String secondGuidName,
-            String guidType) {
+    private String getDisplayName(String guidName, String guidType) {
         String firstName = ComponentNamesBP.getInstance().getName(
                 guidName);
-        String secondName = ComponentNamesBP.getInstance().getName(
-                secondGuidName);
         String type = CompSystemI18n.getString(guidType);
         String displayName = firstName;
-        if (!StringUtils.isBlank(secondGuidName)) {
-            displayName += StringConstants.SPACE 
-                    + StringConstants.RIGHT_INEQUALITY_SING 
-                    + secondName;
-        }
         if (!StringUtils.isBlank(type)) {
             displayName += StringConstants.SPACE + StringConstants.LEFT_BRACKET
                     + type + StringConstants.RIGHT_BRACKET;
@@ -292,27 +285,16 @@ public class ComponentNameMappingWizardPage extends WizardPage {
      * @return a list of component pairs which are matched together from the
      *         selection
      */
-    public List<ICompNamesPairPO> getCompMatching() {
-        List<ICompNamesPairPO> compPairs = new LinkedList<ICompNamesPairPO>();
+    public Map<String, String>getCompMatching() {
+        Map<String, String> mapping = new HashMap<String, String>();
         for (Entry<String, ComboViewer> entry : m_componentNamesMapping
                 .entrySet()) {
             String guidOfCompName = entry.getKey();
-            IViewerObservableValue test = ViewersObservables
+            IViewerObservableValue value = ViewersObservables
                     .observeSingleSelection(entry.getValue());
-            ICompNamesPairPO oldPair = (ICompNamesPairPO) test.getValue();
-            
-            if (oldPair != null) {
-                IComponentNamePO specComponent = ComponentNamesBP.getInstance()
-                        .getCompNamePo(guidOfCompName);
-                if (!StringUtils.isBlank(oldPair.getSecondName())) {
-                    ICompNamesPairPO pair = PoMaker.createCompNamesPairPO(
-                            guidOfCompName, oldPair.getSecondName(),
-                            specComponent.getComponentType());
-                    pair.setPropagated(oldPair.isPropagated());
-                    compPairs.add(pair);
-                }
-            }
+            String guidOfMappedCompName = (String) value.getValue();
+            mapping.put(guidOfCompName, guidOfMappedCompName);
         }
-        return compPairs;
+        return mapping;
     }
 }

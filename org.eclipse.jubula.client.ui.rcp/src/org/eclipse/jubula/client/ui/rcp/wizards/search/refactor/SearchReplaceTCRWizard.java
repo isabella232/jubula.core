@@ -12,17 +12,19 @@ package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-
 import javax.persistence.EntityManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -62,6 +64,9 @@ public class SearchReplaceTCRWizard extends Wizard {
      */
     private class ReplaceTestCaseOperation implements IRunnableWithProgress {
 
+        /** CompNamesBP to get AllCompNamePairs from an execTC*/
+        private CompNamesBP m_compNamesBP = new CompNamesBP();
+        
         /**
          * {@inheritDoc}
          */
@@ -104,9 +109,7 @@ public class SearchReplaceTCRWizard extends Wizard {
                     if (exec.getSpecTestCase().getName() != exec.getName()) {
                         newExec.setName(exec.getName());
                     }
-                    for (ICompNamesPairPO pair : m_listOfNewCompNamePairs) {
-                        newExec.addCompNamesPair(createNewCompNamePair(pair));
-                    }
+                    addNewCompNamePairs(exec, newExec);
                     
                     commands.add(new MultipleNodePM.DeleteExecTCHandle(exec));
                     commands.add(new MultipleNodePM.AddExecTCHandle(parent,
@@ -130,17 +133,51 @@ public class SearchReplaceTCRWizard extends Wizard {
             }
             monitor.done();
         }
+
         /**
-         * Creates a new CompNamesPairPO
-         * @param pair the pair which want to be duplicated
-         * @return the duplicated CompNamePair
+         * Looks in the<code>m_matchedCompNameGuidMap</code> if there is a
+         * matching for the new ExecTestCase and add new CompNamePairs if
+         * necessary
+         * 
+         * @param oldExec
+         *            the old ExecTestCase
+         * @param newExec
+         *            the newly created ExecTestCase
+         * @return the <code>newExec</code>
          */
-        private ICompNamesPairPO createNewCompNamePair(ICompNamesPairPO pair) {
-            ICompNamesPairPO newPair = PoMaker.createCompNamesPairPO(
-                    pair.getFirstName(), pair.getSecondName(),
-                    pair.getType());
-            newPair.setPropagated(pair.isPropagated());
-            return newPair;
+        private IExecTestCasePO addNewCompNamePairs(IExecTestCasePO oldExec,
+                IExecTestCasePO newExec) {
+            // Get all new compNamePairs to get the component names
+            Collection<ICompNamesPairPO> compNamePairs = 
+                    m_compNamesBP.getAllCompNamesPairs(newExec);
+            for (ICompNamesPairPO newPseudoPairs : compNamePairs) {
+                if (m_matchedCompNameGuidMap.containsKey(newPseudoPairs
+                        .getFirstName())) {
+                    String oldCompName = m_matchedCompNameGuidMap
+                            .get(newPseudoPairs.getFirstName());
+                    Collection<ICompNamesPairPO> oldCompNamePairs = 
+                            m_compNamesBP.getAllCompNamesPairs(oldExec);
+                    
+                    // Get the corresponding new Name of the old CompNamePair
+                    for (Iterator iterator = oldCompNamePairs.iterator();
+                            iterator.hasNext();) {
+                        ICompNamesPairPO oldPair = (ICompNamesPairPO) iterator
+                                .next();
+                        if (oldPair.getFirstName().equals(oldCompName)) {
+                            ICompNamesPairPO newPair = PoMaker
+                                    .createCompNamesPairPO(
+                                            newPseudoPairs.getFirstName(),
+                                            oldPair.getSecondName(),
+                                            oldPair.getType());
+                            newPair.setPropagated(oldPair.isPropagated());
+                            newExec.addCompNamesPair(newPair);
+                            break;
+                        }
+
+                    }
+                }
+            }
+            return newExec;
         }
 
     }
@@ -152,7 +189,7 @@ public class SearchReplaceTCRWizard extends Wizard {
     /**
      * 
      */
-    private List<ICompNamesPairPO> m_listOfNewCompNamePairs;
+    private Map<String, String> m_matchedCompNameGuidMap;
     /**
      * <code>m_choosePage</code>
      */
@@ -182,7 +219,7 @@ public class SearchReplaceTCRWizard extends Wizard {
     public boolean performFinish() {
         // This is needed if Finish was pressed on the first page
         m_newSpec = m_choosePage.getChoosenTestCase();
-        m_listOfNewCompNamePairs = m_componentNamesPage.getCompMatching();
+        m_matchedCompNameGuidMap = m_componentNamesPage.getCompMatching();
         try {
             PlatformUI.getWorkbench().getProgressService()
                     .run(true, false, new ReplaceTestCaseOperation());
