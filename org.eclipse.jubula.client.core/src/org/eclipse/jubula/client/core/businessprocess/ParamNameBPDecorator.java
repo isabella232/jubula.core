@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +25,7 @@ import org.eclipse.jubula.client.core.model.IParamNamePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
@@ -57,7 +59,9 @@ public class ParamNameBPDecorator extends GuidNameCache<IParamNamePO>
      */
     private Set<ITcParamDescriptionPO> m_paramDescriptions = 
         new HashSet<ITcParamDescriptionPO>();
-    
+
+    /** The list of test data perstistence objects to update. */
+    private List<ITestDataPO> m_testDataToUpdate = new ArrayList<ITestDataPO>();
 
     /**
      * constructor
@@ -119,8 +123,13 @@ public class ParamNameBPDecorator extends GuidNameCache<IParamNamePO>
         addNameToInsert(namePO);
     }
 
-  
-    
+    /**
+     * @param testData The test data persistence object for updating in db.
+     */
+    public void addTestDataPO(ITestDataPO testData) {
+        m_testDataToUpdate.add(testData);
+    }
+
     /**
      * writes new paramNames in database
      * @param s session to use
@@ -190,6 +199,21 @@ public class ParamNameBPDecorator extends GuidNameCache<IParamNamePO>
                 throw new PMSaveException(msg, MessageIDs.E_DB_SAVE);
             }
         }
+        for (ITestDataPO testData : getTestDataToUpdate()) {
+            testData.setParentProjectId(rootProjId);
+            try {
+                s.merge(testData);
+            } catch (PersistenceException e) {
+                StringBuilder msgbuid = new StringBuilder();
+                msgbuid.append(Messages.CouldNotSaveParameter);
+                msgbuid.append(StringConstants.SPACE);
+                msgbuid.append(testData.getName());
+                msgbuid.append(StringConstants.DOT);
+                String msg = msgbuid.toString();
+                log.error(msg, e);
+                throw new PMSaveException(msg, MessageIDs.E_DB_SAVE);
+            }
+        }
         // param names will be automatically commited in this session because of
         // invocation of createQuery
         List<String> guids = getNameGuidsToUpdate();
@@ -224,6 +248,13 @@ public class ParamNameBPDecorator extends GuidNameCache<IParamNamePO>
         updateLocalCache();
     }
     
+
+    /**
+     * @return The list of test data persistence objects.
+     */
+    private List<ITestDataPO> getTestDataToUpdate() {
+        return m_testDataToUpdate;
+    }
 
     /**
      * {@inheritDoc}

@@ -269,6 +269,21 @@ public abstract class AbstractParamInterfaceBP<T> {
             T paramIntObj, Locale locale);
 
     /**
+     * @param paramIntObj
+     *            The object to change the parameter usage at.
+     * @param desc
+     *            The old parameter for changing the usage at.
+     * @param guid
+     *            The GUID of the new parameter usage.
+     * @param locale
+     *            the locale to use.
+     * @param mapper The parameter name mapping.
+     */
+    public abstract void changeUsageParameter(T paramIntObj,
+            IParamDescriptionPO desc, String guid, Locale locale,
+            ParamNameBPDecorator mapper);
+
+    /**
      * @param desc
      *            the param to rename
      * @param newName

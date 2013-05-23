@@ -35,4 +35,12 @@ public class ParameterInterfaceBP
             IParamNameMapper mapper, int row) {
         writeTestDataEntry(conv, locale, row);
     }
+
+    /** {@inheritDoc} */
+    public void changeUsageParameter(ITestDataCubePO paramIntObj,
+            IParamDescriptionPO desc, String guid, Locale locale,
+            ParamNameBPDecorator mapper) {
+        // currently not implemented
+    }
+
 }

@@ -590,6 +590,11 @@ public class Messages extends NLS {
     public static String RefTestSuiteGUIPropertySourceAutIdName;
     public static String RefTestSuiteGUIPropertySourceRefTSName;
     public static String ReplaceTestCasesActionDialog;
+    public static String ChangeParameterUsageActionDialog;
+    public static String ChangeParameterUsageSelectPageTitle;
+    public static String ChangeParameterUsageOldNameLabel;
+    public static String ChangeParameterUsageNewNameLabel;
+    public static String ChangeParameterUsageOperation;
     public static String RenameActionCatError;
     public static String RenameActionCatLabel;
     public static String RenameActionCatMessage;

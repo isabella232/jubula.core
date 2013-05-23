@@ -588,12 +588,14 @@ public class MessageIDs {
     public static final Integer I_DB_BACKGROUND_JOB = new Integer(127);
     /** No log file found */
     public static final Integer I_NO_CLIENT_LOG_FOUND = new Integer(128);
-    /** if Automatic perspective changeover has been disabled */ 
+    /** if Automatic perspective changeover has been disabled */
     public static final Integer I_NO_PERSPECTIVE_CHANGE = new Integer(129);
-    /** if the selected entries does not have the same spec TC */ 
+    /** if the selected entries does not have the same spec TC */
     public static final Integer I_NOT_SAME_SPEC = new Integer(130);
-    /** if one or more of the selected entries is not an exec TC */ 
+    /** if one or more of the selected entries is not an exec TC */
     public static final Integer I_NO_EXEC = new Integer(131);
+    /** if the selected TCs do not use the same CTDS */
+    public static final Integer I_ALL_TCS_MUST_USE_SAME_CTDS = new Integer(132);
 
     // ---------------------------------------------------------------------
     /** key = message id, message object */
@@ -973,6 +975,7 @@ public class MessageIDs {
         messageMap.put(I_NO_PERSPECTIVE_CHANGE, i, "InfoMessage.NO_PERSPECTIVE_CHANGE", null); //$NON-NLS-1$
         messageMap.put(I_NOT_SAME_SPEC, i, "InfoMessage.NOT_SAME_SPEC", null); //$NON-NLS-1$
         messageMap.put(I_NO_EXEC, i, "InfoMessage.NO_EXEC", null); //$NON-NLS-1$
+        messageMap.put(I_ALL_TCS_MUST_USE_SAME_CTDS, i, "InfoMessage.ALL_TCS_MUST_USE_SAME_CTDS", null); //$NON-NLS-1$
     }
     
     /**
