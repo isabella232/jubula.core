@@ -13,23 +13,6 @@ From the \gdsearchresultview{}, you can:
 
 Once you have performed a search, you can perform specific actions on the results:
 \begin{itemize}
-\item You can replace all reused \gdcases{} with another \gdcase{} \bxpref{TasksSearchResultReplaceTC}.
+\item You can replace a \gdcase{} at multiple places where it has been reused with another \gdcase{} \bxpref{TasksSearchResultReplaceTC}.
 \end{itemize}
 
-\subsubsection{Replacing a specific \gdcase{} at places where it has been reused }
-\label{TasksSearchResultReplaceTC}
-
-If you have reused a \gdcase{} at multiple places in your \gdproject{}, and later create a new \gdcase{} that should replace it, then you can perform a mass replace via the \gdsearchresultview{}. 
-
-\bxwarn{In order to perform a mass replace, all \gdcases{} to be changed must not be in use by anyone else using the \gdproject{} - you should ensure that this is the case before performing the replace, otherwise the replace cannot be carried out.}
-
-\begin{enumerate}
-\item Perform a search that will let you see the places where you want to replace the \gdcase{} (for this action, using \bxname{Show where used} \bxpref{TasksShowWhereUsedTestCase} on the \gdcase{} to replace will show all places of reuse in this \gdproject{}). 
-\item In the \gdsearchresultview{}, select all entries, or just the \gdcase{} references you want to replace with a new \gdcase{} reference. 
-\bxwarn{You will only be able to perform the replace if all selected \gdcase{} references use the same original \gdcase{}.}
-\item From the context menu, select:\\
-\bxmenu{Replace with another \gdcase{}}{}{}\\
-\item The first page of a wizard will appear. Here, you can choose the \gdcase{} you want to use as a replacement at the places you selected.
-\item Click \bxcaption{Finish} to use the newly selected \gdcase{} at the places where the searched-for \gdcase{} was used, or press \bxcaption{Next} to continue to the next page of the wizard.
-\bxtipp{The \gdcase{} reference names and any comments that were used for the original \gdcase{} references, will be transferred to each new \gdcase{} reference. If the original \gdcase{} reference was commented out, the replacement \gdcase{} reference will be as well.}
-\end{enumerate}

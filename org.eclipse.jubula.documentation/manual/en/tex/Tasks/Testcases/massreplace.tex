@@ -1,0 +1,29 @@
+If you have reused a \gdcase{} at multiple places in your \gdproject{}, and later create a new \gdcase{} that should replace it, then you can perform a mass replace via the \gdsearchresultview{}. If you just want to replace one single place where a  \gdcase{} has been reused, then you can either select that \gdcase{} in the \gdsearchresultview{} or use the in-editor replace \bxpref{TasksReplaceTC}.  
+
+\bxwarn{In order to perform a mass replace, all \gdcases{} to be changed must not be in use by anyone else using the \gdproject{} -- you should ensure that this is the case before performing the replace, otherwise the replace cannot be carried out.}
+
+\begin{enumerate}
+\item Search for all places where the \gdcase{} you want to replace is used e.g. \bxname{Show where used} \bxpref{TasksShowWhereUsedTestCase}. 
+\item In the \gdsearchresultview{}, you will see all places where the selected \gdcase{} is reused in this \gdproject{}, including in other \gdcases{}, in \gdsuites{} and anywhere you have used the \gdcase{} as an \gdehandler{}. Select all entries, or just the \gdcase{} references you want to replace with a new \gdcase{} reference. 
+\bxwarn{You will only be able to perform the replace if all selected \gdcase{} references use the same original \gdcase{}.}
+\item From the context menu, select:\\
+\bxmenu{Replace with another \gdcase{}}{}{}\\
+\item The first page of a wizard will appear. Here, you can choose the \gdcase{} you want to use as a replacement at the places you selected. It is a good idea to select a \gdcase{} that ''fits well'' (in terms of any component names it propagates and parameters it references) to the \gdcase{} you are replacing. You will be able to map any compatible components and parameter names in the next steps. 
+\item Press \bxcaption{Next} to continue to the next page of the wizard.
+\item On this page, you can match any component names propagated \bxpref{TasksCompNamesCheckbox} from the newly selected \gdcase{} to already existing propagated component names from the old \gdcase{}.    
+On the left-hand side, you can see names that are propagated from the newly chosen \gdcase{}. On the right-hand side, you can:
+\begin{itemize}
+\item  match the new names to existing names if there are compatible names available in the existing \gdcase{}. The information for names you match in this way will be transferred from the existing \gdcase{} to the new \gdcase{} when the replacement occurs. Any new names entered, or further propagations at the places of reuse, will also be transferred. This is the best way of ensuring that your \gdproject{} structure is the same after the replace. 
+\item choose to leave any combo boxes empty. In this case, no match for that component name will take place, and the new component name will be used. 
+\item see if there are no names available, either because there is no compatible type for matching in the existing \gdcase{}, or because the existing \gdcase{} had no propagated component names. In such cases, the new component name will be used.
+\end{itemize}
+\item Once you have matched any component names, press \bxcaption{Next} to continue to the next page of the wizard.
+\item On this page, you can match any referenced parameter names \bxpref{TasksTestdataReferences} from the newly selected \gdcase{} to already existing referenced parameter names from the old \gdcase{}. On the left-hand side, you can see parameters that are referenced from the newly chosen \gdcase{}. On the right-hand side you can:
+\begin{itemize}
+\item  match the new parameter to existing parameters if there are compatible types available in the existing \gdcase{}. The data for any parameters you match in this way will be transferred from the existing \gdcase{} to the new \gdcase{} when the replacement occurs. Any test data entered locally, any test data referenced from the original specification, and any central test data sets or Excel tables used, will also be transferred. This is the best way of ensuring that your \gdproject{} structure is the same after the replace. 
+\item choose to leave any combo boxes empty. In this case, no match for that parameter will take place, and the new parameter will be used. 
+\item see if there are no names available, either because there is no compatible type for matching in the existing \gdcase{}, or because the existing \gdcase{} had no referenced parameters. In such cases, the new parameter will be used after the replace.
+\end{itemize}
+\item Once you have finished matching the parameters, press \bxcaption{Finish} to perform the replace.
+\end{enumerate}
+\bxtipp{The \gdcase{} reference names and any comments that were used for the original \gdcase{} references, will be transferred to each new \gdcase{} reference. If the original \gdcase{} reference was commented out, the replacement \gdcase{} reference will be as well. If you had used the original \gdcase{} as an \gdehandler{}, the \gdehandler{} details will also be transferred.}
