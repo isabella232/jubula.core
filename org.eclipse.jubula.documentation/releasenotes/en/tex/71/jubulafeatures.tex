@@ -33,6 +33,14 @@
 \item Within the specified data set, the required value is located based on the line found using the key column and entry key, as well as the column name for the actual value. 
 \end{itemize}
 
+\textbf{New option to change the column in a central test data set used by \gdcases{}}
+\begin{itemize} 
+\item If you have used a central test data set in multiple \gdcases{} and later realize that you have two columns in the central test data set that contain the same information, then you can change all \gdcases{} that use this central test data set to just use one column. Once you have done this, you can remove the unnecessary column from the central test data set.   
+\item If you have searched, e.g. for all places where a central test data set is reused, and want to alter \gdcases{} that use this central test data set to use a different column in the central test data set, then you can select the option to change the central test data set column usage.
+\item You can change an existing parameter present in the selected \gdcases{} to target a different column in the central data set using the dialog that appears.  
+\end{itemize}
+
+
 \textbf{Multi-window support for HTML \gdauts{}}
 \begin{itemize}
 \item If your HTML \gdaut{} uses multi windows (e.g. pop-ups), then you can now specify this in the \gdaut{} configuration. 
