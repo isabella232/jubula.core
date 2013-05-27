@@ -105,7 +105,6 @@ public class ComponentNameMappingWizardPage extends WizardPage {
      */
     public void setNewSpec(ISpecTestCasePO newSpec) {
         m_newSpec = newSpec;
-        setPageComplete(false);
         
         m_composite.dispose(); // Disposing old and generating new composite
         m_componentNamesMapping = new HashMap<String, ComboViewer>();
@@ -120,7 +119,6 @@ public class ComponentNameMappingWizardPage extends WizardPage {
         
         m_scroll.setContent(mappingGrid);
         m_composite = mappingGrid;
-        setPageComplete(true);
     }
 
     /**

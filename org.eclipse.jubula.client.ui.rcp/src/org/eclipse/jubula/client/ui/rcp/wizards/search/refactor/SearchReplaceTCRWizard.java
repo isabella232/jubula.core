@@ -40,6 +40,7 @@ import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.pages.ChooseTestCasePage;
 import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages.ComponentNameMappingWizardPage;
+import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages.ParameterNamesMatchingWizardPage;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageInfo;
@@ -56,6 +57,8 @@ public class SearchReplaceTCRWizard extends Wizard {
     private static final String CHOOSE_PAGE_ID = "ReplaceTCRWizard.ChoosePageId"; //$NON-NLS-1$
     /** ID for the "Component Mapping" page */
     private static final String COMPONENT_MAPPING_PAGE_ID = "ReplaceTCRWizard.ComponentMappingPageId"; //$NON-NLS-1$
+    /** ID for the "Parameter Matching" page */
+    private static final String PARAMETER_MATCHING_PAGE_ID = "ReplaceTCRWizard.ParameterMatchingPageId"; //$NON-NLS-1$
 
     /**
      * Operation for replacing the test cases
@@ -186,23 +189,33 @@ public class SearchReplaceTCRWizard extends Wizard {
      * <code>m_setOfExecsToReplace</code>
      */
     private final Set<IExecTestCasePO> m_setOfExecsToReplace;
+    
     /**
-     * 
+     * Map for matching guid's for component names 
      */
     private Map<String, String> m_matchedCompNameGuidMap;
+    
     /**
      * <code>m_choosePage</code>
      */
     private ChooseTestCasePage m_choosePage;
 
     /**
+     * Component Names matching page ID
+     */
+    private ComponentNameMappingWizardPage m_componentNamesPage;
+
+    /**
+     * Parameter Matching page ID
+     */
+    private ParameterNamesMatchingWizardPage m_parameterMatchingPage;
+    
+    /**
      * <code>m_newSpec</code>
      */
     private ISpecTestCasePO m_newSpec;
-    /**
-     * Component Names matching page
-     */
-    private ComponentNameMappingWizardPage m_componentNamesPage;
+    
+    
 
     /**
      * Constructor for the wizard page
@@ -258,8 +271,11 @@ public class SearchReplaceTCRWizard extends Wizard {
                 COMPONENT_MAPPING_PAGE_ID, m_setOfExecsToReplace);
         m_componentNamesPage.setDescription(Messages
                 .ReplaceTCRWizard_matchComponentNames_multi_description);
+        m_parameterMatchingPage = new ParameterNamesMatchingWizardPage(
+                PARAMETER_MATCHING_PAGE_ID);
         addPage(m_choosePage);
         addPage(m_componentNamesPage);
+        addPage(m_parameterMatchingPage);
         
     }
 
@@ -271,6 +287,12 @@ public class SearchReplaceTCRWizard extends Wizard {
             m_newSpec = m_choosePage.getChoosenTestCase();
             m_componentNamesPage.setNewSpec(m_newSpec);
         }
-        return super.getNextPage(page);
+        IWizardPage nextPage = super.getNextPage(page);
+        if (nextPage instanceof ParameterNamesMatchingWizardPage) {
+            m_parameterMatchingPage.setPageComplete(true);
+        } else {
+            m_parameterMatchingPage.setPageComplete(false);
+        }
+        return nextPage;
     }
 }

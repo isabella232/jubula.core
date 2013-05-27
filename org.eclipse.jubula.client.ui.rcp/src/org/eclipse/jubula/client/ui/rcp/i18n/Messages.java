@@ -640,6 +640,7 @@ public class Messages extends NLS {
     public static String ReplaceTCRWizard_matchComponentNames_multi_description;
     public static String ReplaceTCRWizard_matchComponentNames_oldInterface;
     public static String ReplaceTCRWizard_matchComponentNames_newInterface;
+    public static String ReplaceTCRWizard_matchParameterNames_title;
     public static String RevertEditorChangesActionQuestionText;
     public static String RevertEditorChangesActionShellTitle;
     public static String RunningAUTParameter;
