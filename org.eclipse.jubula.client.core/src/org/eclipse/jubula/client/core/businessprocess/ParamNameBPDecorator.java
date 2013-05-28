@@ -199,7 +199,7 @@ public class ParamNameBPDecorator extends GuidNameCache<IParamNamePO>
                 throw new PMSaveException(msg, MessageIDs.E_DB_SAVE);
             }
         }
-        for (ITestDataPO testData : getTestDataToUpdate()) {
+        for (ITestDataPO testData : m_testDataToUpdate) {
             testData.setParentProjectId(rootProjId);
             try {
                 s.merge(testData);
@@ -248,13 +248,6 @@ public class ParamNameBPDecorator extends GuidNameCache<IParamNamePO>
         updateLocalCache();
     }
     
-
-    /**
-     * @return The list of test data persistence objects.
-     */
-    private List<ITestDataPO> getTestDataToUpdate() {
-        return m_testDataToUpdate;
-    }
 
     /**
      * {@inheritDoc}

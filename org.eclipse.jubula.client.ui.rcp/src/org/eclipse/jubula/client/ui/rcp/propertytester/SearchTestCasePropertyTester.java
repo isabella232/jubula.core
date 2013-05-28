@@ -98,9 +98,7 @@ public class SearchTestCasePropertyTester
      * </ol>
      * <p>If property is <b>isExecOrSpecAndUsesCTDS</b>:
      * <ol>
-     *      <li>this node is a specification or execution Test Case,</li>
-     *      <li>the specification Test Case (of the execution Test Case) is defined
-     *          in the current project, and</li>
+     *      <li>this node is a specification or execution Test Case, and</li>
      *      <li>the data cube is not empty.</li>
      * </ol>
      */

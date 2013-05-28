@@ -165,7 +165,7 @@ public class ChangeCtdsColumnUsageOperation
      * which is called, if the user pressed F5.
      * @return True, if the project has been refreshed, otherwise false on errors.
      */
-    private boolean refreshProject() {
+    private static boolean refreshProject() {
         final AtomicReference<IStatus> statusOfRefresh =
                 new AtomicReference<IStatus>();
         Plugin.getDisplay().syncExec(new Runnable() {
