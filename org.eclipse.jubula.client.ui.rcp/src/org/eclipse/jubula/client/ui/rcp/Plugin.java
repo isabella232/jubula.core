@@ -832,6 +832,21 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         return false;
     }
 
+    /**
+     * Save all opened editors, if they have a dirty state.
+     * @return True, if all opened editors has been saved and not in dirty state,
+     *         otherwise false.
+     */
+    public boolean saveAllDirtyEditors() {
+        if (!anyDirtyStar()) {
+            return true;
+        }
+        if (showSaveEditorDialog()) {
+            return !anyDirtyStar();
+        }
+        return false;
+    }
+
     /** Sets the hourglas cursor. */
     private static void setWaitCursor() {
         getDisplay().syncExec(new Runnable() {

@@ -594,8 +594,13 @@ public class MessageIDs {
     public static final Integer I_NOT_SAME_SPEC = new Integer(130);
     /** if one or more of the selected entries is not an exec TC */
     public static final Integer I_NO_EXEC = new Integer(131);
+    /** The selected Test Case "{0}" uses more than one Central Test Data Set. */
+    public static final Integer I_TC_WITH_TWO_CTDS = new Integer(132);
     /** if the selected TCs do not use the same CTDS */
-    public static final Integer I_ALL_TCS_MUST_USE_SAME_CTDS = new Integer(132);
+    public static final Integer I_ALL_TCS_MUST_USE_SAME_CTDS = new Integer(133);
+    /** The selected Test Cases do not have a parameter for which the column usage of the Central Test Data can be changed. */
+    public static final Integer I_TCS_HAVE_NO_CHANGEABLE_PARAMETER_NAME =
+            new Integer(134);
 
     // ---------------------------------------------------------------------
     /** key = message id, message object */
@@ -975,7 +980,9 @@ public class MessageIDs {
         messageMap.put(I_NO_PERSPECTIVE_CHANGE, i, "InfoMessage.NO_PERSPECTIVE_CHANGE", null); //$NON-NLS-1$
         messageMap.put(I_NOT_SAME_SPEC, i, "InfoMessage.NOT_SAME_SPEC", null); //$NON-NLS-1$
         messageMap.put(I_NO_EXEC, i, "InfoMessage.NO_EXEC", null); //$NON-NLS-1$
+        messageMap.put(I_TC_WITH_TWO_CTDS, i, "InfoMessage.TC_WITH_TWO_CTDS", null); //$NON-NLS-1$
         messageMap.put(I_ALL_TCS_MUST_USE_SAME_CTDS, i, "InfoMessage.ALL_TCS_MUST_USE_SAME_CTDS", null); //$NON-NLS-1$
+        messageMap.put(I_TCS_HAVE_NO_CHANGEABLE_PARAMETER_NAME, i, "InfoMessage.TCS_HAVE_NO_CHANGEABLE_PARAMETER_NAME", null); //$NON-NLS-1$
     }
     
     /**

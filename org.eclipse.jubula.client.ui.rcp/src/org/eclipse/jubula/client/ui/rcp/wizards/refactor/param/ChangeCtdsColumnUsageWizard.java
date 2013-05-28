@@ -11,10 +11,8 @@
 package org.eclipse.jubula.client.ui.rcp.wizards.refactor.param;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Set;
-
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.jubula.client.core.model.ITestCasePO;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressService;
@@ -25,18 +23,33 @@ import org.eclipse.ui.progress.IProgressService;
  */
 public class ChangeCtdsColumnUsageWizard extends Wizard {
 
-    /** The wizard page for selecting the old parameter name. */
-    private ParameterNames m_paramNames;
+    /** The running operation for persisting the column usage. */
+    private ChangeCtdsColumnUsageOperation m_operation;
 
     /**
-     * @param testCases The set of execution Test Cases the change of
-     *                  parameter name usage should operate on.
+     * @param paramDescriptions The parameter descriptions of the selected Test Cases.
      */
-    public ChangeCtdsColumnUsageWizard(Set<ITestCasePO> testCases) {
-        setWindowTitle(Messages.ChangeParameterUsageActionDialog);
-        // create for each parameter name a corresponding set of execution Test Cases
-        m_paramNames = new ParameterNames(testCases);
-        addPage(new SelectOldAndNewParameterNamesPage(m_paramNames));
+    public ChangeCtdsColumnUsageWizard(
+            ExistingAndNewParameterData paramDescriptions) {
+        m_operation = new ChangeCtdsColumnUsageOperation(paramDescriptions);
+        setWindowTitle(Messages.ChangeCtdsColumnUsageActionDialog);
+        addPage(new ChangeCtdsColumnUsagePage(paramDescriptions));
+    }
+
+    /**
+     * @return True, if all pages are complete and the running operation can lock,
+     *         otherwise false.
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canFinish() {
+        String canLock = m_operation.canLock();
+        WizardPage page = (WizardPage) getContainer().getCurrentPage();
+        page.setErrorMessage(canLock);
+        if (canLock != null) {
+            return false;
+        }
+        return super.canFinish();
     }
 
     /**
@@ -46,14 +59,25 @@ public class ChangeCtdsColumnUsageWizard extends Wizard {
         try {
             IProgressService ps = PlatformUI.getWorkbench()
                     .getProgressService();
-            ps.run(true, false, new ChangeCtdsColumnUsageOperation(
-                    m_paramNames));
+            ps.run(true, false, m_operation);
         } catch (InvocationTargetException e) {
             //Already handled;
         } catch (InterruptedException e) {
             //Already handled
         }
         return true;
+    }
+
+    /**
+     * Unlock all previously locked persistent objects.
+     */
+    @Override
+    public void dispose() {
+        if (m_operation != null) {
+            m_operation.closeEditSupports();
+            m_operation = null;
+        }
+        super.dispose();
     }
 
 }

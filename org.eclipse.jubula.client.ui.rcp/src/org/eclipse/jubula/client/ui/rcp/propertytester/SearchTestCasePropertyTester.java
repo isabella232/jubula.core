@@ -10,12 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.propertytester;
 
-import java.util.List;
-
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
-import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
@@ -105,7 +101,7 @@ public class SearchTestCasePropertyTester
      *      <li>this node is a specification or execution Test Case,</li>
      *      <li>the specification Test Case (of the execution Test Case) is defined
      *          in the current project, and</li>
-     *      <li>{@link #checkParameters(List, IParameterInterfacePO)}.</li>
+     *      <li>the data cube is not empty.</li>
      * </ol>
      */
     private static boolean checkNode(String property,
@@ -117,55 +113,11 @@ public class SearchTestCasePropertyTester
         if (property.equals(IS_EXEC_OR_SPEC_AND_USES_CTDS)) {
             if (node instanceof IExecTestCasePO
                     || node instanceof ISpecTestCasePO) {
-                if (node instanceof IExecTestCasePO) {
-                    IExecTestCasePO exec = (IExecTestCasePO) node;
-                    if (!exec.getSpecTestCase().getParentProjectId()
-                            .equals(projectId)) {
-                        // the specification Test Case of the execution Test Case
-                        // is not defined in current project
-                        return false;
-                    }
-                } else {
-                    ISpecTestCasePO spec = (ISpecTestCasePO) node;
-                    if (!spec.getParentProjectId().equals(projectId)) {
-                        // the specification Test Case
-                        // is not defined in current project
-                        return false;
-                    }
-                }
                 ITestCasePO testCase = (ITestCasePO) node;
-                return checkParameters(testCase.getParameterList(),
-                        testCase.getReferencedDataCube());
+                return testCase.getReferencedDataCube() != null;
             }
         }
         // node is not execution and not specification Test Case
-        return false;
-    }
-
-    /**
-     * @param params The list of parameter descriptions of the Test Case. It must not be null.
-     * @param dataCube The data cube of the Test Case. It can be null.
-     * @return True, if the following rules are satisfied, otherwise false:
-     * <ol>
-     *      <li>the data cube is not empty,</li>
-     *      <li>the list of parameters has one or more elements, and</li>
-     *      <li>one of the parameters have the same type as an other column in the CTDS.</li>
-     * </ol>
-     */
-    private static boolean checkParameters(List<IParamDescriptionPO> params,
-            IParameterInterfacePO dataCube) {
-        assert params != null;
-        if (dataCube != null) {
-            for (IParamDescriptionPO param : params) {
-                for (IParamDescriptionPO dcParam
-                        : dataCube.getParameterList()) {
-                    if (!param.getName().equals(dcParam.getName())
-                            && param.getType().equals(dcParam.getType())) {
-                        return true;
-                    }
-                }
-            }
-        }
         return false;
     }
 

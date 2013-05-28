@@ -19,7 +19,7 @@ import org.eclipse.swt.graphics.Image;
  * The content provider for the parameter names used by the TreeViewer.
  * @author BREDEX GmbH
  */
-public class ParameterNamesLabelProvider extends GeneralLabelProvider {
+public class ParameterDescriptionLabelProvider extends GeneralLabelProvider {
 
     /**
      * {@inheritDoc}
@@ -44,11 +44,13 @@ public class ParameterNamesLabelProvider extends GeneralLabelProvider {
     public String getText(Object element) {
         if (element instanceof IParamDescriptionPO) {
             IParamDescriptionPO paramDesc = (IParamDescriptionPO) element;
-            StringBuffer sb = new StringBuffer(paramDesc.getName());
-            sb.append(" ("); //$NON-NLS-1$
-            sb.append(getShortTypeName(paramDesc));
-            sb.append(")"); //$NON-NLS-1$
-            return sb.toString();
+            StringBuffer sb = new StringBuffer();
+            return sb.append("[") //$NON-NLS-1$
+                .append(getShortTypeName(paramDesc))
+                .append(": ") //$NON-NLS-1$
+                .append(paramDesc.getName())
+                .append("]") //$NON-NLS-1$
+                .toString();
         }
         return super.getText(element);
     }
@@ -72,7 +74,7 @@ public class ParameterNamesLabelProvider extends GeneralLabelProvider {
     public String getToolTipText(Object element) {
         if (element instanceof IParamDescriptionPO) {
             IParamDescriptionPO paramDesc = (IParamDescriptionPO) element;
-            return "id=" + paramDesc.getUniqueId();
+            return "id=" + paramDesc.getUniqueId(); //$NON-NLS-1$
         }
         return super.getToolTipText(element);
     }

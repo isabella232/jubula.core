@@ -18,14 +18,15 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
  * The content provider for the parameter names used by the TreeViewer.
  * @author BREDEX GmbH
  */
-public class ParameterNamesContentProvider implements ITreeContentProvider {
+public class ParameterDescriptionContentProvider
+        implements ITreeContentProvider {
 
     /**
      * The parameter names passed to this content provider in the method
      * {@link #getElements(Object)} by
      * {@link org.eclipse.jface.viewers.TreeViewer#setInput(Object)}.
      */
-    private ParameterNames m_paramNames;
+    private ExistingAndNewParameterData m_paramData;
 
     /**
      * @return The array of parameter descriptions to show in the tree directly
@@ -33,9 +34,9 @@ public class ParameterNamesContentProvider implements ITreeContentProvider {
      * {@inheritDoc}
      */
     public Object[] getElements(Object inputElement) {
-        if (inputElement instanceof ParameterNames) {
-            m_paramNames = (ParameterNames) inputElement;
-            return m_paramNames.getAllParamDescriptions();
+        if (inputElement instanceof ExistingAndNewParameterData) {
+            m_paramData = (ExistingAndNewParameterData) inputElement;
+            return m_paramData.getAllParamDescriptions();
         }
         return null;
     }
@@ -59,10 +60,10 @@ public class ParameterNamesContentProvider implements ITreeContentProvider {
      */
     public Object[] getChildren(Object parentElement) {
         if (parentElement instanceof IParamDescriptionPO) {
-            if (m_paramNames != null) {
+            if (m_paramData != null) {
                 IParamDescriptionPO paramDesc =
                         (IParamDescriptionPO) parentElement;
-                return m_paramNames.getTestCasesOfParamDescription(paramDesc);
+                return m_paramData.getTestCasesOfParamDescription(paramDesc);
             }
         }
         return null;

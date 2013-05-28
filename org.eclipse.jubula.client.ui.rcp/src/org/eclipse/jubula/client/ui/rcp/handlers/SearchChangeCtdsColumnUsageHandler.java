@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
@@ -26,6 +27,7 @@ import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.param.ChangeCtdsColumnUsageWizard;
+import org.eclipse.jubula.client.ui.rcp.wizards.refactor.param.ExistingAndNewParameterData;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -53,6 +55,24 @@ public class SearchChangeCtdsColumnUsageHandler
             ITestCasePO testCase = (ITestCasePO) nodePO;
             IParameterInterfacePO currentDataCube =
                     testCase.getReferencedDataCube();
+            if (testCase instanceof IExecTestCasePO) {
+                IExecTestCasePO exec = (IExecTestCasePO) testCase;
+                if (exec.getSpecTestCase().getReferencedDataCube() != null
+                        && exec.getReferencedDataCube()
+                            != exec.getSpecTestCase().getReferencedDataCube()) {
+                    String execName = exec.getName();
+                    if (!exec.getName().equals(
+                            exec.getSpecTestCase().getName())) {
+                        execName = execName
+                                + " <" + exec.getSpecTestCase().getName() //$NON-NLS-1$
+                                + ">"; //$NON-NLS-1$
+                    }
+                    ErrorHandlingUtil.createMessageDialog(
+                            MessageIDs.I_TC_WITH_TWO_CTDS,
+                            new String[] {execName}, null);
+                    return null;
+                }
+            }
             if (dataCube == null && currentDataCube != null) {
                 dataCube = currentDataCube;
             } else if (currentDataCube == null
@@ -63,27 +83,29 @@ public class SearchChangeCtdsColumnUsageHandler
             }
             testCaseSet.add(testCase);
         }
-        if (Plugin.getDefault().anyDirtyStar()) {
-            if (Plugin.getDefault().showSaveEditorDialog()) {
-                if (!Plugin.getDefault().anyDirtyStar()) {
-                    showWizardDialog(testCaseSet);
-                }
-            }
-        } else {
-            showWizardDialog(testCaseSet);
+        // create for each parameter name a corresponding set of execution Test Cases
+        ExistingAndNewParameterData paramData =
+                new ExistingAndNewParameterData(testCaseSet);
+        if (paramData.getAllParamDescriptions().length == 0) {
+            ErrorHandlingUtil.createMessageDialog(
+                    MessageIDs.I_TCS_HAVE_NO_CHANGEABLE_PARAMETER_NAME);
+            return null;
+        }
+        if (Plugin.getDefault().saveAllDirtyEditors()) {
+            showWizardDialog(paramData);
         }
         return null;
     }
 
     /**
      * Show the dialog for changing CTDS column usage.
-     * @param execList Set of all execution and specification Test Cases, in which
-     *                 parameter names should be replaced.
+     * @param paramData The parameter names of the selected Test Cases.
      */
-    private void showWizardDialog(Set<ITestCasePO> execList) {
+    private void showWizardDialog(
+            ExistingAndNewParameterData paramData) {
         WizardDialog dialog;
         dialog = new WizardDialog(getActiveShell(),
-                new ChangeCtdsColumnUsageWizard(execList));
+                new ChangeCtdsColumnUsageWizard(paramData));
         dialog.open();
     }
 
