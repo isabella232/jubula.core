@@ -15,7 +15,6 @@
   <description>Release engineering for Jubula ITE.</description>
 
 	<modules>
-		<module>../org.apache.poi</module>
 		<module>../org.eclipse.jubula.site</module>
 		<module>../org.eclipse.jubula.app</module>
 		<module>../org.eclipse.jubula.app.cmd</module>
