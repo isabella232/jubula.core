@@ -22,6 +22,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Cell;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.exceptions.DataReadException;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.exceptions.NoSupportForLocaleException;
 
@@ -162,15 +163,15 @@ public class ExcelImportFilter implements IDataImportFilter {
         }
         int type = cell.getCellType();
         switch (type) {
-            case HSSFCell.CELL_TYPE_STRING:
+            case Cell.CELL_TYPE_STRING:
                 return cell.getRichStringCellValue().getString();
-            case HSSFCell.CELL_TYPE_NUMERIC:
+            case Cell.CELL_TYPE_NUMERIC:
                 return getDoubleString(cell.getNumericCellValue());
-            case HSSFCell.CELL_TYPE_FORMULA:
+            case Cell.CELL_TYPE_FORMULA:
                 switch(cell.getCachedFormulaResultType()) {
-                    case HSSFCell.CELL_TYPE_STRING:
+                    case Cell.CELL_TYPE_STRING:
                         return cell.getRichStringCellValue().getString();
-                    case HSSFCell.CELL_TYPE_NUMERIC:
+                    case Cell.CELL_TYPE_NUMERIC:
                         return getDoubleString(cell.getNumericCellValue());
                     default:
                         break;
