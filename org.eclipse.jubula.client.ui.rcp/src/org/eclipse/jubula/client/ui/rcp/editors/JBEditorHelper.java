@@ -111,7 +111,6 @@ public class JBEditorHelper implements ILockedObjects,
             try {
                 getEditSupport().lockWorkVersion();
                 m_editableState = EditableState.OK;
-                setDirty(true);
             } catch (PMAlreadyLockedException e) {
                 m_editableState = EditableState.Locked;
                 PMExceptionHandler.handlePMExceptionForEditor(e, m_editor);
