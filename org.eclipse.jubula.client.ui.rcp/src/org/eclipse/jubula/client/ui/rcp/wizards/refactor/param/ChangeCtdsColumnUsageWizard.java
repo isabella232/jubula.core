@@ -47,7 +47,7 @@ public class ChangeCtdsColumnUsageWizard extends Wizard {
         WizardPage page = (WizardPage) getContainer().getCurrentPage();
         page.setErrorMessage(canLock);
         if (canLock != null) {
-            return false;
+            return false; // locking not possible
         }
         return super.canFinish();
     }

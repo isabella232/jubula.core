@@ -16,6 +16,8 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
+import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -170,6 +172,16 @@ public class ChangeCtdsColumnUsagePage extends WizardPage
         m_paramData.setNewParamName(m_newParamNameCombo.getText());
         setPageComplete(m_paramData.isComplete()
                 && m_newParamNameCombo.isEnabled());
+    }
+
+    /**
+     * Show help contend attached to wizard after selecting the ? icon,
+     * or pressing F1 on Windows / Shift+F1 on Linux / Help on MAC.
+     * {@inheritDoc}
+     */
+    public void performHelp() {
+        Plugin.getHelpSystem().displayHelp(ContextHelpIds
+                .SEARCH_REFACTOR_CHANGE_CTDS_COLUMN_USAGE_WIZARD_PAGE);
     }
 
 }

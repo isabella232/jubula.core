@@ -36,6 +36,8 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
+import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
@@ -295,4 +297,15 @@ public class ComponentNameMappingWizardPage extends WizardPage {
         }
         return mapping;
     }
+
+    /**
+     * Show help contend attached to wizard after selecting the ? icon,
+     * or pressing F1 on Windows / Shift+F1 on Linux / Help on MAC.
+     * {@inheritDoc}
+     */
+    public void performHelp() {
+        Plugin.getHelpSystem().displayHelp(ContextHelpIds
+                .SEARCH_REFACTOR_REPLACE_MATCH_COMP_NAMES_WIZARD_PAGE);
+    }
+
 }

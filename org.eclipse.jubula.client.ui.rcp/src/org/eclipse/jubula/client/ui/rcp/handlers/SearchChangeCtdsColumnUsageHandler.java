@@ -106,6 +106,7 @@ public class SearchChangeCtdsColumnUsageHandler
         WizardDialog dialog;
         dialog = new WizardDialog(getActiveShell(),
                 new ChangeCtdsColumnUsageWizard(paramData));
+        dialog.setHelpAvailable(true); // show ? icon on left bottom
         dialog.open();
     }
 

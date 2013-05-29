@@ -254,6 +254,16 @@ public interface ContextHelpIds {
     REFACTOR_REPLACE_MATCH_COMP_NAMES_WIZARD_PAGE = PRAEFIX
             + "refactorReplaceMatchComponentNamesWizardPagePageContextId"; //$NON-NLS-1$
 
+    /** help context id for a wizard page */
+    public static final String
+    SEARCH_REFACTOR_REPLACE_MATCH_COMP_NAMES_WIZARD_PAGE = PRAEFIX
+            + "searchRefactorReplaceMatchComponentNamesWizardPagePageContextId"; //$NON-NLS-1$
+
+    /** help context id for a wizard page */
+    public static final String
+    SEARCH_REFACTOR_CHANGE_CTDS_COLUMN_USAGE_WIZARD_PAGE = PRAEFIX
+            + "searchRefactorChangeCtdsColumnUsageWizardPagePageContextId"; //$NON-NLS-1$
+
     /** help context id for the nag dialog to import all required projects */
     public static final String IMPORT_ALL_REQUIRED_PROJECTS = PRAEFIX
         + "openProjectImportAllRequiredProjectsContextId"; //$NON-NLS-1$

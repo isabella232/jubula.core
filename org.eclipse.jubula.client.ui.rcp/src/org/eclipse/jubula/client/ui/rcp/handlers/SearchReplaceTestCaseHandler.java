@@ -105,7 +105,7 @@ public class SearchReplaceTestCaseHandler extends
                         .6f, SizeType.SIZE);
             }
         };
-        dialog.setHelpAvailable(true);
+        dialog.setHelpAvailable(true); // show ? icon on left bottom
         dialog.open();
     }
 

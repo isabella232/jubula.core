@@ -11,6 +11,8 @@
 package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
 
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -40,5 +42,15 @@ public class ParameterNamesMatchingWizardPage extends WizardPage {
                 | SWT.H_SCROLL);
         setControl(comp);
     }
-    
+
+    /**
+     * Show help contend attached to wizard after selecting the ? icon,
+     * or pressing F1 on Windows / Shift+F1 on Linux / Help on MAC.
+     * {@inheritDoc}
+     */
+    public void performHelp() {
+        Plugin.getHelpSystem().displayHelp(ContextHelpIds
+                .SEARCH_REFACTOR_REPLACE_MATCH_COMP_NAMES_WIZARD_PAGE);
+    }
+
 }
