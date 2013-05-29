@@ -23,4 +23,12 @@
          Performing an action in the cheat sheet viewer (such as clicking &quot;Complete&quot;) may remove the focus from the element (e.g. Test Case) you were editing. When returning to your test, you will need to re-select the item you want to edit to be able to add data or component names for example.
       </description>
    </item>
+   <item title="More resources once you're done">
+      <description>
+          Visit <b>http://testing.bredex.de</b> for more examples, articles and testing resources. 
+      </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.browser.openBrowser(url=http://testing.bredex.de)"/>
+   </item>
 </cheatsheet>
