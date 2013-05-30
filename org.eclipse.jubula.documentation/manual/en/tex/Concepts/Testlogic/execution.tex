@@ -12,12 +12,12 @@ The prerequisites for test execution are covered in the previous chapter \bxpref
 
 
 \subsection{\gdstep{} execution}
-\app{} executes tests on the following basis: 
+Tests are  executed tests on the following basis: 
 \begin{itemize}
 \item A user-defined component is located in the user interface of the \gdaut{}. 
 \item The specified action is executed on this component, with the parameters you gave for the action. 
 \end{itemize}
 
-\app{} bases the success of an action on whether it was carried out or not. There are no implicit checks which verify the state of the application to check if the execution of an action actually had an effect. For example, if an action is carried out to click a button, this \gdstep{} will be marked as successful even if the button is disabled. From \app{}'s perspective, a click was executed on the button component. 
+The success of an action is based on whether it was carried out or not. There are no implicit checks which verify the state of the application to check if the execution of an action actually had an effect. For example, if an action is carried out to click a button, this \gdstep{} will be marked as successful even if the button is disabled. From the remote control perspective, a click was executed on the button component. 
 
 It is worth bearing this in mind if a test has failed, especially because of a ''component not found'' error. What may have happened is that a further component was not found due to a dialog still being in focus, because the \bxcaption{close} button  was disabled, for example. Although a click was executed on this button, it did not have the desired effect. The test continued, but ran into problems. 
