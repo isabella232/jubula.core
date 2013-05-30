@@ -2,15 +2,15 @@
 \gdhelpid{autConfigSettingWizardPagePageContextId}{Configuring an AUT}
 \gdhelpid{autSettingWizardPagePageContextId}{Defining an AUT}
 
-\app{} offers two options to start your Java \gdaut{} for testing:
+There are two options to start your Java \gdaut{} for testing:
 
 \begin{description}
-\item [Via an \gdaut{} configuration:]{This option means that you create an \gdaut{} configuration in your \gdproject{}, and the \gdaut{} is started by \app{} \bxpref{TasksConfigureJavaAUT}.}
-\item [Using the \bxname{autrun} command:]{This option lets you start an \gdaut{} without creating a configuration. Certain start parameters are required for the \gdaut{} so that \app{} can locate it \bxpref{autrun}.}
+\item [Via an \gdaut{} configuration:]{This option means that you create an \gdaut{} configuration in your \gdproject{}, and the \gdaut{} is started from the \ite{} \bxpref{TasksConfigureJavaAUT}.}
+\item [Using the \bxname{autrun} command:]{This option lets you start an \gdaut{} without creating a configuration. Certain start parameters are required for the \gdaut{} so that it can be located \bxpref{autrun}.}
 \end{description}
 
 
-\subsubsection{Configuring a Java \gdaut{} to be started by \app{}}
+\subsubsection{Configuring a Java \gdaut{} to be started from the \ite{}}
 \index{Add!AUT Configuration}
 \index{AUT Configuration!Add}
 \index{Edit!AUT Configuration}
@@ -73,7 +73,7 @@ You can use the advanced dialog (\bxfigref{autconfigadvanced}) if your \gdaut{} 
 
 This path can be relative (if you define a working directory), or absolute. This JAR file must contain a manifest file which contains the main class and the classpath. 
 
-\item You can optionally create a working directory to store files in. The server directory of the \app{} installation is selected as default. To create a working directory elsewhere, browse to and select the location. 
+\item You can optionally create a working directory to store files in. The server directory of the installation is selected as default. To create a working directory elsewhere, browse to and select the location. 
 
 The working directory is the root directory for any classpaths, classnames, JAR files and JRE binaries. If you create a working directory, you can enter the paths to these items using a relative path, with the working directory as the root. For more information on relative paths, read the section in the reference manual \bxextref{\gdrefman}{ref,relativepath}. 
 
@@ -84,14 +84,14 @@ The working directory is the root directory for any classpaths, classnames, JAR 
 \item Browse to a JRE executable or add a new one by clicking \bxcaption{New}. 
 The Java version used must be 1.4 or later. 
 
-Java is installed with \app{}. You can find the Java file in:\\
-\bxmenu{\app{}}{jre}{bin}.
+Java is installed with the \ite{}. You can find the Java file in:\\
+\bxmenu{\gd{} or \jb{}}{jre}{bin}.
 Use java.exe if you want to use a console, use javaw.exe if you do not want a console. 
 \item For SWT and RCP \gdauts{}, select which keyboard layout is used on the machine on which the \gdaut{} will run. 
 g
 \bxtipp{The keyboard layout is not the actual keyboard attached to the computer, but is based on the regional language settings for the operating system.}
 
-\app{} supports English (US) and German (DE) keyboard layouts out-of-the box. If you want to use a different keyboard layout, see the reference manual for information on creating keyboard layouts \bxextref{\gdrefman}{ref,keyboardlayout}. 
+English (US) and German (DE) keyboard layouts are supported out-of-the box. If you want to use a different keyboard layout, see the reference manual for information on creating keyboard layouts \bxextref{\gdrefman}{ref,keyboardlayout}. 
 \end{enumerate}
 For information on the expert properties for the \gdaut{} configuration, see the next section \bxpref{ExpertAUTConfig}. 
 
@@ -114,7 +114,7 @@ format \bxcaption{<VARNAME>=<value>}, i.e. \bxcaption{PATH=C:$\backslash$}.
 Separate each variable with a new line by pressing \bxkey{Enter}.
 
 \bxwarn{Please be advised that ''embedding'' the contents of one
-variable into another is not supported at this time by \app{}. That is,
+variable into another is not supported at this time. That is,
 if you have a variable named \texttt{FOO} whose value is
 \bxcaption{abc}, and set the value of a second
 variable \texttt{BAR} to \bxcaption{\%FOO\%def}, the second variable will
