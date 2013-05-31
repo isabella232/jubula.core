@@ -66,18 +66,22 @@ public class ChangeCtdsColumnUsagePage extends WizardPage
      * {@inheritDoc}
      */
     public void createControl(Composite parent) {
+        // shrink height of dialog content to 100 pixel (originally about 200 pixel)
+        if (parent.getLayoutData() instanceof GridData) {
+            GridData gridData = (GridData) parent.getLayoutData();
+            gridData.heightHint = 100;
+        }
+
         Composite composite = new Composite(parent, SWT.NONE);
-        composite.setLayout(new GridLayout(2, false));
-        composite.setLayoutData(new GridData(GridData.FILL_BOTH));
+        composite.setLayout(new GridLayout(2, true));
+        composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         setControl(composite);
 
-        Group groupLeft = new Group(composite, SWT.NONE);
-        groupLeft.setLayout(new GridLayout(1, false));
-        groupLeft.setLayoutData(new GridData(GridData.FILL_BOTH));
-        groupLeft.setText(Messages.ChangeParameterUsageOldNameLabel);
+        Group groupLeft = createGroup(composite,
+                Messages.ChangeParameterUsageOldNameLabel);
         m_oldParamNameCombo = new ComboViewer(groupLeft, SWT.READ_ONLY);
         m_oldParamNameCombo.getCombo().setLayoutData(
-                new GridData(SWT.CENTER, SWT.CENTER, true, true));
+                new GridData(GridData.FILL_HORIZONTAL));
         m_oldParamNameCombo.setContentProvider(
                 new ParameterDescriptionContentProvider());
         m_oldParamNameCombo.setLabelProvider(
@@ -85,17 +89,28 @@ public class ChangeCtdsColumnUsagePage extends WizardPage
         m_oldParamNameCombo.setInput(m_paramData);
         m_oldParamNameCombo.addSelectionChangedListener(this);
 
-        Group groupRight = new Group(composite, SWT.NONE);
-        groupRight.setLayout(new GridLayout(1, false));
-        groupRight.setLayoutData(new GridData(GridData.FILL_BOTH));
-        groupRight.setText(Messages.ChangeParameterUsageNewNameLabel);
+        Group groupRight = createGroup(composite,
+                Messages.ChangeParameterUsageNewNameLabel);
         m_newParamNameCombo = new Combo(groupRight, SWT.READ_ONLY);
         m_newParamNameCombo.setLayoutData(
-                new GridData(SWT.CENTER, SWT.CENTER, true, true));
-        // add all possible items for the layout manager to calculate the width
-        m_newParamNameCombo.setItems(m_paramData.getAllColumnNamesOfCTDS());
+                new GridData(GridData.FILL_HORIZONTAL));
         m_newParamNameCombo.addSelectionListener(this);
         m_newParamNameCombo.addKeyListener(this);
+    }
+
+    /**
+     * @param parent The parent composite.
+     * @param text The title text.
+     * @return A vertically centered and horizontal filled group
+     *         with the given title text and horizontal.
+     */
+    private static Group createGroup(Composite parent, String text) {
+        Group group = new Group(parent, SWT.NONE);
+        group.setLayout(new GridLayout(1, false));
+        group.setLayoutData(new GridData(
+                SWT.FILL, SWT.CENTER, true, true));
+        group.setText(text);
+        return group;
     }
 
     /**

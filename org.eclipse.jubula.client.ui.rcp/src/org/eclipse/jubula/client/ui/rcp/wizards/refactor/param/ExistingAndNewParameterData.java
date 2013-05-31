@@ -171,16 +171,6 @@ public class ExistingAndNewParameterData {
     }
 
     /**
-     * @return An array of all column names used in the Central Test Data Set.
-     */
-    public String[] getAllColumnNamesOfCTDS() {
-        if (m_dataCube != null) {
-            return m_dataCube.getParamNames().toArray(new String[] {});
-        }
-        return new String[] {};
-    }
-
-    /**
      * @param paramDesc The old parameter description to set. Must not be null.
      * @return An array of column names used in the Central Test Data Set
      *         with the same type and a different parameter name than the
