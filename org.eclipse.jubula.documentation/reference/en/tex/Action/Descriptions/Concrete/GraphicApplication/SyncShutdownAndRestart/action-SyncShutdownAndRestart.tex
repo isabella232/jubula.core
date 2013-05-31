@@ -2,7 +2,7 @@
 
 \begin{itemize}
 \item Use this action together with the action to prepare for \gdaut{} termination and an action to close your \gdaut{}. 
-\item Using these actions, you can close your \gdaut{} using e.g. \bxmenu{File}{Exit}{} and have it automatically restarted via \app{}.
+\item Using these actions, you can close your \gdaut{} using e.g. \bxmenu{File}{Exit}{} and have it automatically restarted.
 \item Use this action sometime after using the prepare for termination action, and directly after the action to close the \gdaut{}. 
 \bxwarn{The shutdown method you choose must run through the JVM shutdown hooks to properly terminate the \gdaut{}. Do not use the \bxname{restart} action to shut your \gdaut{} down.}
 \item The action works by waiting for the \gdaut{} to terminate (configurable via a parameter), then re-starting the \gdaut{} using the same configuration / autrun parameters as it was originally started with.
