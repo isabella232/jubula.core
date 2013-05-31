@@ -305,7 +305,7 @@ public class ComponentNameMappingWizardPage extends WizardPage {
      */
     public void performHelp() {
         Plugin.getHelpSystem().displayHelp(ContextHelpIds
-                .SEARCH_REFACTOR_REPLACE_MATCH_COMP_NAMES_WIZARD_PAGE);
+                .SEARCH_REFACTOR_REPLACE_EXECUTION_TEST_CASE_WIZARD);
     }
 
 }

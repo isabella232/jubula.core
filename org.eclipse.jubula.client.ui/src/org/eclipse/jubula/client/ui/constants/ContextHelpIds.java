@@ -254,10 +254,10 @@ public interface ContextHelpIds {
     REFACTOR_REPLACE_MATCH_COMP_NAMES_WIZARD_PAGE = PRAEFIX
             + "refactorReplaceMatchComponentNamesWizardPagePageContextId"; //$NON-NLS-1$
 
-    /** help context id for a wizard page */
+    /** help context id for a wizard */
     public static final String
-    SEARCH_REFACTOR_REPLACE_MATCH_COMP_NAMES_WIZARD_PAGE = PRAEFIX
-            + "searchRefactorReplaceMatchComponentNamesWizardPagePageContextId"; //$NON-NLS-1$
+    SEARCH_REFACTOR_REPLACE_EXECUTION_TEST_CASE_WIZARD = PRAEFIX
+            + "searchRefactorReplaceExecutionTestCaseWizardContextId"; //$NON-NLS-1$
 
     /** help context id for a wizard page */
     public static final String
