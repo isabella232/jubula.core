@@ -9,7 +9,7 @@
 % --------------------------------------------------------
 
 \subsection{Supported operating systems}
-The following operating systems are supported by \app{}:
+The following operating systems are supported:
 \begin{itemize}
   \item Microsoft Windows (tested on Vista, Windows 7 and 8)
   \item  Linux (tested on Centos 5 with GTK)
@@ -17,31 +17,31 @@ The following operating systems are supported by \app{}:
 
 \end{itemize}
 
-Although the software may run on other systems, we cannot guarantee that \app{} will run properly on them; nor can we support an installation on such systems.
+Although the software may run on other systems, we cannot guarantee that the components will run properly on them; nor can we support an installation on such systems.
 
 \subsection{Supported \bxname{Java} environments}
 \begin{description}
-\item [\app{} client component (Integrated Test Environment, \ite{}):]{JRE version 1.5 minimum}
-\item [\app{} server component (\gdagent):]{JRE version 1.4 minimum}
+\item [Client component (Integrated Test Environment, \ite{}):]{JRE version 1.5 minimum}
+\item [Server component (\gdagent):]{JRE version 1.4 minimum}
 \item [\gdaut{}:]{JRE version 1.4 minimum}
 \end{description}
-Java 1.6 is provided in the \app{} installation.  
+Java 1.6 is provided in the  installation.  
 
 For the \ite{}, you will need a 32-bit Java version. The operating system you use can be 32 or 64 bit, however. 
 
 \subsection{\gdDB requirements}
-\app{} supports  \bxname{Oracle 9-10} as a multi-user \gddb{}. There is an embedded \gddb{} which is installed with \app{}, but we only recommend using this for demo purposes. 
+The \ite{} supports  \bxname{Oracle 9-10} as a multi-user \gddb{}. There is an embedded \gddb{} which is installed as well, but we only recommend using this for demo purposes. 
 
 Other databases may work, as supported by \bxname{Eclipse Link}, but we can offer neither guarantee of their proper use nor technical support. 
 
-\subsection{Firewalls and \app{}}
-\app{} has to be able to perform interprocess communication in order to run tests. No information is sent to external sources during this process. 
+\subsection{Firewalls}
+The \ite{} and \gdagent{} have to be able to perform interprocess communication in order to run tests. No information is sent to external sources during this process. 
 
-The ports required by \app{} are:
+The ports required are:
 \begin{enumerate}
-\item From the \ite{} to the \gdagent{}: this port is defined in the \app{}  preferences.
+\item From the \ite{} to the \gdagent{}: this port is defined in the  preferences.
 \item From the \gdaut{} to the \ite{}: this port is dynamically chosen, and cannot currently be defined. Therefore, any ports available on your test machine must also be open on the machine from which the test is being run.
 \end{enumerate}
 
- If opening all ports in this way is not an option, we recommend using the \app{} test executor on the test machine to run the tests, so that all communication is done locally. 
+ If opening all ports in this way is not an option, we recommend using the test executor on the test machine to run the tests, so that all communication is done locally. 
 
