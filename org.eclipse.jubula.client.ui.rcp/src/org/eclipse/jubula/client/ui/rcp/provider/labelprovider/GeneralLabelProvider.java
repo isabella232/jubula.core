@@ -381,7 +381,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * @param testCaseRef The Test Case Reference to examine.
      * @return label text for the given Test Case Reference.
      */
-    private static String getText(IExecTestCasePO testCaseRef) {
+    public static String getText(IExecTestCasePO testCaseRef) {
         StringBuilder nameBuilder = new StringBuilder();
         
         if (!StringUtils.isBlank(testCaseRef.getRealName())) {

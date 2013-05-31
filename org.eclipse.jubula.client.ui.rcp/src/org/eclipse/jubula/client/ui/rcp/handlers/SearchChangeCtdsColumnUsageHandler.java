@@ -25,6 +25,7 @@ import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.param.ChangeCtdsColumnUsageWizard;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.param.ExistingAndNewParameterData;
@@ -60,13 +61,7 @@ public class SearchChangeCtdsColumnUsageHandler
                 if (exec.getSpecTestCase().getReferencedDataCube() != null
                         && exec.getReferencedDataCube()
                             != exec.getSpecTestCase().getReferencedDataCube()) {
-                    String execName = exec.getName();
-                    if (!exec.getName().equals(
-                            exec.getSpecTestCase().getName())) {
-                        execName = execName
-                                + " <" + exec.getSpecTestCase().getName() //$NON-NLS-1$
-                                + ">"; //$NON-NLS-1$
-                    }
+                    String execName = GeneralLabelProvider.getText(exec);
                     ErrorHandlingUtil.createMessageDialog(
                             MessageIDs.I_TC_WITH_TWO_CTDS,
                             new String[] {execName}, null);
