@@ -1426,7 +1426,7 @@
           commandId="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow"
           id="org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.ChooseHTMLWindowCommand"
           style="pulldown"
-          icon="icons/startOM.gif"
+          icon="icons/selectWindow.png"
           tooltip="%ChooseAUTWindow">
           <visibleWhen checkEnabled="false">
              <and>
