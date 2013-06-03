@@ -44,27 +44,9 @@ public class ParameterDescriptionLabelProvider extends GeneralLabelProvider {
     public String getText(Object element) {
         if (element instanceof IParamDescriptionPO) {
             IParamDescriptionPO paramDesc = (IParamDescriptionPO) element;
-            StringBuffer sb = new StringBuffer();
-            return sb.append("[") //$NON-NLS-1$
-                .append(getShortTypeName(paramDesc))
-                .append(": ") //$NON-NLS-1$
-                .append(paramDesc.getName())
-                .append("]") //$NON-NLS-1$
-                .toString();
+            return GeneralLabelProvider.getTextWithBrackets(paramDesc);
         }
         return super.getText(element);
-    }
-
-    /**
-     * @param paramDesc The parameter description.
-     * @return The short type name of the given parameter description, e.g.
-     *         the name <code>String</code>, if the parameter has the type
-     *         {@link java.lang.String}.
-     */
-    private static String getShortTypeName(IParamDescriptionPO paramDesc) {
-        String typeName = paramDesc.getType();
-        int i = typeName.lastIndexOf('.');
-        return typeName.substring(i + 1);
     }
 
     /**

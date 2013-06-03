@@ -27,7 +27,8 @@ public class MatchParameterPage extends WizardPage {
      *            the page name
      */
     public MatchParameterPage(String pageName) {
-        super(pageName, Messages.ReplaceTCRWizard_matchParameter_title, null);
+        super(pageName,
+                Messages.ReplaceTCRWizard_matchParameterNames_title, null);
     }
 
     /**

@@ -74,16 +74,16 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     /**
      * <code>INACTIVE_PREFIX</code>
      */
-    public static final String INACTIVE_PREFIX = "// "; //$NON-NLS-1$
+    protected static final String INACTIVE_PREFIX = "// "; //$NON-NLS-1$
     
     /** close bracked */
-    public static final String CLOSE_BRACKED = "]"; //$NON-NLS-1$
+    protected static final String CLOSE_BRACKED = "]"; //$NON-NLS-1$
 
     /** open bracked */
-    public static final String OPEN_BRACKED = " ["; //$NON-NLS-1$
+    protected static final String OPEN_BRACKED = " ["; //$NON-NLS-1$
     
     /** <code>SEPARATOR</code> */
-    public static final String SEPARATOR = "; "; //$NON-NLS-1$
+    protected static final String SEPARATOR = "; "; //$NON-NLS-1$
     
     /** the logger */
     private static final Logger LOG = 
@@ -421,7 +421,40 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     private static String getText(ISpecTestCasePO testCase) {
         return testCase.getName() + getParameterString(testCase);
     }
-    
+
+    /**
+     * @param paramDesc The parameter description.
+     * @return The short type name of the given parameter description, e.g.
+     *         the name <code>String</code>, if the parameter has the type
+     *         {@link java.lang.String}.
+     */
+    private static String getShortTypeName(IParamDescriptionPO paramDesc) {
+        String typeName = paramDesc.getType();
+        int i = typeName.lastIndexOf('.');
+        return typeName.substring(i + 1);
+    }
+
+    /**
+     * @param paramDesc The parameter description.
+     * @return The short type name, a colon, a space and the name of the parameter
+     *         description.
+     */
+    private static String getText(IParamDescriptionPO paramDesc) {
+        return getShortTypeName(paramDesc)
+                + ": " //$NON-NLS-1$
+                + paramDesc.getName();
+    }
+
+    /**
+     * @param paramDesc The parameter description.
+     * @return The text for a parameter description surrounded with brackets.
+     */
+    public static String getTextWithBrackets(IParamDescriptionPO paramDesc) {
+        return "[" //$NON-NLS-1$
+                + getText(paramDesc)
+                + CLOSE_BRACKED;
+    }
+
     /**
      * 
      * @param paramNode The Parameter Node to examine.

@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +40,7 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.pages.ChooseTestCasePage;
 import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages.ComponentNameMappingWizardPage;
 import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages.ParameterNamesMatchingWizardPage;
+import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages.ReplaceExecTestCaseData;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageInfo;
@@ -79,13 +79,14 @@ public class SearchReplaceTCRWizard extends Wizard {
             EntityManager session = GeneralStorage.getInstance()
                     .getMasterSession();
             try {
-                Persistor.instance().lockPOSet(session, m_setOfExecsToReplace);
-                Persistor.instance().lockPO(session, m_newSpec);
+                Persistor.instance().lockPOSet(session,
+                        m_replaceExecTestCaseData.getOldExecTestCases());
+                Persistor.instance().lockPO(session,
+                        m_replaceExecTestCaseData.getNewSpecTestCase());
                 List<MultipleNodePM.AbstractCmdHandle> commands = 
                         new ArrayList<MultipleNodePM.AbstractCmdHandle>();
-                for (Iterator iterator = m_setOfExecsToReplace.iterator();
-                        iterator.hasNext();) {
-                    IExecTestCasePO exec = (IExecTestCasePO) iterator.next();
+                for (IExecTestCasePO exec: m_replaceExecTestCaseData
+                        .getOldExecTestCases()) {
                     INodePO parent = exec.getParentNode();
                     int index = parent.indexOf(exec);
                     
@@ -93,7 +94,9 @@ public class SearchReplaceTCRWizard extends Wizard {
                     if (IEventExecTestCasePO.class.isAssignableFrom(
                             exec.getClass())) {
                         IEventExecTestCasePO newEventExec = NodeMaker
-                                .createEventExecTestCasePO(m_newSpec, parent);
+                            .createEventExecTestCasePO(
+                                m_replaceExecTestCaseData.getNewSpecTestCase(),
+                                parent);
                         IEventExecTestCasePO oldEventExec = 
                                 (IEventExecTestCasePO) exec;
                         newEventExec.setEventType(oldEventExec.getEventType());
@@ -103,7 +106,8 @@ public class SearchReplaceTCRWizard extends Wizard {
                                 .setMaxRetries(oldEventExec.getMaxRetries());
                         newExec = newEventExec;
                     } else {
-                        newExec = NodeMaker.createExecTestCasePO(m_newSpec);
+                        newExec = NodeMaker.createExecTestCasePO(
+                                m_replaceExecTestCaseData.getNewSpecTestCase());
                     }
 
                     newExec.setComment(exec.getComment());
@@ -188,8 +192,8 @@ public class SearchReplaceTCRWizard extends Wizard {
     /**
      * <code>m_setOfExecsToReplace</code>
      */
-    private final Set<IExecTestCasePO> m_setOfExecsToReplace;
-    
+    private final ReplaceExecTestCaseData m_replaceExecTestCaseData;
+
     /**
      * Map for matching guid's for component names 
      */
@@ -209,13 +213,6 @@ public class SearchReplaceTCRWizard extends Wizard {
      * Parameter Matching page ID
      */
     private ParameterNamesMatchingWizardPage m_parameterMatchingPage;
-    
-    /**
-     * <code>m_newSpec</code>
-     */
-    private ISpecTestCasePO m_newSpec;
-    
-    
 
     /**
      * Constructor for the wizard page
@@ -225,14 +222,15 @@ public class SearchReplaceTCRWizard extends Wizard {
      *            be changed
      */
     public SearchReplaceTCRWizard(Set<IExecTestCasePO> execsToReplace) {
-        m_setOfExecsToReplace = execsToReplace;
+        m_replaceExecTestCaseData = new ReplaceExecTestCaseData(execsToReplace);
         setWindowTitle(Messages.ReplaceTCRWizardTitle);
     }
 
     /** {@inheritDoc} */
     public boolean performFinish() {
         // This is needed if Finish was pressed on the first page
-        m_newSpec = m_choosePage.getChoosenTestCase();
+        m_replaceExecTestCaseData.setNewSpecTestCase(
+                m_choosePage.getChoosenTestCase());
         m_matchedCompNameGuidMap = m_componentNamesPage.getCompMatching();
         try {
             PlatformUI.getWorkbench().getProgressService()
@@ -245,34 +243,23 @@ public class SearchReplaceTCRWizard extends Wizard {
         return true;
     }
 
-    /** {@inheritDoc} */
-    public boolean performCancel() {
-        return true;
-    }
-
     /**
      * {@inheritDoc}
      */
     public void addPages() {
         super.addPages();
-        Set<INodePO> specSet = new HashSet<INodePO>();
-        for (Iterator iterator = m_setOfExecsToReplace.iterator(); iterator
-                .hasNext();) {
-            IExecTestCasePO exec = (IExecTestCasePO) iterator.next();
-            if (ISpecTestCasePO.class.isAssignableFrom(exec.getParentNode()
-                    .getClass())) {
-                specSet.add(exec.getParentNode());
-            }
-        }
-        m_choosePage = new ChooseTestCasePage(specSet, CHOOSE_PAGE_ID);
+        ISpecTestCasePO spec = m_replaceExecTestCaseData
+                .getOldSpecTestCase();
+        m_choosePage = new ChooseTestCasePage(spec, CHOOSE_PAGE_ID);
         m_choosePage.setDescription(
                 Messages.replaceTCRWizard_choosePage_multi_description);
         m_componentNamesPage = new ComponentNameMappingWizardPage(
-                COMPONENT_MAPPING_PAGE_ID, m_setOfExecsToReplace);
+                COMPONENT_MAPPING_PAGE_ID,
+                m_replaceExecTestCaseData.getOldExecTestCases());
         m_componentNamesPage.setDescription(Messages
                 .ReplaceTCRWizard_matchComponentNames_multi_description);
         m_parameterMatchingPage = new ParameterNamesMatchingWizardPage(
-                PARAMETER_MATCHING_PAGE_ID);
+                PARAMETER_MATCHING_PAGE_ID, m_replaceExecTestCaseData);
         addPage(m_choosePage);
         addPage(m_componentNamesPage);
         addPage(m_parameterMatchingPage);
@@ -284,15 +271,14 @@ public class SearchReplaceTCRWizard extends Wizard {
      */
     public IWizardPage getNextPage(IWizardPage page) {
         if (page instanceof ChooseTestCasePage) {
-            m_newSpec = m_choosePage.getChoosenTestCase();
-            m_componentNamesPage.setNewSpec(m_newSpec);
+            m_replaceExecTestCaseData.setNewSpecTestCase(
+                    m_choosePage.getChoosenTestCase());
+            // FIXME RB: wizard pages should update data it self
+            m_componentNamesPage.setNewSpec(
+                    m_replaceExecTestCaseData.getNewSpecTestCase());
         }
         IWizardPage nextPage = super.getNextPage(page);
-        if (nextPage instanceof ParameterNamesMatchingWizardPage) {
-            m_parameterMatchingPage.setPageComplete(true);
-        } else {
-            m_parameterMatchingPage.setPageComplete(false);
-        }
         return nextPage;
     }
+
 }
