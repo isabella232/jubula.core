@@ -13,9 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
 
 import java.util.List;
 
-import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -27,7 +25,7 @@ import org.eclipse.swt.widgets.Composite;
  *
  * @author BREDEX GmbH
  */
-public class ParameterNameCombo implements SelectionListener {
+public class DecoratedCombo implements SelectionListener {
 
     /** The combo box for choosing the parameter name */
     private Combo m_combo;
@@ -41,17 +39,14 @@ public class ParameterNameCombo implements SelectionListener {
      * automatically. In each case an empty item is added at the
      * beginning of the list.
      * @param parent The parent composite.
-     * @param items An list of items.
-     * @param oldSpecName The name of the old specification Test Case.
+     * @param items A list of items.
+     * @param message The message to show in the bobble.
      */
-    public ParameterNameCombo(Composite parent, List<String> items,
-            String oldSpecName) {
+    private DecoratedCombo(Composite parent, List<String> items,
+            String message) {
         m_combo = new Combo(parent, SWT.READ_ONLY);
         m_warningDecoration = ControlDecorator.addWarningDecorator(
-            m_combo, NLS.bind(Messages
-                .ReplaceTCRWizard_matchParameterNames_warningUnmatchedParameters
-                , oldSpecName)
-        );
+            m_combo, message);
         m_combo.addSelectionListener(this);
         items.add(0, ""); //$NON-NLS-1$
         m_combo.setItems(items.toArray(new String[] {}));
@@ -59,6 +54,24 @@ public class ParameterNameCombo implements SelectionListener {
             m_combo.select(1);
         }
         widgetSelected(null);
+    }
+
+    /**
+     * A combo box with an attached warning decoration shown, if no element
+     * is selected.
+     * @param parent The parent composite.
+     * @param items A list of items.
+     * @param message The message to show in the warning bobble.
+     * @return A new combo box with the given items added to the given parent.
+     *         If the given items only contains one element, this element is selected
+     *         automatically. In each case an empty item is added at the
+     *         beginning of the list.
+     */
+    public static Combo create(Composite parent, List<String> items,
+            String message) {
+        DecoratedCombo decoratedCombo = new DecoratedCombo(
+                parent, items, message);
+        return decoratedCombo.m_combo;
     }
 
     /**

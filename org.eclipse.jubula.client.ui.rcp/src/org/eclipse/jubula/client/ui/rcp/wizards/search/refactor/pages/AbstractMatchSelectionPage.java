@@ -1,0 +1,166 @@
+/*******************************************************************************
+ * Copyright (c) 2013 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
+
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Text;
+
+/**
+ * Wizard page for matching the parameter names.
+ *
+ * @author BREDEX GmbH
+ */
+public abstract class AbstractMatchSelectionPage extends WizardPage {
+
+    /** The scrolled composite containing the parameter names. */
+    private ScrolledComposite m_scroll;
+
+    /** GridLayout to show the new and old parameter names. */
+    private Composite m_selectGrid;
+
+    /** The group box for additional information. */
+    private Group m_infoGroup;
+
+    /** The text area for additional information. */
+    private Text m_infoText;
+
+    /**
+     * @param pageName The page name.
+     * @param title The title of the page.
+     * @param titleImage The image descriptor for the title of this wizard page,
+     *   or <code>null</code> if none.
+     */
+    public AbstractMatchSelectionPage(
+            String pageName,
+            String title,
+            ImageDescriptor titleImage) {
+        super(title, title, titleImage);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void createControl(Composite parent) {
+        // create a main composite with one column
+        Composite composite = new Composite(parent, SWT.NONE);
+        setGrid(composite, 1);
+        setControl(composite);
+        // create a group for selecting the parameters
+        createGroupForSelectingParameters(composite);
+        createGroupForInfoText(composite);
+    }
+
+    /**
+     * Create the group including the table for matching the parameters
+     * with combo boxes.
+     * @param parent The parent.
+     */
+    private void createGroupForSelectingParameters(Composite parent) {
+        Group groupSelection = new Group(parent, SWT.NONE);
+        setGrid(groupSelection, 1);
+
+        m_scroll = new ScrolledComposite(
+                groupSelection, SWT.V_SCROLL | SWT.H_SCROLL);
+        setGrid(m_scroll, 1);
+        m_scroll.setExpandHorizontal(true);
+        m_scroll.setExpandVertical(true);
+
+        m_selectGrid = new Composite(m_scroll, SWT.NONE);
+        m_scroll.setContent(m_selectGrid);
+        setGrid(m_selectGrid, 2);
+    }
+
+    /**
+     * Create the group including the info text box.
+     * @param parent The parent.
+     */
+    private void createGroupForInfoText(Composite parent) {
+        m_infoGroup = new Group(parent, SWT.NONE);
+        m_infoGroup.setText(Messages
+                .ReplaceTCRWizard_additionalInformation_title);
+        setGrid(m_infoGroup, 1);
+
+        m_infoText = new Text(m_infoGroup,
+                SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+        m_infoText.setLayoutData(new GridData(GridData.FILL_BOTH));
+    }
+
+    /**
+     * @param message The message to show in the text area for additional
+     *                information. If null, the group box is hidden,
+     *                otherwise it is shown.
+     */
+    protected void setAdditionalInformation(String message) {
+        m_infoGroup.setVisible(message != null);
+        if (message != null) {
+            m_infoText.setText(message);
+        }
+    }
+
+    /**
+     * Set a filled grid layout with given columns at the given composite.
+     * @param composite The composite.
+     * @param column The number of columns.
+     */
+    protected static void setGrid(Composite composite, int column) {
+        composite.setLayout(new GridLayout(column, true));
+        composite.setLayoutData(new GridData(GridData.FILL_BOTH));
+    }
+
+    /**
+     * Create a label with the given text in a bold black font and white background
+     * added to the given parent.
+     * @param parent The parent.
+     * @param text The text.
+     */
+    protected static void createHeadLabel(Composite parent, String text) {
+        StyledText styledText = new StyledText(parent,
+                SWT.READ_ONLY | SWT.WRAP | SWT.CENTER);
+        styledText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        styledText.setEnabled(false);
+        styledText.setText(text);
+        styledText.setStyleRange(new StyleRange(0, text.length(),
+                null,
+                //parent.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND),
+                null,
+                SWT.BOLD));
+    }
+
+    @Override
+    public void setVisible(boolean isVisible) {
+        if (isVisible) {
+            // add the selectable parameter names
+            createSelectionTable(m_selectGrid);
+            m_scroll.setMinSize(m_selectGrid.computeSize(
+                    SWT.DEFAULT, SWT.DEFAULT));
+            m_selectGrid.layout(true);
+        }
+        super.setVisible(isVisible);
+    }
+
+    /**
+     * Create the table of parameters showing the new parameters in the left
+     * column and the combo boxes in the right column.
+     * @param parent The parent composite with a grid layout of 2 columns.
+     */
+    protected abstract void createSelectionTable(Composite parent);
+
+}

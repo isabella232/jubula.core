@@ -646,8 +646,8 @@ public class Messages extends NLS {
     public static String ReplaceTCRWizard_matchParameterNames_oldParameter;
     public static String ReplaceTCRWizard_matchParameterNames_newParameter;
     public static String ReplaceTCRWizard_matchParameterNames_information;
-    public static String ReplaceTCRWizard_matchParameterNames_warningUnmatchedParameters;
-    public static String ReplaceTCRWizard_matchParameterNames_warningUnusedOldParameters;
+    public static String ReplaceTCRWizard_matchParameterNames_warningUnmatchedParams;
+    public static String ReplaceTCRWizard_matchParameterNames_warningUnusedOldParams;
     public static String ReplaceTCRWizard_matchParameterNames_warningNoSameType;
     public static String ReplaceTCRWizard_matchParameterNames_warningNoSameTypeDesc;
     public static String ReplaceTCRWizard_matchParameterNames_warningNoSameTypeHint;

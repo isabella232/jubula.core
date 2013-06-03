@@ -12,8 +12,6 @@ package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -21,15 +19,13 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.GeneralLabelProvider;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyleRange;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -37,7 +33,9 @@ import org.eclipse.swt.widgets.Label;
  *
  * @author BREDEX GmbH
  */
-public class ParameterNamesMatchingWizardPage extends WizardPage {
+public class ParameterNamesMatchingWizardPage
+        extends AbstractMatchSelectionPage
+        implements SelectionListener {
 
     /** The data for replacing execution Test Cases. */
     private final ReplaceExecTestCaseData m_replaceExecTestCasesData;
@@ -45,15 +43,8 @@ public class ParameterNamesMatchingWizardPage extends WizardPage {
     /** The last selected new specification Test Case. */
     private ISpecTestCasePO m_lastNewSpecTestCase;
 
-    /** The scrolled composite containing the parameter names. */
-    private ScrolledComposite m_scroll;
-
-    /** GridLayout to show the new and old parameter names. */
-    private Composite m_selectGrid;
-
     /** An array of combo boxes for the old names. */
-    private List<ParameterNameCombo> m_oldNameCombos =
-            new ArrayList<ParameterNameCombo>();
+    private List<Combo> m_oldNameCombos = new ArrayList<Combo>();
 
     /**
      * @param pageName
@@ -67,48 +58,16 @@ public class ParameterNamesMatchingWizardPage extends WizardPage {
         m_replaceExecTestCasesData = replaceExecTestCasesData;
         setDescription(Messages
                 .ReplaceTCRWizard_matchParameterNames_multi_description);
-        setPageComplete(false);
+        setPageComplete(true);
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public void createControl(Composite parent) {
-        // create a main composite with one column
-        Composite composite = new Composite(parent, SWT.NONE);
-        setGrid(composite, 1);
-        setControl(composite);
-        // create a group for selecting the parameters
-        createGroupForSelectingParameters(composite);
-    }
-
-    /**
-     * Create the group including the table for matching the parameters
-     * with combo boxes.
-     * @param parent The parent.
-     */
-    private void createGroupForSelectingParameters(Composite parent) {
-        Group groupSelection = new Group(parent, SWT.NONE);
-        setGrid(groupSelection, 1);
-
-        m_scroll = new ScrolledComposite(
-                groupSelection, SWT.V_SCROLL | SWT.H_SCROLL);
-        setGrid(m_scroll, 1);
-        m_scroll.setExpandHorizontal(true);
-        m_scroll.setExpandVertical(true);
-
-        m_selectGrid = new Composite(m_scroll, SWT.NONE);
-        m_scroll.setContent(m_selectGrid);
-        setGrid(m_selectGrid, 2);
-
-    }
-
-    /**
-     * Create the table of parameters showing the new parameters in the left
-     * column and the combo boxes in the right column.
+     * Create the table of parameters showing the new parameters at the left
+     * column and the combo boxes at the right column.
      * @param parent The parent composite with a grid layout of 2 columns.
      */
-    private void createTableOfParameters(Composite parent) {
+    @Override
+    protected void createSelectionTable(Composite parent) {
         if (m_lastNewSpecTestCase == m_replaceExecTestCasesData
                 .getNewSpecTestCase()) {
             return; // no new specification Test Case has been selected
@@ -116,19 +75,20 @@ public class ParameterNamesMatchingWizardPage extends WizardPage {
         m_lastNewSpecTestCase = m_replaceExecTestCasesData
                 .getNewSpecTestCase();
         // remove the previously shown parameter names
-        for (Control child: m_selectGrid.getChildren()) {
+        for (Control child: parent.getChildren()) {
             child.dispose();
         }
         // create head row
-        createHeadLabel(m_selectGrid, Messages
+        createHeadLabel(parent, Messages
                 .ReplaceTCRWizard_matchParameterNames_newParameter);
-        createHeadLabel(m_selectGrid, Messages
+        createHeadLabel(parent, Messages
                 .ReplaceTCRWizard_matchParameterNames_oldParameter);
         // fill the rows with the new parameter names
         List<IParamDescriptionPO> paramDescList = m_replaceExecTestCasesData
                 .getNewSpecTestCase()
                 .getParameterList();
         m_oldNameCombos.clear();
+        int unmatchedTypes = 0;
         for (IParamDescriptionPO paramDesc: paramDescList) {
             createLabel(parent,
                     GeneralLabelProvider.getTextWithBrackets(paramDesc));
@@ -143,45 +103,40 @@ public class ParameterNamesMatchingWizardPage extends WizardPage {
                     .ReplaceTCRWizard_matchParameterNames_warningNoSameTypeDesc
                 );
                 m_oldNameCombos.add(null); // remember no matching with null
+                unmatchedTypes++;
             } else {
-                ParameterNameCombo combo = new ParameterNameCombo(
-                        parent, oldNames, m_replaceExecTestCasesData
-                            .getOldSpecTestCase()
-                            .getName());
+                String message = NLS.bind(Messages
+                    .ReplaceTCRWizard_matchParameterNames_warningUnmatchedParams
+                    , m_replaceExecTestCasesData.getOldSpecTestCase().getName()
+                );
+                Combo combo = DecoratedCombo.create(
+                    parent, oldNames, message);
+                combo.addSelectionListener(this);
                 m_oldNameCombos.add(combo);
             }
         }
-        m_scroll.setMinSize(m_selectGrid.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        m_selectGrid.layout(true);
+        updateAdditionalInformation(unmatchedTypes);
     }
 
     /**
-     * Set a filled grid layout with given columns at the given composite.
-     * @param composite The composite.
-     * @param column The number of columns.
+     * Set the additional information.
+     * @param unmatchedTypes The number of empty combo boxes.
      */
-    private static void setGrid(Composite composite, int column) {
-        composite.setLayout(new GridLayout(column, true));
-        composite.setLayoutData(new GridData(GridData.FILL_BOTH));
-    }
-
-    /**
-     * Create a label with the given text in a bold black font and white background
-     * added to the given parent.
-     * @param parent The parent.
-     * @param text The text.
-     */
-    private static void createHeadLabel(Composite parent, String text) {
-        StyledText styledText = new StyledText(parent,
-                SWT.READ_ONLY | SWT.WRAP | SWT.CENTER);
-        styledText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        styledText.setEnabled(false);
-        styledText.setText(text);
-        styledText.setStyleRange(new StyleRange(0, text.length(),
-                null,
-                //parent.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND),
-                null,
-                SWT.BOLD));
+    private void updateAdditionalInformation(int unmatchedTypes) {
+        String message = ""; //$NON-NLS-1$
+        if (unmatchedTypes > 0) {
+            message += Messages
+                .ReplaceTCRWizard_matchParameterNames_warningNoSameTypeHint;
+        }
+        if (!m_replaceExecTestCasesData.hasMatchableParameters()) {
+            message += "\n" //$NON-NLS-1$
+                + Messages
+                .ReplaceTCRWizard_matchParameterNames_warningUnusedOldParams;
+        }
+        if (message.length() == 0) {
+            message = null;
+        }
+        setAdditionalInformation(message);
     }
 
     /**
@@ -195,15 +150,6 @@ public class ParameterNamesMatchingWizardPage extends WizardPage {
         return label;
     }
 
-    @Override
-    public void setVisible(boolean isVisible) {
-        if (isVisible) {
-            // add the selectable parameter names
-            createTableOfParameters(m_selectGrid);
-        }
-        super.setVisible(isVisible);
-    }
-
     /**
      * Show help contend attached to wizard after selecting the ? icon,
      * or pressing F1 on Windows / Shift+F1 on Linux / Help on MAC.
@@ -212,6 +158,26 @@ public class ParameterNamesMatchingWizardPage extends WizardPage {
     public void performHelp() {
         Plugin.getHelpSystem().displayHelp(ContextHelpIds
                 .SEARCH_REFACTOR_REPLACE_EXECUTION_TEST_CASE_WIZARD);
+    }
+
+    /**
+     * Sets the new data, when the selection of the combo boxes have been changed.
+     * {@inheritDoc}
+     */
+    public void widgetSelected(SelectionEvent e) {
+        if (m_oldNameCombos.get(0).getSelectionIndex() == 0) {
+            setAdditionalInformation("Ohh"); //$NON-NLS-1$
+        } else {
+            setAdditionalInformation(null);
+        }
+        m_replaceExecTestCasesData.setNewOldParameterNames(m_oldNameCombos);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void widgetDefaultSelected(SelectionEvent e) {
+        // do nothing
     }
 
 }
