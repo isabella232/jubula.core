@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -230,11 +229,6 @@ public class TJEditorDndSupport {
     private static void postDropAction(INodePO node, 
             TestJobEditor targetEditor) {
         targetEditor.setFocus();
-        if (node != null) {
-            targetEditor.getTreeViewer().setSelection(
-                    new StructuredSelection(node));            
-        }
-        targetEditor.getTreeViewer().refresh();
         targetEditor.getEditorHelper().setDirty(true);
         LocalSelectionTransfer.getInstance().setSelection(null);
     }

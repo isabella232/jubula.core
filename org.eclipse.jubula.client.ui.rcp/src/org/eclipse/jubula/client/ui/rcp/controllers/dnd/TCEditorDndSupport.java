@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
@@ -312,11 +311,6 @@ public class TCEditorDndSupport {
     private static void postDropAction(INodePO node, 
             AbstractTestCaseEditor targetEditor) {
         targetEditor.setFocus();
-        if (node != null) {
-            targetEditor.getTreeViewer().setSelection(
-                    new StructuredSelection(node));            
-        }
-        targetEditor.getTreeViewer().refresh();
         targetEditor.getEditorHelper().setDirty(true);
         LocalSelectionTransfer.getInstance().setSelection(null);
     }

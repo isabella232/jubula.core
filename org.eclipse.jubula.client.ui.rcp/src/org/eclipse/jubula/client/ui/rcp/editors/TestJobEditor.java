@@ -17,6 +17,7 @@ import org.apache.commons.collections.IteratorUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.db.TimestampBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
@@ -219,7 +220,8 @@ public class TestJobEditor extends AbstractJBEditor {
                     if (editorNode.indexOf(addedNode) > -1) {
                         getTreeViewer().refresh();
                         getTreeViewer().expandAll();
-                        UINodeBP.setSelectionAndFocusToNode(addedNode, tv);
+                        UINodeBP.setFocusAndSelection(new StructuredSelection(
+                                addedNode), tv);
                     }
                     break;
                 case Deleted:
@@ -229,7 +231,7 @@ public class TestJobEditor extends AbstractJBEditor {
                     }
                     break;
                 case Renamed:
-                    renameGUINode(po);
+                    createPartName();
                     break;
                 case StructureModified:
                     if (!handleStructureModified(po)) {

@@ -39,6 +39,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionGDEditor;
 import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionTCEditor;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.AbstractPartListener;
 import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.rcp.propertytester.EditorPartPropertyTester;
@@ -202,7 +203,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      * @param parentComposite
      *            the parentComposite to set
      */
-    public void setParentComposite(Composite parentComposite) {
+    protected void setParentComposite(Composite parentComposite) {
         m_parentComposite = parentComposite;
     }
 
@@ -290,21 +291,21 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      * @param selection the new selection
      */
     protected void setSelectionImpl(ISelection selection) {
-        getMainTreeViewer().setSelection(selection);
+        UINodeBP.setFocusAndSelection(selection, getMainTreeViewer());
     }
 
     /**
      * @param mainTreeViewer
      *            the mainTreeViewer to set
      */
-    public void setMainTreeViewer(TreeViewer mainTreeViewer) {
+    protected void setMainTreeViewer(TreeViewer mainTreeViewer) {
         m_mainTreeViewer = mainTreeViewer;
     }
 
     /**
      * @return the topTreeViewer
      */
-    public TreeViewer getMainTreeViewer() {
+    protected TreeViewer getMainTreeViewer() {
         return m_mainTreeViewer;
     }
 
@@ -312,7 +313,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      * @param selectionChangedListenerList
      *            the selectionChangedListenerList to set
      */
-    public void setSelectionChangedListenerList(
+    protected void setSelectionChangedListenerList(
             List<ISelectionChangedListener> selectionChangedListenerList) {
         m_selectionChangedListenerList = selectionChangedListenerList;
     }
@@ -320,7 +321,8 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     /**
      * @return the selectionChangedListenerList
      */
-    public List<ISelectionChangedListener> getSelectionChangedListenerList() {
+    protected List<ISelectionChangedListener> 
+    getSelectionChangedListenerList() {
         return m_selectionChangedListenerList;
     }
     
@@ -589,7 +591,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     /**
      * @param editorHelper the editorHelper to set
      */
-    public void setEditorHelper(JBEditorHelper editorHelper) {
+    protected void setEditorHelper(JBEditorHelper editorHelper) {
         m_editorHelper = editorHelper;
     }
 
@@ -603,21 +605,21 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     /**
      * @param control the control to set
      */
-    public void setControl(Control control) {
+    protected void setControl(Control control) {
         m_control = control;
     }
 
     /**
      * @return the control
      */
-    public Control getControl() {
+    private Control getControl() {
         return m_control;
     }
 
     /**
      * @param cutTreeItemAction the cutTreeItemAction to set
      */
-    public void setCutTreeItemAction(
+    protected void setCutTreeItemAction(
             CutTreeItemActionGDEditor cutTreeItemAction) {
         m_cutTreeItemAction = cutTreeItemAction;
     }
@@ -625,14 +627,14 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     /**
      * @return the cutTreeItemAction
      */
-    public CutTreeItemActionGDEditor getCutTreeItemAction() {
+    protected CutTreeItemActionGDEditor getCutTreeItemAction() {
         return m_cutTreeItemAction;
     }
 
     /**
      * @param pasteTreeItemAction the pasteTreeItemAction to set
      */
-    public void setPasteTreeItemAction(
+    protected void setPasteTreeItemAction(
             PasteTreeItemActionTCEditor pasteTreeItemAction) {
         m_pasteTreeItemAction = pasteTreeItemAction;
     }
@@ -640,7 +642,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     /**
      * @return the pasteTreeItemAction
      */
-    public PasteTreeItemActionTCEditor getPasteTreeItemAction() {
+    protected PasteTreeItemActionTCEditor getPasteTreeItemAction() {
         return m_pasteTreeItemAction;
     }
     
@@ -669,19 +671,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
                     .getService(IEvaluationService.class);
             service.requestEvaluation(EditorPartPropertyTester.FQN_IS_DIRTY);
         }
-    }
-    
-    /**
-     * Renames a guiNode.
-     * 
-     * @param po
-     *            The corresponding NodePO.
-     */
-    protected void renameGUINode(
-        IPersistentObject po) {
-        getMainTreeViewer().refresh(true);
-        // rename the editor based on currently edited node
-        createPartName();
     }
     
     /** {@inheritDoc} */

@@ -43,20 +43,19 @@ public class UINodeBP {
     }
     
     /**
-     * sets the selection in the given TreeViewer to the given node and also
-     * gives the given tree viewer focus
+     * sets the given selection in the given TreeViewer and also gives the given
+     * tree viewer focus
      * 
-     * @param node
-     *            the node to select
+     * @param sel
+     *            the selection to set
      * @param tv
-     *            the TreeViewer
+     *            the tree viewer to use
      */
-    public static void setSelectionAndFocusToNode(INodePO node, TreeViewer tv) {
+    public static void setFocusAndSelection(ISelection sel, TreeViewer tv) {
         tv.getTree().setFocus();
-        tv.setSelection(new StructuredSelection(node), true);
+        tv.setSelection(sel, true);
     }
     
-
     /**
      * @param structuredSel
      *            find the referenced specification test case for the given
