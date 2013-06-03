@@ -11,6 +11,8 @@
 
 package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,6 +35,23 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
      */
     public ReplaceExecTestCaseData(Set<IExecTestCasePO> execTestCases) {
         super(execTestCases);
+    }
+
+    /**
+     * @param newParamDesc The new parameter description.
+     * @return An array of strings containing all parameter names from the old
+     *         specification Test Case with the same type as the given parameter description.
+     */
+    public List<String> getOldParameterNamesByType(
+            IParamDescriptionPO newParamDesc) {
+        List<String> matchingNames = new ArrayList<String>();
+        for (IParamDescriptionPO oldParamDesc: getOldSpecTestCase()
+                .getParameterList()) {
+            if (newParamDesc.getType().equals(oldParamDesc.getType())) {
+                matchingNames.add(oldParamDesc.getName());
+            }
+        }
+        return matchingNames;
     }
 
     /**

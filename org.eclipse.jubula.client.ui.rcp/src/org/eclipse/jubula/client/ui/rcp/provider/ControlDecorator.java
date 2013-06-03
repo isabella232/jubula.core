@@ -14,6 +14,7 @@ import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Control;
 
 
@@ -43,7 +44,11 @@ public class ControlDecorator extends ControlDecoration {
      *        is hidden.
      */
     public void setVisible(boolean isVisible) {
-        getControl().setVisible(isVisible);
+        if (isVisible) {
+            show();
+        } else {
+            hide();
+        }
     }
 
     /**
@@ -57,11 +62,11 @@ public class ControlDecorator extends ControlDecoration {
      * e.g. SWT.NO_FOCUS
      * @return The created control decoration specified by the given parameters.
      */
-    protected static ControlDecoration createDecoration(
+    protected static ControlDecorator createDecoration(
             Control control, int position,
             String message, String imageID, boolean showOnFocus) {
-        ControlDecoration infoBobbles = 
-            new ControlDecoration(control, position);
+        ControlDecorator infoBobbles =
+            new ControlDecorator(control, position);
         infoBobbles.setDescriptionText(message);
         infoBobbles.setImage(FieldDecorationRegistry.getDefault()
                 .getFieldDecoration(imageID).getImage());
@@ -115,10 +120,27 @@ public class ControlDecorator extends ControlDecoration {
      * @param message The message to show in the warning bobble.
      * @return The created warning control decoration defined by the given parameters.
      */
-    public static ControlDecoration createWarning(Control control,
+    public static ControlDecorator createWarning(Control control,
             int position, String message) {
         return createDecoration(control, position, message,
                 FieldDecorationRegistry.DEC_WARNING, false);
     }
+
+    /**
+     * @param control The control.
+     * @param message The warning decoration text.
+     * @return The warning control decoration added to the given control.
+     */
+    public static ControlDecorator addWarningDecorator(
+            Control control, String message) {
+        GridData grid = new GridData(GridData.BEGINNING, GridData.CENTER,
+                false , false, 1, 1);
+        //grid.horizontalIndent = 10;
+        control.setLayoutData(grid);
+        ControlDecorator warningDecoration = ControlDecorator.createWarning(
+                control, SWT.TRAIL, message);
+        return warningDecoration;
+    }
+
 
 }

@@ -10,11 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -41,6 +42,19 @@ public class ParameterNamesMatchingWizardPage extends WizardPage {
     /** The data for replacing execution Test Cases. */
     private final ReplaceExecTestCaseData m_replaceExecTestCasesData;
 
+    /** The last selected new specification Test Case. */
+    private ISpecTestCasePO m_lastNewSpecTestCase;
+
+    /** The scrolled composite containing the parameter names. */
+    private ScrolledComposite m_scroll;
+
+    /** GridLayout to show the new and old parameter names. */
+    private Composite m_selectGrid;
+
+    /** An array of combo boxes for the old names. */
+    private List<ParameterNameCombo> m_oldNameCombos =
+            new ArrayList<ParameterNameCombo>();
+
     /**
      * @param pageName
      *            The name of the page.
@@ -64,9 +78,81 @@ public class ParameterNamesMatchingWizardPage extends WizardPage {
         Composite composite = new Composite(parent, SWT.NONE);
         setGrid(composite, 1);
         setControl(composite);
-
         // create a group for selecting the parameters
         createGroupForSelectingParameters(composite);
+    }
+
+    /**
+     * Create the group including the table for matching the parameters
+     * with combo boxes.
+     * @param parent The parent.
+     */
+    private void createGroupForSelectingParameters(Composite parent) {
+        Group groupSelection = new Group(parent, SWT.NONE);
+        setGrid(groupSelection, 1);
+
+        m_scroll = new ScrolledComposite(
+                groupSelection, SWT.V_SCROLL | SWT.H_SCROLL);
+        setGrid(m_scroll, 1);
+        m_scroll.setExpandHorizontal(true);
+        m_scroll.setExpandVertical(true);
+
+        m_selectGrid = new Composite(m_scroll, SWT.NONE);
+        m_scroll.setContent(m_selectGrid);
+        setGrid(m_selectGrid, 2);
+
+    }
+
+    /**
+     * Create the table of parameters showing the new parameters in the left
+     * column and the combo boxes in the right column.
+     * @param parent The parent composite with a grid layout of 2 columns.
+     */
+    private void createTableOfParameters(Composite parent) {
+        if (m_lastNewSpecTestCase == m_replaceExecTestCasesData
+                .getNewSpecTestCase()) {
+            return; // no new specification Test Case has been selected
+        }
+        m_lastNewSpecTestCase = m_replaceExecTestCasesData
+                .getNewSpecTestCase();
+        // remove the previously shown parameter names
+        for (Control child: m_selectGrid.getChildren()) {
+            child.dispose();
+        }
+        // create head row
+        createHeadLabel(m_selectGrid, Messages
+                .ReplaceTCRWizard_matchParameterNames_newParameter);
+        createHeadLabel(m_selectGrid, Messages
+                .ReplaceTCRWizard_matchParameterNames_oldParameter);
+        // fill the rows with the new parameter names
+        List<IParamDescriptionPO> paramDescList = m_replaceExecTestCasesData
+                .getNewSpecTestCase()
+                .getParameterList();
+        m_oldNameCombos.clear();
+        for (IParamDescriptionPO paramDesc: paramDescList) {
+            createLabel(parent,
+                    GeneralLabelProvider.getTextWithBrackets(paramDesc));
+            List<String> oldNames = m_replaceExecTestCasesData
+                    .getOldParameterNamesByType(paramDesc);
+            if (oldNames.size() == 0) {
+                Label label = createLabel(parent, Messages
+                    .ReplaceTCRWizard_matchParameterNames_warningNoSameType);
+                ControlDecorator.addWarningDecorator(
+                    label,
+                    Messages
+                    .ReplaceTCRWizard_matchParameterNames_warningNoSameTypeDesc
+                );
+                m_oldNameCombos.add(null); // remember no matching with null
+            } else {
+                ParameterNameCombo combo = new ParameterNameCombo(
+                        parent, oldNames, m_replaceExecTestCasesData
+                            .getOldSpecTestCase()
+                            .getName());
+                m_oldNameCombos.add(combo);
+            }
+        }
+        m_scroll.setMinSize(m_selectGrid.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        m_selectGrid.layout(true);
     }
 
     /**
@@ -80,77 +166,12 @@ public class ParameterNamesMatchingWizardPage extends WizardPage {
     }
 
     /**
-     * Create the group including the table for matching the parameters
-     * with combo boxes.
-     * @param parent The parent.
-     */
-    private void createGroupForSelectingParameters(Composite parent) {
-        Group groupSelection = new Group(parent, SWT.NONE);
-        setGrid(groupSelection, 1);
-
-        ScrolledComposite scroll = new ScrolledComposite(
-                groupSelection, SWT.V_SCROLL | SWT.H_SCROLL);
-        setGrid(scroll, 1);
-        scroll.setExpandHorizontal(true);
-        scroll.setExpandVertical(true);
-
-        Composite selectGrid = new Composite(scroll, SWT.NONE);
-        setGrid(selectGrid, 2);
-
-        createHeadLabel(selectGrid, Messages
-                .ReplaceTCRWizard_matchParameterNames_newParameter);
-        createHeadLabel(selectGrid, Messages
-                .ReplaceTCRWizard_matchParameterNames_oldParameter);
-
-        createTableOfParameters(selectGrid);
-
-        scroll.setContent(selectGrid);
-        scroll.setMinSize(selectGrid.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-    }
-
-    /**
-     * Create the table of parameters showing the new parameters in the left
-     * column and the combo boxes in the right column.
-     * @param parent The parent composite with a grid layout of 2 columns.
-     */
-    private void createTableOfParameters(Composite parent) {
-        List<IParamDescriptionPO> paramDescList = m_replaceExecTestCasesData
-                .getOldSpecTestCase()
-                .getParameterList();
-        for (IParamDescriptionPO paramDesc: paramDescList) {
-            createLabel(parent,
-                    GeneralLabelProvider.getTextWithBrackets(paramDesc));
-            ControlDecoration warning = addWarningDecorator(
-                createLabel(parent, Messages
-                    .ReplaceTCRWizard_matchParameterNames_warningNoSameType),
-                    Messages
-                    .ReplaceTCRWizard_matchParameterNames_warningNoSameTypeDesc
-            );
-        }
-    }
-
-    /**
-     * @param composite The composite.
-     * @param message The ID of the warning decoration.
-     * @return The warning control decoration added to the given control.
-     */
-    private ControlDecoration addWarningDecorator(
-            Control composite, String message) {
-        GridData grid = new GridData(GridData.BEGINNING, GridData.CENTER,
-                false , false, 1, 1);
-        //grid.horizontalIndent = 10;
-        composite.setLayoutData(grid);
-        ControlDecoration warningDecoration = ControlDecorator.createWarning(
-                composite, SWT.TRAIL, message);
-        return warningDecoration;
-
-    }
-
-    /**
+     * Create a label with the given text in a bold black font and white background
+     * added to the given parent.
      * @param parent The parent.
      * @param text The text.
      */
-    private void createHeadLabel(Composite parent, String text) {
+    private static void createHeadLabel(Composite parent, String text) {
         StyledText styledText = new StyledText(parent,
                 SWT.READ_ONLY | SWT.WRAP | SWT.CENTER);
         styledText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -164,15 +185,23 @@ public class ParameterNamesMatchingWizardPage extends WizardPage {
     }
 
     /**
-     * Creates a label for this page.
      * @param text The label text to set.
      * @param parent The composite.
-     * @return a new label
+     * @return A new label with the given text added to the given parent.
      */
     private static Label createLabel(Composite parent, String text) {
         Label label = new Label(parent, SWT.NONE);
         label.setText(text);
         return label;
+    }
+
+    @Override
+    public void setVisible(boolean isVisible) {
+        if (isVisible) {
+            // add the selectable parameter names
+            createTableOfParameters(m_selectGrid);
+        }
+        super.setVisible(isVisible);
     }
 
     /**
