@@ -44,7 +44,7 @@ import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
  * @author BREDEX GmbH
  * @created 25.03.2008
  */
-public class TCEditorDndSupport {
+public class TCEditorDndSupport extends AbstractEditorDndSupport {
 
     /**
      * Private constructor
@@ -289,29 +289,5 @@ public class TCEditorDndSupport {
         }
         TestCaseBP.addReferencedTestCase(editSupport, parentGUI, 
                 specTcGUItoDrop, position);
-    }
-
-    /**
-     * @param node the node to be moved.
-     * @param target the target node.
-     * @return the dropped GuiNode.
-     */
-    private static INodePO moveNode(INodePO node, INodePO target) {
-        int newPos = target.getParentNode().indexOf(target);
-        node.getParentNode().removeNode(node);
-        target.getParentNode().addNode(newPos, node);
-        return node;
-    }
-
-    /**
-     * Executes actions after the drop.
-     * @param node the dropped node. 
-     * @param targetEditor The editor to which the item has been dropped/pasted.
-     */
-    private static void postDropAction(INodePO node, 
-            AbstractTestCaseEditor targetEditor) {
-        targetEditor.setFocus();
-        targetEditor.getEditorHelper().setDirty(true);
-        LocalSelectionTransfer.getInstance().setSelection(null);
     }
 }

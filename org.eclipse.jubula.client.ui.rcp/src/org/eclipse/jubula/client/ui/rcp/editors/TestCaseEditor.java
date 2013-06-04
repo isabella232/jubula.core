@@ -621,7 +621,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
     }
     
     @Override
-    protected void refresh() {
+    public void refresh() {
         super.refresh();
         getEventHandlerTreeViewer().refresh(true);
     }

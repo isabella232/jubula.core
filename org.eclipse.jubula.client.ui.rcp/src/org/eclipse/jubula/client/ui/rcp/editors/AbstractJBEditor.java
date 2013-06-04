@@ -677,4 +677,11 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     public EntityManager getEntityManager() {
         return getEditorHelper().getEditSupport().getSession();
     }
+    
+    /**
+     * Refreshes the editors viewer
+     */
+    public void refresh() {
+        getTreeViewer().refresh(true);
+    }
 }

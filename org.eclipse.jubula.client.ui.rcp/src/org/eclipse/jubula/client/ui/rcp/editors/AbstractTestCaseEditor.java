@@ -929,13 +929,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     }
 
     /**
-     * Refreshes the tree viewer.
-     */
-    protected void refresh() {
-        getTreeViewer().refresh(true);
-    }
-
-    /**
      * 
      * @return the receiver's current selection, if it is an 
      *         {@link IStructuredSelection}. Otherwise, returns an empty 
