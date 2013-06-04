@@ -18,29 +18,19 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.ICategoryPO;
-import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestDataCubePO;
-import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.NodeSearchResultElementAction;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.TestDataCubeSearchResultElementAction;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.search.ui.ISearchQuery;
 import org.eclipse.search.ui.ISearchResult;
-import org.eclipse.swt.graphics.Image;
 
 
 /**
@@ -135,7 +125,7 @@ public abstract class AbstractQuery implements ISearchQuery {
     protected void add(IParameterInterfacePO testDataCube) {
         m_resultTestDataCubes.add(new SearchResultElement<Long>(testDataCube
                 .getName(), testDataCube.getId(),
-                getImageForNode(testDataCube),
+                GeneralLabelProvider.getImageImpl(testDataCube),
                 new TestDataCubeSearchResultElementAction(),
                 null,
                 Constants.JB_DATASET_VIEW_ID));
@@ -183,10 +173,16 @@ public abstract class AbstractQuery implements ISearchQuery {
                 reuse.size());
         for (INodePO node : reuse) {
             INodePO parent = node.getParentNode();
-            String resultName = validParent(parent) ? parent.getName()
-                    + " / " + node.getName() : node.getName(); //$NON-NLS-1$
+            String resultName;
+            String nodeName = GeneralLabelProvider.getTextImpl(node);
+            if (validParent(parent)) {
+                resultName = NLS.bind(Messages.SearchResultPageElementLabel,
+                        new Object[] { parent.getName(), nodeName });
+            } else {
+                resultName = nodeName;
+            }
             searchResult.add(new SearchResultElement<Long>(resultName, node
-                    .getId(), getImageForNode(node),
+                    .getId(), GeneralLabelProvider.getImageImpl(node),
                     new NodeSearchResultElementAction(), node.getComment(),
                     m_viewId));
         }
@@ -199,34 +195,6 @@ public abstract class AbstractQuery implements ISearchQuery {
      */
     private static boolean validParent(INodePO parent) {
         return parent != null && !(parent instanceof IProjectPO);
-    }
-
-    /**
-     * Gets an Image for the given po used in method showLocationsOfReuse
-     *
-     * @param po
-     *            the persistent object
-     * @return an Image or null if po not supported
-     */
-    public static Image getImageForNode(IPersistentObject po) {
-        if (Persistor.isPoSubclass(po, IEventExecTestCasePO.class)) {
-            return IconConstants.EH_IMAGE;
-        } else if (Persistor.isPoSubclass(po, ICapPO.class)) {
-            return IconConstants.CAP_IMAGE;
-        } else if (Persistor.isPoSubclass(po, ISpecTestCasePO.class)) {
-            return IconConstants.TC_IMAGE;
-        } else if (Persistor.isPoSubclass(po, ICategoryPO.class)) {
-            return IconConstants.CATEGORY_IMAGE;
-        } else if (Persistor.isPoSubclass(po, ITestSuitePO.class)) {
-            return IconConstants.TS_IMAGE;
-        } else if (Persistor.isPoSubclass(po, IExecTestCasePO.class)) {
-            return IconConstants.TC_REF_IMAGE;
-        } else if (Persistor.isPoSubclass(po, ITestJobPO.class)) {
-            return IconConstants.TJ_IMAGE;
-        } else if (Persistor.isPoSubclass(po, ITestDataCubePO.class)) {
-            return IconConstants.TDC_IMAGE;
-        }
-        return null;
     }
 
     /**

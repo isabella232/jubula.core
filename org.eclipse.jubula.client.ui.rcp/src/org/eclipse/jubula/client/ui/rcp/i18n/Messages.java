@@ -672,6 +672,7 @@ public class Messages extends NLS {
     public static String SaveProjectAsOperationSavingProject;
     public static String SearchingIn;
     public static String SearchResultPageResultPageLabel;
+    public static String SearchResultPageElementLabel;
     public static String SelectAll;
     public static String ServerLogViewerName;
     public static String ServerName;

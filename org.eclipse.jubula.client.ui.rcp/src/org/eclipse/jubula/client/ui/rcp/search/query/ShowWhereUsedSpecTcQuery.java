@@ -26,10 +26,12 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.NodeSearchResultElementAction;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -96,12 +98,12 @@ public class ShowWhereUsedSpecTcQuery
             INodePO parent = execTC.getParentNode();
             if (parent != null) {
                 Long id = execTC.getId();
-                String name = execTC.getName();
+                String nodeName = GeneralLabelProvider.getTextImpl(execTC);
                 parentList.add(parent);
-                String resultName = parent.getName() + StringConstants.SPACE
-                    + StringConstants.SLASH + StringConstants.SPACE + name;
-                reuseLoc.add(new SearchResultElement<Long>(resultName, id,
-                        getImageForNode(execTC),
+                reuseLoc.add(new SearchResultElement<Long>(NLS.bind(
+                        Messages.SearchResultPageElementLabel, new Object[] {
+                                parent.getName(), nodeName }), id,
+                                GeneralLabelProvider.getImageImpl(execTC),
                         new NodeSearchResultElementAction(), execTC
                                 .getComment()));
             }

@@ -38,6 +38,7 @@ import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -300,6 +301,9 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             return IconConstants.TS_REF_IMAGE;
         }
         
+        if (element instanceof ITestDataCubePO) {
+            return IconConstants.TDC_IMAGE;
+        }
         return null;
     }
 
