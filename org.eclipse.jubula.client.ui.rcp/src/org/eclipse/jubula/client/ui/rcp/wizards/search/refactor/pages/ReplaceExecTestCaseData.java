@@ -68,9 +68,12 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
         Map<IParamDescriptionPO, IParamDescriptionPO> newOldParamMap =
                 new HashMap<IParamDescriptionPO, IParamDescriptionPO>();
         for (IParamDescriptionPO newParamDesc: newSpec.getParameterList()) {
+            IParamDescriptionPO oldParamDesc = null;
             Combo combo = it.next();
-            IParamDescriptionPO oldParamDesc = getOldSpecTestCase()
-                            .getParameterForName(combo.getText());
+            if (combo != null) {
+                oldParamDesc = getOldSpecTestCase()
+                        .getParameterForName(combo.getText());
+            }
             newOldParamMap.put(newParamDesc, oldParamDesc);
         }
         this.m_newOldParamMap = newOldParamMap;

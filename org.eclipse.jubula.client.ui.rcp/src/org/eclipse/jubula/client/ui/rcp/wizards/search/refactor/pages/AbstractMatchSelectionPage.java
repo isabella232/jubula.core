@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
 
+import java.util.List;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -104,15 +106,21 @@ public abstract class AbstractMatchSelectionPage extends WizardPage {
     }
 
     /**
-     * @param message The message to show in the text area for additional
-     *                information. If null, the group box is hidden,
-     *                otherwise it is shown.
+     * @param messages The messages to show in the text area for additional
+     *                 information. If null or empty, the text box is cleared.
      */
-    protected void setAdditionalInformation(String message) {
-        m_infoGroup.setVisible(message != null);
-        if (message != null) {
-            m_infoText.setText(message);
+    protected void setAdditionalInformation(List<String> messages) {
+        String allText = ""; //$NON-NLS-1$
+        if (messages != null) {
+            for (String text: messages) {
+                if (allText.length() > 0) {
+                    allText += "\n";  //$NON-NLS-1$
+                }
+                allText += "\u2022 " //$NON-NLS-1$
+                        + text;
+            }
         }
+        m_infoText.setText(allText);
     }
 
     /**

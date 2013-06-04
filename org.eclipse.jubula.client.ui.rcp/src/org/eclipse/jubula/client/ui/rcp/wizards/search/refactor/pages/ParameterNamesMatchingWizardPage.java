@@ -88,7 +88,6 @@ public class ParameterNamesMatchingWizardPage
                 .getNewSpecTestCase()
                 .getParameterList();
         m_oldNameCombos.clear();
-        int unmatchedTypes = 0;
         for (IParamDescriptionPO paramDesc: paramDescList) {
             createLabel(parent,
                     GeneralLabelProvider.getTextWithBrackets(paramDesc));
@@ -103,7 +102,6 @@ public class ParameterNamesMatchingWizardPage
                     .ReplaceTCRWizard_matchParameterNames_warningNoSameTypeDesc
                 );
                 m_oldNameCombos.add(null); // remember no matching with null
-                unmatchedTypes++;
             } else {
                 String message = NLS.bind(Messages
                     .ReplaceTCRWizard_matchParameterNames_warningUnmatchedParams
@@ -115,28 +113,24 @@ public class ParameterNamesMatchingWizardPage
                 m_oldNameCombos.add(combo);
             }
         }
-        updateAdditionalInformation(unmatchedTypes);
+        updateAdditionalInformation();
     }
 
     /**
      * Set the additional information.
-     * @param unmatchedTypes The number of empty combo boxes.
      */
-    private void updateAdditionalInformation(int unmatchedTypes) {
-        String message = ""; //$NON-NLS-1$
-        if (unmatchedTypes > 0) {
-            message += Messages
-                .ReplaceTCRWizard_matchParameterNames_warningNoSameTypeHint;
+    private void updateAdditionalInformation() {
+        boolean hasUnmatchedTypes = m_oldNameCombos.contains(null);
+        List<String> messages = new ArrayList<String>();
+        if (hasUnmatchedTypes) {
+            messages.add(Messages
+                .ReplaceTCRWizard_matchParameterNames_warningNoSameTypeHint);
         }
         if (!m_replaceExecTestCasesData.hasMatchableParameters()) {
-            message += "\n" //$NON-NLS-1$
-                + Messages
-                .ReplaceTCRWizard_matchParameterNames_warningUnusedOldParams;
+            messages.add(Messages
+                .ReplaceTCRWizard_matchParameterNames_warningUnusedOldParams);
         }
-        if (message.length() == 0) {
-            message = null;
-        }
-        setAdditionalInformation(message);
+        setAdditionalInformation(messages);
     }
 
     /**
@@ -166,7 +160,9 @@ public class ParameterNamesMatchingWizardPage
      */
     public void widgetSelected(SelectionEvent e) {
         if (m_oldNameCombos.get(0).getSelectionIndex() == 0) {
-            setAdditionalInformation("Ohh"); //$NON-NLS-1$
+            List<String> messages = new ArrayList<String>();
+            messages.add("Ohh"); //$NON-NLS-1$
+            setAdditionalInformation(messages);
         } else {
             setAdditionalInformation(null);
         }
