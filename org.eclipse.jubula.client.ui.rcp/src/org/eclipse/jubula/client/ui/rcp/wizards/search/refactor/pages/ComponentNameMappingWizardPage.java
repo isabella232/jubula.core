@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,12 +23,9 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.databinding.viewers.IViewerObservableValue;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.MasterSessionComponentNameMapper;
@@ -39,36 +37,38 @@ import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 /**
  * 
  * @author BREDEX GmbH
  *
  */
-public class ComponentNameMappingWizardPage extends WizardPage {
+public class ComponentNameMappingWizardPage extends AbstractMatchSelectionPage {
     
     /** Map of component GUID to comboViewer with data */
     private Map<String, ComboViewer> m_componentNamesMapping;
-    /** the scrolled composite which is used as parent */
-    private ScrolledComposite m_scroll;
-    /** the composite with all data*/
-    private Composite m_composite;
     /** the new spec Test Case */
     private ISpecTestCasePO m_newSpec;
+    /** for Information Text purpose */
+    private boolean m_noMatchingType = false;
     /**
-     * 
+     * Old component names pairs
      */
     private LinkedList<ICompNamesPairPO> m_oldCompNamePairs =
             new LinkedList<ICompNamesPairPO>();
-    /** */
+    /** CompNamesBP */
     private CompNamesBP m_compNamesBP = new CompNamesBP();
+    
     /**
      * 
      * @param pageName
@@ -87,40 +87,14 @@ public class ComponentNameMappingWizardPage extends WizardPage {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public void createControl(Composite parent) {
-        m_scroll = new ScrolledComposite(parent, SWT.V_SCROLL | SWT.H_SCROLL);
-        
-        m_scroll.setLayout(GridLayoutFactory.fillDefaults()
-                .numColumns(1).create());
-        m_scroll.setMinSize(parent.getSize());
-        m_composite = new Composite(m_scroll,
-                SWT.NONE);
-        setControl(m_scroll);
-    }
-
-    /**
      * 
      * @param newSpec
      *            new Spec Test case which should be used for replacement
      */
     public void setNewSpec(ISpecTestCasePO newSpec) {
         m_newSpec = newSpec;
-        
-        m_composite.dispose(); // Disposing old and generating new composite
+        m_noMatchingType = false;
         m_componentNamesMapping = new HashMap<String, ComboViewer>();
-        Composite mappingGrid = new Composite(m_scroll, SWT.NONE);
-        mappingGrid.setLayout(GridLayoutFactory.fillDefaults()
-                .numColumns(3).spacing(10, 10).create());
-        GridData tableGridData = GridDataFactory.fillDefaults()
-                .grab(false, false).align(SWT.CENTER, SWT.CENTER).create();
-        mappingGrid.setLayoutData(tableGridData);
-        
-        createLayoutWithData(mappingGrid);
-        
-        m_scroll.setContent(mappingGrid);
-        m_composite = mappingGrid;
     }
 
     /**
@@ -129,25 +103,18 @@ public class ComponentNameMappingWizardPage extends WizardPage {
      *            the parent in which the data should be rendered
      */
     private void createLayoutWithData(Composite parent) {
-        
-        new Label(parent, SWT.NONE).setText(
-                Messages.ReplaceTCRWizard_ComponentNameMapping_newTC);
-        new Label(parent, SWT.SEPARATOR | SWT.VERTICAL);
-        new Label(parent, SWT.NONE).setText(
-                Messages.ReplaceTCRWizard_ComponentNameMapping_oldTC);
+        IExecTestCasePO newExec = NodeMaker.createExecTestCasePO(m_newSpec);
 
-        Label seperatorHorizontal = new Label(parent, SWT.HORIZONTAL
-                | SWT.SEPARATOR);
-        
-        GridData seperatorGridHorizontal = new GridData(GridData.FILL,
-                GridData.CENTER, true, false);
-        seperatorGridHorizontal.horizontalSpan = 3;
-        seperatorHorizontal.setLayoutData(seperatorGridHorizontal);
-        
+        Collection<ICompNamesPairPO> compNamePairs = 
+                m_compNamesBP.getAllCompNamesPairs(newExec);  
+        if (compNamePairs.size() == 0) {            
+            return;
+        }
         createMatchingFields(parent);
         parent.pack();
-    }
 
+    }
+    
     /**
      * Creates the GUI fields with component names
      * @param parent the parent composite
@@ -159,10 +126,9 @@ public class ComponentNameMappingWizardPage extends WizardPage {
                 m_compNamesBP.getAllCompNamesPairs(newExec); 
         
         GridData seperatorVertical = new GridData(
-                GridData.CENTER, GridData.FILL, false, true);
+                SWT.CENTER, SWT.FILL, false, true);
         seperatorVertical.verticalSpan = compNamePairs.size();
         
-        boolean first = true;
         for (Iterator compIterator = compNamePairs.iterator(); compIterator
                 .hasNext();) {
             ICompNamesPairPO compNamesPair = (ICompNamesPairPO) compIterator
@@ -185,55 +151,31 @@ public class ComponentNameMappingWizardPage extends WizardPage {
             Label compname = new Label(parent, NONE);
             compname.setText(displayName); 
             compname.setLayoutData(leftGridData);
-            if (first) {
-                Label seperator = new Label(parent, SWT.VERTICAL
-                        | SWT.SEPARATOR);
-                seperator.setLayoutData(seperatorVertical);
-                first = false;
-            }
-            
-            Combo oldCompNames = new Combo(parent, SWT.READ_ONLY);
-            oldCompNames.setLayoutData(rightGridData); 
-            
-            fillComboWithOldNames(newComponentName, oldCompNames);
-            oldCompNames.pack();
+                    
+            Control comboOrLabel = createControlWithOldComponentNames(
+                    newComponentName, parent);
+            comboOrLabel.setLayoutData(rightGridData);
+            comboOrLabel.pack();
             
         }
     }
 
     /**
-     * Fills the combo box with the old component names of the right type
+     * Creates a Combo if there are old component names, or a text with the message of the problem
      * 
      * @param componentName
      *            the new Component Names
-     * @param oldCompNames
-     *            the Combo Box to fill
+     * @param parent
+     *            the parent
+     * @return a <code>Combo</code> or a <code>Label</code> 
      */
-    private void fillComboWithOldNames(IComponentNamePO componentName,
-            Combo oldCompNames) {
-        ComboViewer comboViewer = new ComboViewer(oldCompNames);
-        comboViewer.setContentProvider(new ArrayContentProvider());
-        comboViewer.setLabelProvider(new LabelProvider() {
-            @Override
-            public String getText(Object element) {
-                if (element instanceof String) {
-                    String guid = (String) element;
-                    if (!StringUtils.isBlank((String)element)) {
-                        IComponentNamePO newComponentName = ComponentNamesBP
-                                .getInstance().getCompNamePo(guid);
-                        return getDisplayName(newComponentName.getGuid(),
-                                newComponentName.getComponentType());
-                    }
-                }
-                return StringConstants.SPACE;
-            } 
-        });
-        
-        m_componentNamesMapping.put(componentName.getGuid(), comboViewer);
+    private Control createControlWithOldComponentNames(
+            IComponentNamePO componentName, Composite parent) {        
         int counter = 1;
         List<String> listOfMatchingCompNames = new LinkedList<String>();
         // this is for the empty line
         listOfMatchingCompNames.add(StringConstants.SPACE);
+        int selection = 0;
         for (Iterator iterator = m_oldCompNamePairs.iterator(); 
                 iterator.hasNext();) {
             ICompNamesPairPO oldPairs = (ICompNamesPairPO) iterator.next();
@@ -252,12 +194,84 @@ public class ComponentNameMappingWizardPage extends WizardPage {
                 if (componentName.getName().equals(oldComponent.getName())
                         && componentName.getComponentType().equals(
                                 oldComponent.getComponentType())) {
-                    oldCompNames.select(counter);
+                    selection = counter;
                 }
                 counter++;
             }
         }
+        if (listOfMatchingCompNames.size() > 1) {
+            return createCombo(componentName, parent, listOfMatchingCompNames,
+                    selection);
+        }
+        
+        Label label = new Label(parent, SWT.NONE);
+        label.setText(Messages
+                .ReplaceTCRWizard_matchComponentNames_warningNoSameType);
+        ControlDecorator.addWarningDecorator(label,
+                Messages
+                .ReplaceTCRWizard_matchComponentNames_warningNoSameTypeDesc
+        );
+        m_noMatchingType = true;
+        return label;
+    }
+
+    /**
+     * 
+     * @param componentName
+     *            the component name
+     * @param parent
+     *            the parent
+     * @param listOfMatchingCompNames
+     *            the list of matching component names
+     * @param selection
+     *            the selected index if one should be preselected
+     * @return the Combo
+     * 
+     */
+    private Combo createCombo(IComponentNamePO componentName,
+            Composite parent, List<String> listOfMatchingCompNames,
+            int selection) {
+        final Combo oldCompNamesCombo = new Combo(parent, SWT.READ_ONLY);
+        ComboViewer comboViewer = new ComboViewer(oldCompNamesCombo);
+        comboViewer.setContentProvider(new ArrayContentProvider());
+        comboViewer.setLabelProvider(new LabelProvider() {
+            @Override
+            public String getText(Object element) {
+                if (element instanceof String) {
+                    String guid = (String) element;
+                    if (!StringUtils.isBlank((String)element)) {
+                        IComponentNamePO newComponentName = ComponentNamesBP
+                                .getInstance().getCompNamePo(guid);
+                        return getDisplayName(newComponentName.getGuid(),
+                                newComponentName.getComponentType());
+                    }
+                }
+                return StringConstants.SPACE;
+            } 
+        });
         comboViewer.setInput(listOfMatchingCompNames.toArray());
+        m_componentNamesMapping.put(componentName.getGuid(), comboViewer);
+        final ControlDecorator notMappedDecoration = ControlDecorator
+                .addWarningDecorator(
+            oldCompNamesCombo,
+            Messages
+            .ReplaceTCRWizard_matchComponentNames_warningUnmatchedComp
+        );
+        oldCompNamesCombo.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+                notMappedDecoration.setVisible(oldCompNamesCombo
+                        .getSelectionIndex() == 0);
+            }
+            
+            public void widgetDefaultSelected(SelectionEvent e) {
+                // Do nothing
+            }
+        });
+        if (selection != 0) {
+            oldCompNamesCombo.select(selection);
+            notMappedDecoration.setVisible(false);
+        }
+        return oldCompNamesCombo;
     }
     
     /**
@@ -299,6 +313,49 @@ public class ComponentNameMappingWizardPage extends WizardPage {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void createSelectionTable(Composite parent) {
+        if (m_componentNamesMapping.size() == 0) {
+            // remove the previously shown parameter names
+            for (Control child : parent.getChildren()) {
+                child.dispose();
+            }
+            createHeadLabel(parent,
+                    Messages.ReplaceTCRWizard_ComponentNameMapping_newTC);
+            createHeadLabel(parent,
+                    Messages.ReplaceTCRWizard_ComponentNameMapping_oldTC);
+            createLayoutWithData(parent);
+            updateAdditionalInformation();
+        }
+    }
+
+    /**
+     * updates the additional information text
+     */
+    private void updateAdditionalInformation() {
+        IExecTestCasePO newExec = NodeMaker.createExecTestCasePO(m_newSpec);
+        Collection<ICompNamesPairPO> compNamePairs = 
+                m_compNamesBP.getAllCompNamesPairs(newExec);
+        List<String> messages = new ArrayList<String>();
+        if (compNamePairs.size() == 0 && m_oldCompNamePairs.size() == 0) {
+            messages.add(Messages
+                    .ReplaceTCRWizard_matchComponentNames_infoNotNecessary);
+        }
+        if (compNamePairs.size() < m_oldCompNamePairs.size()) {
+            messages.add(Messages
+                    .ReplaceTCRWizard_matchComponentNames_infoOldMore);
+        }
+        if (m_noMatchingType) {
+            messages.add(Messages
+                    .ReplaceTCRWizard_matchComponentNames_infoNoType);
+        }
+        
+        setAdditionalInformation(messages);
+    }
+    
+    /**
      * Show help contend attached to wizard after selecting the ? icon,
      * or pressing F1 on Windows / Shift+F1 on Linux / Help on MAC.
      * {@inheritDoc}
@@ -307,5 +364,4 @@ public class ComponentNameMappingWizardPage extends WizardPage {
         Plugin.getHelpSystem().displayHelp(ContextHelpIds
                 .SEARCH_REFACTOR_REPLACE_EXECUTION_TEST_CASE_WIZARD);
     }
-
 }

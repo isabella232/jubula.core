@@ -641,6 +641,12 @@ public class Messages extends NLS {
     public static String ReplaceTCRWizard_matchComponentNames_multi_description;
     public static String ReplaceTCRWizard_matchComponentNames_oldInterface;
     public static String ReplaceTCRWizard_matchComponentNames_newInterface;
+    public static String ReplaceTCRWizard_matchComponentNames_warningNoSameType;
+    public static String ReplaceTCRWizard_matchComponentNames_warningNoSameTypeDesc;
+    public static String ReplaceTCRWizard_matchComponentNames_warningUnmatchedComp;
+    public static String ReplaceTCRWizard_matchComponentNames_infoNotNecessary;
+    public static String ReplaceTCRWizard_matchComponentNames_infoNoType;
+    public static String ReplaceTCRWizard_matchComponentNames_infoOldMore;
     public static String ReplaceTCRWizard_matchParameterNames_title;
     public static String ReplaceTCRWizard_matchParameterNames_multi_description;
     public static String ReplaceTCRWizard_matchParameterNames_oldParameter;

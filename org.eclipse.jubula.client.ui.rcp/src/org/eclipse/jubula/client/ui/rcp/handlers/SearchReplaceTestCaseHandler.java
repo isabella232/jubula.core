@@ -28,9 +28,7 @@ import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.SearchReplaceTCRWizard;
-import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
-import org.eclipse.jubula.client.ui.utils.DialogUtils.SizeType;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Shell;
 
@@ -95,16 +93,15 @@ public class SearchReplaceTestCaseHandler extends
      *            Set of all exec testcases which should be replaced
      */
     private void showWizardDialog(Set<IExecTestCasePO> execList) {
-        WizardDialog dialog;
+        WizardDialog dialog; 
         dialog = new WizardDialog(getActiveShell(), 
                 new SearchReplaceTCRWizard(execList)) {
             /** {@inheritDoc} */
             protected void configureShell(Shell newShell) {
                 super.configureShell(newShell);
-                DialogUtils.adjustShellSizeRelativeToClientSize(newShell, .6f,
-                        .6f, SizeType.SIZE);
             }
         };
+        dialog.setMinimumPageSize(775, 400);
         dialog.setHelpAvailable(true); // show ? icon on left bottom
         dialog.open();
     }

@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
 
+
 import java.util.List;
 
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -99,9 +101,12 @@ public abstract class AbstractMatchSelectionPage extends WizardPage {
         m_infoGroup.setText(Messages
                 .ReplaceTCRWizard_additionalInformation_title);
         setGrid(m_infoGroup, 1);
-
+        m_infoGroup.setLayoutData(
+                GridDataFactory.fillDefaults()
+                    .align(SWT.FILL, SWT.END).grab(true, false)
+                    .hint(SWT.DEFAULT, 80).create());
         m_infoText = new Text(m_infoGroup,
-                SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+                SWT.READ_ONLY | SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         m_infoText.setLayoutData(new GridData(GridData.FILL_BOTH));
     }
 
@@ -141,8 +146,9 @@ public abstract class AbstractMatchSelectionPage extends WizardPage {
      */
     protected static void createHeadLabel(Composite parent, String text) {
         StyledText styledText = new StyledText(parent,
-                SWT.READ_ONLY | SWT.WRAP | SWT.CENTER);
-        styledText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+                SWT.READ_ONLY | SWT.WRAP | SWT.LEAD);
+        styledText.setLayoutData(
+                new GridData(SWT.FILL, SWT.FILL, true, false));
         styledText.setEnabled(false);
         styledText.setText(text);
         styledText.setStyleRange(new StyleRange(0, text.length(),
