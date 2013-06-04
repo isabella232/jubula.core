@@ -17,9 +17,6 @@ package org.eclipse.jubula.communication.message;
  * @created 27.08.2004
  */
 public abstract class CAPTestMessage extends Message {
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** The CAP message data. */
     private MessageCap m_messageCap;
 
@@ -65,11 +62,6 @@ public abstract class CAPTestMessage extends Message {
 
     /** @return the command class */
     public abstract String getCommandClass();
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
-    }
 
     /** @return Returns the requestAnswer. */
     public boolean isRequestAnswer() {

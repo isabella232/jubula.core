@@ -19,8 +19,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created Mar 23, 2010
  */
 public class PrepareForShutdownMessage extends Message {
-    /** Static version */
-    private static final double VERSION = 1.0;
     /**
      * indicates whether the AUT should be forced to quit or whether the AUT
      * will terminate by itself
@@ -32,7 +30,7 @@ public class PrepareForShutdownMessage extends Message {
     private int m_additionalDelay;
 
     /**
-     * necessary for deserialization
+     * necessary for serialization
      */
     public PrepareForShutdownMessage() {
         // empty
@@ -53,11 +51,6 @@ public class PrepareForShutdownMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.PREPARE_FOR_SHUTDOWN_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /**

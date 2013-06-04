@@ -20,9 +20,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 05.10.2004
  */
 public class ServerShowDialogResponseMessage extends Message {
-    /** static version */
-    private static final double VERSION = 1.0;
-
     /** if the dialog is opened or closed */
     private boolean m_open;
 
@@ -66,11 +63,6 @@ public class ServerShowDialogResponseMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.SERVER_SHOW_DIALOG_RESULT_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return the open */

@@ -20,9 +20,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 06.07.2009
  */
 public class ActivateInspectorResponseMessage extends Message {
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /**
      * Default constructor. Do nothing (required by Betwixt).
      */
@@ -33,10 +30,5 @@ public class ActivateInspectorResponseMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.ACTIVATE_INSPECTOR_RESPONSE_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 }

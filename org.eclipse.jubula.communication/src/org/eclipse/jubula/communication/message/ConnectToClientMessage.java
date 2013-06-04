@@ -21,10 +21,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * 
  */
 public class ConnectToClientMessage extends Message {
-
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** the host name at which the client is listening */
     private String m_clientHostName;
 
@@ -57,11 +53,6 @@ public class ConnectToClientMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.CONNECT_TO_CLIENT_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return the host name at which the client is listening. */

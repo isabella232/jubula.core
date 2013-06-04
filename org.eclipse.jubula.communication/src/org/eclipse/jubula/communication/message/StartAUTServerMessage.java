@@ -107,15 +107,6 @@ public class StartAUTServerMessage extends Message {
         return CommandConstants.START_AUT_SERVER_COMMAND;
     }
 
-    /**
-     * Returns the version of the AUTStartVersion.
-     * 
-     * @return a <code>double</code> value. {@inheritDoc}
-     */
-    public double getVersion() {
-        return VERSION;
-    }
-
     /** @return Returns the client. */
     public String getClient() {
         return m_client;

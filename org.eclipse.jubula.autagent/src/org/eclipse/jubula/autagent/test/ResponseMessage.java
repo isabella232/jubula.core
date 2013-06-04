@@ -18,7 +18,6 @@ import org.eclipse.jubula.communication.message.Message;
  * 
  */
 public class ResponseMessage extends Message {
-    
     /** the respponse */
     private String m_response;
     
@@ -42,13 +41,6 @@ public class ResponseMessage extends Message {
      */
     public String getCommandClass() {
         return "org.eclipse.jubula.autagent.test.ResponseCommand"; //$NON-NLS-1$
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public double getVersion() {
-        return 1;
     }
 
     /**

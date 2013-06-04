@@ -110,9 +110,8 @@ public class QueryTreeContentProvider implements ITreeContentProvider {
         } 
         if (childCat.size() != 0) {
             return childCat.toArray();
-        } else {
-            return anaArray;
         }
+        return anaArray;
     }
 
     /**

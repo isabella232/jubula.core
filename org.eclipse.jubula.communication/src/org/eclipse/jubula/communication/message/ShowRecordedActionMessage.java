@@ -86,11 +86,6 @@ public class ShowRecordedActionMessage extends Message {
         return CommandConstants.SHOW_RECORDED_ACTION_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
-    }
-
     /** @return if open or not */
     public boolean isRecorded() {
         return m_recorded;

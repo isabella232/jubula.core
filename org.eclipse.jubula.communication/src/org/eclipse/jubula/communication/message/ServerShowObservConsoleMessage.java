@@ -48,11 +48,6 @@ public class ServerShowObservConsoleMessage extends Message {
         return CommandConstants.SERVER_SHOW_OBSERV_CONSOLE_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
-    }
-
     /**
      * if dialog should be opened/closed
      * 

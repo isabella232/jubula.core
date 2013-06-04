@@ -18,9 +18,6 @@ import org.eclipse.jubula.tools.registration.AutIdentifier;
  * @created Mar 25, 2010
  */
 public class RestartAutMessage extends Message {
-    /** Static version */
-    private static final double VERSION = 1.0;
-
     /** the ID of the Running AUT to restart */
     private AutIdentifier m_autId;
     
@@ -55,11 +52,6 @@ public class RestartAutMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.RESTART_AUT_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return the ID of the Running AUT to restart. */

@@ -17,9 +17,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created Aug 19, 2010
  */
 public class DisplayManualTestStepResponseMessage extends Message {
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** <code>m_comment</code> */
     private String m_comment = null;
 
@@ -48,11 +45,6 @@ public class DisplayManualTestStepResponseMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.DISPLAY_MANUAL_TEST_STEP_RESPONSE_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /**

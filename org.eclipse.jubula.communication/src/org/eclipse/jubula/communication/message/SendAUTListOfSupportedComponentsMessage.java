@@ -37,18 +37,13 @@ public abstract class SendAUTListOfSupportedComponentsMessage extends Message {
     /** fuzzy profile */
     private Profile m_profile;
 
-    /** empty constructor for serialisation */
+    /** empty constructor for serialization */
     public SendAUTListOfSupportedComponentsMessage() {
         super();
     }
 
     /** {@inheritDoc} */
     public abstract String getCommandClass();
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
-    }
 
     /** @return The list of <code>Component</code> objects. */
     public List getComponents() {

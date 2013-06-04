@@ -15,22 +15,12 @@ import org.eclipse.jubula.communication.message.Message;
 /**
  * @author BREDEX GmbH
  * @created 26.07.2004
- * 
  */
 public class ServerConnectionTestMessage extends Message {
-
     /**
      * {@inheritDoc}
      */
     public String getCommandClass() {
         return this.getClass().getName() + "ICommand"; //$NON-NLS-1$
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public double getVersion() {
-        return 0;
-    }
-
 }

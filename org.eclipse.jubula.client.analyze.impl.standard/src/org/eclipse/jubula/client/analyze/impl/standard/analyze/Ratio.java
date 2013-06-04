@@ -214,12 +214,11 @@ public class Ratio implements IAnalyze {
             if (toolkitdesc.getDepends().equals(
                     ToolkitConstants.EMPTY_EXTPOINT_ENTRY)) {
                 return toolkitdesc;
-            } else {
-                ToolkitPluginDescriptor desc = ComponentBuilder.getInstance()
-                        .getCompSystem().getToolkitPluginDescriptor(
-                                toolkitdesc.getDepends());
-                return getParentToolkitPluginDescriptor(desc);
             }
+            ToolkitPluginDescriptor desc = ComponentBuilder.getInstance()
+                    .getCompSystem().getToolkitPluginDescriptor(
+                            toolkitdesc.getDepends());
+            return getParentToolkitPluginDescriptor(desc);
         }
         
         /**

@@ -26,9 +26,4 @@ public class DisconnectFromAutAgentMessage extends Message {
     public String getCommandClass() {
         return CommandConstants.DISCONNECT_FROM_AUT_AGENT_COMMAND;
     }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return 1.0;
-    }
 }

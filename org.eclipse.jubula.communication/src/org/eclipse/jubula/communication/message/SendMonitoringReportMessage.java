@@ -31,10 +31,6 @@ public class SendMonitoringReportMessage extends Message {
         return CommandConstants.GET_MONITORING_REPORT_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return 1.0;
-    }    
     /**
      * 
      * @return the port to use for data transfer

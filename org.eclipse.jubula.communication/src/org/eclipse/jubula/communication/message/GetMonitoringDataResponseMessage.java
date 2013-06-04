@@ -30,11 +30,6 @@ public class GetMonitoringDataResponseMessage extends Message {
         return CommandConstants.GET_MONITORING_DATA_RESPONSE_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return 1.0;
-    }
-
     /** @return the coverageId */
     public String getMonitoringId() {
         return m_monitoringId;

@@ -17,9 +17,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created May 18, 2009
  */
 public class SendDirectoryMessage extends Message {
-    /** static version */
-    private static final double VERSION = 1.0;
-
     /** m_dirname */
     private String m_dirname;
 
@@ -42,11 +39,6 @@ public class SendDirectoryMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.SEND_DIRECTORY_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return the dirname */

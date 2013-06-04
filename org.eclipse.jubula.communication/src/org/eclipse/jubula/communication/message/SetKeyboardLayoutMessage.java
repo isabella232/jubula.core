@@ -21,10 +21,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created Aug 2, 2011
  */
 public class SetKeyboardLayoutMessage extends Message {
-
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** the layout to use */
     private Properties m_keyboardLayout;
 
@@ -46,19 +42,10 @@ public class SetKeyboardLayoutMessage extends Message {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public String getCommandClass() {
         return CommandConstants.SET_KEYBOARD_LAYOUT_COMMAND;
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public double getVersion() {
-        return VERSION;
     }
 
     /**

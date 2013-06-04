@@ -31,11 +31,6 @@ public class TakeScreenshotResponseMessage extends Message {
         return CommandConstants.TAKE_SCREENSHOT_RESPONSE_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return 1.0;
-    }
-
     /**
      * @param screenshot
      *            the screenshot to set

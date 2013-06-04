@@ -19,10 +19,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 27.08.2004
  */
 public class CAPRecordedMessage extends Message {
-
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** The CAP message data. */
     private MessageCap m_messageCap;
 
@@ -68,12 +64,5 @@ public class CAPRecordedMessage extends Message {
      */
     public String getCommandClass() {
         return CommandConstants.CAP_RECORDED_COMMAND;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public double getVersion() {
-        return VERSION;
     }
 }

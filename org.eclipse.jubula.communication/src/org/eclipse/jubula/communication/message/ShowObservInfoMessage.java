@@ -47,11 +47,6 @@ public class ShowObservInfoMessage extends Message {
         return CommandConstants.SHOW_OBSERVE_INFO_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
-    }
-
     /** @return additional Message / Info */
     public String getExtraMessage() {
         return m_extraMsg;

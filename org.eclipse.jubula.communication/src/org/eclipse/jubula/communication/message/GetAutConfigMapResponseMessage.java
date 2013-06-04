@@ -44,11 +44,6 @@ public class GetAutConfigMapResponseMessage extends Message {
         return CommandConstants.GET_AUT_CONFIGMAP_COMMAND_RESPONSE_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return 1.0;
-    }
-
     /** @return The autConfigMap form the Agent */
     public Map getAutConfigMap() {
         return m_autConfigMap;

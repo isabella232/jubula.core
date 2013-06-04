@@ -17,9 +17,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created Jan 26, 2010
  */
 public class GetRegisteredAutListMessage extends Message {
-    /** version */
-    private static final double VERSION = 1.0;
-
     /**
      * Default constructor. Do nothing (required by Betwixt).
      */
@@ -30,10 +27,5 @@ public class GetRegisteredAutListMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.GET_REGISTERED_AUTS_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 }

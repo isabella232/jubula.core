@@ -23,10 +23,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 23.07.2004
  */
 public class AUTStartMessage extends Message {
-
-    /** transmitted version of this message. */
-    public static final double VERSION = 1.0;
-
     /**
      * Default constructor. Do nothing.
      */
@@ -41,14 +37,5 @@ public class AUTStartMessage extends Message {
      */
     public String getCommandClass() {
         return CommandConstants.AUT_START_COMMAND;
-    }
-
-    /**
-     * Returns the version of this message.
-     * 
-     * @return a <code>double</code> value. {@inheritDoc}
-     */
-    public double getVersion() {
-        return VERSION;
     }
 }

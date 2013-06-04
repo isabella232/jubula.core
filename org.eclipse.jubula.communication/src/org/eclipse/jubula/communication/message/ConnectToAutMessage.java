@@ -22,16 +22,13 @@ import org.eclipse.jubula.tools.registration.AutIdentifier;
  * @created Feb 12, 2010
  */
 public class ConnectToAutMessage extends Message {
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** host name where the client is waiting */
     private String m_clientHostName;
 
     /** port number where the client is waiting */
     private int m_clientPort;
 
-    /** Timeout for the AUTServer to wait for a confirmation for a sended event */
+    /** Timeout for the AUTServer to wait for a confirmation for a sent event */
     private long m_eventConfirmTimeOut;
 
     /** ID of the Running AUT that should receive the connection request */
@@ -69,13 +66,6 @@ public class ConnectToAutMessage extends Message {
      */
     public String getCommandClass() {
         return CommandConstants.CONNECT_TO_AUT_COMMAND;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public double getVersion() {
-        return VERSION;
     }
 
     /**

@@ -22,9 +22,6 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
  * @created 10.06.2009
  */
 public class InspectorComponentSelectedMessage extends Message {
-    /** static version */
-    private static final double VERSION = 1.0;
-
     // the data of this message BEGIN
     /** the identifier of the component. */
     private IComponentIdentifier m_componentIdentifier;
@@ -39,11 +36,6 @@ public class InspectorComponentSelectedMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.INSPECTOR_COMPONENT_SELECTED_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return Returns the componentIdentifier. */
