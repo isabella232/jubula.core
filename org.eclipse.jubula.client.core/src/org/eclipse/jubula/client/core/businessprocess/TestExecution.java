@@ -142,7 +142,7 @@ public class TestExecution {
          */
         UNPAUSE,
         /**
-         * <code>CONTINUE_WITHOUT_EH</code> unpause test execution withou
+         * <code>CONTINUE_WITHOUT_EH</code> unpause test execution without
          * executing the next event handler
          */
         CONTINUE_WITHOUT_EH
@@ -398,14 +398,13 @@ public class TestExecution {
         }
         ClientTestFactory.getClientTest().fireTestExecutionChanged(
                 new TestExecutionEvent(TestExecutionEvent.TEST_EXEC_FAILED,
-                        new JBException(Messages.CouldNotConnectToAUT 
-                            + StringConstants.COLON + StringConstants.SPACE
-                            + autName, MessageIDs.E_NO_AUT_CONNECTION_ERROR)));
+                        new JBException(Messages.CouldNotConnectToAUT + autName,
+                                MessageIDs.E_NO_AUT_CONNECTION_ERROR)));
     }
     
     /**
      * @param autName the AUT Id
-     * @return wheter the aut name is correctly set
+     * @return whether the AUT name is correctly set
      */
     public static boolean isAutNameSet(String autName) {
         return String.valueOf(autName).equals("null"); //$NON-NLS-1$
