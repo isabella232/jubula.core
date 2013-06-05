@@ -26,10 +26,13 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -76,7 +79,7 @@ public class SearchReplaceTCRWizard extends Wizard {
          */
         public void run(IProgressMonitor monitor) {
             monitor.beginTask(Messages.ReplaceTestCasesActionDialog,
-                    IProgressMonitor.UNKNOWN);
+                    m_replaceExecTestCaseData.getOldExecTestCases().size());
             EntityManager session = GeneralStorage.getInstance()
                     .getMasterSession();
             try {
@@ -114,14 +117,17 @@ public class SearchReplaceTCRWizard extends Wizard {
                     newExec.setComment(exec.getComment());
                     newExec.setActive(exec.isActive());
                     newExec.setParentProjectId(exec.getParentProjectId());
+                    newExec.setGenerated(exec.isGenerated());
                     if (exec.getSpecTestCase().getName() != exec.getName()) {
                         newExec.setName(exec.getName());
                     }
                     addNewCompNamePairs(exec, newExec);
+                    addParametersToNewExecTestCase(exec, newExec);
                     
                     commands.add(new MultipleNodePM.DeleteExecTCHandle(exec));
                     commands.add(new MultipleNodePM.AddExecTCHandle(parent,
                             newExec, index));
+                    monitor.worked(1);
                 }
                 MessageInfo errorMessageInfo = MultipleNodePM.getInstance()
                         .executeCommands(commands, session);
@@ -129,7 +135,7 @@ public class SearchReplaceTCRWizard extends Wizard {
                 // Since a lot of changes are done fire the project is "reloaded"
                 DataEventDispatcher.getInstance().fireProjectLoadedListener(
                         monitor);
-                if ((errorMessageInfo != null)) {
+                if (errorMessageInfo != null) {
                     ErrorHandlingUtil.createMessageDialog(
                             errorMessageInfo.getMessageId(),
                             errorMessageInfo.getParams(), null);
@@ -188,6 +194,45 @@ public class SearchReplaceTCRWizard extends Wizard {
             return newExec;
         }
 
+        /**
+         * Add the parameters to the new execution Test Case by using the
+         * map between new to old parameter descriptions.
+         * @param oldExec The old execution Test Case.
+         * @param newExec The new execution Test Case.
+         */
+        private void addParametersToNewExecTestCase(
+                IExecTestCasePO oldExec,
+                IExecTestCasePO newExec) {
+            if (oldExec.getHasReferencedTD()) {
+                return; // do nothing, if the test data is referenced to spec
+            }
+            // get the parameter map
+            Map<IParamDescriptionPO, IParamDescriptionPO> newOldParamMap =
+                    m_replaceExecTestCaseData.getNewOldParamMap();
+            for (IParamDescriptionPO newParam: newOldParamMap.keySet()) {
+                IParamDescriptionPO oldParam = newOldParamMap.get(newParam);
+                if (oldParam != null) {
+                    int column = oldExec.getDataManager()
+                            .findColumnForParam(oldParam.getUniqueId());
+                    // iterate over all lines of parameter sets
+                    int row = 0;
+                    for (IDataSetPO oldDataSet: oldExec
+                            .getDataManager().getDataSets()) {
+                        // get column from old test data
+                        ITestDataPO oldTestData = oldDataSet.getColumn(column);
+                        if (newExec.getDataManager().getDataSetCount() == row) {
+                            newExec.getDataManager().insertDataSet(row);
+                        }
+                        IDataSetPO newDataRow = newExec.getDataManager()
+                                .getDataSet(row);
+                        ITestDataPO newTestData = oldTestData.deepCopy();
+                        newDataRow.addColumn(newTestData);
+                        row++;
+                    }
+                }
+            }
+        }
+
     }
 
     /**
@@ -211,11 +256,6 @@ public class SearchReplaceTCRWizard extends Wizard {
     private ComponentNameMappingWizardPage m_componentNamesPage;
 
     /**
-     * Parameter Matching page ID
-     */
-    private ParameterNamesMatchingWizardPage m_parameterMatchingPage;
-
-    /**
      * Constructor for the wizard page
      * 
      * @param execsToReplace
@@ -230,8 +270,6 @@ public class SearchReplaceTCRWizard extends Wizard {
     /** {@inheritDoc} */
     public boolean performFinish() {
         // This is needed if Finish was pressed on the first page
-        m_replaceExecTestCaseData.setNewSpecTestCase(
-                m_choosePage.getChoosenTestCase());
         m_matchedCompNameGuidMap = m_componentNamesPage.getCompMatching();
         try {
             PlatformUI.getWorkbench().getProgressService()
@@ -261,12 +299,10 @@ public class SearchReplaceTCRWizard extends Wizard {
                 m_replaceExecTestCaseData.getOldExecTestCases());
         m_componentNamesPage.setDescription(Messages
                 .ReplaceTCRWizard_matchComponentNames_multi_description);
-        m_parameterMatchingPage = new ParameterNamesMatchingWizardPage(
-                PARAMETER_MATCHING_PAGE_ID, m_replaceExecTestCaseData);
         addPage(m_choosePage);
         addPage(m_componentNamesPage);
-        addPage(m_parameterMatchingPage);
-        
+        addPage(new ParameterNamesMatchingWizardPage(
+                PARAMETER_MATCHING_PAGE_ID, m_replaceExecTestCaseData));
     }
 
     /**

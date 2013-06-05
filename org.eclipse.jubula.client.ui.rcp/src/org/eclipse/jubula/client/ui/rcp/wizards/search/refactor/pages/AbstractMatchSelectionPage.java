@@ -146,7 +146,7 @@ public abstract class AbstractMatchSelectionPage extends WizardPage {
      */
     protected static void createHeadLabel(Composite parent, String text) {
         StyledText styledText = new StyledText(parent,
-                SWT.READ_ONLY | SWT.WRAP | SWT.LEAD);
+                SWT.READ_ONLY | SWT.WRAP | SWT.LEAD | SWT.LEFT);
         styledText.setLayoutData(
                 new GridData(SWT.FILL, SWT.FILL, true, false));
         styledText.setEnabled(false);

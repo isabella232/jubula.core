@@ -42,6 +42,22 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
     }
 
     /**
+     * Set the new specification Test Case and initialize the map between
+     * the new and old parameters with null for the old parameter name.
+     * {@inheritDoc}
+     */
+    @Override
+    public void setNewSpecTestCase(ISpecTestCasePO newSpecTestCase) {
+        super.setNewSpecTestCase(newSpecTestCase);
+        List<String> oldParamNames = new ArrayList<String>();
+        int size = newSpecTestCase.getParameterListSize();
+        for (int i = 0; i < size; i++) {
+            oldParamNames.add(null);
+        }
+        setOldParameterNames(oldParamNames);
+    }
+
+    /**
      * @param newParamDesc The new parameter description.
      * @return An array of strings containing all parameter names from the old
      *         specification Test Case with the same type as the given parameter description.
@@ -59,20 +75,33 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
     }
 
     /**
-     * @param oldParamNameCombos
-     *          The list of combo boxes with the selected old parameter names.
+     * @param oldParamNameCombos The list of combo boxes with the selected
+     *                           old parameter names.
+     * @see #getNewOldParamMap()
      */
-    public void setNewOldParameterNames(List<Combo> oldParamNameCombos) {
+    public void setOldParameterNamesWithCombos(List<Combo> oldParamNameCombos) {
+        List<String> oldParamNames =
+                new ArrayList<String>(oldParamNameCombos.size());
+        for (Combo combo: oldParamNameCombos) {
+            oldParamNames.add(combo.getText());
+        }
+        setOldParameterNames(oldParamNames);
+    }
+
+    /**
+     * @param oldParamNames The list of selected parameter names.
+     */
+    private void setOldParameterNames(List<String> oldParamNames) {
         ISpecTestCasePO newSpec = getNewSpecTestCase();
-        Iterator<Combo> it = oldParamNameCombos.iterator();
+        Iterator<String> it = oldParamNames.iterator();
         Map<IParamDescriptionPO, IParamDescriptionPO> newOldParamMap =
                 new HashMap<IParamDescriptionPO, IParamDescriptionPO>();
         for (IParamDescriptionPO newParamDesc: newSpec.getParameterList()) {
             IParamDescriptionPO oldParamDesc = null;
-            Combo combo = it.next();
-            if (combo != null) {
+            String oldName = it.next();
+            if (oldName != null) {
                 oldParamDesc = getOldSpecTestCase()
-                        .getParameterForName(combo.getText());
+                        .getParameterForName(oldName);
             }
             newOldParamMap.put(newParamDesc, oldParamDesc);
         }
@@ -80,9 +109,9 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
     }
 
     /**
-     * @return The parameter map between new as key and old as value.
+     * @return The map between new parameter description as key and old as value.
      */
-    public Map<IParamDescriptionPO, IParamDescriptionPO> getMapParams() {
+    public Map<IParamDescriptionPO, IParamDescriptionPO> getNewOldParamMap() {
         return m_newOldParamMap;
     }
 

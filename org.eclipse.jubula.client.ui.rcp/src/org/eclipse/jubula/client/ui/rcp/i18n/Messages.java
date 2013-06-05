@@ -657,6 +657,7 @@ public class Messages extends NLS {
     public static String ReplaceTCRWizard_matchParameterNames_warningNoSameType;
     public static String ReplaceTCRWizard_matchParameterNames_warningNoSameTypeDesc;
     public static String ReplaceTCRWizard_matchParameterNames_warningNoSameTypeHint;
+    public static String ReplaceTCRWizard_matchParameterNames_hintNoMatchingNeeded;
     public static String RevertEditorChangesActionQuestionText;
     public static String RevertEditorChangesActionShellTitle;
     public static String RunningAUTParameter;

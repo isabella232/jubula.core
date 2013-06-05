@@ -79,10 +79,12 @@ public class ParameterNamesMatchingWizardPage
             child.dispose();
         }
         // create head row
-        createHeadLabel(parent, Messages
-                .ReplaceTCRWizard_matchParameterNames_newParameter);
-        createHeadLabel(parent, Messages
-                .ReplaceTCRWizard_matchParameterNames_oldParameter);
+        createHeadLabel(parent, NLS.bind(Messages
+                .ReplaceTCRWizard_matchParameterNames_newParameter,
+                m_replaceExecTestCasesData.getNewSpecTestCase().getName()));
+        createHeadLabel(parent, NLS.bind(Messages
+                .ReplaceTCRWizard_matchParameterNames_oldParameter,
+                m_replaceExecTestCasesData.getOldSpecTestCase().getName()));
         // fill the rows with the new parameter names
         List<IParamDescriptionPO> paramDescList = m_replaceExecTestCasesData
                 .getNewSpecTestCase()
@@ -122,13 +124,21 @@ public class ParameterNamesMatchingWizardPage
     private void updateAdditionalInformation() {
         boolean hasUnmatchedTypes = m_oldNameCombos.contains(null);
         List<String> messages = new ArrayList<String>();
-        if (hasUnmatchedTypes) {
+        if (m_replaceExecTestCasesData
+                    .getNewSpecTestCase()
+                    .getParameterListSize() == 0
+                && m_replaceExecTestCasesData
+                    .getOldSpecTestCase()
+                    .getParameterListSize() == 0) {
             messages.add(Messages
-                .ReplaceTCRWizard_matchParameterNames_warningNoSameTypeHint);
+                    .ReplaceTCRWizard_matchParameterNames_hintNoMatchingNeeded);
+        } else if (hasUnmatchedTypes) {
+            messages.add(Messages
+                .ReplaceTCRWizard_matchParameterNames_warningUnusedOldParams);
         }
         if (!m_replaceExecTestCasesData.hasMatchableParameters()) {
             messages.add(Messages
-                .ReplaceTCRWizard_matchParameterNames_warningUnusedOldParams);
+                .ReplaceTCRWizard_matchParameterNames_warningNoSameTypeHint);
         }
         setAdditionalInformation(messages);
     }
@@ -159,21 +169,16 @@ public class ParameterNamesMatchingWizardPage
      * {@inheritDoc}
      */
     public void widgetSelected(SelectionEvent e) {
-        if (m_oldNameCombos.get(0).getSelectionIndex() == 0) {
-            List<String> messages = new ArrayList<String>();
-            messages.add("Ohh"); //$NON-NLS-1$
-            setAdditionalInformation(messages);
-        } else {
-            setAdditionalInformation(null);
-        }
-        m_replaceExecTestCasesData.setNewOldParameterNames(m_oldNameCombos);
+        m_replaceExecTestCasesData.setOldParameterNamesWithCombos(
+                m_oldNameCombos);
+        updateAdditionalInformation();
     }
 
     /**
      * {@inheritDoc}
      */
     public void widgetDefaultSelected(SelectionEvent e) {
-        // do nothing
+        widgetSelected(e);
     }
 
 }

@@ -52,8 +52,18 @@ public class DecoratedCombo implements SelectionListener {
         m_combo.setItems(items.toArray(new String[] {}));
         if (items.size() == 2) {
             m_combo.select(1);
+        } else {
+            m_combo.select(0);
         }
-        widgetSelected(null);
+        updateVisibilityOfDecorator();
+    }
+
+    /**
+     * Show the decorator, if the empty element is selected, otherwise
+     * hide the decorator.
+     */
+    private void updateVisibilityOfDecorator() {
+        m_warningDecoration.setVisible(m_combo.getSelectionIndex() == 0);
     }
 
     /**
@@ -75,14 +85,15 @@ public class DecoratedCombo implements SelectionListener {
     }
 
     /**
-     * Show warning decoration next to combo box, if the empty element is selected.
+     * Calls only {@link #updateVisibilityOfDecorator()}.
      * {@inheritDoc}
      */
     public void widgetSelected(SelectionEvent e) {
-        m_warningDecoration.setVisible(m_combo.getSelectionIndex() == 0);
+        updateVisibilityOfDecorator();
     }
 
     /**
+     * Do nothing.
      * {@inheritDoc}
      */
     public void widgetDefaultSelected(SelectionEvent e) {
