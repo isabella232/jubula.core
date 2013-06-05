@@ -1065,43 +1065,50 @@ public class ClientTest implements IClientTest {
             public boolean belongsTo(Object family) {
                 return m_jobFamily.equals(family);
             } 
-            protected IStatus run(IProgressMonitor monitor) {            
-                monitor.beginTask(Messages.ClientWritingReport,
-                        IProgressMonitor.UNKNOWN); 
-                writeReport();
-                monitor.beginTask(Messages.ClientWritingReportToDB,
-                        IProgressMonitor.UNKNOWN); 
-                writeTestresultToDB();                
-                if (isRunningWithMonitoring()) {
-                    monitor.setTaskName(Messages.ClientCalculating);
-                    getMonitoringData();   
-                    while (result.getMonitoringValues() == null 
-                            || result.getMonitoringValues().isEmpty()) {
-                        TimeUtil.delay(500);
-                        if (result.getMonitoringValues() != null) {
-                            break;
-                        }                        
-                        if (monitor.isCanceled()) {
-                            return Status.CANCEL_STATUS;
+            protected IStatus run(IProgressMonitor monitor) {  
+                try {
+                    monitor.beginTask(Messages.ClientWritingReport,
+                            IProgressMonitor.UNKNOWN);
+                    writeReport();
+                    monitor.beginTask(Messages.ClientWritingReportToDB,
+                            IProgressMonitor.UNKNOWN);
+                    writeTestresultToDB();
+                    if (isRunningWithMonitoring()) {
+                        monitor.setTaskName(Messages.ClientCalculating);
+                        getMonitoringData();
+                        while (result.getMonitoringValues() == null
+                                || result.getMonitoringValues().isEmpty()) {
+                            TimeUtil.delay(500);
+                            if (result.getMonitoringValues() != null) {
+                                break;
+                            }
+                            if (monitor.isCanceled()) {
+                                return Status.CANCEL_STATUS;
+                            }
                         }
+                        monitor.setTaskName(Messages.ClientBuildingReport);
+                        buildMonitoringReport();
+                        while (result.getReportData() == null) {
+                            TimeUtil.delay(500);
+                            if (result.getReportData() 
+                                    ==  (MonitoringConstants.EMPTY_REPORT)) {
+                                break;
+                            }
+                            if (monitor.isCanceled()) {
+                                return Status.CANCEL_STATUS;
+                            }
+                        }
+                        writeMonitoringResults(result);
                     }
-                    monitor.setTaskName(Messages.ClientBuildingReport);
-                    buildMonitoringReport();      
-                    while (result.getReportData() == null) {
-                        TimeUtil.delay(500);
-                        if (result.getReportData() == (
-                                MonitoringConstants.EMPTY_REPORT)) {
-                            break;
-                        }
-                        if (monitor.isCanceled()) {
-                            return Status.CANCEL_STATUS;
-                        }
-                    }
-                    writeMonitoringResults(result);              
+                    fireTestresultSummaryChanged();
+                    monitor.done();
+                    return Status.OK_STATUS;
+                } catch (Throwable t) {
+                    // this is due that everything that happens in the job
+                    // will otherwise not be logged (like memory Exception)
+                    log.error(Messages.ClientWritingReportError, t);
+                    return Status.CANCEL_STATUS;
                 }
-                fireTestresultSummaryChanged();
-                monitor.done();
-                return Status.OK_STATUS;
             }
         }; 
         job.addJobChangeListener(new JobChangeAdapter() {
