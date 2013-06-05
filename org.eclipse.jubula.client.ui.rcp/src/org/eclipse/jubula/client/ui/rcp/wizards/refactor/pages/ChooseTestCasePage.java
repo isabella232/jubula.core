@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.wizards.refactor.pages;
 
-import java.util.Set;
-
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -30,22 +28,23 @@ import org.eclipse.ui.PlatformUI;
  * @created Jul 25, 2011
  */
 public class ChooseTestCasePage extends WizardPage {
+
+    /** The help context ID for this page. */
+    private String m_contextHelpId;
+
     /**
      * <code>m_parentTestCase</code>
      */
     private INodePO m_parentTestCase;
-    
-    /**
-     * <code>m_parentTestCases</code>
-     */
-    private Set<INodePO> m_setOfParentTestCases;
-    
+
     /**
      * <code>m_choosenTestCase</code>
      */
     private ISpecTestCasePO m_choosenTestCase = null;
-    
+
     /**
+     * The default context help ID is
+     * {@link ContextHelpIds#REFACTOR_REPLACE_CHOOSE_TEST_CASE_WIZARD_PAGE}.
      * @param pageId
      *            the page id
      * @param parentTestCase
@@ -55,32 +54,25 @@ public class ChooseTestCasePage extends WizardPage {
         super(pageId, Messages.ReplaceTCRWizard_choosePage_title, null);
         m_parentTestCase = parentTestCase;
         setPageComplete(false);
+        m_contextHelpId =
+                ContextHelpIds.REFACTOR_REPLACE_CHOOSE_TEST_CASE_WIZARD_PAGE;
     }
-    
+
     /**
-     * @param pageId
-     *            the page id
-     * @param parentTestCases
-     *            the parent test cases
+     * Override the default context help ID.
+     * @param contextHelpId The help context ID for this wizard page.
+     * @see #ChooseTestCasePage(INodePO, String)
      */
-    public ChooseTestCasePage(Set<INodePO> parentTestCases, String pageId) {
-        super(pageId, Messages.ReplaceTCRWizard_choosePage_title, null);
-        m_setOfParentTestCases = parentTestCases;
-        setPageComplete(false);
+    public void setContextHelpId(String contextHelpId) {
+        m_contextHelpId = contextHelpId;
     }
 
     /**
      * {@inheritDoc}
      */
     public void createControl(Composite parent) {
-        final TestCaseTreeComposite tctc;
-        if (m_parentTestCase != null) {
-            tctc = new TestCaseTreeComposite(parent,
-                    SWT.SINGLE, m_parentTestCase);
-        } else {
-            tctc = new TestCaseTreeComposite(parent,
-                    SWT.SINGLE, m_setOfParentTestCases);
-        }
+        final TestCaseTreeComposite tctc = new TestCaseTreeComposite(parent,
+                SWT.SINGLE, m_parentTestCase);
         tctc.getTreeViewer().addSelectionChangedListener(
                 new ISelectionChangedListener() {
                     public void selectionChanged(SelectionChangedEvent event) {
@@ -105,7 +97,7 @@ public class ChooseTestCasePage extends WizardPage {
      */
     public void performHelp() {
         PlatformUI.getWorkbench().getHelpSystem().displayHelp(
-            ContextHelpIds.REFACTOR_REPLACE_CHOOSE_TEST_CASE_WIZARD_PAGE);
+            m_contextHelpId);
     }
 
     /**

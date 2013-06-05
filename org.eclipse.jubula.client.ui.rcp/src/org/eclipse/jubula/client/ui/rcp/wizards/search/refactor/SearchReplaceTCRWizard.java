@@ -36,6 +36,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
+import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.pages.ChooseTestCasePage;
 import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages.ComponentNameMappingWizardPage;
@@ -253,6 +254,8 @@ public class SearchReplaceTCRWizard extends Wizard {
         m_choosePage = new ChooseTestCasePage(spec, CHOOSE_PAGE_ID);
         m_choosePage.setDescription(
                 Messages.replaceTCRWizard_choosePage_multi_description);
+        m_choosePage.setContextHelpId(ContextHelpIds
+                .SEARCH_REFACTOR_REPLACE_EXECUTION_TEST_CASE_WIZARD);
         m_componentNamesPage = new ComponentNameMappingWizardPage(
                 COMPONENT_MAPPING_PAGE_ID,
                 m_replaceExecTestCaseData.getOldExecTestCases());
