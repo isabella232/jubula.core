@@ -440,22 +440,12 @@ public class GeneralLabelProvider extends ColumnLabelProvider
 
     /**
      * @param paramDesc The parameter description.
-     * @return The short type name, a colon, a space and the name of the parameter
-     *         description.
-     */
-    private static String getText(IParamDescriptionPO paramDesc) {
-        return getShortTypeName(paramDesc)
-                + ": " //$NON-NLS-1$
-                + paramDesc.getName();
-    }
-
-    /**
-     * @param paramDesc The parameter description.
      * @return The text for a parameter description surrounded with brackets.
      */
-    public static String getTextWithBrackets(IParamDescriptionPO paramDesc) {
-        return "[" //$NON-NLS-1$
-                + getText(paramDesc)
+    public static String getTextWithType(IParamDescriptionPO paramDesc) {
+        return paramDesc.getName()
+                + OPEN_BRACKED
+                + getShortTypeName(paramDesc)
                 + CLOSE_BRACKED;
     }
 

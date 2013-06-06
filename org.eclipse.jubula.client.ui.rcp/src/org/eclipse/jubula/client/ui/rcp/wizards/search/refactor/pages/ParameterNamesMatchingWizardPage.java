@@ -23,6 +23,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -91,7 +92,7 @@ public class ParameterNamesMatchingWizardPage
         m_oldNameCombos.clear();
         for (IParamDescriptionPO paramDesc: paramDescList) {
             createLabel(parent,
-                    GeneralLabelProvider.getTextWithBrackets(paramDesc));
+                    GeneralLabelProvider.getTextWithType(paramDesc));
             List<String> oldNames = m_replaceExecTestCasesData
                     .getOldParameterNamesByType(paramDesc);
             if (oldNames.size() == 0) {
@@ -108,8 +109,13 @@ public class ParameterNamesMatchingWizardPage
                     .ReplaceTCRWizard_matchParameterNames_warningUnmatchedParams
                     , m_replaceExecTestCasesData.getOldSpecTestCase().getName()
                 );
+                int selectedIndex = 0;
+                if (oldNames.contains(paramDesc.getName())) {
+                    selectedIndex = oldNames.indexOf(paramDesc.getName()) + 1;
+                }
                 Combo combo = DecoratedCombo.create(
-                    parent, oldNames, message);
+                    parent, oldNames, selectedIndex, message);
+                combo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
                 combo.addSelectionListener(this);
                 m_oldNameCombos.add(combo);
             }
@@ -199,7 +205,7 @@ public class ParameterNamesMatchingWizardPage
      * {@inheritDoc}
      */
     public void widgetDefaultSelected(SelectionEvent e) {
-        // do nothing
+        onSelected();
     }
 
 }

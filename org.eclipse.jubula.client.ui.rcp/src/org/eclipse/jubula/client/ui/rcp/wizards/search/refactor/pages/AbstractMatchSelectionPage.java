@@ -90,6 +90,9 @@ public abstract class AbstractMatchSelectionPage extends WizardPage {
         m_selectGrid = new Composite(m_scroll, SWT.NONE);
         m_scroll.setContent(m_selectGrid);
         setGrid(m_selectGrid, 2);
+        // add right margin reserving space for decorators
+        GridLayout gridLayout = (GridLayout) m_selectGrid.getLayout();
+        gridLayout.marginRight = 10;
     }
 
     /**
@@ -151,9 +154,11 @@ public abstract class AbstractMatchSelectionPage extends WizardPage {
                 new GridData(SWT.FILL, SWT.FILL, true, false));
         styledText.setEnabled(false);
         styledText.setText(text);
+        styledText.setBackground(parent.getDisplay()
+                .getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
         styledText.setStyleRange(new StyleRange(0, text.length(),
                 null,
-                parent.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND),
+                null,
                 SWT.BOLD));
     }
 

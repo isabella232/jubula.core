@@ -35,26 +35,21 @@ public class DecoratedCombo implements SelectionListener {
 
     /**
      * A new combo box with the given items added to the given parent.
-     * If the given items only contains one element, this element is selected
-     * automatically. In each case an empty item is added at the
-     * beginning of the list.
+     * An empty item is added at the beginning of the list and is selected.
      * @param parent The parent composite.
      * @param items A list of items.
+     * @param selectedIndex The index for default selection.
      * @param message The message to show in the bobble.
      */
     private DecoratedCombo(Composite parent, List<String> items,
-            String message) {
+            int selectedIndex, String message) {
         m_combo = new Combo(parent, SWT.READ_ONLY);
         m_warningDecoration = ControlDecorator.addWarningDecorator(
             m_combo, message);
         m_combo.addSelectionListener(this);
         items.add(0, ""); //$NON-NLS-1$
         m_combo.setItems(items.toArray(new String[] {}));
-        if (items.size() == 2) {
-            m_combo.select(1);
-        } else {
-            m_combo.select(0);
-        }
+        m_combo.select(selectedIndex);
         updateVisibilityOfDecorator();
     }
 
@@ -71,6 +66,7 @@ public class DecoratedCombo implements SelectionListener {
      * is selected.
      * @param parent The parent composite.
      * @param items A list of items.
+     * @param selectedIndex The index for default selection.
      * @param message The message to show in the warning bobble.
      * @return A new combo box with the given items added to the given parent.
      *         If the given items only contains one element, this element is selected
@@ -78,9 +74,9 @@ public class DecoratedCombo implements SelectionListener {
      *         beginning of the list.
      */
     public static Combo create(Composite parent, List<String> items,
-            String message) {
+            int selectedIndex, String message) {
         DecoratedCombo decoratedCombo = new DecoratedCombo(
-                parent, items, message);
+                parent, items, selectedIndex, message);
         return decoratedCombo.m_combo;
     }
 
@@ -97,7 +93,7 @@ public class DecoratedCombo implements SelectionListener {
      * {@inheritDoc}
      */
     public void widgetDefaultSelected(SelectionEvent e) {
-        // do nothing
+        updateVisibilityOfDecorator();
     }
 
 }

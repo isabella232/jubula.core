@@ -48,6 +48,7 @@ import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages.ParameterN
 import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages.ReplaceExecTestCaseData;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.exception.JBRuntimeException;
 import org.eclipse.jubula.tools.messagehandling.MessageInfo;
 import org.eclipse.ui.PlatformUI;
 
@@ -94,7 +95,6 @@ public class SearchReplaceTCRWizard extends Wizard {
                         .getOldExecTestCases()) {
                     INodePO parent = exec.getParentNode();
                     int index = parent.indexOf(exec);
-                    
                     IExecTestCasePO newExec;
                     if (IEventExecTestCasePO.class.isAssignableFrom(
                             exec.getClass())) {
@@ -114,7 +114,6 @@ public class SearchReplaceTCRWizard extends Wizard {
                         newExec = NodeMaker.createExecTestCasePO(
                                 m_replaceExecTestCaseData.getNewSpecTestCase());
                     }
-
                     // 1. copy primitive members
                     copyPrimitiveMembers(exec, newExec);
                     // 2. add data manager with new columns
@@ -129,7 +128,6 @@ public class SearchReplaceTCRWizard extends Wizard {
                     }
                     // 4. add pairs of component names
                     addNewCompNamePairs(exec, newExec);
-                    
                     commands.add(new MultipleNodePM.DeleteExecTCHandle(exec));
                     commands.add(new MultipleNodePM.AddExecTCHandle(parent,
                             newExec, index));
@@ -137,7 +135,6 @@ public class SearchReplaceTCRWizard extends Wizard {
                 }
                 MessageInfo errorMessageInfo = MultipleNodePM.getInstance()
                         .executeCommands(commands, session);
-                
                 // Since a lot of changes are done fire the project is "reloaded"
                 DataEventDispatcher.getInstance().fireProjectLoadedListener(
                         monitor);
@@ -148,6 +145,10 @@ public class SearchReplaceTCRWizard extends Wizard {
                 }
             } catch (JBException e) {
                 ErrorHandlingUtil.createMessageDialog(e, null, null);
+            } catch (JBRuntimeException e) {
+                ErrorHandlingUtil.createMessageDialog(e);
+            } catch (RuntimeException e) {
+                e.printStackTrace();
             } finally {
                 LockManager.instance().unlockPOs(session);
             }
@@ -186,8 +187,12 @@ public class SearchReplaceTCRWizard extends Wizard {
                 IExecTestCasePO oldExec,
                 IExecTestCasePO newExec) {
             if (oldExec.getHasReferencedTD()
+                    || oldExec.getReferencedDataCube() != null
                     || m_replaceExecTestCaseData.hasOnlyUnmatchedParameters()) {
-                return; // test data referenced to specification TC: do nothing
+                // test data referenced to specification Test Case
+                // or a data cube exists
+                // or every new parameters are unmatched
+                return; // add no local test data
             }
             // get the parameter map
             Map<IParamDescriptionPO, IParamDescriptionPO> newOldParamMap =

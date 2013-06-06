@@ -44,7 +44,7 @@ public class ParameterDescriptionLabelProvider extends GeneralLabelProvider {
     public String getText(Object element) {
         if (element instanceof IParamDescriptionPO) {
             IParamDescriptionPO paramDesc = (IParamDescriptionPO) element;
-            return GeneralLabelProvider.getTextWithBrackets(paramDesc);
+            return GeneralLabelProvider.getTextWithType(paramDesc);
         }
         return super.getText(element);
     }
