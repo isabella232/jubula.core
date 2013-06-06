@@ -12,6 +12,8 @@
 package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -50,9 +52,11 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
     public void setNewSpecTestCase(ISpecTestCasePO newSpecTestCase) {
         super.setNewSpecTestCase(newSpecTestCase);
         List<String> oldParamNames = new ArrayList<String>();
-        int size = newSpecTestCase.getParameterListSize();
-        for (int i = 0; i < size; i++) {
-            oldParamNames.add(null);
+        if (newSpecTestCase != null) {
+            int size = newSpecTestCase.getParameterListSize();
+            for (int i = 0; i < size; i++) {
+                oldParamNames.add(null);
+            }
         }
         setOldParameterNames(oldParamNames);
     }
@@ -83,13 +87,20 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
         List<String> oldParamNames =
                 new ArrayList<String>(oldParamNameCombos.size());
         for (Combo combo: oldParamNameCombos) {
-            oldParamNames.add(combo.getText());
+            String oldParamName = null;
+            if (combo != null) {
+                oldParamName = combo.getText();
+            }
+            oldParamNames.add(oldParamName);
         }
         setOldParameterNames(oldParamNames);
     }
 
     /**
-     * @param oldParamNames The list of selected parameter names.
+     * Set the selected old parameters by a list of names. Use
+     * {@link #getNewOldParamMap()} to get the result.
+     * @param oldParamNames The list of selected parameter names in the order
+     *                      of the new parameter list.
      */
     private void setOldParameterNames(List<String> oldParamNames) {
         ISpecTestCasePO newSpec = getNewSpecTestCase();
@@ -109,31 +120,41 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
     }
 
     /**
-     * @return The map between new parameter description as key and old as value.
+     * @return The map between new parameter descriptions as key and old as value.
+     *         The old parameter description is null, if it is unmatched.
      */
     public Map<IParamDescriptionPO, IParamDescriptionPO> getNewOldParamMap() {
         return m_newOldParamMap;
     }
 
     /**
-     * @return True, if the parameters from the new and old specification
-     *         Test Case can not be matched directly, otherwise false.
+     * @return True, if not all old parameters are matched to a new parameter,
+     *         otherwise false.
      */
-    public boolean hasMatchableParameters() {
+    public boolean hasUnmatchedParameters() {
         if (getNewSpecTestCase().getParameterListSize()
-                == getOldSpecTestCase().getParameterListSize()) {
-            return haveSameTypeCount();
+                < getOldSpecTestCase().getParameterListSize()) {
+            // matching not possible, because the new TC has not enough parameters
+            return true;
         }
-        return false;
+        // create a temporary list from the old parameter list by copying
+        List<IParamDescriptionPO> tmpParams =
+                new ArrayList<IParamDescriptionPO>(
+                        getOldSpecTestCase().getParameterList());
+        // remove the selected old parameters from the temporary list
+        tmpParams.removeAll(m_newOldParamMap.values());
+        // there are unmatched parameters, if the temporary list is not empty
+        return !tmpParams.isEmpty();
     }
 
     /**
-     * @return True, if the new and old Test Case have the same number of
-     *         parameter types, otherwise false.
+     * @return True, if all new parameters have no matched old parameters, i.e.
+     *         all values of the parameter map {@link #getNewOldParamMap()} are null,
+     *         otherwise false.
      */
-    private boolean haveSameTypeCount() {
-        // FIXME RB: not implemented yet
-        return true;
+    public boolean hasOnlyUnmatchedParameters() {
+        Collection<IParamDescriptionPO> values = m_newOldParamMap.values();
+        return Collections.frequency(values, null) == values.size();
     }
 
 }

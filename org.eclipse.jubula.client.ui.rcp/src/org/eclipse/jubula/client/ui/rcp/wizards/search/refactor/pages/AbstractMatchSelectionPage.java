@@ -153,8 +153,7 @@ public abstract class AbstractMatchSelectionPage extends WizardPage {
         styledText.setText(text);
         styledText.setStyleRange(new StyleRange(0, text.length(),
                 null,
-                //parent.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND),
-                null,
+                parent.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND),
                 SWT.BOLD));
     }
 
@@ -163,17 +162,19 @@ public abstract class AbstractMatchSelectionPage extends WizardPage {
         if (isVisible) {
             // add the selectable parameter names
             createSelectionTable(m_selectGrid);
+            // set the minimum size of the selection table depending on current content
             m_scroll.setMinSize(m_selectGrid.computeSize(
                     SWT.DEFAULT, SWT.DEFAULT));
+            // update the layout of the selection table
             m_selectGrid.layout(true);
         }
         super.setVisible(isVisible);
     }
 
     /**
-     * Create the table of parameters showing the new parameters in the left
-     * column and the combo boxes in the right column.
-     * @param parent The parent composite with a grid layout of 2 columns.
+     * Create the table of parameters showing the new component or parameter name
+     * at the left column and corresponding combo boxes at the right column.
+     * @param parent The parent composite with a grid layout of two columns.
      */
     protected abstract void createSelectionTable(Composite parent);
 

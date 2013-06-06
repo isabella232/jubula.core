@@ -32,6 +32,7 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
@@ -114,15 +115,20 @@ public class SearchReplaceTCRWizard extends Wizard {
                                 m_replaceExecTestCaseData.getNewSpecTestCase());
                     }
 
-                    newExec.setComment(exec.getComment());
-                    newExec.setActive(exec.isActive());
-                    newExec.setParentProjectId(exec.getParentProjectId());
-                    newExec.setGenerated(exec.isGenerated());
-                    if (exec.getSpecTestCase().getName() != exec.getName()) {
-                        newExec.setName(exec.getName());
+                    // 1. copy primitive members
+                    copyPrimitiveMembers(exec, newExec);
+                    // 2. add data manager with new columns
+                    addParametersFromOldToNewTC(exec, newExec);
+                    // 3. copy referenced data cube
+                    if (exec.getReferencedDataCube() != null
+                            && !exec.getReferencedDataCube().equals(exec
+                                    .getSpecTestCase()
+                                    .getReferencedDataCube())) {
+                        newExec.setReferencedDataCube(
+                                exec.getReferencedDataCube());
                     }
+                    // 4. add pairs of component names
                     addNewCompNamePairs(exec, newExec);
-                    addParametersToNewExecTestCase(exec, newExec);
                     
                     commands.add(new MultipleNodePM.DeleteExecTCHandle(exec));
                     commands.add(new MultipleNodePM.AddExecTCHandle(parent,
@@ -146,6 +152,76 @@ public class SearchReplaceTCRWizard extends Wizard {
                 LockManager.instance().unlockPOs(session);
             }
             monitor.done();
+        }
+
+        /**
+         * Copy primitive members from old to new execution Test Case.
+         * @param oldExec The old execution Test Case.
+         * @param newExec The new execution Test Case.
+         */
+        private void copyPrimitiveMembers(IExecTestCasePO oldExec,
+                IExecTestCasePO newExec) {
+            newExec.setActive(oldExec.isActive());
+            newExec.setComment(oldExec.getComment());
+            newExec.setDataFile(oldExec.getDataFile());
+            newExec.setGenerated(oldExec.isGenerated());
+            // copy execution test case name
+            if (oldExec.getSpecTestCase().getName() != oldExec.getName()) {
+                newExec.setName(oldExec.getName());
+            }
+            newExec.setParentProjectId(oldExec.getParentProjectId());
+            newExec.setToolkitLevel(oldExec.getToolkitLevel());
+            newExec.setHasReferencedTD(
+                    oldExec.getDataManager().equals(
+                    oldExec.getSpecTestCase().getDataManager()));
+        }
+
+        /**
+         * Add the parameters to the new execution Test Case by using the
+         * map between new to old parameter descriptions.
+         * @param oldExec The old execution Test Case.
+         * @param newExec The new execution Test Case.
+         */
+        private void addParametersFromOldToNewTC(
+                IExecTestCasePO oldExec,
+                IExecTestCasePO newExec) {
+            if (oldExec.getHasReferencedTD()
+                    || m_replaceExecTestCaseData.hasOnlyUnmatchedParameters()) {
+                return; // test data referenced to specification TC: do nothing
+            }
+            // get the parameter map
+            Map<IParamDescriptionPO, IParamDescriptionPO> newOldParamMap =
+                    m_replaceExecTestCaseData.getNewOldParamMap();
+            // add the new parameter description IDs to data manager
+            ITDManager tdManager = newExec.getDataManager();
+            for (IParamDescriptionPO newParam: newOldParamMap.keySet()) {
+                tdManager.addUniqueId(newParam.getUniqueId());
+            }
+            // iterate over all data sets (rows)
+            for (IDataSetPO oldDataSet: oldExec
+                    .getDataManager().getDataSets()) {
+                List<ITestDataPO> newRow = new ArrayList<ITestDataPO>(
+                        newOldParamMap.size());
+                // iterate over all new parameter descriptions
+                for (IParamDescriptionPO newParam: newOldParamMap.keySet()) {
+                    IParamDescriptionPO oldParam = newOldParamMap.get(newParam);
+                    if (oldParam != null) {
+                        // copy old test data for new Test Case
+                        int column = oldExec.getDataManager()
+                                .findColumnForParam(oldParam.getUniqueId());
+                        // get column from old test data
+                        ITestDataPO oldTestData = oldDataSet.getColumn(column);
+                        newRow.add(oldTestData.deepCopy());
+                    } else {
+                        // create empty test data for new Test Case
+                        newRow.add(PoMaker.createTestDataPO());
+                    }
+                }
+                // add the new row to data set for new Test Case
+                tdManager.insertDataSet(
+                        PoMaker.createListWrapperPO(newRow),
+                        tdManager.getDataSetCount());
+            }
         }
 
         /**
@@ -192,45 +268,6 @@ public class SearchReplaceTCRWizard extends Wizard {
                 }
             }
             return newExec;
-        }
-
-        /**
-         * Add the parameters to the new execution Test Case by using the
-         * map between new to old parameter descriptions.
-         * @param oldExec The old execution Test Case.
-         * @param newExec The new execution Test Case.
-         */
-        private void addParametersToNewExecTestCase(
-                IExecTestCasePO oldExec,
-                IExecTestCasePO newExec) {
-            if (oldExec.getHasReferencedTD()) {
-                return; // do nothing, if the test data is referenced to spec
-            }
-            // get the parameter map
-            Map<IParamDescriptionPO, IParamDescriptionPO> newOldParamMap =
-                    m_replaceExecTestCaseData.getNewOldParamMap();
-            for (IParamDescriptionPO newParam: newOldParamMap.keySet()) {
-                IParamDescriptionPO oldParam = newOldParamMap.get(newParam);
-                if (oldParam != null) {
-                    int column = oldExec.getDataManager()
-                            .findColumnForParam(oldParam.getUniqueId());
-                    // iterate over all lines of parameter sets
-                    int row = 0;
-                    for (IDataSetPO oldDataSet: oldExec
-                            .getDataManager().getDataSets()) {
-                        // get column from old test data
-                        ITestDataPO oldTestData = oldDataSet.getColumn(column);
-                        if (newExec.getDataManager().getDataSetCount() == row) {
-                            newExec.getDataManager().insertDataSet(row);
-                        }
-                        IDataSetPO newDataRow = newExec.getDataManager()
-                                .getDataSet(row);
-                        ITestDataPO newTestData = oldTestData.deepCopy();
-                        newDataRow.addColumn(newTestData);
-                        row++;
-                    }
-                }
-            }
         }
 
     }

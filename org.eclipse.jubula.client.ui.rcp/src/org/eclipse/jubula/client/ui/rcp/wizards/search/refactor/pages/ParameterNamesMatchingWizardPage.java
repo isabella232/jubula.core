@@ -58,7 +58,6 @@ public class ParameterNamesMatchingWizardPage
         m_replaceExecTestCasesData = replaceExecTestCasesData;
         setDescription(Messages
                 .ReplaceTCRWizard_matchParameterNames_multi_description);
-        setPageComplete(true);
     }
 
     /**
@@ -115,6 +114,17 @@ public class ParameterNamesMatchingWizardPage
                 m_oldNameCombos.add(combo);
             }
         }
+        onSelected();
+    }
+
+    /**
+     * Called after a selection has been changed, to store the
+     * old selected parameter names into the data class and update the
+     * additional information text depending on the current selection.
+     */
+    private void onSelected() {
+        m_replaceExecTestCasesData.setOldParameterNamesWithCombos(
+                m_oldNameCombos);
         updateAdditionalInformation();
     }
 
@@ -122,7 +132,7 @@ public class ParameterNamesMatchingWizardPage
      * Set the additional information.
      */
     private void updateAdditionalInformation() {
-        boolean hasUnmatchedTypes = m_oldNameCombos.contains(null);
+        boolean hasUnmatchableTypes = m_oldNameCombos.contains(null);
         List<String> messages = new ArrayList<String>();
         if (m_replaceExecTestCasesData
                     .getNewSpecTestCase()
@@ -132,13 +142,17 @@ public class ParameterNamesMatchingWizardPage
                     .getParameterListSize() == 0) {
             messages.add(Messages
                     .ReplaceTCRWizard_matchParameterNames_hintNoMatchingNeeded);
-        } else if (hasUnmatchedTypes) {
-            messages.add(Messages
-                .ReplaceTCRWizard_matchParameterNames_warningUnusedOldParams);
-        }
-        if (!m_replaceExecTestCasesData.hasMatchableParameters()) {
-            messages.add(Messages
-                .ReplaceTCRWizard_matchParameterNames_warningNoSameTypeHint);
+        } else {
+            if (hasUnmatchableTypes) {
+                messages.add(Messages
+                    .ReplaceTCRWizard_matchParameterNames_warningNoSameTypeHint
+                );
+            }
+            if (m_replaceExecTestCasesData.hasUnmatchedParameters()) {
+                messages.add(Messages
+                    .ReplaceTCRWizard_matchParameterNames_warningUnusedOldParams
+                );
+            }
         }
         setAdditionalInformation(messages);
     }
@@ -165,20 +179,27 @@ public class ParameterNamesMatchingWizardPage
     }
 
     /**
+     * The wizard can be finished only at this last page.
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isPageComplete() {
+        return isCurrentPage();
+    }
+
+    /**
      * Sets the new data, when the selection of the combo boxes have been changed.
      * {@inheritDoc}
      */
     public void widgetSelected(SelectionEvent e) {
-        m_replaceExecTestCasesData.setOldParameterNamesWithCombos(
-                m_oldNameCombos);
-        updateAdditionalInformation();
+        onSelected();
     }
 
     /**
      * {@inheritDoc}
      */
     public void widgetDefaultSelected(SelectionEvent e) {
-        widgetSelected(e);
+        // do nothing
     }
 
 }
