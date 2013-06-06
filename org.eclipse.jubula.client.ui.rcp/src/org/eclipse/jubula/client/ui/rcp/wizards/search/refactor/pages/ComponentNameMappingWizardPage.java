@@ -124,11 +124,7 @@ public class ComponentNameMappingWizardPage extends AbstractMatchSelectionPage {
 
         Collection<ICompNamesPairPO> compNamePairs = 
                 m_compNamesBP.getAllCompNamesPairs(newExec); 
-        
-        GridData seperatorVertical = new GridData(
-                SWT.CENTER, SWT.FILL, false, true);
-        seperatorVertical.verticalSpan = compNamePairs.size();
-        
+                
         for (Iterator compIterator = compNamePairs.iterator(); compIterator
                 .hasNext();) {
             ICompNamesPairPO compNamesPair = (ICompNamesPairPO) compIterator
@@ -138,10 +134,10 @@ public class ComponentNameMappingWizardPage extends AbstractMatchSelectionPage {
             leftGridData.horizontalAlignment = SWT.LEFT;
             leftGridData.verticalAlignment = SWT.BEGINNING;
             GridData rightGridData = new GridData();
-            rightGridData.horizontalAlignment = SWT.LEFT;
+            rightGridData.horizontalAlignment = SWT.FILL;
             rightGridData.verticalAlignment = SWT.BEGINNING;
             rightGridData.minimumWidth = 200;
-            rightGridData.grabExcessHorizontalSpace = true;            
+            rightGridData.grabExcessHorizontalSpace = true;
 
             IComponentNamePO newComponentName = ComponentNamesBP.getInstance()
                     .getCompNamePo(compNamesPair.getFirstName());

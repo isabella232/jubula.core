@@ -101,7 +101,8 @@ public class SearchReplaceTestCaseHandler extends
                 super.configureShell(newShell);
             }
         };
-        dialog.setMinimumPageSize(775, 400);
+        dialog.setMinimumPageSize(775, 300);
+        dialog.setPageSize(775, 300);
         dialog.setHelpAvailable(true); // show ? icon on left bottom
         dialog.open();
     }
