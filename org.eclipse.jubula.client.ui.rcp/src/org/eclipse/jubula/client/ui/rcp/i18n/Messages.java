@@ -649,15 +649,15 @@ public class Messages extends NLS {
     public static String ReplaceTCRWizard_matchComponentNames_infoOldMore;
     public static String ReplaceTCRWizard_matchParameterNames_title;
     public static String ReplaceTCRWizard_matchParameterNames_multi_description;
-    public static String ReplaceTCRWizard_matchParameterNames_oldParameter;
     public static String ReplaceTCRWizard_matchParameterNames_newParameter;
+    public static String ReplaceTCRWizard_matchParameterNames_oldParameter;
     public static String ReplaceTCRWizard_matchParameterNames_information;
     public static String ReplaceTCRWizard_matchParameterNames_warningUnmatchedParams;
-    public static String ReplaceTCRWizard_matchParameterNames_warningUnusedOldParams;
     public static String ReplaceTCRWizard_matchParameterNames_warningNoSameType;
     public static String ReplaceTCRWizard_matchParameterNames_warningNoSameTypeDesc;
-    public static String ReplaceTCRWizard_matchParameterNames_warningNoSameTypeHint;
     public static String ReplaceTCRWizard_matchParameterNames_hintNoMatchingNeeded;
+    public static String ReplaceTCRWizard_matchParameterNames_hintUnmatchedNewParam;
+    public static String ReplaceTCRWizard_matchParameterNames_hintUnmatchedOldParam;
     public static String RevertEditorChangesActionQuestionText;
     public static String RevertEditorChangesActionShellTitle;
     public static String RunningAUTParameter;

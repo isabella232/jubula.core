@@ -138,25 +138,19 @@ public class ParameterNamesMatchingWizardPage
      * Set the additional information.
      */
     private void updateAdditionalInformation() {
-        boolean hasUnmatchableTypes = m_oldNameCombos.contains(null);
         List<String> messages = new ArrayList<String>();
-        if (m_replaceExecTestCasesData
-                    .getNewSpecTestCase()
-                    .getParameterListSize() == 0
-                && m_replaceExecTestCasesData
-                    .getOldSpecTestCase()
-                    .getParameterListSize() == 0) {
+        if (m_replaceExecTestCasesData.haveNewAndOldTestCasesNoParameters()) {
             messages.add(Messages
                     .ReplaceTCRWizard_matchParameterNames_hintNoMatchingNeeded);
         } else {
-            if (hasUnmatchableTypes) {
+            if (m_replaceExecTestCasesData.hasUnmatchedNewParameters()) {
                 messages.add(Messages
-                    .ReplaceTCRWizard_matchParameterNames_warningNoSameTypeHint
+                    .ReplaceTCRWizard_matchParameterNames_hintUnmatchedNewParam
                 );
             }
-            if (m_replaceExecTestCasesData.hasUnmatchedParameters()) {
+            if (m_replaceExecTestCasesData.hasUnmatchedOldParameters()) {
                 messages.add(Messages
-                    .ReplaceTCRWizard_matchParameterNames_warningUnusedOldParams
+                    .ReplaceTCRWizard_matchParameterNames_hintUnmatchedOldParam
                 );
             }
         }

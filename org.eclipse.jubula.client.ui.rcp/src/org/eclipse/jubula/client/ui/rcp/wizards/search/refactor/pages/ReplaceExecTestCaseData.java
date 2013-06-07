@@ -128,15 +128,27 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
     }
 
     /**
+     * @return True, if both the new and the old Test Case do not have parameters,
+     *         otherwise false.
+     */
+    public boolean haveNewAndOldTestCasesNoParameters() {
+        return getNewSpecTestCase().getParameterListSize() == 0
+                && getOldSpecTestCase().getParameterListSize() == 0;
+    }
+
+    /**
+     * @return True, if one or more new parameters are not matched,
+     *         otherwise false.
+     */
+    public boolean hasUnmatchedNewParameters() {
+        return m_newOldParamMap.values().contains(null);
+    }
+
+    /**
      * @return True, if not all old parameters are matched to a new parameter,
      *         otherwise false.
      */
-    public boolean hasUnmatchedParameters() {
-        if (getNewSpecTestCase().getParameterListSize()
-                < getOldSpecTestCase().getParameterListSize()) {
-            // matching not possible, because the new TC has not enough parameters
-            return true;
-        }
+    public boolean hasUnmatchedOldParameters() {
         // create a temporary list from the old parameter list by copying
         List<IParamDescriptionPO> tmpParams =
                 new ArrayList<IParamDescriptionPO>(
@@ -152,7 +164,7 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
      *         all values of the parameter map {@link #getNewOldParamMap()} are null,
      *         otherwise false.
      */
-    public boolean hasOnlyUnmatchedParameters() {
+    public boolean hasNoMatching() {
         Collection<IParamDescriptionPO> values = m_newOldParamMap.values();
         return Collections.frequency(values, null) == values.size();
     }

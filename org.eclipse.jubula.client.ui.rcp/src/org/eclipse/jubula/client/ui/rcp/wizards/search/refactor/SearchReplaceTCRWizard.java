@@ -188,10 +188,9 @@ public class SearchReplaceTCRWizard extends Wizard {
                 IExecTestCasePO newExec) {
             if (oldExec.getHasReferencedTD()
                     || oldExec.getReferencedDataCube() != null
-                    || m_replaceExecTestCaseData.hasOnlyUnmatchedParameters()) {
+                    || m_replaceExecTestCaseData.hasNoMatching()) {
                 // test data referenced to specification Test Case
-                // or a data cube exists
-                // or every new parameters are unmatched
+                // or a data cube exists or every new parameters are unmatched
                 return; // add no local test data
             }
             // get the parameter map
