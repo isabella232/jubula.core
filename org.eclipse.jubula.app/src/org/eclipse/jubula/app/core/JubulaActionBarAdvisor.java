@@ -293,10 +293,6 @@ public class JubulaActionBarAdvisor extends ActionBarAdvisor {
                 IWorkbenchActionConstants.M_HELP);
         helpMenu.add(m_intro);
         helpMenu.add(m_helpCont);
-        helpMenu.add(CommandHelper.createContributionItem(
-                "org.eclipse.ui.cheatsheets.openCheatSheet", null, //$NON-NLS-1$ 
-                Messages.ActionBuilderHelpCheatSheetsItem, 
-                CommandContributionItem.STYLE_PUSH));
 
         helpMenu.add(new Separator("helpEnd")); //$NON-NLS-1$
         helpMenu.add(new Separator());
