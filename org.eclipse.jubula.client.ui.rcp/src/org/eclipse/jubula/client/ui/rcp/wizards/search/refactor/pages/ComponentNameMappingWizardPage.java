@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -335,11 +336,15 @@ public class ComponentNameMappingWizardPage extends AbstractMatchSelectionPage {
         Collection<ICompNamesPairPO> compNamePairs = 
                 m_compNamesBP.getAllCompNamesPairs(newExec);
         List<String> messages = new ArrayList<String>();
-        if (compNamePairs.size() == 0 && m_oldCompNamePairs.size() == 0) {
+        Set<String> oldCompNames = new HashSet<String>();
+        for (ICompNamesPairPO pair : m_oldCompNamePairs) {
+            oldCompNames.add(pair.getFirstName());
+        }
+        if (compNamePairs.size() == 0 && oldCompNames.size() == 0) {
             messages.add(Messages
                     .ReplaceTCRWizard_matchComponentNames_infoNotNecessary);
         }
-        if (compNamePairs.size() < m_oldCompNamePairs.size()) {
+        if (compNamePairs.size() < oldCompNames.size()) {
             messages.add(Messages
                     .ReplaceTCRWizard_matchComponentNames_infoOldMore);
         }
