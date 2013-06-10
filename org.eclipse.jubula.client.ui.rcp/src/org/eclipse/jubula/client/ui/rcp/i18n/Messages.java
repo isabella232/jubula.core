@@ -591,6 +591,7 @@ public class Messages extends NLS {
     public static String RefTestSuiteGUIPropertySourceRefTSName;
     public static String ReplaceTestCasesActionDialog;
     public static String ChangeCtdsColumnUsageActionDialog;
+    public static String ChangeCtdsColumnUsageQuestionDeselect;
     public static String ChangeCtdsColumnUsageSelectPageTitle;
     public static String ChangeCtdsColumnUsageSelectPageDescription;
     public static String ChangeCtdsColumnUsageTestCaseCouldNotBeLocked;

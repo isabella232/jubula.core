@@ -71,7 +71,7 @@ public class ChangeCtdsColumnUsageOperation
      */
     public String canLock() {
         if (m_lastSelectedExistingParamDescription
-                == m_paramData.getExistingParamDescription()) {
+                == m_paramData.getOldParamDescription()) {
             return null;
         }
         closeEditSupports();
@@ -83,7 +83,7 @@ public class ChangeCtdsColumnUsageOperation
                 es.lockWorkVersion();
                 m_editSupports.put(spec, es);
                 m_lastSelectedExistingParamDescription =
-                        m_paramData.getExistingParamDescription();
+                        m_paramData.getOldParamDescription();
             } catch (PMException e) {
                 closeEditSupports();
                 return NLS.bind(
@@ -112,7 +112,7 @@ public class ChangeCtdsColumnUsageOperation
     public void run(IProgressMonitor monitor) {
         monitor.beginTask(
                 NLS.bind(Messages.ChangeParameterUsageOperation,
-                        m_paramData.getExistingParamDescription().getName(),
+                        m_paramData.getOldParamDescription().getName(),
                         m_paramData.getNewParamDescription().getName()),
                 m_paramData.getSelectedTestCases().size());
         TestCaseParamBP testCaseParamBP = new TestCaseParamBP();

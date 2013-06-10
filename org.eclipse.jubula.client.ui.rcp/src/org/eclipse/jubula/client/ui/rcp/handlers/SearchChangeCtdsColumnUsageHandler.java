@@ -9,28 +9,35 @@
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.GeneralLabelProvider;
+import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.search.SearchResultPage;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.param.ChangeCtdsColumnUsageWizard;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.param.ExistingAndNewParameterData;
+import org.eclipse.jubula.client.ui.rcp.wizards.refactor.param.TestCasesValidator;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.part.IPage;
+import org.eclipse.ui.part.PageBookView;
 
 /**
  * Handler for context menu in a search result list to change CTDS column usage.
@@ -43,44 +50,42 @@ public class SearchChangeCtdsColumnUsageHandler
      * {@inheritDoc}
      */
     protected Object executeImpl(ExecutionEvent event) {
-        List selectionList = getSelection().toList();
-        Set<ITestCasePO> testCaseSet = new LinkedHashSet<ITestCasePO>();
+        SearchResultPage page = getSearchResultPage(event);
+        if (page == null) {
+            return null;
+        }
+        // create list of selected Test Cases
+        @SuppressWarnings("unchecked")
+        List<SearchResultElement<Long>> oldSelection =
+                (List<SearchResultElement<Long>>) getSelection().toList();
+        Set<ITestCasePO> testCases = new HashSet<ITestCasePO>();
         EntityManager session = GeneralStorage.getInstance().getMasterSession();
-        IParameterInterfacePO dataCube = null;
-        for (Object element : selectionList) {
-            @SuppressWarnings("unchecked")
-            SearchResultElement<Long> searchResult =
-                    (SearchResultElement<Long>) element;
+        for (SearchResultElement<Long> searchResult: oldSelection) {
             INodePO nodePO = session.find(NodeMaker.getNodePOClass(),
                     searchResult.getData());
-            ITestCasePO testCase = (ITestCasePO) nodePO;
-            IParameterInterfacePO currentDataCube =
-                    testCase.getReferencedDataCube();
-            if (testCase instanceof IExecTestCasePO) {
-                IExecTestCasePO exec = (IExecTestCasePO) testCase;
-                if (exec.getSpecTestCase().getReferencedDataCube() != null
-                        && exec.getReferencedDataCube()
-                            != exec.getSpecTestCase().getReferencedDataCube()) {
-                    String execName = GeneralLabelProvider.getText(exec);
-                    ErrorHandlingUtil.createMessageDialog(
-                            MessageIDs.I_TC_WITH_TWO_CTDS,
-                            new String[] {execName}, null);
-                    return null;
-                }
+            if (nodePO instanceof ITestCasePO) {
+                testCases.add((ITestCasePO) nodePO);
             }
-            if (dataCube == null && currentDataCube != null) {
-                dataCube = currentDataCube;
-            } else if (currentDataCube == null
-                    || !dataCube.equals(currentDataCube)) {
-                ErrorHandlingUtil.createMessageDialog(
-                        MessageIDs.I_ALL_TCS_MUST_USE_SAME_CTDS);
-                return null;
+        }
+        // validate the selected Test Cases
+        TestCasesValidator validator = new TestCasesValidator(testCases);
+        if (!validator.isReferencedDataCubeOk()) {
+            ErrorHandlingUtil.createMessageDialog(
+                    MessageIDs.I_ALL_TCS_MUST_USE_SAME_CTDS);
+            return null;
+        }
+        if (!validator.areAllTestCasesOk()) {
+            if (MessageDialog.openConfirm(null,
+                    Messages.ChangeCtdsColumnUsageActionDialog,
+                    Messages.ChangeCtdsColumnUsageQuestionDeselect)) {
+                selectValidTestCases(page,
+                        oldSelection, validator.getValidTestCases());
             }
-            testCaseSet.add(testCase);
+            return null;
         }
         // create for each parameter name a corresponding set of execution Test Cases
         ExistingAndNewParameterData paramData =
-                new ExistingAndNewParameterData(testCaseSet);
+                new ExistingAndNewParameterData(validator.getValidTestCases());
         if (paramData.getAllParamDescriptions().length == 0) {
             ErrorHandlingUtil.createMessageDialog(
                     MessageIDs.I_TCS_HAVE_NO_CHANGEABLE_PARAMETER_NAME);
@@ -90,6 +95,60 @@ public class SearchChangeCtdsColumnUsageHandler
             showWizardDialog(paramData);
         }
         return null;
+    }
+
+    /**
+     * @param event The event.
+     * @return The search result page from the given event.
+     */
+    private static SearchResultPage getSearchResultPage(ExecutionEvent event) {
+        SearchResultPage resultPage = null;
+        IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
+        if (activePart instanceof PageBookView) {
+            PageBookView pageView = (PageBookView) activePart;
+            IPage currentPage = pageView.getCurrentPage();
+            if (currentPage instanceof SearchResultPage) {
+                resultPage = (SearchResultPage) currentPage;
+            }
+        }
+        return resultPage;
+    }
+
+    /**
+     * Select the Test Cases, which can be used for changing CTDS column usage.
+     * @param page The search result page.
+     * @param oldSelection The old selection.
+     * @param testCases The list of valid Test Cases.
+     */
+    private static void selectValidTestCases(SearchResultPage page,
+            List<SearchResultElement<Long>> oldSelection,
+            List<ITestCasePO> testCases) {
+        // create a new list for selection
+        List<SearchResultElement<Long>> newSelection =
+                new ArrayList<SearchResultElement<Long>>();
+        for (SearchResultElement<Long> resultElement: oldSelection) {
+            if (testCasesContainId(testCases, resultElement.getData())) {
+                newSelection.add(resultElement);
+            }
+        }
+        // set the new list for selection
+        page.setSelection(new StructuredSelection(newSelection));
+    }
+
+    /**
+     * @param testCases The list of valid Test Cases
+     * @param id The persistence (JPA / EclipseLink) ID.
+     * @return True, if the given list of Test Cases contains a Test Case
+     *         with the given ID.
+     */
+    private static boolean testCasesContainId(
+            List<ITestCasePO> testCases, Long id) {
+        for (ITestCasePO tc: testCases) {
+            if (id.equals(tc.getId())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
