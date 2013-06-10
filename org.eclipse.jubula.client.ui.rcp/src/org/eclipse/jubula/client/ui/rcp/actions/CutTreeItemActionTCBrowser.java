@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.actions;
 
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
@@ -29,19 +30,17 @@ public class CutTreeItemActionTCBrowser extends AbstractCutTreeItemAction {
      * {@inheritDoc}
      */
     public void run() {
-        
-        TestCaseBrowser tstv = (TestCaseBrowser)Plugin.getActiveView();
-        if (!(tstv.getSelection() instanceof IStructuredSelection)) {
+        TestCaseBrowser tcb = (TestCaseBrowser) Plugin.getActiveView();
+        ISelection selection = tcb.getSelection();
+        if (!(selection instanceof IStructuredSelection)) {
             return;
         }
-        IStructuredSelection selection = (IStructuredSelection)tstv
-            .getSelection();
+        IStructuredSelection strucSelection = (IStructuredSelection) selection;
         LocalSelectionClipboardTransfer transfer = 
-            LocalSelectionClipboardTransfer.getInstance(); 
-        tstv.getClipboard().setContents(
-                new Object [] {selection}, new Transfer [] {transfer});
-        transfer.setSelection(selection, tstv.getTreeViewer());
-        
+                LocalSelectionClipboardTransfer.getInstance();
+        tcb.getClipboard().setContents(new Object[] { strucSelection },
+                new Transfer[] { transfer });
+        transfer.setSelection(strucSelection, tcb.getTreeViewer());
+        tcb.getActionListener().selectionChanged(tcb, selection);
     }
-
 }

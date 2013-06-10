@@ -37,7 +37,7 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionGDEditor;
+import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionJBEditor;
 import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionTCEditor;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.AbstractPartListener;
@@ -109,8 +109,8 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     private Control m_control;
     
     /** action to cut TreeItems */
-    private CutTreeItemActionGDEditor m_cutTreeItemAction =
-        new CutTreeItemActionGDEditor();
+    private CutTreeItemActionJBEditor m_cutTreeItemAction =
+        new CutTreeItemActionJBEditor();
     
     /** action to paste TreeItems */
     private PasteTreeItemActionTCEditor m_pasteTreeItemAction = 
@@ -620,14 +620,14 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      * @param cutTreeItemAction the cutTreeItemAction to set
      */
     protected void setCutTreeItemAction(
-            CutTreeItemActionGDEditor cutTreeItemAction) {
+            CutTreeItemActionJBEditor cutTreeItemAction) {
         m_cutTreeItemAction = cutTreeItemAction;
     }
 
     /**
      * @return the cutTreeItemAction
      */
-    protected CutTreeItemActionGDEditor getCutTreeItemAction() {
+    protected CutTreeItemActionJBEditor getCutTreeItemAction() {
         return m_cutTreeItemAction;
     }
 

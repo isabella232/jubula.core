@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.actions;
 
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
@@ -23,22 +24,23 @@ import org.eclipse.swt.dnd.Transfer;
  * @author BREDEX GmbH
  * @created 20.03.2008
  */
-public class CutTreeItemActionGDEditor extends AbstractCutTreeItemAction {
+public class CutTreeItemActionJBEditor extends AbstractCutTreeItemAction {
 
     /**
      * {@inheritDoc}
      */
     public void run() {
-        AbstractJBEditor tce = (AbstractJBEditor)Plugin.getActiveEditor();
-        if (!(tce.getSelection() instanceof IStructuredSelection)) {
+        AbstractJBEditor jbe = (AbstractJBEditor) Plugin.getActiveEditor();
+        ISelection selection = jbe.getSelection();
+        if (!(selection instanceof IStructuredSelection)) {
             return;
         }
-        IStructuredSelection selection = 
-            (IStructuredSelection)tce.getSelection();
+        IStructuredSelection strucSelection = (IStructuredSelection) selection;
         LocalSelectionClipboardTransfer transfer = 
-            LocalSelectionClipboardTransfer.getInstance(); 
-        tce.getEditorHelper().getClipboard().setContents(
-                new Object [] {selection}, new Transfer [] {transfer});
-        transfer.setSelection(selection, tce.getTreeViewer());
+                LocalSelectionClipboardTransfer.getInstance();
+        jbe.getEditorHelper().getClipboard()
+                .setContents(new Object[] { strucSelection },
+                        new Transfer[] { transfer });
+        transfer.setSelection(strucSelection, jbe.getTreeViewer());
     }
 }
