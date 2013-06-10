@@ -79,12 +79,10 @@ public class ParameterNamesMatchingWizardPage
             child.dispose();
         }
         // create head row
-        createHeadLabel(parent, NLS.bind(Messages
-                .ReplaceTCRWizard_matchParameterNames_newParameter,
-                m_replaceExecTestCasesData.getNewSpecTestCase().getName()));
-        createHeadLabel(parent, NLS.bind(Messages
-                .ReplaceTCRWizard_matchParameterNames_oldParameter,
-                m_replaceExecTestCasesData.getOldSpecTestCase().getName()));
+        createHeadLabel(parent, Messages
+                .ReplaceTCRWizard_matchParameterNames_newParameter);
+        createHeadLabel(parent, Messages
+                .ReplaceTCRWizard_matchParameterNames_oldParameter);
         // fill the rows with the new parameter names
         List<IParamDescriptionPO> paramDescList = m_replaceExecTestCasesData
                 .getNewSpecTestCase()
