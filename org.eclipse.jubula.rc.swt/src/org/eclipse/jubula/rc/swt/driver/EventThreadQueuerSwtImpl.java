@@ -46,6 +46,7 @@ public class EventThreadQueuerSwtImpl implements IEventThreadQueuer {
             if (display.isDisposed()) {
                 // this may happen e.g. during the shutdown process of the AUT
                 // see http://bugzilla.bredex.de/907 for additional information
+                log.warn("Display has already been disposed - skipping IRunnable invocation!"); //$NON-NLS-1$
                 return null;
             }
             display.syncExec(wrapper);
