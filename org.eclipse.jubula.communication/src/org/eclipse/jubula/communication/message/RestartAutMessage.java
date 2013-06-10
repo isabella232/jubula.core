@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.message;
 
+import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 
@@ -20,12 +21,11 @@ import org.eclipse.jubula.tools.registration.AutIdentifier;
 public class RestartAutMessage extends Message {
     /** the ID of the Running AUT to restart */
     private AutIdentifier m_autId;
-    
     /**
-     * flag indicating whether the AUT should be closed or not
+     * the timeout to use
      */
-    private boolean m_forceAUTTermination = true;
-
+    private int m_timeout;
+    
     /**
      * Constructor for use in framework methods. Do not use for normal
      * programming.
@@ -41,12 +41,14 @@ public class RestartAutMessage extends Message {
      * 
      * @param autId
      *            The ID of the Running AUT to restart.
-     * @param forceAUTTermination
-     *            flag indicating whether the AUT should be forced to quit
+     * @param timeout
+     *            the timeout to use; 0 indicates that the AUT should be forced
+     *            to terminate
      */
-    public RestartAutMessage(AutIdentifier autId, boolean forceAUTTermination) {
+    public RestartAutMessage(AutIdentifier autId, int timeout) {
+        Validate.isTrue(timeout >= 0);
         m_autId = autId;
-        m_forceAUTTermination = forceAUTTermination;
+        setTimeout(timeout);
     }
 
     /** {@inheritDoc} */
@@ -68,16 +70,17 @@ public class RestartAutMessage extends Message {
     }
 
     /**
-     * @return the forceAUTTermination
+     * @return the timeout
      */
-    public boolean isForceAUTTermination() {
-        return m_forceAUTTermination;
+    public int getTimeout() {
+        return m_timeout;
     }
 
     /**
-     * @param forceAUTTermination the forceAUTTermination to set
+     * @param timeout
+     *            the timeout to set
      */
-    public void setForceAUTTermination(boolean forceAUTTermination) {
-        m_forceAUTTermination = forceAUTTermination;
+    public void setTimeout(int timeout) {
+        m_timeout = timeout;
     }
 }

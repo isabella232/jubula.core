@@ -34,4 +34,7 @@ public interface TimeoutConstants {
     
     /** Default for event confirm timeout */
     public static final int SERVER_TIMEOUT_EVENTCONFIRM_DEFAULT = 2000;
+    
+    /** Amount of milliseconds to delay the AUTs termination */
+    public static final int AUT_KEEP_ALIVE_DELAY_DEFAULT = 2000;
 }

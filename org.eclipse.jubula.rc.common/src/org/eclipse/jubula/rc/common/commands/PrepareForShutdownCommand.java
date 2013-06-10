@@ -21,6 +21,7 @@ import org.eclipse.jubula.communication.message.MessageHeader;
 import org.eclipse.jubula.communication.message.PrepareForShutdownMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
+import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
@@ -38,20 +39,14 @@ import org.slf4j.LoggerFactory;
  */
 public class PrepareForShutdownCommand implements ICommand {
     /**
-     * Amount of milliseconds to delay the AUTs termination
-     */
-    public static final int AUT_KEEP_ALIVE_DELAY_DEFAULT = 2000;
-
-    /**
      * Name of the variable to override the AUTs termination delay
      */
     public static final String AUT_KEEP_ALIVE_DELAY_VAR = "TEST_AUT_KEEP_ALIVE_DELAY"; //$NON-NLS-1$
 
     /**
-     * flag to indicate whether this AUTs JVM has already been prepared for a
-     * proper shutdown
+     * the shutdown hook thread
      */
-    private static boolean hasAlreadyBeenPreparedForShutdown = false;
+    private static Thread shutdownHookThread = null;
     
     /**
      * @author BREDEX GmbH
@@ -64,7 +59,10 @@ public class PrepareForShutdownCommand implements ICommand {
         private int m_addDelay;
 
         /**
-         * @param addDelay the additional delay to use
+         * Constructor
+         * 
+         * @param addDelay
+         *            the additional delay
          */
         public AUTProperTerminationShutdownHook(int addDelay) {
             setAddDelay(addDelay);
@@ -80,9 +78,12 @@ public class PrepareForShutdownCommand implements ICommand {
                 // and thereby our event confirming until the AUT terminates
                 sendFakeCAPTestReponseMessage(autRC);
             }
-
+            Communicator agentCommunicator = autRC.getServerCommunicator();
+            if (agentCommunicator != null) {
+                agentCommunicator.clearListeners();
+            }
             // keep the AUT alive to perform proper AUT termination synchronization
-            long timeToWait = AUT_KEEP_ALIVE_DELAY_DEFAULT;
+            long timeToWait = TimeoutConstants.AUT_KEEP_ALIVE_DELAY_DEFAULT;
             try {
                 String value = EnvironmentUtils
                         .getProcessOrSystemProperty(AUT_KEEP_ALIVE_DELAY_VAR);
@@ -135,20 +136,23 @@ public class PrepareForShutdownCommand implements ICommand {
 
     /** the message */
     private PrepareForShutdownMessage m_message;
-    
+
     /**
      * {@inheritDoc}
      */
     public Message execute() {
-        Communicator agentCommunicator = 
-            AUTServer.getInstance().getServerCommunicator();
-        if (agentCommunicator != null) {
-            agentCommunicator.clearListeners();
-        }
-        Connection autAgentConnection = agentCommunicator.getConnection();
         PrepareForShutdownMessage message = m_message;
         boolean isForce = message.isForce();
         if (isForce) {
+            Communicator agentCommunicator = 
+                    AUTServer.getInstance().getServerCommunicator();
+            if (agentCommunicator != null) {
+                agentCommunicator.clearListeners();
+            }
+            Connection autAgentConnection = agentCommunicator.getConnection();
+            if (shutdownHookThread != null) {
+                Runtime.getRuntime().removeShutdownHook(shutdownHookThread);
+            }
             if (autAgentConnection != null) {
                 // Add a listener to exit the AUT normally when the connection is 
                 // closed
@@ -170,12 +174,11 @@ public class PrepareForShutdownCommand implements ICommand {
                 });
             }
         } else {
-            if (!hasAlreadyBeenPreparedForShutdown) {
+            if (shutdownHookThread == null) {
                 int addDelay = message.getAdditionalDelay();
-                Runtime.getRuntime().addShutdownHook(
-                        new Thread(new AUTProperTerminationShutdownHook(
-                                addDelay)));
-                hasAlreadyBeenPreparedForShutdown = true;
+                shutdownHookThread = new Thread(
+                        new AUTProperTerminationShutdownHook(addDelay));
+                Runtime.getRuntime().addShutdownHook(shutdownHookThread);
             }
             
         }

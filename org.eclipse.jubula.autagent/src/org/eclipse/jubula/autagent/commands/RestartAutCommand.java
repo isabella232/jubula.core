@@ -47,7 +47,7 @@ public class RestartAutCommand implements ICommand {
             invokeMonitoringRestartMethod();
         }
         AutStarter.getInstance().getAgent()
-                .restartAut(autId, m_message.isForceAUTTermination());
+                .restartAut(autId, m_message.getTimeout());
         return null;
     }
     /**

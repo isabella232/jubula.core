@@ -33,7 +33,7 @@ public class PrepareForShutdownMessage extends Message {
      * necessary for serialization
      */
     public PrepareForShutdownMessage() {
-        // empty
+        this(true, 0);
     }
     
     /**

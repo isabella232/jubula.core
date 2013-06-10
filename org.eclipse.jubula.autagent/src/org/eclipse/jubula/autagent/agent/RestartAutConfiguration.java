@@ -43,8 +43,8 @@ public class RestartAutConfiguration implements IRestartAutHandler {
     }
 
     /** {@inheritDoc} */
-    public void restartAut(AutAgent agent, boolean force) {
-        agent.stopAut(m_autId, force);
+    public void restartAut(AutAgent agent, int timeout) {
+        agent.stopAut(m_autId, timeout);
         StartAUTServerCommand startCommand = new StartAUTServerCommand();
         startCommand.setMessage(m_startAutMessage);
         startCommand.execute();
