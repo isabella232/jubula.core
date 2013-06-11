@@ -1807,13 +1807,17 @@ public class TestExecution {
     public abstract class AbstractRestartCmd 
         extends AbstractPostExecutionCommand {
         /**
+         * timeout constant for using not timeout and force the AUTs restart
+         */
+        protected static final int NO_TIMEOUT__FORCE_RESTART = 0;
+        
+        /**
          * {@inheritDoc}
          */
         public final TestErrorEvent execute() throws JBException {
             final AutIdentifier autId = getConnectedAutId();
             AUTTerminationListener registrationListener = 
                     new AUTTerminationListener(autId);
-            
             try {
                 TimeUtil.delay(2000);
                 
@@ -1833,9 +1837,10 @@ public class TestExecution {
                 clientTest.fireAUTStateChanged(new AUTEvent(
                         AUTEvent.AUT_ABOUT_TO_TERMINATE));
                 
-                int terminationTimeout = getTerminationTimeout()
+                final int initialTerminationTimeout = getTerminationTimeout();
+                final int terminationTimeout = initialTerminationTimeout
                         + TimeoutConstants.AUT_KEEP_ALIVE_DELAY_DEFAULT;
-                long startTime = System.currentTimeMillis();
+                final long startTime = System.currentTimeMillis();
                 long endTime = 0;
                 AutAgentConnection.getInstance().send(
                         new RestartAutMessage(autId, terminationTimeout));
@@ -1861,7 +1866,8 @@ public class TestExecution {
                 initTestExecutionMessage(getConnectedAUTsConfigMap(),
                         new NullProgressMonitor());
                 long terminationDuration = endTime - startTime;
-                if (terminationDuration > terminationTimeout) {
+                if (initialTerminationTimeout > NO_TIMEOUT__FORCE_RESTART
+                        && terminationDuration > terminationTimeout) {
                     return EventFactory.createActionError(
                             TestErrorEvent.TIMEOUT_EXPIRED);
                 }
@@ -1899,7 +1905,7 @@ public class TestExecution {
     public class RestartCmd extends AbstractRestartCmd {
         @Override
         protected int getTerminationTimeout() {
-            return 0;
+            return NO_TIMEOUT__FORCE_RESTART;
         }
     }
     
