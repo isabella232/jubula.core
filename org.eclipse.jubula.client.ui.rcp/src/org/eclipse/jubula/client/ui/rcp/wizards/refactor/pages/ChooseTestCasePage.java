@@ -109,6 +109,9 @@ public class ChooseTestCasePage extends WizardPage {
                             pageComplete = true;
                             specTC = (ISpecTestCasePO)selection
                                     .getFirstElement();
+                            if (specTC == null) {
+                                pageComplete = false;
+                            }
                         }
                         setChoosenTestCase(specTC);
                         setPageComplete(pageComplete);
