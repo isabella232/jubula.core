@@ -18,4 +18,7 @@ For example, to access an otherwise unreachable text on a label:\\
 \bxshell{myLabel.setData("TEST\_TESTABLE\_TEXT", label);}
 
 If you are making text in e.g. a table accessible, then you will need to add a dynamic part for the column, e.g.:\\
-\bxshell{myTableItemInstance.setData("TEST\_TESTABLE\_TEXT\_" + colIdx, text);}
+\begin{verbatim}
+myTableItemInstance.setData
+("TEST\_TESTABLE\_TEXT\_" + colIdx, text);
+\end{verbatim}
