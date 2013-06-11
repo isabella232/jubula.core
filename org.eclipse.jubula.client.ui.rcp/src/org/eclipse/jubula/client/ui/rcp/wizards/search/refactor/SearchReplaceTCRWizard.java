@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -328,9 +329,15 @@ public class SearchReplaceTCRWizard extends Wizard {
      */
     public void addPages() {
         super.addPages();
-        ISpecTestCasePO spec = m_replaceExecTestCaseData
-                .getOldSpecTestCase();
-        m_choosePage = new ChooseTestCasePage(spec, CHOOSE_PAGE_ID);
+        Set<INodePO> specSet = new HashSet<INodePO>();
+        for (IExecTestCasePO exec : m_replaceExecTestCaseData
+                .getOldExecTestCases()) {
+            if (ISpecTestCasePO.class.isAssignableFrom(exec.getParentNode()
+                    .getClass())) {
+                specSet.add(exec.getParentNode());
+            }
+        }    
+        m_choosePage = new ChooseTestCasePage(specSet, CHOOSE_PAGE_ID);
         m_choosePage.setDescription(
                 Messages.replaceTCRWizard_choosePage_multi_description);
         m_choosePage.setContextHelpId(ContextHelpIds
