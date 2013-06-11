@@ -4,12 +4,13 @@
 \begin{itemize}
 \item Use this action together with an action to close your \gdaut{} and action to synchronize the termination and re-start of the \gdaut{}. 
 \item Using these actions, you can close your \gdaut{} using e.g. \bxmenu{File}{Exit}{} and have it automatically restarted.
+\bxwarn{Using the \bxname{Restart} option in Eclipse \gdauts{} is not supported.}
 \item Use this action shortly before an action in your test that will cause the \gdaut{} to shutdown. It must not be directly before the action to close the \gdaut{}. 
 \bxwarn{The shutdown method you choose must run through the JVM shutdown hooks to properly terminate the \gdaut{}. Do not use the \bxname{restart} action to shut your \gdaut{} down.}
 \item Using this action ensures that the step to terminate the \gdaut{} is correctly recognized and that it can be successfully re-started using the synchronize termination and re-start action. This is achieved by delaying the time between opting to close the \gdaut{} and actually closing it so that the correct communication can take place. The default delay time is set to 2000 milliseconds, and can be altered using either an environment variable \bxextref{\gduserman}{user,TasksSystemVariables} or as a JVM property in the \gdaut{} configuration \bxextref{\gduserman}{user,ExpertAUTConfig} \bxname{TEST\_AUT\_KEEP\_ALIVE\_DELAY}. Any test step delay specified in your \gdsuite{} is added to this delay.
 
 \end{itemize}
 
-\bxwarn{This action is currently supported on the Swing and RCP toolkits.}
+\bxwarn{This action is currently supported on the Swing and RCP toolkits. Neither toolkit supports the terminating of \gdauts{} using the \bxname{press any key} actions to press e.g. \bxkey{Alt+F4}. External key combinations can be used to terminate the \gdaut{} using e.g. \bxkey{Alt+F4} on RCP \gdauts{}, but not Swing \gdauts{}.}
 
 
