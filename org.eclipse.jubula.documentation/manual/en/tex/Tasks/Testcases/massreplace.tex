@@ -1,6 +1,6 @@
 If you have reused a \gdcase{} at multiple places in your \gdproject{}, and later create a new \gdcase{} that should replace it, then you can perform a mass replace via the \gdsearchresultview{}. If you just want to replace one single place where a  \gdcase{} has been reused, then you can either select that \gdcase{} in the \gdsearchresultview{} or use the in-editor replace \bxpref{TasksReplaceTC}.  
 
-\bxwarn{In order to perform a mass replace, all \gdcases{} to be changed must not be in use by anyone else using the \gdproject{} -- you should ensure that this is the case before performing the replace, otherwise the replace cannot be carried out.}
+\bxwarn{In order to perform a mass replace, all \gdcases{} to be changed must not be in use by anyone else using the \gdproject{} -- you should ensure that this is the case before performing the replace, otherwise the replace cannot be carried out. You should also be aware before performing this action that it cannot be undone.}
 
 \begin{enumerate}
 \item Search for all places where the \gdcase{} you want to replace is used e.g. \bxname{Show where used} \bxpref{TasksShowWhereUsedTestCase}. 
@@ -17,6 +17,7 @@ On the left-hand side, you can see names that are propagated from the newly chos
 \item choose to leave any combo boxes empty. In this case, no match for that component name will take place, and the new component name will be used. 
 \item see if there are no names available, either because there is no compatible type for matching in the existing \gdcase{}, or because the existing \gdcase{} had no propagated component names. In such cases, the new component name will be used.
 \end{itemize}
+\bxwarn{For any non-matched (or non-matchable) component names, the new names from the new \gdcase{} will be used. This may result in incomplete object mapping for your tests.}
 \item Once you have matched any component names, press \bxcaption{Next} to continue to the next page of the wizard.
 \item On this page, you can match any referenced parameter names \bxpref{TasksTestdataReferences} from the newly selected \gdcase{} to already existing referenced parameter names from the old \gdcase{}. On the left-hand side, you can see parameters that are referenced from the newly chosen \gdcase{}. On the right-hand side you can:
 \begin{itemize}
@@ -24,6 +25,7 @@ On the left-hand side, you can see names that are propagated from the newly chos
 \item choose to leave any combo boxes empty. In this case, no match for that parameter will take place, and the new parameter will be used. 
 \item see if there are no names available, either because there is no compatible type for matching in the existing \gdcase{}, or because the existing \gdcase{} had no referenced parameters. In such cases, the new parameter will be used after the replace.
 \end{itemize}
+\bxwarn{For any non-matched (or non-matchable) parameters, the new parameters from the new \gdcase{} will be used. This may result in incomplete test data for your tests.}
 \item Once you have finished matching the parameters, press \bxcaption{Finish} to perform the replace.
 \end{enumerate}
 \bxtipp{The \gdcase{} reference names and any comments that were used for the original \gdcase{} references, will be transferred to each new \gdcase{} reference. If the original \gdcase{} reference was commented out, the replacement \gdcase{} reference will be as well. If you had used the original \gdcase{} as an \gdehandler{}, the \gdehandler{} details will also be transferred.}
