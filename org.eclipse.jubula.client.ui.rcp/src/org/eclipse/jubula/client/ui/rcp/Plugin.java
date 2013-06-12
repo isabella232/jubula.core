@@ -938,21 +938,26 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         do {
             StackTraceElement[] stack = work.getStackTrace();
             for (StackTraceElement el : stack) {
+                String className = el.getClassName();
                 // check for
                 // org.eclipse.ui.views.markers.internal.MarkerAdapter.buildAllMarkers
-                if (el.getClassName().indexOf("MarkerAdapter") != -1) { //$NON-NLS-1$
+                if (className.indexOf("MarkerAdapter") != -1) { //$NON-NLS-1$
                     return true;
                 }
                 // double click error in help view
-                if (el.getClassName().indexOf("EngineResultSection") != -1) { //$NON-NLS-1$
+                if (className.indexOf("EngineResultSection") != -1) { //$NON-NLS-1$
                     return true;
                 }
                 // Context Sensitive Help when DSV Cell Editor is open #3291
-                if (el.getClassName().indexOf("ContextHelpPart") != -1) { //$NON-NLS-1$
+                if (className.indexOf("ContextHelpPart") != -1) { //$NON-NLS-1$
                     return true;
                 }
-                // Problem with missing icon on decoration in JFace; GD bugzilla #84 
-                if (el.getClassName().indexOf("CompositeImageDescriptor") != -1) { //$NON-NLS-1$
+                // http://bugzilla.bredex.de/84 
+                if (className.indexOf("CompositeImageDescriptor") != -1) { //$NON-NLS-1$
+                    return true;
+                }
+                // http://bugzilla.bredex.de/933 
+                if (className.indexOf("EditorStateParticipant") != -1) { //$NON-NLS-1$
                     return true;
                 }
             }
