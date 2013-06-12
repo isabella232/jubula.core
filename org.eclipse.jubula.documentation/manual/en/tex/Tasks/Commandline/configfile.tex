@@ -24,7 +24,7 @@
 \bxshell{-c <path to file>}
 
 For example:
-\emph{-c ''C:/My Documents/config1.xml''}
+\emph{-c ''<pathToQADocs>/config1.xml''}
 \item You can also overwrite parameters contained in the configuration file by entering another parameter directly into the interface. 
 \item For example, if your configuration file contains the \gdsuite{} \bxcaption{Suite1}, but you enter \bxshell{-testsuite ''Suite2''} in the command line interface, the \gdsuite{} called \bxcaption{Suite2} will be started, not \bxcaption{Suite1}.
 \item To create an XML file:
@@ -51,8 +51,8 @@ For example:
     <testsuite>Suite1</testsuite>
             OR
     <testjob>Job1</testjob>        
-    <datadir>D:/tests/data</datadir>
-    <resultdir>D:/tests/results</resultdir>
+    <datadir><pathToQADocs>/data</datadir>
+    <resultdir><pathToQADocs>/results</resultdir>
 </configuration>
 \end{verbatim}
 \normalsize
