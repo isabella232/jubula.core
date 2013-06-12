@@ -54,8 +54,7 @@ public class SearchTestCasePropertyTester
      * @return True, if all of the following rules are satisfied, otherwise false:
      * <ol>
      *      <li>the current project is opened,</li>
-     *      <li>the current project is not protected,</li>
-     *      <li>this node is defined in the current project, and</li>
+     *      <li>the current project is not protected, and</li>
      *      <li>{@link #checkNode(String, INodePO)}.</li>
      * </ol>
      * {@inheritDoc}

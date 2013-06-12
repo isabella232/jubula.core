@@ -164,6 +164,9 @@ public class TestCasesValidator {
 
     /**
      * @return True, if all invalid lists are empty, otherwise false.
+     *         A Test Case is invalid, if the specification Test Case is not defined in
+     *         the current project or if the specification of a referenced
+     *         Test Case use a different CTDS.
      */
     public boolean areAllTestCasesOk() {
         return m_testCasesWithSpecNotDefinedInCurrentProject.isEmpty()
