@@ -73,7 +73,7 @@ public class SearchTestCasePropertyTester
                             .find(NodeMaker.getTestCasePOClass(),
                                     searchResult.getData());
                     if (node != null) {
-                        return checkNode(property, project.getId(), node);
+                        return isValidNode(property, node);
                     }
                 } catch (IllegalStateException e) {
                     // Thrown, if the project is closed,
@@ -88,34 +88,48 @@ public class SearchTestCasePropertyTester
 
     /**
      * @param property The property.
-     * @param projectId The project ID.
      * @param node The node.
      * @return True, if the following rules are satisfied, otherwise false:
      * <p>If property is <b>isExec</b>:
      * <ol>
-     *      <li>this node is an execution Test Case.</li>
+     *      <li>{@link #isExistingTestCase(INodePO)}.</li>
      * </ol>
      * <p>If property is <b>isExecOrSpecAndUsesCTDS</b>:
      * <ol>
-     *      <li>this node is a specification or execution Test Case, and</li>
-     *      <li>the data cube is not empty.</li>
+     *      <li>The data cube is not empty, and</li>
+     *      <li>{@link #isExistingTestCase(INodePO)}.</li>
      * </ol>
      */
-    private static boolean checkNode(String property,
-            Long projectId, INodePO node) {
-
+    private static boolean isValidNode(String property, INodePO node) {
         if (property.equals(IS_EXEC)) {
-            return node instanceof IExecTestCasePO;
-        }
-        if (property.equals(IS_EXEC_OR_SPEC_AND_USES_CTDS)) {
-            if (node instanceof IExecTestCasePO
-                    || node instanceof ISpecTestCasePO) {
+            return isExistingTestCase(node);
+        } else if (property.equals(IS_EXEC_OR_SPEC_AND_USES_CTDS)) {
+            if (node instanceof ITestCasePO) {
                 ITestCasePO testCase = (ITestCasePO) node;
-                return testCase.getReferencedDataCube() != null;
+                if (testCase.getReferencedDataCube() != null) {
+                    return isExistingTestCase(testCase);
+                }
             }
         }
-        // node is not execution and not specification Test Case
         return false;
+    }
+
+    /**
+     * @param node The node.
+     * @return
+     * <ol>
+     *   <li>True, if the given node is an execution Test Case and its specification
+     *       Test Case exist in the database.</li>
+     *   <li>True, if the given node is a specification Test Case.</li>
+     *   <li>False in every other cases.</li>
+     * </ol>
+     */
+    private static boolean isExistingTestCase(INodePO node) {
+        if (node instanceof IExecTestCasePO) {
+            IExecTestCasePO exec = (IExecTestCasePO) node;
+            return exec.getSpecTestCase() != null; // spec exists in DB
+        }
+        return node instanceof ISpecTestCasePO;
     }
 
     /** {@inheritDoc} */
