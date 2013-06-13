@@ -30,37 +30,11 @@ For example:
 \item To create an XML file:
 \begin{enumerate} 
 \item Open a text editor of your choice. 
-\item Enter the desired parameters as shown in the example:
-\footnotesize
-\begin{verbatim}
-<configuration>
-    <project>ExampleProject</project>
-    <version>1.0</version>
-    <autconfig>local configuration</autconfig>
-           OR
-    <autid>Adder</autid>
-    <dbscheme>embedded</dbscheme>
-        OPTIONAL DBURL PARAMETER 
-     (to avoid using -data and -dbscheme)
-    <dburl>DBURL</dburl>
-    <dbuser>sa</dbuser>
-    <dbpw></dbpw>
-    <server>localhost</server>
-    <port>60000</port>
-    <language>EN_US</language>
-    <testsuite>Suite1</testsuite>
-            OR
-    <testjob>Job1</testjob>        
-    <datadir><pathToQADocs>/data</datadir>
-    <resultdir><pathToQADocs>/results</resultdir>
-</configuration>
-\end{verbatim}
-\normalsize
+\item Enter the desired parameters as shown in the example in the installation. It can be found under:\\
+\bxname{InstallationDirectory/examples/scripts}
 \item Save the file as an XML file.
 \item This file will be used when you enter the \bxcaption{-c <path to file>} parameter.
 \bxtipp{The no-run, quiet mode, no screenshot, no relevance and \bxname{-data} (for the workspace) parameters can only be entered in the command line interface. They cannot be entered in the configuration file.}
 \bxtipp{Java Virtual Machine parameters can only be entered in the command line interface. They cannot be entered in the configuration file.}
 \end{enumerate}
-\item A template configuration file is in the installation. It can be found under:\\
-\bxname{InstallationDirectory/examples/scripts}
 \end{enumerate}
