@@ -98,7 +98,7 @@ public class SearchReplaceTestCaseHandler extends
             return null;
         }
         if (error) {
-            if (MessageDialog.openConfirm(null,
+            if (MessageDialog.openQuestion(null,
                     Messages.ReplaceMultiTCRWizardActionDialog,
                     Messages.ReplaceMultiTCRWizardQuestionDeselect)) {
                 SearchResultPage page = SearchPageUtils
