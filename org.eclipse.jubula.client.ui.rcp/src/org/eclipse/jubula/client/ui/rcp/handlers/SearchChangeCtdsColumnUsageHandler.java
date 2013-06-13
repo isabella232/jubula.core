@@ -69,7 +69,7 @@ public class SearchChangeCtdsColumnUsageHandler
             return null;
         }
         if (!validator.areAllTestCasesOk()) {
-            if (MessageDialog.openConfirm(null,
+            if (MessageDialog.openQuestion(null,
                     Messages.ChangeCtdsColumnUsageActionDialog,
                     Messages.ChangeCtdsColumnUsageQuestionDeselect)) {
                 SearchPageUtils.selectTestCases(page,
