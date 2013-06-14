@@ -163,11 +163,12 @@ public class AUTConnection extends BaseConnection {
      * badly which will be corrected in a future version!
      */
     public synchronized void reset() {
-        if (getCommunicator() != null) {
-            getCommunicator().clearListeners();
+        Communicator communicator = getCommunicator();
+        if (communicator != null) {
+            communicator.interruptAllTimeouts();
+            communicator.clearListeners();
+            communicator.close();
         }
-
-        getCommunicator().close();
 
         instance = null;
     }
