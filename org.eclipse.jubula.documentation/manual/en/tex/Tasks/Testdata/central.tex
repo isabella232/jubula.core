@@ -119,9 +119,11 @@ If you have used a central test data set in multiple \gdcases{} and later realiz
 \item All the selected \gdcases{} use the same central test data set.
 \item All the selected \gdcases{} have their original specification in this \gdproject{}, i.e. you do not have a \gdcase{} from a reused \gdproject{} that uses the central test data set in this \gdproject{}.
 \item The \gdproject{} is not protected.
+\item The \gdcases{} you have selected are present (i.e. they are not missing from e.g. reused \gdprojects{}. 
 \item None of the selected \gdcases{} uses two different central test data sets (e.g. one central test data set on the originally specified \gdcase{}, and another one at a place where it is reused).
 \item The selected \gdcases{} have at least one referenced parameter and at least one of the referenced parameters has the same type as another parameter in the central test data set.
 \end{itemize}
+\item If the \gdproject{} is protected, or \gdcases{} are missing, the context-menu entry will be disabled. If any of the other prerequisites are not fulfilled, you will see an information dialog that lets you automatically deselect any invalid \gdcases{}. 
 \item From the context menu, select:\\
 \bxmenu{Change central test data set column usage}{}{}\\
 \item In the dialog that appears, you can select a parameter to change on the left-hand side, and the column to change it to on the right-hand side. You can only change the usage of columns whose types are the same. If you have e.g. TEXT1 (string) and TEXT2 (string)  in your central test data set and \gdcases{}, but you only require TEXT1, then select TEXT2 on the left-hand side and TEXT1 on the right hand side.
