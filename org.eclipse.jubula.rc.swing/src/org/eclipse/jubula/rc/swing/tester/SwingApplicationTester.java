@@ -37,7 +37,6 @@ import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.swing.components.SwingComponent;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swing.listener.FocusTracker;
-import org.eclipse.jubula.rc.swing.interfaces.IGraphicApplication;
 import org.eclipse.jubula.rc.swing.tester.util.EventListener;
 import org.eclipse.jubula.rc.swing.tester.util.WindowHelper;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -48,8 +47,7 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
  * @author BREDEX GmbH
  *
  */
-public class SwingApplicationTester extends AbstractApplicationTester implements
-        IGraphicApplication {
+public class SwingApplicationTester extends AbstractApplicationTester {
 
     /**
      * This condition is true if the event is an 'window opened' event

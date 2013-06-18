@@ -32,7 +32,6 @@ import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.components.SwtComponent;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
-import org.eclipse.jubula.rc.swt.interfaces.IGraphicApplication;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swt.listener.FocusTracker;
 import org.eclipse.jubula.rc.swt.tester.util.EventListener;
@@ -51,8 +50,7 @@ import org.eclipse.swt.widgets.Widget;
 /**
  * @author BREDEX GmbH
  */
-public class SwtApplicationTester extends AbstractApplicationTester implements
-        IGraphicApplication {
+public class SwtApplicationTester extends AbstractApplicationTester {
 
     /** The logging. */
     private static AutServerLogger log = 
