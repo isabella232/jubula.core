@@ -27,7 +27,7 @@ public class AUTStateMessage extends Message {
     /** Name of the command class */
     private static final String COMMAND_CLASS = "org.eclipse.jubula.client.core.commands.AUTStateCommand"; //$NON-NLS-1$
 
-    /** the state of the aut, see constants */
+    /** the state of the AUT, see constants */
     private int m_state;
 
     /**
@@ -45,7 +45,7 @@ public class AUTStateMessage extends Message {
      * constructor with parameter for the state, use the defined constants *
      * 
      * @param state
-     *            the state the aut is in
+     *            the state the AUT is in
      */
     public AUTStateMessage(int state) {
         this();

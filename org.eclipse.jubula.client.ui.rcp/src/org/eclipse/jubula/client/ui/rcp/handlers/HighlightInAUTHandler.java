@@ -84,9 +84,9 @@ public class HighlightInAUTHandler
                 message.setComponent(compId);
                 AUTConnection.getInstance().request(message, response, 5000);
             } catch (NotConnectedException nce) {
-                // HERE: notify the listeners about unsuccessfull mode change
+                // HERE: notify the listeners about unsuccessful mode change
             } catch (CommunicationException ce) {
-                // HERE: notify the listeners about unsuccessfull mode change
+                // HERE: notify the listeners about unsuccessful mode change
             }
         }
         return null;

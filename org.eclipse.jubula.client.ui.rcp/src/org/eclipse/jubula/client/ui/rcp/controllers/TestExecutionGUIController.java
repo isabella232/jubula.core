@@ -274,10 +274,8 @@ public class TestExecutionGUIController {
         TestExecutionContributor.getInstance().connectToAutAgent(
             autAgent.getName(), autAgent.getPort().toString());
         try {
-            if (AutAgentConnection.getInstance().isConnected()) {
-                AutAgentConnection.getInstance();
-                AutAgentConnection connection = 
-                        AutAgentConnection.getInstance();
+            AutAgentConnection connection = AutAgentConnection.getInstance();
+            if (connection.isConnected()) {
                 SendCompSystemI18nMessage message =
                     new SendCompSystemI18nMessage();
                 message.setResourceBundles(CompSystemI18n.bundlesToString());
@@ -290,7 +288,6 @@ public class TestExecutionGUIController {
                 } catch (CommunicationException e) {
                     LOG.error("Could not send CompSystemI18nResourceBundle to AutAgent", e);  //$NON-NLS-1$
                 }
-                // FIXME : CHECK_GLOBAL_ACTION
             }
         } catch (ConnectionException e) {
             DataEventDispatcher.getInstance().fireAutAgentConnectionChanged(

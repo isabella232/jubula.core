@@ -13,10 +13,10 @@ package org.eclipse.jubula.client.core.commands;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.IAUTInfoListener;
+import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
@@ -26,7 +26,6 @@ import org.eclipse.jubula.communication.message.AUTStartStateMessage;
 import org.eclipse.jubula.communication.message.AUTStateMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
@@ -47,7 +46,6 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class AUTStartedCommand implements ICommand {
-    
     /** the logger */
     private static Logger log = 
         LoggerFactory.getLogger(AUTStartedCommand.class);
@@ -58,7 +56,6 @@ public class AUTStartedCommand implements ICommand {
     /** the message */
     private AUTStartStateMessage m_message;
 
-    // HERE for the exhibition
     /** the state of the AUT */
     private AUTStateMessage m_stateMessage;
     
@@ -66,32 +63,23 @@ public class AUTStartedCommand implements ICommand {
     private boolean m_wasExecuted = false;
     
     /**
-     * Used by communication framework
-     * 
-     * @deprecated
+     * Constructor
      */
     public AUTStartedCommand() {
         // Nothing to initialize
     }
 
     /**
-     * public constructor
+     * Constructor
      * 
      * @param listener
-     *            the listener to callback, must not be null
-     * @throws IllegalArgumentException
-     *             if <code>listener</code> is null
+     *            the listener to callback, may be null
      */
-    public AUTStartedCommand(IAUTInfoListener listener)
-        throws IllegalArgumentException {
+    public AUTStartedCommand(IAUTInfoListener listener) {
         super();
-
-        Validate.notNull(listener, "listener must not be null"); //$NON-NLS-1$
-        
-        m_listener = listener;
+        setListener(listener);
     }
 
-    // HERE for the exhibition START
     /**
      * @param stateMessage The stateMessage to set.
      */
@@ -100,28 +88,27 @@ public class AUTStartedCommand implements ICommand {
     }
     
     /**
-     * analyse the state of the message and fire appropriate events.
+     * analyze the state of the message and fire appropriate events.
      */
     private void fireAutStateChanged() {
         int state = m_stateMessage.getState();
-        switch (state) { 
+        IClientTest clientTest = ClientTestFactory.getClientTest();
+        switch (state) {
             case AUTStateMessage.RUNNING:
                 log.info(Messages.AUTIsRunning);
-                ClientTestFactory.getClientTest().fireAUTStateChanged(
-                    new AUTEvent(AUTEvent.AUT_STARTED));
+                clientTest.fireAUTStateChanged(
+                        new AUTEvent(AUTEvent.AUT_STARTED));
                 break;
             case AUTStateMessage.START_FAILED:
-                log.error(Messages.AUTCouldNotStarted + StringConstants.COLON
-                    + StringConstants.SPACE + m_stateMessage.getDescription());
-                ClientTestFactory.getClientTest().fireAUTStateChanged(
-                    new AUTEvent(AUTEvent.AUT_START_FAILED));
+                log.error(Messages.AUTCouldNotStarted
+                        + m_stateMessage.getDescription());
+                clientTest.fireAUTStateChanged(new AUTEvent(
+                        AUTEvent.AUT_START_FAILED));
                 break;
             default:
-                // nothing here
+            // nothing here
         }
     }
-    
-    // HERE for the exhibition END
     
     /**
      * {@inheritDoc}
@@ -144,8 +131,6 @@ public class AUTStartedCommand implements ICommand {
      * The name of the default mapping is localized. If there is no I18N value,
      * <code>DefaultMapping.getLogicalName()</code> is returned.
      * 
-     * {@inheritDoc}
-     * 
      * @param comp
      *            The component
      * @return The logical name or <code>null</code>
@@ -162,10 +147,8 @@ public class AUTStartedCommand implements ICommand {
         }
         return logicalName;
     }
+    
     /**
-     * notify the listener <br>
-     * always return null (no response to send) <br>
-     * 
      * {@inheritDoc}
      */
     public Message execute() {
@@ -205,7 +188,6 @@ public class AUTStartedCommand implements ICommand {
         }
         ObjectMappingEventDispatcher.setCategoryToCreateIn(oldCategory);
 
-        // HERE for the exhibition
         // do this after the OM was build
         fireAutStateChanged();
         m_wasExecuted = true;
@@ -214,7 +196,7 @@ public class AUTStartedCommand implements ICommand {
 
     /**
      * 
-     * @return <code>true</code> if the command has been succesfully executed.
+     * @return <code>true</code> if the command has been successfully executed.
      *         Otherwise, <code>false</code>.
      */
     public boolean wasExecuted() {
@@ -226,6 +208,23 @@ public class AUTStartedCommand implements ICommand {
      */
     public void timeout() {
         log.warn(this.getClass().getName() + ".timeout() called"); //$NON-NLS-1$
-        m_listener.error(IAUTInfoListener.ERROR_TIMEOUT);
+        IAUTInfoListener listener = getListener();
+        if (listener != null) {
+            listener.error(IAUTInfoListener.ERROR_TIMEOUT);
+        }
+    }
+
+    /**
+     * @return the listener; may be <code>null</code>!
+     */
+    public IAUTInfoListener getListener() {
+        return m_listener;
+    }
+
+    /**
+     * @param listener the listener to set
+     */
+    private void setListener(IAUTInfoListener listener) {
+        m_listener = listener;
     }
 }

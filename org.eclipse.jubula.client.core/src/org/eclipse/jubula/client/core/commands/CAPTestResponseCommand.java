@@ -17,6 +17,7 @@ import org.eclipse.jubula.communication.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.MessageCap;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,50 +142,35 @@ public class CAPTestResponseCommand implements ICommand {
                         + Messages.GeneralFailure + StringConstants.NEWLINE;
                     break;
                 case CAPTestResponseMessage.FAILURE_SECURITY:
-                    message = message 
-                        + Messages.Failure + StringConstants.COLON 
-                        + StringConstants.SPACE + Messages.MissingPermission
-                        + StringConstants.NEWLINE;
+                    message = message + NLS.bind(Messages.Failure, 
+                                Messages.MissingPermission);
                     break;
                 case CAPTestResponseMessage.FAILURE_ACCESSIBILITY:
-                    message = message 
-                        + Messages.Failure + StringConstants.COLON 
-                        + StringConstants.SPACE + Messages.MethodNotAccesible
-                        + StringConstants.NEWLINE;
+                    message = message + NLS.bind(Messages.Failure, 
+                                    Messages.MethodNotAccesible);
                     break;
                 case CAPTestResponseMessage
                     .FAILURE_INVALID_IMPLEMENTATION_CLASS:
-                    message = message
-                        + Messages.Failure + StringConstants.COLON 
-                        + StringConstants.SPACE 
-                        + Messages.MissingImplementationClass 
-                        + StringConstants.NEWLINE;
+                    message = message + NLS.bind(Messages.Failure, 
+                                    Messages.MissingImplementationClass);
                     break;
                 case CAPTestResponseMessage.FAILURE_METHOD_NOT_FOUND:
                     break;
                 case CAPTestResponseMessage.FAILURE_INVALID_PARAMETER:
-                    message = message + Messages.Failure + StringConstants.COLON
-                        + StringConstants.SPACE + Messages.parametersAreNotValid
-                        + StringConstants.NEWLINE;
+                    message = message + NLS.bind(Messages.Failure, 
+                            Messages.parametersAreNotValid);
                     break;
                 case CAPTestResponseMessage.FAILURE_STEP_EXECUTION:
-                    message = message + Messages.Failure + StringConstants.COLON
-                        + StringConstants.SPACE 
-                        + Messages.ImplementingMethodHasThrownAnException
-                        + StringConstants.NEWLINE;
+                    message = message + NLS.bind(Messages.Failure, 
+                            Messages.ImplementingMethodHasThrownAnException);
                     break;
                 case CAPTestResponseMessage.FAILURE_UNSUPPORTED_COMPONENT:
-                    message = message 
-                        + Messages.Failure + StringConstants.COLON 
-                        + StringConstants.SPACE 
-                        + Messages.ComponentIsNotSupported
-                        + StringConstants.NEWLINE;
+                    message = message + NLS.bind(Messages.Failure, 
+                            Messages.ComponentIsNotSupported);
                     break;
                 case CAPTestResponseMessage.FAILURE_COMPONENT_NOT_FOUND:
-                    message = message 
-                        + Messages.Failure + StringConstants.COLON 
-                        + StringConstants.SPACE + Messages.ComponentNotFound
-                        + StringConstants.NEWLINE;
+                    message = message + NLS.bind(Messages.Failure, 
+                            Messages.ComponentNotFound);
                     break;
                 default:
                     message = Messages.UnknownState + StringConstants.COLON

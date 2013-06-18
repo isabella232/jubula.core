@@ -30,25 +30,11 @@ public class ProfileBuilder {
      */
     private static List profiles = null;
     
-    /**
-     * actual active profile 
-     *
-     */
-    private static Profile activeProfile = null;
-    
     /** 
      * Default constructor
      */
     private ProfileBuilder() {
         super();
-    }
-    
-    /**
-     * initializes the profiles
-     */
-    public static void init() {
-        ProfileBuilder.setActiveProfile((Profile)ProfileBuilder.
-            getProfiles().get(0));
     }
     
     /**
@@ -88,7 +74,6 @@ public class ProfileBuilder {
     }
 
     /**
-     * 
      * @param name
      *      String
      * @return
@@ -106,23 +91,9 @@ public class ProfileBuilder {
     }
 
     /**
-     * 
      * @return the default object mapping profile.
      */
     public static Profile getDefaultProfile() {
         return (Profile)ProfileBuilder.getProfiles().get(0);
     }
-    /**
-     * @return Returns the activeProfile.
-     */
-    public static Profile getActiveProfile() {
-        return activeProfile;
-    }
-    /**
-     * @param a The activeProfile to set.
-     */
-    public static void setActiveProfile(Profile a) {
-        ProfileBuilder.activeProfile = a;
-    }
-    
 }

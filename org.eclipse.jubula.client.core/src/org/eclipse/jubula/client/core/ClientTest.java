@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.core;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -20,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.Timer;
@@ -53,16 +51,14 @@ import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
 import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
-import org.eclipse.jubula.client.core.commands.AUTStartedCommand;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.commands.DisconnectFromAutAgentResponseCommand;
 import org.eclipse.jubula.client.core.commands.GetAutConfigMapResponseCommand;
-import org.eclipse.jubula.client.core.commands.GetKeyboardLayoutNameResponseCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
+import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -80,18 +76,13 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
-import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.AUTStateMessage;
 import org.eclipse.jubula.communication.message.BuildMonitoringReportMessage;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.communication.message.DisconnectFromAutAgentMessage;
 import org.eclipse.jubula.communication.message.GetAutConfigMapMessage;
-import org.eclipse.jubula.communication.message.GetKeyboardLayoutNameMessage;
 import org.eclipse.jubula.communication.message.GetMonitoringDataMessage;
 import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.SendAUTListOfSupportedComponentsMessage;
-import org.eclipse.jubula.communication.message.SetKeyboardLayoutMessage;
 import org.eclipse.jubula.communication.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.message.StopAUTServerMessage;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
@@ -112,9 +103,6 @@ import org.eclipse.jubula.tools.objects.IMonitoringValue;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.MonitoringUtil;
 import org.eclipse.jubula.tools.utils.TimeUtil;
-import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
-import org.eclipse.jubula.tools.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,25 +127,23 @@ public class ClientTest implements IClientTest {
     /** file extension for XML */
     private static final String XML_FILE_EXT = ".xml"; //$NON-NLS-1$
     
-    /** used in filenames for reports for succeful tests */
+    /** used in filenames for reports for successful tests */
     private static final String TEST_SUCCESSFUL = "ok"; //$NON-NLS-1$
     
     /** used in filenames for reports for failed tests */
     private static final String TEST_FAILED = "failed"; //$NON-NLS-1$
-    /** timeout for report job, after this time the job will be canceled 
-     * 1200000ms = 20min */
+    /**
+     * timeout for report job, after this time the job will be canceled
+     * 1200000ms = 20min
+     */
     private static final int BUILD_REPORT_TIMEOUT = 1200000;
+    
     /** timeout for requesting AutConfigMap from Agent */
     private static final int REQUEST_CONFIG_MAP_TIMEOUT = 10000;
 
-    /**
-     * Timeout for connect to servicecomponent
-     */
-    //    private static final int TIMEOUT = 60;
     /** A list of listeners for all events*/
     private static EventListenerList eventListenerList = 
         new EventListenerList();
-
     
     /**
      * Time of test suite start
@@ -245,7 +231,6 @@ public class ClientTest implements IClientTest {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public void startAut(IAUTMainPO aut, IAUTConfigPO conf, Locale locale) 
@@ -519,14 +504,6 @@ public class ClientTest implements IClientTest {
     /**
      * {@inheritDoc}
      */
-    public void startTestSuite(ITestSuitePO execTestSuite, Locale locale,
-            AutIdentifier autId, boolean autoScreenshot) {
-        startTestSuite(execTestSuite, locale, autId, autoScreenshot, null);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public void startTestSuite(final ITestSuitePO execTestSuite,
             final Locale locale, final AutIdentifier autId,
             final boolean autoScreenshot, 
@@ -611,7 +588,7 @@ public class ClientTest implements IClientTest {
                         .getTestSuiteAutID());
                 String testSuiteGuid = refTestSuite.getTestSuiteGuid();
                 ITestSuitePO testSuite = NodePM.getTestSuite(testSuiteGuid);
-                startTestSuite(testSuite, locale, autId, autoScreenshot);
+                startTestSuite(testSuite, locale, autId, autoScreenshot, null);
                 while (!isTestExecutionFinished.get()) {
                     TimeUtil.delay(500);
                 }
@@ -661,136 +638,6 @@ public class ClientTest implements IClientTest {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public void getAllComponentsFromAUT(IAUTInfoListener listener, 
-            int timeout) throws CommunicationException {
-        
-        log.info(Messages.GettingAllComponentsFromAUT);
-
-        if (listener == null) {
-            log.warn(Messages.ListenerIsNull);
-            return;
-        }
-
-        AUTStartedCommand response = new AUTStartedCommand(listener);
-        response.setStateMessage(new AUTStateMessage(AUTStateMessage.RUNNING));
-        try {
-            SendAUTListOfSupportedComponentsMessage message = 
-                MessageFactory.getSendAUTListOfSupportedComponentsMessage();
-            int timeoutToUse = 0;
-            if (timeout > 0) {
-                timeoutToUse = timeout;
-            }
-            // Send the supported components and their implementation classes
-            // to the AUT server to get registered.
-            CompSystem compSystem = ComponentBuilder.getInstance()
-                .getCompSystem();
-            String autToolkitId = 
-                TestExecution.getInstance().getConnectedAut().getToolkit();
-            List<Component> components = 
-                compSystem.getComponents(autToolkitId, true);
-
-            // optimization: only concrete components need to be registered,
-            // as abstract components do not have a corresponding impl class
-            components.retainAll(compSystem.getConcreteComponents());
-
-            message.setComponents(components);
-            message.setProfile(ProfileBuilder.getActiveProfile());
-
-            AUTConnection.getInstance()
-                    .request(message, response, timeoutToUse);
-
-            long startTime = System.currentTimeMillis();
-            while (System.currentTimeMillis() <= startTime + timeoutToUse
-                    && !response.wasExecuted() 
-                    && AUTConnection.getInstance().isConnected()) {
-                TimeUtil.delay(500);
-            }
-            if (!response.wasExecuted() 
-                    && AUTConnection.getInstance().isConnected()) {
-                listener.error(IAUTInfoListener.ERROR_COMMUNICATION);
-                throw new CommunicationException(
-                        Messages.CouldNotRequestComponentsFromAUT, 
-                        IAUTInfoListener.ERROR_COMMUNICATION);
-            }
-            if (ObjectMappingEventDispatcher.getObjMapTransient()
-                    .getMappings().isEmpty()) {
-                
-                // FIXME zeb Logging as error assumes that every AUT Server has
-                //           default mappings to contribute. So far this is true,
-                //           but might not be true for future toolkits.
-                log.warn(Messages.NoDefaultObjectMappingsCouldBeFoundForTheAUT);
-            }
-        } catch (UnknownMessageException ume) {
-            fireAUTServerStateChanged(new AUTServerEvent(ume.getErrorId()));
-        } 
-    }
-
-    /**
-     * {@inheritDoc}
-     * @throws CommunicationException 
-     * @throws ConnectionException 
-     * @throws NotConnectedException 
-     */
-    public void setAutKeyboardLayout(int timeout) 
-        throws NotConnectedException, ConnectionException, 
-               CommunicationException {
-
-        long timeoutToUse = timeout > 0 ? timeout : 0; 
-        
-        GetKeyboardLayoutNameMessage request = 
-            new GetKeyboardLayoutNameMessage();
-        GetKeyboardLayoutNameResponseCommand response =
-            new GetKeyboardLayoutNameResponseCommand();
-        AUTConnection.getInstance().request(request, response, timeout);
-
-        long startTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() <= startTime + timeoutToUse
-                && !response.wasExecuted() 
-                && AUTConnection.getInstance().isConnected()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                // Do nothing. The exit conditions will be checked
-                // again on the next loop iteration.
-            }
-        }
-        
-        String layoutName = response.getKeyboardLayoutName();
-        if (StringUtils.isNotEmpty(layoutName)) {
-            String filename = 
-                Languages.KEYBOARD_MAPPING_FILE_PREFIX + layoutName 
-                + Languages.KEYBOARD_MAPPING_FILE_POSTFIX;
-            final InputStream stream = getClass().getClassLoader()
-                .getResourceAsStream(filename);
-            try {
-                if (stream != null) {
-                    Properties prop = new Properties();
-                    prop.load(stream);
-                    AUTConnection.getInstance().send(
-                            new SetKeyboardLayoutMessage(prop));
-                } else {
-                    log.error("Mapping for '" + layoutName + "' could not be found.");  //$NON-NLS-1$//$NON-NLS-2$
-                }
-            } catch (IOException ioe) {
-                log.error("Error occurred while loading Keyboard Mapping.", ioe); //$NON-NLS-1$
-            } catch (IllegalArgumentException iae) {
-                log.error("Error occurred while loading Keybaord Mapping.", iae); //$NON-NLS-1$
-            } finally {
-                if (stream != null) {
-                    try {
-                        stream.close();
-                    } catch (IOException e) {
-                        log.warn("Error occurred while closing stream.", e); //$NON-NLS-1$
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * 
      * {@inheritDoc}
      */
     public void addTestEventListener(IAUTEventListener listener) {
@@ -1375,13 +1222,6 @@ public class ClientTest implements IClientTest {
         m_logStyle = logStyle;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void stateChanged(TestExecutionEvent event) {
-        // do nothing
-    }
-    
     /**
      * @return the Test Result Summary for the current test execution, or for
      *         the previous test execution if no test is currently running.

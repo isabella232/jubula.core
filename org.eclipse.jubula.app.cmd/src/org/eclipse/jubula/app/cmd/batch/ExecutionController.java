@@ -465,7 +465,7 @@ public class ExecutionController implements IAUTServerEventListener,
                         m_job.getActualTestSuite(),
                         m_job.getLanguage(),
                         m_startedAutId != null ? m_startedAutId : m_job
-                                .getAutId(), m_job.isAutoScreenshot());
+                                .getAutId(), m_job.isAutoScreenshot(), null);
             } 
         }
     }

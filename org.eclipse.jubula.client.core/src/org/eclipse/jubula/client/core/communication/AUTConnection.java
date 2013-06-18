@@ -11,29 +11,46 @@
 package org.eclipse.jubula.client.core.communication;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
+import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.AUTServerEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.IAUTInfoListener;
 import org.eclipse.jubula.client.core.IClientTest;
+import org.eclipse.jubula.client.core.MessageFactory;
 import org.eclipse.jubula.client.core.ServerEvent;
+import org.eclipse.jubula.client.core.UnknownMessageException;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
+import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
+import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.commands.AUTStartedCommand;
+import org.eclipse.jubula.client.core.commands.AUTStateCommand;
 import org.eclipse.jubula.client.core.commands.ConnectToAutResponseCommand;
+import org.eclipse.jubula.client.core.commands.GetKeyboardLayoutNameResponseCommand;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
+import org.eclipse.jubula.communication.message.AUTStateMessage;
 import org.eclipse.jubula.communication.message.ConnectToAutMessage;
+import org.eclipse.jubula.communication.message.GetKeyboardLayoutNameMessage;
 import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.message.SendAUTListOfSupportedComponentsMessage;
 import org.eclipse.jubula.communication.message.SendCompSystemI18nMessage;
+import org.eclipse.jubula.communication.message.SetKeyboardLayoutMessage;
+import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
@@ -41,8 +58,9 @@ import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
+import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.Profile;
-import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -221,10 +239,10 @@ public class AUTConnection extends BaseConnection {
                     IAUTMainPO aut = AutAgentRegistration.getAutForId(autId, 
                             GeneralStorage.getInstance().getProject());
                     if (aut != null) {
-                        getComponentsFromAut(aut);
-                        sendResourceBundlesToAut();
-                        ClientTestFactory.getClientTest()
-                            .setAutKeyboardLayout(10000);
+                        AUTStartedCommand response = new AUTStartedCommand();
+                        response.setStateMessage(new AUTStateMessage(
+                                AUTStateMessage.RUNNING));
+                        setup(response);
                     } else {
                         LOG.warn(Messages.ErrorOccurredActivatingObjectMapping);
                     }
@@ -246,52 +264,171 @@ public class AUTConnection extends BaseConnection {
         ded.fireAutServerConnectionChanged(ServerState.Disconnected);
         return false;
     }
+    
+    /**
+     * Sets the keyboard layout for the currently connected AUT.
+     * 
+     * @throws NotConnectedException if there is no connection to an AUT.
+     * @throws ConnectionException if no connection to an AUT could be 
+     *                             initialized.
+     * @throws CommunicationException if an error occurs while communicating
+     *                                with the AUT.
+     */
+    private void sendKeyboardLayoutToAut() 
+        throws NotConnectedException, ConnectionException, 
+               CommunicationException {
 
+        final int timeoutToUse = CONNECT_TO_AUT_TIMEOUT; 
+        
+        GetKeyboardLayoutNameMessage request = 
+            new GetKeyboardLayoutNameMessage();
+        GetKeyboardLayoutNameResponseCommand response =
+            new GetKeyboardLayoutNameResponseCommand();
+        request(request, response, timeoutToUse);
+
+        long startTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() <= startTime + timeoutToUse
+                && !response.wasExecuted() && isConnected()) {
+            TimeUtil.delay(500);
+        }
+        
+        String layoutName = response.getKeyboardLayoutName();
+        if (StringUtils.isNotEmpty(layoutName)) {
+            String filename = 
+                Languages.KEYBOARD_MAPPING_FILE_PREFIX + layoutName 
+                + Languages.KEYBOARD_MAPPING_FILE_POSTFIX;
+            final InputStream stream = getClass().getClassLoader()
+                .getResourceAsStream(filename);
+            try {
+                if (stream != null) {
+                    Properties prop = new Properties();
+                    prop.load(stream);
+                    send(new SetKeyboardLayoutMessage(prop));
+                } else {
+                    LOG.error("Mapping for '" + layoutName + "' could not be found.");  //$NON-NLS-1$//$NON-NLS-2$
+                }
+            } catch (IOException ioe) {
+                LOG.error("Error occurred while loading Keyboard Mapping.", ioe); //$NON-NLS-1$
+            } catch (IllegalArgumentException iae) {
+                LOG.error("Error occurred while loading Keybaord Mapping.", iae); //$NON-NLS-1$
+            } finally {
+                if (stream != null) {
+                    try {
+                        stream.close();
+                    } catch (IOException e) {
+                        LOG.warn("Error occurred while closing stream.", e); //$NON-NLS-1$
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * setup the connection between ITE and AUT
+     * 
+     * @param command
+     *            the command to execute on callback
+     * @throws NotConnectedException
+     *             if there is no connection to an AUT.
+     * @throws ConnectionException
+     *             if no connection to an AUT could be initialized.
+     * @throws CommunicationException
+     *             if an error occurs while communicating with the AUT.
+     */
+    public void setup(AUTStartedCommand command)
+        throws NotConnectedException, ConnectionException,
+        CommunicationException {
+        sendKeyboardLayoutToAut();
+        sendResourceBundlesToAut();
+        getAllComponentsFromAUT(command);
+    }
+    
     /**
      * Sends the i18n resource bundles to the AUT Server.
      */
     private void sendResourceBundlesToAut() {
-        SendCompSystemI18nMessage i18nMessage =
-            new SendCompSystemI18nMessage();
-        i18nMessage.setResourceBundles(
-                CompSystemI18n.bundlesToString());
+        SendCompSystemI18nMessage i18nMessage = new SendCompSystemI18nMessage();
+        i18nMessage.setResourceBundles(CompSystemI18n.bundlesToString());
         try {
             send(i18nMessage);
-        } catch (CommunicationException ce) {
-            LOG.error(Messages.CommunicationErrorWhileSettingResourceBundle, 
-                ce); 
+        } catch (CommunicationException e) {
+            LOG.error(Messages.CommunicationErrorWhileSettingResourceBundle, e);
         }
     }
 
     /**
-     * Sends a message to the currently connected AUT to initialize all
-     * supported component types.
+     * Query the AUTServer for all supported components.
+     * <code>listener.componentInfo()</code> will be called when the answer
+     * receives.
      * 
-     * @param aut
-     *            The AUT for which to get the components.
+     * @param command
+     *            the command to execute as a callback
+     * 
      * @throws CommunicationException
      *             if an error occurs while communicating with the AUT.
      */
-    private void getComponentsFromAut(IAUTMainPO aut) 
+    private void getAllComponentsFromAUT(AUTStartedCommand command)
         throws CommunicationException {
-        Profile profile = new Profile();
-        IObjectMappingProfilePO profilePo = 
-            aut.getObjMap().getProfile();
-        profile.setNameFactor(profilePo.getNameFactor());
-        profile.setPathFactor(profilePo.getPathFactor());
-        profile.setContextFactor(profilePo.getContextFactor());
-        profile.setThreshold(profilePo.getThreshold());
-        ProfileBuilder.setActiveProfile(profile);
         
-        IAUTInfoListener listener = new IAUTInfoListener() {
-            public void error(int reason) {
-                LOG.error(Messages.ErrorOccurredWhileGettingComponentsFromAUT
-                        + reason);
-            }
-        };
+        LOG.info(Messages.GettingAllComponentsFromAUT);
 
-        ClientTestFactory.getClientTest()
-            .getAllComponentsFromAUT(listener, 30000);
+        try {
+            SendAUTListOfSupportedComponentsMessage message = 
+                MessageFactory.getSendAUTListOfSupportedComponentsMessage();
+            // Send the supported components and their implementation classes
+            // to the AUT server to get registered.
+            CompSystem compSystem = ComponentBuilder.getInstance()
+                    .getCompSystem();
+            IAUTMainPO connectedAut = TestExecution.getInstance()
+                    .getConnectedAut();
+            String autToolkitId = connectedAut.getToolkit();
+            List<Component> components = compSystem.getComponents(
+                    autToolkitId, true);
+
+            // optimization: only concrete components need to be registered,
+            // as abstract components do not have a corresponding tester class
+            components.retainAll(compSystem.getConcreteComponents());
+            message.setComponents(components);
+            
+            Profile profile = new Profile();
+            IObjectMappingProfilePO profilePo = connectedAut.getObjMap()
+                    .getProfile();
+            profile.setNameFactor(profilePo.getNameFactor());
+            profile.setPathFactor(profilePo.getPathFactor());
+            profile.setContextFactor(profilePo.getContextFactor());
+            profile.setThreshold(profilePo.getThreshold());
+
+            message.setProfile(profile);
+            
+            int timeoutToUse = AUTStateCommand.AUT_COMPONENT_RETRIEVAL_TIMEOUT;
+            request(message, command, timeoutToUse);
+
+            long startTime = System.currentTimeMillis();
+            while (System.currentTimeMillis() <= startTime + timeoutToUse
+                    && !command.wasExecuted() && isConnected()) {
+                TimeUtil.delay(500);
+            }
+            if (!command.wasExecuted() && isConnected()) {
+                IAUTInfoListener listener = command.getListener();
+                if (listener != null) {
+                    listener.error(IAUTInfoListener.ERROR_COMMUNICATION);
+                }
+                throw new CommunicationException(
+                        Messages.CouldNotRequestComponentsFromAUT,
+                        IAUTInfoListener.ERROR_COMMUNICATION);
+            }
+            if (ObjectMappingEventDispatcher.getObjMapTransient()
+                    .getMappings().isEmpty()) {
+                
+                // FIXME zeb Logging as error assumes that every AUT Server has
+                //           default mappings to contribute. So far this is true,
+                //           but might not be true for future toolkits.
+                LOG.warn(Messages.NoDefaultObjectMappingsCouldBeFoundForTheAUT);
+            }
+        } catch (UnknownMessageException ume) {
+            ClientTestFactory.getClientTest().fireAUTServerStateChanged(
+                    new AUTServerEvent(ume.getErrorId()));
+        } 
     }
     
     /**

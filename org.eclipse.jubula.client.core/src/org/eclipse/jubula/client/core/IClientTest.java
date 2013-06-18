@@ -55,7 +55,7 @@ public interface IClientTest {
      * start the application under test.
      * @param conf AutConf
      * @param locale the Locale to start AUT with
-     * @param aut the IAUTMainPO the aut.
+     * @param aut the IAUTMainPO the AUT.
      * @throws ToolkitPluginException if the toolkit for the AUT cannot be found
      */
     public abstract void startAut(IAUTMainPO aut, IAUTConfigPO conf, 
@@ -128,22 +128,6 @@ public interface IClientTest {
      *            test execution errors
      * @param autId
      *            The ID of the Running AUT on which the test will take place.
-     */
-    public abstract void startTestSuite(ITestSuitePO execTestSuite,
-        Locale locale, AutIdentifier autId, boolean autoScreenshot);
-
-    /**
-     * Starts the testsuite
-     * 
-     * @param execTestSuite
-     *            The testSuite to be tested
-     * @param locale
-     *            The locale to be tested
-     * @param autoScreenshot
-     *            whether screenshots should be automatically taken in case of
-     *            test execution errors
-     * @param autId
-     *            The ID of the Running AUT on which the test will take place.
      * @param externalVars
      *            a map of externally set variables; may be <code>null</code>
      */
@@ -189,39 +173,6 @@ public interface IClientTest {
      * @return get the pause test execution on error flag.
      */
     public abstract boolean isPauseTestExecutionOnError();
-    
-    /**
-     * Query the AUTServer for all supported components.
-     * <code>listener.componentInfo()</code> will be called when the answer
-     * receives.
-     * 
-     * @param listener
-     *            the listener to call back, if the listener is null no action
-     *            is performed and no exception is thrown
-     * @param timeout
-     *            maximum time in milliseconds to wait before 
-     *            listener.error(ERROR_TIMEOUT) is called. For value less or 
-     *            equals zero, the default timeout (from Communicator) is used
-     * @throws CommunicationException 
-     *            if an error occurs while communicating with the AUT.
-     */
-    public abstract void getAllComponentsFromAUT(IAUTInfoListener listener,
-        int timeout) throws CommunicationException;
-
-    /**
-     * Sets the keyboard layout for the currently connected AUT.
-     * 
-     * @param timeout The maximum amount of time (in milliseconds) to wait
-     *                before canceling the operation.
-     * @throws NotConnectedException if there is no connection to an AUT.
-     * @throws ConnectionException if no connection to an AUT could be 
-     *                             initialized.
-     * @throws CommunicationException if an error occurs while communicating
-     *                                with the AUT.
-     */
-    public abstract void setAutKeyboardLayout(int timeout) 
-        throws NotConnectedException, ConnectionException, 
-               CommunicationException;
     
     /**
      * adds an IAUTServerEventListener

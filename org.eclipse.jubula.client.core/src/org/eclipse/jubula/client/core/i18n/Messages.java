@@ -61,8 +61,7 @@ public class Messages extends NLS {
     public static String ClosingConnectionToTheAUTServer;
     public static String ClosingConnectionToTheAutStarter;
     public static String ClosingTheConnectionsFailed;
-    public static String CommunicationErrorGetResourceBundle;
-    public static String CommunicationErrorSetResourceBundle;
+    public static String CommunicationErrorSettingUpAUT;
     public static String CommunicationErrorWhileSettingResourceBundle;
     public static String CommunicationWithAUTFails;
     public static String CommunicatorMustNotBeNull;
