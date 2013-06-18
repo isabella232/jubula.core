@@ -175,17 +175,10 @@ public class ExportAllHandler extends AbstractProjectHandler {
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        if (GeneralStorage.getInstance()
-                .getProject() != null
-                && Plugin.getDefault().anyDirtyStar()) {
-
-            if (Plugin.getDefault()
-                    .showSaveEditorDialog()) {
-                showExportDialog();
-            }
-            return null;
+        if (GeneralStorage.getInstance().getProject() != null
+                && Plugin.getDefault().saveAllDirtyEditors()) {
+            showExportDialog();
         }
-        showExportDialog();
         return null;
     }
 }

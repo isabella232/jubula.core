@@ -37,14 +37,10 @@ public class ImportProjectHandler extends AbstractProjectHandler {
      */
     public Object executeImpl(ExecutionEvent event) {
         if (GeneralStorage.getInstance().getProject() != null
-                && Plugin.getDefault().anyDirtyStar()) {
-            if (Plugin.getDefault().showSaveEditorDialog()) {
-                showImportDialog();
-            }
-            Plugin.stopLongRunning();
-            return null;
+                && Plugin.getDefault().saveAllDirtyEditors()) {
+            showImportDialog();
         }
-        showImportDialog();
+        Plugin.stopLongRunning();
         return null;
     }
 

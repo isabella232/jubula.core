@@ -419,8 +419,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
     public ProjectDialog openProjectOpenDialog(List<IProjectPO> projList) {
         ProjectDialog dialog = null;
         if (GeneralStorage.getInstance().getProject() != null
-                && Plugin.getDefault().anyDirtyStar()
-                && !Plugin.getDefault().showSaveEditorDialog()) {
+                && !Plugin.getDefault().saveAllDirtyEditors()) {
 
             Plugin.stopLongRunning();
         } else {
