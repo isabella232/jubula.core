@@ -52,6 +52,9 @@ public class SearchReplaceTestCaseHandler extends
      */
     @SuppressWarnings("unchecked")
     protected Object executeImpl(ExecutionEvent event) {
+        if (!Plugin.getDefault().saveAllDirtyEditors()) {
+            return null;
+        }
         IStructuredSelection selectedObject = getSelection();
         List<SearchResultElement<Long>> selectionList =
                 (List<SearchResultElement<Long>>) selectedObject.toList();
@@ -110,17 +113,7 @@ public class SearchReplaceTestCaseHandler extends
             }
             return null;
         }
-        
-        if (Plugin.getDefault().anyDirtyStar()) {
-            if (Plugin.getDefault().showSaveEditorDialog()) {
-                if (!Plugin.getDefault().anyDirtyStar()) {
-                    showWizardDialog(execList);
-                }
-            }
-        } else {
-            showWizardDialog(execList);
-        }
-
+        showWizardDialog(execList);
         return null;
     }
 

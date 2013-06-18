@@ -48,6 +48,9 @@ public class SearchChangeCtdsColumnUsageHandler
         if (page == null) {
             return null;
         }
+        if (!Plugin.getDefault().saveAllDirtyEditors()) {
+            return null;
+        }
         // create list of selected Test Cases
         @SuppressWarnings("unchecked")
         List<SearchResultElement<Long>> oldSelection =
@@ -85,9 +88,7 @@ public class SearchChangeCtdsColumnUsageHandler
                     MessageIDs.I_TCS_HAVE_NO_CHANGEABLE_PARAMETER_NAME);
             return null;
         }
-        if (Plugin.getDefault().saveAllDirtyEditors()) {
-            showWizardDialog(paramData);
-        }
+        showWizardDialog(paramData);
         return null;
     }
 
