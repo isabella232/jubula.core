@@ -117,7 +117,6 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
      */
     protected String[] getBundlesForClasspath() {
         return new String[] { CommandConstants.RC_HTML_BUNDLE_ID,
-                              CommandConstants.RC_HTML_COMMON_BUNDLE_ID,
                               CommandConstants.TOOLS_BUNDLE_ID,
                               CommandConstants.COMMUNICATION_BUNDLE_ID,
                               CommandConstants.RC_COMMON_BUNDLE_ID,
