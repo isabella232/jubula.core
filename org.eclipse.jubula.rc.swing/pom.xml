@@ -23,13 +23,4 @@
 
   <packaging>eclipse-plugin</packaging>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.eclipse.jubula</groupId>
-      <artifactId>org.eclipse.jubula.toolkit.generate.interfaces</artifactId>
-      <version>2.1.0-SNAPSHOT</version>
-      <type>pom</type>
-    </dependency>
-  </dependencies>
-
 </project>
