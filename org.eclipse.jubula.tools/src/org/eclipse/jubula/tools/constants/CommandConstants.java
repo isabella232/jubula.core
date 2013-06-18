@@ -46,8 +46,6 @@ public abstract class CommandConstants {
     public static final String RCP_TOOLKIT = "com.bredexsw.guidancer.RcpToolkitPlugin"; //$NON-NLS-1$
     /** constant: "Html" */
     public static final String HTML_TOOLKIT = "com.bredexsw.guidancer.HtmlToolkitPlugin"; //$NON-NLS-1$
-    /** constant: "Rap" */
-    public static final String RAP_TOOLKIT = "ui.toolkit.aria.RapToolkitPlugin"; //$NON-NLS-1$
     /** constant: ".NET" */
     public static final String DOTNET_TOOLKIT = "ui.toolkit.DotnetToolkitPlugin"; //$NON-NLS-1$
     /** constant: "iOS" */
