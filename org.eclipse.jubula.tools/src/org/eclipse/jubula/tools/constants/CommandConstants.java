@@ -76,6 +76,8 @@ public abstract class CommandConstants {
     public static final String COMMUNICATION_BUNDLE_ID = "org.eclipse.jubula.communication"; //$NON-NLS-1$
     /** ID of the common RC bundle */
     public static final String RC_COMMON_BUNDLE_ID = "org.eclipse.jubula.rc.common"; //$NON-NLS-1$
+    /** ID of the common RC bundle */
+    public static final String RC_BREDEX_COMMON_BUNDLE_ID = "com.bredexsw.jubula.rc.common"; //$NON-NLS-1$
     /** ID of the RC Common Agent bundle */
     public static final String RC_COMMON_AGENT_BUNDLE_ID = "org.eclipse.jubula.rc.common.agent"; //$NON-NLS-1$
     /** ID of the Swing RC bundle */
