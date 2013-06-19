@@ -20,7 +20,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
@@ -175,8 +174,7 @@ public class ExportAllHandler extends AbstractProjectHandler {
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        if (GeneralStorage.getInstance().getProject() != null
-                && Plugin.getDefault().saveAllDirtyEditors()) {
+        if (Plugin.getDefault().saveAllDirtyEditors()) {
             showExportDialog();
         }
         return null;

@@ -17,7 +17,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.handlers.project.AbstractProjectHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ImportFileBP;
@@ -36,8 +35,7 @@ public class ImportProjectHandler extends AbstractProjectHandler {
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        if (GeneralStorage.getInstance().getProject() != null
-                && Plugin.getDefault().saveAllDirtyEditors()) {
+        if (Plugin.getDefault().saveAllDirtyEditors()) {
             showImportDialog();
         }
         Plugin.stopLongRunning();
