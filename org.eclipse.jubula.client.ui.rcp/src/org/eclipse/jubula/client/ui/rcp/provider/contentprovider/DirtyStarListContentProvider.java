@@ -12,8 +12,6 @@ package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
-
 
 /**
  * @author BREDEX GmbH
@@ -26,7 +24,7 @@ public class DirtyStarListContentProvider
      * {@inheritDoc}
      */
     public Object[] getElements(Object inputElement) {
-        return Plugin.getDefault().getDirtyEditorNames().toArray();
+        return (Object[]) inputElement;
     }
 
     /**

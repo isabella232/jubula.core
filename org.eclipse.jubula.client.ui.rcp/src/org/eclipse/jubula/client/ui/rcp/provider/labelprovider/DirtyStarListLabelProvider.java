@@ -10,15 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.provider.labelprovider;
 
-import java.util.Iterator;
-
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
-import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.part.EditorPart;
+import org.eclipse.ui.IEditorReference;
 
 
 /**
@@ -31,40 +27,26 @@ public class DirtyStarListLabelProvider implements ILabelProvider {
      * {@inheritDoc}
      */
     public Image getImage(Object element) {
-        Image image = null;
-        Iterator editors = 
-            Plugin.getDefault().getDirtyEditorNames().iterator();
-        while (editors.hasNext()) {
-            EditorPart editor = (EditorPart)Plugin
-            .getEditorByTitle((String)editors.next());
-
-            if (editor.getTitle().equals(element)) {
-                image = editor.getTitleImage();
-                if (!editor.isDirty() && (editor instanceof IJBEditor)) {
-                    IJBEditor seditor = (IJBEditor) editor;
-                    image = seditor.getDisabledTitleImage();
-                }
-                return image;
+        if (element instanceof IEditorReference) {
+            IEditorReference editor = (IEditorReference) element;
+            if (!editor.isDirty() && (editor instanceof IJBEditor)) {
+                IJBEditor seditor = (IJBEditor) editor;
+                return seditor.getDisabledTitleImage();
             }
+            return editor.getTitleImage();
         }
-        return image;
+        return null;
     }
     
     /**
      * {@inheritDoc}
      */
     public String getText(Object element) {
-        Iterator editors = 
-            Plugin.getDefault().getDirtyEditorNames().iterator();
-        while (editors.hasNext()) {
-            EditorPart  editor = (EditorPart)Plugin
-                .getEditorByTitle((String)editors.next());
-            if (editor.getTitle().equals(element) && !editor.isDirty()) {
-                return element.toString() 
-                    + Messages.DirtyStarListLabelProviderAlreadySaved;
-            }
+        if (element instanceof IEditorReference) {
+            IEditorReference editor = (IEditorReference) element;
+            return editor.getTitle();
         }
-        return element.toString();
+        return null;
     }
     
     /**

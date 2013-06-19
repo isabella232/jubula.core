@@ -35,7 +35,7 @@ public class ImportProjectHandler extends AbstractProjectHandler {
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        if (Plugin.getDefault().saveAllDirtyEditors()) {
+        if (Plugin.getDefault().showSaveEditorDialog()) {
             showImportDialog();
         }
         Plugin.stopLongRunning();

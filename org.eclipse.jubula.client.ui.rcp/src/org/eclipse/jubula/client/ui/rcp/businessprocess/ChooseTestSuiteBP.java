@@ -453,7 +453,7 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
      */
     public TestSuiteState validateSaveState(ITestSuitePO ts) {
         if (Plugin.getDefault().anyDirtyStar()) {
-            boolean isSaved = Plugin.getDefault().saveAllDirtyEditors();
+            boolean isSaved = Plugin.getDefault().showSaveEditorDialog();
             if (isSaved) {
                 SortedSet<ITestSuitePO> allTestSuites = 
                     getAllTestSuites();

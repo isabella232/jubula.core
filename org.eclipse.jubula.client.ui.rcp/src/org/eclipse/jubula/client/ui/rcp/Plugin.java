@@ -13,11 +13,8 @@ package org.eclipse.jubula.client.ui.rcp;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.Validate;
@@ -139,8 +136,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     
     /** the client status */
     private ClientStatus m_status = ClientStatus.STARTING;
-    /** a list with the unsaved editors*/
-    private List < String > m_dirtyEditors;
     /** the preference store for this bundle */
     private ScopedPreferenceStore m_preferenceStore = null;
     /** the console */
@@ -669,13 +664,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     }
 
     /**
-     * @return A list of unsaved editors.
-     */
-    public List < String > getDirtyEditorNames() {
-        return m_dirtyEditors;
-    }
-
-    /**
      * @return An array of IEditorParts.
      */
     public IEditorPart[] getDirtyEditors() {
@@ -683,13 +671,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
             return getActivePage().getDirtyEditors();
         }
         return new IEditorPart[0];
-    }
-
-    /**
-     * @param dirtyEditors The dirty editors list to set.
-     */
-    public void setDirtyEditorNames(List < String > dirtyEditors) {
-        m_dirtyEditors = dirtyEditors;
     }
 
     /**
@@ -747,27 +728,38 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         boolean alsoProjectIndependent) {
         IWorkbenchPage activePage = getActivePage();
         if (activePage != null) {
-            Set<IEditorReference> editorRefSet = 
-                new HashSet<IEditorReference>();
-            for (IEditorReference editorRef 
-                    : activePage.getEditorReferences()) {
+            List<IEditorReference> editorParts = getAllOpenedJubulaEditors(
+                    alsoProjectIndependent);
+            activePage.closeEditors(
+                    editorParts.toArray(
+                            new IEditorReference[editorParts.size()]),
+                    false);
+        }
+    }
 
+    /**
+     * @param alsoProjectIndependent
+     *            True, if also project independent editors should be collected such
+     *            as the test result viewer, otherwise false.
+     * @return A set of editor references of all opened Jubula editors (i.e. TCE, TSE, OME),
+     *         or an empty set. If this method is not called from the GUI thread, the set is empty.
+     */
+    private static List<IEditorReference> getAllOpenedJubulaEditors(
+            boolean alsoProjectIndependent) {
+        List<IEditorReference> editorRefs = new ArrayList<IEditorReference>();
+        IWorkbenchPage activePage = getActivePage();
+        if (activePage != null) {
+            for (IEditorReference editorRef: activePage.getEditorReferences()) {
                 IEditorPart editor = editorRef.getEditor(true);
                 if (editor instanceof IJBPart) {
-                    if (alsoProjectIndependent) {
-                        editorRefSet.add(editorRef);
-                    } else {
-                        if (!(editor instanceof TestResultViewer)) {
-                            editorRefSet.add(editorRef);
-                        }
+                    if (alsoProjectIndependent
+                            || !(editor instanceof TestResultViewer)) {
+                        editorRefs.add(editorRef);
                     }
                 }
             }
-            activePage.closeEditors(
-                    editorRefSet.toArray(
-                            new IEditorReference[editorRefSet.size()]), 
-                    false);
         }
+        return editorRefs;
     }
 
     /**
@@ -794,61 +786,62 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      * @return true, if there are unsaved m_editors, false otherwise
      */
     public boolean anyDirtyStar() {
-        boolean isDirtyStar = false;
-        IEditorPart[] editors = getActivePage().getDirtyEditors();
-        setDirtyEditorNames(new ArrayList < String > ());
-        for (int t = 0; t < editors.length; t++) {
-            if (editors[t].isDirty()) {
-                isDirtyStar = true;
-                m_dirtyEditors.add(editors[t].getTitle());
-            }
-        }
-        return isDirtyStar;
+        return !getProjectDependentDirtyEditors().isEmpty();
     }
 
     /**
-     * <p>* opens the ListSelectionDialog and saves all selected editors, which are dirty</p>
-     * <p>* starts the AUT, if in the dialog the OK button was pressed</p>
-     * @return boolean isSaved?
+     * @return A list of project dependent dirty editors.
+     */
+    private List<IEditorReference> getProjectDependentDirtyEditors() {
+        List<IEditorReference> dirtyEditors = new ArrayList<IEditorReference>();
+        for (IEditorReference editorRef: getAllOpenedJubulaEditors(false)) {
+            if (editorRef.isDirty()) {
+                dirtyEditors.add(editorRef);
+            }
+        }
+        return dirtyEditors;
+    }
+
+    /**
+     * Opens the {@link ListSelectionDialog} with a preselected list of
+     * all project dependent dirty editors. If the list is empty, the dialog
+     * is not shown.
+     * @return True, if there are not dirty editors or all preselected dirty
+     *         editors have been saved, otherwise false.
      */
     public boolean showSaveEditorDialog() {
-        ListSelectionDialog dialog = new ListSelectionDialog(getShell(),
-                m_dirtyEditors, new DirtyStarListContentProvider(),
-                new DirtyStarListLabelProvider(),
-                Messages.StartSuiteActionMessage);
-        dialog.setTitle(Messages.StartSuiteActionTitle);
-        dialog.setInitialSelections(m_dirtyEditors.toArray());
-        dialog.open();
-        // if OK was pressed in the dialog
-        // all selected editors will saved
-        if (dialog.getReturnCode() == Window.OK) {
-            for (int t = 0; t < dialog.getResult().length; t++) {
-                ((getEditorByTitle(dialog.getResult()[t].toString())))
-                        .doSave(new NullProgressMonitor());
+        List<IEditorReference> dirtyEditors = getProjectDependentDirtyEditors();
+        boolean hasDirtyEditors = !dirtyEditors.isEmpty();
+        if (hasDirtyEditors) {
+            ListSelectionDialog dialog = new ListSelectionDialog(getShell(),
+                    dirtyEditors.toArray(), new DirtyStarListContentProvider(),
+                    new DirtyStarListLabelProvider(),
+                    Messages.StartSuiteActionMessage);
+            dialog.setTitle(Messages.StartSuiteActionTitle);
+            dialog.setInitialElementSelections(dirtyEditors);
+            dialog.open();
+            if (dialog.getReturnCode() == Window.OK) {
+                // save all selected editors
+                Object[] editorRefs = dialog.getResult();
+                if (editorRefs != null) {
+                    for (Object editorObj : editorRefs) {
+                        if (editorObj instanceof IEditorReference) {
+                            IEditorReference editorRef = (IEditorReference)
+                                    editorObj;
+                            IEditorPart editorPart = editorRef.getEditor(true);
+                            editorPart.doSave(new NullProgressMonitor());
+                        }
+                    }
+                }
+                hasDirtyEditors = !getProjectDependentDirtyEditors()
+                        .isEmpty();
             }
-            setNormalCursor();
-            return true;
         }
         setNormalCursor();
-        return false;
+        return !hasDirtyEditors;
     }
 
-    /**
-     * Save all opened editors, if they have a dirty state.
-     * @return True, if all opened editors has been saved and not in dirty state,
-     *         otherwise false.
-     */
-    public boolean saveAllDirtyEditors() {
-        if (!anyDirtyStar()) {
-            return true;
-        }
-        if (showSaveEditorDialog()) {
-            return !anyDirtyStar();
-        }
-        return false;
-    }
-
-    /** Sets the hourglas cursor. */
+    /** Sets the hour glass cursor. */
     private static void setWaitCursor() {
         getDisplay().syncExec(new Runnable() {
             public void run() {

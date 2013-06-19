@@ -48,7 +48,7 @@ public class SearchChangeCtdsColumnUsageHandler
         if (page == null) {
             return null;
         }
-        if (!Plugin.getDefault().saveAllDirtyEditors()) {
+        if (!Plugin.getDefault().showSaveEditorDialog()) {
             return null;
         }
         // create list of selected Test Cases

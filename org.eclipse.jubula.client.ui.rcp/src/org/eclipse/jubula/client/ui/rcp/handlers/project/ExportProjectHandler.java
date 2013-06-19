@@ -160,7 +160,7 @@ public class ExportProjectHandler extends AbstractProjectHandler {
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        if (Plugin.getDefault().saveAllDirtyEditors()) {
+        if (Plugin.getDefault().showSaveEditorDialog()) {
             showExportDialog();
         }
         Plugin.stopLongRunning();
