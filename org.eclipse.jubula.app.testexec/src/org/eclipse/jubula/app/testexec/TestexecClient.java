@@ -9,11 +9,11 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.app.cmd;
+package org.eclipse.jubula.app.testexec;
 
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
-import org.eclipse.jubula.app.cmd.batch.ExecutionController;
+import org.eclipse.jubula.app.testexec.batch.ExecutionController;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.JobConfiguration;
 import org.eclipse.jubula.client.cmd.constants.ClientStrings;
@@ -28,10 +28,10 @@ import org.slf4j.LoggerFactory;
 /**
  * @created Mar 21, 2006
  */
-public class Client extends AbstractCmdlineClient {
+public class TestexecClient extends AbstractCmdlineClient {
     
     /** log facility */
-    private static Logger log = LoggerFactory.getLogger(Client.class);
+    private static Logger log = LoggerFactory.getLogger(TestexecClient.class);
 
     /** the instance */
     private static AbstractCmdlineClient instance = null;
@@ -40,7 +40,7 @@ public class Client extends AbstractCmdlineClient {
      * private contructor
      *
      */
-    private Client() {
+    private TestexecClient() {
         //no public constructor for this class
     }
 
@@ -51,7 +51,7 @@ public class Client extends AbstractCmdlineClient {
      */
     public static AbstractCmdlineClient getInstance() {
         if (instance == null) {
-            instance = new Client();
+            instance = new TestexecClient();
         }
         return instance;
     }
@@ -225,6 +225,6 @@ public class Client extends AbstractCmdlineClient {
     
     /** {@inheritDoc} */
     public String getCmdlineClientExecName() {
-        return org.eclipse.jubula.app.cmd.i18n.Messages.ClientNameShort;
+        return org.eclipse.jubula.app.testexec.i18n.Messages.ClientNameShort;
     }
 }

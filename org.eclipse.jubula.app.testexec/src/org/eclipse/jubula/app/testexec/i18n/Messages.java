@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.app.cmd.i18n;
+package org.eclipse.jubula.app.testexec.i18n;
 
 import org.eclipse.osgi.util.NLS;
 
@@ -17,7 +17,7 @@ import org.eclipse.osgi.util.NLS;
  * @created 10.12.2010
  */
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "org.eclipse.jubula.app.cmd.i18n.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.eclipse.jubula.app.testexec.i18n.messages"; //$NON-NLS-1$
     
     public static String ConnectingToAUTAgent;
     public static String ConnectionToAUTAgentFailed;

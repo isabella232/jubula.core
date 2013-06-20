@@ -9,7 +9,7 @@
     <relativePath>../org.eclipse.jubula.releng.client</relativePath>
   </parent>
   <groupId>org.eclipse.jubula</groupId>
-  <artifactId>org.eclipse.jubula.app.cmd</artifactId>
+  <artifactId>org.eclipse.jubula.app.testexec</artifactId>
   <version>2.1.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>

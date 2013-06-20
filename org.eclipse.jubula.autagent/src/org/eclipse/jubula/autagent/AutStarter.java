@@ -422,7 +422,7 @@ public class AutStarter {
     }
     
     /**
-     * A thread waiting for termination of the autServerVM. Puts the exitcode
+     * A thread waiting for termination of the autServerVM. Puts the exit code
      * into m_autExitValue and handle the termination.
      *
      * @author BREDEX GmbH
@@ -430,7 +430,7 @@ public class AutStarter {
      */
     private static class AUTServerWatcher extends Thread {
 
-        /** lock for synchonizing on m_autServerVM */
+        /** lock for synchronizing on m_autServerVM */
         private final Object m_autServerLock = new Object();
         
         /** 
@@ -451,7 +451,7 @@ public class AutStarter {
          */
         private boolean m_isExpectingAUTServerStop;
 
-        /** whether the AUT was startet using the GDAgent mechanism */
+        /** whether the AUT was started using the GDAgent mechanism */
         private boolean m_isAgentSet;
 
         /** sends messages concerning the AUT Server */
@@ -462,7 +462,7 @@ public class AutStarter {
          * 
          * @param autServerProcess The process in which the AUT and AUT Server
          *                         are running.
-         * @param isAgentSet Whether the AUT was startet using the GDAgent 
+         * @param isAgentSet Whether the AUT was started using the GDAgent 
          *                   mechanism.
          * @param messenger Sends messages concerning the AUT Server.
          */

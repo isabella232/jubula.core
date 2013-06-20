@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.app.cmd;
+package org.eclipse.jubula.app.testexec;
 
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.AbstractLauncher;
@@ -22,6 +22,6 @@ public class Launcher extends AbstractLauncher {
      * {@inheritDoc}
      */
     protected AbstractCmdlineClient getAbstractCmdLineClient() {
-        return Client.getInstance();
+        return TestexecClient.getInstance();
     }
 }

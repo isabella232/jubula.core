@@ -14,7 +14,7 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="org.eclipse.jubula.app.cmd.Launcher">
+               class="org.eclipse.jubula.app.testexec.Launcher">
          </run>
       </application>
    </extension>

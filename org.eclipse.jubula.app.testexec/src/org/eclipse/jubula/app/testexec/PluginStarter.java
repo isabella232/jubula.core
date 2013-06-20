@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.app.cmd;
+package org.eclipse.jubula.app.testexec;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
@@ -19,7 +19,7 @@ import org.osgi.framework.BundleContext;
  */
 public class PluginStarter extends Plugin {
     /** plugin id */
-    public static final String PLUGIN_ID = "org.eclipse.jubula.app.cmd"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "org.eclipse.jubula.app.testexec"; //$NON-NLS-1$
 
     /** the shared instance*/
     private static PluginStarter plugin;
