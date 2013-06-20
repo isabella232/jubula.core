@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.jubula.tools.exception.GDConfigXmlException;
+import org.eclipse.jubula.tools.exception.ConfigXmlException;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
@@ -43,11 +43,11 @@ public class CompSystemProcessor implements IProcessor {
     /**
      * @param config
      *            file location information for the toolkits
-     * @throws GDConfigXmlException
+     * @throws ConfigXmlException
      *             If the configuration cannot be loaded
      */
     public CompSystemProcessor(ToolkitConfig config)
-        throws GDConfigXmlException {
+        throws ConfigXmlException {
         AbstractComponentBuilder builder = new AbstractComponentBuilder(config);
         //
         m_compSystem = builder.getCompSystem();
@@ -189,7 +189,7 @@ public class CompSystemProcessor implements IProcessor {
                         instanceof InvalidAction)) {
                     result = info;
                 }
-            } catch (GDConfigXmlException e) { // NOPMD by al on 3/19/07 2:09
+            } catch (ConfigXmlException e) { // NOPMD by al on 3/19/07 2:09
                 // PM
                 // OK because we're searching multiple
                 // comps for a single action

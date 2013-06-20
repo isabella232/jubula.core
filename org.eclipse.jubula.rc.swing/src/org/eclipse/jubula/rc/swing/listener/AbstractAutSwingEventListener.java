@@ -258,7 +258,6 @@ public abstract class AbstractAutSwingEventListener
      * @param source Component
      * @param implClass IImplementationClass
      * @param highlightColor highlight clolor
-     * @see AbstractGDAutSwingEventListener#highlightClicked(Object, Color)
      */
     protected void highlight(Component source, final Object implClass, 
         final Color highlightColor) {

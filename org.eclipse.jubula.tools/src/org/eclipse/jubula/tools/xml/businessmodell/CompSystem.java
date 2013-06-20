@@ -26,7 +26,7 @@ import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
-import org.eclipse.jubula.tools.exception.GDConfigXmlException;
+import org.eclipse.jubula.tools.exception.ConfigXmlException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -281,7 +281,7 @@ public class CompSystem {
                 final String msg = "multiple definition of component type " //$NON-NLS-1$
                         + component.getType();
                 log.error(msg);
-                throw new GDConfigXmlException(msg, 
+                throw new ConfigXmlException(msg, 
                     MessageIDs.E_MULTIPLE_COMPONENT);
             }
         }
@@ -592,7 +592,7 @@ public class CompSystem {
                     + " has no realizing concreteComponents";  //$NON-NLS-1$
                 if (ac.isVisible()) {
                     log.error("visible " + message); //$NON-NLS-1$
-                    throw new GDConfigXmlException("visible " + message, //$NON-NLS-1$
+                    throw new ConfigXmlException("visible " + message, //$NON-NLS-1$
                         MessageIDs.E_NO_ABSTRACT_COMPONENT); 
                 }
                 log.warn(message);
@@ -606,7 +606,7 @@ public class CompSystem {
                 final String msg = "Extending ConcreteComponent '" //$NON-NLS-1$
                     + cc.getType() + "' must not have a componentClass!"; //$NON-NLS-1$
                 log.error(msg);
-                throw new GDConfigXmlException(msg, 
+                throw new ConfigXmlException(msg, 
                     MessageIDs.E_GENERAL_COMPONENT_ERROR);
             }
         }

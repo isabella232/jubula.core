@@ -149,7 +149,7 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                         throw new InvocationTargetException(e);
                     } catch (ProjectDeletedException e) {
                         Plugin.stopLongRunning();
-                        PMExceptionHandler.handleGDProjectDeletedException();
+                        PMExceptionHandler.handleProjectDeletedException();
                         throw new InvocationTargetException(e);
                     }
                 }
@@ -163,7 +163,7 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
             } catch (ProjectDeletedException e) {
                 Plugin.stopLongRunning();
-                PMExceptionHandler.handleGDProjectDeletedException();    
+                PMExceptionHandler.handleProjectDeletedException();    
             } catch (JBVersionException e) {
                 // should not be occur, that a used toolkit of current project
                 // has a version conflict with installed Toolkit Plugin.

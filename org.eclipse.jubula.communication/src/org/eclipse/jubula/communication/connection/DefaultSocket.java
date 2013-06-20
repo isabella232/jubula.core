@@ -25,23 +25,21 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
 /**
  * A socket extension implementing the protocol for establishing a connection.
  * <br>
  * 
  * After creating the connections, wait a given period and reads the server
- * state from the inputstream.
+ * state from the input stream.
  * 
  * @author BREDEX GmbH
  * @created 20.09.2004
  */
-public class GDSocket extends Socket {
+public class DefaultSocket extends Socket {
     /** the logger */
-    private static Logger log = LoggerFactory.getLogger(GDSocket.class);
+    private static Logger log = LoggerFactory.getLogger(DefaultSocket.class);
     
-    /** flag wheter a connection could established or not */
+    /** flag whether a connection could established or not */
     private boolean m_connectionEstablished = false;
     
     /** the state send from the other site, see ConnectionState */
@@ -69,7 +67,7 @@ public class GDSocket extends Socket {
      * @throws JBVersionException
      *             in case of a version error between Client and AutStarter
      */
-    public GDSocket(InetAddress address, int port, long waitForServer) 
+    public DefaultSocket(InetAddress address, int port, long waitForServer) 
         throws IOException, JBVersionException {
         super(address, port);
     
@@ -130,7 +128,7 @@ public class GDSocket extends Socket {
     }
 
     /**
-     * waits the given time, read a byte from the inputstream and sets the
+     * waits the given time, read a byte from the input stream and sets the
      * <code>connected</code> flag.
      * 
      * @param waitForServer

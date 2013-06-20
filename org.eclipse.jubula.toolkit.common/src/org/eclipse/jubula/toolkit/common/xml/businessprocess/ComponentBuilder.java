@@ -28,7 +28,7 @@ import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
-import org.eclipse.jubula.tools.exception.GDConfigXmlException;
+import org.eclipse.jubula.tools.exception.ConfigXmlException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.utils.generator.AbstractComponentBuilder;
@@ -191,10 +191,10 @@ public class ComponentBuilder extends AbstractComponentBuilder {
                 initCompSystem();
             } catch (RuntimeException e) {
                 log.error(e.getMessage());
-                throw new GDConfigXmlException(e.getMessage(), 
+                throw new ConfigXmlException(e.getMessage(), 
                     MessageIDs.E_GENERAL_COMPONENT_ERROR);
             } catch (ToolkitPluginException tke) {
-                throw new GDConfigXmlException(tke.getMessage(), 
+                throw new ConfigXmlException(tke.getMessage(), 
                     MessageIDs.E_GENERAL_COMPONENT_ERROR);
             }
         }

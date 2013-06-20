@@ -136,7 +136,7 @@ public class ImportFileBP implements IProjectNameConflictResolver,
                                 .handlePMExceptionForMasterSession(pme);
                         } catch (ProjectDeletedException gdpde) {
                             PMExceptionHandler
-                                .handleGDProjectDeletedException();
+                                .handleProjectDeletedException();
                         }
                     }
                 
@@ -194,7 +194,7 @@ public class ImportFileBP implements IProjectNameConflictResolver,
                 .handlePMExceptionForMasterSession(pme);
         } catch (ProjectDeletedException gdpde) {
             PMExceptionHandler
-                .handleGDProjectDeletedException();
+                .handleProjectDeletedException();
         }
     }
     

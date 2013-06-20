@@ -631,7 +631,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
     }
 
     /**
-     * Shows the status of the project protection in GDProblemView.
+     * Shows the status of the project protection in Problems-View.
      */
     private void problemProtectedProjectLoaded() {
         m_localProblemsToShow.add(ProblemFactory
@@ -657,7 +657,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
     }
 
     /**
-     * Shows the existance of a project in GDProblemView.
+     * Shows the existence of a project in Problem-View.
      */
     private void problemNoTestSuiteExists() {
         m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
@@ -670,7 +670,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
     }
 
     /**
-     * called when a project lacks an Aut
+     * called when a project lacks an AUT
      */
     private void problemNoAutForProjectExists() {
         m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(

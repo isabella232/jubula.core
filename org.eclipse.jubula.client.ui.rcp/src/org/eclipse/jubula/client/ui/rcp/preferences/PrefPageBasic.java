@@ -212,7 +212,7 @@ public class PrefPageBasic extends PreferencePage implements
                 .getPreferenceStore().getBoolean(
                         Constants.SHOWCAPINFO_KEY));
         ControlDecorator.decorateInfo(m_capInfoCheckbox,  
-                "GDControlDecorator.ShowCapInfo", false); //$NON-NLS-1$
+                "ControlDecorator.ShowCapInfo", false); //$NON-NLS-1$
     }
     
     /**
@@ -227,7 +227,7 @@ public class PrefPageBasic extends PreferencePage implements
                 .getPreferenceStore().getBoolean(
                         Constants.SHOW_TRANSIENT_CHILDREN_KEY));
         ControlDecorator.decorateInfo(m_showTransientChildrenCheckBox,
-                "GDControlDecorator.showTransientChildrenCheckBox", false); //$NON-NLS-1$
+                "ControlDecorator.showTransientChildrenCheckBox", false); //$NON-NLS-1$
     }
     
     /**

@@ -635,7 +635,7 @@ public class ImportProjectsWizardPage extends WizardPage
         gridData.horizontalAlignment = SWT.LEFT;
         listLabel.setLayoutData(gridData);
         ControlDecorator.decorateInfo(listLabel, 
-                "GDControlDecorator.Import", false); //$NON-NLS-1$
+                "ControlDecorator.Import", false); //$NON-NLS-1$
         
         addImportList(composite);
         addListButtons(composite);

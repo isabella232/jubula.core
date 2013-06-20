@@ -61,7 +61,7 @@ import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
-import org.eclipse.jubula.tools.exception.GDConfigXmlException;
+import org.eclipse.jubula.tools.exception.ConfigXmlException;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -124,7 +124,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                         throw new InterruptedException();
                     }
 
-                } catch (GDConfigXmlException ce) {
+                } catch (ConfigXmlException ce) {
                     handleCapDataNotFound(ce);
                 }
                 ded.fireProjectLoadedListener(monitor);
@@ -282,12 +282,12 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                         PMExceptionHandler
                                 .handlePMExceptionForMasterSession(e1);
                     } catch (ProjectDeletedException e1) {
-                        PMExceptionHandler.handleGDProjectDeletedException();
+                        PMExceptionHandler.handleProjectDeletedException();
                     }
                     if (monitor.isCanceled()) {
                         throw new InterruptedException();
                     }
-                } catch (GDConfigXmlException ce) {
+                } catch (ConfigXmlException ce) {
                     if (prevProj == null) {
                         GeneralStorage.getInstance().reset();
                     } else {
@@ -344,7 +344,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
          * @param ce
          *            The exception that prevented the loading of project.
          */
-        private void handleCapDataNotFound(GDConfigXmlException ce) {
+        private void handleCapDataNotFound(ConfigXmlException ce) {
             ErrorHandlingUtil.createMessageDialog(
                     MessageIDs.E_LOAD_PROJECT_CONFIG_CONFLICT, null,
                     new String[] { ce.getMessage() });

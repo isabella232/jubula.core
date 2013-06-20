@@ -389,7 +389,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
             return editor;
         }
         // If a view is maximized, getActiveEditor() returns null.
-        // So lets ask all IGDEditors.
+        // So lets ask all IJBEditors.
         final IEditorReference[] editorReferences = activePage
             .getEditorReferences();
         for (IEditorReference edRef : editorReferences) {
@@ -674,27 +674,26 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     }
 
     /**
-     * @return the active gd editor or null if no gd editor is active
+     * @return the active Jubula editor or null if no Jubula editor is active
      */
-    public AbstractJBEditor getActiveGDEditor() {
+    public AbstractJBEditor getActiveJBEditor() {
         IWorkbenchPage activePage = getActivePage();
         if (activePage == null) { // during shutdown
             return null;
         }
         IEditorPart iEditorPart = getActiveEditor();
-        if (iEditorPart != null 
-                && iEditorPart instanceof AbstractJBEditor) {
-            return (AbstractJBEditor)iEditorPart;
+        if (iEditorPart != null && iEditorPart instanceof AbstractJBEditor) {
+            return (AbstractJBEditor) iEditorPart;
         }
-        return null;              
+        return null;
     }
     
     /**
      * @return the active TestCaseEditor or null if no TC editor is active
      */
     public AbstractTestCaseEditor getActiveTCEditor() {
-        if (getActiveGDEditor() instanceof AbstractTestCaseEditor) {
-            return (AbstractTestCaseEditor)getActiveGDEditor();
+        if (getActiveJBEditor() instanceof AbstractTestCaseEditor) {
+            return (AbstractTestCaseEditor)getActiveJBEditor();
         }
         return null;
     }

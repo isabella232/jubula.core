@@ -75,7 +75,7 @@ public class NewTestSuiteHandler extends AbstractNewHandler {
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
         } catch (ProjectDeletedException e) {
-            PMExceptionHandler.handleGDProjectDeletedException();
+            PMExceptionHandler.handleProjectDeletedException();
         }
     }
 

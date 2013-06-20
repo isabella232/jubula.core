@@ -475,7 +475,7 @@ public class SpecTestCaseGUIPropertySource
                 String valueString = (String)value;
                 if (!StringUtils.isEmpty(valueString)) {
                     AbstractJBEditor activeEditor = 
-                        Plugin.getDefault().getActiveGDEditor();
+                        Plugin.getDefault().getActiveJBEditor();
                     if (activeEditor == null) {
                         LOG.error(Messages
                                 .ActiveJubulaEditorReferenceNotNull);

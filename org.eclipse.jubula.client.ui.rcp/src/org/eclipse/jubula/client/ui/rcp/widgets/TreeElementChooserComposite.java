@@ -114,7 +114,7 @@ public class TreeElementChooserComposite extends Composite {
     /** Parents that have a child that is used */
     private Set<String> m_usedParents = new HashSet<String>();
     
-    /** the GDStateController */
+    /** the StateController */
     private final WidgetSelectionListener m_selectionListener = 
         new WidgetSelectionListener();
     

@@ -57,15 +57,17 @@ public class StatusLineContributionItem extends ContributionItem {
     /** height of the displayed text */
     private int m_heightHint = -1;
     /**
-     * @param id ID of the GDStatusLineContributionItem.
+     * @param id ID of the StatusLineContributionItem.
      */
     public StatusLineContributionItem(String id) {
         this(id, DEFAULT_CHAR_WIDTH);
     }
 
     /**
-     * @param id GDStatusLineContributionItem
-     * @param charWidth max. char width of the diplayed text.
+     * @param id
+     *            StatusLineContributionItem
+     * @param charWidth
+     *            max. char width of the displayed text.
      */
     public StatusLineContributionItem(String id, int charWidth) {
         super(id);

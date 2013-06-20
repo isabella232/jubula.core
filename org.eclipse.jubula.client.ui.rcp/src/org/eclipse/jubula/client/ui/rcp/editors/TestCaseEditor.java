@@ -170,7 +170,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
             } catch (ProjectDeletedException e) {
-                PMExceptionHandler.handleGDProjectDeletedException();
+                PMExceptionHandler.handleProjectDeletedException();
             } catch (IncompatibleTypeException ite) {
                 ErrorHandlingUtil.createMessageDialog(ite, 
                         ite.getErrorMessageParams(), null);
@@ -460,7 +460,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         Label headLine = new Label(headLineComposite, SWT.NONE);
         headLine.setText(Messages.TestCaseEditorEHAreaHeadline); 
         ControlDecorator.decorateInfo(headLine,
-                "GDControlDecorator.EventHandler", false); //$NON-NLS-1$
+                "ControlDecorator.EventHandler", false); //$NON-NLS-1$
         GridData ehTvGridData = new GridData();
         ehTvGridData.grabExcessHorizontalSpace = true;
         ehTvGridData.grabExcessVerticalSpace = true;

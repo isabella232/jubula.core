@@ -106,10 +106,10 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     private Button m_isReusableCheckbox;
     /** the m_isProtected checkbox for if the project is protected */
     private Button m_isProtectedCheckbox;
-    /** the GDStateController */
+    /** the StateController */
     private final WidgetModifyListener m_modifyListener = 
         new WidgetModifyListener();
-    /** the GDStateController */
+    /** the StateController */
     private final ToolkitComboSelectionListener m_toolkitComboListener = 
         new ToolkitComboSelectionListener();
     /** the old project name */
@@ -225,10 +225,10 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         createLabel(rightComposite, m_majorVersionNumber.toString() 
                 + StringConstants.DOT + m_minorVersionNumber);
         Label l = createLabel(rightComposite, StringConstants.EMPTY);
-        GridData textGD = new GridData();
-        textGD.grabExcessHorizontalSpace = true;
-        textGD.horizontalAlignment = GridData.FILL;
-        l.setLayoutData(textGD);
+        GridData layoutData = new GridData();
+        layoutData.grabExcessHorizontalSpace = true;
+        layoutData.horizontalAlignment = GridData.FILL;
+        l.setLayoutData(layoutData);
 
     }
 
@@ -243,16 +243,16 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
             Messages.ProjectPropertyPageProjectGuid), 
-            "GDControlDecorator.ProjectPropertiesGUID", false); //$NON-NLS-1$
+            "ControlDecorator.ProjectPropertiesGUID", false); //$NON-NLS-1$
         
         Text projectGuid = new Text(rightComposite, 
             SWT.READ_ONLY | SWT.BORDER);
         projectGuid.setText(m_projectGuid);
         Label l = createLabel(rightComposite, StringConstants.EMPTY);
-        GridData textGD = new GridData();
-        textGD.grabExcessHorizontalSpace = true;
-        textGD.horizontalAlignment = GridData.FILL;
-        l.setLayoutData(textGD);
+        GridData layoutData = new GridData();
+        layoutData.grabExcessHorizontalSpace = true;
+        layoutData.horizontalAlignment = GridData.FILL;
+        l.setLayoutData(layoutData);
 
     }
 
@@ -267,7 +267,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 GridData.FILL, true);
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
                 Messages.ProjectPropertyPageIsReusable),
-                "GDControlDecorator.NewProjectIsReusable", false); //$NON-NLS-1$
+                "ControlDecorator.NewProjectIsReusable", false); //$NON-NLS-1$
         m_isReusableCheckbox = new Button(rightComposite, SWT.CHECK);
 
         m_isReusableCheckbox.setSelection(m_oldIsReusable);
@@ -296,7 +296,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 GridData.FILL, true);
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
                 Messages.ProjectPropertyPageIsProtected),
-                "GDControlDecorator.NewProjectIsProtected", false); //$NON-NLS-1$
+                "ControlDecorator.NewProjectIsProtected", false); //$NON-NLS-1$
         m_isProtectedCheckbox = new Button(rightComposite, SWT.CHECK);
 
         m_isProtectedCheckbox.setSelection(m_oldIsProtected);
@@ -559,7 +559,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         } catch (PMException e) {
             ErrorHandlingUtil.createMessageDialog(e, null, null);
         } catch (ProjectDeletedException e) {
-            PMExceptionHandler.handleGDProjectDeletedException();
+            PMExceptionHandler.handleProjectDeletedException();
         } catch (IncompatibleTypeException ite) {
             ErrorHandlingUtil.createMessageDialog(
                     ite, ite.getErrorMessageParams(), null);

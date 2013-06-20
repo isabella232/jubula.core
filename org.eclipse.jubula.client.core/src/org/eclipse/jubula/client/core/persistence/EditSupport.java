@@ -367,7 +367,6 @@ public class EditSupport {
     /**
      * Persists the Parameter Names.
      * @throws PMException
-     * @throws GDProjectDeletedException
      */
     private void saveParamNames() throws PMException {
         m_paramMapper.persist(m_session, 

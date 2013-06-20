@@ -75,7 +75,7 @@ public class ListElementChooserComposite extends Composite {
     /** button content array */
     private Object[] m_buttonContents;
 
-    /** the GDStateController */
+    /** the StateController */
     private final WidgetSelectionListener m_selectionListener = 
         new WidgetSelectionListener();
 

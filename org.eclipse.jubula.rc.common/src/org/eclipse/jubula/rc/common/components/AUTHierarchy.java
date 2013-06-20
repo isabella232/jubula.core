@@ -195,7 +195,7 @@ public abstract class AUTHierarchy {
         String improvedName = buildImprovedName(componentTextArray);
         if (containerNameGenerated) {
             containerName = AUTServerConfiguration.getInstance()
-                .getGDComponentName(component);
+                .getComponentName(component);
         }
         String displayName = combineNames(containerName, containerNameGenerated,
                 improvedName);        

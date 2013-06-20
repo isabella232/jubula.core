@@ -1017,9 +1017,10 @@ public class ProjectPM extends PersistenceManager
     }
 
     /**
-     * @param proj the Project
+     * @param proj
+     *            the Project
      * @throws PMException
-     * @throws GDProjectDeletedException
+     * @throws ProjectDeletedException
      * @throws PMSaveException
      */
     private static void initBPs(IProjectPO proj) throws PMException,

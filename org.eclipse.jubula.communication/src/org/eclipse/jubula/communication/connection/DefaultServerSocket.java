@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * A serversocket implementing the protocol for establishing a connection. <br>
+ * A ServerSocket implementing the protocol for establishing a connection. <br>
  * 
  * The method send() sends a state code of the server. It's called immediately
  * after accept() by the AcceptingThread of the communicator.
@@ -31,18 +31,18 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 20.09.2004
  */
-public class AutStarterSocket extends ServerSocket {
-
+public class DefaultServerSocket extends ServerSocket {
     /** the logger */
-    private static Logger log = LoggerFactory.getLogger(AutStarterSocket.class);
+    private static Logger log = LoggerFactory.getLogger(
+            DefaultServerSocket.class);
     
     /**
      * @param port
-     *            the portnumber to use, zero means any free port
+     *            the port number to use, zero means any free port
      * @throws java.io.IOException
      *             from constructor of super class ServerSocket
      */
-    public AutStarterSocket(int port) throws IOException {
+    public DefaultServerSocket(int port) throws IOException {
         super(port);
     }
     

@@ -70,7 +70,7 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
     private Button m_upButton;
     /** the combo box for the project default language */
     private DirectCombo <Locale> m_defaultLangComboBox;
-    /** the GDStateController */
+    /** the StateController */
     private final WidgetSelectionListener m_selectionListener = 
         new WidgetSelectionListener();
     /** the composite with 2 ListBoxes */
@@ -94,7 +94,7 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
     protected Control createContents(Composite parent) {
         ControlDecorator.decorateInfo(createLabel(parent,
                 Messages.ProjectSettingWizardPageSelectLanguagesOfTD),
-                "GDControlDecorator.NewProjectProjectLanguage", false); //$NON-NLS-1$
+                "ControlDecorator.NewProjectProjectLanguage", false); //$NON-NLS-1$
         Composite composite = createComposite(parent, NUM_COLUMNS_1,
             SWT.FILL, SWT.FILL, true, true);
 

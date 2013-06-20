@@ -16,5 +16,5 @@ package org.eclipse.jubula.tools.constants;
  */
 public interface AutEnvironmentConstants {
     /** constant key for the generate component name environment variable */
-    public static final String GENERATE_COMPONENT_NAMES = "GD_GENERATE_NAMES_PROPERTY"; //$NON-NLS-1$
+    public static final String GENERATE_COMPONENT_NAMES = "TEST_GENERATE_NAMES_PROPERTY"; //$NON-NLS-1$
 }

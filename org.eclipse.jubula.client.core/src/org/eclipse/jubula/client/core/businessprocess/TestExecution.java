@@ -155,13 +155,13 @@ public class TestExecution {
      * Constant for the m_varStore of the last return value of the last
      * executed Action 
      */
-    private static final String LAST_ACTION_RETURN = "GD_LAR"; //$NON-NLS-1$
+    private static final String LAST_ACTION_RETURN = "TEST_LAR"; //$NON-NLS-1$
     
     /** 
      * Constant for the m_varStore of the last return value of the current
      * data set number
      */
-    private static final String CURRENT_DATASET_NUMBER = "GD_CDN"; //$NON-NLS-1$
+    private static final String CURRENT_DATASET_NUMBER = "TEST_CDN"; //$NON-NLS-1$
     
     /** Singleton Instance of TestExecution */
     private static TestExecution instance = null;

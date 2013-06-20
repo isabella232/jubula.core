@@ -95,7 +95,7 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
                 GeneralStorage.getInstance().reloadMasterSession(
                         new NullProgressMonitor());
             } catch (ProjectDeletedException e) {
-                PMExceptionHandler.handleGDProjectDeletedException();
+                PMExceptionHandler.handleProjectDeletedException();
             }
         }
 
@@ -190,7 +190,7 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
         } catch (ProjectDeletedException e) {
-            PMExceptionHandler.handleGDProjectDeletedException();
+            PMExceptionHandler.handleProjectDeletedException();
         }
         return new ExtractionReturn();
     }

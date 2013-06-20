@@ -166,7 +166,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
                             referencedProject,
                         DataState.StructureModified, UpdateState.all));
             } catch (ProjectDeletedException e) {
-                PMExceptionHandler.handleGDProjectDeletedException();
+                PMExceptionHandler.handleProjectDeletedException();
             } catch (JBException e) {
                 ErrorHandlingUtil.createMessageDialog(e, null, null);
             } finally {

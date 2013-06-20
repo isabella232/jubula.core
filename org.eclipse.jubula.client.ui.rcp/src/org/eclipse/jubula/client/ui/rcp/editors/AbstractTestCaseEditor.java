@@ -352,7 +352,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 PMExceptionHandler.handlePMExceptionForEditor(e, this);
             }
         } catch (ProjectDeletedException e) {
-            PMExceptionHandler.handleGDProjectDeletedException();
+            PMExceptionHandler.handleProjectDeletedException();
         } finally {
             monitor.done();
         }

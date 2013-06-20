@@ -27,12 +27,12 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @author BREDEX GmbH
  * @created Mar 26, 2008
  */
-public class GDAgent {
+public class RCAgent {
 
     /**
      * hidden constructor
      */
-    private GDAgent() {
+    private RCAgent() {
         super();
     }
     

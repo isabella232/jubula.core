@@ -280,7 +280,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
         } catch (ProjectDeletedException e) {
-            PMExceptionHandler.handleGDProjectDeletedException();
+            PMExceptionHandler.handleProjectDeletedException();
         } catch (InterruptedException ie) {
             throw ie;
         }

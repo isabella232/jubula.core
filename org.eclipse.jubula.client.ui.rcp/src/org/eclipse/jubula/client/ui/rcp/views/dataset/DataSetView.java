@@ -57,7 +57,7 @@ public class DataSetView extends PageBookView
         MessagePage page = new MessagePage();
         initPage(page);
         page.createControl(book);
-        page.setMessage(Messages.GDDataSetViewNoDataSetInfo);
+        page.setMessage(Messages.DataSetViewNoDataSetInfo);
         return page;
     }
 

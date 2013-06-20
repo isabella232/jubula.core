@@ -29,16 +29,13 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 04.08.2004
  */
 public class StartAUTServerMessage extends Message {
-    /** Static version */
-    private static final double VERSION = 1.1;
-
     /** where to find the JubulaClient, inetAdress conform */
     private String m_client;
 
-    /** port the GDClient listens to */
+    /** port the ITE listens to */
     private int m_port;
 
-    /** Timeout for the AUTServer to wait for a confirmation for a sended event */
+    /** Timeout for the AUTServer to wait for a confirmation for a sent event */
     private long m_eventConfirmTimeOut;
 
     /** Language to start AUT with */
@@ -47,7 +44,7 @@ public class StartAUTServerMessage extends Message {
     /** the actual autToolKit of the project as String */
     private String m_autToolKit;
 
-    /** The Map with the aut configuration */
+    /** The Map with the AUT configuration */
     private Map m_autConfiguration = null;
 
     /** flag to indicate whether technical names should be generated */

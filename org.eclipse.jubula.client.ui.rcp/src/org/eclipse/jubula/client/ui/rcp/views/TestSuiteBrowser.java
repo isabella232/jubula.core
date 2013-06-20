@@ -354,7 +354,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
     
     /**
      * @return the EditSupport for the current active editor. This methods
-     * throws a GDFatalExecption if called with no IGDEditor subclass active.
+     * throws a JBFatalExecption if called with no IJBEditor subclass active.
      */
     private EditSupport getEditSupport() {
         TestJobEditor edit = getTJEditor();            

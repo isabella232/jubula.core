@@ -70,7 +70,7 @@ public class RefreshProjectHandler extends AbstractProjectHandler {
                 GeneralStorage.getInstance().reloadMasterSession(
                         monitor);
             } catch (ProjectDeletedException e) {
-                PMExceptionHandler.handleGDProjectDeletedException();
+                PMExceptionHandler.handleProjectDeletedException();
             } finally {
                 ProgressMonitorTracker.getInstance().setProgressMonitor(null);
                 monitor.done();

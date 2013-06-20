@@ -25,10 +25,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.communication.connection.AutStarterSocket;
+import org.eclipse.jubula.communication.connection.DefaultServerSocket;
 import org.eclipse.jubula.communication.connection.Connection;
 import org.eclipse.jubula.communication.connection.ConnectionState;
-import org.eclipse.jubula.communication.connection.GDSocket;
+import org.eclipse.jubula.communication.connection.DefaultSocket;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.listener.IErrorHandler;
 import org.eclipse.jubula.communication.listener.IMessageHandler;
@@ -102,7 +102,7 @@ public class Communicator {
     private ClassLoader m_classLoader = null;
 
     /** the server socket (this instance will act as a server) */
-    private AutStarterSocket m_serverSocket = null;
+    private DefaultServerSocket m_serverSocket = null;
 
     /** the local port, this instance uses, regardless which constructor was called */
     private int m_localPort;
@@ -236,7 +236,7 @@ public class Communicator {
             "no class loader for creation of command " + //$NON-NLS-1$
             "object available"); //$NON-NLS-1$
         // create a server socket
-        m_serverSocket = new AutStarterSocket(port);
+        m_serverSocket = new DefaultServerSocket(port);
         m_serverSocket.setSoTimeout(0);
 
         // store the opened socket to LOCAL Port
@@ -302,7 +302,7 @@ public class Communicator {
         } else if (m_inetAddress != null) {
             // it's a client
             try {
-                GDSocket socket = new GDSocket(m_inetAddress, m_port,
+                DefaultSocket socket = new DefaultSocket(m_inetAddress, m_port,
                         m_initConnectionTimeout * THOUSAND); 
                 if (socket.isConnectionEstablished()) {
                     setup(socket);
@@ -743,7 +743,7 @@ public class Communicator {
      * setting the up the connection with the given socket
      * @param socket the socket, gained by connecting (Socket.Constructor)
      */
-    private void setup(GDSocket socket) throws IOException {
+    private void setup(DefaultSocket socket) throws IOException {
         m_connection = new Connection(socket);
         setup(m_connection, socket);
     }
@@ -1019,7 +1019,7 @@ public class Communicator {
                                     Connection.IO_STREAM_ENCODING));
 
                     // find out what kind of client initiated the connection
-                    String response = AutStarterSocket.requestClientType(
+                    String response = DefaultServerSocket.requestClientType(
                             socket, reader, 
                             DEFAULT_CONNECTING_TIMEOUT * THOUSAND);
 
@@ -1033,7 +1033,7 @@ public class Communicator {
                             // use default initialization strategy
                             int nextState = 
                                 getConnectionManager().getNextState();
-                            AutStarterSocket.send(socket, nextState);
+                            DefaultServerSocket.send(socket, nextState);
                             if (nextState == ConnectionState.SERVER_OK) {
                                 setup(socket, reader);
                                 // notify the connection manager

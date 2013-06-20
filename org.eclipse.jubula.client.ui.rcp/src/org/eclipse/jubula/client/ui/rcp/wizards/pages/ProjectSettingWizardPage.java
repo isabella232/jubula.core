@@ -151,7 +151,7 @@ public class ProjectSettingWizardPage extends WizardPage {
         separator(composite, NUM_COLUMNS_1);  
         ControlDecorator.decorateInfo(createLabel(composite, 
                 Messages.ProjectSettingWizardPageSelectLanguagesOfTD),
-                 "GDControlDecorator.NewProjectProjectLanguage", //$NON-NLS-1$ 
+                 "ControlDecorator.NewProjectProjectLanguage", //$NON-NLS-1$ 
                 false); 
         Composite innerComposite = new Composite(composite, SWT.NONE);
         GridLayout compositeLayout = new GridLayout();
@@ -237,7 +237,7 @@ public class ProjectSettingWizardPage extends WizardPage {
             GridData.FILL, true);
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
             Messages.ProjectPropertyPageIsReusable),
-            "GDControlDecorator.NewProjectIsReusable", false);  //$NON-NLS-1$
+            "ControlDecorator.NewProjectIsReusable", false);  //$NON-NLS-1$
         m_projectReusabilityCheckbox = new Button(rightComposite, SWT.CHECK);
         m_projectReusabilityCheckbox.setSelection(false);
     }
@@ -254,7 +254,7 @@ public class ProjectSettingWizardPage extends WizardPage {
             GridData.FILL, true);
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
             Messages.ProjectPropertyPageIsProtected),
-            "GDControlDecorator.NewProjectIsProtected", false);  //$NON-NLS-1$
+            "ControlDecorator.NewProjectIsProtected", false);  //$NON-NLS-1$
         m_projectProtectionCheckbox = new Button(rightComposite, SWT.CHECK);
         m_projectProtectionCheckbox.setSelection(false);
     }
@@ -287,7 +287,7 @@ public class ProjectSettingWizardPage extends WizardPage {
         rightComposite.setLayout(gridLayout);
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
                 Messages.ProjectSettingWizardPageAutToolKitLabel), 
-                 "GDControlDecorator.NewProjectToolkit", false); //$NON-NLS-1$
+                 "ControlDecorator.NewProjectToolkit", false); //$NON-NLS-1$
         m_autToolKitComboBox = ControlFactory.createToolkitCombo(
             rightComposite); 
         GridData comboGridData = new GridData();
@@ -411,7 +411,7 @@ public class ProjectSettingWizardPage extends WizardPage {
                 GridData.END, true);
         ControlDecorator.decorateInfo(createLabel(leftComposite, 
                 Messages.ProjectSettingWizardPageLanguageLabel), 
-                "GDControlDecorator.NewProjectDefaultLanguage", //$NON-NLS-1$ 
+                "ControlDecorator.NewProjectDefaultLanguage", //$NON-NLS-1$ 
                 false);
         m_defaultLangComboBox = new DirectCombo<Locale>(middleComposite, 
                 SWT.READ_ONLY, new ArrayList<Locale>(), 

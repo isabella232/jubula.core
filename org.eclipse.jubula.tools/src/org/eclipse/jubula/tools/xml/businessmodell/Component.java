@@ -18,7 +18,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.eclipse.jubula.tools.exception.GDConfigXmlException;
+import org.eclipse.jubula.tools.exception.ConfigXmlException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -230,7 +230,7 @@ public abstract class Component {
                     + ": method " + present.getMethod()  //$NON-NLS-1$
                     + " vs. method " + action.getMethod(); //$NON-NLS-1$
                 log.error(msg);
-                throw new GDConfigXmlException(msg, 
+                throw new ConfigXmlException(msg, 
                     MessageIDs.E_DUPLICATE_ACTION); 
             }
         }
@@ -288,7 +288,7 @@ public abstract class Component {
         sb.append(") does not exist."); //$NON-NLS-1$
         String message = sb.toString();
         log.error(message);
-        throw new GDConfigXmlException(message, MessageIDs.E_NO_ACTION);
+        throw new ConfigXmlException(message, MessageIDs.E_NO_ACTION);
     }
     
 

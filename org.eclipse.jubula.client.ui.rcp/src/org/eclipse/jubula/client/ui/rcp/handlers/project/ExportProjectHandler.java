@@ -92,7 +92,7 @@ public class ExportProjectHandler extends AbstractProjectHandler {
                 } catch (final PMException e) {
                     ErrorHandlingUtil.createMessageDialog(e, null, null);
                 } catch (final ProjectDeletedException e) {
-                    PMExceptionHandler.handleGDProjectDeletedException();
+                    PMExceptionHandler.handleProjectDeletedException();
                 } finally {
                     monitor.done();
                     Plugin.stopLongRunning();

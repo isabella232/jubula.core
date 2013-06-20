@@ -284,7 +284,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
          * {@inheritDoc}
          */
         public int hashCode(Object element) {
-            // ignore GDPropertyDescriptor as this leads to incorrect behaviour
+            // ignore JBPropertyDescriptor as this leads to incorrect behavior
             // e.g. when deleting params from a spec tc via edit parameters
             if (element instanceof IPropertyDescriptor 
                     && !(element instanceof JBPropertyDescriptor)) {
@@ -306,7 +306,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
          * {@inheritDoc}
          */
         public boolean equals(Object a, Object b) {
-            // ignore GDPropertyDescriptor as this leads to incorrect behaviour
+            // ignore JBPropertyDescriptor as this leads to incorrect behavior
             // e.g. when deleting params from a spec tc via edit parameters
             if (a instanceof IPropertyDescriptor
                     && b instanceof IPropertyDescriptor
@@ -335,14 +335,14 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
     private JBContextProvider m_contextProvider = 
         new JBContextProvider();
     /** helpListener of this view */
-    private GDHelpListener m_helpListener = new GDHelpListener();
+    private ContextHelpListener m_helpListener = new ContextHelpListener();
     
     /** the Component Name mapper to use when this page is active */
     private IComponentNameMapper m_compMapper;
 
     /** current editor */
     private AbstractJBEditor m_currentEditor = Plugin.getDefault()
-            .getActiveGDEditor();
+            .getActiveJBEditor();
 
     /** the focus manager for the tree viewer */
     private TreeViewerFocusCellManager m_focusCellManager;
@@ -1150,10 +1150,8 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
      * @author BREDEX GmbH
      * @created Jan 22, 2007
      */
-    private final class GDHelpListener implements HelpListener {
-        /**
-         * {@inheritDoc}
-         */
+    private final class ContextHelpListener implements HelpListener {
+        /** {@inheritDoc} */
         public void helpRequested(HelpEvent e) {
             IContext context = m_contextProvider.getContext(
                     m_treeViewer.getControl().getData(ContextHelpIds.HELP)); 

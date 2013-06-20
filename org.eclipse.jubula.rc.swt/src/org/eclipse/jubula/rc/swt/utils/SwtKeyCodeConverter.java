@@ -29,7 +29,7 @@ public class SwtKeyCodeConverter {
     private static AutServerLogger log = 
         new AutServerLogger(SwtKeyCodeConverter.class);
 
-    /** Map for translating keycodes from GD 
+    /** Map for translating keycodes from the ITE 
      * (see Reference Manual -> Application -> Key Stroke) to SWT key char
      * (see org.eclipse.swt.events.KeyEvent). Entities should be added to this 
      * map, and not KEY_MAP, if (and only if) the corresponding KeyEvent needs
@@ -43,7 +43,7 @@ public class SwtKeyCodeConverter {
         CHAR_MAP.put("SPACE", new Character(' '));  //$NON-NLS-1$
     }
     
-    /** Map for translating keycodes from GD 
+    /** Map for translating keycodes from the ITE  
      * (see Reference Manual -> Application -> Key Stroke) to SWT key code
      * (see org.eclipse.swt.SWT).
      * String <=> Integer
@@ -91,7 +91,7 @@ public class SwtKeyCodeConverter {
         KEY_MAP.put("NUMPAD_9", new Integer(SWT.KEYPAD_9));  //$NON-NLS-1$
     }
     
-    /** Map for translating modifiers from GD 
+    /** Map for translating modifiers from the ITE 
      * (see Reference Manual -> Application -> Key Stroke) to SWT key code
      * (see org.eclipse.swt.SWT).
      * String <=> Integer
@@ -105,7 +105,7 @@ public class SwtKeyCodeConverter {
     }
     
     
-    /** Map for translating keycodes from swt keyevents to GD 
+    /** Map for translating keycodes from SWT keyevents to the ITE 
      *  Integer <=> String
      */
     private static final Map KEYCODE_MAP = new HashMap();
@@ -167,7 +167,7 @@ public class SwtKeyCodeConverter {
 
     }
     
-    /** Map for translating modifiers from swt keyevents to GD 
+    /** Map for translating modifiers from swt keyevents to the ITE 
      *  Integer <=> String
      */
     private static final Map MODIFIER_MAP = new HashMap();

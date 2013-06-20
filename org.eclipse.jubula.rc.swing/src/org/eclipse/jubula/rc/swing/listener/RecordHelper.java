@@ -64,13 +64,13 @@ import org.eclipse.jubula.tools.xml.businessmodell.Action;
  * @created 23.08.2004
  */
 public class RecordHelper {    
-    
     /** The logging. */
     private static AutServerLogger log = 
         new AutServerLogger(RecordHelper.class);
     
-    /** Map for translating keycodes from keyevents to GD 
-     *  Integer <=> String
+    /** 
+     * Map for translating keycodes from keyevents to the ITE 
+     * Integer <=> String
      */
     private static final Map KEYCODE_MAP = new HashMap();
 
@@ -134,7 +134,7 @@ public class RecordHelper {
         KEYCODE_MAP.put(new Integer(KeyEvent.VK_CAPS_LOCK), new String("CAPS_LOCK"));  //$NON-NLS-1$
     }
     
-    /** Map for translating modifiers from keyevents to GD 
+    /** Map for translating modifiers from keyevents to the ITE 
      *  Integer <=> String
      */
     private static final Map MODIFIER_MAP = new HashMap();

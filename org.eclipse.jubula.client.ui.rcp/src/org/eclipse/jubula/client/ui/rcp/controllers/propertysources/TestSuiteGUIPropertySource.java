@@ -213,7 +213,7 @@ public class TestSuiteGUIPropertySource
      * @return The work version of the original object.
      */
     IPersistentObject getWorkVersion(IPersistentObject object) {
-        AbstractJBEditor edit = Plugin.getDefault().getActiveGDEditor();
+        AbstractJBEditor edit = Plugin.getDefault().getActiveJBEditor();
         EditSupport editSupport = edit.getEditorHelper().getEditSupport();
         IPersistentObject objectW = null;
         try {

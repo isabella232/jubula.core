@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.eclipse.jubula.tools.exception.GDConfigXmlException;
+import org.eclipse.jubula.tools.exception.ConfigXmlException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.utils.ClassPathHacker;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
@@ -94,9 +94,9 @@ public class AbstractComponentBuilder {
     /**
      * Finishes the ComponentSystem.<br>
      * Call this after all Toolkits are read in.
-     * @throws GDConfigXmlException in case of error creating CompSystem.
+     * @throws ConfigXmlException in case of error creating CompSystem.
      */
-    protected void postProcess() throws GDConfigXmlException {
+    protected void postProcess() throws ConfigXmlException {
         m_compSystem.postProcess();
     }
     

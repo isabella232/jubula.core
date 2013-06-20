@@ -172,7 +172,7 @@ public final class EditParametersDialog extends AbstractEditParametersDialog {
             
         });
         ControlDecorator.decorateInfo(m_lockInterfaceCheckBox, 
-                "GDControlDecorator.EditParameterLock", false); //$NON-NLS-1$
+                "ControlDecorator.EditParameterLock", false); //$NON-NLS-1$
     }
 
     /**

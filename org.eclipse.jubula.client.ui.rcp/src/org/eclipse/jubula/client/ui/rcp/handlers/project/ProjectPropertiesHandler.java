@@ -111,7 +111,7 @@ public class ProjectPropertiesHandler extends AbstractProjectHandler {
         } catch (PMObjectDeletedException e) { 
             // this implies that the project was deleted since the properties
             // are always available
-            PMExceptionHandler.handleGDProjectDeletedException();            
+            PMExceptionHandler.handleProjectDeletedException();            
         } catch (PMException e) {
             ErrorHandlingUtil.createMessageDialog(e, null, null);
         }

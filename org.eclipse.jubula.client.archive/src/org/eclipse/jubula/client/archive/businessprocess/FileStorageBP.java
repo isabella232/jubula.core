@@ -77,7 +77,7 @@ import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.GDConfigXmlException;
+import org.eclipse.jubula.tools.exception.ConfigXmlException;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
@@ -198,7 +198,7 @@ public class FileStorageBP {
                 showFinishedReadingProjects(m_console);
             } catch (final PMReadException e) {
                 handlePMReadException(e, m_fileURLs);
-            } catch (final GDConfigXmlException ce) {
+            } catch (final ConfigXmlException ce) {
                 handleCapDataNotFound(ce);
             } finally {
                 monitor.done();
@@ -932,7 +932,7 @@ public class FileStorageBP {
                             m_projectToCompCacheMap, m_elements, m_console)
                         .run(monitor);
                 }
-            } catch (final GDConfigXmlException ce) {
+            } catch (final ConfigXmlException ce) {
                 handleCapDataNotFound(ce);
             } finally {
                 NodePM.getInstance().setUseCache(false);
@@ -1724,7 +1724,7 @@ public class FileStorageBP {
      * @param ce The exception that prevented the import of the 
      *           project.
      */
-    private static void handleCapDataNotFound(final GDConfigXmlException ce) {
+    private static void handleCapDataNotFound(final ConfigXmlException ce) {
 
         ErrorMessagePresenter.getPresenter().showErrorMessage(
                 MessageIDs.E_IMPORT_PROJECT_CONFIG_CONFLICT, 

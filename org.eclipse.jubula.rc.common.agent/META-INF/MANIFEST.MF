@@ -5,7 +5,7 @@ Bundle-Name: Jubula RC Java Agent
 Bundle-SymbolicName: org.eclipse.jubula.rc.common.agent
 Bundle-Version: 2.1.0.qualifier
 Bundle-Vendor: Eclipse Jubula
-Premain-Class: org.eclipse.jubula.rc.common.agent.GDAgent
+Premain-Class: org.eclipse.jubula.rc.common.agent.RCAgent
 Class-Path: lib/org.eclipse.jubula.rc.common.jar
 Export-Package: org.eclipse.jubula.rc.common.agent
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

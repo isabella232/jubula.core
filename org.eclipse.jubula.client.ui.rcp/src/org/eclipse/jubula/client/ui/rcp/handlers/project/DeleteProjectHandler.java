@@ -164,7 +164,7 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
                 return;
             } catch (ProjectDeletedException e) {
-                PMExceptionHandler.handleGDProjectDeletedException();
+                PMExceptionHandler.handleProjectDeletedException();
                 return;
             } catch (JBException e) {
                 ErrorHandlingUtil.createMessageDialog(e, null, null);

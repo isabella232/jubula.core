@@ -180,7 +180,7 @@ public class ObservationPreferencePage extends PreferencePage implements
         data2.horizontalSpan = 4;
         dialogLabel.setLayoutData(data2);        
         ControlDecorator.decorateInfo(dialogLabel,  
-                "GDControlDecorator.ObervationConsole", false); //$NON-NLS-1$
+                "ControlDecorator.ObervationConsole", false); //$NON-NLS-1$
               
         m_showDialog = new Button(composite, SWT.CHECK);
         m_showDialog.setText(Messages.ObservationPreferencePageShowDialog);
@@ -200,7 +200,7 @@ public class ObservationPreferencePage extends PreferencePage implements
         data3.horizontalSpan = 4;
         triggerLabel.setLayoutData(data3);
         ControlDecorator.decorateInfo(triggerLabel, 
-                "GDControlDecorator.ObservationTriggerReplaceText", false); //$NON-NLS-1$
+                "ControlDecorator.ObservationTriggerReplaceText", false); //$NON-NLS-1$
         
         Set<String> values = new HashSet<String>();
         m_singleLineTrigger = new ModifiableTriggerList(composite, SWT.NONE, 

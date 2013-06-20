@@ -192,7 +192,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     /** page index of the table view */
     private static final int TABLE_PAGE_IDX = 2;
     
-    /** the object responsible for handling GDEditor-related tasks */
+    /** the object responsible for handling JBEditor-related tasks */
     private JBEditorHelper m_editorHelper;
     
     /** handles the business process operations for this editor */
@@ -1253,7 +1253,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             PMExceptionHandler.handlePMExceptionForEditor(e, this);
             errorOccured = true;
         } catch (ProjectDeletedException e) {
-            PMExceptionHandler.handleGDProjectDeletedException();
+            PMExceptionHandler.handleProjectDeletedException();
             errorOccured = true;
         } catch (IncompatibleTypeException ite) {
             ErrorHandlingUtil.createMessageDialog(

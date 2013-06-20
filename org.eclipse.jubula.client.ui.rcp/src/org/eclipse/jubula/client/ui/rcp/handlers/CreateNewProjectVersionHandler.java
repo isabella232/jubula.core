@@ -138,7 +138,7 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
                 log.error(Messages.ErrorOccurredWhileCreatingNewProjectVersion,
                     e);
             } catch (ProjectDeletedException e) {
-                PMExceptionHandler.handleGDProjectDeletedException();
+                PMExceptionHandler.handleProjectDeletedException();
             } catch (JBVersionException e) {
                 // should not be occur
                 log.error(Messages.
@@ -161,7 +161,7 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
          * @throws PMException
          * @throws InterruptedException
          * @throws PMReadException
-         * @throws GDVersionException
+         * @throws JBVersionException
          * @throws ConverterException
          */
         private void createNewVersion(IProgressMonitor monitor,
@@ -215,7 +215,7 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
             } catch (ProjectDeletedException e) {
                 Plugin.stopLongRunning();
-                PMExceptionHandler.handleGDProjectDeletedException();
+                PMExceptionHandler.handleProjectDeletedException();
             }
         }
         
@@ -308,7 +308,7 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
                 GeneralStorage.getInstance().getProject().getGuid());
         } catch (ProjectDeletedException e) {
             PMExceptionHandler
-                .handleGDProjectDeletedException();
+                .handleProjectDeletedException();
             return null;
         } catch (JBException e) {
             ErrorHandlingUtil.createMessageDialog(e, null, null);

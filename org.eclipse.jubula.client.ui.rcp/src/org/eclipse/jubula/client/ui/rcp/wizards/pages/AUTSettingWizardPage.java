@@ -178,7 +178,7 @@ public class AUTSettingWizardPage extends WizardPage {
         descriptionLabel.setText(
                 Messages.AUTSettingWizardPageSelectLanguagesOfTD);
         ControlDecorator.decorateInfo(descriptionLabel, 
-                "GDControlDecorator.NewProjectAUTLanguage", false);
+                "ControlDecorator.NewProjectAUTLanguage", false);
         m_chooseLists = new ListElementChooserComposite(
             innerComposite, 
             Messages.AUTSettingWizardPageUpperLabel,
@@ -374,7 +374,7 @@ public class AUTSettingWizardPage extends WizardPage {
         newLabel(rightComposite, StringConstants.EMPTY);
         ControlDecorator.decorateInfo(newLabel(leftComposite, 
                 Messages.AUTSettingWizardPageToolkit), 
-                "GDControlDecorator.NewProjectAUTToolkit", false);
+                "ControlDecorator.NewProjectAUTToolkit", false);
         try {
             m_autToolKitComboBox = ControlFactory.createAutToolkitCombo(
                 rightComposite, m_project, m_autMain.getToolkit());
@@ -392,8 +392,6 @@ public class AUTSettingWizardPage extends WizardPage {
         }
         m_autToolKitComboBox.addSelectionListener(m_selectionListener);
         m_autToolKitComboBox.setLayoutData(gridData);
-        /*GDControlDecorator.decorateInfo(m_autToolKitComboBox, SWT.LEFT, 
-                "TEST", false);*/
     }
 
     /**

@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Category for organizing Object Mapping Associations. Maintains separate
- * child lists for sucategories and Associations.
+ * child lists for subcategories and Associations.
  *
  * @author BREDEX GmbH
  * @created Feb 18, 2009

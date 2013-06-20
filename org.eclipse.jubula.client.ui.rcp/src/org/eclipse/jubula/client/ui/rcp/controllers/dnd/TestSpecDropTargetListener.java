@@ -58,7 +58,7 @@ public class TestSpecDropTargetListener extends ViewerDropAdapter {
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
         } catch (ProjectDeletedException e) {
-            PMExceptionHandler.handleGDProjectDeletedException();
+            PMExceptionHandler.handleProjectDeletedException();
         } finally {
             LocalSelectionTransfer.getInstance().setSelection(null);
         }

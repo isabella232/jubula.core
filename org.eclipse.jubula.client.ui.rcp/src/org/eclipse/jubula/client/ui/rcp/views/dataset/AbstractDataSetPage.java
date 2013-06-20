@@ -496,15 +496,15 @@ public abstract class AbstractDataSetPage extends Page
      */
     private void createComboLabels(Composite parent) {
         Label paramLabel = new Label(parent, SWT.NONE);
-        paramLabel.setText(Messages.GDDataSetViewParameter);
+        paramLabel.setText(Messages.DataSetViewParameter);
         paramLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.ParamLabel"); //$NON-NLS-1$
         
         Label dataSetLabel = new Label(parent, SWT.NONE);
-        dataSetLabel.setText(Messages.GDDataSetViewDataSet);
+        dataSetLabel.setText(Messages.DataSetViewDataSet);
         dataSetLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.DataSetLabel"); //$NON-NLS-1$
         
         Label languageLabel = new Label(parent, SWT.NONE);
-        languageLabel.setText(Messages.GDDataSetViewLanguage);
+        languageLabel.setText(Messages.DataSetViewLanguage);
         languageLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.DataSetLabel"); //$NON-NLS-1$
     }
     
@@ -526,7 +526,7 @@ public abstract class AbstractDataSetPage extends Page
         // Create and configure the "Insert" button
         setInsertButton(new Button(parent, SWT.PUSH | SWT.CENTER));
         getInsertButton().setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DataSetView.InsertButton"); //$NON-NLS-1$
-        getInsertButton().setText(Messages.GDDataSetViewInsert);
+        getInsertButton().setText(Messages.DataSetViewInsert);
         gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 80;
         getInsertButton().setLayoutData(gridData);
@@ -808,7 +808,7 @@ public abstract class AbstractDataSetPage extends Page
         final Table table = getTable();
         // create column for data set numer
         TableColumn dataSetNumberCol = new TableColumn(table, SWT.NONE);
-        dataSetNumberCol.setText(Messages.GDDataSetViewControllerDataSetNumber);
+        dataSetNumberCol.setText(Messages.DataSetViewControllerDataSetNumber);
         dataSetNumberCol.setWidth(DATASET_NUMBER_COLUMNWIDTH);
         return dataSetNumberCol.getText();
     }
@@ -822,7 +822,7 @@ public abstract class AbstractDataSetPage extends Page
         final Table table = getTable();
         // create column for data set numer
         TableColumn paramCol = new TableColumn(table, SWT.NONE);
-        paramCol.setText(Messages.GDDataSetViewParameter);
+        paramCol.setText(Messages.DataSetViewParameter);
         paramCol.pack();
         return paramCol.getText();
     }

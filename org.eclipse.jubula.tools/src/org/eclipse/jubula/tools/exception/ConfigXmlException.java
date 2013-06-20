@@ -11,22 +11,21 @@
 package org.eclipse.jubula.tools.exception;
 
 /**
+ * exceptions concerning any problem with XML configuration files
  * 
- * exceptions concerning any problem with guidancerConfig.xml
  * @author BREDEX GmbH
  * @created 29.11.2005
- *
  */
-public class GDConfigXmlException extends JBFatalAbortException {
-    
-    /** 
+public class ConfigXmlException extends JBFatalAbortException {
+    /**
      * public constructor
-     * @param message the detailed message
-     * @param id An ErrorMessage.ID.
-     * {@inheritDoc}
+     * 
+     * @param message
+     *            the detailed message
+     * @param id
+     *            An ErrorMessage.ID. {@inheritDoc}
      */
-    public GDConfigXmlException(String message, Integer id) {
+    public ConfigXmlException(String message, Integer id) {
         super(message, id);
     }
-
 }

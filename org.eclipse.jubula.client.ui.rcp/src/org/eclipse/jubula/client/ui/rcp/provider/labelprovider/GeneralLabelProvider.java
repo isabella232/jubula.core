@@ -94,7 +94,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * <code>UNNAMED_NODE</code>
      */
     private static final String UNNAMED_NODE = 
-            Messages.GeneralGDLabelProviderUnnamedNode;
+            Messages.GeneralLabelProviderUnnamedNode;
     /**
      * <code>COMMENT_PREFIX</code>
      */

@@ -26,7 +26,7 @@ import org.eclipse.jubula.rc.common.businessprocess.ReflectionBP;
 import org.eclipse.jubula.rc.common.classloader.ImplClassClassLoader;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.tools.exception.GDConfigXmlException;
+import org.eclipse.jubula.tools.exception.ConfigXmlException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.MappingConstants;
@@ -397,7 +397,7 @@ public class AUTServerConfiguration {
         String message = "Component " + typeName //$NON-NLS-1$
                 + " does not exist"; //$NON-NLS-1$
         log.error(message);
-        throw new GDConfigXmlException(message, MessageIDs.E_NO_COMPONENT);
+        throw new ConfigXmlException(message, MessageIDs.E_NO_COMPONENT);
     }
     
     /**
@@ -426,7 +426,7 @@ public class AUTServerConfiguration {
         String message = "Component " + typeName //$NON-NLS-1$
                 + " does not exist"; //$NON-NLS-1$
         log.error(message);
-        throw new GDConfigXmlException(message, MessageIDs.E_NO_COMPONENT);
+        throw new ConfigXmlException(message, MessageIDs.E_NO_COMPONENT);
     }
     
     /**
@@ -434,7 +434,7 @@ public class AUTServerConfiguration {
      * @param component java component
      * @return jubula component type
      */
-    public String getGDComponentName (Object component) {
+    public String getComponentName (Object component) {
         String gdCompName = null;        
         try {            
             String compType = getTestableClass(component.getClass()).getName();

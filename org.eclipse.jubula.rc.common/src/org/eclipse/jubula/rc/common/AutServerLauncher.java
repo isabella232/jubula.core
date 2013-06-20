@@ -26,13 +26,12 @@ import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
  * @created 10.11.2005
  */
 public class AutServerLauncher {
-
     /** 
      * name for environment variable that should be set if old/classic class 
      * loading should be used 
      */
     private static final String ENV_VAR_USE_CLASSIC_CLASSLOADER = 
-        "GD_USE_CLASSIC_CL"; //$NON-NLS-1$
+        "TEST_USE_CLASSIC_CL"; //$NON-NLS-1$
 
     /**
      * hidden constructor
@@ -77,7 +76,7 @@ public class AutServerLauncher {
         
         if (useClassicClassLoaderValue != null) {
             // Use the old class loading
-            autServerClassLoader = new GDUrlClassicClassLoader(urls, 
+            autServerClassLoader = new UrlClassicClassLoader(urls, 
                     ClassLoader.getSystemClassLoader().getParent());
         } else {
             // Use the new class loading
@@ -125,18 +124,15 @@ public class AutServerLauncher {
      * @author BREDEX GmbH
      * @created 16.01.2006
      */
-    private static class GDUrlClassicClassLoader extends URLClassLoader {
-
-        
+    private static class UrlClassicClassLoader extends URLClassLoader {
         /**
          * Constructor
          * @param urls URL[]
          * @param parent ClassLoader
          */
-        public GDUrlClassicClassLoader(URL[] urls, ClassLoader parent) {
+        public UrlClassicClassLoader(URL[] urls, ClassLoader parent) {
             super(urls, parent);
         }
-
 
         /**
          * Tries to load the given class first.<br>

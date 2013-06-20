@@ -340,7 +340,7 @@ public class ProjectDialog extends TitleAreaDialog {
         data.horizontalSpan = HORIZONTAL_SPAN;
         m_keepTestresultSummaryButton.setLayoutData(data);
         ControlDecorator.decorateInfo(m_keepTestresultSummaryButton,  
-                "GDControlDecorator.KeepTestresultSummary", false); //$NON-NLS-1$
+                "ControlDecorator.KeepTestresultSummary", false); //$NON-NLS-1$
     }
 
     /**

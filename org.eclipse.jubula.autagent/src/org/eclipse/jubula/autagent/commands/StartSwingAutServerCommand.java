@@ -364,7 +364,7 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAut {
     }
     
     /**
-     * Gets the absolute path of the GDAgent.jar file.
+     * Gets the absolute path of the RCAgent.jar file.
      * @return the absolute path
      */
     protected String getAbsoluteAgentJarPath() {

@@ -65,7 +65,7 @@ public class TextControlBP {
     }
     
     /**
-     * selects the text of the GDText
+     * selects the text
      * @param control the current control
      */
     public static void selectAll(Control control) {
@@ -79,7 +79,7 @@ public class TextControlBP {
     }
     
     /**
-     * selects the text of the GDText
+     * selects the text
      * @param control the current control
      * @param index the index to set the selection
      */

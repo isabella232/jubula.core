@@ -20,7 +20,7 @@ import org.eclipse.ui.IPageLayout;
 
 
 /**
- * This class contains common constants for the modul JubulaClientGUI
+ * This class contains common constants for the module JubulaClientGUI
  *
  * @author BREDEX GmbH
  * @created 13.07.2004
@@ -502,7 +502,7 @@ public interface Constants {
     // -------------------------------------------------------------
     // Marker for Problem/Task view
     //  -------------------------------------------------------------
-    /** GD Problem marker ID */
+    /** problem marker ID */
     public static String JB_PROBLEM_MARKER = "org.eclipse.jubula.client.ui.rcp.jbProblem"; //$NON-NLS-1$
     /** Object marker type. */
     public static final String JB_OBJECT_HASHCODE = "jbObjectHashCode"; //$NON-NLS-1$

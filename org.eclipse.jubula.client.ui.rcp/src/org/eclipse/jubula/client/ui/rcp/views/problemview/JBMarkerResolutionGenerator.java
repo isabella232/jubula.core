@@ -88,7 +88,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
         
         /** {@inheritDoc} */
         public String getLabel() {
-            return NLS.bind(Messages.GDProblemViewOpenEditor, m_nodeName);
+            return NLS.bind(Messages.ProblemViewOpenEditor, m_nodeName);
         }
 
         /** {@inheritDoc} */
@@ -130,7 +130,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
         
         /** {@inheritDoc} */
         public String getLabel() {
-            return NLS.bind(Messages.GDProblemViewOpenObjectMappingEditor, 
+            return NLS.bind(Messages.ProblemViewOpenObjectMappingEditor, 
                     m_autName);
         }
 
@@ -228,7 +228,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
         return new IMarkerResolution[] { new IMarkerResolution() {
 
             public String getLabel() {
-                return Messages.GDProblemViewOpenReusedProjectSettings;
+                return Messages.ProblemViewOpenReusedProjectSettings;
             }
 
             public void run(IMarker marker) {
@@ -251,7 +251,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
         return new IMarkerResolution[] { new IMarkerResolution() {
 
             public String getLabel() {
-                return Messages.GDProblemViewOpenAutSettings;
+                return Messages.ProblemViewOpenAutSettings;
             }
 
             public void run(IMarker marker) {
@@ -277,7 +277,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             new IMarkerResolution() {
 
                 public String getLabel() {
-                    return Messages.GDProblemViewOpenAutStarterPreferences;
+                    return Messages.ProblemViewOpenAutAgentPreferences;
                 }
 
                 public void run(IMarker marker) {
@@ -332,7 +332,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
         return new IMarkerResolution[] { new IMarkerResolution() {
 
             public String getLabel() {
-                return Messages.GDProblemViewCreateTestSuite;
+                return Messages.ProblemViewCreateTestSuite;
             }
 
             public void run(IMarker marker) {

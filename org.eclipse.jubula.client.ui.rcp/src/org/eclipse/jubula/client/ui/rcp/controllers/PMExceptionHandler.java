@@ -130,7 +130,7 @@ public class PMExceptionHandler {
      * clear current views and editors after deletion of current project by
      * another user
      */
-    public static void handleGDProjectDeletedException() {
+    public static void handleProjectDeletedException() {
         Display.getDefault().syncExec(new Runnable() {
 
             public void run() {

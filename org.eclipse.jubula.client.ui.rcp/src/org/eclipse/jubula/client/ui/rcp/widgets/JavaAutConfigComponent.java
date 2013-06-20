@@ -1646,7 +1646,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         // parameter editor
         ControlDecorator.decorateInfo(UIComponentHelper.createLabel(
                 advancedAreaComposite, "AUTConfigComponent.autArguments"), //$NON-NLS-1$
-                "GDControlDecorator.AUTArguments", false); //$NON-NLS-1$
+                "ControlDecorator.AUTArguments", false); //$NON-NLS-1$
         m_autArgsTextField = 
             UIComponentHelper.createTextField(advancedAreaComposite, 2); 
         // JRE directory editor
@@ -1682,7 +1682,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         // JRE parameter editor
         ControlDecorator.decorateInfo(UIComponentHelper.createLabel(
                 expertAreaComposite, "AUTConfigComponent.jreArguments"), //$NON-NLS-1$
-                "GDControlDecorator.JREArguments", false); //$NON-NLS-1$
+                "ControlDecorator.JREArguments", false); //$NON-NLS-1$
         m_autJreParamTextField = UIComponentHelper.createTextField(
                 expertAreaComposite, 2);
         // Environment editor

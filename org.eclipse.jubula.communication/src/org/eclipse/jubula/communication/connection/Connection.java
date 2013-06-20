@@ -125,7 +125,7 @@ public class Connection {
      * @param socket the socket to use
      * @throws IllegalArgumentException if the socket is null or the socket has no assigned streams
      */
-    public Connection(GDSocket socket) 
+    public Connection(DefaultSocket socket) 
         throws IOException, IllegalArgumentException {
         
         this(socket, socket.getInputStreamReader());
