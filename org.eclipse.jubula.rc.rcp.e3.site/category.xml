@@ -7,8 +7,5 @@
    <feature url="features/org.eclipse.jubula.rc.rcp.e3.feature_2.1.0.qualifier.jar" id="org.eclipse.jubula.rc.rcp.e3.feature" version="2.1.0.qualifier">
       <category name="org.eclipse.jubula.rc.rcp.e3"/>
    </feature>
-   <bundle url="features/org.eclipse.jubula.rc.rcp.feature_2.1.0.qualifier.jar" id="org.eclipse.jubula.rc.rcp.feature" version="2.1.0.qualifier">
-      <category name="org.eclipse.jubula.rc.rcp.e3"/>
-   </bundle>
    <category-def name="org.eclipse.jubula.rc.rcp.e3" label="Testing e3"/>
 </site>
