@@ -139,8 +139,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     /**
      * {@inheritDoc}
      */
-    public String getRenderedText(final Object node)
-        throws StepExecutionException {
+    public String getRenderedText(final Object node) {
         return (String)getQueuer().invokeAndWait(
                 "getRenderedText", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
@@ -151,8 +150,16 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                                 .getTreeCellRendererComponent(tree, node,
                                         false, tree.isExpanded(row),
                                         m_model.isLeaf(node), row, false);
-                        return TesterUtil
-                                .getRenderedText(cellRendererComponent);
+                        try {
+                            return TesterUtil
+                                    .getRenderedText(cellRendererComponent);
+                        } catch (StepExecutionException e) {
+                            // This is a valid case in JTrees since if there is no text
+                            // there is also no renderer 
+                            log.warn("Renderer not supported: " +       //$NON-NLS-1$
+                                    cellRendererComponent.getClass(), e); 
+                            return null;
+                        }
                     }
                 });
     }
