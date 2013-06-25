@@ -1,1 +1,34 @@
 %
+
+\textbf{H2 data base version updated}
+\begin{itemize}
+\item The driver used for the embedded H2 data base are updated from version
+    1.1.117 to 1.3.168. These two versions are not compatible, because the file format
+    has been changed. More information about changes in H2 are
+    available at \url{http://www.h2database.com/html/changelog.html}.
+\item Old embedded H2 data bases are not readable with the new version
+    of \app(), but migration is possible with the following steps:
+    \begin{enumerate}
+        \item Export the old data base into a file by using the menu
+            Test - Export All with your working version of \app().
+        \item Install, start and the new version of \app().
+        \item Import the previously exported file using the new version
+            of \app().
+\end{itemize}
+
+\textbf{JaCoCo version updated}
+\begin{itemize}
+\item Now JaCoCo is updated from version 0.5.9 to 0.6.3, which fully supports
+    code coverage for Java 7. More information about changes in JaCoCo are
+    available at
+    \url{http://www.eclemma.org/jacoco/trunk/doc/changes.html}.
+\end{itemize}
+
+\textbf{SLF4J version updated}
+\begin{itemize}
+\item Version 1.7.2 of SLF4J in combination with version 1.0.7 of LOGBack
+    are now used for logging. More information about changes in SLF4J and
+    LOGBack are available at
+    \url{http://www.slf4j.org/news.html} and
+    \url{http://logback.qos.ch/news.html}.
+\end{itemize}
