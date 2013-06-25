@@ -54,6 +54,8 @@ public abstract class CommandConstants {
     public static final String SLF4J_API_BUNDLE_ID = "org.slf4j.api"; //$NON-NLS-1$
     /** ID of the SLF4J JCL bundle */
     public static final String SLF4J_JCL_BUNDLE_ID = "org.slf4j.jcl"; //$NON-NLS-1$
+    /** ID of the SLF4J JUL bundle */
+    public static final String ORG_SLF4J_JUL_BUNDLE_ID = "org.slf4j.jul"; //$NON-NLS-1$
     /** ID of the logback classic bundle */
     public static final String LOGBACK_CLASSIC_BUNDLE_ID = "ch.qos.logback.classic"; //$NON-NLS-1$
     /** ID of the logback core bundle */
