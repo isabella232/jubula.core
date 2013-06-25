@@ -588,4 +588,14 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
         return -1;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isLeaf(Object node) {
+        if (getNumberOfChildren(node) == 0) {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -537,5 +537,11 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
         return -1;
 
     }
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isLeaf(Object node) {
+        return m_model.isLeaf(node);
+    }
 
 }
