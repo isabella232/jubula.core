@@ -460,8 +460,8 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
                 if (allTestSuites.contains(ts)) {
                     return TestSuiteState.complete;
                 } 
-                return TestSuiteState.incomplete;
             }
+            return TestSuiteState.incomplete;
         }
         return TestSuiteState.unchanged;
     }
