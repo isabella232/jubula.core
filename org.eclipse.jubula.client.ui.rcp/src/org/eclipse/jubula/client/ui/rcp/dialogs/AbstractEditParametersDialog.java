@@ -990,14 +990,13 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         final Label nameLabel = new Label(nameFieldArea, SWT.NONE);
         nameLabel.setText(getEditedObjectNameString());
         
-        final Text nameField = new Text(nameFieldArea, 
-                SWT.SINGLE | SWT.BORDER);
+        final Label nameField = new Label(nameFieldArea,
+                SWT.SINGLE);
         final GridData nameFieldGridData = new GridData();
         nameFieldGridData.grabExcessHorizontalSpace = true;
         nameFieldGridData.horizontalAlignment = GridData.FILL;
         nameField.setLayoutData(nameFieldGridData);
         nameField.setText(getParamInterfaceObj().getName());
-        nameField.setEditable(false);
     }
 
 
