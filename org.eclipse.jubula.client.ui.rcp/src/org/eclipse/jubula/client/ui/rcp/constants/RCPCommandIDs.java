@@ -29,6 +29,9 @@ public interface RCPCommandIDs {
     /** the ID of the "connnect to AUT Agent" command */
     public static final String CONNECT_TO_AUT_AGENT = "org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand"; //$NON-NLS-1$
     
+    /** the ID of the "choose working language" command */
+    public static final String CHOOSE_LANGUAGE = "org.eclipse.jubula.client.ui.rcp.commands.ChooseLanguageCommand"; //$NON-NLS-1$
+    
     /** the ID of the "delete project" command */
     public static final String DELETE_PROJECT = "org.eclipse.jubula.client.ui.rcp.commands.DeleteProject"; //$NON-NLS-1$
     

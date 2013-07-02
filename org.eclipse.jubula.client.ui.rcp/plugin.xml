@@ -420,14 +420,6 @@
         <separator name="JubulaAddSeparator1" />
       </menu>
       <action
-        class="org.eclipse.jubula.client.ui.rcp.actions.ChooseLanguageAction"
-        icon="icons/globe.gif"
-        id="org.eclipse.jubula.client.ui.rcp.actions.ChooseLanguageAction"
-        label="%ChooseLanguage"
-        style="pulldown"
-        toolbarPath="org.eclipse.jubula.client.ui.rcp.toolbar.LanguageToolbar"
-        tooltip="%ChooseLanguageToolTip" />
-      <action
         class="org.eclipse.jubula.client.ui.rcp.actions.ShowClientLogAction"
         icon="icons/clientLogView.gif"
         id="org.eclipse.jubula.client.ui.rcp.actions.ShowClientLogAction"
@@ -691,6 +683,18 @@
       <state
         class="org.eclipse.core.commands.State"
         id="org.eclipse.jubula.client.ui.rcp.commands.ChooseAutCommand.state.lastStartedAutConfig" />
+    </command>
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.ChooseLanguageCommand"
+      name="%ChooseLanguage">
+      <commandParameter
+        id="org.eclipse.jubula.client.ui.rcp.commands.ChooseLanguageCommand.parameter.language"
+        name="Language"
+        optional="false" />
+      <state
+        class="org.eclipse.core.commands.State"
+        id="org.eclipse.jubula.client.ui.rcp.commands.ChooseLanguageCommand.state.workingLanguage" />    
     </command>
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
@@ -1284,6 +1288,16 @@
     </menuContribution>
     <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
       <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.LanguageToolbar">
+        <command
+          commandId="org.eclipse.jubula.client.ui.rcp.commands.ChooseLanguageCommand"
+          icon="icons/globe.gif"
+          id="org.eclipse.jubula.client.ui.rcp.toolbar.LanguageToolbar.ChooseLanguageCommand"
+          style="pulldown">
+          <visibleWhen checkEnabled="false">
+            <reference
+              definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
+          </visibleWhen>
+        </command>
         <separator name="GlobalActions" />
       </toolbar>
       <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.CentralTestDataToolbar">
@@ -1597,6 +1611,12 @@
       <dynamic
         class="org.eclipse.jubula.client.ui.rcp.contributionitems.ChooseHTMLWindowContributionItem"
         id="menu:org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.ChooseHTMLWindowCommand.dropdown" />
+    </menuContribution>
+    <menuContribution
+      locationURI="menu:org.eclipse.jubula.client.ui.rcp.toolbar.LanguageToolbar.ChooseLanguageCommand">
+      <dynamic
+        class="org.eclipse.jubula.client.ui.rcp.contributionitems.LanguageContributionItem"
+        id="menu:org.eclipse.jubula.client.ui.rcp.toolbar.LanguageToolbar.ChooseLanguageCommand.dropdown" />
     </menuContribution>
     <menuContribution
       allPopups="false"
@@ -2395,6 +2415,15 @@
               <count value="2" />
         </with>
       </and>
+      </enabledWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.ChooseLanguageHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.ChooseLanguageCommand">
+      <enabledWhen>
+        <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectActive">
+          <equals value="true" />
+        </with>
       </enabledWhen>
     </handler>
     <handler
