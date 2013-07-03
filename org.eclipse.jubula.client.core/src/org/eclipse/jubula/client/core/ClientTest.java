@@ -919,12 +919,12 @@ public class ClientTest implements IClientTest {
             } 
             protected IStatus run(IProgressMonitor monitor) {  
                 try {
-                    monitor.beginTask(Messages.ClientWritingReport,
-                            IProgressMonitor.UNKNOWN);
-                    writeReport();
                     monitor.beginTask(Messages.ClientWritingReportToDB,
                             IProgressMonitor.UNKNOWN);
                     writeTestresultToDB();
+                    monitor.beginTask(Messages.ClientWritingReport,
+                            IProgressMonitor.UNKNOWN);
+                    writeReport();
                     if (isRunningWithMonitoring()) {
                         monitor.setTaskName(Messages.ClientCalculating);
                         getMonitoringData();
