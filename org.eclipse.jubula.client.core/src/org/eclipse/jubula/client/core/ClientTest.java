@@ -177,6 +177,11 @@ public class ClientTest implements IClientTest {
     private boolean m_relevant = true;
     
     /**
+     * <code>m_xmlScrennshot</code> the XML screenshot flag
+     */
+    private boolean m_xmlScrennshot = true;
+    
+    /**
      * <code>m_pauseOnError</code>
      */
     private boolean m_pauseOnError = false;
@@ -1264,4 +1269,19 @@ public class ClientTest implements IClientTest {
     public void pauseTestExecutionOnError(boolean pauseOnError) {
         m_pauseOnError = pauseOnError;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void setScreenshotXMLFlag(boolean screenshotXml) {
+        m_xmlScrennshot = screenshotXml;        
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isScreenshotForXML() {
+        return m_xmlScrennshot;
+    }
+    
 }

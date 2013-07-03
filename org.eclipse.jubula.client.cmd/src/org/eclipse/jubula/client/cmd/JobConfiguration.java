@@ -114,6 +114,8 @@ public class JobConfiguration {
     private int m_timeout = 0;
     /** flag to automatically take screenshots */
     private boolean m_autoScreenshot = true;
+    /** flag to save screenshots in XML and HTML */
+    private boolean m_xmlScreenshot = true;
     /** flag to mark test execution as relevant or not */
     private boolean m_relevant = true;
     
@@ -452,6 +454,9 @@ public class JobConfiguration {
         if (cmd.hasOption(ClientTestStrings.TEST_EXECUTION_RELEVANT)) { 
             setRelevant(false);
         }
+        if (cmd.hasOption(ClientTestStrings.NO_XML_SCREENSHOT)) { 
+            setXMLScreenshot(false);
+        }
         if (cmd.hasOption(ClientTestStrings.TIMEOUT)) {
             try {
                 setTimeout(Integer.parseInt(cmd
@@ -497,6 +502,9 @@ public class JobConfiguration {
         }
         if (cmd.hasOption(ClientTestStrings.AUTO_SCREENSHOT)) { 
             setAutoScreenshot(false);
+        }
+        if (cmd.hasOption(ClientTestStrings.NO_XML_SCREENSHOT)) { 
+            setXMLScreenshot(false);
         }
         if (cmd.hasOption(ClientTestStrings.TEST_EXECUTION_RELEVANT)) { 
             setRelevant(false);
@@ -985,7 +993,22 @@ public class JobConfiguration {
     public boolean isAutoScreenshot() {
         return m_autoScreenshot;
     }
-
+    
+    /**
+     * @param xmlScreenshot
+     *            should screenshots be written to XML and HTML documents
+     */
+    public void setXMLScreenshot(boolean xmlScreenshot) {
+        m_xmlScreenshot = xmlScreenshot;
+    }
+    
+    /**
+     * @return the xmlscreenshot
+     */
+    public boolean isXMLScreenshot() {
+        return m_xmlScreenshot;
+    }
+    
     /**
      * @param relevant the relevant to set
      */

@@ -356,4 +356,16 @@ public interface IClientTest {
      * @return null if no config map available; otherwise the map
      */
     public Map<String, String> requestAutConfigMapFromAgent(String autId);
+
+    /**
+     * 
+     * @param screenshotXml
+     *            whether the XML and HTML should have screenshots in the files
+     */
+    public void setScreenshotXMLFlag(boolean screenshotXml);
+    
+    /**
+     * @return whether the XML and HTML testresults should have screenshots
+     */    
+    public boolean isScreenshotForXML();
 }

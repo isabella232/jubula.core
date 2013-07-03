@@ -406,6 +406,7 @@ public class ExecutionController implements IAUTServerEventListener,
                     MessageIDs.E_COMMUNICATOR_CONNECTION);
         }
         clientTest.setRelevantFlag(m_job.isRelevant());
+        clientTest.setScreenshotXMLFlag(m_job.isXMLScreenshot());
         prepareExecution();
         // start aut, working will be set false, after aut started
         m_idle = true;

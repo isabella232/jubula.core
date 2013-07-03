@@ -46,6 +46,7 @@ public class Messages extends NLS {
     public static String ClientMissingArgs;
     public static String ClientMonitoringInfoDialog;
     public static String ClientNoRunOpt;
+    public static String ClientNoXmlScreenshot;
     public static String ClientogViewerName;
     public static String ClientPortOpt;
     public static String ClientProjectOpt;
