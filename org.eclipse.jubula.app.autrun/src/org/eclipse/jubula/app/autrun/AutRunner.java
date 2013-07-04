@@ -98,6 +98,10 @@ public class AutRunner {
      */
     public void run() throws IOException, ConnectException {
         // Establish connection to AUT Agent
+        if (m_agentAddr.getAddress() == null) {
+            LOG.error(Messages.errorAutAgentHost);
+            throw new ConnectException(Messages.errorAutAgentHost);
+        }
         final Socket agentSocket = 
             new Socket(m_agentAddr.getAddress(), m_agentAddr.getPort());
 

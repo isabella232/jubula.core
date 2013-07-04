@@ -15,6 +15,7 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.app.autrun.i18n.messages";  //$NON-NLS-1$
     
+    public static String errorAutAgentHost;
     public static String infoAutAgentHost;
     public static String infoAutAgentPort;
     public static String infoSwingToolkit;
