@@ -150,6 +150,8 @@ public class MessageIDs {
     public static final Integer E_SQL_EXCEPTION = new Integer(2063);
     /** if the database profile does not exits anymore */
     public static final Integer E_DB_PROFILE_NOT_EXIST = new Integer(2064);
+    /** if import of project (xml) failed for broken xml */
+    public static final Integer E_IMPORT_XML_FAILED = new Integer(2065);
     
     // -- GENERAL ERROR IDs ------------------------------------------------
     /** if serilization exception */
@@ -816,6 +818,7 @@ public class MessageIDs {
         messageMap.put(E_EDITOR_CLOSE, e, "ErrorMessage.EDITOR_CLOSE", null); //$NON-NLS-1$
         messageMap.put(E_DELETED_TC, e, "ErrorMessage.DELETED_TC", null); //$NON-NLS-1$
         messageMap.put(E_IMPORT_PROJECT_XML_FAILED, e, "ErrorMessage.IMPORT_PROJECT_XML_FAILED", null); //$NON-NLS-1$
+        messageMap.put(E_IMPORT_XML_FAILED, e, "ErrorMessage.IMPORT_XML_FAILED", null); //$NON-NLS-1$
         messageMap.put(E_IMPORT_PROJECT_CONFIG_CONFLICT, e, "ErrorMessage.IMPORT_PROJECT_CONFIG_CONFLICT", null); //$NON-NLS-1$
         messageMap.put(E_CANNOT_CHANGE_PARAMETER, e, "ErrorMessage.CANNOT_CHANGE_PARAMETER", null); //$NON-NLS-1$
         messageMap.put(E_SAVE_AS_PROJECT_FAILED, e, "ErrorMessage.SAVE_AS_PROJECT_FAILED", null); //$NON-NLS-1$

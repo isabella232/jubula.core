@@ -1710,11 +1710,10 @@ public class FileStorageBP {
      */
     private static void handlePMReadException(final PMReadException e, 
             final List<URL> fileURLs) {
-        
         ErrorMessagePresenter.getPresenter().showErrorMessage(
                 new JBException(e + Messages.Reading + fileURLs.toArray()
                         + Messages.Failed,
-                        MessageIDs.E_IMPORT_PROJECT_XML_FAILED), null,
+                        MessageIDs.E_IMPORT_XML_FAILED), null,
                 MessageIDs.getMessageObject(e.getErrorId()).getDetails());
     }
 
