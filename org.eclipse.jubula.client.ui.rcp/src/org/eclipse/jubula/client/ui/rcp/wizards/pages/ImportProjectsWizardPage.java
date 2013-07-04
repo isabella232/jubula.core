@@ -299,6 +299,7 @@ public class ImportProjectsWizardPage extends WizardPage
                     }
                     m_filesToImport.setSelection(newSelectedIndices);
                 }
+                updateModel();
             }
             
         });
@@ -337,6 +338,7 @@ public class ImportProjectsWizardPage extends WizardPage
                     }
                     m_filesToImport.setSelection(newSelectedIndices);
                 }
+                updateModel();
             }
             
         });
@@ -388,17 +390,7 @@ public class ImportProjectsWizardPage extends WizardPage
      *
      */
     void checkCompletness() {
-        // Update model values
-        String[] fileNames = m_filesToImport.getItems();
-        m_fileURLs = new ArrayList<URL>(fileNames.length);
-
-        for (String fileName : fileNames) {
-            try {
-                m_fileURLs.add(new File(fileName).toURI().toURL());
-            } catch (MalformedURLException e) {
-                log.error(e.getLocalizedMessage(), e);
-            }
-        }
+        updateModel();
         
         m_isOpenProject = m_openProjectCheckbox.getSelection();
 
@@ -648,6 +640,24 @@ public class ImportProjectsWizardPage extends WizardPage
                 .IMPORT_PROJECT_DIALOG);
         setPageComplete(false);
         setControl(composite);
+    }
+    
+    /**
+     * Updates the model so that m_fileURLs has the same data and same order as
+     * the m_filesToImport SWT list
+     */
+    private void updateModel() {
+        // Update model values
+        String[] fileNames = m_filesToImport.getItems();
+        m_fileURLs = new ArrayList<URL>(fileNames.length);
+
+        for (String fileName : fileNames) {
+            try {
+                m_fileURLs.add(new File(fileName).toURI().toURL());
+            } catch (MalformedURLException e) {
+                log.error(e.getLocalizedMessage(), e);
+            }
+        }
     }
     
     /**
