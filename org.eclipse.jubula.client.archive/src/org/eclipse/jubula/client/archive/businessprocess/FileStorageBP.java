@@ -160,6 +160,7 @@ public class FileStorageBP {
             SubMonitor subMonitor = SubMonitor.convert(
                     monitor, Messages.ImportFileBPReading,
                     m_fileURLs.size());
+            String lastFileName = StringConstants.EMPTY;
             try {
                 showStartingImport(m_console);
                 showStartingReadingProjects(m_console);
@@ -169,6 +170,7 @@ public class FileStorageBP {
                     final IWritableComponentNameCache compNameCache =
                         new ComponentNamesDecorator(null);
                     String fileName = fileURL.getFile();
+                    lastFileName = fileName;
                     m_console.writeLine(NLS.bind(Messages
                                     .ImportFileActionInfoStartingReadingProject,
                                     fileName));
@@ -197,6 +199,10 @@ public class FileStorageBP {
                 }
                 showFinishedReadingProjects(m_console);
             } catch (final PMReadException e) {
+                m_console.writeErrorLine(NLS.bind(
+                        Messages.ImportFileActionErrorImportFailedProject,
+                        lastFileName, StringConstants.TAB
+                                + Messages.InvalidImportFile));
                 handlePMReadException(e, m_fileURLs);
             } catch (final ConfigXmlException ce) {
                 handleCapDataNotFound(ce);
