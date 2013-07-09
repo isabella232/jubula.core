@@ -20,24 +20,10 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created Aug 2, 2011
  */
 public class GetKeyboardLayoutNameMessage extends Message {
-
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /**
-     * 
      * {@inheritDoc}
      */
     public String getCommandClass() {
         return CommandConstants.GET_KEYBOARD_LAYOUT_NAME_COMMAND;
     }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public double getVersion() {
-        return VERSION;
-    }
-
 }

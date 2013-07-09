@@ -61,13 +61,13 @@ public abstract class BaseConnection {
     }
     
     /**
-     * synchronized setter for comunicator.
+     * synchronized setter for communicator.
      * 
      * @param communicator -
      *            a new communicator, must not be null
      */
     protected synchronized void setCommunicator(Communicator communicator) {
-        // check paramater
+        // check parameter
         if (communicator == null) {
             throw new IllegalArgumentException(
                     Messages.CommunicatorMustNotBeNull);
@@ -82,7 +82,7 @@ public abstract class BaseConnection {
      * synchronized method for starting the communication.
      * 
      * @throws AlreadyConnectedException
-     *             if this connection is laready connected.
+     *             if this connection is already connected.
      * @throws JBVersionException in case of version error between Client
      *  and AutStarter 
      */
@@ -110,13 +110,13 @@ public abstract class BaseConnection {
      * Sends the given Message. Delegates to the Communicator
      * 
      * @param message
-     *            the messsage to send, must not be null
+     *            the message to send, must not be null
      * @throws IllegalArgumentException
      *             if Message is null
      * @throws CommunicationException
      *             when the message could not send
      * @throws NotConnectedException
-     *             when no connection is availiable either not yet set or lost
+     *             when no connection is available either not yet set or lost
      * {@inheritDoc}
      */
     public synchronized void send(Message message)
@@ -149,7 +149,7 @@ public abstract class BaseConnection {
      *            max milliseconds to wait for a response. Only values greater than
      *            zero are valid.
      * @throws NotConnectedException
-     *             when no connection is availiable either not yet set or lost
+     *             when no connection is available either not yet set or lost
      * @throws CommunicationException
      *             when the message could not send
      * {@inheritDoc}
@@ -215,39 +215,27 @@ public abstract class BaseConnection {
      * @created 12.08.2004
      */
     private class CommunicationListener implements ICommunicationErrorListener {
-        
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void acceptingFailed(int port) {
             setConnected(false);
         }
         
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void connectingFailed(InetAddress inetAddress, int port) {
             setConnected(false);
         }
         
-        /**
-         * {@inheritDoc}
-         */
-
+        /** {@inheritDoc} */
         public void connectionGained(InetAddress inetAddress, int port) {
             setConnected(true);
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void sendFailed(Message message) {
             // do nothing
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void shutDown() {
             setConnected(false);
         }

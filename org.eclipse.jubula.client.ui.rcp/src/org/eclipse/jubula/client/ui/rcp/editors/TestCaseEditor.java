@@ -95,9 +95,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IWorkbenchPartConstants;
 
@@ -139,6 +137,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         if (!Plugin.getDefault().anyDirtyStar()) {
             checkAndRemoveUnusedTestData();
         }
+        m_currentTreeViewer = getMainTreeViewer();
     }
 
     /**
@@ -308,34 +307,12 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             Tree tree = (Tree)e.getSource();
             if (getMainTreeViewer().getTree() == tree) {
                 m_currentTreeViewer = getMainTreeViewer();
-            } else if (m_eventHandlerTreeViewer.getTree() == tree) {
-                m_currentTreeViewer = m_eventHandlerTreeViewer;
+            } else if (getEventHandlerTreeViewer().getTree() == tree) {
+                m_currentTreeViewer = getEventHandlerTreeViewer();
             }
-            m_currentTreeViewer.setSelection(
-                    m_currentTreeViewer.getSelection(), true);
         }       
     }
 
-    /**
-     * @author BREDEX GmbH
-     * @created 04.06.2005
-     */
-    private class MouseDownListener implements Listener {
-        /**
-         * {@inheritDoc}
-         */
-        public void handleEvent(Event event) {
-            if (SWT.MouseDown == event.type) {
-                Tree tree = (Tree)event.widget;
-                if (getMainTreeViewer().getTree() == tree) {
-                    m_currentTreeViewer = getMainTreeViewer();
-                } else if (m_eventHandlerTreeViewer.getTree() == tree) {
-                    m_currentTreeViewer = m_eventHandlerTreeViewer;
-                }
-            }
-        }
-    }
-    
     /**
      * SelectionListener to en-/disable delete-action
      * 
@@ -468,12 +445,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         return m_currentTreeViewer.getSelection();
     }
 
-    @Override
-    protected void renameGUINode(IPersistentObject po) {
-        super.renameGUINode(po);
-        m_eventHandlerTreeViewer.refresh(true);
-    }
-    
     /**
      * Creates the EventHandler part of the editor
      * @param parent Composite
@@ -512,8 +483,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         m_eventHandlerTreeViewer.setLabelProvider(lp);
         m_eventHandlerTreeViewer.setComparer(new UIIdentitiyElementComparer());
         m_eventHandlerTreeViewer.setUseHashlookup(true);
-        m_eventHandlerTreeViewer.getTree()
-            .addListener(SWT.MouseDown, new MouseDownListener());
         firePropertyChange(IWorkbenchPartConstants.PROP_INPUT);
     }
 
@@ -569,7 +538,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                 TestCaseBP.addEventHandler(editSupport, workSpecTcPO, 
                     eventHandlerPO);
                 getEditorHelper().setDirty(true);
-                getEventHandlerTreeViewer().refresh();
                 DataEventDispatcher.getInstance().fireDataChangedListener(
                         eventHandlerPO, DataState.Added,
                         UpdateState.onlyInEditor);
@@ -653,20 +621,11 @@ public class TestCaseEditor extends AbstractTestCaseEditor
     }
     
     @Override
-    protected void refresh() {
+    public void refresh() {
         super.refresh();
-        getEventHandlerTreeViewer().refresh();
+        getEventHandlerTreeViewer().refresh(true);
     }
     
-    @Override
-    protected void handleNodeAdded(INodePO addedNode) {
-        super.handleNodeAdded(addedNode);
-        if (addedNode instanceof IEventExecTestCasePO) {
-            UINodeBP.setSelectionAndFocusToNode(
-                    addedNode, m_eventHandlerTreeViewer);
-        }
-    }
-
     /** {@inheritDoc} */
     protected DropTargetListener getViewerDropAdapter() {
         return new TCEditorDropTargetListener(this);
@@ -704,11 +663,16 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             StructuredSelection ss = (StructuredSelection) selection;
             Object firstElement = ss.getFirstElement();
             if (firstElement instanceof IEventExecTestCasePO) {
-                getEventHandlerTreeViewer().getTree().setFocus();
-                getEventHandlerTreeViewer().setSelection(selection);
+                UINodeBP.setFocusAndSelection(ss, getEventHandlerTreeViewer());
             } else {
                 super.setSelectionImpl(selection);
             }
         }
+    }
+    
+    /** {@inheritDoc} */
+    public void setFocus() {
+        m_currentTreeViewer.getTree().setFocus();
+        Plugin.showStatusLine(this);
     }
 }

@@ -24,9 +24,6 @@ public class AUTStateMessage extends Message {
     /** state signaling that the AUT could not started */
     public static final int START_FAILED = 2;
 
-    /** static version */
-    public static final double VERSION = 1.0;
-
     /** Name of the command class */
     private static final String COMMAND_CLASS = "org.eclipse.jubula.client.core.commands.AUTStateCommand"; //$NON-NLS-1$
 
@@ -58,11 +55,6 @@ public class AUTStateMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return COMMAND_CLASS;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return Returns the description. */

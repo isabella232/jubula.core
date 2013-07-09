@@ -180,8 +180,7 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
             }
 
             DataEventDispatcher.getInstance().fireDataChangedListener(
-                    events.toArray(
-                            new DataChangedEvent[events.size()]));
+                    events.toArray(new DataChangedEvent[events.size()]));
             
             return true;
         }

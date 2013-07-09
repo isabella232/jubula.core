@@ -38,6 +38,7 @@ import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -74,16 +75,16 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     /**
      * <code>INACTIVE_PREFIX</code>
      */
-    public static final String INACTIVE_PREFIX = "// "; //$NON-NLS-1$
+    protected static final String INACTIVE_PREFIX = "// "; //$NON-NLS-1$
     
     /** close bracked */
-    public static final String CLOSE_BRACKED = "]"; //$NON-NLS-1$
+    protected static final String CLOSE_BRACKED = "]"; //$NON-NLS-1$
 
     /** open bracked */
-    public static final String OPEN_BRACKED = " ["; //$NON-NLS-1$
+    protected static final String OPEN_BRACKED = " ["; //$NON-NLS-1$
     
     /** <code>SEPARATOR</code> */
-    public static final String SEPARATOR = "; "; //$NON-NLS-1$
+    protected static final String SEPARATOR = "; "; //$NON-NLS-1$
     
     /** the logger */
     private static final Logger LOG = 
@@ -300,6 +301,9 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             return IconConstants.TS_REF_IMAGE;
         }
         
+        if (element instanceof ITestDataCubePO) {
+            return IconConstants.TDC_IMAGE;
+        }
         return null;
     }
 
@@ -381,7 +385,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * @param testCaseRef The Test Case Reference to examine.
      * @return label text for the given Test Case Reference.
      */
-    private static String getText(IExecTestCasePO testCaseRef) {
+    public static String getText(IExecTestCasePO testCaseRef) {
         StringBuilder nameBuilder = new StringBuilder();
         
         if (!StringUtils.isBlank(testCaseRef.getRealName())) {
@@ -421,7 +425,30 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     private static String getText(ISpecTestCasePO testCase) {
         return testCase.getName() + getParameterString(testCase);
     }
-    
+
+    /**
+     * @param paramDesc The parameter description.
+     * @return The short type name of the given parameter description, e.g.
+     *         the name <code>String</code>, if the parameter has the type
+     *         {@link java.lang.String}.
+     */
+    private static String getShortTypeName(IParamDescriptionPO paramDesc) {
+        String typeName = paramDesc.getType();
+        int i = typeName.lastIndexOf('.');
+        return typeName.substring(i + 1);
+    }
+
+    /**
+     * @param paramDesc The parameter description.
+     * @return The text for a parameter description surrounded with brackets.
+     */
+    public static String getTextWithType(IParamDescriptionPO paramDesc) {
+        return paramDesc.getName()
+                + OPEN_BRACKED
+                + getShortTypeName(paramDesc)
+                + CLOSE_BRACKED;
+    }
+
     /**
      * 
      * @param paramNode The Parameter Node to examine.

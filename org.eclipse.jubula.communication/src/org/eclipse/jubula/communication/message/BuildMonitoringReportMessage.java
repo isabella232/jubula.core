@@ -17,10 +17,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 13.09.2010
  */
 public class BuildMonitoringReportMessage extends Message {
-
-    /** static version */
-    public static final double VERSION = 1.0;
-
     /** The autId */
     private String m_autId;
 
@@ -40,11 +36,6 @@ public class BuildMonitoringReportMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.BUILD_MONITORING_REPORT_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return the autId */

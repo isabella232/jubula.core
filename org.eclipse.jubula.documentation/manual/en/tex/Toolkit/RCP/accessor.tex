@@ -3,15 +3,15 @@
 \index{RCP AUT's}
 \index{RCP!Remote Control}
 
-If you want to test a \bxname{Rich Client Platform} application, you must ensure that our \bxcaption{RCP Remote Control} plugin (org.eclipse.jubula.rc.rcp) is added to your \gdaut{} and that it will be started when the \gdaut{} starts. If you are using \app{} in a continuous build and test process, then we highly recommend doing this as a part of the product build, or just afterwards \bxpref{ToolkitRCPSetupCI}. For testing purposes, and to get started quicker, the steps can also be done manually as follows:
+If you want to test a \bxname{Rich Client Platform} application, you must ensure that our \bxcaption{RCP Remote Control} plugin (org.eclipse.jubula.rc.rcp) is added to your \gdaut{} and that it will be started when the \gdaut{} starts. If you are working in a continuous build and test process, then we highly recommend doing this as a part of the product build, or just afterwards \bxpref{ToolkitRCPSetupCI}. For testing purposes, and to get started quicker, the steps can also be done manually as follows:
 
 
 \bxwarn{Please ensure that you follow all these steps!}
 \begin{enumerate}
-\item Locate the \app{} installation directory, and open the \bxname{development} folder.
+\item Locate the installation directory, and open the \bxname{development} folder.
 \item Extract the content of the \bxname{rcp-support.zip} folder into the \bxname{plugins} directory for your RCP \gdaut{}.
 \item RCP applications generally have a configuration/config.ini file which contains the parameter \bxname{osgi.bundles}. This parameter needs to be modified to allow the RCP remote control plugin to load on \gdaut{} startup. You must add  \bxname{,org.eclipse.jubula.rc.rcp@start} (the comma is important to delimit this argument from the others) to the end of the \bxname{osgi.bundles} parameter.
-\item Start your \gdaut{} \textbf{normally} (i.e. not as an \gdaut{} from \app{}). Close it, and then start it again. 
+\item Start your \gdaut{} \textbf{normally} (i.e. not as an \gdaut{}. Close it, and then start it again. 
 \item In your \gdaut{}, open \bxmenu{Help}{About}{}. 
 \item In the \bxname{plugin details} for your \gdaut{}, you should be able to see that the following plugins are started:
 \begin{itemize}
@@ -21,7 +21,7 @@ If you want to test a \bxname{Rich Client Platform} application, you must ensure
 \item If you can see these plugins, then you can continue and start your \gdaut{} via e.g. an \gdaut{} configuration \bxpref{TasksConfigureJavaAUT} or via \bxname{autrun} \bxpref{autrun}. 
 \item If you cannot see these plugins, then you should speak to a member of the development team to implement the suggestions described in the section below \bxpref{ToolkitRCPSetupCI}.
 \end{enumerate}
-\bxtipp{When you install a new version of \app{}, you must repeat these steps with the new RCP remote control plugin. We recommend starting your \gdaut{} once with \bxshell{-clean} to ensure that the new remote control plugin is used. }
+\bxtipp{When you install a new version of the \ite{}, you must repeat these steps with the new RCP remote control plugin. We recommend starting your \gdaut{} once with \bxshell{-clean} to ensure that the new remote control plugin is used. }
 If you do not follow these steps, the \gdagent{} will not be able to communicate with your \gdaut{}!
 
 \subsubsection{Setting up an RCP \gdaut{} for testing as a part of the build process}

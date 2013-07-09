@@ -99,13 +99,6 @@ public class ChangeAUTModeMessage extends Message {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public double getVersion() {
-        return VERSION;
-    }
-
-    /**
      * @return Returns the mode.
      */
     public int getMode() {

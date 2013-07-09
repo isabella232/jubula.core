@@ -13,6 +13,8 @@ package org.eclipse.jubula.client.ui.rcp.propertytester;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
@@ -20,49 +22,114 @@ import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchRe
 
 /**
  * PropertyTester for search results.
- * It checks if the selected search result element is an exec and
- * that it is from the same and non protected project.
- * @author BREDEX GmbH
  *
+ * It checks, if the selected search result element satisfies the rules
+ * depending on the property <b>isExec</b> or <b>isExecOrSpec</b>.
+ *
+ * @see #testImpl(Object, String, Object[])
+ *
+ * @author BREDEX GmbH
  */
 public class SearchTestCasePropertyTester 
     extends AbstractBooleanPropertyTester {
+
     /**
-     * ID of the "isExec" property
+     * ID of the "isExec" property.
      */
     public static final String IS_EXEC = "isExec"; //$NON-NLS-1$
-    
-    
+
+    /**
+     * ID of the "isExecOrSpec" property.
+     */
+    public static final String IS_EXEC_OR_SPEC_AND_USES_CTDS =
+            "isExecOrSpecAndUsesCTDS"; //$NON-NLS-1$
+
     /**
      * <code>PROPERTIES</code>
      */
-    private static final String[] PROPERTIES = new String[] { IS_EXEC };
+    private static final String[] PROPERTIES = new String[] {
+        IS_EXEC, IS_EXEC_OR_SPEC_AND_USES_CTDS };
 
-    /** {@inheritDoc} */
+    /**
+     * @return True, if all of the following rules are satisfied, otherwise false:
+     * <ol>
+     *      <li>the current project is opened,</li>
+     *      <li>the current project is not protected, and</li>
+     *      <li>{@link #checkNode(String, INodePO)}.</li>
+     * </ol>
+     * {@inheritDoc}
+     */
     public boolean testImpl(Object receiver, String property, Object[] args) {
-        if (property.equals(IS_EXEC)) {
+        if (receiver instanceof SearchResultElement) {
+            @SuppressWarnings("unchecked")
             SearchResultElement<Long> searchResult = 
                     (SearchResultElement<Long>) receiver;
             IProjectPO project = GeneralStorage.getInstance().getProject();
             if (project != null && !project.getIsProtected()) {
-                INodePO nodePO = GeneralStorage
-                        .getInstance()
-                        .getMasterSession()
-                        .find(NodeMaker.getExecTestCasePOClass(),
-                                searchResult.getData());
-                if (nodePO != null) {
-                    try {
-                        IExecTestCasePO exec = (IExecTestCasePO) nodePO;
-                        if (exec.getParentProjectId().equals(project.getId())) {
-                            return true;
-                        }
-                    } catch (ClassCastException e) {
-                        return false;
+                try {
+                    INodePO node = GeneralStorage
+                            .getInstance()
+                            .getMasterSession()
+                            .find(NodeMaker.getTestCasePOClass(),
+                                    searchResult.getData());
+                    if (node != null) {
+                        return isValidNode(property, node);
                     }
+                } catch (IllegalStateException e) {
+                    // Thrown, if the project is closed,
+                    // while the project is reloaded. Ignore this case here,
+                    // because this property tester will be called again,
+                    // after the project is reloaded.
                 }
             }
         }
         return false;
+    }
+
+    /**
+     * @param property The property.
+     * @param node The node.
+     * @return True, if the following rules are satisfied, otherwise false:
+     * <p>If property is <b>isExec</b>:
+     * <ol>
+     *      <li>{@link #isExistingTestCase(INodePO)}.</li>
+     * </ol>
+     * <p>If property is <b>isExecOrSpecAndUsesCTDS</b>:
+     * <ol>
+     *      <li>The data cube is not empty, and</li>
+     *      <li>{@link #isExistingTestCase(INodePO)}.</li>
+     * </ol>
+     */
+    private static boolean isValidNode(String property, INodePO node) {
+        if (property.equals(IS_EXEC)) {
+            return isExistingTestCase(node);
+        } else if (property.equals(IS_EXEC_OR_SPEC_AND_USES_CTDS)) {
+            if (node instanceof ITestCasePO) {
+                ITestCasePO testCase = (ITestCasePO) node;
+                if (testCase.getReferencedDataCube() != null) {
+                    return isExistingTestCase(testCase);
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param node The node.
+     * @return
+     * <ol>
+     *   <li>True, if the given node is an execution Test Case and its specification
+     *       Test Case exist in the database.</li>
+     *   <li>True, if the given node is a specification Test Case.</li>
+     *   <li>False in every other cases.</li>
+     * </ol>
+     */
+    private static boolean isExistingTestCase(INodePO node) {
+        if (node instanceof IExecTestCasePO) {
+            IExecTestCasePO exec = (IExecTestCasePO) node;
+            return exec.getSpecTestCase() != null; // spec exists in DB
+        }
+        return node instanceof ISpecTestCasePO;
     }
 
     /** {@inheritDoc} */

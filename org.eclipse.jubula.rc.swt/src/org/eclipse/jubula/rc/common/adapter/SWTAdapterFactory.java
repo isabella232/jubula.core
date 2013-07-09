@@ -34,6 +34,7 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.List;
@@ -60,7 +61,9 @@ public class SWTAdapterFactory implements IAdapterFactory {
             new Class[]{Button.class, Menu.class, MenuItem.class, Tree.class,
                 Table.class, List.class, Text.class, StyledText.class,
                 Combo.class, CCombo.class, Label.class, CLabel.class, 
-                TabFolder.class, CTabFolder.class, ToolItem.class};
+                TabFolder.class, CTabFolder.class, ToolItem.class,
+                DateTime.class, Scale.class, Slider.class, Spinner.class,
+                Link.class };
     
     
     /**
@@ -112,9 +115,11 @@ public class SWTAdapterFactory implements IAdapterFactory {
                 returnvalue = new ControlAdapter(objectToAdapt);
             } else if (objectToAdapt instanceof Scale) {
                 returnvalue = new ControlAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof DateTime) {
+                returnvalue = new ControlAdapter(objectToAdapt);
             } else if (objectToAdapt instanceof ToolItem) {
                 returnvalue = new ToolItemAdapter(objectToAdapt);
-            }            
+            }           
             return returnvalue;
         }
         return null;

@@ -19,20 +19,12 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 07.02.2006
  */
 public class InitTestExecutionMessage extends Message {
-    /** version */
-    private static final double VERSION = 1.0;
-
     /** default activation method */
     private String m_defaultActivationMethod;
 
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.INIT_TEST_EXECUTION_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return default activation method */

@@ -214,7 +214,7 @@ public class BasicSearchResult implements ISearchResult {
          * @param image
          *            an image to display, may be null
          * @param action
-         *            delegate for "jumpt to" functionality
+         *            delegate for "jump to" functionality
          */
         public SearchResultElement(String name, DATATYPE data, Image image,
                 ISearchResultElementAction<DATATYPE> action) {

@@ -1,7 +1,7 @@
 \index{Functions}
 \index{Parameter!Function}
 
-You can let \app{} calculate specific values for you without having to enter the results yourself by using \bxname{functions}. There are specific functions that work out-of-the-box with \app{}, and additional functions can be added as well. 
+You can calculate specific values without to enter the results yourself  using \bxname{functions}. There are specific functions that work out-of-the-box, and additional functions can be added as well. 
 
 \subsubsection{Syntax for functions}
 \index{Functions!Syntax}
@@ -14,7 +14,7 @@ After the sign, you must enter the name of the function followed by the argument
 The arguments are separated by commas and are placed within round brackets. 
 
 \subsubsection{Pre-defined functions}
-The following functions are available directly in \app{}:
+The following functions are available directly in the \ite{}:
 
 \textbf{Mathematical functions}\\
 The following functions give their results as decimal numbers, e.g. 1.0, 1.2 etc. 
@@ -33,7 +33,7 @@ The following functions give their results as decimal numbers, e.g. 1.0, 1.2 etc
 \begin{description}
 \item [now]{Saves the current date in an internal format that can be used as a basis for the formatDate and modifyDate functions. This function takes no arguments: \bxshell{?now()}.}
 \item [formatDate]{Puts a date into a specific format. The date to be formatted is entered as the first argument, followed by the format string e.g. \bxshell{?formatDate(?now(), dd-MM-yyyy)}. The formats that can used here are the formats from the SimpleDateFormat class in Java.}
-\item [parseDate]{Reads a value that is a date and parses it into an internal format based on the format string given (i.e. how the date should be understood by \app{}). The first argument is the date, and the second is the format string  \bxshell{?parseDate(2011.06.25,yyyy.MM.dd)}. This function should be used when reading and working with dates shown in the \gdaut{}. }
+\item [parseDate]{Reads a value that is a date and parses it into an internal format based on the format string given (i.e. how the date should be understood). The first argument is the date, and the second is the format string  \bxshell{?parseDate(2011.06.25,yyyy.MM.dd)}. This function should be used when reading and working with dates shown in the \gdaut{}. }
 \item [modifyDate]{This function can add days (d), months (M), and years (y) to a given date. The date must first be parsed (i.e. using parseDate) so that the correct internal format is used. This function takes two arguments: the first is the date to modify, and the second is the modification to perform, e.g. \bxshell{?modifyDate(?now(),1d)}. Additions are entered as positive integers (but without a plus sign, e.g. 1d, 1M, 1y) and subtractions are entered as negative integers, e.g. -1d, -1M, -1y.}
 \end{description}
 

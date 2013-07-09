@@ -41,11 +41,6 @@ public class GetMonitoringDataMessage extends Message {
         return CommandConstants.GET_MONITORING_DATA_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return 1.0;
-    }
-
     /** @return the autId */
     public String getAutId() {
         return m_autId;

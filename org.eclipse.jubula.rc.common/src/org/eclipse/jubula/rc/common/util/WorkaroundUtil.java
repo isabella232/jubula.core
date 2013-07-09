@@ -33,7 +33,7 @@ public class WorkaroundUtil {
      * Name of the environment variable that defines whether the client should
      * ignore server-side timeouts that occur during test execution.
      */
-    private static final String IGNORE_TIMEOUT_VAR = "GD_IGNORE_TIMEOUT"; //$NON-NLS-1$
+    private static final String IGNORE_TIMEOUT_VAR = "TEST_RC_IGNORE_TIMEOUT"; //$NON-NLS-1$
     
     /**
      * Private constructor

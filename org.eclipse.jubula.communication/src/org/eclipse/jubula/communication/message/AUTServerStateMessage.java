@@ -42,9 +42,6 @@ public class AUTServerStateMessage extends Message {
     /** the constant used, when no state is set */
     public static final int UNKNOWN = MAX_CONSTANT;
 
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** the state */
     private int m_state;
 
@@ -84,11 +81,6 @@ public class AUTServerStateMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.AUT_SERVER_STATE_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return Returns the description. */

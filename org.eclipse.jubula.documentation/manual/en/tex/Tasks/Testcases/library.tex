@@ -1,12 +1,12 @@
 \index{Test Case!Library}
 \index{Library of Test Cases}
 
-Everything you need to create tests is already available for you in each \gdproject{}. The library of \gdcases{} which appears automatically in each new \gdproject{} contains all the actions supported by \app{} as well as some examples of more complex keywords. For general information about the library, read the section later on \bxpref{LibraryInformation}. To learn how to use the library to create tests, read the next section \bxpref{UseLibrary}. 
+Everything you need to create tests is already available for you in each \gdproject{}. The library of \gdcases{} which appears automatically in each new \gdproject{} contains all the actions supported for testing as well as some examples of more complex keywords. For general information about the library, read the section later on \bxpref{LibraryInformation}. To learn how to use the library to create tests, read the next section \bxpref{UseLibrary}. 
 
 
 \subsubsection{Using the library to create tests}
 \label{UseLibrary}
-Creating tests with \app{} is really just a matter of:
+Creating tests with the \ite{} is really just a matter of:
 \begin{itemize}
 \item Deciding how to structure your tests (i.e. what keywords to create and how to combine them).
 \item Choosing the \gdcases{} from the library (or from your own set of \gdcases{}) that you need to create these keywords. 
@@ -32,7 +32,7 @@ to see a list of all \gdcases{} that you can add to this \gdcase{}.
 \subsubsection{Information about the library}
 \label{LibraryInformation}
 \begin{enumerate}
-\item \app{} lets you use a  highly reusable library of \gdcases{} to specify tests. 
+\item You can use a  highly reusable library of \gdcases{} to specify tests. 
 \item The \gdprojects{} containing the \gdcase{} libraries are located under:\\
 \bxname{examples/testcaseLibrary}.
 
@@ -63,12 +63,12 @@ actions they support, and their parameters.}
 
 \subsubsection{Tips and tricks for using the \gdcase{} library}
 \label{UnderstandingLibrary}
-The \gdcases{} in the library are organised into actions. In the \bxname{basic} category, you will find the various actions offered by \app{}. The \bxname{complex} category contains some example keywords which are built up of more than one \gdcase{}. 
+The \gdcases{} in the library are organised into actions. In the \bxname{basic} category, you will find the various actions offered for testing. The \bxname{complex} category contains some example keywords which are built up of more than one \gdcase{}. 
 
 When specifying your tests, you need to find and choose which actions you will need. This takes some practice, but there are some hints which can help you:
 
 \textbf{High-Level Actions}\\
-\app{} executes \bxname{high-level} actions. This means that if you want to select something from a menu using the menupath, for example, you need to look in the category:\\
+During a test, \bxname{high-level} actions are executed. This means that if you want to select something from a menu using the menupath, for example, you need to look in the category:\\
 \bxname{Actions (basic)/Select/Menu Bar}\\
 and select the \gdcase{}:\\
 \bxname{ub\_mbr\_selectEntry\_byTextpath}\\
@@ -86,7 +86,7 @@ Different actions require different data. Some \gdcases{} in the library have be
 
 Some actions let you choose whether you want to enter data using an \bxname{indexpath} or a \bxname{textpath}. We recommend using the textpath so that you are not dependent on the order of e.g. menu entries or tabbed panes. 
 
-To make text-based parameters more robust, \app{} often lets you choose an \bxname{operator}. You can choose between \bxname{equals, matches, simple match, not equals}. Using matches lets you use regular expressions so that you don't have to hard-code the whole text parameter. 
+To make text-based parameters more robust, you can often choose an \bxname{operator}. You can choose between \bxname{equals, matches, simple match, not equals}. Using matches lets you use regular expressions so that you don't have to hard-code the whole text parameter. 
 
 
 

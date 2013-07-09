@@ -405,7 +405,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         }
         
         /**
-         * Constructor to create an alreadey existing Parameter with GUID
+         * Constructor to create an already existing parameter with GUID
          * @param guid the GUID.
          * @param name The name.
          * @param type The type.
@@ -413,6 +413,14 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         public Parameter(String guid, String name, String type) {
             this(name, type);
             m_guid = guid;
+        }
+
+        /**
+         * Copy constructor from an already existing parameter description.
+         * @param descr The parameter description.
+         */
+        public Parameter(IParamDescriptionPO descr) {
+            this(descr.getUniqueId(), descr.getName(), descr.getType());
         }
 
         /**
@@ -665,9 +673,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         List<IParamDescriptionPO> parameterList = 
             getParamInterfaceObj().getParameterList();
         for (IParamDescriptionPO descr : parameterList) {
-            Parameter parameter = new Parameter(descr.getUniqueId(), 
-                descr.getName(), descr.getType());
-            m_parameters.add(parameter);
+            m_parameters.add(new Parameter(descr));
         }
     }
 

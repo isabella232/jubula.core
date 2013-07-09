@@ -283,7 +283,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
         } finally {
             getMainTreeViewer().getTree().setRedraw(true);
             getMainTreeViewer().expandAll();
-            getMainTreeViewer().setSelection(new StructuredSelection(root));
+            setSelection(new StructuredSelection(root));
         }
     }
 
@@ -766,7 +766,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                     } 
                     break;
                 case Renamed:
-                    renameGUINode(po);
+                    createPartName();
                     break;
                 case StructureModified:
                     if (isVisibleInEditor) {
@@ -929,13 +929,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     }
 
     /**
-     * Refreshes the tree viewer.
-     */
-    protected void refresh() {
-        getTreeViewer().refresh();
-    }
-
-    /**
      * 
      * @return the receiver's current selection, if it is an 
      *         {@link IStructuredSelection}. Otherwise, returns an empty 
@@ -956,8 +949,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
      * 
      * @param addedNode The node that has been added.
      */
-    protected void handleNodeAdded(INodePO addedNode) {
-        getTreeViewer().refresh();
-        getTreeViewer().setSelection(new StructuredSelection(addedNode));
+    private void handleNodeAdded(INodePO addedNode) {
+        refresh();
+        setSelection(new StructuredSelection(addedNode));
     }
 }

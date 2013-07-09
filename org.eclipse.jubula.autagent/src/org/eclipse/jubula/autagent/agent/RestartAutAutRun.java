@@ -60,7 +60,7 @@ public class RestartAutAutRun implements IRestartAutHandler {
     /**
      * {@inheritDoc}
      */
-    public void restartAut(AutAgent agent, boolean force) {
+    public void restartAut(AutAgent agent, int timeout) {
         try {
             PrintWriter writer = new PrintWriter(
                     m_autrunSocket.getOutputStream(), true);
@@ -68,7 +68,7 @@ public class RestartAutAutRun implements IRestartAutHandler {
             writer.println(RestartAutProtocol.REQ_PREPARE_FOR_RESTART);
             m_socketReader.readLine();
 
-            agent.stopAut(m_autId, force);
+            agent.stopAut(m_autId, timeout);
             
             writer.println(RestartAutProtocol.REQ_RESTART);
             

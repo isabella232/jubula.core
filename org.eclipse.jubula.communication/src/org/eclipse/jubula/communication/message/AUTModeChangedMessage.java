@@ -20,9 +20,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 23.08.2004
  */
 public class AUTModeChangedMessage extends Message {
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** the new mode the AUTServer is in */
     private int m_mode;
 
@@ -34,11 +31,6 @@ public class AUTModeChangedMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.AUT_MODE_CHANGED_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return Returns the mode. */

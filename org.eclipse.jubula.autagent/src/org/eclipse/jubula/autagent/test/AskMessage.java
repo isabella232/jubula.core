@@ -44,18 +44,14 @@ public class AskMessage extends Message {
     public String getCommandClass() {
         return "org.eclipse.jubula.autagent.test.AskCommand"; //$NON-NLS-1$
     }
-    /**
-     * {@inheritDoc}
-     */
-    public double getVersion() {
-        return 1;
-    }
+
     /**
      * @return Returns the question.
      */
     public String getQuestion() {
         return m_question;
     }
+    
     /**
      * @param question The question to set.
      */

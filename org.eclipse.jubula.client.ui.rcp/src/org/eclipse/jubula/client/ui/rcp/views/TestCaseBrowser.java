@@ -84,7 +84,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
     /** The action to paste TreeItems */
     private PasteTreeItemActionTCBrowser m_pasteTreeItemAction;
     /** The action listener of the treeViewer */
-    private ActionListener m_actionListener;
+    private CutAndPasteEnablementListener m_actionListener;
     /** <code>m_doubleClickListener</code> */
     private final DoubleClickListener m_doubleClickListener = 
         new DoubleClickListener();
@@ -172,7 +172,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
         getViewSite().getActionBars().setGlobalActionHandler(
                 ActionFactory.PASTE.getId(), m_pasteTreeItemAction);
         getViewSite().getWorkbenchWindow().getSelectionService()
-            .addSelectionListener(m_actionListener);
+            .addSelectionListener(getActionListener());
         getViewSite().getActionBars().updateActionBars();
     }
 
@@ -187,7 +187,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
      */
     protected void addTreeListener() {
         getTreeViewer().addDoubleClickListener(m_doubleClickListener);
-        m_actionListener = new ActionListener();
+        setActionListener(new CutAndPasteEnablementListener());
     }  
     
     /**
@@ -214,7 +214,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
             DataEventDispatcher ded = DataEventDispatcher.getInstance();
             ded.removeDataChangedListener(this);
             getViewSite().getWorkbenchWindow().getSelectionService()
-                .removeSelectionListener(m_actionListener);
+                .removeSelectionListener(getActionListener());
             getTreeViewer().removeDoubleClickListener(m_doubleClickListener);
         } finally {
             MultipleTCBTracker.getInstance().removeTCB(this);
@@ -261,7 +261,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
      * @author BREDEX GmbH
      * @created 02.03.2006
      */
-    private final class ActionListener implements ISelectionListener {
+    public final class CutAndPasteEnablementListener 
+        implements ISelectionListener {
         /**
          * en-/disable cut-action
          * @param selList actual selection list
@@ -288,14 +289,14 @@ public class TestCaseBrowser extends AbstractJBTreeView
             m_pasteTreeItemAction.setEnabled(false);
             Object cbContents = getClipboard().getContents(
                     LocalSelectionClipboardTransfer.getInstance());
-            for (INodePO guiNode : selList) {
-                if (!(guiNode instanceof ICategoryPO 
-                        || guiNode instanceof ISpecTestCasePO
-                        || guiNode instanceof IProjectPO)
-                        || !NodeBP.isEditable(guiNode)
+            for (INodePO node : selList) {
+                if (!(node instanceof ICategoryPO 
+                        || node instanceof ISpecTestCasePO
+                        || node instanceof IProjectPO)
+                        || !NodeBP.isEditable(node)
                         || !(cbContents instanceof IStructuredSelection)
                         || !TCBrowserDndSupport.canMove(
-                                (IStructuredSelection)cbContents, guiNode)) {
+                                (IStructuredSelection)cbContents, node)) {
                     
                     m_pasteTreeItemAction.setEnabled(false);
                     return;
@@ -468,5 +469,21 @@ public class TestCaseBrowser extends AbstractJBTreeView
      */
     public void setViewTitle(String title) {
         super.setPartName(title);
+    }
+
+    /**
+     * @return the actionListener
+     */
+    public CutAndPasteEnablementListener getActionListener() {
+        return m_actionListener;
+    }
+
+    /**
+     * @param actionListener
+     *            the actionListener to set
+     */
+    private void setActionListener(
+            CutAndPasteEnablementListener actionListener) {
+        m_actionListener = actionListener;
     }
 }

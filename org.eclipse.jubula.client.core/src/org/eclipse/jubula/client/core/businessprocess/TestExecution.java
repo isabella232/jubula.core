@@ -142,7 +142,7 @@ public class TestExecution {
          */
         UNPAUSE,
         /**
-         * <code>CONTINUE_WITHOUT_EH</code> unpause test execution withou
+         * <code>CONTINUE_WITHOUT_EH</code> continue test execution without
          * executing the next event handler
          */
         CONTINUE_WITHOUT_EH
@@ -398,14 +398,13 @@ public class TestExecution {
         }
         ClientTestFactory.getClientTest().fireTestExecutionChanged(
                 new TestExecutionEvent(TestExecutionEvent.TEST_EXEC_FAILED,
-                        new JBException(Messages.CouldNotConnectToAUT 
-                            + StringConstants.COLON + StringConstants.SPACE
-                            + autName, MessageIDs.E_NO_AUT_CONNECTION_ERROR)));
+                        new JBException(Messages.CouldNotConnectToAUT + autName,
+                                MessageIDs.E_NO_AUT_CONNECTION_ERROR)));
     }
     
     /**
      * @param autName the AUT Id
-     * @return wheter the aut name is correctly set
+     * @return whether the AUT name is correctly set
      */
     public static boolean isAutNameSet(String autName) {
         return String.valueOf(autName).equals("null"); //$NON-NLS-1$
@@ -1789,8 +1788,15 @@ public class TestExecution {
      */
     public class SyncShutdownAndRestartCmd extends AbstractRestartCmd {
         @Override
-        protected Message getRestartMessage(AutIdentifier autId) {
-            return new RestartAutMessage(autId, false);
+        protected int getTerminationTimeout() throws JBException {
+            String timeout = getValueForParam("CompSystem.Timeout"); //$NON-NLS-1$
+            int parseInt = 0;
+            try {
+                parseInt = Integer.parseInt(timeout);
+            } catch (NumberFormatException nfe) {
+                LOG.error(nfe.getLocalizedMessage(), nfe);
+            }
+            return parseInt;
         }
     }
     
@@ -1798,7 +1804,13 @@ public class TestExecution {
      * @author BREDEX GmbH
      * @created 30.04.2013
      */
-    public abstract class AbstractRestartCmd implements IPostExecutionCommand {
+    public abstract class AbstractRestartCmd 
+        extends AbstractPostExecutionCommand {
+        /**
+         * timeout constant for using not timeout and force the AUTs restart
+         */
+        protected static final int NO_TIMEOUT__FORCE_RESTART = 0;
+        
         /**
          * {@inheritDoc}
          */
@@ -1806,7 +1818,6 @@ public class TestExecution {
             final AutIdentifier autId = getConnectedAutId();
             AUTTerminationListener registrationListener = 
                     new AUTTerminationListener(autId);
-            
             try {
                 TimeUtil.delay(2000);
                 
@@ -1826,11 +1837,20 @@ public class TestExecution {
                 clientTest.fireAUTStateChanged(new AUTEvent(
                         AUTEvent.AUT_ABOUT_TO_TERMINATE));
                 
+                final int initialTerminationTimeout = getTerminationTimeout();
+                final int terminationTimeout = initialTerminationTimeout
+                        + TimeoutConstants.AUT_KEEP_ALIVE_DELAY_DEFAULT;
+                final long startTime = System.currentTimeMillis();
+                long endTime = 0;
                 AutAgentConnection.getInstance().send(
-                        getRestartMessage(autId));
+                        new RestartAutMessage(autId, terminationTimeout));
                 while (!registrationListener.hasAutRestarted().get()) {
                     // wait for AUT registration
                     try {
+                        if (endTime == 0 && registrationListener
+                                .hasAutTerminated()) {
+                            endTime = System.currentTimeMillis();
+                        }
                         Thread.sleep(250);
                     } catch (InterruptedException e) {
                         // nothing
@@ -1845,6 +1865,12 @@ public class TestExecution {
                 }
                 initTestExecutionMessage(getConnectedAUTsConfigMap(),
                         new NullProgressMonitor());
+                long terminationDuration = endTime - startTime;
+                if (initialTerminationTimeout > NO_TIMEOUT__FORCE_RESTART
+                        && terminationDuration > terminationTimeout) {
+                    return EventFactory.createActionError(
+                            TestErrorEvent.TIMEOUT_EXPIRED);
+                }
                 return null;
             } finally {
                 AutAgentRegistration.getInstance().removeListener(
@@ -1865,11 +1891,11 @@ public class TestExecution {
         }
 
         /**
-         * @param autId
-         *            the AUT id to use
-         * @return the message used to restart the AUT
+         * @return the timeout used to restart the AUT
+         * @throws JBException
+         *             in case of data retrieval problems
          */
-        protected abstract Message getRestartMessage(AutIdentifier autId);
+        protected abstract int getTerminationTimeout() throws JBException;
     }
     
     /**
@@ -1878,8 +1904,8 @@ public class TestExecution {
      */
     public class RestartCmd extends AbstractRestartCmd {
         @Override
-        protected Message getRestartMessage(AutIdentifier autId) {
-            return new RestartAutMessage(autId, true);
+        protected int getTerminationTimeout() {
+            return NO_TIMEOUT__FORCE_RESTART;
         }
     }
     

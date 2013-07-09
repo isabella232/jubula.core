@@ -24,8 +24,6 @@ package org.eclipse.jubula.communication.message;
  * a public constructor with no parameter <br>
  * getCommandClass(): the fully qualified class name that's used by
  * createCommand(). <br>
- * getVersion() and setVersion(): It will be used to determine version conflicts
- * (future).
  * 
  * @author BREDEX GmbH
  * @created 09.07.2004
@@ -49,9 +47,6 @@ public abstract class Message {
      * @return the fully qualified name of the command object for this message
      */
     public abstract String getCommandClass();
-
-    /** @return Returns the version of the message. */
-    public abstract double getVersion();
 
     /** @return Returns the bindId. */
     public MessageIdentifier getBindId() {

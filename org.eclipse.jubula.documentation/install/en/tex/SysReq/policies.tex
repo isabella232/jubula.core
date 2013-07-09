@@ -16,11 +16,11 @@
 
 %\end{document}
 
-If the \gdaut uses a security manager (or, in some cases, a Java Policy), please be aware that the \app{} service component requires permission to create and use ClassLoader instances. Most policies will not permit this action for security reasons. The service component uses the ClassLoader to separate the program code used to inspect the \gdaut from the \gdaut itself as much as possible. 
+If the \gdaut uses a security manager (or, in some cases, a Java Policy), please be aware that the service component requires permission to create and use ClassLoader instances. Most policies will not permit this action for security reasons. The service component uses the ClassLoader to separate the program code used to inspect the \gdaut from the \gdaut itself as much as possible. 
 
 To grant the necessary permission, please use the following policy
 snippet (please use a personal installation directory instead of  the
-\app{} installation directory).
+ installation directory).
 
 
 \footnotesize
@@ -60,4 +60,4 @@ grant {
 \end{verbatim}
 \normalsize
 
-If these permissions are not granted, a SecurityException will be thrown when the \gdaut is started. This means that the \gdaut cannot be tested by \app{}. 
+If these permissions are not granted, a SecurityException will be thrown when the \gdaut is started. This means that the \gdaut cannot be tested. 

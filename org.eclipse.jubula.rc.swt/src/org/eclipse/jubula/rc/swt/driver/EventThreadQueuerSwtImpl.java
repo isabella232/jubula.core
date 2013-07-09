@@ -42,7 +42,14 @@ public class EventThreadQueuerSwtImpl implements IEventThreadQueuer {
         Validate.notNull(runnable, "runnable must not be null"); //$NON-NLS-1$
         RunnableWrapper wrapper = new RunnableWrapper(name, runnable);
         try {
-            getDisplay().syncExec(wrapper);
+            Display display = getDisplay();
+            if (display.isDisposed()) {
+                // this may happen e.g. during the shutdown process of the AUT
+                // see http://bugzilla.bredex.de/907 for additional information
+                log.warn("Display has already been disposed - skipping IRunnable invocation!"); //$NON-NLS-1$
+                return null;
+            }
+            display.syncExec(wrapper);
             StepExecutionException exception = wrapper.getException();
             if (exception != null) {
                 throw new InvocationTargetException(exception);

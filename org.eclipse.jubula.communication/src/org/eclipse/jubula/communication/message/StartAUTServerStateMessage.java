@@ -136,11 +136,6 @@ public class StartAUTServerStateMessage extends Message {
         return CommandConstants.START_AUT_SERVER_STATE_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
-    }
-
     /** @return Returns the reason. */
     public int getReason() {
         return m_reason;

@@ -22,9 +22,6 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
  * @created 25.08.2004
  */
 public class ObjectMappedMessage extends Message {
-    /** static version */
-    public static final double VERSION = 1.0;
-
     // the data of this message BEGIN
     /** the identifier of the components */
     private IComponentIdentifier[] m_componentIdentifiers;
@@ -39,11 +36,6 @@ public class ObjectMappedMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.OBJECT_MAPPED_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return the componentIdentifiers */

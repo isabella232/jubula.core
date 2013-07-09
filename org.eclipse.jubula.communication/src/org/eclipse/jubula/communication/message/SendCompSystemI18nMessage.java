@@ -28,11 +28,6 @@ public class SendCompSystemI18nMessage extends Message {
         return "org.eclipse.jubula.communication.commands.SetCompSystemI18nCommand"; //$NON-NLS-1$
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return 1.0;
-    }
-
     /** @return the ResourceBundles */
     public String getResourceBundles() {
         return m_resourceBundles;

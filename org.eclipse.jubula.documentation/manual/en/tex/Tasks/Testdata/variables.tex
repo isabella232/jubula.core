@@ -2,7 +2,7 @@
 \index{Parameter!Variable}
 
 \begin{itemize}
-\item \app{} lets you store values from the \gdaut{} to use later.
+\item You can store values from the \gdaut{} during a test to use later in the test.
 \item Some actions (e.g. store value) let you save a value as a variable. You specify the name of the variable, e.g. \bxshell{USERNAME}. 
 \item When you want to use the variable, you can enter it as a parameter by preceding it with a dollar sign: \bxshell{\$USERNAME}. 
 \end{itemize}
@@ -10,7 +10,7 @@ For more information on using variables, see the following sections:
 \begin{itemize}
 \item Working with variables in tests \bxpref{TasksAUTVariables}.
 \item Working with system variables \bxpref{TasksSystemVariables}.
-\item Working with the \app{} pre-defined variables \bxpref{TasksPredefinedVariables}.
+\item Working with the  pre-defined variables \bxpref{TasksPredefinedVariables}.
 \end{itemize}
 
 \subsubsection{Reading and using values (variables) from the \gdaut{}}
@@ -35,7 +35,7 @@ Bear in mind that the variable has to be stored before it can be used as a param
 Read the following sections for more information on:
 \begin{itemize}
 \item Using system variables in tests \bxpref{TasksSystemVariables}. 
-\item Using the pre-defined \app{} variables in tests \bxpref{TasksPredefinedVariables}
+\item Using the pre-defined  variables in tests \bxpref{TasksPredefinedVariables}
 \end{itemize}
 
 \subsubsection{Using environment variables in tests}
@@ -48,7 +48,7 @@ Read the following sections for more information on:
 \index{JRE parameters}
 
 
-\app{} lets you add variables to your operating system, which can be used in your tests. 
+You can add variables to your operating system, which can be used in your tests. 
 
 You will need to set environment variables which have the form:\\
 
@@ -57,7 +57,7 @@ You will need to set environment variables which have the form:\\
 
 To use the variable in your tests, enter the variable name (everything after the underscore) preceded by a dollar sign. Do not enter the \bxcaption{TEST\_UDV\_} part.
 
-\bxwarn{After entering or changing an environment variable, you will need to restart \app{}. Environment variables for the \ite{} (i.e. for the test) are only read from the machine on which the client part of \app{} is running, not from the machine where the \gdagent{} is running.}
+\bxwarn{After entering or changing an environment variable, you will need to restart the \ite{}. Environment variables for the \ite{} (i.e. for the test) are only read from the machine on which the \ite{} is running, not from the machine where the \gdagent{} is running.}
 
 Your system administrator will be able to help you with operating-system specific ways of setting environment variables. 
 
@@ -71,13 +71,13 @@ These variables can be used as environment variables on your machine or as JVM p
 
 
 
-\subsubsection{Using the \app{} pre-defined test execution variables}
+\subsubsection{Using the  pre-defined test execution variables}
 \label{TasksPredefinedVariables}
 \index{Variables!Pre-defined}
 \index{Predefined Variables}
 
 \begin{enumerate}
-\item \app{} contains pre-defined test execution variables which you can use in your tests. 
+\item There are pre-defined test execution variables which you can use in your tests. 
 \item The following variables are automatically initialized when executing a \gdsuite{}:
  \begin{description}
  \item [TEST\_TESTSUITE:]{The \gdsuite{} name.}
@@ -87,7 +87,7 @@ These variables can be used as environment variables on your machine or as JVM p
  \item [TEST\_PORTNUMBER:]{The port number for the \gdagent{} the test is running on.}
  \item [TEST\_AUT:]{The \gdaut{} name.}
  \item [TEST\_AUTCONFIG:]{The \gdaut{} configuration name.}
- \item [TEST\_CLIENTVERSION:]{The version of the \app{} client you are using.}
+ \item [TEST\_CLIENTVERSION:]{The version of the \ite{} you are using.}
  \item [TEST\_LANGUAGE:]{The language the AUT and the test are running in, e.g en\_US. }
  \end{description}
 \item To use the value of one of these variables in your test, enter: \\

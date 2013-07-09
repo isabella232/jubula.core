@@ -49,7 +49,6 @@ import org.slf4j.LoggerFactory;
  * implementation class action method.
  * @author BREDEX GmbH
  * @created 02.01.2007
- * 
  */
 public abstract class AbstractCapTestCommand implements ICommand {
     /** The logger */

@@ -470,6 +470,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      * @param id The ID of the view to find.
      * @return A <code>IViewReference</code> value. The view or null.
      **/
+    @Deprecated
     public static IViewPart getView(String id) {
         Validate.notEmpty(id, Messages.Missing_ID);
         if (getActivePage() != null) {
@@ -832,6 +833,21 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         return false;
     }
 
+    /**
+     * Save all opened editors, if they have a dirty state.
+     * @return True, if all opened editors has been saved and not in dirty state,
+     *         otherwise false.
+     */
+    public boolean saveAllDirtyEditors() {
+        if (!anyDirtyStar()) {
+            return true;
+        }
+        if (showSaveEditorDialog()) {
+            return !anyDirtyStar();
+        }
+        return false;
+    }
+
     /** Sets the hourglas cursor. */
     private static void setWaitCursor() {
         getDisplay().syncExec(new Runnable() {
@@ -922,21 +938,26 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         do {
             StackTraceElement[] stack = work.getStackTrace();
             for (StackTraceElement el : stack) {
+                String className = el.getClassName();
                 // check for
                 // org.eclipse.ui.views.markers.internal.MarkerAdapter.buildAllMarkers
-                if (el.getClassName().indexOf("MarkerAdapter") != -1) { //$NON-NLS-1$
+                if (className.indexOf("MarkerAdapter") != -1) { //$NON-NLS-1$
                     return true;
                 }
                 // double click error in help view
-                if (el.getClassName().indexOf("EngineResultSection") != -1) { //$NON-NLS-1$
+                if (className.indexOf("EngineResultSection") != -1) { //$NON-NLS-1$
                     return true;
                 }
                 // Context Sensitive Help when DSV Cell Editor is open #3291
-                if (el.getClassName().indexOf("ContextHelpPart") != -1) { //$NON-NLS-1$
+                if (className.indexOf("ContextHelpPart") != -1) { //$NON-NLS-1$
                     return true;
                 }
-                // Problem with missing icon on decoration in JFace; GD bugzilla #84 
-                if (el.getClassName().indexOf("CompositeImageDescriptor") != -1) { //$NON-NLS-1$
+                // http://bugzilla.bredex.de/84 
+                if (className.indexOf("CompositeImageDescriptor") != -1) { //$NON-NLS-1$
+                    return true;
+                }
+                // http://bugzilla.bredex.de/933 
+                if (className.indexOf("EditorStateParticipant") != -1) { //$NON-NLS-1$
                     return true;
                 }
             }

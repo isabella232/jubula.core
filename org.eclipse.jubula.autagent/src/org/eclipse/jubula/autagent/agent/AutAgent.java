@@ -451,7 +451,7 @@ public class AutAgent {
      * Removes the given AUT from the collection of registered AUTs.
      * 
      * @param autId
-     *            The ID of the AUT to deregister.
+     *            The ID of the AUT to de-register.
      */
     private void removeAut(AutIdentifier autId) {
         boolean wasSetChanged = false;
@@ -583,11 +583,30 @@ public class AutAgent {
      * 
      * @param autId
      *            The ID of the Running AUT to stop.
-     * @param force
-     *            indicates whether the AUT should be forced to quit or whether
-     *            the AUT will terminate by itself
+     * @param timeout
+     *            indicates whether the AUT should be forced to quit (timeout ==
+     *            0) or whether the AUT should terminate by itself (timeout > 0)
      */
-    public void stopAut(AutIdentifier autId, boolean force) {
+    public void stopAut(AutIdentifier autId, int timeout) {
+        boolean force = timeout == 0;
+        if (!force) {
+            long startTime = System.currentTimeMillis();
+            boolean timedOut = false;
+            while (m_auts.containsKey(autId) && !timedOut) {
+                timedOut = (startTime + timeout) < System.currentTimeMillis();
+                TimeUtil.delay(250);
+            }
+            if (!timedOut) {
+                // The AUT has just unregistered itself - which must not be exactly
+                // the same as terminated - therefore we wait for another moment
+                // of time
+                TimeUtil.delayDefaultOrExternalTime(
+                        AUT_POST_DEREGISTRATION_DELAY_DEFAULT,
+                        AUT_POST_DEREGISTRATION_DELAY_VAR);
+            } else {
+                force = true;
+            }
+        }
         synchronized (m_auts) {
             Communicator autCommunicator = m_auts.get(autId);
             if (autCommunicator != null) {
@@ -596,16 +615,6 @@ public class AutAgent {
                 }
             }
         }
-        if (!force) {
-            while (m_auts.containsKey(autId)) {
-                TimeUtil.delay(250);
-            }
-            // The AUT has just unregistered itself - which must not be exactly
-            // the same as terminated - therefore we wait for another moment of time
-            TimeUtil.delayDefaultOrExternalTime(
-                    AUT_POST_DEREGISTRATION_DELAY_DEFAULT, 
-                    AUT_POST_DEREGISTRATION_DELAY_VAR);
-        }
     }
 
     /**
@@ -613,15 +622,15 @@ public class AutAgent {
      * 
      * @param autId
      *            The ID of the Running AUT to restart.
-     * @param force
-     *            indicates whether the AUT should be forced to quit or whether
-     *            the AUT will terminate by itself
+     * @param timeout
+     *            indicates whether the AUT should be forced to quit (timeout ==
+     *            0) or whether the AUT should terminate by itself (timeout > 0)
      */
-    public void restartAut(AutIdentifier autId, boolean force) {
+    public void restartAut(AutIdentifier autId, int timeout) {
         // cache the start method
         final IRestartAutHandler message = m_autIdToRestartHandler.get(autId);
 
-        message.restartAut(this, force);
+        message.restartAut(this, timeout);
     }
     
     /**

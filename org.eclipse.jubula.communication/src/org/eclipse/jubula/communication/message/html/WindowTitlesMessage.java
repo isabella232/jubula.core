@@ -33,12 +33,6 @@ public class WindowTitlesMessage extends Message {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public double getVersion() {
-        return 1.0;
-    }
-    /**
      * 
      * @return the window titles of the application
      */

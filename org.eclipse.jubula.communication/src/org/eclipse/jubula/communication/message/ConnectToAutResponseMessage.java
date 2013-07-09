@@ -19,10 +19,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created Mar 18, 2010
  */
 public class ConnectToAutResponseMessage extends Message {
-
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** an error message, or <code>null</code> if no error occurred */
     private String m_errorMessage;
 
@@ -48,11 +44,6 @@ public class ConnectToAutResponseMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.CONNECT_TO_AUT_RESPONSE_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return an error message, or <code>null</code> if no error occurred */

@@ -200,7 +200,13 @@ public abstract class AbstractTreeOperationContext {
      *          of graphical root nodes if <code>parent == null</code>.
      */
     public abstract int getNumberOfChildren(Object parent);
-
+ 
+    /**
+     * @param node the node to check
+     * @return true if the node is a leaf
+     */
+    public abstract boolean isLeaf(Object node);
+    
     /**
      * 
      * @param parent    The parent node. Can be <code>null</code>.

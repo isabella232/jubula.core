@@ -195,7 +195,7 @@ public class ParamNameBP extends AbstractNameBP<IParamNamePO>
     
     /**
      * @param uniqueId uniqueId of paramName object to get
-     * @return ParamNamePO object to given name
+     * @return ParamNamePO object to given name, or null if it has not been found.
      */
     public IParamNamePO getParamNamePO(String uniqueId) {
         return getNamePO(uniqueId);

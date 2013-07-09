@@ -66,11 +66,6 @@ public class SendDirectoryResponseMessage extends Message {
         return CommandConstants.PROCESS_DIR_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
-    }
-
     /**
      * add a file entry
      * 

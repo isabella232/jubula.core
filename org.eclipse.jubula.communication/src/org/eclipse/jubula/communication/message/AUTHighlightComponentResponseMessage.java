@@ -20,9 +20,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 23.08.2004
  */
 public class AUTHighlightComponentResponseMessage extends Message {
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** set when component is highlighted by server */
     private boolean m_verified = false;
 
@@ -34,11 +31,6 @@ public class AUTHighlightComponentResponseMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.HIGHLIGHT_COMPONENT_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return Returns the verified. */

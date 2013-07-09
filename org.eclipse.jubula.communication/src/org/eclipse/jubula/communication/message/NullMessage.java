@@ -19,24 +19,10 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 02.02.2006
  */
 public class NullMessage extends Message {
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /**
      * {@inheritDoc}
-     * 
-     * @return
      */
     public String getCommandClass() {
         return CommandConstants.NULL_COMMAND;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return
-     */
-    public double getVersion() {
-        return VERSION;
     }
 }

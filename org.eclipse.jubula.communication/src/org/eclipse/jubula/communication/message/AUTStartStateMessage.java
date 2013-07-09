@@ -25,10 +25,6 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
  * @created 05.10.2004
  */
 public class AUTStartStateMessage extends Message {
-
-    /** static version */
-    public static final double VERSION = 1.0;
-
     // the data of this message BEGIN
     /**
      * the list of component identifiers of all supported and instantiated
@@ -72,7 +68,7 @@ public class AUTStartStateMessage extends Message {
     }
 
     /**
-     * add a componentIdentifier to the list. Used for serialising this message.
+     * add a componentIdentifier to the list. Used for serializing this message.
      * 
      * @param compId
      *            the component identifier to add, null values are ignored
@@ -86,10 +82,5 @@ public class AUTStartStateMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.AUT_STARTED_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 }

@@ -57,9 +57,6 @@ public class CAPTestResponseMessage extends Message {
     /** constant to signal to pause the execution */
     public static final int PAUSE_EXECUTION = 31;
 
-    /** The static version */
-    private static final double VERSION = 1.0;
-
     /** The state of test */
     private int m_state = TEST_OK;
 
@@ -118,13 +115,6 @@ public class CAPTestResponseMessage extends Message {
      */
     public String getCommandClass() {
         return CommandConstants.CAP_TEST_RESPONSE_COMMAND;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public double getVersion() {
-        return VERSION;
     }
 
     /**

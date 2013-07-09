@@ -51,6 +51,7 @@ import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
+import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.osgi.util.NLS;
@@ -236,9 +237,10 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                 missingExtensionLabel.setStyleRange(new StyleRange(
                         0, missingExtensionLabel.getText().length(), 
                         null, null, SWT.ITALIC));
-                ControlDecorator.decorateWarning(
-                        missingExtensionLabel, SWT.LEAD, 
-                        "MissingMonitoringExtension.fieldDecorationText"); //$NON-NLS-1$
+                ControlDecorator.createWarning(
+                        missingExtensionLabel,
+                        I18n.getString(
+                            "MissingMonitoringExtension.fieldDecorationText")); //$NON-NLS-1$
             }
         }
         resize();

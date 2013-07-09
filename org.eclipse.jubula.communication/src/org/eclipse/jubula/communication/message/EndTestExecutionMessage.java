@@ -20,9 +20,6 @@ public class EndTestExecutionMessage extends Message {
     /** <code>TIMEOUT</code> the timeout for this message */
     public static final int TIMEOUT = 10000;
 
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** Default constructor. */
     public EndTestExecutionMessage() {
         // empty
@@ -31,10 +28,5 @@ public class EndTestExecutionMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.END_TESTEXECUTION_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 }

@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -254,9 +253,7 @@ public class ChainRenderer implements IResultRendererUI {
                                                     list.get(j + 1)), list
                                             .get(j + 1));
                             
-                            Map<String, Long> map = 
-                                    PortableNodeInformationHelper
-                                    .getNodeInformation();
+                            PortableNodeInformationHelper.getNodeInformation();
                             
                             arr[0] = child;
                             return arr;

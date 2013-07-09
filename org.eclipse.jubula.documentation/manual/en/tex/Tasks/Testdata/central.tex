@@ -1,4 +1,4 @@
-\app{} lets you create and manage central test data sets for a \gdproject{} which can be reused in \gdcases{}. 
+You can create and manage central test data sets for a \gdproject{} which can be reused in \gdcases{}. 
 
 \subsubsection{Creating and editing central test data sets}
 \gdhelpid{guidancerCentralTestDataEditorContextId}{Central Test Data}
@@ -99,4 +99,35 @@ If you have existing Excel files that you want to convert into central test data
 \item Either select the whole directory (if it contains all Excel files) on the left, or select the individual Excel files on the right.
 \item Click \bxcaption{Finish} to start the import.
 \bxwarn{Your Excel files must contain the correct amount and type of \gdproject{} languages.}
+\end{enumerate}
+
+\subsubsection{Changing the column used in a central test data set for multiple \gdcases{}}
+\gdhelpid{searchRefactorChangeCtdsColumnUsageWizardPagePageContextId}{Changing Central Test Data Columns}
+\gdhelpid{guidancerCentralTestDataEditorContextId}{Central Test Data}
+\gdhelpid{searchResultViewContextId}{Search Result View}
+\label{TasksChangeCTDSColumn}
+If you have used a central test data set in multiple \gdcases{} and later realize that you have two columns in the central test data set that contain the same information, then you can change all \gdcases{} that use this central test data set to just use one column. Once you have done this, you can remove the unnecessary column from the central test data set. 
+
+\bxwarn{In order to perform this action, all \gdcases{} to be changed must not be in use by anyone else using the \gdproject{} -- you should ensure that this is the case before performing the action, otherwise the action cannot be carried out.}
+
+
+\begin{enumerate}
+\item Search for all places where the central test data set whose column usage you want to change is used. Use \bxname{Show where used} on the central test data set to see all places \bxpref{TasksShowWhereUsedDataSet}. 
+\item In the \gdsearchresultview{}, you will see all places where the selected central test data set is reused in this \gdproject{}, including any original specifications of \gdcases{} that use it, and any reused \gdcases{} that use it (as \gdcases{} or as \gdehandlers{}. We recommend selecting all entries to perform the action, otherwise you may have incomplete test data after only changing a subset. 
+\item You will only be able to perform the changes if:
+\begin{itemize}
+\item All the selected \gdcases{} use the same central test data set.
+\item All the selected \gdcases{} have their original specification in this \gdproject{}, i.e. you do not have a \gdcase{} from a reused \gdproject{} that uses the central test data set in this \gdproject{}.
+\item The \gdproject{} is not protected.
+\item The \gdcases{} you have selected are present (i.e. they are not missing from e.g. reused \gdprojects{}. 
+\item None of the selected \gdcases{} uses two different central test data sets (e.g. one central test data set on the originally specified \gdcase{}, and another one at a place where it is reused).
+\item The selected \gdcases{} have at least one referenced parameter and at least one of the referenced parameters has the same type as another parameter in the central test data set.
+\end{itemize}
+\item If the \gdproject{} is protected, or \gdcases{} are missing, the context-menu entry will be disabled. If any of the other prerequisites are not fulfilled, you will see an information dialog that lets you automatically deselect any invalid \gdcases{}. 
+\item From the context menu, select:\\
+\bxmenu{Change central test data set column usage}{}{}\\
+\item In the dialog that appears, you can select a parameter to change on the left-hand side, and the column to change it to on the right-hand side. You can only change the usage of columns whose types are the same. If you have e.g. TEXT1 (string) and TEXT2 (string)  in your central test data set and \gdcases{}, but you only require TEXT1, then select TEXT2 on the left-hand side and TEXT1 on the right hand side.
+\item Click \bxcaption{Finish} to perform the action. 
+\item All selected \gdcases{} will be altered to use the newly chosen column in place of the previously used column. 
+\item If the newly chosen column was already used in one or more of the selected \gdcases{}, then all places within the \gdcase{} that referenced the old column are changed to reference the newly chosen column. Using the example from above, all places where TEXT2 was referenced in the selected \gdcase{} will be changed to TEXT1. The changed name remains at the interface of the \gdcase{}; TEXT2 is not deleted from the \gdcase{}, but it is no longer used. If the newly chosen column was not yet used in one or more of the selected \gdcases{}, the old parameter name of the \gdcase{} is renamed to the newly chosen column. 
 \end{enumerate}

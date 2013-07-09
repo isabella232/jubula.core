@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -40,7 +39,7 @@ import org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser;
  * @author BREDEX GmbH
  * @created Mar 17, 2010
  */
-public class TJEditorDndSupport {
+public class TJEditorDndSupport extends AbstractEditorDndSupport {
 
     /**
      * Private constructor
@@ -208,34 +207,5 @@ public class TJEditorDndSupport {
         if (tsb != null) {
             tsb.addReferencedTestSuite(node, parentGUI, position);
         }
-    }
-
-    /**
-     * @param node the node to be moved.
-     * @param target the target node.
-     * @return the dropped node.
-     */
-    private static INodePO moveNode(INodePO node, INodePO target) {
-        int newPos = target.getParentNode().indexOf(target);
-        node.getParentNode().removeNode(node);
-        target.getParentNode().addNode(newPos, node);
-        return node;
-    }
-
-    /**
-     * Executes actions after the drop.
-     * @param node the dropped node. 
-     * @param targetEditor The editor to which the item has been dropped/pasted.
-     */
-    private static void postDropAction(INodePO node, 
-            TestJobEditor targetEditor) {
-        targetEditor.setFocus();
-        if (node != null) {
-            targetEditor.getTreeViewer().setSelection(
-                    new StructuredSelection(node));            
-        }
-        targetEditor.getTreeViewer().refresh();
-        targetEditor.getEditorHelper().setDirty(true);
-        LocalSelectionTransfer.getInstance().setSelection(null);
     }
 }

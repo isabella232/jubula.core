@@ -21,9 +21,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 18.12.2007
  */
 public class StopAUTServerStateMessage extends Message {
-    /** static version */
-    private static final double VERSION = 1.0;
-
     /** empty default constructor */
     public StopAUTServerStateMessage() {
         super();
@@ -32,10 +29,5 @@ public class StopAUTServerStateMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.STOP_AUT_SERVER_STATE_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 }

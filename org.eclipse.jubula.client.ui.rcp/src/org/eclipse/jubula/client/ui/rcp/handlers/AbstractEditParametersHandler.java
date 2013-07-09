@@ -24,6 +24,7 @@ import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.model.IModifiableParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AbstractEditParametersDialog.Parameter;
@@ -73,22 +74,26 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
      */
     protected static int getNewParamIndex(IParamDescriptionPO paramDesc, 
             List<Parameter> paramList) {
-        int index = 0;
-        for (Parameter param : paramList) {
-            if (param.getName().equals(paramDesc.getName())) {
-                return index;
-            }
-            String paramGuid = param.getGuid();
+        // 1. search for GUID
+        for (int i = 0; i < paramList.size(); i++) {
+            String paramGuid = paramList.get(i).getGuid();
             if ((paramGuid != null) 
                     && (paramGuid.equals(paramDesc.getUniqueId()))) {
-                return index;
+                return i;
             }
-            index++;
+        }
+        // 2. search for same name
+        for (int i = 0; i < paramList.size(); i++) {
+            if (paramList.get(i).getName().equals(paramDesc.getName())) {
+                return i;
+            }
         }
         return -1;
     }
     
     /**
+     * @param <T> The type of the main persistence object to modify, e.g.
+     *            {@link ISpecTestCase} or {@link ITestDataCubePO}
      * @param paramIntObj
      *            the {@link IModifiableParameterInterfacePO} which is to modify.
      * @param parameters
@@ -103,18 +108,15 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
      *            the param interface business process to use for model changes
      * @return if occurs any modification of parameters
      */
-    public static boolean editParameters(
-            IModifiableParameterInterfacePO paramIntObj,
-            List<Parameter> parameters, boolean isInterfaceLocked,
-            ParamNameBPDecorator mapper, 
-            AbstractParamInterfaceBP paramInterfaceBP) {
-
-        Map<String, IParamDescriptionPO> oldParams = 
-            new HashMap<String, IParamDescriptionPO>();
-        List<IParamDescriptionPO> paramList = paramIntObj.getParameterList();
-        for (IParamDescriptionPO oldDesc : paramList) {
-            oldParams.put(oldDesc.getUniqueId(), oldDesc);
-        }
+    protected static
+    <T extends IModifiableParameterInterfacePO> boolean editParameters(
+            T paramIntObj,
+            List<Parameter> parameters,
+            boolean isInterfaceLocked,
+            ParamNameBPDecorator mapper,
+            AbstractParamInterfaceBP<T> paramInterfaceBP) {
+        Map<String, IParamDescriptionPO> oldParamsMap =
+                createOldParamsMap(paramIntObj);
         // find new parameters
         List<Parameter> paramsToAdd = new ArrayList<Parameter>();
         List<Parameter> params = new ArrayList<Parameter>(parameters);
@@ -124,14 +126,26 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
                 params.remove(parameter);
             }
         }
-        // find renamed parameters
-        Map<IParamDescriptionPO, String> paramsToRename = 
+        // Find renamed parameters and parameters, which changed the usage,
+        // if they have the same new name.
+        Map<IParamDescriptionPO, String> paramsToRename =
             new HashMap<IParamDescriptionPO, String>();
+        Map<IParamDescriptionPO, String> paramsToChangeUsage =
+                new HashMap<IParamDescriptionPO, String>();
         for (Parameter param : params) {
-            IParamDescriptionPO paramDescr = oldParams.get(param.getGuid());
+            IParamDescriptionPO paramDescr = oldParamsMap.get(param.getGuid());
             if (paramDescr != null) {
                 if (!(paramDescr.getName().equals(param.getName()))) {
-                    paramsToRename.put(paramDescr, param.getName());
+                    Parameter paramNotRenamed = getNotRenamedParamWithSameName(
+                            oldParamsMap, params, param);
+                    if (paramNotRenamed == null) {
+                        // rename the first usage
+                        paramsToRename.put(paramDescr, param.getName());
+                    } else {
+                        // change the usage to the first parameter with the same name
+                        paramsToChangeUsage.put(paramDescr,
+                                paramNotRenamed.getGuid());
+                    }
                 }
             } else {
                 Assert.notReached(Messages.UnexpectedError 
@@ -141,43 +155,132 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
             }
         }
         // find parameters to remove
-        List<String> oldGuids = new ArrayList<String>(oldParams.keySet());
-        for (Parameter parameter : parameters) {
-            oldGuids.remove(parameter.getGuid());
-
-        }
-        List<IParamDescriptionPO> paramsToRemove = 
-            new ArrayList<IParamDescriptionPO>();
-        for (String oldGuid : oldGuids) {
-            paramsToRemove.add(oldParams.get(oldGuid));
-        }
+        List<IParamDescriptionPO> paramsToRemove = findParamsToRemove(
+                parameters, oldParamsMap);
         boolean isInterfaceLockedChanged = false;
+        ISpecTestCasePO specTc = null;
         if (paramIntObj instanceof ISpecTestCasePO) {
-            ISpecTestCasePO specTc = (ISpecTestCasePO)paramIntObj;
+            specTc = (ISpecTestCasePO)paramIntObj;
             isInterfaceLockedChanged = !((specTc).isInterfaceLocked() 
                     == isInterfaceLocked);
             TestCaseParamBP.setInterfaceLocked(specTc, isInterfaceLocked);
         }
         // update model
+        updateModel(paramIntObj, mapper, paramInterfaceBP, paramsToAdd,
+                paramsToRename, paramsToChangeUsage, paramsToRemove);
+        final boolean moved = moveParameters(paramIntObj, parameters);
+        // changes have been made, if one or more lists/maps are not empty
+        return     !paramsToRemove.isEmpty()
+                || !paramsToAdd.isEmpty()
+                || !paramsToRename.isEmpty()
+                || !paramsToChangeUsage.isEmpty()
+                || moved
+                || isInterfaceLockedChanged;
+    }
+
+    /**
+     * Notify the abstract parameter interface BP of the calculated parameters,
+     * which are new, removed, renamed or the usage have been changed.
+     * @param <T> The type of the node working at.
+     * @param paramIntObj The node working at.
+     * @param mapper The parameter name mapping.
+     * @param paramInterfaceBP The parameter interface BP.
+     * @param paramsToAdd The list of parameters to add.
+     * @param paramsToRename The map of renamed parameters.
+     * @param paramsToChangeUsage The map of changed parameters.
+     * @param paramsToRemove The list of removed parameter descriptions.
+     */
+    private static <T extends IModifiableParameterInterfacePO> void updateModel(
+            T paramIntObj, ParamNameBPDecorator mapper,
+            AbstractParamInterfaceBP<T> paramInterfaceBP,
+            List<Parameter> paramsToAdd,
+            Map<IParamDescriptionPO, String> paramsToRename,
+            Map<IParamDescriptionPO, String> paramsToChangeUsage,
+            List<IParamDescriptionPO> paramsToRemove) {
+        // add
         for (Parameter addParam : paramsToAdd) {
             paramInterfaceBP.addParameter(addParam.getName(), addParam
                     .getType(), paramIntObj, mapper);
         }
+        // remove
+        final List<Locale> projLangs = GeneralStorage.getInstance()
+                .getProject().getLangHelper().getLanguageList();
         for (IParamDescriptionPO desc : paramsToRemove) {
-            final List<Locale> projLangs = GeneralStorage.getInstance()
-                    .getProject().getLangHelper().getLanguageList();
             for (Locale locale : projLangs) {
                 paramInterfaceBP.removeParameter(desc, paramIntObj, locale);
             }
         }
+        // rename
         for (IParamDescriptionPO desc : paramsToRename.keySet()) {
-            paramInterfaceBP.renameParameters(desc, paramsToRename.get(desc),
-                    mapper);
+            paramInterfaceBP.renameParameters(
+                    desc, paramsToRename.get(desc), mapper);
         }
-        final boolean moved = moveParameters(paramIntObj, parameters);
-        return !paramsToRemove.isEmpty() || !paramsToAdd.isEmpty()
-                || !paramsToRename.isEmpty() || isInterfaceLockedChanged
-                || moved;
+        // usage changed
+        for (IParamDescriptionPO desc : paramsToChangeUsage.keySet()) {
+            for (Locale locale : projLangs) {
+                paramInterfaceBP.changeUsageParameter(paramIntObj,
+                        desc, paramsToChangeUsage.get(desc), locale, mapper);
+            }
+        }
+    }
+
+    /**
+     * @param parameters The list of new parameters.
+     * @param oldParams The map of old parameter GUIDs to
+     *                  their parameter description.
+     * @return The list of parameter descriptions to be removed.
+     */
+    private static List<IParamDescriptionPO> findParamsToRemove(
+            List<Parameter> parameters,
+            Map<String, IParamDescriptionPO> oldParams) {
+        List<String> oldGuids = new ArrayList<String>(oldParams.keySet());
+        for (Parameter parameter : parameters) {
+            oldGuids.remove(parameter.getGuid());
+        }
+        List<IParamDescriptionPO> paramsToRemove =
+            new ArrayList<IParamDescriptionPO>();
+        for (String oldGuid : oldGuids) {
+            paramsToRemove.add(oldParams.get(oldGuid));
+        }
+        return paramsToRemove;
+    }
+
+    /**
+     * @param paramIntObj The node (ITestDataPO or ISpecTestCasePO) working on.
+     * @return The map of parameter description GUIDs to it parameter description.
+     */
+    private static Map<String, IParamDescriptionPO> createOldParamsMap(
+            IModifiableParameterInterfacePO paramIntObj) {
+        Map<String, IParamDescriptionPO> oldParams =
+            new HashMap<String, IParamDescriptionPO>();
+        List<IParamDescriptionPO> paramList = paramIntObj.getParameterList();
+        for (IParamDescriptionPO oldDesc : paramList) {
+            oldParams.put(oldDesc.getUniqueId(), oldDesc);
+        }
+        return oldParams;
+    }
+
+    /**
+     * @param oldParamsMap The map of GUIDs to old parameter descriptions.
+     * @param params The list of new parameters.
+     * @param param The parameter searching for in the list.
+     * @return The first different not renamed parameter with the same name
+     *         as the given parameter, or null, if it has not been found.
+     */
+    private static Parameter getNotRenamedParamWithSameName(
+            Map<String, IParamDescriptionPO> oldParamsMap,
+            List<Parameter> params,
+            Parameter param) {
+        for (Parameter paramSearch : params) {
+            if (paramSearch != param) {
+                IParamDescriptionPO oldParam =
+                        oldParamsMap.get(paramSearch.getGuid());
+                if (oldParam.getName().equals(param.getName())) {
+                    return paramSearch;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -225,9 +328,9 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
      * @return if occurs any modification of parameters
      */
     public static boolean editParameters(
-            IModifiableParameterInterfacePO paramIntObj,
+            ITestDataCubePO paramIntObj,
             List<Parameter> parameters, ParamNameBPDecorator mapper,
-            AbstractParamInterfaceBP paramInterfaceBP) {
+            AbstractParamInterfaceBP<ITestDataCubePO> paramInterfaceBP) {
         return editParameters(paramIntObj, parameters, false, mapper,
                 paramInterfaceBP);
     }

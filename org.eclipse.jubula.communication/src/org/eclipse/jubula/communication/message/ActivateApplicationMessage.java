@@ -15,14 +15,6 @@ package org.eclipse.jubula.communication.message;
  * @created 10.02.2006
  */
 public abstract class ActivateApplicationMessage extends Message {
-    /** version */
-    private static final double VERSION = 1.0;
-
     /** {@inheritDoc} */
     public abstract String getCommandClass();
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
-    }
 }

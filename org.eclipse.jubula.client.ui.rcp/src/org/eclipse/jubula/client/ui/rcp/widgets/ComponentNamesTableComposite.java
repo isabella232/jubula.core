@@ -598,10 +598,7 @@ public class ComponentNamesTableComposite extends Composite implements
      */
     private void updateTableInput() {
         boolean editable = false;
-        if (getSelectedExecNodeOwner() instanceof AbstractTestCaseEditor
-                && ((AbstractTestCaseEditor)getSelectedExecNodeOwner())
-                        .getEditorHelper().requestEditableState() 
-                        == EditableState.OK) {
+        if (getSelectedExecNodeOwner() instanceof AbstractTestCaseEditor) {
             editable = true;
         }
         List<ICompNamesPairPO> input = null;

@@ -51,11 +51,6 @@ public class ServerLogResponseMessage extends Message {
         return CommandConstants.SERVER_LOG_RESPONSE_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
-    }
-
     /** @return the serverLog */
     public String getServerLog() {
         return m_serverLog;

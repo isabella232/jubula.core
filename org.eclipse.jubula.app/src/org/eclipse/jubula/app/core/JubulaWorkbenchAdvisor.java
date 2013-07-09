@@ -201,9 +201,7 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
     }
 
     /**
-     * catch every occuring RuntimeException
      * {@inheritDoc}
-     * @param exception
      */
     public void eventLoopException(Throwable exception) {
         if (exception instanceof RuntimeException) {

@@ -20,10 +20,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created Aug 2, 2011
  */
 public class GetKeyboardLayoutNameResponseMessage extends Message {
-
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** the name of the assigned keyboard layout */
     private String m_keyboardLayoutName = null;
 
@@ -46,19 +42,10 @@ public class GetKeyboardLayoutNameResponseMessage extends Message {
     }
     
     /**
-     * 
      * {@inheritDoc}
      */
     public String getCommandClass() {
         return CommandConstants.GET_KEYBOARD_LAYOUT_NAME_RESPONSE_COMMAND;
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public double getVersion() {
-        return VERSION;
     }
 
     /**

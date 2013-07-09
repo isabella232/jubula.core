@@ -164,8 +164,10 @@ public class ModelParamValueConverter extends ParamValueConverter {
      * replaces an old guid with a new guid in all available RefTokens, which
      * contain a modelstring containing the given old guid
      * @param map key: old Guid, value: new Guid
+     * @return True, if something has been modified, otherwise false.
      */
-    public void replaceGuidsInReferences(Map<String, String> map) {
+    public boolean replaceGuidsInReferences(Map<String, String> map) {
+        boolean isModified = false;
         List<RefToken> refTokens = getRefTokens();
         for (RefToken refToken : refTokens) {
             String oldGuid = RefToken.extractCore(refToken.getModelString());
@@ -173,9 +175,13 @@ public class ModelParamValueConverter extends ParamValueConverter {
                 String newGuid = map.get(oldGuid);
                 refToken.setModelString(
                     RefToken.replaceCore(newGuid, refToken.getModelString()));
+                isModified = true;
             }
         }
-        updateModelString();
+        if (isModified) {
+            updateModelString();
+        }
+        return isModified;
     }
     
     /**
@@ -193,11 +199,7 @@ public class ModelParamValueConverter extends ParamValueConverter {
      * updates model- and guiString after deletion of reference token
      */
     private void updateStrings() {
-        StringBuilder builder = new StringBuilder();
-        for (IParamValueToken token : getTokens()) {
-            builder.append(token.getModelString());
-        }
-        setModelString(builder.toString());
+        updateModelString();
         setGuiString(null);
     }
 }

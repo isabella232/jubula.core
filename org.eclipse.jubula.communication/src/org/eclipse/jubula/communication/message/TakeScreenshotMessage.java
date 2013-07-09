@@ -26,9 +26,4 @@ public class TakeScreenshotMessage extends Message {
     public String getCommandClass() {
         return CommandConstants.TAKE_SCREENSHOT_COMMAND;
     }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return 1.0;
-    }
 }

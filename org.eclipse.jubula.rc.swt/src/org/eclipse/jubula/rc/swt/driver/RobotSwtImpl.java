@@ -871,7 +871,6 @@ public class RobotSwtImpl implements IRobot {
 
     /**
      * {@inheritDoc}
-     *      int)
      */
     public void keyRelease(Object graphicsComponent, int keycode)
         throws RobotException {

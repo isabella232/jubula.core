@@ -38,11 +38,6 @@ public class ResetMonitoringDataMessage extends Message {
         return CommandConstants.RESET_MONITORING_DATA_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return 1.0;
-    }
-
     /** @return the autId */
     public String getAutId() {
         return m_autId;

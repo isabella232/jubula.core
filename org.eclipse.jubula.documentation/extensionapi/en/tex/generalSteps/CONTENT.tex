@@ -1,7 +1,7 @@
 \chapter{Introduction}
 \label{introduction}
 
-\app{} starts, controls, and observes \gdauts using its remote control component. In
+\gdauts{} are started, controlled and observed using its remote control component. In
 order for the \gdagent to know how to control each element of a GUI, we have
 outfitted the \gdagent with a pluggable interface for graphic components. An
 adapter factory containing one or more components must be implemented for and
@@ -30,9 +30,9 @@ control extension in section \ref{remoteControlExtension}.
 
 Extension examples with source code can be found in the subdirectory\\
 \bxshell{examples/development/extension/src/}\\
-of the \app{} installation.
+of the  installation.
 
-In general you always have to extend two parts of \app{}:
+In general you always have to extend two things:
 \begin{itemize}
 \item The \ite{} toolkit extension --  by writing your own \textbf{toolkit} plug-in:\\
       This will tell the \ite{} which new components and actions are
@@ -42,7 +42,7 @@ In general you always have to extend two parts of \app{}:
 \end{itemize}
 
 In this chapter all used directory names are located in the
-installation directory of \app{} as long as nothing else is specified.
+installation directory  as long as nothing else is specified.
 
 \section{Requirements}
 To create your own \ite{} toolkit and remote control extensions, you need:
@@ -50,7 +50,7 @@ To create your own \ite{} toolkit and remote control extensions, you need:
 \item \textbf{GUI}\emph{dancer} 7.0 / Jubula 2.0 or later
 \item Eclipse 3.4 or later (4.2 recommended)
 \item JDK 5.0
-\item Full write access in the \app{} installation directory for deploying the
+\item Full write access in installation directory for deploying the
 extension.
 \end{itemize}
 
@@ -58,7 +58,7 @@ extension.
 \label{iteExtension}
 
 This section shows you how to develop the \ite{} toolkit extension. We describe the
-steps to create the toolkit plug-in and how it can be exported into \app{}.
+steps to create the toolkit plug-in and how it can be exported.
 
 \subsection{Creating the toolkit plug-in}
 
@@ -72,7 +72,7 @@ The following steps have to be done to extend the \ite{} toolkit:
         \item \bxname{org.eclipse.rcp} and
         \item \bxname{org.eclipse.jubula.feature}
        \end{itemize}
-       from the \app{} installation folder \bxshell{\MakeLowercase{\app{}}/} as
+       from the installation folder as
        your \textbf{Target Platform} in the workspace preferences. Information
        on configuring the target platform can be found in Eclipse's online Help
        under \bxname{Plug-in Development Environment Guide > Tools >
@@ -130,7 +130,7 @@ this update site into  the \ite{}.
 \subsubsection{Install the toolkit feature from the update site}
 
 \begin{enumerate}
-\item Start \app{} and select from the main menu\\
+\item Start the \ite{}  and select from the main menu\\
 \bxmenu{Help}{Install new software...}{}.
 \item Click the \bxcaption{Add...}
 button in the \bxname{Install} dialog that appears.
@@ -151,7 +151,7 @@ deselected. Your feature should be visible in the central table of the dialog.
  Click \bxcaption{OK} in this dialog if the feature comes from a trusted
  source. This should be the case as long as you install your own feature.
  Then the installation process begins.
-\item Click the \bxcaption{Restart Now} button to perform a restart of \app{},
+\item Click the \bxcaption{Restart Now} button to perform a restart,
  when a dialog appears to prompt the restart that will safely
  finish the update / installation.  After the restart your \ite{} toolkit extension
  feature is installed.
@@ -164,7 +164,7 @@ deselected. Your feature should be visible in the central table of the dialog.
 can also execute the remote control if the embedded \gdagent{}  is
 used. Otherwise, the normal \gdagent{} runs as a remote control in a
 separate process independently from the \ite{}.
-For each supported component known to \app{} a \gdtesterclass must exist.
+For each supported component known, a \gdtesterclass must exist.
 This class implements the test actions that can be carried out on the component.
 You need to write a fragment for your component, which contains the
 \gdtesterclass and a corresponding adapter factory.
@@ -274,14 +274,14 @@ Please take the following guidelines into consideration for creating
         \bxshell{StepExecutionException}\\
         defined in the package named\\
         \bxname{org.eclipse.jubula.rc.common.exception}
-        to notify \app{} if the execution of the action has  failed.
+        to notify the \ite{} if the execution of the action has  failed.
 \end{itemize}
 
 \subsection{Deploying the fragment}
 
-Once you have written your fragment, you still need to make \app{}
+Once you have written your fragment, you still need to make all components
 aware of its presence. This is done by exporting the fragment and
-deploying it into the \app{} remote control.
+deploying it into the remote control.
 
 There are different ways for installing your fragment into the remote
 control, depending on the  \gdagent{} used and the specific \gdaut{}. You are free to
@@ -328,7 +328,7 @@ toolkit feature into the \ite{} and the fragment as described below.
 \section{\ite{} and remote control extension examples}
 \label{extensionExamples}
 
-\app{} comes with source code examples for extending supported toolkits. The
+In the installation, there are source code examples for extending supported toolkits. The
 examples can be found in the directory\\
 \bxshell{examples/development/extension},\\
 which contains the following sub-folders:
@@ -338,16 +338,15 @@ which contains the following sub-folders:
             can be imported by Eclipse:
  \begin{itemize}
    \item \bxshell{RCPExtension.zip}\\
-         A \app{} extension supporting \bxshell{Group} for SWT including client
+         An extension supporting \bxshell{Group} for SWT including client
          and remote control projects. After deploying these projects you should
-         be able to test the \bxshell{Group} in RCP applications with \app{}.
+         be able to test the \bxshell{Group} in RCP applications.
    \item \bxshell{SwingAUT.zip}\\
          An AUT using \bxshell{JSlider} from Swing.
    \item \bxshell{SwingExtension.zip}\\
-         The \app{} extension supporting \bxshell{JSlider} for Swing including
+         The  extension supporting \bxshell{JSlider} for Swing including
          client and remote control projects. After deploying these projects you
-         should be able to test the \bxshell{JSlider} in the Swing example AUT
-         with \app{}.
+         should be able to test the \bxshell{JSlider} in the Swing example AUT.
    \item \bxshell{SwingRendererExtension.zip}\\
          A remote control extension supporting a custom graphics
          component for Swing.
@@ -355,5 +354,5 @@ which contains the following sub-folders:
  \item[AUT]  Contains the binary file \bxshell{JSlider.jar}, which is a simple
  example AUT using the normally unsupported component \bxshell{JSlider}. After
  installing the \bxshell{JSlider} example extension from the \textbf{src}
- folder, \app{} will be able to test this new component.
+ folder, you will be able to test this new component.
 \end{description}

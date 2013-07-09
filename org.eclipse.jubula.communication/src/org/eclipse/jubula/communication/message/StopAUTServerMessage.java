@@ -50,11 +50,6 @@ public class StopAUTServerMessage extends Message {
         return CommandConstants.STOP_AUT_SERVER_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
-    }
-
     /** @return the ID of the AUT to stop. */
     public AutIdentifier getAutId() {
         return m_autId;

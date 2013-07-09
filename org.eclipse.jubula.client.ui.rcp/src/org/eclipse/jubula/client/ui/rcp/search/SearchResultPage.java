@@ -16,6 +16,7 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -178,8 +179,9 @@ public class SearchResultPage extends AbstractSearchResultPage
             if (!(event.getSelection() instanceof IStructuredSelection)) {
                 return;
             }
+            @SuppressWarnings("unchecked")
             SearchResultElement<Long> element = 
-                (SearchResultElement)((IStructuredSelection)event
+                (SearchResultElement<Long>)((IStructuredSelection)event
                     .getSelection()).getFirstElement();
             element.jumpToResult();
         }
@@ -236,4 +238,13 @@ public class SearchResultPage extends AbstractSearchResultPage
             });
         }
     }
+
+    /**
+     * @param selection
+     *            the selection to set
+     */
+    public void setSelection(ISelection selection) {
+        getTreeViewer().setSelection(selection, true);
+    }
+
 }

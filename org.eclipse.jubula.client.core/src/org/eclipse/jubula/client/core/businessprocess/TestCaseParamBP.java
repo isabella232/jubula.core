@@ -11,11 +11,13 @@
 package org.eclipse.jubula.client.core.businessprocess;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -52,12 +54,6 @@ import org.eclipse.jubula.tools.xml.businessmodell.Param;
  * @created 22.08.2005
  */
 public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
-    /**
-     * The constructor.
-     */
-    public TestCaseParamBP() {
-        // empty
-    }
 
     /** {@inheritDoc} */
     protected void updateParam(GuiParamValueConverter conv, 
@@ -207,7 +203,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
      * @param locale currently used language
      */
     public void removeParameter(IParamDescriptionPO desc, 
-        ISpecTestCasePO specTc, Locale locale) {
+            ISpecTestCasePO specTc, Locale locale) {
         specTc.removeParameter(desc.getUniqueId());
         removeReferencesInChildren(specTc, desc, locale);
     }
@@ -252,15 +248,71 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
                     final boolean isModified = conv.removeReference(
                             desc.getUniqueId());
                     if (isModified) {
-                        cell.getTestData().setValue(locale, 
-                            conv.getModelString(), 
+                        cell.getTestData().setValue(locale,
+                            conv.getModelString(),
                             GeneralStorage.getInstance().getProject());
                     }
                 }
             }
         }
     }
-    
+
+    /**
+     * Change the usage of the given old parameter to the new parameter GUID
+     * in all child execution Test Cases of the given specification Test Case.
+     * @param specTc The specification Test Case for changing the usage at.
+     * {@inheritDoc}
+     */
+    public void changeUsageParameter(ISpecTestCasePO specTc,
+            IParamDescriptionPO desc, String newGuid, Locale locale,
+            ParamNameBPDecorator mapper) {
+        changeUsageReferences(
+                specTc.getNodeListIterator(), desc, newGuid, locale, mapper);
+        final Collection<IEventExecTestCasePO> eventHandler =
+            specTc.getAllEventEventExecTC();
+        changeUsageReferences(
+                eventHandler.iterator(), desc, newGuid, locale, mapper);
+    }
+
+    /**
+     * @param childrenIt the Iterator of the children which References are to
+     * remove.
+     * @param desc The old parameter description, which have to be changed.
+     * @param newGuid The new GUID to change the reference to.
+     * @param locale locale currently used language
+     * @param mapper The parameter name mapping used here to persist test data.
+     */
+    private void changeUsageReferences(Iterator childrenIt,
+            IParamDescriptionPO desc, String newGuid, Locale locale,
+            ParamNameBPDecorator mapper) {
+        while (childrenIt.hasNext()) {
+            final IParamNodePO child = (IParamNodePO)childrenIt.next();
+            final ITDManager mgr = child.getDataManager();
+            final Iterator<TDCell> refIt =
+                child.getParamReferencesIterator(locale);
+            while (refIt.hasNext()) {
+                final TDCell cell = refIt.next();
+                final String guid = mgr.getUniqueIds().get(cell.getCol());
+                final IParamDescriptionPO childDesc =
+                    child.getParameterForUniqueId(guid);
+                final ITestDataPO testData = cell.getTestData();
+                final ModelParamValueConverter conv =
+                    new ModelParamValueConverter(testData, child,
+                            locale, childDesc);
+                if (conv.containsReferences()) {
+                    Map<String, String> map = new HashMap<String, String>();
+                    map.put(desc.getUniqueId(), newGuid);
+                    if (conv.replaceGuidsInReferences(map)) {
+                        testData.setValue(locale,
+                            conv.getModelString(),
+                            GeneralStorage.getInstance().getProject());
+                        mapper.addTestDataPO(testData);
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Gets a List of IExecTestCasePO with unused TestData of the given 
      * ISpecTestCasePO.
@@ -341,4 +393,5 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
         }
         return true;
     }
+
 }

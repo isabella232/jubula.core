@@ -17,9 +17,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created Apr 19, 2010
  */
 public class EndTestExecutionResponseMessage extends Message {
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** Default constructor. */
     public EndTestExecutionResponseMessage() {
         // empty
@@ -28,10 +25,5 @@ public class EndTestExecutionResponseMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.END_TESTEXECUTION_RESPONSE_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 }

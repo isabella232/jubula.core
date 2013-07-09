@@ -18,16 +18,13 @@ package org.eclipse.jubula.autagent.agent;
  * @created Mar 26, 2010
  */
 public interface IRestartAutHandler {
-
     /**
-     * 
      * @param agent
      *            The AUT Agent with which the AUT to be restarted is
      *            registered. This may be used, for example, to stop the AUT.
-     * @param force
-     *            indicates whether the AUT should be forced to quit or whether
-     *            the AUT will terminate by itself
+     * @param timeout
+     *            indicates whether the AUT should be forced to quit (timeout ==
+     *            0) or whether the AUT should terminate by itself (timeout > 0)
      */
-    public void restartAut(AutAgent agent, boolean force);
-    
+    public void restartAut(AutAgent agent, int timeout);
 }

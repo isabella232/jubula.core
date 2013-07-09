@@ -21,9 +21,6 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
  * @created 23.08.2004
  */
 public class AUTHighlightComponentMessage extends Message {
-    /** Static version */
-    public static final double VERSION = 1.0;
-
     /** component to highlight */
     private IComponentIdentifier m_component;
 
@@ -35,11 +32,6 @@ public class AUTHighlightComponentMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.AUT_HIGHLIGHT_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /** @return Returns the component. */

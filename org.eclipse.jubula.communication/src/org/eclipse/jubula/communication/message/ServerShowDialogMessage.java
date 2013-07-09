@@ -110,11 +110,6 @@ public class ServerShowDialogMessage extends Message {
         return CommandConstants.SERVER_SHOW_DIALOG_COMMAND;
     }
 
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
-    }
-
     /**
      * what dialog should be opened/closed
      * 

@@ -138,8 +138,7 @@ public class AnalyzeParameter {
     public String getValue() {
         if (StringUtils.isEmpty(m_modifiedValue)) {
             return m_defaultValue;
-        } else {
-            return m_modifiedValue;
         }
+        return m_modifiedValue;
     }
 }

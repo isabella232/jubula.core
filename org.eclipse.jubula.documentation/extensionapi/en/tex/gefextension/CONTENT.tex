@@ -1,7 +1,7 @@
-Although \app{} supports identification and testing of GEF components
+Although the identification and testing of GEF components is supported
 out-of-the-box, it is highly recommended that application developers enhance
 this support by implementing an accessibility plug-in for their application. Such a
-plug-in makes identification of GEF components more robust and allows \app{}
+plug-in makes identification of GEF components more robust and allows 
 tests to reference additional components, such as connection anchors.
 
 Apart from the general description for creating toolkit extensions in the
@@ -31,9 +31,9 @@ toolkit extension.
 \subsection{Walkthrough}
 The first step for implementing your accessibility plug-in is to create
 identifiers for each type of GEF component that you wish to make accessible for
-\app{} tests. An identifier is a Java class that implements
+ tests. An identifier is a Java class that implements
 \bxshell{IEditPartIdentifier} from the package named
-\bxname{org.eclipse.jubula.rc.rcp.e3.gef.identifier} and provides \app{} with
+\bxname{org.eclipse.jubula.rc.rcp.e3.gef.identifier} and provides 
 additional and/or more precise information about a specific \bxshell{EditPart}
 from the package named \bxname{org.eclipse.gef}. The granularity of your
 identifier classes will depend on the class hierarchy of the edit parts in the
@@ -42,8 +42,7 @@ you can write a single Identifier for that superclass that will be able to
 provide accessibility for all edit parts that inherit from that superclass. See
 the example in section \ref{gefreference}, which shows a sample implementation.
 
-The next step is to create an adapter factory. This extension will provide
-\app{} with information regarding which identifier to use for each edit part.
+The next step is to create an adapter factory. This extension provides information regarding which identifier to use for each edit part.
 \begin{enumerate}
 \item  Open the \bxshell{plugin.xml} file from your accessibility plug-in and
 select the \textbf{Extension} tab. % (\bxfigref{extensionstab}).
@@ -102,7 +101,7 @@ parameter.}
 \label{gefreference}
 A sample accessibility plug-in for certain elements of the Logic Diagram sample
 plug-in project (contributed from the GEF plug-ins to Eclipse's New Project
-Wizard) are included in the installation of \app{}. A default implementation can
+Wizard) are included in the installation. A default implementation can
 be found in the directory \bxshell{examples/development/gef}. There you will
 find a zip-file containing a full accessibility plug-in example.
 

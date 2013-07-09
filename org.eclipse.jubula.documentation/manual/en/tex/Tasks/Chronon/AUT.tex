@@ -2,7 +2,7 @@
 
 You can configure your \gdaut{} to run with Chronon recording so that you can analyze any errors that occur during your automated test runs. See the section later \bxpref{TasksChrononTools} on analysing the reports for information on the tooling required to do this.
 
-\bxtipp{\jb users: The support for Chronon recording in \gdauts{} is currently only available in the standalone software.}
+\bxtipp{\jb{} Feature users: The support for Chronon recording in \gdauts{} is currently only available in the standalone software.}
 
 \subsubsection{Adding Chronon information in the \gdaut{} configuration}
 \gdhelpid{autConfigSettingWizardPagePageContextId}{Configuring an AUT}
@@ -27,7 +27,7 @@ Enter the following configuration details:
 \item [Config file:]{Enter the absolute path to the configuration file for the recorder. The configuration file has the same setup as a Java properties file. It must contain the following properties:\\
 \bxshell{servermode} (set to true)\\
 \bxshell{name} (the \gdaut{} name as it will be displayed in the Chronon Recording Server UI)\\
-\bxshell{autostartwithconfig} (if you want the recording to start automatically (recommended when working with \app{}), then the recording parameters need to be set in the Chronon application.)\\ 
+\bxshell{autostartwithconfig} (if you want the recording to start automatically (recommended) then the recording parameters need to be set in the Chronon application.)\\ 
 \bxshell{port} (optional -- if none is entered, 8042 is used.). \\
 The documentation for the configuration file is available on the Chronon site:\\
 \href{http://chronon.onconfluence.com/\\
@@ -52,7 +52,7 @@ You should bear the following in mind when using Chronon for recording informati
 
 \textbf{Stopping or restarting the \gdaut{} will cause the previously recorded information to be lost}
 \begin{itemize}
-\item The recording files are written when the \gdaut{} is stopped. This means either stopping the \gdaut{} by hand, using the \bxcaption{Stop AUT} button in \app{} or when you use the \bxname{restart} action. 
+\item The recording files are written when the \gdaut{} is stopped. This means either stopping the \gdaut{} by hand, using the \bxcaption{Stop AUT} button in on the toolbar in the \ite{} or when you use the \bxname{restart} action. 
 \item Because of this, we recommend executing individual \gdcases{} (use cases) in \gdsuites{} that you want to analyze with Chronon. You should ensure that any \gdehandlers{} in the \gdsuite{} will not cause the \gdaut{} to restart.
 \end{itemize}
 
@@ -61,7 +61,7 @@ You should bear the following in mind when using Chronon for recording informati
 
 \subsubsection{Analyzing the generated reports}
 \label{TasksChrononTools}
-To analyze the reports generated, you will require the Chronon Time Travelling Debugger from Chronon Systems. \app{} users can download a trial version of this tool. The link to the trial version is provided in the expert \gdaut{} configuration.
+To analyze the reports generated, you will require the Chronon Time Travelling Debugger from Chronon Systems. You can download a trial version of this tool. The link to the trial version is provided in the expert \gdaut{} configuration.
 
 Open source projects may contact Chronon Systems for free licenses. 
 

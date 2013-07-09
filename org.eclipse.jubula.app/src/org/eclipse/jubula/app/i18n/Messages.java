@@ -20,7 +20,6 @@ public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.app.i18n.messages"; //$NON-NLS-1$
     
     public static String ActionBuilderEdit;
-    public static String ActionBuilderHelpCheatSheetsItem;
     public static String ActionBuilderMyFileEntry;
     public static String ActionBuilderMyHelpEntry;
     public static String ActionBuilderopenPerspective;

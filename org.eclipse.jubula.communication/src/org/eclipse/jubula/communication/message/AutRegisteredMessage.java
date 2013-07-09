@@ -20,11 +20,7 @@ import org.eclipse.jubula.tools.registration.AutIdentifier;
  * @created Jan 26, 2010
  */
 public class AutRegisteredMessage extends Message {
-
-    /** version */
-    public static final double VERSION = 1.0;
-
-    /** AUTID */
+    /** AUT ID */
     private AutIdentifier m_autId;
 
     /** boolean m_registered */
@@ -54,11 +50,6 @@ public class AutRegisteredMessage extends Message {
     /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.AUT_REGISTERED_COMMAND;
-    }
-
-    /** {@inheritDoc} */
-    public double getVersion() {
-        return VERSION;
     }
 
     /**

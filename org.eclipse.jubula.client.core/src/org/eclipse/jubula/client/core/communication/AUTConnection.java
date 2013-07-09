@@ -94,8 +94,7 @@ public class AUTConnection extends BaseConnection {
             // create a communicator on any free port
             Communicator communicator = new Communicator(0, this.getClass()
                     .getClassLoader());
-            communicator
-                    .addCommunicationErrorListener(m_autConnectionListener);
+            communicator.addCommunicationErrorListener(m_autConnectionListener);
             setCommunicator(communicator);
         } catch (IOException ioe) {
             handleInitError(ioe);
@@ -164,11 +163,12 @@ public class AUTConnection extends BaseConnection {
      * badly which will be corrected in a future version!
      */
     public synchronized void reset() {
-        if (getCommunicator() != null) {
-            getCommunicator().clearListeners();
+        Communicator communicator = getCommunicator();
+        if (communicator != null) {
+            communicator.interruptAllTimeouts();
+            communicator.clearListeners();
+            communicator.close();
         }
-
-        getCommunicator().close();
 
         instance = null;
     }
@@ -183,9 +183,9 @@ public class AUTConnection extends BaseConnection {
      */
     public boolean connectToAut(AutIdentifier autId,
             IProgressMonitor monitor) {
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
         if (!isConnected()) {
-            DataEventDispatcher.getInstance().fireAutServerConnectionChanged(
-                    ServerState.Connecting);
+            ded.fireAutServerConnectionChanged(ServerState.Connecting);
             try {
                 monitor.subTask(NLS.bind(Messages.ConnectingToAUT, 
                         autId.getExecutableName()));
@@ -204,8 +204,7 @@ public class AUTConnection extends BaseConnection {
                         && responseCommand.getMessage().getErrorMessage() 
                             != null) {
                     // Connection has failed
-                    DataEventDispatcher.getInstance()
-                        .fireAutServerConnectionChanged(
+                    ded.fireAutServerConnectionChanged(
                             ServerState.Disconnected);
                     return false;
                 }
@@ -218,8 +217,7 @@ public class AUTConnection extends BaseConnection {
                 }
                 if (isConnected()) {
                     m_connectedAutId = autId;
-                    LOG.info(Messages.ConnectionToAUTEstablished 
-                            + StringConstants.DOT);
+                    LOG.info(Messages.ConnectionToAUTEstablished);
                     IAUTMainPO aut = AutAgentRegistration.getAutForId(autId, 
                             GeneralStorage.getInstance().getProject());
                     if (aut != null) {
@@ -232,25 +230,20 @@ public class AUTConnection extends BaseConnection {
                     }
                     return true;
                 }
-                LOG.error(Messages.ConnectionToAUTCouldNotBeEstablished
-                        + StringConstants.DOT);
+                LOG.error(Messages.ConnectionToAUTCouldNotBeEstablished);
             } catch (CommunicationException e) {
-                LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT
-                        + StringConstants.DOT, e);
+                LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT, e);
             } catch (UnknownHostException e) {
-                LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT
-                        + StringConstants.DOT, e);
+                LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT, e);
             } catch (JBVersionException e) {
-                LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT
-                        + StringConstants.DOT, e);
+                LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT, e);
             } finally {
                 monitor.done();
             }
         } else {
             LOG.warn(Messages.CannotEstablishNewConnectionToAUT);
         } 
-        DataEventDispatcher.getInstance().fireAutServerConnectionChanged(
-                ServerState.Disconnected);
+        ded.fireAutServerConnectionChanged(ServerState.Disconnected);
         return false;
     }
 
@@ -293,8 +286,7 @@ public class AUTConnection extends BaseConnection {
         IAUTInfoListener listener = new IAUTInfoListener() {
             public void error(int reason) {
                 LOG.error(Messages.ErrorOccurredWhileGettingComponentsFromAUT
-                       + StringConstants.COLON + StringConstants.SPACE 
-                       + reason);
+                        + reason);
             }
         };
 
@@ -368,7 +360,6 @@ public class AUTConnection extends BaseConnection {
 
         /**
          * {@inheritDoc}
-         *      int)
          */
         public void connectingFailed(InetAddress inetAddress, int port) {
             StringBuilder msg = new StringBuilder();

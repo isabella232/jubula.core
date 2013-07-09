@@ -128,7 +128,7 @@
       class="org.eclipse.jubula.client.ui.rcp.propertytester.SearchTestCasePropertyTester"
       id="org.eclipse.jubula.client.ui.rcp.propertytester.SearchTestCaseTester"
       namespace="org.eclipse.jubula.client.ui.rcp.propertytester.SearchTestCase"
-      properties="isExec"
+      properties="isExec,isExecOrSpecAndUsesCTDS"
       type="org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult$SearchResultElement" />
     <propertyTester
       class="org.eclipse.jubula.client.ui.rcp.propertytester.ParameterInterfacePropertyTester"
@@ -888,6 +888,10 @@
       name="%ReplaceTestCases" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.SearchReplaceParameterNameCommand"
+      name="%ReplaceParameterNames" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.OpenCentralTestDataEditor"
       name="%OpenCentralTestDataEditor" />
     <command
@@ -1270,8 +1274,13 @@
       locationURI="popup:org.eclipse.jubula.client.ui.rcp.search.searchResultPage?after=additions">
       <command
         commandId="org.eclipse.jubula.client.ui.rcp.commands.SearchReplaceTestCaseCommand"
-        style="push"
-        label="%ReplaceTestCases" />
+        style="push" />
+    </menuContribution>
+    <menuContribution
+      locationURI="popup:org.eclipse.jubula.client.ui.rcp.search.searchResultPage?after=additions">
+      <command
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.SearchReplaceParameterNameCommand"
+        style="push" />
     </menuContribution>
     <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
       <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.LanguageToolbar">
@@ -1417,7 +1426,7 @@
           commandId="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow"
           id="org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.ChooseHTMLWindowCommand"
           style="pulldown"
-          icon="icons/startOM.gif"
+          icon="icons/selectWindow.png"
           tooltip="%ChooseAUTWindow">
           <visibleWhen checkEnabled="false">
              <and>
@@ -2546,6 +2555,21 @@
             <test
               forcePluginActivation="true"
               property="org.eclipse.jubula.client.ui.rcp.propertytester.SearchTestCase.isExec" />
+          </iterate>
+        </and>
+      </enabledWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.SearchChangeCtdsColumnUsageHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.SearchReplaceParameterNameCommand">
+      <enabledWhen>
+        <and>
+          <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectActive">
+            <equals value="true" />
+          </with>
+          <iterate ifEmpty="false" operator="and">
+            <test
+                property="org.eclipse.jubula.client.ui.rcp.propertytester.SearchTestCase.isExecOrSpecAndUsesCTDS" />
           </iterate>
         </and>
       </enabledWhen>
