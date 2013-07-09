@@ -353,13 +353,7 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
             if (original != null) {
                 masterSession.refresh(original);
                 if (original instanceof ITestDataCategoryPO) {
-                    for (ITestDataCubePO dataCube 
-                            : ((ITestDataCategoryPO) original)
-                            .getTestDataChildren()) {
-                        masterSession.refresh(dataCube);
-                        ITDManager manager = dataCube.getDataManager();
-                        masterSession.refresh(manager);
-                    }    
+                    refreshChilds(masterSession, original);    
                 }
             }
             updateReferencedParamNodes();
@@ -382,6 +376,30 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
             monitor.done();
         }
 
+    }
+
+    /**
+     * Does the refresh cascading manually
+     * @param session
+     *            the session in which you want to refresh 
+     * @param testDataCategory
+     *            the category which child's should be refreshed
+     */
+    private void refreshChilds(final EntityManager session,
+            IPersistentObject testDataCategory) {
+        for (ITestDataCategoryPO catergory 
+                : ((ITestDataCategoryPO) testDataCategory)
+                .getCategoryChildren()) {
+            session.refresh(catergory);
+            refreshChilds(session, catergory);
+        }
+        for (ITestDataCubePO dataCube 
+                : ((ITestDataCategoryPO) testDataCategory)
+                .getTestDataChildren()) {
+            session.refresh(dataCube);
+            ITDManager manager = dataCube.getDataManager();
+            session.refresh(manager);
+        }
     }
 
     /**
