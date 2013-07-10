@@ -97,7 +97,7 @@ public final class DialogUtils {
      * @param classObj the class for that the short name has to be returned
      * @return the short class name
      */
-    private static String getShortClassName(Class classObj) {
+    private static String getShortClassName(Class<?> classObj) {
         final String longClassName = String.valueOf(classObj);
         final int indexOfLastDot = longClassName.lastIndexOf('.');
         final String shortClassName;

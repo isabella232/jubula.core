@@ -54,8 +54,10 @@ import org.eclipse.search.ui.ISearchQuery;
 import org.eclipse.search.ui.NewSearchUI;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -112,6 +114,22 @@ public class Utils {
     }
     
     /**
+     * Returns the active perspective descriptor or <code>null</code>.
+     * 
+     * @param activePage
+     *            the currently active page - may also be null
+     * @return an <code>IPerspectiveDescriptor</code> value. The active
+     *         perspective for the currently active page.
+     */
+    private static IPerspectiveDescriptor getActivePerspective(
+            IWorkbenchPage activePage) {
+        if (activePage != null) {
+            return activePage.getPerspective();
+        }
+        return null;
+    }
+    
+    /**
      * Opens a perspective with the given ID.
      * @param perspectiveID The ID of the perspective to open.
      * @return True, if the user wants to change the perspective, false otherwise.
@@ -120,9 +138,10 @@ public class Utils {
         IWorkbench worbench = PlatformUI.getWorkbench();
         IWorkbenchWindow activeWindow = worbench.getActiveWorkbenchWindow();
         try {
-            if (Plugin.getActivePerspective() != null
-                    && Plugin.getActivePerspective().getId()
-                            .equals(perspectiveID)) {
+            IPerspectiveDescriptor activePerspective = getActivePerspective(
+                    activeWindow.getActivePage());
+            if (activePerspective != null
+                    && activePerspective.getId().equals(perspectiveID)) {
                 return true;
             }
             final IPreferenceStore preferenceStore = Plugin.getDefault()
