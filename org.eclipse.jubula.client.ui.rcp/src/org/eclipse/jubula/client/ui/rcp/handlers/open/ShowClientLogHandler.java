@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2013 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,28 +8,27 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.actions;
+package org.eclipse.jubula.client.ui.rcp.handlers.open;
 
 import java.io.File;
 
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.AbstractActionBP;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ShowClientLogBP;
 import org.eclipse.jubula.client.ui.rcp.editors.ClientLogInput;
 import org.eclipse.jubula.client.ui.rcp.editors.LogViewer;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-
 /**
+ * 
  * @author BREDEX GmbH
- * @created Feb 7, 2007
+ *
  */
-public class ShowClientLogAction extends AbstractAction {
+public class ShowClientLogHandler extends AbstractHandler {
 
     /** single instance of the ClientLogInput */
     private IEditorInput m_clientLogInput = null;
@@ -37,17 +36,11 @@ public class ShowClientLogAction extends AbstractAction {
     /**
      * {@inheritDoc}
      */
-    public void runWithEvent(IAction action, Event event) {
-        if (action != null && !action.isEnabled()) {
-            return;
-        }
-        
+    public Object execute(ExecutionEvent event) {
         File clientLogFile = ShowClientLogBP.getInstance().getClientLogFile();
         
         if (clientLogFile != null && clientLogFile.canRead()) {
-            IWorkbenchPage currentPage = 
-                PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                    .getActivePage();
+            IWorkbenchPage currentPage = Plugin.getActivePage();
             
             if (currentPage != null) {
                 if (m_clientLogInput != null 
@@ -69,13 +62,7 @@ public class ShowClientLogAction extends AbstractAction {
             ErrorHandlingUtil.createMessageDialog(
                     MessageIDs.I_NO_CLIENT_LOG_FOUND);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected AbstractActionBP getActionBP() {
-        return ShowClientLogBP.getInstance();
+        return null;
     }
 
 }

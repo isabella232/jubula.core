@@ -420,13 +420,6 @@
         <separator name="JubulaAddSeparator1" />
       </menu>
       <action
-        class="org.eclipse.jubula.client.ui.rcp.actions.ShowClientLogAction"
-        icon="icons/clientLogView.gif"
-        id="org.eclipse.jubula.client.ui.rcp.actions.ShowClientLogAction"
-        label="%ShowClientLog"
-        menubarPath="help/helpEnd"
-        style="push" />
-      <action
         class="org.eclipse.jubula.client.ui.rcp.actions.ShowServerLogAction"
         icon="icons/serverLogView.gif"
         id="org.eclipse.jubula.client.ui.rcp.actions.ShowServerLogAction"
@@ -592,8 +585,8 @@
       name="%ToggleActiveState" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
-      id="org.eclipse.jubula.client.ui.rcp.commands.ShowLogCommand"
-      name="Show Log" />
+      id="org.eclipse.jubula.client.ui.rcp.commands.ShowClientLogCommand"
+      name="%ShowClientLog" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       description="%StartMappingToolTip"
@@ -1209,6 +1202,14 @@
           label="%Show.UnusedTestCases"
           style="toggle" />
       </menu>
+    </menuContribution>
+    <menuContribution
+      locationURI="menu:help?after=helpEnd">
+      <command
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowClientLogCommand"
+        label="%ShowClientLog"
+        icon="icons/clientLogView.gif"
+        style="push" />
     </menuContribution>
     <menuContribution locationURI="menu:edit?before=JubulaEditSeparator3">
       <command
@@ -3052,6 +3053,10 @@
           </with>
         </and>
       </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.open.ShowClientLogHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowClientLogCommand">
     </handler>
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.ExtractTestCaseHandler"
