@@ -28,7 +28,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.Widget;
 
 
@@ -163,8 +162,7 @@ public class ClickSwtEventMatcher extends DefaultSwtEventMatcher {
         // We receive no Mouse events on Table and Tree(Table) headers.
         // This will supposedly be fixed for SWT 3.4. 
         // See https://bugs.eclipse.org/bugs/show_bug.cgi?id=17871
-        } else if ((graphicsComponent instanceof Table
-            || graphicsComponent instanceof Tree)
+        } else if (graphicsComponent instanceof Table
             && SwtUtils.isMouseCursorInWidget((Widget)graphicsComponent)) {
             // Assuming that if a Table or Tree was the target component and 
             // the mouse pointer is currently within the bounds for that Table, 
