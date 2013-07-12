@@ -419,13 +419,6 @@
         id="JubulaAddMenu">
         <separator name="JubulaAddSeparator1" />
       </menu>
-      <action
-        class="org.eclipse.jubula.client.ui.rcp.actions.ShowServerLogAction"
-        icon="icons/serverLogView.gif"
-        id="org.eclipse.jubula.client.ui.rcp.actions.ShowServerLogAction"
-        label="%ShowAutStarterLog"
-        menubarPath="help/helpEnd"
-        style="push" />
     </actionSet>
   </extension>
   <extension point="org.eclipse.ui.perspectiveExtensions">
@@ -587,6 +580,10 @@
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.ShowClientLogCommand"
       name="%ShowClientLog" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.ShowServerLogCommand"
+      name="%ShowAutStarterLog" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       description="%StartMappingToolTip"
@@ -1202,6 +1199,14 @@
           label="%Show.UnusedTestCases"
           style="toggle" />
       </menu>
+    </menuContribution>
+    <menuContribution
+      locationURI="menu:help?after=helpEnd">
+      <command
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowServerLogCommand"
+        label="%ShowAutStarterLog"
+        icon="icons/serverLogView.gif"
+        style="push" />
     </menuContribution>
     <menuContribution
       locationURI="menu:help?after=helpEnd">
@@ -3052,6 +3057,15 @@
             <equals value="org.eclipse.jubula.client.ui.rcp.views.ComponentNameBrowser" />
           </with>
         </and>
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.open.ShowServerLogHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowServerLogCommand">
+      <activeWhen>
+        <with variable="org.eclipse.jubula.client.ui.rcp.variable.isConnectedToAutAgent">
+          <equals value="true" />
+      </with>
       </activeWhen>
     </handler>
     <handler
