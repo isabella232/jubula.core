@@ -63,16 +63,17 @@
       </and>
     </definition>
     <definition id="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive">
-      <!-- 
-      makes use of the fact that actionSets exist as a context when 
-      they are "active" (i.e. this menu is visible when the actionSet 
-      "org.eclipse.jubula.client.ui.rcp.menu.actions" is active)
-      -->
-      <with variable="activeContexts">
-        <iterate operator="or">
-          <equals value="org.eclipse.jubula.client.ui.rcp.menu.actions" />
-        </iterate>
-      </with>
+      <or>
+        <with variable="activeWorkbenchWindow.activePerspective">
+            <equals value="org.eclipse.jubula.client.ui.rcp.perspectives.SpecificationPerspective"/>
+        </with>
+        <with variable="activeWorkbenchWindow.activePerspective">
+             <equals value="org.eclipse.jubula.client.ui.rcp.perspectives.ExecutionPerspective"/>
+        </with>
+        <with variable="activeWorkbenchWindow.activePerspective">
+             <equals value="org.eclipse.jubula.client.ui.perspectives.ReportPerspective"/>
+        </with>
+     </or>
     </definition>
   </extension>
   <extension point="org.eclipse.core.expressions.propertyTesters">
@@ -401,26 +402,6 @@
       </description>
     </decorator>
   </extension>
-  <extension point="org.eclipse.ui.actionSets">
-    <actionSet
-      description="only these actions, that are visible in the main menu- or toolbar"
-      id="org.eclipse.jubula.client.ui.rcp.menu.actions"
-      label="Jubula Menu Action Set"
-      visible="false">
-      <menu
-        label="%Insert"
-        path="edit/JubulaEditSeparator1"
-        id="JubulaInsertMenu">
-        <separator name="JubulaInsertSeparator1" />
-      </menu>
-      <menu
-        label="%Add"
-        path="edit/JubulaEditSeparator1"
-        id="JubulaAddMenu">
-        <separator name="JubulaAddSeparator1" />
-      </menu>
-    </actionSet>
-  </extension>
   <extension point="org.eclipse.ui.perspectiveExtensions">
     <perspectiveExtension
       targetID="org.eclipse.jubula.client.ui.rcp.perspectives.SpecificationPerspective">
@@ -480,7 +461,6 @@
         minimized="false"
         relationship="stack"
         relative="org.eclipse.ui.views.ProblemView" />  
-      <actionSet id="org.eclipse.jubula.client.ui.rcp.menu.actions" />
       <hiddenToolBarItem id="org.eclipse.search.OpenSearchDialogPage" />
       <perspectiveShortcut
         id="org.eclipse.jubula.client.ui.rcp.perspectives.ExecutionPerspective" />
@@ -505,7 +485,6 @@
     </perspectiveExtension>
     <perspectiveExtension
       targetID="org.eclipse.jubula.client.ui.rcp.perspectives.ExecutionPerspective">
-      <actionSet id="org.eclipse.jubula.client.ui.rcp.menu.actions" />
       <hiddenToolBarItem id="org.eclipse.search.OpenSearchDialogPage" />
       <perspectiveShortcut
         id="org.eclipse.jubula.client.ui.rcp.perspectives.SpecificationPerspective" />
@@ -525,7 +504,6 @@
       <viewShortcut id="org.eclipse.search.ui.views.SearchView" />
     </perspectiveExtension>
     <perspectiveExtension targetID="org.eclipse.jubula.client.ui.perspectives.ReportPerspective">
-      <actionSet id="org.eclipse.jubula.client.ui.rcp.menu.actions" />
       <hiddenToolBarItem id="org.eclipse.search.OpenSearchDialogPage" />
       <perspectiveShortcut
         id="org.eclipse.jubula.client.ui.rcp.perspectives.SpecificationPerspective" />
@@ -1307,6 +1285,7 @@
         <separator name="GlobalActions" />
       </toolbar>
       <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.CentralTestDataToolbar">
+        <separator name="GlobalActions" />
         <command
           commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenCentralTestDataEditor"
           style="push">
@@ -1324,7 +1303,6 @@
               definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
           </visibleWhen>
         </command>
-        <separator name="GlobalActions" />
       </toolbar>
       <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.AutAgentToolbar">
         <separator name="GlobalActions" />
@@ -1683,11 +1661,6 @@
           style="push" />
         <visibleWhen checkEnabled="false">
           <reference definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
-      <!-- 
-      makes use of the fact that actionSets exist as a context when 
-      they are "active" (i.e. this menu is visible when the actionSet 
-      "org.eclipse.jubula.client.ui.rcp.menu.actions" is active)
-      -->
         </visibleWhen>
       </menu>
     </menuContribution>
