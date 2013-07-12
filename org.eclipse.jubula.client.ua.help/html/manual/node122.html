@@ -1,29 +1,24 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.2 Entering concrete values as data in Test Cases </title>
-    <meta content="3.12.2 Entering concrete values as data in Test Cases " name="description" />
+    <title>3.12.1 Data types and entering data for Test Cases </title>
+    <meta content="3.12.1 Data types and entering data for Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><h2><a name="SECTION004122000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">2</span> Entering concrete values as data in Test Cases </a></h2><a name="TasksTestdataConcrete"></a><p><a name="2381"></a> <a name="2382"></a><p>
-      <ul>
-        <li>In the Properties View for a Test Case , you can enter a <i>concrete value</i> as a parameter e.g. <tt>&quot;Hello&quot;</tt>. <li>This means that this particular parameter cannot be changed when you reuse its parent Test Case . <li>Enter concrete values for things that you expect to stay the same, like your choice of <i>operator</i> (i.e. matches, equals) or the click count. Deciding which data not to parametrize is an important decision is test creation. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to get content assist in the Properties View for certain parameters. </b></td>
-            </tr>
-          </table>
-        <li>Depending on your test structure, you may want to use concrete values for all the parameters in a keyword. If, for example, you have a keyword to open the &quot;<i>New Category</i>&quot; dialog from a menu, you will probably want to write the menupath as a concrete value. After all, this Test Case is designed to open this specific dialog, so the menupath is fixed. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>Any concrete values you enter into a Test Case are valid whenever you reuse this Test Case . If you change the concrete values in the original Test Case , all of the places you have reused it will change as well. </b></td>
-            </tr>
-          </table>
-      </ul>
+  <body><a name="guidancerPropertiesViewContextId"></a><a name="guidancerSpecTestCaseEditorContextId"></a><a name="guidancerDataSetViewContextId"></a><a name="guidancerCentralTestDataEditorContextId"></a><h2><a name="SECTION004121000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">1</span> Data types and entering data for Test Cases </a></h2><a name="TasksDataTypes"></a><p><a name="2379"></a> <a name="2380"></a><p> Most actions in the library require one or more <i>parameters</i> (e.g. how often to click, what text to enter). Once you have added Test Cases or Test Steps to a Test Case , you will see which parameters are required by this action in the Properties View . <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>You can also enter <i>data sets</i> in the Data Sets View <a href="node150.html#TasksDataSetsView">3.12.11</a> and you can create central data sets to be reused throughout the Project <a href="node139.html#TasksCentralData">3.12.9</a>. </b></td>
+        </tr>
+      </table>
+    <p> You can be very flexible with data, so you have a choice about what to enter in the Properties View : <p>
+      <ol>
+        <li>Concrete values <a href="node123.html#TasksTestdataConcrete">3.12.2</a>. <li>References <a href="node124.html#TasksTestdataReferences">3.12.3</a>. <li>Variables <a href="node126.html#TasksVariables">3.12.5</a>. <li>Functions <a href="node130.html#TasksDataFunctions">3.12.6</a>. <li>A mixture of the above <a href="node136.html#TasksConcatenation">3.12.7</a>. <li>An Excel file <a href="node147.html#TasksExcel">3.12.10</a>. <li>A reference to a central data set <a href="node139.html#TasksCentralData">3.12.9</a>. </ol>
     <p>
       <br />
       <hr />

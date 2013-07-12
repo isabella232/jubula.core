@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>6.12.1 How Event Handlers work</title>
-    <meta content="6.12.1 How Event Handlers work" name="description" />
+    <title>6.11 Observing user actions</title>
+    <meta content="6.11 Observing user actions" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,7 +10,16 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION007121000000000000000"> <span class="arabic">6</span>.<span class="arabic">12</span>.<span class="arabic">1</span> How Event Handlers work</a></h2> When an error occurs in a Test Step , its parent Test Case is searched for an Event Handler for this type of error. If no Event Handler is found, the parent Test Case of this Test Case is searched and so on. Once a corresponding Event Handler is found, it is activated. <p> If no Event Handler is found in the highest Test Case in this part of the tree, a default Event Handler (set in the Test Suite properties) is activated. <p> Each Event Handler requires an &quot;<i>Event Type</i>&quot; and a &quot;<i>Reentry Type</i>&quot;. For information on these terms, see the section in the Tasks chapter <a href="node216.html#customizedehandler">3.21</a>. <p>
+    <h1><a name="SECTION007110000000000000000"> <span class="arabic">6</span>.<span class="arabic">11</span> Observing user actions</a></h1>
+    <p><a name="7353"></a><p> As explained in the introduction <a href="node6.html#IntroRecording">1.1.3</a> and in the section on how to record <a href="node238.html#TasksObsModeTips">3.23.1</a>, we believe that recording tests has various disadvantages in any tool. <p> However, you can observe Test Cases in a running Java AUT . You can record actions and checks in your AUT , and the output for these actions is Test Steps . <p> You can create the same tests with observing as you can with specification. The real differences are: <ul>
+        <li>object mapping is carried out automatically in observing mode. Because of this, you do not provide a component name, but one is created automatically. <li>you must use concrete values for parameters in the observation mode. You can (and should), however, change these to references in the specification perspective later so that your tests are more reusable. </ul>
+    <p> You can reuse observed Test Cases in the same ways as you can reuse specified Test Cases . <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>The observation mode supports high level actions. To find out exactly how an action works, look up the component and its action in --&gt;<i>Reference Manual</i> <a href="../reference/node6.html#actparam"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a></b></td>
+        </tr>
+      </table>. <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>

@@ -1,37 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.15.3 Creating a new Test Job </title>
-    <meta content="3.15.3 Creating a new Test Job " name="description" />
+    <title>3.15.2.1 Testing independently started AUT&#39;s </title>
+    <meta content="3.15.2.1 Testing independently started AUT&#39;s " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="testExecViewContextId"></a><a name="dialogTestJobNewContextId"></a><h2><a name="SECTION004153000000000000000"> <span class="arabic">3</span>.<span class="arabic">15</span>.<span class="arabic">3</span> Creating a new Test Job </a></h2><a name="createtestjob"></a><p><a name="3461"></a> <a name="3462"></a> <a name="3463"></a> <a name="3464"></a><p> To create a Test Job , the Test Suite Browser must be visible. If it is not visible, change to the Functional Test Specification Perspective and select: <br />
-      <table border="0" style="margin:0px;padding:0px;">
+  <body>
+    <h3><a name="SECTION004152100000000000000"></a> <a name="3448"></a><br /><span class="arabic">3</span>.<span class="arabic">15</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Testing independently started AUT&#39;s </h3>
+    <p> To be able to test multiple AUT&#39;s that are <i>not</i> started by each other, the following criteria must be met: <p>
+      <ul>
+        <li>The AUT&#39;s are either written with the same toolkit (e.g. Swing) or, <li>you have specified your Project at the <i>concrete</i> level, and will only be testing areas of the AUT&#39;s that can be tested with the actions that are valid for all AUT types (i.e. no RCP-specific components are involved in the test) <a href="node52.html#projtoolkit">7</a>. <li>The AUT&#39;s are all defined in the same Project . <li>The first AUT can either be started using the <i>autrun</i> command <a href="node82.html#autrun">3.7.2.6</a> or via an AUT configuration <a href="node74.html#configuringaut">3.7.1</a>. Any other AUT&#39;s required for the Test Job must have been started with the <i>autrun</i> command. </ul>
+    <p>
+      <table>
         <tr>
-          <td bgcolor="#DDDDDD">Window</td>
-          <td>--&gt;</td>
-          <td bgcolor="#DDDDDD">Show View</td>
-          <td>--&gt;</td>
-          <td bgcolor="#DDDDDD">Test Suite Browser</td>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>To run Test Jobs from the test executor, all AUT&#39;s for the test run must already be started when the test execution begins. For unattended build and test processes, this will mean that the AUT&#39;s must be started with the <i>autrun</i> command.</b></td>
         </tr>
-      </table> . <p>
-      <ol>
-        <li>Select: <br />
-          <table border="0" style="margin:0px;padding:0px;">
-            <tr>
-              <td bgcolor="#DDDDDD">New</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">New Test Job </td>
-            </tr>
-          </table>
-          <br /> from the context-sensitive menu in the Test Suite Browser . <p>
-        <li>Name the new Test Job when prompted with a meaningful name. It is a good idea to have naming conventions for Test Jobs . <li>Click &quot;<i>OK</i>&quot;. <li>The Test Job you created will appear in the Test Suite Browser under the category <i>Test Jobs </i>. <li>Once you have created a Test Job , you can: <ul>
-            <li>Add Test Suites to it <a href="node98.html#TasksEditorAdd">3.9.2</a>. <li>Specify which AUT the Test Suites should test <a href="node171.html#TasksJobID">3.15.4</a>. <li>Rename the Test Job <a href="node90.html#TasksBrowserRename">3.8.1</a>. <li>Delete Test Suites from it <a href="node99.html#TasksEditorDelete">3.9.3</a>. </ul>
-      </ol>
+      </table>
     <p>
       <br />
       <hr />

@@ -1,20 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.33.1.3 Adapting tests to improve data collection</title>
-    <meta content="3.33.1.3 Adapting tests to improve data collection" name="description" />
+    <title>3.33.1.1 Adding Chronon information in the AUT configuration</title>
+    <meta content="3.33.1.1 Adding Chronon information in the AUT configuration" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION004331300000000000000"> <span class="arabic">3</span>.<span class="arabic">33</span>.<span class="arabic">1</span>.<span class="arabic">3</span> Adapting tests to improve data collection</a></h3> You should bear the following in mind when using Chronon for recording information in automated tests. <br />
-    <p><span class="textbf">Performance in the AUT may be affected</span><ul>
-        <li>The recordings that Chronon performs are very memory-intensive. For this reason, you may notice performance differences in your AUT . It may also be necessary to increase the step delay for your tests, and / or add extra synchronization to compensate for the performance differences when Chronon is running. <li>For these reasons, we do not recommend having Chronon configured as a part of your standard AUT configuration. Instead, we suggest running tests with Chronon monitoring when needed. <li>We also strongly suggest ensuring that your AUT and the machine it is running on have sufficient memory to cope with the increased monitoring activity. </ul>
-    <p><span class="textbf">Stopping or restarting the AUT will cause the previously recorded information to be lost</span><ul>
-        <li>The recording files are written when the AUT is stopped. This means either stopping the AUT by hand, using the &quot;<i>Stop AUT</i>&quot; button in Jubula or when you use the <i>restart</i> action. <li>Because of this, we recommend executing individual Test Cases (use cases) in Test Suites that you want to analyze with Chronon. You should ensure that any Event Handlers in the Test Suite will not cause the AUT to restart. </ul>
+  <body><a name="autConfigSettingWizardPagePageContextId"></a><h3><a name="SECTION004331100000000000000"> <span class="arabic">3</span>.<span class="arabic">33</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Adding Chronon information in the AUT configuration</a></h3>You can select Chronon as a monitoring agent and configure it in the Expert Settings in the AUT configuration. <p>
+      <ol>
+        <li>Open the AUT configuration dialog from the Project properties <a href="node53.html#projectproperties">3.5.2</a>. <li>Select the <i>Expert</i> configuration. <li>Select <i>Chronon (separate installation)</i> as a monitoring agent <a href="node309.html#TasksChrononAUTSeparate">3.33.1.2</a>. <li>You can then enter the configuration details for the monitoring. </ol>
     <p>
       <br />
       <hr />

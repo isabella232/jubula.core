@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Jubula Reference Manual">
+<toc label="Functional Testing Reference Manual">
      <topic label="1. Introduction" href="html/reference/node2.html"></topic>
      <topic label="2. Shortcuts" href="html/reference/node3.html"></topic>
      <topic label="3. Using Regular Expressions for Text Verification" href="html/reference/node4.html"></topic>
@@ -45,7 +45,7 @@
      </topic>
      <topic label="7. Overview of Components" href="html/reference/node36.html"></topic>
      <topic label="8. Using Relative Paths" href="html/reference/node37.html"></topic>
-     <topic label="9. Special characters in Jubula" href="html/reference/node38.html">
+     <topic label="9. Special characters" href="html/reference/node38.html">
           <topic label="9.1 Verbatim text symbol" href="html/reference/node39.html"></topic>
           <topic label="9.2 General special characters" href="html/reference/node40.html"></topic>
           <topic label="9.3 Symbols with special meanings for certain parameters" href="html/reference/node41.html"></topic>

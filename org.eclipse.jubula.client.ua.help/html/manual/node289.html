@@ -1,28 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.29.10 Creating a support information package</title>
-    <meta content="3.29.10 Creating a support information package" name="description" />
+    <title>3.29.8 My Test Suite failed when using rdesktop</title>
+    <meta content="3.29.8 My Test Suite failed when using rdesktop" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="problemViewContextId"></a><a name="supportRequestDialogContextId"></a><h2><a name="SECTION0042910000000000000000"> <span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">10</span> Creating a support information package</a></h2>
-    <p><a name="5804"></a><p> If you have found a problem in Jubula , you can create a support information package from within the ITE . You can choose which information to include in the package, which can be uploaded to a bug-tracking system as a .zip file. <p>
-      <ol>
-        <li>Select: <br />
-          <table border="0" style="margin:0px;padding:0px;">
-            <tr>
-              <td bgcolor="#DDDDDD">Help</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">Create Support Information Package</td>
-            </tr>
-          </table>
-        <li>In the dialog which appears, select what to add to the package: <dl>
-            <dt><strong>Configuration information:</strong><dd>This includes information about how you have configured Jubula , which other plugins you are using, and information about your environment. <dt><strong>The AUT Agent log</strong><dd>This lets us see the messages from the AUT Agent . If you are not connected to the AUT Agent , this option will be grayed out. <dt><strong>The client log</strong><dd>This lets us see the messages from the ITE . <dt><strong>The Project and depending Projects </strong><dd>The currently open Project and any Projects it reuses. </dl>
-        <li>Browse to the destination to save the .zip file. <li>Click &quot;<i>OK</i>&quot;. <li>The prepared package will be saved to the destination you specified. </ol>
+  <body>
+    <h2><a name="SECTION004298000000000000000"></a> <a name="troublerdesktop"></a><br /><span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">8</span> My Test Suite failed when using <span class="textit">rdesktop</span></h2>
+    <p><a name="5817"></a><ul>
+        <li>Under a very specific configuration involving <span class="textit">rdesktop 1.5</span>, tests are known to frequently fail with an action error: &#39;Timeout received before confirming the posted event&#39;. <li>This occurs when <span class="textit">rdesktop 1.5</span> is used to log into a user account used for the ITE as well as a separate account for the AUT Agent . <li>The problem does not occur under <span class="textit">rdesktop 1.4.1</span>. </ul>
     <p>
       <br />
       <hr />

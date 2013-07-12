@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.29.8 My Test Suite failed when using rdesktop</title>
-    <meta content="3.29.8 My Test Suite failed when using rdesktop" name="description" />
+    <title>3.29.6 I can&#39;t execute my Test Suite </title>
+    <meta content="3.29.6 I can&#39;t execute my Test Suite " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,9 +10,22 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION004298000000000000000"></a> <a name="troublerdesktop"></a><br /><span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">8</span> My Test Suite failed when using <span class="textit">rdesktop</span></h2>
-    <p><a name="5785"></a><ul>
-        <li>Under a very specific configuration involving <span class="textit">rdesktop 1.5</span>, Jubula is known to frequently fail tests with an action error: &#39;Timeout received before confirming the posted event&#39;. <li>This occurs when <span class="textit">rdesktop 1.5</span> is used to log into a user account used for the ITE as well as a separate account for the AUT Agent . <li>The problem does not occur under <span class="textit">rdesktop 1.4.1</span>. </ul>
+    <h2><a name="SECTION004296000000000000000"></a> <a name="troubleexecute"></a><br /><span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">6</span> I can&#39;t execute my Test Suite </h2>
+    <p><a name="5767"></a> <a name="5768"></a> If you cannot start a Test Suite , check that: <ul>
+        <li>The Test Suite has complete data for the current language. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>No parameter values can be empty in a Test Suite . If you no longer need the parameter, delete it.</b></td>
+            </tr>
+          </table>
+        <li>The object mapping is complete <a href="node181.html#objectmappingtasks">3.18.1</a>. <li>The Object Mapping Mode and the observation mode have been switched off. <li>You have connected to the AUT Agent <a href="node39.html#TasksAgentConnect">3.1.2</a>. <li>You have started the AUT <a href="node197.html#startaut">3.19.2</a>. </ul>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>You can use the Test Suite Browser to click through the Test Suite to see the exact places where data and object maps are missing.</b></td>
+        </tr>
+      </table>
     <p>
       <br />
       <hr />

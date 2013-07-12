@@ -1,35 +1,30 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.9.5 Reusing central test data sets in Test Cases </title>
-    <meta content="3.12.9.5 Reusing central test data sets in Test Cases " name="description" />
+    <title>3.12.9.4 Entering data for central test data sets</title>
+    <meta content="3.12.9.4 Entering data for central test data sets" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerCentralTestDataEditorContextId"></a><a name="guidancerPropertiesViewContextId"></a><h3><a name="SECTION004129500000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">9</span>.<span class="arabic">5</span> Reusing central test data sets in Test Cases </a></h3><a name="TasksCentralDataReference"></a><p> You can reuse a central test data set in a Test Case to provide the concrete data for the parameters required by the Test Case . <p>
-      <ol>
-        <li>In the Properties View for the Test Case , enter the name of the central test data set you want to use in the <i>Central Test Data Set</i> field. <table>
+  <body><a name="guidancerCentralTestDataEditorContextId"></a><h3><a name="SECTION004129400000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">9</span>.<span class="arabic">4</span> Entering data for central test data sets</a></h3><a name="TasksDSVCentral"></a><p> Once you have created a central test data set <a href="node140.html#TasksCentralDataCreate">3.12.9.1</a> and have added parameters to the central test data set <a href="node142.html#TasksCentralDataEditParams">3.12.9.3</a> then you can enter data for these parameters in the Data Sets View . <p> To enter data sets for a central test data set: <ol>
+        <li>Open the Central Test Data Editor by clicking the &quot;<i>Central Test Data Editor</i>&quot; on the toolbar or selecting: <br />
+          <table border="0" style="margin:0px;padding:0px;">
             <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to see a list of possible data sets for this Test Case . You will only be shown data sets that contain the correct parameters with the correct types.</b></td>
+              <td bgcolor="#DDDDDD">Open with</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">Central Test Data Editor</td>
             </tr>
           </table>
-        <li>When you have entered a central test data set, then the Properties View shows <i>central test data set</i> as the data type. You will see the data from the central test data set in read-only form in the Data Sets View . <table>
+          <br /> from the Test Suite Browser . <li>In the editor, single-click the central test data set you want to add data to. <li>In the Data Sets View , make sure the language in the combo box on the right is the right language for your data. <li>Select &quot;<i>Add</i>&quot; to add a row. <li>Enter the values for the parameters in the row. <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>If data is missing from the central test data set, you will receive the error that test data is incomplete for any Test Suites this Test Case is used in.</b></td>
+              <td><b>You cannot add referenced parameters (i.e. reference names preceded by the equals sign) in the Data Sets View for a central test data set.</b></td>
             </tr>
           </table>
-        <li>You can delete the central test data set used by removing it from the <i>central test data set</i> field. The data type reverts to <i>local data</i>. For more information on the data sources, see the earlier section <a href="node136.html#TasksDataSources">3.12.8</a>. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>You can use central test data sets that contain more parameters than your Test Case . For example, if your Test Case requires the parameters <tt>&quot;NAME, ADDRESS&quot;</tt> and your central test data set contains <tt>&quot;NAME, ADDRESS, POSTCODE&quot;</tt>, you can still use the central test data set.</b></td>
-            </tr>
-          </table>
-      </ol>
+        <li>Use the buttons in the Data Sets View to add more rows, delete rows and insert rows above the currently selected row. </ol>
     <p>
       <br />
       <hr />

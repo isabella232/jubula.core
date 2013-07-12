@@ -1,47 +1,33 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.10.1 Configuring the Excel file</title>
-    <meta content="3.12.10.1 Configuring the Excel file" name="description" />
+    <title>3.12.9.7 Changing the column used in a central test data set for multiple Test Cases </title>
+    <meta content="3.12.9.7 Changing the column used in a central test data set for multiple Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION0041210100000000000000"></a> <a name="2842"></a> <a name="TasksConfigureExcel"></a><br /><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">10</span>.<span class="arabic">1</span> Configuring the Excel file </h3>
-    <ul>
-      <li>The worksheet in Excel must be named with the language code for the language your data are in. See the Reference Manual (--&gt;<i>Reference Manual</i> <a href="../reference/node42.html#langcodes"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>) for a list of language codes. <p> For example, if the data of your first sheet are for French, then name the first sheet: <tt>&quot;fr_FR&quot;</tt> (<a href="#excel">3.19</a>). <p>
-          <div align="CENTER"><a name="excel"></a><a name="2852"></a><table>
-              <caption align="BOTTOM"><strong>Figure 3.19:</strong> Example Excel Table</caption>
-              <tr>
-                <td>
-                  <div align="CENTER"><img align="BOTTOM" alt="Image excelexample" border="0" height="388" src="./excelexample.png" width="444" /></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-        <p> You can create sheets for every language you need. Make sure that each sheet is named with the language code. Jubula will read the sheet which corresponds to the working language when the test is being executed. <p>
-      <li>Name the top cell of each column with a parameter name from your Test Case . <p> For example, if you entered the reference &quot;<i>=VALUE1</i>&quot;, then you must enter <tt>&quot;VALUE1&quot;</tt> in the top cell of the column which will contain data for that parameter. <table>
+  <body><a name="searchRefactorChangeCtdsColumnUsageWizardPagePageContextId"></a><a name="guidancerCentralTestDataEditorContextId"></a><a name="searchResultViewContextId"></a><h3><a name="SECTION004129700000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">9</span>.<span class="arabic">7</span> Changing the column used in a central test data set for multiple Test Cases </a></h3><a name="TasksChangeCTDSColumn"></a>If you have used a central test data set in multiple Test Cases and later realize that you have two columns in the central test data set that contain the same information, then you can change all Test Cases that use this central test data set to just use one column. Once you have done this, you can remove the unnecessary column from the central test data set. <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>In order to perform this action, all Test Cases to be changed must not be in use by anyone else using the Project - you should ensure that this is the case before performing the action, otherwise the action cannot be carried out.</b></td>
+        </tr>
+      </table>
+    <p>
+      <ol>
+        <li>Search for all places where the central test data set whose column usage you want to change is used. Use <i>Show where used</i> on the central test data set to see all places <a href="node269.html#TasksShowWhereUsedDataSet">3.28.4</a>. <li>In the Search Result View , you will see all places where the selected central test data set is reused in this Project , including any original specifications of Test Cases that use it, and any reused Test Cases that use it (as Test Cases or as Event Handlers . We recommend selecting all entries to perform the action, otherwise you may have incomplete test data after only changing a subset. <li>You will only be able to perform the changes if: <ul>
+            <li>All the selected Test Cases use the same central test data set. <li>All the selected Test Cases have their original specification in this Project , i.e. you do not have a Test Case from a reused Project that uses the central test data set in this Project . <li>The Project is not protected. <li>The Test Cases you have selected are present (i.e. they are not missing from e.g. reused Projects . <li>None of the selected Test Cases uses two different central test data sets (e.g. one central test data set on the originally specified Test Case , and another one at a place where it is reused). <li>The selected Test Cases have at least one referenced parameter and at least one of the referenced parameters has the same type as another parameter in the central test data set. </ul>
+        <li>If the Project is protected, or Test Cases are missing, the context-menu entry will be disabled. If any of the other prerequisites are not fulfilled, you will see an information dialog that lets you automatically deselect any invalid Test Cases . <li>From the context menu, select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
             <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>Jubula is case sensitive.</b></td>
+              <td bgcolor="#DDDDDD">Change central test data set column usage</td>
             </tr>
           </table>
-      <li>Make sure that all the parameters for your Test Case have a column. <li>Do not leave any gaps in the table. <li>You must have an entry for each parameter used in the Test Case . <li>You can then fill in the values or formulae you want to use for these parameters. Each row in the table represents one set of data for the parameters used. <table>
-          <tr>
-            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-            <td><b>We recommend that you format cells as text <span class="textit">before</span> adding the test data. This ensures that Excel&#39;s number formatting won&#39;t modify the test data in unexpected and undesirable ways. Especially for the boolean values<i>true</i> and <i>false</i>, make sure you format the column as text.</b></td>
-          </tr>
-        </table>
-      <li>If your Excel table contains data which change from day-to-day, then make sure you open the file before starting your test. Otherwise, the data from the last-opened state will be used. <table>
-          <tr>
-            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-            <td><b>If you store your Excel files in your workspace, you will be able to open these directly in Jubula from the navigator view using the in-place editor. </b></td>
-          </tr>
-        </table>
-      <li>See the section later on using the <i>today</i> function in Excel to get the current date <a href="node147.html#exceltoday">3.12.10.2</a>. <li>Excel files may not contain autofilters in any of the worksheets to be used as data sources for Jubula . Remove any filters from all your Excel sheets before running a test. </ul>
+          <br />
+        <li>In the dialog that appears, you can select a parameter to change on the left-hand side, and the column to change it to on the right-hand side. You can only change the usage of columns whose types are the same. If you have e.g. TEXT1 (string) and TEXT2 (string) in your central test data set and Test Cases , but you only require TEXT1, then select TEXT2 on the left-hand side and TEXT1 on the right hand side. <li>Click &quot;<i>Finish</i>&quot; to perform the action. <li>All selected Test Cases will be altered to use the newly chosen column in place of the previously used column. <li>If the newly chosen column was already used in one or more of the selected Test Cases , then all places within the Test Case that referenced the old column are changed to reference the newly chosen column. Using the example from above, all places where TEXT2 was referenced in the selected Test Case will be changed to TEXT1. The changed name remains at the interface of the Test Case ; TEXT2 is not deleted from the Test Case , but it is no longer used. If the newly chosen column was not yet used in one or more of the selected Test Cases , the old parameter name of the Test Case is renamed to the newly chosen column. </ol>
     <p>
       <br />
       <hr />

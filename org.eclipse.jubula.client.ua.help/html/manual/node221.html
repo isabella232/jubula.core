@@ -1,33 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.22.1 Test preferences</title>
-    <meta content="3.22.1 Test preferences" name="description" />
+    <title>3.21.3 Reentry types</title>
+    <meta content="3.21.3 Reentry types" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="prefPageBasicContextId"></a><h2><a name="SECTION004221000000000000000"> <span class="arabic">3</span>.<span class="arabic">22</span>.<span class="arabic">1</span> Test preferences</a></h2>
-    <p><a name="4600"></a> <a name="4601"></a> <a name="gdprefs"></a><p>
-      <div align="CENTER"><a name="gdprefs"></a><a name="7973"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.27:</strong> Jubula Preference Dialog</caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image gdprefs" border="0" height="574" src="./gdprefs.png" width="676" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <p> In the preferences dialog, select <i>Test</i> from the tree on the left hand side. <p> From this page, you can configure your preferences for: <dl>
-        <dt><strong>Auto-scrolling and -expanding:</strong><dd>When the checkbox is marked, the views and browsers in Jubula automatically scroll in the direction you move the mouse when you are dragging and dropping. Trees will also be automatically expanded when you hover over them while dragging items. <dt><strong>Minimizing the ITE :</strong><dd>When the checkbox is marked, Jubula is automatically minimized when test execution begins. This is useful if you are letting tests run on the same machine you are specifying on. <dt><strong>AUT confirmation dialog:</strong><dd>When the checkbox is marked, a dialog appears to check if you are sure when you click the &quot;<i>stop AUT </i>&quot; button. <dt><strong>Original Test Case name:</strong><dd>When the checkbox is activated, you can see the original name of a referenced Test Case in brackets behind a new name you enter for the Test Case . This can help you to see and search for Test Cases you have reused. <dt><strong>Test Step information:</strong><dd>When this checkbox is activated, you see the details about the Test Step (the component name and type, and the action) in square brackets behind the Test Step name. If you do not want to see these details, you can deactivate this checkbox. <dt><strong>Show referenced children:</strong><dd>When this option is not active, you can only see referenced parent Test Cases in the Test Case Browser . The referenced Test Cases contained in these Test Cases are not displayed. This action can be useful if you want to improve the speed of working with the ITE . <dt><strong>Project auto load:</strong><dd>If you have selected a Project to be automatically loaded <a href="node63.html#TasksAutoLoadProject">3.5.4.1</a>, then you can stop the auto-loading by deactivating the checkbox. <dt><strong>Switching to the Functional Test Execution Perspective :</strong><dd>When the test begins, Jubula can automatically change to the Functional Test Execution Perspective . You can choose to always be asked, to always change, or to never change. <dt><strong>Data files location:</strong><dd>You can specify a location where external data files (e.g. Excel files) are held, or use the workspace directory as the base location. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>The advantage of using the workspace as a location for your data files is that you can view these in the navigator view directly in the ITE . Windows users can even open Excel files from the ITE using the In-Place editor.</b></td>
-            </tr>
-          </table>
-      </dl>
+  <body>
+    <h2><a name="SECTION004213000000000000000"> <span class="arabic">3</span>.<span class="arabic">21</span>.<span class="arabic">3</span> Reentry types</a></h2>
+    <p><a name="4605"></a> <a name="4606"></a> <a name="4607"></a> <a name="4608"></a> <a name="4609"></a> <a name="4610"></a> <a name="4611"></a> <a name="4612"></a><p><a name="reentrytype"></a>The reentry type specifies how the test should continue once the Event Handler Test Case has been executed. <p>
+      <dl>
+        <dt><strong>Break</strong><dd>The test execution leaves the Test Case in which the error occurred and continues at the next Test Case or Test Step . <dt><strong>Continue</strong><dd>The test execution carries on at the next Test Case or Test Step . This is a good option when the error is relatively unimportant and does not affect the following Test Steps . <dt><strong>Exit</strong><dd>The test execution is stopped. Use this when the error is so severe that the test cannot be continued. <dt><strong>Return</strong><dd>The test execution leaves the Test Case in which the activated Event Handler is nested. This could be the current Test Case or one higher up in the hierarchy. This option is useful if you have a use case, which contains Test Cases to test a particular area or function. You can decide to leave this part of the test, and carry on at the next use case. <i>Return</i> will continue at the next Test Suite in a Test Job if it is activated as a default Event Handler or if there are no further steps in the current Test Suite . <dt><strong>Pause</strong><dd>The test execution is paused. To restart the test, click the <i>pause</i> button in the toolbar in the ITE . <dt><strong>Retry</strong><dd>The failed Test Step is repeated as many times as you specify in the Properties View . If the Test Step is successful on repeating, it is marked as successful after retrying. If the Test Step fails on all retries, the error type is passed on to the next parent Test Case and this Test Step (and therefore the test) is marked as failed. </dl>
     <p>
       <br />
       <hr />

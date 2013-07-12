@@ -1,18 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.8 Viewing and changing data sources for Test Cases </title>
-    <meta content="3.12.8 Viewing and changing data sources for Test Cases " name="description" />
+    <title>3.12.7 Concatenating (combining) parameters</title>
+    <meta content="3.12.7 Concatenating (combining) parameters" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><h2><a name="SECTION004128000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">8</span> Viewing and changing data sources for Test Cases </a></h2><a name="TasksDataSources"></a><p> The Properties View shows the currently used <i>data source</i> for each Test Case . The following data sources are available: <p><span class="textbf">Referenced Test Case</span><br /> The data have come directly from the original specification of this Test Case . If the data in the referenced Test Case change, then the changes will also take effect here. <p><span class="textbf">Local Test Case</span><br /> The data being used were entered for this Test Case . Any changes made in the original specifiation of the Test Case will not affect the data here. <p> You can change from <i>local</i> to <i>referenced</i> test data using the combo box to reset the default value from the referenced Test Case . <p><span class="textbf">Central test data set</span><br /> The data have come from a central test data set <a href="node138.html#TasksCentralData">3.12.9</a>. <p><span class="textbf">Excel data file</span><br /> An Excel file has been entered as the data source <a href="node145.html#TasksExcel">3.12.10</a><p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node137.html" name="tex2html2826"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">8</span>.<span class="arabic">1</span> Changing the data source for a Test Case </a></ul>
+  <body><a name="guidancerPropertiesViewContextId"></a><a name="guidancerDataSetViewContextId"></a><h2><a name="SECTION004127000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">7</span> Concatenating (combining) parameters</a></h2><a name="TasksConcatenation"></a><p><a name="2661"></a> <a name="2662"></a><p> The ITE lets you use various different types of parameter: <ul>
+        <li>Concrete values <a href="node123.html#TasksTestdataConcrete">3.12.2</a>. <li>Referenced parameters <a href="node124.html#TasksTestdataReferences">3.12.3</a>. <li>Variables <a href="node126.html#TasksVariables">3.12.5</a>. <li>Functions <a href="node130.html#TasksDataFunctions">3.12.6</a>. </ul>
+    <p> You can use these parameters separately, or you can combine them to create a parameter value. This is useful if a value you want to enter or check consists of parts that change and parts that stay the same. <p> To combine different types of parameter to make one value, you must write them in a specific way: <ol>
+        <li>Referenced parameters must be written with curly brackets around the reference name: <br /><tt>&quot;={REF_NAME}&quot;</tt><li>Variable names must also be written with curly brackets around them: <br /><tt>&quot;${VAR_NAME}&quot;</tt><li>Concrete values are written as normal. <li>For example, you can build a data string that contains all four types of data: <br /><tt>&quot;test_={PROJECTNAME}_${CUSTOMERNUMBER}_?now()&quot;</tt><br />
+          <p>
+      </ol>
+    <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>

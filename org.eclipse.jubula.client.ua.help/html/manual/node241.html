@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.23.3.2 Performing checks in the Java observation mode</title>
-    <meta content="3.23.3.2 Performing checks in the Java observation mode" name="description" />
+    <title>3.23.3.1 Actions that cannot be recorded</title>
+    <meta content="3.23.3.1 Actions that cannot be recorded" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,33 +10,8 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION004233200000000000000"></a> <a name="TasksObsCheckJava"></a><br /><span class="arabic">3</span>.<span class="arabic">23</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Performing checks in the Java observation mode </h3>
-    <p> You can perform checks in the observation mode by taking the following steps: <ol>
-        <li>Start the check mode by pressing <tt>&raquo;CTRL+SHIFT+F11&laquo;</tt>. This key combination can be changed in the preferences <a href="node228.html#TasksPrefsObsModeJava">3.22.7</a>. <li>In the observation console, the check mode will be marked as <i>on</i>. <li>In the AUT , components will be highlighted with a red border (<a href="#redborders">3.34</a>). <p>
-            <div align="CENTER"><a name="redborders"></a><a name="4997"></a><table>
-                <caption align="BOTTOM"><strong>Figure 3.34:</strong> Red borders in the check mode</caption>
-                <tr>
-                  <td>
-                    <div align="CENTER"><img align="BOTTOM" alt="Image redborders" border="0" height="168" src="./redborders.png" width="196" /></div>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>While the check mode is active, no other actions will be recorded.</b></td>
-              </tr>
-            </table>
-        <li>Hover over the component you want to execute a check on and press <tt>&raquo;CTRL+SHIFT+F12&laquo;</tt>. This key combination can be changed in the preferences <a href="node228.html#TasksPrefsObsModeJava">3.22.7</a>. <li>A dialog will appear showing the type of component you are performing the check on. <li>From the dialog, select the check action you want to perform and enter any parameters the check action needs. Many check actions have predefined parameters based on the state of the AUT . <li>When you have specified your check action, choose whether you want to close the dialog and continue in the check mode (<i>check on</i>) or whether you want to stop the check mode when the dialog closes (<i>stop checking</i>). <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>You can manually stop the check mode using the same key combination as you used to start the check mode (<tt>&raquo;CTRL+SHIFT+F11&laquo;</tt> by default).</b></td>
-            </tr>
-          </table>
-        <li>The check action you specify will be added to the Test Case Editor . </ol>
-    <p>
+    <h3><a name="SECTION004233100000000000000"> <span class="arabic">3</span>.<span class="arabic">23</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Actions that cannot be recorded</a></h3> A few actions cannot be recorded in the current version. These include: <ul>
+      <li>Key combinations that are used as shortcuts in SWT applications. <li>Click counts on trees. The select actions are correctly recorded, but the click count is set to 0 and must be manually adjusted. <li>Components that contain texts that are too long (more than 3999 characters). <li>Actions on native dialogs e.g. file choosers. <li>Actions in the figure canvas for GEF components. </ul>
     <p>
       <br />
       <hr />

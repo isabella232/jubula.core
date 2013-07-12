@@ -9,7 +9,7 @@
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><h1><a name="SECTION00400000000000000000"> <span class="arabic">3</span>. Using Regular Expressions for Text Verification</a></h1><a name="regex"></a><p><a name="35"></a><p>
+  <body><a name="guidancerPropertiesViewContextId"></a><h1><a name="SECTION00400000000000000000"> <span class="arabic">3</span>. Using Regular Expressions for Text Verification</a></h1><a name="regex"></a><p><a name="34"></a><p>
       <ul>
         <li>Using regular expressions lets you verify or select text even if you do not know exactly what the text is. <li>Using a system of placeholders for characters and some function symbols, you can enter a regular expression to find or check a text. <li>Actions which support regular expressions have an additional parameter, &quot;<i>Operator</i>&quot;. From this combo box, you can choose &quot;<i>matches</i>&quot; to indicate that you want to use regular expressions. </ul>
     <p><span class="textbf">Simple matching</span><ul>
@@ -23,7 +23,7 @@
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-          <td><b>Jubula applies your regular expression to your entire string. To search for a match within a string, wildcards need to be placed on either side. See the examples below for more information.</b></td>
+          <td><b>The regular expression is applied to your entire string. To search for a match within a string, wildcards need to be placed on either side. See the examples below for more information.</b></td>
         </tr>
       </table>
     <p><span class="textbf">Ranges</span><ul>
@@ -38,7 +38,7 @@
         <li>Use a pipe (&#39;<tt>|</tt>&#39;) to specify alternatives. <li>For example, <tt>&quot;[a|b].*&quot;</tt> will match a string that begins with <tt>&quot;a&quot;</tt> or <tt>&quot;b&quot;</tt>. </ul>
     <p><span class="textbf">Escape character</span><ul>
         <li>Backslash <tt>&quot;<span class="MATH"><img align="MIDDLE" alt="$\backslash$" border="0" height="38" src="img2.gif" width="15" /></span>&quot;</tt> is used to negate the effect of the character following the backslash. <li>The characters that are used to construct a regular expression need to be escaped if they are to be matched within a string. <li>The characters are: <br /><code> [ ] \ . | ? * + ( ) { } ^ $ </code><br />
-        <li>Because Jubula already uses a backslash as an escape symbol, you will need to use two backslashes to escape regular expression characters. <li>For example, to check for a tree node: <br /><tt>&quot;x/y/z/***&quot;</tt><br /> where the slashes are a part of the node, your regular expression in Jubula would look like this: <code> x\/y\/z\/\\*\\*\\* </code><br /> The backslashes before the ordinary slashes are an escape symbol to tell Jubula that the following sign is not a path separator. The extra backslash before the stars tells Jubula that the second backslash is to be interpreted as a backslash in the regular expression, i.e. as an escape symbol. <li>E.g. If you want to check for a star (<tt>&quot;*&quot;</tt>), then you have to enter <tt>&quot;<span class="MATH"><img align="MIDDLE" alt="$\backslash$" border="0" height="38" src="img2.gif" width="15" /></span><span class="MATH"><img align="MIDDLE" alt="$\backslash$" border="0" height="38" src="img2.gif" width="15" /></span>*&quot;</tt>. </ul>
+        <li>Because backslash is already used as an escape symbol, you will need to use two backslashes to escape regular expression characters. <li>For example, to check for a tree node: <br /><tt>&quot;x/y/z/***&quot;</tt><br /> where the slashes are a part of the node, your regular expression in the ITE would look like this: <code> x\/y\/z\/\\*\\*\\* </code><br /> The backslashes before the ordinary slashes are an escape symbol to specify that the following sign is not a path separator. The extra backslash before the stars means that the second backslash is to be interpreted as a backslash in the regular expression, i.e. as an escape symbol. <li>E.g. If you want to check for a star (<tt>&quot;*&quot;</tt>), then you have to enter <tt>&quot;<span class="MATH"><img align="MIDDLE" alt="$\backslash$" border="0" height="38" src="img2.gif" width="15" /></span><span class="MATH"><img align="MIDDLE" alt="$\backslash$" border="0" height="38" src="img2.gif" width="15" /></span>*&quot;</tt>. </ul>
     <p><span class="textbf">Verbatim</span><ul>
         <li>You can avoid having to use multiple backslashes by putting the whole regular expression in single quotes: <li>The example above for a tree node could be entered thus: <br /><tt>&quot;&#39;x/y/z/***&#39;&quot;</tt></ul>
     <p><span class="textbf">Useful examples</span><ul>

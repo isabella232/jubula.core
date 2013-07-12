@@ -1,64 +1,30 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.13.2 Entering and reassigning component names in the Component Names View </title>
-    <meta content="3.13.2 Entering and reassigning component names in the Component Names View " name="description" />
+    <title>3.13 Working with component names</title>
+    <meta content="3.13 Working with component names" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="compNameViewContextId"></a><h2><a name="SECTION004132000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">2</span> Entering and reassigning component names in the Component Names View </a></h2><a name="TasksReassignCompName"></a><p><a name="3036"></a> <a name="3037"></a> <a name="3038"></a> <a name="3039"></a> <a name="3040"></a> <a name="3041"></a> <a name="3042"></a> <a name="3043"></a> <a name="3044"></a> <a name="3045"></a><p>
+  <body>
+    <h1><a name="SECTION004130000000000000000"></a> <a name="reass"></a><br /><span class="arabic">3</span>.<span class="arabic">13</span> Working with component names </h1>
+    <p> Component names are the names you use to refer to the user interface components you want your actions to be executed on. These component names are collected and assigned to real components when you carry out object mapping <a href="node181.html#objectmappingtasks">3.18.1</a>. <p>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>The following section deals with entering component names in the Component Names View when you have added Test Cases from the library. For information on component names in Test Steps , see the Test Steps section <a href="node173.html#specsteps">3.16.1</a>.</b></td>
+          <td><b>A component is an element of the user interface you can execute an action on, e.g. a button, a text field.</b></td>
         </tr>
       </table>
-    <p>
-      <ol>
-        <li>Once you have added a Test Case from the library of Test Cases <a href="node112.html#usingtemplate">3.11.2</a>, you will need to enter a component name for the component you want to test. <li>In the Component Names View , you will see the <i>old name</i> for this component, which was given in the Test Step contained in the library Test Case . The old name is just a placeholder and should be <i>reassigned</i> (<a href="#compnamesview">3.20</a>). <p>
-            <div align="CENTER"><a name="compnamesview"></a><a name="7829"></a><table>
-                <caption align="BOTTOM"><strong>Figure 3.20:</strong> The Component Names View </caption>
-                <tr>
-                  <td>
-                    <div align="CENTER"><img align="BOTTOM" alt="Image compnamesview" border="0" height="265" src="./compnamesview.png" width="461" /></div>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>When you enter a component name in the Component Names View , you create a new reference to a component in the AUT . This component name appears in the Object Mapping Editor to be mapped to a component in your AUT . A Test Case containing component names to be reassigned can therefore be used at a variety of different places to test different actual components. If you want to rename a component name, you can do so in the Component Name Browser &nbsp; <a href="node158.html#TasksRenameCompName">3.13.3</a>.</b></td>
-              </tr>
-            </table>
-          <p>
-        <li>In the <i>new name</i> field, enter your name for this component, e.g. <tt>&quot;MainWindow_NavigationTree_tre&quot;</tt>. <p> We recommend using naming conventions for component names. <p>
-        <li>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to see a list of component names you have already used for this type of component: <p>
-            <dl>
-              <dt><strong><i>Local</i></strong><dd> component names are names you have used in this Test Case for this component type. <br />
-                <div class="margin"><img align="BOTTOM" alt="Image localName" border="0" height="256" src="./localName.png" width="256" />&nbsp;Local name</div>
-                <br />
-              <dt><strong><i>Global</i></strong><dd> component names are names you have used for this component type, but not in this Test Case . <br />
-                <div class="margin"><img align="BOTTOM" alt="Image globalName" border="0" height="256" src="./globalName.png" width="256" />&nbsp;Global name</div>
-                <br />
-            </dl>
-          <p>
-        <li>The component name you enter here will be collected by the Object Mapping Editor when you carry out object mapping so that you can assign it to a component in the AUT . <p>
-        <li>Every time you want to carry out an action on this component, use this name. </ol>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>See the section on the component hierarchy for some tips on using component names in your tests <a href="node161.html#TasksCompNameType">3.13.6</a>.</b></td>
-        </tr>
-      </table>
-    <p>
+    <p> Each component you are planning on testing requires a component name. We recommend using well-thought out names so that object mapping and test creation / maintenance are easier. <p>
       <br />
       <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node156.html" name="tex2html3063"><span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Propagating component names: writing Test Cases that can test different components in the AUT </a><li><a href="node157.html" name="tex2html3064"><span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Changing component names</a></ul>
+        <li><a href="node156.html" name="tex2html3063"><span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">1</span> Creating new component names</a><li><a href="node157.html" name="tex2html3064"><span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">2</span> Entering and reassigning component names in the Component Names View </a><ul>
+            <li><a href="node158.html" name="tex2html3065"><span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Changing component names</a></ul>
+          <br />
+        <li><a href="node159.html" name="tex2html3066"><span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">3</span> Renaming component names</a><li><a href="node160.html" name="tex2html3067"><span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">4</span> Propagating component names</a><li><a href="node161.html" name="tex2html3068"><span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">5</span> Merging component names</a><li><a href="node162.html" name="tex2html3069"><span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">6</span> Deleting unused component names</a><li><a href="node163.html" name="tex2html3070"><span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">7</span> Understanding the component hierarchy</a></ul>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>

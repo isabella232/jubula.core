@@ -1,26 +1,45 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.4 Using the edit parameters dialog to add, edit and delete references</title>
-    <meta content="3.12.4 Using the edit parameters dialog to add, edit and delete references" name="description" />
+    <title>3.12.3 Using references for data in Test Cases </title>
+    <meta content="3.12.3 Using references for data in Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><a name="editParametersDialogContextId"></a><a name="guidancerCentralTestDataEditorContextId"></a><h2><a name="SECTION004124000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">4</span> Using the edit parameters dialog to add, edit and delete references</a></h2><a name="TasksTestdataEditParams"></a><p><a name="2437"></a> <a name="2438"></a><p> You can use the edit parameters dialog to add, edit and delete parameters for a Test Case or a central test data set. This section is concerned with using the dialog for editing parameters in a Test Case . For editing parameters for a central test data set, see the section later <a href="node138.html#TasksCentralData">3.12.9</a>. <p> To edit the parameters for a Test Case : <ol>
-        <li>Open the edit parameters dialog by right-clicking on the root node in the Test Case Editor and selecting <table border="0" style="margin:0px;padding:0px;">
+  <body><a name="guidancerPropertiesViewContextId"></a><a name="guidancerDataSetViewContextId"></a><h2><a name="SECTION004123000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">3</span> Using references for data in Test Cases </a></h2><a name="TasksTestdataReferences"></a><p><a name="2428"></a> <a name="2429"></a><ul>
+        <li>If there are parameters in a Test Case that you want to change when you reuse it, you can enter a reference instead of a concrete value. Deciding which data to parametrize is an important decision in test creation. <table>
             <tr>
-              <td bgcolor="#DDDDDD">Edit parameters</td>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to get content assist in the Properties View for certain parameters. </b></td>
             </tr>
-          </table> from the context-sensitive menu. <li>In the dialog, you can see any parameters you have referenced for this Test Case , and what type of parameters they are. <li>From the dialog, you can add new parameters to the Test Case , edit existing parameters, and delete parameters. You can also change the order the parameters appear in. <li>Use the <i>lock</i> option to lock the parameters for this Test Case . This means that you cannot delete them, rename them or remove them in this Test Case . <table>
+          </table>
+        <li>To enter a reference for a parameter, in the Properties View , enter a reference name, preceded by an equals sign: <tt>&quot;=REF_NAME&quot;</tt>. <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>Reference names may only consist of letters, numbers and underscores. You cannot use spaces in reference names.</b></td>
+              </tr>
+            </table>
+        <li>Press <tt>&raquo;ENTER&laquo;</tt>. A yellow arrow will appear next to the <i>parameter</i> field in the Properties View . <br />
+          <div class="margin"><img align="BOTTOM" alt="Image refArrow" border="0" height="241" src="./refArrow.png" width="256" />&nbsp; reference symbol</div>
+          <br />
+          <table>
             <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-              <td><b>In the Properties View , you can only <i>add</i> references for parameters. To edit or delete references, you must use this dialog.</b></td>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>It helps to choose names that are meaningful so that you know what sort of data to enter later. Instead of <i>=TEXT</i>, you could use <i>=CATEGORY_NAME</i>, for example.</b></td>
             </tr>
-          </table>. </ol>
-    <p>
+          </table>
+        <li>You will see that the reference becomes a parameter of the parent Test Case . It appears in the Test Case Browser next to the parent Test Case in square brackets. <li>You will be able to enter data for this parameter when you reuse the Test Case . <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You can enter data for it now if you want to - this is essentially like having default data. They appear when you reuse the Test Case , but you can overwrite them <a href="node154.html#TasksOverwriteData">3.12.13</a>.</b></td>
+            </tr>
+          </table>
+      </ul>
+    <p> For information on editing and deleting referenced parameters from Test Cases , see the following section <a href="node125.html#TasksTestdataEditParams">3.12.4</a>. <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>

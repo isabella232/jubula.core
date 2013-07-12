@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.32.1 Starting the dbtool</title>
-    <meta content="3.32.1 Starting the dbtool" name="description" />
+    <title>3.31.4 Configuration Files</title>
+    <meta content="3.31.4 Configuration Files" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,9 +10,29 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION004321000000000000000"> <span class="arabic">3</span>.<span class="arabic">32</span>.<span class="arabic">1</span> Starting the dbtool</a></h2>
-    <p><a name="6073"></a><ol>
-        <li>In a command line interface, locate the Jubula installation directory and open the Jubula directory within it. <li>Enter <tt>&quot;dbtool.exe&quot;</tt>. <p> This will run the executable <span class="textit">dbtool.exe</span>. <li>Do not press <tt>&raquo;ENTER&laquo;</tt> until you have entered the necessary parameters. See the next section for details on the parameters. </ol>
+    <h2><a name="SECTION004314000000000000000"> <span class="arabic">3</span>.<span class="arabic">31</span>.<span class="arabic">4</span> Using a configuration file</a></h2>
+    <p><a name="6072"></a><ol>
+        <li>You can also enter test executor parameters in an XML configuration file. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The workspace parameter (<i>-data</i>) cannot currently be entered in the configuration file for the test executor, it must be entered directly into the command line interface.</b></td>
+            </tr>
+          </table>
+        <li>This saves you typing in the same details each time you start a test. <li>To enter the configuration file path, enter the following command: <br /><tt>&quot;-c &lt;path to file&gt;&quot;</tt><p> For example: <span class="textit">-c &#39;&#39; </span><li>You can also overwrite parameters contained in the configuration file by entering another parameter directly into the interface. <li>For example, if your configuration file contains the Test Suite &quot;<i>Suite1</i>&quot;, but you enter <tt>&quot;-testsuite &#39;&#39;Suite2&#39;&#39;&quot;</tt> in the command line interface, the Test Suite called &quot;<i>Suite2</i>&quot; will be started, not &quot;<i>Suite1</i>&quot;. <li>To create an XML file: <ol>
+            <li>Open a text editor of your choice. <li>Enter the desired parameters as shown in the example in the installation. It can be found under: <br /><i>InstallationDirectory/examples/scripts</i><li>Save the file as an XML file. <li>This file will be used when you enter the &quot;<i>-c &lt;path to file&gt;</i>&quot; parameter. <table>
+                <tr>
+                  <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                  <td><b>The no-run, quiet mode, no screenshot, no relevance and <i>-data</i> (for the workspace) parameters can only be entered in the command line interface. They cannot be entered in the configuration file.</b></td>
+                </tr>
+              </table>
+              <table>
+                <tr>
+                  <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                  <td><b>Java Virtual Machine parameters can only be entered in the command line interface. They cannot be entered in the configuration file.</b></td>
+                </tr>
+              </table>
+          </ol>
+      </ol>
     <p>
       <br />
       <hr />

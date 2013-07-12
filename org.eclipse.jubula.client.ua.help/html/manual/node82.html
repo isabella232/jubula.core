@@ -9,17 +9,17 @@
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="autSettingWizardPagePageContextId"></a><h3><a name="SECTION00472600000000000000"> <span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">6</span> Starting Java AUT&#39;s with the <i>autrun</i> command</a></h3><a name="autrun"></a><p><a name="1353"></a> <a name="1354"></a><p> The <i>autrun</i> command can be used as an alternative to starting your AUT via Jubula (i.e. with an AUT configuration <a href="node74.html#configuringaut">3.7.1</a>). It can only be used if your AUT is written in Java 1.5 or above, and you are using a Java Standard Edition JRE. <p>
+  <body><a name="autSettingWizardPagePageContextId"></a><h3><a name="SECTION00472600000000000000"> <span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">6</span> Starting Java AUT&#39;s with the <i>autrun</i> command</a></h3><a name="autrun"></a><p><a name="1316"></a> <a name="1317"></a><p> The <i>autrun</i> command can be used as an alternative to starting your AUT from the ITE . (i.e. with an AUT configuration <a href="node74.html#configuringaut">3.7.1</a>). It can only be used if your AUT is written in Java 1.5 or above, and you are using a Java Standard Edition JRE. <p>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
           <td><b>The <i>autrun</i> command cannot be used for HTML or pure SWT AUT&#39;s .</b></td>
         </tr>
       </table>
-    <p> The command allows you to start your AUT independently of Jubula , on a machine where the AUT Agent is running. The Jubula ITE , when connected to this AUT Agent will then recognize the running AUT as a testable application. <p> To use the <i>autrun</i> command: <ol>
+    <p> The command allows you to start your AUT independently, on a machine where the AUT Agent is running. The ITE , when connected to this AUT Agent will then recognize the running AUT as a testable application. <p> To use the <i>autrun</i> command: <ol>
         <li>Ensure that the AUT Agent is installed on the machine where you will be starting the AUT . <li>Navigate to the <i>server</i> directory in the installation via the command line. <li>Start your AUT via the command line by entering <tt>&quot;autrun.exe&quot;</tt> under Windows or <tt>&quot;autrun&quot;</tt> under Linux then the following parameters: <br />
           <p>
-          <div align="CENTER"><a name="1407"></a><table>
+          <div align="CENTER"><a name="1368"></a><table>
               <caption><strong>Table 3.1:</strong> Parameters for autrun command</caption>
               <tr>
                 <td><a name="autrunparams"></a><div align="CENTER">

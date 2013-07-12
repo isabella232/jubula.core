@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.29.6 I can&#39;t execute my Test Suite </title>
-    <meta content="3.29.6 I can&#39;t execute my Test Suite " name="description" />
+    <title>3.29.4 I can&#39;t start the AUT </title>
+    <meta content="3.29.4 I can&#39;t start the AUT " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,23 +10,13 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION004296000000000000000"></a> <a name="troubleexecute"></a><br /><span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">6</span> I can&#39;t execute my Test Suite </h2>
-    <p><a name="5735"></a> <a name="5736"></a> If you cannot start a Test Suite , check that: <ul>
-        <li>The Test Suite has complete data for the current language. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-              <td><b>No parameter values can be empty in a Test Suite . If you no longer need the parameter, delete it.</b></td>
-            </tr>
-          </table>
-        <li>The object mapping is complete <a href="node179.html#objectmappingtasks">3.18.1</a>. <li>The Object Mapping Mode and the observation mode have been switched off. <li>You have connected to the AUT Agent <a href="node39.html#TasksAgentConnect">3.1.2</a>. <li>You have started the AUT <a href="node195.html#startaut">3.19.2</a>. </ul>
-    <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>You can use the Test Suite Browser to click through the Test Suite to see the exact places where data and object maps are missing.</b></td>
-        </tr>
-      </table>
-    <p>
+    <h2><a name="SECTION004294000000000000000"></a> <a name="troublestartaut"></a><br /><span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">4</span> I can&#39;t start the AUT </h2>
+    <p><a name="5711"></a> <a name="5712"></a> <span class="textbf">If the start AUT button is disabled</span><br /> If you cannot start a particular AUT , this could be because: <p>
+      <ul>
+        <li>You have not connected to the AUT Agent <a href="node39.html#TasksAgentConnect">3.1.2</a>. <li>You have not defined an AUT <a href="node72.html#Defineaut">3.6</a>. <li>You have not configured an AUT <a href="node74.html#configuringaut">3.7.1</a>. <li>The AUT does not support the current working language. </ul>
+    <p><span class="textbf">Errors starting the AUT </span><br /> If there is an error starting the AUT , this could be because: <dl>
+        <dt><strong>The AUT cannot be found:</strong><dd>Make sure that the JAR or executable file for the AUT is correct, or that the classpaths are correct <a href="node74.html#configuringaut">3.7.1</a>. <dt><strong>The main class has not been found:</strong><dd>Make sure that the JAR file or the classpaths you have entered contain the main class <a href="node74.html#configuringaut">3.7.1</a>. <dt><strong>The JAR given as a classpath is not valid:</strong><dd>Check that you have entered the right JAR file, and that the path to it is correct from this computer. If you have entered a relative path, make sure that it is relative to the AUT working directory, if there is one, or to the AUT Agent directory if you have not specified a AUT working directory. <dt><strong>The JAR given as a classpath does not contain a distinct main class:</strong><dd>Check that you have entered a JAR which contains a main class. </dl>
+    <p><span class="textbf">If the AUT does not appear in the Running AUT&#39;s View </span><br /> If the AUT does not appear in the Running AUT&#39;s View and you are testing an RCP application, make sure that the RCP Remote Control plugin has been installed <a href="node328.html#rcpaut">4.2</a>. <p> Otherwise, check that the toolkit you specified in the AUT configuration <a href="node74.html#configuringaut">3.7.1</a> is the right toolkit for this AUT . <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>

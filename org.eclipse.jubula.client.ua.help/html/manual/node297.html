@@ -1,24 +1,40 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.31.1 Starting</title>
-    <meta content="3.31.1 Starting" name="description" />
+    <title>3.30.4 Stopping the AUT Agent </title>
+    <meta content="3.30.4 Stopping the AUT Agent " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h2><a name="SECTION004311000000000000000"> <span class="arabic">3</span>.<span class="arabic">31</span>.<span class="arabic">1</span> Starting the test executor</a></h2>
-    <p><a name="5904"></a><ol>
-        <li>In a command line interface, locate the Jubula installation directory and open the Jubula directory within it. <li>Enter <tt>&quot;testexec.exe&quot;</tt>. <p> This will run the executable <span class="textit">testexec.exe</span>. <li>Do not press <tt>&raquo;ENTER&laquo;</tt> until you have entered the necessary parameters. See the next section for details on the parameters. </ol>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>Be sure to start the AUT Agent before executing a test</b></td>
-        </tr>
-      </table>
+  <body><a name="problemViewContextId"></a><h2><a name="SECTION004304000000000000000"> <span class="arabic">3</span>.<span class="arabic">30</span>.<span class="arabic">4</span> Stopping the AUT Agent </a></h2>
+    <ul>
+      <li>Stop the AUT Agent by selecting: <br />
+        <table border="0" style="margin:0px;padding:0px;">
+          <tr>
+            <td bgcolor="#DDDDDD">Start</td>
+            <td>--&gt;</td>
+            <td bgcolor="#DDDDDD">Programs</td>
+            <td>--&gt;</td>
+            <td bgcolor="#DDDDDD"><b>GUI</b><i>dancer</i> or Jubula </td>
+          </tr>
+        </table>
+        <br /> and then &quot;<i>Stop AUT Agent </i>&quot; from the Windows Menu. <li>Under Linux, use the script: <br /><tt>&quot;stopautagent&quot;</tt>. <table>
+          <tr>
+            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+            <td><b>You can also stop the AUT Agent from the system tray.</b></td>
+          </tr>
+        </table>
+      <li>You can use the parameter <tt>&quot;-p &lt;port number&gt;&quot;</tt> to specify which port number should be stopped. <li>You can also enter the hostname directly after the <tt>&quot;stopautagent&quot;</tt> command to specify which hostname should be stopped. <table>
+          <tr>
+            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+            <td><b>Stopping the AUT Agent will stop any AUT&#39;s that are connected to this AUT Agent .</b></td>
+          </tr>
+        </table>
+    </ul>
+    <p>
     <p>
       <br />
       <hr />

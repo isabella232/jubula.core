@@ -10,7 +10,7 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00621000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Application</a></h2><a name="3717"></a> <a name="3718"></a><p><b>Description</b>:<p><a name="CONCRETE_GraphicApplication"></a><p>
+    <h2><a name="SECTION00621000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Application</a></h2><a name="3677"></a> <a name="3678"></a><p><b>Description</b>:<p><a name="CONCRETE_GraphicApplication"></a><p>
       <ul>
         <li>The <i>Application</i> component is the container for all other components. <li>It represents the AUT as a whole. </ul>
     <p>
@@ -239,8 +239,8 @@
     <p><b>Inherited Actions</b><p><i>none</i><p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Activate</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44601"></a><a name="44602"></a><p><a name="CONCRETE_GraphicApplication_Activate"></a><p><a name="activate"></a><ul>
-        <li>When the ITE and AUT Agent are running on the same computer, you may need to bring the AUT into focus before a test can begin. <li>Exactly how to <i>activate</i> the application can vary from one system to another. <li>This action offers various different ways of activating the application. <li>Jubula realises this action by clicking in the location indicated in the <i>activation method</i> parameter. <li>In the AUT configuration --&gt;<i>User Manual</i> <a href="../manual/node74.html#configuringaut"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>, the default is that no activation is carried out. <li>You can set an activation method for the whole AUT in its configuration, and use this in your Test Steps (e.g. set the activation method parameter to &quot;<i>AUT_DEFAULT</i>&quot;) or you can use a different activation method. <li>In this way, you can centrally define a default for a given operating system, which you can easily change when you test on another operating system. <li>Using the activate action, you can also specify activation methods which differ from the default. <p>
+      <br /><span class="textbf"><big class="LARGE">Activate</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44487"></a><a name="44488"></a><p><a name="CONCRETE_GraphicApplication_Activate"></a><p><a name="activate"></a><ul>
+        <li>When the ITE and AUT Agent are running on the same computer, you may need to bring the AUT into focus before a test can begin. <li>Exactly how to <i>activate</i> the application can vary from one system to another. <li>This action offers various different ways of activating the application. <li>This action is performed by clicking in the location indicated in the <i>activation method</i> parameter. <li>In the AUT configuration --&gt;<i>User Manual</i> <a href="../manual/node74.html#configuringaut"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>, the default is that no activation is carried out. <li>You can set an activation method for the whole AUT in its configuration, and use this in your Test Steps (e.g. set the activation method parameter to &quot;<i>AUT_DEFAULT</i>&quot;) or you can use a different activation method. <li>In this way, you can centrally define a default for a given operating system, which you can easily change when you test on another operating system. <li>Using the activate action, you can also specify activation methods which differ from the default. <p>
             <table>
               <tr>
                 <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
@@ -304,7 +304,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Existence of Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44608"></a><a name="44609"></a><p><a name="CONCRETE_GraphicApplication_CheckExistenceOfWindow"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44494"></a><a name="44495"></a><p><a name="CONCRETE_GraphicApplication_CheckExistenceOfWindow"></a><p>
       <ul>
         <li>Use this action to check the existence of a window based on its title. </ul>
     <p>
@@ -363,7 +363,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Numeric Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44615"></a><a name="44616"></a><p><a name="CONCRETE_GraphicApplication_CheckValues"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Numeric Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44501"></a><a name="44502"></a><p><a name="CONCRETE_GraphicApplication_CheckValues"></a><p>
       <ul>
         <li>Use this action to compare two numeric values during your test. <li>This action can be used with the <i>start timer</i> and <i>read timer</i> actions to compare the time difference to a value you specify (i.e. to measure the performance of your application). <li>You can also compare other variables you have read from your application with this action. </ul>
     <p>
@@ -422,7 +422,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check String Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44622"></a><a name="44623"></a><p><a name="CONCRETE_GraphicApplication_CheckStringValues"></a><p> Use this action to compare the values of two strings in your test. This can be used if you want to check the value of a variable, for example. <p>
+      <br /><span class="textbf"><big class="LARGE">Check String Values</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44508"></a><a name="44509"></a><p><a name="CONCRETE_GraphicApplication_CheckStringValues"></a><p> Use this action to compare the values of two strings in your test. This can be used if you want to check the value of a variable, for example. <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
         <tr>
@@ -478,7 +478,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Click in Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44629"></a><a name="44630"></a><p><a name="CONCRETE_GraphicApplication_ClickInActiveWindow"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Click in Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44515"></a><a name="44516"></a><p><a name="CONCRETE_GraphicApplication_ClickInActiveWindow"></a><p>
       <ul>
         <li>Use this action to send one or more clicks with any mouse button to the currently active window. <li>You can specify where to click, how many times, and with which mouse button. </ul>
     <p>
@@ -563,7 +563,7 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_ClickInActiveWindow_XUnits"></a><p>
       <ul>
-        <li>Use this parameter to tell Jubula whether you want your values for the x-coordinate to be in pixels or percent. <li>If you choose percent for this parameter, and <tt>&quot;50&quot;</tt> for the <i>x-position</i> parameter, the click will always be in the middle of the x-axis. </ul>
+        <li>Use this parameter to specify whether you want your values for the x-coordinate to be in pixels or percent. <li>If you choose percent for this parameter, and <tt>&quot;50&quot;</tt> for the <i>x-position</i> parameter, the click will always be in the middle of the x-axis. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -610,12 +610,12 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_ClickInActiveWindow_YUnits"></a><p>
       <ul>
-        <li>Use this parameter to tell Jubula whether you want your values for the y-coordinate to be in pixels or percent. <li>If you choose percent for this parameter, and <tt>&quot;50&quot;</tt> for the <i>y-position</i> parameter, the click will always be in the middle of the y-axis. </ul>
+        <li>Use this parameter to specify whether you want your values for the y-coordinate to be in pixels or percent. <li>If you choose percent for this parameter, and <tt>&quot;50&quot;</tt> for the <i>y-position</i> parameter, the click will always be in the middle of the y-axis. </ul>
     <p>
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Copy Text to Clipboard</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44636"></a><a name="44637"></a><p><a name="CONCRETE_GraphicApplication_CopyToClipboard"></a><p> This action allows you to copy one string to the clipboard on your operating system. It can be used in combination with the key combination <tt>&raquo;CTRL+V&laquo;</tt> to paste text into your AUT , or into native dialogs (e.g. file choosers) opened by your AUT . <p>
+      <br /><span class="textbf"><big class="LARGE">Copy Text to Clipboard</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44522"></a><a name="44523"></a><p><a name="CONCRETE_GraphicApplication_CopyToClipboard"></a><p> This action allows you to copy one string to the clipboard on your operating system. It can be used in combination with the key combination <tt>&raquo;CTRL+V&laquo;</tt> to paste text into your AUT , or into native dialogs (e.g. file choosers) opened by your AUT . <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
         <tr>
@@ -637,9 +637,9 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Execute External Command</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44643"></a><a name="44644"></a><p><a name="CONCRETE_GraphicApplication_ExecuteCommand"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Execute External Command</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44529"></a><a name="44530"></a><p><a name="CONCRETE_GraphicApplication_ExecuteCommand"></a><p>
       <ul>
-        <li>Use this action to run an external script or command during your test. <li>You enter the command and the exit code that Jubula should wait for, as well as a timeout to tell Jubula how long to wait for the code. </ul>
+        <li>Use this action to run an external script or command during your test. <li>You enter the command and the exit code to wait for, as well as a timeout to specify how long to wait for the code. </ul>
     <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
@@ -657,7 +657,7 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_ExecuteCommand_Command"></a><p>
       <ul>
-        <li>Use this parameter to tell Jubula which command to execute. <li>Give the path to the command, either on the local machine or on the remote machine, as defined in the <i>local</i> parameter. <li>Relative paths can be written simply with the white spaces included. You will need to use quotes (&quot;) around the path or command if you are using path fragments (e.g. <tt>&quot;./&quot;</tt> or <tt>&quot;../&quot;</tt>) for the relative path. <li>When using absolute paths, use quotes (&quot;) around the command or parameter containing the whitespaces. <li>You need to use quotes for path fragments as <p> For example, instead of: <br /><code>C:\Program Files\guidancer\guidancer.exe </code><br /><code>-data C:\Program Files\guidancer\ws </code><br /> enter: <br /><code>&quot;C:\Program Files\guidancer\guidancer.exe&quot; </code><br /><code> -data &quot;C:\Program Files\guidancer\ws&quot; </code><p>
+        <li>Use this parameter to specify which command to execute. <li>Give the path to the command, either on the local machine or on the remote machine, as defined in the <i>local</i> parameter. <li>Relative paths can be written simply with the white spaces included. You will need to use quotes (&quot;) around the path or command if you are using path fragments (e.g. <tt>&quot;./&quot;</tt> or <tt>&quot;../&quot;</tt>) for the relative path. <li>When using absolute paths, use quotes (&quot;) around the command or parameter containing the whitespaces. <li>You need to use quotes for path fragments as <p> For example, instead of: <br /><code>C:\Program Files\MyProgram\example.exe </code><br /><code>-data C:\Program Files\MyProgram\ws </code><br /> enter: <br /><code>&quot;C:\Program Files\MyProgram\example.exe&quot; </code><br /><code> -data &quot;C:\Program Files\MyProgram\ws&quot; </code><p>
         <li>In Linux, quotes may be placed around the command and the parameter. Windows cmd.exe can only accept quotes in either the parameter or the command. <li>Please bear in mind that strings within the quotes are not checked for validity. <p>
       </ul>
       <table>
@@ -682,7 +682,7 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_ExecuteCommand_ExpectedExitCode"></a><p>
       <ul>
-        <li>Scripts generally have an exit code (for example, 0 usually means that the script was successfull). <li>Use this paramter to define the exit code that Jubula should expect. </ul>
+        <li>Scripts generally have an exit code (for example, 0 usually means that the script was successfull). <li>Use this parameter to define the expected exit code. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -699,7 +699,7 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_ExecuteCommand_RunLocal"></a><p>
       <ul>
-        <li>Use this parameter to define whether the command should be run locally (on the same machine as the ITE , the same machine as Jubula is installed on) or remotely (on the machine where the AUT Agent is installed, and the AUT is running.). <li>Set this parameter to true to run the command locally. <li>Set this parameter to false to run the command remotely. <table>
+        <li>Use this parameter to define whether the command should be run locally (on the same machine as the ITE ) or remotely (on the machine where the AUT Agent is installed, and the AUT is running.). <li>Set this parameter to true to run the command locally. <li>Set this parameter to false to run the command remotely. <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
               <td><b>If you are running your AUT on the same machine as the ITE , there is no difference between running the command locally or remotely.</b></td>
@@ -722,14 +722,14 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_ExecuteCommand_Timeout"></a><p>
       <ul>
-        <li>Enter the amount of time (in milliseconds) Jubula should wait for the exit code for the command. <li>If the exit code is not delivered in this timeframe, the Test Step is unsuccessful. </ul>
+        <li>Enter the amount of time (in milliseconds) that should be waited for the exit code for the command. <li>If the exit code is not delivered in this timeframe, the Test Step is unsuccessful. </ul>
     <p>
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">External Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44650"></a><a name="44651"></a><p><a name="CONCRETE_GraphicApplication_NativeInputText"></a><p>
+      <br /><span class="textbf"><big class="LARGE">External Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44536"></a><a name="44537"></a><p><a name="CONCRETE_GraphicApplication_NativeInputText"></a><p>
       <ul>
-        <li>Use this action to input text into dialogs that are not supported by Jubula (e.g. file choosers). <li>Jubula can send keystrokes to these dialogs, but cannot check if they have arrived. <li>For this action to work, the dialog must be in focus, and the cursor must be in the text field to be filled in. <li>Combine this action with the &quot;<i>External Key Combination</i>&quot; action to send key combinations to native dialogs to be able to work with file choosers during your test. </ul>
+        <li>Use this action to input text into dialogs that are not supported (e.g. file choosers). <li>Keystrokes can be sent to these dialogs, but no check is possible to see if they have arrived. <li>For this action to work, the dialog must be in focus, and the cursor must be in the text field to be filled in. <li>Combine this action with the &quot;<i>External Key Combination</i>&quot; action to send key combinations to native dialogs to be able to work with file choosers during your test. </ul>
     <p><span class="textbf">Native dialogs in SWT and RCP AUT&#39;s </span><br />
     <p> In SWT and RCP AUT&#39;s , this action can only enter ASCII characters (large and small letters, and numbers). <p> To enter characters such as spaces, periods and slashes, use the action <i>External Key Combination</i>. <p> We recommend using the action <i>Copy to Clipboard</i> to help fill out native dialogs in SWT and RCP AUT&#39;s . The string you copy to the clipboard can then simply be entered into the textfield in the dialog using <tt>&raquo;CTRL+V&laquo;</tt> as an <i>External Key Combination</i> action. <p>
     <p><i>Parameters</i><br />
@@ -753,9 +753,9 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">External Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44657"></a><a name="44658"></a><p><a name="CONCRETE_GraphicApplication_NativeKeyStroke"></a><p>
+      <br /><span class="textbf"><big class="LARGE">External Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44543"></a><a name="44544"></a><p><a name="CONCRETE_GraphicApplication_NativeKeyStroke"></a><p>
       <ul>
-        <li>Use this action to send a key combination to a dialog that is not supported by Jubula (e.g. file choosers). <li>Jubula can send a keystroke to these dialogs, but cannot check if it have arrived. <li>For this action to work, the dialog must be in focus. <li>Combine this action with the &quot;<i>External Input Text</i>&quot; action to be able to work with file choosers during your test. <li>Some of the keystrokes you may need include <i>ENTER</i>, <i>SPACE</i>, <i>PERIOD</i> and <i>/</i>. </ul>
+        <li>Use this action to send a key combination to a dialog that is not supported (e.g. file choosers). <li>Keystrokes canbe sent to these dialogs, but it is not possible to check if it has arrived. <li>For this action to work, the dialog must be in focus. <li>Combine this action with the &quot;<i>External Input Text</i>&quot; action to be able to work with file choosers during your test. <li>Some of the keystrokes you may need include <i>ENTER</i>, <i>SPACE</i>, <i>PERIOD</i> and <i>/</i>. </ul>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img3.jpg" width="102" /></td>
@@ -906,9 +906,9 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44664"></a><a name="44665"></a><p><a name="CONCRETE_GraphicApplication_InputTextDirect"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Input Text</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44550"></a><a name="44551"></a><p><a name="CONCRETE_GraphicApplication_InputTextDirect"></a><p>
       <ul>
-        <li>Use this action to enter text into the component which currently has focus. <li>The text you want to enter is given as a parameter. <li>The difference between this action and the &quot;<i>External Input Text</i>&quot; is that Jubula can check that the keystrokes have arrived at the component. <li>Use this action for components that Jubula supports, and the &quot;<i>External Input Text</i>&quot; action for components in external dialogs, such as file choosers. </ul>
+        <li>Use this action to enter text into the component which currently has focus. <li>The text you want to enter is given as a parameter. <li>The difference between this action and the &quot;<i>External Input Text</i>&quot; is that the arrival of the keystrokes at the component are checked here. <li>Use this action for supported components, and the &quot;<i>External Input Text</i>&quot; action for components in external dialogs, such as file choosers. </ul>
     <p>
       <table>
         <tr>
@@ -938,7 +938,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44671"></a><a name="44672"></a><p><a name="CONCRETE_GraphicApplication_KeyStroke"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Key Combination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44557"></a><a name="44558"></a><p><a name="CONCRETE_GraphicApplication_KeyStroke"></a><p>
       <ul>
         <li>This action allows you to send a key command to the application. <li>This is useful for actions such as <tt>&raquo;DELETE&laquo;</tt>, <tt>&raquo;ENTER&laquo;</tt>, etc. </ul>
       <table>
@@ -1098,9 +1098,9 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Manual Test Step</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44678"></a><a name="44679"></a><p><a name="CONCRETE_GraphicApplication_ManualTestStep"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Manual Test Step</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44564"></a><a name="44565"></a><p><a name="CONCRETE_GraphicApplication_ManualTestStep"></a><p>
       <ul>
-        <li>Use this action to specify a manual Test Step . <li>Manual Test Steps can be specified in Jubula and must be executed by a manual tester. <li>Jubula provides a special test execution mode for manual testing, in which the manual Test Steps are presented to the user to be executed. </ul>
+        <li>Use this action to specify a manual Test Step . <li>Manual Test Steps can be specified and must be executed by a manual tester. <li>There is a special test execution mode for manual testing, in which the manual Test Steps are presented to the user to be executed. </ul>
     <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
@@ -1163,14 +1163,14 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Pause Test Execution</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44685"></a><a name="44686"></a><p><a name="CONCRETE_GraphicApplication_Pause"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Pause Test Execution</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44571"></a><a name="44572"></a><p><a name="CONCRETE_GraphicApplication_Pause"></a><p>
       <ul>
         <li>This action pauses the test execution. <li>To continue a paused test, press the pause button in the ITE . </ul>
     <p>
     <p>
     <p>This action has no parameters.<p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Prepare for AUT termination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44692"></a><a name="44693"></a><p><a name="CONCRETE_GraphicApplication_PrepareForShutdown"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Prepare for AUT termination</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44578"></a><a name="44579"></a><p><a name="CONCRETE_GraphicApplication_PrepareForShutdown"></a><p>
       <ul>
         <li>Use this action together with an action to close your AUT and action to synchronize the termination and re-start of the AUT . <li>Using these actions, you can close your AUT using e.g. <table border="0" style="margin:0px;padding:0px;">
             <tr>
@@ -1178,26 +1178,32 @@
               <td>--&gt;</td>
               <td bgcolor="#DDDDDD">Exit</td>
             </tr>
-          </table> and have it automatically restarted via Jubula . <li>Use this action shortly before an action in your test that will cause the AUT to shutdown. It must not be directly before the action to close the AUT . <table>
+          </table> and have it automatically restarted. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img3.jpg" width="102" /></td>
+              <td><b>Using the <i>Restart</i> option in Eclipse AUT&#39;s is not supported.</b></td>
+            </tr>
+          </table>
+        <li>Use this action shortly before an action in your test that will cause the AUT to shutdown. It must not be directly before the action to close the AUT . <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img3.jpg" width="102" /></td>
               <td><b>The shutdown method you choose must run through the JVM shutdown hooks to properly terminate the AUT . Do not use the <i>restart</i> action to shut your AUT down.</b></td>
             </tr>
           </table>
-        <li>Using this action ensures that the step to terminate the AUT is correctly recognized by Jubula and that it can be successfully re-started using the synchronize termination and re-start action. This is achieved by delaying the time between opting to close the AUT and actually closing it so that the correct communication can take place. The default delay time is set to 2000 milliseconds, and can be altered using either an environment variable --&gt;<i>User Manual</i> <a href="../manual/node127.html#TasksSystemVariables"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a> or as a JVM property in the AUT configuration --&gt;<i>User Manual</i> <a href="../manual/node81.html#ExpertAUTConfig"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a> <i>TEST_AUT_KEEP_ALIVE_DELAY</i>. Any test step delay specified in your Test Suite is added to this delay. <p>
+        <li>Using this action ensures that the step to terminate the AUT is correctly recognized and that it can be successfully re-started using the synchronize termination and re-start action. This is achieved by delaying the time between opting to close the AUT and actually closing it so that the correct communication can take place. The default delay time is set to 2000 milliseconds, and can be altered using either an environment variable --&gt;<i>User Manual</i> <a href="../manual/node128.html#TasksSystemVariables"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a> or as a JVM property in the AUT configuration --&gt;<i>User Manual</i> <a href="../manual/node81.html#ExpertAUTConfig"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a> <i>TEST_AUT_KEEP_ALIVE_DELAY</i>. Any test step delay specified in your Test Suite is added to this delay. <p>
       </ul>
     <p>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img3.jpg" width="102" /></td>
-          <td><b>This action is currently supported on the Swing and RCP toolkits and has the status &#39;experimental&#39; for the Kepler release (Jubula feature).</b></td>
+          <td><b>This action is currently supported on the Swing and RCP toolkits. Neither toolkit supports the terminating of AUT&#39;s using the <i>press any key</i> actions to press e.g. <tt>&raquo;ALT+F4&laquo;</tt>. External key combinations can be used to terminate the AUT using e.g. <tt>&raquo;ALT+F4&laquo;</tt> on RCP AUT&#39;s , but not Swing AUT&#39;s .</b></td>
         </tr>
       </table>
     <p>
     <p>
     <p>This action has no parameters.<p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Read Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44699"></a><a name="44700"></a><p><a name="CONCRETE_GraphicApplication_ReadTimer"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Read Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44585"></a><a name="44586"></a><p><a name="CONCRETE_GraphicApplication_ReadTimer"></a><p>
       <ul>
         <li>Use this action to read a timer (stopwatch). <li>You enter the name of the timer you want to read and enter a variable which saves the difference (in milliseconds) between the current time and the time at which the timer was started. <li>You can start timers and compare values between starting and reading timers using other actions. <li>This action is useful for measuring how long your AUT takes to execute certain actions. </ul>
       <table>
@@ -1245,7 +1251,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Restart</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44706"></a><a name="44707"></a><p><a name="CONCRETE_GraphicApplication_Restart"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Restart</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44592"></a><a name="44593"></a><p><a name="CONCRETE_GraphicApplication_Restart"></a><p>
       <ul>
         <li>Use this action to restart the AUT during the test. <li>The action closes your AUT and all windows/dialogs associated with it. <li>It then starts the same AUT with the same configuration as it had when you originally started it and carries on with the test. <li>If your AUT takes a while to load/to be ready, it is a good idea to use the &quot;<i>wait for window</i>&quot; or &quot;<i>wait for component</i>&quot; action after the restart action. <table>
             <tr>
@@ -1265,14 +1271,14 @@
     <p>
     <p>This action has no parameters.<p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Set Toggle Key</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44713"></a><a name="44714"></a><p><a name="CONCRETE_GraphicApplication_KeyToogle"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Set Toggle Key</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44599"></a><a name="44600"></a><p><a name="CONCRETE_GraphicApplication_KeyToogle"></a><p>
       <ul>
         <li>Use this action to turn the following keys on or off: <ul>
             <li>Caps-lock <li>Num-lock <li>Scroll-lock </ul>
         <li>You specify which key to (de)activate and whether the function should be turned on or off. <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img3.jpg" width="102" /></td>
-              <td><b>Due to current Java limitations, Jubula does not support this action when testing under Linux. This means that any Test Step containing this action will fail when testing under Linux.</b></td>
+              <td><b>Due to current Java limitations, this action is not supported when testing under Linux. This means that any Test Step containing this action will fail when testing under Linux.</b></td>
             </tr>
           </table>
       </ul>
@@ -1293,7 +1299,7 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_KeyToogle_ToogleKey"></a><p>
       <ul>
-        <li>Use this parameter to tell Jubula which key you want to (de)activate. <li><tt>&quot;1&quot;</tt> = Num-lock <li><tt>&quot;2&quot;</tt> = Caps-lock <li><tt>&quot;3&quot;</tt> = Scroll-lock </ul>
+        <li>Use this parameter to specify which key you want to (de)activate. <li><tt>&quot;1&quot;</tt> = Num-lock <li><tt>&quot;2&quot;</tt> = Caps-lock <li><tt>&quot;3&quot;</tt> = Scroll-lock </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -1315,7 +1321,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Start Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44720"></a><a name="44721"></a><p><a name="CONCRETE_GraphicApplication_StartTimer"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Start Timer</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44606"></a><a name="44607"></a><p><a name="CONCRETE_GraphicApplication_StartTimer"></a><p>
       <ul>
         <li>Use this action to start a timer (stopwatch). <li>You name the timer and enter a variable which saves the current time (in milliseconds since the January 1st 1970). <li>You can read timers and compare values between starting and reading timers using other actions. <li>This action is useful for measuring how long your AUT takes to execute certain actions. </ul>
     <p>
@@ -1357,7 +1363,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Store Value</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44727"></a><a name="44728"></a><p><a name="CONCRETE_GraphicApplication_ReadValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Store Value</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44613"></a><a name="44614"></a><p><a name="CONCRETE_GraphicApplication_ReadValue"></a><p>
       <ul>
         <li>Use this action to store a value you specify so that you can use it as data for other actions. </ul>
     <p>
@@ -1399,7 +1405,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Synchronize termination and re-start of AUT</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44734"></a><a name="44735"></a><p><a name="CONCRETE_GraphicApplication_SyncShutdownAndRestart"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Synchronize termination and re-start of AUT</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44620"></a><a name="44621"></a><p><a name="CONCRETE_GraphicApplication_SyncShutdownAndRestart"></a><p>
       <ul>
         <li>Use this action together with the action to prepare for AUT termination and an action to close your AUT . <li>Using these actions, you can close your AUT using e.g. <table border="0" style="margin:0px;padding:0px;">
             <tr>
@@ -1407,7 +1413,13 @@
               <td>--&gt;</td>
               <td bgcolor="#DDDDDD">Exit</td>
             </tr>
-          </table> and have it automatically restarted via Jubula . <li>Use this action sometime after using the prepare for termination action, and directly after the action to close the AUT . <table>
+          </table> and have it automatically restarted. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img3.jpg" width="102" /></td>
+              <td><b>Using the <i>Restart</i> option in Eclipse AUT&#39;s is not supported.</b></td>
+            </tr>
+          </table>
+        <li>Use this action sometime after using the prepare for termination action, and directly after the action to close the AUT . <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img3.jpg" width="102" /></td>
               <td><b>The shutdown method you choose must run through the JVM shutdown hooks to properly terminate the AUT . Do not use the <i>restart</i> action to shut your AUT down.</b></td>
@@ -1418,7 +1430,7 @@
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img3.jpg" width="102" /></td>
-          <td><b>This action is currently supported on the Swing and RCP toolkits and has the status &#39;experimental&#39; for the Kepler release (Jubula feature).</b></td>
+          <td><b>This action is currently supported on the Swing and RCP toolkits. Neither toolkit supports the terminating of AUT&#39;s using the <i>press any key</i> actions to press e.g. <tt>&raquo;ALT+F4&laquo;</tt>. External key combinations can be used to terminate the AUT using e.g. <tt>&raquo;ALT+F4&laquo;</tt> on RCP AUT&#39;s , but not Swing AUT&#39;s .</b></td>
         </tr>
       </table>
     <p>
@@ -1438,7 +1450,7 @@
         </tr>
       </table><a name="CONCRETE_GraphicApplication_SyncShutdownAndRestart_Timeout"></a><p>
       <ul>
-        <li>Specify the timeout in milliseconds that represents the maximum amount of time that Jubula should wait for the AUT to terminate (to de-register from the AUT Agent ). You should specify a time that represents how long your AUT takes to close. <li>If, after closing, your AUT requires time to free up resources, save settings etc., then you can use the environment variable <i>TEST_AUT_POST_DEREGISTRATION_DELAY</i> for the environment the AUT Agent is running in --&gt;<i>User Manual</i> <a href="../manual/node127.html#TasksSystemVariables"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a> or as a JVM property in the AUT configuration --&gt;<i>User Manual</i> <a href="../manual/node81.html#ExpertAUTConfig"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a> to add a delay to ensure that these steps are completed successfully. <li>If the termination timeout is exceeded, and the AUT is still registered, then a normal <i>restart</i> AUT will be executed and this Test Step will be marked as failed. </ul>
+        <li>Specify the timeout in milliseconds that represents the maximum amount of time that should be waited for the AUT to terminate (to de-register from the AUT Agent ). You should specify a time that represents how long your AUT takes to close. <li>If, after closing, your AUT requires time to free up resources, save settings etc., then you can use the environment variable <i>TEST_AUT_POST_DEREGISTRATION_DELAY</i> for the environment the AUT Agent is running in --&gt;<i>User Manual</i> <a href="../manual/node128.html#TasksSystemVariables"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a> or as a JVM property in the AUT configuration --&gt;<i>User Manual</i> <a href="../manual/node81.html#ExpertAUTConfig"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a> to add a delay to ensure that these steps are completed successfully. <li>If the termination timeout is exceeded, and the AUT is still registered, then a normal <i>restart</i> AUT will be executed and this Test Step will be marked as failed. </ul>
     <p>
       <table>
         <tr>
@@ -1457,7 +1469,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Take Screenshot</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44741"></a><a name="44742"></a><p><a name="CONCRETE_GraphicApplication_TakeScreenshot"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Take Screenshot</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44627"></a><a name="44628"></a><p><a name="CONCRETE_GraphicApplication_TakeScreenshot"></a><p>
       <ul>
         <li>This action takes a screen capture and saves the resulting image to disk. <li>The action takes a screenshot of the whole screen on the primary monitor. To take a screenshot of only the active window, use the action <i>Take Screenshot of Active Window</i>. <li>If you do not enter a file extension, the screenshot will be saved as a <span class="textit">.png</span> file. You can also save the file as an <span class="textit">.jpeg</span> or <span class="textit">.bmp</span> file. <p>
       </ul>
@@ -1551,7 +1563,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Take Screenshot of Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44748"></a><a name="44749"></a><p><a name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Take Screenshot of Active Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44634"></a><a name="44635"></a><p><a name="CONCRETE_GraphicApplication_TakeScreenshotOfActiveWindow"></a><p>
       <ul>
         <li>This action takes a screen capture of the active window on the primary monitor and saves the resulting image to disk. <li>To take a screenshot of thw whole screen, use the action <i>Take Screenshot</i>. <li>If you do not enter a file extension, the screenshot will be saved as a <span class="textit">.png</span> file. You can also save the file as an <span class="textit">.jpeg</span> or <span class="textit">.bmp</span> file. <li>You can specify a margin around the active window to extend the range of the screenshot. This may be necessary on some systems where the title bar of some dialogs is not included in the screenshot. </ul>
     <p>
@@ -1712,9 +1724,9 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Wait</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44755"></a><a name="44756"></a><p><a name="CONCRETE_GraphicApplication_Wait"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Wait</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44641"></a><a name="44642"></a><p><a name="CONCRETE_GraphicApplication_Wait"></a><p>
       <ul>
-        <li>Sometimes it is necessary to wait for a period of time before continuing. <li>Use this action to tell the AUT Agent to wait for a given amount of time before continuing with the next Test Step . <li>Jubula also offers actions to wait for a window and a component. If you are waiting for a component, or a window, use the actions specific to these events. </ul>
+        <li>Sometimes it is necessary to wait for a period of time before continuing. <li>Use this action to tell the AUT Agent to wait for a given amount of time before continuing with the next Test Step . <li>There are also actions to wait for a window and a component. If you are waiting for a component, or a window, use the actions specific to these events. </ul>
     <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
@@ -1737,7 +1749,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Wait for Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44762"></a><a name="44763"></a><p><a name="CONCRETE_GraphicApplication_WaitForWindow"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Wait for Window</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44648"></a><a name="44649"></a><p><a name="CONCRETE_GraphicApplication_WaitForWindow"></a><p>
       <ul>
         <li>This action waits for the window you name to open. <li>This action does <span class="textit">not</span> check whether the window is active <li>Once the window is open (or if the window is already open), the test continues. <li>If the window does not open, the action fails. </ul>
     <p>
@@ -1813,7 +1825,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Wait for Window Activation</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44769"></a><a name="44770"></a><p><a name="CONCRETE_GraphicApplication_WaitForWindowActivation"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Wait for Window Activation</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44655"></a><a name="44656"></a><p><a name="CONCRETE_GraphicApplication_WaitForWindowActivation"></a><p>
       <ul>
         <li>This action waits for the window you name to become active. A window is active only when it is the currently selected window. <li>Once the window is active (or if the window is already active when this test step begins), the test continues. <li>If the window does not become active, the action fails. </ul>
     <p>
@@ -1889,7 +1901,7 @@
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Wait for Window to Close</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44776"></a><a name="44777"></a><p><a name="CONCRETE_GraphicApplication_WaitForWindowToClose"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Wait for Window to Close</big></span> <tt><small class="FOOTNOTESIZE">(Application)</small></tt> <a name="44662"></a><a name="44663"></a><p><a name="CONCRETE_GraphicApplication_WaitForWindowToClose"></a><p>
       <ul>
         <li>This action waits for the window you name to close. <li>Once the window is closed (or if no open window with a corresponding title can be found), the test continues. <li>If a window is found and does not close within the timeout period, the action fails. </ul>
     <p>

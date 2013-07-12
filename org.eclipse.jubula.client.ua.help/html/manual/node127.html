@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.5.2 Using environment variables in tests</title>
-    <meta content="3.12.5.2 Using environment variables in tests" name="description" />
+    <title>3.12.5.1 Reading and using values (variables) from the AUT </title>
+    <meta content="3.12.5.1 Reading and using values (variables) from the AUT " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,19 +10,26 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION004125200000000000000"></a> <a name="TasksSystemVariables"></a><a name="2498"></a> <a name="2499"></a> <a name="2500"></a> <a name="2501"></a> <a name="2502"></a> <a name="2503"></a><br /><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">5</span>.<span class="arabic">2</span> Using environment variables in tests </h3>
-    <p> Jubula lets you add variables to your operating system, which can be used in your tests. <p> You will need to set environment variables which have the form: <br />
-    <p><tt>&quot;TEST_UDV_&lt;variablename&gt;&quot;</tt><br />
-    <p> To use the variable in your tests, enter the variable name (everything after the underscore) preceded by a dollar sign. Do not enter the &quot;<i>TEST_UDV_</i>&quot; part. <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-          <td><b>After entering or changing an environment variable, you will need to restart Jubula . Environment variables for the ITE (i.e. for the test) are only read from the machine on which the client part of Jubula is running, not from the machine where the AUT Agent is running.</b></td>
-        </tr>
-      </table>
-    <p> Your system administrator will be able to help you with operating-system specific ways of setting environment variables. <p><span class="textbf">Useful variables</span> These variables can be used as environment variables on your machine or as JVM properties in your AUT configuration. <p>
-      <dl>
-        <dt><strong>TEST_AUT_KEEP_ALIVE_DELAY</strong><dd>This can be useful if you are using the action to <i>prepare for termination</i>. You can use this variable to configure (in millseconds) how long the AUT should be &#39;&#39;kept alive&#39;&#39; after the termination command (e.g. pressing &quot;<i>Exit</i>&quot; in order for the correct communication between the ITE and the AUT to occur. The value is set to 2000ms per default. <dt><strong>TEST_AUT_POST_DEREGISTRATION_DELAY</strong><dd>This can be useful if you are using the action <i>synchronize shutdown and re-start</i>. You can use this variable to configure (in milliseconds) how long your AUT requires after closing to perform tasks such as saving resources and settings. </dl>
+    <h3><a name="SECTION004125100000000000000"></a> <a name="2501"></a> <a name="2502"></a> <a name="TasksAUTVariables"></a><br /><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">5</span>.<span class="arabic">1</span> Reading and using values (variables) from the AUT </h3>
+    <p> You can store values read from the AUT to use as data in other Test Cases . <p>
+      <ol>
+        <li>Use one of the <i>store value</i> actions on the various components to reads a value from a component in the AUT . <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You can also use the <i>store value</i> action on the <i>application</i> component to store a value you enter.</b></td>
+            </tr>
+          </table>
+          <p>
+        <li>In the parameter field, enter a name for this variable (e.g. USERNAME). <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>Variable names may only contain letters, numbers and underscores</b></td>
+              </tr>
+            </table>
+        <li>When you want to use this value as data for a parameter, enter the variable name preceded by a dollar sign ($) as the parameter value (e.g. $USERNAME). <p> Bear in mind that the variable has to be stored before it can be used as a parameter value. <p>
+      </ol> Read the following sections for more information on: <ul>
+        <li>Using system variables in tests <a href="node128.html#TasksSystemVariables">3.12.5.2</a>. <li>Using the pre-defined variables in tests <a href="node129.html#TasksPredefinedVariables">3.12.5.3</a></ul>
     <p>
       <br />
       <hr />

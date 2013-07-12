@@ -475,7 +475,7 @@
      </context>
      <context id="guidancerDataSetViewContextId">
           <description>Data Sets View</description>
-          <topic href="html/reference/node38.html#guidancerDataSetViewContextId" label="9. Special characters in Jubula &#10;"></topic>
+          <topic href="html/reference/node38.html#guidancerDataSetViewContextId" label="9. Special characters&#10;"></topic>
      </context>
      <context id="ABSTRACT_Widget_PopupVerifyEnabledByIndexpathPosition_XUnits">
           <description>x-units</description>
@@ -1840,7 +1840,7 @@
      <context id="guidancerPropertiesViewContextId">
           <description>Properties View</description>
           <topic href="html/reference/node37.html#guidancerPropertiesViewContextId" label="8. Using Relative Paths&#10;"></topic>
-          <topic href="html/reference/node38.html#guidancerPropertiesViewContextId" label="9. Special characters in Jubula &#10;"></topic>
+          <topic href="html/reference/node38.html#guidancerPropertiesViewContextId" label="9. Special characters&#10;"></topic>
           <topic href="html/reference/node4.html#guidancerPropertiesViewContextId" label="3. Using Regular Expressions for Text Verification&#10;"></topic>
           <topic href="html/reference/node5.html#guidancerPropertiesViewContextId" label="4. Using Simple Match for Text Verification&#10;"></topic>
      </context>

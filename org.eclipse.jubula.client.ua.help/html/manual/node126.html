@@ -1,36 +1,22 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.5.1 Reading and using values (variables) from the AUT </title>
-    <meta content="3.12.5.1 Reading and using values (variables) from the AUT " name="description" />
+    <title>3.12.5 Using variables as data for Test Cases </title>
+    <meta content="3.12.5 Using variables as data for Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION004125100000000000000"></a> <a name="2479"></a> <a name="2480"></a> <a name="TasksAUTVariables"></a><br /><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">5</span>.<span class="arabic">1</span> Reading and using values (variables) from the AUT </h3>
-    <p> You can store values read from the AUT to use as data in other Test Cases . <p>
-      <ol>
-        <li>Use one of the <i>store value</i> actions on the various components to reads a value from a component in the AUT . <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>You can also use the <i>store value</i> action on the <i>application</i> component to store a value you enter.</b></td>
-            </tr>
-          </table>
-          <p>
-        <li>In the parameter field, enter a name for this variable (e.g. USERNAME). <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>Variable names may only contain letters, numbers and underscores</b></td>
-              </tr>
-            </table>
-        <li>When you want to use this value as data for a parameter, enter the variable name preceded by a dollar sign ($) as the parameter value (e.g. $USERNAME). <p> Bear in mind that the variable has to be stored before it can be used as a parameter value. <p>
-      </ol> Read the following sections for more information on: <ul>
-        <li>Using system variables in tests <a href="node127.html#TasksSystemVariables">3.12.5.2</a>. <li>Using the pre-defined Jubula variables in tests <a href="node128.html#TasksPredefinedVariables">3.12.5.3</a></ul>
+  <body><a name="guidancerDataSetViewContextId"></a><a name="guidancerPropertiesViewContextId"></a><a name="guidancerCentralTestDataEditorContextId"></a><h2><a name="SECTION004125000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">5</span> Using variables as data for Test Cases </a></h2><a name="TasksVariables"></a><p><a name="2488"></a> <a name="2489"></a><p>
+      <ul>
+        <li>You can store values from the AUT during a test to use later in the test. <li>Some actions (e.g. store value) let you save a value as a variable. You specify the name of the variable, e.g. <tt>&quot;USERNAME&quot;</tt>. <li>When you want to use the variable, you can enter it as a parameter by preceding it with a dollar sign: <tt>&quot;$USERNAME&quot;</tt>. </ul> For more information on using variables, see the following sections: <ul>
+        <li>Working with variables in tests <a href="node127.html#TasksAUTVariables">3.12.5.1</a>. <li>Working with system variables <a href="node128.html#TasksSystemVariables">3.12.5.2</a>. <li>Working with the pre-defined variables <a href="node129.html#TasksPredefinedVariables">3.12.5.3</a>. </ul>
     <p>
+      <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node127.html" name="tex2html2709"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">5</span>.<span class="arabic">1</span> Reading and using values (variables) from the AUT </a><li><a href="node128.html" name="tex2html2710"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">5</span>.<span class="arabic">2</span> Using environment variables in tests</a><li><a href="node129.html" name="tex2html2711"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">5</span>.<span class="arabic">3</span> Using the pre-defined test execution variables</a></ul>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>

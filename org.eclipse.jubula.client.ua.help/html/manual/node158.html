@@ -1,29 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.13.3 Renaming component names</title>
-    <meta content="3.13.3 Renaming component names" name="description" />
+    <title>3.13.2.1 Changing component names</title>
+    <meta content="3.13.2.1 Changing component names" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="renameComponentNameContextId"></a><h2><a name="SECTION004133000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">3</span> Renaming component names</a></h2><a name="TasksRenameCompName"></a><p><a name="3124"></a> <a name="3125"></a><p> Use the rename function to change the name of a component name in your test specification. Whereas <i>reassigning</i> component names results in a new component name being created <a href="node155.html#TasksReassignCompName">3.13.2</a>, renaming just changes the name at all places where it is used. <p> You can rename component names in the Component Name Browser &nbsp; and in the Object Mapping Editor . <ol>
-        <li>Select the component name you want to rename. <li>In the context-menu, select: <br />
-          <table border="0" style="margin:0px;padding:0px;">
-            <tr>
-              <td bgcolor="#DDDDDD">Rename</td>
-            </tr>
-          </table>
-        <li>In the dialog that appears, enter a new component name to replace the old name. We recommend using naming conventions for component names. <li>Press &quot;<i>OK</i>&quot;. The component name you entered will replace the old name throughout your test. </ol>
-    <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>You cannot rename a component name with a name that already exists. To merge two or more component names to the same name, see the section on merging <a href="node159.html#TasksMergeCompName">3.13.4</a>.</b></td>
-        </tr>
-      </table>
+  <body>
+    <h3><a name="SECTION004132100000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Changing component names</a></h3> If you newly reassign component names in your test hierarchy that were themselves later reassigned, you will be shown a message in the Component Names View . <ul>
+      <li>The message only appears at places where you have reused the Test Case containing that component, and where you have overwritten the component name. <li>For example: <ol>
+          <li>Your component was originally called <i>LoginDialog_nn_btn</i>. <li>You reused the Test Case containing this component, and renamed the component <i>LoginDialog_OK_btn</i>. <li>You then change the component name in the original Test Case to &quot;<i>LoginDialog_AnyButton_btn</i>&quot;. </ol>
+      <li>In the Component Names View for the reused Test Case , you will see a warning message that the component name has no type. <li>You will also see the new name for the component. <table>
+          <tr>
+            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+            <td><b>The warning field is not editable.</b></td>
+          </tr>
+        </table>
+      <li>If you want to keep the same overwritten name, enter the name into the &quot;<i>new name</i>&quot; field in the row for the new component name. <li>You can also change the overwritten name, or not overwrite it at all. In this case you will need to adapt your object mapping, if this component has been used in a Test Suite . <li>Once you have saved the Component Names View , the warning message will disappear. </ul>
     <p>
       <br />
       <hr />

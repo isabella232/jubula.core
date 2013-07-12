@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.25.2.2 Setting the message level for guidelines</title>
-    <meta content="3.25.2.2 Setting the message level for guidelines" name="description" />
+    <title>3.25.2.1 Activating and deactivating individual guidelines</title>
+    <meta content="3.25.2.1 Activating and deactivating individual guidelines" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,11 +10,17 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION004252200000000000000"></a> <a name="TeststyleMessageLevel"></a><br /><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Setting the message level for guidelines </h3>
-    <p> For each guideline in the Project properties, you can decide how Jubula should notify you that the guideline is not being upheld. <p> The choices available are: <dl>
-        <dt><strong>Information:</strong><dd>Information is shown in the Problem View using a blue icon. Elements in the test are not decorated with information messages. <dt><strong>Warning:</strong><dd>Warnings are shown in the Problem View using a yellow icon. Warnings are also shown on elements in the test (e.g. Test Cases . <dt><strong>Errors:</strong><dd>Errors are shown in the Problem View using a red icon. Warnings are also shown on elements in the test (e.g. Test Cases , Test Suites . If a Test Suite contains a Teststyle error, it will not be executable via the ITE . </dl>
-    <p> To set the message level for a guideline: <ol>
-        <li>In the Project properties, under the section <i>Teststyle</i>, select the guideline you want to configure. <li>In the combo-box on the right-hand side, select the level of message you want to receive if this guideline is not upheld. <li>Click &quot;<i>OK</i>&quot; in the Project properties to save the changes. </ol>
+    <h3><a name="SECTION004252100000000000000"></a> <a name="TeststyleActivateGuideline"></a><br /><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Activating and deactivating individual guidelines </h3>
+    <p> In the Project properties, under the <i>Teststyle</i> section, you can activate and deactivate guidelines for use in the Project : <p>
+      <ol>
+        <li>When Teststyle is enabled for the Project <a href="node246.html#TeststyleActivate">3.25.1</a>, select the checkbox for an individual guideline to activate it for the Project . <li>Deselect a checkbox to deactivate the guideline. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>When you select a guideline, the description text gives you more information on what the guideline is for.</b></td>
+            </tr>
+          </table>
+        <li>You can (de)select all the guidelines in a category by activating or deactivating the checkbox for the category name. <li>You can also use the buttons &quot;<i>Select All</i>&quot; and &quot;<i>Deselect All</i>&quot; to (de)select all the guidelines. <li>Click &quot;<i>OK</i>&quot; in the Project properties to save the changes. <li>If your current Project flouts any of the guidelines that are set, then you will see entries in the Problem View notifying you of the places where guidelines are being flouted. For more information on working with the Problem View to fix tests, see the section later <a href="node252.html#TeststyleProbView">3.25.3</a>. <p>
+      </ol>
     <p>
       <br />
       <hr />

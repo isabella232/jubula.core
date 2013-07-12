@@ -1,29 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.13.6 Understanding the component hierarchy</title>
-    <meta content="3.13.6 Understanding the component hierarchy" name="description" />
+    <title>3.13.5 Merging component names</title>
+    <meta content="3.13.5 Merging component names" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="compNameViewContextId"></a><a name="objectMapEditorContextId"></a><h2><a name="SECTION004136000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">6</span> Understanding the component hierarchy</a></h2><a name="TasksCompNameType"></a><p><a name="3196"></a> <a name="3197"></a> <a name="3198"></a> The component hierarchy in Jubula is designed to allow flexible test specification and robust tests. For a graphical overview of the component hierarchy, see the reference manual --&gt;<i>Reference Manual</i> <a href="../reference/node36.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
-    <p>
-      <br />
-    <p><span class="textbf">Abstract components</span><br />
-    <p> Jubula lets you write tests very abstractly at the beginning, only adding detail later. You will notice that the library contains categories such as <i>Component with Text Input</i> and <i>Graphics Component</i>. <p> These are <i>abstract components</i> - actions in these categories can be used on a wide range of actual components in the AUT . You can use a <i>Click</i> action on the <i>Graphics Component</i> to click any component in the AUT . You just need to enter different component names for it in the Component Names View . <p>
-    <p>
-      <br /><span class="textbf">Using the same component name for different component types</span><br />
-    <p> What happens if you want to specify a test that clicks in a table and then selects a cell in the table? <p> The click action is on the <i>Graphics Component</i> and the select cell action is on the <i>Table</i> component - but you don&#39;t want to have two different component names. <p> This isn&#39;t a problem for Jubula . You can use the same component name for different components as long as these are compatible. So, in this case, the <i>Graphics Component</i> and the <i>Table</i> component can both use the component name e.g. <i>TableView_MainTable_tbl</i>. <p>
+  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="objectMapEditorContextId"></a><a name="mergeComponentNameContextId"></a><h2><a name="SECTION004135000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">5</span> Merging component names</a></h2><a name="TasksMergeCompName"></a><p><a name="3213"></a> <a name="3214"></a><p> You can merge two or more component names to one unifying name in the Component Name Browser &nbsp; . This makes sense if you have accidentally created two component names for the same component. <p>
       <table>
         <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-          <td><b>You cannot use the same component name for incompatible types, for example, trees and tables.</b></td>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>The component types must be the same to be able to merge the component names, and the component names must not have already been mapped to different technical names from the AUT . The component names must all come from the current Project , not from any of the reused Projects .</b></td>
         </tr>
       </table>
-    <p> An overview of the component hierarchy can be seen in: --&gt;<i>Reference Manual</i> <a href="../reference/node36.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
+    <p> To merge component names: <ol>
+        <li>Select the component names you want to merge. Use <tt>&raquo;CTRL&laquo;</tt> to select multiple names. <li>From the context-menu, select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Merge Component Names</td>
+            </tr>
+          </table>
+        <li>A dialog will appear in which you can choose which of the selected names you want to merge all the names to. Select the name you want and click &quot;<i>OK</i>&quot;. <li>The component names you selected will be merged to the name you specified throughout your test. </ol>
     <p>
       <br />
       <hr />

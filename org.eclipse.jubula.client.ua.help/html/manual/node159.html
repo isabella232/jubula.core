@@ -1,29 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.13.4 Merging component names</title>
-    <meta content="3.13.4 Merging component names" name="description" />
+    <title>3.13.3 Renaming component names</title>
+    <meta content="3.13.3 Renaming component names" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="objectMapEditorContextId"></a><a name="mergeComponentNameContextId"></a><h2><a name="SECTION004134000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">4</span> Merging component names</a></h2><a name="TasksMergeCompName"></a><p><a name="3145"></a> <a name="3146"></a><p> You can merge two or more component names to one unifying name in the Component Name Browser &nbsp; . This makes sense if you have accidentally created two component names for the same component. <p>
+  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="renameComponentNameContextId"></a><h2><a name="SECTION004133000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">3</span> Renaming component names</a></h2><a name="TasksRenameCompName"></a><p><a name="3180"></a> <a name="3181"></a><p> Use the rename function to change the name of a component name in your test specification. Whereas <i>reassigning</i> component names results in a new component name being created <a href="node157.html#TasksReassignCompName">3.13.2</a>, renaming just changes the name at all places where it is used. <p> You can rename component names in the Component Name Browser &nbsp; and in the Object Mapping Editor . <ol>
+        <li>Select the component name you want to rename. <li>In the context-menu, select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Rename</td>
+            </tr>
+          </table>
+        <li>In the dialog that appears, enter a new component name to replace the old name. We recommend using naming conventions for component names. <li>Press &quot;<i>OK</i>&quot;. The component name you entered will replace the old name throughout your test. </ol>
+    <p>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>The component types must be the same to be able to merge the component names, and the component names must not have already been mapped to different technical names from the AUT . The component names must all come from the current Project , not from any of the reused Projects .</b></td>
+          <td><b>You cannot rename a component name with a name that already exists. To merge two or more component names to the same name, see the section on merging <a href="node161.html#TasksMergeCompName">3.13.5</a>.</b></td>
         </tr>
       </table>
-    <p> To merge component names: <ol>
-        <li>Select the component names you want to merge. Use <tt>&raquo;CTRL&laquo;</tt> to select multiple names. <li>From the context-menu, select: <br />
-          <table border="0" style="margin:0px;padding:0px;">
-            <tr>
-              <td bgcolor="#DDDDDD">Merge Component Names</td>
-            </tr>
-          </table>
-        <li>A dialog will appear in which you can choose which of the selected names you want to merge all the names to. Select the name you want and click &quot;<i>OK</i>&quot;. <li>The component names you selected will be merged to the name you specified throughout your test. </ol>
     <p>
       <br />
       <hr />
