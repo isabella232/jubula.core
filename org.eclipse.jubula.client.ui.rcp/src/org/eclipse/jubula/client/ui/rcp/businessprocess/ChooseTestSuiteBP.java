@@ -53,7 +53,7 @@ import org.eclipse.jubula.tools.registration.AutIdentifier;
  * @author BREDEX GmbH
  * @created 16.08.2006
  */
-public class ChooseTestSuiteBP extends AbstractActionBP {
+public class ChooseTestSuiteBP {
     
     /**
      * state of testsuite after save action
@@ -402,8 +402,7 @@ public class ChooseTestSuiteBP extends AbstractActionBP {
     private void updateTestSuiteButtonState(boolean validateNumberOfTS) {
         if (validateNumberOfTS) {
             validateNumberOfAvailableTestSuites();
-        }
-        setEnabledStatus();       
+        }       
     }
     
     /**

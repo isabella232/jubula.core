@@ -23,13 +23,14 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMExtProjDeletedException;
 import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
-import org.eclipse.jubula.client.ui.rcp.actions.AbstractAction;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
+import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.handlers.project.RefreshProjectHandler.RefreshProjectOperation;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 
 
@@ -71,7 +72,7 @@ public class PMExceptionHandler {
         } else if (e instanceof PMAlreadyLockedException) {
             boolean result = false;
             if (((PMAlreadyLockedException)e).getLockedObject() != null) {
-                result = AbstractAction.handleLockedObject((
+                result = handleLockedObject((
                     (PMAlreadyLockedException)e).getLockedObject());
             }
             if (!result) {
@@ -150,4 +151,18 @@ public class PMExceptionHandler {
         });
     }
 
+    /**
+     * @param po locked persistent object
+     * @return flag to signal, if given object is locked by an own editor
+     */
+    private static boolean handleLockedObject(IPersistentObject po) {
+        boolean result = false;
+        IEditorPart editor = JBEditorHelper.findEditor2LockedObj(po);
+        if (editor != null) {
+            ErrorHandlingUtil.createMessageDialog(MessageIDs.I_LOCK_OBJ_1, 
+                    new Object[] {po.getName(), editor.getTitle() }, null);
+            result = true;
+        }
+        return result;
+    }
 }

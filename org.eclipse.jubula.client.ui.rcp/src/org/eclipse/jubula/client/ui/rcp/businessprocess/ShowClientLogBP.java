@@ -26,7 +26,7 @@ import ch.qos.logback.core.FileAppender;
  * @author BREDEX GmbH
  * @created 09.04.2008
  */
-public final class ShowClientLogBP extends AbstractActionBP {
+public final class ShowClientLogBP {
     /** single instance */
     private static ShowClientLogBP instance = null;
 

@@ -55,7 +55,7 @@ import org.eclipse.jubula.tools.exception.Assert;
  * @author BREDEX GmbH
  * @created 13.07.2006
  */
-public class StartAutBP extends AbstractActionBP {
+public class StartAutBP {
     
     /**
      * <code>LOCALHOST_IP_ALIAS</code>
@@ -147,7 +147,6 @@ public class StartAutBP extends AbstractActionBP {
                     m_autState = AutState.notRunning;
                     m_autStarted = false;
                     m_atLeastOneAutAvailable = false;
-                    setEnabledStatus();
                 }
             }
         };
@@ -505,7 +504,6 @@ public class StartAutBP extends AbstractActionBP {
             protected IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);
                 validateNumberOfAuts();
-                setEnabledStatus();
                 monitor.done();
                 return Status.OK_STATUS;
             }
@@ -518,7 +516,6 @@ public class StartAutBP extends AbstractActionBP {
      */
     public void fireAutStarted() {
         m_autStarted = true;
-        setEnabledStatus();
     }
 
 }

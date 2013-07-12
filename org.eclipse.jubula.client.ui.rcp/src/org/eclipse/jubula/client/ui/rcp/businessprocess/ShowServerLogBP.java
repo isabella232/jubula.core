@@ -29,8 +29,7 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
  * @author BREDEX GmbH
  * @created Feb 9, 2007
  */
-public final class ShowServerLogBP extends AbstractActionBP 
-                                   implements IServerConnectionListener, 
+public final class ShowServerLogBP implements IServerConnectionListener, 
                                               IServerLogListener {
 
     /** The timeout for request of aut starter log */
@@ -69,7 +68,6 @@ public final class ShowServerLogBP extends AbstractActionBP
      */
     public void handleServerConnStateChanged(ServerState state) {
         m_isConnectedToServer = (state == ServerState.Connected);
-        setEnabledStatus();
     }
 
     /**

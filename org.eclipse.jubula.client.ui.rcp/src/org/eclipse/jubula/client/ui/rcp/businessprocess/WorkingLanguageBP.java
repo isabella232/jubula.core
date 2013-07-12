@@ -32,8 +32,7 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
  * @author BREDEX GmbH
  * @created 30.03.2006
  */
-public class WorkingLanguageBP extends AbstractActionBP 
-                               implements IProjectLoadedListener {   
+public class WorkingLanguageBP implements IProjectLoadedListener {   
     
     /** <code>instance</code> single WorkingLanguageBP instance */
     private static WorkingLanguageBP instance = null;
@@ -72,7 +71,6 @@ public class WorkingLanguageBP extends AbstractActionBP
             /** {@inheritDoc} */
             public void handleDataChanged(DataChangedEvent... events) {
                 Plugin.showLangInfo();
-                setEnabledStatus();
             }
         };
 
@@ -147,7 +145,6 @@ public class WorkingLanguageBP extends AbstractActionBP
      */
     private void resetWorkingLanguageBP() {
         m_currentLanguage = null;
-        setEnabledStatus();
     }
 
     /**
@@ -156,20 +153,6 @@ public class WorkingLanguageBP extends AbstractActionBP
     public void setCurrentLanguage(Locale currentLanguage) {
         m_currentLanguage = currentLanguage;
         Plugin.showLangInfo();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isEnabled() {
-        return !isWorkingLanguageNull();
-    }
-
-    /**
-     * @return true if the current project is null
-     */    
-    private boolean isWorkingLanguageNull() {
-        return (getWorkingLanguage() == null);
     }
     
     /**
