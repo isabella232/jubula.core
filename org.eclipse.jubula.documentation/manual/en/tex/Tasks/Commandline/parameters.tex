@@ -110,7 +110,7 @@
 		Result directory
                   & \bxshell{-resultdir <path to directory>}\\
                  &e.g. \emph{-resultdir ''<pathToQADocs>/results''}\\
-		\hline
+                \hline
 		No run option (optional)
                   & \bxshell{-n}\\
                   &e.g. \emph{-n}\\
@@ -136,6 +136,15 @@
                 \hline
 		No screenshot (optional)
                   & \bxshell{-s }\\
+                  & no screenshots will be taken on errors.\\
+                  \hline
+                  \hline
+		No screenshots in HTML and XML (optional)
+                  & \bxshell{-sx }\\
+                  & screenshots will be taken on errors\\
+                  & and written to the \gddb{} \\
+                  & but they will not appear in the \\
+                  & XML and HTML reports. \\
                   \hline
 		Test results not relevant (optional)
                   & \bxshell{-r }\\

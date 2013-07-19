@@ -1,3 +1,15 @@
+\textbf{Meters \gdaut{} and tests removed}
+\begin{itemize}
+\item The meters application has been removed from the samples project and from the examples directory.
+\end{itemize}
+
+\textbf{Change to the order of writing test results}
+\begin{itemize}
+\item In previous versions, once a test run was finished, the test results were first written to a file (XML and HTML), then to the \gddb{}.
+\item As of this version, this order has been changed. The test results are first written to the \gddb{}.
+\end{itemize}
+
+
 \textbf{H2 database version updated}
 \begin{itemize}
 \item The drivers used for the embedded H2 database have been updated from version 1.1.117 to 1.3.168. These two versions are not compatible, because the file format has been changed. More information about changes in H2 are available at \url{http://www.h2database.com/html/changelog.html}.
