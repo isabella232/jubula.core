@@ -47,3 +47,21 @@ We recommend using naming conventions for component names.
 \end{enumerate}
 \bxtipp{See the section on the component hierarchy for some tips on using component names in your tests \bxpref{TasksCompNameType}.}
 
+
+\subsubsection{Changing component names}
+If you newly reassign component names in  your test hierarchy that were themselves later reassigned, you will be shown a message in the \gdcompnamesview{}.
+\begin{itemize}
+\item The message only appears at places where you have reused the \gdcase{} containing that component, and where you have overwritten the component name. 
+\item For example:
+\begin{enumerate}
+\item Your component was originally called \bxname{LoginDialog\_nn\_btn}.
+\item You reused the \gdcase{} containing this component, and renamed the component \bxname{LoginDialog\_OK\_btn}.
+\item You then change the component name in the original \gdcase{} to \bxcaption{LoginDialog\_AnyButton\_btn}.
+\end{enumerate}
+\item In the \gdcompnamesview{} for the reused \gdcase{}, you will see a warning message that the component name has no type.
+\item You will also see the new name for the component.
+\bxwarn{The warning field is not editable.}
+\item If you want to keep the same overwritten name, enter the name into the \bxcaption{new name} field in the row for the new component name.
+\item You can also change the overwritten name, or not overwrite it at all. In this case you will need to adapt your object mapping, if this component has been used in a \gdsuite{}. 
+\item Once you have saved the \gdcompnamesview{}, the warning message will disappear. 
+\end{itemize}
