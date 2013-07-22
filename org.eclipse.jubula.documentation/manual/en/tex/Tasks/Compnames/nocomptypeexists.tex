@@ -1,0 +1,30 @@
+This situation occurs when a component name that has been propagated and then renamed at the place of reuse is no longer accessible, either because:
+
+\begin{itemize}
+\item the name with which the component was propagated has been changed, or
+\item the checkbox to propagate the component name has been deactivated.
+\end{itemize}
+In such situations, you will see the message in the \gdcompnamesview{} :\\
+\bxname{No Component Type Exists!}.
+
+\bxtipp{Saving the \gdcase{} will remove the message, however, you may want to take steps to transfer the component name before removing the message.}
+
+\begin{itemize}
+\item An example of a situation where this occurs:
+\begin{enumerate}
+\item You have a \gdcase{} \bxname{TC1} that has a component name propagated from it:  \bxname{nn\_nn\_grc}.
+\item You reused the \bxname{TC1} \gdcase{} in another \gdcase{} called \bxname{TC2}, and renamed the component name to \bxname{LoginDialog\_OK\_btn} at the place of reuse.
+\item You then either:\\
+\begin{itemize}
+\item change the component name in the original \gdcase{} to \bxcaption{LoginDialog\_AnyButton\_btn}, 
+\item or you deactivate the checkbox for propagating the component name from the original \gdcase{}.
+\end{itemize}
+\end{enumerate}
+\item In the \gdcompnamesview{} for the reused \gdcase{} in \bxname{TC2}, you will see a warning message that the component name has no type. 
+\bxwarn{The warning field is not editable.}
+\item Depending on whehter you renamed the component name or removed the checkbox, you can now do one of two things:
+\begin{itemize}
+\item If you renamed the component name in the original \gdcase{} (\bxname{TC1}, then you can locate the newly propagated name in the \gdcompnamesview{} and enter the \bxname{new name} for the no longer existent component type in the \bxname{new name} field for the newly propagated name. This essentially points the previous component name hierarchy onto the new one.
+\item If you deactivated the checkbox, or if you do not want to transfer the name as mentioned above, you can simply make any change to the \gdcase{} and then save it. The message will disappear.
+\end{itemize}
+\end{itemize}
