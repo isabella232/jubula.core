@@ -170,6 +170,11 @@ public abstract class AbstractTreeOperationContext {
     public abstract Object getSelectedNode();
     
     /**
+     * @return  The currently selected nodes.
+     */
+    public abstract Object[] getSelectedNodes();
+    
+    /**
      * @return  All top-level nodes for the tree. These are the highest-level
      *          nodes that the user can see.
      */

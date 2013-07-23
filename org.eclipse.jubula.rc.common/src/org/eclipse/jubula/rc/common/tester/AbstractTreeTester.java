@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -611,7 +612,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
         throws StepExecutionException {
 
         AbstractTreeOperationContext context = getTreeAdapter().getContext();
-        checkNodeText(getSelectedNode(context), pattern, operator);
+        checkNodeText(context.getSelectedNodes(), pattern, operator);
     }
     
     /**
@@ -624,11 +625,13 @@ public abstract class AbstractTreeTester extends WidgetTester {
      *          actual values.
      * @throws StepVerifyFailedException If the verification fails.
      */
-    protected void checkNodeText(Object node, String pattern, String operator) 
+    protected void checkNodeText(Object[] node, String pattern, String operator)
         throws StepVerifyFailedException {
-        
+        Collection nodeTextList = new ArrayList();
         AbstractTreeOperationContext context = getTreeAdapter().getContext();
-        Collection nodeTextList = context.getNodeTextList(node);
+        for (int i = 0; i < node.length; i++) {
+            nodeTextList.addAll(context.getNodeTextList(node[i])); 
+        }
         Iterator it = nodeTextList.iterator();
         boolean isMatched = false;
         while (it.hasNext() && !isMatched) {

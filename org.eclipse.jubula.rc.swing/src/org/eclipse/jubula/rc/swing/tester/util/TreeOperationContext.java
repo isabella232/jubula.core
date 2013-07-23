@@ -543,5 +543,17 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     public boolean isLeaf(Object node) {
         return m_model.isLeaf(node);
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public Object[] getSelectedNodes() {
+        TreePath[] paths = getCheckedSelectedPaths();
+        Object[] nodes = new Object[paths.length];
+        for (int i = 0; i < paths.length; i++) {
+            nodes[i] = paths[i].getLastPathComponent();
+        }
+        return nodes;
+    }
 
 }

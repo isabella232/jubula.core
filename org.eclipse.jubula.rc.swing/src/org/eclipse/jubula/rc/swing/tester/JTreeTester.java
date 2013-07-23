@@ -99,7 +99,7 @@ public class JTreeTester extends AbstractTreeTester {
      * {@inheritDoc}
      */
     public void rcVerifyTextAtMousePosition(String text, String operator) {
-        checkNodeText(getNodeAtMousePosition(), text, operator);
+        checkNodeText(new Object[] {getNodeAtMousePosition()}, text, operator);
     }
     /**
      * 

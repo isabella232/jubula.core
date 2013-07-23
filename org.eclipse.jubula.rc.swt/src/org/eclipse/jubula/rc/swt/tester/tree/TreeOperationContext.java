@@ -465,6 +465,28 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
             });
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public Object[] getSelectedNodes() {
+        return (Object[]) getQueuer().invokeAndWait("getSelectedNodes",  //$NON-NLS-1$
+            new IRunnable() {
+
+                public Object run() {
+                    TreeItem [] selectedItems = 
+                        ((Tree)getTree()).getSelection();
+                    if (selectedItems == null || selectedItems.length == 0) {
+                        throw new StepExecutionException(
+                            "No tree node(s) selected", //$NON-NLS-1$
+                            EventFactory.createActionError(
+                                TestErrorEvent.NO_SELECTION));
+                    }
+                    return selectedItems;
+                }
+
+            });
+    }
 
     /**
      * {@inheritDoc}
