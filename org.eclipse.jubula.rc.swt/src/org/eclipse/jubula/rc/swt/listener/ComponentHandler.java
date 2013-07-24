@@ -151,7 +151,7 @@ public class ComponentHandler extends BaseSwtEventListener
         try {
             return autHierarchy.findComponent(componentIdentifier);
         } catch (ComponentNotManagedException cnme) {
-            log.warn(cnme.getLocalizedMessage(), cnme);
+            log.debug(cnme.getLocalizedMessage(), cnme);
             if (retry) {
 
                 while (System.currentTimeMillis() - start < timeout) {

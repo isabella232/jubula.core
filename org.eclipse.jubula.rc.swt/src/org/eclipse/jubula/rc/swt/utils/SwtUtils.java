@@ -1138,11 +1138,16 @@ public class SwtUtils {
      */
     private static Rectangle handleBoundsError(Exception e) {
         
-        Rectangle defaultResult = new Rectangle(0, 0, 0, 0);
-        log.error("getBounds() failed. Returning default bounds result: " //$NON-NLS-1$
-            + defaultResult 
-            + ".",  //$NON-NLS-1$
-            e);
+        Rectangle defaultResult = new Rectangle(0, 0, 0, 0); 
+        String message = "getBounds() failed. Returning default bounds result: " //$NON-NLS-1$
+                + defaultResult 
+                + "."; //$NON-NLS-1$
+                
+        if (EnvironmentUtils.isMacOS()) {
+            log.debug(message, e);
+        } else {
+            log.error(message, e);            
+        }
 
         return defaultResult;
     }
