@@ -983,7 +983,7 @@ public class Traverser {
                     value = conv.getExecutionString(
                             stackList, te.getLocale());
                 } catch (InvalidDataException e) {
-                    LOG.error(e.getMessage());
+                    LOG.info(e.getMessage());
                     value = MessageIDs.getMessageObject(e.getErrorId()).
                         getMessage(new String[] {e.getLocalizedMessage()});
                 }
