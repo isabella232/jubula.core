@@ -29,6 +29,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -309,7 +310,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
      *            The persistent object that was added
      */
     private void handleDataAdded(IPersistentObject po) {
-        if (po instanceof ISpecTestCasePO) {
+        if (po instanceof ISpecTestCasePO || po instanceof IComponentNamePO) {
             return;
         }
         getTreeViewer().refresh();
