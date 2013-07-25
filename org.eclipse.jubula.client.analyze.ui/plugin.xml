@@ -149,11 +149,6 @@
           id="tableRenderer"
           rendererClass="org.eclipse.jubula.client.analyze.ui.renderer.TableRenderer">
     </ResultRenderer>
-    <Context
-          class="org.eclipse.jubula.client.analyze.ui.internal.context.Project"
-          id="project"
-          name="Project">
-    </Context>
     <ResultRenderer
           ResultType="ratioResult"
           id="ratio"
