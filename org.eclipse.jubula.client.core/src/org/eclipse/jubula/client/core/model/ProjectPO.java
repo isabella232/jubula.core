@@ -127,7 +127,6 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     @Transient

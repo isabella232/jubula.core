@@ -110,16 +110,6 @@ public class ProjectDialog extends TitleAreaDialog {
     private ProjectData m_selection;
     
     /**
-     * label of name combo
-     */
-    private String m_label = Messages.OpenProjectActionLabel;
-
-    /**
-     * label of the version combo
-     */
-    private String m_label2 = Messages.OpenProjectActionLabel2; 
-
-    /**
      * <code>m_title</code> title
      */
     private String m_title;
@@ -140,9 +130,9 @@ public class ProjectDialog extends TitleAreaDialog {
     private Button m_defaultProject;
     
     /**
-     * <code>m_isDeleteAction</code> true if dialog is "delete project"-dialog
+     * <code>m_isDeleteOperation</code> true if dialog is "delete project"-dialog
      */
-    private boolean m_isDeleteAction = false;
+    private boolean m_isDeleteOperation = false;
     
     /**
      * check box to define if test result summary should not be deleted, when project is deleted
@@ -282,8 +272,9 @@ public class ProjectDialog extends TitleAreaDialog {
         m_title = title;
         m_image = image;
         m_shellTitle = shellTitle;
-        m_isDeleteAction = isDeleteAction;
+        m_isDeleteOperation = isDeleteAction;
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -319,7 +310,7 @@ public class ProjectDialog extends TitleAreaDialog {
         createComboBoxes(area);
         createDefaultProjectCheckbox(area);
         
-        if (m_isDeleteAction) {
+        if (m_isDeleteOperation) {
             createDeleteTestresultsCheckbox(area);
         }
 
@@ -349,7 +340,7 @@ public class ProjectDialog extends TitleAreaDialog {
      */
     private void createComboBoxes(Composite parent) {
         createEmptyLabel(parent);
-        new Label(parent, SWT.NONE).setText(m_label);
+        new Label(parent, SWT.NONE).setText(Messages.OpenProjectActionLabel);
         m_nameComboBox = new DirectCombo<String>(parent, SWT.SINGLE | SWT.BORDER
                 | SWT.READ_ONLY, m_guidList, m_nameList, false, true);
         GridData gridData = newGridData();
@@ -373,7 +364,7 @@ public class ProjectDialog extends TitleAreaDialog {
         m_versionList = m_guidToVersionMap.get(
             m_nameComboBox.getSelectedObject());
         createEmptyLabel(parent);
-        new Label(parent, SWT.NONE).setText(m_label2);
+        new Label(parent, SWT.NONE).setText(Messages.OpenProjectActionLabel2);
         m_versionComboBox = 
             new DirectCombo<String>(parent, SWT.SINGLE | SWT.BORDER
                 | SWT.READ_ONLY, m_versionList, m_versionList, false,
@@ -409,7 +400,7 @@ public class ProjectDialog extends TitleAreaDialog {
      * @param composite the parent composite
      */
     private void createDefaultProjectCheckbox(Composite composite) {
-        if (!m_isDeleteAction) {
+        if (!m_isDeleteOperation) {
             createEmptyLabel(composite);
             new Label(composite, SWT.NONE).setLayoutData(new GridData(
                     GridData.FILL, GridData.CENTER, false, false,
@@ -455,7 +446,7 @@ public class ProjectDialog extends TitleAreaDialog {
                 m_versionComboBox.getSelectedObject());
 
         final ProjectUIBP defaultProject = ProjectUIBP.getInstance();
-        if (m_isDeleteAction) {
+        if (m_isDeleteOperation) {
             m_keepTestresultSummary = m_keepTestresultSummaryButton
                     .getSelection();
         } else if (m_defaultProject.getSelection()) {

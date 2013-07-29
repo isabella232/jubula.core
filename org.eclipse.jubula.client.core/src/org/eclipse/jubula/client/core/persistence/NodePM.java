@@ -400,7 +400,6 @@ public class NodePM extends PersistenceManager {
         }
     }
 
-
     /**
      * @param node
      *            the node to be renamed
@@ -433,6 +432,37 @@ public class NodePM extends PersistenceManager {
         }
     }
 
+    /**
+     * @param node
+     *            the node to be renamed
+     * @param newComment
+     *            the new comment
+     * @throws PMDirtyVersionException
+     *             in case of dirty version
+     * @throws PMAlreadyLockedException
+     *             in case of locked node
+     * @throws PMSaveException
+     *             in case of DB save error
+     * @throws PMException in case of general db error
+     * @throws ProjectDeletedException if the project was deleted in another
+     * instance            
+     */
+    public static void setComment(INodePO node, String newComment)
+        throws PMDirtyVersionException, PMAlreadyLockedException,
+        PMSaveException, PMException, ProjectDeletedException {
+
+        EntityManager sess = GeneralStorage.getInstance().getMasterSession();
+        EntityTransaction tx = null;
+        try {
+            final Persistor persistor = Persistor.instance();
+            tx = persistor.getTransaction(sess);
+            persistor.lockPO(sess, node);
+            node.setComment(newComment);
+            persistor.commitTransaction(sess, tx);
+        } catch (PersistenceException e) {
+            PersistenceManager.handleDBExceptionForMasterSession(node, e);
+        }
+    }
     
     /**
      * @param cat category, which is the parent of the testcases to import

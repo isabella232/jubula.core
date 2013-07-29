@@ -186,10 +186,11 @@ abstract class NodePO implements INodePO {
      * @return the name of the node
      */
     @Basic
-    @Column(name = "NAME", length = 4000)
+    @Column(name = "NAME", length = MAX_STRING_LENGTH)
     private String getHbmName() {
         return m_name;
     }
+    
     /**
      * For Persistence (JPA / EclipseLink) only
      * Sets the value of the m_name property.
@@ -282,7 +283,7 @@ abstract class NodePO implements INodePO {
      * @return Returns the m_comment.
      */
     @Basic
-    @Column(name = "COMM_TXT", length = 4000)
+    @Column(name = "COMM_TXT", length = MAX_STRING_LENGTH)
     private String getHbmComment() {
         return m_comment;
     }

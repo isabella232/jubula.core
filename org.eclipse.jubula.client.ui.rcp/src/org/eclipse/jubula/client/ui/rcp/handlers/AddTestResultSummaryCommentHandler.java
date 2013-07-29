@@ -10,27 +10,16 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.databinding.validation.IValidator;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.client.ui.dialogs.EnterCommentDialog;
+import org.eclipse.jubula.client.ui.dialogs.EnterCommentAndDetailsDialog;
 import org.eclipse.jubula.client.ui.handlers.AbstractTestResultViewHandler;
-import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.validator.MaxStringLengthValidator;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.exception.JBFatalException;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -51,16 +40,10 @@ public class AddTestResultSummaryCommentHandler
             final String origTitle = selectedSummary.getCommentTitle();
             final String origDetail = selectedSummary.getCommentDetail();
 
-            EnterCommentDialog dialog = new EnterCommentDialog(HandlerUtil
-                    .getActiveShell(event), new IValidator() {
-                        public IStatus validate(Object value) {
-                            if (value instanceof String) {
-                                return (((String)value).length() < 4000) 
-                                    ? Status.OK_STATUS : Status.CANCEL_STATUS; 
-                            }
-                            return Status.OK_STATUS;
-                        }
-                    }, origTitle, origDetail);
+            EnterCommentAndDetailsDialog dialog = 
+                    new EnterCommentAndDetailsDialog(
+                    HandlerUtil.getActiveShell(event),
+                    new MaxStringLengthValidator(), origTitle, origDetail);
             dialog.setHelpAvailable(true);
             dialog.create();
             DialogUtils.setWidgetNameForModalDialog(dialog);
@@ -74,44 +57,11 @@ public class AddTestResultSummaryCommentHandler
             String newDetails = dialog.getCommentDetail();
             if (!StringUtils.equals(origTitle, newTitle)
                     || !StringUtils.equals(origDetail, newDetails)) {
-                performOperation(selectedSummary, newTitle, newDetails);
+                TestresultSummaryBP.getInstance().setCommentTitleAndDetails(
+                        selectedSummary, newTitle, newDetails);
             }
         }
         
         return null;
-    }
-
-    /**
-     * perform model changes
-     * 
-     * @param selectedSummary the summary to change the comment for
-     * @param newTitle the new comment title
-     * @param newDetails the new comment details
-     */
-    private void performOperation(ITestResultSummaryPO selectedSummary,
-            String newTitle, String newDetails) {
-        
-        final EntityManager sess = Persistor.instance().openSession();
-        try {            
-            final EntityTransaction tx = 
-                Persistor.instance().getTransaction(sess);
-
-            ITestResultSummaryPO transactionSummary = 
-                sess.merge(selectedSummary);
-            
-            transactionSummary.setCommentTitle(newTitle);
-            transactionSummary.setCommentDetail(newDetails);
-            
-            Persistor.instance().commitTransaction(sess, tx);
-            ClientTestFactory.getClientTest().fireTestresultSummaryChanged();
-        } catch (PMException e) {
-            throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
-                    MessageIDs.E_DATABASE_GENERAL);
-        } catch (ProjectDeletedException e) {
-            throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
-                    MessageIDs.E_PROJECT_NOT_FOUND);
-        } finally {
-            Persistor.instance().dropSession(sess);
-        }
     }
 }

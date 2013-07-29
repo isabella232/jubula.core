@@ -16,6 +16,7 @@ import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
@@ -138,6 +139,10 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     
     /** set of listeners to be informed when ok has been pressed */
     private Set<IOkListener> m_okListenerList = new HashSet<IOkListener>();
+    /**
+     * the projects description text field
+     */
+    private Text m_projectDescriptionTextField;
     
     /**
      * @param es the editSupport
@@ -168,6 +173,9 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         createEmptyLabel(projectNameComposite);
         
         createProjectNameField(projectNameComposite);
+        createProjectDescrField(projectNameComposite);
+        createProjectVersionInfo(projectNameComposite);
+        createProjectGuidInfo(projectNameComposite);
         
         createEmptyLabel(projectNameComposite);
         separator(projectNameComposite, NUM_COLUMNS_2); 
@@ -179,8 +187,6 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         
         createIsReusable(projectNameComposite);
         createIsProtected(projectNameComposite);
-        createVersionInfo(projectNameComposite);
-        createGuidInfo(projectNameComposite);
         
         separator(projectNameComposite, NUM_COLUMNS_2);
         createEmptyLabel(projectNameComposite);
@@ -214,7 +220,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     /**
      * @param parent the parent composite
      */
-    private void createVersionInfo(Composite parent) {
+    private void createProjectVersionInfo(Composite parent) {
         Composite leftComposite = createComposite(parent, NUM_COLUMNS_1, 
             GridData.BEGINNING, false);
         Composite rightComposite = createComposite(parent, 3, 
@@ -235,7 +241,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     /**
      * @param parent the parent composite
      */
-    private void createGuidInfo(Composite parent) {
+    private void createProjectGuidInfo(Composite parent) {
         Composite leftComposite = createComposite(parent, NUM_COLUMNS_1, 
             GridData.BEGINNING, false);
         Composite rightComposite = createComposite(parent, 3, 
@@ -245,8 +251,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             Messages.ProjectPropertyPageProjectGuid), 
             "ControlDecorator.ProjectPropertiesGUID", false); //$NON-NLS-1$
         
-        Text projectGuid = new Text(rightComposite, 
-            SWT.READ_ONLY | SWT.BORDER);
+        Label projectGuid = new Label(rightComposite, SWT.NONE);
         projectGuid.setText(m_projectGuid);
         Label l = createLabel(rightComposite, StringConstants.EMPTY);
         GridData layoutData = new GridData();
@@ -345,7 +350,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     /**
      * Creates a separator line.
      * @param composite The parent composite.
-     * @param horSpan The horizonzal span.
+     * @param horSpan The horizontal span.
      */
     private void separator(Composite composite, int horSpan) {
         createLabel(composite, StringConstants.EMPTY);
@@ -381,6 +386,30 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     }
     
     /**
+     * Creates the textfield for the project description.
+     * 
+     * @param parent
+     *            The parent composite.
+     */
+    private void createProjectDescrField(Composite parent) {
+        Composite leftComposite = createComposite(parent, NUM_COLUMNS_1, 
+            GridData.BEGINNING, false);
+        Composite rightComposite = createComposite(parent, NUM_COLUMNS_1, 
+            GridData.FILL, true);
+        createLabel(leftComposite, Messages.ProjectPropertyPageProjectDescr);
+        m_projectDescriptionTextField = new Text(rightComposite, SWT.BORDER);
+        m_projectDescriptionTextField.setText(StringUtils
+                .defaultString(getProject().getComment()));
+        GridData textGridData = new GridData();
+        textGridData.grabExcessHorizontalSpace = true;
+        textGridData.horizontalAlignment = GridData.FILL;
+        LayoutUtil.addToolTipAndMaxWidth(
+                textGridData, m_projectDescriptionTextField);
+        m_projectDescriptionTextField.setLayoutData(textGridData);
+        LayoutUtil.setMaxChar(m_projectDescriptionTextField);
+    }
+    
+    /**
      * @param parent the parent composite
      */
     private void createAutToolKit(Composite parent) {
@@ -389,26 +418,13 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         Composite rightComposite = createComposite(parent, NUM_COLUMNS_2, 
             GridData.FILL, true);
         createLabel(leftComposite, Messages.ProjectPropertyPageAutToolKitLabel);
-        m_projectToolkitCombo = createToolkitCombo(rightComposite);
+        m_projectToolkitCombo = ControlFactory
+                .createProjectToolkitCombo(rightComposite);
         m_projectToolkitCombo.setSelectedObject(getProject().getToolkit());
         GridData textGridData = new GridData();
         textGridData.grabExcessHorizontalSpace = true;
         textGridData.horizontalAlignment = GridData.FILL;
         m_projectToolkitCombo.setLayoutData(textGridData);
-        Label l = createLabel(rightComposite, StringConstants.EMPTY);
-        GridData txtGridData = new GridData();
-        txtGridData.grabExcessHorizontalSpace = true;
-        txtGridData.horizontalAlignment = GridData.FILL;
-        l.setLayoutData(txtGridData);
-    }
-    
-    /**
-     * Creates the toolkit combo.
-     * @param parent the parent.
-     * @return the toolkit combo.
-     */
-    private DirectCombo<String> createToolkitCombo(Composite parent) {
-        return ControlFactory.createProjectToolkitCombo(parent);
     }
     
     /**
@@ -463,14 +479,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             }
             
         });
-        Label label = new Label(parent, SWT.NONE);
-        label.setText(Messages.TestResultViewPreferencePageCleanDaysLabel);
-        gridData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
-        gridData.horizontalSpan = 1;
-        gridData.grabExcessHorizontalSpace = false;
-        label.setLayoutData(gridData);
         enableCleanResultDaysTextfield();
-        ControlDecorator.decorateInfo(label,  
+        ControlDecorator.decorateInfo(m_cleanResultDays,  
                 "TestResultViewPreferencePage.cleanResultsInfo", false); //$NON-NLS-1$
     }
     
@@ -503,19 +513,21 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                     return false;
                 }
             }
+            IProjectPO project = getProject();
             if (m_isReusableCheckbox != null) {
-                getProject().setIsReusable(
-                        m_isReusableCheckbox.getSelection());
+                project.setIsReusable(m_isReusableCheckbox.getSelection());
             }
             if (m_isProtectedCheckbox != null) {
-                getProject().setIsProtected(
-                        m_isProtectedCheckbox.getSelection());
+                project.setIsProtected(m_isProtectedCheckbox.getSelection());
+            }
+            if (m_projectDescriptionTextField != null) {
+                project.setComment(m_projectDescriptionTextField.getText());
             }
             storeAutoTestResultCleanup();
 
             if (!m_oldProjectName.equals(m_newProjectName)) {
                 ProjectNameBP.getInstance().setName(
-                        getEditSupport().getSession(), getProject().getGuid(),
+                        getEditSupport().getSession(), project.getGuid(),
                         m_newProjectName);
             }
             fireOkPressed();
@@ -527,9 +539,9 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                     .getUsedProjects());
             newReused.removeAll(origReused);
             getEditSupport().saveWorkVersion();
-            refreshAutMainList();
-            DataEventDispatcher.getInstance().fireProjectStateChanged(
-                    ProjectState.prop_modified);
+            refreshProject();
+            DataEventDispatcher ded = DataEventDispatcher.getInstance();
+            ded.fireProjectStateChanged(ProjectState.prop_modified);
             for (IReusedProjectPO reused : newReused) {
                 try {
                     IProjectPO reusedProject = 
@@ -549,12 +561,11 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             // FIXME zeb This updates the Test Case Browser. Once we have separate
             //           EditSupports for each property page, then we can use 
             //           "real" ReusedProjectPOs instead of a placeholder.
-            DataEventDispatcher.getInstance().fireDataChangedListener(
+            ded.fireDataChangedListener(
                     PoMaker.createReusedProjectPO("1", 1, 1), //$NON-NLS-1$
                     DataState.ReuseChanged, UpdateState.notInEditor);
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                    GeneralStorage.getInstance().getProject(),
-                    DataState.Renamed, UpdateState.notInEditor);
+            ded.fireDataChangedListener(GeneralStorage.getInstance()
+                    .getProject(), DataState.Renamed, UpdateState.notInEditor);
             CompletenessBP.getInstance().completeProjectCheck();
         } catch (PMException e) {
             ErrorHandlingUtil.createMessageDialog(e, null, null);
@@ -564,7 +575,6 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             ErrorHandlingUtil.createMessageDialog(
                     ite, ite.getErrorMessageParams(), null);
         }
-
         return true;
     }
 
@@ -596,22 +606,20 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     }
 
     /**
-     * Refreshes the AutMainList of the Project.
+     * Refreshes the project.
      */
-    private void refreshAutMainList() throws ProjectDeletedException {
+    private void refreshProject() throws ProjectDeletedException {
+        GeneralStorage storage = GeneralStorage.getInstance();
         try {
-            GeneralStorage.getInstance().getMasterSession().refresh(
-                GeneralStorage.getInstance().getProject().getAutCont());
+            storage.getMasterSession().refresh(storage.getProject());
         } catch (EntityNotFoundException enfe) {
             // Occurs if any Object Mapping information has been deleted while
             // the Project Properties were being edited.
             // Refresh the entire master session to ensure that AUT settings
             // and Object Mappings are in sync
-            GeneralStorage.getInstance().reloadMasterSession(
-                    new NullProgressMonitor());
+            storage.reloadMasterSession(new NullProgressMonitor());
         }
     }
-
 
     /**
      * Adds necessary listeners.
@@ -684,7 +692,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             if (o.equals(m_projectNameTextField)) {
                 modifyProjectNameFieldAction(true);
                 return;
-            }           
+            }
         }       
     }
     
@@ -748,7 +756,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
      */
     private void refreshAutToolkitCombo() {
         final Composite parent = m_projectToolkitCombo.getParent();
-        final DirectCombo<String> tmpCombo = createToolkitCombo(parent);
+        final DirectCombo<String> tmpCombo = ControlFactory
+                .createProjectToolkitCombo(parent);
         m_projectToolkitCombo.setItems(tmpCombo.getValues(), Arrays.asList(
             tmpCombo.getItems()));
         tmpCombo.dispose();

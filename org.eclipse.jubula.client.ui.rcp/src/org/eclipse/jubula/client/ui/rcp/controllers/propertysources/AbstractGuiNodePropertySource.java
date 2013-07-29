@@ -63,7 +63,7 @@ public abstract class AbstractGuiNodePropertySource
     private TestCaseParamBP m_testCaseParamBP;
 
     /**
-     * a usable readonly flag
+     * a usable read only flag
      */
     private boolean m_readOnly;
     
@@ -106,10 +106,8 @@ public abstract class AbstractGuiNodePropertySource
      * @created 04.08.2005
      */
     protected class CommentController extends AbstractPropertyController {
-
         /**
          * {@inheritDoc}
-         * @param value
          */
         public boolean setProperty(Object value) {
             if (value != null) {
@@ -122,7 +120,6 @@ public abstract class AbstractGuiNodePropertySource
 
         /**
          * {@inheritDoc}
-         * @return
          */
         public Object getProperty() {
             if (getPoNode() != null && getPoNode().getComment() != null) {
@@ -133,12 +130,10 @@ public abstract class AbstractGuiNodePropertySource
 
         /**
          * {@inheritDoc}
-         * @return
          */
         public Image getImage() {
             return DEFAULT_IMAGE;
         }
-        
     }
     
     /**

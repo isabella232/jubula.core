@@ -398,13 +398,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
      * Sets the input for the tree viewer.
      */
     private void setViewerInput() {
-        IProjectPO activeProject = GeneralStorage.getInstance().getProject();
-        if (activeProject != null) {
-            getTreeViewer().setInput(
-                    new IExecObjContPO[] {activeProject.getExecObjCont()});
-        } else {
-            getTreeViewer().setInput(null);
-        }
+        getTreeViewer().setInput(GeneralStorage.getInstance().getProject());
     }
 
     /** {@inheritDoc} */

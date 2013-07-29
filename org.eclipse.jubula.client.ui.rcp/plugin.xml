@@ -169,6 +169,11 @@
   </extension>
   <extension point="org.eclipse.core.runtime.adapters">
     <factory
+      adaptableType="org.eclipse.jubula.client.core.model.ICategoryPO"
+      class="org.eclipse.jubula.client.ui.rcp.adapter.PropertySourceAdapterFactory">
+      <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+    </factory>
+    <factory
       adaptableType="org.eclipse.jubula.client.core.model.IComponentNamePO"
       class="org.eclipse.jubula.client.ui.rcp.adapter.PropertySourceAdapterFactory">
       <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
@@ -199,7 +204,7 @@
       <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
     </factory>
     <factory
-      adaptableType="org.eclipse.jubula.client.core.model.IProjectPO"
+      adaptableType="org.eclipse.jubula.client.core.model.IExecObjContPO"
       class="org.eclipse.jubula.client.ui.rcp.adapter.PropertySourceAdapterFactory">
       <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
     </factory>
@@ -1742,6 +1747,10 @@
              commandId="org.eclipse.jubula.client.ui.rcp.commands.CopyID"
              style="push">
        </command>
+      <command
+             commandId="org.eclipse.jubula.client.ui.commands.AddComment"
+             style="push">
+       </command>
        <separator
              name="separator3"
              visible="true">
@@ -1843,6 +1852,10 @@
        </separator>
        <command
              commandId="org.eclipse.jubula.client.ui.rcp.commands.CopyID"
+             style="push">
+       </command>
+       <command
+             commandId="org.eclipse.jubula.client.ui.commands.AddComment"
              style="push">
        </command>
        <separator name="separator3"
@@ -2066,6 +2079,33 @@
             <or>
               <instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
+            </or>
+            <test property="org.eclipse.jubula.client.ui.rcp.model.isEditable" />
+          </iterate>
+        </and>
+      </enabledWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.EditNodeComment"
+      commandId="org.eclipse.jubula.client.ui.commands.AddComment">
+      <activeWhen>
+      	<or>
+          <with variable="activePartId">
+          	<equals value="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser" />
+          </with>
+          <with variable="activePartId">
+          	<equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser" />
+          </with>
+        </or>
+      </activeWhen>
+      <enabledWhen>
+        <and>
+          <count value="1" />
+          <iterate
+            ifEmpty="false"
+            operator="and">
+            <or>
+              <instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
             </or>
             <test property="org.eclipse.jubula.client.ui.rcp.model.isEditable" />
           </iterate>

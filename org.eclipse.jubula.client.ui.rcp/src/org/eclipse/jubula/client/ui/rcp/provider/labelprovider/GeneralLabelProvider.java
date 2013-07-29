@@ -62,10 +62,8 @@ import org.eclipse.ui.PlatformUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
 /**
- * Base class for all label probider
+ * Base class for all label provider
  *
  * @author BREDEX GmbH
  * @created May 11, 2010

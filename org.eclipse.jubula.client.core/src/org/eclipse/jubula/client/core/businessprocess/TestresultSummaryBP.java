@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.ClientTestFactory;
@@ -29,17 +30,23 @@ import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummary;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.model.TestResultParameter;
+import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.exception.JBFatalException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 
@@ -331,6 +338,42 @@ public class TestresultSummaryBP {
         }
     }
 
+
+    /**
+     * perform model changes
+     * 
+     * @param selectedSummary the summary to change the comment for
+     * @param newTitle the new comment title
+     * @param newDetails the new comment details
+     */
+    public void setCommentTitleAndDetails(
+        ITestResultSummaryPO selectedSummary, String newTitle,
+        String newDetails) {
+        
+        final EntityManager sess = Persistor.instance().openSession();
+        try {            
+            final EntityTransaction tx = 
+                Persistor.instance().getTransaction(sess);
+
+            ITestResultSummaryPO transactionSummary = 
+                sess.merge(selectedSummary);
+            
+            transactionSummary.setCommentTitle(newTitle);
+            transactionSummary.setCommentDetail(newDetails);
+            
+            Persistor.instance().commitTransaction(sess, tx);
+            ClientTestFactory.getClientTest().fireTestresultSummaryChanged();
+        } catch (PMException e) {
+            throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
+                    MessageIDs.E_DATABASE_GENERAL);
+        } catch (ProjectDeletedException e) {
+            throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
+                    MessageIDs.E_PROJECT_NOT_FOUND);
+        } finally {
+            Persistor.instance().dropSession(sess);
+        }
+    }
+    
     /**
      * @return instance of TestresultSummaryBP
      */

@@ -19,7 +19,7 @@ import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.handlers.AbstractTestResultViewHandler;
-import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -29,9 +29,7 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  * @created Mar 3, 2011
  */
 public class ToggleRelevanceHandler extends AbstractTestResultViewHandler {
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Object executeImpl(ExecutionEvent event) {
         ITestResultSummaryPO selectedSummary = getSelectedSummary(event);
 

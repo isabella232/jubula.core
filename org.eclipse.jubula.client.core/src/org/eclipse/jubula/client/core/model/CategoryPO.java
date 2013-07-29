@@ -12,14 +12,10 @@ package org.eclipse.jubula.client.core.model;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
- * class to manage nodes in Specification Tree, which support grouping of nodes
+ * Class to manage grouping of nodes
  * 
  * @author BREDEX GmbH
  * @created 08.06.2005
@@ -27,10 +23,6 @@ import org.slf4j.LoggerFactory;
 @Entity
 @DiscriminatorValue(value = "Y")
 class CategoryPO extends NodePO implements ICategoryPO {
-    
-    /** The logger */
-    private static final Logger LOG = LoggerFactory.getLogger(CategoryPO.class);
-
     /**
      * @param name name
      * @param isGenerated indicates whether this node has been generated
@@ -53,13 +45,5 @@ class CategoryPO extends NodePO implements ICategoryPO {
      */
     CategoryPO() {
         // nothing
-    }
-
-    /** {@inheritDoc}
-     * @see org.eclipse.jubula.client.core.model.NodePO#isInterfaceLocked()
-     */
-    @Transient
-    public Boolean isReused() {
-        return true;
     }
 }

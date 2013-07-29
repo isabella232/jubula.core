@@ -20,6 +20,7 @@ import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
@@ -43,8 +44,9 @@ public class TestSuiteBrowserContentProvider
      * @return object array
      */
     public Object[] getChildren(Object parentElement) {
-        if (parentElement instanceof IExecObjContPO[]) {
-            return new Object[] { ((IExecObjContPO[])parentElement)[0] };
+        if (parentElement instanceof IProjectPO) {
+            return new Object[] { ((IProjectPO) parentElement)
+                    .getExecObjCont() };
         }
 
         if (parentElement instanceof IExecObjContPO) {
@@ -70,12 +72,11 @@ public class TestSuiteBrowserContentProvider
         }
         
         if (parentElement instanceof ITestSuitePO) {
-            ITestSuitePO testSuite = (ITestSuitePO)parentElement;
-            Locale workLang = WorkingLanguageBP.getInstance()
-                    .getWorkingLanguage();
+            ITestSuitePO testSuite = (ITestSuitePO) parentElement;
+            WorkingLanguageBP workLangBP = WorkingLanguageBP.getInstance();
+            Locale workLang = workLangBP.getWorkingLanguage();
             if (testSuite.getAut() != null
-                    && !WorkingLanguageBP.getInstance()
-                            .isTestSuiteLanguage(workLang, testSuite)) {
+                    && !workLangBP.isTestSuiteLanguage(workLang, testSuite)) {
                 return ArrayUtils.EMPTY_OBJECT_ARRAY;
             }
             // fall through

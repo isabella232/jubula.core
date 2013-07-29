@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2013 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,26 +10,24 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
 
-import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
-
 /**
  * @author BREDEX GmbH
- * @created 06.12.2005
  */
-public class ProjectGUIPropertySource extends AbstractGuiNodePropertySource {
+public class CategoryGUIPropertySource extends AbstractGuiNodePropertySource {
     /** cached property descriptor for name */
     private IPropertyDescriptor m_namePropDesc = null;
     
     /**
-     * @param project
-     *            the project
+     * @param category
+     *            the category
      */
-    public ProjectGUIPropertySource(IProjectPO project) {
-        super(project);
+    public CategoryGUIPropertySource(ICategoryPO category) {
+        super(category);
     }
 
     /** {@inheritDoc} */
@@ -42,7 +40,7 @@ public class ProjectGUIPropertySource extends AbstractGuiNodePropertySource {
         if (m_namePropDesc == null) {
             m_namePropDesc = new TextPropertyDescriptor(
                     new ElementNameController(),
-                    Messages.ProjectGUIPropertySourceProjectName);
+                    Messages.CategoryGUIPropertySourceName);
         }
         addPropertyDescriptor(m_namePropDesc);
         // Project Comment

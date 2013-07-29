@@ -36,26 +36,19 @@ import org.eclipse.swt.widgets.Text;
  * @created Aug 23, 2010
  */
 public class EnterCommentDialog extends AbstractValidatedDialog {
+    /** 
+     * the validator used for validation of value correctness 
+     */
+    private IValidator m_validator;
+
     /** observable (bindable) value for comment title */
     private WritableValue m_commentTitle;
-    
-    /** observable (bindable) value for comment detail */
-    private WritableValue m_commentDetail;
 
     /**
      * <code>m_initialTitle</code>
      */
     private String m_initialTitle = null;
     
-    /**
-     * <code>m_initialDetail</code>
-     */
-    private String m_initialDetail = null;
-    
-    /** 
-     * the validator used for validation of value correctness 
-     */
-    private IValidator m_validator;
 
     /**
      * Constructor
@@ -66,15 +59,12 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
      *            The validator to use for the commentary values
      * @param title
      *            the initial comment title
-     * @param detail
-     *            the initial comment detail
      */
     public EnterCommentDialog(Shell parentShell, IValidator commentValidator,
-        String title, String detail) {
+        String title) {
         super(parentShell);
-        m_validator = commentValidator;
+        setValidator(commentValidator);
         m_initialTitle = title;
-        m_initialDetail = detail;
     }
 
     /**
@@ -91,11 +81,18 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
         area.setLayout(new GridLayout(2, false));
 
         createCommentTitleField(area);
-        createCommentDetailField(area);
+        createDialogAdditionalArea(area);
         
         return area;
     }
     
+    /**
+     * @param area the area to create some additional content on
+     */
+    protected void createDialogAdditionalArea(Composite area) {
+        // currently empty
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -103,7 +100,7 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
         Point shellSize = super.getInitialSize();
         return new Point(Math.max(
                 convertHorizontalDLUsToPixels(450), shellSize.x),
-                Math.max(convertVerticalDLUsToPixels(300),
+                Math.max(convertVerticalDLUsToPixels(100),
                         shellSize.y));
     }
     
@@ -130,7 +127,7 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
         getValidationContext().bindValue(
                 commentTitleFieldText,
                 m_commentTitle,
-                new UpdateValueStrategy().setAfterGetValidator(m_validator),
+                new UpdateValueStrategy().setAfterGetValidator(getValidator()),
                 new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE));
         
         if (!StringUtils.isEmpty(m_initialTitle)) {
@@ -142,32 +139,6 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
     }
     
     /**
-     * @param area the parent area
-     */
-    private void createCommentDetailField(Composite area) {
-        GridData gridData;
-        Text commentDetailField = createCommentDetailText(area);
-        gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-        LayoutUtil.addToolTipAndMaxWidth(gridData, commentDetailField);
-        commentDetailField.setLayoutData(gridData);
-        
-        IObservableValue commentDetailFieldText = 
-            SWTObservables.observeText(commentDetailField, SWT.Modify);
-        m_commentDetail = WritableValue.withValueType(String.class);
-        
-        getValidationContext().bindValue(
-                commentDetailFieldText,
-                m_commentDetail,
-                new UpdateValueStrategy().setAfterGetValidator(m_validator),
-                new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE));
-        
-        if (!StringUtils.isEmpty(m_initialDetail)) {
-            m_commentDetail.setValue(m_initialDetail);
-        }
-        LayoutUtil.setMaxChar(commentDetailField, 4000);
-    }
-
-    /**
      * @param area The parent for the created widgets.
      * @return the created text field.
      */
@@ -178,16 +149,6 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
     }
     
     /**
-     * @param area The parent for the created widgets.
-     * @return the created text field.
-     */
-    private Text createCommentDetailText(Composite area) {
-        new Label(area, SWT.NONE).setText(
-                Messages.EnterCommentDialogDetailLabel);
-        return new Text(area, SWT.V_SCROLL | SWT.BORDER);
-    }
-    
-    /**
      * This method must be called from the GUI thread.
      * 
      * @return the comment title
@@ -195,13 +156,18 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
     public String getCommentTitle() {
         return (String)m_commentTitle.getValue();
     }
-    
+
     /**
-     * This method must be called from the GUI thread.
-     * 
-     * @return the comment detail
+     * @return the validator
      */
-    public String getCommentDetail() {
-        return (String)m_commentDetail.getValue();
+    protected IValidator getValidator() {
+        return m_validator;
+    }
+
+    /**
+     * @param validator the validator to set
+     */
+    private void setValidator(IValidator validator) {
+        m_validator = validator;
     }
 }

@@ -124,6 +124,7 @@ public class Messages extends NLS {
     public static String CapGUIAction;
     public static String CapGUIName;
     public static String CapGUIType;
+    public static String CategoryGUIPropertySourceName;
     public static String CentralTestDataEditorName;
     public static String ClassPathDialogAddDir;
     public static String ClassPathDialogDir;
@@ -539,6 +540,7 @@ public class Messages extends NLS {
     public static String ProjectPropertyPageNoProjectLanguage;
     public static String ProjectPropertyPageProjectGuid;
     public static String ProjectPropertyPageProjectName;
+    public static String ProjectPropertyPageProjectDescr;
     public static String ProjectPropertyPageProjectVersion;
     public static String ProjectPropertyPageReusableProjectsAllDownToolTip;
     public static String ProjectPropertyPageReusableProjectsAllUpToolTip;
@@ -718,6 +720,7 @@ public class Messages extends NLS {
     public static String StopAUTActionQuestionText;
     public static String StopAUTActionQuestionTextIfcollecting;
     public static String StopAUTActionShellTitle;
+    public static String StoringOfMetadataFailed;
     public static String TestCaseBrowser;
     public static String TestCaseBrowserMainPrefix;
     public static String TestCaseBrowserLinkWithEditor;
