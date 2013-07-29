@@ -2,6 +2,6 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.eclipse.jubula.examples.extension.rcp.rc
 Bundle-SymbolicName: org.eclipse.jubula.examples.extension.rcp.rc;singleton:=true
-Bundle-Version: 2.1.0.qualifier
+Bundle-Version: 2.2.0.qualifier
 Fragment-Host: org.eclipse.jubula.rc.rcp.swt
 Bundle-RequiredExecutionEnvironment: J2SE-1.4
