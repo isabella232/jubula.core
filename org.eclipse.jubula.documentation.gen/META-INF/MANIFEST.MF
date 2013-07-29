@@ -6,9 +6,11 @@ Bundle-Version: 2.1.0.qualifier
 Bundle-ClassPath: .,
  lib/commons-configuration-1.2.jar
 Bundle-Vendor: Eclipse Jubula
-Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
+Require-Bundle: org.apache.commons.beanutils;bundle-version="[1.7.0,2.0.0)",
  org.apache.commons.collections;bundle-version="[3.2.0,4.0.0)",
+ org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
  org.apache.commons.cli;bundle-version="[1.2.0,2.0.0)",
+ org.apache.oro;bundle-version="[2.0.8,3.0.0)",
  org.slf4j.jcl;bundle-version="[1.5.11,2.0.0)",
  org.slf4j.api;bundle-version="[1.5.11,2.0.0)",
  ch.qos.logback.classic;bundle-version="[1.0.0,2.0.0)",
