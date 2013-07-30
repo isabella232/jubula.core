@@ -47,6 +47,10 @@ for i in `ls $TEXGEN_DIR/target/lib/*.jar`
 do
   CL_PATH="${CL_PATH}:$i"
 done
+for i in `ls $TEXGEN_DIR/target/lib/org.eclipse.jubula.documentation.gen-lib/*.jar`
+do
+  CL_PATH="${CL_PATH}:$i"
+done
 for i in `ls $TEXGEN_DIR/target/lib/org.eclipse.jubula.tools-lib/*.jar`
 do
   CL_PATH="${CL_PATH}:$i"
