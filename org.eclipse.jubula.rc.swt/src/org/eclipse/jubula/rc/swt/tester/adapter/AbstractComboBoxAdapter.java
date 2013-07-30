@@ -152,7 +152,7 @@ public abstract class AbstractComboBoxAdapter extends ControlAdapter
         }
 
         getRobot().click(getRealComponent(), r,
-            ClickOptions.create().setScrollToVisible(false)
+            ClickOptions.create().setScrollToVisible(true)
                 .setConfirmClick(false));
 
     }
