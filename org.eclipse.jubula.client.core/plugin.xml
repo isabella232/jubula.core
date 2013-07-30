@@ -162,6 +162,55 @@
          	type="string">
          </parameter>
      </function>
+   <function
+         class="org.eclipse.jubula.client.core.functions.StringReplaceAllFunctionEvaluator"
+         evaluator="local"
+         name="replaceAll">
+      <parameter
+            name="string"
+            type="string">
+      </parameter>
+      <parameter
+            name="regex"
+            type="string">
+      </parameter>
+      <parameter
+            name="replacement"
+            type="string">
+      </parameter>
+   </function>
+   <function
+         class="org.eclipse.jubula.client.core.functions.UUIDFunctionEvaluator"
+         evaluator="local"
+         name="uuid">
+   </function>
+   <function
+         class="org.eclipse.jubula.client.core.functions.RandomIntegerFunctionEvaluator"
+         evaluator="local"
+         name="randomInt">
+      <parameter
+            name="exclusiveMaxValue"
+            type="number">
+      </parameter>
+   </function>
+   <function
+         class="org.eclipse.jubula.client.core.functions.Base64EncodeFunctionEvaluator"
+         evaluator="local"
+         name="base64Encode">
+      <parameter
+            name="string"
+            type="string">
+      </parameter>
+   </function>
+   <function
+         class="org.eclipse.jubula.client.core.functions.Base64DecodeFunctionEvaluator"
+         evaluator="local"
+         name="base64Decode">
+      <parameter
+            name="string"
+            type="string">
+      </parameter>
+   </function>
    </extension>
 
 </plugin>
