@@ -37,28 +37,6 @@
     </profile>
   </profiles>
 
-  <repositories>
-    <repository>
-      <id>local-repo</id>
-      <url>file://${basedir}/../org.eclipse.jubula.rc.common.orbit/local-orbit-repo</url>
-    </repository>
-  </repositories>
-
-  <dependencies>
-    <!-- 
-    This dependency is necessary even though it is already declared in the
-    MANIFEST.MF (as a classpath entry). The MANIFEST.MF dependency is used
-    at compile-time, and this dependency is used for Maven's Dependency Plugin
-    in order to copy dependencies to a "lib" subdirectory in the build 
-    directory. 
-    -->
-    <dependency>
-      <groupId>org.eclipse.jubula.rc.common.orbit</groupId>
-      <artifactId>org.apache.commons.configuration</artifactId>
-      <version>1.2.0</version>
-    </dependency>
-  </dependencies>
-
   <build>
     <plugins>
             <plugin>
