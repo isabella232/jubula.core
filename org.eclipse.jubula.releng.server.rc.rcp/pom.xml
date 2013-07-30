@@ -21,6 +21,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>../org.eclipse.jubula.rc.rcp.feature</module>
+        <module>../org.eclipse.jubula.rc.common.orbit</module>
         <module>../org.eclipse.jubula.rc.rcp.common</module>
         <module>../org.eclipse.jubula.rc.rcp.swt</module>
         <module>../org.eclipse.jubula.rc.rcp.e3.releng</module>
