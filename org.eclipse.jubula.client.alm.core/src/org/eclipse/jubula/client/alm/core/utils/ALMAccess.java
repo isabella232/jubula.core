@@ -20,6 +20,7 @@ import org.eclipse.mylyn.tasks.core.RepositoryResponse;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.core.data.AbstractTaskDataHandler;
 import org.eclipse.mylyn.tasks.core.data.TaskAttribute;
+import org.eclipse.mylyn.tasks.core.data.TaskAttributeMapper;
 import org.eclipse.mylyn.tasks.core.data.TaskData;
 import org.eclipse.mylyn.tasks.ui.TasksUi;
 import org.slf4j.Logger;
@@ -30,9 +31,8 @@ import org.slf4j.LoggerFactory;
  */
 public final class ALMAccess {
     /** the logger */
-    private static final Logger LOG = 
-        LoggerFactory.getLogger(ALMAccess.class);
-    
+    private static final Logger LOG = LoggerFactory.getLogger(ALMAccess.class);
+
     /** Constructor */
     private ALMAccess() {
         // hide
@@ -110,5 +110,36 @@ public final class ALMAccess {
             LOG.error(e.getLocalizedMessage(), e);
         }
         return succeeded;
+    }
+
+    /**
+     * @param repoLabel
+     *            repoLabel
+     * @param taskId
+     *            the taskId
+     * @param taskAttributeId
+     *            the id of the attribute to retrieve
+     * @return the value or null if not found
+     */
+    public static String getTaskAttributeValue(String repoLabel, String taskId,
+            String taskAttributeId) {
+        String value = null;
+        TaskRepository repo = getRepositoryByLabel(repoLabel);
+        try {
+            TaskData taskData = getTaskDataByID(repo, taskId);
+            if (taskData != null) {
+                TaskAttribute root = taskData.getRoot();
+                TaskAttributeMapper attributeMapper = 
+                        taskData.getAttributeMapper();
+                TaskAttribute mappedAttribute = root
+                        .getMappedAttribute(taskAttributeId);
+                if (mappedAttribute != null) {
+                    value = attributeMapper.getValue(mappedAttribute);
+                }
+            }
+        } catch (CoreException e) {
+            LOG.error(e.getLocalizedMessage(), e);
+        }
+        return value;
     }
 }

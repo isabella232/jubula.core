@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.jubula.client.core.functions">
+      <function
+            class="org.eclipse.jubula.client.alm.core.functions.GetALMTaskAttribute"
+            evaluator="local"
+            name="getALMTaskAttribute">
+         <parameter
+               name="repositoryName"
+               type="string">
+         </parameter>
+         <parameter
+               name="taskId"
+               type="string">
+         </parameter>
+         <parameter
+               name="taskAttribute"
+               type="string">
+         </parameter>
+      </function>
+   </extension>
+
+</plugin>
