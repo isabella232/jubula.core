@@ -10,13 +10,18 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.alm.core.utils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.mylyn.tasks.core.AbstractRepositoryConnector;
 import org.eclipse.mylyn.tasks.core.IRepositoryManager;
+import org.eclipse.mylyn.tasks.core.ITaskMapping;
 import org.eclipse.mylyn.tasks.core.RepositoryResponse;
+import org.eclipse.mylyn.tasks.core.TaskMapping;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.core.data.AbstractTaskDataHandler;
 import org.eclipse.mylyn.tasks.core.data.TaskAttribute;
@@ -30,6 +35,34 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  */
 public final class ALMAccess {
+    /**
+     * @author BREDEX GmbH
+     */
+    public static class ALMDefaultTaskMapping extends TaskMapping {
+        /** m_values */
+        private Map<String, String> m_values = new HashMap<String, String>();
+
+        @Override
+        public String getDescription() {
+            return m_values.get(TaskAttribute.DESCRIPTION);
+        }
+
+        @Override
+        public String getSummary() {
+            return m_values.get(TaskAttribute.SUMMARY);
+        }
+
+        @Override
+        public String getProduct() {
+            return m_values.get(TaskAttribute.PRODUCT);
+        }
+        
+        @Override
+        public String getTaskKind() {
+            return m_values.get(TaskAttribute.TASK_KIND);
+        }
+    }
+    
     /** the logger */
     private static final Logger LOG = LoggerFactory.getLogger(ALMAccess.class);
 
@@ -129,8 +162,8 @@ public final class ALMAccess {
             TaskData taskData = getTaskDataByID(repo, taskId);
             if (taskData != null) {
                 TaskAttribute root = taskData.getRoot();
-                TaskAttributeMapper attributeMapper = 
-                        taskData.getAttributeMapper();
+                TaskAttributeMapper attributeMapper = taskData
+                        .getAttributeMapper();
                 TaskAttribute mappedAttribute = root
                         .getMappedAttribute(taskAttributeId);
                 if (mappedAttribute != null) {
@@ -141,5 +174,73 @@ public final class ALMAccess {
             LOG.error(e.getLocalizedMessage(), e);
         }
         return value;
+    }
+
+    /**
+     * @param repoLabel
+     *            repoLabel
+     * @param product
+     *            the product
+     * @param summary
+     *            the summary
+     * @param description
+     *            the description
+     * @return true if succeeded; false otherwise
+     */
+    public static boolean createNewTask(String repoLabel, String product,
+        String summary, String description) {
+        boolean succeeded = false;
+        TaskRepository repo = getRepositoryByLabel(repoLabel);
+        AbstractRepositoryConnector connector = TasksUi
+                .getRepositoryConnector(repo.getConnectorKind());
+        
+        AbstractTaskDataHandler taskDataHandler = connector
+                .getTaskDataHandler();
+        
+        // e.g. when local has been chosen
+        if (taskDataHandler == null) {
+            return succeeded;
+        }
+        
+        TaskAttributeMapper attributeMapper = taskDataHandler
+                .getAttributeMapper(repo);
+        
+        TaskData newTask = new TaskData(attributeMapper,
+                repo.getConnectorKind(), 
+                repo.getRepositoryUrl(), 
+                StringConstants.EMPTY);
+        
+        ITaskMapping taskMapping = new ALMDefaultTaskMapping();
+        try {
+            
+            TaskAttribute newTaskRoot = newTask.getRoot();
+            
+            TaskAttribute summaryAttribute = newTaskRoot
+                    .createMappedAttribute(TaskAttribute.SUMMARY);
+            TaskAttribute descriptionAttribute = newTaskRoot
+                    .createMappedAttribute(TaskAttribute.DESCRIPTION);
+            
+            // JIRA - start
+            newTaskRoot.createMappedAttribute(TaskAttribute.TASK_KIND);
+            newTaskRoot.createMappedAttribute(TaskAttribute.STATUS);
+            TaskAttribute productAttribute = newTaskRoot
+                    .createMappedAttribute(TaskAttribute.PRODUCT);
+            // JIRA - end
+
+            taskDataHandler.initializeTaskData(repo, newTask, taskMapping,
+                    new NullProgressMonitor());
+
+            attributeMapper.setValue(descriptionAttribute, description);
+            attributeMapper.setValue(summaryAttribute, summary);
+            attributeMapper.setValue(productAttribute, product);
+            
+            RepositoryResponse response = taskDataHandler.postTaskData(repo,
+                    newTask, null, new NullProgressMonitor());
+            succeeded = RepositoryResponse.ResponseKind.TASK_CREATED
+                    .equals(response .getReposonseKind());
+        } catch (CoreException e) {
+            LOG.error(e.getLocalizedMessage(), e);
+        }
+        return succeeded;
     }
 }

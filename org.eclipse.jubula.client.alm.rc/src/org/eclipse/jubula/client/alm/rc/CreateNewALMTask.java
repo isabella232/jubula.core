@@ -16,15 +16,17 @@ import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
 /** @author BREDEX GmbH */
-public class AddCommentToTask extends AbstractALMExecutionCommand {
+public class CreateNewALMTask extends AbstractALMExecutionCommand {
     /** {@inheritDoc} */
     public TestErrorEvent execute() throws JBException {
         TestErrorEvent event = null;
         String repoName = getValueForParam(ALM_REPOSITORY_NAME_KEY);
-        String taskID = getValueForParam(ALM_TASK_ID_KEY);
-        String comment = getValueForParam(ALM_COMMENT_KEY);
+        String product = getValueForParam(ALM_TASK_PRODUCT_KEY);
+        String summary = getValueForParam(ALM_TASK_SUMMARY_KEY);
+        String description = getValueForParam(ALM_TASK_DESCRIPTION_KEY);
 
-        boolean success = ALMAccess.createComment(repoName, taskID, comment);
+        boolean success = ALMAccess.createNewTask(
+                repoName, product, summary, description);
         if (!success) {
             event = EventFactory.createActionError();
         }
