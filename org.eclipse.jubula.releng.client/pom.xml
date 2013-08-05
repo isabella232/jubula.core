@@ -23,6 +23,9 @@
         <module>../org.eclipse.jubula.feature.source</module>
 		<module>../org.eclipse.jubula.client.core</module>
         <module>../org.eclipse.jubula.client.ui</module>
+        <module>../org.eclipse.jubula.client.alm.core</module>
+        <module>../org.eclipse.jubula.client.alm.ui</module>
+        <module>../org.eclipse.jubula.client.alm.rc</module>
 		<module>../org.eclipse.jubula.client.ui.rcp</module>
 		<module>../org.eclipse.jubula.client.inspector.ui</module>
 		<module>../org.eclipse.jubula.client.archive</module>

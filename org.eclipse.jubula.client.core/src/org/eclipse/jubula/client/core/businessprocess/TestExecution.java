@@ -66,6 +66,8 @@ import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Persistor;
+import org.eclipse.jubula.client.core.rc.commands.AbstractPostExecutionCommand;
+import org.eclipse.jubula.client.core.rc.commands.IPostExecutionCommand;
 import org.eclipse.jubula.client.core.utils.ExecObject;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
@@ -111,8 +113,6 @@ import org.eclipse.osgi.util.NLS;
 import org.osgi.framework.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
 
 /**
  * This class creates the captestmessage with test data and sends this message
@@ -1045,6 +1045,14 @@ public class TestExecution {
         
         final IPostExecutionCommand cmd = m_postExecCmdFactory
             .createCommand(cmdClassName);
+        if (cmd instanceof AbstractPostExecutionCommand) {
+            AbstractPostExecutionCommand aCmd = 
+                    (AbstractPostExecutionCommand) cmd;
+            aCmd.setCurrentCap(m_currentCap);
+            aCmd.setExternalTestDataBP(m_externalTestDataBP);
+            aCmd.setLocale(getLocale());
+            aCmd.setTraverser(m_trav);
+        }
         try {
             return cmd.execute();
         } catch (JBException e) {
@@ -2140,83 +2148,6 @@ public class TestExecution {
         }
     }
   
-    /**
-     * Interface for commands to execute after the execution of the dependent
-     * CAP. The implementing class of this interface must be inscribed 
-     * with the full qualified name in the componentConfiguration.xml 
-     * in the "postExecutionCommand"-tag in the dependent Action.
-     * 
-     * @author BREDEX GmbH
-     * @created 24.07.2006
-     */
-    public static interface IPostExecutionCommand {
-        
-        /**
-         * Implementation of this IPostExecutionCommand
-         * @throws JBException in case of error while execution
-         * @return a TestErrorEvent representing an error that occurred during  
-         *         execution, or <code>null</code> if no such error occurs. 
-         */
-        public TestErrorEvent execute() throws JBException;
-        
-    }
-    
-    /**
-     * abstract class for shared methods
-     *
-     * @author BREDEX GmbH
-     * @created 19.08.2009
-     */
-    public abstract class AbstractPostExecutionCommand 
-        implements IPostExecutionCommand {
-        
-        /** Constructor */
-        private AbstractPostExecutionCommand() {
-        // empty
-        }
-        
-        /**
-         * Method to find the value for a parameter
-         * 
-         * @param date test data object
-         * @param cap the corresponding cap
-         * @param desc param description belonging to current test data object
-         * @return the value
-         * @throws InvalidDataException
-         *      in case of missing value for a parameter in a cap
-         */
-        protected String getValueForParam(ITestDataPO date, ICapPO cap, 
-            IParamDescriptionPO desc) 
-            throws InvalidDataException {
-            String value = StringConstants.EMPTY;
-            ParamValueConverter conv = new ModelParamValueConverter(
-                date.getValue(getLocale()), cap, getLocale(), desc);
-            try {
-                List <ExecObject> stackList = 
-                    new ArrayList<ExecObject>(m_trav.getExecStackAsList());
-                value = conv.getExecutionString(stackList, getLocale());
-            } catch (InvalidDataException e) {
-                throw new InvalidDataException(
-                    Messages.NeitherValueNorReferenceForNode
-                    + StringConstants.COLON + StringConstants.SPACE
-                    + cap.getName(), MessageIDs.E_NO_REFERENCE); 
-            }
-            return value;
-        }
-        
-        /** 
-         * @param paramID the parameter id 
-         * @return the value of the current paramID parameter */
-        protected String getValueForParam(String paramID) throws JBException {
-            IParamDescriptionPO desc = m_currentCap
-                    .getParameterForUniqueId(paramID);
-            ITDManager tdManager = 
-                m_externalTestDataBP.getExternalCheckedTDManager(m_currentCap);
-            ITestDataPO date = tdManager.getCell(0, desc);
-            return this.getValueForParam(date, m_currentCap, desc);
-        }
-    }
-
     /**
      * @return variableStore
      */

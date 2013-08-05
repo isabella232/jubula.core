@@ -481,4 +481,26 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          version="2.3.2"
          unpack="false"/>
 
+   <plugin
+         id="org.eclipse.jubula.client.alm.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.alm.rc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.alm.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>

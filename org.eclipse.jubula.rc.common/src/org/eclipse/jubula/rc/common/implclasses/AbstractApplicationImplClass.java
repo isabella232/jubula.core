@@ -467,6 +467,20 @@ public abstract class AbstractApplicationImplClass implements ITester {
     }
     
     /**
+     * @param repositoryName
+     *            the name of the repository
+     * @param taskID
+     *            the id of the task
+     * @param comment
+     *            the comment to add
+     */
+    public void rcALMaddCommentToTask(String repositoryName, String taskID,
+            String comment) {
+        // empty implementation: implementation can be found in the
+        // corresponding postExecutionCommand
+    }
+    
+    /**
      * Perform a keystroke specified according <a
      * href=http://java.sun.com/j2se/1.4.2/docs/api/javax/swing/KeyStroke.html#getKeyStroke(java.lang.String)>
      * string representation of a keystroke </a>.
