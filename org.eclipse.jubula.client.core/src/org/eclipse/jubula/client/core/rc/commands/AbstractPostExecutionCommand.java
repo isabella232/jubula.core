@@ -68,12 +68,13 @@ public abstract class AbstractPostExecutionCommand
         IParamDescriptionPO desc) 
         throws InvalidDataException {
         String value = StringConstants.EMPTY;
+        Locale locale = getLocale();
         ParamValueConverter conv = new ModelParamValueConverter(
-            date.getValue(getLocale()), cap, getLocale(), desc);
+            date.getValue(locale), cap, locale, desc);
         try {
             List <ExecObject> stackList = 
                 new ArrayList<ExecObject>(getTraverser().getExecStackAsList());
-            value = conv.getExecutionString(stackList, getLocale());
+            value = conv.getExecutionString(stackList, locale);
         } catch (InvalidDataException e) {
             throw new InvalidDataException(
                 Messages.NeitherValueNorReferenceForNode
@@ -89,12 +90,12 @@ public abstract class AbstractPostExecutionCommand
      * @return the value of the current paramID parameter
      */
     protected String getValueForParam(String paramID) throws JBException {
-        IParamDescriptionPO desc = getCurrentCap().getParameterForUniqueId(
-                paramID);
+        ICapPO currentCap = getCurrentCap();
+        IParamDescriptionPO desc = currentCap.getParameterForUniqueId(paramID);
         ITDManager tdManager = getExternalTestDataBP()
-                .getExternalCheckedTDManager(getCurrentCap());
+                .getExternalCheckedTDManager(currentCap);
         ITestDataPO date = tdManager.getCell(0, desc);
-        return this.getValueForParam(date, getCurrentCap(), desc);
+        return this.getValueForParam(date, currentCap, desc);
     }
 
     /**

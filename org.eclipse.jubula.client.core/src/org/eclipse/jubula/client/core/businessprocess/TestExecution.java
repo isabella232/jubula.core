@@ -123,6 +123,9 @@ import org.slf4j.LoggerFactory;
  * @created 03.09.2004
  */
 public class TestExecution {
+    /** the component system timeout key */
+    public static final String COMP_SYSTEM_TIMEOUT = "CompSystem.Timeout"; //$NON-NLS-1$
+    
     /**
      * @author BREDEX GmbH
      * @created Feb 2, 2011
@@ -643,7 +646,7 @@ public class TestExecution {
     private int calculateRequestTimeout(MessageCap messageCap) {
         List<Integer> timeOuts = new ArrayList<Integer>();
         IParamDescriptionPO desc1 = 
-            m_currentCap.getParameterForUniqueId("CompSystem.Timeout"); //$NON-NLS-1$
+            m_currentCap.getParameterForUniqueId(COMP_SYSTEM_TIMEOUT);
         timeOuts.add(m_currentCap.getParameterList().indexOf(desc1));
         desc1 = m_currentCap.getParameterForUniqueId("CompSystem.TimeMillSec"); //$NON-NLS-1$
         timeOuts.add(m_currentCap.getParameterList().indexOf(desc1));
@@ -659,7 +662,7 @@ public class TestExecution {
         }
         
         // Special handling for Show Text
-        boolean isShowText = messageCap.getMethod().equals("gdShowText"); //$NON-NLS-1$
+        boolean isShowText = messageCap.getMethod().equals("rcShowText"); //$NON-NLS-1$
         if (isShowText) {
             int showTextTimeout = calculateShowTextTimeout(messageCap);
             if (showTextTimeout != -1) {
@@ -692,18 +695,15 @@ public class TestExecution {
         final String postExecCommandClass = action.getPostExecutionCommand();
         final IPostExecutionCommand command = m_postExecCmdFactory
             .createCommand(postExecCommandClass);
-        try {
-            TestErrorEvent errorEvent = command.execute();
-            
-            if (errorEvent != null) { 
-                CAPTestResponseMessage response = new CAPTestResponseMessage();
-                response.setTestErrorEvent(errorEvent);
-                response.setMessageCap(capTestMessage.getMessageCap());
-                return response;
-            }
-        } catch (JBException e) { // NOPMD by al on 3/19/07 1:24 PM
-            // nothing
+        TestErrorEvent errorEvent = executePostExecCommand(command);
+        
+        if (errorEvent != null) { 
+            CAPTestResponseMessage response = new CAPTestResponseMessage();
+            response.setTestErrorEvent(errorEvent);
+            response.setMessageCap(capTestMessage.getMessageCap());
+            return response;
         }
+        
         return null;
     }
     
@@ -1025,8 +1025,9 @@ public class TestExecution {
             .getPostExecutionCommand();
         if (cmdClassName != null && cmdClassName.length() > 0 
             && !m_currentCap.getMetaAction().isClientAction()) {
-            
-            TestErrorEvent errorEvent = executePostExecCommand(cmdClassName); 
+
+            TestErrorEvent errorEvent = executePostExecCommand(
+                    m_postExecCmdFactory.createCommand(cmdClassName));
             if (msg.getTestErrorEvent() == null 
                 && errorEvent != null) { 
                 
@@ -1037,14 +1038,13 @@ public class TestExecution {
     
     /**
      * Loads, instantiates and executes the given IPostExecutionCommand class
-     * @param cmdClassName the IPostExecutionCommand to execute.
-     * @return a TestErrorEvent representing an error that occurred during  
-     *         execution, or <code>null</code> if no such error occurs. 
+     * 
+     * @param cmd
+     *            the IPostExecutionCommand to execute.
+     * @return a TestErrorEvent representing an error that occurred during
+     *         execution, or <code>null</code> if no such error occurs.
      */
-    private TestErrorEvent executePostExecCommand(String cmdClassName) {
-        
-        final IPostExecutionCommand cmd = m_postExecCmdFactory
-            .createCommand(cmdClassName);
+    private TestErrorEvent executePostExecCommand(IPostExecutionCommand cmd) {
         if (cmd instanceof AbstractPostExecutionCommand) {
             AbstractPostExecutionCommand aCmd = 
                     (AbstractPostExecutionCommand) cmd;
@@ -1056,19 +1056,8 @@ public class TestExecution {
         try {
             return cmd.execute();
         } catch (JBException e) {
-            StringBuilder msg = new StringBuilder();
-            msg.append(Messages.ErrorExecutingCommand);
-            msg.append(StringConstants.COLON);
-            msg.append(StringConstants.SPACE);
-            msg.append(cmdClassName);
-            msg.append(StringConstants.SPACE);
-            msg.append(StringConstants.DOT);
-            msg.append(StringConstants.SPACE);
-            msg.append(Messages.Exception);
-            msg.append(StringConstants.COLON);
-            msg.append(StringConstants.SPACE);
-            msg.append(String.valueOf(e));
-            LOG.error(msg.toString());
+            LOG.error(NLS.bind(Messages.ErrorExecutingCommand, cmd.getClass()
+                    .getName(), e.getLocalizedMessage()));
             fireError(e);
             return null;
         }
@@ -1129,12 +1118,13 @@ public class TestExecution {
 
     /**
      * Fires an event if test fails
-     * @param e JBException
+     * 
+     * @param e
+     *            Exception
      */
     private void fireError(Exception e) {
-        ClientTestFactory.getClientTest().
-            fireTestExecutionChanged(new TestExecutionEvent(
-                TestExecutionEvent.TEST_EXEC_FAILED, e));
+        ClientTestFactory.getClientTest().fireTestExecutionChanged(
+                new TestExecutionEvent(TestExecutionEvent.TEST_EXEC_FAILED, e));
         endTestExecution();
     }
 
@@ -1646,7 +1636,7 @@ public class TestExecution {
                 String expectedBehavior = 
                     getValueForParam("CompSystem.ExpectedBehavior"); //$NON-NLS-1$
                 int timeout = Integer.parseInt(
-                    getValueForParam("CompSystem.Timeout")); //$NON-NLS-1$
+                    getValueForParam(COMP_SYSTEM_TIMEOUT));
                 
                 Message message = new DisplayManualTestStepMessage(
                         actionToPerform, expectedBehavior, timeout);
@@ -1797,7 +1787,7 @@ public class TestExecution {
     public class SyncShutdownAndRestartCmd extends AbstractRestartCmd {
         @Override
         protected int getTerminationTimeout() throws JBException {
-            String timeout = getValueForParam("CompSystem.Timeout"); //$NON-NLS-1$
+            String timeout = getValueForParam(COMP_SYSTEM_TIMEOUT);
             int parseInt = 0;
             try {
                 parseInt = Integer.parseInt(timeout);
@@ -2095,8 +2085,8 @@ public class TestExecution {
                     String cmd = this.getValueForParam(date, m_currentCap, 
                         desc);
                     
-                    desc = 
-                        m_currentCap.getParameterForUniqueId("CompSystem.Timeout"); //$NON-NLS-1$
+                    desc = m_currentCap
+                            .getParameterForUniqueId(COMP_SYSTEM_TIMEOUT);
                     date = 
                         tdManager.getCell(0, desc);
                     int timeout = Integer.parseInt(

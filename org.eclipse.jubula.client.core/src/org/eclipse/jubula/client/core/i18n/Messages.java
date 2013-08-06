@@ -168,7 +168,6 @@ public class Messages extends NLS {
     public static String EventExecTestCasePORETRY;
     public static String EventExecTestCasePORETURN;
     public static String EventExecTestCasePOSTOP;
-    public static String Exception;
     public static String ExceptionShouldNotHappen;
     public static String ExecTestCasePOMissingReference;
     public static String ExecTestCasePOMissingReferenceWithProjectName;
