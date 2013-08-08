@@ -40,6 +40,7 @@ import javax.swing.JTree;
 import javax.swing.text.JTextComponent;
 import javax.swing.tree.TreePath;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.communication.message.CAPRecordedMessage;
 import org.eclipse.jubula.communication.message.MessageCap;
 import org.eclipse.jubula.communication.message.MessageParam;
@@ -719,9 +720,10 @@ public class RecordActions {
             messageParam.setValue(value);
             messageCap.addMessageParam(messageParam);
             
-            if (!(logName.equals("default"))) { //$NON-NLS-1$
-                messageCap.setLogicalName(logName);
-            }
+        }
+        if (StringUtils.isEmpty(id.getComponentName())) { //$NON-NLS-1$
+            messageCap.setLogicalName(logName);
+            messageCap.sethasDefaultMapping(true);
         }
         CAPRecordedMessage capRecMessage = new CAPRecordedMessage(messageCap);
                 

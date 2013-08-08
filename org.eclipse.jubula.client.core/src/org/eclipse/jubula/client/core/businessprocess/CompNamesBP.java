@@ -452,7 +452,9 @@ public class CompNamesBP {
                     }                    
                 } else if (childNode instanceof ICapPO) {
                     ICapPO cap = (ICapPO)childNode;
-                    if (cap.getComponentName().equals(pair.getFirstName())) {
+                    if (cap.getComponentName() != null
+                            && cap.getComponentName()
+                                .equals(pair.getFirstName())) {
                         pair.setType(cap.getComponentType());
                         return true;
                     }
@@ -522,7 +524,10 @@ public class CompNamesBP {
             INodePO node = it.previous();
             if (node instanceof IExecTestCasePO) {
                 IExecTestCasePO execNode = (IExecTestCasePO)node;
-                ICompNamesPairPO pair = execNode.getCompNamesPair(currentName);
+                ICompNamesPairPO pair = null;
+                if (!StringUtils.isEmpty(currentName)) {
+                    pair = execNode.getCompNamesPair(currentName);
+                }
                 if (pair != null) {
                     currentName = pair.getSecondName();
                     currentNamePo = 

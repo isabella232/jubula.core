@@ -53,6 +53,7 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.NameValidator;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.MappingConstants;
 import org.eclipse.jubula.tools.utils.StringParsing;
@@ -166,19 +167,9 @@ public class RecordHelper {
      * @return the IComponentIdentifier for the default mapping component Menu
      */
     protected IComponentIdentifier getMenuCompID() {
-        IComponentIdentifier id = null;
-        IComponentIdentifier[] compIDs = ComponentHandler.getAllComponentId();
-        for (int i = 0; i < compIDs.length; i++) {
-            IComponentIdentifier idIter = compIDs[i];
-            if (idIter.getSupportedClassName().equals(
-                    MappingConstants.SWING_MENU_DEFAULT_MAPPING_CLASSNAME)) {
-                
-                id = idIter;
-                id.setComponentClassName(MappingConstants.SWING_MENU_CLASSNAME);
-                id.setSupportedClassName(MappingConstants.SWING_MENU_CLASSNAME);
-                break;
-            }
-        }
+        IComponentIdentifier id = new ComponentIdentifier();
+        id.setComponentClassName(MappingConstants.SWING_MENU_CLASSNAME);
+        id.setSupportedClassName(MappingConstants.SWING_MENU_CLASSNAME);
         return id;
     }
     
@@ -186,21 +177,11 @@ public class RecordHelper {
      * @return IComponentIdentifier for the default mapping component Application
      */
     protected IComponentIdentifier getApplicationCompID() {
-        IComponentIdentifier id = null;
-        IComponentIdentifier[] compIDs = ComponentHandler.getAllComponentId();
-        for (int i = 0; i < compIDs.length; i++) {
-            IComponentIdentifier idIter = compIDs[i];
-            if (idIter.getSupportedClassName().equals(
-                MappingConstants
-                    .SWING_APPLICATION_CLASSNAME)) {
-                id = idIter;
-                id.setComponentClassName(MappingConstants
-                    .SWING_APPLICATION_COMPONENT_IDENTIFIER);
-                id.setSupportedClassName(MappingConstants
+        IComponentIdentifier id = new ComponentIdentifier();
+        id.setComponentClassName(MappingConstants
+                .SWING_APPLICATION_COMPONENT_IDENTIFIER);
+        id.setSupportedClassName(MappingConstants
                         .SWING_APPLICATION_COMPONENT_IDENTIFIER);
-                break;
-            }
-        }
         return id;
     }
     

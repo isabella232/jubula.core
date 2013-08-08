@@ -94,10 +94,13 @@ import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.TestCaseEditorC
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TooltipLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -408,7 +411,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 String compNameGuid = capPo.getComponentName();
                 IComponentNamePO compNamePo = 
                     compNameCache.getCompNamePo(compNameGuid);
-                if (!compNamePo.getGuid().equals(compNameGuid)) {
+                if (compNamePo != null
+                        && !compNamePo.getGuid().equals(compNameGuid)) {
                     capPo.setComponentName(compNamePo.getGuid());
                 }
             }
@@ -518,6 +522,9 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                                     cap.getName()) });
                     return false;
                 }
+                if (componentHasDefaultMapping(cap)) { 
+                    continue; // there is no component name
+                }
                 if (cap.getComponentName() == null
                         || StringConstants.EMPTY.equals(
                                 cap.getComponentName())) {
@@ -527,9 +534,9 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                                     cap.getName()) });
                     return false;
                 }
-                if (cap.getComponentName().startsWith(BLANK)
-                        || cap.getComponentName().endsWith(BLANK)) {
-                    ErrorHandlingUtil.createMessageDialog(mId, null, 
+                if (cap.getComponentName().startsWith(BLANK) || cap
+                                .getComponentName().endsWith(BLANK)) {
+                    ErrorHandlingUtil.createMessageDialog(mId, null,
                             new String[] { NLS.bind(
                                     Messages.TestCaseEditorWrongCompName2,
                                     cap.getName()) });
@@ -554,6 +561,21 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
             }
         }
         return checkRefsAndCompNames(testCase);
+    }
+
+    /**
+     * 
+     * @param cap
+     *            the cap from which wee need the component type
+     * @return if the component has a default mapping
+     */
+    private boolean componentHasDefaultMapping(ICapPO cap) {
+        Component component = ComponentBuilder.getInstance()
+                .getCompSystem().findComponent(cap.getComponentType());
+        if (component.isConcrete()) {
+            return ((ConcreteComponent) component).hasDefaultMapping();
+        }
+        return false;
     }
     
     /**

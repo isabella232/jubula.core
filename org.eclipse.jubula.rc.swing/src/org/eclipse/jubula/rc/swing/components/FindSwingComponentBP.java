@@ -15,8 +15,6 @@ import java.awt.Component;
 import org.eclipse.jubula.rc.common.components.FindComponentBP;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 
-import com.bredexsw.guidancer.autserver.swing.implclasses.GraphicApplication;
-
 
 /**
  * @author BREDEX GmbH
@@ -52,9 +50,6 @@ public class FindSwingComponentBP extends FindComponentBP {
      */
     protected boolean isAvailable(Object currComp) {
         Component comp = (Component)currComp;
-        if (comp instanceof GraphicApplication) {
-            return true;
-        }
         return comp.isShowing();
     }
 }

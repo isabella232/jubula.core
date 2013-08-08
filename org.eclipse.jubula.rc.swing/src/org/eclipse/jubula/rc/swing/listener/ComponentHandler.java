@@ -22,11 +22,9 @@ import java.util.EventListener;
 
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.rc.common.components.IComponentFactory;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
-import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swing.components.AUTSwingHierarchy;
@@ -85,18 +83,6 @@ public class ComponentHandler extends BaseAWTEventListener
                     + component + "'", //$NON-NLS-1$
                     MessageIDs.E_COMPONENT_ID_CREATION); 
         }
-    }
-    /**
-     * @param factory factory
-     * @param componentName componentName
-     * @param technicalName technicalName
-     * @throws UnsupportedComponentException UnsupportedComponentException
-     */
-    public static void addToHierarchy(IComponentFactory factory,
-        String componentName, String technicalName)
-        throws UnsupportedComponentException {
-        
-        autHierarchy.addToHierarchy(factory, componentName, technicalName);
     }
     /**
      * returns an array of all componentIdentifier of (supported) components,

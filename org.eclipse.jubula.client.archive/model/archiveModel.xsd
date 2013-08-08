@@ -407,7 +407,7 @@
       <xs:extension base="gd:parameter">
         <xs:sequence>
           <xs:element name="actionName" type="xs:string" />
-          <xs:element name="componentName" type="xs:string" />
+          <xs:element name="componentName" type="xs:string" nillable="true" />
           <xs:element name="componentType" type="xs:string" />
         </xs:sequence>
       </xs:extension>

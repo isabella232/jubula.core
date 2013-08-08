@@ -117,16 +117,8 @@ public abstract class CommandConstants {
     /** constant: "org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand" */
     public static final String CHANGE_AUT_MODE_COMMAND = "org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swing.commands.ChangeAUTModeCommand" */
-    public static final String SWING_SEND_COMPONENTS_COMMAND = "org.eclipse.jubula.rc.swing.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.rc.swt.commands.SendAUTListOfSupportedComponentsCommand" */
-    public static final String SWT_SEND_COMPONENTS_COMMAND = "org.eclipse.jubula.rc.swt.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
-    /** constant: "com.bredexsw.jubula.rc.html.commands.SendAUTListOfSupportedComponentsCommand" */
-    public static final String HTML_SEND_COMPONENTS_COMMAND = "com.bredexsw.jubula.rc.html.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
-    /** constant: "com.bredexsw.guidancer.rc.win.message.SendWinAUTListOfSupportedComponentsMessage" */
-    public static final String WIN_SEND_COMPONENTS_COMMAND = "com.bredexsw.guidancer.rc.win.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
-    /** command constant */
-    public static final String IOS_SEND_COMPONENTS_COMMAND = "com.bredexsw.guidancer.rc.mobile.ios.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.client.core.commands.AUTHighlightComponentCommand" */
+    public static final String SEND_COMPONENTS_COMMAND = "org.eclipse.jubula.rc.common.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
+     /** constant: "org.eclipse.jubula.client.core.commands.AUTHighlightComponentCommand" */
     public static final String HIGHLIGHT_COMPONENT_COMMAND = "org.eclipse.jubula.client.core.commands.AUTHighlightComponentCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.AUTModeChangedCommand" */
     public static final String AUT_MODE_CHANGED_COMMAND = "org.eclipse.jubula.client.core.commands.AUTModeChangedCommand"; //$NON-NLS-1$

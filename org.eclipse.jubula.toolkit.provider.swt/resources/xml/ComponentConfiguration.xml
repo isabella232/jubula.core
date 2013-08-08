@@ -185,20 +185,13 @@
 		<componentClass name="org.eclipse.swt.widgets.Button" />
 	</toolkitComponent>
 	
-	<toolkitComponent type="org.eclipse.swt.GraphicApplication" visible="false">
-		<defaultMapping logicalName="CompSystem.LogicalApplicationName"
-			technicalName="Application">
-			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
-		</defaultMapping>
+	<toolkitComponent type="org.eclipse.swt.GraphicApplication" visible="false" hasDefaultMapping="true">
 		<realizes>guidancer.concrete.GraphicApplication</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.SwtApplicationTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.autswtserver.implclasses.GraphicApplication" />
 	</toolkitComponent>
 
-	<toolkitComponent type="org.eclipse.swt.widgets.Menu" visible="false">
-		<defaultMapping technicalName="Menu" logicalName="CompSystem.LogicalMenuName">
-			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
-		</defaultMapping>
+	<toolkitComponent type="org.eclipse.swt.widgets.Menu" visible="false" hasDefaultMapping="true">
 		<realizes>guidancer.concrete.MenuBar</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.MenuTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.autswtserver.implclasses.MenuDefaultMapping" />

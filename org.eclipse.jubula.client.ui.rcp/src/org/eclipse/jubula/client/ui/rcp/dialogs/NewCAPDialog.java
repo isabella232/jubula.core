@@ -13,10 +13,8 @@ package org.eclipse.jubula.client.ui.rcp.dialogs;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -86,8 +84,6 @@ public class NewCAPDialog extends TitleAreaDialog {
     private DirectCombo <String> m_componentCombo;
     /** the combo box for the actions */
     private DirectCombo <String> m_actionCombo;
-    /** list of all default names */
-    private Set <String>m_defaultNames = new HashSet<String>();
     /** The name of the cap */
     private String m_capName;
     /** The type of the component */
@@ -159,24 +155,7 @@ public class NewCAPDialog extends TitleAreaDialog {
         m_componentNameField.addModifyListener(m_modifyListener);
         Plugin.getHelpSystem().setHelp(parent, ContextHelpIds.CAP);
         setHelpAvailable(true);
-        initDefaultNamesList();
         return area;
-    }
-
-    /**
-     * initializes a list with all defaultNames
-     */
-    private void initDefaultNamesList() {
-        m_defaultNames.clear();
-        final List concreteComponents = ComponentBuilder.getInstance()
-            .getCompSystem().getConcreteComponents();
-        for (Object o : concreteComponents) {
-            ConcreteComponent c = (ConcreteComponent)o;
-            if (c.hasDefaultMapping()) {
-                m_defaultNames.add(StringHelper.getInstance().get(
-                    c.getDefaultMapping().getLogicalName(), true));
-            }
-        }
     }
 
     /**
@@ -336,8 +315,6 @@ public class NewCAPDialog extends TitleAreaDialog {
             ConcreteComponent cc = (ConcreteComponent)component;
             if (cc.hasDefaultMapping()) {
                 defaultMappingComponent = true;
-                componentName = StringHelper.getInstance().get(
-                    cc.getDefaultMapping().getLogicalName(), true);
             }
         }
         List<Action> actions = 
@@ -452,20 +429,20 @@ public class NewCAPDialog extends TitleAreaDialog {
             
             isCorrect = false;
         }
-        if (m_componentNameField.isEnabled() 
-            && m_defaultNames.contains(m_componentNameField.getText())) {
+        if (!m_componentNameField.isEnabled()) {
             
             defaultName = true;
-            isCorrect = false;
+            isCorrect = true;
         }
+        String compatibilityErrorMsg = null;
+        if (!defaultName) {
+            compatibilityErrorMsg = 
+                    ComponentNamesBP.getInstance()
+                    .isCompatible(m_componentCombo.getSelectedObject(),
+                            m_componentNameField.getText(), m_compMapper,
+                            GeneralStorage.getInstance().getProject().getId());
 
-        String compatibilityErrorMsg = 
-            ComponentNamesBP.getInstance().isCompatible(
-                m_componentCombo.getSelectedObject(),
-                m_componentNameField.getText(), 
-                m_compMapper, 
-                GeneralStorage.getInstance().getProject().getId());
- 
+        }
         isCorrect &= compatibilityErrorMsg == null;
         
         if (isCorrect) {
@@ -475,7 +452,7 @@ public class NewCAPDialog extends TitleAreaDialog {
         getButton(IDialogConstants.OK_ID).setEnabled(false);
         if (compatibilityErrorMsg != null) {
             setErrorMessage(compatibilityErrorMsg);
-        } else if (componentNameLength == 0) {
+        } else if (componentNameLength == 0 && !defaultName) {
             setErrorMessage(Messages.NewCAPDialogEmptyCompName);
         } else if (defaultName) {
             setErrorMessage(NLS.bind(Messages.NewCAPDialogReservedCompName, 

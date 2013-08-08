@@ -33,6 +33,9 @@ public interface IRecordListener extends EventListener {
      *      successfully be created.
      * @param ci
      *      ComponentIdentifier
+     * @param hasDefaultMapping
+     *      if the cap which is recorded has not component name
      */
-    public void capRecorded(ICapPO newCap, IComponentIdentifier ci);
+    public void capRecorded(ICapPO newCap, IComponentIdentifier ci,
+            boolean hasDefaultMapping);
 }

@@ -110,7 +110,9 @@ public abstract class AbstractCapTestCommand implements ICommand {
                 + (ci == null ? "(none)" : ci.getComponentClassName())); //$NON-NLS-1$
         }
         try {
-            Validate.notNull(ci);
+            if (!messageCap.hasDefaultMapping()) {
+                Validate.notNull(ci);
+            }
             // FIXME : Extra handling for waitForComponent and verifyExists
             int timeout = 500;
             
@@ -127,10 +129,16 @@ public abstract class AbstractCapTestCommand implements ICommand {
                         + "Using default value.", e); //$NON-NLS-1$
                 }
             }
-            Object component = findComponent(ci, timeout);
-            implClass = AUTServerConfiguration.getInstance()
-                .prepareImplementationClass(component, component.getClass());
+            if (!messageCap.hasDefaultMapping()) {
+                Object component = findComponent(ci, timeout);
+                implClass = AUTServerConfiguration.getInstance()
+                        .prepareImplementationClass(component,
+                                component.getClass());
 
+            } else {
+                implClass = AUTServerConfiguration.getInstance()
+                     .getImplementationClass(ci.getComponentClassName());
+            }
             if (isWaitForComponent) {
                 MessageParam delayParam = (MessageParam)messageCap.
                         getMessageParams().get(1);

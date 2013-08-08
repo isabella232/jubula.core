@@ -235,6 +235,47 @@ public class AUTServerConfiguration {
             implClassName = (String)m_implClassNames.get(
                 currentClass.getName());
         }
+        return createInstance(componentClass.getName(), implClassName,
+                currentClass.getClassLoader());
+    }
+    
+    /**
+     * Returns an instance of the implementation class for
+     * <code>componentClassName</code>.
+     * 
+     * @param componentClassName
+     *            the class name of the component, e.g javax.swing.JButton
+     * @throws UnsupportedComponentException
+     *             If the <code>componentClassName</code> has no registered
+     *             implementation class.
+     * @throws IllegalArgumentException
+     *             if the <code>componentClassName</code> is <code>null</code>.
+     * @return An instance of the implementation class.
+     */
+    public Object getImplementationClass(String componentClassName) 
+        throws UnsupportedComponentException, 
+        IllegalArgumentException {
+        Validate.notNull(componentClassName);
+        String implClassName = (String)m_implClassNames.get(
+            componentClassName);
+        return createInstance(componentClassName, implClassName, null);
+    }
+    
+    /**
+     * 
+     * @param componentClassName
+     *            the class name of the component
+     * @param implClassName
+     *            the tester class name of the component
+     * @param classLoader
+     *            the classloader which should be used
+     * @return an instance of the tester class, either from the cache or newly
+     *         instantiated
+     * @throws UnsupportedComponentException
+     */
+    private Object createInstance(String componentClassName,
+        String implClassName, ClassLoader classLoader)
+        throws UnsupportedComponentException {
         if (implClassName != null) {
             Class implClass = null;
             Object implInstance = m_implClassCache.get(implClassName);
@@ -246,10 +287,10 @@ public class AUTServerConfiguration {
                     log.debug("Loading ImplementationClass: "  //$NON-NLS-1$
                         + "'" + String.valueOf(implClassName) + "'"  //$NON-NLS-1$ //$NON-NLS-2$
                         + " with ClassLoader: " //$NON-NLS-1$
-                        + "'" + String.valueOf(currentClass.getClassLoader()) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+                        + "'" + String.valueOf(classLoader) + "'"); //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 implClass = loadImplementationClass(implClassName, 
-                    currentClass.getClassLoader());
+                        classLoader);
                 implInstance = implClass.newInstance();
                 if (!m_implClassCache.containsKey(implClassName)) {
                     m_implClassCache.put(implClassName, implInstance);
@@ -267,7 +308,7 @@ public class AUTServerConfiguration {
             } catch (ClassNotFoundException cnfe) {
                 log.error(cnfe);
                 throw new UnsupportedComponentException(
-                    "component '" + componentClass.getName() //$NON-NLS-1$
+                    "component '" + componentClassName //$NON-NLS-1$
                     + "' is not supported: implementation class '" //$NON-NLS-1$
                     + implClassName
                     + "' not found", MessageIDs.E_COMPONENT_UNSUPPORTED); //$NON-NLS-1$
@@ -275,8 +316,8 @@ public class AUTServerConfiguration {
             return implInstance;
         }
         throw new UnsupportedComponentException(
-            "component '" + componentClass.getName() //$NON-NLS-1$
-            + "' is not supported", MessageIDs.E_COMPONENT_UNSUPPORTED); //$NON-NLS-1$
+                "component '" + componentClassName //$NON-NLS-1$
+                + "' is not supported", MessageIDs.E_COMPONENT_UNSUPPORTED); //$NON-NLS-1$
     }
 
     /**

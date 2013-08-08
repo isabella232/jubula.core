@@ -54,7 +54,7 @@ public class FindNodesForComponentNameOp
             INodePO node, boolean alreadyVisited) {
         if (Persistor.isPoSubclass(node, ICapPO.class)) {
             ICapPO cap = (ICapPO)node;
-            if (cap.getComponentName().equals(getCompNameGuid())) {
+            if (getCompNameGuid().equals(cap.getComponentName())) {
                 getNodes().add(cap);
             }
         } else if (Persistor.isPoSubclass(node, IExecTestCasePO.class)) {

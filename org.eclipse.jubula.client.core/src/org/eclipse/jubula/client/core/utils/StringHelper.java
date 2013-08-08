@@ -27,7 +27,6 @@ import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
 import org.eclipse.jubula.tools.xml.businessmodell.ValueSetElement;
 
@@ -111,18 +110,6 @@ public class StringHelper {
                     String value = CompSystemI18n.getString(compType);
                     m_map.put(compType, value);
                     m_map.put(value, compType);
-                }
-            }
-            if (component.isConcrete()) {
-                ConcreteComponent cc = (ConcreteComponent)component;
-                if (cc.hasDefaultMapping()) {
-                    String logicalName = cc.getDefaultMapping()
-                        .getLogicalName();
-                    if (!m_map.containsKey(logicalName)) {
-                        String value = CompSystemI18n.getString(logicalName);
-                        m_map.put(logicalName, value);
-                        m_map.put(value, logicalName);
-                    }
                 }
             }
             final List<Action> actions = component.getActions();

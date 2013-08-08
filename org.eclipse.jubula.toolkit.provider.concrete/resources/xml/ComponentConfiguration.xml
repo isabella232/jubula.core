@@ -14,11 +14,7 @@
 		<minorVersion>6</minorVersion>
 	</configVersion>
 	
-	<concreteComponent type="guidancer.concrete.GraphicApplication">
-		<defaultMapping logicalName="CompSystem.LogicalApplicationName"
-			technicalName="Application">
-			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
-		</defaultMapping>
+	<concreteComponent type="guidancer.concrete.GraphicApplication" hasDefaultMapping="true">
 		<action name="CompSystem.ClickInActiveWindow" changed="1.27">
 			<method>rcClickDirect</method>
 			<param name="CompSystem.ClickCount">
@@ -458,10 +454,7 @@
 		<realizes>guidancer.abstract.ButtonComp</realizes>
 	</concreteComponent>
 
-	<concreteComponent type="guidancer.concrete.MenuBar">
-		<defaultMapping technicalName="Menu" logicalName="CompSystem.LogicalMenuName">
-			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
-		</defaultMapping>
+	<concreteComponent type="guidancer.concrete.MenuBar" hasDefaultMapping="true">
 		<action name="CompSystem.SelectMenuItem" changed="1.12">
 			<method>selectMenuItem</method>
 			<param name="CompSystem.MenuPath">

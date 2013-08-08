@@ -40,7 +40,10 @@ public class MessageCap {
 
     /** the resolved(possibly overwritten) logical name */
     private String m_resolvedLogicalName;
-
+    
+    /** if there is no graphical component for this cap*/
+    private boolean m_hasDefaultMapping = false;
+    
     /**
      * full qualified name of the command class to execute after test execution
      * in TestExecution
@@ -190,5 +193,19 @@ public class MessageCap {
      */
     public void setPostExecutionCommand(String postExecutionCommand) {
         m_postExecutionCommand = postExecutionCommand;
+    }
+    
+    /**
+     * @return if there is not component for this cap
+     */
+    public boolean hasDefaultMapping() {
+        return m_hasDefaultMapping;
+    }
+
+    /**
+     * @param hasDefaultMapping if there is not component for this cap
+     */
+    public void sethasDefaultMapping(boolean hasDefaultMapping) {
+        this.m_hasDefaultMapping = hasDefaultMapping;
     }
 }

@@ -56,7 +56,8 @@ public class CheckIfComponentNameIsReusedOp
 //        if (Persistor.isPoSubclass(node, ICapPO.class)) {
         if (node instanceof ICapPO) {
             ICapPO cap = (ICapPO)node;
-            if (cap.getComponentName().equals(m_compNameGuid)) {
+            if (cap.getComponentName() != null 
+                    && cap.getComponentName().equals(m_compNameGuid)) {
                 m_isReused = true;
                 ctx.setContinued(false);
                 return false;

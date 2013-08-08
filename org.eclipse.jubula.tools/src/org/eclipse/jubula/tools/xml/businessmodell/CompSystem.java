@@ -80,9 +80,6 @@ public class CompSystem {
     /** A List of all DataTypes */
     private Set m_dataTypes = null;
     
-    /** All Component Names wich have a default mapping (Name => Type) */
-    private Map m_defaultMappingNames = null;
-
     /** Default constructor */
     public CompSystem() {
         init();
@@ -547,7 +544,6 @@ public class CompSystem {
             handleDepender(component);
         }
         validateComponents();
-        collectDefaultMappingNames();
         
         for (Iterator it = getAbstractComponents().iterator(); it.hasNext();) {
             Component component = (Component)it.next();
@@ -675,31 +671,6 @@ public class CompSystem {
      */
     public ConfigVersion getConfigVersion() {
         return m_configVersion;
-    }
-    
-    /**
-     * Collects all default mapping logical names.
-     */
-    private void collectDefaultMappingNames() {
-        m_defaultMappingNames = new HashMap();
-        final List concreteComponents = getConcreteComponents();
-        for (Iterator it = concreteComponents.iterator(); it.hasNext();) {
-            final ConcreteComponent concComp = (ConcreteComponent)it.next();
-            if (concComp.hasDefaultMapping()) {
-                final String technicalName = concComp.getDefaultMapping()
-                    .getTechnicalName();
-                final String componentType = concComp.getType();
-                m_defaultMappingNames.put(technicalName, componentType);
-            }
-        }
-    }
-    
-    /**
-     * 
-     * @return the default mapping logical names.
-     */
-    public final Map getDefaultMappingNames() {
-        return m_defaultMappingNames;
     }
     
     /**

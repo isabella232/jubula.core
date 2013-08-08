@@ -12,10 +12,8 @@ package org.eclipse.jubula.client.core.businessprocess;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -59,7 +57,6 @@ import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -147,15 +144,11 @@ public class ComponentNamesBP
     /** The singleton instance */
     private static ComponentNamesBP instance = null;
     
-    /** all default Names */
-    private Map<ConcreteComponent, String> m_defaultNames = 
-        new HashMap<ConcreteComponent, String>();
-    
     /**
      * Singleton Constructor.
      */
     private ComponentNamesBP() {
-        initDefaultNames();
+        //
         
     }
     
@@ -562,12 +555,6 @@ public class ComponentNamesBP
         }
 
         CompSystem compSystem = ComponentBuilder.getInstance().getCompSystem();
-        if (compSystem.getDefaultMappingNames().containsKey(componentName)) {
-            // Default mapping cannot change, no need to perform 
-            // the computation.
-            return 
-                (String)compSystem.getDefaultMappingNames().get(componentName);
-        }
         Set<Component> components = new HashSet<Component>();
         for (String compType : types) {
             Component comp = compSystem.findComponent(compType);
@@ -645,13 +632,7 @@ public class ComponentNamesBP
     public String isCompatible(String originalCompType, String checkableName,
             IComponentNameMapper compNameMapper, Long projectId,
             boolean isSimpleMatch) {
- 
-        if (isReservedName(checkableName, originalCompType)) {
-            return MessageIDs.getMessageObject(
-                MessageIDs.E_RESERVED_COMP_NAME).getMessage(
-                    new Object[] {checkableName});
-        }
-        
+         
         IComponentNameCache compNameCache = compNameMapper.getCompNameCache();
         
         Set<IComponentNameData> componentNameDataSet = 
@@ -743,41 +724,7 @@ public class ComponentNamesBP
         return isCompatible(originalCompType, checkableName, compNameMapper,
                 projectId, false);
 
-    }
-    
-    /**
-     * @param name comp name to check
-     * @param componentType The type for the component
-     * @return true, if given name is a reserved comp name
-     */
-    private boolean isReservedName(String name, String componentType) {
-        if (m_defaultNames.values().contains(name)) {
-            CompSystem compSystem = 
-                ComponentBuilder.getInstance().getCompSystem();
-            Component comp = compSystem.findComponent(componentType);
-            if (comp instanceof ConcreteComponent) {
-                return !name.equals(m_defaultNames.get(comp));
-            }
-            
-            return true;
-        }
-        return false;
-    }
-    
-    /**
-     * initializes a list with all defaultNames
-     */
-    private void initDefaultNames() {
-        m_defaultNames.clear();
-        for (Object o : ComponentBuilder.getInstance().getCompSystem()
-                .getConcreteComponents()) {
-            ConcreteComponent c = (ConcreteComponent)o;
-            if (c.hasDefaultMapping()) {
-                m_defaultNames.put(c, StringHelper.getInstance().get(
-                    c.getDefaultMapping().getLogicalName(), true));
-            }
-        }
-    }
+    }    
     
     /**
      * Gets the Component with the given typeName.

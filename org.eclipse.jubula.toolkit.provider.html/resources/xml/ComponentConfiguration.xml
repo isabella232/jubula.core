@@ -237,20 +237,12 @@
             <property name="selector" value="input[type=image]" />
         </componentClass>
 	</toolkitComponent>
-	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.GraphicApplication" visible="false">
-		<defaultMapping logicalName="CompSystem.LogicalApplicationName"
-			technicalName="Application">
-			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
-		</defaultMapping>
+	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.GraphicApplication" visible="false" hasDefaultMapping="true">
 		<realizes>guidancer.concrete.GraphicApplication</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.HtmlApplicationImplClass</testerClass>
         <componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.GraphicApplication" />
 	</toolkitComponent>
-    <toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.WebBrowser" visible="true">
-		<defaultMapping logicalName="CompSystem.LogicalHtmlApplicationName"
-			technicalName="Browser">
-			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
-		</defaultMapping>
+    <toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.WebBrowser" visible="true" hasDefaultMapping="true">
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.HtmlApplicationImplClass</testerClass>
 		<componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.WebBrowser" />
 		<action name="html.BrowserGotoAction" changed="1.0">
@@ -296,10 +288,7 @@
             </param>        
         </action>
 	</toolkitComponent>
-	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" visible="false">
-		<defaultMapping technicalName="Menu" logicalName="CompSystem.LogicalMenuName">
-			<typeFactory>org.eclipse.jubula.rc.common.components.DefaultComponentFactory</typeFactory>
-		</defaultMapping>
+	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" visible="false" hasDefaultMapping="true">
 		<realizes>guidancer.concrete.MenuBar</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.HtmlMenuBarImplClass</testerClass>
 		<componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" />

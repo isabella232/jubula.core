@@ -146,6 +146,8 @@ import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
 import org.eclipse.jubula.tools.objects.MonitoringValue;
+import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
@@ -519,15 +521,18 @@ class XmlImporter {
             }
             final String name = compName.getCompName();
             final String type = compName.getCompType();
-            final String creationContext = compName.getCreationContext();
-            final CompNameCreationContext ctx = CompNameCreationContext
-                .forName(creationContext);
-            final IComponentNamePO componentNamePO = PoMaker
-                .createComponentNamePO(guid, name, type, ctx, proj.getId());
-            componentNamePO.setReferencedGuid(compName.getRefGuid());
-            createdCompNames.add(componentNamePO);
-            compNameCache.addComponentNamePO(
-                    componentNamePO);
+            if (!componentHasDefaultMapping(type)) {
+                
+                final String creationContext = compName.getCreationContext();
+                final CompNameCreationContext ctx = CompNameCreationContext
+                    .forName(creationContext);
+                final IComponentNamePO componentNamePO = PoMaker
+                    .createComponentNamePO(guid, name, type, ctx, proj.getId());
+                componentNamePO.setReferencedGuid(compName.getRefGuid());
+                createdCompNames.add(componentNamePO);
+                compNameCache.addComponentNamePO(
+                        componentNamePO);
+            }
         }
         
         if (assignNewGuid) {
@@ -1207,15 +1212,18 @@ class XmlImporter {
     private ICapPO createCap(IProjectPO proj, Cap xml, boolean assignNewGuid) {
 
         final ICapPO cap;
-        
+        String componentname = xml.getComponentName();
+        if (componentHasDefaultMapping(xml.getComponentType())) {
+            componentname = null;
+        }
         if (xml.getGUID() != null && !assignNewGuid) {
             // GUID is available
             cap = NodeMaker.createCapPO(
-                xml.getName(), xml.getComponentName(), xml.getComponentType(), 
+                xml.getName(), componentname, xml.getComponentType(), 
                 xml.getActionName(), proj, xml.getGUID());
         } else {
             cap = NodeMaker.createCapPO(xml.getName(), 
-                xml.getComponentName(), xml.getComponentType(), 
+                componentname, xml.getComponentType(), 
                 xml.getActionName(), proj);
         }
         cap.setDataFile(xml.getDatafile());
@@ -2169,5 +2177,20 @@ class XmlImporter {
         }
     }
     
+    /**
+     * 
+     * @param componentType
+     *            component type name
+     * @return true if the component has a default mapping and therefore has no
+     *         component name
+     */
+    private boolean componentHasDefaultMapping(String componentType) {
+        Component component = ComponentBuilder.getInstance()
+                .getCompSystem().findComponent(componentType);
+        if (component.isConcrete()) {
+            return ((ConcreteComponent)component).hasDefaultMapping();
+        }        
+        return false;
+    }
 
 }

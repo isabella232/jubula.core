@@ -186,7 +186,8 @@ public class CAPRecordedCommand implements ICommand {
         ICapPO cap = buildCapPO(messageCap, compType);
         // GUI updates
         if (recordListener != null) {
-            recordListener.capRecorded(cap, messageCap.getCi());
+            recordListener.capRecorded(cap, messageCap.getCi(),
+                    messageCap.hasDefaultMapping());
         }
     }
     
@@ -198,17 +199,18 @@ public class CAPRecordedCommand implements ICommand {
      *         not be created.
      */
     private ICapPO buildCapPO(MessageCap messageCap, String componentType) {
-        String componentName;
+        String componentName = null;
         boolean isAppAction = isApplication(componentType);
         if (isAppAction) {
-            componentName = messageCap.getCi().generateLogicalName();
+            componentName = null;
         } else {
             componentName = getOrCreateLogicalName(messageCap);
         }
         String actionName = messageCap.getAction().getName();
         String capName = null;
         capName = CompSystemI18n.getString(actionName);
-        if (isAppAction || messageCap.isWebObservOld()) {
+        if (isAppAction || messageCap.isWebObservOld() 
+                || messageCap.hasDefaultMapping()) {
             capName = CompSystemI18n.getString(actionName);
         } else {
             capName = CompSystemI18n.getString(actionName);
@@ -228,10 +230,13 @@ public class CAPRecordedCommand implements ICommand {
         // mapper doesn't remove the instance of reuse 
         // for <code>componentName</code>.
         recCap.setComponentName(null);
+        
         try {
-            ComponentNamesBP.getInstance().setCompName(
-                    recCap, componentName, 
-                    CompNameCreationContext.STEP, compNamesMapper);
+            if (!messageCap.hasDefaultMapping()) {
+                ComponentNamesBP.getInstance().setCompName(
+                        recCap, componentName, 
+                        CompNameCreationContext.STEP, compNamesMapper);
+            }
         } catch (IncompatibleTypeException e) {
             // Should not happen, but if it does, return null to indicate that 
             // the cap was not created successfully.

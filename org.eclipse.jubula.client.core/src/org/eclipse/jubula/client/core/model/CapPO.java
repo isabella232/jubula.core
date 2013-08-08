@@ -30,6 +30,7 @@ import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
 
 
@@ -181,9 +182,18 @@ class CapPO extends ParamNodePO implements ICapPO {
     private void validateCAP(String capName, String componentName,
             String componentType, String actionName) {
         Validate.notEmpty(capName, Messages.MissingNameForCapPO);
-        Validate
+        CompSystem compsys = ComponentBuilder.getInstance().getCompSystem();
+        Component comp = compsys.findComponent(componentType);
+        boolean hasDefaultMapping = false;
+        if (comp.isConcrete()) {
+            ConcreteComponent cc = (ConcreteComponent) comp;
+            hasDefaultMapping = cc.hasDefaultMapping();
+        }
+        if (!hasDefaultMapping) {
+            Validate
                 .notEmpty(componentName, 
-                    Messages.MissingComponentNameForComponent);
+                    Messages.MissingComponentNameForComponent);            
+        }
         Validate
                 .notEmpty(componentType, 
                         Messages.MissingComponentNameForComponent);

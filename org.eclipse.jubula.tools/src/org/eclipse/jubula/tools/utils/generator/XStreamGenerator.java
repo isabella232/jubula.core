@@ -16,7 +16,6 @@ import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.ComponentClass;
 import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
-import org.eclipse.jubula.tools.xml.businessmodell.DefaultMapping;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
 import org.eclipse.jubula.tools.xml.businessmodell.ParamValueSet;
 import org.eclipse.jubula.tools.xml.businessmodell.Property;
@@ -78,8 +77,8 @@ public class XStreamGenerator {
         stream.alias("concreteComponent", ConcreteComponent.class); //$NON-NLS-1$
         stream.aliasField("type", ConcreteComponent.class, "m_type"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("testerClass", ConcreteComponent.class, "m_testerClass"); //$NON-NLS-1$ //$NON-NLS-2$           
-        stream.aliasField("defaultMapping", ConcreteComponent.class, "m_defaultMapping"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("visible", ConcreteComponent.class, "m_visible"); //$NON-NLS-1$ //$NON-NLS-2$
+        stream.aliasField("hasDefaultMapping", ConcreteComponent.class, "m_hasDefaultMapping"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("observable", ConcreteComponent.class, "m_observable"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("changed", ConcreteComponent.class, "m_changed"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("deprecated", ConcreteComponent.class, "m_deprecated"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -92,12 +91,7 @@ public class XStreamGenerator {
         stream.alias("property", Property.class); //$NON-NLS-1$
         stream.aliasField("name", Property.class, "m_name"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("value", Property.class, "m_value"); //$NON-NLS-1$ //$NON-NLS-2$
-        
-        stream.alias("defaultMapping", DefaultMapping.class); //$NON-NLS-1$
-        stream.aliasField("typeFactory", DefaultMapping.class, "m_typeFactory"); //$NON-NLS-1$ //$NON-NLS-2$
-        stream.aliasField("logicalName", DefaultMapping.class, "m_logicalName"); //$NON-NLS-1$ //$NON-NLS-2$
-        stream.aliasField("technicalName", DefaultMapping.class, "m_technicalName"); //$NON-NLS-1$ //$NON-NLS-2$
-     
+             
         aliasActionClass(stream);
         stream.addImplicitCollection(Action.class, "m_params", "param", Param.class); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("name", Param.class, "m_name"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -128,7 +122,7 @@ public class XStreamGenerator {
             new String[] {"m_type", "m_visible", "m_observable", "m_changed", "m_deprecated"}));  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
             ConcreteComponent.class, 
-            new String[] {"m_type", "m_visible", "m_observable", "m_changed", "m_deprecated"}));  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+            new String[] {"m_type", "m_visible", "m_observable", "m_changed", "m_deprecated", "m_hasDefaultMapping"}));  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
             Action.class, 
             new String[] {"m_name", "m_clientAction", "m_deprecated", "m_changed"})); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ 
@@ -137,9 +131,6 @@ public class XStreamGenerator {
             Param.class, "m_name")); //$NON-NLS-1$
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
                 ParamValueSet.class, "m_isCombinable")); //$NON-NLS-1$
-        stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
-            DefaultMapping.class, new String[] { "m_logicalName", //$NON-NLS-1$
-                "m_technicalName" })); //$NON-NLS-1$
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
             ValueSetElement.class, new String[] { "m_name", "m_value" }));  //$NON-NLS-1$//$NON-NLS-2$        
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,

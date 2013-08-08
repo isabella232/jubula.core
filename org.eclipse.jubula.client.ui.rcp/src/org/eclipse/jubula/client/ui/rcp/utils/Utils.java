@@ -428,7 +428,7 @@ public class Utils {
                     : exec.getSpecTestCase().getUnmodifiableNodeList()) {
                 if (node instanceof ICapPO) {
                     ICapPO cap = (ICapPO)node;
-                    if (cap.getComponentName().equals(name)) {
+                    if (name.equals(cap.getComponentName())) {
                         return cap.getComponentType();
                     }
                 } else if (node instanceof IExecTestCasePO) {

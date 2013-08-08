@@ -42,9 +42,7 @@ import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.components.AUTHierarchy;
 import org.eclipse.jubula.rc.common.components.HierarchyContainer;
-import org.eclipse.jubula.rc.common.components.IComponentFactory;
 import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
-import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swing.SwingAUTServer;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
@@ -184,27 +182,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
         // addToHierarchy
         addToHierarchyDown(getHierarchyContainer(window), window);
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void addToHierarchy(IComponentFactory factory, String componentName,
-        String technicalName) throws UnsupportedComponentException {
         
-        Component component = (Component)factory.createComponent(componentName);
-        // don't add, if in hierarchy map yet
-        if (getRealMap().get(component) != null) {
-            return;
-        }
-        if (getHierarchyContainer(component) != null) {
-            return;
-        }
-        SwingComponent comp = new SwingComponent(component);
-        SwingHierarchyContainer container = new SwingHierarchyContainer(comp);
-        container.setName(technicalName, true);
-        addToHierachyMap(container);
-    }
-    
     /**
      * Removes the given window from the hierarchy.
      * @param window the window to remove.
@@ -359,7 +337,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
             if (window != null && window.isShowing() && !window.isActive()) {
                 window.toFront();
             }
-            return comp; 
+            return comp;
         }
         throw new ComponentNotManagedException(
             "unmanaged component with identifier: '" //$NON-NLS-1$

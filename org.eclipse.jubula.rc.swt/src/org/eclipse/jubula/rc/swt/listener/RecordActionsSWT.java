@@ -719,6 +719,8 @@ public class RecordActionsSWT {
             
             if (!(logName.equals("default"))) { //$NON-NLS-1$
                 messageCap.setLogicalName(logName);
+            } else {
+                messageCap.sethasDefaultMapping(true);
             }
             
             messageCap.setExtraMessage(extraMsg);

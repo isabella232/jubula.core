@@ -42,7 +42,6 @@ import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.PopupCompNameTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.factory.TestDataControlFactory;
@@ -309,36 +308,7 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
             if (comp.isConcrete()) {
                 final ConcreteComponent concrete = (ConcreteComponent)comp;
                 if (concrete.hasDefaultMapping()) {
-                    ComponentNameController cnc = new ComponentNameController();
-                    final String logicalName = StringHelper.getInstance().get(
-                        concrete.getDefaultMapping().getLogicalName(), true);
-
-                    final IEditorPart activeEditor = Plugin.getActiveEditor();
-                    // FIXME zeb This looks like a workaround for something
-                    // unnecessary. We should see if we can handle this default
-                    // mapping situation in a more elegant way.
-                    if (activeEditor instanceof IJBEditor
-                            && ((IJBEditor)activeEditor).getEditorHelper()
-                                .getEditSupport().getWorkVersion() 
-                                    == capPO.getParentNode()) {
-                        IWritableComponentNameMapper mapper = 
-                            ((IJBEditor)activeEditor).getEditorHelper()
-                                .getEditSupport().getCompMapper();
-                        try {
-                            ComponentNamesBP.getInstance().setCompName(capPO, 
-                                    logicalName, CompNameCreationContext.STEP, 
-                                    mapper);
-                            cnc.setProperty(logicalName);
-                            pd = new JBPropertyDescriptor(
-                                    cnc, P_ELEMENT_DISPLAY_COMPNAME);
-                        } catch (IncompatibleTypeException e) {
-                            ErrorHandlingUtil.createMessageDialog(
-                                    e, e.getErrorMessageParams(), null);
-                        } catch (PMException pme) {
-                            PMExceptionHandler.handlePMExceptionForEditor(
-                                    pme, (IJBEditor)activeEditor);
-                        }
-                    }
+                    return null;
                 } 
             }
             if (pd == null) {
@@ -405,7 +375,10 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
         // Component Type
         addPropertyDescriptor(getCompTypePropDesc());
         // Component Name
-        addPropertyDescriptor(getCompNamePropDesc());
+        IPropertyDescriptor propdesc = getCompNamePropDesc();
+        if (propdesc != null) {            
+            addPropertyDescriptor(getCompNamePropDesc());
+        }
         // Action Type
         addPropertyDescriptor(getActionPropDesc());
         // Parameters

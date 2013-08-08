@@ -101,22 +101,6 @@ public abstract class AUTHierarchy {
     }
     
     /**
-     * This method may be used for a component with a default mapping. It
-     * creates a component instance using the passed factory, creates a new
-     * <code>SwingHierarchyContainer</code> and adds the container to the internal
-     * hierarchy map. The technical name is set as the name property of the
-     * <code>SwingHierarchyContainer</code>.
-     * @param factory The factory to create a new component
-     * @param componentName The name of the component to create
-     * @param technicalName The technical name of the component
-     * @throws UnsupportedComponentException If the factory fails creating the component
-     */
-    public abstract void addToHierarchy(IComponentFactory factory, 
-            String componentName,
-            String technicalName) 
-        throws UnsupportedComponentException;
-    
-    /**
      * returns an array of all component identifier of (supported) components,
      * which are currently instantiated by the AUT.
      * @attention synchronized in subclasses!!!

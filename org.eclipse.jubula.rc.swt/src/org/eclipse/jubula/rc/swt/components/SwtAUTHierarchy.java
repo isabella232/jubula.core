@@ -28,9 +28,7 @@ import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.components.AUTHierarchy;
 import org.eclipse.jubula.rc.common.components.HierarchyContainer;
-import org.eclipse.jubula.rc.common.components.IComponentFactory;
 import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
-import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
@@ -137,27 +135,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
         addToHierarchyDown(hierarchyWindow, window);
         
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void addToHierarchy(IComponentFactory factory, String componentName,
-        String technicalName) throws UnsupportedComponentException {
         
-        Widget component = (Widget)factory.createComponent(componentName);
-        // don't add, if in hierarchy map yet
-        if (getRealMap().get(component) != null) {
-            return;
-        }
-        if (getHierarchyContainer(component) != null) {
-            return;
-        }
-        SwtComponent comp = new SwtComponent(component);
-        SwtHierarchyContainer container = new SwtHierarchyContainer(comp);
-        container.setName(technicalName, true);
-        addToHierachyMap(container);
-    }
-    
     /**
      * Removes the given window from the hierarchy.
      * 

@@ -33,6 +33,10 @@ import org.eclipse.jubula.client.ui.rcp.dialogs.NewCAPDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
+import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -106,13 +110,19 @@ public class NewCAP extends AbstractSelectionBasedHandler {
             capName, componentName, componentType, action);
         final IWritableComponentNameMapper compMapper = 
             tse.getEditorHelper().getEditSupport().getCompMapper(); //###BLA
+        CompSystem compSystem = ComponentBuilder.getInstance()
+                .getCompSystem();
+        Component comp = compSystem.findComponent(componentType);
         try {
             // Set the Component Name to null so that the Component Name 
             // mapper doesn't remove the instance of reuse 
             // for <code>componentName</code>.
             cap.setComponentName(null);
-            ComponentNamesBP.getInstance().setCompName(cap, componentName, 
-                    CompNameCreationContext.STEP, compMapper);
+            if (comp instanceof ConcreteComponent
+                    && !((ConcreteComponent) comp).hasDefaultMapping()) {
+                ComponentNamesBP.getInstance().setCompName(cap, componentName,
+                        CompNameCreationContext.STEP, compMapper);
+            }
             workTC.addNode(position, cap);
             tse.getEditorHelper().setDirty(true);
             DataEventDispatcher.getInstance().fireDataChangedListener(cap, 

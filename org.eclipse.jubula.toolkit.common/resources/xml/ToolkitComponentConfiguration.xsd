@@ -27,7 +27,6 @@
 	<xs:element name="toolkitComponent">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element minOccurs="0" ref="defaultMapping" />
 				<xs:element minOccurs="0" maxOccurs="unbounded" ref="realizes" />
 				<xs:element minOccurs="0" maxOccurs="unbounded" ref="extends" />
 				<xs:element ref="testerClass" />
@@ -43,6 +42,14 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:attribute>
+			<xs:attribute name="hasDefaultMapping" default="false">
+                <xs:simpleType>
+                    <xs:restriction base="xs:token">
+                        <xs:enumeration value="true"/>
+                        <xs:enumeration value="false"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
 			<xs:attribute name="observable" default="true">
 				<xs:simpleType>
 					<xs:restriction base="xs:token">
@@ -103,29 +110,36 @@
 		</xs:complexType>
 	</xs:element>
     <xs:element name="concreteComponent">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" ref="defaultMapping"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="realizes"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="extends"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="action"/>
-      </xs:sequence>
-      <xs:attribute name="type" use="required" type="xs:ID"/>
-      <xs:attribute name="visible" default="true">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="true"/>
-            <xs:enumeration value="false"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
-      <xs:attribute name="changed"/>
-      <xs:attribute name="deprecated">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="true"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
-    </xs:complexType>
-  </xs:element></xs:schema>
+	    <xs:complexType>
+	        <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="realizes" />
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="extends" />
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="action" />
+            </xs:sequence>
+	      <xs:attribute name="type" use="required" type="xs:ID"/>
+	      <xs:attribute name="visible" default="true">
+	        <xs:simpleType>
+	          <xs:restriction base="xs:token">
+	            <xs:enumeration value="true"/>
+	            <xs:enumeration value="false"/>
+	          </xs:restriction>
+	        </xs:simpleType>
+	      </xs:attribute>
+	      <xs:attribute name="hasDefaultMapping" default="false">
+	        <xs:simpleType>
+	          <xs:restriction base="xs:token">
+	            <xs:enumeration value="true"/>
+	            <xs:enumeration value="false"/>
+	          </xs:restriction>
+	        </xs:simpleType>
+	      </xs:attribute>
+	      <xs:attribute name="changed"/>
+	      <xs:attribute name="deprecated">
+	        <xs:simpleType>
+	          <xs:restriction base="xs:token">
+	            <xs:enumeration value="true"/>
+	          </xs:restriction>
+	        </xs:simpleType>
+	      </xs:attribute>
+	    </xs:complexType>
+    </xs:element></xs:schema>

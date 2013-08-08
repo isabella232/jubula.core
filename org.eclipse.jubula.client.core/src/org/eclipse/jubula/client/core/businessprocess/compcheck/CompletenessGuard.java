@@ -123,7 +123,6 @@ public final class CompletenessGuard {
             if (metaComponentType instanceof ConcreteComponent
                     && ((ConcreteComponent) metaComponentType)
                             .hasDefaultMapping()) {
-
                 setCompletenessObjectMapping(cap, m_aut, true);
                 return true;
             }

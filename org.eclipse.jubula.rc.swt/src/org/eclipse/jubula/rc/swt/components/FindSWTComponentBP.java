@@ -19,9 +19,6 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Widget;
 
-import com.bredexsw.guidancer.autswtserver.implclasses.GraphicApplication;
-
-
 /**
  * @author BREDEX GmbH
  * @created 19.04.2006
@@ -78,9 +75,6 @@ public class FindSWTComponentBP extends FindComponentBP {
      * {@inheritDoc}
      */
     protected boolean isAvailable(Object currComp) {
-        if (currComp instanceof GraphicApplication) {
-            return true;
-        }
         if (currComp instanceof Control) {
             return !((Control)currComp).isDisposed() 
                 && ((Control)currComp).isVisible();

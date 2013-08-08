@@ -13,6 +13,7 @@ package org.eclipse.jubula.communication.message;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.Profile;
 
@@ -25,7 +26,7 @@ import org.eclipse.jubula.tools.xml.businessmodell.Profile;
  * @author BREDEX GmbH
  * @created 04.10.2004
  */
-public abstract class SendAUTListOfSupportedComponentsMessage extends Message {
+public final class SendAUTListOfSupportedComponentsMessage extends Message {
     /** static version */
     private static final double VERSION = 1.0;
 
@@ -43,7 +44,9 @@ public abstract class SendAUTListOfSupportedComponentsMessage extends Message {
     }
 
     /** {@inheritDoc} */
-    public abstract String getCommandClass();
+    public String getCommandClass() {
+        return CommandConstants.SEND_COMPONENTS_COMMAND;        
+    }
 
     /** @return The list of <code>Component</code> objects. */
     public List getComponents() {

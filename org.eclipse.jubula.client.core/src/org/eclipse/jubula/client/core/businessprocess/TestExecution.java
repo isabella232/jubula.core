@@ -15,12 +15,15 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -97,6 +100,7 @@ import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -108,6 +112,7 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
 import org.eclipse.osgi.util.NLS;
 import org.osgi.framework.Constants;
@@ -757,28 +762,28 @@ public class TestExecution {
             ITestSuitePO ts = (ITestSuitePO)m_trav.getRoot();
             IAUTMainPO aut = ts.getAut();
             IObjectMappingPO om = aut.getObjMap();
-            IObjectMappingPO transientOm = ObjectMappingEventDispatcher.
-                getObjMapTransient();
+            Component comp = compSystem.findComponent(cap.getComponentType());
             // Find the component name. It may be overridden in one or
             // more ExecTestCase nodes.
-            logicalName = m_compNamesBP.findCompName(
-                    m_trav.getExecStackAsNodeList(), cap, 
-                    cap.getComponentName(),
-                    ComponentNamesBP.getInstance()).getCompName();
+            if (!StringUtils.isEmpty(cap.getComponentName())) {
+                logicalName = m_compNamesBP.findCompName(
+                        m_trav.getExecStackAsNodeList(), cap, 
+                        cap.getComponentName(),
+                        ComponentNamesBP.getInstance()).getCompName();
+            }
             messageCap.setResolvedLogicalName(logicalName);
-            IComponentIdentifier technicalName;
+            IComponentIdentifier technicalName = null;
             
-            try {
-                technicalName = transientOm.getTechnicalName(logicalName);
-            } catch (LogicComponentNotManagedException e) {
-                technicalName = om.getTechnicalName(logicalName);
+            technicalName = getTechnicalName(logicalName, aut, comp);
+            if (comp.isConcrete() && ((ConcreteComponent)comp)
+                    .hasDefaultMapping()) {
+                messageCap.sethasDefaultMapping(true);
             }
             if (technicalName == null) {
                 throw new LogicComponentNotManagedException(
                         StringConstants.EMPTY,
                         MessageIDs.E_COMPONENT_NOT_MANAGED);
             }
-            Component comp = compSystem.findComponent(cap.getComponentType());
             Action action = comp.findAction(cap.getActionName());
             messageCap.setMethod(action.getMethod());
             messageCap.setPostExecutionCommand(
@@ -815,6 +820,48 @@ public class TestExecution {
             // handles this exception in this case!
             return null;
         }
+    }
+
+    /**
+     * 
+     * @param logicalName
+     *            guid of the logical name for which to find the technical name
+     * @param aut
+     *            AUT information
+     * @param comp
+     *            component
+     * @return a ComponentIdentifier or null
+     */
+    private IComponentIdentifier getTechnicalName(String logicalName,
+            IAUTMainPO aut,  Component comp) {
+        IObjectMappingPO om = aut.getObjMap();
+        IComponentIdentifier technicalName;
+        try {
+            technicalName = om.getTechnicalName(logicalName);
+        } catch (LogicComponentNotManagedException e) {
+            technicalName = null;
+        }
+        if (technicalName == null && comp instanceof ConcreteComponent) {
+            ConcreteComponent cc = ((ConcreteComponent) comp);
+            if (cc.hasDefaultMapping() && cc.getComponentClass() != null) {
+                Set realizers = cc.getAllRealizers();
+                for (Iterator iterator = realizers.iterator(); iterator
+                        .hasNext();) {
+                    ConcreteComponent concreteComponent = 
+                            (ConcreteComponent) iterator.next();
+                    if (aut.getToolkit().equals(
+                            concreteComponent.getToolkitDesriptor()
+                                    .getToolkitID())) {
+                        technicalName = new ComponentIdentifier();
+                        technicalName
+                                .setComponentClassName(concreteComponent
+                                        .getComponentClass());
+                        break;
+                    }
+                }
+            }
+        }
+        return technicalName;
     }
 
     /**

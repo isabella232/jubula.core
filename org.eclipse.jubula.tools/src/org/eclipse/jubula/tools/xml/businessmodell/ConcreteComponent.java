@@ -34,8 +34,11 @@ public class ConcreteComponent extends Component {
     /** The testerClass of the component. */
     private String m_testerClass;
     
-    /** The default mapping. */
-    private DefaultMapping m_defaultMapping;
+    /**
+     * the information if for this component exists no real component so we are
+     * calling the tester class directly
+     */
+    private boolean m_hasDefaultMapping;
 
     /** @return Returns the testerClass. */
     public String getTesterClass() {
@@ -86,18 +89,10 @@ public class ConcreteComponent extends Component {
     public boolean isConcrete() {
         return true;
     }
-    
-    /**
-     * @return The default mapping or <code>null</code>, if the component has
-     *         not default mapping.
-     */
-    public DefaultMapping getDefaultMapping() {
-        return m_defaultMapping;
-    }
-    
-    /** @return <code>true</code> if the component has a default mapping */
+            
+    /** @return <code>true</code> if the component has no component */
     public boolean hasDefaultMapping() {
-        return m_defaultMapping != null;
+        return m_hasDefaultMapping;
     }
     
     /** @return Returns the componentClass. */

@@ -258,7 +258,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
      * {@inheritDoc}
      */
     public void capRecorded(final ICapPO newCap, 
-        final IComponentIdentifier ci) {
+        final IComponentIdentifier ci, final boolean hasDefaultMapping) {
         
         if (newCap == null) {
             ErrorHandlingUtil.createMessageDialog(
@@ -278,7 +278,8 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                     // recorded action with default mapping not being 
                     // added to objmap
                     if (!ObjectMappingEventDispatcher.
-                            getObjMapTransient().existTechnicalName(ci)) {
+                            getObjMapTransient().existTechnicalName(ci) 
+                            && !hasDefaultMapping) {
                         
                         String capComponentName = 
                             m_objectMappingManager.addMapping(

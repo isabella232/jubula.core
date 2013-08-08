@@ -19,6 +19,7 @@ import org.eclipse.jubula.rc.common.util.NameValidator;
 import org.eclipse.jubula.rc.swt.components.FindSWTComponentBP;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.MappingConstants;
 import org.eclipse.jubula.tools.utils.StringParsing;
@@ -141,18 +142,9 @@ public class RecordHelperSWT {
      */
     protected IComponentIdentifier getMenuCompID() {
         IComponentIdentifier id = null;
-        IComponentIdentifier[] compIDs = ComponentHandler.getAllComponentId();
-        for (int i = 0; i < compIDs.length; i++) {
-            IComponentIdentifier idIter = compIDs[i];
-            if (idIter.getSupportedClassName().equals(
-                    MappingConstants.SWT_MENU_DEFAULT_MAPPING_CLASSNAME)) {
-                
-                id = idIter;
-                id.setComponentClassName(MappingConstants.SWT_MENU_CLASSNAME);
-                id.setSupportedClassName(MappingConstants.SWT_MENU_CLASSNAME);
-                break;
-            }
-        }
+        id = new ComponentIdentifier();
+        id.setSupportedClassName(MappingConstants.SWT_MENU_CLASSNAME);
+        id.setComponentClassName(MappingConstants.SWT_MENU_CLASSNAME);
         return id;
     }
     
@@ -162,52 +154,13 @@ public class RecordHelperSWT {
      */
     protected IComponentIdentifier getApplicationCompID() {
         IComponentIdentifier id = null;
-        IComponentIdentifier[] compIds = 
-            ComponentHandler.getAllComponentId();
-        for (int i = 0; i < compIds.length; i++) {
-            IComponentIdentifier idIter = compIds[i];
-            if (isDefaultMapping(idIter)) {
-                id = idIter;
-                id.setComponentClassName(getDefaultMapping(
-                    id.getSupportedClassName()));
-                break;
-            }
-        }
+        id = new ComponentIdentifier();
+        id.setComponentClassName(MappingConstants
+                .SWT_APPLICATION_COMPONENT_IDENTIFIER);
+        id.setSupportedClassName(MappingConstants.SWT_APPLICATION_CLASSNAME);
         return id;
     }
-    
-    /**
-     * 
-     * @param supportedClassname The name of the class for which to find the 
-     *                           default mapping.
-     * @return a String representing the default mapping for the given 
-     *         supported classname. If no default mapping exists, the classname
-     *         itself will be returned.
-     */
-    private String getDefaultMapping(String supportedClassname) {
-        String mapping = supportedClassname;
         
-        if (MappingConstants.SWT_APPLICATION_CLASSNAME.equals(
-            supportedClassname)) {
-            
-            mapping = MappingConstants.SWT_APPLICATION_COMPONENT_IDENTIFIER;
-        }
-        
-        return mapping;
-    }
-
-    /**
-     * Checks if the given IComponentIdentifier has a Default-Mapping
-     * @param id the IComponentIdentifier to check
-     * @return true in case of Default-Mapping, false otherwise
-     */
-    private boolean isDefaultMapping(IComponentIdentifier id) {
-        final String supportedClassName = id.getSupportedClassName();
-        return supportedClassName.equals(MappingConstants
-            .SWT_APPLICATION_CLASSNAME)
-            || supportedClassName.equals(MappingConstants.SWT_MENU_CLASSNAME);
-    }
-    
     /**
      * get Text of component
      * @param w Widget
@@ -276,7 +229,11 @@ public class RecordHelperSWT {
                 .SWT_MENU_CLASSNAME)) {
             compsList = AUTServerConfiguration.getInstance()
                 .findComponents(
-                        MappingConstants.SWT_MENU_DEFAULT_MAPPING_CLASSNAME);
+                    MappingConstants.SWT_MENU_DEFAULT_MAPPING_CLASSNAME);
+        } else if (id.getSupportedClassName().equals(
+                MappingConstants.SWT_APPLICATION_CLASSNAME)) {
+            compsList = AUTServerConfiguration.getInstance().findComponents(
+                    MappingConstants.SWT_APPLICATION_CLASSNAME);
         } else {
             compsList = AUTServerConfiguration.getInstance()
                 .findComponents(id.getSupportedClassName());            

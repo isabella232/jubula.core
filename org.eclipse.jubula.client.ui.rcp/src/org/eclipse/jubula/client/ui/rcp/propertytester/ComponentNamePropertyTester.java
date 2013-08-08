@@ -15,8 +15,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ComponentNameReuseBP;
-import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
-import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 
 
 /**
@@ -45,9 +43,6 @@ public class ComponentNamePropertyTester extends AbstractBooleanPropertyTester {
         if (property.equals(IS_BEING_USED_PROP)) {
             return testIsBeingUsed(compName);
         }
-        if (property.equals(IS_DEFAULT_MAPPING_PROP)) {
-            return testIsDefaultMapping(compName);
-        }
         return false;
     }
 
@@ -65,19 +60,6 @@ public class ComponentNamePropertyTester extends AbstractBooleanPropertyTester {
                     compName.getGuid());
         }
         return true;
-    }
-
-    /**
-     * @param compName The Component Name to test.
-     * @return <code>true</code> if the Component Name is part of a default 
-     *         mapping (ex. Menu, Application). Otherwise <code>false</code>.
-     */
-    private boolean testIsDefaultMapping(IComponentNamePO compName) {
-
-        String name = compName.getName();
-        CompSystem compSystem = ComponentBuilder.getInstance().getCompSystem();
-        return compSystem.getDefaultMappingNames().containsKey(name);
-        
     }
 
     /** {@inheritDoc} */

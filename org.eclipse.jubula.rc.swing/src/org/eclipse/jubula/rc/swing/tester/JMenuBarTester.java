@@ -122,9 +122,11 @@ public class JMenuBarTester extends AbstractMenuTester {
     /**
      * @return the component
      */
-    public IComponent getComponent() {
-        if (super.getComponent().getRealComponent() instanceof JPopupMenu) {
-            return super.getComponent();
+    public IComponent getComponent() { 
+        IComponent component = super.getComponent();
+        if (component != null && component.getRealComponent() 
+                instanceof JPopupMenu) {
+            return component;
         }
         Window activeWindow = WindowHelper.getActiveWindow();
         if (activeWindow == null) {

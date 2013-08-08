@@ -24,20 +24,7 @@
 			<xs:attribute name="combinable" default="false" use="optional" />
 		</xs:complexType>
 	</xs:element>
-	
-	<xs:element name="defaultMapping">
-    	<xs:complexType>
-      		<xs:complexContent>
-        		<xs:extension base="typeFactory">
-          			<xs:attribute name="logicalName" use="required" type="xs:ID"/>
-          			<xs:attribute name="technicalName" use="required"/>
-        		</xs:extension>
-      		</xs:complexContent>
-    	</xs:complexType>
-	</xs:element>
 
-	<xs:element name="typeFactory" type="xs:string"/>
-	
 	<xs:element name="element">
 		<xs:complexType>
 			<xs:attribute name="name" use="required" />
@@ -76,11 +63,5 @@
 
 	<xs:element name="realizes" type="xs:string"/>
 	<xs:element name="extends" type="xs:string"/>
-
-	<xs:complexType name="typeFactory">
-		<xs:sequence>
-			<xs:element ref="typeFactory"/>
-		</xs:sequence>
-	</xs:complexType>
 
 </xs:schema>
