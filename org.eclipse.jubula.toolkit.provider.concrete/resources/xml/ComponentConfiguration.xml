@@ -452,8 +452,7 @@
 				<defaultValue>900000</defaultValue>
 			</param>
 		<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$ManualTestStepCmd</postExecutionCommand>
-		</action>		<action name="CompSystem.alm.addCommentToTask" changed="1.0">			<method>rcALMaddCommentToTask</method>			<param name="CompSystem.alm.repositoryName">				<type>java.lang.String</type>			</param>			<param name="CompSystem.alm.taskID">				<type>java.lang.String</type>			</param>			<param name="CompSystem.alm.comment">				<type>java.lang.String</type>			</param>			<postExecutionCommand>org.eclipse.jubula.client.alm.rc.AddCommentToTask</postExecutionCommand>		</action>		<action name="CompSystem.alm.createNewTask" changed="1.0">			<method>rcALMcreateNewTask</method>			<param name="CompSystem.alm.repositoryName">				<type>java.lang.String</type>			</param>			<param name="CompSystem.alm.taskProduct">				<type>java.lang.String</type>			</param>			<param name="CompSystem.alm.taskSummary">				<type>java.lang.String</type>			</param>			<param name="CompSystem.alm.taskDescription">				<type>java.lang.String</type>			</param>			<postExecutionCommand>org.eclipse.jubula.client.alm.rc.CreateNewALMTask</postExecutionCommand>		</action>
-	</concreteComponent>
+		</action>	</concreteComponent>
 	
 	<concreteComponent type="guidancer.concrete.Button">
 		<realizes>guidancer.abstract.ButtonComp</realizes>
