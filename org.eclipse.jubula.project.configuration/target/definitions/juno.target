@@ -20,6 +20,8 @@
 <repository id="eclipse-orbit-R20130517111416" location="http://download.eclipse.org/tools/orbit/downloads/drops/R20130517111416/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.core.runtime.compatibility" version="0.0.0"/>
+<unit id="org.eclipse.core.runtime.compatibility.auth" version="0.0.0"/>
 <unit id="org.eclipse.platform.ide" version="0.0.0"/>
 <unit id="org.eclipse.equinox.executable.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.e4.rcp.feature.group" version="0.0.0"/>

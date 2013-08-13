@@ -50,6 +50,10 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
       <import plugin="org.eclipse.search" version="3.6.0" match="compatible"/>
       <import feature="org.eclipse.help"/>
       <import plugin="org.eclipse.equinox.security" version="1.0.0" match="compatible"/>
+      <import feature="org.eclipse.mylyn.commons" version="3.8.0" match="compatible"/>
+      <import feature="org.eclipse.mylyn.context_feature" version="3.8.0" match="compatible"/>
+      <import feature="org.eclipse.mylyn_feature" version="3.8.0" match="compatible"/>
+      <import plugin="org.eclipse.mylyn.help.ui"/>
    </requires>
 
    <plugin
