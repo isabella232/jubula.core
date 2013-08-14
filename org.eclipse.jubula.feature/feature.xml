@@ -486,22 +486,14 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.client.alm.core"
+         id="org.eclipse.jubula.client.alm.mylyn.core"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.client.alm.rc"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.jubula.client.alm.ui"
+         id="org.eclipse.jubula.client.alm.mylyn.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
