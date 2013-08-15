@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ALM - Mylyn Integration Core
+Bundle-Name: Jubula ALM - Mylyn Integration Core
 Bundle-SymbolicName: org.eclipse.jubula.client.alm.mylyn.core;singleton:=true
 Bundle-Version: 2.2.0.qualifier
 Bundle-Activator: org.eclipse.jubula.client.alm.mylyn.core.Activator
