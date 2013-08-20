@@ -15,7 +15,7 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
 import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
 import org.eclipse.jubula.client.ui.rcp.controllers.ContentAssistCellEditor;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractGuiNodePropertySource.AbstractParamValueController;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNodePropertySource.AbstractParamValueController;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.rcp.widgets.ParamProposalProvider;
 import org.eclipse.swt.widgets.Composite;

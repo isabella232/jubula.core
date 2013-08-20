@@ -19,12 +19,35 @@
             id="org.eclipse.jubula.client.alm.ui.commands.createTaskCommand"
             name="Create a Mylyn task">
       </command>
+      <command
+            categoryId="org.eclipse.jubula.client.alm.ui.commands.category"
+            id="org.eclipse.jubula.client.alm.ui.commands.openTaskForNodeCommand"
+            name="Mylyn Task Editor">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
             class="org.eclipse.jubula.client.alm.mylyn.ui.handler.AddTaskHandler"
             commandId="org.eclipse.jubula.client.alm.ui.commands.createTaskCommand">
+      </handler>
+      <handler
+            class="org.eclipse.jubula.client.alm.mylyn.ui.handler.OpenTaskFromNodeHandler"
+            commandId="org.eclipse.jubula.client.alm.ui.commands.openTaskForNodeCommand">
+	      <enabledWhen>
+	        <and>
+	          <iterate
+	            ifEmpty="false"
+	            operator="and">
+	            <or>
+	              <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
+	              <instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
+	              <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
+	            </or>
+	            <test property="org.eclipse.jubula.client.ui.rcp.model.hasTaskId" />
+	          </iterate>
+	        </and>
+	      </enabledWhen>
       </handler>
    </extension>
    <extension
@@ -40,6 +63,22 @@
          point="org.eclipse.ui.menus">
       <menuContribution locationURI="popup:org.eclipse.jubula.client.ui.editors.TestResultViewer?after=additions">
 	      <command commandId="org.eclipse.jubula.client.alm.ui.commands.createTaskCommand" style="push" />
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser.menu.open">
+         <command
+               commandId="org.eclipse.jubula.client.alm.ui.commands.openTaskForNodeCommand"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser.menu.open">
+         <command
+               commandId="org.eclipse.jubula.client.alm.ui.commands.openTaskForNodeCommand"
+               style="push">
+         </command>
       </menuContribution>
    </extension>
    <extension

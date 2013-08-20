@@ -82,7 +82,7 @@ public final class ALMAccess {
      *            the label of the repository
      * @return the task repository or <code>null</code> if not found
      */
-    private static TaskRepository getRepositoryByLabel(String repoLabel) {
+    public static TaskRepository getRepositoryByLabel(String repoLabel) {
         List<TaskRepository> allRepositories = getAllRepositories();
 
         for (TaskRepository repo : allRepositories) {

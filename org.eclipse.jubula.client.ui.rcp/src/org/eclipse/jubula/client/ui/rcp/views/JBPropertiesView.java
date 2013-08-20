@@ -68,7 +68,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractGuiNodePropertySource;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNodePropertySource;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.CapGUIPropertySource.ActionTypeController;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.CapGUIPropertySource.ComponentNameController;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.CapGUIPropertySource.ComponentTypeController;
@@ -237,9 +237,9 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
          * {@inheritDoc}
          */
         public Color getForeground(Object element) {
-            if (m_propSource instanceof AbstractGuiNodePropertySource) {
-                AbstractGuiNodePropertySource guiNodePropSource =
-                    (AbstractGuiNodePropertySource)m_propSource;
+            if (m_propSource instanceof AbstractNodePropertySource) {
+                AbstractNodePropertySource guiNodePropSource =
+                    (AbstractNodePropertySource)m_propSource;
                 if (guiNodePropSource.isReadOnly()) {
                     return LayoutUtil.GRAY_COLOR;
                 }
@@ -876,10 +876,10 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
 
                 if (element instanceof IPropertyDescriptor) {
                     Object propId = ((IPropertyDescriptor)element).getId();
-                    if (m_propSource instanceof AbstractGuiNodePropertySource
+                    if (m_propSource instanceof AbstractNodePropertySource
                             && propId 
                                 instanceof IParameterPropertyController) {
-                        return ((AbstractGuiNodePropertySource)m_propSource)
+                        return ((AbstractNodePropertySource)m_propSource)
                             .isParameterEntryEnabled(
                                 (IParameterPropertyController)propId);
                     }

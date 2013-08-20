@@ -20,7 +20,7 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
  * @author BREDEX GmbH
  * @created 06.12.2005
  */
-public class ProjectGUIPropertySource extends AbstractGuiNodePropertySource {
+public class ProjectGUIPropertySource extends AbstractNodePropertySource {
     /** cached property descriptor for name */
     private IPropertyDescriptor m_namePropDesc = null;
     

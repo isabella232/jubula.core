@@ -204,4 +204,15 @@ public interface INodePO extends ITimestampPO {
      * @return Unmodifiable set of problems.
      */
     public Set<IProblem> getProblems();
+    
+    /**
+     * @return The taskId of this node
+     */
+    public String getTaskId();
+
+    /**
+     * Sets the value of the task Id property.
+     * @param taskId the taskId of this node
+     */
+    public void setTaskId(String taskId);
 }

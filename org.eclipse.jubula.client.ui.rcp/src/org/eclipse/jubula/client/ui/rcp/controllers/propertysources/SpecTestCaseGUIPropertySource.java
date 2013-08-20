@@ -64,12 +64,7 @@ import org.slf4j.LoggerFactory;
  * {@inheritDoc}
  */
 public class SpecTestCaseGUIPropertySource 
-        extends AbstractGuiNodePropertySource {
-    
-    /** Constant for the String TestCase Name */
-    public static final String P_ELEMENT_DISPLAY_NAME =
-        Messages.SpecTestCaseGUIPropertySourceTestCaseName;
-
+        extends AbstractNodePropertySource {
     /** Constant for the String Locked Parameter */
     public static final String P_ELEMENT_DISPLAY_PARAM_LOCKED = 
         Messages.SpecTestCaseGUIPropertySourceLockedParameters;
@@ -132,12 +127,21 @@ public class SpecTestCaseGUIPropertySource
         // TestCase Name
         if (m_namePropDesc == null) {
             m_namePropDesc = new TextPropertyDescriptor(
-                    new ElementNameController(), P_ELEMENT_DISPLAY_NAME);
+                new ElementNameController(),
+                Messages.SpecTestCaseGUIPropertySourceTestCaseName);
         }
         addPropertyDescriptor(m_namePropDesc);
         
         super.initPropDescriptor();
 
+        // Task ID
+        if (getTaskIdPropDesc() == null) {
+            setTaskIdPropDesc(new TextPropertyDescriptor(
+                new TaskIdController(), 
+                Messages.AbstractGuiNodePropertySourceTaskId));
+        }
+        addPropertyDescriptor(getTaskIdPropDesc());
+        
         // Data Source
         addPropertyDescriptor(getDataSourcePropertyDescr(
                 new SpecTestCaseTestDataSourceController(this)));
@@ -223,9 +227,9 @@ public class SpecTestCaseGUIPropertySource
 
         /**
          * contructor
-         * @param s AbstractGuiNodePropertySource
+         * @param s AbstractNodePropertySource
          */
-        public ExternalDataController(AbstractGuiNodePropertySource s) {
+        public ExternalDataController(AbstractNodePropertySource s) {
             super(s);
         }
 
@@ -333,10 +337,10 @@ public class SpecTestCaseGUIPropertySource
         
         /**
          * Constructor
-         * @param s AbstractGuiNodePropertySource
+         * @param s AbstractNodePropertySource
          */
         public SpecTestCaseTestDataSourceController(
-                AbstractGuiNodePropertySource s) {
+                AbstractNodePropertySource s) {
             super(s);
             getDataSource().add(DATA_SOURCE_LOCAL);
             getDataSource().add(DATA_SOURCE_EXCEL);
@@ -456,9 +460,9 @@ public class SpecTestCaseGUIPropertySource
 
         /**
          * contructor
-         * @param s AbstractGuiNodePropertySource
+         * @param s AbstractNodePropertySource
          */
-        public ReferenceTestDataController(AbstractGuiNodePropertySource s) {
+        public ReferenceTestDataController(AbstractNodePropertySource s) {
             super(s);
         }
 
@@ -575,10 +579,10 @@ public class SpecTestCaseGUIPropertySource
         /**
          * Constructor
          * @param paramDescr the Parameter description.
-         * @param s AbstractGuiNodePropertySource
+         * @param s AbstractNodePropertySource
          * @param paramNameMapper the param name mapper
          */
-        public ParameterValueController(AbstractGuiNodePropertySource s, 
+        public ParameterValueController(AbstractNodePropertySource s, 
             IParamDescriptionPO paramDescr, IParamNameMapper paramNameMapper) {
             super(s, paramDescr, paramNameMapper);
         }

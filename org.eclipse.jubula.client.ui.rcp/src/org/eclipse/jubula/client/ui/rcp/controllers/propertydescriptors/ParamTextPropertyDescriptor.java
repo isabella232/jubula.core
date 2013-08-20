@@ -22,7 +22,7 @@ import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.ContentAssistCellEditor;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractGuiNodePropertySource.AbstractParamValueController;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNodePropertySource.AbstractParamValueController;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.rcp.widgets.ParamProposalProvider;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;

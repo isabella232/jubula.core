@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.factory;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -161,7 +162,8 @@ public class ControlFactory {
             displayValues.add(repositoryLabel);
         }
 
-        if (!values.contains(preConfiguredRepositoryName)) {
+        if (StringUtils.isNotBlank(preConfiguredRepositoryName)
+                && !values.contains(preConfiguredRepositoryName)) {
             values.add(preConfiguredRepositoryName);
             displayValues.add(preConfiguredRepositoryName);
         }

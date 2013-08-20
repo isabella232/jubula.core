@@ -121,14 +121,14 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
         /**
          * parent propertysource
          */
-        private AbstractGuiNodePropertySource m_propertySource;
+        private AbstractNodePropertySource m_propertySource;
         
         /**
          * contructor
          * @param s
-         *      AbstractGuiNodePropertySource
+         *      AbstractNodePropertySource
          */
-        public AbstractPropertyController(AbstractGuiNodePropertySource s) {
+        public AbstractPropertyController(AbstractNodePropertySource s) {
             setPropertySource(s);
         }
         /**
@@ -163,7 +163,7 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
          * 
          * @return parent PropertySource
          */
-        public AbstractGuiNodePropertySource getPropertySource() {
+        public AbstractNodePropertySource getPropertySource() {
             return m_propertySource;
         }
         
@@ -172,7 +172,7 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
          * @param propertySource
          * parent PropertySource
          */
-        public void setPropertySource(AbstractGuiNodePropertySource 
+        public void setPropertySource(AbstractNodePropertySource 
             propertySource) {
             m_propertySource = propertySource;
         }

@@ -75,7 +75,7 @@ import org.slf4j.LoggerFactory;
  * {@inheritDoc}
  */
 @SuppressWarnings("synthetic-access")
-public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
+public class CapGUIPropertySource extends AbstractNodePropertySource  {
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_COMPNAME = 
         Messages.CapGUIPropertySourceComponentName;
@@ -765,10 +765,10 @@ public class CapGUIPropertySource extends AbstractGuiNodePropertySource  {
         /**
          * Constructor.
          * @param desc The parameter description
-         * @param s AbstractGuiNodePropertySource
+         * @param s AbstractNodePropertySource
          * @param paramNameMapper the param name mapper
          */
-        public ParameterValueController(AbstractGuiNodePropertySource s,
+        public ParameterValueController(AbstractNodePropertySource s,
             IParamDescriptionPO desc, IParamNameMapper paramNameMapper) {
             super(s, desc, paramNameMapper);
         }

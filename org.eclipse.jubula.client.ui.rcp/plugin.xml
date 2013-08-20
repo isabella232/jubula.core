@@ -81,7 +81,7 @@
       class="org.eclipse.jubula.client.ui.rcp.propertytester.NodePropertyTester"
       id="org.eclipse.jubula.client.ui.rcp.propertytester.GuiNodePropertyTester"
       namespace="org.eclipse.jubula.client.ui.rcp.model"
-      properties="isEditable"
+      properties="isEditable, hasTaskId"
       type="org.eclipse.jubula.client.core.model.IPersistentObject" />
     <propertyTester
       class="org.eclipse.jubula.client.ui.rcp.propertytester.ComponentNameCollectionPropertyTester"
@@ -1762,7 +1762,7 @@
        <separator name="separator4"
              visible="true">
        </separator>
-       <menu
+       <menu id="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser.menu.open"
              label="Open with">
           <command
                 commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestJobEditor"
@@ -1861,7 +1861,7 @@
        <separator name="separator3"
              visible="true">
        </separator>
-       <menu
+       <menu id="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser.menu.open"
              label="Open with">
           <command
                 commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestcaseEditor"

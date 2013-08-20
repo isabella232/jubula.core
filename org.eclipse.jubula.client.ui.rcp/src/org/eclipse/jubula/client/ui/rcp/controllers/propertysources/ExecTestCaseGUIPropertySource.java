@@ -106,7 +106,6 @@ public class ExecTestCaseGUIPropertySource extends
         if (!getPropertyDescriptorList().isEmpty()) {
             clearPropertyDescriptors();
         }
-
         // TestCase Name
         if (m_namePropDesc == null) {
             m_namePropDesc = new TextPropertyDescriptor(
@@ -130,6 +129,16 @@ public class ExecTestCaseGUIPropertySource extends
         }
         addPropertyDescriptor(m_commentPropDesc);
 
+        // Task ID
+        if (getTaskIdPropDesc() == null) {
+            JBPropertyDescriptor taskIdPropDesc = new JBPropertyDescriptor(
+                new ReadOnlySpecTaskIdController(),
+                Messages.AbstractGuiNodePropertySourceTaskId);
+            taskIdPropDesc.setLabelProvider(new DisabledLabelProvider());
+            setTaskIdPropDesc(taskIdPropDesc);
+        }
+        addPropertyDescriptor(getTaskIdPropDesc());
+        
         // Data Source
         addPropertyDescriptor(getDataSourcePropertyDescr(
                 new ExecTestCaseTestDataSourceController(this)));
@@ -148,7 +157,6 @@ public class ExecTestCaseGUIPropertySource extends
                 GeneralStorage.getInstance().getProject();
             IContentProposalProvider dataCubeRefProposalProvider = null;
             IValidator dataCubeRefValidator = null;
-
             if (activeProject != null) {
                 dataCubeRefProposalProvider = 
                     new TestDataCubeRefContentProposalProvider(activeProject, 
@@ -166,7 +174,6 @@ public class ExecTestCaseGUIPropertySource extends
             m_referencedCubePropDesc.setCategory(P_TESTDATA_CAT);
         }
         addPropertyDescriptor(m_referencedCubePropDesc);
-
         // Parameters
         addPropertyDescriptor(createParamDescriptors());
     }
@@ -273,10 +280,10 @@ public class ExecTestCaseGUIPropertySource extends
          * The constructor.
          * @param paramDescr The parameter description.
          * @param s
-         *      AbstractGuiNodePropertySource
+         *      AbstractNodePropertySource
          * @param paramNameMapper the param name mapper
          */
-        public ParameterValueController(AbstractGuiNodePropertySource s, 
+        public ParameterValueController(AbstractNodePropertySource s, 
             IParamDescriptionPO paramDescr, IParamNameMapper paramNameMapper) {
             super(s, paramDescr, paramNameMapper);
         }
@@ -298,10 +305,10 @@ public class ExecTestCaseGUIPropertySource extends
 
         /**
          * Constructor
-         * @param s AbstractGuiNodePropertySource
+         * @param s AbstractNodePropertySource
          */
         public ExecTestCaseTestDataSourceController(
-                AbstractGuiNodePropertySource s) {
+                AbstractNodePropertySource s) {
             super(s);
             getDataSource().add(DATA_SOURCE_REFERENCED);
         }

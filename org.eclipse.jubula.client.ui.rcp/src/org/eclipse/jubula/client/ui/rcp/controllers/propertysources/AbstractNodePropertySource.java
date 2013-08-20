@@ -24,6 +24,7 @@ import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
@@ -35,6 +36,7 @@ import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.IVerifiable;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractPropertySource.AbstractPropertyController;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.IParameterPropertyController.ParameterInputType;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -50,7 +52,7 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
  * @author BREDEX GmbH
  * @created 04.08.2005
  */
-public abstract class AbstractGuiNodePropertySource 
+public abstract class AbstractNodePropertySource 
     extends AbstractPropertySource<INodePO> {
 
     /** Property m_text on display */
@@ -74,10 +76,13 @@ public abstract class AbstractGuiNodePropertySource
     /** cached property descriptor for comment */
     private IPropertyDescriptor m_commentDesc = null;
     
+    /** cached property descriptor for taskId */
+    private IPropertyDescriptor m_taskIdPropDesc = null;
+    
     /**
      * @param guiNode the depending GuiNode.
      */
-    public AbstractGuiNodePropertySource(INodePO guiNode) {
+    public AbstractNodePropertySource(INodePO guiNode) {
         super(guiNode);
         m_testCaseParamBP = new TestCaseParamBP();
     }
@@ -137,6 +142,64 @@ public abstract class AbstractGuiNodePropertySource
     }
     
     /**
+     * Controller for the taskId field.
+     * @author BREDEX GmbH
+     * @created 20.08.2013
+     */
+    protected class TaskIdController extends AbstractPropertyController {
+        /** {@inheritDoc} */
+        public boolean setProperty(Object value) {
+            if (value != null) {
+                getPoNode().setTaskId(String.valueOf(value));
+            } else {
+                getPoNode().setTaskId(null);
+            }
+            return true;
+        }
+
+        /** {@inheritDoc} */
+        public Object getProperty() {
+            if (getPoNode() != null && getPoNode().getTaskId() != null) {
+                return getPoNode().getTaskId();
+            }
+            return StringConstants.EMPTY;
+        }
+
+        /** {@inheritDoc} */
+        public Image getImage() {
+            return DEFAULT_IMAGE;
+        }
+    }
+    
+    /**
+     * Class to control the taskId of the depending SpecTestCasePO. 
+     * @author BREDEX GmbH
+     * @created 20.08.2013
+     */
+    protected class ReadOnlySpecTaskIdController 
+        extends AbstractPropertyController {
+        /** {@inheritDoc} */
+        public boolean setProperty(Object value) {
+            // do nothing, read only
+            return true;
+        }
+        /** {@inheritDoc} */
+        public Object getProperty() {
+            IExecTestCasePO exTc = (IExecTestCasePO) getPoNode();
+            if (exTc.getSpecTestCase() != null) {
+                return exTc.getSpecTestCase().getTaskId(); 
+            }
+            
+            return StringConstants.EMPTY;
+        }
+        
+        /** {@inheritDoc} */
+        public Image getImage() {
+            return READONLY_IMAGE;
+        }
+    }
+    
+    /**
      * This class represents a controller for parameter values.
      */
     public abstract class AbstractParamValueController extends
@@ -154,10 +217,10 @@ public abstract class AbstractGuiNodePropertySource
          * Constructor
          * @param paramDescr the Parameter description.
          * @param s 
-         *     AbstractGuiNodePropertySource 
+         *     AbstractNodePropertySource 
          * @param paramNameMapper the param name mapper
          */
-        public AbstractParamValueController(AbstractGuiNodePropertySource s, 
+        public AbstractParamValueController(AbstractNodePropertySource s, 
             IParamDescriptionPO paramDescr, IParamNameMapper paramNameMapper) {
             super(s);
             m_paramDescr = paramDescr;
@@ -450,5 +513,19 @@ public abstract class AbstractGuiNodePropertySource
                 .get(desc.getType()));
         sb.append(StringConstants.RIGHT_BRACKET);
         return sb.toString();
+    }
+
+    /**
+     * @return the taskIdPropDesc
+     */
+    protected IPropertyDescriptor getTaskIdPropDesc() {
+        return m_taskIdPropDesc;
+    }
+
+    /**
+     * @param taskIdPropDesc the taskIdPropDesc to set
+     */
+    protected void setTaskIdPropDesc(IPropertyDescriptor taskIdPropDesc) {
+        m_taskIdPropDesc = taskIdPropDesc;
     }
 }

@@ -1262,6 +1262,7 @@ class XmlImporter {
         }
         cat.setGenerated(xml.getGenerated());
         cat.setComment(xml.getComment());
+        cat.setTaskId(xml.getTaskId());
         
         for (Category catXml  : xml.getCategoryList()) {
             cat.addNode(createCategory(proj, catXml, assignNewGuid, mapper));
@@ -1397,6 +1398,7 @@ class XmlImporter {
         }
         cat.setGenerated(xml.getGenerated());
         cat.setComment(xml.getComment());
+        cat.setTaskId(xml.getTaskId());
         
         for (ExecCategory catXml  : xml.getCategoryList()) {
             cat.addNode(createExecObjects(proj, catXml, assignNewGuid));
@@ -1890,6 +1892,7 @@ class XmlImporter {
         
         tc.setComment(xml.getComment());
         tc.setGenerated(xml.getGenerated());
+        tc.setTaskId(xml.getTaskId());
         tc.setInterfaceLocked(xml.getInterfaceLocked());
         tc.setDataFile(xml.getDatafile());
         if (xml.getReferencedTestData() != null) {
@@ -1958,6 +1961,7 @@ class XmlImporter {
         }
         
         ts.setComment(xml.getComment());
+        ts.setTaskId(xml.getTaskId());
         ts.setCmdLineParameter(xml.getCommandLineParameter());
         if (xml.getSelectedAut() != null) {
             ts.setAut(findReferencedAut(xml.getSelectedAut()));
@@ -2001,7 +2005,8 @@ class XmlImporter {
             tj = NodeMaker.createTestJobPO(xml.getName());
         }
         tj.setComment(xml.getComment());
-
+        tj.setTaskId(xml.getTaskId());
+        
         for (RefTestSuite xmlRts : xml.getRefTestSuiteList()) {
             IRefTestSuitePO rts;
             if (assignNewGuid) {
@@ -2046,6 +2051,7 @@ class XmlImporter {
         exec.setName(xml.getName());
         exec.setComment(xml.getComment());
         exec.setGenerated(xml.getGenerated());
+        exec.setTaskId(xml.getTaskId());
         if (xml.isSetActive()) {
             exec.setActive(xml.getActive());
         } else {

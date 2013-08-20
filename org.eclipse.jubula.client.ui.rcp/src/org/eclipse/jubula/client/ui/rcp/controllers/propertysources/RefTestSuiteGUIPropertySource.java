@@ -38,7 +38,7 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
  * @created Mar 16, 2010
  */
 public class RefTestSuiteGUIPropertySource 
-        extends AbstractGuiNodePropertySource {
+        extends AbstractNodePropertySource {
     /** Constant for the String Specification Name */
     private static final String P_REF_TS_DISPLAY_NAME = 
         Messages.RefTestSuiteGUIPropertySourceRefTSName;

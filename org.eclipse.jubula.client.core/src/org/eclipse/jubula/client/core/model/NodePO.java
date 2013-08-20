@@ -110,6 +110,11 @@ abstract class NodePO implements INodePO {
     private String m_name;
 
     /**
+     * the task Id of the node
+     */
+    private String m_taskId;
+    
+    /**
      * describes, if the node is derived from another node
      */
     private INodePO m_parentNode = null;
@@ -634,5 +639,27 @@ abstract class NodePO implements INodePO {
     /** {@inheritDoc} */
     public Set<IProblem> getProblems() {
         return Collections.unmodifiableSet(m_problems);
+    }
+    
+    /**
+     * gets the value of the taskId property
+     * 
+     * @return the taskId of the node
+     */
+    @Basic
+    @Column(name = "TASK_ID", length = MAX_STRING_LENGTH)
+    public String getTaskId() {
+        return m_taskId;
+    }
+    
+    /**
+     * For Persistence (JPA / EclipseLink) only
+     * Sets the value of the taskId property.
+     * 
+     * @param taskId
+     *            the new value of the taskId property
+     */
+    public void setTaskId(String taskId) {
+        m_taskId = taskId;
     }
 }

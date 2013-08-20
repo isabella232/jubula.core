@@ -22,7 +22,7 @@ import org.eclipse.jubula.client.core.utils.NullValidator;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractGuiNodePropertySource.AbstractParamValueController;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNodePropertySource.AbstractParamValueController;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.graphics.Color;

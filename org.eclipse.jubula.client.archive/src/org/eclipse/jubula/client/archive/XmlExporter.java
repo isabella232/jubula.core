@@ -752,7 +752,8 @@ class XmlExporter {
         xml.setGUID(po.getGuid());
         xml.setGenerated(po.isGenerated());
         xml.setActive(po.isActive());
-
+        xml.setTaskId(po.getTaskId());
+        
         // Finished a node
         m_monitor.worked(1);
     }
