@@ -46,8 +46,8 @@ public abstract class CommandConstants {
     public static final String RCP_TOOLKIT = "com.bredexsw.guidancer.RcpToolkitPlugin"; //$NON-NLS-1$
     /** constant: "Html" */
     public static final String HTML_TOOLKIT = "com.bredexsw.guidancer.HtmlToolkitPlugin"; //$NON-NLS-1$
-    /** constant: ".NET" */
-    public static final String DOTNET_TOOLKIT = "ui.toolkit.DotnetToolkitPlugin"; //$NON-NLS-1$
+    /** constant: "Win" */
+    public static final String WIN_TOOLKIT = "ui.toolkit.WinToolkitPlugin"; //$NON-NLS-1$
     /** constant: "iOS" */
     public static final String IOS_TOOLKIT = "ui.toolkit.mobile.IOSToolkitPlugin"; //$NON-NLS-1$
     /** ID of the SLF4J API bundle */
@@ -88,10 +88,10 @@ public abstract class CommandConstants {
     public static final String RC_SWT_BUNDLE_ID = "org.eclipse.jubula.rc.swt"; //$NON-NLS-1$
     /** ID of the HTML RC bundle */
     public static final String RC_HTML_BUNDLE_ID = "com.bredexsw.jubula.rc.html"; //$NON-NLS-1$
-    /** ID of the DOTNET RC bundle */
-    public static final String RC_DOTNET_BUNDLE_ID = "com.bredexsw.guidancer.rc.dotnet"; //$NON-NLS-1$
-    /** ID of the DOTNET NATIVE RC bundle */
-    public static final String RC_DOTNET_NATIVE_BUNDLE_ID = "com.bredexsw.guidancer.rc.dotnet.nativ"; //$NON-NLS-1$
+    /** ID of the Win RC bundle */
+    public static final String RC_WIN_BUNDLE_ID = "com.bredexsw.guidancer.rc.win"; //$NON-NLS-1$
+    /** ID of the Win native RC bundle */
+    public static final String RC_WIN_NATIVE_BUNDLE_ID = "com.bredexsw.guidancer.rc.win.nativ"; //$NON-NLS-1$
     /** /** constant: "./lib/extImplClasses" - path name to external ImplClasses */
     public static final String EXT_IMPLCLASSES_PATH = "./lib/extImplClasses"; //$NON-NLS-1$
     /** constant: "./lib/ext" - path name for extension jars like monitoring */
@@ -101,7 +101,7 @@ public abstract class CommandConstants {
     /** constant: "org.eclipse.jubula.rc.swt.commands.ActivateApplicationCommand" */
     public static final String ACTIVATE_SWT_APPLICATION_COMMAND = "org.eclipse.jubula.rc.swt.commands.ActivateApplicationCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swt.commands.ActivateApplicationCommand" */
-    public static final String ACTIVATE_DOTNET_APPLICATION_COMMAND = "com.bredexsw.guidancer.rc.dotnet.commands.ActivateApplicationCommand"; //$NON-NLS-1$
+    public static final String ACTIVATE_WIN_APPLICATION_COMMAND = "com.bredexsw.guidancer.rc.win.commands.ActivateApplicationCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.AUTHighlightComponentCommand" */
     public static final String AUT_HIGHLIGHT_COMMAND = "org.eclipse.jubula.rc.common.commands.AUTHighlightComponentCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.AUTStartCommand" */
@@ -112,8 +112,8 @@ public abstract class CommandConstants {
     public static final String SWT_CAP_TEST_COMMAND = "org.eclipse.jubula.rc.swt.commands.CAPTestCommand"; //$NON-NLS-1$
     /** constant: "com.bredexsw.jubula.rc.html.commands.CAPTestCommand" */
     public static final String HTML_CAP_TEST_COMMAND = "com.bredexsw.jubula.rc.html.commands.CAPTestCommand"; //$NON-NLS-1$
-    /** constant: "com.bredexsw.jubula.rc.html.commands.CAPTestCommand" */
-    public static final String DOTNET_CAP_TEST_COMMAND = "com.bredexsw.guidancer.rc.dotnet.commands.CAPTestCommand"; //$NON-NLS-1$
+    /** constant: "com.bredexsw.jubula.rc.win.commands.CAPTestCommand" */
+    public static final String WIN_CAP_TEST_COMMAND = "com.bredexsw.guidancer.rc.win.commands.CAPTestCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand" */
     public static final String CHANGE_AUT_MODE_COMMAND = "org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swing.commands.ChangeAUTModeCommand" */
@@ -122,8 +122,8 @@ public abstract class CommandConstants {
     public static final String SWT_SEND_COMPONENTS_COMMAND = "org.eclipse.jubula.rc.swt.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
     /** constant: "com.bredexsw.jubula.rc.html.commands.SendAUTListOfSupportedComponentsCommand" */
     public static final String HTML_SEND_COMPONENTS_COMMAND = "com.bredexsw.jubula.rc.html.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
-    /** constant: "com.bredexsw.guidancer.rc.dotnet.message.SendDotNetAUTListOfSupportedComponentsMessage" */
-    public static final String DOTNET_SEND_COMPONENTS_COMMAND = "com.bredexsw.guidancer.rc.dotnet.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
+    /** constant: "com.bredexsw.guidancer.rc.win.message.SendWinAUTListOfSupportedComponentsMessage" */
+    public static final String WIN_SEND_COMPONENTS_COMMAND = "com.bredexsw.guidancer.rc.win.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
     /** command constant */
     public static final String IOS_SEND_COMPONENTS_COMMAND = "com.bredexsw.guidancer.rc.mobile.ios.commands.SendAUTListOfSupportedComponentsCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.AUTHighlightComponentCommand" */

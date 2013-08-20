@@ -54,8 +54,8 @@ public class MessageFactory {
                     CommandConstants.SWT_TOOLKIT));
         toolkitToActivationMessageClassName.put(CommandConstants.SWING_TOOLKIT, 
             "org.eclipse.jubula.communication.message.swing.ActivateSwingApplicationMessage"); //$NON-NLS-1$
-        toolkitToActivationMessageClassName.put(CommandConstants.DOTNET_TOOLKIT,
-                "org.eclipse.jubula.communication.message.dotnet.ActivateDotNetApplicationMessage"); //$NON-NLS-1$
+        toolkitToActivationMessageClassName.put(CommandConstants.WIN_TOOLKIT,
+                "org.eclipse.jubula.communication.message.win.ActivateWinApplicationMessage"); //$NON-NLS-1$
         toolkitToActivationMessageClassName.put(CommandConstants.IOS_TOOLKIT,
                 "org.eclipse.jubula.communication.message.ios.IOSActivateApplicationMessage"); //$NON-NLS-1$
     }
@@ -76,8 +76,8 @@ public class MessageFactory {
             "org.eclipse.jubula.communication.message.swing.CAPSwingTestMessage"); //$NON-NLS-1$
         toolkitToTestMessageClassName.put(CommandConstants.HTML_TOOLKIT, 
             "org.eclipse.jubula.communication.message.html.CAPHtmlTestMessage"); //$NON-NLS-1$
-        toolkitToTestMessageClassName.put(CommandConstants.DOTNET_TOOLKIT, 
-                "org.eclipse.jubula.communication.message.dotnet.CAPDotNetTestMessage"); //$NON-NLS-1$
+        toolkitToTestMessageClassName.put(CommandConstants.WIN_TOOLKIT,
+                "org.eclipse.jubula.communication.message.win.CAPWinTestMessage"); //$NON-NLS-1$
         toolkitToTestMessageClassName.put(CommandConstants.IOS_TOOLKIT, 
                 "org.eclipse.jubula.communication.message.ios.IOSCAPTestMessage"); //$NON-NLS-1$
     }
@@ -281,8 +281,8 @@ public class MessageFactory {
                 messageClassName = "org.eclipse.jubula.communication.message.swing.SendSwingAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$                
             } else if (CommandConstants.HTML_TOOLKIT.equals(autToolKit)) {
                 messageClassName = "org.eclipse.jubula.communication.message.html.SendHtmlAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$
-            } else if (CommandConstants.DOTNET_TOOLKIT.equals(autToolKit)) {
-                messageClassName = "org.eclipse.jubula.communication.message.dotnet.SenddotnetAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$) {
+            } else if (CommandConstants.WIN_TOOLKIT.equals(autToolKit)) {
+                messageClassName = "org.eclipse.jubula.communication.message.win.SendWinAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$) {
             } else if (CommandConstants.IOS_TOOLKIT.equals(autToolKit)) {
                 messageClassName = "org.eclipse.jubula.communication.message.ios.SendIOSAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$) {
             }               
