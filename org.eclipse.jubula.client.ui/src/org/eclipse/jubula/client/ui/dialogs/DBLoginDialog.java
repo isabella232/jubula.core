@@ -243,7 +243,6 @@ public class DBLoginDialog extends TitleAreaDialog {
         m_pwdText = new Text(area, SWT.PASSWORD | SWT.BORDER);
         m_pwdText.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DBLoginDialog.pwdTxf"); //$NON-NLS-1$
         GridData gridData = newGridData();
-        LayoutUtil.addToolTipAndMaxWidth(gridData, m_pwdText);
         m_pwdText.setLayoutData(gridData);
         LayoutUtil.setMaxChar(m_pwdText);
         if (!StringUtils.isEmpty(m_userText.getText())) {
