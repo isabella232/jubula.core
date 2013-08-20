@@ -26,7 +26,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jubula.app.testexec.i18n.Messages;
-import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.JobConfiguration;
 import org.eclipse.jubula.client.cmd.controller.IClcServer;
@@ -571,32 +570,6 @@ public class ExecutionController implements IAUTServerEventListener,
     }
 
     /**
-     * prepare the ALM repository connection
-     */
-    private void prepareALMConnection() {
-        String almRepositoryName = m_job.getProject().getProjectProperties()
-                .getALMRepositoryName();
-        
-        if (StringUtils.isNotBlank(almRepositoryName)) {
-            AbstractCmdlineClient.printConsoleLn(NLS.bind(
-                    Messages.ExecutionControllerALMConnection, 
-                    almRepositoryName), true);
-            
-            IStatus connectionStatus = ALMAccess
-                    .testConnection(almRepositoryName);
-            if (connectionStatus.isOK()) {
-                AbstractCmdlineClient.printConsoleLn(
-                        Messages.ExecutionControllerALMConnectionSucceed, true);
-            } else {
-                AbstractCmdlineClient.printConsoleLn(NLS.bind(
-                        Messages.ExecutionControllerALMConnectionFailed,
-                        connectionStatus.getMessage()), true);
-            }
-        }
-
-    }
-
-    /**
      * sets the log Directory
      */
     private void setLogDir() {
@@ -795,7 +768,6 @@ public class ExecutionController implements IAUTServerEventListener,
              * using Persistence (JPA / EclipseLink). The project is never set. This is detected
              * during job validation (initAndValidate). */
         }
-        prepareALMConnection();
         
         AbstractCmdlineClient.printConsoleLn(Messages
                 .ExecutionControllerProjectCompleteness, true);

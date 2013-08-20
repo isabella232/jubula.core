@@ -27,9 +27,6 @@ public class Messages extends NLS {
     public static String ErrorWhileStoppingAUT;
     public static String EventHandler;
     public static String ExecutionControllerAbort;
-    public static String ExecutionControllerALMConnection;
-    public static String ExecutionControllerALMConnectionSucceed;
-    public static String ExecutionControllerALMConnectionFailed;
     public static String ExecutionControllerAUT;
     public static String ExecutionControllerAUTStart;
     public static String ExecutionControllerAUTConnectionEstablished;
