@@ -359,7 +359,7 @@ class TestDataCubePO implements ITestDataCubePO {
      * @return the name of the node
      */
     @Basic
-    @Column(name = "DATA_FILE", length = 4000)
+    @Column(name = "DATA_FILE", length = MAX_STRING_LENGTH)
     private String getHbmDataFile() {
         return m_dataFile;
     }
@@ -441,7 +441,7 @@ class TestDataCubePO implements ITestDataCubePO {
      * {@inheritDoc}
      */
     @Basic
-    @Column(name = "NAME", length = 4000)
+    @Column(name = "NAME", length = MAX_STRING_LENGTH)
     public String getName() {
         return m_name;
     }

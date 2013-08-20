@@ -200,7 +200,7 @@ public class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
      * {@inheritDoc}
      */
     @Basic
-    @Column(name = "NAME", length = 4000)
+    @Column(name = "NAME", length = MAX_STRING_LENGTH)
     public String getName() {
         return m_name;
     }

@@ -228,11 +228,11 @@ public class DirectCombo<TheObject> extends Combo {
      * {@inheritDoc}
      */
     protected void checkSubclass() {
-        // do nothing, therefor allowing subclassing 
+        // do nothing, therefore allowing subclassing 
     }
 
     /**
-     * This methods has no meaning for this subsclass and must not
+     * This methods has no meaning for this subclass and must not
      * be called.
      * {@inheritDoc}
      * @deprecated
@@ -243,7 +243,7 @@ public class DirectCombo<TheObject> extends Combo {
     }
 
     /**
-     * This methods has no meaning for this subsclass and must not
+     * This methods has no meaning for this subclass and must not
      * be called. 
      * {@inheritDoc}
      * @deprecated
@@ -254,7 +254,7 @@ public class DirectCombo<TheObject> extends Combo {
     }
 
     /**
-     * This methods has no meaning for this subsclass and must not
+     * This methods has no meaning for this subclass and must not
      * be called. 
      * {@inheritDoc}
      * @deprecated
@@ -265,7 +265,7 @@ public class DirectCombo<TheObject> extends Combo {
     }
 
     /**
-     * This methods has no meaning for this subsclass and must not
+     * This methods has no meaning for this subclass and must not
      * be called. 
      * {@inheritDoc}
      * @deprecated
@@ -276,7 +276,7 @@ public class DirectCombo<TheObject> extends Combo {
     }
 
     /**
-     * This methods has no meaning for this subsclass and must not
+     * This methods has no meaning for this subclass and must not
      * be called.
      * {@inheritDoc}
      * @deprecated
@@ -287,7 +287,7 @@ public class DirectCombo<TheObject> extends Combo {
     }
 
     /**
-     * This methods has no meaning for this subsclass and must not
+     * This methods has no meaning for this subclass and must not
      * be called. 
      * {@inheritDoc}
      * @deprecated
@@ -298,7 +298,7 @@ public class DirectCombo<TheObject> extends Combo {
     }
 
     /**
-     * This methods has no meaning for this subsclass and must not
+     * This methods has no meaning for this subclass and must not
      * be called. 
      * {@inheritDoc}
      * @deprecated
@@ -309,7 +309,7 @@ public class DirectCombo<TheObject> extends Combo {
     }
 
     /**
-     * This methods has no meaning for this subsclass and must not
+     * This methods has no meaning for this subclass and must not
      * be called.
      * {@inheritDoc}
      * @deprecated

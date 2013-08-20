@@ -226,7 +226,7 @@ class TestResultPO implements ITestResultPO {
      * @return the keywordTypeString
      */
     @Basic
-    @Column(name = "KEYWORD_TYPE", length = 4000)
+    @Column(name = "KEYWORD_TYPE", length = IPersistentObject.MAX_STRING_LENGTH)
     public String getKeywordType() {
         return m_keywordType;
     }
@@ -243,7 +243,9 @@ class TestResultPO implements ITestResultPO {
      * @return the keywordName
      */
     @Basic
-    @Column(name = "KEYWORD_NAME", length = 4000)
+    @Column(
+            name = "KEYWORD_NAME", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getKeywordName() {
         return m_keywordName;
     }
@@ -260,7 +262,9 @@ class TestResultPO implements ITestResultPO {
      * @return the keywordComment
      */
     @Basic
-    @Column(name = "KEYWORD_COMMENT", length = 4000)
+    @Column(
+            name = "KEYWORD_COMMENT", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getKeywordComment() {
         return m_keywordComment;
     }
@@ -277,7 +281,9 @@ class TestResultPO implements ITestResultPO {
      * @return the keywordGuid
      */
     @Basic
-    @Column(name = "INTERNAL_KEYWORD_GUID", length = 4000)
+    @Column(
+            name = "INTERNAL_KEYWORD_GUID", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getInternalKeywordGuid() {
         return m_keywordGuid;
     }
@@ -311,7 +317,9 @@ class TestResultPO implements ITestResultPO {
      * @return the keywordStatus
      */
     @Basic
-    @Column(name = "KEYWORD_STATUS", length = 4000)
+    @Column(
+            name = "KEYWORD_STATUS", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getKeywordStatus() {
         return m_keywordStatus;
     }
@@ -380,7 +388,9 @@ class TestResultPO implements ITestResultPO {
      * @return the componentNameGuid
      */
     @Basic
-    @Column(name = "INTERNAL_COMPONENT_NAME", length = 4000)
+    @Column(
+            name = "INTERNAL_COMPONENT_NAME", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getInternalComponentNameGuid() {
         return m_componentNameGuid;
     }
@@ -397,7 +407,9 @@ class TestResultPO implements ITestResultPO {
      * @return the componentName
      */
     @Basic
-    @Column(name = "COMPONENT_NAME", length = 4000)
+    @Column(
+            name = "COMPONENT_NAME", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getComponentName() {
         return m_componentName;
     }
@@ -414,7 +426,9 @@ class TestResultPO implements ITestResultPO {
      * @return the internalComponentType
      */
     @Basic
-    @Column(name = "INTERNAL_COMPONENT_TYPE", length = 4000)
+    @Column(
+            name = "INTERNAL_COMPONENT_TYPE", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getInternalComponentType() {
         return m_internalComponentType;
     }
@@ -431,7 +445,9 @@ class TestResultPO implements ITestResultPO {
      * @return the componentType
      */
     @Basic
-    @Column(name = "COMPONENT_TYPE", length = 4000)
+    @Column(
+            name = "COMPONENT_TYPE", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getComponentType() {
         return m_componentType;
     }
@@ -448,7 +464,9 @@ class TestResultPO implements ITestResultPO {
      * @return the internalActionName
      */
     @Basic
-    @Column(name = "INTERNAL_ACTION_NAME", length = 4000)
+    @Column(
+            name = "INTERNAL_ACTION_NAME", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getInternalActionName() {
         return m_internalActionName;
     }
@@ -465,7 +483,9 @@ class TestResultPO implements ITestResultPO {
      * @return the actionName
      */
     @Basic
-    @Column(name = "ACTION_NAME", length = 4000)
+    @Column(
+            name = "ACTION_NAME", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getActionName() {
         return m_actionName;
     }
@@ -523,7 +543,9 @@ class TestResultPO implements ITestResultPO {
      * @return the statusType
      */
     @Basic
-    @Column(name = "STATUS_TYPE", length = 4000)
+    @Column(
+            name = "STATUS_TYPE", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getStatusType() {
         return m_statusType;
     }
@@ -540,7 +562,9 @@ class TestResultPO implements ITestResultPO {
      * @return the statusDescription
      */
     @Basic
-    @Column(name = "STATUS_DESCRIPTION", length = 4000)
+    @Column(
+            name = "STATUS_DESCRIPTION", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getStatusDescription() {
         return m_statusDescription;
     }
@@ -557,7 +581,9 @@ class TestResultPO implements ITestResultPO {
      * @return the statusOperator
      */
     @Basic
-    @Column(name = "STATUS_OPERATOR", length = 4000)
+    @Column(
+            name = "STATUS_OPERATOR", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getStatusOperator() {
         return m_statusOperator;
     }
@@ -574,7 +600,9 @@ class TestResultPO implements ITestResultPO {
      * @return the expectedValue
      */
     @Basic
-    @Column(name = "STATUS_EXPECTED_VALUE", length = 4000)
+    @Column(
+            name = "STATUS_EXPECTED_VALUE", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getExpectedValue() {
         return m_expectedValue;
     }
@@ -591,7 +619,9 @@ class TestResultPO implements ITestResultPO {
      * @return the actualValue
      */
     @Basic
-    @Column(name = "STATUS_ACTUAL_VALUE", length = 4000)
+    @Column(
+            name = "STATUS_ACTUAL_VALUE", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getActualValue() {
         return m_actualValue;
     }

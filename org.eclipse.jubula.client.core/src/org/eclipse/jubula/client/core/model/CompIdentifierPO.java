@@ -64,7 +64,7 @@ class CompIdentifierPO extends ComponentIdentifier implements
      */
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "NEIGHBOURS")
-    @Column(name = "NEIGHBOUR", length = 4000)
+    @Column(name = "NEIGHBOUR", length = MAX_STRING_LENGTH)
     @OrderColumn(name = "IDX")
     @JoinColumn(name = "FK_COMP_ID")
     @BatchFetch(value = BatchFetchType.JOIN)
@@ -84,7 +84,7 @@ class CompIdentifierPO extends ComponentIdentifier implements
      * @return Returns the componentClassName.
      */
     @Basic
-    @Column(name = "COMP_CLASS_NAME", length = 4000)
+    @Column(name = "COMP_CLASS_NAME", length = MAX_STRING_LENGTH)
     public String getComponentClassName() { // NOPMD by al on 3/19/07 1:26 PM
         return super.getComponentClassName();
     }
@@ -101,7 +101,7 @@ class CompIdentifierPO extends ComponentIdentifier implements
      * @return Returns the supportedClassName.
      */
     @Basic
-    @Column(name = "SUPP_CLASS_NAME", length = 4000)
+    @Column(name = "SUPP_CLASS_NAME", length = MAX_STRING_LENGTH)
     public String getSupportedClassName() { // NOPMD by al on 3/19/07 1:26 PM
         return super.getSupportedClassName();
     }
@@ -119,7 +119,7 @@ class CompIdentifierPO extends ComponentIdentifier implements
      */
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "HIERARCHY_NAMES")
-    @Column(name = "HIERARCHY_NAME", length = 4000)
+    @Column(name = "HIERARCHY_NAME", length = MAX_STRING_LENGTH)
     @OrderColumn(name = "IDX")
     @JoinColumn(name = "FK_COMP_ID")
     @BatchFetch(value = BatchFetchType.JOIN)
@@ -241,7 +241,7 @@ class CompIdentifierPO extends ComponentIdentifier implements
      * {@inheritDoc}
      */
     @Basic
-    @Column(name = "ALTERNATIVE_DISPLAY_NAME", length = 4000)
+    @Column(name = "ALTERNATIVE_DISPLAY_NAME", length = MAX_STRING_LENGTH)
     public String getAlternativeDisplayName() {
         return super.getAlternativeDisplayName();
     }

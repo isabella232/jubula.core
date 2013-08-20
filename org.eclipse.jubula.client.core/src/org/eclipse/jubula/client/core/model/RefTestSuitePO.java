@@ -129,7 +129,7 @@ class RefTestSuitePO extends NodePO implements IRefTestSuitePO {
      * @return the testSuiteAutID
      */
     @Basic
-    @Column(name = "AUT_ID", length = 4000)
+    @Column(name = "AUT_ID", length = MAX_STRING_LENGTH)
     public String getTestSuiteAutID() {
         return m_testSuiteAutID;
     }

@@ -210,7 +210,7 @@ class TestDataPO implements ITestDataPO {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "LOCALE_TO_TD")
     @MapKeyColumn(name = "LOCALE")
-    @Column(name = "TD_VALUE", length = 4000, nullable = false)
+    @Column(name = "TD_VALUE", length = MAX_STRING_LENGTH, nullable = false)
     @JoinColumn(name = "I18N_STR")
     @BatchFetch(value = BatchFetchType.JOIN)
     private Map<String, String> getMap() {

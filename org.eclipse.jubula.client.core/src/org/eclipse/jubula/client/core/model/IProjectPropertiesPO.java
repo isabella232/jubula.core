@@ -114,4 +114,74 @@ public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport {
      * @return the check conf container
      */
     public abstract ICheckConfContPO getCheckConfCont();
+    
+    /**
+     * @return the URL of the central dashboard instance
+     */
+    public abstract String getDashboardURL();
+
+    /**
+     * @param dashboardURL
+     *            the URL of the central dashboard instance
+     */
+    public abstract void setDashboardURL(String dashboardURL);
+    
+    /**
+     * @return the name of the central ALM repository
+     */
+    public abstract String getALMRepositoryName();
+
+    /**
+     * @param almRepositoryName
+     *             the name of the central ALM repository
+     */
+    public abstract void setALMRepositoryName(String almRepositoryName);
+    
+    /**
+     * @return <code>true</code> if this project should report succeeded test
+     *         executions to the connected ALM repository
+     */
+    public abstract boolean getIsReportOnSuccess();
+
+    /**
+     * @param isReportOnSuccess
+     *            <code>true</code> if this project should report succeeded test
+     *            executions to the connected ALM repository
+     */
+    public void setIsReportOnSuccess(boolean isReportOnSuccess);
+    
+    /**
+     * @return <code>true</code> if this project should report failed test
+     *         executions to the connected ALM repository
+     */
+    public abstract boolean getIsReportOnFailure();
+
+    /**
+     * @param isReportOnFailure
+     *            <code>true</code> if this project should report failed test
+     *            executions to the connected ALM repository
+     */
+    public void setIsReportOnFailure(boolean isReportOnFailure);
+    
+    /**
+     * @return the comment in case of a succeeded test
+     */
+    public abstract String getSuccessComment();
+
+    /**
+     * @param comment
+     *             the comment in case of a succeeded test
+     */
+    public abstract void setSuccessComment(String comment);
+    
+    /**
+     * @return the comment in case of a failed test
+     */
+    public abstract String getFailureComment();
+
+    /**
+     * @param comment
+     *             the comment in case of a failed test
+     */
+    public abstract void setFailureComment(String comment);
 }

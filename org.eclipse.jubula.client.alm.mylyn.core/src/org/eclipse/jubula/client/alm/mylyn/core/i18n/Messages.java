@@ -20,6 +20,10 @@ public class Messages extends NLS {
     
     public static String TaskAttributeNotFound;
     public static String UnsupportedTaskAttribute;
+    public static String TaskRepositoryNotFound;
+    public static String TaskRepositoryOffline;
+    public static String TaskRepositoryNoCredentialsStored;
+    public static String TaskRepositoryNoConnectorFound;
     
     static {
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

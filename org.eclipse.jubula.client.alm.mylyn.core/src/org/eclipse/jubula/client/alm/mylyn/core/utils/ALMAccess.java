@@ -15,8 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jubula.client.alm.mylyn.core.Activator;
+import org.eclipse.jubula.client.alm.mylyn.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.mylyn.commons.net.AuthenticationType;
 import org.eclipse.mylyn.tasks.core.AbstractRepositoryConnector;
 import org.eclipse.mylyn.tasks.core.IRepositoryManager;
 import org.eclipse.mylyn.tasks.core.ITaskMapping;
@@ -28,6 +33,7 @@ import org.eclipse.mylyn.tasks.core.data.TaskAttribute;
 import org.eclipse.mylyn.tasks.core.data.TaskAttributeMapper;
 import org.eclipse.mylyn.tasks.core.data.TaskData;
 import org.eclipse.mylyn.tasks.ui.TasksUi;
+import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,9 +83,7 @@ public final class ALMAccess {
      * @return the task repository or <code>null</code> if not found
      */
     private static TaskRepository getRepositoryByLabel(String repoLabel) {
-        IRepositoryManager repositoryManager = TasksUi.getRepositoryManager();
-        List<TaskRepository> allRepositories = repositoryManager
-                .getAllRepositories();
+        List<TaskRepository> allRepositories = getAllRepositories();
 
         for (TaskRepository repo : allRepositories) {
             if (repo.getRepositoryLabel().equals(repoLabel)) {
@@ -87,6 +91,14 @@ public final class ALMAccess {
             }
         }
         return null;
+    }
+
+    /**
+     * @return a list of all available task repositories
+     */
+    public static List<TaskRepository> getAllRepositories() {
+        IRepositoryManager repositoryManager = TasksUi.getRepositoryManager();
+        return repositoryManager.getAllRepositories();
     }
 
     /**
@@ -242,5 +254,50 @@ public final class ALMAccess {
             LOG.error(e.getLocalizedMessage(), e);
         }
         return succeeded;
+    }
+
+    /**
+     * @param repoLabel
+     *            the repository to test the connection for
+     * @return a status reflecting the current connection state
+     */
+    public static IStatus testConnection(String repoLabel) {
+        TaskRepository repository = getRepositoryByLabel(repoLabel);
+        if (repository == null) {
+            return new Status(IStatus.ERROR, Activator.ID, NLS.bind(
+                    Messages.TaskRepositoryNotFound, repoLabel));
+        }
+        if (repository.isOffline()) {
+            return new Status(IStatus.ERROR, Activator.ID, NLS.bind(
+                    Messages.TaskRepositoryOffline, repoLabel));
+        }
+        
+        boolean savePassword = repository
+                .getSavePassword(AuthenticationType.REPOSITORY);
+        if (!savePassword) {
+            return new Status(IStatus.ERROR, Activator.ID, NLS.bind(
+                    Messages.TaskRepositoryNoCredentialsStored, repoLabel));
+        }
+        
+        AbstractRepositoryConnector connector = TasksUi
+                .getRepositoryConnector(repository.getConnectorKind());
+        if (connector == null) {
+            return new Status(IStatus.ERROR, Activator.ID, NLS.bind(
+                    Messages.TaskRepositoryNoCredentialsStored, repoLabel));
+        }
+        
+        try {
+            connector.updateRepositoryConfiguration(repository,
+                    new NullProgressMonitor());
+        } catch (CoreException e) {
+            return new Status(IStatus.ERROR, Activator.ID,
+                    e.getLocalizedMessage());
+        }
+        
+        IStatus repoStatus = repository.getStatus();
+        if (repoStatus != null) {
+            return repoStatus;
+        }
+        return Status.OK_STATUS;
     }
 }

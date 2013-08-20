@@ -27,8 +27,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
-import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -97,11 +97,6 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
 
     /** the number of lines in a text field */
     protected static final int COMPOSITE_WIDTH = 250;
-    
-    /**
-     * <code>MAX_TEXT_LENGTH</code>
-     */
-    private static final int MAX_TEXT_LENGTH = 4000;
     
     /** String constant for getting the main class from a JAR manifest */
     private static final String MAIN_CLASS = "Main-Class"; //$NON-NLS-1$
@@ -461,7 +456,8 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
             "AUTConfigComponent.exec"); //$NON-NLS-1$ 
         m_execTextField = UIComponentHelper.createTextField(
                 parent, 1);
-        UIComponentHelper.setMaxTextChars(m_execTextField, MAX_TEXT_LENGTH);
+        LayoutUtil.setMaxChar(m_execTextField,
+                IPersistentObject.MAX_STRING_LENGTH);
         m_execButton = new Button(
                 UIComponentHelper.createLayoutComposite(parent),
                 SWT.PUSH);
@@ -598,7 +594,8 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         UIComponentHelper.createLabel(parent, "AUTConfigComponent.envVariables"); //$NON-NLS-1$ 
         m_envTextArea = new Text(parent, 
                 LayoutUtil.MULTI_TEXT | SWT.V_SCROLL);
-        LayoutUtil.setMaxChar(m_envTextArea, 4000);
+        LayoutUtil.setMaxChar(m_envTextArea,
+                IPersistentObject.MAX_STRING_LENGTH);
         GridData textGridData = new GridData();
         textGridData.horizontalAlignment = GridData.FILL;
         textGridData.horizontalSpan = 2;
@@ -616,7 +613,8 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
     private void initGuiJarChooser(Composite parent) {
         UIComponentHelper.createLabel(parent, "AUTConfigComponent.jar"); //$NON-NLS-1$ 
         m_jarTextField = UIComponentHelper.createTextField(parent, 1);
-        UIComponentHelper.setMaxTextChars(m_jarTextField, MAX_TEXT_LENGTH);
+        LayoutUtil.setMaxChar(m_jarTextField,
+                IPersistentObject.MAX_STRING_LENGTH);
         m_jarButton = new Button(UIComponentHelper
                 .createLayoutComposite(parent), SWT.PUSH);
         m_jarButton.setText(Messages.AUTConfigComponentBrowse);
@@ -1338,7 +1336,7 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
             classPath = classPath.concat(m_classPathListField.getItem(i) + ";"); //$NON-NLS-1$
         }
         classPath = classPath.concat(elementToAdd + ";"); //$NON-NLS-1$
-        if (classPath.length() <= IAUTConfigPO.MAX_CLASSPATH_LENGTH) {
+        if (classPath.length() <= IPersistentObject.MAX_STRING_LENGTH) {
             return true;
         }
         return false;
@@ -1349,12 +1347,12 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      * @param editButtonWasPressed true, if edit button was pressed
      */
     public void handleAddElementButtonEvent(boolean editButtonWasPressed) {
-        int maxLength = IAUTConfigPO.MAX_CLASSPATH_LENGTH 
+        int maxLength = IPersistentObject.MAX_STRING_LENGTH 
             - getClassPathLength();
         if (maxLength < 1) {
             ErrorHandlingUtil.createMessageDialog(
                     MessageIDs.I_TOO_LONG_CLASSPATH, 
-                    new Object[] {IAUTConfigPO.MAX_CLASSPATH_LENGTH}, null);
+                    new Object[] {IPersistentObject.MAX_STRING_LENGTH}, null);
             return;
         }
         String oldText = StringConstants.EMPTY;
@@ -1384,9 +1382,11 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                         }
                         m_classPathListField.add(elements[i]);
                     } else {
-                        ErrorHandlingUtil.createMessageDialog(MessageIDs
-                                .I_TOO_LONG_CLASSPATH, new Object[] {
-                                    IAUTConfigPO.MAX_CLASSPATH_LENGTH}, null);
+                        ErrorHandlingUtil.createMessageDialog(
+                            MessageIDs.I_TOO_LONG_CLASSPATH,
+                                new Object[] { 
+                                    IPersistentObject.MAX_STRING_LENGTH },
+                                    null);
                         return;
                     }
                 }
@@ -1636,8 +1636,8 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
                 "AUTConfigComponent.className"); //$NON-NLS-1$ 
         m_classNameTextField = UIComponentHelper.createTextField(
                 advancedAreaComposite, 2);
-        UIComponentHelper
-                .setMaxTextChars(m_classNameTextField, MAX_TEXT_LENGTH);
+        LayoutUtil.setMaxChar(m_classNameTextField, 
+                IPersistentObject.MAX_STRING_LENGTH);
         m_classNameTextField.setText(StringUtils
                 .defaultString(getConfigValue(AutConfigConstants.CLASSNAME)));
         
@@ -1654,8 +1654,8 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
             advancedAreaComposite, "AUTConfigComponent.jre"); //$NON-NLS-1$ 
         m_autJreTextField = 
             UIComponentHelper.createTextField(advancedAreaComposite, 1);
-        UIComponentHelper.setMaxTextChars(
-                m_autJreTextField, MAX_TEXT_LENGTH);
+        LayoutUtil.setMaxChar(m_autJreTextField,
+                IPersistentObject.MAX_STRING_LENGTH);
         GridData comboGrid = new GridData(GridData.FILL, GridData.CENTER, 
             true , false, 1, 1);
         LayoutUtil.addToolTipAndMaxWidth(comboGrid, m_autJreTextField);

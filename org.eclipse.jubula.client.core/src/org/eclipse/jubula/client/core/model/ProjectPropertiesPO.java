@@ -43,7 +43,6 @@ import org.apache.commons.lang.Validate;
 @Entity
 @Table(name = "PROJECT_PROPERTIES")
 class ProjectPropertiesPO implements IProjectPropertiesPO {
-
     /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
@@ -97,6 +96,32 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
 
     /** The default of auto-cleanup days for test result details */
     private Integer m_testResultCleanupInterval = IProjectPO.CLEANUP_DEFAULT;
+
+    /** whether to report in case of a failure */
+    private boolean m_reportOnFailure = false;
+
+    /** whether to report in case of a success */
+    private boolean m_reportOnSuccess = false;
+
+    /**
+     * the comment to post in case of a success
+     */
+    private String m_commentSuccess = null;
+
+    /**
+     * the comment to post in case of a failure
+     */
+    private String m_commentFailure = null;
+
+    /**
+     * the connected ALM repository name
+     */
+    private String m_almRepositoryName = null;
+
+    /**
+     * the URL of the dashboard
+     */
+    private String m_dashboardURL = null;
     
     /**
      * For Persistence (JPA / EclipseLink)
@@ -489,5 +514,77 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
      */
     public void setCheckConfCont(ICheckConfContPO checkConfCont) {
         m_checkConfCont = checkConfCont;
+    }
+    
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "DASHBOARD_URL", length = MAX_STRING_LENGTH)
+    public String getDashboardURL() {
+        return m_dashboardURL;
+    }
+    
+    /** {@inheritDoc} */
+    public void setDashboardURL(String dashboardURL) {
+        m_dashboardURL = dashboardURL;
+    }
+    
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "ALM_REPOSITORY_NAME", length = MAX_STRING_LENGTH)
+    public String getALMRepositoryName() {
+        return m_almRepositoryName;
+    }
+    
+    /** {@inheritDoc} */
+    public void setALMRepositoryName(String almRepositoryName) {
+        m_almRepositoryName = almRepositoryName;
+    }
+    
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "IS_REPORT_ON_SUCCESS")
+    public boolean getIsReportOnSuccess() {
+        return m_reportOnSuccess;
+    }
+    
+    /** {@inheritDoc} */
+    public void setIsReportOnSuccess(boolean isReportOnSuccess) {
+        m_reportOnSuccess = isReportOnSuccess;
+    }
+    
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "IS_REPORT_ON_FAILURE")
+    public boolean getIsReportOnFailure() {
+        return m_reportOnFailure;
+    }
+
+    /** {@inheritDoc} */
+    public void setIsReportOnFailure(boolean isReportOnFailure) {
+        m_reportOnFailure = isReportOnFailure;
+    }
+    
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "COMMENT_SUCCESS", length = MAX_STRING_LENGTH)
+    public String getSuccessComment() {
+        return m_commentSuccess;
+    }
+    
+    /** {@inheritDoc} */
+    public void setSuccessComment(String comment) {
+        m_commentSuccess = comment;
+    }
+    
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "COMMENT_FAILURE", length = MAX_STRING_LENGTH)
+    public String getFailureComment() {
+        return m_commentFailure;
+    }
+    
+    /** {@inheritDoc} */
+    public void setFailureComment(String comment) {
+        m_commentFailure = comment;
     }
 }

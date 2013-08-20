@@ -93,6 +93,7 @@ import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
@@ -355,8 +356,8 @@ class XmlExporter {
             OperationCanceledException {
         fillNode(xml, po);
         checkForCancel();
-        fillCheckConfiguration(
-                xml, po.getProjectProperties().getCheckConfCont());
+        IProjectPropertiesPO projectProperties = po.getProjectProperties();
+        fillCheckConfiguration(xml, projectProperties.getCheckConfCont());
         // used toolkits
         fillUsedToolkits(xml, po);
         // All project toolkit info finished
@@ -412,9 +413,15 @@ class XmlExporter {
         xml.setIsReusable(po.getIsReusable());
         xml.setIsProtected(po.getIsProtected());
         xml.setTeststyleEnabled(
-                po.getProjectProperties().getCheckConfCont().getEnabled());
+                projectProperties.getCheckConfCont().getEnabled());
         xml.setTestResultDetailsCleanupInterval(
                 po.getTestResultCleanupInterval());
+        xml.setAlmRepositoryName(projectProperties.getALMRepositoryName());
+        xml.setIsReportOnSuccess(projectProperties.getIsReportOnSuccess());
+        xml.setSuccessComment(projectProperties.getSuccessComment());
+        xml.setIsReportOnFailure(projectProperties.getIsReportOnFailure());
+        xml.setFailureComment(projectProperties.getFailureComment());
+        xml.setDashboardURL(projectProperties.getDashboardURL());
         m_monitor.worked(1);
     }
 

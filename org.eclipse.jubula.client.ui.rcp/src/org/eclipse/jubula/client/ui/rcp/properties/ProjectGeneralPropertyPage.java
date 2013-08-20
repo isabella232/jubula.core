@@ -17,13 +17,16 @@ import java.util.Set;
 import javax.persistence.EntityNotFoundException;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
@@ -43,6 +46,7 @@ import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedIntText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedProjectNameText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText;
+import org.eclipse.jubula.client.ui.rcp.widgets.CheckedURLText;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
@@ -76,30 +80,28 @@ import org.slf4j.LoggerFactory;
  * @created 08.02.2005
  */
 public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
+    /** the default width */
+    private static final int DEFAULT_CONTROL_WIDTH = 500;
 
     /**
      * @author BREDEX GmbH
      * @created Aug 21, 2007
      */
     public interface IOkListener {
-        
         /**
          * The OK button has been pressed.
          */
         public void okPressed() throws PMException;
     }
 
-
     /** number of columns = 1 */
     private static final int NUM_COLUMNS_1 = 1; 
     /** number of columns = 2 */
     private static final int NUM_COLUMNS_2 = 2;
 
-    /**
-     * the logger
-     */
-    private static Logger log = 
-        LoggerFactory.getLogger(ProjectGeneralPropertyPage.class);
+    /** the logger */
+    private static Logger log = LoggerFactory
+            .getLogger(ProjectGeneralPropertyPage.class);
     
     /** the m_text field for the project name */
     private CheckedText m_projectNameTextField;
@@ -113,26 +115,30 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     /** the StateController */
     private final ToolkitComboSelectionListener m_toolkitComboListener = 
         new ToolkitComboSelectionListener();
-    /** the old project name */
-    private final String m_oldProjectName;
-    /** the old project isReusable */
-    private final boolean m_oldIsReusable;
-    /** the old project isProtected */
-    private final boolean m_oldIsProtected;
-    /** the project major version number */
-    private final Integer m_majorVersionNumber;
-    /** the project minor version number */
-    private final Integer m_minorVersionNumber;
     /** the Combo to select the toolkit */
     private DirectCombo<String> m_projectToolkitCombo;
-    /** the project GUID */
-    private String m_projectGuid;
-    
+    /** the Combo to select the connected ALM system */
+    private DirectCombo<String> m_almRepoCombo;
     /** the new project name */
     private String m_newProjectName;
-    
     /**  Checkbox to decide if testresults should be deleted after specified days */
     private Button m_cleanTestresults = null;
+    
+    /**
+     * Checkbox to decide if a comment should be automatically posted to the ALM
+     * in case of a succeeded test
+     */
+    private Button m_reportOnSuccess = null;
+    /** the success comment */
+    private Text m_successComment;
+    /** the success comment */
+    private Text m_failureComment;
+    
+    /**
+     * Checkbox to decide if a comment should be automatically posted to the ALM
+     * in case of a failed test
+     */
+    private Button m_reportOnFailure = null;    
     
     /**  textfield to specify days after which testresults should be deleted after from database */
     private CheckedIntText m_cleanResultDays = null; 
@@ -145,18 +151,27 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     private Text m_projectDescriptionTextField;
     
     /**
-     * @param es the editSupport
+     * the dashboards URL text field
+     */
+    private CheckedText m_dashboardURL;
+    
+    /**
+     * the original / unmodified project properties
+     */
+    private IProjectPropertiesPO m_origProjectProps;
+    /**
+     * the old project name
+     */
+    private String m_oldProjectName;
+    
+    /**
+     * @param es
+     *            the editSupport
      */
     public ProjectGeneralPropertyPage(EditSupport es) {
         super(es);
-        IProjectPO project = getProject();
-        m_oldProjectName = project.getName();
-        m_newProjectName = m_oldProjectName;
-        m_oldIsReusable = project.getIsReusable();
-        m_oldIsProtected = project.getIsProtected();
-        m_majorVersionNumber = project.getMajorProjectVersion();
-        m_minorVersionNumber = project.getMinorProjectVersion();
-        m_projectGuid = project.getGuid();
+        m_oldProjectName = getProject().getName();
+        m_origProjectProps = ((IProjectPropertiesPO) es.getOriginal());
     }
 
     /**
@@ -192,6 +207,15 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         createEmptyLabel(projectNameComposite);
         
         createCleanTestResults(projectNameComposite);
+        
+        separator(projectNameComposite, NUM_COLUMNS_2);
+        createEmptyLabel(projectNameComposite);
+        
+        createALMrepositoryChooser(projectNameComposite);
+        createReportOnSuccess(projectNameComposite);
+        createReportOnFailure(projectNameComposite);
+        createDashboardURL(projectNameComposite);
+        
         Composite innerComposite = new Composite(composite, SWT.NONE);
         GridLayout compositeLayout = new GridLayout();
         compositeLayout.numColumns = NUM_COLUMNS_1;
@@ -208,6 +232,137 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         Plugin.getHelpSystem().setHelp(parent,
             ContextHelpIds.PROJECT_PROPERTY_PAGE);
         return composite;
+    }
+    
+    /**
+     * @param parent the parent to use
+     */
+    private void createDashboardURL(Composite parent) {
+        Composite leftComposite = createComposite(parent, NUM_COLUMNS_1,
+                GridData.BEGINNING, false);
+        Composite rightComposite = createComposite(parent, NUM_COLUMNS_1,
+                GridData.FILL, true);
+        createLabel(leftComposite, 
+                Messages.ProjectPropertyPageDasboardURLLabel);
+        m_dashboardURL = new CheckedURLText(rightComposite, SWT.BORDER);
+        m_dashboardURL.setText(StringUtils
+                .defaultString(m_origProjectProps.getDashboardURL()));
+        m_dashboardURL.validate();
+        GridData textGridData = new GridData();
+        textGridData.grabExcessHorizontalSpace = false;
+        textGridData.widthHint = DEFAULT_CONTROL_WIDTH;
+        m_dashboardURL.setLayoutData(textGridData);
+        LayoutUtil.setMaxChar(m_dashboardURL,
+                IPersistentObject.MAX_STRING_LENGTH);
+    }
+    
+    /**
+     * @param parent the parent to use
+     */
+    private void createReportOnFailure(Composite parent) {
+        m_reportOnFailure = new Button(parent, SWT.CHECK);
+        m_reportOnFailure.setText(Messages
+                .ProjectPropertyPageReportOnFailureLabel);
+        GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+        gridData.grabExcessHorizontalSpace = false;
+        m_reportOnFailure.setLayoutData(gridData);
+        boolean reportOnFailure = m_origProjectProps.getIsReportOnFailure();
+        m_reportOnFailure.setSelection(reportOnFailure);
+        m_reportOnFailure.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+                enableFailureCommentTextfield();
+            }
+
+            public void widgetDefaultSelected(SelectionEvent e) {
+                // nothing here
+            }
+        });
+        m_failureComment = new Text(parent, SWT.BORDER);
+        m_failureComment.setText(StringUtils
+                .defaultString(m_origProjectProps.getFailureComment()));
+        GridData textGridData = new GridData();
+        textGridData.grabExcessHorizontalSpace = false;
+        textGridData.widthHint = DEFAULT_CONTROL_WIDTH;
+        m_failureComment.setLayoutData(textGridData);
+        LayoutUtil.setMaxChar(m_failureComment,
+                IPersistentObject.MAX_STRING_LENGTH);
+        ControlDecorator.createInfo(m_failureComment,
+                Messages.ProjectPropertyPageReportOnFailureInfo, false);
+        enableFailureCommentTextfield();
+    }
+    
+    /**
+     * @param parent the parent to use
+     */
+    private void createReportOnSuccess(Composite parent) {
+        m_reportOnSuccess = new Button(parent, SWT.CHECK);
+        m_reportOnSuccess.setText(Messages
+                .ProjectPropertyPageReportOnSuccessLabel);
+        GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+        gridData.grabExcessHorizontalSpace = false;
+        m_reportOnSuccess.setLayoutData(gridData);
+        boolean reportOnSuccess = m_origProjectProps.getIsReportOnSuccess();
+        m_reportOnSuccess.setSelection(reportOnSuccess);
+        m_reportOnSuccess.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+                enableSuccessCommentTextfield();
+            }
+
+            public void widgetDefaultSelected(SelectionEvent e) {
+                // nothing here
+            }
+        });
+        m_successComment = new Text(parent, SWT.BORDER);
+        m_successComment.setText(StringUtils
+                .defaultString(m_origProjectProps.getSuccessComment()));
+        GridData textGridData = new GridData();
+        textGridData.grabExcessHorizontalSpace = false;
+        textGridData.widthHint = DEFAULT_CONTROL_WIDTH;
+        m_successComment.setLayoutData(textGridData);
+        LayoutUtil.setMaxChar(m_successComment,
+                IPersistentObject.MAX_STRING_LENGTH);
+        ControlDecorator.createInfo(m_successComment,
+                Messages.ProjectPropertyPageReportOnSuccessInfo, false);
+        enableSuccessCommentTextfield();
+    }
+
+    /**
+     * @param parent the parent to use
+     */
+    private void createALMrepositoryChooser(Composite parent) {
+        Composite leftComposite = createComposite(parent, NUM_COLUMNS_1,
+                GridData.BEGINNING, false);
+        Composite rightComposite = createComposite(parent, 3,
+                GridData.FILL, true);
+        createLabel(leftComposite,
+                Messages.ProjectPropertyPageALMRepositoryLabel);
+        String configuredRepo = m_origProjectProps
+                .getALMRepositoryName();
+        m_almRepoCombo = ControlFactory
+                .createALMRepositoryCombo(rightComposite, configuredRepo);
+        m_almRepoCombo.setSelectedObject(configuredRepo);
+        GridData textGridData = new GridData();
+        textGridData.grabExcessHorizontalSpace = true;
+        textGridData.horizontalAlignment = GridData.FILL;
+        m_almRepoCombo.setLayoutData(textGridData);
+        
+        Button connectionTest = new Button(rightComposite, SWT.PUSH);
+        connectionTest.setText(Messages.ProjectPropertyPageALMConnectionTest);
+        
+        connectionTest.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+                IStatus connectionStatus = ALMAccess
+                        .testConnection(m_almRepoCombo.getSelectedObject());
+                if (connectionStatus.isOK()) {
+                    setErrorMessage(null);
+                } else {
+                    setErrorMessage(connectionStatus.getMessage());
+                }
+            }
+            public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+        });
     }
 
     /**
@@ -228,8 +383,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         
         createLabel(leftComposite, 
             Messages.ProjectPropertyPageProjectVersion);
-        createLabel(rightComposite, m_majorVersionNumber.toString() 
-                + StringConstants.DOT + m_minorVersionNumber);
+        createLabel(rightComposite, m_origProjectProps.getMajorNumber() 
+                + StringConstants.DOT + m_origProjectProps.getMinorNumber());
         Label l = createLabel(rightComposite, StringConstants.EMPTY);
         GridData layoutData = new GridData();
         layoutData.grabExcessHorizontalSpace = true;
@@ -252,7 +407,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             "ControlDecorator.ProjectPropertiesGUID", false); //$NON-NLS-1$
         
         Label projectGuid = new Label(rightComposite, SWT.NONE);
-        projectGuid.setText(m_projectGuid);
+        projectGuid.setText(getProject().getGuid());
         Label l = createLabel(rightComposite, StringConstants.EMPTY);
         GridData layoutData = new GridData();
         layoutData.grabExcessHorizontalSpace = true;
@@ -275,7 +430,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 "ControlDecorator.NewProjectIsReusable", false); //$NON-NLS-1$
         m_isReusableCheckbox = new Button(rightComposite, SWT.CHECK);
 
-        m_isReusableCheckbox.setSelection(m_oldIsReusable);
+        m_isReusableCheckbox.setSelection(m_origProjectProps.getIsReusable());
         m_isReusableCheckbox.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
                 boolean isReusable = m_isReusableCheckbox.getSelection();
@@ -304,7 +459,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 "ControlDecorator.NewProjectIsProtected", false); //$NON-NLS-1$
         m_isProtectedCheckbox = new Button(rightComposite, SWT.CHECK);
 
-        m_isProtectedCheckbox.setSelection(m_oldIsProtected);
+        m_isProtectedCheckbox.setSelection(m_origProjectProps.getIsProtected());
 
     }
 
@@ -406,7 +561,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         LayoutUtil.addToolTipAndMaxWidth(
                 textGridData, m_projectDescriptionTextField);
         m_projectDescriptionTextField.setLayoutData(textGridData);
-        LayoutUtil.setMaxChar(m_projectDescriptionTextField);
+        LayoutUtil.setMaxChar(m_projectDescriptionTextField,
+                IPersistentObject.MAX_STRING_LENGTH);
     }
     
     /**
@@ -428,10 +584,24 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     }
     
     /**
-     * 
+     * reflect the enablement of checkbox to the corresponding textfield
      */
     protected void enableCleanResultDaysTextfield() {
         m_cleanResultDays.setEnabled(m_cleanTestresults.getSelection());
+    }
+    
+    /**
+     * reflect the enablement of checkbox to the corresponding textfield 
+     */
+    protected void enableSuccessCommentTextfield() {
+        m_successComment.setEnabled(m_reportOnSuccess.getSelection());
+    }
+    
+    /**
+     * reflect the enablement of checkbox to the corresponding textfield 
+     */
+    protected void enableFailureCommentTextfield() {
+        m_failureComment.setEnabled(m_reportOnFailure.getSelection());
     }
     
     /**
@@ -524,7 +694,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 project.setComment(m_projectDescriptionTextField.getText());
             }
             storeAutoTestResultCleanup();
-
+            storeALMData();
             if (!m_oldProjectName.equals(m_newProjectName)) {
                 ProjectNameBP.getInstance().setName(
                         getEditSupport().getSession(), project.getGuid(),
@@ -576,6 +746,31 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                     ite, ite.getErrorMessageParams(), null);
         }
         return true;
+    }
+
+    /**
+     * store all ALM related data
+     */
+    private void storeALMData() {
+        IProjectPropertiesPO props = getProject().getProjectProperties();
+        if (m_almRepoCombo != null) {
+            props.setALMRepositoryName(m_almRepoCombo.getText());
+        }
+        if (m_reportOnFailure != null) {
+            props.setIsReportOnFailure(m_reportOnFailure.getSelection());
+        }
+        if (m_failureComment != null) {
+            props.setFailureComment(m_failureComment.getText().trim());
+        }
+        if (m_reportOnSuccess != null) {
+            props.setIsReportOnSuccess(m_reportOnSuccess.getSelection());
+        }
+        if (m_successComment != null) {
+            props.setSuccessComment(m_successComment.getText().trim());
+        }
+        if (m_dashboardURL != null) {
+            props.setDashboardURL(m_dashboardURL.getText().trim());
+        }
     }
 
     /**

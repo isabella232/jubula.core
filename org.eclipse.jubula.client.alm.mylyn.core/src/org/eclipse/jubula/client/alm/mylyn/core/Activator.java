@@ -17,6 +17,8 @@ import org.osgi.framework.BundleContext;
  * @author BREDEX GmbH
  */
 public class Activator implements BundleActivator {
+    /** the bundle ID */
+    public static final String ID = "org.eclipse.jubula.client.alm.mylyn.core"; 
     /** context */
     private static BundleContext context;
 

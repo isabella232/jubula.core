@@ -229,7 +229,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return the testJobName
      */
     @Basic
-    @Column(name = "TEST_JOB_NAME", length = 4000)
+    @Column(
+            name = "TEST_JOB_NAME", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getTestJobName() {
         return m_testJobName;
     }
@@ -301,7 +303,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return the projectName
      */
     @Basic
-    @Column(name = "PROJECT_NAME", length = 4000)
+    @Column(
+            name = "PROJECT_NAME", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getProjectName() {
         return m_projectName;
     }
@@ -366,7 +370,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return the tsName
      */
     @Basic
-    @Column(name = "TS_NAME", length = 4000)
+    @Column(
+            name = "TS_NAME", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getTestsuiteName() {
         return m_testsuiteName;
     }
@@ -407,7 +413,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return Returns the autName.
      */
     @Basic
-    @Column(name = "AUT_NAME", length = 4000)
+    @Column(
+            name = "AUT_NAME", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getAutName() {
         return m_autName;
     }
@@ -424,7 +432,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return Returns the autId.
      */
     @Basic
-    @Column(name = "AUT_ID", length = 4000)
+    @Column(
+            name = "AUT_ID", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getAutId() {
         return m_autId;
     }
@@ -464,7 +474,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return the autConf
      */
     @Basic
-    @Column(name = "AUT_CONFIG_NAME", length = 4000)
+    @Column(
+            name = "AUT_CONFIG_NAME", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getAutConfigName() {
         return m_autConfigName;
     }
@@ -513,7 +525,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return the autagent name
      */
     @Basic
-    @Column(name = "AUT_AGENT_NAME", length = 4000)
+    @Column(
+            name = "AUT_AGENT_NAME", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getAutAgentName() {
         return m_autAgentName;
     }
@@ -523,7 +537,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return the autHostname
      */
     @Basic
-    @Column(name = "AUT_HOSTNAME", length = 4000)
+    @Column(
+            name = "AUT_HOSTNAME", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getAutHostname() {
         return m_autHostname;
     }
@@ -540,7 +556,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return the autOS
      */
     @Basic
-    @Column(name = "AUT_OS", length = 4000)
+    @Column(
+            name = "AUT_OS", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getAutOS() {
         return m_autOS;
     }
@@ -663,7 +681,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return the duration
      */
     @Basic
-    @Column(name = "TS_DURATION", length = 4000)    
+    @Column(
+            name = "TS_DURATION", 
+            length = IPersistentObject.MAX_STRING_LENGTH)    
     public String getTestsuiteDuration() {
         return m_testsuiteDuration;
     }
@@ -865,7 +885,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * {@inheritDoc}
      */
     @Basic
-    @Column(name = "COMMENT_TITLE", length = 4000)
+    @Column(
+            name = "COMMENT_TITLE", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getCommentTitle() {
         return m_commentTitle;
     }
@@ -881,7 +903,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * {@inheritDoc}
      */
     @Basic
-    @Column(name = "COMMENT_DETAIL", length = 4000)
+    @Column(
+            name = "COMMENT_DETAIL", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getCommentDetail() {
         return m_commentDetail;
     }

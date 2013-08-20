@@ -241,7 +241,7 @@ class AUTConfigPO implements IAUTConfigPO {
     @CollectionTable(name = "AUT_CONF_ATTR", 
                      joinColumns = @JoinColumn(name = "AUT_CONF"))
     @MapKeyColumn(name = "ATTR_KEY")
-    @Column(name = "ATTR_VALUE", length = 4000)
+    @Column(name = "ATTR_VALUE", length = MAX_STRING_LENGTH)
     Map<String, String> getHbmConfigMap() {
         return m_config;
     }

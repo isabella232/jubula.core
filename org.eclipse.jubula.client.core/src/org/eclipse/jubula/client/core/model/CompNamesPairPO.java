@@ -183,7 +183,7 @@ class CompNamesPairPO implements ICompNamesPairPO {
      * {@inheritDoc}
      */
     @Basic
-    @Column(name = "FIRST_NAME", length = 4000)
+    @Column(name = "FIRST_NAME", length = MAX_STRING_LENGTH)
     public String getFirstName() {
         return m_firstName;
     }
@@ -194,7 +194,7 @@ class CompNamesPairPO implements ICompNamesPairPO {
      * {@inheritDoc}
      */
     @Basic
-    @Column(name = "SECOND_NAME", length = 4000)
+    @Column(name = "SECOND_NAME", length = MAX_STRING_LENGTH)
     public String getSecondName() {
         return m_secondName;
     }

@@ -37,8 +37,7 @@ public class TestexecClient extends AbstractCmdlineClient {
     private static AbstractCmdlineClient instance = null;
 
     /**
-     * private contructor
-     *
+     * private constructor
      */
     private TestexecClient() {
         //no public constructor for this class

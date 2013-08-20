@@ -102,7 +102,9 @@ public class ParameterDetailsPO implements IParameterDetailsPO {
      * @return the parameterName
      */
     @Basic
-    @Column(name = "NAME", length = 4000)
+    @Column(
+            name = "NAME", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getParameterName() {
         return m_parameterName;
     }
@@ -119,7 +121,9 @@ public class ParameterDetailsPO implements IParameterDetailsPO {
      * @return the internalParameterType
      */
     @Basic
-    @Column(name = "INTERNAL_TYPE", length = 4000)
+    @Column(
+            name = "INTERNAL_TYPE", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
     public String getInternalParameterType() {
         return m_internalParameterType;
     }
@@ -136,7 +140,7 @@ public class ParameterDetailsPO implements IParameterDetailsPO {
      * @return the parameterType
      */
     @Basic
-    @Column(name = "TYPE", length = 4000)
+    @Column(name = "TYPE", length = IPersistentObject.MAX_STRING_LENGTH)
     public String getParameterType() {
         return m_parameterType;
     }
@@ -153,7 +157,7 @@ public class ParameterDetailsPO implements IParameterDetailsPO {
      * @return the parameterValue
      */
     @Basic
-    @Column(name = "VALUE", length = 4000)
+    @Column(name = "VALUE", length = IPersistentObject.MAX_STRING_LENGTH)
     public String getParameterValue() {
         return m_parameterValue;
     }

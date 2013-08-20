@@ -22,11 +22,6 @@ import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
  */
 public interface INodePO extends ITimestampPO {
     /**
-     * maximum length of strings in database
-     */
-    public static final int MAX_STRING_LENGTH = 4000;
-    
-    /**
      * @return The name of this node
      */
     public abstract String getName();

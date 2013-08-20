@@ -134,7 +134,7 @@ public class ObjectMappingAssoziationPO
      * @return Returns the type.
      */
     @Basic
-    @Column(length = 4000)
+    @Column(length = MAX_STRING_LENGTH)
     public String getType() {
         return m_type;
     }
@@ -188,7 +188,7 @@ public class ObjectMappingAssoziationPO
     @CollectionTable(name = "LOGICAL_NAME")
     @JoinColumn(name = "OM_ASSOC")
     @OrderColumn(name = "IDX")
-    @Column(name = "LOGICAL_NAME", length = 4000)
+    @Column(name = "LOGICAL_NAME", length = MAX_STRING_LENGTH)
     @BatchFetch(value = BatchFetchType.JOIN)
     public List<String> getLogicalNames() {
         return m_logicalNames;

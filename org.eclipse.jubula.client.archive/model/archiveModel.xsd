@@ -82,6 +82,18 @@
         		minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="teststyleEnabled" type="xs:boolean" minOccurs="0" 
                 nillable="false" default="false" />
+        	<xs:element name="almRepositoryName" type="xs:string" minOccurs="0"
+        		maxOccurs="1" />
+        	<xs:element name="isReportOnSuccess" type="xs:boolean"
+        		minOccurs="0" maxOccurs="1" default="false" />
+        	<xs:element name="successComment" type="xs:string" minOccurs="0"
+        		maxOccurs="1" />
+        	<xs:element name="isReportOnFailure" type="xs:boolean"
+        		minOccurs="0" maxOccurs="1" default="false" />
+        	<xs:element name="failureComment" type="xs:string" minOccurs="0"
+        		maxOccurs="1" />
+        	<xs:element name="dashboardURL" type="xs:string" minOccurs="0"
+        		maxOccurs="1" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

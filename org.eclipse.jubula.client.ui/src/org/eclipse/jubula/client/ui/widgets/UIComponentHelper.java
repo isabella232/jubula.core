@@ -12,13 +12,9 @@ package org.eclipse.jubula.client.ui.widgets;
 
 import java.util.List;
 
-import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -37,16 +33,16 @@ public abstract class UIComponentHelper {
     private static final String LABEL_TERMINATOR = ":"; //$NON-NLS-1$
     
     /**
-     * hide construcotr for utility class
+     * hide constructor for utility class
      */
     private UIComponentHelper() {
-        // hide construcotr for utility class
+        // hide constructor for utility class
     }
 
     /**
      * Create a simple separator which spans the supplied number of columns
      * @param parent parent composite
-     * @param hSpan number of columns the sepator should span
+     * @param hSpan number of columns the separator should span
      * @return a Label representing the separator
      */
     public static Label createSeparator(Composite parent, int hSpan) {
@@ -187,31 +183,6 @@ public abstract class UIComponentHelper {
         LayoutUtil.addToolTipAndMaxWidth(comboGrid, combo);
         combo.setLayoutData(comboGrid);
         return combo;
-    }
-
-    /**
-     * set the maximum number of characters this Text may hold and install
-     * a listener which shows a warning dialog if the number of characters is
-     * reached.
-     * @param textField The Text for which the limit should be set
-     * @param limit The limit, any number greater than one and less than
-     * Text.LIMIT;
-     */
-    public static void setMaxTextChars(Text textField, final int limit) {
-        if (textField == null) {
-            return;
-        }
-        textField.setTextLimit(limit);
-        textField.addModifyListener(new ModifyListener() {
-            public void modifyText(ModifyEvent e) {
-                if (((Text)e.widget).getCharCount() == limit) {
-                    ErrorHandlingUtil.createMessageDialog(
-                            MessageIDs.W_MAX_CHAR, 
-                            new Object[] {limit}, null);  
-                }
-            }
-        });
-
     }
 
     /**

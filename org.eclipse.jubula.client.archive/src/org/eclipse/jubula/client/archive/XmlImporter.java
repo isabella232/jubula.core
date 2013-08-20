@@ -104,6 +104,7 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
@@ -715,14 +716,8 @@ class XmlImporter {
         EntityManager attrDescSession, boolean assignNewGuid, 
         IParamNameMapper mapper, IWritableComponentNameCache cNC)
         throws InvalidDataException, InterruptedException {
-        proj.setComment(xml.getComment());
-        proj.setDefaultLanguage(LocaleUtil.convertStrToLocale(xml
-                .getDefaultLanguage()));
-        proj.setToolkit(xml.getAutToolKit());
-        proj.setIsReusable(xml.getIsReusable());
-        proj.setIsProtected(xml.getIsProtected());
-        proj.getProjectProperties().getCheckConfCont().setEnabled(
-                xml.getTeststyleEnabled());
+        IProjectPropertiesPO projectProperties = 
+                fillProjectProperties(proj, xml);
         if (xml.isSetTestResultDetailsCleanupInterval()) {
             proj.setTestResultCleanupInterval(xml
                     .getTestResultDetailsCleanupInterval());
@@ -779,12 +774,39 @@ class XmlImporter {
         for (CheckConfiguration xmlConf : xml.getCheckConfigurationList()) {
             checkCancel();
             initCheckConf(
-                xmlConf, proj.getProjectProperties().getCheckConfCont());
+                xmlConf, projectProperties.getCheckConfCont());
         }
         if (xml.getTestresultSummaries() != null) {
             initTestResultSummaries(xml.getTestresultSummaries(), proj);
         }
         createComponentNames(xml, proj, cNC, assignNewGuid);
+    }
+
+    /**
+     * @param proj
+     *            the project
+     * @param xml
+     *            the project
+     * @return the project properties
+     */
+    public IProjectPropertiesPO fillProjectProperties(IProjectPO proj,
+            Project xml) {
+        proj.setComment(xml.getComment());
+        proj.setDefaultLanguage(LocaleUtil.convertStrToLocale(xml
+                .getDefaultLanguage()));
+        proj.setToolkit(xml.getAutToolKit());
+        proj.setIsReusable(xml.getIsReusable());
+        proj.setIsProtected(xml.getIsProtected());
+        IProjectPropertiesPO projectProperties = proj.getProjectProperties();
+        projectProperties.setALMRepositoryName(xml.getAlmRepositoryName());
+        projectProperties.setIsReportOnSuccess(xml.getIsReportOnSuccess());
+        projectProperties.setSuccessComment(xml.getSuccessComment());
+        projectProperties.setIsReportOnFailure(xml.getIsReportOnFailure());
+        projectProperties.setFailureComment(xml.getFailureComment());
+        projectProperties.setDashboardURL(xml.getDashboardURL());
+        projectProperties.getCheckConfCont().setEnabled(
+                xml.getTeststyleEnabled());
+        return projectProperties;
     }
 
     /**

@@ -532,6 +532,12 @@ public class Messages extends NLS {
     public static String Project;
     public static String ProjectGUIPropertySourceProjectName;
     public static String ProjectInfoWizardPageInfoText;
+    public static String ProjectPropertyPageALMRepositoryLabel;
+    public static String ProjectPropertyPageALMConnectionTest;
+    public static String ProjectPropertyPageReportOnSuccessLabel;
+    public static String ProjectPropertyPageReportOnSuccessInfo;
+    public static String ProjectPropertyPageReportOnFailureLabel;
+    public static String ProjectPropertyPageReportOnFailureInfo;
     public static String ProjectPropertyPageAutToolKitLabel;
     public static String ProjectPropertyPageDownToolTip;
     public static String ProjectPropertyPageIsProtected;
@@ -541,6 +547,7 @@ public class Messages extends NLS {
     public static String ProjectPropertyPageProjectGuid;
     public static String ProjectPropertyPageProjectName;
     public static String ProjectPropertyPageProjectDescr;
+    public static String ProjectPropertyPageDasboardURLLabel;
     public static String ProjectPropertyPageProjectVersion;
     public static String ProjectPropertyPageReusableProjectsAllDownToolTip;
     public static String ProjectPropertyPageReusableProjectsAllUpToolTip;

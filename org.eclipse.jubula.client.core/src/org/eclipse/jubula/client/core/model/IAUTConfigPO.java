@@ -20,11 +20,6 @@ import org.apache.commons.lang.StringUtils;
  * @created 20.12.2005
  */
 public interface IAUTConfigPO extends IPersistentObject, Comparable {
-    /**
-     * max length of classpath allowed
-     */
-    public static final int MAX_CLASSPATH_LENGTH = 4000;
-
     /** Activation method for window at TS start */
     public static enum ActivationMethod {
         /** No activation */

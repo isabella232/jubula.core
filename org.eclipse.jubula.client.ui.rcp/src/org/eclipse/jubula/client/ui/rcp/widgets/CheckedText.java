@@ -174,6 +174,13 @@ public abstract class CheckedText extends JBText {
         m_validationListener = new ValidationListener(validator);
         addVerifyListener(m_validationListener);
         
+        validate();
+    }
+
+    /**
+     * trigger a validation programmatically
+     */
+    public void validate() {
         Event dummyEvent = new Event();
         dummyEvent.start = 0;
         dummyEvent.end = 0;

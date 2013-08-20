@@ -18,7 +18,11 @@ import java.io.Serializable;
  * @created 20.06.2005
  */
 public interface IPersistentObject extends Serializable {
-
+    /**
+     * max length of a string in the database
+     */
+    public static final int MAX_STRING_LENGTH = 4000;
+    
     /**
      * @return version
      */

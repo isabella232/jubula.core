@@ -16,8 +16,6 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
-
-
 /**
  * @author BREDEX GmbH
  * @created 06.03.2006
@@ -25,7 +23,7 @@ import org.eclipse.swt.widgets.Text;
 public class CheckedProjectNameText extends CheckedText {
 
     /**
-     * Implementation of the intger validator with optional check for empty
+     * Implementation of the integer validator with optional check for empty
      * input.
      */
     private static class ProjectNameValidator implements IValidator {
