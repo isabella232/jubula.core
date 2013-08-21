@@ -37,6 +37,7 @@ import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
@@ -94,6 +95,29 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         public void okPressed() throws PMException;
     }
 
+    /**
+     * @author BREDEX GmbH
+     */
+    private class ConnectionTestListener implements SelectionListener {
+        /** {@inheritDoc} */
+        public void widgetSelected(SelectionEvent e) {
+            IStatus connectionStatus = ALMAccess
+                    .testConnection(m_almRepoCombo.getSelectedObject());
+            if (connectionStatus.isOK()) {
+                m_connectionTest.setImage(IconConstants.STEP_OK_IMAGE);
+                setErrorMessage(null);
+            } else {
+                m_connectionTest.setImage(IconConstants.ERROR_IMAGE);
+                setErrorMessage(connectionStatus.getMessage());
+            }
+        }
+        
+        /** {@inheritDoc} */
+        public void widgetDefaultSelected(SelectionEvent e) {
+            widgetSelected(e);
+        }
+    }
+    
     /** number of columns = 1 */
     private static final int NUM_COLUMNS_1 = 1; 
     /** number of columns = 2 */
@@ -119,6 +143,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     private DirectCombo<String> m_projectToolkitCombo;
     /** the Combo to select the connected ALM system */
     private DirectCombo<String> m_almRepoCombo;
+    /** the button to test the connection with */ 
+    private Button m_connectionTest;
     /** the new project name */
     private String m_newProjectName;
     /**  Checkbox to decide if testresults should be deleted after specified days */
@@ -341,28 +367,24 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         m_almRepoCombo = ControlFactory
                 .createALMRepositoryCombo(rightComposite, configuredRepo);
         m_almRepoCombo.setSelectedObject(configuredRepo);
-        GridData textGridData = new GridData();
-        textGridData.grabExcessHorizontalSpace = true;
-        textGridData.horizontalAlignment = GridData.FILL;
-        m_almRepoCombo.setLayoutData(textGridData);
-        
-        Button connectionTest = new Button(rightComposite, SWT.PUSH);
-        connectionTest.setText(Messages.ProjectPropertyPageALMConnectionTest);
-        
-        connectionTest.addSelectionListener(new SelectionListener() {
+        m_almRepoCombo.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
-                IStatus connectionStatus = ALMAccess
-                        .testConnection(m_almRepoCombo.getSelectedObject());
-                if (connectionStatus.isOK()) {
-                    setErrorMessage(null);
-                } else {
-                    setErrorMessage(connectionStatus.getMessage());
-                }
+                m_connectionTest.setImage(IconConstants.STEP_TESTING_IMAGE);
+                setErrorMessage(null);
             }
             public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
         });
+        GridData textGridData = new GridData();
+        textGridData.grabExcessHorizontalSpace = true;
+        textGridData.horizontalAlignment = GridData.FILL;
+        m_almRepoCombo.setLayoutData(textGridData);
+        
+        m_connectionTest = new Button(rightComposite, SWT.PUSH);
+        m_connectionTest.setText(Messages.ProjectPropertyPageALMConnectionTest);
+        m_connectionTest.setImage(IconConstants.STEP_TESTING_IMAGE);
+        m_connectionTest.addSelectionListener(new ConnectionTestListener());
     }
 
     /**
