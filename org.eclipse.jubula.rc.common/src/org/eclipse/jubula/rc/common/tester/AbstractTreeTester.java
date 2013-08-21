@@ -555,11 +555,6 @@ public abstract class AbstractTreeTester extends WidgetTester {
         AbstractTreeOperationContext context = getTreeAdapter().getContext();
         Object selectedNode = 
             getSelectedNode(context);
-        if (selectedNode == null) {
-            throw new StepExecutionException("No tree item selected", //$NON-NLS-1$ 
-                EventFactory.createActionError(TestErrorEvent.NO_SELECTION));
-        }
-        
         return context.getRenderedText(selectedNode);
     }
     
