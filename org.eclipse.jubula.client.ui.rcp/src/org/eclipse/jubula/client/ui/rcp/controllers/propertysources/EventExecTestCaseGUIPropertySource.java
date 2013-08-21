@@ -82,6 +82,9 @@ public class EventExecTestCaseGUIPropertySource extends
     /** cached property descriptor for max number of retries */
     private IPropertyDescriptor m_maxRetriesPropDesc = null;
 
+    /** cached property descriptor for comment */
+    private IPropertyDescriptor m_commentPropDesc = null;
+    
     /**
      * @param eventExTestCase
      *            the dependend EventExecTestCase.
@@ -132,23 +135,10 @@ public class EventExecTestCaseGUIPropertySource extends
     @SuppressWarnings("synthetic-access")
     protected void initPropDescriptor() {
         clearPropertyDescriptors();
-        
-        // EventHandler Name
-        if (m_namePropDesc == null) {
-            m_namePropDesc = new TextPropertyDescriptor(
-                    new ExecNameController(),
-                    P_EVHANDLER_DISPLAY_NAME);
-        }
-        addPropertyDescriptor(m_namePropDesc);
-        // Specification Name
-        if (m_specNamePropDesc == null) {
-            PropertyDescriptor propDes = new JBPropertyDescriptor(
-                    new SpecNameController(),
-                    P_SPECNAME_DISPLAY_NAME);
-            propDes.setLabelProvider(new DisabledLabelProvider());
-            m_specNamePropDesc = propDes;
-        }
-        addPropertyDescriptor(m_specNamePropDesc);
+        createNamePropertyDescriptor();
+        createSpecNamePropertyDescriptor();
+        createCommentPropertyDescriptor();
+        createTaskIdPropertyDescriptor();
         
         // Event Types
         if (m_eventTypePropDesc == null) {
@@ -200,6 +190,51 @@ public class EventExecTestCaseGUIPropertySource extends
 
         // Get the ExecTcDescriptors and add them to this descriptors
         addPropertyDescriptor(super.createParamDescriptors());
+    }
+
+    /** create property descriptor */
+    private void createTaskIdPropertyDescriptor() {
+        if (getTaskIdPropDesc() == null) {
+            JBPropertyDescriptor taskIdPropDesc = new JBPropertyDescriptor(
+                new ReadOnlySpecTaskIdController(),
+                Messages.AbstractGuiNodePropertySourceTaskId);
+            taskIdPropDesc.setLabelProvider(new DisabledLabelProvider());
+            setTaskIdPropDesc(taskIdPropDesc);
+        }
+        addPropertyDescriptor(getTaskIdPropDesc());
+    }
+
+
+    /** create property descriptor */
+    private void createCommentPropertyDescriptor() {
+        if (m_commentPropDesc == null) {
+            m_commentPropDesc = new TextPropertyDescriptor(
+                    new CommentController(), P_ELEMENT_DISPLAY_COMMENT);
+        }
+        addPropertyDescriptor(m_commentPropDesc);
+    }
+
+
+        /** create property descriptor */
+    private void createSpecNamePropertyDescriptor() {
+        if (m_specNamePropDesc == null) {
+            PropertyDescriptor propDes = new JBPropertyDescriptor(
+                    new SpecNameController(),
+                    P_SPECNAME_DISPLAY_NAME);
+            propDes.setLabelProvider(new DisabledLabelProvider());
+            m_specNamePropDesc = propDes;
+        }
+        addPropertyDescriptor(m_specNamePropDesc);
+    }
+
+    /** create property descriptor */
+    private void createNamePropertyDescriptor() {
+        if (m_namePropDesc == null) {
+            m_namePropDesc = new TextPropertyDescriptor(
+                    new ExecNameController(),
+                    P_EVHANDLER_DISPLAY_NAME);
+        }
+        addPropertyDescriptor(m_namePropDesc);
     }
 
     /**

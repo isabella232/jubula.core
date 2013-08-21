@@ -24,7 +24,6 @@ import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
@@ -36,7 +35,6 @@ import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.IVerifiable;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractPropertySource.AbstractPropertyController;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.IParameterPropertyController.ParameterInputType;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -177,20 +175,10 @@ public abstract class AbstractNodePropertySource
      * @created 20.08.2013
      */
     protected class ReadOnlySpecTaskIdController 
-        extends AbstractPropertyController {
+        extends TaskIdController {
         /** {@inheritDoc} */
         public boolean setProperty(Object value) {
-            // do nothing, read only
-            return true;
-        }
-        /** {@inheritDoc} */
-        public Object getProperty() {
-            IExecTestCasePO exTc = (IExecTestCasePO) getPoNode();
-            if (exTc.getSpecTestCase() != null) {
-                return exTc.getSpecTestCase().getTaskId(); 
-            }
-            
-            return StringConstants.EMPTY;
+            return true; // do nothing, read only
         }
         
         /** {@inheritDoc} */
