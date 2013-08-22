@@ -68,6 +68,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
@@ -101,8 +102,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     private class ConnectionTestListener implements SelectionListener {
         /** {@inheritDoc} */
         public void widgetSelected(SelectionEvent e) {
-            IStatus connectionStatus = ALMAccess
-                    .testConnection(m_almRepoCombo.getSelectedObject());
+            String selectedObject = m_almRepoCombo.getSelectedObject();
+            IStatus connectionStatus = ALMAccess.testConnection(selectedObject);
             if (connectionStatus.isOK()) {
                 m_connectionTest.setImage(IconConstants.STEP_OK_IMAGE);
                 setErrorMessage(null);
@@ -242,6 +243,11 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         createReportOnFailure(projectNameComposite);
         createDashboardURL(projectNameComposite);
         
+        Event event = new Event();
+        event.type = SWT.Selection;
+        event.widget = m_almRepoCombo;
+        m_almRepoCombo.notifyListeners(SWT.Selection, event);
+        
         Composite innerComposite = new Composite(composite, SWT.NONE);
         GridLayout compositeLayout = new GridLayout();
         compositeLayout.numColumns = NUM_COLUMNS_1;
@@ -366,16 +372,25 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 .getALMRepositoryName();
         m_almRepoCombo = ControlFactory
                 .createALMRepositoryCombo(rightComposite, configuredRepo);
-        m_almRepoCombo.setSelectedObject(configuredRepo);
         m_almRepoCombo.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
                 m_connectionTest.setImage(IconConstants.STEP_TESTING_IMAGE);
+                if (m_almRepoCombo.getSelectedObject() == null) {
+                    m_reportOnFailure.setEnabled(false);
+                    m_reportOnSuccess.setEnabled(false);
+                } else {
+                    m_reportOnFailure.setEnabled(true);
+                    m_reportOnSuccess.setEnabled(true);
+                }
+                enableSuccessCommentTextfield();
+                enableFailureCommentTextfield();
                 setErrorMessage(null);
             }
             public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
             }
         });
+        m_almRepoCombo.setSelectedObject(configuredRepo);
         GridData textGridData = new GridData();
         textGridData.grabExcessHorizontalSpace = true;
         textGridData.horizontalAlignment = GridData.FILL;
@@ -616,14 +631,31 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
      * reflect the enablement of checkbox to the corresponding textfield 
      */
     protected void enableSuccessCommentTextfield() {
-        m_successComment.setEnabled(m_reportOnSuccess.getSelection());
+        enableSelectionAndEnablementDependent(
+                m_reportOnSuccess, m_successComment);
     }
     
     /**
      * reflect the enablement of checkbox to the corresponding textfield 
      */
     protected void enableFailureCommentTextfield() {
-        m_failureComment.setEnabled(m_reportOnFailure.getSelection());
+        enableSelectionAndEnablementDependent(
+                m_reportOnFailure, m_failureComment);
+    }
+    
+    /**
+     * @param buttonToSyncTo
+     *            the button to sync to
+     * @param widgetToEnable
+     *            the widget to enable / disable
+     */
+    protected void enableSelectionAndEnablementDependent(Button buttonToSyncTo,
+        Control widgetToEnable) {
+        if (buttonToSyncTo.isEnabled()) {
+            widgetToEnable.setEnabled(buttonToSyncTo.getSelection());
+        } else {
+            widgetToEnable.setEnabled(false);
+        }
     }
     
     /**
