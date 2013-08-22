@@ -50,10 +50,14 @@ public class AutConfigConstants {
     /** The environment of the AUT */
     public static final String ENVIRONMENT = "ENVIRONMENT"; //$NON-NLS-1$
 
-    /**
-     * the key for the name of the executable file used to start the AUT
-     */
+    /** The key for the name of the Modern UI app used to start the AUT. */
+    public static final String AUT_TYPE = "AUT_TYPE"; //$NON-NLS-1$
+
+    /** The key for the name of the executable file used to start the AUT. */
     public static final String EXECUTABLE = "EXECUTABLE"; //$NON-NLS-1$
+
+    /** The key for the name of the Modern UI app used to start the AUT. */
+    public static final String APP_NAME = "APP_NAME"; //$NON-NLS-1$
 
     /** The executable jar file of the AUT */
     public static final String JAR_FILE = "JAR_FILE"; //$NON-NLS-1$

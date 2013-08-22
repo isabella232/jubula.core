@@ -452,8 +452,8 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
      */
     private void initGUIAutConfigSettings(Composite parent) {
         // executable chooser
-        UIComponentHelper.createLabel(parent, 
-            "AUTConfigComponent.exec"); //$NON-NLS-1$ 
+        UIComponentHelper.createLabel(parent,
+                Messages.AUTConfigComponentExecFileName);
         m_execTextField = UIComponentHelper.createTextField(
                 parent, 1);
         LayoutUtil.setMaxChar(m_execTextField,
@@ -1644,9 +1644,10 @@ public abstract class JavaAutConfigComponent extends AutConfigComponent {
         // class path editor
         initGuiClasspathEditor(advancedAreaComposite); 
         // parameter editor
-        ControlDecorator.decorateInfo(UIComponentHelper.createLabel(
-                advancedAreaComposite, "AUTConfigComponent.autArguments"), //$NON-NLS-1$
-                "ControlDecorator.AUTArguments", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(UIComponentHelper.createLabel(
+                advancedAreaComposite,
+                Messages.AUTConfigComponentArguments),
+                Messages.AUTConfigComponentArgumentsControlDecorator, false);
         m_autArgsTextField = 
             UIComponentHelper.createTextField(advancedAreaComposite, 2); 
         // JRE directory editor
