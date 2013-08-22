@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.properties;
 
+import javax.persistence.EntityNotFoundException;
+
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
@@ -17,9 +20,17 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBFatalAbortException;
+import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.ui.IWorkbenchPropertyPage;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.dialogs.PropertyPage;
 
 
@@ -27,9 +38,7 @@ import org.eclipse.ui.dialogs.PropertyPage;
  * @author BREDEX GmbH
  * @created 09.11.2005
  */
-public abstract class AbstractProjectPropertyPage extends PropertyPage 
-        implements IWorkbenchPropertyPage {
-    
+public abstract class AbstractProjectPropertyPage extends PropertyPage {
     /**
      * <code>m_editSupport</code>
      */
@@ -83,6 +92,22 @@ public abstract class AbstractProjectPropertyPage extends PropertyPage
     }
 
     /**
+     * Refreshes the project.
+     */
+    protected void refreshProject() throws ProjectDeletedException {
+        GeneralStorage storage = GeneralStorage.getInstance();
+        try {
+            storage.getMasterSession().refresh(storage.getProject());
+        } catch (EntityNotFoundException enfe) {
+            // Occurs if any Object Mapping information has been deleted while
+            // the Project Properties were being edited.
+            // Refresh the entire master session to ensure that AUT settings
+            // and Object Mappings are in sync
+            storage.reloadMasterSession(new NullProgressMonitor());
+        }
+    }
+    
+    /**
      * @return shared edit support
      */
     protected EditSupport getEditSupport() {
@@ -102,5 +127,82 @@ public abstract class AbstractProjectPropertyPage extends PropertyPage
     public boolean performCancel() {
         Plugin.stopLongRunning();
         return super.performCancel();
+    }
+    
+    /**
+     * @param buttonToSyncTo
+     *            the button to sync to
+     * @param widgetToEnable
+     *            the widget to enable / disable
+     */
+    protected void enableSelectionAndEnablementDependent(Button buttonToSyncTo,
+        Control widgetToEnable) {
+        if (buttonToSyncTo.isEnabled()) {
+            widgetToEnable.setEnabled(buttonToSyncTo.getSelection());
+        } else {
+            widgetToEnable.setEnabled(false);
+        }
+    }
+    
+    /**
+     * Creates a new composite.
+     * @param parent The parent composite.
+     * @param numColumns the number of columns for this composite.
+     * @param alignment The horizontalAlignment (grabExcess).
+     * @param horizontalSpace The horizontalSpace.
+     * @return The new composite.
+     */
+    protected Composite createComposite(Composite parent, int numColumns, 
+            int alignment, boolean horizontalSpace) {
+        
+        Composite composite = new Composite(parent, SWT.NONE);
+        GridLayout compositeLayout = new GridLayout();
+        compositeLayout.numColumns = numColumns;
+        compositeLayout.marginHeight = 0;
+        compositeLayout.marginWidth = 0;
+        composite.setLayout(compositeLayout);
+        GridData compositeData = new GridData();
+        compositeData.horizontalAlignment = alignment;
+        compositeData.grabExcessHorizontalSpace = horizontalSpace;
+        composite.setLayoutData(compositeData);
+        return composite;       
+    }
+    
+    /**
+     * @param parent the parent composite
+     */
+    protected void createEmptyLabel(Composite parent) {
+        createLabel(parent, StringConstants.EMPTY);
+    }
+
+    /**
+     * Creates a label for this page.
+     * @param text The label text to set.
+     * @param parent The composite.
+     * @return a new label
+     */
+    protected Label createLabel(Composite parent, String text) {
+        Label label = new Label(parent, SWT.NONE);
+        label.setText(text);
+        GridData labelGrid = new GridData(GridData.BEGINNING, GridData.CENTER, 
+            false , false, 1, 1);
+        label.setLayoutData(labelGrid);
+        return label;
+    }
+    
+
+    /**
+     * Creates a separator line.
+     * @param composite The parent composite.
+     * @param horSpan The horizontal span.
+     */
+    protected void separator(Composite composite, int horSpan) {
+        createLabel(composite, StringConstants.EMPTY);
+        Label sep = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+        GridData sepData = new GridData();
+        sepData.horizontalAlignment = GridData.FILL;
+        sepData.horizontalSpan = horSpan;
+        sep.setLayoutData(sepData);
+        createLabel(composite, StringConstants.EMPTY);
     }
 }

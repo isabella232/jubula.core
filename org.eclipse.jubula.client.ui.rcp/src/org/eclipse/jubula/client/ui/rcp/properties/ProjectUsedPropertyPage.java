@@ -221,22 +221,6 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
     }
     
     /**
-     * Creates a label for this page.
-     * @param text The label text to set.
-     * @param parent The composite.
-     * @return a new label
-     */
-    private Label createLabel(Composite parent, String text) {
-        Label label = new Label(parent, SWT.NONE);
-        label.setText(text);
-        GridData labelGrid = new GridData(GridData.BEGINNING, GridData.CENTER, 
-            false , false, 1, 1);
-        label.setLayoutData(labelGrid);
-        return label;
-    }
-    
-
-    /**
      * Updates the used projects of the model.
      * @param usedProjects The projects that should be used.
      */
@@ -252,13 +236,14 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
         }
 
         // toRemove: All elements that are currently used, but not in the new list
-        toRemove.addAll(getEditSupport().getWorkProject().getUsedProjects());
+        IProjectPO workProject = getEditSupport().getWorkProject();
+        toRemove.addAll(workProject.getUsedProjects());
         toRemove.removeAll(toAdd);
         
         // toAdd: All elements that are in the new list, but are currently used
-        toAdd.removeAll(getEditSupport().getWorkProject().getUsedProjects());
+        toAdd.removeAll(workProject.getUsedProjects());
         for (IReusedProjectPO remove : toRemove) {
-            getEditSupport().getWorkProject().removeUsedProject(remove);
+            workProject.removeUsedProject(remove);
         }
 
         boolean isDirty = 
@@ -267,12 +252,12 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
         // Prevents constraint violation from Persistence (JPA / EclipseLink)
         Persistor.instance().flushSession(getEditSupport().getSession());
         if (isDirty) {
-            // the session will not be commited if there are no pending changes
-            TimestampBP.refreshTimestamp(getEditSupport().getWorkProject());
+            // the session will not be committed if there are no pending changes
+            TimestampBP.refreshTimestamp(workProject);
         }
         
         for (IReusedProjectPO reuse : toAdd) {
-            getEditSupport().getWorkProject().addUsedProject(reuse);
+            workProject.addUsedProject(reuse);
             reuse.setParentProjectId(getProject().getId());
         }
 

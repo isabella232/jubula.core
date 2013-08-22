@@ -596,6 +596,7 @@ public class Messages extends NLS {
     public static String PropertiesActionPage2;
     public static String PropertiesActionPage3;
     public static String PropertiesActionPage4;
+    public static String PropertiesActionPage5;
     public static String ProtectedProject;
     public static String RecomputeProposals;
     public static String RecordTestCaseActionDoubleTCName;

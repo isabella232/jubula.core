@@ -58,6 +58,10 @@ public interface Constants {
     public static final String REUSED_PROJECT_PROPERTY_ID = 
         "org.eclipse.jubula.client.ui.projectProperties.ReusedProjectPropertyPage";  //$NON-NLS-1$
 
+    /** The ID of the ALM project property page. */
+    public static final String ALM_PROJECT_PROPERTY_ID = 
+        "org.eclipse.jubula.client.ui.projectProperties.ALMProjectPropertyPage";  //$NON-NLS-1$
+    
     /** The ID of the Simple Component Extension property page. */
     public static final String SIMPLE_EXTENSION_PROPERTY_ID = 
         "org.eclipse.jubula.client.ui.projectProperties.ReusedProjectPropertyPage";  //$NON-NLS-1$

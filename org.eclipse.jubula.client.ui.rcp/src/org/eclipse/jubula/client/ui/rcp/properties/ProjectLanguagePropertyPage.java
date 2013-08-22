@@ -43,7 +43,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 
 
@@ -197,36 +196,6 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
         m_allDownButton = m_chooseLists.getAllOneToTwoButton();
     }
     
-    /**
-     * Creates a label for this page.
-     * @param text The label text to set.
-     * @param parent The composite.
-     * @return a new label
-     */
-    private Label createLabel(Composite parent, String text) {
-        Label label = new Label(parent, SWT.NONE);
-        label.setText(text);
-        GridData labelGrid = new GridData(GridData.BEGINNING, GridData.CENTER, 
-            false , false, 1, 1);
-        label.setLayoutData(labelGrid);
-        return label;
-    }
-    
-    /**
-     * Creates a separator line.
-     * @param composite The parent composite.
-     * @param horSpan The horizonzal span.
-     */
-    private void separator(Composite composite, int horSpan) {
-        createLabel(composite, StringConstants.EMPTY);
-        Label sep = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
-        GridData sepData = new GridData();
-        sepData.horizontalAlignment = GridData.FILL;
-        sepData.horizontalSpan = horSpan;
-        sep.setLayoutData(sepData);
-        createLabel(composite, StringConstants.EMPTY);
-    }
-
     /**
      * Inits all swt field in this page.
      */

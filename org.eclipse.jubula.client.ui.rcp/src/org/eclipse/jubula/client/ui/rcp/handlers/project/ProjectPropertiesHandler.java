@@ -30,6 +30,7 @@ import org.eclipse.jubula.client.ui.rcp.extensions.ProjectPropertyExtensionHandl
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.properties.AUTPropertyPage;
 import org.eclipse.jubula.client.ui.rcp.properties.AbstractProjectPropertyPage;
+import org.eclipse.jubula.client.ui.rcp.properties.ProjectALMPropertyPage;
 import org.eclipse.jubula.client.ui.rcp.properties.ProjectGeneralPropertyPage;
 import org.eclipse.jubula.client.ui.rcp.properties.ProjectGeneralPropertyPage.IOkListener;
 import org.eclipse.jubula.client.ui.rcp.properties.ProjectLanguagePropertyPage;
@@ -152,6 +153,13 @@ public class ProjectPropertiesHandler extends AbstractProjectHandler {
         IPreferenceNode usedNode = new PreferenceNode(
             Constants.REUSED_PROJECT_PROPERTY_ID, usedPage);
         mgr.addToRoot(usedNode);
+
+        ProjectALMPropertyPage almPage = new ProjectALMPropertyPage(es);
+        almPage.setTitle(Messages.PropertiesActionPage5);
+        IPreferenceNode almNode = new PreferenceNode(
+                Constants.ALM_PROJECT_PROPERTY_ID, almPage);
+        mgr.addToRoot(almNode);
+        
         generalPage.addOkListener(usedPage);
         
         return generalPage;
