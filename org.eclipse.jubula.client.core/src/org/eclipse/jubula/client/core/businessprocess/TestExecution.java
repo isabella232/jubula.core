@@ -90,6 +90,8 @@ import org.eclipse.jubula.communication.message.PrepareForShutdownMessage;
 import org.eclipse.jubula.communication.message.ResetMonitoringDataMessage;
 import org.eclipse.jubula.communication.message.RestartAutMessage;
 import org.eclipse.jubula.communication.message.TakeScreenshotMessage;
+import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
@@ -114,6 +116,7 @@ import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.osgi.framework.Constants;
 import org.slf4j.Logger;
@@ -834,7 +837,7 @@ public class TestExecution {
      */
     private IComponentIdentifier getTechnicalName(String logicalName,
             IAUTMainPO aut,  Component comp) {
-        IObjectMappingPO om = aut.getObjMap();
+        IObjectMappingPO om = aut.getObjMap(); 
         IComponentIdentifier technicalName;
         try {
             technicalName = om.getTechnicalName(logicalName);
@@ -845,18 +848,30 @@ public class TestExecution {
             ConcreteComponent cc = ((ConcreteComponent) comp);
             if (cc.hasDefaultMapping() && cc.getComponentClass() != null) {
                 Set realizers = cc.getAllRealizers();
-                for (Iterator iterator = realizers.iterator(); iterator
-                        .hasNext();) {
-                    ConcreteComponent concreteComponent = 
-                            (ConcreteComponent) iterator.next();
-                    if (aut.getToolkit().equals(
-                            concreteComponent.getToolkitDesriptor()
-                                    .getToolkitID())) {
-                        technicalName = new ComponentIdentifier();
-                        technicalName
-                                .setComponentClassName(concreteComponent
-                                        .getComponentClass());
-                        break;
+                String toolkit = aut.getToolkit();
+                ToolkitPluginDescriptor tpd = null;
+                while (!StringUtils.isEmpty(toolkit)) {
+
+                    for (Iterator iterator = realizers.iterator(); iterator
+                            .hasNext();) {
+                        ConcreteComponent concreteComponent = 
+                                (ConcreteComponent) iterator.next();
+                        if (toolkit.equals(concreteComponent
+                                .getToolkitDesriptor().getToolkitID())
+                                && concreteComponent
+                                    .getComponentClass() != null) {
+                            technicalName = new ComponentIdentifier();
+                            technicalName.setComponentClassName(
+                                    concreteComponent.getComponentClass());
+                            return technicalName;
+                        }
+                    }
+                    try {
+                        tpd = ToolkitSupportBP.getToolkitDescriptor(toolkit);
+                        toolkit = tpd.getIncludes();
+                    } catch (ToolkitPluginException e) {
+                        LOG.error("No possible technical name found", e); //$NON-NLS-1$
+                        return null;
                     }
                 }
             }

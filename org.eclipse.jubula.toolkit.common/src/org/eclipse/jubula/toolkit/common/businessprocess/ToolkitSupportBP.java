@@ -138,7 +138,7 @@ public class ToolkitSupportBP {
      * @return the {@link ToolkitPluginDescriptor} of the toolkit with the 
      * given id.
      */
-    private static ToolkitPluginDescriptor getToolkitDescriptor(
+    public static ToolkitPluginDescriptor getToolkitDescriptor(
         String toolkitId) throws ToolkitPluginException {
         
         if (toolkitId == null) {
