@@ -35,9 +35,6 @@ public class MessageCap {
     /** Action of CAP */
     private Action m_action;
 
-    /** boolean to decide, if CAP is from old recorded Web Observ-Mode */
-    private boolean m_isOldWebObserv = false;
-
     /** the resolved(possibly overwritten) logical name */
     private String m_resolvedLogicalName;
     
@@ -106,21 +103,6 @@ public class MessageCap {
     /** @return Returns the Action. */
     public Action getAction() {
         return m_action;
-    }
-
-    /**
-     * @param isOldWebObserv
-     *            set to true, if recorded CAP is from old Web-ObservationMode
-     */
-    public void setWebObservOld(boolean isOldWebObserv) {
-        m_isOldWebObserv = isOldWebObserv;
-    }
-
-    /**
-     * @return Returns true, if recorded CAP is from old Web-ObservationMode
-     */
-    public boolean isWebObservOld() {
-        return m_isOldWebObserv;
     }
 
     /**

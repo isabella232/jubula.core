@@ -20,13 +20,11 @@ import java.util.Set;
 import org.apache.commons.collections.list.UnmodifiableList;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.IRecordListener;
-import org.eclipse.jubula.client.core.MessageFactory;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
-import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
-import org.eclipse.jubula.client.core.communication.AUTConnection;
+import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -42,7 +40,6 @@ import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.CAPRecordedMessage;
-import org.eclipse.jubula.communication.message.CAPTestMessage;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.MessageCap;
@@ -52,7 +49,6 @@ import org.eclipse.jubula.communication.message.ShowRecordedActionMessage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.objects.MappingConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.Action;
@@ -153,23 +149,10 @@ public class CAPRecordedCommand implements ICommand {
             try {
                 // here handle to Save CAP
                 setCapIntoSpecModel(messageCap, compType);            
-                //execute recorded CAP if belongs to old ObservMode
-                if (messageCap.isWebObservOld()) {
-                    CAPTestMessage capTestMessage = 
-                        MessageFactory.getCAPTestMessage(
-                            messageCap);
-                    capTestMessage.setMessageCap(messageCap);
-                    capTestMessage.setRequestAnswer(false);
-                    AUTConnection.getInstance().send(capTestMessage);
-                    return null;
-                }
-                
                 String recAction = m_recAction;
                 String extraMsg = m_extraMsg;
                 return new ShowRecordedActionMessage(true, recAction, extraMsg);
             } catch (IllegalArgumentException e) {
-                LOG.error(Messages.ExecutedFailed, e);
-            } catch (CommunicationException e) {
                 LOG.error(Messages.ExecutedFailed, e);
             }
             return new ShowRecordedActionMessage(false);
@@ -209,8 +192,7 @@ public class CAPRecordedCommand implements ICommand {
         String actionName = messageCap.getAction().getName();
         String capName = null;
         capName = CompSystemI18n.getString(actionName);
-        if (isAppAction || messageCap.isWebObservOld() 
-                || messageCap.hasDefaultMapping()) {
+        if (isAppAction || messageCap.hasDefaultMapping()) {
             capName = CompSystemI18n.getString(actionName);
         } else {
             capName = CompSystemI18n.getString(actionName);
