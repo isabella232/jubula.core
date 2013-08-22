@@ -22,8 +22,9 @@ import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.persistence.NodePM;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.DisabledLabelProvider;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -73,7 +74,7 @@ public class RefTestSuiteGUIPropertySource
      */
     private void fillAutIdList(IRefTestSuitePO refTestSuite) {
         Set<String> idSet = new HashSet<String>();
-        ITestSuitePO ts = NodePM.getTestSuite(refTestSuite.getTestSuiteGuid());
+        ITestSuitePO ts = refTestSuite.getTestSuite();
         IAUTMainPO aut = ts.getAut();
         if (aut != null) {
             idSet.addAll(aut.getAutIds());
@@ -101,6 +102,17 @@ public class RefTestSuiteGUIPropertySource
         }
         addPropertyDescriptor(m_namePropDesc);
         super.initPropDescriptor();
+        
+        // Task ID
+        if (getTaskIdPropDesc() == null) {
+            JBPropertyDescriptor taskIdPropDesc = new JBPropertyDescriptor(
+                new ReadOnlyTaskIdController(),
+                Messages.AbstractGuiNodePropertySourceTaskId);
+            taskIdPropDesc.setLabelProvider(new DisabledLabelProvider());
+            setTaskIdPropDesc(taskIdPropDesc);
+        }
+        addPropertyDescriptor(getTaskIdPropDesc());
+        
         // AUT id list
         addPropertyDescriptor(getAutIdPropDesc());
     }

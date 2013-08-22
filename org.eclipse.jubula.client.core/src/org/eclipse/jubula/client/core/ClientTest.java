@@ -73,7 +73,6 @@ import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.communication.ICommand;
@@ -591,9 +590,8 @@ public class ClientTest implements IClientTest {
                 addTestExecutionEventListener(executionListener);
                 AutIdentifier autId = new AutIdentifier(refTestSuite
                         .getTestSuiteAutID());
-                String testSuiteGuid = refTestSuite.getTestSuiteGuid();
-                ITestSuitePO testSuite = NodePM.getTestSuite(testSuiteGuid);
-                startTestSuite(testSuite, locale, autId, autoScreenshot, null);
+                startTestSuite(refTestSuite.getTestSuite(), locale, autId,
+                        autoScreenshot, null);
                 while (!isTestExecutionFinished.get()) {
                     TimeUtil.delay(500);
                 }

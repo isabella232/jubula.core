@@ -1041,9 +1041,10 @@ public class NodePM extends PersistenceManager {
     public static synchronized ITestSuitePO getTestSuite(
             String testSuiteGuid) {
        
-        IProjectPO currentProject = GeneralStorage.getInstance().getProject();
+        GeneralStorage gs = GeneralStorage.getInstance();
+        IProjectPO currentProject = gs.getProject();
         if (currentProject != null) {
-            EntityManager s = GeneralStorage.getInstance().getMasterSession();
+            EntityManager s = gs.getMasterSession();
             
             CriteriaBuilder builder = s.getCriteriaBuilder();
             CriteriaQuery query = builder.createQuery();

@@ -17,7 +17,6 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 
@@ -34,8 +33,7 @@ public class OpenSpecificationHandlerRefTS extends AbstractOpenHandler {
             Object firstElement = iss.getFirstElement();
             if (firstElement instanceof IRefTestSuitePO) {
                 IRefTestSuitePO refTS = (IRefTestSuitePO)firstElement;
-                String tsGUID = refTS.getTestSuiteGuid();
-                ITestSuitePO testSuite = NodePM.getTestSuite(tsGUID);
+                ITestSuitePO testSuite = refTS.getTestSuite();
                 openEditor(testSuite);
                 InteractionEventDispatcher.getDefault().
                     fireProgammableSelectionEvent(

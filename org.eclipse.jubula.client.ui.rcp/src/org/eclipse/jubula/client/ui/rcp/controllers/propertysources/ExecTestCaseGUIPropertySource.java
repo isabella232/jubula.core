@@ -132,7 +132,7 @@ public class ExecTestCaseGUIPropertySource extends
         // Task ID
         if (getTaskIdPropDesc() == null) {
             JBPropertyDescriptor taskIdPropDesc = new JBPropertyDescriptor(
-                new ReadOnlySpecTaskIdController(),
+                new ReadOnlyTaskIdController(),
                 Messages.AbstractGuiNodePropertySourceTaskId);
             taskIdPropDesc.setLabelProvider(new DisabledLabelProvider());
             setTaskIdPropDesc(taskIdPropDesc);

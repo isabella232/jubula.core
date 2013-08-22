@@ -15,6 +15,7 @@ import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
 
 
@@ -58,12 +59,19 @@ public class NodePropertyTester extends AbstractBooleanPropertyTester {
     }
     
     /**
-     * @param node The node for which to check the task id.
+     * @param po
+     *            The node for which to check the task id.
      * @return whether a task id is set or not
      */
-    private boolean hasTaskIdSet(IPersistentObject node) {
-        if (node instanceof INodePO) {
-            return StringUtils.isNotEmpty(((INodePO)node).getTaskId());
+    private boolean hasTaskIdSet(IPersistentObject po) {
+        if (po instanceof INodePO) {
+            INodePO node = (INodePO) po;
+            String taskId = node.getTaskId();
+            if (node instanceof IRefTestSuitePO) {
+                IRefTestSuitePO refTS = (IRefTestSuitePO) node;
+                taskId = refTS.getTestSuite().getTaskId();
+            }
+            return StringUtils.isNotEmpty(taskId);
         }
         return false;
     }

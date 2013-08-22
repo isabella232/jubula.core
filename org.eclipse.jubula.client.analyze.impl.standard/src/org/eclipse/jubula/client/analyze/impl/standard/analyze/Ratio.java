@@ -374,9 +374,7 @@ public class Ratio implements IAnalyze {
         if (count.getRefTestSuites().size() != 0) {
             for (int i = 0; i < count.getRefTestSuites().size(); i++) {
                 IRefTestSuitePO ref = count.getRefTestSuites().get(i);
-                INodePO tsRoot = NodePM.getTestSuite(ref.getTestSuiteGuid());
-
-                TreeTraverser tt = new TreeTraverser(tsRoot);
+                TreeTraverser tt = new TreeTraverser(ref.getTestSuite());
                 tt.addOperation(count);
                 tt.traverse(true);
             }

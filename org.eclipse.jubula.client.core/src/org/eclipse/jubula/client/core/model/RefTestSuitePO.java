@@ -16,6 +16,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
+import org.eclipse.jubula.client.core.persistence.NodePM;
+
 /**
  * class only for specification data of testcase specificaton data are infos to
  * CapPO tripel like name of CapPO, name of component, action name and the fixed
@@ -29,7 +31,6 @@ import javax.persistence.Transient;
 @Entity
 @DiscriminatorValue(value = "R")
 class RefTestSuitePO extends NodePO implements IRefTestSuitePO {
-    
     /** Persistence (JPA / EclipseLink) property */
     private String m_testSuiteGuid;
     /** Persistence (JPA / EclipseLink) property */
@@ -141,4 +142,9 @@ class RefTestSuitePO extends NodePO implements IRefTestSuitePO {
         m_testSuiteAutID = testSuiteAutID;
     }
 
+    /** {@inheritDoc} */
+    @Transient
+    public ITestSuitePO getTestSuite() {
+        return NodePM.getTestSuite(getTestSuiteGuid());
+    }
 }

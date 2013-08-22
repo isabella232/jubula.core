@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
+import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
@@ -170,17 +171,27 @@ public abstract class AbstractNodePropertySource
     }
     
     /**
-     * Class to control the taskId of the depending SpecTestCasePO. 
+     * Class to control the referenced taskId
+     * 
      * @author BREDEX GmbH
      * @created 20.08.2013
      */
-    protected class ReadOnlySpecTaskIdController 
-        extends TaskIdController {
+    protected class ReadOnlyTaskIdController extends TaskIdController {
         /** {@inheritDoc} */
         public boolean setProperty(Object value) {
             return true; // do nothing, read only
         }
-        
+
+        @Override
+        public Object getProperty() {
+            INodePO node = getPoNode();
+            if (node instanceof IRefTestSuitePO) {
+                IRefTestSuitePO refTS = (IRefTestSuitePO) node;
+                return refTS.getTestSuite().getTaskId();
+            }
+            return super.getProperty();
+        }
+
         /** {@inheritDoc} */
         public Image getImage() {
             return READONLY_IMAGE;

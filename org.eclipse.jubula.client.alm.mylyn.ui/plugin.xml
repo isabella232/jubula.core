@@ -43,6 +43,7 @@
 	              <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
 	              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
 	              <instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
+	              <instanceof value="org.eclipse.jubula.client.core.model.IRefTestSuitePO" />
 	              <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
 	            </or>
 	            <test property="org.eclipse.jubula.client.ui.rcp.model.hasTaskId" />

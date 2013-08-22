@@ -14,7 +14,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
@@ -37,8 +36,7 @@ public class ShowSpecificationHandlerRefTS extends
         Object firstElement = iss.getFirstElement();
         if (firstElement instanceof IRefTestSuitePO) {
             IRefTestSuitePO refTS = (IRefTestSuitePO)firstElement;
-            String tsGUID = refTS.getTestSuiteGuid();
-            ITestSuitePO testSuite = NodePM.getTestSuite(tsGUID);
+            ITestSuitePO testSuite = refTS.getTestSuite();
             IViewPart activatedView = 
                 Plugin.showView(Constants.TS_BROWSER_ID);
             if (activatedView instanceof TestSuiteBrowser) {
