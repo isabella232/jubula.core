@@ -118,8 +118,12 @@ public class NewCAP extends AbstractSelectionBasedHandler {
             // mapper doesn't remove the instance of reuse 
             // for <code>componentName</code>.
             cap.setComponentName(null);
-            if (comp instanceof ConcreteComponent
-                    && !((ConcreteComponent) comp).hasDefaultMapping()) {
+            boolean hasDefaultMapping = false;
+            if (comp.isConcrete()) {
+                hasDefaultMapping = ((ConcreteComponent) comp)
+                        .hasDefaultMapping();
+            }
+            if (!hasDefaultMapping) {
                 ComponentNamesBP.getInstance().setCompName(cap, componentName,
                         CompNameCreationContext.STEP, compMapper);
             }
