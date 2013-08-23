@@ -32,7 +32,6 @@ import org.eclipse.jubula.rc.common.implclasses.tree.StandardDepthFirstTraverser
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperationConstraint;
 import org.eclipse.jubula.rc.common.tester.AbstractTreeTester;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
@@ -786,10 +785,8 @@ public class TreeTester extends AbstractTreeTester {
         throws StepExecutionException {        
         Boolean checkSelected = ((Boolean)getEventThreadQueuer().invokeAndWait(
                 "rcVerifyTreeCheckbox", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        AbstractTreeOperationContext context = 
-                                ((ITreeComponent)getComponent()).getContext();
-                        TreeItem node = (TreeItem) getSelectedNode(context);
+                    public Object run() {             
+                        TreeItem node = getTree().getSelection()[0];
                         return new Boolean(node.getChecked());
                     }            
                 }));       

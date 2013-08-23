@@ -21,7 +21,6 @@ import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
-import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -49,7 +48,11 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
      */
     public String getText() {
         String[] selected = getSelectedValues();
-        return (String) SelectionUtil.validateSelection(selected);
+        if (selected.length > 0) {
+            return selected[0];
+        }
+        throw new StepExecutionException("No list item selected", //$NON-NLS-1$
+            EventFactory.createActionError(TestErrorEvent.NO_SELECTION));
     }
 
     /**

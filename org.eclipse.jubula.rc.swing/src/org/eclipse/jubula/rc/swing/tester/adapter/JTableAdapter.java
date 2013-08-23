@@ -266,7 +266,7 @@ public class JTableAdapter extends JComponentAdapter
                                                     .Property
                                                     .DESCRIPTION_KEY)))) {
                 // set "invalid index" to "no selection" -> better description!
-                                throw new StepExecutionException("No selection found", //$NON-NLS-1$
+                                throw new StepExecutionException("No selection", //$NON-NLS-1$
                                         EventFactory.createActionError(
                                                 TestErrorEvent.NO_SELECTION));
                             }

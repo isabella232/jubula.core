@@ -14,8 +14,9 @@ import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
-import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
+import org.eclipse.jubula.tools.objects.event.EventFactory;
+import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.List;
 /**
@@ -38,7 +39,11 @@ public class ListAdapter extends ControlAdapter implements IListComponent {
      */
     public String getText() {
         String[] selected = getSelectedValues();
-        return (String) SelectionUtil.validateSelection(selected);
+        if (selected.length > 0) {
+            return selected[0];
+        }
+        throw new StepExecutionException("No list item selected", //$NON-NLS-1$
+            EventFactory.createActionError(TestErrorEvent.NO_SELECTION));
     }
     
     /**
