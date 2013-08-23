@@ -31,9 +31,8 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.swing.driver.EventThreadQueuerAwtImpl;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
 
 /**
@@ -502,6 +501,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
      */
     public Object getSelectedNode() {
         TreePath[] paths = getCheckedSelectedPaths();
+        SelectionUtil.validateSelection(paths);
         return paths[0].getLastPathComponent();
     }
 
@@ -512,10 +512,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
      */
     private TreePath[] getCheckedSelectedPaths() {
         TreePath[] paths = (TreePath[])getSelectionPaths();
-        if (paths == null) {
-            throw new StepExecutionException("No tree node(s) selected", //$NON-NLS-1$
-                EventFactory.createActionError(TestErrorEvent.NO_SELECTION));
-        }
+        SelectionUtil.validateSelection(paths);
         return paths;
     }
     /**
@@ -553,6 +550,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
         for (int i = 0; i < paths.length; i++) {
             nodes[i] = paths[i].getLastPathComponent();
         }
+        SelectionUtil.validateSelection(paths);
         return nodes;
     }
 

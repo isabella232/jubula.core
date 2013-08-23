@@ -20,6 +20,7 @@ import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
+import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.ListSelectionVerifier;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
@@ -58,10 +59,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      */
     private int[] getCheckedSelectedIndices() throws StepExecutionException {
         int[] selected = getListAdapter().getSelectedIndices();
-        if (selected.length == 0) {
-            throw new StepExecutionException("No list element selected", //$NON-NLS-1$
-                EventFactory.createActionError(TestErrorEvent.NO_SELECTION));
-        }
+        SelectionUtil.validateSelection(selected);
         return selected;
     }
 
@@ -131,10 +129,7 @@ public class ListTester extends AbstractTextVerifiableTester {
     public void rcVerifyText(String text, String operator) {
         String[] selected = getListAdapter().getSelectedValues();
         final int selCount = selected.length;
-        if (selCount < 1) {
-            throw new StepExecutionException("No selection", //$NON-NLS-1$
-                EventFactory.createActionError(TestErrorEvent.NO_SELECTION));
-        }
+        SelectionUtil.validateSelection(selected);
         for (int i = 0; i < selCount; i++) {
             Verifier.match(selected[i], text, operator);
         }
@@ -211,11 +206,8 @@ public class ListTester extends AbstractTextVerifiableTester {
      */
     public String rcReadValue(String variable) {
         String[] selected = getListAdapter().getSelectedValues();
-        if (selected.length > 0) {
-            return selected[0];
-        }
-        throw new StepExecutionException("No list item selected", //$NON-NLS-1$
-            EventFactory.createActionError(TestErrorEvent.NO_SELECTION));
+        SelectionUtil.validateSelection(selected);
+        return selected[0];
     }
     
     /**

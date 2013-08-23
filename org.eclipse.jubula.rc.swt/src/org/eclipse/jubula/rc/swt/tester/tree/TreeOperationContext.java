@@ -21,13 +21,12 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -448,22 +447,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
      * {@inheritDoc}
      */
     public Object getSelectedNode() {
-        return getQueuer().invokeAndWait("getSelectedNode",  //$NON-NLS-1$
-            new IRunnable() {
-
-                public Object run() {
-                    TreeItem [] selectedItems = 
-                        ((Tree)getTree()).getSelection();
-                    if (selectedItems == null || selectedItems.length == 0) {
-                        throw new StepExecutionException(
-                            "No tree node(s) selected", //$NON-NLS-1$
-                            EventFactory.createActionError(
-                                TestErrorEvent.NO_SELECTION));
-                    }
-                    return selectedItems[0];
-                }
-
-            });
+        return getSelectedNodes()[0];
     }
     
     /**
@@ -476,12 +460,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                 public Object run() {
                     TreeItem [] selectedItems = 
                         ((Tree)getTree()).getSelection();
-                    if (selectedItems == null || selectedItems.length == 0) {
-                        throw new StepExecutionException(
-                            "No tree node(s) selected", //$NON-NLS-1$
-                            EventFactory.createActionError(
-                                TestErrorEvent.NO_SELECTION));
-                    }
+                    SelectionUtil.validateSelection(selectedItems);
                     return selectedItems;
                 }
 
