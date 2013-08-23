@@ -757,15 +757,4 @@ class ExecTestCasePO extends TestCasePO implements
         }
         return false;
     }
-
-    
-    @Override
-    @Transient
-    public String getTaskId() {
-        ISpecTestCasePO spec = getSpecTestCase();
-        if (spec != null) {
-            return spec.getTaskId();
-        }
-        return super.getTaskId();
-    }
 }

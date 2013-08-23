@@ -12,10 +12,12 @@ package org.eclipse.jubula.client.ui.rcp.propertytester;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
 
 
@@ -66,14 +68,33 @@ public class NodePropertyTester extends AbstractBooleanPropertyTester {
     private boolean hasTaskIdSet(IPersistentObject po) {
         if (po instanceof INodePO) {
             INodePO node = (INodePO) po;
-            String taskId = node.getTaskId();
-            if (node instanceof IRefTestSuitePO) {
-                IRefTestSuitePO refTS = (IRefTestSuitePO) node;
-                taskId = refTS.getTestSuite().getTaskId();
-            }
-            return StringUtils.isNotEmpty(taskId);
+            return StringUtils.isNotEmpty(getTaskIdforNode(node));
         }
         return false;
+    }
+    
+    /**
+     * @param node
+     *            the node to retrieve the task id for; may be <code>null</code>
+     * @return the taskId for the given node or <code>null</code> if not set /
+     *         found
+     */
+    public static String getTaskIdforNode(INodePO node) {
+        if (node == null) {
+            return null;
+        }
+        String taskId = node.getTaskId();
+        if (node instanceof IRefTestSuitePO) {
+            IRefTestSuitePO refTS = (IRefTestSuitePO) node;
+            taskId = refTS.getTestSuite().getTaskId();
+        } else if (node instanceof IExecTestCasePO) {
+            IExecTestCasePO execTC = (IExecTestCasePO) node;
+            ISpecTestCasePO specTestCase = execTC.getSpecTestCase();
+            if (specTestCase != null) {
+                taskId = specTestCase.getTaskId();
+            }
+        }
+        return taskId;
     }
 
     /** {@inheritDoc} */

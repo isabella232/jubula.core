@@ -19,9 +19,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
+import org.eclipse.jubula.client.ui.rcp.propertytester.NodePropertyTester;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.ui.TasksUiUtil;
 
@@ -44,11 +44,8 @@ public class OpenTaskFromNodeHandler extends AbstractSelectionBasedHandler {
                     Object element = it.next();
                     if (element instanceof INodePO) {
                         INodePO node = (INodePO) element;
-                        String taskId = node.getTaskId();
-                        if (node instanceof IRefTestSuitePO) {
-                            IRefTestSuitePO refTS = (IRefTestSuitePO)node;
-                            taskId = refTS.getTestSuite().getTaskId();
-                        }
+                        String taskId = NodePropertyTester
+                                .getTaskIdforNode(node);
                         if (StringUtils.isNotEmpty(taskId)) {
                             TasksUiUtil.openTask(repository, taskId);
                         }
