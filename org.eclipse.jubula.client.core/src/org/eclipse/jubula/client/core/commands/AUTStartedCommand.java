@@ -14,7 +14,6 @@ import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.IAUTInfoListener;
 import org.eclipse.jubula.client.core.IClientTest;
-import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.AUTStartStateMessage;
@@ -117,8 +116,6 @@ public class AUTStartedCommand implements ICommand {
      * {@inheritDoc}
      */
     public Message execute() {
-
-        ObjectMappingEventDispatcher.clearObjMapTransient();
 
         // do this after the OM was build
         fireAutStateChanged();

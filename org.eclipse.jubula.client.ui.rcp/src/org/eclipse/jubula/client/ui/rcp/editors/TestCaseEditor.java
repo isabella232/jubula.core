@@ -30,7 +30,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.IRecordListener;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
@@ -277,9 +276,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                     // Cap added to model
                     // recorded action with default mapping not being 
                     // added to objmap
-                    if (!ObjectMappingEventDispatcher.
-                            getObjMapTransient().existTechnicalName(ci) 
-                            && !hasDefaultMapping) {
+                    if (!hasDefaultMapping) {
                         
                         String capComponentName = 
                             m_objectMappingManager.addMapping(

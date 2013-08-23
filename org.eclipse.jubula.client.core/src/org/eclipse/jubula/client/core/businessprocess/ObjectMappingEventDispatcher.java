@@ -21,10 +21,8 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
-import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 
@@ -41,11 +39,6 @@ public class ObjectMappingEventDispatcher {
     /** found TestSuites for the given TestCase */
     private static List < IObjectMappingObserver > observer = 
         new ArrayList < IObjectMappingObserver > ();
-
-    /**
-     * a client session objectmapping for DefaultComponents
-     */
-    private static IObjectMappingPO objMapTransient;
     
     /** category where om nodes should be created in */
     private static IObjectMappingCategoryPO categoryToCreateIn;
@@ -154,25 +147,6 @@ public class ObjectMappingEventDispatcher {
         if (observer.contains(obs)) {
             observer.remove(obs);
         }
-    }
-
-    /**
-     * 
-     * @return the transient client session Object Mapping
-     */
-    public static IObjectMappingPO getObjMapTransient() {
-        if (objMapTransient == null) {
-            objMapTransient = PoMaker.createObjectMappingPO();
-        }
-        return objMapTransient;
-    }
-    
-    /**
-     * 
-     * clears the mapping
-     */
-    public static void clearObjMapTransient() {
-        objMapTransient = null;
     }
 
     /**

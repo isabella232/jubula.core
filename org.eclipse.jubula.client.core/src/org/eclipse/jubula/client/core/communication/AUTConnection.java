@@ -28,7 +28,6 @@ import org.eclipse.jubula.client.core.MessageFactory;
 import org.eclipse.jubula.client.core.ServerEvent;
 import org.eclipse.jubula.client.core.UnknownMessageException;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
-import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.commands.AUTStartedCommand;
 import org.eclipse.jubula.client.core.commands.AUTStateCommand;
@@ -416,14 +415,6 @@ public class AUTConnection extends BaseConnection {
                 throw new CommunicationException(
                         Messages.CouldNotRequestComponentsFromAUT,
                         IAUTInfoListener.ERROR_COMMUNICATION);
-            }
-            if (ObjectMappingEventDispatcher.getObjMapTransient()
-                    .getMappings().isEmpty()) {
-                
-                // FIXME zeb Logging as error assumes that every AUT Server has
-                //           default mappings to contribute. So far this is true,
-                //           but might not be true for future toolkits.
-                LOG.warn(Messages.NoDefaultObjectMappingsCouldBeFoundForTheAUT);
             }
         } catch (UnknownMessageException ume) {
             ClientTestFactory.getClientTest().fireAUTServerStateChanged(
