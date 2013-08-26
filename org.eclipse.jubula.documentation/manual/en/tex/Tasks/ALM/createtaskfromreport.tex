@@ -1,0 +1,10 @@
+ You can create a new task with pre-filled information directly from an open test result report in the \gdtestresultview{}. This is useful if a test has failed and you want to create e.g. an issue in your bug-tracking system for the failure. 
+\begin{enumerate}
+\item In an open test result report, select the node that best describes the test failure (e.g. a \gdcase{} or \gdstep{} that has failed, or the whole \gdsuite{}, then right-click and select:\\
+\bxmenu{Create a Mylyn Task}{}{}\\
+from the context-sensitive menu.
+\item  In the dialog that appears, select a repository in which to create the task. A \bxname{local} repository is available by default, but you can also add connections to Bugzilla and Trac repositories by clicking \bxcaption{Add Task Repository} in the New Task Dialog. Connectors to other repositories can also be added. See the Mylyn documentation for more details on adding repositories.
+\item Click \bxcaption{Finish} once you have selected your repository. 
+\item The editor for a new task will appear. It is pre-filled with information relevant to the node that you selected. Edit the task to make it descriptive enough for a bug report and save the editor. 
+\item Once you have created a task, you can activate it to start saving your context for this task. See the later section \bxpref{TasksActivateTask} for details.
+\end{enumerate}
