@@ -32,7 +32,6 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -138,6 +137,9 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
     protected Control createContents(Composite parent) {
         Composite composite = createComposite(parent, NUM_COLUMNS_1,
                 GridData.FILL, false);
+
+        createALMPageDescription(composite);
+        
         Composite main = createComposite(composite, NUM_COLUMNS_2,
                 GridData.FILL, false);
         noDefaultAndApplyButton();       
@@ -155,18 +157,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         event.widget = m_almRepoCombo;
         m_almRepoCombo.notifyListeners(SWT.Selection, event);
         
-        Composite innerComposite = new Composite(composite, SWT.NONE);
-        GridLayout compositeLayout = new GridLayout();
-        compositeLayout.numColumns = NUM_COLUMNS_1;
-        compositeLayout.marginHeight = 0;
-        compositeLayout.marginWidth = 0;
-        innerComposite.setLayout(compositeLayout);
-        GridData compositeData = new GridData();
-        compositeData.horizontalSpan = NUM_COLUMNS_2;
-        compositeData.horizontalAlignment = GridData.FILL;
-        compositeData.grabExcessHorizontalSpace = true;
-        innerComposite.setLayoutData(compositeData);
-
         Plugin.getHelpSystem().setHelp(parent,
             ContextHelpIds.PROJECT_ALM_PROPERTY_PAGE);
         return composite;
@@ -269,6 +259,17 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         enableSuccessCommentTextfield();
     }
 
+    /**
+     * @param parent the parent to use
+     */
+    private void createALMPageDescription(Composite parent) {
+        createEmptyLabel(parent);
+        
+        Composite composite = createComposite(parent, 1,
+                GridData.FILL, true);
+        createLabel(composite, Messages.ProjectPropertyPageALMLabel);
+    }
+    
     /**
      * @param parent the parent to use
      */

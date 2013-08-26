@@ -541,6 +541,7 @@ public class Messages extends NLS {
     public static String Project;
     public static String ProjectGUIPropertySourceProjectName;
     public static String ProjectInfoWizardPageInfoText;
+    public static String ProjectPropertyPageALMLabel;
     public static String ProjectPropertyPageALMRepositoryLabel;
     public static String ProjectPropertyPageALMConnectionTest;
     public static String ProjectPropertyPageReportOnSuccessLabel;
