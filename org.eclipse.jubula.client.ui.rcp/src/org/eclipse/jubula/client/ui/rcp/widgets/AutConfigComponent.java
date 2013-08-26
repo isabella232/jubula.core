@@ -286,21 +286,19 @@ public abstract class AutConfigComponent extends ScrolledComposite {
 
         if (m_isMultiMode) {
             setCurrentMode(m_mode);
-            getDisplay().asyncExec(new Runnable() {
-                public void run() {
-                    // Since we're resizing after everything is initialized,
-                    // it's possible that the dialog is already disposed here.
-                    if (!isDisposed()) {
-                        resize();
-                        getShell().pack(true);
-                    }
-                }
-            });
         } else {
             setCompositeVisible(m_basicAreaComposite, true);
-            resize();
         }
-        
+        getDisplay().asyncExec(new Runnable() {
+            public void run() {
+                // Since we're resizing after everything is initialized,
+                // it's possible that the dialog is already disposed here.
+                if (!isDisposed()) {
+                    resize();
+                    getShell().pack(true);
+                }
+            }
+        });
         m_isinitialized = true;
     }
     

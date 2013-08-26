@@ -235,6 +235,13 @@ public abstract class AUTServer {
     }
 
     /**
+     * @return The mapping listern given to the constructor.
+     */
+    protected AUTEventListener getMappingListener() {
+        return m_mappingListener;
+    }
+
+    /**
      * Method to get the single instance of this class. This also once
      * initializes the adapter factory registry.
      * 
