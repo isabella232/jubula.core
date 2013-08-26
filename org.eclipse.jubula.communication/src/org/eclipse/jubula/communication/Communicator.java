@@ -25,9 +25,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.communication.connection.DefaultServerSocket;
 import org.eclipse.jubula.communication.connection.Connection;
 import org.eclipse.jubula.communication.connection.ConnectionState;
+import org.eclipse.jubula.communication.connection.DefaultServerSocket;
 import org.eclipse.jubula.communication.connection.DefaultSocket;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.listener.IErrorHandler;
@@ -42,7 +42,6 @@ import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.exception.SerialisationException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
@@ -87,7 +86,8 @@ public class Communicator {
     private static final int THOUSAND = 1000;
 
     /** the logger instance */
-    private static Logger log = LoggerFactory.getLogger(Communicator.class);
+    private static ConfigurableLogger log = new ConfigurableLogger(
+            LoggerFactory.getLogger(Communicator.class));
 
     /** the port for connecting a server (this instance will act as a client) */
     private int m_port = 0;
@@ -1135,6 +1135,25 @@ public class Communicator {
         }
     }
 
+    /**
+     * prepare the communicator for connection problems
+     */
+    public void prepareForConnectionProblems() {
+        setEnablementOfConnectionLogger(false);
+    }
+
+    /**
+     * @param enable
+     *            the loggers enablement
+     * 
+     */
+    private void setEnablementOfConnectionLogger(boolean enable) {
+        Connection c = getConnection();
+        if (c != null) {
+            c.getLogger().setEnabled(enable);
+        }
+    }
+    
     /**
      * Interrupts all timeouts
      * Call this when the TestExecution gets interrupted.

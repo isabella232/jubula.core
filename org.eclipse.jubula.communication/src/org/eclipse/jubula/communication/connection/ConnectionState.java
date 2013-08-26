@@ -70,8 +70,8 @@ public class ConnectionState {
     public static final String CLIENT_TYPE_COMMAND_SHUTDOWN = "ClientType.Command.ShutDown"; //$NON-NLS-1$
     
     /** the logger */
-    private static final Logger LOG = 
-        LoggerFactory.getLogger(ConnectionState.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(ConnectionState.class);
     
     /**
      * Utility constructor
@@ -82,8 +82,8 @@ public class ConnectionState {
     
     /**
      * Parses the state out of the given message
-     * @param message the emessage to parse
-     * @return the state or UNKNOWN-state if any error occured
+     * @param message the message to parse
+     * @return the state or UNKNOWN-state if any error occurred
      */
     public static int parseState(String message) {
         StringTokenizer tok = new StringTokenizer(message, SEPARATOR);
@@ -99,9 +99,9 @@ public class ConnectionState {
     }
     
     /**
-     * Parses the version number out of th egiven messsage
+     * Parses the version number out of the given message
      * @param message the message to parse
-     * @return the version number or -1 if any error occured
+     * @return the version number or -1 if any error occurred
      */
     public static int parseVersion(String message) {
         StringTokenizer tok = new StringTokenizer(message, SEPARATOR);

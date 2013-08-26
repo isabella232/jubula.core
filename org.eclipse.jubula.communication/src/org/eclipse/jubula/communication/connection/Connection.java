@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.communication.ConfigurableLogger;
 import org.eclipse.jubula.communication.IExceptionHandler;
 import org.eclipse.jubula.communication.listener.IErrorHandler;
 import org.eclipse.jubula.communication.listener.IMessageHandler;
@@ -33,7 +34,6 @@ import org.eclipse.jubula.communication.parser.MessageHeaderSerializer;
 import org.eclipse.jubula.communication.writer.MessageWriter;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.SerialisationException;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
@@ -84,7 +84,8 @@ public class Connection {
     private static final long SEQUENCE_START = 1;
 
     /** the logger */
-    private static Logger log = LoggerFactory.getLogger(Connection.class);
+    private ConfigurableLogger m_logger = new ConfigurableLogger(
+            LoggerFactory.getLogger(Connection.class));
 
     /**
      * the sequence number used by this connection to identify messages will be
@@ -116,7 +117,7 @@ public class Connection {
     /** boolean to avoid multiple notification of a shutdown */
     private boolean m_shutDownFired;
     
-    /** The (de)serializer of message headers. */
+    /** The (de)-serializer of message headers. */
     private MessageHeaderSerializer m_headerSerializer;
     
     /**
@@ -164,7 +165,7 @@ public class Connection {
     }
 
     /**
-     * synchronized method for retreiving a new sequence number from this
+     * synchronized method for retrieving a new sequence number from this
      * connection
      * @return an new sequenceNumber
      */
@@ -178,7 +179,7 @@ public class Connection {
     }
 
     /**
-     * Starts reading from the inputstream of the socket (in a separated thread).
+     * Starts reading from the input stream of the socket (in a separated thread).
      * @param id for debugging purposes: mark the reader thread
      */
     public void startReading(String id) {
@@ -210,7 +211,7 @@ public class Connection {
         try {
             m_socket.close();
         } catch (IOException ioe) {
-            log.debug("io error closing a socket", ioe); //$NON-NLS-1$
+            getLogger().debug("io error closing a socket", ioe); //$NON-NLS-1$
         }
     }
 
@@ -289,9 +290,9 @@ public class Connection {
     }
     
     /**
-     * A synchronized method for sending messages. If an io error occurs, the
+     * A synchronized method for sending messages. If an IO error occurs, the
      * error handlers will be notified with sendFailed, shutDown AND an
-     * IOException will be thrown. In case of a serialisation error the error
+     * IOException will be thrown. In case of a serialization error the error
      * handler will be notified with sendFailed(). The header is filled with the
      * message length 
      * @param header - the header for the message, must not be null
@@ -318,19 +319,19 @@ public class Connection {
             // write message
             writer.write(message); 
             writer.flush();
-            if (log.isInfoEnabled()) {
-                log.info("sent to " + m_socket.getRemoteSocketAddress() + " message with header: " + serializedHeader); //$NON-NLS-1$ //$NON-NLS-2$
+            if (getLogger().isInfoEnabled()) {
+                getLogger().info("sent to " + m_socket.getRemoteSocketAddress() + " message with header: " + serializedHeader); //$NON-NLS-1$ //$NON-NLS-2$
             }
-            if (log.isDebugEnabled()) {
-                log.debug("sent message: " + message); //$NON-NLS-1$
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("sent message: " + message); //$NON-NLS-1$
             }
         } catch (IOException ioe) {
-            log.error("send failed", ioe); //$NON-NLS-1$
+            getLogger().error("send failed", ioe); //$NON-NLS-1$
             fireSendFailed(message, header);
             fireShutDown();
             throw ioe;
         } catch (SerialisationException se) {
-            log.error("serialisation of " //$NON-NLS-1$ 
+            getLogger().error("serialisation of " //$NON-NLS-1$ 
                     + header.toString() 
                     + "failed", se); //$NON-NLS-1$
             fireSendFailed(message, header);
@@ -345,8 +346,8 @@ public class Connection {
     private synchronized void fireSendFailed(String message,
             MessageHeader header) {
         
-        if (log.isDebugEnabled()) {
-            log.debug("firing send failed, message=" + message); //$NON-NLS-1$
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("firing send failed, message=" + message); //$NON-NLS-1$
                     
         }
         Iterator iter = ((HashSet)((HashSet)m_errorHandlers).clone())
@@ -355,7 +356,7 @@ public class Connection {
             try {
                 ((IErrorHandler)iter.next()).sendFailed(header, message);
             } catch (Throwable t) {
-                log.error("Exception while calling listener", t); //$NON-NLS-1$        
+                getLogger().error("Exception while calling listener", t); //$NON-NLS-1$        
             }
         }
     }
@@ -365,32 +366,32 @@ public class Connection {
      */
     private synchronized void fireShutDown() {
         if (!m_shutDownFired) {
-            log.debug("firing shutdown"); //$NON-NLS-1$
+            getLogger().debug("firing shutdown"); //$NON-NLS-1$
             Iterator iter = ((HashSet)((HashSet)m_errorHandlers).clone())
                 .iterator();
             while (iter.hasNext()) {
                 try {
                     ((IErrorHandler)iter.next()).shutDown();
                 } catch (Throwable t) {
-                    log.error("Exception while calling listener", t); //$NON-NLS-1$                         
+                    getLogger().error("Exception while calling listener", t); //$NON-NLS-1$                         
                 }
             }
             // don't fire more than once
             m_shutDownFired = true;
         } else {
-            log.debug("shutdown already fired"); //$NON-NLS-1$
+            getLogger().debug("shutdown already fired"); //$NON-NLS-1$
         }
     }
 
     /**
-     * A synchronizted method for notifying the message handlers 
+     * A synchronized method for notifying the message handlers 
      * @param header - the received message header
      * @param message - the received message
      */
     private void fireMessageReceived(MessageHeader header,
             String message) {
-        if (log.isDebugEnabled()) {
-            log.debug("firing message received, message=" + message); //$NON-NLS-1$         
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("firing message received, message=" + message); //$NON-NLS-1$         
         }
         Iterator iter;
         synchronized (this) {
@@ -400,7 +401,7 @@ public class Connection {
             try {
                 ((IMessageHandler)iter.next()).received(header, message);
             } catch (Throwable t) {
-                log.error("Exception while calling listener", t); //$NON-NLS-1$                   
+                getLogger().error("Exception while calling listener", t); //$NON-NLS-1$                   
             }            
         }
     }
@@ -438,8 +439,8 @@ public class Connection {
                     int headerLength = Integer.parseInt(headerLengthToken);
                     String headerString = 
                         readString(m_inputStreamReader, headerLength);
-                    if (log.isInfoEnabled()) {
-                        log.info("read header: " + headerString); //$NON-NLS-1$ 
+                    if (getLogger().isInfoEnabled()) {
+                        getLogger().info("read header: " + headerString); //$NON-NLS-1$ 
                     }
                     MessageHeader header = m_headerSerializer
                         .deserialize(headerString);
@@ -447,8 +448,8 @@ public class Connection {
                     String message = readString(m_inputStreamReader, header
                         .getMessageLength());
                     // notify message handlers
-                    if (log.isDebugEnabled()) {
-                        log.debug("read message: " + message); //$NON-NLS-1$ 
+                    if (getLogger().isDebugEnabled()) {
+                        getLogger().debug("read message: " + message); //$NON-NLS-1$ 
                     }
                     fireMessageReceived(header, message);
                 } catch (IOException ioe) {
@@ -456,22 +457,22 @@ public class Connection {
                     // regular way (pressing the AUT-Stop Button).
                     // In a future release this should be handled in another way
                     /*
-                     * exception while reading from inputstream or writing to a
-                     * buffered StringWriter => log the message and stop
+                     * exception while reading from input stream or writing to a
+                     * buffered StringWriter => m_logger the message and stop
                      */
-                    log.debug("stopping reading either due to io exception or stopped AUT", ioe); //$NON-NLS-1$
+                    getLogger().debug("stopping reading either due to io exception or stopped AUT", ioe); //$NON-NLS-1$
                     fireShutDownAndFinish();
                 } catch (UnexpectedEofException e) {
-                    log.error("unexpected end of file while reading message", e); //$NON-NLS-1$
+                    getLogger().error("unexpected end of file while reading message", e); //$NON-NLS-1$
                     close();
                     fireShutDownAndFinish();
                 } catch (NumberFormatException e) {
-                    log.error("invalid header length token: " //$NON-NLS-1$
+                    getLogger().error("invalid header length token: " //$NON-NLS-1$
                         + headerLengthToken, e); 
                 } catch (InvalidHeaderVersionException ihve) {
-                    log.error(ihve.getLocalizedMessage(), ihve);
+                    getLogger().error(ihve.getLocalizedMessage(), ihve);
                 } catch (Throwable t) {
-                    log.error("exception raised", t); //$NON-NLS-1$
+                    getLogger().error("exception raised", t); //$NON-NLS-1$
                     final IExceptionHandler exceptionHandler = 
                         getExceptionHandler();
                     if (exceptionHandler != null) {
@@ -500,8 +501,8 @@ public class Connection {
         private String readString(BufferedReader reader, int length)
             throws IOException, UnexpectedEofException {
             
-            if (log.isDebugEnabled()) {
-                log.debug("readString len " + length); //$NON-NLS-1$
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("readString len " + length); //$NON-NLS-1$
             }
             char[] headerChars = new char[length];
             int required = length;
@@ -509,7 +510,7 @@ public class Connection {
             while (required > 0) {
                 int nread = reader.read(headerChars, filled, required);
                 if (nread == -1) {
-                    log.error("received message part before unexpected eof: " //$NON-NLS-1$
+                    getLogger().error("received message part before unexpected eof: " //$NON-NLS-1$
                             + String.valueOf(headerChars));
                     // this is really a (serious) error !
                     throw new UnexpectedEofException("after reading " + filled  //$NON-NLS-1$
@@ -525,13 +526,13 @@ public class Connection {
         
         /**
          * waits for input, the sign MesageHeader.HEADER_START <br>
-         * partialy transmitted messages are logged. 
+         * Partially transmitted messages are logged. 
          * @return true if the reading process should continue, false otherwise
-         * @throws IOException if an io errors occurs while reading from the inputstream
+         * @throws IOException if an IO errors occurs while reading from the input stream
          */
         private boolean waitForInput() throws IOException {
             int character = nextChar();
-            final boolean createLogMessage = log.isDebugEnabled();
+            final boolean createLogMessage = getLogger().isDebugEnabled();
             final StringWriter logMessage = new StringWriter();
             // character must be the sign for a new message
             while (!this.isInterrupted()
@@ -549,7 +550,7 @@ public class Connection {
             }
             if (createLogMessage) {
                 logMessage.flush();
-                log.debug("received a portion of a message:" //$NON-NLS-1$ 
+                getLogger().debug("received a portion of a message:" //$NON-NLS-1$ 
                         + logMessage.toString());
             }
             return true;
@@ -598,5 +599,12 @@ public class Connection {
     public void clearListeners() {
         m_errorHandlers.clear();
         m_messageHandlers.clear();
+    }
+
+    /**
+     * @return the logger
+     */
+    public ConfigurableLogger getLogger() {
+        return m_logger;
     }
 }

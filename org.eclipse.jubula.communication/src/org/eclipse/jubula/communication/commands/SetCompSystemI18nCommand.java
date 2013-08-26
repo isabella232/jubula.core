@@ -21,39 +21,28 @@ import org.slf4j.LoggerFactory;
 /**
  * @author BREDEX GmbH
  * @created Oct 31, 2007
- * 
  */
 public class SetCompSystemI18nCommand implements ICommand {
-
     /** the logger */
-    private static Logger log = 
-        LoggerFactory.getLogger(SetCompSystemI18nCommand.class);
-
-    
+    private static Logger log = LoggerFactory
+            .getLogger(SetCompSystemI18nCommand.class);
     
     /** The Message */
     private SendCompSystemI18nMessage m_message;
     
-    
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Message execute() {
         final String resourceBundles = m_message.getResourceBundles();
         CompSystemI18n.fromString(resourceBundles); 
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Message getMessage() {
         return m_message;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setMessage(Message message) {
         try {
             m_message = (SendCompSystemI18nMessage)message;            
@@ -67,9 +56,7 @@ public class SetCompSystemI18nCommand implements ICommand {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void timeout() {
         log.error(this.getClass().getName() + "timeout() called when it shouldn't (no response)"); //$NON-NLS-1$
     }

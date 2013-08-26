@@ -20,15 +20,11 @@ import org.slf4j.LoggerFactory;
  * @created 21.09.2004
  */
 public class AbortingExceptionHandler implements IExceptionHandler {
-
     /** the logger */
-    private static Logger log = 
-        LoggerFactory.getLogger(AbortingExceptionHandler.class);
+    private static Logger log = LoggerFactory
+            .getLogger(AbortingExceptionHandler.class);
 
-    /**
-     * {@inheritDoc}
-     * 
-     */
+    /** {@inheritDoc} */
     public boolean handle(Throwable t) {
         log.info("aborting: ", t); //$NON-NLS-1$
         return false;

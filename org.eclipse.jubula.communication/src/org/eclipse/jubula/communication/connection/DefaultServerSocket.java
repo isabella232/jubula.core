@@ -33,8 +33,8 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultServerSocket extends ServerSocket {
     /** the logger */
-    private static Logger log = LoggerFactory.getLogger(
-            DefaultServerSocket.class);
+    private static Logger log = LoggerFactory
+            .getLogger(DefaultServerSocket.class);
     
     /**
      * @param port
