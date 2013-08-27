@@ -87,12 +87,8 @@
         		maxOccurs="1" nillable="true" />
         	<xs:element name="isReportOnSuccess" type="xs:boolean"
         		minOccurs="0" maxOccurs="1" default="false" />
-        	<xs:element name="successComment" type="xs:string" minOccurs="0"
-        		maxOccurs="1" nillable="true" />
         	<xs:element name="isReportOnFailure" type="xs:boolean"
         		minOccurs="0" maxOccurs="1" default="false" />
-        	<xs:element name="failureComment" type="xs:string" minOccurs="0"
-        		maxOccurs="1" nillable="true" />
         	<xs:element name="dashboardURL" type="xs:string" minOccurs="0"
         		maxOccurs="1" nillable="true" />
         </xs:sequence>

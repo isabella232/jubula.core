@@ -162,26 +162,4 @@ public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport {
      *            executions to the connected ALM repository
      */
     public void setIsReportOnFailure(boolean isReportOnFailure);
-    
-    /**
-     * @return the comment in case of a succeeded test
-     */
-    public abstract String getSuccessComment();
-
-    /**
-     * @param comment
-     *             the comment in case of a succeeded test
-     */
-    public abstract void setSuccessComment(String comment);
-    
-    /**
-     * @return the comment in case of a failed test
-     */
-    public abstract String getFailureComment();
-
-    /**
-     * @param comment
-     *             the comment in case of a failed test
-     */
-    public abstract void setFailureComment(String comment);
 }

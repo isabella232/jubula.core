@@ -104,16 +104,6 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     private boolean m_reportOnSuccess = false;
 
     /**
-     * the comment to post in case of a success
-     */
-    private String m_commentSuccess = null;
-
-    /**
-     * the comment to post in case of a failure
-     */
-    private String m_commentFailure = null;
-
-    /**
      * the connected ALM repository name
      */
     private String m_almRepositoryName = null;
@@ -562,29 +552,5 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     /** {@inheritDoc} */
     public void setIsReportOnFailure(boolean isReportOnFailure) {
         m_reportOnFailure = isReportOnFailure;
-    }
-    
-    /** {@inheritDoc} */
-    @Basic
-    @Column(name = "COMMENT_SUCCESS", length = MAX_STRING_LENGTH)
-    public String getSuccessComment() {
-        return m_commentSuccess;
-    }
-    
-    /** {@inheritDoc} */
-    public void setSuccessComment(String comment) {
-        m_commentSuccess = comment;
-    }
-    
-    /** {@inheritDoc} */
-    @Basic
-    @Column(name = "COMMENT_FAILURE", length = MAX_STRING_LENGTH)
-    public String getFailureComment() {
-        return m_commentFailure;
-    }
-    
-    /** {@inheritDoc} */
-    public void setFailureComment(String comment) {
-        m_commentFailure = comment;
     }
 }

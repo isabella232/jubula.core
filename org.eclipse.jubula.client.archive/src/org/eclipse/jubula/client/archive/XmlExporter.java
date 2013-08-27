@@ -418,9 +418,7 @@ class XmlExporter {
                 po.getTestResultCleanupInterval());
         xml.setAlmRepositoryName(projectProperties.getALMRepositoryName());
         xml.setIsReportOnSuccess(projectProperties.getIsReportOnSuccess());
-        xml.setSuccessComment(projectProperties.getSuccessComment());
         xml.setIsReportOnFailure(projectProperties.getIsReportOnFailure());
-        xml.setFailureComment(projectProperties.getFailureComment());
         xml.setDashboardURL(projectProperties.getDashboardURL());
         m_monitor.worked(1);
     }

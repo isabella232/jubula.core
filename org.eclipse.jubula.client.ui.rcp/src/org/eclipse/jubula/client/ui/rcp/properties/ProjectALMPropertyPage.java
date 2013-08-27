@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Label;
 
 
 /**
@@ -98,11 +98,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
      * in case of a succeeded test
      */
     private Button m_reportOnSuccess = null;
-    /** the success comment */
-    private Text m_successComment;
-    /** the success comment */
-    private Text m_failureComment;
-    
     /** listener to keep the data in sync */
     private ModifyListener m_dataUpdater = new DataUpdateListener();
     
@@ -189,6 +184,7 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
      * @param parent the parent to use
      */
     private void createReportOnFailure(Composite parent) {
+        createEmptyLabel(parent);
         m_reportOnFailure = new Button(parent, SWT.CHECK);
         m_reportOnFailure.setText(Messages
                 .ProjectPropertyPageReportOnFailureLabel);
@@ -199,7 +195,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         m_reportOnFailure.setSelection(reportOnFailure);
         m_reportOnFailure.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
-                enableFailureCommentTextfield();
                 updateALMData();
             }
 
@@ -207,25 +202,16 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                 widgetSelected(e);
             }
         });
-        m_failureComment = new Text(parent, SWT.BORDER);
-        m_failureComment.setText(StringUtils
-                .defaultString(m_origProjectProps.getFailureComment()));
-        GridData textGridData = new GridData();
-        textGridData.grabExcessHorizontalSpace = false;
-        textGridData.widthHint = DEFAULT_CONTROL_WIDTH;
-        m_failureComment.setLayoutData(textGridData);
-        LayoutUtil.setMaxChar(m_failureComment,
-                IPersistentObject.MAX_STRING_LENGTH);
-        ControlDecorator.createInfo(m_failureComment,
-                Messages.ProjectPropertyPageReportOnFailureInfo, false);
-        m_failureComment.addModifyListener(m_dataUpdater);
-        enableFailureCommentTextfield();
     }
     
     /**
      * @param parent the parent to use
      */
     private void createReportOnSuccess(Composite parent) {
+        Label infoLabel = createLabel(parent, 
+                Messages.ProjectPropertyPageReportOptionsLabel);
+        ControlDecorator.createInfo(infoLabel,
+                Messages.ProjectPropertyPageReportOptionsDecoration, false);
         m_reportOnSuccess = new Button(parent, SWT.CHECK);
         m_reportOnSuccess.setText(Messages
                 .ProjectPropertyPageReportOnSuccessLabel);
@@ -236,7 +222,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         m_reportOnSuccess.setSelection(reportOnSuccess);
         m_reportOnSuccess.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
-                enableSuccessCommentTextfield();
                 updateALMData();
             }
 
@@ -244,19 +229,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                 widgetSelected(e);
             }
         });
-        m_successComment = new Text(parent, SWT.BORDER);
-        m_successComment.setText(StringUtils
-                .defaultString(m_origProjectProps.getSuccessComment()));
-        GridData textGridData = new GridData();
-        textGridData.grabExcessHorizontalSpace = false;
-        textGridData.widthHint = DEFAULT_CONTROL_WIDTH;
-        m_successComment.setLayoutData(textGridData);
-        LayoutUtil.setMaxChar(m_successComment,
-                IPersistentObject.MAX_STRING_LENGTH);
-        ControlDecorator.createInfo(m_successComment,
-                Messages.ProjectPropertyPageReportOnSuccessInfo, false);
-        m_successComment.addModifyListener(m_dataUpdater);
-        enableSuccessCommentTextfield();
     }
 
     /**
@@ -294,8 +266,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                     m_reportOnFailure.setEnabled(true);
                     m_reportOnSuccess.setEnabled(true);
                 }
-                enableSuccessCommentTextfield();
-                enableFailureCommentTextfield();
                 setErrorMessage(null);
                 updateALMData();
             }
@@ -316,22 +286,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
     }
 
     /**
-     * reflect the enablement of checkbox to the corresponding textfield 
-     */
-    protected void enableSuccessCommentTextfield() {
-        enableSelectionAndEnablementDependent(
-                m_reportOnSuccess, m_successComment);
-    }
-    
-    /**
-     * reflect the enablement of checkbox to the corresponding textfield 
-     */
-    protected void enableFailureCommentTextfield() {
-        enableSelectionAndEnablementDependent(
-                m_reportOnFailure, m_failureComment);
-    }
-    
-    /**
      * update the data
      */
     private void updateALMData() {
@@ -342,14 +296,8 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         if (m_reportOnFailure != null) {
             props.setIsReportOnFailure(m_reportOnFailure.getSelection());
         }
-        if (m_failureComment != null) {
-            props.setFailureComment(m_failureComment.getText().trim());
-        }
         if (m_reportOnSuccess != null) {
             props.setIsReportOnSuccess(m_reportOnSuccess.getSelection());
-        }
-        if (m_successComment != null) {
-            props.setSuccessComment(m_successComment.getText().trim());
         }
         if (m_dashboardURL != null) {
             props.setDashboardURL(m_dashboardURL.getText().trim());

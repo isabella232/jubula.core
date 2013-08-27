@@ -807,9 +807,7 @@ class XmlImporter {
         IProjectPropertiesPO projectProperties = proj.getProjectProperties();
         projectProperties.setALMRepositoryName(xml.getAlmRepositoryName());
         projectProperties.setIsReportOnSuccess(xml.getIsReportOnSuccess());
-        projectProperties.setSuccessComment(xml.getSuccessComment());
         projectProperties.setIsReportOnFailure(xml.getIsReportOnFailure());
-        projectProperties.setFailureComment(xml.getFailureComment());
         projectProperties.setDashboardURL(xml.getDashboardURL());
         projectProperties.getCheckConfCont().setEnabled(
                 xml.getTeststyleEnabled());
