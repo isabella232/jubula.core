@@ -459,8 +459,8 @@ public class AutAgent {
             if (m_isRunning) {
                 m_autIdToRestartHandler.remove(autId);                
                 Communicator autCommunicator = m_auts.remove(autId);
-                autCommunicator.prepareForConnectionProblems();
                 if (autCommunicator != null) {
+                    autCommunicator.prepareForConnectionProblems();
                     try {
                         autCommunicator.send(
                                 new PrepareForShutdownMessage());
