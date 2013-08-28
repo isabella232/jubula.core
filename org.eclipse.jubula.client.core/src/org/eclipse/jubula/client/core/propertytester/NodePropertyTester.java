@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.propertytester;
+package org.eclipse.jubula.client.core.propertytester;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
@@ -18,7 +18,6 @@ import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
 
 
 /**

@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.propertytester;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
+import org.eclipse.jubula.client.core.propertytester.AbstractBooleanPropertyTester;
 
 /**
  * PropertyTester for TestResultSummary.

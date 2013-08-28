@@ -78,12 +78,6 @@
   </extension>
   <extension point="org.eclipse.core.expressions.propertyTesters">
     <propertyTester
-      class="org.eclipse.jubula.client.ui.rcp.propertytester.NodePropertyTester"
-      id="org.eclipse.jubula.client.ui.rcp.propertytester.GuiNodePropertyTester"
-      namespace="org.eclipse.jubula.client.ui.rcp.model"
-      properties="isEditable, hasTaskId"
-      type="org.eclipse.jubula.client.core.model.IPersistentObject" />
-    <propertyTester
       class="org.eclipse.jubula.client.ui.rcp.propertytester.ComponentNameCollectionPropertyTester"
       id="org.eclipse.jubula.client.ui.rcp.propertytester.ComponentNameCollectionPropertyTester"
       namespace="org.eclipse.jubula.client.core.model.ComponentNameCollection"
@@ -2080,7 +2074,7 @@
               <instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
             </or>
-            <test property="org.eclipse.jubula.client.ui.rcp.model.isEditable" />
+            <test property="org.eclipse.jubula.client.core.model.isEditable" />
           </iterate>
         </and>
       </enabledWhen>
@@ -2107,7 +2101,7 @@
             <or>
               <instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
             </or>
-            <test property="org.eclipse.jubula.client.ui.rcp.model.isEditable" />
+            <test property="org.eclipse.jubula.client.core.model.isEditable" />
           </iterate>
         </and>
       </enabledWhen>
@@ -2190,7 +2184,7 @@
               <instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
             </or>
-            <test property="org.eclipse.jubula.client.ui.rcp.model.isEditable" />
+            <test property="org.eclipse.jubula.client.core.model.isEditable" />
           </iterate>
           <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectProtected">
             <equals value="false" />
@@ -2771,7 +2765,7 @@
                       value="org.eclipse.jubula.client.core.model.ISpecTestCasePO">
                 </instanceof>
              </or>
-            <test property="org.eclipse.jubula.client.ui.rcp.model.isEditable" />
+            <test property="org.eclipse.jubula.client.core.model.isEditable" />
           </iterate>
        </enabledWhen>
     </handler>
@@ -3192,7 +3186,7 @@
               <instanceof value="org.eclipse.jubula.client.core.model.ISpecObjContPO" />
               <instanceof value="org.eclipse.jubula.client.core.model.IExecObjContPO" />
             </or>
-            <test property="org.eclipse.jubula.client.ui.rcp.model.isEditable" />
+            <test property="org.eclipse.jubula.client.core.model.isEditable" />
           </iterate>
         </and>
       </activeWhen>
@@ -3221,7 +3215,7 @@
           <iterate
             ifEmpty="false"
             operator="and">
-            <test property="org.eclipse.jubula.client.ui.rcp.model.isEditable" />
+            <test property="org.eclipse.jubula.client.core.model.isEditable" />
           </iterate>
         </and>
       </activeWhen>
@@ -3387,7 +3381,7 @@
                 <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
               </or>
               <test
-                property="org.eclipse.jubula.client.ui.rcp.model.isEditable"
+                property="org.eclipse.jubula.client.core.model.isEditable"
                 value="true" />
             </and>
           </iterate>
@@ -3412,7 +3406,7 @@
                 </or>
               </not>
               <test
-                property="org.eclipse.jubula.client.ui.rcp.model.isEditable"
+                property="org.eclipse.jubula.client.core.model.isEditable"
                 value="true" />
             </and>
           </iterate>

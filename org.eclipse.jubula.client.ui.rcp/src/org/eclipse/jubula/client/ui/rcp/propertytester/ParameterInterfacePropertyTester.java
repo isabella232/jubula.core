@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.propertytester;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
+import org.eclipse.jubula.client.core.propertytester.AbstractBooleanPropertyTester;
 
 /**
  * @author Markus Tiede

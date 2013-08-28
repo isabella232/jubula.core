@@ -171,9 +171,8 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         m_dashboardURL.setText(StringUtils
                 .defaultString(m_origProjectProps.getDashboardURL()));
         m_dashboardURL.validate();
-        GridData textGridData = new GridData();
-        textGridData.grabExcessHorizontalSpace = false;
-        textGridData.widthHint = DEFAULT_CONTROL_WIDTH;
+        GridData textGridData = new GridData(GridData.FILL_HORIZONTAL);
+        textGridData.grabExcessHorizontalSpace = true;
         m_dashboardURL.setLayoutData(textGridData);
         LayoutUtil.setMaxChar(m_dashboardURL,
                 IPersistentObject.MAX_STRING_LENGTH);
@@ -262,9 +261,11 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                 if (m_almRepoCombo.getSelectedObject() == null) {
                     m_reportOnFailure.setEnabled(false);
                     m_reportOnSuccess.setEnabled(false);
+                    m_dashboardURL.setEnabled(false);
                 } else {
                     m_reportOnFailure.setEnabled(true);
                     m_reportOnSuccess.setEnabled(true);
+                    m_dashboardURL.setEnabled(true);
                 }
                 setErrorMessage(null);
                 updateALMData();

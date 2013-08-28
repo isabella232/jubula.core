@@ -386,8 +386,9 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     public static String getText(IExecTestCasePO testCaseRef) {
         StringBuilder nameBuilder = new StringBuilder();
         
-        if (!StringUtils.isBlank(testCaseRef.getRealName())) {
-            nameBuilder.append(testCaseRef.getRealName());
+        String realName = testCaseRef.getRealName();
+        if (!StringUtils.isBlank(realName)) {
+            nameBuilder.append(realName);
             if (Plugin.getDefault().getPreferenceStore().getBoolean(
                     Constants.SHOWORIGINALNAME_KEY)) {
                 ISpecTestCasePO testCase = testCaseRef.getSpecTestCase();

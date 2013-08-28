@@ -290,6 +290,8 @@ public class Messages extends NLS {
     public static String ProjectNotInDB;
     public static String ProjectWasDeleted;
     public static String ProjectWizardCreatingProject;
+    public static String PropertyTesterPropertyNotSupported;
+    public static String PropertyTesterTypeNotSupported;
     public static String ReadingComponentNamesFailed;
     public static String ReadingOfProjectNameOrParamNamesFailed;
     public static String Reference;
@@ -396,7 +398,12 @@ public class Messages extends NLS {
     public static String WrongTypeForAdditionOfEventhandler;
     public static String WrongTypeForRemovalOfEventhandler;
     public static String WrongTypeOfReentryProperty;
-
+    public static String TestResultNodeTypeEventTestCase;
+    public static String TestResultNodeTypeTestCase;
+    public static String TestResultNodeTypeTestStep;
+    public static String TestResultNodeTypeTestSuite;
+    public static String TestResultNodeTypeUnknown;
+    
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

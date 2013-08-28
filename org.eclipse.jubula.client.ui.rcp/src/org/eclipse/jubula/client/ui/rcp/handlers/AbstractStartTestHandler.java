@@ -107,8 +107,11 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
                             public void run() {
                                 State state = command
                                         .getState(RegistryToggleState.STATE_ID);
-                                boolean newToggleStateValue = tee.getState() 
-                                    == TestExecutionEvent.TEST_EXEC_PAUSED;
+                                boolean newToggleStateValue = 
+                                        tee.getState() 
+                                         == org.eclipse.jubula.client.core
+                                         .businessprocess.TestExecutionEvent
+                                         .State.TEST_EXEC_PAUSED;
                                 state.setValue(newToggleStateValue);
                             }
                         });

@@ -46,7 +46,7 @@
 	              <instanceof value="org.eclipse.jubula.client.core.model.IRefTestSuitePO" />
 	              <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
 	            </or>
-	            <test property="org.eclipse.jubula.client.ui.rcp.model.hasTaskId" />
+	            <test property="org.eclipse.jubula.client.core.model.hasTaskId" />
 	          </iterate>
 	        </and>
 	      </enabledWhen>

@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.persistence.Persistor;
+import org.eclipse.jubula.client.core.propertytester.NodePropertyTester;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
 import org.eclipse.jubula.client.core.utils.NullValidator;
@@ -38,7 +39,6 @@ import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.IVerifia
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.IParameterPropertyController.ParameterInputType;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.propertytester.NodePropertyTester;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
 import org.eclipse.swt.graphics.Image;

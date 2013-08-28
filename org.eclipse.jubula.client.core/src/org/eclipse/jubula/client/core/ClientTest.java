@@ -49,6 +49,7 @@ import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatch
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
+import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent.State;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
 import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
@@ -66,6 +67,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
+import org.eclipse.jubula.client.core.model.ITestResult;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.MonitoringReportPO;
@@ -559,9 +561,9 @@ public class ClientTest implements IClientTest {
                 new ITestExecutionEventListener() {
                     /** {@inheritDoc} */
                     public void stateChanged(TestExecutionEvent event) {
-                        testExecutionState.set(event.getState());
+                        testExecutionState.set(event.getState().ordinal());
                         if (event.getState() 
-                                == TestExecutionEvent.TEST_EXEC_FAILED) {
+                                == State.TEST_EXEC_FAILED) {
                             if (event.getException() instanceof JBException) {
                                 JBException e = (JBException)
                                     event.getException();
@@ -609,7 +611,7 @@ public class ClientTest implements IClientTest {
     /**
      * @param testExecutionState the test execution state 
      * @param testExecutionMessageId the test execution message id
-     * @return wether the test job execution should be stopped or not
+     * @return whether the test job execution should be stopped or not
      */
     private boolean continueTestJobExecution(AtomicInteger testExecutionState,
             AtomicInteger testExecutionMessageId) {
@@ -617,8 +619,7 @@ public class ClientTest implements IClientTest {
                 == MessageIDs.E_NO_AUT_CONNECTION_ERROR.intValue()) {
             return false;
         }
-        if (testExecutionState.get() 
-                == TestExecutionEvent.TEST_EXEC_STOP) {
+        if (testExecutionState.get() == State.TEST_EXEC_STOP.ordinal()) {
             return false;
         }
         return true;
@@ -629,7 +630,7 @@ public class ClientTest implements IClientTest {
      */
     public void stopTestExecution() {
         fireTestExecutionChanged(new TestExecutionEvent(
-                TestExecutionEvent.TEST_EXEC_STOP));
+                State.TEST_EXEC_STOP));
         TestExecution.getInstance().stopExecution();
     }
 
@@ -1084,20 +1085,18 @@ public class ClientTest implements IClientTest {
      * {@inheritDoc}
      */
     public void writeReport() {
-        if (TestResultBP.getInstance().getResultTestModel() != null 
-                && m_logPath != null) {
-            
+        TestResult resultTestModel = TestResultBP.getInstance()
+                .getResultTestModel();
+        if (resultTestModel != null && m_logPath != null) {
             AbstractXMLReportGenerator generator = null;
             // Use the appropriate report generator
             // Default is currently Complete
             if (Messages.TestResultViewPreferencePageStyleErrorsOnly
-                    .equalsIgnoreCase(m_logStyle)) { 
+                    .equalsIgnoreCase(m_logStyle)) {
 
-                generator = new ErrorsOnlyXMLReportGenerator(TestResultBP.
-                        getInstance().getResultTestModel());
+                generator = new ErrorsOnlyXMLReportGenerator(resultTestModel);
             } else {
-                generator = new CompleteXMLReportGenerator(TestResultBP.
-                        getInstance().getResultTestModel());
+                generator = new CompleteXMLReportGenerator(resultTestModel);
             }
             writeReport(generator);
         }
@@ -1105,14 +1104,13 @@ public class ClientTest implements IClientTest {
 
     /**
      * Writes a report to disk using the given ReportGenerator.
-     * @param generator generates the XML that will be written to disk.
+     * 
+     * @param generator
+     *            generates the XML that will be written to disk.
      */
     private void writeReport(AbstractXMLReportGenerator generator) {
         Document document = generator.generateXmlReport();
-        
-        String fileName = createFilename(
-                TestResultBP.getInstance().getResultTestModel());
-        
+        String fileName = createFilename(generator.getTestResult());
         try {
             new FileXMLReportWriter(fileName).write(document);
         } catch (IOException e) {
@@ -1124,7 +1122,7 @@ public class ClientTest implements IClientTest {
      * @param result The Test Result.
      * @return a suitable filename for the given test result model.
      */
-    private String createFilename(TestResult result) {
+    private String createFilename(ITestResult result) {
         StringBuilder sb = new StringBuilder(m_logPath);
         sb.append(StringConstants.SLASH);
         sb.append(Messages.ExecutionLog);
@@ -1155,8 +1153,8 @@ public class ClientTest implements IClientTest {
     }
 
     /**
-     * Initiliazes the AutAgentConnection and the AUTConnection, in case of an
-     * error, the listeners are notified with appopriate ServerEvent.
+     * Initializes the AutAgentConnection and the AUTConnection, in case of an
+     * error, the listeners are notified with appropriate ServerEvent.
      * @param serverName The name of the server.
      * @param port The port number.
      * @throws JBVersionException in case of a version error between Client

@@ -8,11 +8,11 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.propertytester;
+package org.eclipse.jubula.client.core.propertytester;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.core.expressions.PropertyTester;
-import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

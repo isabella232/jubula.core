@@ -20,8 +20,8 @@ import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.propertytester.NodePropertyTester;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
-import org.eclipse.jubula.client.ui.rcp.propertytester.NodePropertyTester;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.ui.TasksUiUtil;
 

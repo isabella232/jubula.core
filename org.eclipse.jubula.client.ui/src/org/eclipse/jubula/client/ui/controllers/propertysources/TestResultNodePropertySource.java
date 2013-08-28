@@ -18,7 +18,6 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.model.TestResultParameter;
@@ -134,7 +133,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         addPropertyDescriptor(propDes);
         propDes = new PropertyDescriptor(new ComponentController() {
             public Object getProperty() {
-                return getTypeOfNode(node);
+                return m_node.getTypeOfNode();
             }
             public Image getImage() {
                 return getImageForNode(node);
@@ -167,23 +166,6 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         initComponentNameDetailsPropDescriptor(m_node);
         initActionDetailsPropDescriptor(m_node);
         initParameterDescriptor(m_node);
-    }
-    
-    /**
-     * @param node the node
-     * @return a human readable type description for the given node
-     */
-    public static String getTypeOfNode(INodePO node) {
-        if (Persistor.isPoSubclass(node, IEventExecTestCasePO.class)) {
-            return Messages.TestResultNodePropertySourceEventTestCase;
-        } else if (Persistor.isPoSubclass(node, ITestCasePO.class)) {
-            return Messages.TestResultNodePropertySourceTestCase;
-        } else if (Persistor.isPoSubclass(node, ICapPO.class)) {
-            return Messages.TestResultNodePropertySourceTestStep;
-        } else if (Persistor.isPoSubclass(node, ITestSuitePO.class)) {
-            return Messages.TestResultNodePropertySourceTestSuite;
-        }
-        return Messages.TestResultNodePropertySourceUnknownElement;
     }
     
     /**

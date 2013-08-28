@@ -30,6 +30,7 @@ import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatch
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
+import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent.State;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.commands.AUTModeChangedCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
@@ -520,28 +521,28 @@ public class TestExecutionContributor
         String testCaseName = null;
         String capName = null;
         switch (event.getState()) {
-            case TestExecutionEvent.TEST_EXEC_STOP:
+            case TEST_EXEC_STOP:
                 icon = Constants.AUT_UP;
                 message = Messages.TestExecutionContributorSuiteStop;
                 break;
-            case TestExecutionEvent.TEST_EXEC_FAILED:
+            case TEST_EXEC_FAILED:
                 error = getTestSuiteErrorText(event);
                 message = Messages.TestExecutionContributorSuiteFailed;
                 break;
-            case TestExecutionEvent.TEST_EXEC_START:
+            case TEST_EXEC_START:
                 setClientMinimized(true);
                 icon = Constants.AUT_UP;
                 message = Messages.TestExecutionContributorSuiteRun;
                 showTestResultTreeView();
                 break;
-            case TestExecutionEvent.TEST_EXEC_RESULT_TREE_READY:
+            case TEST_EXEC_RESULT_TREE_READY:
                 message = Messages.TestExecutionContributorSuiteRun;
                 break;
-            case TestExecutionEvent.TEST_EXEC_FINISHED:
+            case TEST_EXEC_FINISHED:
                 message = Messages.TestExecutionContributorSuiteFinished;
                 icon = Constants.AUT_UP;
                 break;
-            case TestExecutionEvent.TEST_EXEC_COMPONENT_FAILED:
+            case TEST_EXEC_COMPONENT_FAILED:
                 cap = TestExecution.getInstance().getActualCap();
                 final String componentName = cap.getComponentName();
                 testCaseName = cap.getParentNode().getName();
@@ -550,24 +551,24 @@ public class TestExecutionContributor
                         new Object[]{componentName, testCaseName, capName});
                 message = Messages.TestExecutionContributorSuiteFailed;
                 break;
-            case TestExecutionEvent.TEST_EXEC_PAUSED:
+            case TEST_EXEC_PAUSED:
                 setClientMinimized(false);
                 icon = Constants.PAUSED;
                 message = Messages.TestExecutionContributorSuitePaused;
                 break;
-            case TestExecutionEvent.TEST_RUN_INCOMPLETE_TESTDATA_ERROR:
+            case TEST_RUN_INCOMPLETE_TESTDATA_ERROR:
                 setClientMinimized(false);
-                error = getIncompleteTestRunMessage(TestExecutionEvent
-                    .TEST_RUN_INCOMPLETE_TESTDATA_ERROR);
+                error = getIncompleteTestRunMessage(
+                        State.TEST_RUN_INCOMPLETE_TESTDATA_ERROR);
                 message = Messages.TestExecutionContributorSuiteFailed;
                 break;
-            case TestExecutionEvent.TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR:
+            case TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR:
                 setClientMinimized(false);
-                error = getIncompleteTestRunMessage(TestExecutionEvent
-                    .TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR);
+                error = getIncompleteTestRunMessage(
+                        State.TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR);
                 message = Messages.TestExecutionContributorSuiteFailed;
                 break;
-            case TestExecutionEvent.TEST_EXEC_RESTART:
+            case TEST_EXEC_RESTART:
                 icon = Constants.AUT_UP;
                 message = Messages.TestExecutionContributorSuiteRun;
                 break;
@@ -607,16 +608,16 @@ public class TestExecutionContributor
      * @param testExecEventID the TestExecutionEvent-ID
      * @return the I18N-String of the error description.
      */
-    private String getIncompleteTestRunMessage(int testExecEventID) {
+    private String getIncompleteTestRunMessage(State testExecEventID) {
         ICapPO cap = TestExecution.getInstance().getActualCap();
         String testCaseName = cap.getParentNode().getName();
         String capName = cap.getName();
         switch(testExecEventID) {
-            case TestExecutionEvent.TEST_RUN_INCOMPLETE_TESTDATA_ERROR:
+            case TEST_RUN_INCOMPLETE_TESTDATA_ERROR:
                 return NLS.bind(Messages.
                     TestExecutionContributorTEST_RUN_INCOMPLETE_TESTDATA_ERROR,
                     new Object[]{testCaseName, capName});
-            case TestExecutionEvent.TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR:
+            case TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR:
                 return NLS.bind(Messages.
                         TestExecutionContributorRunIncompleteOMError,
                     new Object[]{testCaseName, capName});

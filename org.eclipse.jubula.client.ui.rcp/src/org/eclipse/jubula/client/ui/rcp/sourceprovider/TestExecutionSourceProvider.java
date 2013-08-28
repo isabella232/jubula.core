@@ -99,21 +99,21 @@ public class TestExecutionSourceProvider extends AbstractJBSourceProvider
      */
     public void stateChanged(TestExecutionEvent event) {
         switch (event.getState()) {
-            case TestExecutionEvent.TEST_EXEC_START:
-            case TestExecutionEvent.TEST_EXEC_RESTART:
+            case TEST_EXEC_START:
+            case TEST_EXEC_RESTART:
                 m_isTestPaused = false;
                 m_isTestRunning = true;
                 break;
-            case TestExecutionEvent.TEST_EXEC_PAUSED:
+            case TEST_EXEC_PAUSED:
                 m_isTestRunning = true;
                 m_isTestPaused = true;
                 break;
-            case TestExecutionEvent.TEST_EXEC_ERROR:
-            case TestExecutionEvent.TEST_EXEC_STOP:
-            case TestExecutionEvent.TEST_EXEC_FAILED:
-            case TestExecutionEvent.TEST_EXEC_FINISHED:
-            case TestExecutionEvent.TEST_EXEC_OK:
-            case TestExecutionEvent.TEST_EXEC_COMPONENT_FAILED:
+            case TEST_EXEC_ERROR:
+            case TEST_EXEC_STOP:
+            case TEST_EXEC_FAILED:
+            case TEST_EXEC_FINISHED:
+            case TEST_EXEC_OK:
+            case TEST_EXEC_COMPONENT_FAILED:
                 m_isTestRunning = false;
                 m_isTestPaused = false;
                 break;

@@ -912,26 +912,26 @@ public class ExecutionController implements IAUTServerEventListener,
         }
 
         switch (event.getState()) {
-            case TestExecutionEvent.TEST_EXEC_RESULT_TREE_READY:
+            case TEST_EXEC_RESULT_TREE_READY:
                 TestExecution.getInstance().getTrav()
                     .addExecStackModificationListener(m_progress);
                 break;
-            case TestExecutionEvent.TEST_EXEC_START:
-            case TestExecutionEvent.TEST_EXEC_RESTART:
+            case TEST_EXEC_START:
+            case TEST_EXEC_RESTART:
                 break;
-            case TestExecutionEvent.TEST_EXEC_FINISHED:
+            case TEST_EXEC_FINISHED:
                 AbstractCmdlineClient.printConsoleLn(
                         Messages.ExecutionControllerTestSuiteEnd,
                         true);
                 m_job.getNextTestSuite();
                 m_clcServiceImpl.tsDone(isNoErrorWhileExecution() ? 0 : 1);
                 break;
-            case TestExecutionEvent.TEST_EXEC_PAUSED:
+            case TEST_EXEC_PAUSED:
                 TestExecution.getInstance().pauseExecution(PauseMode.UNPAUSE);
                 break;
-            case TestExecutionEvent.TEST_EXEC_ERROR:
-            case TestExecutionEvent.TEST_EXEC_FAILED:
-            case TestExecutionEvent.TEST_EXEC_STOP:
+            case TEST_EXEC_ERROR:
+            case TEST_EXEC_FAILED:
+            case TEST_EXEC_STOP:
                 m_job.getNextTestSuite();
                 break;
             default:

@@ -17,7 +17,7 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
+import org.eclipse.jubula.client.core.propertytester.AbstractBooleanPropertyTester;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 
 /**

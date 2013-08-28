@@ -24,6 +24,18 @@ public class Messages extends NLS {
     public static String TaskRepositoryOffline;
     public static String TaskRepositoryNoCredentialsStored;
     public static String TaskRepositoryNoConnectorFound;
+    public static String NodeComment;
+    public static String StatusPassed;
+    public static String DashboardUrl;
+    public static String StatusFailed;
+    public static String ReportToALMJob;
+    public static String ReportToALMJobDone;
+    public static String ReportingTask;
+    public static String ReportingTaskFailed;
+    public static String NotAvailable;
+    public static String TaskRepositoryConnectionTest;
+    public static String TaskRepositoryConnectionTestFailed;
+    public static String TaskRepositoryConnectionTestSucceeded;
     
     static {
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

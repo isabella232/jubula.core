@@ -61,7 +61,7 @@ public abstract class AbstractXMLReportGenerator {
      */
     public AbstractXMLReportGenerator(ITestResult testResult) {
         m_document = DocumentHelper.createDocument();
-        m_testResult = testResult;
+        setTestResult(testResult);
     }
     
     /**
@@ -89,18 +89,18 @@ public abstract class AbstractXMLReportGenerator {
         Element general = root.addElement("project"); //$NON-NLS-1$
         
         general.addElement("name").//$NON-NLS-1$
-            addText(m_testResult.getProjectName());
+            addText(getTestResult().getProjectName());
 
         general.addElement("version").//$NON-NLS-1$
-                addText(m_testResult.getProjectMajorVersion()
+                addText(getTestResult().getProjectMajorVersion()
                         + StringConstants.DOT
-                        + m_testResult.getProjectMinorVersion());
+                        + getTestResult().getProjectMinorVersion());
 
-        Date startTime = m_testResult.getStartTime();
+        Date startTime = getTestResult().getStartTime();
         if (startTime != null) {
             general.addElement("test-start").addText(startTime.toString()); //$NON-NLS-1$
         }
-        Date endTime = m_testResult.getEndTime();
+        Date endTime = getTestResult().getEndTime();
         if (endTime != null) {
             general.addElement("test-end").addText(endTime.toString()); //$NON-NLS-1$
         }
@@ -110,9 +110,9 @@ public abstract class AbstractXMLReportGenerator {
                 addText(TimeUtil.getDurationString(startTime, endTime));
         }
         
-        addStepCountElements(m_testResult, general);
+        addStepCountElements(getTestResult(), general);
         
-        general.addElement("language").addText(m_testResult.getTestLanguage()); //$NON-NLS-1$
+        general.addElement("language").addText(getTestResult().getTestLanguage()); //$NON-NLS-1$
         
         return general;
     }
@@ -154,7 +154,7 @@ public abstract class AbstractXMLReportGenerator {
      * @return the created element.
      */
     protected Element buildRootElement(Element parent) {
-        return buildElement(parent, m_testResult.getRootResultNode());
+        return buildElement(parent, getTestResult().getRootResultNode());
     }
     
     /**
@@ -181,9 +181,9 @@ public abstract class AbstractXMLReportGenerator {
             IAUTMainPO aut = ts.getAut();
             Element autEl = suite.addElement("aut"); //$NON-NLS-1$
             autEl.addElement("name").addText(aut.getName()); //$NON-NLS-1$
-            autEl.addElement("config").addText(m_testResult.getAutConfigName()); //$NON-NLS-1$
-            autEl.addElement("server").addText(m_testResult.getAutAgentHostName()); //$NON-NLS-1$
-            autEl.addElement("cmdline-parameter").setText(m_testResult.getAutArguments()); //$NON-NLS-1$
+            autEl.addElement("config").addText(getTestResult().getAutConfigName()); //$NON-NLS-1$
+            autEl.addElement("server").addText(getTestResult().getAutAgentHostName()); //$NON-NLS-1$
+            autEl.addElement("cmdline-parameter").setText(getTestResult().getAutArguments()); //$NON-NLS-1$
             insertInto = suite.addElement("test-run"); //$NON-NLS-1$
         } else if (node instanceof IEventExecTestCasePO) {
             insertInto = element.addElement("eventhandler"); //$NON-NLS-1$
@@ -351,7 +351,7 @@ public abstract class AbstractXMLReportGenerator {
         status.addText(String.valueOf(resultNode.getStatus()));
         
         long durationMillis = 
-            resultNode.getDuration(m_testResult.getEndTime());
+            resultNode.getDuration(getTestResult().getEndTime());
         if (durationMillis != -1) {
             insertInto.addAttribute("duration", //$NON-NLS-1$
                     DurationFormatUtils.formatDurationHMS(durationMillis));
@@ -373,4 +373,17 @@ public abstract class AbstractXMLReportGenerator {
      */
     protected abstract String getStyleName();
 
+    /**
+     * @return the testResult
+     */
+    public ITestResult getTestResult() {
+        return m_testResult;
+    }
+
+    /**
+     * @param testResult the testResult to set
+     */
+    private void setTestResult(ITestResult testResult) {
+        m_testResult = testResult;
+    }
 }

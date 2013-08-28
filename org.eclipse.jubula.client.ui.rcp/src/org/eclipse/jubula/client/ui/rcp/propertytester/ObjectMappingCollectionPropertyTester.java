@@ -16,7 +16,7 @@ import java.util.List;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
-import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
+import org.eclipse.jubula.client.core.propertytester.AbstractBooleanPropertyTester;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.OMEditorDndSupport;

@@ -66,8 +66,6 @@ public class Messages extends NLS {
     public static String ParentElementHasInvalidTypeReturningEmptyArray;
     public static String PluginConnectProgress;
     public static String PropertyIDInexistent;
-    public static String PropertyTesterPropertyNotSupported;
-    public static String PropertyTesterTypeNotSupported;
     public static String SelectDatabaseConnectFailed;
     public static String SelectDatabaseConnectSuccessful;
     public static String SelectedElementIsNotTestResultSummary;
@@ -79,18 +77,13 @@ public class Messages extends NLS {
     public static String TestResultNodePropertySourceErrorDetail;
     public static String TestResultNodePropertySourceErrorType;
     public static String TestResultNodeGUIPropertySourceEventhandler;
-    public static String TestResultNodePropertySourceEventTestCase;
     public static String TestResultNodeGUIPropertySourceReentry;
     public static String TestResultNodePropertySourceResultStep;
     public static String TestResultNodePropertySourceStepName;
     public static String TestResultNodePropertySourceStepStatus;
     public static String TestResultNodePropertySourceStepType;
-    public static String TestResultNodePropertySourceTestCase;
     public static String TestResultNodePropertySourceTestResult;
-    public static String TestResultNodePropertySourceTestStep;
-    public static String TestResultNodePropertySourceTestSuite;
     public static String TestResultNodePropertySourceTimeStamp;
-    public static String TestResultNodePropertySourceUnknownElement;
     public static String TestresultSummaryAutAgentHostname;
     public static String TestresultSummaryAutConf;
     public static String TestresultSummaryAutHostname;

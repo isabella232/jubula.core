@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
 import org.eclipse.jubula.client.core.businessprocess.ITestResultEventListener;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
+import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent.State;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -253,8 +254,7 @@ public class TestResultTreeView extends ViewPart
      * {@inheritDoc}
      */
     public void stateChanged(TestExecutionEvent event) {
-        if (event.getState() == TestExecutionEvent.
-                TEST_EXEC_RESULT_TREE_READY) {
+        if (event.getState() == State.TEST_EXEC_RESULT_TREE_READY) {
 
             putDecorationContextProperty(
                     TestResultViewer.DECORATION_CONTEXT_SUITE_END_TIME_ID, 

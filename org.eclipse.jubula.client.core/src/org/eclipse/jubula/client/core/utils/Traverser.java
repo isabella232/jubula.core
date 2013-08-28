@@ -525,8 +525,10 @@ public class Traverser {
     }
     
     /**
-     *  event for proceeding of next cap
-     * @param cap actual proceeded cap 
+     * event for proceeding of next cap
+     * 
+     * @param cap
+     *            actual proceeded cap
      */
     private void fireNextCap(ICapPO cap) {
         Iterator<IExecStackModificationListener> it = 
@@ -540,6 +542,7 @@ public class Traverser {
             }
         }
     }
+    
     /**
      * @return Returns the dataSetNumber.
      */

@@ -39,6 +39,7 @@ import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent.RegistrationStatus;
 import org.eclipse.jubula.client.core.agent.IAutRegistrationListener;
+import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent.State;
 import org.eclipse.jubula.client.core.commands.CAPTestResponseCommand;
 import org.eclipse.jubula.client.core.commands.DisplayManualTestStepResponseCommand;
 import org.eclipse.jubula.client.core.commands.EndTestExecutionResponseCommand;
@@ -408,7 +409,7 @@ public class TestExecution {
                     testSuite.getName());
         }
         ClientTestFactory.getClientTest().fireTestExecutionChanged(
-                new TestExecutionEvent(TestExecutionEvent.TEST_EXEC_FAILED,
+                new TestExecutionEvent(State.TEST_EXEC_FAILED,
                         new JBException(Messages.CouldNotConnectToAUT + autName,
                                 MessageIDs.E_NO_AUT_CONNECTION_ERROR)));
     }
@@ -546,7 +547,7 @@ public class TestExecution {
             setStepSpeed(testSuite.getStepDelay());
             ClientTestFactory.getClientTest().
                 fireTestExecutionChanged(new TestExecutionEvent(
-                        TestExecutionEvent.TEST_EXEC_RESULT_TREE_READY));
+                        State.TEST_EXEC_RESULT_TREE_READY));
             monitor.subTask(
                     NLS.bind(Messages.StartingTestSuite,
                     testSuite.getName()));
@@ -558,7 +559,7 @@ public class TestExecution {
         if (firstCap != null) {
             ClientTestFactory.getClientTest().
                 fireTestExecutionChanged(new TestExecutionEvent(
-                        TestExecutionEvent.TEST_EXEC_START));
+                        State.TEST_EXEC_START));
             processCap(firstCap);
         } else {
             endTestExecution();
@@ -1186,7 +1187,7 @@ public class TestExecution {
      */
     private void fireError(Exception e) {
         ClientTestFactory.getClientTest().fireTestExecutionChanged(
-                new TestExecutionEvent(TestExecutionEvent.TEST_EXEC_FAILED, e));
+                new TestExecutionEvent(State.TEST_EXEC_FAILED, e));
         endTestExecution();
     }
 
@@ -1196,7 +1197,7 @@ public class TestExecution {
     private void fireComponentError() {
         ClientTestFactory.getClientTest().
             fireTestExecutionChanged(new TestExecutionEvent(
-                TestExecutionEvent.TEST_EXEC_COMPONENT_FAILED));
+                State.TEST_EXEC_COMPONENT_FAILED));
         endTestExecution();
     }
     
@@ -1325,7 +1326,7 @@ public class TestExecution {
                     }
                     ClientTestFactory.getClientTest().fireTestExecutionChanged(
                             new TestExecutionEvent(
-                                    TestExecutionEvent.TEST_EXEC_PAUSED));
+                                    State.TEST_EXEC_PAUSED));
                 } else {
                     if (LOG.isInfoEnabled()) {
                         LOG.info(Messages.TestexecutionHasResumed);
@@ -1342,7 +1343,7 @@ public class TestExecution {
                     }
                     ClientTestFactory.getClientTest().fireTestExecutionChanged(
                             new TestExecutionEvent(
-                                    TestExecutionEvent.TEST_EXEC_START));
+                                    State.TEST_EXEC_START));
                 }
                 break;
             case CONTINUE_WITHOUT_EH:
@@ -1941,7 +1942,7 @@ public class TestExecution {
                 if (!m_stopped) { // the AUT/TS may be stopped by a project load
                     ClientTestFactory.getClientTest().fireTestExecutionChanged(
                             new TestExecutionEvent(
-                                    TestExecutionEvent.TEST_EXEC_RESTART));
+                                    State.TEST_EXEC_RESTART));
                 } else {
                     if (LOG.isDebugEnabled()) {
                         LOG.debug(Messages.CantContinueTSIsStopped);

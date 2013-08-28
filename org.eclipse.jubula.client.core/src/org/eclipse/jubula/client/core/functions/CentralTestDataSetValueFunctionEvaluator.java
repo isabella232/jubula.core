@@ -21,6 +21,7 @@ import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListene
 import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
+import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent.State;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
@@ -68,8 +69,7 @@ public class CentralTestDataSetValueFunctionEvaluator
         ClientTestFactory.getClientTest()
             .addTestExecutionEventListener(new ITestExecutionEventListener() {
                 public void stateChanged(TestExecutionEvent event) {
-                    if (event.getState() == TestExecutionEvent
-                            .TEST_EXEC_RESULT_TREE_READY) {
+                    if (event.getState() == State.TEST_EXEC_RESULT_TREE_READY) {
                         registerDataCubes();
                         PARAM_DESCRIPTIONS.clear();
                         UNIQUE_KEYS.clear();

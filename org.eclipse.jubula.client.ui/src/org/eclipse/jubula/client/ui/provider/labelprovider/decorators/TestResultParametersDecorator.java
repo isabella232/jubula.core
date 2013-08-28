@@ -10,12 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.labelprovider.decorators;
 
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.core.model.TestResultParameter;
 
 /**
  * @author BREDEX GmbH
@@ -23,38 +19,11 @@ import org.eclipse.jubula.client.core.model.TestResultParameter;
  */
 public class TestResultParametersDecorator extends
         AbstractLightweightLabelDecorator {
-
-    /** separator for Parameter values */
-    private static final String SEPARATOR = ", "; //$NON-NLS-1$
-    
-    /** length of Parameter value separator string */
-    private static final int SEPARATOR_LEN = SEPARATOR.length();
-    
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void decorate(Object element, IDecoration decoration) {
         if (element instanceof TestResultNode) {
-            TestResultNode testResult = (TestResultNode)element;
-            StringBuilder paramValueBuilder = new StringBuilder();
-            List<TestResultParameter> parameters = testResult.getParameters();
-            // use index based loop to avoid ConcurrentModificationException
-            for (int index = 0; index < parameters.size(); index++) {
-                TestResultParameter parameter = parameters.get(index);
-                paramValueBuilder
-                    .append(StringUtils.defaultString(parameter.getValue()))
-                    .append(SEPARATOR);
-            }
-            if (paramValueBuilder.length() > 0) {
-                int builderLength = paramValueBuilder.length();
-                paramValueBuilder.delete(
-                        builderLength - SEPARATOR_LEN, builderLength);
-                paramValueBuilder.insert(0, " ["); //$NON-NLS-1$
-                paramValueBuilder.append("]"); //$NON-NLS-1$
-                decoration.addSuffix(paramValueBuilder.toString());
-            }
+            TestResultNode testResult = (TestResultNode) element;
+            decoration.addSuffix(testResult.getParameterDescription());
         }
     }
-
 }

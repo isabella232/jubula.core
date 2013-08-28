@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.propertytester;
 
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.ui.propertytester.AbstractBooleanPropertyTester;
+import org.eclipse.jubula.client.core.propertytester.AbstractBooleanPropertyTester;
 
 
 /**

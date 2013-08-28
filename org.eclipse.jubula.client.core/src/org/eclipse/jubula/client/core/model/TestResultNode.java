@@ -17,9 +17,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.jubula.client.core.businessprocess.ITestResultEventListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.osgi.util.NLS;
@@ -33,7 +35,6 @@ import org.slf4j.LoggerFactory;
  * @created 21.04.2005
  */
 public class TestResultNode {
-    
     /**
      * Status if not yet tested
      */
@@ -82,6 +83,12 @@ public class TestResultNode {
     /** the logger */
     private static final Logger LOG = 
         LoggerFactory.getLogger(TestResultNode.class);
+    
+    /** separator for Parameter values */
+    private static final String SEPARATOR = ", "; //$NON-NLS-1$
+    
+    /** length of Parameter value separator string */
+    private static final int SEPARATOR_LEN = SEPARATOR.length();
     
     /**
      * index for Tree Tracker
@@ -633,5 +640,46 @@ public class TestResultNode {
         
         // keyword was not executed, so duration cannot be calculated
         return -1;
+    }
+    
+    /**
+     * @return a human readable type description for the given node
+     */
+    public String getTypeOfNode() {
+        INodePO node = getNode();
+        if (Persistor.isPoSubclass(node, IEventExecTestCasePO.class)) {
+            return Messages.TestResultNodeTypeEventTestCase;
+        } else if (Persistor.isPoSubclass(node, ITestCasePO.class)) {
+            return Messages.TestResultNodeTypeTestCase;
+        } else if (Persistor.isPoSubclass(node, ICapPO.class)) {
+            return Messages.TestResultNodeTypeTestStep;
+        } else if (Persistor.isPoSubclass(node, ITestSuitePO.class)) {
+            return Messages.TestResultNodeTypeTestSuite;
+        }
+        return Messages.TestResultNodeTypeUnknown;
+    }
+    
+    /**
+     * @return a human readable parameter description for the given node
+     */
+    public String getParameterDescription() {
+        StringBuilder paramValueBuilder = new StringBuilder();
+        List<TestResultParameter> parameters = getParameters();
+        // use index based loop to avoid ConcurrentModificationException
+        for (int index = 0; index < parameters.size(); index++) {
+            TestResultParameter parameter = parameters.get(index);
+            paramValueBuilder.append(
+                    StringUtils.defaultString(parameter.getValue())).append(
+                    SEPARATOR);
+        }
+        if (paramValueBuilder.length() > 0) {
+            int builderLength = paramValueBuilder.length();
+            paramValueBuilder.delete(builderLength - SEPARATOR_LEN,
+                    builderLength);
+            paramValueBuilder.insert(0, " ["); //$NON-NLS-1$
+            paramValueBuilder.append("]"); //$NON-NLS-1$
+            return paramValueBuilder.toString();
+        }
+        return StringConstants.EMPTY;
     }
 }

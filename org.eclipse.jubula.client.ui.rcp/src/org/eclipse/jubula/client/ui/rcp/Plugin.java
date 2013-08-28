@@ -29,6 +29,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.alm.mylyn.core.bp.CommentReporter;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.MasterSessionComponentNameMapper;
@@ -1037,6 +1038,8 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
 
         // register AutStarter, AutServer, and test listeners
         TestExecutionContributor.getInstance();
+        CommentReporter instance = CommentReporter.getInstance();
+        instance.setConsole(this);
         
         propagateDataDir();
         Plugin.getDefault().getPreferenceStore().addPropertyChangeListener(

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
@@ -106,18 +107,19 @@ public final class ALMAccess {
      *            the task repository
      * @param taskId
      *            the taskId
+     * @param monitor
+     *            the monitor to use
      * @return the tasks data or <code>null</code> if not found
      * @throws CoreException
      *             in case of a problem
      */
-    private static TaskData getTaskDataByID(TaskRepository repo, String taskId)
-        throws CoreException {
+    private static TaskData getTaskDataByID(TaskRepository repo, String taskId,
+            IProgressMonitor monitor) throws CoreException {
         TaskData taskData = null;
         if (repo != null && !repo.isOffline()) {
             AbstractRepositoryConnector connector = TasksUi
                     .getRepositoryConnector(repo.getConnectorKind());
-            taskData = connector.getTaskData(repo, taskId,
-                    new NullProgressMonitor());
+            taskData = connector.getTaskData(repo, taskId, monitor);
         }
         return taskData;
     }
@@ -129,14 +131,16 @@ public final class ALMAccess {
      *            the taskId
      * @param comment
      *            the comment
+     * @param monitor
+     *            the monitor to use
      * @return true if succeeded; false otherwise
      */
     public static boolean createComment(String repoLabel, String taskId,
-            String comment) {
+            String comment, IProgressMonitor monitor) {
         boolean succeeded = false;
         TaskRepository repo = getRepositoryByLabel(repoLabel);
         try {
-            TaskData taskData = getTaskDataByID(repo, taskId);
+            TaskData taskData = getTaskDataByID(repo, taskId, monitor);
             if (taskData != null) {
                 AbstractRepositoryConnector connector = TasksUi
                         .getRepositoryConnector(repo.getConnectorKind());
@@ -147,7 +151,7 @@ public final class ALMAccess {
                         .createMappedAttribute(TaskAttribute.COMMENT_NEW);
                 newComment.setValue(comment);
                 RepositoryResponse response = taskDataHandler.postTaskData(
-                        repo, taskData, null, new NullProgressMonitor());
+                        repo, taskData, null, monitor);
                 succeeded = RepositoryResponse.ResponseKind.TASK_UPDATED
                         .equals(response.getReposonseKind());
             }
@@ -171,7 +175,8 @@ public final class ALMAccess {
         String value = null;
         TaskRepository repo = getRepositoryByLabel(repoLabel);
         try {
-            TaskData taskData = getTaskDataByID(repo, taskId);
+            TaskData taskData = getTaskDataByID(repo, taskId,
+                    new NullProgressMonitor());
             if (taskData != null) {
                 TaskAttribute root = taskData.getRoot();
                 TaskAttributeMapper attributeMapper = taskData

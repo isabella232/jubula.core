@@ -15,111 +15,82 @@ package org.eclipse.jubula.client.core.businessprocess;
  * @created 07.10.2004
  */
 public class TestExecutionEvent {
-    /**
-     * Signals that TestExecution is started
-     */
-    public static final int TEST_EXEC_START = 1;
-    
-    /**
-     * Signals that TestExecution is stopped
-     */
-    public static final int TEST_EXEC_STOP = 2;
-    
-    /**
-     * Signals that TestExecution fails
-     */
-    public static final int TEST_EXEC_FAILED = 3;
-    
-    /**
-     * Signals that the cap has an error
-     */
-    public static final int TEST_EXEC_ERROR = 4;
-    
-    /**
-     * Signals that the cap is ok
-     */
-    public static final int TEST_EXEC_OK = 5;
-    /**
-     * The result tree is ready for showing
-     */
-    public static final int TEST_EXEC_RESULT_TREE_READY = 6;
-    /**
-     * Test execution ready
-     */
-    public static final int TEST_EXEC_FINISHED = 7;
-    /**
-     * Signals that TestExecution fails, when the component name is wrong.
-     */
-    public static final int TEST_EXEC_COMPONENT_FAILED = 8;
+    /** @author BREDEX GmbH */
+    public static enum State {
+        /** Signals that TestExecution is started */
+        TEST_EXEC_START,
+        /** Signals that TestExecution is stopped */
+        TEST_EXEC_STOP,
+        /** Signals that TestExecution fails */
+        TEST_EXEC_FAILED,
+        /** Signals that the cap has an error */
+        TEST_EXEC_ERROR,
+        /** Signals that the cap is ok */
+        TEST_EXEC_OK,
+        /** The result tree is ready for showing */
+        TEST_EXEC_RESULT_TREE_READY,
+        /** Test execution ready */
+        TEST_EXEC_FINISHED,
+        /** Signals that TestExecution fails, when the component name is wrong. */
+        TEST_EXEC_COMPONENT_FAILED,
+        /** Signals that TestExecution should be paused. */
+        TEST_EXEC_PAUSED,
+        /** Signals that TestExecution resumed. */
+        TEST_EXEC_RESUMED,
+        /** Signals that TestExecution updated. */
+        TEST_EXEC_UPDATE,
+        /** Signals that TestExecution restarted. */
+        TEST_EXEC_RESTART,
+        /** Signals that a test run with incomplete data failed */
+        TEST_RUN_INCOMPLETE_TESTDATA_ERROR,
+        /** Signals that a test run with incomplete object mapping failed */
+        TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR
+    }
 
-    /**
-     * Signals that TestExecution should be paused.
-     */
-    public static final int TEST_EXEC_PAUSED = 9;
-
-    /**
-     * Signals that TestExecution resumed.
-     */
-    public static final int TEST_EXEC_RESUMED = 10;
-
-    /**
-     * Signals that TestExecution updated.
-     */
-    public static final int TEST_EXEC_UPDATE = 11;
-    
-    /**
-     * Signals that TestExecution updated.
-     */
-    public static final int TEST_EXEC_RESTART = 14;
-    
-//    /** Signals that a test runned with incomplete data failed */
-//    public static final int TEST_RUN_INCOMPLETE_FAILED = 12;
-    
-    /** Signals that a test runned with incomplete data failed  */
-    public static final int TEST_RUN_INCOMPLETE_TESTDATA_ERROR = 12;
-
-    /** Signals that a test runned with incomplete object mapping failed */
-    public static final int TEST_RUN_INCOMPLETE_OBJECTMAPPING_ERROR = 13;
-    
     /**
      * The state of TestExecution
      */
-    private int m_state;
-    
+    private State m_state;
+
     /**
-     * occured Exception
+     * occurred Exception
      */
     private Exception m_exception;
-    
+
     /**
      * Constructor that sets the state
-     * @param state The state of TestExecution
+     * 
+     * @param state
+     *            The state of TestExecution
      */
-    public TestExecutionEvent(int state) {
+    public TestExecutionEvent(State state) {
         m_state = state;
     }
 
     /**
      * Constructor that sets the state
-     * @param state The state of TestExecution
-     * @param e Exception that occured
+     * 
+     * @param state
+     *            The state of TestExecution
+     * @param e
+     *            Exception that occurred
      */
-    public TestExecutionEvent(int state, Exception e) {
+    public TestExecutionEvent(State state, Exception e) {
         m_state = state;
         m_exception = e;
     }
 
-    
     /**
      * Gets the state
+     * 
      * @return the state
      */
-    public int getState() {
+    public State getState() {
         return m_state;
     }
 
     /**
-     * @return occured Exception
+     * @return occurred Exception
      */
     public Exception getException() {
         return m_exception;

@@ -69,17 +69,14 @@ public class TestResultNodeTaskMapping extends TaskMapping {
             }
             count++;
         }
-        Object[] params = {
-                TestResultNodePropertySource
-                        .getTypeOfNode(m_node.getNode()), sb.toString() };
+        Object[] params = { m_node.getTypeOfNode(), sb.toString() };
         return NLS.bind(Messages.TaskDescription, params);
     }
 
     /** {@inheritDoc} */
     public String getSummary() {
-        Object[] params = {
-                TestResultNodePropertySource.getTypeOfNode(m_node.getNode()),
-                m_node.getName(), m_node.getStatusString() };
+        Object[] params = { m_node.getTypeOfNode(), m_node.getName(),
+                m_node.getStatusString() };
         return NLS.bind(Messages.TaskTitle, params);
     }
 }
