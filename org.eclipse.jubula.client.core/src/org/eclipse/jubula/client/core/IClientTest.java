@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.SortedSet;
 
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
-import org.eclipse.jubula.client.core.businessprocess.ITestresultSummaryEventListener;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
@@ -208,13 +207,6 @@ public interface IClientTest {
             ITestExecutionEventListener listener);
     
     /**
-     * add a TestresultSummaryEventListener
-     * @param listener a TestresultSummaryEventListener
-     */
-    public void addTestresultSummaryEventListener(
-            ITestresultSummaryEventListener listener);
-
-    /**
      * Notify all listeners that have registered interest for notification on
      * changing the state of the connection to the AUTServer.
      * 
@@ -237,11 +229,6 @@ public interface IClientTest {
      */
     public void fireEndTestExecution();
     
-    /**
-     * notify listeners, that test result summary has changed
-     */
-    public void fireTestresultSummaryChanged();
-
     /**
      * Notify all listeners that have registered interest for notification on
      * changing the state of the connection to the AUT Agent.
@@ -292,13 +279,6 @@ public interface IClientTest {
             ITestExecutionEventListener listener);
     
     /**
-     * Remove a ITestresultSummaryEventListener
-     * @param listener The listener to remove.
-     */
-    public void removeTestresultSummaryEventListener(
-            ITestresultSummaryEventListener listener);
-    
-    /**
      * @return Returns the endTime.
      */
     public Date getEndTime();
@@ -338,17 +318,6 @@ public interface IClientTest {
      */
     public boolean isRelevant();
     
-    /**
-     * Writes a test result report of the executed test on disc
-     * after the test is finished.
-     */
-    public void writeReport();
-    
-    /**
-     * Writes test result to database
-     */
-    public void writeTestresultToDB();
-
     /**
      * sending a request to the agent to get the config map from the last
      * connected AUT.

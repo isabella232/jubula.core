@@ -43,7 +43,6 @@ import org.eclipse.jubula.client.core.businessprocess.CompleteXMLReportGenerator
 import org.eclipse.jubula.client.core.businessprocess.ErrorsOnlyXMLReportGenerator;
 import org.eclipse.jubula.client.core.businessprocess.FileXMLReportWriter;
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
-import org.eclipse.jubula.client.core.businessprocess.ITestresultSummaryEventListener;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
@@ -60,6 +59,8 @@ import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -723,25 +724,6 @@ public class ClientTest implements IClientTest {
     }
     
     /**
-     * {@inheritDoc}
-     */
-    public void addTestresultSummaryEventListener(
-            ITestresultSummaryEventListener listener) {
-        eventListenerList.add(ITestresultSummaryEventListener.class, listener);
-        
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void removeTestresultSummaryEventListener(
-            ITestresultSummaryEventListener listener) {
-        eventListenerList.remove(ITestresultSummaryEventListener.class,
-                listener);
-        
-    }
-
-    /**
      * 
      * {@inheritDoc}
      */
@@ -906,10 +888,9 @@ public class ClientTest implements IClientTest {
     
     /**
      * creating the job that is building and writing test data to DB. 
-     * @param results The test results  
+     * @param result The test results  
      */
-    private void createReportJob(TestResult results) {
-        final TestResult result = results;         
+    private void createReportJob(final TestResult result) {
         final AtomicBoolean ab = new AtomicBoolean(false);
         final Job job = new Job (Messages.ClientCollectingInformation) {
             private String m_jobFamily = this.getName();
@@ -920,10 +901,10 @@ public class ClientTest implements IClientTest {
                 try {
                     monitor.beginTask(Messages.ClientWritingReportToDB,
                             IProgressMonitor.UNKNOWN);
-                    writeTestresultToDB();
+                    ITestResultSummaryPO summary = writeTestresultToDB(result);
                     monitor.beginTask(Messages.ClientWritingReport,
                             IProgressMonitor.UNKNOWN);
-                    writeReport();
+                    writeReportToFileSystem(result);
                     if (isRunningWithMonitoring()) {
                         monitor.setTaskName(Messages.ClientCalculating);
                         getMonitoringData();
@@ -951,7 +932,9 @@ public class ClientTest implements IClientTest {
                         }
                         writeMonitoringResults(result);
                     }
-                    fireTestresultSummaryChanged();
+                    DataEventDispatcher.getInstance()
+                            .fireTestresultSummaryChanged(summary,
+                                    DataState.Added);
                     monitor.done();
                     return Status.OK_STATUS;
                 } catch (Throwable t) {
@@ -986,28 +969,26 @@ public class ClientTest implements IClientTest {
      */    
     public void writeMonitoringResults(TestResult result) {
         
-        ITestResultSummaryPO currentSummary = getTestresultSummary();        
-        currentSummary.setMonitoringValues(result.getMonitoringValues()); 
-        
-        IMonitoringValue significantValue = 
-            findSignificantValue(result.getMonitoringValues());
+        ITestResultSummaryPO summary = getTestresultSummary();
+        summary.setMonitoringValues(result.getMonitoringValues());
+
+        IMonitoringValue significantValue = findSignificantValue(result
+                .getMonitoringValues());
         if (significantValue == null) {
-            currentSummary.setMonitoringValue(null);            
+            summary.setMonitoringValue(null);
         } else {
-            currentSummary.setMonitoringValue(significantValue.getValue());
-            currentSummary.setMonitoringValueType(significantValue.getType());
+            summary.setMonitoringValue(significantValue.getValue());
+            summary.setMonitoringValueType(significantValue.getType());
         }
-        currentSummary.setInternalMonitoringId(result.getMonitoringId()); 
+        summary.setInternalMonitoringId(result.getMonitoringId());
         if (result.getReportData() == MonitoringConstants.EMPTY_REPORT) {
-            currentSummary.setReportWritten(false);
+            summary.setReportWritten(false);
         } else {
-            currentSummary.setMonitoringReport(
-                    new MonitoringReportPO(result.getReportData()));         
-            currentSummary.setReportWritten(true);            
+            summary.setMonitoringReport(new MonitoringReportPO(result
+                    .getReportData()));
+            summary.setReportWritten(true);
         }
-        TestResultSummaryPM
-                .mergeTestResultSummaryInDB(
-                        currentSummary);        
+        TestResultSummaryPM.mergeTestResultSummaryInDB(summary);        
         //set the monitoring report in result to null, 
         //so it can be garbage collected
         result.setReportData(null);
@@ -1049,54 +1030,37 @@ public class ClientTest implements IClientTest {
     }
 
     /**
-     * {@inheritDoc}
+     * @param result
+     *            the result to write
+     * @return the id of the persisted test result summary
      */
-    public void fireTestresultSummaryChanged() {
-        Object[] listeners = eventListenerList.getListenerList();
-        for (int i = listeners.length - 2; i >= 0; i -= 2) {
-            if (listeners[i] == ITestresultSummaryEventListener.class) {
-                ((ITestresultSummaryEventListener)listeners[i + 1])
-                        .testresultSummaryChanged();
-            }
-        }
-    }    
-    /**
-     * {@inheritDoc}
-     */
-    public void writeTestresultToDB() {
-        TestResult result = TestResultBP.getInstance().getResultTestModel();
-        if (result != null) {
-            TestresultSummaryBP.getInstance()
-                .populateTestResultSummary(result, getTestresultSummary());
+    public ITestResultSummaryPO writeTestresultToDB(TestResult result) {
+        ITestResultSummaryPO summary = getTestresultSummary();
+        TestresultSummaryBP instance = TestresultSummaryBP.getInstance();
+        instance.fillTestResultSummary(result, summary);
 
-            if (getTestresultSummary() != null) {
-                TestResultSummaryPM.storeTestResultSummaryInDB(
-                        getTestresultSummary());                
-               
-                TestResultPM.storeTestResult(TestresultSummaryBP.getInstance()
-                        .createTestResultDetailsSession(result,
-                                getTestresultSummary().getId()));
-            }
-        }
+        TestResultSummaryPM.storeTestResultSummaryInDB(summary);
+        Long summaryId = summary.getId();
+        TestResultPM.storeTestResult(instance.createTestResultDetailsSession(
+                result, summaryId));
+        return summary;
     }
 
     /**
-     * 
-     * {@inheritDoc}
+     * @param result
+     *            the result to write
      */
-    public void writeReport() {
-        TestResult resultTestModel = TestResultBP.getInstance()
-                .getResultTestModel();
-        if (resultTestModel != null && m_logPath != null) {
+    public void writeReportToFileSystem(TestResult result) {
+        if (result != null && m_logPath != null) {
             AbstractXMLReportGenerator generator = null;
             // Use the appropriate report generator
             // Default is currently Complete
             if (Messages.TestResultViewPreferencePageStyleErrorsOnly
                     .equalsIgnoreCase(m_logStyle)) {
 
-                generator = new ErrorsOnlyXMLReportGenerator(resultTestModel);
+                generator = new ErrorsOnlyXMLReportGenerator(result);
             } else {
-                generator = new CompleteXMLReportGenerator(resultTestModel);
+                generator = new CompleteXMLReportGenerator(result);
             }
             writeReport(generator);
         }

@@ -19,6 +19,7 @@ import javax.persistence.EntityTransaction;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -38,6 +39,8 @@ import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.model.TestResultParameter;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
@@ -83,7 +86,7 @@ public class TestresultSummaryBP {
      * @param result The Test Result containing the source data.
      * @param summary The Test Result Summary to fill with data.
      */
-    public void populateTestResultSummary(TestResult result,
+    public void fillTestResultSummary(TestResult result,
             ITestResultSummary summary) {
         TestExecution te = TestExecution.getInstance();
         ITestSuitePO ts = te.getStartedTestSuite();
@@ -121,8 +124,8 @@ public class TestresultSummaryBP {
                 + result.getProjectMinorVersion());
         summary.setProjectMajorVersion(result.getProjectMajorVersion());
         summary.setProjectMinorVersion(result.getProjectMinorVersion());
-        Date startTime = ClientTestFactory.getClientTest()
-                .getTestsuiteStartTime();
+        IClientTest clientTest = ClientTestFactory.getClientTest();
+        Date startTime = clientTest.getTestsuiteStartTime();
         summary.setTestsuiteStartTime(startTime);
         Date endTime = new Date();
         summary.setTestsuiteEndTime(endTime);
@@ -135,13 +138,12 @@ public class TestresultSummaryBP {
                     + te.getNumberOfRetriedSteps());
         summary.setTestsuiteFailedTeststeps(te.getNumberOfFailedSteps());
         summary.setTestsuiteLanguage(te.getLocale().getDisplayName());
-        summary.setTestsuiteRelevant(ClientTestFactory.getClientTest()
-                        .isRelevant());
+        summary.setTestsuiteRelevant(clientTest.isRelevant());
         ITestJobPO tj = te.getStartedTestJob();
         if (tj != null) {
             summary.setTestJobName(tj.getName());
             summary.setInternalTestJobGuid(tj.getGuid());
-            summary.setTestJobStartTime(ClientTestFactory.getClientTest()
+            summary.setTestJobStartTime(clientTest
                     .getTestjobStartTime());
         }
         summary.setTestsuiteStatus(
@@ -227,9 +229,9 @@ public class TestresultSummaryBP {
                     (IParameterInterfacePO)inode);
         }
 
+        keyword.setKeywordType(node.getTypeOfNode());
         if (inode instanceof ICapPO) {
             keyword.setInternalKeywordType(TYPE_TEST_STEP);
-            keyword.setKeywordType("Test Step"); //$NON-NLS-1$
             
             //set component name, type and action name
             ICapPO cap = (ICapPO)inode;
@@ -249,10 +251,8 @@ public class TestresultSummaryBP {
             keyword.setOmHeuristicEquivalence(node.getOmHeuristicEquivalence());
         } else if (inode instanceof ITestCasePO) {
             keyword.setInternalKeywordType(TYPE_TEST_CASE);
-            keyword.setKeywordType("Test Case"); //$NON-NLS-1$
         } else if (inode instanceof ITestSuitePO) {
             keyword.setInternalKeywordType(TYPE_TEST_SUITE);
-            keyword.setKeywordType("Test Suite"); //$NON-NLS-1$
         }
     }
     
@@ -299,36 +299,37 @@ public class TestresultSummaryBP {
     private void addErrorDetails(ITestResultPO keyword, TestResultNode node) {
         if (node.getStatus() == TestResultNode.ERROR 
                 || node.getStatus() == TestResultNode.RETRYING) {
-            keyword.setStatusType(I18n.getString(node.getEvent().getId(),
+            TestErrorEvent event = node.getEvent();
+            keyword.setStatusType(I18n.getString(event.getId(),
                     true));
             
-            Map<Object, Object> eventProps = node.getEvent().getProps();
-            String descriptionKey = (String)node.getEvent().getProps().get(
-                    TestErrorEvent.Property.DESCRIPTION_KEY);
+            Map<Object, Object> eventProps = event.getProps();
+            String descriptionKey = (String) eventProps
+                    .get(TestErrorEvent.Property.DESCRIPTION_KEY);
             if (descriptionKey != null) {
-                Object[] args = (Object[])node.getEvent().getProps().get(
-                        TestErrorEvent.Property.PARAMETER_KEY);
-                //error description
+                Object[] args = (Object[]) eventProps
+                        .get(TestErrorEvent.Property.PARAMETER_KEY);
+                // error description
                 keyword.setStatusDescription(String.valueOf(I18n.getString(
                         descriptionKey, args)));
             }
-            
+
             if (eventProps.containsKey(TestErrorEvent.Property.OPERATOR_KEY)) {
-                String value = String.valueOf(node.getEvent().getProps().get(
-                        TestErrorEvent.Property.OPERATOR_KEY));
+                String value = String.valueOf(eventProps
+                        .get(TestErrorEvent.Property.OPERATOR_KEY));
                 keyword.setStatusOperator(value);
             }
-            
+
             if (eventProps.containsKey(TestErrorEvent.Property.PATTERN_KEY)) {
-                String value = String.valueOf(node.getEvent().getProps().get(
-                        TestErrorEvent.Property.PATTERN_KEY));
+                String value = String.valueOf(eventProps
+                        .get(TestErrorEvent.Property.PATTERN_KEY));
                 keyword.setExpectedValue(value);
             }
 
             if (eventProps.containsKey(
                     TestErrorEvent.Property.ACTUAL_VALUE_KEY)) {
-                String value = String.valueOf(node.getEvent().getProps().get(
-                        TestErrorEvent.Property.ACTUAL_VALUE_KEY));
+                String value = String.valueOf(eventProps
+                        .get(TestErrorEvent.Property.ACTUAL_VALUE_KEY));
                 keyword.setActualValue(value);
             }
 
@@ -350,19 +351,19 @@ public class TestresultSummaryBP {
         ITestResultSummaryPO selectedSummary, String newTitle,
         String newDetails) {
         
-        final EntityManager sess = Persistor.instance().openSession();
-        try {            
-            final EntityTransaction tx = 
-                Persistor.instance().getTransaction(sess);
+        Persistor persistor = Persistor.instance();
+        final EntityManager sess = persistor.openSession();
+        try {
+            final EntityTransaction tx = persistor.getTransaction(sess);
 
-            ITestResultSummaryPO transactionSummary = 
-                sess.merge(selectedSummary);
-            
-            transactionSummary.setCommentTitle(newTitle);
-            transactionSummary.setCommentDetail(newDetails);
-            
-            Persistor.instance().commitTransaction(sess, tx);
-            ClientTestFactory.getClientTest().fireTestresultSummaryChanged();
+            ITestResultSummaryPO summary = sess.merge(selectedSummary);
+
+            summary.setCommentTitle(newTitle);
+            summary.setCommentDetail(newDetails);
+
+            persistor.commitTransaction(sess, tx);
+            DataEventDispatcher.getInstance().fireTestresultSummaryChanged(
+                    summary, DataState.StructureModified);
         } catch (PMException e) {
             throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
@@ -370,7 +371,7 @@ public class TestresultSummaryBP {
             throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
-            Persistor.instance().dropSession(sess);
+            persistor.dropSession(sess);
         }
     }
     

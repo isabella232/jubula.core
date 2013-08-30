@@ -14,12 +14,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.handlers.AbstractTestResultViewHandler;
-import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -34,20 +35,17 @@ public class ToggleRelevanceHandler extends AbstractTestResultViewHandler {
         ITestResultSummaryPO selectedSummary = getSelectedSummary(event);
 
         if (selectedSummary != null) {
-            final EntityManager sess = Persistor.instance().openSession();
+            Persistor persistor = Persistor.instance();
+            final EntityManager sess = persistor.openSession();
             try {
-                final EntityTransaction tx = Persistor.instance()
-                        .getTransaction(sess);
+                final EntityTransaction tx = persistor.getTransaction(sess);
 
-                ITestResultSummaryPO transactionSummary = sess
-                        .merge(selectedSummary);
+                ITestResultSummaryPO summary = sess.merge(selectedSummary);
 
-                transactionSummary.setTestsuiteRelevant(!transactionSummary
-                        .isTestsuiteRelevant());
-
-                Persistor.instance().commitTransaction(sess, tx);
-                ClientTestFactory.getClientTest()
-                        .fireTestresultSummaryChanged();
+                summary.setTestsuiteRelevant(!summary.isTestsuiteRelevant());
+                persistor.commitTransaction(sess, tx);
+                DataEventDispatcher.getInstance().fireTestresultSummaryChanged(
+                        summary, DataState.StructureModified);
             } catch (PMException e) {
                 throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                         MessageIDs.E_DATABASE_GENERAL);
@@ -55,7 +53,7 @@ public class ToggleRelevanceHandler extends AbstractTestResultViewHandler {
                 throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                         MessageIDs.E_PROJECT_NOT_FOUND);
             } finally {
-                Persistor.instance().dropSession(sess);
+                persistor.dropSession(sess);
             }
         }
 

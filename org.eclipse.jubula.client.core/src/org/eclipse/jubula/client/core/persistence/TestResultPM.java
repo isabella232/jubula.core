@@ -55,10 +55,10 @@ public class TestResultPM {
      * @param session Session
      */
     public static final void storeTestResult(EntityManager session) {
-        try {            
-            final EntityTransaction tx = 
-                Persistor.instance().getTransaction(session);            
-            Persistor.instance().commitTransaction(session, tx);
+        Persistor persistor = Persistor.instance();
+        try {
+            final EntityTransaction tx = persistor.getTransaction(session);
+            persistor.commitTransaction(session, tx);
         } catch (PMException e) {
             throw new JBFatalException(Messages.StoringOfTestResultsFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
@@ -66,7 +66,7 @@ public class TestResultPM {
             throw new JBFatalException(Messages.StoringOfTestResultsFailed, e,
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
-            Persistor.instance().dropSession(session);
+            persistor.dropSession(session);
         }
     }
     

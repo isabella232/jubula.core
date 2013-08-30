@@ -22,16 +22,16 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.alm.mylyn.core.i18n.Messages;
 import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
-import org.eclipse.jubula.client.core.ClientTestFactory;
-import org.eclipse.jubula.client.core.IClientTest;
-import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
-import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultSummaryEventListener;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -46,19 +46,23 @@ import org.eclipse.osgi.util.NLS;
 /**
  * @author BREDEX GmbH
  */
-public class CommentReporter implements ITestExecutionEventListener {
+public class CommentReporter implements ITestresultSummaryEventListener {
     /** instance of this class */
     private static CommentReporter instance;
     /** the progress console to use */
     private IProgressConsole m_console;
     /** the project properties to use */ 
     private IProjectPropertiesPO m_projProps = null;
+    /** the test result summary this reporter links to */
+    private ITestResultSummaryPO m_summary;
     
     /**
      * @author BREDEX GmbH
      */
     private static class ReportOperation implements
             ITreeNodeOperation<TestResultNode> {
+        /** the max length for data */
+        private static final int MAX_DATA_STRING_LENGTH = 200;
         /** the taskIdToComment mapping */
         private Map<String, String> m_taskIdToComment;
         /** report failure */
@@ -67,7 +71,11 @@ public class CommentReporter implements ITestExecutionEventListener {
         private final boolean m_reportSuccess;
         /** dashboard URL */
         private String m_dashboardURL;
-
+        /** the summary id */
+        private String m_summaryIdString;
+        /** test result node counter */
+        private long m_nodeCount = 0;
+        
         /**
          * Constructor
          * 
@@ -79,21 +87,23 @@ public class CommentReporter implements ITestExecutionEventListener {
          *            reportFailure
          * @param dashboardURL
          *            dashboardURL
+         * @param summaryId 
          */
         public ReportOperation(Map<String, String> taskIdToComment,
                 boolean reportFailure, boolean reportSuccess,
-                String dashboardURL) {
+                String dashboardURL, String summaryId) {
             m_taskIdToComment = taskIdToComment;
             m_reportFailure = reportFailure;
             m_reportSuccess = reportSuccess;
             m_dashboardURL = dashboardURL;
+            m_summaryIdString = summaryId;
         }
 
         /** {@inheritDoc} */
         public boolean operate(ITreeTraverserContext<TestResultNode> ctx,
                 TestResultNode parent, TestResultNode resultNode,
                 boolean alreadyVisited) {
-
+            m_nodeCount++;
             boolean didNodePass = hasPassed(resultNode.getStatus());
 
             INodePO node = resultNode.getNode();
@@ -133,11 +143,13 @@ public class CommentReporter implements ITestExecutionEventListener {
             } else {
                 timestamp = Messages.NotAvailable;
             }
-            
+
             String nodeType = resultNode.getTypeOfNode();
             String nodeNameAndParams = getName(resultNode)
                     + StringConstants.SPACE
-                    + resultNode.getParameterDescription();
+                    + StringUtils.abbreviate(
+                            resultNode.getParameterDescription(), 
+                            MAX_DATA_STRING_LENGTH);
             
             String status;
             if (hasPassed(resultNode.getStatus())) {
@@ -147,13 +159,11 @@ public class CommentReporter implements ITestExecutionEventListener {
             }
 
             String baseURL = m_dashboardURL;
-            // TODO implement
-            String testresultId = "testresultId";
-            // TODO implement
-            String testresultNodeId = "testresultNodeId";
+            String summaryId = m_summaryIdString;
+            String testresultNodeId = String.valueOf(m_nodeCount);
 
             String url = NLS.bind(Messages.DashboardUrl, new String[] {
-                baseURL, testresultId, testresultNodeId });
+                baseURL, summaryId, testresultNodeId });
             return NLS.bind(Messages.NodeComment, new String[] { timestamp,
                 nodeType, nodeNameAndParams, status, url });
         }
@@ -212,8 +222,8 @@ public class CommentReporter implements ITestExecutionEventListener {
 
     /** Constructor */
     private CommentReporter() {
-        IClientTest clientTest = ClientTestFactory.getClientTest();
-        clientTest.addTestExecutionEventListener(this);
+        DataEventDispatcher.getInstance()
+            .addTestresultSummaryEventListener(this);
     }
 
     /**
@@ -224,53 +234,6 @@ public class CommentReporter implements ITestExecutionEventListener {
             instance = new CommentReporter();
         }
         return instance;
-    }
-
-    /** {@inheritDoc} */
-    public void stateChanged(TestExecutionEvent event) {
-        // currently unused
-    }
-
-    /** {@inheritDoc} */
-    public void endTestExecution() {
-        IProjectPO project = GeneralStorage.getInstance().getProject();
-        if (project == null) {
-            return;
-        }
-        
-        m_projProps = project.getProjectProperties();
-
-        final boolean reportSuccess = m_projProps.getIsReportOnSuccess();
-        final boolean reportFailure = m_projProps.getIsReportOnFailure();
-        final String almRepositoryName = m_projProps.getALMRepositoryName();
-        
-        if (!StringUtils.isBlank(almRepositoryName)
-                && (reportSuccess || reportFailure)) {
-            Job reportToALMOperation = new Job(NLS.bind(
-                    Messages.ReportToALMJob, almRepositoryName)) {
-                protected IStatus run(IProgressMonitor monitor) {
-                    getConsole().writeLine(
-                            NLS.bind(Messages.TaskRepositoryConnectionTest,
-                                    almRepositoryName));
-                    IStatus connectionStatus = ALMAccess
-                            .testConnection(almRepositoryName);
-                    if (connectionStatus.isOK()) {
-                        getConsole().writeLine(NLS.bind(
-                            Messages.TaskRepositoryConnectionTestSucceeded,
-                            almRepositoryName));
-                        return processResultTree(monitor, reportSuccess,
-                                reportFailure);
-                    }
-                    getConsole().writeLine(NLS.bind(
-                        Messages.TaskRepositoryConnectionTestFailed,
-                        connectionStatus.getMessage()));
-                    
-                    return connectionStatus;
-                    
-                }
-            };
-            reportToALMOperation.schedule();
-        }
     }
 
     /**
@@ -294,7 +257,7 @@ public class CommentReporter implements ITestExecutionEventListener {
 
         ITreeNodeOperation<TestResultNode> operation = new ReportOperation(
                 taskIdToComment, reportFailure, reportSuccess,
-                m_projProps.getDashboardURL());
+                m_projProps.getDashboardURL(), m_summary.getId().toString());
         TestResultNodeTraverser traverser = new TestResultNodeTraverser(
                 rootResultNode, operation);
         traverser.traverse();
@@ -348,4 +311,56 @@ public class CommentReporter implements ITestExecutionEventListener {
     public void setConsole(IProgressConsole console) {
         m_console = console;
     }
+
+    /** {@inheritDoc} */
+    public void handleTestresultSummaryChanged(ITestResultSummaryPO summary, 
+        DataState state) {
+        if (state != DataState.Added) {
+            return;
+        }
+
+        IProjectPO project = GeneralStorage.getInstance().getProject();
+        m_projProps = project.getProjectProperties();
+
+        final boolean reportSuccess = m_projProps.getIsReportOnSuccess();
+        final boolean reportFailure = m_projProps.getIsReportOnFailure();
+        final String almRepositoryName = m_projProps.getALMRepositoryName();
+
+        if (!StringUtils.isBlank(almRepositoryName)
+                && (reportSuccess || reportFailure)) {
+            Job reportToALMOperation = new Job(NLS.bind(
+                    Messages.ReportToALMJob, almRepositoryName)) {
+                protected IStatus run(IProgressMonitor monitor) {
+                    getConsole().writeLine(
+                            NLS.bind(Messages.TaskRepositoryConnectionTest,
+                                    almRepositoryName));
+                    IStatus connectionStatus = ALMAccess
+                            .testConnection(almRepositoryName);
+                    if (connectionStatus.isOK()) {
+                        getConsole().writeLine(
+                            NLS.bind(
+                                Messages.TaskRepositoryConnectionTestSucceeded,
+                                    almRepositoryName));
+                        return processResultTree(monitor, reportSuccess,
+                                reportFailure);
+                    }
+                    getConsole().writeErrorLine(
+                        NLS.bind(Messages.TaskRepositoryConnectionTestFailed,
+                            connectionStatus.getMessage()));
+
+                    return connectionStatus;
+
+                }
+            };
+            reportToALMOperation.schedule();
+        }
+    }
+
+    /**
+     * @param summary the summary to set
+     */
+    public void setSummary(ITestResultSummaryPO summary) {
+        m_summary = summary;
+    }
+
 }

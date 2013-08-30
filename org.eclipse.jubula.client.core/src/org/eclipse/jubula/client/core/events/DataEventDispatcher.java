@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.events;
 
+import java.util.EventListener;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -24,6 +25,7 @@ import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage.IDataModifiedListener;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage.IReloadedSessionListener;
@@ -282,6 +284,23 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         // do nothing
     }
     
+    /**
+     * @author BREDEX GmbH
+     * @created Mar 16, 2010
+     */
+    public interface ITestresultSummaryEventListener extends EventListener {
+        /**
+         * This method is called when the state of testresults changes.
+         * 
+         * @param summary
+         *            the changed summary
+         * @param state
+         *            the data changed state
+         */
+        public void handleTestresultSummaryChanged(ITestResultSummaryPO summary,
+                DataState state);
+    }
+    
     /** to notify clients about changes of testresults */
     public interface ITestresultChangedListener {
         /**
@@ -529,7 +548,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         new HashSet<IOMStateListener>();
     
     /**
-     * <code>m_omAutListeners</code> listener for autid of OM Mode
+     * <code>m_omAutListeners</code> listener for AUT-ID of OM Mode
      */
     private Set<IOMAUTListener> m_omAUTListeners =
         new HashSet<IOMAUTListener>();
@@ -540,6 +559,13 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     private Set<IOMWindowsListener> m_omWindowListeners =
         new HashSet<IOMWindowsListener>();
     
+    /**
+     * <code>m_testresultSummaryListener</code> listener for test result summary
+     * changes
+     */
+    private Set<ITestresultSummaryEventListener> m_testresultSummaryListener = 
+        new HashSet<ITestresultSummaryEventListener>();
+
     /**
      * <code>m_omStateListeners</code> listener for state of OM Mode
      *  POST-Event for gui updates 
@@ -1446,5 +1472,41 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      */
     public void removeAUTWindowsListener(IOMWindowsListener l) {
         m_omWindowListeners.remove(l);
+    }
+    
+    /**
+     * notify listener about changes of test result summary
+     * 
+     * @param summary
+     *            the changed summary
+     * @param state
+     *            the changed data state
+     */
+    public void fireTestresultSummaryChanged(ITestResultSummaryPO summary,
+            DataState state) {
+        final Set<ITestresultSummaryEventListener> notifySet = 
+            new HashSet<ITestresultSummaryEventListener>(
+                m_testresultSummaryListener);
+        for (ITestresultSummaryEventListener l : notifySet) {
+            l.handleTestresultSummaryChanged(summary, state);
+        }
+    }
+    
+    /**
+     * @param listener
+     *            the listener to add
+     */
+    public void addTestresultSummaryEventListener(
+            ITestresultSummaryEventListener listener) {
+        m_testresultSummaryListener.add(listener);
+    }
+
+    /**
+     * @param listener
+     *            the listener to remove
+     */
+    public void removeTestresultSummaryEventListener(
+            ITestresultSummaryEventListener listener) {
+        m_testresultSummaryListener.remove(listener);
     }
 }

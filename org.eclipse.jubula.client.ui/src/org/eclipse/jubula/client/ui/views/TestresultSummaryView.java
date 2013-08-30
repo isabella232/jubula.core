@@ -43,10 +43,10 @@ import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jubula.client.core.ClientTestFactory;
-import org.eclipse.jubula.client.core.businessprocess.ITestresultSummaryEventListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultChangedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultSummaryEventListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.model.ITestResultSummary;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
@@ -440,9 +440,6 @@ public class TestresultSummaryView extends ViewPart implements
                 new TestresultSummaryContentProvider());
         m_tableViewer.getTable().setLinesVisible(true);
         m_tableViewer.getTable().setHeaderVisible(true);
-
-        ClientTestFactory.getClientTest()
-            .addTestresultSummaryEventListener(this);
         m_tableViewer.setUseHashlookup(true);
 
         addContextMenu(m_tableViewer, m_headerMenu);
@@ -452,8 +449,10 @@ public class TestresultSummaryView extends ViewPart implements
         PlatformUI.getWorkbench().getHelpSystem().setHelp(
                 m_tableViewer.getControl(),
                 ContextHelpIds.TESTRESULT_SUMMARY_VIEW);
-        DataEventDispatcher.getInstance().addTestresultListener(
-                this, true);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.addTestresultListener(this, true);
+        ded.addTestresultSummaryEventListener(this);
+        
         DatabaseStateDispatcher.addDatabaseStateListener(this);
         addDoubleClickListener(m_tableViewer);
 
@@ -1750,9 +1749,9 @@ public class TestresultSummaryView extends ViewPart implements
      * {@inheritDoc}
      */
     public void dispose() {
-        ClientTestFactory.getClientTest()
-            .removeTestresultSummaryEventListener(this);
-        DataEventDispatcher.getInstance().removeTestresultListener(this);
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.removeTestresultListener(this);
+        ded.removeTestresultSummaryEventListener(this);
         DatabaseStateDispatcher.removeDatabaseStateListener(this);
         super.dispose();
     }
@@ -1771,9 +1770,7 @@ public class TestresultSummaryView extends ViewPart implements
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void handleTestresultChanged(TestresultState state) {
         if (state == TestresultState.Clear) {
             clear();
@@ -1782,13 +1779,12 @@ public class TestresultSummaryView extends ViewPart implements
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void testresultSummaryChanged() {
+    /** {@inheritDoc} */
+    public void handleTestresultSummaryChanged(ITestResultSummaryPO summary, 
+        DataState state) {
         loadViewInput();
     }
-    
+   
     /**
      * @author BREDEX GmbH
      * @created Nov 23, 2010
