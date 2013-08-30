@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -75,6 +76,9 @@ public class WinAutConfigComponent extends AutConfigComponent {
 
     /** text field for the Modern UI App name to launch the AUT */
     private Text m_modernUiAppName;
+
+    /** check box for the Modern UI touch object mapping mode */
+    private Button m_modernUiTouchOMM;
 
     /** text field for the aut_args */
     private Text m_autArgsTextField;
@@ -164,13 +168,19 @@ public class WinAutConfigComponent extends AutConfigComponent {
         m_execButton.setEnabled(Utils.isLocalhost());
 
         // Modern UI App...
+        //  App name
         UIComponentHelper.createLabel(m_basicAreaModernUiApp,
                 Messages.AUTConfigComponentAppName);
         m_modernUiAppName = UIComponentHelper.createTextField(
                 m_basicAreaModernUiApp, 2);
-
         LayoutUtil.setMaxChar(m_modernUiAppName,
                 IPersistentObject.MAX_STRING_LENGTH);
+        //  touch OMM
+        UIComponentHelper.createLabel(m_basicAreaModernUiApp,
+                Messages.AUTConfigComponentTouchOMMLabel);
+        m_modernUiTouchOMM = UIComponentHelper.createToggleButton(
+                m_basicAreaModernUiApp, 2);
+        m_modernUiTouchOMM.setText(Messages.AUTConfigComponentTouchOMMCheckBox);
 
         // AUT arguments
         ControlDecorator.createInfo(UIComponentHelper.createLabel(
@@ -199,6 +209,9 @@ public class WinAutConfigComponent extends AutConfigComponent {
         // Modern UI App name
         m_modernUiAppName.setText(StringUtils.defaultString(data
                 .get(AutConfigConstants.APP_NAME)));
+        // Modern UI Touch OMM
+        m_modernUiTouchOMM.setSelection(BooleanUtils.toBoolean(data
+                .get(AutConfigConstants.TOUCH_OMM)));
         // AUT arguments
         m_autArgsTextField.setText(StringUtils.defaultString(data.get(
              AutConfigConstants.AUT_ARGUMENTS)));
@@ -319,6 +332,7 @@ public class WinAutConfigComponent extends AutConfigComponent {
         m_execButton.addSelectionListener(selectionListener);
         m_execTextField.addModifyListener(modifyListener);
         m_modernUiAppName.addModifyListener(modifyListener);
+        m_modernUiTouchOMM.addSelectionListener(selectionListener);
         m_autArgsTextField.addModifyListener(modifyListener);
     }
 
@@ -335,6 +349,7 @@ public class WinAutConfigComponent extends AutConfigComponent {
         m_execButton.removeSelectionListener(selectionListener);
         m_execTextField.removeModifyListener(modifyListener);
         m_modernUiAppName.removeModifyListener(modifyListener);
+        m_modernUiTouchOMM.removeSelectionListener(selectionListener);
         m_autArgsTextField.removeModifyListener(modifyListener);
     }
 
@@ -373,7 +388,9 @@ public class WinAutConfigComponent extends AutConfigComponent {
                 //what do with remote selection ?
                 handleExecButtonEvent(new FileDialog(Plugin.getShell(),
                             SWT.APPLICATION_MODAL | SWT.ON_TOP));
-                return;
+            } else if (source.equals(m_modernUiTouchOMM)) {
+                putConfigValue(AutConfigConstants.TOUCH_OMM,
+                    new Boolean(m_modernUiTouchOMM.getSelection()).toString());
             }
         }
 

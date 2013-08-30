@@ -59,6 +59,9 @@ public class AutConfigConstants {
     /** The key for the name of the Modern UI app used to start the AUT. */
     public static final String APP_NAME = "APP_NAME"; //$NON-NLS-1$
 
+    /** The key for the touch OMM (true, or false) of the Modern UI app. */
+    public static final String TOUCH_OMM = "TOUCH_OMM"; //$NON-NLS-1$
+
     /** The executable jar file of the AUT */
     public static final String JAR_FILE = "JAR_FILE"; //$NON-NLS-1$
 
