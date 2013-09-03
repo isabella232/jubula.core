@@ -23,6 +23,7 @@ import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.tester.AbstractTableTester;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextInputComponent;
+import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.tester.adapter.StyledTextAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TableAdapter;
@@ -306,7 +307,7 @@ public class TableTester extends AbstractTableTester {
                 "getCellBounds", //$NON-NLS-1$
                 new IRunnable() {
                     public Object run() {
-                        TableItem ti = table.getItem(row);
+                        TableItem ti = table.getItem(row); 
                         int column = (table.getColumnCount() > 0 || col > 0) 
                             ? col : 0;
                         org.eclipse.swt.graphics.Rectangle r = 
@@ -660,5 +661,118 @@ public class TableTester extends AbstractTableTester {
                     dndHelper.getMouseButton());
             pressOrReleaseModifiers(dndHelper.getModifier(), false);
         }
+    }
+    
+    /**
+     * Verifies whether the checkbox in the row of the selected cell 
+     * is checked
+     * 
+     * @param checked true if checkbox in cell should be selected, false otherwise
+     * @throws StepExecutionException If no cell is selected or the verification fails.
+     */
+    public void rcVerifyCheckboxInSelectedRow(boolean checked)
+        throws StepExecutionException {
+        int row = ((ITableComponent) getComponent()).getSelectedCell().getRow();
+        verifyCheckboxInRow(checked, row);
+    }
+    
+    /**
+     * Verifies whether the checkbox in the row under the mouse pointer is checked
+     * 
+     * @param checked true if checkbox in cell is selected, false otherwise
+     */
+    public void rcVerifyCheckboxInRowAtMousePosition(boolean checked) {
+        int row = getCellAtMousePosition().getRow();
+        verifyCheckboxInRow(checked, row);
+    }
+    
+    /**
+     * Verifies whether the checkbox in the row with the given
+     * <code>index</code> is checked
+     * 
+     * @param checked true if checkbox in cell is selected, false otherwise
+     * @param row the row-index of the cell in which the checkbox-state should be verified
+     */
+    private void verifyCheckboxInRow(boolean checked, final int row) {
+        Boolean checkIndex = ((Boolean)getEventThreadQueuer().invokeAndWait(
+                "rcVerifyTableCheckboxIndex", new IRunnable() { //$NON-NLS-1$
+                    public Object run() throws StepExecutionException {
+                        Table table = getTable();
+                        if ((table.getStyle() & SWT.CHECK) == 0) {
+                            throw new StepExecutionException(
+                                    "No checkbox found", //$NON-NLS-1$
+                                    EventFactory.createActionError(
+                                            TestErrorEvent.CHECKBOX_NOT_FOUND));
+                        }
+                        return new Boolean(table.getItem(row).
+                                getChecked());
+                    }
+                }));
+        Verifier.equals(checked, checkIndex.booleanValue());
+    }
+
+    /**
+     * Toggles the checkbox in the row under the Mouse Pointer 
+     */
+    public void rcToggleCheckboxInRowAtMousePosition() {
+        toggleCheckboxInRow(getCellAtMousePosition().getRow());
+    }
+    
+    /**
+     * Toggles the checkbox in the selected row
+     */
+    public void rcToggleCheckboxInSelectedRow() {
+        int row = ((Integer) getEventThreadQueuer().invokeAndWait(
+                "get Selection index", new IRunnable() { //$NON-NLS-1$
+                    public Object run() throws StepExecutionException {
+                        return new Integer(getTable().getSelectionIndex());
+                    }
+                })).intValue();
+        toggleCheckboxInRow(row);
+    }
+
+    /**
+     * Toggles the checkbox in the row with the given index
+     * @param row the index
+     */
+    private void toggleCheckboxInRow(final int row) {
+
+        if (row == -1) {
+            getEventThreadQueuer().invokeAndWait(
+                "No Selection", new IRunnable() { //$NON-NLS-1$
+                    public Object run() throws StepExecutionException {
+                        throw new StepExecutionException(
+                            "No Selection found ", //$NON-NLS-1$
+                            EventFactory.createActionError(
+                                TestErrorEvent.NO_SELECTION));
+                    }
+                });
+        }
+        
+        ((ITableComponent) getComponent()).scrollCellToVisible(row, 0);
+
+        final Table table = getTable();
+        
+        org.eclipse.swt.graphics.Rectangle itemBounds =
+            (org.eclipse.swt.graphics.Rectangle) getEventThreadQueuer().
+                invokeAndWait(
+                    "getTableItem",  //$NON-NLS-1$
+                    new IRunnable() {
+                        public Object run() throws StepExecutionException {
+                            return table.getItem(row).getBounds();
+                        }
+                    });
+        
+        int itemHeight = itemBounds.height;
+        
+        // Creates a Rectangle with bounds around the checkbox of the row
+        org.eclipse.swt.graphics.Rectangle cbxBounds = 
+                new org.eclipse.swt.graphics.Rectangle(0,
+                        itemBounds.y, itemBounds.x, itemHeight);
+        
+        // Performs a click in the middle of the Rectangle
+        getRobot().click(table, cbxBounds, ClickOptions.create().left().
+                setScrollToVisible(false),
+                itemBounds.x / 2, true, itemHeight / 2, true);
     }
 }

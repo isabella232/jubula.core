@@ -1976,8 +1976,7 @@
 				<type>java.lang.Integer</type>
 				<defaultValue>100</defaultValue>
 			</param>
-		</action>
-		
+		</action>				<action name="CompSystem.VerifyCheckboxInSelectedRow" changed="4.5">			<method>rcVerifyCheckboxInSelectedRow</method>			<param name="CompSystem.Checked">				<type>java.lang.Boolean</type>				<defaultValue>true</defaultValue>				<valueSet>					<element name="CompSystem.True" value="true"/>					<element name="CompSystem.False" value="false"/>				</valueSet>			</param>		</action>				<action name="CompSystem.VerifyCheckboxOfRowAtMousePosition" changed="4.5">			<method>rcVerifyCheckboxInRowAtMousePosition</method>			<param name="CompSystem.Checked">				<type>java.lang.Boolean</type>				<defaultValue>true</defaultValue>				<valueSet>					<element name="CompSystem.True" value="true"/>					<element name="CompSystem.False" value="false"/>				</valueSet>			</param>		</action>				<action name="CompSystem.ToggleCheckboxInSelectedRow" changed="4.5">			<method>rcToggleCheckboxInSelectedRow</method>		</action>				<action name="CompSystem.ToggleCheckboxOfRowAtMousePosition" changed="4.5">			<method>rcToggleCheckboxInRowAtMousePosition</method>		</action>		
 	</concreteComponent>
 	
 	<concreteComponent type="guidancer.concrete.TextComponent">

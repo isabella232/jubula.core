@@ -24,6 +24,12 @@ import java.util.Map;
  */
 public class TestErrorEvent {
     /**
+     * Checkbox has not been found
+     */
+    public static final String CHECKBOX_NOT_FOUND =
+        "TestErrorEvent.CheckboxNotFound"; //$NON-NLS-1$
+    
+    /**
      * unsupported keyboard layout.
      */
     public static final String UNSUPPORTED_KEYBOARD_LAYOUT = 
