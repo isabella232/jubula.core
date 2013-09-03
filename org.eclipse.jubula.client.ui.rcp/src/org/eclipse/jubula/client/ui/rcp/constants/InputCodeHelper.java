@@ -110,7 +110,7 @@ public class InputCodeHelper {
     /**
      * modifier keycodes
      */
-    private int[] m_modifier = new int[5];
+    private int[] m_modifier = new int[6];
     
     /** all key-press inputs */
     private UserInput[] m_keys;
@@ -145,6 +145,7 @@ public class InputCodeHelper {
         m_modifier[2] = InputEvent.CTRL_DOWN_MASK | InputEvent.ALT_DOWN_MASK;
         m_modifier[3] = InputEvent.ALT_DOWN_MASK;
         m_modifier[4] = InputEvent.ALT_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK;
+        m_modifier[5] = 0; // no modifier pressed
         
         List<UserInput> inputList = new ArrayList<UserInput>();
         List<String> inputStringList = new ArrayList<String>();

@@ -67,6 +67,8 @@ public class KeyConverter {
         } else if (stateMask
                 == (InputEvent.ALT_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK)) {
             return SWT.ALT | SWT.SHIFT;
+        } else if (stateMask == 0) {
+            return 0; // no modifier
         }
         return -1;
     }
