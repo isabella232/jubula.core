@@ -78,8 +78,6 @@ public class Messages extends NLS {
     public static String AUTConfigComponentShowAdvanced;
     public static String AUTConfigComponentShowBasic;
     public static String AUTConfigComponentShowExpert;
-    public static String AUTConfigComponentTouchOMMLabel;
-    public static String AUTConfigComponentTouchOMMCheckBox;
     public static String AUTConfigComponentWrongAUTConfigName;
     public static String AUTConfigComponentWrongClassName;
     public static String AUTConfigComponentWrongExecutable;
