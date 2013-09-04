@@ -48,14 +48,40 @@ public class ChangeAUTModeCommand implements ICommand {
     }
 
     /**
+     * Stores also the new configuration into {@link AUTServerConfiguration}
+     * contained in the given message.
      * {@inheritDoc}
      */
     public void setMessage(Message message) {
         m_message = (ChangeAUTModeMessage) message;
+        final AUTServerConfiguration autServerConfig =
+                AUTServerConfiguration.getInstance();
+        switch (m_message.getMode()) {
+            case ChangeAUTModeMessage.CHECK_MODE :
+            case ChangeAUTModeMessage.RECORD_MODE :
+            case ChangeAUTModeMessage.OBJECT_MAPPING :
+                autServerConfig.setKeyMod(m_message.getKeyModifier());
+                autServerConfig.setKey(m_message.getKey());
+                autServerConfig.setMouseButton(m_message.getMouseButton());
+                autServerConfig.setKey2Mod(m_message.getKey2Modifier());
+                autServerConfig.setKey2(m_message.getKey2());
+                autServerConfig.setCheckModeKeyMod(m_message
+                        .getCheckModeKeyModifier());
+                autServerConfig.setCheckModeKey(m_message.getCheckModeKey());
+                autServerConfig.setCheckCompKeyMod(m_message
+                        .getCheckCompKeyModifier());
+                autServerConfig.setCheckCompKey(m_message.getCheckCompKey());
+                autServerConfig.setSingleLineTrigger(m_message
+                        .getSingleLineTrigger());
+                autServerConfig.setMultiLineTrigger(m_message
+                        .getMultiLineTrigger());
+                autServerConfig.setProjectToolkit(m_message.getToolkit());
+            default :
+        }
     }
 
     /**
-     * Changes the mode aof the AUTServer to the mode taken from the message.
+     * Changes the mode of the AUTServer to the mode taken from the message.
      * Returns an AUTModeChangedMessage with the new mode.
      * 
      * {@inheritDoc}
@@ -63,6 +89,7 @@ public class ChangeAUTModeCommand implements ICommand {
     public Message execute() {
         log.info("changing mode of the AUTServer to: " //$NON-NLS-1$
                 + m_message.getMode());
+
         int oldMode = AUTServer.getInstance().getMode();
         AUTServer.getInstance().setMode(m_message.getMode());
         AUTServer.getInstance().refreshMode();
@@ -105,32 +132,7 @@ public class ChangeAUTModeCommand implements ICommand {
             // and if there is no connection to the AUT Agent, then this AUT
             // will be ending shortly anyway.
         }
-        
-        final AUTServerConfiguration autServerConfig = 
-            AUTServerConfiguration.getInstance();
-        switch (m_message.getMode()) {
-            case ChangeAUTModeMessage.CHECK_MODE :               
-            case ChangeAUTModeMessage.RECORD_MODE :               
-            case ChangeAUTModeMessage.OBJECT_MAPPING :
-                autServerConfig.setKeyMod(m_message.getKeyModifier());
-                autServerConfig.setKey(m_message.getKey());
-                autServerConfig.setMouseButton(m_message.getMouseButton());
-                autServerConfig.setKey2Mod(m_message.getKey2Modifier());
-                autServerConfig.setKey2(m_message.getKey2());
-                autServerConfig.setCheckModeKeyMod(m_message
-                        .getCheckModeKeyModifier());
-                autServerConfig.setCheckModeKey(m_message.getCheckModeKey());
-                autServerConfig.setCheckCompKeyMod(m_message
-                        .getCheckCompKeyModifier());
-                autServerConfig.setCheckCompKey(m_message.getCheckCompKey());
-                autServerConfig.setSingleLineTrigger(m_message
-                        .getSingleLineTrigger());
-                autServerConfig.setMultiLineTrigger(m_message
-                        .getMultiLineTrigger());
-                autServerConfig.setProjectToolkit(m_message.getToolkit());
-            default :
-                
-        }
+
         AUTModeChangedMessage result = new AUTModeChangedMessage();
         result.setMode(AUTServer.getInstance().getMode());        
         return result;
