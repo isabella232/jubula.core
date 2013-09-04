@@ -53,8 +53,6 @@ public class CommentReporter implements ITestresultSummaryEventListener {
     private IProgressConsole m_console;
     /** the project properties to use */ 
     private IProjectPropertiesPO m_projProps = null;
-    /** the test result summary this reporter links to */
-    private ITestResultSummaryPO m_summary;
     
     /**
      * @author BREDEX GmbH
@@ -245,10 +243,13 @@ public class CommentReporter implements ITestresultSummaryEventListener {
      *            reportSuccess
      * @param monitor
      *            monitor
+     * @param summary
+     *            the summary the result tree belongs to
      * @return status
      */
     private IStatus processResultTree(IProgressMonitor monitor,
-            boolean reportSuccess, boolean reportFailure) {
+        boolean reportSuccess, boolean reportFailure, 
+        ITestResultSummaryPO summary) {
         Map<String, String> taskIdToComment = new HashMap<String, String>();
 
         TestResult resultTestModel = TestResultBP.getInstance()
@@ -257,7 +258,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
 
         ITreeNodeOperation<TestResultNode> operation = new ReportOperation(
                 taskIdToComment, reportFailure, reportSuccess,
-                m_projProps.getDashboardURL(), m_summary.getId().toString());
+                m_projProps.getDashboardURL(), summary.getId().toString());
         TestResultNodeTraverser traverser = new TestResultNodeTraverser(
                 rootResultNode, operation);
         traverser.traverse();
@@ -313,8 +314,8 @@ public class CommentReporter implements ITestresultSummaryEventListener {
     }
 
     /** {@inheritDoc} */
-    public void handleTestresultSummaryChanged(ITestResultSummaryPO summary, 
-        DataState state) {
+    public void handleTestresultSummaryChanged(
+        final ITestResultSummaryPO summary, DataState state) {
         if (state != DataState.Added) {
             return;
         }
@@ -342,7 +343,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
                                 Messages.TaskRepositoryConnectionTestSucceeded,
                                     almRepositoryName));
                         return processResultTree(monitor, reportSuccess,
-                                reportFailure);
+                                reportFailure, summary);
                     }
                     getConsole().writeErrorLine(
                         NLS.bind(Messages.TaskRepositoryConnectionTestFailed,
@@ -355,12 +356,4 @@ public class CommentReporter implements ITestresultSummaryEventListener {
             reportToALMOperation.schedule();
         }
     }
-
-    /**
-     * @param summary the summary to set
-     */
-    public void setSummary(ITestResultSummaryPO summary) {
-        m_summary = summary;
-    }
-
 }
