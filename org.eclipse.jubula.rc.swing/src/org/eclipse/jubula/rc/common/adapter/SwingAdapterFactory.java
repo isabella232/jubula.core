@@ -20,6 +20,7 @@ import javax.swing.JList;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -30,6 +31,7 @@ import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.swing.tester.adapter.AbstractButtonAdapter;
 import org.eclipse.jubula.rc.swing.tester.adapter.JComboBoxAdapter;
+import org.eclipse.jubula.rc.swing.tester.adapter.JComponentAdapter;
 import org.eclipse.jubula.rc.swing.tester.adapter.JLabelAdapter;
 import org.eclipse.jubula.rc.swing.tester.adapter.JListAdapter;
 import org.eclipse.jubula.rc.swing.tester.adapter.JMenuBarAdapter;
@@ -60,7 +62,7 @@ public class SwingAdapterFactory implements IAdapterFactory {
         JCheckBox.class, JRadioButton.class, JTable.class,
         JPopupMenu.class,
         JList.class, JTextComponent.class, JComboBox.class,
-        JLabel.class, JTabbedPane.class };
+        JLabel.class, JTabbedPane.class, JProgressBar.class };
    
     /** {@inheritDoc} */
     public Class[] getSupportedClasses() {
@@ -101,6 +103,8 @@ public class SwingAdapterFactory implements IAdapterFactory {
             } else if (objectToAdapt instanceof AbstractButton) { 
                 // pick up every button which is not specialized
                 returnvalue = new AbstractButtonAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof JProgressBar) {
+                returnvalue = new JComponentAdapter(objectToAdapt);
             }
             
             return returnvalue;

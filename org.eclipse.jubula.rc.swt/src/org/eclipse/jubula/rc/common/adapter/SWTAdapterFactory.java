@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Spinner;
@@ -63,7 +64,7 @@ public class SWTAdapterFactory implements IAdapterFactory {
                 Combo.class, CCombo.class, Label.class, CLabel.class, 
                 TabFolder.class, CTabFolder.class, ToolItem.class,
                 DateTime.class, Scale.class, Slider.class, Spinner.class,
-                Link.class };
+                Link.class, ProgressBar.class };
     
     
     /**
@@ -119,7 +120,9 @@ public class SWTAdapterFactory implements IAdapterFactory {
                 returnvalue = new ControlAdapter(objectToAdapt);
             } else if (objectToAdapt instanceof ToolItem) {
                 returnvalue = new ToolItemAdapter(objectToAdapt);
-            }           
+            } else if (objectToAdapt instanceof ProgressBar) {
+                returnvalue = new ControlAdapter(objectToAdapt);
+            }
             return returnvalue;
         }
         return null;
