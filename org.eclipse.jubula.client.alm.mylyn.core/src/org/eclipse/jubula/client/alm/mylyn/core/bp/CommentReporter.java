@@ -284,7 +284,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
 
         Set<String> taskIds = taskIdToComment.keySet();
         int taskAmount = taskIds.size();
-        String out = NLS.bind(Messages.ReportToALMJob, taskAmount, repoLabel);
+        String out = NLS.bind(Messages.ReportToALMJob, repoLabel);
         monitor.beginTask(out, taskAmount);
 
         IProgressConsole c = getConsole();
