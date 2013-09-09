@@ -294,8 +294,8 @@
 		<componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" />
 	</toolkitComponent>
 	<toolkitComponent type="html.Div" visible="false">
-		<realizes>guidancer.abstract.Widget</realizes>
-		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.DivImplClass</testerClass>
+		<realizes>guidancer.abstract.TextVerifiable</realizes>
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>
 		<componentClass name="html.Div">
             <property name="selector" value="div" />
         </componentClass>
