@@ -158,7 +158,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
             }
 
             String url = m_dashboardURL 
-                    + StringConstants.AMPERSAND 
+                    + StringConstants.QUESTION_MARK
                     + Constants.DASHBOARD_SUMMARY_PARAM
                     + StringConstants.EQUALS_SIGN 
                     + m_summaryIdString
