@@ -26,9 +26,7 @@ public interface CommandIDs {
     /** the ID of the "expand tree item" command */
     public static final String EXPAND_TREE_ITEM_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.ExpandTreeItem"; //$NON-NLS-1$
     
-    /**
-     * <code>EXPORT_WIZARD_PARAM_ID</code>
-     */
+    /** <code>EXPORT_WIZARD_PARAM_ID</code> */
     public static final String EXPORT_WIZARD_PARAM_ID = "exportWizardId"; //$NON-NLS-1$
     
     /** the ID of the "open specification" command */
@@ -37,9 +35,12 @@ public interface CommandIDs {
     /** the ID of the "Open test result detail" command */
     public static final String OPEN_TEST_RESULT_DETAIL_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.OpenTestResultViewer"; //$NON-NLS-1$
     
-    /** ID of the "Open Test Result Viewer" command  */
-    public static final String OPEN_TEST_RESULT_VIEWER_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.OpenTestResultViewer"; //$NON-NLS-1$
-
+    /** the ID of the "Open test result detail" command parameter */
+    public static final String OPEN_TEST_RESULT_DETAIL_COMMAND_PARAMETER_SUMMARY_ID = OPEN_TEST_RESULT_DETAIL_COMMAND_ID + ".parameter.summaryId"; //$NON-NLS-1$
+    
+    /** the ID of the "Open test result detail" command parameter */
+    public static final String OPEN_TEST_RESULT_DETAIL_COMMAND_PARAMETER_NODE_ID = OPEN_TEST_RESULT_DETAIL_COMMAND_ID + ".parameter.resultNode"; //$NON-NLS-1$
+    
     /** the ID of the "refresh" command */
     public static final String REFRESH_COMMAND_ID = "org.eclipse.ui.file.refresh"; //$NON-NLS-1$
     

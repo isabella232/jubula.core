@@ -26,7 +26,6 @@ public class Messages extends NLS {
     public static String TaskRepositoryNoConnectorFound;
     public static String NodeComment;
     public static String StatusPassed;
-    public static String DashboardUrl;
     public static String StatusFailed;
     public static String ReportToALMJob;
     public static String ReportToALMJobDone;

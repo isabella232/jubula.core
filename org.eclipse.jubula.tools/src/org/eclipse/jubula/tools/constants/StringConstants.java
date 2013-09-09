@@ -42,6 +42,11 @@ public interface StringConstants {
     public static final String PLUS = "+"; //$NON-NLS-1$
     
     /**
+     * <code>AMPERSAND</code>
+     */
+    public static final String AMPERSAND = "&"; //$NON-NLS-1$
+    
+    /**
      * <code>MINUS</code>
      */
     public static final String MINUS = "-"; //$NON-NLS-1$

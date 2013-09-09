@@ -86,22 +86,32 @@ public abstract class CommandHelper {
     }
     
     /**
-     * @param pc the parameterized command
+     * @param pc
+     *            the parameterized command
      * @return The return value from the execution; may be null.
      */
     public static Object executeParameterizedCommand(ParameterizedCommand pc) {
-        IHandlerService handlerService;
-        handlerService = getHandlerService();
+        return executeParameterizedCommand(getHandlerService(), pc);
+    }
+
+    /**
+     * @param hs
+     *            the handler service to use
+     * @param pc
+     *            the parameterized command
+     * @return The return value from the execution; may be null.
+     */
+    public static Object executeParameterizedCommand(IHandlerService hs,
+        ParameterizedCommand pc) {
         try {
-            return handlerService.executeCommand(pc, null);
+            return hs.executeCommand(pc, null);
         } catch (CommandException e) {
             log.warn(Messages.ErrorOccurredWhileExecutingCommand
-                    + StringConstants.COLON + StringConstants.SPACE
-                    + pc.getId());
+                + StringConstants.COLON + StringConstants.SPACE + pc.getId());
         }
         return null;
     }
-
+    
     /**
      * @return the handler service
      */

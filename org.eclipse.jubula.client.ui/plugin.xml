@@ -138,14 +138,6 @@
   <handler
         class="org.eclipse.jubula.client.ui.handlers.open.OpenTestResultViewerHandler"
         commandId="org.eclipse.jubula.client.ui.commands.OpenTestResultViewer">
-     <activeWhen>
-        <iterate
-              ifEmpty="false"
-              operator="and">
-           <instanceof value="org.eclipse.jubula.client.core.model.ITestResultSummaryPO" />
-           <test property="org.eclipse.jubula.client.ui.propertytester.TestResultSummary.hasTestResultDetails" />
-        </iterate>
-     </activeWhen>
   </handler>
 	<handler
 		class="org.eclipse.jubula.client.ui.handlers.ExpandTreeItemHandler"
@@ -210,6 +202,14 @@
             categoryId="org.eclipse.jubula.client.ui.commands"
             id="org.eclipse.jubula.client.ui.commands.OpenTestResultViewer"
             name="%OpenTestResultViewer">
+          <commandParameter
+	        id="org.eclipse.jubula.client.ui.commands.OpenTestResultViewer.parameter.summaryId"
+	        name="summaryId"
+	        optional="true" />
+	      <commandParameter
+	        id="org.eclipse.jubula.client.ui.commands.OpenTestResultViewer.parameter.resultNode"
+	        name="resultNode"
+	        optional="true" />
         </command>
       <command
             categoryId="org.eclipse.jubula.client.ui.commands"

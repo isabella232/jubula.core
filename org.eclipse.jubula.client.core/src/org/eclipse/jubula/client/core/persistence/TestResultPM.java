@@ -245,31 +245,60 @@ public class TestResultPM {
     }
     
     /**
-     * @param session The session in which to execute the Persistence (JPA / EclipseLink) query.
-     * @param summaryId The database ID of the summary for which to compute the
-     *                  corresponding Test Result nodes.
-     * @return the Test Result nodes associated with the given Test Result 
+     * @param session
+     *            The session in which to execute the Persistence (JPA /
+     *            EclipseLink) query.
+     * @param summaryId
+     *            The database ID of the summary for which to compute the
+     *            corresponding Test Result nodes.
+     * @return the Test Result nodes associated with the given Test Result
      *         Summary, sorted by sequence (ascending).
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public static boolean hasTestResultDetails(
-            EntityManager session, Long summaryId) {
+    public static boolean hasTestResultDetails(EntityManager session,
+        Long summaryId) {
         boolean hasDetails = false;
         if (session == null) {
             return hasDetails;
         }
-        
+
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery query = builder.createQuery();
         Root from = query.from(PoMaker.getTestResultClass());
         query.select(builder.count(from)).where(
             builder.equal(from.get("internalTestResultSummaryID"), summaryId)); //$NON-NLS-1$
-        
-        Number result = (Number)session.createQuery(query).getSingleResult();
+
+        Number result = (Number) session.createQuery(query).getSingleResult();
         if (result.longValue() > 0) {
             hasDetails = true;
         }
         return hasDetails;
+    }
+    
+    /**
+     * @param session
+     *            The session in which to execute the Persistence (JPA /
+     *            EclipseLink) query.
+     * @param summaryId
+     *            The database ID of the summary for which to compute the
+     *            corresponding Test Result nodes.
+     * @return the Test Result nodes associated with the given Test Result
+     *         Summary, sorted by sequence (ascending).
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public static ITestResultSummaryPO getTestResultSummary(
+        EntityManager session, Long summaryId) {
+        if (session == null) {
+            return null;
+        }
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery query = builder.createQuery();
+        Root from = query.from(PoMaker.getTestResultSummaryClass());
+        query.where(builder.equal(from.get("id"), summaryId)); //$NON-NLS-1$
+
+        return (ITestResultSummaryPO) session.createQuery(query)
+            .getSingleResult();
     }
     
     /**

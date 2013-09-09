@@ -70,6 +70,7 @@ public class Messages extends NLS {
     public static String SelectDatabaseConnectSuccessful;
     public static String SelectedElementIsNotTestResultSummary;
     public static String SetItemsNotValidForThisSubclass;
+    public static String TestresultDetailsForSummaryNotFound;
     public static String TestResultNodePropertySourceCapDetail;
     public static String TestResultNodePropertySourceDataCat;
     public static String TestResultNodePropertySourceDataParameter;

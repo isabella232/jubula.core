@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.alm.mylyn.core.i18n.Messages;
 import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
+import org.eclipse.jubula.client.core.constants.Constants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultSummaryEventListener;
@@ -156,12 +157,16 @@ public class CommentReporter implements ITestresultSummaryEventListener {
                 status = Messages.StatusFailed;
             }
 
-            String baseURL = m_dashboardURL;
-            String summaryId = m_summaryIdString;
-            String testresultNodeId = String.valueOf(m_nodeCount);
-
-            String url = NLS.bind(Messages.DashboardUrl, new String[] {
-                baseURL, summaryId, testresultNodeId });
+            String url = m_dashboardURL 
+                    + StringConstants.AMPERSAND 
+                    + Constants.DASHBOARD_SUMMARY_PARAM
+                    + StringConstants.EQUALS_SIGN 
+                    + m_summaryIdString
+                    + StringConstants.AMPERSAND 
+                    + Constants.DASHBOARD_RESULT_NODE_PARAM
+                    + StringConstants.EQUALS_SIGN 
+                    + String.valueOf(m_nodeCount);
+            
             return NLS.bind(Messages.NodeComment, new String[] { timestamp,
                 nodeType, nodeNameAndParams, status, url });
         }

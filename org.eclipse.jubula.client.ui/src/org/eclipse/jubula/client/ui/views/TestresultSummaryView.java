@@ -595,7 +595,7 @@ public class TestresultSummaryView extends ViewPart implements
         viewer.addDoubleClickListener(new IDoubleClickListener() {
             public void doubleClick(DoubleClickEvent event) {
                 CommandHelper.executeCommand(
-                        CommandIDs.OPEN_TEST_RESULT_VIEWER_COMMAND_ID,
+                        CommandIDs.OPEN_TEST_RESULT_DETAIL_COMMAND_ID,
                         getSite());
             }
         });

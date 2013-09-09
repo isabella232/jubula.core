@@ -46,7 +46,6 @@ public class TestResultEditorInput implements IEditorInput {
     /** database ID of the Project associated with the test run */
     private Long m_parentProjectId;
     
-
     /**
      * Constructor
      * 

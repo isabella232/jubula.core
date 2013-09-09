@@ -178,10 +178,8 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                     IProgressMonitor.UNKNOWN);
             
             try {
-                List<ITestResultPO> testResultList = 
-                    TestResultPM.computeTestResultListForSummary(
-                            m_session, 
-                            m_summaryId);
+                List<ITestResultPO> testResultList = TestResultPM
+                    .computeTestResultListForSummary(m_session, m_summaryId);
                 
                 TestResultNode createdNode = null;
                 Stack<TestResultNode> parentNodeStack = 
@@ -349,6 +347,11 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
      * master session 
      */
     private boolean m_cacheResults;
+
+    /**
+     * the root node
+     */
+    private TestResultNode m_testResultRootNode;
     
     /** {@inheritDoc} */
     public void doSave(IProgressMonitor monitor) {
@@ -466,10 +469,10 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
         PlatformUI.getWorkbench().getHelpSystem().setHelp(m_viewer.getControl(),
                 ContextHelpIds.RESULT_TREE_VIEW);
         try {
-            m_viewer.setInput(new TestResultNode[] {
-                    generateTestResult(
-                            editorInput.getTestResultSummaryId(),
-                            editorInput.getParentProjectId())});
+            setTestResultRootNode(generateTestResult(
+                    editorInput.getTestResultSummaryId(),
+                    editorInput.getParentProjectId()));
+            m_viewer.setInput(new TestResultNode[] {getTestResultRootNode()});
         } catch (InterruptedException ie) {
             // Operation was cancelled by user
             m_viewer.getControl().dispose();
@@ -559,5 +562,19 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
     public void dispose() {
         super.dispose();
         Persistor.instance().dropSession(m_session);
+    }
+
+    /**
+     * @return the testResultRootNode
+     */
+    public TestResultNode getTestResultRootNode() {
+        return m_testResultRootNode;
+    }
+
+    /**
+     * @param testResultRootNode the testResultRootNode to set
+     */
+    private void setTestResultRootNode(TestResultNode testResultRootNode) {
+        m_testResultRootNode = testResultRootNode;
     }
 }
