@@ -34,7 +34,7 @@ public class ToolkitProvider extends AbstractToolkitProvider {
      * {@inheritDoc}
      */
     public URL getComponentConfigurationFileURL() {
-        return ToolkitUtils.getURL(PluginStarter.getDefault(), 
+        return ToolkitUtils.getURL(Activator.getDefault(), 
             ToolkitConstants.COMP_CONFIG_PATH);
     }
 

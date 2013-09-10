@@ -11,7 +11,7 @@
    <extension
          point="org.eclipse.jubula.toolkit.common.toolkitsupport">
       <toolkit
-            IToolkitProvider="org.eclipse.jubula.toolkit.provider.rcp.ToolkitProvider"
+            IToolkitProvider="org.eclipse.jubula.toolkit.provider.rcp.RCPToolkitProvider"
             includes="com.bredexsw.guidancer.SwtToolkitPlugin"
             isUserToolkit="false"
             level="toolkit"

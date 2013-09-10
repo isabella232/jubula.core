@@ -25,38 +25,28 @@ import org.eclipse.swt.widgets.Composite;
  * @author BREDEX GmbH
  * @created 24.04.2007
  */
-public class ToolkitProvider implements IToolKitProvider {
-
-    /**
-     * <code>I18N_PROPERTIES</code>
-     */
+public class SWTToolkitProvider implements IToolKitProvider {
+    /** <code>I18N_PROPERTIES</code> */
     private static final String I18N_PROPERTIES = 
         "org.eclipse.jubula.toolkit.provider.swt.I18nStrings"; //$NON-NLS-1$
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Composite getAutConfigDialog(Composite parent, int style,
         Map<String, String> autConfig, String autName) 
         throws ToolkitPluginException {
-        
         return ToolkitUtils.createAutConfigComponent(
-            "org.eclipse.jubula.toolkit.provider.swt.gui.SwtAutConfigComponent",  //$NON-NLS-1$
-            this.getClass().getClassLoader(), parent, style, 
-            autConfig, autName);
+                "org.eclipse.jubula.client.ui.rcp.widgets.autconfig.SwtAutConfigComponent",  //$NON-NLS-1$
+                    this.getClass().getClassLoader(), parent, style, 
+                        autConfig, autName);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {
-        return ToolkitUtils.getURL(PluginStarter.getDefault(), 
+        return ToolkitUtils.getURL(Activator.getDefault(), 
             ToolkitConstants.COMP_CONFIG_PATH);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public ResourceBundle getI18nResourceBundle() {
         return ResourceBundle.getBundle(I18N_PROPERTIES);
     }

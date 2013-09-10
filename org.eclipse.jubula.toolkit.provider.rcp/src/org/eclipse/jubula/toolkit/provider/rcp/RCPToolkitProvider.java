@@ -11,55 +11,29 @@
 package org.eclipse.jubula.toolkit.provider.rcp;
 
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.eclipse.jubula.toolkit.common.IToolKitProvider;
-import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
+import org.eclipse.jubula.toolkit.provider.swt.SWTToolkitProvider;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
-import org.eclipse.swt.widgets.Composite;
-
 
 /**
  * @author BREDEX GmbH
  * @created 24.04.2007
  */
-public class ToolkitProvider implements IToolKitProvider {
-
-    /**
-     * <code>I18N_PROPERTIES</code>
-     */
+public class RCPToolkitProvider extends SWTToolkitProvider {
+    /** <code>I18N_PROPERTIES</code> */
     private static final String I18N_PROPERTIES = 
         "org.eclipse.jubula.toolkit.provider.rcp.I18nStrings"; //$NON-NLS-1$
 
-
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {
-        return ToolkitUtils.getURL(PluginStarter.getDefault(), 
+        return ToolkitUtils.getURL(Activator.getDefault(), 
             ToolkitConstants.COMP_CONFIG_PATH);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public ResourceBundle getI18nResourceBundle() {
         return ResourceBundle.getBundle(I18N_PROPERTIES);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Composite getAutConfigDialog(Composite parent, int style,
-        Map<String, String> autConfig, String autName) 
-        throws ToolkitPluginException {
-        
-        return ToolkitUtils.createAutConfigComponent(
-            "org.eclipse.jubula.toolkit.provider.rcp.gui.RcpAutConfigComponent",  //$NON-NLS-1$
-            this.getClass().getClassLoader(), parent, style, 
-            autConfig, autName);
-    }
-
 }

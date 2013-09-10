@@ -40,6 +40,7 @@ Export-Package: org.eclipse.jubula.client.ui.rcp,
  org.eclipse.jubula.client.ui.rcp.views,
  org.eclipse.jubula.client.ui.rcp.views.problemview,
  org.eclipse.jubula.client.ui.rcp.widgets,
+ org.eclipse.jubula.client.ui.rcp.widgets.autconfig,
  org.eclipse.jubula.client.ui.rcp.wizards,
  org.eclipse.jubula.client.ui.rcp.wizards.pages
 Require-Bundle: org.eclipse.jubula.tools;bundle-version="[2.2.0,2.3.0)",

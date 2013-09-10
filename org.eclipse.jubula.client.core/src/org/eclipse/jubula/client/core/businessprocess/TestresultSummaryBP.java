@@ -205,40 +205,40 @@ public class TestresultSummaryBP {
     /**
      * fill result node
      * @param keyword ITestResultPO
-     * @param node ITestResultPO
+     * @param resultNode ITestResultPO
      */
-    private void fillNode(ITestResultPO keyword, TestResultNode node) {
-        INodePO inode = node.getNode();
-        keyword.setKeywordName(node.getNode().getName());
-        keyword.setInternalKeywordGuid(inode.getGuid());
-        keyword.setKeywordComment(inode.getComment());
-        keyword.setInternalKeywordStatus(node.getStatus());
-        keyword.setKeywordStatus(node.getStatusString());
-        if (node.getTimeStamp() != null) {
-            keyword.setTimestamp(node.getTimeStamp());
+    private void fillNode(ITestResultPO keyword, TestResultNode resultNode) {
+        INodePO node = resultNode.getNode();
+        keyword.setKeywordName(node.getName());
+        keyword.setInternalKeywordGuid(node.getGuid());
+        keyword.setKeywordComment(node.getComment());
+        keyword.setInternalKeywordStatus(resultNode.getStatus());
+        keyword.setKeywordStatus(resultNode.getStatusString());
+        if (resultNode.getTimeStamp() != null) {
+            keyword.setTimestamp(resultNode.getTimeStamp());
         }
         
-        if (node.getParent() != null) {
+        if (resultNode.getParent() != null) {
             keyword.setInternalParentKeywordID(
-                    node.getParent().getNode().getId());
+                    resultNode.getParent().getNode().getId());
         }
 
-        if (inode instanceof IParameterInterfacePO) {
+        if (node instanceof IParameterInterfacePO) {
             //set parameters
-            addParameterListToResult(keyword, node, 
-                    (IParameterInterfacePO)inode);
+            addParameterListToResult(keyword, resultNode, 
+                    (IParameterInterfacePO)node);
         }
 
-        keyword.setKeywordType(node.getTypeOfNode());
-        if (inode instanceof ICapPO) {
+        keyword.setKeywordType(resultNode.getTypeOfNode());
+        if (node instanceof ICapPO) {
             keyword.setInternalKeywordType(TYPE_TEST_STEP);
             
             //set component name, type and action name
-            ICapPO cap = (ICapPO)inode;
+            ICapPO cap = (ICapPO)node;
             String compNameGuid = cap.getComponentName();
             keyword.setInternalComponentNameGuid(compNameGuid);
             keyword.setComponentName(
-                    StringUtils.defaultString(node.getComponentName()));
+                    StringUtils.defaultString(resultNode.getComponentName()));
             keyword.setInternalComponentType(cap.getComponentType());
             keyword.setComponentType(CompSystemI18n.getString(
                     cap.getComponentType()));
@@ -246,12 +246,14 @@ public class TestresultSummaryBP {
             keyword.setActionName(CompSystemI18n.getString(
                     cap.getActionName()));
             //add error details
-            addErrorDetails(keyword, node);
-            keyword.setNoOfSimilarComponents(node.getNoOfSimilarComponents());
-            keyword.setOmHeuristicEquivalence(node.getOmHeuristicEquivalence());
-        } else if (inode instanceof ITestCasePO) {
+            addErrorDetails(keyword, resultNode);
+            keyword.setNoOfSimilarComponents(
+                    resultNode.getNoOfSimilarComponents());
+            keyword.setOmHeuristicEquivalence(
+                    resultNode.getOmHeuristicEquivalence());
+        } else if (node instanceof ITestCasePO) {
             keyword.setInternalKeywordType(TYPE_TEST_CASE);
-        } else if (inode instanceof ITestSuitePO) {
+        } else if (node instanceof ITestSuitePO) {
             keyword.setInternalKeywordType(TYPE_TEST_SUITE);
         }
     }

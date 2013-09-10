@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.widgets;
+package org.eclipse.jubula.client.ui.rcp.widgets.autconfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -89,7 +89,7 @@ import org.eclipse.ui.internal.about.AboutUtils;
  * @created 13.02.2006
  * 
  */
-public abstract class JavaAutConfigComponent extends AutConfigComponent {
+public class JavaAutConfigComponent extends AutConfigComponent {
     
     /** Value for the default AUT Config mode */
     public static final String AUT_CONFIG_DIALOG_MODE_KEY_DEFAULT = 

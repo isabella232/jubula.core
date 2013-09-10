@@ -11,13 +11,11 @@
 package org.eclipse.jubula.examples.extension.swing.toolkit.provider;
 
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.eclipse.jubula.examples.extension.swing.toolkit.Activator;
-import org.eclipse.jubula.toolkit.common.IToolKitProvider;
+import org.eclipse.jubula.toolkit.common.AbstractToolkitProvider;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
-import org.eclipse.swt.widgets.Composite;
 
 
 /**
@@ -31,33 +29,17 @@ import org.eclipse.swt.widgets.Composite;
  * @author BREDEX GmbH
  * 
  */
-public class MyToolkitProvider implements IToolKitProvider {
+public class MyToolkitProvider extends AbstractToolkitProvider {
     /** the bundle location */
     public static final String BUNDLE = "org.eclipse.jubula.examples.extension.swing.toolkit.i18n.i18n"; //$NON-NLS-1$
 
-    /**
-     * As this should be a toolkit extension instead of a separated toolkit, you
-     * do not have to implement your own AUT-Configuration dialog. {@inheritDoc}
-     */
-    public Composite getAutConfigDialog(Composite arg0, int arg1,
-            Map<String, String> arg2, String arg3) {
-        return null;
-    }
-
-    /**
-     * this method returns the path where the client searches for your client
-     * toolkit extension XML-file. This file contains all necessary information
-     * for the client. {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {
         return ToolkitUtils.getURL(Activator.getDefault(),
                 "resources/xml/ComponentConfiguration.xml"); //$NON-NLS-1$
     }
 
-    /**
-     * this method should return a i18n properties file location for
-     * translatable strings. {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public ResourceBundle getI18nResourceBundle() {
         return ResourceBundle.getBundle(BUNDLE);
     }

@@ -22,7 +22,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
-import org.eclipse.jubula.client.ui.rcp.widgets.AutConfigComponent;
+import org.eclipse.jubula.client.ui.rcp.widgets.autconfig.AutConfigComponent;
 import org.eclipse.jubula.client.ui.rcp.wizards.ProjectWizard;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;

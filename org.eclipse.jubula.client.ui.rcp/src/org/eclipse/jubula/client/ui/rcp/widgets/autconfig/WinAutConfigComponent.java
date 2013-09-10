@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.provider.win.gui;
+package org.eclipse.jubula.client.ui.rcp.widgets.autconfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,13 +20,12 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.RemoteFileBrowserBP;
+import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
-import org.eclipse.jubula.client.ui.rcp.widgets.AutConfigComponent;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
-import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;

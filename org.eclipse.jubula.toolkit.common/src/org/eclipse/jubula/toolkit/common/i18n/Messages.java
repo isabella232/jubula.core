@@ -24,7 +24,6 @@ public class Messages extends NLS {
     public static String CouldNotResolvePath;
     public static String ErrorWhileReadingAttributes;
     public static String FailedLoading;
-    public static String InstantiatingClass;
     public static String NoAutConfigFound;
     public static String NoI18n;
     public static String NoToolkitPluginDescriptorFound;

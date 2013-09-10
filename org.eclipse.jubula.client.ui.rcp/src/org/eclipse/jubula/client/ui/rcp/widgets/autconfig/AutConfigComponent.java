@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.widgets;
+package org.eclipse.jubula.client.ui.rcp.widgets.autconfig;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,8 +73,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PreferencesUtil;
-
-
 
 /**
  * @author BREDEX GmbH

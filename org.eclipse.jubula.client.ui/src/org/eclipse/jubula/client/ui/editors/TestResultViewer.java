@@ -267,14 +267,15 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                     // future.
                     String componentName = !StringUtils.isEmpty(result
                             .getComponentName()) ? result.getComponentName()
-                            : " "; //$NON-NLS-1$
-                    return NodeMaker.createCapPO(
-                            result.getKeywordName(),
+                            : StringConstants.SPACE;
+                    return NodeMaker.createCapPO(result.getKeywordName(),
                             componentName,
-                            result.getInternalComponentType() != null ? result
-                                    .getInternalComponentType() : " ", //$NON-NLS-1$
-                            result.getInternalActionName() != null ? result
-                                    .getInternalActionName() : " "); //$NON-NLS-1$
+                        result.getInternalComponentType() != null ? result
+                                .getInternalComponentType()
+                                : StringConstants.SPACE,
+                        result.getInternalActionName() != null ? result
+                                .getInternalActionName()
+                                : StringConstants.SPACE);
                 case TestresultSummaryBP.TYPE_TEST_CASE:
                     return NodeMaker.createSpecTestCasePO(
                             result.getKeywordName(),
@@ -283,10 +284,8 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                     ITestSuitePO backingTestSuite = NodeMaker
                             .createTestSuitePO(result.getKeywordName(),
                                     result.getInternalKeywordGuid());
-                    ITestResultSummaryPO summary = 
-                        GeneralStorage
-                            .getInstance()
-                            .getMasterSession()
+                    ITestResultSummaryPO summary = GeneralStorage
+                        .getInstance().getMasterSession()
                             .find(PoMaker.getTestResultSummaryClass(),
                                     m_summaryId);
                     backingTestSuite.setAut(PoMaker.createAUTMainPO(summary

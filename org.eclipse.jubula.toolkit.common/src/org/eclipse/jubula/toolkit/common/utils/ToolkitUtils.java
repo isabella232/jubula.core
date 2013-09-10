@@ -27,6 +27,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Composite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -174,7 +175,7 @@ public class ToolkitUtils {
      * @param classLoader the ClassLoader to load the class with.
      * @param parent the parent of the AutConfigComponent.
      * @param style the SWT-Style
-     * @param autConfig the aut configuration as a Map.
+     * @param autConfig the AUT configuration as a Map.
      * @param autName the name of the AUT that will be using this configuration.
      * @return an instance of the AutConfigComponent.
      */
@@ -185,12 +186,8 @@ public class ToolkitUtils {
         throws ToolkitPluginException {
         
         Composite autConfigDialog = null;
-        StringBuilder logMsg = new StringBuilder();
-        logMsg.append(Messages.FailedLoading);
-        logMsg.append(StringConstants.SLASH);
-        logMsg.append(Messages.InstantiatingClass);
-        logMsg.append(StringConstants.COLON);
-        logMsg.append(StringConstants.SPACE);
+        String log = NLS.bind(Messages.FailedLoading, 
+                String.valueOf(className));
         try {
             Class autConfigComponentClass = classLoader.loadClass(className);
             Constructor<Composite> constructor = autConfigComponentClass
@@ -199,43 +196,34 @@ public class ToolkitUtils {
             autConfigDialog = constructor.newInstance(
                 new Object[]{parent, style, autConfig, autName});
         } catch (SecurityException e) {
-            LOG.error(e.getLocalizedMessage(), e);
-            throw new ToolkitPluginException(
-                logMsg.toString()
-                + String.valueOf(className), e);
+            handleException(log, e);
         } catch (IllegalArgumentException e) {
-            LOG.error(e.getLocalizedMessage(), e);
-            throw new ToolkitPluginException(
-                logMsg.toString()
-                + String.valueOf(className), e);
+            handleException(log, e);
         } catch (ClassNotFoundException e) {
-            LOG.error(e.getLocalizedMessage(), e);
-            throw new ToolkitPluginException(
-                logMsg.toString()
-                + String.valueOf(className), e);
+            handleException(log, e);
         } catch (NoSuchMethodException e) {
-            LOG.error(e.getLocalizedMessage(), e);
-            throw new ToolkitPluginException(
-                logMsg.toString()
-                + String.valueOf(className), e);
+            handleException(log, e);
         } catch (InstantiationException e) {
-            LOG.error(e.getLocalizedMessage(), e);
-            throw new ToolkitPluginException(
-                logMsg.toString()
-                + String.valueOf(className), e);
+            handleException(log, e);
         } catch (IllegalAccessException e) {
-            LOG.error(e.getLocalizedMessage(), e);
-            throw new ToolkitPluginException(
-                logMsg.toString()
-                + String.valueOf(className), e);
+            handleException(log, e);
         } catch (InvocationTargetException e) {
-            LOG.error(e.getLocalizedMessage(), e);
-            throw new ToolkitPluginException(
-                logMsg.toString()
-                + String.valueOf(className), e);
+            handleException(log, e);
         }
         return autConfigDialog;
-    }    
-    
-    
+    }
+
+    /**
+     * @param logMsg
+     *            the log message
+     * @param exception
+     *            the exception
+     * @throws ToolkitPluginException
+     *             the wrapper exception
+     */
+    private static void handleException(String logMsg,
+            Exception exception) throws ToolkitPluginException {
+        LOG.error(exception.getLocalizedMessage(), exception);
+        throw new ToolkitPluginException(logMsg.toString(), exception);
+    }
 }
