@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.rap.ui.launch.RAPLauncher">
+<booleanAttribute key="append.args" value="true"/>
+<booleanAttribute key="askclear" value="false"/>
+<booleanAttribute key="automaticAdd" value="true"/>
+<booleanAttribute key="automaticValidate" value="false"/>
+<stringAttribute key="bootstrap" value=""/>
+<stringAttribute key="checked" value="[NONE]"/>
+<booleanAttribute key="clearConfig" value="false"/>
+<booleanAttribute key="clearws" value="false"/>
+<stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/dashboard"/>
+<booleanAttribute key="default" value="true"/>
+<booleanAttribute key="default_auto_start" value="true"/>
+<intAttribute key="default_start_level" value="4"/>
+<booleanAttribute key="includeOptional" value="false"/>
+<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -console -clean -debug"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Declipse.ignoreApp=true &#10;-Dosgi.noShutdown=true &#10;-Dorg.eclipse.jubula.dashboard.jdbc_driver=oracle.jdbc.driver.OracleDriver &#10;-Dorg.eclipse.jubula.dashboard.jdbc_url=jdbc:oracle:thin:@dbbxtest.bredex.de:1521:bxutf &#10;-Dorg.eclipse.jubula.dashboard.database_username=markus&#10;-Dorg.eclipse.jubula.dashboard.database_password=bxtest"/>
+<stringAttribute key="org.eclipse.rap.launch.browserMode" value="INTERNAL"/>
+<stringAttribute key="org.eclipse.rap.launch.contextpath" value=""/>
+<stringAttribute key="org.eclipse.rap.launch.dataLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.rap.tools.launch/dashboard"/>
+<booleanAttribute key="org.eclipse.rap.launch.developmentMode" value="true"/>
+<stringAttribute key="org.eclipse.rap.launch.entryPoint" value="org.eclipse.jubula.app.dashboard.dashboard"/>
+<stringAttribute key="org.eclipse.rap.launch.libraryVariant" value="STANDARD"/>
+<booleanAttribute key="org.eclipse.rap.launch.openBrowser" value="false"/>
+<intAttribute key="org.eclipse.rap.launch.port" value="60001"/>
+<stringAttribute key="org.eclipse.rap.launch.servletName" value="/rap"/>
+<stringAttribute key="org.eclipse.rap.launch.servletPath" value="/dashboard"/>
+<intAttribute key="org.eclipse.rap.launch.sessionTimeout" value="0"/>
+<booleanAttribute key="org.eclipse.rap.launch.terminatePrevious" value="true"/>
+<booleanAttribute key="org.eclipse.rap.launch.useDefaultDataLocation" value="true"/>
+<booleanAttribute key="org.eclipse.rap.launch.useManualContextPath" value="false"/>
+<booleanAttribute key="org.eclipse.rap.launch.useManualPort" value="true"/>
+<booleanAttribute key="org.eclipse.rap.launch.useSessionTimeout" value="false"/>
+<booleanAttribute key="pde.generated.config" value="true"/>
+<stringAttribute key="pde.version" value="3.3"/>
+<booleanAttribute key="show_selected_only" value="false"/>
+<stringAttribute key="target_bundles" value="ch.qos.logback.classic@default:default,ch.qos.logback.core@default:default,ch.qos.logback.slf4j@default:false,com.ibm.icu.base@default:default,javax.persistence@default:default,javax.servlet@default:true,org.apache.commons.beanutils@default:default,org.apache.commons.cli@default:default,org.apache.commons.codec@default:default,org.apache.commons.collections@default:default,org.apache.commons.lang@default:default,org.apache.commons.logging*1.1.1.v201101211721@default:default,org.apache.felix.gogo.runtime@default:default,org.apache.felix.gogo.shell@default:default,org.apache.poi@default:default,org.eclipse.birt.jetty.overlay@default:false,org.eclipse.core.commands@default:default,org.eclipse.core.contenttype@default:default,org.eclipse.core.databinding.beans@default:default,org.eclipse.core.databinding.observable@default:default,org.eclipse.core.databinding.property@default:default,org.eclipse.core.databinding@default:default,org.eclipse.core.expressions*3.4.401.v20120912-155018@default:default,org.eclipse.core.jobs*3.5.300.v20120912-155018@default:default,org.eclipse.core.runtime*3.8.0.v20120912-155025@default:true,org.eclipse.equinox.app@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.console@default:default,org.eclipse.equinox.http.jetty*3.0.1.v20121109-203239@default:default,org.eclipse.equinox.http.registry*1.1.200.v20120912-130548@default:default,org.eclipse.equinox.http.servlet*1.1.300.v20120912-130548@default:default,org.eclipse.equinox.preferences*3.5.1.v20121031-182809@default:default,org.eclipse.equinox.registry@default:default,org.eclipse.equinox.security@default:default,org.eclipse.equinox.servletbridge.extensionbundle@default:false,org.eclipse.equinox.transforms.hook@default:false,org.eclipse.equinox.weaving.hook@default:false,org.eclipse.help@default:default,org.eclipse.jetty.continuation@default:default,org.eclipse.jetty.http@default:default,org.eclipse.jetty.io@default:default,org.eclipse.jetty.security@default:default,org.eclipse.jetty.server@default:default,org.eclipse.jetty.servlet@default:default,org.eclipse.jetty.util@default:default,org.eclipse.osgi*3.8.2.v20130124-134944@-1:true,org.eclipse.osgi.services@default:default,org.eclipse.persistence.antlr@default:default,org.eclipse.persistence.asm@default:default,org.eclipse.persistence.core@default:default,org.eclipse.persistence.jpa.equinox.weaving@default:false,org.eclipse.persistence.jpa.equinox@default:false,org.eclipse.persistence.jpa.osgi@default:default,org.eclipse.persistence.jpa@default:default,org.eclipse.persistence.oracle@default:false,org.eclipse.rap.design.example@default:default,org.eclipse.rap.jface.databinding@default:default,org.eclipse.rap.jface@default:default,org.eclipse.rap.rwt.osgi@default:default,org.eclipse.rap.rwt@default:default,org.eclipse.rap.ui.forms@default:default,org.eclipse.rap.ui.views@default:default,org.eclipse.rap.ui.workbench@default:default,org.eclipse.rap.ui@default:default,org.eclipse.swt@default:default,org.h2@default:default,org.slf4j.api@default:default,org.slf4j.jcl@default:default"/>
+<booleanAttribute key="tracing" value="false"/>
+<booleanAttribute key="useCustomFeatures" value="false"/>
+<booleanAttribute key="useDefaultConfigArea" value="true"/>
+<stringAttribute key="workspace_bundles" value="org.eclipse.jubula.app.dashboard@default:default,org.eclipse.jubula.client.ui.rap@default:default,org.eclipse.jubula.dashboard.jettycustomizer@default:false,com.bredexsw.jubula.client.core.driver@default:false,org.eclipse.jubula.client.core@default:default,org.eclipse.jubula.client.ui@default:default,org.eclipse.jubula.communication@default:default,org.eclipse.jubula.toolkit.common@default:default,org.eclipse.jubula.toolkit.provider.base@default:default,org.eclipse.jubula.toolkit.provider.concrete@default:default,org.eclipse.jubula.toolkit.provider.html@default:default,org.eclipse.jubula.toolkit.provider.rcp.gef@default:default,org.eclipse.jubula.toolkit.provider.rcp@default:default,org.eclipse.jubula.toolkit.provider.swing@default:default,org.eclipse.jubula.toolkit.provider.swt@default:default,org.eclipse.jubula.toolkit.provider.win@default:default,org.eclipse.jubula.tools@default:default,org.eclipse.jubula.ui.compatibility@default:default"/>
+</launchConfiguration>

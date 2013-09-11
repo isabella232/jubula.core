@@ -25,7 +25,7 @@ import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 
 /**
- * @author Markus Tiede
+ * @author BREDEX GmbH
  * @created 27.10.2011
  */
 public class ProblemPropagator {
@@ -69,7 +69,7 @@ public class ProblemPropagator {
     }
     
     /**
-     * @author Marcell Salvage
+     * @author BREDEX GmbH
      */
     public static class ProblemPropagationOperation 
         implements ITreeNodeOperation<INodePO> {

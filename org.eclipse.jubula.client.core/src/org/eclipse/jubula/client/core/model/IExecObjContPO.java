@@ -16,7 +16,7 @@ import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 
 
 /**
- * @author Markus Tiede
+ * @author BREDEX GmbH
  * @created 14.10.2011
  */
 public interface IExecObjContPO extends IPersistentObject {

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+    Copyright (c) 2004, 2013 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<plugin>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.jubula.client.ui.rap.handler.project.RapSelectDatabaseHandler"
+            commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase">
+      </handler>
+      <handler
+            class="org.eclipse.jubula.client.ui.rap.handler.ExportTestResultsHandler"
+            commandId="org.eclipse.jubula.client.ui.commands.ExportTestResults">
+         <enabledWhen>
+            <and>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <instanceof
+                        value="org.eclipse.jubula.client.core.model.ITestResultSummaryPO">
+                  </instanceof>
+               </iterate>
+            </and>
+         </enabledWhen>
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.rap.ui.serviceHandler">
+      <serviceHandler
+            class="org.eclipse.jubula.client.ui.rap.servicehandler.DownloadTestResultsServiceHandler"
+            id="org.eclipse.jubula.client.ui.rap.servicehandler.DownloadTestResultsServiceHandler">
+      </serviceHandler>
+   </extension>
+
+</plugin>

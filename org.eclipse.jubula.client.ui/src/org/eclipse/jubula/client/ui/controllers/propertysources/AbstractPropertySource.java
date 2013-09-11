@@ -22,7 +22,7 @@ import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
- * @author Markus Tiede
+ * @author BREDEX GmbH
  * @created 22.11.2011
  */
 public abstract class AbstractPropertySource implements IPropertySource {

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+<!--
+    Copyright (c) 2004, 2013 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<product name="dashboard" uid="org.eclipse.jubula.product.dashboard" id="org.eclipse.jubula.app.dashboard.product" application="org.eclipse.jubula.app.dashboard.dashboardHttpServer" version="2.2.0.qualifier" useFeatures="false" includeLaunchers="true">
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>-data
+@user.home/.jubula/dashboardWorkspace</programArgs>
+      <programArgsLin>-vm ../jre/bin</programArgsLin>
+      <programArgsWin>-vm ../jre/bin</programArgsWin>
+      <vmArgs>-server
+-Dosgi.noShutdown=true
+-Dorg.eclipse.equinox.http.jetty.context.sessioninactiveinterval=0
+-Dorg.eclipse.equinox.http.jetty.autostart=false
+-Xms128m
+-Xmx1024m
+-XX:MaxPermSize=256m</vmArgs>
+   </launcherArgs>
+
+   <windowImages/>
+
+   <launcher name="dashboardserver">
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <plugins>
+      <plugin id="ch.qos.logback.classic"/>
+      <plugin id="ch.qos.logback.core"/>
+      <plugin id="ch.qos.logback.slf4j" fragment="true"/>
+      <plugin id="org.eclipse.jubula.app.dashboard"/>
+      <plugin id="org.eclipse.jubula.client.ui.rap"/>
+      <plugin id="org.eclipse.jubula.dashboard.jettycustomizer" fragment="true"/>
+      <plugin id="com.bredexsw.jubula.client.core.driver" fragment="true"/>
+      <plugin id="com.ibm.icu.base"/>
+      <plugin id="javax.activation"/>
+      <plugin id="javax.mail"/>
+      <plugin id="javax.persistence"/>
+      <plugin id="javax.servlet"/>
+      <plugin id="javax.servlet.jsp"/>
+      <plugin id="javax.xml"/>
+      <plugin id="javax.xml.stream"/>
+      <plugin id="org.apache.commons.beanutils"/>
+      <plugin id="org.apache.commons.cli"/>
+      <plugin id="org.apache.commons.codec"/>
+      <plugin id="org.apache.commons.collections"/>
+      <plugin id="org.apache.commons.lang"/>
+      <plugin id="org.apache.commons.logging"/>
+      <plugin id="org.apache.oro"/>
+      <plugin id="org.apache.poi"/>
+      <plugin id="org.apache.felix.gogo.runtime"/>
+      <plugin id="org.apache.felix.gogo.shell"/>
+      <plugin id="org.apache.felix.gogo.command"/>
+      <plugin id="org.eclipse.core.commands"/>
+      <plugin id="org.eclipse.core.contenttype"/>
+      <plugin id="org.eclipse.core.databinding"/>
+      <plugin id="org.eclipse.core.databinding.beans"/>
+      <plugin id="org.eclipse.core.databinding.observable"/>
+      <plugin id="org.eclipse.core.databinding.property"/>
+      <plugin id="org.eclipse.core.expressions"/>
+      <plugin id="org.eclipse.core.jobs"/>
+      <plugin id="org.eclipse.core.runtime"/>
+      <plugin id="org.eclipse.equinox.app"/>
+      <plugin id="org.eclipse.equinox.common"/>
+      <plugin id="org.eclipse.equinox.console"/>
+      <plugin id="org.eclipse.equinox.http.jetty"/>
+      <plugin id="org.eclipse.equinox.http.registry"/>
+      <plugin id="org.eclipse.equinox.http.servlet"/>
+      <plugin id="org.eclipse.equinox.preferences"/>
+      <plugin id="org.eclipse.equinox.registry"/>
+      <plugin id="org.eclipse.equinox.security"/>
+      <plugin id="org.eclipse.equinox.servletbridge.extensionbundle" fragment="true"/>
+      <plugin id="org.eclipse.equinox.transforms.hook" fragment="true"/>
+      <plugin id="org.eclipse.equinox.weaving.hook" fragment="true"/>
+      <plugin id="org.eclipse.help"/>
+      <plugin id="org.eclipse.jubula.client.core"/>
+      <plugin id="org.eclipse.jubula.client.ui"/>
+      <plugin id="org.eclipse.jubula.communication"/>
+      <plugin id="org.eclipse.jubula.toolkit.common"/>
+      <plugin id="org.eclipse.jubula.toolkit.provider.base"/>
+      <plugin id="org.eclipse.jubula.toolkit.provider.concrete"/>
+      <plugin id="org.eclipse.jubula.toolkit.provider.html"/>
+      <plugin id="org.eclipse.jubula.toolkit.provider.rcp"/>
+      <plugin id="org.eclipse.jubula.toolkit.provider.rcp.gef"/>
+      <plugin id="org.eclipse.jubula.toolkit.provider.swing"/>
+      <plugin id="org.eclipse.jubula.toolkit.provider.swt"/>
+      <plugin id="org.eclipse.jubula.toolkit.provider.win"/>
+      <plugin id="org.eclipse.jubula.tools"/>
+      <plugin id="org.eclipse.jubula.ui.compatibility"/>
+      <plugin id="org.eclipse.osgi"/>
+      <plugin id="org.eclipse.osgi.services"/>
+      <plugin id="org.eclipse.persistence.antlr"/>
+      <plugin id="org.eclipse.persistence.asm"/>
+      <plugin id="org.eclipse.persistence.core"/>
+      <plugin id="org.eclipse.persistence.jpa"/>
+      <plugin id="org.eclipse.persistence.jpa.osgi"/>
+      <plugin id="org.eclipse.persistence.oracle" fragment="true"/>
+      <plugin id="org.eclipse.rap.design.example"/>
+      <plugin id="org.eclipse.rap.jface"/>
+      <plugin id="org.eclipse.rap.jface.databinding"/>
+      <plugin id="org.eclipse.rap.rwt"/>
+      <plugin id="org.eclipse.rap.ui"/>
+      <plugin id="org.eclipse.rap.ui.views"/>
+      <plugin id="org.eclipse.rap.ui.workbench"/>
+      <plugin id="org.h2"/>
+      <plugin id="org.eclipse.jetty.server"/>
+      <plugin id="org.eclipse.jetty.util"/>
+      <plugin id="org.slf4j.api"/>
+      <plugin id="org.slf4j.jcl"/>
+   </plugins>
+
+   <configurations>
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.rap.rwt.osgi" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.common" autoStart="false" startLevel="2" />
+      <plugin id="org.eclipse.equinox.http.registry" autoStart="true" startLevel="3" />
+      <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
+   </configurations>
+
+</product>

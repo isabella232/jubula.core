@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author Markus Tiede
+ * @author BREDEX GmbH
  * @created Jul 20, 2011
  */
 public abstract class AbstractBooleanPropertyTester extends PropertyTester {

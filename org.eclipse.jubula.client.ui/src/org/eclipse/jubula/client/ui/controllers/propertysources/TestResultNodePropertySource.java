@@ -33,7 +33,7 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
 
 
 /**
- * @author Markus Tiede
+ * @author BREDEX GmbH
  * @created 22.11.2011
  */
 @SuppressWarnings("synthetic-access")

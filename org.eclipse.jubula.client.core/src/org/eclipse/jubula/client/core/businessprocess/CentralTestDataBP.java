@@ -17,7 +17,7 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 
 /**
- * @author Zeb Ford-Reitz
+ * @author BREDEX GmbH
  * @created Nov 03, 2011
  */
 public class CentralTestDataBP {

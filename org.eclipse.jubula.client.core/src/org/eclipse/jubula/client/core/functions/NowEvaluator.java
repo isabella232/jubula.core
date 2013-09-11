@@ -6,7 +6,7 @@ package org.eclipse.jubula.client.core.functions;
 import java.util.Date;
 
 /**
- * @author al
+ * @author BREDEX GmbH
  *
  */
 public final class NowEvaluator implements IFunctionEvaluator {

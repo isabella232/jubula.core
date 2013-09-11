@@ -20,7 +20,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 
 /**
- * @author Markus Tiede
+ * @author BREDEX GmbH
  * @created Oct 14, 2011
  */
 public class TestJobBP extends NodeBP {

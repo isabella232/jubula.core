@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.model;
 
 /**
- * @author Zeb Ford-Reitz
+ * @author BREDEX GmbH
  * @created Nov 04, 2011
  */
 public interface ITestDataNodePO extends IPersistentObject {

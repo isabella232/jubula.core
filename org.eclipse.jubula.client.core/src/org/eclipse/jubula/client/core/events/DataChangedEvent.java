@@ -15,7 +15,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 
 /**
- * @author Markus Tiede
+ * @author BREDEX GmbH
  * @created Aug 12, 2011
  */
 public class DataChangedEvent {

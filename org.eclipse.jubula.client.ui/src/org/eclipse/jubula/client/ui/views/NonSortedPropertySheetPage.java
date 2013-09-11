@@ -22,7 +22,7 @@ import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetSorter;
 
 /**
- * @author Markus Tiede
+ * @author BREDEX GmbH
  * @created 23.11.2011
  */
 public class NonSortedPropertySheetPage extends PropertySheetPage {
@@ -51,7 +51,7 @@ public class NonSortedPropertySheetPage extends PropertySheetPage {
     }
     
     /**
-     * @author Markus Tiede
+     * @author BREDEX GmbH
      * @created 23.11.2011
      */
     private static class NonSortingPropertySheetSorter extends

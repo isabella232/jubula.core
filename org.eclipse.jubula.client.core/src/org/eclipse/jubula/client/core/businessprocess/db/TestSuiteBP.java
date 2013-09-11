@@ -135,7 +135,7 @@ public class TestSuiteBP extends NodeBP {
     }
     
     /**
-     * @author Markus Tiede
+     * @author BREDEX GmbH
      */
     public static class ExecNodeFinder <T>
         extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {

@@ -13,7 +13,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedL
 
 /**
  * 
- * @author al
+ * @author BREDEX GmbH
  *
  * This is basically a Map used as a cache which supports 
  * invalidation based on predefined events.

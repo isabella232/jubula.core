@@ -10,7 +10,7 @@ import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 /**
- * @author al
+ * @author BREDEX GmbH
  * 
  */
 public final class ModifyDateEvaluator extends AbstractFunctionEvaluator {

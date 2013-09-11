@@ -16,7 +16,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 /**
  * Interface for tagging classes as persistable in the ExecStore.
  *
- * @author Markus Tiede
+ * @author BREDEX GmbH
  * @created 14.10.2011
  */
 public interface IExecPersistable extends INodePO {
