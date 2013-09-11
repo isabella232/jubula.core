@@ -20,8 +20,28 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tycho-version>0.18.0</tycho-version>
     <target-platform-base-path>../org.eclipse.jubula.project.configuration/target/definitions/</target-platform-base-path>
-    <target-platform-path>${target-platform-base-path}dashboard-local</target-platform-path>
   </properties>
+
+  <profiles>
+    <profile>
+      <id>jubula-local-build</id>
+      <modules>
+        <module>../../jubula/org.eclipse.jubula.releng</module>
+      </modules>
+      <properties>
+        <target-platform-path>${target-platform-base-path}dashboard-local</target-platform-path>
+      </properties>
+    </profile>
+    <profile>
+      <id>jubula-remote-fetch</id>
+      <properties>
+        <target-platform-path>${target-platform-base-path}dashboard</target-platform-path>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+  </profiles>
 
   <modules>
     <module>../org.eclipse.jubula.releng</module>
