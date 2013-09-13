@@ -22,19 +22,18 @@
 <unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.rap.runtime.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.rap.runtime.requirements.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.birt.osgi.runtime.sdk.feature.group" version="0.0.0"/>
 <unit id="javax.xml" version="0.0.0"/>
-<unit id="org.eclipse.ui.workbench" version="0.0.0"/>
-<unit id="org.eclipse.ui" version="0.0.0"/>
-<unit id="org.eclipse.swt" version="0.0.0"/>
-<unit id="org.eclipse.jface.databinding" version="0.0.0"/>
-<unit id="org.eclipse.jface" version="0.0.0"/>
-<unit id="org.eclipse.ui.views" version="0.0.0"/>
 <repository id="eclipse-juno" location="http://download.eclipse.org/releases/juno"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.persistence.jpa.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/releases/indigo"/>
 </location>
+<!--
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="com.bredexsw.jubula.client.core.driver.feature.feature.group" version="0.0.0"/>
+<repository location="http://update.bredex.de/jubula"/>
+</location>
+-->
 </locations>
 </target>
