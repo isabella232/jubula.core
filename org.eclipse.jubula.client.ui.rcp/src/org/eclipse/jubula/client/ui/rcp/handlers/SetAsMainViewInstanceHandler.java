@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
 import org.eclipse.ui.IWorkbenchPart;
@@ -23,7 +22,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class SetAsMainViewInstanceHandler extends AbstractHandler {
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object execute(ExecutionEvent event) {
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         if (activePart instanceof TestCaseBrowser) {
             TestCaseBrowser tcb = (TestCaseBrowser) activePart;

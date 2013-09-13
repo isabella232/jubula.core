@@ -35,7 +35,7 @@ public class DatabaseConnectionInitializer extends
     @Override
     public void initializeDefaultPreferences() {
         IEclipsePreferences preferenceNode = 
-            new DefaultScope().getNode(Activator.PLUGIN_ID);
+            DefaultScope.INSTANCE.getNode(Activator.PLUGIN_ID);
         preferenceNode.put(
             DatabaseConnectionConverter.PREF_DATABASE_CONNECTIONS, 
             DatabaseConnectionConverter.convert(

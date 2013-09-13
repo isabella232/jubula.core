@@ -46,7 +46,7 @@ public abstract class AbstractProcessor implements EventHandler {
         if (!eventBroker.subscribe(UIEvents.UIElement.TOPIC_WIDGET,
                 this)) {
             System.err.println(
-                    "Could not subscribe to event broker TOPIC_WIDGET!");
+                    "Could not subscribe to event broker TOPIC_WIDGET!"); //$NON-NLS-1$
         }
     }
 

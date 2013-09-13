@@ -106,6 +106,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
@@ -1000,11 +1001,11 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
                 helpId = ContextHelpIds.JB_PROPERTIES_VIEW;
             }
 
-            Plugin.getHelpSystem().setHelp(m_treeViewer.getControl(), helpId);
-            if (Plugin.getHelpSystem().isContextHelpDisplayed()
-                    || Plugin.getView(Constants.ECLIPSE_HELP_VIEW_ID) 
-                        != null) {
-                Plugin.getHelpSystem().displayHelp(helpId);
+            IWorkbenchHelpSystem helpSystem = Plugin.getHelpSystem();
+            helpSystem.setHelp(m_treeViewer.getControl(), helpId);
+            if (helpSystem.isContextHelpDisplayed()
+                    || Plugin.getView(Constants.ECLIPSE_HELP_VIEW_ID) != null) {
+                helpSystem.displayHelp(helpId);
             }
         }
         

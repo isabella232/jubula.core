@@ -17,8 +17,6 @@ import java.util.Vector;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -44,10 +42,6 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
         BROWSER_TO_CMD_MAP.put("Chrome", "*googlechrome"); //$NON-NLS-1$ //$NON-NLS-2$
     }
     
-    /** the logger */
-    private static final Logger LOG = LoggerFactory
-            .getLogger(StartHtmlAutServerCommand.class);
-
     /**
      * {@inheritDoc}
      */

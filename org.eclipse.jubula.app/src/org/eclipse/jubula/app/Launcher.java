@@ -19,7 +19,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.ILogListener;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -45,8 +44,6 @@ import org.eclipse.ui.internal.ide.ChooseWorkspaceDialog;
 import org.eclipse.ui.internal.ide.IDEWorkbenchMessages;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
 import org.eclipse.ui.internal.ide.StatusUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -73,9 +70,6 @@ public class Launcher implements IApplication {
      * restart the workbench.
      */
     private static final Integer EXIT_RELAUNCH = new Integer(24);
-
-    /** for log messages */
-    private static Logger log = LoggerFactory.getLogger(Launcher.class);
 
     /**
      * Creates a new Application.
@@ -183,15 +177,6 @@ public class Launcher implements IApplication {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public void setInitializationData(IConfigurationElement config, 
-        String propertyName, Object data) {
-        // do nothing 
-    }
-
-
-    /**
      * Creates the display used by the application.
      * 
      * @return the display used by the application
@@ -223,7 +208,7 @@ public class Launcher implements IApplication {
             Object instanceLocationCheck = checkInstanceLocation(shell);
             if (instanceLocationCheck != null) {
                 WorkbenchPlugin.unsetSplashShell(display);
-                Platform.endSplash();
+                context.applicationRunning();
                 return instanceLocationCheck;
             }
 
@@ -448,23 +433,25 @@ public class Launcher implements IApplication {
             try {
                 // the operation will fail if the url is not a valid
                 // instance data area, so other checking is unneeded
-                if (instanceLoc.setURL(workspaceUrl, true)) {
+                if (instanceLoc.set(workspaceUrl, true)) {
                     launchData.writePersistedData();
                     writeWorkspaceVersion();
                     return null;
                 }
             } catch (IllegalStateException e) {
                 MessageDialog.openError(shell,
-                    IDEWorkbenchMessages
-                        .IDEApplication_workspaceCannotBeSetTitle,
-                    IDEWorkbenchMessages
-                        .IDEApplication_workspaceCannotBeSetMessage);
+                    IDEWorkbenchMessages.
+                        IDEApplication_workspaceCannotBeSetTitle,
+                    IDEWorkbenchMessages.
+                        IDEApplication_workspaceCannotBeSetMessage);
                 return EXIT_OK;
+            } catch (IOException e) {
+                // fall through
             }
             // by this point it has been determined that the workspace is
             // already in use -- force the user to choose again
             MessageDialog.openError(shell, IDEWorkbenchMessages
-                        .IDEApplication_workspaceInUseTitle, 
+                .IDEApplication_workspaceInUseTitle, 
                     IDEWorkbenchMessages.IDEApplication_workspaceInUseMessage);
         }
     }

@@ -26,9 +26,6 @@ public class ServerShowObservConsoleMessage extends Message {
     /** closes the recordedAction dialog */
     public static final int ACT_CLOSE_ACTION_SHELL = 2;
 
-    /** static version */
-    private static final double VERSION = 1.0;
-
     /** action/dialog that should be executed */
     private int m_action = 0;
 

@@ -21,18 +21,12 @@ import org.eclipse.jubula.client.ui.rcp.utils.HTMLAutWindowManager;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.ui.actions.CompoundContributionItem;
 import org.eclipse.ui.menus.CommandContributionItem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 /**
  * Populates the dropdown list for the HTML window chooser toolbar item
  * @author BREDEX GmbH
  *
  */
 public class ChooseHTMLWindowContributionItem extends CompoundContributionItem {
-    /** The logger */
-    private static final Logger LOG = 
-        LoggerFactory.getLogger(ChooseHTMLWindowContributionItem.class);
-
     /**
      * {@inheritDoc}
      */

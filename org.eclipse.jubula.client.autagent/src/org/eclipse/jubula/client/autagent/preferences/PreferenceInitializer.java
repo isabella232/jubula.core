@@ -32,7 +32,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
     @Override
     public void initializeDefaultPreferences() {
         IEclipsePreferences preferenceNode = 
-            new DefaultScope().getNode(Activator.PLUGIN_ID);
+            DefaultScope.INSTANCE.getNode(Activator.PLUGIN_ID);
         preferenceNode.putInt(PREF_EMBEDDED_AGENT_PORT, 
                 DEFAULT_EMBEDDED_AGENT_PORT);
     }

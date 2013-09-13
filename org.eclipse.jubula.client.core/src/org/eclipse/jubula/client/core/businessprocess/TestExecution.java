@@ -765,7 +765,6 @@ public class TestExecution {
             m_currentCap = cap;
             ITestSuitePO ts = (ITestSuitePO)m_trav.getRoot();
             IAUTMainPO aut = ts.getAut();
-            IObjectMappingPO om = aut.getObjMap();
             Component comp = compSystem.findComponent(cap.getComponentType());
             // Find the component name. It may be overridden in one or
             // more ExecTestCase nodes.

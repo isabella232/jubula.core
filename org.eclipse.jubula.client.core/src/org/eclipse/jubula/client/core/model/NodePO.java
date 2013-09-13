@@ -71,7 +71,7 @@ import org.slf4j.LoggerFactory;
         InsertProgressListener.class, RemoveProgressListener.class })
 abstract class NodePO implements INodePO {
     /** the logger */
-    protected static final Logger LOG = LoggerFactory
+    private static final Logger LOG = LoggerFactory
             .getLogger(NodePO.class);
     
     /** Persistence (JPA / EclipseLink) OID */
@@ -230,7 +230,7 @@ abstract class NodePO implements INodePO {
         if (LOG.isErrorEnabled() && parent == null) {
             try {
                 throw new IllegalArgumentException(
-                        "The parent of the INodePO (GUID " + getGuid() 
+                        "The parent of the INodePO (GUID " + getGuid()  //$NON-NLS-1$
                             + ") is not intended to be set to null."); //$NON-NLS-1$
             } catch (IllegalArgumentException e) {
                 LOG.info(ExceptionUtils.getFullStackTrace(e), e);

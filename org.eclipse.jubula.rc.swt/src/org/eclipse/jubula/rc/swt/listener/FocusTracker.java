@@ -71,7 +71,7 @@ public class FocusTracker extends BaseSwtEventListener
             this.getClass().getClassLoader());
         try {
             if (log.isDebugEnabled()) {
-                log.debug("Event: ", event);
+                log.debug("Event: ", event); //$NON-NLS-1$
             }
             switch (event.type) {
                 case SWT.FocusIn:

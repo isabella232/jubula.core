@@ -12,7 +12,6 @@ package org.eclipse.jubula.toolkit.common;
 
 import java.util.Map;
 
-import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -21,8 +20,7 @@ import org.eclipse.swt.widgets.Composite;
 public abstract class AbstractToolkitProvider implements IToolKitProvider {
     /** {@inheritDoc} */
     public Composite getAutConfigDialog(Composite parent, int style,
-        Map<String, String> autConfig, String autName)
-        throws ToolkitPluginException {
+        Map<String, String> autConfig, String autName) {
         return null;
     }
 }

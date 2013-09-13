@@ -721,7 +721,7 @@ public class RecordActions {
             messageCap.addMessageParam(messageParam);
             
         }
-        if (StringUtils.isEmpty(id.getComponentName())) { //$NON-NLS-1$
+        if (StringUtils.isEmpty(id.getComponentName())) {
             messageCap.setLogicalName(logName);
             messageCap.sethasDefaultMapping(true);
         }

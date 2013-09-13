@@ -21,9 +21,6 @@ import org.eclipse.jubula.tools.registration.AutIdentifier;
  * @created 18.12.2007
  */
 public class StopAUTServerMessage extends Message {
-    /** Static version */
-    private static final double VERSION = 1.1;
-
     /** autId */
     private AutIdentifier m_autId;
 

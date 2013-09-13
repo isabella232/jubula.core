@@ -46,9 +46,6 @@ import org.eclipse.swt.widgets.Label;
  * @created 08.02.2005
  */
 public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
-    /** the default width */
-    private static final int DEFAULT_CONTROL_WIDTH = 500;
-
     /**
      * @author BREDEX GmbH
      */

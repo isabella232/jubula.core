@@ -91,9 +91,6 @@ public class StartAUTServerStateMessage extends Message {
     /** the constant used, when no reason is set */
     private static final int UNKNOWN = MAX_CONSTANT;
 
-    /** static version */
-    private static final double VERSION = 1.0;
-
     /** the reason */
     private int m_reason;
 

@@ -37,9 +37,6 @@ public class ServerShowDialogMessage extends Message {
     /** closes the checkmode dialog */
     public static final int ACT_CLOSE_CHECK_DIALOG = 4;
 
-    /** static version */
-    private static final double VERSION = 1.0;
-
     /** action/dialog that should be executed */
     private int m_action = 0;
 

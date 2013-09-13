@@ -29,7 +29,7 @@ public class NewViewInstanceHandler extends AbstractHandler {
     private static final String SECONDARY_ID_PREFIX = "instance_"; //$NON-NLS-1$
 
     /** {@inheritDoc} */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object execute(ExecutionEvent event) {
         IWorkbenchWindow activeWorkbenchWindow = HandlerUtil
                 .getActiveWorkbenchWindow(event);
 

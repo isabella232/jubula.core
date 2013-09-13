@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -188,7 +189,7 @@ public class WinAutConfigComponent extends AutConfigComponent {
     protected void populateBasicArea(Map<String, String> data) {
         super.populateBasicArea(data);
         // AUT type
-        int autTypeIndex = new Integer("0"
+        int autTypeIndex = new Integer("0" //$NON-NLS-1$
                 + StringUtils.defaultString(
                         data.get(AutConfigConstants.AUT_TYPE)));
         m_comboAutType.select(autTypeIndex);
@@ -397,7 +398,8 @@ public class WinAutConfigComponent extends AutConfigComponent {
             if (source.equals(m_comboAutType)) {
                 setVisibilityByAutTypeAndResize();
                 putConfigValue(AutConfigConstants.AUT_TYPE,
-                        "" + m_comboAutType.getSelectionIndex());
+                    StringConstants.EMPTY 
+                        + m_comboAutType.getSelectionIndex());
             } else if (source.equals(m_execTextField)
                     || source.equals(m_modernUiAppName)
                     || source.equals(m_autArgsTextField)) {

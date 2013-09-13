@@ -32,9 +32,6 @@ public class ServerLogResponseMessage extends Message {
     /** configuration problem */
     public static final int CONFIG_ERROR = 4;
 
-    /** Static version */
-    private static final double VERSION = 1.0;
-
     /** the server log contents */
     private String m_serverLog;
 

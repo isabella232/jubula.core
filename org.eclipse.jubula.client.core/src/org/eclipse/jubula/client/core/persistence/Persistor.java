@@ -215,7 +215,7 @@ public class Persistor {
                         message = MessageIDs.E_UNEXPECTED_EXCEPTION;
                     }
                     return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                            StringConstants.EMPTY, e);
+                        message.toString(), e);
                 } catch (JBException e) {
                     if (e.getErrorId().equals(MessageIDs.E_NO_DB_CONNECTION)) {
                         message = MessageIDs.E_NO_DB_CONNECTION;
@@ -224,7 +224,7 @@ public class Persistor {
                         message = MessageIDs.E_DB_IN_USE;
                     }
                     return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                            StringConstants.EMPTY, e);
+                        message.toString(), e);
                 }
             }
         };

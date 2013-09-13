@@ -24,5 +24,5 @@ Export-Package: com.thoughtworks.xstream,
  org.eclipse.jubula.tools.xml.businessmodell,
  org.eclipse.jubula.tools.xml.businessprocess
 Bundle-RequiredExecutionEnvironment: J2SE-1.4
-Require-Bundle: org.apache.commons.lang;bundle-version="2.4.0",
- org.slf4j.api;bundle-version="[1.5.11,2.0.0)"
+Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
+ org.slf4j.api;bundle-version="[1.7.2,2.0.0)"

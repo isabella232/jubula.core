@@ -106,7 +106,7 @@ public class ProjectUIBP {
                 LOG.error(e1.getLocalizedMessage(), e1);
             }
         } else {
-            LOG.error("Node not found");
+            LOG.error("Node not found"); //$NON-NLS-1$
         }
     }
     

@@ -249,19 +249,19 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     protected abstract String getServerClassName();
     
     /**
-     * @param cmds The command List. May <b>not</b> be <ocde>null</code>.
+     * @param cmds The command List. May <b>not</b> be <code>null</code>.
      * @param locale The <code>Locale</code> for the AUT. 
      *               May be <code>null</code> if no locale was specified.
      */
     protected void addLocale(List cmds, Locale locale) {
         if (locale != null) {
-            if (locale.getCountry() != null 
-                && locale.getCountry().length() > 0) {
-                cmds.add(JAVA_COUNTRY_PROPERTY + locale.getCountry());
+            String country = locale.getCountry();
+            if (country != null && country.length() > 0) {
+                cmds.add(JAVA_COUNTRY_PROPERTY + country);
             }
-            if (locale.getLanguage() != null 
-                && locale.getLanguage().length() > 0) {
-                cmds.add(JAVA_LANGUAGE_PROPERTY + locale.getLanguage());
+            String language = locale.getLanguage();
+            if (language != null && language.length() > 0) {
+                cmds.add(JAVA_LANGUAGE_PROPERTY + language);
             }
         }
     }

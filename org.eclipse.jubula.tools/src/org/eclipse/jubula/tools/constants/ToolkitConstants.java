@@ -15,12 +15,8 @@ package org.eclipse.jubula.tools.constants;
  * @created 20.04.2007
  */
 public interface ToolkitConstants {
-
     /** The ID of the Extension Point */
     public static final String EXT_POINT_ID = "org.eclipse.jubula.toolkit.common.toolkitsupport"; //$NON-NLS-1$
-    
-    /** The path to the ComponentConfiguration.xml */
-    public static final String COMP_CONFIG_PATH = "resources/xml/ComponentConfiguration.xml"; //$NON-NLS-1$
     
     /** The ID of this Plugin */
     public static final String PLUGIN_ID = "org.eclipse.jubula.toolkit.common"; //$NON-NLS-1$

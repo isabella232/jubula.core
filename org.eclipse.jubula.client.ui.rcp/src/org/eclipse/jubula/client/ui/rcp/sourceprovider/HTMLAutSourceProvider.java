@@ -32,16 +32,13 @@ import org.eclipse.ui.ISources;
  * 1. is it an HTML AuT
  * 2. the window count of the browser
  * @author BREDEX GmbH
- *
  */
 public class HTMLAutSourceProvider extends AbstractJBSourceProvider implements
         IOMAUTListener, IOMStateListener, IOMWindowsListener {
-
     /**
      * the id of this source provider
      */
     public static final String ID = "org.eclipse.jubula.client.ui.rcp.sourceprovider.HTMLAutSourceProvider"; //$NON-NLS-1$
-
     
     /** 
      * ID of variable that indicates whether the client is currently connected 
@@ -57,12 +54,9 @@ public class HTMLAutSourceProvider extends AbstractJBSourceProvider implements
     public static final String WINDOW_TITLES = 
         "org.eclipse.jubula.client.ui.rcp.variable.html.windowCount"; //$NON-NLS-1$
     
-    /** is it an HTML aut in OMM */
+    /** is it an HTML AUT in OMM */
     private boolean m_isHTMLAut = false;
     
-    /** last selected Window */
-    private String m_lastSelectedWindow = null;
-        
     /**
      * Constructor for adding listeners to the DataEventDispatcher
      */

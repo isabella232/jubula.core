@@ -19,9 +19,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 27.08.2004
  */
 public class ShowRecordedActionMessage extends Message {
-    /** Static version */
-    private static final double VERSION = 1.0;
-
     /** if the action is recorded */
     private boolean m_recorded;
 

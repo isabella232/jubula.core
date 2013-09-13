@@ -17,7 +17,6 @@ import java.util.ResourceBundle;
 import org.eclipse.jubula.toolkit.common.IToolKitProvider;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
-import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.swt.widgets.Composite;
 
 
@@ -42,8 +41,7 @@ public class SWTToolkitProvider implements IToolKitProvider {
 
     /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {
-        return ToolkitUtils.getURL(Activator.getDefault(), 
-            ToolkitConstants.COMP_CONFIG_PATH);
+        return ToolkitUtils.getURL(Activator.getDefault(), COMP_CONFIG_PATH);
     }
 
     /** {@inheritDoc} */

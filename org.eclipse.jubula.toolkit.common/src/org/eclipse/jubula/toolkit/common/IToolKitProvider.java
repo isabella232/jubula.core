@@ -22,6 +22,9 @@ import org.eclipse.swt.widgets.Composite;
  * @created 19.04.2007
  */
 public interface IToolKitProvider {
+    /** The default path to the ComponentConfiguration.xml */
+    public static final String COMP_CONFIG_PATH = "resources/xml/ComponentConfiguration.xml"; //$NON-NLS-1$
+    
     /**
      * @return the URL to the ComponentConfiguration.xml
      */

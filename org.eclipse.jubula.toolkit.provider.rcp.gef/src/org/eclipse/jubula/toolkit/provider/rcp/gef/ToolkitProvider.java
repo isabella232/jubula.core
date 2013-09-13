@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 
 import org.eclipse.jubula.toolkit.common.AbstractToolkitProvider;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
-import org.eclipse.jubula.tools.constants.ToolkitConstants;
 
 /**
  * @author BREDEX GmbH
@@ -28,8 +27,7 @@ public class ToolkitProvider extends AbstractToolkitProvider {
 
     /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {
-        return ToolkitUtils.getURL(Activator.getDefault(), 
-            ToolkitConstants.COMP_CONFIG_PATH);
+        return ToolkitUtils.getURL(Activator.getDefault(), COMP_CONFIG_PATH);
     }
 
     /** {@inheritDoc} */

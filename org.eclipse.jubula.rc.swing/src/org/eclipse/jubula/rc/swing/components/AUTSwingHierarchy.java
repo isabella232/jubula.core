@@ -90,7 +90,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
      * (de-)registered directly in the thread that handles Swing / AWT events
      */
     private static final String ENV_VAR_SYNC_REGISTER_LISTENERS = 
-        "JB_SYNC_REG_SWING_LISTENERS";
+        "JB_SYNC_REG_SWING_LISTENERS"; //$NON-NLS-1$
 
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(

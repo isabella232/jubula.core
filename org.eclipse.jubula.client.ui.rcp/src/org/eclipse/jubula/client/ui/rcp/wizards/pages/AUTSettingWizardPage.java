@@ -178,7 +178,7 @@ public class AUTSettingWizardPage extends WizardPage {
         descriptionLabel.setText(
                 Messages.AUTSettingWizardPageSelectLanguagesOfTD);
         ControlDecorator.decorateInfo(descriptionLabel, 
-                "ControlDecorator.NewProjectAUTLanguage", false);
+                "ControlDecorator.NewProjectAUTLanguage", false); //$NON-NLS-1$
         m_chooseLists = new ListElementChooserComposite(
             innerComposite, 
             Messages.AUTSettingWizardPageUpperLabel,
@@ -374,7 +374,7 @@ public class AUTSettingWizardPage extends WizardPage {
         newLabel(rightComposite, StringConstants.EMPTY);
         ControlDecorator.decorateInfo(newLabel(leftComposite, 
                 Messages.AUTSettingWizardPageToolkit), 
-                "ControlDecorator.NewProjectAUTToolkit", false);
+                "ControlDecorator.NewProjectAUTToolkit", false); //$NON-NLS-1$
         try {
             m_autToolKitComboBox = ControlFactory.createAutToolkitCombo(
                 rightComposite, m_project, m_autMain.getToolkit());

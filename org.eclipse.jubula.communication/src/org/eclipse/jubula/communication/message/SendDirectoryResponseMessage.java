@@ -36,9 +36,6 @@ public class SendDirectoryResponseMessage extends Message {
     /** state */
     public static final int IO_ERROR = 2;
 
-    /** static version */
-    private static final double VERSION = 1.0;
-
     /** m_base */
     private String m_base;
 

@@ -27,9 +27,6 @@ import org.eclipse.jubula.tools.xml.businessmodell.Profile;
  * @created 04.10.2004
  */
 public final class SendAUTListOfSupportedComponentsMessage extends Message {
-    /** static version */
-    private static final double VERSION = 1.0;
-
     // the data of this message BEGIN
     /** The list of supported components and their implementation classes. */
     private List m_components = new ArrayList();

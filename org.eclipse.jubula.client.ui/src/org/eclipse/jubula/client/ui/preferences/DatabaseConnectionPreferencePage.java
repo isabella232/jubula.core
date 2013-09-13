@@ -112,7 +112,7 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
      */
     public void init(IWorkbench workbench) {
         setPreferenceStore(new ScopedPreferenceStore(
-                new InstanceScope(), Activator.PLUGIN_ID));
+                InstanceScope.INSTANCE, Activator.PLUGIN_ID));
     }
 
     @Override
