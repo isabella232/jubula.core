@@ -6,7 +6,7 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 <project name="org.eclipse.jubula.client.core" default="generate">
-	<property name="src" value="src" />
+	<property name="src" value="src-gen" />
 
 	<property name="sablecc.dir" value="../org.eclipse.jubula.releng/lib/sablecc" />
 	<property name="parser.grammar.def" value="${sablecc.dir}/parameter.sable" />

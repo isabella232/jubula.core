@@ -372,13 +372,10 @@ class ExecTestCasePO extends TestCasePO implements
      * @return the DataManager of this ExecTestCase even if getHasReferencedID()
      * returns true. 
      */
-    @SuppressWarnings("unused")
     @Transient
     private ITDManager getOwnDataManager() {
         return super.getDataManager();
     }
-    
-
 
     /**
      * Sets the data manager and changes the <code>hasReferencedTD</code> flag

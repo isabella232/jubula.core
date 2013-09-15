@@ -3,10 +3,10 @@
 <fileset-config file-format-version="1.2.0" simple-config="false" sync-formatter="false">
   <fileset name="all" enabled="true" check-config-name="Jubula" local="false">
     <file-match-pattern match-pattern=".java$" include-pattern="true"/>
-    <file-match-pattern match-pattern="gen-src/*" include-pattern="false"/>
+    <file-match-pattern match-pattern="src-gen/*" include-pattern="false"/>
   </fileset>
   <filter name="FilesFromPackage" enabled="true">
-    <filter-data value="src/org/eclipse/jubula/client/core/gen"/>
+    <filter-data value="src-gen/"/>
     <filter-data value="src/org/eclipse/jubula/client/core/i18n"/>
     <filter-data value="src/org/eclipse/jubula/client/core/test"/>
   </filter>
