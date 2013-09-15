@@ -13,6 +13,7 @@
 	<property name="sablecc.jar" value="${sablecc.dir}/sablecc.jar" />
 
 	<target name="generate">
+	    <mkdir dir="${src}"/>
 		<java jar="${sablecc.jar}" fork="true" failonerror="true">
 			<arg value="-d" />
 			<arg value="${src}" />
