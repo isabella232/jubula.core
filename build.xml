@@ -6,20 +6,52 @@
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
  -->
-<project name="Jubula" default="cleanBuild">
+<project name="Jubula" default="cleanBuild-allComponents">
     <description>
-            main releng build script
+        main Jubula releng build script
     </description>
 
-    <!-- ================================= 
-          target: cleanBuild              
-         ================================= -->
-    <target name="cleanBuild">
-        <exec dir="org.eclipse.jubula.releng" executable="mvn">
+    <target name="cleanBuild-allComponents">
+        <antcall target="cleanBuild-dashboard" />
+        <antcall target="cleanBuild-ite" />
+    </target>
+
+    <target name="cleanBuild-ite" description="Clean build for the ITE feature">
+        <antcall target="cleanBuild-template">
+            <param name="buildBaseDir" value="org.eclipse.jubula.releng" />
+        </antcall>
+    </target>
+
+    <target name="cleanBuild-dashboard" description="Clean build for the dashboard product">
+        <!-- dynamically / temporarily remove external (optional) dependencies -->
+        <property name="dashboardProductLocation" value="org.eclipse.jubula.product.dashboard/org.eclipse.jubula.product.dashboard.product" />
+        <copy file="${dashboardProductLocation}" tofile="${dashboardProductLocation}.tmp" overwrite="yes">
+            <filterchain>
+                <linecontains negate="true">
+                    <contains value="com.bredexsw" />
+                </linecontains>
+            </filterchain>
+        </copy>
+        <move tofile="${dashboardProductLocation}" file="${dashboardProductLocation}.tmp" overwrite="yes" />
+
+        <antcall target="cleanBuild-template">
+            <param name="buildBaseDir" value="org.eclipse.jubula.releng.dashboard" />
+        </antcall>
+
+        <!-- revert the dynamically / temporarily remove external (optional) dependencies -->
+        <exec dir="${basedir}" executable="git">
+            <arg value="checkout" />
+            <arg value="${dashboardProductLocation}" />
+        </exec>
+    </target>
+
+    <target name="cleanBuild-template">
+        <exec dir="${buildBaseDir}" executable="mvn">
             <env key="MAVEN_OPTS" value="-Xmx512m" />
-            <arg value="clean"/>
-            <arg value="verify"/>
-            <arg value="-q"/>
+            <arg value="clean" />
+            <arg value="verify" />
+            <arg value="-q" />
+            <arg value="-V" />
         </exec>
     </target>
 
