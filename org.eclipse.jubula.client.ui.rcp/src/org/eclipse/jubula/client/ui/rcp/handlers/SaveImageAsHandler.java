@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.TestResultNode;
@@ -66,8 +67,11 @@ public class SaveImageAsHandler extends AbstractSelectionBasedHandler {
             fileName = fileName.replaceAll("[\\s\\?\\\\/:|<>\\*\"]", ""); //$NON-NLS-1$ //$NON-NLS-2$
 
             String fileEnding = "_" + date + ".png"; //$NON-NLS-1$ //$NON-NLS-2$
-            fileName = fileName.substring(0, MAX_FILE_NAME_LENGTH
-                            - fileEnding.length()) + fileEnding;
+            fileName = StringUtils.substring(fileName, 0,
+                    MAX_FILE_NAME_LENGTH
+                    - fileEnding.length()
+                    - saveDialog.getFilterPath().length());
+            fileName = fileName + fileEnding;
             saveDialog.setFileName(fileName);
             saveDialog.setFilterExtensions(new String[] { "*.png" }); //$NON-NLS-1$
             saveDialog.setOverwrite(true);
