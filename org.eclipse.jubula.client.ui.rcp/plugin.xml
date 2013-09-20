@@ -2787,6 +2787,28 @@
           </iterate>
        </enabledWhen>
     </handler>
+    <handler
+          class="org.eclipse.jubula.client.ui.rcp.handlers.GoToNextTestResultErrorHandler"
+          commandId="org.eclipse.jubula.client.ui.commands.GoToNextError">
+       <activeWhen>
+          <with
+                variable="activePartId">
+             <equals
+                   value="org.eclipse.jubula.client.ui.rcp.views.TestResultTreeView">
+             </equals>
+          </with></activeWhen>
+    </handler>
+    <handler
+          class="org.eclipse.jubula.client.ui.rcp.handlers.GoToPreviousTestResultErrorHandler"
+          commandId="org.eclipse.jubula.client.ui.commands.GoToPreviousError">
+       <activeWhen>
+          <with
+                variable="activePartId">
+             <equals
+                   value="org.eclipse.jubula.client.ui.rcp.views.TestResultTreeView">
+             </equals>
+          </with></activeWhen>
+    </handler>
   </extension>
   <extension point="org.eclipse.ui.commandImages">
     <image
@@ -3923,5 +3945,46 @@
       <description> %databaseConnectionsTransferDescription
       </description>
     </transfer>
+  </extension>
+  <extension
+        point="org.eclipse.core.expressions.definitions">
+      <!-- The following expressions containing "distinct" are client.ui.rcp specific - 
+      Other plugins define the same ID with another expression --> 
+     <definition
+           id="org.eclipse.jubula.client.ui.reference.distinct.visibleWhen.TestResultToolbar">
+        <or>
+           <with
+                 variable="activeEditorId">
+              <equals
+                    value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
+              </equals>
+           </with>
+           <with
+                 variable="activePartId">
+              <equals
+                    value="org.eclipse.jubula.client.ui.rcp.views.TestResultTreeView">
+              </equals>
+           </with>
+        </or>
+     </definition>
+     <definition
+           id="org.eclipse.jubula.client.ui.reference.distinct.activeWhen.GoToTestResultError">
+        <and>
+           <with
+                 variable="activeEditorId">
+              <equals
+                    value="org.eclipse.jubula.client.ui.editors.TestResultViewer">
+              </equals>
+           </with>
+           <not>
+              <with
+                    variable="activePartId">
+                 <equals
+                       value="org.eclipse.jubula.client.ui.rcp.views.TestResultTreeView">
+                 </equals>
+              </with>
+           </not>
+        </and>
+     </definition>
   </extension>
 </plugin>
