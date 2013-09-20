@@ -120,6 +120,10 @@
         commandId="org.eclipse.jubula.client.ui.commands.ExportTestResults"
         icon="icons/exportTestResults.gif">
   </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.SaveImageAs"
+        icon="icons/saveAsNew.gif">
+  </image>
     </extension>
     <extension point="org.eclipse.core.expressions.propertyTesters">
     	    <propertyTester
@@ -253,6 +257,11 @@
           id="org.eclipse.jubula.client.ui.commands.ExportTestResults"
           name="%ExportTestResultsCommandName">
     </command>
+    <command
+		    categoryId="org.eclipse.jubula.client.ui.commands"
+		    id="org.eclipse.jubula.client.ui.commands.SaveImageAs"
+		    name="%SaveImageAs">
+	</command>
     </extension>
     <extension
           point="org.eclipse.ui.preferencePages">

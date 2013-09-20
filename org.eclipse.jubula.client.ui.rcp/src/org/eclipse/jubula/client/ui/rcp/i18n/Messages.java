@@ -248,6 +248,7 @@ public class Messages extends NLS {
     public static String ErrorMessageCantReadProject;
     public static String ErrorMessageEDITOR_CLOSE;
     public static String ErrorMessageFILE_NOT_FOUND;
+    public static String ErrorMessageFILE_NO_PERMISSION;
     public static String ErrorMessageIO_EXCEPTION;
     public static String ErrorMessageVERSION_ERROR;
     public static String ErrorOccurredDuringImport;
