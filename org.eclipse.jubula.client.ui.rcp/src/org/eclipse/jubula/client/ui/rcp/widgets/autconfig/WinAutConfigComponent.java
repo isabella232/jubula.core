@@ -232,7 +232,8 @@ public class WinAutConfigComponent extends AutConfigComponent {
 
         WidgetSelectionListener selectionListener = getSelectionListener();
         WidgetModifyListener modifyListener = getModifyListener();
-
+        
+        getServerCombo().addModifyListener(modifyListener);        
         m_execButton.addSelectionListener(selectionListener);
         m_execTextField.addModifyListener(modifyListener);
         m_autArgsTextField.addModifyListener(modifyListener);
