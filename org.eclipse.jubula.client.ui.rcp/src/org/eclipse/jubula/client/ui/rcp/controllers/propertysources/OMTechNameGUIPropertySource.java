@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
@@ -102,6 +103,33 @@ public class OMTechNameGUIPropertySource
         
         initHierarchy();
         initContext();
+        initComponentProperties();
+    }
+    
+    /**
+     * initializes the ComponentProperties
+     *
+     */
+    @SuppressWarnings("unchecked")
+    private void initComponentProperties() {
+        IComponentIdentifier compId = getGuiNode().getCompIdentifier();
+        if (compId != null) {
+            Map<String, String> componentProperties = 
+                    compId.getComponentPropertiesMap();
+            if (componentProperties != null) {
+                int i = 0;
+                for (Object o : componentProperties.keySet()) {
+                    if (o instanceof String) {
+                        String key = (String)o;
+                        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
+                                new ComponentPropertiesController(i), key);
+                        propDes.setCategory("Property Information"); //$NON-NLS-1$
+                        addPropertyDescriptor(propDes);
+                        i++;
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -363,6 +391,64 @@ public class OMTechNameGUIPropertySource
                     List context = new ArrayList(compId.getNeighbours());
                     Collections.sort(context);
                     return context.get(m_index);
+                }
+            }
+            return StringConstants.EMPTY;
+        }  
+        
+        
+        /**
+         * {@inheritDoc}
+         */
+        public Image getImage() {
+            return DEFAULT_IMAGE;
+        }
+    }
+    
+    /**
+     * Class to control ComponentPropertiesMap.
+     *
+     * @author BREDEX GmbH
+     * @created 02.10.2013
+     */
+    private class ComponentPropertiesController extends
+        AbstractPropertyController {
+        
+        /** 
+         * index of array
+         */
+        private int m_index = 0;
+        
+        /**
+         * constructor
+         * 
+         * @param i
+         *      int
+         */
+        public ComponentPropertiesController(int i) {
+            m_index = i;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public boolean setProperty(Object value) {
+            return true;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        @SuppressWarnings("unchecked")
+        public Object getProperty() {
+            IComponentIdentifier compId = getGuiNode().getCompIdentifier();
+            if (compId != null) {
+                Map<String, String> componentProperties = 
+                        compId.getComponentPropertiesMap();
+                if (componentProperties != null) {
+                    List values = 
+                            new ArrayList<String>(componentProperties.values());
+                    return values.get(m_index);
                 }
             }
             return StringConstants.EMPTY;

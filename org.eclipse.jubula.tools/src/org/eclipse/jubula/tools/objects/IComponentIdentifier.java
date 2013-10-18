@@ -11,6 +11,7 @@
 package org.eclipse.jubula.tools.objects;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author BREDEX GmbH
@@ -147,4 +148,14 @@ public interface IComponentIdentifier {
      * @param equalOriginalFound the equalOriginalFound to set
      */
     public void setEqualOriginalFound(boolean equalOriginalFound);
+    
+    /**
+     * @return the keyValueProperties
+     */
+    public Map getComponentPropertiesMap();
+
+    /**
+     * @param keyValueProperties the keyValueProperties to set
+     */
+    public void setComponentPropertiesMap(Map keyValueProperties);
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -96,6 +97,13 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
      * be used to retrieve the original component on collection
      */
     private boolean m_equalOriginalFound = false;
+    
+    /**
+     * Map for storing additional properties of a component
+     * the key represents the name of the property
+     * the value is only represented by its first 200 characters
+     */
+    private Map m_componentProperties;
     
     /**
      * public constructor <br>
@@ -376,5 +384,15 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
     /** {@inheritDoc} */
     public boolean isEqualOriginalFound() {
         return m_equalOriginalFound;
+    }
+    
+    /** {@inheritDoc} */
+    public Map getComponentPropertiesMap() {
+        return m_componentProperties;
+    }
+
+    /** {@inheritDoc} */
+    public void setComponentPropertiesMap(Map componentProperties) {
+        m_componentProperties = componentProperties;
     }
 }

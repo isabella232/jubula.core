@@ -10,10 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.listener;
 
+import java.util.Map;
 import org.eclipse.jubula.communication.message.ObjectMappedMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
+import org.eclipse.jubula.rc.common.util.PropertyUtil;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
@@ -109,13 +111,15 @@ public class MappingListener extends AbstractAutSwtEventListener {
             try {
                 IComponentIdentifier id = ComponentHandler.getIdentifier(
                     currComp);
+                Map componentProperties = PropertyUtil
+                        .getMapOfComponentProperties(currComp);
+                id.setComponentPropertiesMap(componentProperties);
                 if (LOG.isInfoEnabled()) {
                     LOG.info("send a message with identifier " //$NON-NLS-1$
                             + "for the component '" + id //$NON-NLS-1$ 
                             + "'"); //$NON-NLS-1$
                 }
-                // send a message with the identifier 
-                // of the selected component
+                // send a message with the identifier of the selected component
                 ObjectMappedMessage message = new ObjectMappedMessage();
                 message.setComponentIdentifier(id);
                 AUTServer.getInstance().getCommunicator().send(message);

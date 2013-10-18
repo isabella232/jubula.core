@@ -19,6 +19,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.PaintEvent;
 import java.awt.event.WindowEvent;
+import java.util.Map;
 
 import javax.swing.JList;
 import javax.swing.plaf.basic.ComboPopup;
@@ -30,6 +31,7 @@ import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.util.PropertyUtil;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
@@ -198,13 +200,18 @@ public class MappingListener extends AbstractAutSwingEventListener {
         }
         synchronized (getComponentLock()) {
             // is a component selected? AND the right keys pressed?
-            if (getCurrentComponent() != null 
+            Component bean = getCurrentComponent();
+            if (bean != null 
                     && getAcceptor().accept(event) == KeyAcceptor
                         .MAPPING_KEY_COMB) {
                 
                 IComponentIdentifier id;
                 try {
-                    id = ComponentHandler.getIdentifier(getCurrentComponent());
+                    id = ComponentHandler.getIdentifier(bean);
+                    Map componentProperties = PropertyUtil
+                            .getMapOfComponentProperties(bean);
+                    id.setComponentPropertiesMap(componentProperties);
+                    
                     if (log.isInfoEnabled()) {
                         log.info("send a message with identifier for the component '"  //$NON-NLS-1$
                             + id + "'"); //$NON-NLS-1$
@@ -215,11 +222,10 @@ public class MappingListener extends AbstractAutSwingEventListener {
                     AUTServer.getInstance().getCommunicator().send(message);
                 } catch (NoIdentifierForComponentException nifce) {
                     // no identifier for the component, log this as an error
-                    log.error("no identifier for '" + getCurrentComponent()); //$NON-NLS-1$
+                    log.error("no identifier for '" + bean); //$NON-NLS-1$
                 } catch (CommunicationException ce) {
                     log.error(ce);
-                    // do nothing here: a closed connection is handled by the
-                    // AUTServer
+                    // do nothing here: a closed connection is handled by the AUTServer 
                 }
             }
         }
