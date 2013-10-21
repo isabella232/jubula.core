@@ -102,13 +102,12 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     
     /** The color for disabled elements */
     private static final Color DISABLED_COLOR = LayoutUtil.GRAY_COLOR;
+    
     /** The color for reusedProjects */
-    private static final Color REUSED_PROJECTS_COLOR = Display.getDefault()
-            .getSystemColor(SWT.COLOR_BLUE);
+    private static Color reusedProjectsColor = null;
     
     /** clipboard */
-    private static Clipboard clipboard = new Clipboard(PlatformUI
-            .getWorkbench().getActiveWorkbenchWindow().getShell().getDisplay());
+    private static Clipboard clipboard = null;
 
     /** {@inheritDoc} */
     public void dispose() {
@@ -131,7 +130,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         }
         
         // elements that have been "cut" to the clipboard should be grayscale
-        Object cbContents = clipboard.getContents(
+        Object cbContents = getClipboard().getContents(
                 LocalSelectionClipboardTransfer.getInstance());
         if (cbContents instanceof IStructuredSelection) {
             IStructuredSelection sel = (IStructuredSelection)cbContents;
@@ -143,6 +142,18 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         return image;
     }
     
+    /**
+     * returns the clipboard after creating it if necessary
+     * @return the clipboard
+     */
+    private Clipboard getClipboard() {
+        if (clipboard == null) {
+            clipboard = new Clipboard(PlatformUI.getWorkbench()
+                    .getActiveWorkbenchWindow().getShell().getDisplay());
+        }
+        return clipboard;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -332,12 +343,24 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         if (element instanceof IReusedProjectPO
                 || (element instanceof INodePO 
                 && !NodeBP.isEditable((INodePO)element))) {
-            return REUSED_PROJECTS_COLOR;
+            return getReusedProjectsColor();
         }
 
         return null;
     }
     
+    /**
+     * returns the color of a reused project after creating it if necessary
+     * @return the color of a reused project
+     */
+    private Color getReusedProjectsColor() {
+        if (reusedProjectsColor == null) {
+            reusedProjectsColor = Display.getDefault()
+                    .getSystemColor(SWT.COLOR_BLUE);
+        }
+        return reusedProjectsColor;
+    }
+
     /**
      * 
      * @param testStep The Test Step to examine.
