@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2013 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,86 +10,69 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.search.query;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.IReusedProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.JBException;
 
 
 /**
  * @author BREDEX GmbH
- * @created Jul 27, 2010
+ * @created 18.10.2013
  */
-public class ShowWhereUsedSpecTcQuery 
+public class ShowWhereUsedTestSuiteQuery
     extends AbstractShowWhereUsedQuery {
     /**
      * <code>m_specTC</code>
      */
-    private ISpecTestCasePO m_specTC;
+    private ITestSuitePO m_testSuite;
 
     /**
-     * @param specTC
-     *            the spec tc to search the reuse for
+     * @param testSuite
+     *            the test suite to search the reuse for
      */
-    public ShowWhereUsedSpecTcQuery(ISpecTestCasePO specTC) {
+    public ShowWhereUsedTestSuiteQuery(ITestSuitePO testSuite) {
         super(null);
-        m_specTC = specTC;
+        m_testSuite = testSuite;
     }
 
     /**
      * {@inheritDoc}
      */
     public IStatus run(IProgressMonitor monitor) {
-        calculateReuseOfSpecTestCase(m_specTC, monitor);
+        calculateReuseOfTestSuite(m_testSuite, monitor);
         return Status.OK_STATUS;
     }
-    
+
     /**
-     * calculates and show the places of reuse for a spectestcase
-     * 
-     * @param specTC
-     *            ISpecTestCasePO
+     * calculates and show the places of reuse for a test suite
+     *
+     * @param testSuite
+     *            the test suite
      * @param monitor
      *            the progress monitor
      */
-    private void calculateReuseOfSpecTestCase(ISpecTestCasePO specTC,
+    private void calculateReuseOfTestSuite(ITestSuitePO testSuite,
             IProgressMonitor monitor) {
         IProjectPO currentProject = GeneralStorage.getInstance().getProject();
-        List<Long> parentProjectIDs = new LinkedList<Long>();
-        parentProjectIDs.add(currentProject.getId());
-        for (IReusedProjectPO rp : currentProject.getUsedProjects()) {
-            try {
-                Long projID = ProjectPM.findProjectId(rp.getProjectGuid(), rp
-                        .getMajorNumber(), rp.getMinorNumber());
-                if (projID != null) {
-                    parentProjectIDs.add(projID);
-                }
-            } catch (JBException e) {
-                // ignore
-            }
-        }
-        List<IExecTestCasePO> reuseList =
-                NodePM.getExecTestCases(specTC.getGuid(), parentProjectIDs);
+        List<IRefTestSuitePO> reuseList = NodePM.getInternalRefTestSuites(
+                testSuite.getGuid(), currentProject.getId());
         INodePO[] reuse = new INodePO[reuseList.size()];
         reuseList.toArray(reuse);
-        monitor.beginTask("Searching for reusage of Test Case", reuseList.size()); //$NON-NLS-1$
+        monitor.beginTask("Searching for reusage of Test Suite", reuseList.size()); //$NON-NLS-1$
         final List<SearchResultElement> reuseLoc = getResultElementsFromNodes(
                 monitor, reuse);
-        
+
         setSearchResult(reuseLoc);
         monitor.done();
     }
@@ -103,11 +86,11 @@ public class ShowWhereUsedSpecTcQuery
         sb.append(getTimestamp());
         sb.append(StringConstants.COLON);
         sb.append(StringConstants.SPACE);
-        sb.append(Messages.UIJobSearchingTestCases);
+        sb.append(Messages.UIJobSearchingTestSuites);
         sb.append(" \"");
-        sb.append(m_specTC.getName());
+        sb.append(m_testSuite.getName());
         sb.append("\"");
         return sb.toString();
     }
-    
+
 }

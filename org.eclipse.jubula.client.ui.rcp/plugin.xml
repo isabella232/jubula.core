@@ -1751,6 +1751,10 @@
              style="push">
        </command>
        <command
+             commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowWhereUsed"
+             style="push">
+       </command>
+       <command
              commandId="org.eclipse.jubula.client.ui.commands.ExpandTreeItem"
              style="push">
        </command>
@@ -2337,6 +2341,20 @@
             ifEmpty="false"
             operator="and">
             <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
+          </iterate>
+        </and>
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.showwhereused.TestSuiteShowWhereUsedHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowWhereUsed">
+      <activeWhen>
+        <and>
+          <count value="1" />
+          <iterate
+            ifEmpty="false"
+            operator="and">
+            <instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
           </iterate>
         </and>
       </activeWhen>

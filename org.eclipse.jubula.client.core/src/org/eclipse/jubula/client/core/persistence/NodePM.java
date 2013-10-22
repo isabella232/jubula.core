@@ -548,7 +548,7 @@ public class NodePM extends PersistenceManager {
      * doesn't know the parent.
      * 
      * @param tsGuid
-     *            GUID of the test case being reused.
+     *            GUID of the test suite being reused.
      * @param parentProjectId
      *            ID of the parent project of the test case being reused.
      * @return all ref test suites that reference the test suite with the given
@@ -572,7 +572,7 @@ public class NodePM extends PersistenceManager {
     /**
      * 
      * @param tsGuid The GUID of the reused test suite.
-     * @param parentProjectIds All returned test cases will have one of these as
+     * @param parentProjectIds All returned test suites will have one of these as
      *                         their project parent ID.
      * @param s The session into which the test cases will be loaded.
      * @return list of test suites.
@@ -592,8 +592,8 @@ public class NodePM extends PersistenceManager {
         queryBuffer.append(")"); //$NON-NLS-1$
         Query q = s.createQuery(queryBuffer.toString());
         q.setParameter("tsGuid", tsGuid); //$NON-NLS-1$
-        List<IRefTestSuitePO> execTcList = q.getResultList();
-        return execTcList;
+        List<IRefTestSuitePO> refTestSuiteList = q.getResultList();
+        return refTestSuiteList;
     }
 
     /**

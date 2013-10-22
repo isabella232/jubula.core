@@ -844,6 +844,7 @@ public class Messages extends NLS {
     public static String UIJobSearchingResponsibleCompNames;
     public static String UIJobSearchingTestCases;
     public static String UIJobSearchingTestDataCube;
+    public static String UIJobSearchingTestSuites;
     public static String UIJobStartTestJob;
     public static String UnexpectedDialogReturnCode;
     public static String UnexpectedError;
