@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.widgets.autconfig;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -119,7 +120,7 @@ public class WinAutConfigComponent extends AutConfigComponent {
         m_execButton.setEnabled(Utils.isLocalhost());
 
         // parameter editor
-        ControlDecorator.decorateInfo(UIComponentHelper.createLabel(
+        ControlDecorator.createInfo(UIComponentHelper.createLabel(
                 basicAreaComposite, "AUTConfigComponent.autArguments"), //$NON-NLS-1$
                 "ControlDecorator.AUTArguments", false); //$NON-NLS-1$
         m_autArgsTextField =
@@ -248,6 +249,7 @@ public class WinAutConfigComponent extends AutConfigComponent {
         WidgetSelectionListener selectionListener = getSelectionListener();
         WidgetModifyListener modifyListener = getModifyListener();
 
+        getServerCombo().removeModifyListener(modifyListener);
         m_execButton.removeSelectionListener(selectionListener);
         m_execTextField.removeModifyListener(modifyListener);
         m_autArgsTextField.removeModifyListener(modifyListener);
