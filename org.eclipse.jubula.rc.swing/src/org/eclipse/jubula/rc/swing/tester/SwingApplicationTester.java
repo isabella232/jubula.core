@@ -172,21 +172,21 @@ public class SwingApplicationTester extends AbstractApplicationTester {
          * {@inheritDoc}
          */
         public boolean isTrue(AWTEvent event) {
-            if (event.getID() != WindowEvent.WINDOW_CLOSED
-                && event.getID() != ComponentEvent.COMPONENT_HIDDEN) {
-                return false;
+            if (event.getID() == WindowEvent.WINDOW_LOST_FOCUS) {
+                String name = null;
+                if (event.getSource() instanceof Frame) {
+                    Frame frame = (Frame)event.getSource();
+                    name = frame.getTitle();
+                } else if (event.getSource() instanceof Dialog) {
+                    Dialog dialog = (Dialog)event.getSource();
+                    name = dialog.getTitle();
+                } else {
+                    // Window found, but we currently do not support it, because it has no title
+                    return false;
+                }
+                return MatchUtil.getInstance().match(name, m_title, m_operator);
             }
-            if (event.getSource() instanceof Frame) {
-                Frame frame = (Frame)event.getSource();
-                return MatchUtil.getInstance().match(
-                    frame.getTitle(), m_title, m_operator);
-            } else if (event.getSource() instanceof Dialog) {
-                Dialog dialog = (Dialog)event.getSource();
-                return MatchUtil.getInstance().match(
-                    dialog.getTitle(), m_title, m_operator);
-            } else {
-                return false;
-            }
+            return false;
         }
     }
 
