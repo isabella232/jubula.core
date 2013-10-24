@@ -883,15 +883,19 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     /**
      * Sets the EventHandler properties.
      * @param eventHandler the EventHandlerTc
+     * @param refName the referenced name of EventHandler
      * @param eventType the event type
      * @param reentryType the reentry type
      * @param maxRetries the maximum number of retries
      */
     void setEventHandlerProperties(
         IEventExecTestCasePO eventHandler,
-        String eventType, String reentryType, 
+        String refName, String eventType,
+        String reentryType,
         Integer maxRetries) {
         
+        eventHandler.setName(refName);
+
         eventHandler.setEventType(eventType);
         ReentryProperty[] reentryProps = ReentryProperty.REENTRY_PROP_ARRAY;
         for (int i = 0; i < reentryProps.length; i++) {

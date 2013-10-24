@@ -27,9 +27,11 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -66,14 +68,21 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
     /** width hint = 300 */
     private static final int WIDTH_HINT = 300;
 
+    /** maximum length of input */
+    private int m_maxLength = 255;
+
     /** the parent area/composite */
     private Composite m_area = null;
+
+    /** TextFieled for reference name */
+    private Text m_refNameField;
     
     /** ComboBox for event types */
     private Combo m_eventTypesCombo;
     
     /** ComboBox for reentry types */
     private Combo m_reentryTypesCombo;
+
     /** The depending EventTestCase */
     private final IEventHandlerContainer m_eventHandlerContainer;
 
@@ -184,9 +193,19 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
         nameText.setLayoutData(eventNameGridData);
         nameText.setText(m_tcName);
         nameText.setEnabled(false);
-        
+
+        // create an editable text field for the referenced name of the event
+        // handler
+        Label eventRefNameLabel = new Label(parent, SWT.NONE);
+        eventRefNameLabel.setText(Messages.AddEventHandlerDialogRefNameLabel);
+        m_refNameField = new Text(parent, SWT.FILL | SWT.BORDER);
+        GridData eventRefNameGridData = new GridData(SWT.FILL, SWT.NONE, true,
+                false);
+        m_refNameField.setLayoutData(eventRefNameGridData);
+        m_refNameField.setTextLimit(m_maxLength);
+
         Collection<IEventExecTestCasePO> eventTcList = m_eventHandlerContainer
-            .getAllEventEventExecTC();
+                .getAllEventEventExecTC();
         // get a List of used event types in this TestCase.
         List<String> existentEventTypes = new ArrayList<String>();
         for (IEventExecTestCasePO eventTc : eventTcList) {
@@ -196,31 +215,29 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
         Label eventTypeLabel = new Label(parent, SWT.NONE);
         eventTypeLabel.setText(Messages.AddEventHandlerDialogEventType);
         m_eventTypesCombo = new Combo(parent, SWT.FILL | SWT.READ_ONLY);
-        GridData eventGridData = 
-            new GridData(SWT.FILL, SWT.NONE, true, false);
+        GridData eventGridData = new GridData(SWT.FILL, SWT.NONE, true, false);
         m_eventTypesCombo.setLayoutData(eventGridData);
-        
+
         Set<String> mapKeySet = ComponentBuilder.getInstance().getCompSystem()
-            .getEventTypes().keySet(); 
+                .getEventTypes().keySet();
         List<String> selectableEventTypes = new ArrayList<String>();
         final Map<String, String> stringHelperMap = StringHelper.getInstance()
-            .getMap();
+                .getMap();
         for (String eventTypeKey : mapKeySet) {
             if (!existentEventTypes.contains(eventTypeKey)) {
                 selectableEventTypes.add(stringHelperMap.get(eventTypeKey));
             }
         }
         m_eventTypesCombo.setItems(selectableEventTypes
-            .toArray(new String[selectableEventTypes.size()]));
+                .toArray(new String[selectableEventTypes.size()]));
         // create Combo with reentry types
         Label reentryTypeLabel = new Label(parent, SWT.NONE);
         reentryTypeLabel.setText(Messages.AddEventHandlerDialogReentryType);
         m_reentryTypesCombo = new Combo(parent, SWT.FILL | SWT.READ_ONLY);
-        GridData reentryGridData = 
-            new GridData(SWT.FILL, SWT.NONE, true, false);
+        GridData reentryGridData = new GridData(SWT.FILL,
+                SWT.NONE, true, false);
         m_reentryTypesCombo.setLayoutData(reentryGridData);
-        ReentryProperty[] reentryProps = 
-            ReentryProperty.REENTRY_PROP_ARRAY;
+        ReentryProperty[] reentryProps = ReentryProperty.REENTRY_PROP_ARRAY;
         String[] reentryStrings = new String[reentryProps.length];
         for (int k = 0; k < reentryProps.length; k++) {
             reentryStrings[k] = reentryProps[k].toString();
@@ -231,6 +248,7 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
             public void widgetDefaultSelected(SelectionEvent e) {
                 // Do nothing
             }
+
             public void widgetSelected(SelectionEvent e) {
                 setMaxRetriesVisibility();
             }
@@ -303,7 +321,8 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
     private void notifyListener() {
         Iterator<Listener> iter = m_listenerList.iterator();
         while (iter.hasNext()) {
-            iter.next().notifySelected(m_eventTypesCombo.getText(),
+            iter.next().notifySelected(m_refNameField.getText(),
+                m_eventTypesCombo.getText(),
                 m_reentryTypesCombo.getText(),
                 m_maxRetriesText.isVisible() 
                     ? m_maxRetriesText.getSelection() : null);
@@ -317,30 +336,52 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
         notifyListener();
         super.okPressed();
     }
-    
+
+    /**
+     * @return false, if the reference name field contains an error: the name starts or
+     *         end with a blank
+     */
+    private boolean checkRefNameFieldAction() {
+        int nameLength = m_refNameField.getText().length();
+
+        if (nameLength > 0) {
+            if (nameLength >= m_maxLength) {
+                ErrorHandlingUtil.createMessageDialog(MessageIDs.W_MAX_CHAR,
+                        new Object[] { m_maxLength }, null);
+                setErrorMessage(Messages.
+                        AddEventHandlerDialogIncorrectRefNameInput);
+                return false;
+            }
+            String refName = m_refNameField.getText();
+            if (refName.startsWith(StringConstants.SPACE)
+                    || refName.endsWith(StringConstants.SPACE)) {
+                setErrorMessage(Messages.
+                        AddEventHandlerDialogIncorrectRefNameInput);
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * @return True, if something was selected in this combo box.
      */
-    private boolean modifyEventTypeComboAction() {
+    private boolean checkEventTypeComboAction() {
         if (m_eventTypesCombo.getText() == StringConstants.EMPTY) {
             setErrorMessage(Messages.AddEventHandlerDialogNoEventTypeSel);
-            enableOKButton(false);
             return false;
         }
-        enableOKButton(true);
         return true;
     }
     
     /**
      * @return True, if something was selected in this combo box.
      */
-    private boolean modifyReentryTypeComboAction() {
+    private boolean checkReentryTypeComboAction() {
         if (m_reentryTypesCombo.getText() == StringConstants.EMPTY) {
             setErrorMessage(Messages.AddEventHandlerDialogNoReentryTypeSel);
-            enableOKButton(false);
             return false;
         }
-        enableOKButton(true);
         return true;
     }
     
@@ -375,11 +416,12 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
         
         /**
          * Notifies about the selections.
+         * @param refName of EventHandler.
          * @param eventType the selected event Type.
          * @param reentryType the selected reentryType.
          * @param maxRetries the maximum number of retries
          */
-        public abstract void notifySelected(
+        public abstract void notifySelected(String refName,
             String eventType, String reentryType, 
             Integer maxRetries);
     }
@@ -391,8 +433,9 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
         WidgetModifyListener listener = new WidgetModifyListener();
         m_eventTypesCombo.addModifyListener(listener);
         m_reentryTypesCombo.addModifyListener(listener);
+        m_refNameField.addModifyListener(listener);
     }
-    
+
     /**
      * 
      */
@@ -420,20 +463,22 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
          * {@inheritDoc}
          */
         public void modifyText(ModifyEvent e) {
-            Object o = e.getSource();
-            if (o.equals(m_eventTypesCombo)) {
-                if (modifyEventTypeComboAction()
-                    && modifyReentryTypeComboAction()) {
-                    return;
-                }
-                return;
-            } else if (o.equals(m_reentryTypesCombo)) {
-                if (modifyReentryTypeComboAction()
-                    && modifyEventTypeComboAction()) {
-                    return;
-                }
-                return;
-            }
-        }  
-    }    
+            enableOKButton(dialogInputIsValid());
+        }
+
+
+    }
+
+    /**
+     * This method is called on modification of any of Add Event Handler Dialog components
+     * @return false, if at least one of the values
+     * that were inputed in the Add Event Handler Dialog is invalid
+     * @author M.Maulhs
+     * @created 22.10.2013
+     */
+    private boolean dialogInputIsValid() {
+        return  checkRefNameFieldAction()
+                && checkReentryTypeComboAction()
+                && checkEventTypeComboAction();
+    }
 }

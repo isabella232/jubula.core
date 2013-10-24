@@ -131,7 +131,8 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
      * @param parentNode The actual test case.
      * @return True, if the actual test case has eventhandler with all available event types, false otherwise.
      */
-    private boolean hasTestCaseAllEventHandler(ISpecTestCasePO parentNode) {
+    public static boolean hasTestCaseAllEventHandler(
+            ISpecTestCasePO parentNode) {
         Collection eventTcList = parentNode.getAllEventEventExecTC();
         // get a List of used event types in this TestCase.
         List < String > existentEventTypes = new ArrayList < String > ();
@@ -151,7 +152,7 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
         List < String > availableEventTypes = Arrays.asList(eventTypes);
         if (availableEventTypes.size() == existentEventTypes.size()) {
             ErrorHandlingUtil.createMessageDialog(
-                    MessageIDs.E_ENOUGH_EVENT_HANDLER, null, 
+                    MessageIDs.I_ENOUGH_EVENT_HANDLER, null,
                     new String[]{NLS.bind(
                             Messages.AddEventHandlerDialogEnoughEventHandler,
                             parentNode.getName())});

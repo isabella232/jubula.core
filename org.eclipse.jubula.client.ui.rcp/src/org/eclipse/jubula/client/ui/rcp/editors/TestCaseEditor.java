@@ -567,13 +567,13 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             new AddEventHandlerDialog(Plugin.getShell(), eventHandler
                     .getSpecTestCase().getName(), eventHandlerCont);
         dialog.addListener(new AddEventHandlerDialog.Listener() {
-            public void notifySelected(String eventType, 
+            public void notifySelected(String refName, String eventType,
                 String reentryType, Integer maxRetries) {
                 
                 String evType = StringHelper.getInstance().getMap()
                     .get(eventType);
                 
-                setEventHandlerProperties(eventHandler, evType, 
+                setEventHandlerProperties(eventHandler, refName, evType,
                     reentryType, maxRetries);
             }
         });

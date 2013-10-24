@@ -268,8 +268,6 @@ public class MessageIDs {
     public static final Integer E_CANNOT_DELETE_AUT_CONFIG = new Integer(4037);
     /** if language cannot deleted, because it used in an AUT */
     public static final Integer E_DELETE_PROJECT_LANG = new Integer(4038);
-    /** if there are event handler of each type in a TC */
-    public static final Integer E_ENOUGH_EVENT_HANDLER = new Integer(4039);
     /** if a projectname is already in use in db */
     public static final Integer E_PROJECTNAME_ALREADY_EXISTS = 
         new Integer(4040);
@@ -604,6 +602,8 @@ public class MessageIDs {
     /** The selected Test Cases do not have a parameter for which the column usage of the Central Test Data can be changed. */
     public static final Integer I_TCS_HAVE_NO_CHANGEABLE_PARAMETER_NAME =
             new Integer(133);
+    /** if there are event handler of each type in a TC */
+    public static final Integer I_ENOUGH_EVENT_HANDLER = new Integer(134);
 
     // ---------------------------------------------------------------------
     /** key = message id, message object */
@@ -693,7 +693,6 @@ public class MessageIDs {
         messageMap.put(E_CANNOT_DELETE_AUT, e, "ErrorMessage.CANNOT_DELETE_AUT", new String[]{"ErrorDetail.CANNOT_DELETE_AUT"}); //$NON-NLS-1$ //$NON-NLS-2$
         messageMap.put(E_CANNOT_DELETE_AUT_CONFIG, e, "ErrorMessage.CANNOT_DELETE_AUT_CONFIG", new String[]{"ErrorDetail.CANNOT_DELETE_AUT_CONFIG"}); //$NON-NLS-1$ //$NON-NLS-2$
         messageMap.put(E_DELETE_PROJECT_LANG, e, "ErrorMessage.DELETE_PROJECT_LANG", new String[]{"ErrorDetail.DELETE_PROJECT_LANG"}); //$NON-NLS-1$ //$NON-NLS-2$
-        messageMap.put(E_ENOUGH_EVENT_HANDLER, e, "ErrorMessage.ENOUGH_EVENT_HANDLER", null); //$NON-NLS-1$
         messageMap.put(E_PROJECTNAME_ALREADY_EXISTS, e, "ErrorMessage.PROJECTNAME_ALREADY_EXISTS", new String[]{"ErrorDetail.PROJECTNAME_ALREADY_EXISTS"}); //$NON-NLS-1$ //$NON-NLS-2$   
         messageMap.put(E_INCOMPATIBLE_COMP_TYPE, e, "ErrorMessage.INCOMPATIBLE_COMP_TYPE", null); //$NON-NLS-1$
         messageMap.put(E_GENERAL_TOOLKIT_ERROR, e, "ErrorMessage.GENERAL_TOOLKIT_ERROR", null); //$NON-NLS-1$
@@ -987,6 +986,7 @@ public class MessageIDs {
         messageMap.put(I_NO_EXEC, i, "InfoMessage.NO_EXEC", null); //$NON-NLS-1$
         messageMap.put(I_ALL_TCS_MUST_USE_SAME_CTDS, i, "InfoMessage.ALL_TCS_MUST_USE_SAME_CTDS", null); //$NON-NLS-1$
         messageMap.put(I_TCS_HAVE_NO_CHANGEABLE_PARAMETER_NAME, i, "InfoMessage.TCS_HAVE_NO_CHANGEABLE_PARAMETER_NAME", null); //$NON-NLS-1$
+        messageMap.put(I_ENOUGH_EVENT_HANDLER, i, "InfoMessage.ENOUGH_EVENT_HANDLER", null); //$NON-NLS-1$
     }
     
     /**

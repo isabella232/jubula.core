@@ -29,7 +29,9 @@ public class Messages extends NLS {
     public static String AddEventHandlerDialogAddErrorHandler;
     public static String AddEventHandlerDialogEnoughEventHandler;
     public static String AddEventHandlerDialogEventType;
+    public static String AddEventHandlerDialogIncorrectRefNameInput;
     public static String AddEventHandlerDialogLabel;
+    public static String AddEventHandlerDialogRefNameLabel;
     public static String AddEventHandlerDialogMaxNumRetries;
     public static String AddEventHandlerDialogMessage;
     public static String AddEventHandlerDialogNoEventTypeSel;

@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.controllers.dnd;
 
 import java.util.Iterator;
-
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -20,6 +19,7 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor;
+import org.eclipse.jubula.client.ui.rcp.handlers.AddExistingEventHandlerHandler;
 import org.eclipse.swt.dnd.TransferData;
 
 
@@ -74,14 +74,18 @@ public class EventHandlerDropTargetListener extends ViewerDropAdapter {
     /**
      * @param target
      *            the target to drop on.
-     * @param specTcGUI
+     * @param eventSpecTc
      *            the TestCase used as EventHandler.
      */
-    private void addEventHandler(INodePO target, ISpecTestCasePO specTcGUI) {
+    private void addEventHandler(INodePO target, ISpecTestCasePO eventSpecTc) {
+        ISpecTestCasePO ownerSpecTc = (ISpecTestCasePO)m_editor
+                .getEventHandlerTreeViewer().getInput();
         if (target == null || target instanceof IEventExecTestCasePO) {
-
-            m_editor.addEventHandler(specTcGUI, (ISpecTestCasePO)m_editor
-                    .getEventHandlerTreeViewer().getInput());
+            if (AddExistingEventHandlerHandler
+                    .hasTestCaseAllEventHandler(ownerSpecTc)) {
+                return;
+            }
+            m_editor.addEventHandler(eventSpecTc, ownerSpecTc);
             LocalSelectionTransfer.getInstance().setSelection(null);
         }
     }
