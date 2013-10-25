@@ -172,19 +172,27 @@ public class SwingApplicationTester extends AbstractApplicationTester {
          * {@inheritDoc}
          */
         public boolean isTrue(AWTEvent event) {
+            // we use lost focus, because it is triggered independently of hiding the window
+            // by setVisible(false) or dispose()
             if (event.getID() == WindowEvent.WINDOW_LOST_FOCUS) {
-                String name = null;
-                if (event.getSource() instanceof Frame) {
-                    Frame frame = (Frame)event.getSource();
-                    name = frame.getTitle();
-                } else if (event.getSource() instanceof Dialog) {
-                    Dialog dialog = (Dialog)event.getSource();
-                    name = dialog.getTitle();
-                } else {
-                    // Window found, but we currently do not support it, because it has no title
-                    return false;
+                if (event.getSource() instanceof Window) {
+                    Window window = (Window) event.getSource();
+                    if (!window.isVisible()) {
+                        String name = null;
+                        if (window instanceof Frame) {
+                            Frame frame = (Frame) window;
+                            name = frame.getTitle();
+                        } else if (window instanceof Dialog) {
+                            Dialog dialog = (Dialog) window;
+                            name = dialog.getTitle();
+                        } else {
+                            // Window found, but we currently do not support it, because it has no title
+                            return false;
+                        }
+                        return MatchUtil.getInstance()
+                                .match(name, m_title, m_operator);
+                    }
                 }
-                return MatchUtil.getInstance().match(name, m_title, m_operator);
             }
             return false;
         }
