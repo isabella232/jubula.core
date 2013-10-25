@@ -1,9 +1,8 @@
 \gdauts{} written with the HTML GUI toolkit are supported according to the following points:
 
 \begin{itemize}
-%\item \gdauts{} can be run in Internet Explorer (versions 7, 8 and 9), Firefox (3.0 to 1) and Safari (version 5). 
+\item The HTML tests are driven by Selenium. We document which version of Selenium we are currently using  as a driver in the release notes. Check the release notes for the current Selenium version and check the Selenium documentation for supported browsers. 
 \item We strongly recommend writing HTML \gdauts{} so that they are conform to the \bxname{W3C} standard. You can check whether your \gdaut{} is \bxname{W3C} conform using an online validator: http://validator.w3.org
-%\item Frames and IFrames are not supported.
 \item Some of the  actions in the \bxname{concrete} toolkit (i.e. which are theoretically valid for all \gdaut{} types) may not (yet) be supported. In some cases, this is because the component doesn't exist as such in HTML \gdauts{} (menu bars for example). In other cases, text components such as tables or lists do not have a concept for dealing with selection as they do in e.g. Swing. 
 \item The \bxname{autrun} option to start \gdauts{} \bxpref{autrun} cannot be used for HTML \gdauts{}. 
 \item There is a minor difference in the way that clicks are performed in HTML compared to other supported toolkits. In other toolkits such as Swing, an API is used to simulate actions at the OS level so that the the computer itself can't distinguish whether it came from a tool or a keyboard. A normal click by a user in a browser would go via the mouse through various layers to the webserver, resulting in a request to that webserver. The clicks in the HTML toolkit are performed by firing DOM events using Javascript therefore bypassing the mouse level. So, although the computer can tell the difference, the webserver can't. 
