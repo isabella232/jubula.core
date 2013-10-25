@@ -250,7 +250,10 @@ public class Traverser {
             } else if (!(Persistor.isPoSubclass(stackObj.getExecNode(),
                 ITestSuitePO.class)) && tdManager != null) {
                 int maxDsNumber = tdManager.getDataSetCount();
-                if (stackObj.getNumberDs() < maxDsNumber - 1) {
+                if (stackObj.getNumberDs() == Traverser.NO_DATASET) {
+                    stackObj.incrementDataSetNumber();
+                }
+                if (stackObj.getNumberDs() + 1 < maxDsNumber) {
                     stackObj.incrementDataSetNumber();
                     stackObj.setIndex(NO_INDEX);
                     fireNextDataSetIteration();
