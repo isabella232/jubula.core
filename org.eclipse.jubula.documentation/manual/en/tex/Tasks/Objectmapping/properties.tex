@@ -8,3 +8,5 @@ The property information shows you which properties the component has, and their
 You can use this information to help you write tests that use the actions \bxname{check property} and \bxname{store property}. 
 
 The property information is not saved when the \gdomeditor{} is saved: to view property information again, you must collect the component in the \gdomm{} again. 
+
+\bxtipp{Property information can be transient, i.e. it can change as the component or \gdaut{} changes. To make sure that you collect the right property, collect the component when it is in the state that you want it to have. A simple example is the color of a component: if you have a component can be  green or red and you want to check that it is red, then you should collect it while it is red to see the correct property. }
