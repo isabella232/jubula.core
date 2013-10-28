@@ -479,6 +479,7 @@ public class Messages extends NLS {
     public static String OMTechNameGUIPropertySourceCompSuppClass;
     public static String OMTechNameGUIPropertySourceContext;
     public static String OMTechNameGUIPropertySourceHierarchy;
+    public static String OMTechNameGUIPropertySourcePropertyInformation;
     public static String OpenProjectActionCaption;
     public static String OpenProjectActionInternalError;
     public static String OpenProjectActionLabel;

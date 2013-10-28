@@ -61,6 +61,10 @@ public class OMTechNameGUIPropertySource
     public static final String P_ELEMENT_DISPLAY_CONTEXT = 
         Messages.OMTechNameGUIPropertySourceContext;
 
+    /** Property m_text on display */
+    public static final String P_ELEMENT_DISPLAY_PROPERTY_INFORMATION =
+        Messages.OMTechNameGUIPropertySourcePropertyInformation;
+
 
     /**
      * Constructor
@@ -123,7 +127,8 @@ public class OMTechNameGUIPropertySource
                         String key = (String)o;
                         JBPropertyDescriptor propDes = new JBPropertyDescriptor(
                                 new ComponentPropertiesController(i), key);
-                        propDes.setCategory("Property Information"); //$NON-NLS-1$
+                        propDes.setCategory(
+                                P_ELEMENT_DISPLAY_PROPERTY_INFORMATION);
                         addPropertyDescriptor(propDes);
                         i++;
                     }

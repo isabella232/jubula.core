@@ -608,6 +608,15 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
             }
         }
         
+        // property informations should be collapsed by default
+        Object[] expandedCategories = m_treeViewer.getExpandedElements();
+        for (int j = 0; j < expandedCategories.length; j++) {
+            if (expandedCategories[j].toString().equals(
+                    Messages.OMTechNameGUIPropertySourcePropertyInformation)) {
+                m_treeViewer.setExpandedState(expandedCategories[j], false);
+            }
+        }
+
         setViewEnabled(!(part instanceof TestCaseBrowser
             || part instanceof TestSuiteBrowser
             || part instanceof JBPropertiesView
