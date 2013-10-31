@@ -42,6 +42,7 @@ class TestJobPO extends NodePO implements ITestJobPO {
      */
     TestJobPO(String testJobName, boolean isGenerated) {
         super(testJobName, isGenerated);
+        addTrackedChange(CREATED);
     }
         
     
@@ -53,6 +54,7 @@ class TestJobPO extends NodePO implements ITestJobPO {
      */
     TestJobPO(String testJobName, String guid, boolean isGenerated) {
         super(testJobName, guid, isGenerated);
+        addTrackedChange(CREATED);
     }
 
     /**

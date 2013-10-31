@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.core.model;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedMap;
 
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 
@@ -21,6 +22,10 @@ import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
  * @created 19.12.2005
  */
 public interface INodePO extends ITimestampPO {
+
+    /** The created string. */
+    public static final String CREATED = "created"; //$NON-NLS-1$
+
     /**
      * @return The name of this node
      */
@@ -215,4 +220,27 @@ public interface INodePO extends ITimestampPO {
      * @param taskId the taskId of this node
      */
     public void setTaskId(String taskId);
+
+    /**
+     * Add a tracked change information consisting of the current time stamp as key and
+     * a comment. The comment begins with the value of the property defined in the
+     * project configuration and suffixed by the optional comment, if it is given.
+     *
+     * Not relevant changes are automatically removed by the rules defined in the project configuration.
+     * @param optionalComment An additional information added to the value of the property
+     *                        defined in the project configuration. It can be null,
+     *                        to store only the value of the property defined in the
+     *                        project configuration.
+     * @see {@link #getTrackedChanges()}
+     */
+    public void addTrackedChange(String optionalComment);
+
+    /**
+     * @return A copied sorted map of change information with time stamp as key and comment as value.
+     * @see {@link #addTrackedChange(Long, String)}
+     * @see {@link SortedMap#firstKey()}
+     * @see {@link SortedMap#lastKey()}
+     */
+    public SortedMap<Long, String> getTrackedChanges();
+
 }

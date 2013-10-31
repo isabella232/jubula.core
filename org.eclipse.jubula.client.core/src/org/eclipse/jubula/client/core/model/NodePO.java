@@ -12,17 +12,24 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
@@ -33,6 +40,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -113,7 +121,12 @@ abstract class NodePO implements INodePO {
      * the task Id of the node
      */
     private String m_taskId;
-    
+
+    /**
+     * The changed info is a map with a time stamp as key and a comment as value.
+     */
+    private Map<Long, String> m_trackedChangesMap = new HashMap<Long, String>();
+
     /**
      * describes, if the node is derived from another node
      */
@@ -671,4 +684,81 @@ abstract class NodePO implements INodePO {
         }
         m_taskId = newTaskId;
     }
+
+    /**
+     * Only for Persistence (JPA / EclipseLink).
+     * @param trackedChangesMap The tracked changes as a map of time stamp as key and comment as value.
+     */
+    @SuppressWarnings("unused")
+    private void setTrackedChangesMap(Map<Long, String> trackedChangesMap) {
+        this.m_trackedChangesMap = trackedChangesMap;
+    }
+
+    /**
+     * Only for Persistence (JPA / EclipseLink).
+     * @return The map of change information.
+     */
+    @ElementCollection
+    @CollectionTable(name = "NODE_TRACK",
+            joinColumns = @JoinColumn(name = "NODE_ID"))
+    @MapKeyColumn(name = "TIMESTAMP")
+    @Column(name = "TRACK_COMMENT")
+    private Map<Long, String> getTrackedChangesMap() {
+        return m_trackedChangesMap;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void addTrackedChange(String optionalComment) {
+        final boolean isTrackingChanges = true;
+//        final boolean isTrackingChanges = GeneralStorage.getInstance().getProject().getProjectProperties().isTrackingChanges();
+        if (isTrackingChanges) {
+            final long timestamp = new Date().getTime();
+            // remove tracked changes, if there are more than 30
+            int maxTrackedChangesPerNode = 30;
+            final long maxDurationOfTrackedChangesInMS =
+                    1000L * 60 * 60 * 24 * 80;
+            if (maxTrackedChangesPerNode >= 0) {
+                while (m_trackedChangesMap.size() >= maxTrackedChangesPerNode) {
+                    int removeCount = m_trackedChangesMap.size()
+                            - maxTrackedChangesPerNode;
+                    while (removeCount > 0) {
+                        m_trackedChangesMap
+                                .remove(getTrackedChanges().firstKey());
+                    }
+                }
+            }
+            // remove tracked changes older than 80 days
+            if (maxDurationOfTrackedChangesInMS >= 0) {
+                SortedMap<Long, String> changes = getTrackedChanges();
+                while (changes.size() > 0
+                        && timestamp - changes.firstKey()
+                                > maxDurationOfTrackedChangesInMS) {
+                    m_trackedChangesMap.remove(changes.firstKey());
+                }
+            }
+            String systemPropertyName = "user.name"; //$NON-NLS-1$
+//            String systemPropertyName = GeneralStorage.getInstance().getProject().getProjectProperties().getTrackedChangesSignature()
+            StringBuffer comment = new StringBuffer(
+                    System.getProperty(systemPropertyName, "")); //$NON-NLS-1$
+            if (optionalComment != null) {
+                comment.append(": "); //$NON-NLS-1$
+                comment.append(optionalComment);
+            }
+            m_trackedChangesMap.put(timestamp, comment.toString());
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public SortedMap<Long, String> getTrackedChanges() {
+        SortedMap<Long, String> sortedMap = new TreeMap<Long, String>();
+        for (Long key : m_trackedChangesMap.keySet()) {
+            sortedMap.put(key, m_trackedChangesMap.get(key));
+        }
+        return sortedMap;
+    }
+
 }

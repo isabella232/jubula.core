@@ -71,6 +71,7 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
      */
     SpecTestCasePO(String testCaseName, boolean isGenerated) {
         super(testCaseName, isGenerated);
+        addTrackedChange(CREATED);
     }
 
     /**
@@ -84,6 +85,7 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
      */
     SpecTestCasePO(String testCaseName, String guid, boolean isGenerated) {
         super(testCaseName, guid, isGenerated);
+        addTrackedChange(CREATED);
     }
     
     /**
