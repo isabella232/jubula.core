@@ -149,21 +149,31 @@ public interface IProjectPO extends IParamNodePO {
     public abstract boolean getIsReusable();
     
     /**
+     * @param isReusable Whether the project should be reusable.
+     */
+    public void setIsReusable(boolean isReusable);
+    
+    /**
      * @return <code>true</code> if this project is protected. Otherwise
      *         <code>false</code>.
      */
     public abstract boolean getIsProtected();
     
     /**
-     * @param isReusable Whether the project should be reusable.
-     */
-    public void setIsReusable(boolean isReusable);
-
-    /**
      * @param isProtected Whether the project should be protected.
      */
     public void setIsProtected(boolean isProtected);
+        
+    /**
+     * @return Whether changes to the project should be stored.
+     */
+    public boolean getIsTrackingActivated();
     
+    /**
+     * @param isTrackingActivated Whether changes to the project should be stored.
+     */
+    public void setIsTrackingActivated(boolean isTrackingActivated);
+
     /**
      * @return the id of the toolkit of this project
      */

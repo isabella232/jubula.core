@@ -19,6 +19,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -198,6 +199,18 @@ public abstract class UIComponentHelper {
         Label label = new Label(parent, style);
         label.setText(fieldName + LABEL_TERMINATOR);
     }
-    
-    
+
+    /**
+     * @param control The control which enablement should be changed.
+     * @param enabled The new enablement
+     */
+    public static void setEnabledRecursive(Control control, boolean enabled) {
+        control.setEnabled(enabled);
+        if (control instanceof Composite) {
+            Composite composite = (Composite) control;
+            for (Control child : composite.getChildren()) {
+                setEnabledRecursive(child, enabled);
+            }
+        }
+    }  
 }

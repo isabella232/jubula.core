@@ -44,6 +44,7 @@ import org.eclipse.jubula.client.teststyle.properties.provider.TeststyleLabelPro
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.properties.AbstractProjectPropertyPage;
 import org.eclipse.jubula.client.ui.rcp.properties.ProjectGeneralPropertyPage.IOkListener;
+import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -550,7 +551,7 @@ public class TeststyleProjectPropertyPage extends AbstractProjectPropertyPage
      *            If teststyle is enabled for this project or not.
      */
     private void setTeststyleEnabled(boolean enabled) {
-        PropUtils.setEnabledRecursive(m_fullGroup, enabled);
+        UIComponentHelper.setEnabledRecursive(m_fullGroup, enabled);
         m_editAttrBtn.setEnabled(false);
         m_editContBtn.setEnabled(false);
         m_editSeverity.setEnabled(false);

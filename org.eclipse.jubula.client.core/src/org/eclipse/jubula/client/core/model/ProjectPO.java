@@ -359,6 +359,21 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     public void setIsProtected(boolean isProtected) {
         getProjectProperties().setIsProtected(isProtected);
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Transient
+    public boolean getIsTrackingActivated() {
+        return getProjectProperties().getIsTrackingActivated();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void setIsTrackingActivated(boolean isTrackingActivated) {
+        getProjectProperties().setIsTrackingActivated(isTrackingActivated);
+    }
 
     /**
      * {@inheritDoc}
@@ -602,4 +617,5 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     public Integer getTestResultCleanupInterval() {
         return getProjectProperties().getTestResultCleanupInterval();
     }
+    
 }

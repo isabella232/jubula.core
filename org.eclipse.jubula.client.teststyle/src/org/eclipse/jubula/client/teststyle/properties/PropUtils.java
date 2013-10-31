@@ -23,7 +23,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 
 
 /**
@@ -91,20 +90,6 @@ public class PropUtils {
         }
         Collections.sort(nodes);
         return nodes.toArray(new INode[nodes.size()]);
-    }
-    
-    /**
-     * @param control The control which enablement should be changed.
-     * @param enabled The new enablement
-     */
-    public static void setEnabledRecursive(Control control, boolean enabled) {
-        control.setEnabled(enabled);
-        if (control instanceof Composite) {
-            Composite composite = (Composite) control;
-            for (Control child : composite.getChildren()) {
-                setEnabledRecursive(child, enabled);
-            }
-        }
     }
 
 }

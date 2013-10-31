@@ -515,6 +515,9 @@ public class MessageIDs {
     /** if a parameter will be renamed at a already used Test Data Cube */
     public static final Integer Q_CHANGE_INTERFACE_CHANGE_PARAM_NAME = 
         new Integer(13);
+    /** if you want to delete all tracked changes in the currently opened project */
+    public static final Integer Q_DELETE_ALL_TRACKED_CHANGES = 
+        new Integer(14);
     
     // ---------------------------------------------------------------------
     // ---------- Warning IDs ----------------------------------------------
@@ -945,6 +948,7 @@ public class MessageIDs {
         messageMap.put(Q_CHANGE_INTERFACE_CHANGE_PARAM_TYPE, q, "QuestionMessage.CHANGE_INTERFACE_CHANGE_PARAM_TYPE", null); //$NON-NLS-1$
         messageMap.put(Q_SAVE_AND_GENERATE, q, "QuestionMessage.Q_SAVE_AND_GENERATE", null); //$NON-NLS-1$
         messageMap.put(Q_CHANGE_INTERFACE_CHANGE_PARAM_NAME, q, "QuestionMessage.Q_CHANGE_INTERFACE_CHANGE_PARAM_NAME", null); //$NON-NLS-1$
+        messageMap.put(Q_DELETE_ALL_TRACKED_CHANGES, q, "QuestionMessage.DELETE_ALL_TRACKED_CHANGES", null);  //$NON-NLS-1$
     }
     
     /**

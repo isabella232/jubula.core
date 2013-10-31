@@ -35,6 +35,7 @@ import javax.persistence.Version;
 
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.client.core.utils.Timeunit;
 
 /**
  * @author BREDEX GmbH
@@ -43,6 +44,7 @@ import org.apache.commons.lang.Validate;
 @Entity
 @Table(name = "PROJECT_PROPERTIES")
 class ProjectPropertiesPO implements IProjectPropertiesPO {
+       
     /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
 
@@ -87,6 +89,18 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     
     /** Indicates whether this project can be reused in other projects */
     private boolean m_isReusable = false;
+
+    /** Indicates whether this project can tracks changes */
+    private boolean m_isTrackingActivated = false;
+    
+    /** Indicates what detail of a user who made a change is stored for identification */
+    private String m_trackChangesSignature = null;
+    
+    /** The unit in which time should be measured for storing changes */
+    private Timeunit m_trackChangesUnit = null;
+    
+    /** The timespan of how long changes should be stored */
+    private Integer m_trackChangesSpan = null;
     
     /**
      * Indicates whether this project is protected against undo-able
@@ -301,6 +315,17 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     public boolean getIsReusable() {
         return m_isReusable;
     }
+    
+    /**
+     * 
+     * @return Returns <code>true</code> if this project can be reused by other
+     *         projects. Otherwise <code>false</code>.
+     */
+    @Basic
+    @Column(name = "IS_TRACKING_CHANGES")
+    public boolean getIsTrackingActivated() {
+        return m_isTrackingActivated;
+    }
 
     /**
      * 
@@ -393,6 +418,14 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
      */
     public void setIsReusable(boolean isReusable) {
         m_isReusable = isReusable;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void setIsTrackingActivated(boolean isTrackingActivated) {
+        m_isTrackingActivated = isTrackingActivated;
     }
     
     /**
@@ -552,5 +585,41 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     /** {@inheritDoc} */
     public void setIsReportOnFailure(boolean isReportOnFailure) {
         m_reportOnFailure = isReportOnFailure;
+    }
+
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "TRACK_CHANGES_SIGNATURE")
+    public String getTrackChangesSignature() {
+        return m_trackChangesSignature;
+    }
+
+    /** {@inheritDoc} */
+    public void setTrackChangesSignature(String signature) {
+        m_trackChangesSignature = signature;
+    }
+
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "TRACK_CHANGES_UNIT")
+    public Timeunit getTrackChangesUnit() {
+        return m_trackChangesUnit;
+    }
+
+    /** {@inheritDoc} */
+    public void setTrackChangesUnit(Timeunit unit) {
+        m_trackChangesUnit = unit;
+    }
+
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "TRACK_CHANGES_SPAN")
+    public Integer getTrackChangesSpan() {
+        return m_trackChangesSpan;
+    }
+
+    /** {@inheritDoc} */
+    public void setTrackChangesSpan(Integer span) {
+        m_trackChangesSpan = span;
     }
 }

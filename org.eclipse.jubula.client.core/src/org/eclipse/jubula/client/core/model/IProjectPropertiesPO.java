@@ -13,6 +13,8 @@ package org.eclipse.jubula.client.core.model;
 import java.util.Locale;
 import java.util.Set;
 
+import org.eclipse.jubula.client.core.utils.Timeunit;
+
 /**
  * @author BREDEX GmbH
  * @created Jun 11, 2007
@@ -29,6 +31,17 @@ public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport {
      * @param isReusable Whether the project should be reusable.
      */
     public void setIsReusable(boolean isReusable);
+    
+    /**
+     * @return <code>true</code> if this project tracks changes. Otherwise
+     *         <code>false</code>.
+     */
+    public abstract boolean getIsTrackingActivated();
+    
+    /**
+     * @param isTrackingActivated Whether the project should track changes.
+     */
+    public void setIsTrackingActivated(boolean isTrackingActivated);
 
     /**
      * @return <code>true</code> if this project is protected. Otherwise
@@ -162,4 +175,34 @@ public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport {
      *            executions to the connected ALM repository
      */
     public void setIsReportOnFailure(boolean isReportOnFailure);
+
+    /**
+     * @return the detail of a user who made a change which is stored for identification
+     */
+    public abstract String getTrackChangesSignature();
+
+    /**
+     * @param signature the detail of a user who made a change which is stored for identification
+     */
+    public abstract void setTrackChangesSignature(String signature);
+
+    /**
+     * @return the unit in which time should be measured for storing changes
+     */
+    public abstract Timeunit getTrackChangesUnit();
+
+    /**
+     * @param unit the unit in which time should be measured for storing changes
+     */
+    public abstract void setTrackChangesUnit(Timeunit unit);
+
+    /**
+     * @return the timespan of how long changes should be stored
+     */
+    public abstract Integer getTrackChangesSpan();
+
+    /**
+     * @param span the timespan of how long changes should be stored
+     */
+    public abstract void setTrackChangesSpan(Integer span);
 }

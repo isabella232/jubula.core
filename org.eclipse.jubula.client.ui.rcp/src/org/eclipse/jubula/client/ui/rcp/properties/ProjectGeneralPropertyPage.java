@@ -18,6 +18,7 @@ import javax.persistence.EntityNotFoundException;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -34,6 +35,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
+import org.eclipse.jubula.client.core.utils.Timeunit;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
@@ -43,10 +45,12 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedIntText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedProjectNameText;
+import org.eclipse.jubula.client.ui.rcp.widgets.CheckedSignatureText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
+import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -57,6 +61,7 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -64,6 +69,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
@@ -92,6 +98,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     private static final int NUM_COLUMNS_1 = 1; 
     /** number of columns = 2 */
     private static final int NUM_COLUMNS_2 = 2;
+    /** number of columns = 2 */
+    private static final int NUM_COLUMNS_3 = 3;
 
     /** the logger */
     private static Logger log = LoggerFactory
@@ -113,11 +121,26 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     private DirectCombo<String> m_projectToolkitCombo;
     /** the new project name */
     private String m_newProjectName;
-    /**  Checkbox to decide if testresults should be deleted after specified days */
-    private Button m_cleanTestresults = null;
     
+    /**  Checkbox to decide if testresults should be deleted after specified days */
+    private Button m_cleanTestresults = null;    
     /**  textfield to specify days after which testresults should be deleted after from database */
     private CheckedIntText m_cleanResultDays = null; 
+
+    /**  Checkbox to decide if certain changes to the project should be tracked */
+    private Button m_isTrackingActivatedButton = null;
+    /**  group to specify how long changes should be stored */
+    private Group m_trackChangesTimespanSelection = null;
+    /**  textfield to specify how long tracked changes should be stored */
+    private CheckedIntText m_trackChangesSpan = null;
+    /**  textfield to specify what should be stored to identify who made a change */
+    private Composite m_trackChangesUnitSelection = null;
+    /**  group to specify what should be stored to identify who made a change */
+    private Group m_trackChangesSignatureSelection = null;
+    /**  textfield to specify what should be stored to identify who made a change */
+    private CheckedSignatureText m_trackChangesSignature = null;
+    /**  button to delete all tracked changes */
+    private Button m_deleteChanges = null;
     
     /** set of listeners to be informed when ok has been pressed */
     private Set<IOkListener> m_okListenerList = new HashSet<IOkListener>();
@@ -178,6 +201,14 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         createEmptyLabel(projectNameComposite);
         
         createCleanTestResults(projectNameComposite);
+        
+        separator(projectNameComposite, NUM_COLUMNS_2);
+        createTrackChangesEnablement(projectNameComposite);
+        Composite trackChangesProperties = createComposite(composite,
+                NUM_COLUMNS_3, GridData.FILL, false);
+        createTrackChangesTimespanSelection(trackChangesProperties);
+        createTrackChangesSignatureSelection(trackChangesProperties);
+        createTrackChangesDeleteDataButton(trackChangesProperties);
         
         Composite innerComposite = new Composite(composite, SWT.NONE);
         GridLayout compositeLayout = new GridLayout();
@@ -413,6 +444,186 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     }
     
     /**
+     * @param parent The parent <code>Composite</code>
+     */
+    private void createTrackChangesEnablement(Composite parent) {
+        m_isTrackingActivatedButton = new Button(parent, SWT.CHECK);
+        m_isTrackingActivatedButton.setText(Messages
+                .PrefPageTrackChanges);
+        m_isTrackingActivatedButton.setSelection(
+                m_origProjectProps.getIsTrackingActivated());
+        GridData gridData = new GridData(SWT.BEGINNING, SWT.BEGINNING, 
+                false, false);
+        gridData.horizontalSpan = 2;
+        gridData.grabExcessHorizontalSpace = false;
+        m_isTrackingActivatedButton.setLayoutData(gridData);
+        ControlDecorator.decorateInfo(m_isTrackingActivatedButton,
+                "TestResultViewPreferencePage.TrackChangesInfo", false); //$NON-NLS-1$
+        
+        m_isTrackingActivatedButton.addSelectionListener(
+                new SelectionListener() {
+                    public void widgetSelected(SelectionEvent e) {
+                        if (m_isTrackingActivatedButton != null) {
+                            UIComponentHelper.setEnabledRecursive(
+                                    m_trackChangesTimespanSelection, 
+                                    m_isTrackingActivatedButton.getSelection());
+                            UIComponentHelper.setEnabledRecursive(
+                                    m_trackChangesSignatureSelection, 
+                                    m_isTrackingActivatedButton.getSelection());
+                        }
+                        checkCompleteness();
+                    }
+        
+                    public void widgetDefaultSelected(SelectionEvent e) {
+                        // nothing here
+                    }
+                });
+    }
+    
+    /**
+     * @param parent The parent <code>Composite</code>
+     */
+    private void createTrackChangesTimespanSelection(Composite parent) {
+        m_trackChangesTimespanSelection = new Group(parent, SWT.NONE);
+        GridData gridData = new GridData(GridData.FILL_BOTH);
+        m_trackChangesTimespanSelection.setLayout(new GridLayout());
+        m_trackChangesTimespanSelection.setLayoutData(gridData);
+        m_trackChangesTimespanSelection.setText(
+                Messages.PrefPageTrackChangesTimespanSelectionText);
+        m_trackChangesUnitSelection = new Composite(
+                m_trackChangesTimespanSelection, SWT.NULL);
+        m_trackChangesUnitSelection.setLayout(new GridLayout());
+        
+        Button daysButton = new Button(m_trackChangesUnitSelection, SWT.RADIO);
+        daysButton.setText("Days"); //$NON-NLS-1$
+        Button changesButton = new Button(m_trackChangesUnitSelection,
+                SWT.RADIO);
+        changesButton.setText("Changes"); //$NON-NLS-1$
+        SelectionListener listener = new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+                checkCompleteness();
+            }
+
+            public void widgetDefaultSelected(SelectionEvent e) {
+                checkCompleteness();
+            }
+        };
+        daysButton.addSelectionListener(listener);
+        changesButton.addSelectionListener(listener);
+        
+        Timeunit unit = m_origProjectProps.getTrackChangesUnit();
+        if (unit != null) {
+            switch (unit) {
+                case CHANGES:
+                    changesButton.setSelection(true);
+                    break;
+                case DAYS:
+                    daysButton.setSelection(true);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            // set days as default
+            daysButton.setSelection(true);
+        }
+        
+        m_trackChangesSpan = new CheckedIntText(m_trackChangesTimespanSelection,
+                SWT.BORDER, false, 1, Integer.MAX_VALUE);
+        gridData = new GridData(SWT.BEGINNING, SWT.NONE, true, true);
+        gridData.widthHint = 80;
+        m_trackChangesSpan.setLayoutData(gridData);
+        
+        Integer span = m_origProjectProps.getTrackChangesSpan();
+        if (span != null) {
+            m_trackChangesSpan.setText(String.valueOf(span));
+        } else {
+            // set 10 as default
+            m_trackChangesSpan.setText("10"); //$NON-NLS-1$
+        }
+        
+        m_trackChangesSpan.addKeyListener(new KeyListener() {
+            public void keyPressed(KeyEvent e) {
+                // nothing
+            }
+            public void keyReleased(KeyEvent e) {
+                checkCompleteness();
+            }
+            
+        });
+        
+        if (m_isTrackingActivatedButton != null) {
+            UIComponentHelper.setEnabledRecursive(
+                    m_trackChangesTimespanSelection, 
+                    m_isTrackingActivatedButton.getSelection());
+        }
+    }
+    
+    /**
+     * @param parent The parent <code>Composite</code>
+     */
+    private void createTrackChangesSignatureSelection(Composite parent) {
+        m_trackChangesSignatureSelection = new Group(parent, SWT.NONE);
+        m_trackChangesSignatureSelection.setLayout(new GridLayout());
+        GridData gridData = new GridData(GridData.FILL_BOTH);
+        gridData.horizontalSpan = 2;
+        gridData.grabExcessHorizontalSpace = true;
+        m_trackChangesSignatureSelection.setLayoutData(gridData);
+        m_trackChangesSignatureSelection.setText(
+                Messages.PrefPageTrackChangesSignatureSelectionText);
+        Label label = new Label(m_trackChangesSignatureSelection, SWT.WRAP);
+        label.setText(Messages.PrefPageTrackChangesSignatureDescription);
+        final GridData labelData = new GridData();
+        labelData.horizontalSpan = 2;
+        labelData.grabExcessHorizontalSpace = false;
+        labelData.horizontalAlignment = SWT.LEFT;
+        labelData.widthHint = 400;
+        label.setLayoutData(labelData);
+        
+        m_trackChangesSignature = new CheckedSignatureText(
+                m_trackChangesSignatureSelection, SWT.BORDER);
+        gridData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
+        gridData.widthHint = 200;
+        m_trackChangesSignature.setLayoutData(gridData);
+        
+        String signature = m_origProjectProps.getTrackChangesSignature();
+        if (signature != null) {
+            m_trackChangesSignature.setText(signature);
+        }
+        m_trackChangesSignatureSelection.pack();
+        if (m_isTrackingActivatedButton != null) {
+            UIComponentHelper.setEnabledRecursive(
+                    m_trackChangesSignatureSelection, 
+                    m_isTrackingActivatedButton.getSelection());
+        }
+        parent.pack();
+    }
+    
+    /**
+     * @param parent The parent <code>Composite</code>
+     */
+    private void createTrackChangesDeleteDataButton(Composite parent) {
+        m_deleteChanges = new Button(parent, SWT.PUSH);
+        m_deleteChanges.setText(Messages
+                .PrefPageTrackChangesDeleteData);
+        GridData gridData = new GridData(SWT.END, SWT.BEGINNING, 
+                false, false);
+        gridData.horizontalSpan = 1;
+        gridData.grabExcessHorizontalSpace = false;
+        m_deleteChanges.setLayoutData(gridData);
+        
+        m_deleteChanges.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                Dialog qDialog = ErrorHandlingUtil.createMessageDialog(
+                        MessageIDs.Q_DELETE_ALL_TRACKED_CHANGES, null, null);
+                /*if (qDialog.getReturnCode() == 0) {
+                    // delete all tracked changes
+                }*/  
+            }
+        });
+    }
+    
+    /**
      * Checks if Preference Page is complete and valid
      */
     protected void checkCompleteness() {
@@ -420,6 +631,28 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 && m_cleanResultDays.getValue() <= 0) {
             setErrorMessage(Messages
                     .TestResultViewPreferencePageCleanResultDaysEmpty);
+            setValid(false);
+            return;
+        }
+        if (m_trackChangesTimespanSelection.isEnabled()) {
+            boolean unitSelected = false;
+            for (Control child : m_trackChangesUnitSelection.getChildren()) {
+                if (child instanceof Button) {
+                    Button bt = (Button) child;
+                    if (bt.getSelection()) {
+                        unitSelected = true;
+                    }
+                }
+            }
+            if (!unitSelected) {
+                setErrorMessage(Messages.PrefPageTrackChangesNoUnitSelected);
+                setValid(false);
+                return;
+            }
+        }
+        if (m_trackChangesTimespanSelection.isEnabled() 
+                && m_trackChangesSpan.getValue() <= 0) {
+            setErrorMessage(Messages.PrefPageTrackChangesTimespanEmpty);
             setValid(false);
             return;
         }
@@ -442,15 +675,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 }
             }
             IProjectPO project = getProject();
-            if (m_isReusableCheckbox != null) {
-                project.setIsReusable(m_isReusableCheckbox.getSelection());
-            }
-            if (m_isProtectedCheckbox != null) {
-                project.setIsProtected(m_isProtectedCheckbox.getSelection());
-            }
-            if (m_projectDescriptionTextField != null) {
-                project.setComment(m_projectDescriptionTextField.getText());
-            }
+            storeProperties();
             storeAutoTestResultCleanup();
             if (!m_oldProjectName.equals(m_newProjectName)) {
                 ProjectNameBP.getInstance().setName(
@@ -503,6 +728,55 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                     ite, ite.getErrorMessageParams(), null);
         }
         return true;
+    }
+
+    /**
+     * store properties into the database
+     */
+    private void storeProperties() {
+        IProjectPO project = getProject();
+        if (m_isReusableCheckbox != null) {
+            project.setIsReusable(m_isReusableCheckbox.getSelection());
+        }
+        if (m_isProtectedCheckbox != null) {
+            project.setIsProtected(m_isProtectedCheckbox.getSelection());
+        }
+        if (m_projectDescriptionTextField != null) {
+            project.setComment(m_projectDescriptionTextField.getText());
+        }
+        if (m_isTrackingActivatedButton != null) {
+            project.setIsTrackingActivated(
+                    m_isTrackingActivatedButton.getSelection());
+        }
+        if (m_trackChangesSignature != null) {
+            project.getProjectProperties().setTrackChangesSignature(
+                    m_trackChangesSignature.getText());
+        }
+        if (m_trackChangesSpan != null 
+                && m_trackChangesSpan.getText() != null
+                && !m_trackChangesSpan.getText().equals("")) { //$NON-NLS-1$
+            project.getProjectProperties().setTrackChangesSpan(
+                    Integer.valueOf(m_trackChangesSpan.getText()));
+        }
+        if (m_trackChangesUnitSelection != null) {
+            Timeunit unit = null;
+            for (Control child : m_trackChangesUnitSelection.getChildren()) {
+                if (child instanceof Button) {
+                    Button bt = (Button) child;
+                    if (bt.getSelection()) {
+                        String btText = bt.getText();
+                        if (btText.equals("Days")) { //$NON-NLS-1$
+                            unit = Timeunit.DAYS;
+                        } else if (btText.equals("Changes")) { //$NON-NLS-1$
+                            unit = Timeunit.CHANGES;
+                        }
+                    }
+                }
+            }
+            if (unit != null) {
+                project.getProjectProperties().setTrackChangesUnit(unit);
+            }
+        }
     }
 
     /**

@@ -522,6 +522,13 @@ public class Messages extends NLS {
     public static String PrefPageBasicOpenPerspective;
     public static String PrefPageBasicPrompt;
     public static String PrefPageBasicSelectDataDir;
+    public static String PrefPageTrackChanges;
+    public static String PrefPageTrackChangesDeleteData;
+    public static String PrefPageTrackChangesNoUnitSelected;
+    public static String PrefPageTrackChangesSignatureDescription;
+    public static String PrefPageTrackChangesSignatureSelectionText;
+    public static String PrefPageTrackChangesTimespanSelectionText;
+    public static String PrefPageTrackChangesTimespanEmpty;
     public static String ProblemCheckerAUT;
     public static String ProblemCheckerAutConfigMissesJar;
     public static String ProblemCheckerAutNoConfigurationForServer;
