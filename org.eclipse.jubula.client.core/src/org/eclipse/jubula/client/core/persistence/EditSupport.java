@@ -32,6 +32,7 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -39,6 +40,8 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBFatalAbortException;
@@ -255,6 +258,7 @@ public class EditSupport {
         PMException, ProjectDeletedException, IncompatibleTypeException {
         if (m_isValid) {
             if (m_isLocked) {
+                trackChanges();
                 boolean stayLocked = false;
                 try {
                     boolean mayModifyParamNames = 
@@ -321,6 +325,18 @@ public class EditSupport {
                     Messages.NotAllowedToSaveAnUnlockedWorkversion
                     + StringConstants.DOT,
                     MessageIDs.E_CANNOT_SAVE_INVALID); 
+        }
+    }
+
+    /**
+     * Tracks, that a test case, a test suite, or a test job has been modified.
+     */
+    private void trackChanges() {
+        if (m_workVersion instanceof ISpecTestCasePO
+                || m_workVersion instanceof ITestSuitePO
+                || m_workVersion instanceof ITestJobPO) {
+            INodePO node = (INodePO) m_workVersion;
+            node.addTrackedChange("modified"); //$NON-NLS-1$
         }
     }
 

@@ -237,6 +237,7 @@ public interface INodePO extends ITimestampPO {
 
     /**
      * @return A copied sorted map of change information with time stamp as key and comment as value.
+     *         The comment can be null.
      * @see {@link #addTrackedChange(Long, String)}
      * @see {@link SortedMap#firstKey()}
      * @see {@link SortedMap#lastKey()}

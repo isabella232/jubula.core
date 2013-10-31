@@ -700,8 +700,8 @@ abstract class NodePO implements INodePO {
      */
     @ElementCollection
     @CollectionTable(name = "NODE_TRACK",
-            joinColumns = @JoinColumn(name = "NODE_ID"))
-    @MapKeyColumn(name = "TIMESTAMP")
+            joinColumns = @JoinColumn(name = "NODE_ID", nullable = false))
+    @MapKeyColumn(name = "TIMESTAMP", nullable = false)
     @Column(name = "TRACK_COMMENT")
     private Map<Long, String> getTrackedChangesMap() {
         return m_trackedChangesMap;
