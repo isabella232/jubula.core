@@ -51,6 +51,7 @@ import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.progress.ElementLoadedProgressListener;
 import org.eclipse.jubula.client.core.businessprocess.progress.InsertProgressListener;
 import org.eclipse.jubula.client.core.businessprocess.progress.RemoveProgressListener;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.utils.DependencyCheckerOp;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
@@ -711,11 +712,12 @@ abstract class NodePO implements INodePO {
      * {@inheritDoc}
      */
     public void addTrackedChange(String optionalComment) {
-        final boolean isTrackingChanges = true;
-//        final boolean isTrackingChanges = GeneralStorage.getInstance().getProject().getProjectProperties().isTrackingChanges();
+        final boolean isTrackingChanges = GeneralStorage.getInstance()
+                .getProject().getIsTrackingActivated();
         if (isTrackingChanges) {
             final long timestamp = new Date().getTime();
             // remove tracked changes, if there are more than 30
+            // placeholder for data from project properties
             int maxTrackedChangesPerNode = 30;
             final long maxDurationOfTrackedChangesInMS =
                     1000L * 60 * 60 * 24 * 80;
@@ -738,8 +740,9 @@ abstract class NodePO implements INodePO {
                     m_trackedChangesMap.remove(changes.firstKey());
                 }
             }
-            String systemPropertyName = "user.name"; //$NON-NLS-1$
-//            String systemPropertyName = GeneralStorage.getInstance().getProject().getProjectProperties().getTrackedChangesSignature()
+            String systemPropertyName = GeneralStorage.getInstance()
+                    .getProject().getProjectProperties()
+                    .getTrackChangesSignature();
             StringBuffer comment = new StringBuffer(
                     System.getProperty(systemPropertyName, "")); //$NON-NLS-1$
             if (optionalComment != null) {
