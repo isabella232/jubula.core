@@ -75,6 +75,56 @@
         </with>
      </or>
     </definition>
+    <definition id="org.eclipse.jubula.client.ui.rcp.expression.openTestCaseEditorFromTestCaseBrowser">
+      <and>
+          <with variable="activePartId">
+            <equals value="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser" />
+          </with>
+          <iterate
+            ifEmpty="false"
+            operator="and">
+            <and>
+              <not>
+                <or>
+                  <instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
+                </or>
+              </not>
+              <test
+                property="org.eclipse.jubula.client.core.model.isEditable"
+                value="true" />
+            </and>
+          </iterate>
+        </and>
+    </definition>
+    <definition id="org.eclipse.jubula.client.ui.rcp.expression.openTestSuiteEditorFromTestSuiteBrowser">
+      <and>
+          <with variable="activePartId">
+            <equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser" />
+          </with>
+          <iterate
+            ifEmpty="false"
+            operator="and">
+            <or>
+              <instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
+            </or>
+          </iterate>
+        </and>
+    </definition>
+    <definition id="org.eclipse.jubula.client.ui.rcp.expression.openTestJobEditorFromTestSuiteBrowser">
+      <and>
+          <with variable="activePartId">
+            <equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser" />
+          </with>
+          <iterate
+            ifEmpty="false"
+            operator="and">
+            <or>
+              <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.IRefTestSuitePO" />
+            </or>
+          </iterate>
+        </and>
+    </definition>
   </extension>
   <extension point="org.eclipse.core.expressions.propertyTesters">
     <propertyTester
@@ -3417,38 +3467,36 @@
       class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenTestSuiteEditorHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestsuiteEditor">
       <activeWhen>
-        <and>
-          <with variable="activePartId">
-            <equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser" />
-          </with>
-          <iterate
-            ifEmpty="false"
-            operator="and">
-            <or>
-              <instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
-            </or>
-          </iterate>
-        </and>
+        <reference
+              definitionId="org.eclipse.jubula.client.ui.rcp.expression.openTestSuiteEditorFromTestSuiteBrowser">
+        </reference>
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenTestSuiteEditorHandler"
+      commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification">
+      <activeWhen>
+        <reference
+              definitionId="org.eclipse.jubula.client.ui.rcp.expression.openTestSuiteEditorFromTestSuiteBrowser">
+        </reference>
       </activeWhen>
     </handler>
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenTestJobEditorHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestJobEditor">
       <activeWhen>
-        <and>
-          <with variable="activePartId">
-            <equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser" />
-          </with>
-          <iterate
-            ifEmpty="false"
-            operator="and">
-            <or>
-              <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.IRefTestSuitePO" />
-            </or>
-          </iterate>
-        </and>
+        <reference
+              definitionId="org.eclipse.jubula.client.ui.rcp.expression.openTestJobEditorFromTestSuiteBrowser">
+        </reference>
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenTestJobEditorHandler"
+      commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification">
+      <activeWhen>
+        <reference
+              definitionId="org.eclipse.jubula.client.ui.rcp.expression.openTestJobEditorFromTestSuiteBrowser">
+        </reference>
       </activeWhen>
     </handler>
     <handler
@@ -3479,25 +3527,18 @@
       class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenTestCaseEditorHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestcaseEditor">
       <activeWhen>
-        <and>
-          <with variable="activePartId">
-            <equals value="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser" />
-          </with>
-          <iterate
-            ifEmpty="false"
-            operator="and">
-            <and>
-              <not>
-                <or>
-                  <instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
-                </or>
-              </not>
-              <test
-                property="org.eclipse.jubula.client.core.model.isEditable"
-                value="true" />
-            </and>
-          </iterate>
-        </and>
+        <reference
+              definitionId="org.eclipse.jubula.client.ui.rcp.expression.openTestCaseEditorFromTestCaseBrowser">
+        </reference>
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenTestCaseEditorHandler"
+      commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification">
+      <activeWhen>
+        <reference
+              definitionId="org.eclipse.jubula.client.ui.rcp.expression.openTestCaseEditorFromTestCaseBrowser">
+        </reference>
       </activeWhen>
     </handler>
     <handler
