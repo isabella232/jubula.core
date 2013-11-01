@@ -733,6 +733,7 @@ public class Messages extends NLS {
     public static String SpecTestCaseGUIPropertySourceTestCaseName;
     public static String SpecTestCaseGUIPropertySourceTestCaseReferencedTestData;
     public static String SpecTestCaseGUIPropertySourceTestdataCategory;
+    public static String SpecTestCaseGUIPropertySourceTrackedChangesCategory;
     public static String StartAutBPLocalhost;
     public static String StartAutJobJobName;
     public static String StartSuiteActionMessage;

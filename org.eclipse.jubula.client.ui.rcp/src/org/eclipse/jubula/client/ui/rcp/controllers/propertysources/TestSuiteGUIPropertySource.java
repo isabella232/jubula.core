@@ -29,7 +29,6 @@ import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.IntegerTextPropertyDescriptor;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNodePropertySource.TaskIdController;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -140,6 +139,8 @@ public class TestSuiteGUIPropertySource
         
         // eventHandler
         addPropertyDescriptor(getEventHandlerDescriptors());
+
+        initTrackedChangesPropDescriptor();
     }
 
     /**

@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
@@ -188,6 +187,8 @@ public class SpecTestCaseGUIPropertySource
         addPropertyDescriptor(m_lockPropDesc);
         
         initParameterPropDescriptors();
+
+        initTrackedChangesPropDescriptor();
     }
 
     /**

@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
 
 import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNodePropertySource.TaskIdController;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
@@ -63,5 +62,7 @@ public class TestJobGUIPropertySource extends AbstractNodePropertySource {
                 Messages.AbstractGuiNodePropertySourceTaskId));
         }
         addPropertyDescriptor(getTaskIdPropDesc());
+
+        initTrackedChangesPropDescriptor();
     }
 }

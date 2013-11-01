@@ -11,9 +11,14 @@
 package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.SortedMap;
 
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.lang.StringUtils;
@@ -36,6 +41,7 @@ import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.IVerifiable;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.IParameterPropertyController.ParameterInputType;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -57,6 +63,10 @@ public abstract class AbstractNodePropertySource
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_COMMENT =
         Messages.AbstractGuiNodePropertySourceComment;
+
+    /** Constant for Category Tracked Changes */
+    public static final String P_TRACKED_CHANGES_CAT =
+        Messages.SpecTestCaseGUIPropertySourceTrackedChangesCategory;
           
     /**
      * The business process to handle the parameters and references.
@@ -78,6 +88,7 @@ public abstract class AbstractNodePropertySource
     /** cached property descriptor for taskId */
     private IPropertyDescriptor m_taskIdPropDesc = null;
     
+
     /**
      * @param guiNode the depending GuiNode.
      */
@@ -518,5 +529,89 @@ public abstract class AbstractNodePropertySource
      */
     protected void setTaskIdPropDesc(IPropertyDescriptor taskIdPropDesc) {
         m_taskIdPropDesc = taskIdPropDesc;
+    }
+
+
+
+    /**
+     * Initializes the tracked changes property descriptor
+     */
+    protected void initTrackedChangesPropDescriptor() {
+        SortedMap<Long, String> changes =
+                ((INodePO)getPoNode()).getTrackedChanges();
+        int i = 0;
+        for (Object o : changes.keySet()) {
+            if (o instanceof Long) {
+                Long key = (Long)o;
+                JBPropertyDescriptor propDes = new JBPropertyDescriptor(
+                        new TrackedChangesValueController(i),
+                        formatDateForTrackedChanges(key));
+                propDes.setCategory(P_TRACKED_CHANGES_CAT);
+                addPropertyDescriptor(propDes);
+                i++;
+            }
+        }
+    }
+
+    /**
+     * gives a formatted string representing the date of a tracked change
+     * @param dateInMillis the date in milliseconds
+     * @return a formatted string representing the date
+     */
+    private String formatDateForTrackedChanges(Long dateInMillis) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(dateInMillis);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
+        String s = df.format(cal.getTime());
+        return s;
+    }
+
+
+    /**
+     * Class to control tracked changes value.
+     * @author BREDEX GmbH
+     * @created 01.11.2013
+     */
+    public class TrackedChangesValueController
+        extends AbstractPropertyController {
+
+        /**
+         * index of array
+         */
+        private int m_index = 0;
+
+        /**
+         * constructor
+         *
+         * @param i index
+         */
+        public TrackedChangesValueController(int i) {
+            m_index = i;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public boolean setProperty(Object value) {
+            return true;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public Object getProperty() {
+            INodePO poNode = ((INodePO)getPoNode());
+            if (poNode != null) {
+                SortedMap<Long, String> changes = ((INodePO)getPoNode())
+                        .getTrackedChanges();
+                if (changes != null) {
+                    List values =
+                            new ArrayList<String>(changes.values());
+                    return values.get(m_index);
+                }
+            }
+            return StringConstants.EMPTY;
+        }
+
     }
 }
