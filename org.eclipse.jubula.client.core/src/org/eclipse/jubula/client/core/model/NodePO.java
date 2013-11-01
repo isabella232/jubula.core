@@ -711,48 +711,77 @@ abstract class NodePO implements INodePO {
     /**
      * {@inheritDoc}
      */
-    public void addTrackedChange(String optionalComment) {
+    public void addTrackedChange(String optionalComment, boolean isCleaning) {
         final IProjectPO project = GeneralStorage.getInstance().getProject();
-        boolean isTrackingChanges = false;
-        if (project != null) {
-            isTrackingChanges = project.getIsTrackingActivated();
+        if (project == null || !project.getIsTrackingActivated()) {
+            return; // no project is opened or tracking not activated
         }
-        if (isTrackingChanges) {
-            final long timestamp = new Date().getTime();
-            // remove tracked changes, if there are more than 30
-            // placeholder for data from project properties
-            int maxTrackedChangesPerNode = 30;
-            final long maxDurationOfTrackedChangesInMS =
-                    1000L * 60 * 60 * 24 * 80;
-            if (maxTrackedChangesPerNode >= 0) {
-                while (m_trackedChangesMap.size() >= maxTrackedChangesPerNode) {
-                    int removeCount = m_trackedChangesMap.size()
-                            - maxTrackedChangesPerNode;
-                    while (removeCount > 0) {
-                        m_trackedChangesMap
-                                .remove(getTrackedChanges().firstKey());
-                    }
-                }
+        final long timestampInMS = new Date().getTime();
+        if (isCleaning) { // remove tracked changes
+            int span = project.getProjectProperties().getTrackChangesSpan();
+            switch (project.getProjectProperties().getTrackChangesUnit()) {
+                case CHANGES:
+                    removeTrackedChangesByCount(span - 1); // -1 for the new one
+                    break;
+                case DAYS:
+                    removeTrackedChangesByTimeInDays(timestampInMS, span);
+                    break;
+                default:
+                    return;
             }
-            // remove tracked changes older than 80 days
-            if (maxDurationOfTrackedChangesInMS >= 0) {
-                SortedMap<Long, String> changes = getTrackedChanges();
-                while (changes.size() > 0
-                        && timestamp - changes.firstKey()
-                                > maxDurationOfTrackedChangesInMS) {
-                    m_trackedChangesMap.remove(changes.firstKey());
-                }
-            }
-            String systemPropertyName = GeneralStorage.getInstance()
-                    .getProject().getProjectProperties()
-                    .getTrackChangesSignature();
-            StringBuffer comment = new StringBuffer(
-                    System.getProperty(systemPropertyName, "")); //$NON-NLS-1$
-            if (optionalComment != null) {
+        }
+        final String name = project.getProjectProperties()
+                .getTrackChangesSignature();
+        String value = ""; //$NON-NLS-1$
+        if (name != null) {
+            value = System.getProperty(name, value);
+        }
+        StringBuffer comment = new StringBuffer(value);
+        if (optionalComment.length() > 0) {
+            if (comment.length() > 0) {
                 comment.append(": "); //$NON-NLS-1$
-                comment.append(optionalComment);
             }
-            m_trackedChangesMap.put(timestamp, comment.toString());
+            comment.append(optionalComment);
+        }
+        m_trackedChangesMap.put(timestampInMS, comment.toString());
+    }
+
+    /**
+     * Remove tracked changes of this node beginning with the oldest, if the maximum number has reached.
+     * @param maxTrackedChangesPerNode The maximum allowed number of tracked changes per node.
+     */
+    private void removeTrackedChangesByCount(
+            final int maxTrackedChangesPerNode) {
+        if (maxTrackedChangesPerNode >= 0) {
+            SortedMap<Long, String> copy = getTrackedChanges();
+            for (int removeCount = m_trackedChangesMap.size()
+                    - maxTrackedChangesPerNode;
+                    removeCount > 0; removeCount--) {
+                Long key = copy.lastKey();
+                copy.remove(key);
+                m_trackedChangesMap.remove(key);
+            }
+        }
+    }
+
+    /**
+     * Remove tracked changes of this node beginning with the oldest, if they are created before
+     * the given time stamp.
+     * @param currentTimesInMS The current time stamp in milliseconds
+     * @param days The maximum allowed number in days of tracked changes per node.
+     */
+    private void removeTrackedChangesByTimeInDays(
+            final long currentTimesInMS, final int days) {
+        if (days >= 0) {
+            final long durationOfDayInMS = 1000L * 60 * 60 * 24;
+            final long beginningInMS =
+                    currentTimesInMS - days * durationOfDayInMS;
+            SortedMap<Long, String> copy = getTrackedChanges();
+            while (copy.size() > 0 && copy.lastKey() < beginningInMS) {
+                Long key = copy.lastKey();
+                copy.remove(key);
+                m_trackedChangesMap.remove(key);
+            }
         }
     }
 
@@ -760,10 +789,9 @@ abstract class NodePO implements INodePO {
      * {@inheritDoc}
      */
     public SortedMap<Long, String> getTrackedChanges() {
-        SortedMap<Long, String> sortedMap = new TreeMap<Long, String>();
-        for (Long key : m_trackedChangesMap.keySet()) {
-            sortedMap.put(key, m_trackedChangesMap.get(key));
-        }
+        SortedMap<Long, String> sortedMap = new TreeMap<Long, String>(
+                Collections.reverseOrder());
+        sortedMap.putAll(m_trackedChangesMap);
         return sortedMap;
     }
 

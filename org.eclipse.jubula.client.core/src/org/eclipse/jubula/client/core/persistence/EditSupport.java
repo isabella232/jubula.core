@@ -336,7 +336,7 @@ public class EditSupport {
                 || m_workVersion instanceof ITestSuitePO
                 || m_workVersion instanceof ITestJobPO) {
             INodePO node = (INodePO) m_workVersion;
-            node.addTrackedChange("modified"); //$NON-NLS-1$
+            node.addTrackedChange("modified", true); //$NON-NLS-1$
         }
     }
 

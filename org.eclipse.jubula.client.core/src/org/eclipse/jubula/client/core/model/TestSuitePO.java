@@ -78,7 +78,7 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
      */
     TestSuitePO(String testSuiteName, boolean isGenerated) {
         super(testSuiteName, isGenerated);
-        addTrackedChange(CREATED); //$NON-NLS-1$
+        addTrackedChange(CREATED, false);
         init();
     }
     
@@ -90,7 +90,6 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
      */
     TestSuitePO(String testSuiteName, String guid, boolean isGenerated) {
         super(testSuiteName, guid, isGenerated);
-        addTrackedChange(CREATED); //$NON-NLS-1$
         init();
     }
 

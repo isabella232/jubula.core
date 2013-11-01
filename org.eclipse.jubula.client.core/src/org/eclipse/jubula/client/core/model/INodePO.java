@@ -223,20 +223,24 @@ public interface INodePO extends ITimestampPO {
 
     /**
      * Add a tracked change information consisting of the current time stamp as key and
-     * a comment. The comment begins with the value of the property defined in the
+     * a comment. The created comment begins with the value of the property defined in the
      * project configuration and suffixed by the optional comment, if it is given.
      *
-     * Not relevant changes are automatically removed by the rules defined in the project configuration.
+     * Not relevant changes can be are automatically removed by the rules defined
+     * in the project configuration, if it is wished.
      * @param optionalComment An additional information added to the value of the property
      *                        defined in the project configuration. It can be null,
      *                        to store only the value of the property defined in the
      *                        project configuration.
+     * @param isCleaning True, if not relevant changes are automatically removed by the rules
+     *                   defined in the project configuration, otherwise nothing is removed.
      * @see {@link #getTrackedChanges()}
      */
-    public void addTrackedChange(String optionalComment);
+    public void addTrackedChange(String optionalComment, boolean isCleaning);
 
     /**
-     * @return A copied sorted map of change information with time stamp as key and comment as value.
+     * @return A sorted copied map of change information with time stamp as key and comment as value.
+     *         The keys are in descending order, i.e. the first element is the newest tracked change.
      *         The comment can be null.
      * @see {@link #addTrackedChange(Long, String)}
      * @see {@link SortedMap#firstKey()}
