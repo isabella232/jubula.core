@@ -712,8 +712,11 @@ abstract class NodePO implements INodePO {
      * {@inheritDoc}
      */
     public void addTrackedChange(String optionalComment) {
-        final boolean isTrackingChanges = GeneralStorage.getInstance()
-                .getProject().getIsTrackingActivated();
+        final IProjectPO project = GeneralStorage.getInstance().getProject();
+        boolean isTrackingChanges = false;
+        if (project != null) {
+            isTrackingChanges = project.getIsTrackingActivated();
+        }
         if (isTrackingChanges) {
             final long timestamp = new Date().getTime();
             // remove tracked changes, if there are more than 30
