@@ -420,7 +420,21 @@ class XmlExporter {
         xml.setIsReportOnSuccess(projectProperties.getIsReportOnSuccess());
         xml.setIsReportOnFailure(projectProperties.getIsReportOnFailure());
         xml.setDashboardURL(projectProperties.getDashboardURL());
+        fillTrackingConfig(xml, projectProperties);
+        
         m_monitor.worked(1);
+    }
+
+    /**
+     * @param xml the XML to fill
+     * @param projectProperties the properties to use
+     */
+    private void fillTrackingConfig(Project xml,
+            IProjectPropertiesPO projectProperties) {
+        xml.setTrackingEnabled(projectProperties.getIsTrackingActivated());
+        xml.setTrackingAttribute(projectProperties.getTrackChangesSignature());
+        xml.setTrackingUnit(projectProperties.getTrackChangesUnit().toString());
+        xml.setTrackingSpan(projectProperties.getTrackChangesSpan());
     }
 
     /**

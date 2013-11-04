@@ -132,6 +132,7 @@ import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOper
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
+import org.eclipse.jubula.client.core.utils.TrackingUnit;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
@@ -811,6 +812,12 @@ class XmlImporter {
         projectProperties.setDashboardURL(xml.getDashboardURL());
         projectProperties.getCheckConfCont().setEnabled(
                 xml.getTeststyleEnabled());
+        
+        projectProperties.setIsTrackingActivated(xml.getTrackingEnabled());
+        projectProperties.setTrackChangesSignature(xml.getTrackingAttribute());
+        projectProperties.setTrackChangesUnit(
+                TrackingUnit.valueOf(xml.getTrackingUnit()));
+        projectProperties.setTrackChangesSpan(xml.getTrackingSpan());
         return projectProperties;
     }
 

@@ -91,6 +91,14 @@
         		minOccurs="0" maxOccurs="1" default="false" />
         	<xs:element name="dashboardURL" type="xs:string" minOccurs="0"
         		maxOccurs="1" nillable="true" />
+        	<xs:element name="trackingEnabled" type="xs:boolean" minOccurs="0"
+        		maxOccurs="1" default="false" />
+        	<xs:element name="trackingAttribute" type="xs:string" minOccurs="0"
+        		maxOccurs="1" nillable="true" />
+        	<xs:element name="trackingUnit" type="xs:string" minOccurs="0"
+        		maxOccurs="1" nillable="true" />
+        	<xs:element name="trackingSpan" type="xs:int" minOccurs="0"
+        		maxOccurs="1" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
