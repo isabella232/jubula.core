@@ -38,7 +38,6 @@ import org.eclipse.jubula.client.archive.converter.IXmlConverter;
 import org.eclipse.jubula.client.archive.converter.V4C001;
 import org.eclipse.jubula.client.archive.converter.WinToolkitIdConverter;
 import org.eclipse.jubula.client.archive.i18n.Messages;
-import org.eclipse.jubula.client.archive.output.NullImportOutput;
 import org.eclipse.jubula.client.archive.schema.Aut;
 import org.eclipse.jubula.client.archive.schema.AutConfig;
 import org.eclipse.jubula.client.archive.schema.Cap;
@@ -55,6 +54,7 @@ import org.eclipse.jubula.client.archive.schema.I18NString;
 import org.eclipse.jubula.client.archive.schema.MapEntry;
 import org.eclipse.jubula.client.archive.schema.MonitoringValues;
 import org.eclipse.jubula.client.archive.schema.NamedTestData;
+import org.eclipse.jubula.client.archive.schema.Node;
 import org.eclipse.jubula.client.archive.schema.ObjectMapping;
 import org.eclipse.jubula.client.archive.schema.ObjectMappingProfile;
 import org.eclipse.jubula.client.archive.schema.OmCategory;
@@ -259,6 +259,9 @@ class XmlImporter {
 
     /** Parameters that could not be parsed during import */
     private List<String> m_unparseableParameters = new ArrayList<String>();
+
+    /** whether to skip the import of tracked data */
+    private boolean m_skipTrackingInformation = false;
     
     /**
      * Constructor
@@ -267,21 +270,14 @@ class XmlImporter {
      *            The progress monitor for this import operation.
      * @param io
      *            the import output device during import progress
+     * @param skipTrackingInformation
+     *            whether to skip the import of tracked data
      */
-    public XmlImporter(IProgressMonitor monitor, IProgressConsole io) {
+    public XmlImporter(IProgressMonitor monitor, IProgressConsole io,
+            boolean skipTrackingInformation) {
         m_monitor = monitor;
         m_io = io;
-    }
-    
-    /**
-     * Constructor
-     * 
-     * @param monitor
-     *            The progress monitor for this import operation.
-     */
-    public XmlImporter(IProgressMonitor monitor) {
-        m_monitor = monitor;
-        m_io = new NullImportOutput();
+        m_skipTrackingInformation  = skipTrackingInformation;
     }
     
     /**
@@ -805,20 +801,22 @@ class XmlImporter {
         proj.setToolkit(xml.getAutToolKit());
         proj.setIsReusable(xml.getIsReusable());
         proj.setIsProtected(xml.getIsProtected());
-        IProjectPropertiesPO projectProperties = proj.getProjectProperties();
-        projectProperties.setALMRepositoryName(xml.getAlmRepositoryName());
-        projectProperties.setIsReportOnSuccess(xml.getIsReportOnSuccess());
-        projectProperties.setIsReportOnFailure(xml.getIsReportOnFailure());
-        projectProperties.setDashboardURL(xml.getDashboardURL());
-        projectProperties.getCheckConfCont().setEnabled(
+        IProjectPropertiesPO projProperties = proj.getProjectProperties();
+        projProperties.setALMRepositoryName(xml.getAlmRepositoryName());
+        projProperties.setIsReportOnSuccess(xml.getIsReportOnSuccess());
+        projProperties.setIsReportOnFailure(xml.getIsReportOnFailure());
+        projProperties.setDashboardURL(xml.getDashboardURL());
+        projProperties.getCheckConfCont().setEnabled(
                 xml.getTeststyleEnabled());
         
-        projectProperties.setIsTrackingActivated(xml.getTrackingEnabled());
-        projectProperties.setTrackChangesSignature(xml.getTrackingAttribute());
-        projectProperties.setTrackChangesUnit(
-                TrackingUnit.valueOf(xml.getTrackingUnit()));
-        projectProperties.setTrackChangesSpan(xml.getTrackingSpan());
-        return projectProperties;
+        projProperties.setIsTrackingActivated(xml.getTrackingEnabled());
+        projProperties.setTrackChangesSignature(xml.getTrackingAttribute());
+        if (xml.isSetTrackingUnit()) {
+            projProperties.setTrackChangesUnit(
+                    TrackingUnit.valueOf(xml.getTrackingUnit()));
+        }
+        projProperties.setTrackChangesSpan(xml.getTrackingSpan());
+        return projProperties;
     }
 
     /**
@@ -1910,6 +1908,8 @@ class XmlImporter {
         tc.setTaskId(xml.getTaskId());
         tc.setInterfaceLocked(xml.getInterfaceLocked());
         tc.setDataFile(xml.getDatafile());
+        fillTrackedChangesInformation(tc, xml);
+        
         if (xml.getReferencedTestData() != null) {
             String referencedDataName = xml.getReferencedTestData();
             for (IParameterInterfacePO testDataCube 
@@ -1977,6 +1977,9 @@ class XmlImporter {
         
         ts.setComment(xml.getComment());
         ts.setTaskId(xml.getTaskId());
+        
+        fillTrackedChangesInformation(ts, xml);
+        
         ts.setCmdLineParameter(xml.getCommandLineParameter());
         if (xml.getSelectedAut() != null) {
             ts.setAut(findReferencedAut(xml.getSelectedAut()));
@@ -2021,6 +2024,7 @@ class XmlImporter {
         }
         tj.setComment(xml.getComment());
         tj.setTaskId(xml.getTaskId());
+        fillTrackedChangesInformation(tj, xml);
         
         for (RefTestSuite xmlRts : xml.getRefTestSuiteList()) {
             IRefTestSuitePO rts;
@@ -2047,6 +2051,24 @@ class XmlImporter {
             tj.addNode(rts);
         }
         return tj;
+    }
+
+    /**
+     * @param poNode
+     *            the persistent object to fill
+     * @param xmlNode
+     *            the xml node to read from
+     */
+    private void fillTrackedChangesInformation(INodePO poNode, Node xmlNode) {
+        List<MapEntry> trackedModificationList = 
+                xmlNode.getTrackedModificationList();
+        if (!trackedModificationList.isEmpty() && !m_skipTrackingInformation) {
+            Map<Long, String> trackedChanges = new HashMap<Long, String>();
+            for (MapEntry me : trackedModificationList) {
+                trackedChanges.put(Long.valueOf(me.getKey()), me.getValue());
+            }
+            poNode.setTrackedChangesMap(trackedChanges);
+        }
     }
 
     /**

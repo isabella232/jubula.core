@@ -691,8 +691,7 @@ abstract class NodePO implements INodePO {
      * Only for Persistence (JPA / EclipseLink).
      * @param trackedChangesMap The tracked changes as a map of time stamp as key and comment as value.
      */
-    @SuppressWarnings("unused")
-    private void setTrackedChangesMap(Map<Long, String> trackedChangesMap) {
+    public void setTrackedChangesMap(Map<Long, String> trackedChangesMap) {
         this.m_trackedChangesMap = trackedChangesMap;
     }
 

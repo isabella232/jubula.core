@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.archive.XmlStorage;
+import org.eclipse.jubula.client.archive.output.NullImportOutput;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
 import org.eclipse.jubula.client.core.businessprocess.INameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
@@ -126,8 +127,10 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 }
                 if (content != null) {
                     final IProjectPO duplicatedProject = XmlStorage.load(
-                        content, true, paramNameMapper, compNameCache,
-                        subMonitor.newChild(WORK_PROJECT_CREATION));
+                        content, true, null, null, paramNameMapper,
+                        compNameCache, 
+                        subMonitor.newChild(WORK_PROJECT_CREATION),
+                        new NullImportOutput(), true);
                     IWritableComponentNameMapper compNameMapper =
                         new ProjectComponentNameMapper(
                             compNameCache, duplicatedProject);

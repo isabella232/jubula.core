@@ -35,7 +35,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.archive.i18n.Messages;
-import org.eclipse.jubula.client.archive.output.NullImportOutput;
 import org.eclipse.jubula.client.archive.schema.ContentDocument;
 import org.eclipse.jubula.client.archive.schema.ContentDocument.Content;
 import org.eclipse.jubula.client.archive.schema.Project;
@@ -237,119 +236,6 @@ public class XmlStorage {
         return contentDoc.xmlText(genOpts);
     }
     
- 
-    /**
-     * Takes the supplied xmlString and parses it. According to the content an
-     * instance of IProjetPO along with its associated components is created.
-     * 
-     * @param xmlString
-     *            XML representation of a project
-     * @param assignNewGuid
-     *            <code>true</code> if the project and all subnodes should be
-     *            assigned new GUIDs. Otherwise <code>false</code>.
-     * @param paramNameMapper
-     *            mapper to resolve param names
-     * @param compNameCache
-     *            cache to resolve component names
-     * @param monitor
-     *            The progress monitor for this potentially long-running
-     *            operation.
-     * @param io
-     *            the device to write the import output
-     * @return an transient IProjectPO and its components
-     * @throws PMReadException
-     *             in case of a malformed XML string
-     * @throws JBVersionException
-     *             in case of version conflict between used toolkits of imported
-     *             project and the installed Toolkit Plugins
-     * @throws InterruptedException
-     *             if the operation was canceled.
-     */
-    public static IProjectPO load(String xmlString, boolean assignNewGuid, 
-        IParamNameMapper paramNameMapper, 
-        IWritableComponentNameCache compNameCache, IProgressMonitor monitor,
-        IProgressConsole io) 
-        throws PMReadException, JBVersionException, InterruptedException {
-        
-        return load(xmlString, assignNewGuid, null, null, paramNameMapper, 
-                compNameCache, monitor, io);
-    }
-    
-    /**
-     * Takes the supplied xmlString and parses it. According to the content an
-     * instance of IProjetPO along with its associated components is created.
-     * 
-     * @param xmlString
-     *            XML representation of a project
-     * @param assignNewGuid
-     *            <code>true</code> if the project and all subnodes should be
-     *            assigned new GUIDs. Otherwise <code>false</code>.
-     * @param paramNameMapper
-     *            mapper to resolve param names
-     * @param compNameCache
-     *            cache to resolve component names
-     * @param monitor
-     *            The progress monitor for this potentially long-running
-     *            operation.
-     * @return an transient IProjectPO and its components
-     * @throws PMReadException
-     *             in case of a malformed XML string
-     * @throws JBVersionException
-     *             in case of version conflict between used toolkits of imported
-     *             project and the installed Toolkit Plugins
-     * @throws InterruptedException
-     *             if the operation was canceled.
-     */
-    public static IProjectPO load(String xmlString, boolean assignNewGuid, 
-        IParamNameMapper paramNameMapper, 
-        IWritableComponentNameCache compNameCache, IProgressMonitor monitor) 
-        throws PMReadException, JBVersionException, InterruptedException {
-        return load(xmlString, assignNewGuid, null, null, paramNameMapper, 
-                compNameCache, monitor, new NullImportOutput());
-    }
-
-    /**
-     * Takes the supplied xmlString and parses it. According to the content an
-     * instance of IProjetPO along with its associated components is created.
-     * 
-     * @param xmlString
-     *            XML representation of a project
-     * @param assignNewGuid
-     *            Flag for assigning the project a new GUID and version
-     * @param majorVersion
-     *            Major version number for the created object, or
-     *            <code>null</code> if the version from the imported XML should
-     *            be used.
-     * @param minorVersion
-     *            Minor version number for the created object, or
-     *            <code>null</code> if the version from the imported XML should
-     *            be used.
-     * @param paramNameMapper
-     *            mapper to resolve param names
-     * @param compNameCache
-     *            cache to resolve component names
-     * @param monitor
-     *            The progress monitor for this potentially long-running
-     *            operation.
-     * @return an transient IProjectPO and its components
-     * @throws PMReadException
-     *             in case of a malformed XML string
-     * @throws JBVersionException
-     *             in case of version conflict between used toolkits of imported
-     *             project and the installed Toolkit Plugins
-     * @throws InterruptedException
-     *             if the operation was canceled.
-     */
-    public static IProjectPO load(String xmlString, boolean assignNewGuid, 
-        Integer majorVersion, Integer minorVersion,
-        IParamNameMapper paramNameMapper, 
-        IWritableComponentNameCache compNameCache, IProgressMonitor monitor) 
-        throws PMReadException, JBVersionException, InterruptedException {
-        return load(xmlString, assignNewGuid, majorVersion, minorVersion, 
-                paramNameMapper, compNameCache, 
-                monitor, new NullImportOutput());
-    }
-    
     /**
      * Takes the supplied xmlString and parses it. According to the content an
      * instance of IProjetPO along with its associated components is created.
@@ -375,6 +261,8 @@ public class XmlStorage {
      *            operation.
      * @param io
      *            the device to write the import output
+     * @param skipTrackingInformation
+     *            whether to skip importing of tracked information
      * @return an transient IProjectPO and its components
      * @throws PMReadException
      *             in case of a malformed XML string
@@ -384,11 +272,12 @@ public class XmlStorage {
      * @throws InterruptedException
      *             if the operation was canceled.
      */
-    public static IProjectPO load(String xmlString, boolean assignNewGuid, 
+    public static IProjectPO load(String xmlString, boolean assignNewGuid,
         Integer majorVersion, Integer minorVersion,
-        IParamNameMapper paramNameMapper, 
-        IWritableComponentNameCache compNameCache, IProgressMonitor monitor,
-        IProgressConsole io) 
+        IParamNameMapper paramNameMapper,
+        IWritableComponentNameCache compNameCache,
+        IProgressMonitor monitor, IProgressConsole io, 
+        boolean skipTrackingInformation)
         throws PMReadException, JBVersionException, InterruptedException {
         
         ContentDocument contentDoc;
@@ -401,15 +290,17 @@ public class XmlStorage {
             monitor.beginTask(StringConstants.EMPTY, numExecTestCases + 1);
             monitor.worked(1);
             
+            XmlImporter xmlImporter = new XmlImporter(monitor, io,
+                    skipTrackingInformation);
             if (assignNewGuid) {
-                return new XmlImporter(monitor, io).createProject(
+                return xmlImporter.createProject(
                     projectXml, assignNewGuid, paramNameMapper, compNameCache);
             } else if (majorVersion != null && minorVersion != null) {
-                return new XmlImporter(monitor, io).createProject(
+                return xmlImporter.createProject(
                     projectXml, majorVersion, minorVersion, paramNameMapper, 
                     compNameCache);
             }
-            return new XmlImporter(monitor, io).createProject(projectXml, 
+            return xmlImporter.createProject(projectXml, 
                     paramNameMapper, compNameCache);
         } catch (XmlException e) {
             throw new PMReadException(Messages.InvalidImportFile,
@@ -790,45 +681,9 @@ public class XmlStorage {
         IProgressMonitor monitor, IProgressConsole io) throws PMReadException, 
         JBVersionException, InterruptedException {
 
-        return load(readProjectFile(fileURL), assignNewGuids, paramNameMapper, 
-                compNameCache, monitor, io);
+        return load(readProjectFile(fileURL), assignNewGuids, null, null,
+                paramNameMapper, compNameCache, monitor, io, false);
     }
-    
-    /**
-     * read a <code> GeneralStorage </code> object from filename <b> call
-     * getProjectAutToolKit(String filename) at first </b>
-     * 
-     * @param fileURL
-     *            the URL of project file to read
-     * @param paramNameMapper
-     *            mapper to resolve param names
-     * @param compNameCache
-     *            cache to resolve component names
-     * @param assignNewGuids
-     *            <code>true</code> if new GUIDs should be created for each PO.
-     *            <code>false</code> if old GUIDs should be used.
-     * @param monitor
-     *            The progress monitor for this potentially long-running
-     *            operation.
-     * @return the persisted object
-     * @throws PMReadException
-     *             in case of error
-     * @throws JBVersionException
-     *             in case of version conflict between used toolkits of imported
-     *             project and the installed Toolkit Plugins
-     * @throws InterruptedException
-     *             if the operation was canceled.
-     */
-    public IProjectPO readProject(URL fileURL, 
-        IParamNameMapper paramNameMapper, 
-        IWritableComponentNameCache compNameCache, boolean assignNewGuids, 
-        IProgressMonitor monitor) throws PMReadException, 
-        JBVersionException, InterruptedException {
-
-        return load(readProjectFile(fileURL), assignNewGuids, paramNameMapper, 
-                compNameCache, monitor, new NullImportOutput());
-    }
-
 
     /**
      * 

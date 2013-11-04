@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
@@ -248,4 +249,12 @@ public interface INodePO extends ITimestampPO {
      */
     public SortedMap<Long, String> getTrackedChanges();
 
+    /**
+     * Only for importing.
+     * 
+     * @param trackedChangesMap
+     *            The tracked changes as a map of time stamp as key and comment
+     *            as value.
+     */
+    public void setTrackedChangesMap(Map<Long, String> trackedChangesMap);
 }

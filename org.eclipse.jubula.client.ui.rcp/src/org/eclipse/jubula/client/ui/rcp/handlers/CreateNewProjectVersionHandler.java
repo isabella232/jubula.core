@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.archive.XmlStorage;
+import org.eclipse.jubula.client.archive.output.NullImportOutput;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
 import org.eclipse.jubula.client.core.businessprocess.INameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
@@ -191,7 +192,8 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
             final IProjectPO duplicatedProject = XmlStorage.load(
                 content, false, m_majorVersionNumber, 
                 m_minorVersionNumber, paramNameMapper, compNameCache,
-                subMonitor.newChild(WORK_PROJECT_CREATION));
+                subMonitor.newChild(WORK_PROJECT_CREATION),
+                new NullImportOutput(), true);
             if (monitor.isCanceled()) {
                 throw new InterruptedException();
             }

@@ -23,6 +23,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.SortedMap;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -765,6 +766,14 @@ class XmlExporter {
         xml.setGenerated(po.isGenerated());
         xml.setActive(po.isActive());
         xml.setTaskId(po.getTaskId());
+
+        // export tracked changes
+        SortedMap<Long, String> trackedChanges = po.getTrackedChanges();
+        for (Long timestamp : trackedChanges.keySet()) {
+            MapEntry trackedModification = xml.addNewTrackedModification();
+            trackedModification.setKey(timestamp.toString());
+            trackedModification.setValue(trackedChanges.get(timestamp));
+        }
         
         // Finished a node
         m_monitor.worked(1);
