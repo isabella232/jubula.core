@@ -35,7 +35,7 @@ import javax.persistence.Version;
 
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.client.core.utils.Timeunit;
+import org.eclipse.jubula.client.core.utils.TrackingUnit;
 
 /**
  * @author BREDEX GmbH
@@ -97,7 +97,7 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     private String m_trackChangesSignature = null;
     
     /** The unit in which time should be measured for storing changes */
-    private Timeunit m_trackChangesUnit = null;
+    private TrackingUnit m_trackChangesUnit = null;
     
     /** The timespan of how long changes should be stored */
     private Integer m_trackChangesSpan = null;
@@ -602,12 +602,12 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     /** {@inheritDoc} */
     @Basic
     @Column(name = "TRACK_CHANGES_UNIT")
-    public Timeunit getTrackChangesUnit() {
+    public TrackingUnit getTrackChangesUnit() {
         return m_trackChangesUnit;
     }
 
     /** {@inheritDoc} */
-    public void setTrackChangesUnit(Timeunit unit) {
+    public void setTrackChangesUnit(TrackingUnit unit) {
         m_trackChangesUnit = unit;
     }
 

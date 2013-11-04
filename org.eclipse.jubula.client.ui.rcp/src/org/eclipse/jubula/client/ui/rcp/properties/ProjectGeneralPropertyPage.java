@@ -35,7 +35,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
-import org.eclipse.jubula.client.core.utils.Timeunit;
+import org.eclipse.jubula.client.core.utils.TrackingUnit;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
@@ -511,7 +511,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         daysButton.addSelectionListener(listener);
         changesButton.addSelectionListener(listener);
         
-        Timeunit unit = m_origProjectProps.getTrackChangesUnit();
+        TrackingUnit unit = m_origProjectProps.getTrackChangesUnit();
         if (unit != null) {
             switch (unit) {
                 case CHANGES:
@@ -759,16 +759,16 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                     Integer.valueOf(m_trackChangesSpan.getText()));
         }
         if (m_trackChangesUnitSelection != null) {
-            Timeunit unit = null;
+            TrackingUnit unit = null;
             for (Control child : m_trackChangesUnitSelection.getChildren()) {
                 if (child instanceof Button) {
                     Button bt = (Button) child;
                     if (bt.getSelection()) {
                         String btText = bt.getText();
                         if (btText.equals("Days")) { //$NON-NLS-1$
-                            unit = Timeunit.DAYS;
+                            unit = TrackingUnit.DAYS;
                         } else if (btText.equals("Changes")) { //$NON-NLS-1$
-                            unit = Timeunit.CHANGES;
+                            unit = TrackingUnit.CHANGES;
                         }
                     }
                 }

@@ -11,18 +11,12 @@
 package org.eclipse.jubula.client.core.utils;
 
 /**
- * 
  * @author BREDEX GmbH
  * @created Oct 30, 2013
  */
-public enum Timeunit {
-    /**
-     * Time is measured via how many days passed
-     */
+public enum TrackingUnit {
+    /** Time is measured via how many days passed */
     DAYS,
-    
-    /**
-     * Time is measured via how much changes were made
-     */
+    /** Time is measured via how much changes were made */
     CHANGES
 }

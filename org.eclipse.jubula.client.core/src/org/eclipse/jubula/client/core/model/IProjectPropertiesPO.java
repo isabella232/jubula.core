@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.core.model;
 import java.util.Locale;
 import java.util.Set;
 
-import org.eclipse.jubula.client.core.utils.Timeunit;
+import org.eclipse.jubula.client.core.utils.TrackingUnit;
 
 /**
  * @author BREDEX GmbH
@@ -189,12 +189,12 @@ public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport {
     /**
      * @return the unit in which time should be measured for storing changes
      */
-    public abstract Timeunit getTrackChangesUnit();
+    public abstract TrackingUnit getTrackChangesUnit();
 
     /**
      * @param unit the unit in which time should be measured for storing changes
      */
-    public abstract void setTrackChangesUnit(Timeunit unit);
+    public abstract void setTrackChangesUnit(TrackingUnit unit);
 
     /**
      * @return the timespan of how long changes should be stored

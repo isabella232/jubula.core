@@ -56,6 +56,7 @@ import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.utils.DependencyCheckerOp;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.persistence.annotations.BatchFetch;
 import org.eclipse.persistence.annotations.BatchFetchType;
 import org.eclipse.persistence.annotations.Index;
@@ -732,18 +733,21 @@ abstract class NodePO implements INodePO {
         }
         final String name = project.getProjectProperties()
                 .getTrackChangesSignature();
-        String value = ""; //$NON-NLS-1$
+        String value = StringConstants.EMPTY;
         if (name != null) {
-            value = System.getProperty(name, value);
+            value = EnvironmentUtils.getProcessOrSystemProperty(name);
         }
-        StringBuffer comment = new StringBuffer(value);
-        if (optionalComment.length() > 0) {
-            if (comment.length() > 0) {
-                comment.append(": "); //$NON-NLS-1$
+        if (value != null) {
+            StringBuffer comment = new StringBuffer(value);
+            if (optionalComment.length() > 0) {
+                if (comment.length() > 0) {
+                    comment.append(StringConstants.COLON);
+                    comment.append(StringConstants.SPACE);
+                }
+                comment.append(optionalComment);
             }
-            comment.append(optionalComment);
+            m_trackedChangesMap.put(timestampInMS, comment.toString());
         }
-        m_trackedChangesMap.put(timestampInMS, comment.toString());
     }
 
     /**
@@ -794,5 +798,4 @@ abstract class NodePO implements INodePO {
         sortedMap.putAll(m_trackedChangesMap);
         return sortedMap;
     }
-
 }
