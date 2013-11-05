@@ -113,7 +113,7 @@ public class XStreamXmlAttributeConverter extends ReflectionConverter {
         ReflectionProvider provider = new PureJavaReflectionProvider();
         XStreamXmlAttributeConverter converter =
             new XStreamXmlAttributeConverter(
-                stream, stream.getClassMapper(), provider, type,
+                stream, stream.getMapper(), provider, type,
                 fieldNames);
         return converter;
     }

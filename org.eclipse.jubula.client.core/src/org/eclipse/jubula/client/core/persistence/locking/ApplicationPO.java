@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.persistence.locking;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -149,7 +150,9 @@ public class ApplicationPO {
             res.append(StringConstants.SPACE);
             res.append(StringConstants.EQUALS_SIGN);
             res.append(StringConstants.SPACE);
-            res.append(getTimestamp().toGMTString());
+            String timestamp = DateFormat.getDateInstance().format(
+                    getTimestamp());
+            res.append(timestamp);
         }
         return res.toString();
     }

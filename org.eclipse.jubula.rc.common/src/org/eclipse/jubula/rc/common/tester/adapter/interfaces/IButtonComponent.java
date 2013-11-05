@@ -17,4 +17,5 @@ package org.eclipse.jubula.rc.common.tester.adapter.interfaces;
  * @author BREDEX GmbH
  */
 public interface IButtonComponent extends ITextComponent, ISelectionComponent {
+    // currently empty
 }

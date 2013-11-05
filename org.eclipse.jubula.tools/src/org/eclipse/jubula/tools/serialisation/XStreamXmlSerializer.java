@@ -21,8 +21,8 @@ import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.XStreamException;
 import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
-import com.thoughtworks.xstream.core.BaseException;
 import com.thoughtworks.xstream.core.util.CompositeClassLoader;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -90,7 +90,7 @@ public class XStreamXmlSerializer implements IXmlSerializer {
             } 
             return m_stream.fromXML(text);
             
-        } catch (BaseException e) {
+        } catch (XStreamException e) {
             throw new SerialisationException(e.getMessage(), 
                 MessageIDs.E_SERILIZATION_FAILED);
         }
@@ -126,7 +126,7 @@ public class XStreamXmlSerializer implements IXmlSerializer {
             }
             buffer.append(m_stream.toXML(object));
             return buffer.toString();
-        } catch (BaseException e) {
+        } catch (XStreamException e) {
             throw new SerialisationException(e.getMessage(), 
                 MessageIDs.E_SERILIZATION_FAILED);
         }

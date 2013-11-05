@@ -125,7 +125,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
         if (!m_syncListenerRegistration) {
             Thread registrationThread = 
                 new Thread(m_listenerRegistrationWorker, 
-                        "Jubula Listener Registration");
+                        "Jubula Listener Registration"); //$NON-NLS-1$
             registrationThread.setDaemon(true);
             registrationThread.start();
         }
