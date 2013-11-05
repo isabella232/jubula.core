@@ -25,6 +25,8 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.ui.IPersistableElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -33,7 +35,10 @@ import org.eclipse.ui.IPersistableElement;
  */
 public class ClientLogInput extends PlatformObject 
                             implements ISimpleEditorInput {
-
+    /** the logger */
+    protected static final Logger LOG = LoggerFactory
+            .getLogger(ClientLogInput.class);
+    
     /** the log file */
     private File m_logFile;
     
@@ -84,9 +89,9 @@ public class ClientLogInput extends PlatformObject
      * {@inheritDoc}
      */
     public String getContent() throws CoreException {
+        BufferedReader reader = null;
         try {
-            BufferedReader reader = 
-                new BufferedReader(new FileReader(m_logFile));
+            reader = new BufferedReader(new FileReader(m_logFile));
             StringBuilder sb = new StringBuilder();
             String line = null;
             while ((line = reader.readLine()) != null) {
@@ -107,6 +112,14 @@ public class ClientLogInput extends PlatformObject
                     IStatus.OK,
                     Messages.ErrorMessageIO_EXCEPTION,
                     ioe));
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    LOG.error(e.getLocalizedMessage());
+                }
+            }
         }
     }
 

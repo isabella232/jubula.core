@@ -62,9 +62,10 @@ public class SendServerLogCommand implements ICommand {
 
         if (fileAppender != null) {
             final File clientLogFile = new File(fileAppender.getFile());
+            BufferedReader reader = null;
             // Send log
             try {
-                BufferedReader reader = new BufferedReader(new FileReader(
+                reader = new BufferedReader(new FileReader(
                         clientLogFile));
                 StringBuffer sb = new StringBuffer();
                 String line = null;
@@ -84,6 +85,14 @@ public class SendServerLogCommand implements ICommand {
             } catch (IllegalArgumentException e) {
                 // Set error status
                 response.setStatus(ServerLogResponseMessage.CONFIG_ERROR);
+            } finally {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (IOException e) {
+                        log.error(e.getLocalizedMessage());
+                    }
+                }
             }
         } else {
             // No file logger found, set error status
