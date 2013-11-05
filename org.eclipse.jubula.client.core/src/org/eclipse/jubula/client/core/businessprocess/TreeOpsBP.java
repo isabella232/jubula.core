@@ -133,6 +133,7 @@ public class TreeOpsBP {
         }
         propagateCompNames(modNodes, newExec);
         ownerNode.addNode(pos, newExec);
+        ownerNode.addTrackedChange("modified", true); //$NON-NLS-1$
         return newExec;
     }
     
