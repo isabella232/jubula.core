@@ -3540,6 +3540,66 @@
       </activeWhen>
     </handler>
     <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenTestCaseEditorHandler"
+      commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification">
+      <activeWhen>
+        <and>
+            <with variable="activePartId">
+                <equals value="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser" />
+            </with>
+            <iterate 
+                ifEmpty="false"
+                operator="and">
+                <or>
+                    <instanceof
+                          value="org.eclipse.jubula.client.core.model.ISpecTestCasePO">
+                    </instanceof>
+                </or>
+            </iterate>
+        </and>
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenTestSuiteEditorHandler"
+      commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification">
+      <activeWhen>
+        <and>
+            <with variable="activePartId">
+                <equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser" />
+            </with>
+            <iterate 
+                ifEmpty="false"
+                operator="and">
+                <or>
+                    <instanceof
+                          value="org.eclipse.jubula.client.core.model.ITestSuitePO">
+                    </instanceof>
+                </or>
+            </iterate>
+        </and>
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenTestJobEditorHandler"
+      commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification">
+      <activeWhen>
+        <and>
+            <with variable="activePartId">
+                <equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser" />
+            </with>
+            <iterate 
+                ifEmpty="false"
+                operator="and">
+                <or>
+                    <instanceof
+                          value="org.eclipse.jubula.client.core.model.ITestJobPO">
+                    </instanceof>
+                </or>
+            </iterate>
+        </and>
+      </activeWhen>
+    </handler>
+    <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.ShowSpecificationHandlerRefTS"
       commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification">
       <activeWhen>
