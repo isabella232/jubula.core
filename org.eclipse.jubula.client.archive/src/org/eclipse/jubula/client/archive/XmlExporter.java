@@ -114,6 +114,7 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
+import org.eclipse.jubula.client.core.utils.TrackingUnit;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -434,8 +435,14 @@ class XmlExporter {
             IProjectPropertiesPO projectProperties) {
         xml.setTrackingEnabled(projectProperties.getIsTrackingActivated());
         xml.setTrackingAttribute(projectProperties.getTrackChangesSignature());
-        xml.setTrackingUnit(projectProperties.getTrackChangesUnit().toString());
-        xml.setTrackingSpan(projectProperties.getTrackChangesSpan());
+        TrackingUnit trackChangesUnit = projectProperties.getTrackChangesUnit();
+        if (trackChangesUnit != null) {
+            xml.setTrackingUnit(trackChangesUnit.toString());
+        }
+        Integer trackChangesSpan = projectProperties.getTrackChangesSpan();
+        if (trackChangesSpan != null) {
+            xml.setTrackingSpan(trackChangesSpan);
+        }
     }
 
     /**
