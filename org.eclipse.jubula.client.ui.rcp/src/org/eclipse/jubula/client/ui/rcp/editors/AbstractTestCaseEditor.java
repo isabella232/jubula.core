@@ -71,7 +71,6 @@ import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
@@ -506,7 +505,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
         Iterator<INodePO> iter = testCase.getNodeListIterator();
         while (iter.hasNext()) {
             Object node = iter.next();
-            if (Persistor.isPoSubclass((IPersistentObject)node, ICapPO.class)) {
+            if (node instanceof ICapPO) {
                 ICapPO cap = (ICapPO)node;
                 if (cap.getName() == null
                         || StringConstants.EMPTY.equals(cap.getName())) {

@@ -624,7 +624,7 @@ public class MultipleNodePM  extends PersistenceManager {
                 Iterator iter = node.getNodeListIterator();
                 while (iter.hasNext()) {
                     INodePO child = (INodePO)iter.next();
-                    if (Persistor.isPoSubclass(child, IExecTestCasePO.class)) {
+                    if (child instanceof IExecTestCasePO) {
                         IExecTestCasePO execTC = (IExecTestCasePO)child;
                         execTC.setReferencedDataCube(null);
                     }

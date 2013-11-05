@@ -24,7 +24,6 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 
 
 /**
@@ -66,14 +65,13 @@ public class UINodeBP {
     public static ISpecTestCasePO getSpecTC(
         IStructuredSelection structuredSel) {
         IExecTestCasePO execTc = null;
-        if (structuredSel.getFirstElement() instanceof IExecTestCasePO) {
-            execTc = (IExecTestCasePO)structuredSel.getFirstElement();
-        } else if (structuredSel.getFirstElement() instanceof TestResultNode) {
-            TestResultNode trNode = (TestResultNode)structuredSel
-                    .getFirstElement();
+        Object firstElement = structuredSel.getFirstElement();
+        if (firstElement instanceof IExecTestCasePO) {
+            execTc = (IExecTestCasePO)firstElement;
+        } else if (firstElement instanceof TestResultNode) {
+            TestResultNode trNode = (TestResultNode)firstElement;
             INodePO nodePO = trNode.getNode();
-            while (!(Persistor.isPoSubclass(nodePO, 
-                    IExecTestCasePO.class))) {
+            while (!(nodePO instanceof IExecTestCasePO)) {
                 trNode = trNode.getParent();
                 if (trNode == null) {
                     return null;

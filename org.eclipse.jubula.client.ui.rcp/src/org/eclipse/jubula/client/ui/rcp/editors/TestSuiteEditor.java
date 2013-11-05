@@ -30,7 +30,6 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -142,7 +141,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         Iterator iter = tsWorkVersion.getNodeListIterator();
         while (iter.hasNext()) {
             INodePO child = (INodePO)iter.next();
-            if (Persistor.isPoSubclass(child, IExecTestCasePO.class)) {
+            if (child instanceof IExecTestCasePO) {
                 IExecTestCasePO execTC = (IExecTestCasePO)child;
                 if (!checkExecTCCompleteness(execTC)) {
                     

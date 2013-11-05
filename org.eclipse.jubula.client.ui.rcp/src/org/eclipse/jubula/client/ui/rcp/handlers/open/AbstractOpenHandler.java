@@ -23,7 +23,6 @@ import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -97,7 +96,7 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
      */
     private static IEditorInput createEditorInput(IPersistentObject node)
         throws PMException {
-        if (Persistor.isPoSubclass(node, INodePO.class)) {
+        if (node instanceof INodePO) {
             return new NodeEditorInput((INodePO)node);
         }
         return new PersistableEditorInput(node);

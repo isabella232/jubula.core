@@ -23,13 +23,12 @@ import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteCatHandle;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteEvHandle;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteTCHandle;
-import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -56,7 +55,7 @@ public class DeleteTreeItemHandlerTCBrowser
         Set < String > locations = new TreeSet < String > ();
         for (IExecTestCasePO node : reusesSet) {
             INodePO parent = null;
-            if (Persistor.isPoSubclass(node, IEventExecTestCasePO.class)) {
+            if (node instanceof IEventExecTestCasePO) {
                 parent = ((IEventExecTestCasePO) node).getParentNode();
             } else {
                 parent = node.getParentNode();

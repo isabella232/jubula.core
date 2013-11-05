@@ -45,7 +45,6 @@ import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.IncompleteDataException;
@@ -211,7 +210,7 @@ public class Traverser {
             INodePO node = stackObj.getExecNode();
             // next index
             ITDManager tdManager = null;
-            if (Persistor.isPoSubclass(node, IParamNodePO.class)) {
+            if (node instanceof IParamNodePO) {
                 tdManager = 
                     m_externalTestDataBP.getExternalCheckedTDManager(
                             (IParamNodePO)node);
@@ -224,7 +223,7 @@ public class Traverser {
                 if (!childNode.isActive()) {
                     return next();
                 }
-                if (Persistor.isPoSubclass(childNode, ICapPO.class)) {
+                if (childNode instanceof ICapPO) {
                     if (LOG.isDebugEnabled()) {
                         LOG.debug(Messages.ActualExecutedCap 
                             + StringConstants.COLON + StringConstants.SPACE 
@@ -233,8 +232,7 @@ public class Traverser {
                     fireNextCap((ICapPO)childNode);
                     return (ICapPO)childNode;
                 }
-                if (Persistor.isPoSubclass(
-                        childNode, IExecTestCasePO.class)) {
+                if (childNode instanceof IExecTestCasePO) {
                     if (((IExecTestCasePO)childNode).getSpecTestCase() 
                             == null) {
                         throw new IncompleteDataException(
@@ -247,8 +245,8 @@ public class Traverser {
                 Assert.notReached(Messages.ErrorInTestExecutionTree);
                 return null;
                 // next dataset
-            } else if (!(Persistor.isPoSubclass(stackObj.getExecNode(),
-                ITestSuitePO.class)) && tdManager != null) {
+            } else if (!(stackObj.getExecNode() instanceof ITestSuitePO)
+                    && tdManager != null) {
                 int maxDsNumber = tdManager.getDataSetCount();
                 if (stackObj.getNumberDs() == Traverser.NO_DATASET) {
                     stackObj.incrementDataSetNumber();
@@ -361,8 +359,8 @@ public class Traverser {
         throws JBException {
         int firstDs = NO_DATASET;
 
-        if (Persistor.isPoSubclass(node, IParamNodePO.class) 
-                && ((IParamNodePO)node).getDataManager() != null) {
+        if (node instanceof IParamNodePO
+                && ((IParamNodePO) node).getDataManager() != null) {
             IParamNodePO paramNode = (IParamNodePO)node;
             ITDManager tdManager = 
                 m_externalTestDataBP.getExternalCheckedTDManager(paramNode);
@@ -716,7 +714,7 @@ public class Traverser {
      * @return result of validation
      */
     private boolean isEventHandler(INodePO node) {
-        return (Persistor.isPoSubclass(node, IEventExecTestCasePO.class));
+        return node instanceof IEventExecTestCasePO;
     }
 
     /**

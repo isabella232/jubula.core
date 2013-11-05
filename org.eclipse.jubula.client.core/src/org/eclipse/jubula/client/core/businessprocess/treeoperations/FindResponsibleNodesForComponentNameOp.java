@@ -15,7 +15,6 @@ import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 
 /**
@@ -48,7 +47,7 @@ public class FindResponsibleNodesForComponentNameOp
      */
     public boolean operate(ITreeTraverserContext<INodePO> ctx, INodePO parent, 
             INodePO node, boolean alreadyVisited) {
-        if (Persistor.isPoSubclass(node, ICapPO.class)) {
+        if (node instanceof ICapPO) {
             final ICapPO cap = (ICapPO)node;
             CompNameResult result = 
                 m_compNameBP.findCompName(ctx.getCurrentTreePath(), 
@@ -56,7 +55,7 @@ public class FindResponsibleNodesForComponentNameOp
                         ComponentNamesBP.getInstance());
             if (getCompNameGuid().equals(result.getCompName())) {
                 INodePO responsibleNode = result.getResponsibleNode();
-                if (Persistor.isPoSubclass(responsibleNode, ICapPO.class)) {
+                if (responsibleNode instanceof ICapPO) {
                     getNodes().add(parent);
                 }
                 getNodes().add(responsibleNode);

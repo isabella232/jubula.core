@@ -25,7 +25,6 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.tools.exception.JBException;
 
@@ -210,13 +209,10 @@ public class TreeTraverser {
                         INodePO child = it.next();
                         traverseImpl(context, node, child);
                     }
-                    Class nodePoClass = Persistor.getClass(node);
                     if (m_traverseEventHandlers
-                            && Persistor.isPoClassSubclass(
-                                    nodePoClass, ITestCasePO.class)) {
+                            && node instanceof ITestCasePO) {
                         ISpecTestCasePO testCase;
-                        if (Persistor.isPoClassSubclass(
-                                nodePoClass, IExecTestCasePO.class)) {
+                        if (node instanceof IExecTestCasePO) {
                             testCase = 
                                 ((IExecTestCasePO)node).getSpecTestCase();
                         } else {

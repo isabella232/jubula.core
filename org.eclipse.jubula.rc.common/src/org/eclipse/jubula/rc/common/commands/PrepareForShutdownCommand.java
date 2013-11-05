@@ -161,7 +161,7 @@ public class PrepareForShutdownCommand implements ICommand {
                         terminate();
                     }
                     public void sendFailed(MessageHeader header, 
-                        String message) {
+                        String msg) {
                         terminate();
                     }
                     private void terminate() {

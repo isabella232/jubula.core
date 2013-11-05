@@ -17,7 +17,6 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 
@@ -52,12 +51,12 @@ public class FindNodesForComponentNameOp
      */
     public boolean operate(ITreeTraverserContext<INodePO> ctx, INodePO parent, 
             INodePO node, boolean alreadyVisited) {
-        if (Persistor.isPoSubclass(node, ICapPO.class)) {
+        if (node instanceof ICapPO) {
             ICapPO cap = (ICapPO)node;
             if (getCompNameGuid().equals(cap.getComponentName())) {
                 getNodes().add(cap);
             }
-        } else if (Persistor.isPoSubclass(node, IExecTestCasePO.class)) {
+        } else if (node instanceof IExecTestCasePO) {
             IExecTestCasePO execTc = (IExecTestCasePO)node;
             for (ICompNamesPairPO pair : execTc.getCompNamesPairs()) {
                 if (pair.getFirstName().equals(getCompNameGuid())

@@ -23,7 +23,6 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.graphics.Image;
@@ -32,7 +31,6 @@ import org.eclipse.swt.graphics.Image;
 /**
  * @author BREDEX GmbH
  * @created 18.10.2004
- *
  */
 public class TestResultTreeViewLabelProvider extends LabelProvider {
     /** ImageCache */
@@ -63,29 +61,24 @@ public class TestResultTreeViewLabelProvider extends LabelProvider {
      * @return Image
      */
     public Image getImage(Object element) {
-        TestResultNode resultTest = (TestResultNode)element;
+        TestResultNode resultTest = (TestResultNode) element;
         INodePO node = resultTest.getNode();
         Image image = null;
-        Class nodePoClass = Persistor.getClass(node);
-        if (Persistor.isPoClassSubclass(nodePoClass, ITestSuitePO.class)) {
+        if (node instanceof ITestSuitePO) {
             image = IconConstants.TS_IMAGE;
-        } else if (Persistor.isPoClassSubclass(nodePoClass,
-                ISpecTestCasePO.class)) {
+        } else if (node instanceof ISpecTestCasePO) {
             image = IconConstants.TC_IMAGE;
         }
-        if (Persistor.isPoClassSubclass(
-                nodePoClass, IExecTestCasePO.class)) {
-            if (Persistor.isPoClassSubclass(nodePoClass,
-                    IEventExecTestCasePO.class)) {
+        if (node instanceof IExecTestCasePO) {
+            if (node instanceof IEventExecTestCasePO) {
                 image = IconConstants.RESULT_EH_IMAGE;
             } else {
                 image = IconConstants.TC_IMAGE;
             }
         }
-        if (Persistor.isPoClassSubclass(nodePoClass, ICapPO.class)) {
+        if (node instanceof ICapPO) {
             TestResultNode parent = resultTest.getParent();
-            if (Persistor.isPoSubclass(parent.getNode(),
-                    IEventExecTestCasePO.class)) {
+            if (parent.getNode() instanceof IEventExecTestCasePO) {
                 image = IconConstants.EH_CAP_IMAGE;
             } else {
                 image = IconConstants.CAP_IMAGE;
@@ -93,6 +86,7 @@ public class TestResultTreeViewLabelProvider extends LabelProvider {
         }
         return image;
     }
+    
     /**
      * @param element
      *            Object
@@ -106,17 +100,13 @@ public class TestResultTreeViewLabelProvider extends LabelProvider {
                 return name;
             }
             INodePO node = resultTest.getNode();
-            Class nodePoClass = Persistor.getClass(node);
-            if (Persistor.isPoClassSubclass(
-                    nodePoClass, ITestSuitePO.class)) {
+            if (node instanceof ITestSuitePO) {
                 return "ResultTestSuite"; //$NON-NLS-1$
             }
-            if (Persistor.isPoClassSubclass(
-                    nodePoClass, IExecTestCasePO.class)) {
+            if (node instanceof IExecTestCasePO) {
                 return "ResultTestCase"; //$NON-NLS-1$
             } 
-            if (Persistor.isPoClassSubclass(
-                    nodePoClass, ICapPO.class)) {
+            if (node instanceof ICapPO) {
                 return "ResultCap"; //$NON-NLS-1$
             }
         }

@@ -21,7 +21,6 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.model.TestResultParameter;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -154,7 +153,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
 
         initResultDetailsPropDesc();
         
-        if (Persistor.isPoSubclass(node, IEventExecTestCasePO.class)) {
+        if (node instanceof IEventExecTestCasePO) {
             initEventTestCasePropDescriptor(node);
 
         }
@@ -197,21 +196,19 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
      */
     private Image getImageForNode(final INodePO node) {
         Image image = null;
-        if (Persistor.isPoSubclass(node, ITestSuitePO.class)) {
+        if (node instanceof ITestSuitePO) {
             image = IconConstants.TS_IMAGE; 
         }
-        if (Persistor.isPoSubclass(node, IExecTestCasePO.class)) {
-            if (Persistor.isPoSubclass(node, 
-                IEventExecTestCasePO.class)) {
+        if (node instanceof IExecTestCasePO) {
+            if (node instanceof IEventExecTestCasePO) {
                 image = IconConstants.RESULT_EH_IMAGE; 
             } else {
                 image = IconConstants.TC_IMAGE; 
             }
         } 
-        if (Persistor.isPoSubclass(node, ICapPO.class)) {
+        if (node instanceof ICapPO) {
             TestResultNode parent = m_node.getParent();
-            if (Persistor.isPoSubclass(parent.getNode(),
-                IEventExecTestCasePO.class)) {
+            if (parent.getNode() instanceof IEventExecTestCasePO) {
                 image = IconConstants.EH_CAP_IMAGE;
             } else {
                 image = IconConstants.CAP_IMAGE; 

@@ -286,24 +286,18 @@ public class NodePM extends PersistenceManager {
      */
     public static AbstractCmdHandleChild getCmdHandleChild(INodePO parent,
             INodePO child) {
-        Class parentNodePoClass = Persistor.getClass(parent);
-        Class childNodePoClass = Persistor.getClass(child);
         if (parent == ISpecObjContPO.TCB_ROOT_NODE) {
             return new CmdHandleChildIntoSpecList();
         } else if (parent == IExecObjContPO.TSB_ROOT_NODE) {
             return new CmdHandleChildIntoExecList();
-        } else if (Persistor.isPoClassSubclass(parentNodePoClass,
-                ICategoryPO.class)) {
+        } else if (parent instanceof ICategoryPO) {
             // category/specTc in category
             return new CmdHandleChildIntoNodeList();
-        } else if (Persistor.isPoClassSubclass(parentNodePoClass,
-                ITestSuitePO.class)) {
+        } else if (parent instanceof ITestSuitePO) {
             // execTc in testsuite
             return new CmdHandleChildIntoNodeList();
-        } else if (Persistor.isPoClassSubclass(parentNodePoClass,
-                ISpecTestCasePO.class)) {
-            if (Persistor.isPoClassSubclass(childNodePoClass,
-                    IEventExecTestCasePO.class)) {
+        } else if (parent instanceof ISpecTestCasePO) {
+            if (child instanceof IEventExecTestCasePO) {
                 // eventhandler in using specTc
                 return new CmdHandleEventHandlerIntoMap();
             }

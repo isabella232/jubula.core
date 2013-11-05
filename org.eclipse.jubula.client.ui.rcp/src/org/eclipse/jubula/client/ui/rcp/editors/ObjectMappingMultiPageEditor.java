@@ -81,7 +81,6 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
@@ -433,7 +432,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         @SuppressWarnings("synthetic-access")
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
                 INodePO parent, INodePO node, boolean alreadyVisited) {
-            if (Persistor.isPoSubclass(node, ICapPO.class)) {
+            if (node instanceof ICapPO) {
                 final ICapPO cap = (ICapPO)node;
                 CompNameResult result = 
                     m_compNamesBP.findCompName(ctx.getCurrentTreePath(), 

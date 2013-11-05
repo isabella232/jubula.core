@@ -44,7 +44,6 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -314,16 +313,15 @@ public class TestResultTreeView extends ViewPart
                 public void run() {
                     refreshNode(resultNode);
                     if (resultNode != null
-                        && (Plugin.getDefault().getPreferenceStore().getBoolean(
-                            Constants.TRACKRESULTS_KEY)
-                            || Persistor.isPoSubclass(resultNode.getNode(),
-                                ITestSuitePO.class))) {
-
+                        && (Plugin.getDefault().getPreferenceStore()
+                            .getBoolean(Constants.TRACKRESULTS_KEY) 
+                            || (resultNode.getNode() instanceof ITestSuitePO)))
+                    {
                         getTreeViewer().reveal(resultNode);
                     }
                 }
             });
-        }        
+        }    
     }
 
     /**

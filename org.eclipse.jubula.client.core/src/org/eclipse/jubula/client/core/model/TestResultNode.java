@@ -21,7 +21,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.jubula.client.core.businessprocess.ITestResultEventListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.osgi.util.NLS;
@@ -647,13 +646,13 @@ public class TestResultNode {
      */
     public String getTypeOfNode() {
         INodePO node = getNode();
-        if (Persistor.isPoSubclass(node, IEventExecTestCasePO.class)) {
+        if (node instanceof IEventExecTestCasePO) {
             return Messages.TestResultNodeTypeEventTestCase;
-        } else if (Persistor.isPoSubclass(node, ITestCasePO.class)) {
+        } else if (node instanceof ITestCasePO) {
             return Messages.TestResultNodeTypeTestCase;
-        } else if (Persistor.isPoSubclass(node, ICapPO.class)) {
+        } else if (node instanceof ICapPO) {
             return Messages.TestResultNodeTypeTestStep;
-        } else if (Persistor.isPoSubclass(node, ITestSuitePO.class)) {
+        } else if (node instanceof ITestSuitePO) {
             return Messages.TestResultNodeTypeTestSuite;
         }
         return Messages.TestResultNodeTypeUnknown;

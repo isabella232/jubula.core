@@ -1021,50 +1021,6 @@ public class Persistor {
     }
 
     /**
-     * Instanceof variant for Persistence (JPA / EclipseLink) proxies
-     * 
-     * @param po
-     *            PO to be checked
-     * @param compClass
-     *            is the po a subClass or instance of compClass
-     * @return true if po is assignable to compClass
-     */
-    @SuppressWarnings("unchecked")
-    public static boolean isPoSubclass(IPersistentObject po, Class compClass) {
-        boolean result = (po == null || compClass == null) ? false : compClass
-                .isAssignableFrom(getClass(po));
-        return result;
-    }
-
-    /**
-     * Instanceof variant for Persistence (JPA / EclipseLink) proxies
-     * 
-     * @param poClass
-     *            POclass to be checked
-     * @param compClass
-     *            is the poClass a subClass or instance of compClass
-     * @return true if po is assignable to compClass
-     */
-    @SuppressWarnings("unchecked")
-    public static boolean isPoClassSubclass(Class poClass, Class compClass) {
-        boolean result = (poClass == null || compClass == null)
-                ? false
-                : compClass.isAssignableFrom(poClass);
-        return result;
-    }
-
-    /**
-     * Persistence (JPA / EclipseLink).getClass(obj) but null safe
-     * 
-     * @param obj
-     *            the object to get the class for
-     * @return the Persistence (JPA / EclipseLink).getClass(obj) or null if obj == null
-     */
-    public static Class getClass(Object obj) {
-        return obj == null ? null : obj.getClass();
-    }
-
-    /**
      * 
      * @return the username used in the currently active
      *         Entity Manager Factory. Returns <code>null</code> if no 

@@ -28,7 +28,6 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -120,14 +119,14 @@ public class NewCategoryHandler extends AbstractNewHandler {
     }
 
     /**
-     * checks if a category exists in childnodes of given parent
+     * checks if a category exists in child nodes of given parent
      * @param node INodePO
      * @param name String
      * @return boolean
      */
     boolean existCategory(INodePO node, String name) {
         Iterator<? extends INodePO> iter = null;
-        if (Persistor.isPoSubclass(node, ICategoryPO.class)) {
+        if (node instanceof ICategoryPO) {
             iter = node.getNodeListIterator();
         } else {
             IProjectPO proj = GeneralStorage.getInstance().getProject();
@@ -135,8 +134,8 @@ public class NewCategoryHandler extends AbstractNewHandler {
         }
         while (iter.hasNext()) {
             INodePO iterNode = iter.next();
-            if (Persistor.isPoSubclass(iterNode, ICategoryPO.class)
-                && iterNode.getName().equals(name)) {
+            if (iterNode instanceof ICategoryPO
+                    && iterNode.getName().equals(name)) {
                 return true;
             }
         }

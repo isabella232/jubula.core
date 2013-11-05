@@ -17,7 +17,6 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.utils.ExecObject;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
@@ -83,17 +82,14 @@ public class ResultTreeTracker implements IExecStackModificationListener {
         if (m_lastNonCap.getStatus() == TestResultNode.NOT_YET_TESTED) {
             m_lastNonCap.setResult(TestResultNode.TESTING, null);
         }
-        if (Persistor.isPoSubclass(node, IEventExecTestCasePO.class)
-            || m_eventHierarchy > 0) {
+        if (node instanceof IEventExecTestCasePO || m_eventHierarchy > 0) {
             m_eventHierarchy++;
         }
         
         if (m_eventHierarchy > 0) {
             int nextIndex = m_lastNonCap.getNextChildIndex();
             m_lastNonCap = new TestResultNode(
-                    node, 
-                    m_lastNonCap, 
-                    nextIndex);
+                    node, m_lastNonCap, nextIndex);
             m_lastNonCap.getParent().updateResultNode(nextIndex, m_lastNonCap);
         } else {
             TestResultNode nextNonCap = m_lastNonCap.getResultNodeList().

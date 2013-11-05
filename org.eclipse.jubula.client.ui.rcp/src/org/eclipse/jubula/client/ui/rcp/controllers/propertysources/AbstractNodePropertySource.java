@@ -32,7 +32,6 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.propertytester.NodePropertyTester;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
@@ -236,7 +235,7 @@ public abstract class AbstractNodePropertySource
          */
         protected Iterator getValueSetIterator() {
             INodePO node = getPoNode();
-            if (!(Persistor.isPoSubclass(node, ICapPO.class))) {
+            if (!(node instanceof ICapPO)) {
                 return IteratorUtils.EMPTY_ITERATOR;
             }
             Param param = ((ICapPO)node).getMetaAction().findParam(
