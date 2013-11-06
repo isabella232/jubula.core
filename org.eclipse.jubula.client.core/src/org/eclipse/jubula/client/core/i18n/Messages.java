@@ -121,6 +121,7 @@ public class Messages extends NLS {
     public static String DeleteTestresultElementFailed;
     public static String DeleteTestrunFailed;
     public static String DeleteTestrunMetadataFailed;
+    public static String DeleteTrackedChangesActionDialog;
     public static String DeletingTestresultsFailed;
     public static String DeletionOfParamNamePOsFailed;
     public static String DeletionOfToolkitsFailed;

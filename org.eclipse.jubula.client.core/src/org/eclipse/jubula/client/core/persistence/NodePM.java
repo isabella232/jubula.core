@@ -29,6 +29,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -43,6 +44,10 @@ import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
+import org.eclipse.jubula.client.core.persistence.locking.LockManager;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
+import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
+import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -1239,5 +1244,108 @@ public class NodePM extends PersistenceManager {
      */
     public boolean isUseCache() {
         return m_useCache;
+    }
+    
+    /**
+     * Class to collect nodes with tracked changes
+     * @author BREDEX GmbH
+     * @created 05.11.2013
+     */
+    private static class CollectNodesWithTrackedChangesOperation 
+        extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
+        
+        /**
+         * list of nodes with tracked changes
+         */
+        private List<INodePO> m_listOfNodesWithTrackedChanges = 
+                new ArrayList<INodePO>();
+        
+        /**
+         * project which contains the nodes
+         */
+        private IProjectPO m_project;
+        
+        /**
+         * the constructor
+         * @param project the project which contains the nodes
+         */
+        public CollectNodesWithTrackedChangesOperation(IProjectPO project) {
+            m_project = project;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public boolean operate(ITreeTraverserContext<INodePO> ctx,
+                INodePO parent, INodePO node, boolean alreadyVisited) {
+            Long parentProjectId = node.getParentProjectId();
+            if (parentProjectId != null
+                    && !m_project.getId().equals(parentProjectId)) {
+                return false;
+            }
+            if (!node.getTrackedChanges().isEmpty()) {
+                m_listOfNodesWithTrackedChanges.add(node);
+            }
+            return true;
+        }
+        
+        /**
+         * returns the list of nodes with tracked changes
+         * @return the list of nodes with tracked changes
+         */
+        public List<INodePO> getListOfNodesWithTrackedChanges() {
+            return m_listOfNodesWithTrackedChanges;
+        }
+    }
+    
+    /**
+     * Deletes all tracked changes of a project
+     * @param monitor the monitor
+     * @param project the project
+     * @return the list of nodes for which tracked changes could not be deleted
+     * @throws ProjectDeletedException 
+     * @throws PMException
+     */
+    public static List<INodePO> cleanupTrackedChanges(
+            IProgressMonitor monitor, final IProjectPO project) 
+        throws PMException, ProjectDeletedException {
+        
+        CollectNodesWithTrackedChangesOperation treeNodeOp = 
+                new CollectNodesWithTrackedChangesOperation(project);
+        
+        TreeTraverser treeTraverser = new TreeTraverser(
+                project, treeNodeOp, true, true);
+        treeTraverser.traverse();
+        
+        List<INodePO> listOfNodesWithTrackedChanges = 
+                treeNodeOp.getListOfNodesWithTrackedChanges();
+        
+        List<INodePO> listOfLockedNodes = new ArrayList<INodePO>();
+                
+        monitor.beginTask(Messages.DeleteTrackedChangesActionDialog, 
+                listOfNodesWithTrackedChanges.size());
+
+        GeneralStorage instance = GeneralStorage.getInstance();
+        final EntityManager session = instance.getMasterSession();
+        final Persistor persistor = Persistor.instance();
+        EntityTransaction tx = null;
+        
+        for (INodePO node: listOfNodesWithTrackedChanges) {
+            tx = persistor.getTransaction(session);
+            try {
+                persistor.lockPO(session, node);
+                node.deleteTrackedChanges();
+            } catch (PMException e) {
+                // can not delete tracked changes of this node
+                listOfLockedNodes.add(node);
+            }
+            monitor.worked(1);
+        }
+        
+        persistor.commitTransaction(session, tx);
+        LockManager.instance().unlockPOs(session);
+        
+        monitor.done();
+        return listOfLockedNodes;
     }
 }

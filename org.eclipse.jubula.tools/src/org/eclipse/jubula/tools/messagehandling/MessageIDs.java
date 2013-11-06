@@ -607,6 +607,9 @@ public class MessageIDs {
             new Integer(133);
     /** if there are event handler of each type in a TC */
     public static final Integer I_ENOUGH_EVENT_HANDLER = new Integer(134);
+    /** if not all tracked changes could be deleted */
+    public static final Integer I_COULD_NOT_DELETE_ALL_TRACKED_CHANGES = 
+            new Integer(135);
 
     // ---------------------------------------------------------------------
     /** key = message id, message object */
@@ -991,6 +994,7 @@ public class MessageIDs {
         messageMap.put(I_ALL_TCS_MUST_USE_SAME_CTDS, i, "InfoMessage.ALL_TCS_MUST_USE_SAME_CTDS", null); //$NON-NLS-1$
         messageMap.put(I_TCS_HAVE_NO_CHANGEABLE_PARAMETER_NAME, i, "InfoMessage.TCS_HAVE_NO_CHANGEABLE_PARAMETER_NAME", null); //$NON-NLS-1$
         messageMap.put(I_ENOUGH_EVENT_HANDLER, i, "InfoMessage.ENOUGH_EVENT_HANDLER", null); //$NON-NLS-1$
+        messageMap.put(I_COULD_NOT_DELETE_ALL_TRACKED_CHANGES, i, "InfoMessage.COULD_NOT_DELETE_ALL_TRACKED_CHANGES", null); //$NON-NLS-1$
     }
     
     /**

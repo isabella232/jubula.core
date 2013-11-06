@@ -10,21 +10,26 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.properties;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
@@ -33,6 +38,7 @@ import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
+import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
@@ -72,6 +78,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -616,9 +623,18 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             public void widgetSelected(SelectionEvent e) {
                 Dialog qDialog = ErrorHandlingUtil.createMessageDialog(
                         MessageIDs.Q_DELETE_ALL_TRACKED_CHANGES, null, null);
-                /*if (qDialog.getReturnCode() == 0) {
+                if (qDialog.getReturnCode() == 0) {
                     // delete all tracked changes
-                }*/  
+                    try {
+                        PlatformUI.getWorkbench().getProgressService().run(
+                                true, false, 
+                                new DeleteTrackedChangesOperation());
+                    } catch (InvocationTargetException ite) {
+                        // nothing
+                    } catch (InterruptedException ie) {
+                        // nothing
+                    }
+                }
             }
         });
     }
@@ -966,4 +982,42 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         m_projectToolkitCombo.setSelectedObject(getProject().getToolkit());
     }
     
+    
+    /**
+     * Operation for deleting tracked changes
+     * 
+     * @author BREDEX GmbH
+     */
+    private class DeleteTrackedChangesOperation 
+                        implements IRunnableWithProgress {
+        
+        /**
+         * {@inheritDoc}
+         */
+        public void run(IProgressMonitor monitor) {
+            final IProjectPO project = 
+                    GeneralStorage.getInstance().getProject();
+            List<INodePO> listOfLockedNodes;
+            try {
+                listOfLockedNodes = 
+                        NodePM.cleanupTrackedChanges(monitor, project);
+
+                if (!listOfLockedNodes.isEmpty()) {
+                    Object[] details = listOfLockedNodes.toArray();
+                    String[] namesOfLockedNodes = new String[details.length];
+                    
+                    for (int i = 0; i < namesOfLockedNodes.length; i++) {
+                        namesOfLockedNodes[i] = ((INodePO)details[i]).getName();
+                    }
+                    ErrorHandlingUtil.createMessageDialog(
+                            MessageIDs.I_COULD_NOT_DELETE_ALL_TRACKED_CHANGES, 
+                            null, namesOfLockedNodes);
+                }
+            } catch (PMException e) {
+                ErrorHandlingUtil.createMessageDialog(e);
+            } catch (ProjectDeletedException e) {
+                ErrorHandlingUtil.createMessageDialog(e);
+            }
+        }
+    }
 }

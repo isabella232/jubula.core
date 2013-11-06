@@ -797,4 +797,12 @@ abstract class NodePO implements INodePO {
         sortedMap.putAll(m_trackedChangesMap);
         return sortedMap;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void deleteTrackedChanges() {
+        m_trackedChangesMap.clear();
+    }
+
 }

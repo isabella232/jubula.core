@@ -257,4 +257,11 @@ public interface INodePO extends ITimestampPO {
      *            as value.
      */
     public void setTrackedChangesMap(Map<Long, String> trackedChangesMap);
+
+    /**
+     * clears the list of tracked changes
+     */
+    public abstract void deleteTrackedChanges();
+
+
 }
