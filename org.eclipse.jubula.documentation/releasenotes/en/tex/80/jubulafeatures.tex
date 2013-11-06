@@ -10,3 +10,11 @@
 \begin{itemize}
 \item You can now use ''show where used'' on \gdsuites{} to find out which \gdjobs{} they have been reused in.
 \end{itemize}
+
+\textbf{Change tracking in \gdprojects{}}
+\begin{itemize}
+\item You can now configure in the \gdproject{} properties that changes to \gdcases{}, \gdsuites{} and \gdjobs{} in the \gdproject{} are tracked. You can configure a system / environment property that is shown alongside the timestamp of the change to track e.g. who made the changes. 
+\item When change tracking is activated, when you save an editor for a \gdcase{}, \gdsuite{} or \gdjob{}, the timestamp of the save as well as the property will be saved and displayed in the properties view.
+\item You can specify the amount of changes to track per node, or the length of time that change tracking information should be kept. Once the time has passed or the amount of changes has been reached, the next saving of the node will result in invalid change information being discarded.
+\item You can remove all change tracking information from the \gdproject{} via the \gdproject{} properties. 
+\end{itemize}
