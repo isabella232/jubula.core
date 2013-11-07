@@ -12,9 +12,7 @@ package org.eclipse.jubula.client.ui.rcp;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
@@ -25,7 +23,6 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.StatusLineManager;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
@@ -72,7 +69,6 @@ import org.eclipse.search.ui.ISearchQuery;
 import org.eclipse.search.ui.NewSearchUI;
 import org.eclipse.search2.internal.ui.SearchView;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -123,9 +119,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     private static int connectionStatusIcon = Constants.DEFAULT_ICON;
     /** current workbench window */
     private static IWorkbenchWindow workbenchWindow;
-    /** m_imageCache */
-    private static Map < ImageDescriptor, Image > imageCache = 
-        new HashMap < ImageDescriptor, Image > ();
     /** <code>CONNECTION_INFO_STATUSLINE_ITEM</code> */
     private static final String CONNECTION_INFO_STATUSLINE_ITEM = "connectionInfo"; //$NON-NLS-1$
     /** <code>AUT_TOOLKIT_STATUSLINE_ITEM</code> */
