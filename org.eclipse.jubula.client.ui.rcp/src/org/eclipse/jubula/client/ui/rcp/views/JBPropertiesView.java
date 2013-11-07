@@ -532,6 +532,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
                 case StructureModified:
                     if (po instanceof INodePO) {
                         m_treeViewer.refresh();
+                        expandTrackedChanges();
                     }
                     break;
                 case Deleted:
@@ -539,10 +540,21 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
                     break;
                 case Renamed:
                     m_treeViewer.refresh();
+                    expandTrackedChanges();
                     break;
                 default:
             }
         }
+    }
+
+    /**
+     * Expands the tracked changes in the properties view.
+     * For some reasons the view needs persuasion to expand the tracked changes sometimes.
+     */
+    private void expandTrackedChanges() {
+        m_treeViewer.setExpandedState(
+                Messages.SpecTestCaseGUIPropertySourceTrackedChangesCategory, 
+                true);
     }
     
     /**
@@ -616,6 +628,8 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
                 m_treeViewer.setExpandedState(expandedCategories[j], false);
             }
         }
+        
+        expandTrackedChanges();
 
         setViewEnabled(!(part instanceof TestCaseBrowser
             || part instanceof TestSuiteBrowser

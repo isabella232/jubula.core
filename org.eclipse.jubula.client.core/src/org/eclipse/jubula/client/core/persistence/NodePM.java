@@ -30,6 +30,9 @@ import javax.persistence.criteria.Root;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -1344,6 +1347,11 @@ public class NodePM extends PersistenceManager {
         
         persistor.commitTransaction(session, tx);
         LockManager.instance().unlockPOs(session);
+        
+        for (INodePO node: listOfNodesWithTrackedChanges) {
+            DataEventDispatcher.getInstance().fireDataChangedListener(node,
+                    DataState.StructureModified, UpdateState.all);
+        }
         
         monitor.done();
         return listOfLockedNodes;

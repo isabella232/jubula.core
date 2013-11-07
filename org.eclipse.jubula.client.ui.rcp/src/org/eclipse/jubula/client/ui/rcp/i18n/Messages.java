@@ -524,6 +524,7 @@ public class Messages extends NLS {
     public static String PrefPageBasicSelectDataDir;
     public static String PrefPageTrackChanges;
     public static String PrefPageTrackChangesDeleteData;
+    public static String PrefPageTrackChangesDeleteDataQuestion;
     public static String PrefPageTrackChangesNoUnitSelected;
     public static String PrefPageTrackChangesSignatureDescription;
     public static String PrefPageTrackChangesSignatureSelectionText;
@@ -872,6 +873,7 @@ public class Messages extends NLS {
     public static String UnsupportedObjectMappingState;
     public static String UnsupportedRecordModeState;
     public static String UsingFallbackFailed;
+    public static String UtilsConfirmation;
     public static String UtilsExecPerspective;
     public static String UtilsLocalhost1;
     public static String UtilsLocalhost2;

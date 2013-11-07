@@ -22,6 +22,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
@@ -621,8 +622,13 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         
         m_deleteChanges.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                Dialog qDialog = ErrorHandlingUtil.createMessageDialog(
-                        MessageIDs.Q_DELETE_ALL_TRACKED_CHANGES, null, null);
+                Dialog qDialog = new MessageDialog(getShell(), 
+                        Messages.UtilsConfirmation, null, 
+                        Messages.PrefPageTrackChangesDeleteDataQuestion, 
+                        MessageDialog.QUESTION, 
+                        new String[] {Messages.UtilsYes, Messages.UtilsNo}, 0);
+                qDialog.setBlockOnOpen(true);
+                qDialog.open();
                 if (qDialog.getReturnCode() == 0) {
                     // delete all tracked changes
                     try {
@@ -1004,14 +1010,36 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
 
                 if (!listOfLockedNodes.isEmpty()) {
                     Object[] details = listOfLockedNodes.toArray();
-                    String[] namesOfLockedNodes = new String[details.length];
+                    String[] namesOfLockedNodes;
+                    final int maxNumberOfLockedNodesToDisplay = 10;
                     
-                    for (int i = 0; i < namesOfLockedNodes.length; i++) {
-                        namesOfLockedNodes[i] = ((INodePO)details[i]).getName();
+                    if (details.length <= maxNumberOfLockedNodesToDisplay) {
+                        // not too many locked nodes to display them all
+                        namesOfLockedNodes = new String[details.length];
+                        for (int i = 0; i < namesOfLockedNodes.length; i++) {
+                            namesOfLockedNodes[i] = 
+                                    ((INodePO)details[i]).getName();
+                        }
+                        ErrorHandlingUtil.createMessageDialog(
+                                MessageIDs.
+                                    I_COULD_NOT_DELETE_ALL_TRACKED_CHANGES,
+                                null, namesOfLockedNodes);
+                    } else {
+                        // too many locked nodes to display them all
+                        namesOfLockedNodes = 
+                                new String[maxNumberOfLockedNodesToDisplay];
+                        for (int i = 0; i < namesOfLockedNodes.length; i++) {
+                            namesOfLockedNodes[i] = 
+                                    ((INodePO)details[i]).getName();
+                        }
+                        Object[] params = new Object[2];
+                        params[0] = maxNumberOfLockedNodesToDisplay;
+                        params[1] = details.length;
+                        ErrorHandlingUtil.createMessageDialog(
+                                MessageIDs.
+                                    I_COULD_NOT_DELETE_ALL_TRACKED_CHANGES_MANY,
+                                params, namesOfLockedNodes);
                     }
-                    ErrorHandlingUtil.createMessageDialog(
-                            MessageIDs.I_COULD_NOT_DELETE_ALL_TRACKED_CHANGES, 
-                            null, namesOfLockedNodes);
                 }
             } catch (PMException e) {
                 ErrorHandlingUtil.createMessageDialog(e);
