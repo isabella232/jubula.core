@@ -12,8 +12,8 @@ package org.eclipse.jubula.client.ui.rcp.editors;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
@@ -92,9 +92,9 @@ public class LogViewer extends EditorPart {
         if (getEditorInput() instanceof ISimpleEditorInput) {
             ISimpleEditorInput input = (ISimpleEditorInput)getEditorInput();
             if (input instanceof ClientLogInput) {
-                setTitleImage(Plugin.getImage("clientLogView.gif")); //$NON-NLS-1$
+                setTitleImage(IconConstants.ITE_LOG_VIEW);
             } else if (input instanceof ServerLogInput) {
-                setTitleImage(Plugin.getImage("serverLogView.gif")); //$NON-NLS-1$
+                setTitleImage(IconConstants.RC_LOG_VIEW);
             }
             try {
                 m_text = new Text(

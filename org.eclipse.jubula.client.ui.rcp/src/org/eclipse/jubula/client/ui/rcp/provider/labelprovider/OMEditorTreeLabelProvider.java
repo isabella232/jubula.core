@@ -23,7 +23,6 @@ import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.constants.RcpIconConstants;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -137,7 +136,7 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
         if (cbContents instanceof IStructuredSelection) {
             IStructuredSelection sel = (IStructuredSelection)cbContents;
             if (sel.toList().contains(element)) {
-                image = RcpIconConstants.getCutImage(image);
+                image = IconConstants.getCutImage(image);
             }
         }
         

@@ -18,7 +18,6 @@ import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
@@ -31,6 +30,7 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IEntityManagerProvider;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.AbstractPartListener;
@@ -66,9 +66,6 @@ public abstract class AbstractJBTreeView extends ViewPart implements
     /** vertical spacing = 2 */
     protected static final int VERTICAL_SPACING = 3;
     
-    /**ImageDescrptor for the Link with Editor-Button */
-    private static final ImageDescriptor LINK_IMAGE_DESC = 
-            Plugin.getImageDescriptor("linkWithEditor.gif"); //$NON-NLS-1$
     /**
      * <code>m_treeViewer</code>tree Viewer
      */
@@ -126,7 +123,7 @@ public abstract class AbstractJBTreeView extends ViewPart implements
          */
         public ToggleLinkingAction() {
             super(Messages.TestCaseBrowserLinkWithEditor, IAction.AS_CHECK_BOX);
-            setImageDescriptor(LINK_IMAGE_DESC);
+            setImageDescriptor(IconConstants.LINK_WITH_EDITOR_DESCRIPTOR);
             m_isLinkedWithEditor = Plugin.getDefault().getPreferenceStore()
                 .getBoolean(Constants.LINK_WITH_EDITOR_TCVIEW_KEY);
             setChecked(m_isLinkedWithEditor);

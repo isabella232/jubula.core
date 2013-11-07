@@ -233,12 +233,12 @@
   <extension point="org.eclipse.ui.perspectives">
     <perspective
       class="org.eclipse.jubula.client.ui.rcp.perspective.SpecificationPerspective"
-      icon="icons/perspective_sp.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/perspective_sp.gif"
       id="org.eclipse.jubula.client.ui.rcp.perspectives.SpecificationPerspective"
       name="%JubulaSpecification" />
     <perspective
       class="org.eclipse.jubula.client.ui.rcp.perspective.ExecutionPerspective"
-      icon="icons/perspective_ex.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/perspective_ex.gif"
       id="org.eclipse.jubula.client.ui.rcp.perspectives.ExecutionPerspective"
       name="%JubulaExecution" />
   </extension>
@@ -247,32 +247,32 @@
       id="org.eclipse.jubula.client.views"
       name="%JubulaViewCategory" />
     <view
-      icon="icons/testSuiteBrowser.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testSuiteBrowser.gif"
       class="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser"
       name="%TestSuite"
       category="org.eclipse.jubula.client.views"
       id="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser" />
     <view
       class="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser"
-      icon="icons/specTcBrowser.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/specTcBrowser.gif"
       category="org.eclipse.jubula.client.views"
       name="%TestSpec"
       allowMultiple="true"
       id="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser" />
     <view
       class="org.eclipse.jubula.client.ui.rcp.views.TestResultTreeView"
-      icon="icons/testResultTree.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testResultTree.gif"
       category="org.eclipse.jubula.client.views"
       name="%TestResult"
       id="org.eclipse.jubula.client.ui.rcp.views.TestResultTreeView" />
     <view
-      icon="icons/dataSetView.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/dataSetView.gif"
       class="org.eclipse.jubula.client.ui.rcp.views.dataset.DataSetView"
       category="org.eclipse.jubula.client.views"
       name="%JubulaDataSetView"
       id="org.eclipse.jubula.client.ui.rcp.views.DataSetView" />
     <view
-      icon="icons/compNamesView.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/compNamesView.gif"
       class="org.eclipse.jubula.client.ui.rcp.views.CompNamesView"
       category="org.eclipse.jubula.client.views"
       name="%CompNamesView"
@@ -280,7 +280,7 @@
     <view
       category="org.eclipse.jubula.client.views"
       class="org.eclipse.jubula.client.ui.rcp.views.ComponentNameBrowser"
-      icon="icons/ComponentNameBrowser.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/ComponentNameBrowser.gif"
       id="org.eclipse.jubula.client.ui.rcp.views.ComponentNameBrowser"
       name="%ComponentNameBrowser"
       restorable="true" />
@@ -294,34 +294,34 @@
   <extension point="org.eclipse.ui.editors">
     <editor
       class="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor"
-      icon="icons/omEditor.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/omEditor.gif"
       name="%ObjectMappingEditor"
       id="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor" />
     <editor
       class="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor"
-      icon="icons/specTcEditor.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/specTcEditor.gif"
       id="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor"
       name="%TestCaseEditor" />
     <editor
       class="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor"
-      icon="icons/testSuiteEditor.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testSuiteEditor.gif"
       id="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor"
       name="%TestSuiteEditor" />
     <editor
       class="org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor"
-      icon="icons/testJobEditor.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testJobEditor.gif"
       id="org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor"
       name="%TestJobEditor" />
     <editor
       class="org.eclipse.jubula.client.ui.rcp.editors.LogViewer"
       default="false"
-      icon="icons/view.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/view.gif"
       id="org.eclipse.jubula.client.ui.rcp.editors.LogViewer"
       name="%LogViewer" />
     <editor
       class="org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor"
       default="false"
-      icon="icons/centralTestData.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/centralTestData.gif"
       id="org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor"
       name="Central Test Data" />
   </extension>
@@ -1202,7 +1202,7 @@
       <command
         commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowServerLogCommand"
         label="%ShowAutStarterLog"
-        icon="icons/serverLogView.gif"
+        icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/serverLogView.gif"
         style="push" />
     </menuContribution>
     <menuContribution
@@ -1210,7 +1210,7 @@
       <command
         commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowClientLogCommand"
         label="%ShowClientLog"
-        icon="icons/clientLogView.gif"
+        icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/clientLogView.gif"
         style="push" />
     </menuContribution>
     <menuContribution locationURI="menu:edit?before=JubulaEditSeparator3">
@@ -1293,7 +1293,7 @@
       <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.LanguageToolbar">
         <command
           commandId="org.eclipse.jubula.client.ui.rcp.commands.ChooseLanguageCommand"
-          icon="icons/globe.gif"
+          icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/globe.gif"
           id="org.eclipse.jubula.client.ui.rcp.toolbar.LanguageToolbar.ChooseLanguageCommand"
           style="pulldown">
           <visibleWhen checkEnabled="false">
@@ -1346,7 +1346,7 @@
       <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.AutToolbar">
         <command
           commandId="org.eclipse.jubula.client.ui.rcp.commands.ChooseAutCommand"
-          icon="icons/startAUT.gif"
+          icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/startAUT.gif"
           id="org.eclipse.jubula.client.ui.rcp.toolbar.AutToolbar.ChooseAutCommand"
           style="pulldown">
           <visibleWhen checkEnabled="false">
@@ -1443,7 +1443,7 @@
           commandId="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow"
           id="org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.ChooseHTMLWindowCommand"
           style="pulldown"
-          icon="icons/selectWindow.png"
+          icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/selectWindow.png"
           tooltip="%ChooseAUTWindow">
           <visibleWhen checkEnabled="false">
              <and>
@@ -2878,190 +2878,190 @@
   <extension point="org.eclipse.ui.commandImages">
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand"
-      icon="icons/startServer.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/startServer.gif" />
     <image
       commandId="org.eclipse.ui.edit.rename"
-      disabledIcon="icons/rename_disabled.gif"
-      icon="icons/rename.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/rename_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/rename.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewLogicalNameCommand"
-      icon="icons/addLogicalName.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/addLogicalName.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.sort.name"
-      icon="icons/sort.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/sort.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewViewInstance"
-      icon="icons/newView.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/newView.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.SetAsMainViewInstance"
-      icon="icons/mainView.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/mainView.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.MergeLogicalNameCommand"
-      icon="icons/mergeLogicalName.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/mergeLogicalName.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.CollapseAll"
-      disabledIcon="icons/collapse_disabled.gif"
-      icon="icons/collapse.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/collapse_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/collapse.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ClearTestResultView"
-      disabledIcon="icons/view_disabled.gif"
-      icon="icons/view.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/view_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/view.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.NewTestCaseCommand"
-      icon="icons/newTestCaseIcon.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/newTestCaseIcon.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowWhereUsed"
-      icon="icons/showSpec.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/showSpec.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.newTestCaseReference"
-      disabledIcon="icons/testCaseRefNew_disabled.gif"
-      icon="icons/testCaseRefNew.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testCaseRefNew_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testCaseRefNew.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ToggleActiveStatus"
-      icon="icons/toggleActiveState.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/toggleActiveState.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.NewTestSuiteCommand"
-      disabledIcon="icons/root_disabled.gif"
-      icon="icons/newTestSuiteIcon.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/root_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/newTestSuiteIcon.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.NewTestJobCommand"
-      icon="icons/newTestJobIcon.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/newTestJobIcon.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.HighlightInAUT"
-      icon="icons/highlight.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/highlight.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.MapIntoOMCategory"
-      icon="icons/MapInCat.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/MapInCat.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.newCap"
-      disabledIcon="icons/newCapIcon_disabled.gif"
-      icon="icons/newCapIcon.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/newCapIcon_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/newCapIcon.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ExtractTestCase"
-      icon="icons/testCaseRef.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testCaseRef.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewCategoryCommand"
-      icon="icons/newCategory.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/newCategory.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenObjectMappingEditor"
-      icon="icons/omEditor.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/omEditor.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestcaseEditor"
-      icon="icons/specTcEditor.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/specTcEditor.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestsuiteEditor"
-      icon="icons/testSuiteEditor.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testSuiteEditor.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestJobEditor"
-      icon="icons/testJobEditor.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testJobEditor.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.RevertChanges"
-      icon="icons/revertChanges.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/revertChanges.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.StartTestSuiteCommand"
-      disabledIcon="icons/startSuite_disabled.gif"
-      icon="icons/startSuite.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/startSuite_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/startSuite.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.StartTestJobCommand"
-      icon="icons/testJobNode.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testJobNode.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.PauseTestSuiteCommand"
-      disabledIcon="icons/pause_disabled.gif"
-      icon="icons/pause.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/pause_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/pause.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.StopSuiteCommand"
-      disabledIcon="icons/stop_disabled.gif"
-      icon="icons/stop.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/stop_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/stop.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.StopAUTCommand"
-      disabledIcon="icons/stopAUTdisabled.gif"
-      icon="icons/stopAUT.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/stopAUTdisabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/stopAUT.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.OMStartMappingModeCommand"
-      disabledIcon="icons/startOM_disabled.gif"
-      icon="icons/startOM.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/startOM_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/startOM.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.StartObservationModeCommand"
-      disabledIcon="icons/cam_disabled.gif"
-      icon="icons/cam.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/cam_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/cam.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.togglePauseOnErrorCommand"
-      icon="icons/togglePauseOnError.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/togglePauseOnError.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewProjectVersion"
-      disabledIcon="icons/project_dis.gif"
-      icon="icons/newProjectIcon.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/project_dis.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/newProjectIcon.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenProject"
-      disabledIcon="icons/loadDB_disabled.gif"
-      icon="icons/loadDB.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/loadDB_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/loadDB.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenCentralTestDataEditor"
-      icon="icons/centralTestData.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/centralTestData.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.AddNewTestDataManager"
-      icon="icons/addNewCentralTestDataCube.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/addNewCentralTestDataCube.gif" />
     <image
       commandId="org.eclipse.search.ui.openSearchDialog"
-      disabledIcon="icons/openSearchDialog_disabled.gif"
-      icon="icons/openSearchDialog.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/openSearchDialog_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/openSearchDialog.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.AddEventHandler"
-      disabledIcon="icons/addEventHandler_small_disabled.gif"
-      icon="icons/addEventHandler_small.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/addEventHandler_small_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/addEventHandler_small.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowResponsibleNodes"
-      icon="icons/showResponsibleNodes.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/showResponsibleNodes.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.OpenTestCase"
-      icon="icons/openTestcase.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/openTestcase.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.continueWithoutEHCommand"
-      icon="icons/continueWithoutEH.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/continueWithoutEH.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.StopObservationMode"
-      disabledIcon="icons/stopcam_disabled.gif"
-      icon="icons/stopcam.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/stopcam_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/stopcam.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ImportProject"
-      disabledIcon="icons/import_disabled.gif"
-      icon="icons/import.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/import_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/import.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.DeleteProject"
-      disabledIcon="icons/deleteProject_disabled.gif"
-      icon="icons/deleteProject.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/deleteProject_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/deleteProject.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.NewProject"
-      disabledIcon="icons/project_dis.gif"
-      icon="icons/newProjectIcon.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/project_dis.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/newProjectIcon.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ExportProject"
-      disabledIcon="icons/export_disabled.gif"
-      icon="icons/export.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/export_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/export.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.SaveProjectAs"
-      disabledIcon="icons/saveas_d.gif"
-      icon="icons/saveas_e.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/saveas_d.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/saveas_e.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.DisconnectCommand"
-      disabledIcon="icons/stopServer_disabled.gif"
-      icon="icons/stopServer.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/stopServer_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/stopServer.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.OMStopMappingModeCommand"
-      disabledIcon="icons/stopOM_disabled.gif"
-      icon="icons/stopOM.gif" />
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/stopOM_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/stopOM.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ReplaceWithTestCase"
-      icon="icons/replaceWithTestCase.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/replaceWithTestCase.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.SaveAsNew"
-      icon="icons/saveAsNew.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/saveAsNew.gif" />
     <image
       commandId="org.eclipse.ui.edit.findReplace"
-      icon="icons/find.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/find.gif" />
     <image
           commandId="org.eclipse.jubula.client.ui.rcp.commands.MoveTestCase"
-          icon="icons/moveTestCase.gif">
+          icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/moveTestCase.gif">
     </image>
   </extension>
   <extension
@@ -3983,7 +3983,7 @@
     <wizard
       category="org.eclipse.jubula.client.ui.rcp.test"
       class="org.eclipse.jubula.client.ui.rcp.wizards.ExportTestResultDetailsWizard"
-      icon="icons/testResultTree.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testResultTree.gif"
       id="org.eclipse.jubula.client.ui.rcp.exportWizard.ExportTestResultDetailsWizard"
       name="Test Result Details" />
     <category
@@ -4014,7 +4014,7 @@
     <wizard
       category="org.eclipse.jubula.client.ui.rcp.test"
       class="org.eclipse.jubula.client.ui.rcp.wizards.ImportTestDataSetsWizard"
-      icon="icons/centralTestData.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/centralTestData.gif"
       id="org.eclipse.jubula.client.ui.rcp.importWizard.ImportTestDataSetsWizard"
       name="Central Test Data Sets" />
     <category

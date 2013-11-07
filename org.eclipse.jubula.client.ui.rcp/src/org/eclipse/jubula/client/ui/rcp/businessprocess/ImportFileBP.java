@@ -245,7 +245,7 @@ public class ImportFileBP implements IProjectNameConflictResolver,
                 new ArrayList<String>(availableNames), 
                 Messages.ImportFileComboActionProjMessage,
                 Messages.ImportFileActionProjTitle,
-                Plugin.getImage(IconConstants.IMPORT_PROJECT_STRING), 
+                IconConstants.IMPORT_PROJECT,
                 Messages.ImportFileActionProjShell,
                 Messages.ImportFileActionProjLabel);
             

@@ -11,7 +11,7 @@
       label="Jubula Functional Testing"
       version="2.2.0.qualifier"
       provider-name="Eclipse Jubula"
-      plugin="org.eclipse.jubula.client.ui.rcp">
+      plugin="org.eclipse.jubula.client.ui">
 
    <description url="http://www.eclipse.org/jubula">
       Eclipse functional UI testing environment.

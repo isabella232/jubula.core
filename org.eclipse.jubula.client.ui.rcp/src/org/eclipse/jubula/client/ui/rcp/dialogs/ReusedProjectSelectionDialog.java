@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.swt.SWT;
@@ -136,7 +136,7 @@ public class ReusedProjectSelectionDialog extends TitleAreaDialog {
             setMessage(m_message);
         }
         
-        setTitleImage(Plugin.getImage(m_titleImage));
+        setTitleImage(IconConstants.getImage(m_titleImage));
         getShell().setText(m_shellTitle);
 
         // new Composite as container

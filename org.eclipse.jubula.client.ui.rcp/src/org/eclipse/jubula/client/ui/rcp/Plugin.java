@@ -48,7 +48,6 @@ import org.eclipse.jubula.client.ui.rcp.businessprocess.ImportFileBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ProblemsBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ToolkitBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
-import org.eclipse.jubula.client.ui.rcp.constants.RcpIconConstants;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
@@ -60,7 +59,6 @@ import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.DirtyStarListLabe
 import org.eclipse.jubula.client.ui.rcp.search.query.AbstractQuery;
 import org.eclipse.jubula.client.ui.rcp.widgets.StatusLineContributionItem;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
-import org.eclipse.jubula.client.ui.utils.ImageUtils;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
@@ -304,12 +302,12 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
             }
             switch (isConnectionStatusIcon()) {
                 case Constants.NO_SERVER:
-                    item.setMessage(RcpIconConstants.NO_SERVER_IMAGE, 
+                    item.setMessage(IconConstants.NO_SERVER_IMAGE, 
                             getStatusLineText());
                     break;
                 case Constants.NO_SC:
                 case Constants.NO_AUT:
-                    item.setMessage(RcpIconConstants.NO_CONNECTION_IMAGE, 
+                    item.setMessage(IconConstants.NO_CONNECTION_IMAGE, 
                             getStatusLineText());
                     break;
                 case Constants.AUT_UP:
@@ -317,51 +315,27 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
                             getStatusLineText());
                     break;
                 case Constants.RECORDING:
-                    item.setMessage(RcpIconConstants.CAM_IMAGE,
+                    item.setMessage(IconConstants.CAM_IMAGE,
                             getStatusLineText());
                     break;
                 case Constants.CHECKING:
-                    item.setMessage(RcpIconConstants.CHECK_CAM_IMAGE,
+                    item.setMessage(IconConstants.CHECK_CAM_IMAGE,
                             getStatusLineText());
                     break;
                 case Constants.MAPPING:
-                    item.setMessage(RcpIconConstants.MAP_IMAGE,
+                    item.setMessage(IconConstants.MAP_IMAGE,
                             getStatusLineText());
                     break;
                 case Constants.PAUSED:
-                    item.setMessage(RcpIconConstants.PAUSE_IMAGE,
+                    item.setMessage(IconConstants.PAUSE_IMAGE,
                             getStatusLineText());
                     break;
                 default:
-                    item.setMessage(RcpIconConstants.NO_AUT_IMAGE,
+                    item.setMessage(IconConstants.NO_AUT_IMAGE,
                             getStatusLineText());
             }
             manager.update(true);
         }
-    }
-
-    /** 
-     * @param fileName Object
-     * @return Image
-     */
-    public static Image getImage(String fileName) {
-        ImageDescriptor descriptor = null;
-        descriptor = getImageDescriptor(fileName);
-        //obtain the cached image corresponding to the descriptor
-        Image image = imageCache.get(descriptor);
-        if (image == null) {
-            image = descriptor.createImage();
-            imageCache.put(descriptor, image);
-        }
-        return image;
-    }
-
-    /**
-     * @param name String
-     * @return ImageDescriptor from URL
-     */
-    public static ImageDescriptor getImageDescriptor(String name) {
-        return ImageUtils.getImageDescriptor(getDefault().getBundle(), name);
     }
 
     /**
@@ -1175,8 +1149,8 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     public static void startLongRunning(final String message) {
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
-                getStatusLineManager().setErrorMessage(getImage("longRunning.gif"), //$NON-NLS-1$
-                    message); 
+                getStatusLineManager().setErrorMessage(
+                        IconConstants.LONG_RUNNING_IMAGE, message);
                 startLongRunning();
             }
         });

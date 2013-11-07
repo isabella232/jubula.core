@@ -3,8 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Jubula UI (RCP-specific)
 Bundle-SymbolicName: org.eclipse.jubula.client.ui.rcp; singleton:=true
 Bundle-Version: 2.2.0.qualifier
-Bundle-ClassPath: .,
- icons/
+Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.jubula.client.ui.rcp.Plugin
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin

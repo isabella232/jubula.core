@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.dialogs;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
@@ -145,7 +146,7 @@ public class VersionDialog extends TitleAreaDialog {
     protected Control createDialogArea(Composite parent) {
         setMessage(m_message);
         setTitle(m_title);
-        setTitleImage(Plugin.getImage(m_image));
+        setTitleImage(IconConstants.getImage(m_image));
         getShell().setText(m_shell);
         // new Composite as container
         final GridLayout gridLayoutParent = new GridLayout();
