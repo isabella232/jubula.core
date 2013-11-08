@@ -39,6 +39,11 @@ public interface IMenuItemComponent extends IComponent, ISelectionComponent {
      */
     public boolean isShowing();
     
+    /** Gets the menu of the menuitem 
+     * @return the menu which is attached to the item
+     */
+    public IMenuComponent getMenu();
+    
     /**
      * @return <code>true</code> if the menuitem has a submenu
      */
