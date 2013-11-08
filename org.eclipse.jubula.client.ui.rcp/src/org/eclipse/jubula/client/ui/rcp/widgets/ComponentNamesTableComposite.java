@@ -95,8 +95,11 @@ public class ComponentNamesTableComposite extends Composite implements
      */
     private static final String COLUMN_TYPE_NAME = "type"; //$NON-NLS-1$
     
-    /** Constant for the default column witdh */ 
+    /** Constant for the default column width */ 
     private static final int COLUMN_WIDTH = 70;
+    
+    /** Constant for the default new component name column width */ 
+    private static final int NEW_NAME_COLUMN_WIDTH = 190;
     
     /** The table viewer */
     private CheckboxTableViewer m_tableViewer;
@@ -632,7 +635,7 @@ public class ComponentNamesTableComposite extends Composite implements
             }
             item.setGrayed(!editable);
         }
-        // packs all cloumns (inspite of the first)
+        // packs all columns (despite of the first)
         Table table = m_tableViewer.getTable();
         if (table.getItemCount() != 0) {
             final TableColumn[] columns = table.getColumns();
@@ -647,8 +650,14 @@ public class ComponentNamesTableComposite extends Composite implements
             for (ICompNamesPairPO pair : input) {
                 m_tableViewer.setChecked(pair, pair.isPropagated());
             }
-            table.getColumn(0).setResizable(false);
-            table.getColumn(0).setWidth(38);
+            TableColumn propagationColumn = table.getColumn(0);
+            propagationColumn.setResizable(false);
+            propagationColumn.setWidth(38);
+
+            TableColumn newNameColumn = table.getColumn(2);
+            if (newNameColumn.getWidth() < NEW_NAME_COLUMN_WIDTH) {
+                newNameColumn.setWidth(NEW_NAME_COLUMN_WIDTH);
+            }
         }
         controlPropagation(editable);
     }
