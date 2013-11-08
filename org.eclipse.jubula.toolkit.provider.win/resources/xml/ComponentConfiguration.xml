@@ -22,17 +22,17 @@
 	</concreteComponent>	
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonWinForm" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Button</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.ButtonImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ButtonTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonWinForm" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonWPF" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Button</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.ButtonImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ButtonTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonWPF" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonWin32" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Button</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.ButtonImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ButtonTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonWin32" />
 	</toolkitComponent>		
 	
@@ -205,7 +205,7 @@
 	<!-- referenced to http://msdn.microsoft.com/en-us/library/system.windows.automation.controltype.menu.aspx -->
 	<toolkitComponent type="org.eclipse.jubula.rc.dotnet.components.controltype.Menu" visible="false" hasDefaultMapping="true">
 		<realizes>guidancer.concrete.MenuBar</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.MenuImplClass</testerClass>
+		<testerClass>com.bredexsw.guidancer.rc.win.tester.MenuTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.Menu" />
 	</toolkitComponent>		
 </compSystem>
