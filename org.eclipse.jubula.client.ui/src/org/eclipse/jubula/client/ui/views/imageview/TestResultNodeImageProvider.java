@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.views.imageview;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.ui.utils.ImageUtils;
 import org.eclipse.swt.graphics.Device;
@@ -33,15 +36,45 @@ public class TestResultNodeImageProvider implements ImageProvider {
     public TestResultNodeImageProvider(TestResultNode testresultnode) {
         m_testResultNode = testresultnode;
     }
-
+    
     /**
      * {@inheritDoc}
      */
-    public Image getImage(Device target) {
-        if (m_testResultNode.getScreenshot() != null) {
-            return new Image(target, ImageUtils.getImageData(m_testResultNode
-                    .getScreenshot()));
+    public ImageViewData getImageViewData(Device target) {
+        byte[] screenshot = m_testResultNode.getScreenshot();
+        if (screenshot != null) {
+            Image img = new Image(target, ImageUtils.getImageData(screenshot));
+            return new ImageViewData(img, generateImageName(), 
+                    generateImageDate());
         }
         return null;
+    }
+    
+    /**
+     * generates the name of the image
+     * @return the name of the image
+     */
+    private String generateImageName() {
+        TestResultNode parent = m_testResultNode;
+        while (parent.getParent() != null) {
+            parent = parent.getParent();
+        }
+        
+        String imgName = "ErrorInTest_" + parent.getName() + "_" //$NON-NLS-1$ //$NON-NLS-2$
+                              + m_testResultNode.getNode().getName();
+        // eliminate whitespaces and characters which are illegal in a file name
+        imgName = imgName.replaceAll("[\\s\\?\\\\/:|<>\\*\"]", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        return imgName;
+    }
+    
+    /**
+     * generates the date of the image
+     * @return the date of the image
+     */
+    private String generateImageDate() {
+        // get the date of test from time stamp
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss-SSS"); //$NON-NLS-1$
+        String date = format.format(m_testResultNode.getTimeStamp());
+        return date;
     }
 }

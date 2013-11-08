@@ -351,4 +351,12 @@
            <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
         </factory>
 	</extension>
+    <extension
+          point="org.eclipse.ui.contexts">
+       <context
+             id="org.eclipse.jubula.client.ui.contexts.ImageViewDisplaysImage"
+             name="org.eclipse.jubula.client.ui.contexts.ImageViewDisplaysImage"
+             parentId="org.eclipse.ui.contexts.dialogAndWindow">
+       </context>
+    </extension>
 </plugin>

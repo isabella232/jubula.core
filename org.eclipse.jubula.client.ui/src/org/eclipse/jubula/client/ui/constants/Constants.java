@@ -129,6 +129,13 @@ public interface Constants {
         "org.eclipse.jubula.client.ui.rcp.views.RunningAuts"; //$NON-NLS-1$
     
     //  -------------------------------------------------------------
+    //  Keys for Contexts
+    //  -------------------------------------------------------------
+    /** if there is an image displayed in the image view */
+    public static final String IMAGEVIEW_DISPLAYS_IMAGE = 
+        "org.eclipse.jubula.client.ui.contexts.ImageViewDisplaysImage"; //$NON-NLS-1$
+    
+    //  -------------------------------------------------------------
     //  decorator ids
     //  -------------------------------------------------------------
     /** ID of the completeness check decorator */

@@ -144,13 +144,6 @@
           properties="isPasteAllowed"
           type="java.util.Collection">
     </propertyTester>
-    <propertyTester
-          class="org.eclipse.jubula.client.ui.rcp.propertytester.ImageViewPropertyTester"
-          id="org.eclipse.jubula.client.ui.rcp.propertytester.ImageViewPropertyTester"
-          namespace="org.eclipse.jubula.client.ui.rcp.ImageView"
-          properties="hasImage"
-          type="org.eclipse.jubula.client.core.model.TestResultNode">
-    </propertyTester>
   </extension>
   <extension
     id="jbMarker"
@@ -1979,21 +1972,11 @@
       class="org.eclipse.jubula.client.ui.rcp.handlers.SaveImageAsHandler"
       commandId="org.eclipse.jubula.client.ui.commands.SaveImageAs">
      <enabledWhen>
-     <and>
-         <count
-              value="1">
-         </count>
-         <iterate
-             ifEmpty="false"
-             operator="or">
-             <and>
-                <instanceof
-                      value="org.eclipse.jubula.client.core.model.TestResultNode">
-                </instanceof>
-                <test property="org.eclipse.jubula.client.ui.rcp.ImageView.hasImage"/>
-             </and>
-         </iterate>
-     </and>
+        <with variable="activeContexts">
+            <iterate ifEmpty="false" operator="or">
+                <equals value="org.eclipse.jubula.client.ui.contexts.ImageViewDisplaysImage"/>
+            </iterate>
+        </with>     
      </enabledWhen>
   </handler>
     <handler

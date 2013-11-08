@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.views.imageview;
 
 import org.eclipse.swt.graphics.Device;
-import org.eclipse.swt.graphics.Image;
 
 /**
  * @author BREDEX GmbH
@@ -19,14 +18,14 @@ import org.eclipse.swt.graphics.Image;
  */
 public interface ImageProvider {
     /**
-     * This method returns an {@link Image}. The implementor must return an
-     * image that can be disposed() by the caller. The implementor is not given
-     * any notification that the dispose is occurring.
+     * This method returns an {@link ImageViewData}. The implementor must return
+     * an ImageViewData with an image that can be disposed() by the caller. The
+     * implementor is not given any notification that the dispose is occurring.
      * 
      * @param target
      *            The device the image will be displayed on.
      * 
-     * @return {@link Image}
+     * @return {@link ImageViewData}
      */
-    Image getImage(Device target);
+    ImageViewData getImageViewData(Device target);
 }

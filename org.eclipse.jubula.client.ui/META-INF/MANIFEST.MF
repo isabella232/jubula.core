@@ -46,5 +46,6 @@ Export-Package: org.eclipse.jubula.client.ui.adapter,
  org.eclipse.jubula.client.ui.utils,
  org.eclipse.jubula.client.ui.validator.cell,
  org.eclipse.jubula.client.ui.views,
+ org.eclipse.jubula.client.ui.views.imageview,
  org.eclipse.jubula.client.ui.widgets
 Bundle-Activator: org.eclipse.jubula.client.ui.Plugin
