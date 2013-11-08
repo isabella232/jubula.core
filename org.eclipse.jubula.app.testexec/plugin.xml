@@ -9,8 +9,8 @@
 
 <plugin>
    <extension
-         id="org.eclipse.jubula.app.cmd.launcher"
-         name="Testexecutor"
+         id="org.eclipse.jubula.app.testexec.launcher"
+         name="testexec"
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
