@@ -25,17 +25,15 @@ import java.util.zip.ZipInputStream;
 //import org.slf4j.LoggerFactory;
 
 /**
- * JarResources: JarResources maps all resources included in a Zip or Jar file.
+ * JarResources: JarResources maps all resources included in a ZIP or JAR file.
  * Additionaly, it provides a method to extract one as a blob.
  * 
  * !!! this class is needed by MainCassLocator !!!
  */
 public final class JarResources {
-
-// don't use logging because this may not work due to class loading
-// problems and therefor may crash the application.
-// private static final Logger LOG = LoggerFactory.getLogger(JarResources.class);
-    
+    // don't use logging because this may not work due to class loading
+    // problems and therefore may crash the application.
+    // private static final Logger LOG = LoggerFactory.getLogger(JarResources.class);
     /**
      * jar resource mapping tables
      */ 
@@ -56,7 +54,7 @@ public final class JarResources {
      * internal hashtable, keyed by resource names.
      * 
      * @param jFileName
-     *            a jar or zip file
+     *            a jar or ZIP file
      */
     public JarResources(String jFileName) {
         this.m_jarFileName = jFileName;

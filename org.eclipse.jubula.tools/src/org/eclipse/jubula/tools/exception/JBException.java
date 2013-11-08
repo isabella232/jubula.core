@@ -11,7 +11,7 @@
 package org.eclipse.jubula.tools.exception;
 
 /**
- *  The base class for all exceptions in guidancer.
+ *  The base class for all exceptions in Jubula.
  *
  * @author BREDEX GmbH
  * @created 20.07.2004

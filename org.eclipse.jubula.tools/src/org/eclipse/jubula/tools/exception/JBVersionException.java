@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class JBVersionException extends JBException {
     
-    /** list with Strings of detailled errror messages */
+    /** list with Strings of detailed error messages */
     private List m_errorMsgs;
 
     /**

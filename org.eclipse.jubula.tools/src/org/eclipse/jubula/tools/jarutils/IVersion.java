@@ -29,15 +29,15 @@ public interface IVersion {
     /** minor version for DB */
     public final Integer JB_DB_MINOR_VERSION = new Integer(0);
     
-    /** major version for xml import support */
+    /** major version for XML import support */
     public final Integer JB_XML_IMPORT_MAJOR_VERSION = new Integer(1);
     
-    /** minor version for xml import support */
+    /** minor version for XML import support */
     public final Integer JB_XML_IMPORT_MINOR_VERSION = new Integer(1);
     
-    /** major version for state of metadata in xml-format or from database
+    /** major version for state of metadata in XML-format or from database
      *  modifications in client code without modification of ToolkitPlugins
-     *  require an increasement of this version
+     *  require an increase of this version
      */
     public final Integer JB_CLIENT_METADATA_VERSION = new Integer(6);
     
