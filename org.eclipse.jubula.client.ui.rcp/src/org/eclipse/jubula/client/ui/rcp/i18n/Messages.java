@@ -46,6 +46,9 @@ public class Messages extends NLS {
     public static String AutAgentPreferencePageDescription;
     public static String AUTConfigComponentAdd;
     public static String AUTConfigComponentAddServer;
+    public static String AUTConfigComponentAppName;
+    public static String AUTConfigComponentArguments;
+    public static String AUTConfigComponentArgumentsControlDecorator;
     public static String AUTConfigComponentBrowse;
     public static String AUTConfigComponentClassPathDialogTitle;
     public static String AUTConfigComponentDefaultAUTConfigName;
@@ -79,6 +82,7 @@ public class Messages extends NLS {
     public static String AUTConfigComponentWrongInputMessage;
     public static String AUTConfigComponentWrongJAR;
     public static String AUTConfigComponentWrongJRE;
+    public static String AUTConfigComponentWrongModernUiAppName;
     public static String AUTConfigComponentWrongWorkDir;
     public static String AutConfigDialogMoveCpDownToolTip;
     public static String AutConfigDialogMoveCpUpToolTip;

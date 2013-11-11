@@ -68,6 +68,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.PlatformUI;
@@ -230,6 +231,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     /** gui component */
     private Button m_autWorkingDirectoryButton;
     /** gui component */
+    private Label m_autWorkingDirectoryLabel;
+    /** gui component */
     private Text m_autIdTextField;
     /** validator for the AUT ID text field */
     private IValidator m_autIdValidator;
@@ -387,7 +390,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     /**
      * @param areaComposite The composite for which to create and set a layout.
      */
-    private void createLayout(Composite areaComposite) {
+    protected void createLayout(Composite areaComposite) {
         areaComposite.setLayout(
             createDefaultGridLayout(NUM_COLUMNS));
         GridData gridData = new GridData(GridData.BEGINNING);
@@ -547,7 +550,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      */
     protected void createAutDirectoryEditor(Composite parent) {
         
-        UIComponentHelper.createLabel(parent, "AUTConfigComponent.workDir"); //$NON-NLS-1$ 
+        m_autWorkingDirectoryLabel = UIComponentHelper.createLabel(
+                parent, "AUTConfigComponent.workDir"); //$NON-NLS-1$ 
         m_autWorkingDirectoryTextField = UIComponentHelper.createTextField(
             parent, 1);
         
@@ -1289,6 +1293,16 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         
         return error;
     }
+
+    /**
+     * Hide the working dir GUI column.
+     */
+    protected void hideWorkingDirColumn() {
+        m_autWorkingDirectoryLabel.setVisible(false);
+        m_autWorkingDirectoryButton.setVisible(false);
+        m_autWorkingDirectoryTextField.setVisible(false);
+    }
+
     /**
      * 
      * @return the text field for the Working Directory.

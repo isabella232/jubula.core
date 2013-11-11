@@ -56,6 +56,9 @@ public class MessageFactory {
             "org.eclipse.jubula.communication.message.swing.ActivateSwingApplicationMessage"); //$NON-NLS-1$
         toolkitToActivationMessageClassName.put(CommandConstants.WIN_TOOLKIT,
                 "org.eclipse.jubula.communication.message.win.ActivateWinApplicationMessage"); //$NON-NLS-1$
+        toolkitToActivationMessageClassName.put(
+                CommandConstants.WIN__APPS_TOOLKIT,
+                "org.eclipse.jubula.communication.message.win.ActivateWinApplicationMessage"); //$NON-NLS-1$
         toolkitToActivationMessageClassName.put(CommandConstants.IOS_TOOLKIT,
                 "org.eclipse.jubula.communication.message.ios.IOSActivateApplicationMessage"); //$NON-NLS-1$
     }
@@ -77,6 +80,8 @@ public class MessageFactory {
         toolkitToTestMessageClassName.put(CommandConstants.HTML_TOOLKIT, 
             "org.eclipse.jubula.communication.message.html.CAPHtmlTestMessage"); //$NON-NLS-1$
         toolkitToTestMessageClassName.put(CommandConstants.WIN_TOOLKIT,
+                "org.eclipse.jubula.communication.message.win.CAPWinTestMessage"); //$NON-NLS-1$
+        toolkitToTestMessageClassName.put(CommandConstants.WIN__APPS_TOOLKIT,
                 "org.eclipse.jubula.communication.message.win.CAPWinTestMessage"); //$NON-NLS-1$
         toolkitToTestMessageClassName.put(CommandConstants.IOS_TOOLKIT, 
                 "org.eclipse.jubula.communication.message.ios.IOSCAPTestMessage"); //$NON-NLS-1$

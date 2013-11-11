@@ -48,6 +48,8 @@ public abstract class CommandConstants {
     public static final String HTML_TOOLKIT = "com.bredexsw.guidancer.HtmlToolkitPlugin"; //$NON-NLS-1$
     /** constant: "Win" */
     public static final String WIN_TOOLKIT = "ui.toolkit.WinToolkitPlugin"; //$NON-NLS-1$
+    /** constant: "WinApps" */
+    public static final String WIN__APPS_TOOLKIT = "ui.toolkit.WinAppsToolkitPlugin"; //$NON-NLS-1$
     /** constant: "iOS" */
     public static final String IOS_TOOLKIT = "ui.toolkit.mobile.IOSToolkitPlugin"; //$NON-NLS-1$
     /** ID of the SLF4J API bundle */
@@ -100,8 +102,10 @@ public abstract class CommandConstants {
     public static final String ACTIVATE_SWING_APPLICATION_COMMAND = "org.eclipse.jubula.rc.swing.commands.ActivateApplicationCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swt.commands.ActivateApplicationCommand" */
     public static final String ACTIVATE_SWT_APPLICATION_COMMAND = "org.eclipse.jubula.rc.swt.commands.ActivateApplicationCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.rc.swt.commands.ActivateApplicationCommand" */
+    /** constant: "com.bredexsw.guidancer.rc.win.commands.ActivateApplicationCommand" */
     public static final String ACTIVATE_WIN_APPLICATION_COMMAND = "com.bredexsw.guidancer.rc.win.commands.ActivateApplicationCommand"; //$NON-NLS-1$
+    /** constant: "com.bredexsw.guidancer.rc.win.apps.commands.ActivateApplicationCommand" */
+    public static final String ACTIVATE_WIN_APPS_APPLICATION_COMMAND = "com.bredexsw.guidancer.rc.win.apps.commands.ActivateApplicationCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.AUTHighlightComponentCommand" */
     public static final String AUT_HIGHLIGHT_COMMAND = "org.eclipse.jubula.rc.common.commands.AUTHighlightComponentCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.AUTStartCommand" */
@@ -112,8 +116,10 @@ public abstract class CommandConstants {
     public static final String SWT_CAP_TEST_COMMAND = "org.eclipse.jubula.rc.swt.commands.CAPTestCommand"; //$NON-NLS-1$
     /** constant: "com.bredexsw.jubula.rc.html.commands.CAPTestCommand" */
     public static final String HTML_CAP_TEST_COMMAND = "com.bredexsw.jubula.rc.html.commands.CAPTestCommand"; //$NON-NLS-1$
-    /** constant: "com.bredexsw.jubula.rc.win.commands.CAPTestCommand" */
+    /** constant: "com.bredexsw.guidancer.rc.win.commands.CAPTestCommand" */
     public static final String WIN_CAP_TEST_COMMAND = "com.bredexsw.guidancer.rc.win.commands.CAPTestCommand"; //$NON-NLS-1$
+    /** constant: "com.bredexsw.jubula.rc.win.apps.commands.CAPTestCommand" */
+    public static final String WIN_APP_CAP_TEST_COMMAND = "com.bredexsw.guidancer.rc.win.commands.CAPTestCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand" */
     public static final String CHANGE_AUT_MODE_COMMAND = "org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swing.commands.ChangeAUTModeCommand" */

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+    Copyright (c) 2004, 2010 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<!-- CAUTION: don't format any entries, especially don't use line breaks!
+	The value of the formated item may contain formating characters like tabs or
+	newlines, making them unusable for class or data lookup!-->
+<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../org.eclipse.jubula.toolkit.common/resources/xml/ToolkitComponentConfiguration.xsd">
+	<configVersion>
+		<majorVersion>1</majorVersion>
+		<minorVersion>1</minorVersion>
+	</configVersion>
+	
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonXAML" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Button</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.ButtonImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonXAML" />
+	</toolkitComponent>
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonInternetExplorer" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Button</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.ButtonImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonInternetExplorer" />
+	</toolkitComponent>
+	
+	
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.TextXAML" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Text</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.TextImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.TextXAML" />
+	</toolkitComponent>
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.TextInternetExplorer" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Text</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.TextImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.TextInternetExplorer" />
+	</toolkitComponent>
+	
+	
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.CheckBoxXAML" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.CheckBox</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.CheckBoxImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.CheckBoxXAML" />
+	</toolkitComponent>
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.CheckBoxInternetExplorer" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.CheckBox</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.CheckBoxImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.CheckBoxInternetExplorer" />
+	</toolkitComponent>
+	
+	
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.EditXAML" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Edit</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.EditImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.EditXAML" />
+	</toolkitComponent>
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.EditInternetExplorer" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Edit</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.EditImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.EditInternetExplorer" />
+	</toolkitComponent>
+	
+	
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.RadioButtonXAML" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.RadioButton</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.RadioButtonImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.RadioButtonXAML" />
+	</toolkitComponent>
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.RadioButtonInternetExplorer" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.RadioButton</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.RadioButtonImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.RadioButtonInternetExplorer" />
+	</toolkitComponent>
+	
+	
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.ListXAML" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.List</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.ListXAMLImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.ListXAML" />
+	</toolkitComponent>
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.ListInternetExplorer" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.List</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.ListXAMLImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.ListInternetExplorer" />
+	</toolkitComponent>
+	
+	
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.ComboBoxXAML" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.ComboBox</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.ComboBoxImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.ComboBoxXAML" />
+	</toolkitComponent>
+	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.ComboBoxInternetExplorer" visible="false">
+		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.ComboBox</realizes>
+		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.ComboBoxImplClass</testerClass>
+		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.ComboBoxInternetExplorer" />
+	</toolkitComponent>
+</compSystem>
