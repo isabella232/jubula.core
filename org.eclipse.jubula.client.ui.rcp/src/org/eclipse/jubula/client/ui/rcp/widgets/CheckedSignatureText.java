@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.widgets;
 
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 
 
 /**
@@ -35,7 +38,26 @@ public class CheckedSignatureText extends CheckedText {
          * {@inheritDoc}
          */
         public ValidationState validateInput(VerifyEvent e) {
-            return ValidationState.OK;
+            ValidationState val;
+            
+            Text txt = (Text)e.widget;
+            
+            final String oldValue = txt.getText();
+            StringBuilder workValue = new StringBuilder(oldValue);
+            workValue.replace(e.start, e.end, e.text);
+            String newValue = workValue.toString();
+
+            if (StringUtils.isEmpty(newValue)) {                
+                val = ValidationState.OK;                
+            } else {
+                if (EnvironmentUtils.getProcessOrSystemProperty(newValue) 
+                        != null) {
+                    val = ValidationState.OK;                    
+                } else {
+                    val = ValidationState.DontMatchAccept;
+                }
+            }
+            return val;
         }
         
     }

@@ -63,6 +63,7 @@ import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -511,7 +512,6 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             public void widgetSelected(SelectionEvent e) {
                 checkCompleteness();
             }
-
             public void widgetDefaultSelected(SelectionEvent e) {
                 checkCompleteness();
             }
@@ -532,8 +532,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                     break;
             }
         } else {
-            // set days as default
-            daysButton.setSelection(true);
+            daysButton.setSelection(true); // set days as default
         }
         
         m_trackChangesSpan = new CheckedIntText(m_trackChangesTimespanSelection,
@@ -541,6 +540,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         gridData = new GridData(SWT.BEGINNING, SWT.NONE, true, true);
         gridData.widthHint = 80;
         m_trackChangesSpan.setLayoutData(gridData);
+        ControlDecorator.decorateInfo(m_trackChangesSpan,  
+                "TestResultViewPreferencePage.cleanResultsTimeunitInfo", false); //$NON-NLS-1$
         
         Integer span = m_origProjectProps.getTrackChangesSpan();
         if (span != null) {
@@ -557,7 +558,6 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             public void keyReleased(KeyEvent e) {
                 checkCompleteness();
             }
-            
         });
         
         if (m_isTrackingActivatedButton != null) {
@@ -593,6 +593,14 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         gridData = new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 200;
         m_trackChangesSignature.setLayoutData(gridData);
+        m_trackChangesSignature.addKeyListener(new KeyListener() {
+            public void keyPressed(KeyEvent e) {
+                // nothing
+            }
+            public void keyReleased(KeyEvent e) {
+                checkCompleteness();
+            }
+        });
         
         String signature = m_origProjectProps.getTrackChangesSignature();
         if (signature != null) {
@@ -675,6 +683,16 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         if (m_trackChangesTimespanSelection.isEnabled() 
                 && m_trackChangesSpan.getValue() <= 0) {
             setErrorMessage(Messages.PrefPageTrackChangesTimespanEmpty);
+            setValid(false);
+            return;
+        }
+        if (m_trackChangesTimespanSelection.isEnabled() 
+                && !m_trackChangesSignature.getText().equals("")
+                && EnvironmentUtils.
+                    getProcessOrSystemProperty(m_trackChangesSignature.
+                                                getText())
+                   == null) {
+            setErrorMessage(Messages.PrefPageTrackChangesSignatureInvalid);
             setValid(false);
             return;
         }

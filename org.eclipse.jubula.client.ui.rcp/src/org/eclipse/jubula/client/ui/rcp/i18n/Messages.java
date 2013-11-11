@@ -531,6 +531,7 @@ public class Messages extends NLS {
     public static String PrefPageTrackChangesDeleteDataQuestion;
     public static String PrefPageTrackChangesNoUnitSelected;
     public static String PrefPageTrackChangesSignatureDescription;
+    public static String PrefPageTrackChangesSignatureInvalid;
     public static String PrefPageTrackChangesSignatureSelectionText;
     public static String PrefPageTrackChangesTimespanSelectionText;
     public static String PrefPageTrackChangesTimespanEmpty;
