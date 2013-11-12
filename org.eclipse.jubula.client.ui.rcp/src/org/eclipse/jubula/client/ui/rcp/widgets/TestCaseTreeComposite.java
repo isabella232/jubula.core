@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.core.utils.DependencyFinderOp;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.TestCaseTreeCompositeContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.GeneralLabelProvider;
@@ -211,7 +212,7 @@ public class TestCaseTreeComposite extends Composite {
         public Image getImage(Object element) {
             if (element instanceof ISpecTestCasePO) {
                 if (m_circDependList.contains(element)) {
-                    return IconConstants.TC_DISABLED_IMAGE; 
+                    return Plugin.TC_DISABLED_IMAGE; 
                 } 
                 return IconConstants.TC_IMAGE;
             }

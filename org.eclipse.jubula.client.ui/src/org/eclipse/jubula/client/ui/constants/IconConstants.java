@@ -19,8 +19,6 @@ import org.eclipse.jubula.client.ui.utils.ImageUtils;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -28,16 +26,6 @@ import org.slf4j.LoggerFactory;
  * @created 31.07.2006
  */
 public class IconConstants {
-    /**
-     * The <code>Image</code> constructor argument indicating that the new image
-     * should have the appearance of a "gray scaled" copy of the image provided
-     * as an argument (value is 2).
-     * 
-     * @see SWT.IMAGE_GRAY - in here as it's not available in RAP / RWT
-     *      reference implementation
-     */
-    public static final int IMAGE_GRAY = 2;
-    
     /** m_imageCache */
     public static final Map < ImageDescriptor, Image > CACHE = 
         new HashMap < ImageDescriptor, Image > ();
@@ -335,68 +323,9 @@ public class IconConstants {
     /** no aut image */
     public static final Image NO_AUT_IMAGE = getImage("NoAUT.gif"); //$NON-NLS-1$
     
-    /**
-     * @param original The original, or base, image.
-     * @return the "cut" version of the image. Client should not 
-     *         dispose this image.
-     */
-    public static final Image TC_DISABLED_IMAGE = new Image(
-            IconConstants.TC_IMAGE.getDevice(), 
-            IconConstants.TC_IMAGE, IMAGE_GRAY);
-    
-    /** the logger */
-    private static final Logger LOG = 
-        LoggerFactory.getLogger(IconConstants.class);
-
-    /** maps images to their "generated" (green-tinted) counterparts */
-    private static final Map<Image, Image> GEN_IMAGES = 
-        new HashMap<Image, Image>();
-    
-    /** maps images to their "cut" (grayscale) counterparts */
-    private static final Map<Image, Image> CUT_IMAGES = 
-        new HashMap<Image, Image>();
-    
     /** to prevent instantiation */
     private IconConstants() {
         // do nothing
-    }
-    
-    /**
-     * 
-     * @param original The original, or base, image.
-     * @return the "cut" version of the image. Client should not 
-     *         dispose this image.
-     */
-    public static Image getCutImage(Image original) {
-        Image cutImage = CUT_IMAGES.get(original);
-        if (cutImage == null) {
-            cutImage = 
-                new Image(original.getDevice(), original, IMAGE_GRAY);
-            CUT_IMAGES.put(original, cutImage);
-        }
-        
-        return cutImage;
-    }
-    
-    static {
-        GEN_IMAGES.put(TC_IMAGE, getImage("testCase_generated.gif")); //$NON-NLS-1$
-        GEN_IMAGES.put(TC_REF_IMAGE, getImage("testCaseRef_generated.gif")); //$NON-NLS-1$
-        GEN_IMAGES.put(CATEGORY_IMAGE, getImage("category_generated.gif")); //$NON-NLS-1$
-    }
-
-    /**
-     * @param original The original, or base, image.
-     * @return the "generated" version of the image. Client should not 
-     *         dispose this image.
-     */
-    public static Image getGeneratedImage(Image original) {
-        Image genImage = GEN_IMAGES.get(original);
-        if (genImage == null) {
-            LOG.error("'Generated' image does not exist."); //$NON-NLS-1$
-            genImage = original;
-        }
-        
-        return genImage;
     }
     
     /** 

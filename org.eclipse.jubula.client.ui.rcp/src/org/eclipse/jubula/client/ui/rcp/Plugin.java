@@ -12,7 +12,9 @@ package org.eclipse.jubula.client.ui.rcp;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
@@ -69,6 +71,7 @@ import org.eclipse.search.ui.ISearchQuery;
 import org.eclipse.search.ui.NewSearchUI;
 import org.eclipse.search2.internal.ui.SearchView;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -104,9 +107,22 @@ import org.slf4j.LoggerFactory;
  * @created 06.07.2004
  */
 public class Plugin extends AbstractUIPlugin implements IProgressConsole {
-    
     /** plugin id */
     public static final String PLUGIN_ID = "org.eclipse.jubula.client.ui.rcp"; //$NON-NLS-1$
+
+    /** maps images to their "generated" (green-tinted) counterparts */
+    public static final Map<Image, Image> GENERATED_IMAGES = 
+        new HashMap<Image, Image>();
+    
+    /**
+     * @param original The original, or base, image.
+     * @return the "cut" version of the image. Client should not 
+     *         dispose this image.
+     */
+    public static final Image TC_DISABLED_IMAGE = new Image(
+            IconConstants.TC_IMAGE.getDevice(), 
+            IconConstants.TC_IMAGE, SWT.IMAGE_GRAY);
+    
     /** name of the Jubula console */
     private static final String JB_CONSOLE_NAME = "Console"; //$NON-NLS-1$
     /** for log messages */
@@ -125,7 +141,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     private static final String AUT_TOOLKIT_STATUSLINE_ITEM = "autToolKitInfo"; //$NON-NLS-1$
     /** <code>LANG_STATUSLINE_ITEM</code> */
     private static final String LANG_STATUSLINE_ITEM = "lang"; //$NON-NLS-1$
-    
     /** the client status */
     private ClientStatus m_status = ClientStatus.STARTING;
     /** the preference store for this bundle */
@@ -136,11 +151,17 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     private MessageConsoleStream m_standardMessageStream;
     /** error message stream for the console */
     private MessageConsoleStream m_errorMessageStream;
-    
-    /**
-     * the currently running application title
-     */
+    /** the currently running application title */
     private String m_runningApplicationTitle = null;
+    
+    static {
+        GENERATED_IMAGES.put(IconConstants.TC_IMAGE, 
+                       IconConstants.getImage("testCase_generated.gif")); //$NON-NLS-1$
+        GENERATED_IMAGES.put(IconConstants.TC_REF_IMAGE, 
+                       IconConstants.getImage("testCaseRef_generated.gif")); //$NON-NLS-1$
+        GENERATED_IMAGES.put(IconConstants.CATEGORY_IMAGE, 
+                       IconConstants.getImage("category_generated.gif")); //$NON-NLS-1$
+    }
 
     /**
      * Creates an UI plug-in runtime object
@@ -689,6 +710,37 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
                             new IEditorReference[editorParts.size()]),
                     false);
         }
+    }
+    
+    /**
+     * @param original The original, or base, image.
+     * @return the "generated" version of the image. Client should not 
+     *         dispose this image.
+     */
+    public static Image getGeneratedImage(Image original) {
+        Image genImage = GENERATED_IMAGES.get(original);
+        if (genImage == null) {
+            log.error("'Generated' image does not exist."); //$NON-NLS-1$
+            genImage = original;
+        }
+        
+        return genImage;
+    }
+    /**
+     * 
+     * @param original The original, or base, image.
+     * @return the "cut" version of the image. Client should not 
+     *         dispose this image.
+     */
+    public static Image getCutImage(Image original) {
+        Image cutImage = GENERATED_IMAGES.get(original);
+        if (cutImage == null) {
+            cutImage = new Image(original.getDevice(), original, 
+                    SWT.IMAGE_GRAY);
+            GENERATED_IMAGES.put(original, cutImage);
+        }
+        
+        return cutImage;
     }
 
     /**

@@ -125,7 +125,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         // generated elements
         if (element instanceof INodePO
                 && ((INodePO)element).isGenerated()) {
-            image = IconConstants.getGeneratedImage(image);
+            image = Plugin.getGeneratedImage(image);
         }
         
         // elements that have been "cut" to the clipboard should be grayscale
@@ -134,7 +134,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         if (cbContents instanceof IStructuredSelection) {
             IStructuredSelection sel = (IStructuredSelection)cbContents;
             if (sel.toList().contains(element)) {
-                image = IconConstants.getCutImage(image);
+                image = Plugin.getCutImage(image);
             }
         }
         

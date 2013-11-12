@@ -136,7 +136,7 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
         if (cbContents instanceof IStructuredSelection) {
             IStructuredSelection sel = (IStructuredSelection)cbContents;
             if (sel.toList().contains(element)) {
-                image = IconConstants.getCutImage(image);
+                image = Plugin.getCutImage(image);
             }
         }
         
