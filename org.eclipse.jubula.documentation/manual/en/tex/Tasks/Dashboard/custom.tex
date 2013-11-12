@@ -6,7 +6,8 @@ You can start the \dash{} server with default parameters or with custom paramete
 \item If you start the server without any arguments, it will use the properties file \bxname{dashboardserver.properties} from its current working directory. You can see this properties file in the same folder as the \bxname{dashboardserver} on Windows and Linux, and in the folder:\\
 \bxname{dashboard/dashboardserver.app/Contents/MacOS}\\
 on Mac systems. 
-\item You can, alternatively, specify a different properties file using \bxshell{-c <PROPERTIES\_FILE>}.
+\item You can, alternatively, specify a different properties file using \bxshell{-c <PROPERTIES\_FILE>}.\\
+Keep in mind that on Mac systems you cannot use a variable (e.\,g.\,\bxshell{\$HOME}) after \bxshell{-\,-\,args} in the path of the properties file when you try to start the \bxname{dashboardserver} from the command line via the "open" command.
 \item The properties file must contain the following properties with the values you require for them (do not use line breaks within the properties in the properties file):
 \begin{verbatim}
 org.eclipse.jubula.dashboard.
