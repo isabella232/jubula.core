@@ -10,11 +10,9 @@
 		<relativePath>../org.eclipse.jubula.releng</relativePath>
 	</parent>
 
-	<groupId>org.eclipse.jubula</groupId>
 	<artifactId>org.eclipse.jubula.releng.server</artifactId>
 	<name>Eclipse Jubula Server Components</name>
 	<description>Release engineering for Jubula server components.</description>
-	<version>2.3.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
