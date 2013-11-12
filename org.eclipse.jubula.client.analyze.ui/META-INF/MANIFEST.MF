@@ -2,19 +2,19 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Analyze UI
 Bundle-SymbolicName: org.eclipse.jubula.client.analyze.ui;singleton:=true
-Bundle-Version: 2.2.0.qualifier
+Bundle-Version: 2.3.0.qualifier
 Bundle-Activator: org.eclipse.jubula.client.analyze.ui.Activator
 Bundle-Vendor: Eclipse Jubula
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0.v20110110,4.0.0)",
  org.eclipse.ui;bundle-version="[3.7.0.20110602-0100,4.0.0)",
- org.eclipse.jubula.client.analyze.impl.standard;bundle-version="[2.2.0,2.3.0)",
- org.eclipse.jubula.tools;bundle-version="[2.2.0,2.3.0)",
- org.eclipse.jubula.client.analyze;bundle-version="[2.2.0,2.3.0)",
- org.eclipse.jubula.client.ui;bundle-version="[2.2.0,2.3.0)",
+ org.eclipse.jubula.client.analyze.impl.standard;bundle-version="[2.3.0,2.4.0)",
+ org.eclipse.jubula.tools;bundle-version="[2.3.0,2.4.0)",
+ org.eclipse.jubula.client.analyze;bundle-version="[2.3.0,2.4.0)",
+ org.eclipse.jubula.client.ui;bundle-version="[2.3.0,2.4.0)",
  org.eclipse.search;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.jubula.client.ui.rcp;bundle-version="[2.2.0,2.3.0)",
+ org.eclipse.jubula.client.ui.rcp;bundle-version="[2.3.0,2.4.0)",
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
- org.eclipse.jubula.client.core;bundle-version="[2.2.0,2.3.0)"
+ org.eclipse.jubula.client.core;bundle-version="[2.3.0,2.4.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin

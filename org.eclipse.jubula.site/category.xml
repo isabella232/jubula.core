@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2004, 2013 BREDEX GmbH. All rights reserved. This program
+     and the accompanying materials are made available under the terms of the
+     Eclipse Public License v1.0 which accompanies this distribution, and is available
+     at http://www.eclipse.org/legal/epl-v10.html 
+-->
 <site>
    <category-def name="org.eclipse.test" label="Testing"/>
-   <feature url="features/org.eclipse.jubula.feature_2.2.0.qualifier.jar" id="org.eclipse.jubula.feature" version="2.2.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature_2.3.0.qualifier.jar" id="org.eclipse.jubula.feature" version="2.3.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.source_2.2.0.qualifier.jar" id="org.eclipse.jubula.feature.source" version="2.2.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.source_2.3.0.qualifier.jar" id="org.eclipse.jubula.feature.source" version="2.3.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.launch.java_2.2.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.java" version="2.2.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.launch.java_2.3.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.java" version="2.3.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.launch.rcp_2.2.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.rcp" version="2.2.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.launch.rcp_2.3.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.rcp" version="2.3.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
 </site>

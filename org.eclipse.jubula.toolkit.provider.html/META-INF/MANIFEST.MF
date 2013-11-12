@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Toolkit - HTML
 Bundle-SymbolicName: org.eclipse.jubula.toolkit.provider.html;singleton:=true
-Bundle-Version: 2.2.0.qualifier
+Bundle-Version: 2.3.0.qualifier
 Bundle-Activator: org.eclipse.jubula.toolkit.provider.html.Activator
 Bundle-Vendor: Eclipse Jubula
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
- org.eclipse.jubula.toolkit.common;bundle-version="[2.2.0,2.3.0)",
- org.eclipse.jubula.client.ui.rcp;bundle-version="[2.2.0,2.3.0)";resolution:=optional,
- org.eclipse.jubula.ui.compatibility;bundle-version="[2.2.0,2.3.0)"
+ org.eclipse.jubula.toolkit.common;bundle-version="[2.3.0,2.4.0)",
+ org.eclipse.jubula.client.ui.rcp;bundle-version="[2.3.0,2.4.0)";resolution:=optional,
+ org.eclipse.jubula.ui.compatibility;bundle-version="[2.3.0,2.4.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
