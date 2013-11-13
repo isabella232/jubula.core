@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2004, 2010, 2013 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -190,7 +190,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * @param parameters The parameters for starting the AUT.
      * @return the main class
      */
-    private String getMainClassFromManifest(Map parameters) {
+    protected String getMainClassFromManifest(Map parameters) {
         String jarFile = createAbsoluteJarPath(parameters);
         return getAttributeFromManifest("main-class", jarFile); //$NON-NLS-1$
     }
@@ -201,7 +201,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * @return the String value of the specified attribute name, or null if
      *         not found.
      */
-    private String getAttributeFromManifest(
+    protected String getAttributeFromManifest(
         String attributeName, String jarFile) {
         
         if (jarFile == null || jarFile.length() < 1) {
@@ -229,7 +229,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * @param parameters The parameters for starting the AUT.
      * @return the absolute path to the AUT jar file or null.
      */
-    private String createAbsoluteJarPath(Map parameters) {
+    protected String createAbsoluteJarPath(Map parameters) {
         File workingDir = getWorkingDir(parameters);
         String jarPath = (String)parameters.get(AutConfigConstants.JAR_FILE);
         if (jarPath != null && jarPath.length() > 0) {

@@ -259,7 +259,17 @@ public abstract class CommandConstants {
     public static final String HTML_GET_WINDOW_TITLES_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.WindowTitlesChangedCommand"; //$NON-NLS-1$
     /** AUT Server (HTML) - in OMM selection of a specific window for the OMM */
     public static final String HTML_OMM_SELECT_WINDOW_COMMAND = "com.bredexsw.jubula.rc.html.commands.OMSelectWindowCommand"; //$NON-NLS-1$
-    
+    /** constant: "org.eclipse.jubula.rc.javafx.JavaFXAUTServer" */
+    public static final String AUT_JAVAFX_SERVER = "org.eclipse.jubula.rc.javafx.JavaFXAUTServer"; //$NON-NLS-1$
+    /** ID of the JavaFX RC bundle */
+    public static final String RC_JAVAFX_BUNDLE_ID = "org.eclipse.jubula.rc.javafx"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.rc.swt.commands.CAPTestCommand" */
+    public static final String JAVAFX_CAP_TEST_COMMAND = "org.eclipse.jubula.rc.javafx.commands.CAPTestCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.rc.swing.commands.ActivateApplicationCommand" */
+    public static final String ACTIVATE_JAVAFX_APPLICATION_COMMAND = "org.eclipse.jubula.rc.javafx.commands.ActivateApplicationCommand"; //$NON-NLS-1$
+    /** constant: "JavaFX" */
+    public static final String JAVAFX_TOOLKIT = "org.eclipse.jubula.JavaFXToolkitPlugin"; //$NON-NLS-1$
+   
     /** to prevent instantiation */
     private CommandConstants() {
         // do nothing
