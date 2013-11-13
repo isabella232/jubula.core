@@ -378,12 +378,6 @@ public class Utils {
         String type = StringConstants.EMPTY;
         ICompNamesPairPO compNamesPair = exec.getCompNamesPair(name);
         if (compNamesPair != null) {
-//            // at first: check the compType directly
-//            type = compNamesPair.getType();
-//            if (!Constants.EMPTY_STRING.equals(type)) {
-//                return type;
-//            }
-            // if not compType, then search recursively
             if (checkForPropagate) {
                 if (compNamesPair.isPropagated()) {
                     type = searchCompTypeInTree(exec, name);

@@ -60,7 +60,6 @@ public interface ICompNamesPairPO
     
     /**
      * @param type the current type to set
-     * FIXME Clemens: make private, when persisting in DB
      */
     public abstract void setType(String type);
 }

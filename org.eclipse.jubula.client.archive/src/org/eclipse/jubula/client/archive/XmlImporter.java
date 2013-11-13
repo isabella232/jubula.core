@@ -2115,8 +2115,8 @@ class XmlImporter {
         }
         for (CompNames overriddenXml : xml.getOverriddenNamesList()) {
             final ICompNamesPairPO compName = PoMaker.createCompNamesPairPO(
-                overriddenXml.getOriginalName(), overriddenXml.getNewName(), 
-                overriddenXml.getType());
+                    overriddenXml.getOriginalName(),
+                    overriddenXml.getNewName(), null);
             compName.setPropagated(overriddenXml.getPropagated());
             exec.addCompNamesPair(compName);
         }

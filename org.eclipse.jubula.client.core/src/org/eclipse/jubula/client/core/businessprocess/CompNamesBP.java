@@ -47,7 +47,7 @@ import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
  */
 public class CompNamesBP {
     /**
-     * Interface for updates of overriden component names or propagations.
+     * Interface for updates of overridden component names or propagations.
      */
     private interface IUpdater {
         /**

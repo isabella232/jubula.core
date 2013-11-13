@@ -895,8 +895,6 @@ class XmlExporter {
             xmlNames.setOriginalName(name.getFirstName());
             xmlNames.setNewName(name.getSecondName());
             xmlNames.setPropagated(name.isPropagated());
-            xmlNames.setType((name.getType() == null) 
-                    ? StringConstants.EMPTY : name.getType());
         }
     }
 
