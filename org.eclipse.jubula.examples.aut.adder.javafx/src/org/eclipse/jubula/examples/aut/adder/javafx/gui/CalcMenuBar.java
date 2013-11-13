@@ -52,6 +52,7 @@ public class CalcMenuBar extends MenuBar {
      * Constructor that Initializes the MenuBar
      */
     public CalcMenuBar() {
+        this.setId("menuBar");
         m_file = new Menu("File");
         m_reset = new MenuItem("reset");
         m_quit = new MenuItem("quit");

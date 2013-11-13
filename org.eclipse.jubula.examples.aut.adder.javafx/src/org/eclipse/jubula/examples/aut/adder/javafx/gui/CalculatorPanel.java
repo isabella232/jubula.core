@@ -66,15 +66,28 @@ public class CalculatorPanel extends GridPane {
      */
     public CalculatorPanel() {
         m_value1 = new Label("value1");
+        m_value1.setId("Label value1");
+
         m_value2 = new Label("value2");
+        m_value2.setId("Label value2");
+
         m_opSymbol = new Label("+");
+        m_opSymbol.setId("opSymbol");
+
         m_result = new Label("result");
+        m_result.setId("Label result");
 
         m_fieldValue1 = new TextField();
+        m_fieldValue1.setId("value1");
+
         m_fieldValue2 = new TextField();
+        m_fieldValue2.setId("value2");
+
         m_fieldResult = new TextField();
+        m_fieldResult.setId("result");
 
         m_buttonResult = new Button("=");
+        m_buttonResult.setId("equal");
 
         initialize();
     }
