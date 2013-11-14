@@ -45,11 +45,9 @@ You can use the basic setting (\bxfigref{autconfigbasic}) to configure your \gda
 \end{figure}
 
 \begin{enumerate}
-\item A suggested name for this \gdaut{} configuration is generated automatically based on your \gdaut{} name and the default \gdagent{} host. You can change this name if you wish. 
-\item The default \gdagent host is also automatically selected. You can select a new \gdagent{} from the combo box or add a new one by clicking \bxcaption{New}. For more information on adding and editing an \gdagent{}, see the section later \bxpref{TasksPrefsAgent}.
-
+\item Enter the basic configuration details as described earlier \bxpref{TasksBasicConfigurationInfo}.
 \item Enter the executable file name in the \bxname{Executable File Name} field. This path can be relative if you define a working directory \bxpref{AdvancedAUTConfig}).
-\item Enter the \gdaut{} ID that will be given to this \gdaut{} when it is started.  
+  
 \end{enumerate}
 For information on the advanced properties for the \gdaut{} configuration, see the next section \bxpref{AdvancedAUTConfig}. 
 
@@ -71,11 +69,7 @@ You can use the advanced dialog (\bxfigref{autconfigadvanced}) if your \gdaut{} 
 \item Enter the JAR path (directory and file
   name) into the \bxname{Executable JAR File Name} field.  
 
-This path can be relative (if you define a working directory), or absolute. This JAR file must contain a manifest file which contains the main class and the classpath. 
-
-\item You can optionally create a working directory to store files in. The server directory of the installation is selected as default. To create a working directory elsewhere, browse to and select the location. 
-
-The working directory is the root directory for any classpaths, classnames, JAR files and JRE binaries. If you create a working directory, you can enter the paths to these items using a relative path, with the working directory as the root. For more information on relative paths, read the section in the reference manual \bxextref{\gdrefman}{ref,relativepath}. 
+This path can be relative (if you define a working directory \bxpref{TasksWorkingDir}), or absolute. This JAR file must contain a manifest file which contains the main class and the classpath. 
 
 \item If your \gdaut{} must be started with the class name, add the main class name and the classpaths into their relative fields. The paths can be relative (if you have defined a working directory), or absolute. 
 \bxtipp{Add all the necessary files and directories to start the \gdaut{}. }
@@ -123,6 +117,7 @@ variable \texttt{BAR} to \bxcaption{\%FOO\%def}, the second variable will
 
 
 \item Select an activation method for your \gdaut{}. More information on \gdaut{} activation is available in the previous section \bxpref{TasksAUTActivation}.
+\item If you want to perform monitoring (code coverage \bxpref{CodeCoverage} , Chronon recording \bxpref{TasksChronon}), then select this from the combo box.
 
 \end{enumerate}
 
