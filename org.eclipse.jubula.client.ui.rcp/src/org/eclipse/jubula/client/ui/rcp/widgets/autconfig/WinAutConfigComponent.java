@@ -122,7 +122,7 @@ public class WinAutConfigComponent extends AutConfigComponent {
         // parameter editor
         ControlDecorator.createInfo(UIComponentHelper.createLabel(
                 basicAreaComposite, "AUTConfigComponent.autArguments"), //$NON-NLS-1$
-                "ControlDecorator.AUTArguments", false); //$NON-NLS-1$
+                Messages.AUTConfigComponentArgumentsControlDecorator, false);
         m_autArgsTextField =
             UIComponentHelper.createTextField(basicAreaComposite, 2);
     }
