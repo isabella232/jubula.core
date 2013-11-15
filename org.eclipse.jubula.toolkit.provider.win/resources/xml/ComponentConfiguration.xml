@@ -42,12 +42,12 @@
 	</concreteComponent>	
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.CheckBoxWinForm" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.CheckBox</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.CheckBoxImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ButtonTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.CheckBoxWinForm" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.CheckBoxWPF" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.CheckBox</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.CheckBoxImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ButtonTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.CheckBoxWPF" />
 	</toolkitComponent>
 	
@@ -58,12 +58,12 @@
 	</concreteComponent>	
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.RadioButtonWinForm" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.RadioButton</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.RadioButtonImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ButtonTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.RadioButtonWinForm" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.RadioButtonWPF" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.RadioButton</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.RadioButtonImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ButtonTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.RadioButtonWPF" />
 	</toolkitComponent>
 	
@@ -106,12 +106,12 @@
 	</concreteComponent>	
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.TextWinForm" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Text</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.TextImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.LabelTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.TextWinForm" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.TextWPF" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Text</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.TextImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.LabelTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.TextWPF" />
 	</toolkitComponent>
 	
