@@ -55,11 +55,14 @@ public class CommentEntry {
         }
 
         m_nodeType = resultNode.getTypeOfNode();
-        m_nodeNameAndParams = getName(resultNode)
-                + StringConstants.SPACE
-                + StringUtils.abbreviate(
-                        resultNode.getParameterDescription(), 
-                        MAX_DATA_STRING_LENGTH);
+        String paramDescription = StringUtils.abbreviate(
+                resultNode.getParameterDescription(), MAX_DATA_STRING_LENGTH);
+        
+        m_nodeNameAndParams = getName(resultNode);
+        
+        if (!StringUtils.isBlank(paramDescription)) {
+            m_nodeNameAndParams += StringConstants.SPACE + paramDescription;
+        }
         
         if (hasPassed(resultNode.getStatus())) {
             m_status = Messages.StatusPassed;
