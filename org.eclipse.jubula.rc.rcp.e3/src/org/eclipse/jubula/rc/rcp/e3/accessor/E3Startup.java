@@ -13,7 +13,6 @@ package org.eclipse.jubula.rc.rcp.e3.accessor;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.rc.common.AUTServer;
@@ -180,13 +179,11 @@ public abstract class E3Startup implements IStartup {
         }
 
         /**
-         *
          * {@inheritDoc}
          */
         public void partVisible(IWorkbenchPartReference partRef) {
             partOpened(partRef);
         }
-
     }
 
     /**
@@ -206,20 +203,18 @@ public abstract class E3Startup implements IStartup {
      * {@inheritDoc}
      */
     public void earlyStartup() {
-        final Properties envVars =
-            EnvironmentUtils.getProcessEnvironment();
-
-        if (getValue(AutConfigConstants.AUT_AGENT_HOST, envVars) != null) {
+        if (EnvironmentUtils.getProcessOrSystemProperty(
+                AutConfigConstants.AUT_AGENT_HOST) != null) {
             final IWorkbench workbench = PlatformUI.getWorkbench();
             final Display display = workbench.getDisplay();
-            initAutServer(display, envVars);
+            final AUTServer autServer = initAutServer(display);
 
             display.syncExec(new Runnable() {
                 public void run() {
                     // add GEF listeners (and listener appenders) for GEF, if available
                     if (Platform.getBundle(E3Startup.GEF_BUNDLE_ID) != null) {
                         m_gefListener = new GefPartListener();
-                        AUTServer.getInstance().addInspectorListenerAppender(
+                        autServer.addInspectorListenerAppender(
                                 new GefInspectorListenerAppender());
                     }
 
@@ -271,30 +266,30 @@ public abstract class E3Startup implements IStartup {
             // Registering the AdapterFactory for SWT at the registry
             AdapterFactoryRegistry.initRegistration(new EclipseUrlLocator());
             // add listener to AUT
-            AUTServer.getInstance().addToolKitEventListenerToAUT();
-
+            autServer.addToolKitEventListenerToAUT();
         }
 
     }
 
     /**
      * Initializes the AUT Server for the host application.
-     *
-     * @param display The Display to use for the AUT Server.
-     * @param envVars Environment variables to consult in configuring the
-     *                AUT Server.
+     * 
+     * @param display
+     *            The Display to use for the AUT Server.
+     * @return the AUTServer instance
      */
-    private void initAutServer(Display display, Properties envVars) {
-        ((SwtAUTServer)AUTServer.getInstance(CommandConstants
-                .AUT_SWT_SERVER)).setDisplay(display);
-        AUTServer.getInstance().setAutAgentHost(getValue(
-                AutConfigConstants.AUT_AGENT_HOST, envVars));
-        AUTServer.getInstance().setAutAgentPort(getValue(
-                AutConfigConstants.AUT_AGENT_PORT, envVars));
-        AUTServer.getInstance().setAutID(getValue(
-                AutConfigConstants.AUT_NAME, envVars));
-
-        AUTServer.getInstance().start(true);
+    private AUTServer initAutServer(Display display) {
+        AUTServer instance = AUTServer.getInstance(
+                CommandConstants.AUT_SWT_SERVER);
+        ((SwtAUTServer) instance).setDisplay(display);
+        instance.setAutAgentHost(EnvironmentUtils
+                .getProcessOrSystemProperty(AutConfigConstants.AUT_AGENT_HOST));
+        instance.setAutAgentPort(EnvironmentUtils
+                .getProcessOrSystemProperty(AutConfigConstants.AUT_AGENT_PORT));
+        instance.setAutID(EnvironmentUtils
+                .getProcessOrSystemProperty(AutConfigConstants.AUT_NAME));
+        instance.start(true);
+        return instance;
     }
 
     /**
@@ -360,15 +355,10 @@ public abstract class E3Startup implements IStartup {
                 if (children[i] instanceof Composite) {
                     getToolbars((Composite)children[i], toolbarList);
                 }
-                try {
-                    if (children[i] instanceof ToolBar
-                            || children[i] instanceof CoolBar) {
+                if (children[i] instanceof ToolBar
+                        || children[i] instanceof CoolBar) {
 
-                        toolbarList.add(children[i]);
-                    }
-                } catch (NoClassDefFoundError e) {
-                    // we may be running in eRCP which doesn't know about
-                    // toolbars, so we just ignore this
+                    toolbarList.add(children[i]);
                 }
             }
         }
@@ -384,26 +374,5 @@ public abstract class E3Startup implements IStartup {
         if (m_gefListener != null) {
             window.getPartService().addPartListener(m_gefListener);
         }
-    }
-
-    /**
-     * Returns the value for a given property. First, <code>envVars</code>
-     * is checked for the given property. If this
-     * property cannot be found there, the
-     * Java System Properties will be checked. If the property is not
-     * found there, <code>null</code> will be returned.
-     *
-     * @param envVars The first source to check for the given property.
-     * @param propName The name of the property for which to find the value.
-     * @return The value for the given property name, or <code>null</code> if
-     *         given property name cannot be found.
-     */
-    private String getValue(String propName, Properties envVars) {
-        String value =
-            envVars.getProperty(propName);
-        if (value == null) {
-            value = System.getProperty(propName);
-        }
-        return value;
     }
 }

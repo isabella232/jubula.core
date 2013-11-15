@@ -98,5 +98,4 @@ public class E4SwtComponentNamer extends RcpSwtComponentNamer
     protected PreferenceManager getPreferenceManager() {
         return null;
     }
-
 }

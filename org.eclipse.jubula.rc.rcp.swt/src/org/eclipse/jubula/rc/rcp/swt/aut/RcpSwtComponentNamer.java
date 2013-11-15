@@ -186,24 +186,18 @@ public abstract class RcpSwtComponentNamer implements Listener {
         // component hierarchy, due to the fact that the ToolBar's
         // getParent() returns the CoolBar rather than the CoolItem.
         // To resolve this discrepancy, we use the data from the
-        // coresponding CoolItem to generate a name for the ToolBar.
-        try {
-            if (widget instanceof ToolBar) {
-                Composite toolbarParent = ((ToolBar) widget).getParent();
-                if (toolbarParent instanceof CoolBar) {
-                    CoolItem[] coolItems = ((CoolBar) toolbarParent).getItems();
-                    for (int i = 0; i < coolItems.length; i++) {
-                        CoolItem item = coolItems[i];
-                        if (item != null && item.getControl() == widget) {
-                            data = item.getData();
-                        }
+        // corresponding CoolItem to generate a name for the ToolBar.
+        if (widget instanceof ToolBar) {
+            Composite toolbarParent = ((ToolBar) widget).getParent();
+            if (toolbarParent instanceof CoolBar) {
+                CoolItem[] coolItems = ((CoolBar) toolbarParent).getItems();
+                for (int i = 0; i < coolItems.length; i++) {
+                    CoolItem item = coolItems[i];
+                    if (item != null && item.getControl() == widget) {
+                        data = item.getData();
                     }
                 }
             }
-        } catch (NoClassDefFoundError e) {
-            // we may be running in eRCP which doesn't know
-            // about
-            // toolbars, so we just ignore this
         }
 
         return data;
@@ -343,9 +337,7 @@ public abstract class RcpSwtComponentNamer implements Listener {
      */
     public static void setToolbarComponentName(Widget partToolbar,
             String finalPartId) {
-        setComponentName(
-                partToolbar,
-                finalPartId + TOOLBAR_ID_SUFFIX);
+        setComponentName(partToolbar, finalPartId + TOOLBAR_ID_SUFFIX);
     }
 
     /**
@@ -353,5 +345,4 @@ public abstract class RcpSwtComponentNamer implements Listener {
      *         This method must be implemented depending on Eclipse RCP e3 and e4.
      */
     protected abstract PreferenceManager getPreferenceManager();
-
 }

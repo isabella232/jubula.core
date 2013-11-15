@@ -295,7 +295,6 @@ public class SwtUtils {
         Widget parent = null;
         
         if (widget == null) {
-            // FIXME Clemens
             log.error("Cannot get parent for null widget."); //$NON-NLS-1$
         }
         if (widget instanceof Control) {
@@ -325,9 +324,7 @@ public class SwtUtils {
         } else if (widget instanceof DropTarget) {
             parent = ((DropTarget)widget).getControl().getParent();
         } else if (widget instanceof Tracker) {
-            // FIXME Clemens:
-            System.out.println();
-            // Log.debug("requested the parent of a Tracker- UNFINDABLE");
+            log.error("requested the parent of a Tracker- UNFINDABLE"); //$NON-NLS-1$
         }
         return parent;
     }

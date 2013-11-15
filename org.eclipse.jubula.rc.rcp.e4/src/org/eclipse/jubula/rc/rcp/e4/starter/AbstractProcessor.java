@@ -21,8 +21,11 @@ import org.eclipse.e4.ui.model.application.ui.menu.MToolItem;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.jubula.rc.rcp.e4.namer.E4ComponentNamer;
+import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**us
  * This is an abstract e4 processor for the extension point
@@ -32,7 +35,10 @@ import org.osgi.service.event.EventHandler;
  * which returns an {@link AbstractEventBrokerListener}.
  */
 public abstract class AbstractProcessor implements EventHandler {
-
+    /** the logger */
+    private static final Logger LOG = LoggerFactory
+            .getLogger(AbstractProcessor.class);
+    
     /**
      * Called by processor mechanism via extension point to register at
      * the event broker listening on changes in the application model.
@@ -43,10 +49,9 @@ public abstract class AbstractProcessor implements EventHandler {
      */
     @Execute
     protected void hookListener(final IEventBroker eventBroker) {
-        if (!eventBroker.subscribe(UIEvents.UIElement.TOPIC_WIDGET,
-                this)) {
-            System.err.println(
-                    "Could not subscribe to event broker TOPIC_WIDGET!"); //$NON-NLS-1$
+        if (!eventBroker.subscribe(UIEvents.UIElement.TOPIC_WIDGET, this)) {
+            LOG.error("Could not subscribe to event broker TOPIC_WIDGET!"); //$NON-NLS-1$
+            System.exit(AUTServerExitConstants.AUT_START_ERROR);
         }
     }
 

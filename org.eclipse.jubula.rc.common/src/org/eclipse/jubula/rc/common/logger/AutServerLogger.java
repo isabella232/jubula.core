@@ -14,18 +14,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Wrapper class for org.apache.commons.logging
- * This class is used in the implementation class context.
- * This class will NOT be loaded by the ImplClassClassLoader but by its parent!
- * The methods in this class delegate to the org.apache.commons.logging.Log.
- * This is neccessary because in the ImplClassClassLoader context u can only 
- * use plain java code!
+ * Wrapper class for org.slf4j.Logger This class is used in the implementation
+ * class context. This class will NOT be loaded by the ImplClassClassLoader but
+ * by its parent! The methods in this class delegate to the
+ * org.apache.commons.logging.Log. This is necessary because in the
+ * ImplClassClassLoader context u can only use plain java code!
+ * 
  * @author BREDEX GmbH
  * @created 10.05.2006
  */
 public class AutServerLogger {
     /** The Logger */
-    private  Logger m_log;
+    private Logger m_log;
     
     /**
      * Constructor
@@ -159,7 +159,4 @@ public class AutServerLogger {
     public boolean isWarnEnabled() {
         return m_log.isWarnEnabled();
     }
-    
-    
-
 }

@@ -22,7 +22,6 @@ import org.eclipse.swt.widgets.Shell;
  * The SWT implementation of the abstract e4 processor.
  */
 public class SwtProcessor extends AbstractProcessor {
-
     /** The implementation of the e4 component namer interface. */
     private E4SwtComponentNamer m_componentNamer = new E4SwtComponentNamer();
 
@@ -38,5 +37,4 @@ public class SwtProcessor extends AbstractProcessor {
         ((SwtRemoteControlService) SwtRemoteControlService.getInstance())
                 .checkRemoteControlService(display, m_componentNamer);
     }
-
 }

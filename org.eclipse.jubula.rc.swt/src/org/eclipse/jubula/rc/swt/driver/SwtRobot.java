@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -33,6 +34,9 @@ import org.eclipse.swt.widgets.Display;
  * @author BREDEX GmbH
  */
 public class SwtRobot {
+    /** the logger */
+    private static AutServerLogger log = new AutServerLogger(SwtRobot.class);
+    
     /** the # of modifiers- like SWT.CTRL, SWT.ALT, etc- that are currently defined */
     private static final int MODIFIER_COUNT = 7;
 
@@ -133,7 +137,7 @@ public class SwtRobot {
      * CURRENTLY THIS IS FUNCTIONALLY THE SAME AS THE NO-PARAM CONSTRUCTOR
      * Creates a <code>Robot</code> for the given <code>Display</code>.
      * @param display the <code>Display</code> associated with this robot
-     * @throws SWTException throwed AWT-Exception
+     * @throws SWTException thrown AWT-Exception
      */
     public SwtRobot(Display display) throws SWTException {
         this();
@@ -254,35 +258,22 @@ public class SwtRobot {
      * queue, prior to calling this method, have been handled.
      */
     public synchronized void waitForIdle() {
-        if (m_displayProperty.getThread() == Thread.currentThread()) {
-            while (m_displayProperty.readAndDispatch()) {
-                // FIXME Clemens: do nothing
-                System.out.println();
+        final Display d = m_displayProperty;
+        if (d.getThread() == Thread.currentThread()) {
+            boolean continueWaiting = d.readAndDispatch();
+            while (continueWaiting) {
+                continueWaiting = d.readAndDispatch();
             }
         } else {
-            m_displayProperty.syncExec(new Runnable() {
+            d.syncExec(new Runnable() {
                 public void run() {
-                    while (m_displayProperty.readAndDispatch()) {
-//                      FIXME Clemens: do nothing
-                        System.out.println();
+                    boolean continueWaiting = d.readAndDispatch();
+                    while (continueWaiting) {
+                        continueWaiting = d.readAndDispatch();
                     }
                 }
             });
         }
-    }
-
-    /**
-     * @param display the current display
-     */
-    public void waitForIdle(final Display display) {
-        display.syncExec(new Runnable() {
-            public void run() {
-                while (display.readAndDispatch()) {
-//                  FIXME Clemens: do nothing
-                    System.out.println();
-                }
-            }
-        });
     }
 
     /**
@@ -316,8 +307,7 @@ public class SwtRobot {
                 try {
                     m_robot.keyPress(keys[i]);
                 } catch (IllegalArgumentException iae) {
-                    // FIXME Clemens: log
-                    System.err.println("IllegalArgumentException: keystroke :" //$NON-NLS-1$
+                    log.error("IllegalArgumentException: keystroke :" //$NON-NLS-1$
                         + keys[i]
                                + "\nAccelerator:" //$NON-NLS-1$
                                + accelerator
@@ -560,13 +550,5 @@ public class SwtRobot {
      */
     public Display getDisplay() {
         return m_displayProperty;
-    }
-
-    /**
-     * Set the <code>Display</code> object with which this robot is synchronized.
-     * @param display the <code>Display</code> to associate with this <code>Robot</code>
-     */
-    public void setDisplay(Display display) {
-        this.m_displayProperty = display;
     }
 }
