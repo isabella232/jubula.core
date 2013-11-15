@@ -10,8 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.alm.mylyn.core.bp;
 
-import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,17 +22,15 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.alm.mylyn.core.i18n.Messages;
+import org.eclipse.jubula.client.alm.mylyn.core.model.CommentEntry;
 import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
-import org.eclipse.jubula.client.core.constants.Constants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultSummaryEventListener;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
@@ -41,7 +40,6 @@ import org.eclipse.jubula.client.core.propertytester.NodePropertyTester;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TestResultNodeTraverser;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -60,10 +58,8 @@ public class CommentReporter implements ITestresultSummaryEventListener {
      */
     private static class ReportOperation implements
             ITreeNodeOperation<TestResultNode> {
-        /** the max length for data */
-        private static final int MAX_DATA_STRING_LENGTH = 200;
         /** the taskIdToComment mapping */
-        private Map<String, String> m_taskIdToComment;
+        private Map<String, List<CommentEntry>> m_taskIdToComment;
         /** report failure */
         private final boolean m_reportFailure;
         /** report success */
@@ -88,7 +84,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
          *            dashboardURL
          * @param summaryId 
          */
-        public ReportOperation(Map<String, String> taskIdToComment,
+        public ReportOperation(Map<String, List<CommentEntry>> taskIdToComment,
                 boolean reportFailure, boolean reportSuccess,
                 String dashboardURL, String summaryId) {
             m_taskIdToComment = taskIdToComment;
@@ -103,116 +99,33 @@ public class CommentReporter implements ITestresultSummaryEventListener {
                 TestResultNode parent, TestResultNode resultNode,
                 boolean alreadyVisited) {
             m_nodeCount++;
-            boolean didNodePass = hasPassed(resultNode.getStatus());
+            boolean didNodePass = CommentEntry
+                    .hasPassed(resultNode.getStatus());
 
             INodePO node = resultNode.getNode();
             String taskIdforNode = NodePropertyTester.getTaskIdforNode(node);
             boolean hasTaskId = taskIdforNode != null;
             
-            boolean writeCommentForNode = 
-                    (m_reportSuccess && didNodePass && hasTaskId) 
-                 || (m_reportFailure && !didNodePass && hasTaskId);
+            boolean writeCommentForNode = hasTaskId
+                 && (m_reportSuccess && didNodePass) 
+                 || (m_reportFailure && !didNodePass);
 
             if (writeCommentForNode) {
-                String comment = m_taskIdToComment.get(taskIdforNode);
-                if (comment != null) {
-                    m_taskIdToComment.put(taskIdforNode, comment
-                            + StringConstants.NEWLINE
-                            + buildCommentString(resultNode));
+                CommentEntry c = new CommentEntry(resultNode, m_dashboardURL,
+                        m_summaryIdString, m_nodeCount);
+
+                List<CommentEntry> comments = m_taskIdToComment
+                        .get(taskIdforNode);
+                if (comments != null) {
+                    comments.add(c);
                 } else {
-                    m_taskIdToComment.put(taskIdforNode,
-                            buildCommentString(resultNode));
+                    List<CommentEntry> cs = new LinkedList<CommentEntry>();
+                    cs.add(c);
+                    m_taskIdToComment.put(taskIdforNode, cs);
                 }
             }
 
             return true;
-        }
-
-        /**
-         * @param resultNode
-         *            the result node
-         * @return the comment for this node
-         */
-        private String buildCommentString(TestResultNode resultNode) {
-            Date executionTime = resultNode.getTimeStamp();
-            String timestamp;
-            // e.g. when not executed
-            if (executionTime != null) {
-                timestamp = executionTime.toString();
-            } else {
-                timestamp = Messages.NotAvailable;
-            }
-
-            String nodeType = resultNode.getTypeOfNode();
-            String nodeNameAndParams = getName(resultNode)
-                    + StringConstants.SPACE
-                    + StringUtils.abbreviate(
-                            resultNode.getParameterDescription(), 
-                            MAX_DATA_STRING_LENGTH);
-            
-            String status;
-            if (hasPassed(resultNode.getStatus())) {
-                status = Messages.StatusPassed;
-            } else {
-                status = Messages.StatusFailed;
-            }
-
-            String url = m_dashboardURL 
-                    + StringConstants.QUESTION_MARK
-                    + Constants.DASHBOARD_SUMMARY_PARAM
-                    + StringConstants.EQUALS_SIGN 
-                    + m_summaryIdString
-                    + StringConstants.AMPERSAND 
-                    + Constants.DASHBOARD_RESULT_NODE_PARAM
-                    + StringConstants.EQUALS_SIGN 
-                    + String.valueOf(m_nodeCount);
-            
-            return NLS.bind(Messages.NodeComment, new String[] { timestamp,
-                nodeType, nodeNameAndParams, status, url });
-        }
-
-        /**
-         * @param resultNode
-         *            the node
-         * @return the name of the node
-         */
-        private String getName(TestResultNode resultNode) {
-            StringBuilder nameBuilder = new StringBuilder();
-            INodePO node = resultNode.getNode();
-            if (node != null) {
-                if (node instanceof IExecTestCasePO) {
-                    IExecTestCasePO testCaseRef = (IExecTestCasePO) node;
-                    String realName = testCaseRef.getRealName();
-                    ISpecTestCasePO testCase = testCaseRef.getSpecTestCase();
-                    String testCaseName = testCase != null ? testCase.getName()
-                            : StringUtils.EMPTY;
-                    if (!StringUtils.isBlank(realName)) {
-                        nameBuilder.append(realName);
-                        nameBuilder.append(StringConstants.SPACE)
-                                .append(StringConstants.LEFT_PARENTHESES)
-                                .append(testCaseName)
-                                .append(StringConstants.RIGHT_PARENTHESES);
-
-                    } else {
-                        nameBuilder.append(StringConstants.LEFT_INEQUALITY_SING)
-                                .append(testCaseName)
-                                .append(StringConstants.RIGHT_INEQUALITY_SING);
-                    }
-                } else {
-                    nameBuilder.append(node.getName());
-                }
-            }
-            return nameBuilder.toString();
-        }
-
-        /**
-         * @param statusCode
-         *            the status code
-         * @return failure status
-         */
-        private boolean hasPassed(int statusCode) {
-            return statusCode == TestResultNode.SUCCESS
-                    || statusCode == TestResultNode.SUCCESS_RETRY;
         }
 
         /** {@inheritDoc} */
@@ -255,7 +168,8 @@ public class CommentReporter implements ITestresultSummaryEventListener {
     private IStatus processResultTree(IProgressMonitor monitor,
         boolean reportSuccess, boolean reportFailure, 
         ITestResultSummaryPO summary) {
-        Map<String, String> taskIdToComment = new HashMap<String, String>();
+        Map<String, List<CommentEntry>> taskIdToComment = 
+            new HashMap<String, List<CommentEntry>>();
 
         TestResult resultTestModel = TestResultBP.getInstance()
                 .getResultTestModel();
@@ -279,7 +193,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
      * @return status
      */
     private IStatus reportToALM(IProgressMonitor monitor,
-            Map<String, String> taskIdToComment) {
+            Map<String, List<CommentEntry>> taskIdToComment) {
         String repoLabel = m_projProps.getALMRepositoryName();
 
         Set<String> taskIds = taskIdToComment.keySet();

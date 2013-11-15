@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.alm.mylyn.core.utils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -21,6 +22,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.alm.mylyn.core.Activator;
 import org.eclipse.jubula.client.alm.mylyn.core.i18n.Messages;
+import org.eclipse.jubula.client.alm.mylyn.core.model.CommentEntry;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.mylyn.commons.net.AuthenticationType;
 import org.eclipse.mylyn.tasks.core.AbstractRepositoryConnector;
@@ -42,6 +44,16 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  */
 public final class ALMAccess {
+    /**
+     * @author BREDEX GmbH
+     */
+    public enum CONNECTOR {
+        /** default handling type */
+        DEFAULT, 
+        /** custom handling type */
+        HP_ALM
+    }
+    
     /**
      * @author BREDEX GmbH
      */
@@ -129,27 +141,43 @@ public final class ALMAccess {
      *            repoLabel
      * @param taskId
      *            the taskId
-     * @param comment
-     *            the comment
+     * @param commentEntries
+     *            the comment entries
      * @param monitor
      *            the monitor to use
      * @return true if succeeded; false otherwise
      */
     public static boolean createComment(String repoLabel, String taskId,
-            String comment, IProgressMonitor monitor) {
+            List<CommentEntry> commentEntries, IProgressMonitor monitor) {
         boolean succeeded = false;
         TaskRepository repo = getRepositoryByLabel(repoLabel);
         try {
             TaskData taskData = getTaskDataByID(repo, taskId, monitor);
             if (taskData != null) {
+                String connectorKind = repo.getConnectorKind();
                 AbstractRepositoryConnector connector = TasksUi
-                        .getRepositoryConnector(repo.getConnectorKind());
+                        .getRepositoryConnector(connectorKind);
                 AbstractTaskDataHandler taskDataHandler = connector
                         .getTaskDataHandler();
-                TaskAttribute root = taskData.getRoot();
-                TaskAttribute newComment = root
-                        .createMappedAttribute(TaskAttribute.COMMENT_NEW);
-                newComment.setValue(comment);
+                TaskAttribute taskDataAttributeRoot = taskData.getRoot();
+                CONNECTOR handle = determineConnectorHandling(connectorKind);
+                
+                boolean attributeAccess = false;
+                switch (handle) {
+                    case HP_ALM:
+                        attributeAccess = hpAlmHandling(commentEntries, 
+                            taskDataAttributeRoot);
+                        break;
+                    case DEFAULT:
+                    default:
+                        attributeAccess = defaultHandling(commentEntries, 
+                            taskDataAttributeRoot);
+                        break;
+                }
+                if (!attributeAccess) {
+                    return succeeded;
+                }
+                
                 RepositoryResponse response = taskDataHandler.postTaskData(
                         repo, taskData, null, monitor);
                 succeeded = RepositoryResponse.ResponseKind.TASK_UPDATED
@@ -159,6 +187,91 @@ public final class ALMAccess {
             LOG.error(e.getLocalizedMessage(), e);
         }
         return succeeded;
+    }
+
+    /**
+     * @param commentEntries
+     *            the commentEntries to add
+     * @param attr
+     *            the attribute to modify
+     * @return a flag indicating the success of attribute handling
+     */
+    private static boolean hpAlmHandling(List<CommentEntry> commentEntries,
+        TaskAttribute attr) {
+        Properties almProps = Activator.getDefault().getAlmAccessProperties();
+        
+        String hpTaskKindKeyPrefix = CONNECTOR.HP_ALM.toString()
+                + StringConstants.DOT + TaskAttribute.TASK_KIND;
+        String req = hpTaskKindKeyPrefix + ".REQUIREMENT";
+        String hpTaskKindReq = almProps.getProperty(req);
+        String def = hpTaskKindKeyPrefix + ".DEFECT";
+        String hpTaskKindDefect = almProps.getProperty(def);
+
+        String taskKindValue = attr.getMappedAttribute(
+                TaskAttribute.TASK_KIND).getValue();
+        String attrName = null;
+        if (hpTaskKindReq.equals(taskKindValue)) {
+            attrName = almProps.getProperty(req + ".comment");
+        } else if (hpTaskKindDefect.equals(taskKindValue)) {
+            attrName = almProps.getProperty(def + ".comment");
+        }
+
+        if (attrName != null) {
+            TaskAttribute commentAttribute = attr.getMappedAttribute(attrName);
+            String oldComment = commentAttribute.getValue();
+            String newComment = StringConstants.EMPTY;
+            for (CommentEntry c : commentEntries) {
+                newComment = newComment + "<br><a href=\""
+                        + c.getDashboardURL() + "\">" + c.toString() + "</a>";
+            }
+            
+            commentAttribute.setValue(oldComment + newComment);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param commentEntries
+     *            the commentEntries to add
+     * @param attr
+     *            the attribute to modify
+     * @return a flag indicating the success of attribute handling
+     */
+    private static boolean defaultHandling(List<CommentEntry> commentEntries,
+            TaskAttribute attr) {
+        TaskAttribute newComment = attr
+                .createMappedAttribute(TaskAttribute.COMMENT_NEW);
+        String comment = StringConstants.EMPTY;
+        
+        for (CommentEntry c : commentEntries) {
+            comment = comment 
+                    + StringConstants.NEWLINE 
+                    + c.toString()
+                    + StringConstants.NEWLINE
+                    + c.getDashboardURL()
+                    + StringConstants.NEWLINE
+                    + StringConstants.NEWLINE;
+        }
+        
+        newComment.setValue(comment);
+        return true;
+    }
+
+    /**
+     * @param connectorKind
+     *            the connector kind
+     * @return the connector handling type
+     */
+    private static CONNECTOR determineConnectorHandling(
+            String connectorKind) {
+        String hpAlmConnectorKind = Activator.getDefault()
+                .getAlmAccessProperties()
+                .getProperty(CONNECTOR.HP_ALM.toString());
+        if (hpAlmConnectorKind.equals(connectorKind)) {
+            return CONNECTOR.HP_ALM;
+        }
+        return CONNECTOR.DEFAULT;
     }
 
     /**
