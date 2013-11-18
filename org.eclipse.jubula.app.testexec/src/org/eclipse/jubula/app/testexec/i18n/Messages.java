@@ -31,6 +31,7 @@ public class Messages extends NLS {
     public static String ExecutionControllerAUTStart;
     public static String ExecutionControllerAUTConnectionEstablished;
     public static String ExecutionControllerAUTStartError;
+    public static String ExecutionControllerAUTConnectionLost;
     public static String ExecutionControllerAUTDisconnected;
     public static String ExecutionControllerDatabase;
     public static String ExecutionControllerDataBaseEnd;

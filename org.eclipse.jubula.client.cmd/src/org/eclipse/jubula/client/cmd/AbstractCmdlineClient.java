@@ -350,11 +350,11 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     }
     
     /**
-     * excute a job
+     * Execute a job
+     * 
      * @param args
-     *      Command Line Parameter
-     * @return int
-     *      Exit Code
+     *            Command Line Parameter
+     * @return Exit Code
      */
     public int run(String[] args) {
         Job.getJobManager().setProgressProvider(new HeadlessProgressProvider());
@@ -478,7 +478,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
 
 
     /**
-     * Do validation beyonf the baisc parameters
+     * Do validation beyond the basic parameters
      * @param job configuration to check
      * @param errorMsgs storage for error messages from validation
      */
@@ -489,10 +489,10 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     /**
      * 
      * @param args
-     *          commandline
+     *          command line
      * @param exp
      *          exception
-     * @return args  modified
+     * @return arguments modified
      */
     public String[] handleParseException(String [] args, ParseException exp) {
         // if there is an error we will remove that token

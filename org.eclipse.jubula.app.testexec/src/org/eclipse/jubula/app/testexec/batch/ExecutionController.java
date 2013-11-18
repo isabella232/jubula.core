@@ -159,7 +159,7 @@ public class ExecutionController implements IAUTServerEventListener,
         }
         
         /**
-         * Notfiy the client that the TS has completed
+         * Notify the client that the TS has completed
          * @param result result of the TS run
          */
         @SuppressWarnings("synthetic-access")
@@ -220,8 +220,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 }
             } while (new Date().getTime() < m_stoptime);
 
-            AbstractCmdlineClient.printlnConsoleError(
-                    Messages.ExecutionControllerAbort);
+            sysErr(Messages.ExecutionControllerAbort);
 
             ClientTestFactory.getClientTest().stopTestExecution();
             stopProcessing();
@@ -293,6 +292,9 @@ public class ExecutionController implements IAUTServerEventListener,
     /** true if client is processing a job */
     private boolean m_idle = false;
 
+    /** true if ITE is currently executing a test suite */
+    private boolean m_isTestSuiteRunning = false;
+    
     /** true if this is the first time the AUT is being started for the current test suite */
     private boolean m_isFirstAutStart = true;
     
@@ -303,7 +305,7 @@ public class ExecutionController implements IAUTServerEventListener,
     private boolean m_shutdown = false;
 
     /** 
-     * true if fatal error occured, and processing of the batch process must
+     * true if fatal error occurred, and processing of the batch process must
      * be stopped
      */
     private boolean m_stopProcessing = false;
@@ -316,7 +318,7 @@ public class ExecutionController implements IAUTServerEventListener,
     
     /** the RMI service registry */
     private RmiBase m_rmiBase;
-    /** the implemetation of the service for internal use */
+    /** the implementation of the service for internal use */
     @SuppressWarnings("synthetic-access")
     private final ClcService m_clcServiceImpl = new ClcService();
     /** is there a CLC client connection */
@@ -344,14 +346,17 @@ public class ExecutionController implements IAUTServerEventListener,
     }
     
     /**
-     * creates the job passend to command Line client
-     * @param configFile File
-     * @throws IOException Error
-     * @return Jobconfiguration
+     * creates the job passed to command Line client
+     * 
+     * @param configFile
+     *            File
+     * @throws IOException
+     *             Error
+     * @return a job configuration
      */
     public JobConfiguration initJob(File configFile) throws IOException {
         if (configFile != null) {
-            // Create JobConfiguration from xml
+            // Create JobConfiguration from XMl
             BufferedReader in = null;
             StringWriter writer = new StringWriter();
             try {
@@ -368,7 +373,7 @@ public class ExecutionController implements IAUTServerEventListener,
             String xml = writer.toString();    
             m_job = JobConfiguration.readFromXML(xml);
         } else {
-            // or create an emty JobConfiguration
+            // or create an empty JobConfiguration
             m_job = new JobConfiguration();
         }
         return m_job;
@@ -393,10 +398,8 @@ public class ExecutionController implements IAUTServerEventListener,
             timer = new WatchdogTimer(m_job.getTimeout());
             timer.start();
         }
-        AbstractCmdlineClient.printConsoleLn(
-                NLS.bind(Messages.ConnectingToAUTAgent,
-                        new Object[] { m_job.getServer(), m_job.getPort() }),
-                true);
+        sysOut(NLS.bind(Messages.ConnectingToAUTAgent,
+            new Object[] { m_job.getServer(), m_job.getPort() }));
         // init ClientTest
         IClientTest clientTest = ClientTestFactory.getClientTest();
         clientTest.connectToAutAgent(m_job.getServer(), m_job.getPort());
@@ -408,12 +411,11 @@ public class ExecutionController implements IAUTServerEventListener,
         clientTest.setRelevantFlag(m_job.isRelevant());
         clientTest.setScreenshotXMLFlag(m_job.isXMLScreenshot());
         prepareExecution();
-        // start aut, working will be set false, after aut started
+        // start AUT, working will be set false, after AUT started
         m_idle = true;
         // ends testexecution if shutdown command was received from the client
         if (m_shutdown) {
-            AbstractCmdlineClient.printConsoleLn(Messages
-                    .ReceivedShutdownCommand , true);
+            sysOut(Messages.ReceivedShutdownCommand);
             endTestExecution();
         }
         try {
@@ -430,9 +432,8 @@ public class ExecutionController implements IAUTServerEventListener,
                 doTestSuite();
             }
         } catch (ToolkitPluginException e1) {
-            AbstractCmdlineClient.printlnConsoleError(
-                    NLS.bind(Messages.ExecutionControllerAUT,
-                            Messages.ErrorMessageAUT_TOOLKIT_NOT_AVAILABLE));
+            sysErr(NLS.bind(Messages.ExecutionControllerAUT,
+                Messages.ErrorMessageAUT_TOOLKIT_NOT_AVAILABLE));
         }
         if (timer != null) {
             timer.abort();
@@ -456,17 +457,14 @@ public class ExecutionController implements IAUTServerEventListener,
                     && !m_idle && !m_isFirstAutStart) {
    
                 m_idle = true;
-                AbstractCmdlineClient.printConsoleLn(StringConstants.TAB
-                        + NLS.bind(Messages
-                                .ExecutionControllerTestSuiteBegin, 
-                                m_job.getActualTestSuite()
-                                    .getName()),
-                        true); 
+                sysOut(StringConstants.TAB
+                    + NLS.bind(Messages.ExecutionControllerTestSuiteBegin,
+                        m_job.getActualTestSuite().getName()));
                 ClientTestFactory.getClientTest().startTestSuite(
-                        m_job.getActualTestSuite(),
-                        m_job.getLanguage(),
-                        m_startedAutId != null ? m_startedAutId : m_job
-                                .getAutId(), m_job.isAutoScreenshot(), null);
+                    m_job.getActualTestSuite(),
+                    m_job.getLanguage(),
+                    m_startedAutId != null ? m_startedAutId : m_job
+                        .getAutId(), m_job.isAutoScreenshot(), null);
             } 
         }
     }
@@ -475,11 +473,9 @@ public class ExecutionController implements IAUTServerEventListener,
      * run a test job
      */
     private void doTestJob() {
-        AbstractCmdlineClient.printConsoleLn(
-                StringConstants.TAB 
-                + NLS.bind(Messages.ExecutionControllerTestJobBegin,
-                        m_job.getTestJob().getName()), 
-                true);
+        sysOut(StringConstants.TAB
+                + NLS.bind(Messages.ExecutionControllerTestJobBegin, m_job
+                        .getTestJob().getName()));
         ClientTestFactory.getClientTest().startTestJob(
                 m_job.getTestJob(), m_job.getLanguage(),
                 m_job.isAutoScreenshot());
@@ -581,7 +577,7 @@ public class ExecutionController implements IAUTServerEventListener,
     }
 
     /**
-     * starts the aut
+     * starts the AUT
      * @param ts the Test Suite which will be started
      * @param autConf configuration for this AUT
      */
@@ -589,23 +585,19 @@ public class ExecutionController implements IAUTServerEventListener,
         throws ToolkitPluginException {
         if (ts != null && autConf != null) {
             final IAUTMainPO aut = ts.getAut();
-            AbstractCmdlineClient.printConsoleLn(
-                    NLS.bind(
-                            Messages.ExecutionControllerAUT,
-                            NLS.bind(Messages.ExecutionControllerAUTStart,
-                                    aut.getName())), true);
+            sysOut(NLS.bind(Messages.ExecutionControllerAUT,
+                NLS.bind(Messages.ExecutionControllerAUTStart,
+                        aut.getName())));
             
             if (ts != null) {
-                AutIdentifier autToStart = new AutIdentifier(
-                        autConf.getConfigMap().get(
-                                AutConfigConstants.AUT_ID));
+                AutIdentifier autToStart = new AutIdentifier(autConf
+                        .getConfigMap().get(AutConfigConstants.AUT_ID));
                 AUTStartListener asl = new AUTStartListener(autToStart);
-                ClientTestFactory.getClientTest().addTestEventListener(asl);
-                ClientTestFactory.getClientTest().addAUTServerEventListener(
-                        asl);
+                IClientTest clientTest = ClientTestFactory.getClientTest();
+                clientTest.addTestEventListener(asl);
+                clientTest.addAUTServerEventListener(asl);
                 AutAgentRegistration.getInstance().addListener(asl);
-                ClientTestFactory.getClientTest().startAut(aut,
-                        autConf, m_job.getLanguage());
+                clientTest.startAut(aut, autConf, m_job.getLanguage());
                 m_startedAutId = autToStart;
                 while (!asl.autStarted() && !asl.hasAutStartFailed()) {
                     TimeUtil.delay(500);
@@ -613,7 +605,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 waitExternalTime();
             }
         } else {
-            // assume that the aut has already been started via e.g. autrun
+            // assume that the AUT has already been started via e.g. autrun
             m_idle = false;
             m_isFirstAutStart = false;
         }
@@ -633,10 +625,10 @@ public class ExecutionController implements IAUTServerEventListener,
      */
     public class AUTStartListener implements IAUTEventListener, 
         IAUTServerEventListener, IAutRegistrationListener {
-        /** flag to indicate that the aut has been successfully started */
+        /** flag to indicate that the AUT has been successfully started */
         private boolean m_autStarted = false;
         
-        /** flag to indicate that the aut start has failed*/
+        /** flag to indicate that the AUT start has failed*/
         private boolean m_autStartFailed = false;
         
         /** timer to set autStartFailed to true after a certain amount of time */
@@ -720,10 +712,9 @@ public class ExecutionController implements IAUTServerEventListener,
         
         /** remove listener */
         protected void removeListener() {
-            ClientTestFactory.getClientTest()
-                    .removeTestEventListener(this);
-            ClientTestFactory.getClientTest()
-                    .removeAUTServerEventListener(this);
+            IClientTest clientTest = ClientTestFactory.getClientTest();
+            clientTest.removeTestEventListener(this);
+            clientTest.removeAUTServerEventListener(this);
             AutAgentRegistration.getInstance().removeListener(this);
         }
 
@@ -743,12 +734,11 @@ public class ExecutionController implements IAUTServerEventListener,
      * loads a project
      */
     private void loadProject() {
-        AbstractCmdlineClient.printConsoleLn(
-                Messages.ExecutionControllerDatabase
-                        + NLS.bind(Messages.ExecutionControllerLoadingProject,
-                            new Object[] { m_job.getProjectName(),
-                                    m_job.getProjectMajor(),
-                                    m_job.getProjectMinor() }), true);
+        sysOut(Messages.ExecutionControllerDatabase
+                + NLS.bind(Messages.ExecutionControllerLoadingProject,
+                    new Object[] { m_job.getProjectName(),
+                                   m_job.getProjectMajor(),
+                                   m_job.getProjectMinor() }));
         try {
             IProjectPO actualProject = 
                 ProjectPM.loadProjectByNameAndVersion(m_job.getProjectName(), 
@@ -758,10 +748,9 @@ public class ExecutionController implements IAUTServerEventListener,
                 final IProjectPO currentProject = GeneralStorage.getInstance()
                     .getProject();
                 m_job.setProject(currentProject);
-                AbstractCmdlineClient.printConsoleLn(
-                        Messages.ExecutionControllerDatabase
-                    + NLS.bind(Messages.ExecutionControllerProjectLoaded, 
-                            m_job.getProjectName()), true);
+                sysOut(Messages.ExecutionControllerDatabase
+                    + NLS.bind(Messages.ExecutionControllerProjectLoaded,
+                            m_job.getProjectName()));
             }
         } catch (JBException e1) {
             /* An exception was thrown while loading data or closing a session
@@ -769,23 +758,20 @@ public class ExecutionController implements IAUTServerEventListener,
              * during job validation (initAndValidate). */
         }
         
-        AbstractCmdlineClient.printConsoleLn(Messages
-                .ExecutionControllerProjectCompleteness, true);
+        sysOut(Messages.ExecutionControllerProjectCompleteness);
         m_job.initAndValidate();
         boolean noErrors = true;
         for (ITestSuitePO ts : m_job.getTestSuites()) {
             CompletenessGuard.checkAll(m_job.getLanguage(), ts);
-            AbstractCmdlineClient.printConsoleLn(NLS.bind(
-                    Messages.ExecutionControllerTestSuiteCompleteness,
-                    ts.getName()), true);    
+            sysOut(NLS.bind(Messages.ExecutionControllerTestSuiteCompleteness,
+                    ts.getName()));
             final CollectAllErrorsOperation op = 
                     new CollectAllErrorsOperation();
             TreeTraverser traverser = new TreeTraverser(ts, op);
             traverser.traverse(true); 
             for (IProblem problem : op.getErrorsToShow()) {
                 if (problem.hasUserMessage()) {
-                    AbstractCmdlineClient.printConsoleLn(
-                            problem.getUserMessage(), true);
+                    sysOut(problem.getUserMessage());
                 }
                 noErrors = false;
             }
@@ -800,32 +786,27 @@ public class ExecutionController implements IAUTServerEventListener,
     public void stateChanged(AUTServerEvent event) {
         switch (event.getState()) {
             case AUTServerEvent.INVALID_JAR:
-                AbstractCmdlineClient.printlnConsoleError(Messages
-                        .ExecutionControllerInvalidJarError);
+                sysErr(Messages.ExecutionControllerInvalidJarError);
                 stopProcessing();
                 m_idle = false;
                 break;
             case AUTServerEvent.INVALID_JAVA:
-                AbstractCmdlineClient.printlnConsoleError(Messages
-                        .ExecutionControllerInvalidJREError);
+                sysErr(Messages.ExecutionControllerInvalidJREError);
                 stopProcessing();
                 m_idle = false;
                 break;
             case AUTServerEvent.SERVER_NOT_INSTANTIATED:
-                AbstractCmdlineClient.printlnConsoleError(Messages
-                        .ExecutionControllerServerNotInstantiated);
+                sysErr(Messages.ExecutionControllerServerNotInstantiated);
                 stopProcessing();
                 m_idle = false;
                 break;
             case AUTServerEvent.NO_MAIN_IN_JAR:
-                AbstractCmdlineClient.printlnConsoleError(Messages
-                        .ExecutionControllerInvalidMainError);
+                sysErr(Messages.ExecutionControllerInvalidMainError);
                 stopProcessing();
                 m_idle = false;
                 break;
             case AUTServerEvent.COULD_NOT_ACCEPTING:
-                AbstractCmdlineClient.printlnConsoleError(Messages
-                        .ExecutionControllerAUTStartError);
+                sysErr(Messages.ExecutionControllerAUTStartError);
                 stopProcessing();
                 m_idle = false;
                 break;
@@ -834,8 +815,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 m_idle = false;
                 break;
             case AUTServerEvent.DOTNET_INSTALL_INVALID:
-                AbstractCmdlineClient.printlnConsoleError(Messages
-                        .ExecutionControllerDotNetInstallProblem);
+                sysErr(Messages.ExecutionControllerDotNetInstallProblem);
                 stopProcessing();
                 m_idle = false;
                 break;
@@ -849,8 +829,7 @@ public class ExecutionController implements IAUTServerEventListener,
      * {@inheritDoc}
      */
     public void stateChanged(AutAgentEvent event) {
-        AbstractCmdlineClient.printConsoleLn(
-                NLS.bind(Messages.ExecutionControllerServer, event), true);
+        sysOut(NLS.bind(Messages.ExecutionControllerServer, event));
         switch (event.getState()) {
             case ServerEvent.CONNECTION_CLOSED:
                 break;
@@ -865,25 +844,25 @@ public class ExecutionController implements IAUTServerEventListener,
     public void stateChanged(AUTEvent event) {
         switch (event.getState()) {
             case AUTEvent.AUT_STARTED:
-                AbstractCmdlineClient.printConsoleLn(NLS.bind(
-                        Messages.ExecutionControllerAUT,
-                        Messages.ExecutionControllerAUTConnectionEstablished),
-                        true);
+                sysOut(NLS.bind(Messages.ExecutionControllerAUT,
+                    Messages.ExecutionControllerAUTConnectionEstablished));
                 break;
             case AUTEvent.AUT_CLASS_VERSION_ERROR:
             case AUTEvent.AUT_MAIN_NOT_FOUND:
             case AUTEvent.AUT_NOT_FOUND:
             case AUTEvent.AUT_ABORTED:
             case AUTEvent.AUT_START_FAILED:
-                AbstractCmdlineClient.printlnConsoleError(Messages
-                        .ExecutionControllerAUTStartError);
+                sysErr(Messages.ExecutionControllerAUTStartError);
                 stopProcessing();
                 break;
             case AUTEvent.AUT_STOPPED:
-                AbstractCmdlineClient.printConsoleLn(NLS.bind(
-                        Messages.ExecutionControllerAUT,
-                        Messages.ExecutionControllerAUTDisconnected),
-                        true);
+                if (m_isTestSuiteRunning) {
+                    sysErr(Messages.ExecutionControllerAUTConnectionLost);
+                    ClientTestFactory.getClientTest().stopTestExecution();
+                } else {
+                    sysOut(NLS.bind(Messages.ExecutionControllerAUT,
+                        Messages.ExecutionControllerAUTDisconnected));
+                }
                 stopProcessing();
                 break;
             case AUTEvent.AUT_RESTARTED:
@@ -900,14 +879,33 @@ public class ExecutionController implements IAUTServerEventListener,
     }
 
     /**
+     * Writes an output to console
+     * 
+     * @param text
+     *            the text to write
+     */
+    private void sysOut(String text) {
+        AbstractCmdlineClient.printConsoleLn(text, true);
+    }
+    
+    /**
+     * Writes an output to console
+     * 
+     * @param text
+     *            the message to log and println to sys.err
+     */
+    private void sysErr(String text) {
+        AbstractCmdlineClient.printlnConsoleError(text);
+    }
+    
+    /**
      * {@inheritDoc}
      */
     public void stateChanged(TestExecutionEvent event) {
-        if (event.getException() != null
-            && event.getException() instanceof JBException) {
-            String errorMsg = 
-                I18n.getString(event.getException().getMessage(), true);
-            AbstractCmdlineClient.printlnConsoleError(errorMsg);
+        Exception exception = event.getException();
+        if (exception instanceof JBException) {
+            String errorMsg = I18n.getString(exception.getMessage(), true);
+            sysErr(errorMsg);
             stopProcessing();
         }
 
@@ -918,13 +916,13 @@ public class ExecutionController implements IAUTServerEventListener,
                 break;
             case TEST_EXEC_START:
             case TEST_EXEC_RESTART:
+                m_isTestSuiteRunning = true;
                 break;
             case TEST_EXEC_FINISHED:
-                AbstractCmdlineClient.printConsoleLn(
-                        Messages.ExecutionControllerTestSuiteEnd,
-                        true);
+                sysOut(Messages.ExecutionControllerTestSuiteEnd);
                 m_job.getNextTestSuite();
                 m_clcServiceImpl.tsDone(isNoErrorWhileExecution() ? 0 : 1);
+                m_isTestSuiteRunning = false;
                 break;
             case TEST_EXEC_PAUSED:
                 TestExecution.getInstance().pauseExecution(PauseMode.UNPAUSE);
@@ -933,6 +931,7 @@ public class ExecutionController implements IAUTServerEventListener,
             case TEST_EXEC_FAILED:
             case TEST_EXEC_STOP:
                 m_job.getNextTestSuite();
+                m_isTestSuiteRunning = false;
                 break;
             default:
                 break;
@@ -973,7 +972,7 @@ public class ExecutionController implements IAUTServerEventListener,
             sb.append(StringConstants.COLON);
             sb.append(StringConstants.SPACE);
             sb.append(String.valueOf(node.getName()));
-            AbstractCmdlineClient.printConsoleLn(sb.toString(), true);
+            sysOut(sb.toString());
         }
 
         /**
@@ -994,22 +993,22 @@ public class ExecutionController implements IAUTServerEventListener,
          * {@inheritDoc}
          */
         public void nextCap(ICapPO cap) {
-            AbstractCmdlineClient.printConsoleLn(StringConstants.TAB
+            sysOut(StringConstants.TAB
                     + Messages.Step 
                     + StringConstants.COLON
                     + StringConstants.SPACE
-                    + String.valueOf(cap.getName()), true);
+                    + String.valueOf(cap.getName()));
         }
 
         /**
          * {@inheritDoc}
          */
         public void retryCap(ICapPO cap) {
-            AbstractCmdlineClient.printConsoleLn(StringConstants.TAB
+            sysOut(StringConstants.TAB
                     + Messages.RetryStep 
                     + StringConstants.COLON
                     + StringConstants.SPACE
-                    + String.valueOf(cap.getName()), true);
+                    + String.valueOf(cap.getName()));
         }
     }
 
