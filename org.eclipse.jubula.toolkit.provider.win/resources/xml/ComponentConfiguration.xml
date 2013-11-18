@@ -74,12 +74,12 @@
 	</concreteComponent>	
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.EditWinForm" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Edit</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.EditImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.AbstractTextComponentTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.EditWinForm" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.EditWPF" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Edit</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.EditImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.AbstractTextComponentTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.EditWPF" />
 	</toolkitComponent>
 	
@@ -90,12 +90,12 @@
 	</concreteComponent>	
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.DocumentWinForm" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Document</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.DocumentImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.AbstractTextComponentTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.DocumentWinForm" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.DocumentWPF" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Document</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.DocumentImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.AbstractTextComponentTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.DocumentWPF" />
 	</toolkitComponent>
 	
