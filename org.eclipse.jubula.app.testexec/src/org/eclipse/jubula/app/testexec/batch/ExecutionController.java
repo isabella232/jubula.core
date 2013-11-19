@@ -585,9 +585,6 @@ public class ExecutionController implements IAUTServerEventListener,
         throws ToolkitPluginException {
         if (ts != null && autConf != null) {
             final IAUTMainPO aut = ts.getAut();
-            sysOut(NLS.bind(Messages.ExecutionControllerAUT,
-                NLS.bind(Messages.ExecutionControllerAUTStart,
-                        aut.getName())));
             
             if (ts != null) {
                 AutIdentifier autToStart = new AutIdentifier(autConf
@@ -597,6 +594,9 @@ public class ExecutionController implements IAUTServerEventListener,
                 clientTest.addTestEventListener(asl);
                 clientTest.addAUTServerEventListener(asl);
                 AutAgentRegistration.getInstance().addListener(asl);
+                sysOut(NLS.bind(Messages.ExecutionControllerAUT,
+                        NLS.bind(Messages.ExecutionControllerAUTStart,
+                                aut.getName(), autConf.getName())));
                 clientTest.startAut(aut, autConf, m_job.getLanguage());
                 m_startedAutId = autToStart;
                 while (!asl.autStarted() && !asl.hasAutStartFailed()) {
