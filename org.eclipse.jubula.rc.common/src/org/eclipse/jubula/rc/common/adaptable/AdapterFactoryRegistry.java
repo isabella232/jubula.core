@@ -12,8 +12,10 @@ package org.eclipse.jubula.rc.common.adaptable;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -315,6 +317,11 @@ public class AdapterFactoryRegistry {
         String path = resource.getPath()
                 .replaceFirst("[.]jar[!].*", ".jar") //$NON-NLS-1$ //$NON-NLS-2$
                 .replaceFirst("file:", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        try {
+            path = URLDecoder.decode(path, "utf-8"); //$NON-NLS-1$
+        } catch (UnsupportedEncodingException uee) {
+            log.error(uee.getLocalizedMessage(), uee);
+        }
         List classes = new ArrayList();
         try {            
             JarFile jarFile = new JarFile(path);        
