@@ -185,7 +185,7 @@
 	</concreteComponent>	
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.ComboBoxWinForm" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.ComboBox</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.ComboBoxImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ComboBoxTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.ComboBoxWinForm" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.ComboBoxWPF" visible="false">
