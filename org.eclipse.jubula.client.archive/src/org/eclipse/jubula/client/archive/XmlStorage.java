@@ -13,10 +13,9 @@ package org.eclipse.jubula.client.archive;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,6 +27,8 @@ import java.util.TimerTask;
 
 import javax.persistence.PersistenceException;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.apache.commons.lang.Validate;
 import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlOptions;
@@ -70,8 +71,8 @@ public class XmlStorage {
         /** The monitor for which the IO is taking place. */
         private IProgressMonitor m_monitor;
         
-        /** The output stream in which the IO is taking place. */
-        private OutputStream m_outputStream;
+        /** The writer in which the IO is taking place. */
+        private FileWriterWithEncoding m_writer;
         
         /** The Timer used to schedule regular interruption checks. */
         private Timer m_timer;
@@ -79,14 +80,16 @@ public class XmlStorage {
         /**
          * Constructor
          * 
-         * @param monitor The monitor for which the IO is taking place.
-         * @param outputStream The output stream in which the IO is taking place.
+         * @param monitor
+         *            The monitor for which the IO is taking place.
+         * @param writer
+         *            The writer in which the IO is taking place.
          */
-        public IOCanceller(IProgressMonitor monitor, 
-            OutputStream outputStream) {
-            
+        public IOCanceller(IProgressMonitor monitor,
+            FileWriterWithEncoding writer) {
+
             m_monitor = monitor;
-            m_outputStream = outputStream;
+            m_writer = writer;
             m_timer = new Timer();
         }
         
@@ -111,7 +114,7 @@ public class XmlStorage {
         private void checkTask() {
             if (m_monitor.isCanceled()) {
                 try {
-                    m_outputStream.close();
+                    m_writer.close();
                 } catch (IOException e) {
                     log.error(Messages.ErrorWhileCloseOS, e);
                 }
@@ -140,14 +143,8 @@ public class XmlStorage {
     /** XML header end */
     private static final String XML_HEADER_END = "?>"; //$NON-NLS-1$
     
-    /** centralized definition of characters for XML header */
-    private static final char QUOTE = '"';
-    /** centralized definition of characters for XML header */
-    private static final char SPACE = ' ';
-    /** centralized definition of characters for XML header */
-
     /**
-     * the current xml schema namespace
+     * the current XML schema namespace
      */
     private static final String SCHEMA_NAMESPACE = "http://www.eclipse.org/jubula/client/archive/schema"; //$NON-NLS-1$
 
@@ -183,7 +180,7 @@ public class XmlStorage {
      * @throws ProjectDeletedException
      *             in case of current project is already deleted
      */
-    private static String save(IProjectPO project, 
+    private static InputStream save(IProjectPO project, 
             boolean includeTestResultSummaries, IProgressMonitor monitor) 
         throws ProjectDeletedException, PMException {
         XmlOptions genOpts = new XmlOptions();
@@ -233,7 +230,7 @@ public class XmlStorage {
                 "XML" + Messages.ValidateFailed + msgs.toString(), //$NON-NLS-1$
                 MessageIDs.E_FILE_IO);
         }
-        return contentDoc.xmlText(genOpts);
+        return contentDoc.newInputStream(genOpts);
     }
     
     /**
@@ -351,39 +348,7 @@ public class XmlStorage {
      * string, if fileName == null!
      * 
      * @param proj
-     *            proj to be saved
-     * @param fileName
-     *            name for file to save or null, if wanting to get the project
-     *            as serialized string
-     * @param includeTestResultSummaries
-     *            Whether to save the Test Result Summaries as well.
-     * @param monitor
-     *            The progress monitor for this potentially long-running
-     *            operation.
-     * @return the serialized project as string, if fileName == null<br>
-     *         or<br>
-     *         <b>Returns:</b><br>
-     *         null otherwise. Always returns <code>null</code> if the save
-     *         operation was canceled.
-     * @throws PMException
-     *             if save failed for any reason
-     * @throws ProjectDeletedException
-     *             in case of current project is already deleted
-     */
-    public static String save(IProjectPO proj, String fileName, 
-            boolean includeTestResultSummaries, IProgressMonitor monitor)
-        throws ProjectDeletedException, PMException {
-        
-        return save(proj, fileName, includeTestResultSummaries, 
-                monitor, false, null);
-    }
-
-    /**
-     * Save a project as XML to a file or return the serialized project as
-     * string, if fileName == null!
-     * 
-     * @param proj
-     *            proj to be saved
+     *            project to be saved
      * @param fileName
      *            name for file to save or null, if wanting to get the project
      *            as serialized string
@@ -418,29 +383,31 @@ public class XmlStorage {
             getWorkToSave(proj));
                 
         Validate.notNull(proj);
-        FileOutputStream fOut = null;
+        FileWriterWithEncoding fWriter = null;
         try {
-            String xml = buildXmlHeader() 
-                + XmlStorage.save(proj, includeTestResultSummaries, monitor);
+            InputStream projXMLStream = XmlStorage.save(proj, 
+                includeTestResultSummaries, monitor);
 
             if (fileName == null) {
-                return xml;
+                return IOUtils.toString(projXMLStream,
+                    RECOMMENDED_CHAR_ENCODING);
             }
-            
+
             if (writeToSystemTempDir) {
                 File fileInTempDir = createTempFile(fileName);
                 if (listOfProjectFiles != null) {
                     listOfProjectFiles.add(fileInTempDir);
                 }
-                fOut = new FileOutputStream(fileInTempDir);
-            } else  {
-                fOut = new FileOutputStream(fileName);
+                fWriter = new FileWriterWithEncoding(fileInTempDir,
+                    RECOMMENDED_CHAR_ENCODING);
+            } else {
+                fWriter = new FileWriterWithEncoding(fileName,
+                    RECOMMENDED_CHAR_ENCODING);
             }
-            
-            IOCanceller canceller = 
-                new IOCanceller(monitor, fOut);
+
+            IOCanceller canceller = new IOCanceller(monitor, fWriter);
             canceller.startTask();
-            fOut.write(xml.getBytes(RECOMMENDED_CHAR_ENCODING));
+            IOUtils.copy(projXMLStream, fWriter, RECOMMENDED_CHAR_ENCODING);
             canceller.taskFinished();
         } catch (FileNotFoundException e) {
             log.debug(Messages.File + StringConstants.SPACE 
@@ -451,7 +418,7 @@ public class XmlStorage {
                     + e.toString(), MessageIDs.E_FILE_IO);
         } catch (IOException e) {
             // If the operation has been canceled, then this is just
-            // a result of cancelling the IO.
+            // a result of canceling the IO.
             if (!monitor.isCanceled()) {
                 log.debug(Messages.GeneralIoExeption, e);
                 throw new PMSaveException(Messages.GeneralIoExeption 
@@ -463,12 +430,12 @@ public class XmlStorage {
             throw new PMSaveException(e.getMessage(),
                 MessageIDs.E_DATABASE_GENERAL);
         } finally {
-            if (fOut != null) {
+            if (fWriter != null) {
                 try {
-                    fOut.close();
+                    fWriter.close();
                 } catch (IOException e) {
                     // just log, we are already done
-                    log.error(Messages.CantCloseOOS + fOut.toString(), e);
+                    log.error(Messages.CantCloseOOS + fWriter.toString(), e);
                 }
             }
         }
@@ -500,34 +467,8 @@ public class XmlStorage {
     }
 
     /**
-     * @return the custom XML header containing the XML export version info
-     */
-    private static String buildXmlHeader() {
-        StringBuilder res = new StringBuilder(XML_HEADER_START);
-        res.append(StringConstants.SPACE);
-        res.append("version"); //$NON-NLS-1$
-        res.append(StringConstants.EQUALS_SIGN);
-        res.append(QUOTE);
-        res.append("1"); //$NON-NLS-1$
-        res.append(StringConstants.DOT);
-        res.append("0"); //$NON-NLS-1$
-        res.append(QUOTE);
-        res.append(StringConstants.SPACE);
-        res.append("encoding"); //$NON-NLS-1$
-        res.append(StringConstants.EQUALS_SIGN);
-        res.append(QUOTE);
-        res.append(RECOMMENDED_CHAR_ENCODING);
-        res.append(QUOTE);               
-        res.append(SPACE);
-        res.append(XML_HEADER_END);
-        res.append(StringConstants.NEWLINE);
-        
-        return res.toString();
-    }
-    
-    /**
      * read data from a file using a specified character encoding
-     * @param projectURL the project xml URL
+     * @param projectURL the project XML URL
      * @param encoding character encoding. Must be a supported encoding or an
      * UnsupportedEncodingException will be thrown. Null is allowed and means
      * system default encoding.

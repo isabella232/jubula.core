@@ -86,8 +86,8 @@ public class ExportProjectHandler extends AbstractProjectHandler {
                                 Messages.ExportFileActionExporting,
                                 1);
                         
-                        XmlStorage.save(gstorage.getProject(), m_fileName, 
-                                true, subMonitor.newChild(1));
+                        XmlStorage.save(gstorage.getProject(), m_fileName,
+                            true, subMonitor.newChild(1), false, null);
                     }
                 } catch (final PMException e) {
                     ErrorHandlingUtil.createMessageDialog(e, null, null);

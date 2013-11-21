@@ -315,8 +315,8 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
         throws ProjectDeletedException, InterruptedException, PMException {
         GeneralStorage.getInstance().validateProjectExists(
                 GeneralStorage.getInstance().getProject());
-        String serializedProject = XmlStorage.save(
-            GeneralStorage.getInstance().getProject(), null, false, monitor);
+        String serializedProject = XmlStorage.save(GeneralStorage.getInstance()
+            .getProject(), null, false, monitor, false, null);
 
         if (monitor.isCanceled()) {
             throw new InterruptedException();

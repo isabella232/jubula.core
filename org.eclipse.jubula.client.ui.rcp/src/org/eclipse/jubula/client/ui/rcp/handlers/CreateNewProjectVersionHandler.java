@@ -175,9 +175,9 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
             NodePM.getInstance().setUseCache(true);
             GeneralStorage.getInstance().validateProjectExists(
                     GeneralStorage.getInstance().getProject());
-            String serializedProject = XmlStorage.save(
-                GeneralStorage.getInstance().getProject(), null, 
-                false, subMonitor.newChild(WORK_GET_PROJECT_FROM_DB));
+            String serializedProject = XmlStorage.save(GeneralStorage
+                .getInstance().getProject(), null, false, subMonitor
+                .newChild(WORK_GET_PROJECT_FROM_DB), false, null);
             if (monitor.isCanceled() || serializedProject == null) {
                 throw new InterruptedException();
             }

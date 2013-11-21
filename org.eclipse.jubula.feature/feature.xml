@@ -224,6 +224,13 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
+         id="org.apache.commons.io"
+         download-size="0"
+         install-size="0"
+         version="2.0.1"
+         unpack="false"/>
+
+   <plugin
          id="org.apache.oro"
          download-size="0"
          install-size="0"
