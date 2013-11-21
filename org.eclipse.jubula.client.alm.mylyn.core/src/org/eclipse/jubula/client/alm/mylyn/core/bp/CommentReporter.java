@@ -107,8 +107,8 @@ public class CommentReporter implements ITestresultSummaryEventListener {
             boolean hasTaskId = taskIdforNode != null;
             
             boolean writeCommentForNode = hasTaskId
-                 && (m_reportSuccess && didNodePass) 
-                 || (m_reportFailure && !didNodePass);
+                 && ((m_reportSuccess && didNodePass) 
+                  || (m_reportFailure && !didNodePass));
 
             if (writeCommentForNode) {
                 CommentEntry c = new CommentEntry(resultNode, m_dashboardURL,
