@@ -24,7 +24,6 @@ import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProblemPropagationListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -50,6 +49,7 @@ import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TestExecDropTargetListener;
@@ -67,7 +67,6 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
 import org.slf4j.Logger;
@@ -80,8 +79,7 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("synthetic-access")
 public class TestSuiteBrowser extends AbstractJBTreeView implements
-    ITreeViewerContainer, IJBPart, ILanguageChangedListener, 
-    IProblemPropagationListener {
+    ITreeViewerContainer, IJBPart, ILanguageChangedListener {
 
     /** New-menu */
     public static final String NEW_ID = PlatformUI.PLUGIN_ID + ".NewSubMenu"; //$NON-NLS-1$  
@@ -120,7 +118,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addLanguageChangedListener(this, true);
-        ded.addProblemPropagationListener(this);
+        ded.addProblemPropagationListener(CompletenessBP.getInstance());
         if (GeneralStorage.getInstance().getProject() != null) {
             handleProjectLoaded();
         }
@@ -195,7 +193,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.removeDataChangedListener(this);
         ded.removeLanguageChangedListener(this);
-        ded.removeProblemPropagationListener(this);
+        ded.removeProblemPropagationListener(CompletenessBP.getInstance());
         super.dispose();
     }
   
@@ -399,18 +397,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
      */
     private void setViewerInput() {
         getTreeViewer().setInput(GeneralStorage.getInstance().getProject());
-    }
-
-    /** {@inheritDoc} */
-    public void problemPropagationFinished() {
-        getTreeViewer().getTree().getDisplay().syncExec(new Runnable() {
-            public void run() {
-                getTreeViewer().refresh();
-                IDecoratorManager dm = Plugin.getDefault()
-                        .getWorkbench().getDecoratorManager();
-                dm.update(Constants.CC_DECORATOR_ID);
-            }
-        });
     }
 
     /**
