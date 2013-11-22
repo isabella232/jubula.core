@@ -198,23 +198,41 @@ public class CommentReporter implements ITestresultSummaryEventListener {
 
         Set<String> taskIds = taskIdToComment.keySet();
         int taskAmount = taskIds.size();
-        String out = NLS.bind(Messages.ReportToALMJob, repoLabel);
-        monitor.beginTask(out, taskAmount);
-
         IProgressConsole c = getConsole();
-        c.writeLine(out);
-        for (String taskId : taskIds) {
-            c.writeLine(NLS.bind(Messages.ReportingTask, taskId));
-            boolean succeeded = ALMAccess.createComment(repoLabel, taskId,
-                    taskIdToComment.get(taskId), monitor);
-            if (!succeeded) {
-                c.writeErrorLine(NLS.bind(
-                        Messages.ReportingTaskFailed, taskId));
+        if (taskAmount > 0) {
+            String out = NLS.bind(Messages.ReportToALMJob, taskAmount,
+                repoLabel);
+            monitor.beginTask(out, taskAmount);
+            
+            c.writeLine(out);
+            int successCount = 0;
+            int overallCommentCount = 0;
+            for (String taskId : taskIds) {
+                List<CommentEntry> comments = taskIdToComment.get(taskId);
+                int commentAmount = comments.size();
+                if (commentAmount > 1) {
+                    c.writeLine(NLS.bind(Messages.ReportingResults,
+                        commentAmount, taskId));
+                } else {
+                    c.writeLine(NLS.bind(Messages.ReportingResult, taskId));
+                }
+                boolean succeeded = ALMAccess.createComment(repoLabel, taskId,
+                    comments, monitor);
+                if (!succeeded) {
+                    c.writeErrorLine(
+                        NLS.bind(Messages.ReportingTaskFailed, taskId));
+                } else {
+                    successCount++;
+                    overallCommentCount += commentAmount;
+                }
+                monitor.worked(1);
             }
-            monitor.worked(1);
+            c.writeLine(NLS.bind(Messages.ReportToALMJobDone, new Integer[] {
+                overallCommentCount, successCount, taskAmount }));
+            monitor.done();
+        } else {
+            c.writeLine(Messages.NothingToReport);
         }
-        c.writeLine(Messages.ReportToALMJobDone);
-        monitor.done();
         return Status.OK_STATUS;
     }
 

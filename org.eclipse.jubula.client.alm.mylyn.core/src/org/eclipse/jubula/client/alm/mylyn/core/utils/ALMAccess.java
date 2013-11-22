@@ -27,14 +27,17 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.mylyn.commons.net.AuthenticationType;
 import org.eclipse.mylyn.tasks.core.AbstractRepositoryConnector;
 import org.eclipse.mylyn.tasks.core.IRepositoryManager;
-import org.eclipse.mylyn.tasks.core.ITaskMapping;
+import org.eclipse.mylyn.tasks.core.IRepositoryModel;
+import org.eclipse.mylyn.tasks.core.ITask;
 import org.eclipse.mylyn.tasks.core.RepositoryResponse;
 import org.eclipse.mylyn.tasks.core.TaskMapping;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.core.data.AbstractTaskDataHandler;
+import org.eclipse.mylyn.tasks.core.data.ITaskDataManager;
+import org.eclipse.mylyn.tasks.core.data.ITaskDataWorkingCopy;
 import org.eclipse.mylyn.tasks.core.data.TaskAttribute;
-import org.eclipse.mylyn.tasks.core.data.TaskAttributeMapper;
 import org.eclipse.mylyn.tasks.core.data.TaskData;
+import org.eclipse.mylyn.tasks.core.data.TaskDataModel;
 import org.eclipse.mylyn.tasks.ui.TasksUi;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
@@ -121,19 +124,30 @@ public final class ALMAccess {
      *            the taskId
      * @param monitor
      *            the monitor to use
-     * @return the tasks data or <code>null</code> if not found
+     * @return the task or <code>null</code> if not found
      * @throws CoreException
      *             in case of a problem
      */
-    private static TaskData getTaskDataByID(TaskRepository repo, String taskId,
-            IProgressMonitor monitor) throws CoreException {
-        TaskData taskData = null;
-        if (repo != null && !repo.isOffline()) {
-            AbstractRepositoryConnector connector = TasksUi
-                    .getRepositoryConnector(repo.getConnectorKind());
-            taskData = connector.getTaskData(repo, taskId, monitor);
+    private static ITask getTaskByID(TaskRepository repo, String taskId,
+        IProgressMonitor monitor) throws CoreException {
+        ITask task = null;
+        if (validRepository(repo)) {
+            IRepositoryModel repositoryModel = TasksUi.getRepositoryModel();
+            task = repositoryModel.getTask(repo, taskId);
+            if (task == null) {
+                task = repositoryModel.createTask(repo, taskId);
+            }
         }
-        return taskData;
+        return task;
+    }
+
+    /**
+     * @param repo
+     *            the repository to check
+     * @return if the repository is valid
+     */
+    private static boolean validRepository(TaskRepository repo) {
+        return repo != null && !repo.isOffline();
     }
 
     /**
@@ -141,45 +155,59 @@ public final class ALMAccess {
      *            repoLabel
      * @param taskId
      *            the taskId
-     * @param commentEntries
+     * @param comments
      *            the comment entries
      * @param monitor
      *            the monitor to use
      * @return true if succeeded; false otherwise
      */
     public static boolean createComment(String repoLabel, String taskId,
-            List<CommentEntry> commentEntries, IProgressMonitor monitor) {
+            List<CommentEntry> comments, IProgressMonitor monitor) {
         boolean succeeded = false;
         TaskRepository repo = getRepositoryByLabel(repoLabel);
         try {
             TaskData taskData = getTaskDataByID(repo, taskId, monitor);
-            if (taskData != null) {
+            if (taskData == null) {
+                return succeeded;
+            }
+            
+            ITask task = getTaskByID(repo, taskId, monitor);
+            if (task != null) {
+                ITaskDataManager taskDataManager = TasksUi.getTaskDataManager();
+                ITaskDataWorkingCopy taskWorkingCopy = taskDataManager
+                    .createWorkingCopy(task, taskData);
+                TaskDataModel taskModel = new TaskDataModel(repo, task,
+                    taskWorkingCopy);
+                
                 String connectorKind = repo.getConnectorKind();
                 AbstractRepositoryConnector connector = TasksUi
-                        .getRepositoryConnector(connectorKind);
+                    .getRepositoryConnector(connectorKind);
                 AbstractTaskDataHandler taskDataHandler = connector
-                        .getTaskDataHandler();
-                TaskAttribute taskDataAttributeRoot = taskData.getRoot();
+                    .getTaskDataHandler();
+                TaskAttribute rootData = taskModel.getTaskData()
+                    .getRoot();
                 CONNECTOR handle = determineConnectorHandling(connectorKind);
                 
-                boolean attributeAccess = false;
+                TaskAttribute change = null;
                 switch (handle) {
                     case HP_ALM:
-                        attributeAccess = hpAlmHandling(commentEntries, 
-                            taskDataAttributeRoot);
+                        change = hpAlmHandling(comments, rootData);
                         break;
                     case DEFAULT:
                     default:
-                        attributeAccess = defaultHandling(commentEntries, 
-                            taskDataAttributeRoot);
+                        change = defaultHandling(comments, rootData);
                         break;
                 }
-                if (!attributeAccess) {
+                if (change == null) {
                     return succeeded;
                 }
+
+                taskModel.attributeChanged(change);
                 
                 RepositoryResponse response = taskDataHandler.postTaskData(
-                        repo, taskData, null, monitor);
+                    taskModel.getTaskRepository(), taskModel.getTaskData(),
+                    taskModel.getChangedOldAttributes(), monitor);
+                
                 succeeded = RepositoryResponse.ResponseKind.TASK_UPDATED
                         .equals(response.getReposonseKind());
             }
@@ -190,14 +218,36 @@ public final class ALMAccess {
     }
 
     /**
+     * @param repo
+     *            the task repository
+     * @param taskId
+     *            the taskId
+     * @param monitor
+     *            the monitor to use
+     * @return the tasks data or <code>null</code> if not found
+     * @throws CoreException
+     *             in case of a problem
+     */
+    private static TaskData getTaskDataByID(TaskRepository repo, String taskId,
+            IProgressMonitor monitor) throws CoreException {
+        TaskData taskData = null;
+        if (validRepository(repo)) {
+            AbstractRepositoryConnector connector = TasksUi
+                    .getRepositoryConnector(repo.getConnectorKind());
+            taskData = connector.getTaskData(repo, taskId, monitor);
+        }
+        return taskData;
+    }
+    
+    /**
      * @param commentEntries
      *            the commentEntries to add
      * @param attr
      *            the attribute to modify
      * @return a flag indicating the success of attribute handling
      */
-    private static boolean hpAlmHandling(List<CommentEntry> commentEntries,
-        TaskAttribute attr) {
+    private static TaskAttribute hpAlmHandling(
+        List<CommentEntry> commentEntries, TaskAttribute attr) {
         Properties almProps = Activator.getDefault().getAlmAccessProperties();
         
         String hpTaskKindKeyPrefix = CONNECTOR.HP_ALM.toString()
@@ -226,9 +276,9 @@ public final class ALMAccess {
             }
             
             commentAttribute.setValue(oldComment + newComment);
-            return true;
+            return commentAttribute;
         }
-        return false;
+        return null;
     }
 
     /**
@@ -238,24 +288,20 @@ public final class ALMAccess {
      *            the attribute to modify
      * @return a flag indicating the success of attribute handling
      */
-    private static boolean defaultHandling(List<CommentEntry> commentEntries,
-            TaskAttribute attr) {
+    private static TaskAttribute defaultHandling(
+        List<CommentEntry> commentEntries, TaskAttribute attr) {
         TaskAttribute newComment = attr
-                .createMappedAttribute(TaskAttribute.COMMENT_NEW);
+            .createMappedAttribute(TaskAttribute.COMMENT_NEW);
         String comment = StringConstants.EMPTY;
-        
+
         for (CommentEntry c : commentEntries) {
-            comment = comment 
-                    + StringConstants.NEWLINE 
-                    + c.toString()
-                    + StringConstants.NEWLINE
-                    + c.getDashboardURL()
-                    + StringConstants.NEWLINE
-                    + StringConstants.NEWLINE;
+            comment = comment + StringConstants.NEWLINE + c.toString()
+                + StringConstants.NEWLINE + c.getDashboardURL()
+                + StringConstants.NEWLINE + StringConstants.NEWLINE;
         }
-        
+
         newComment.setValue(comment);
-        return true;
+        return newComment;
     }
 
     /**
@@ -272,106 +318,6 @@ public final class ALMAccess {
             return CONNECTOR.HP_ALM;
         }
         return CONNECTOR.DEFAULT;
-    }
-
-    /**
-     * @param repoLabel
-     *            repoLabel
-     * @param taskId
-     *            the taskId
-     * @param taskAttributeId
-     *            the id of the attribute to retrieve
-     * @return the value or null if not found
-     */
-    public static String getTaskAttributeValue(String repoLabel, String taskId,
-            String taskAttributeId) {
-        String value = null;
-        TaskRepository repo = getRepositoryByLabel(repoLabel);
-        try {
-            TaskData taskData = getTaskDataByID(repo, taskId,
-                    new NullProgressMonitor());
-            if (taskData != null) {
-                TaskAttribute root = taskData.getRoot();
-                TaskAttributeMapper attributeMapper = taskData
-                        .getAttributeMapper();
-                TaskAttribute mappedAttribute = root
-                        .getMappedAttribute(taskAttributeId);
-                if (mappedAttribute != null) {
-                    value = attributeMapper.getValue(mappedAttribute);
-                }
-            }
-        } catch (CoreException e) {
-            LOG.error(e.getLocalizedMessage(), e);
-        }
-        return value;
-    }
-
-    /**
-     * @param repoLabel
-     *            repoLabel
-     * @param product
-     *            the product
-     * @param summary
-     *            the summary
-     * @param description
-     *            the description
-     * @return true if succeeded; false otherwise
-     */
-    public static boolean createNewTask(String repoLabel, String product,
-        String summary, String description) {
-        boolean succeeded = false;
-        TaskRepository repo = getRepositoryByLabel(repoLabel);
-        AbstractRepositoryConnector connector = TasksUi
-                .getRepositoryConnector(repo.getConnectorKind());
-        
-        AbstractTaskDataHandler taskDataHandler = connector
-                .getTaskDataHandler();
-        
-        // e.g. when local has been chosen
-        if (taskDataHandler == null) {
-            return succeeded;
-        }
-        
-        TaskAttributeMapper attributeMapper = taskDataHandler
-                .getAttributeMapper(repo);
-        
-        TaskData newTask = new TaskData(attributeMapper,
-                repo.getConnectorKind(), 
-                repo.getRepositoryUrl(), 
-                StringConstants.EMPTY);
-        
-        ITaskMapping taskMapping = new ALMDefaultTaskMapping();
-        try {
-            
-            TaskAttribute newTaskRoot = newTask.getRoot();
-            
-            TaskAttribute summaryAttribute = newTaskRoot
-                    .createMappedAttribute(TaskAttribute.SUMMARY);
-            TaskAttribute descriptionAttribute = newTaskRoot
-                    .createMappedAttribute(TaskAttribute.DESCRIPTION);
-            
-            // JIRA - start
-            newTaskRoot.createMappedAttribute(TaskAttribute.TASK_KIND);
-            newTaskRoot.createMappedAttribute(TaskAttribute.STATUS);
-            TaskAttribute productAttribute = newTaskRoot
-                    .createMappedAttribute(TaskAttribute.PRODUCT);
-            // JIRA - end
-
-            taskDataHandler.initializeTaskData(repo, newTask, taskMapping,
-                    new NullProgressMonitor());
-
-            attributeMapper.setValue(descriptionAttribute, description);
-            attributeMapper.setValue(summaryAttribute, summary);
-            attributeMapper.setValue(productAttribute, product);
-            
-            RepositoryResponse response = taskDataHandler.postTaskData(repo,
-                    newTask, null, new NullProgressMonitor());
-            succeeded = RepositoryResponse.ResponseKind.TASK_CREATED
-                    .equals(response .getReposonseKind());
-        } catch (CoreException e) {
-            LOG.error(e.getLocalizedMessage(), e);
-        }
-        return succeeded;
     }
 
     /**
