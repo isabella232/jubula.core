@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.exception;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.eclipse.jubula.tools.exception.JBRuntimeException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -40,9 +41,12 @@ public abstract class EventSupportException
      */
     public EventSupportException(Throwable cause, Integer id) {
         super(cause, id);
+        String message = cause.getMessage();
+        if (message == null) {
+            message = ExceptionUtils.getFullStackTrace(cause);
+        }
         m_event = EventFactory.createActionError(
-                TestErrorEvent.EXECUTION_ERROR, new Object[] { cause
-                        .getMessage() });
+                TestErrorEvent.EXECUTION_ERROR, new Object[] { message });
     }
     /**
      * @param message The message.
