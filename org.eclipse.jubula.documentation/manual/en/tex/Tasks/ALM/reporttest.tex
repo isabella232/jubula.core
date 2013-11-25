@@ -69,6 +69,7 @@ If your \gdproject{} is joined to an external repository \bxpref{TasksALMConfigu
 \item If you have changed the attribute IDs in your HP ALM installation for defects and / or requirements from their relative defaults (\bxname{BG\_DEV\_COMMENTS} and \bxname{REQ\_DEV\_COMMENTS}), or if you have changed the ID for the connector, then you must modify these properties in the \bxshell{almAccess.properties} file contained in the jar:\\
 \bxname{org.eclipse.jubula.client.alm.mylyn.core} 
 \item Since tasks in HP ALM only have one comment field, the result information is appended to the comment field instead of being added as a new comment each time. The result is formatted as a hyperlink to the dashboard.
+\item To write to requirements in a default HP ALM installation, you must use the prefix \bxname{REQ}, e.g. REQ100. To write to defects in a default HP ALM installation, you must use the prefix \bxname{DEF}, e.g. DEF42.
 \end{itemize}
 
 
