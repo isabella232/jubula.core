@@ -28,6 +28,7 @@ public class Messages extends NLS {
     public static String StatusPassed;
     public static String StatusFailed;
     public static String NothingToReport;
+    public static String ReportToALMJobName;
     public static String ReportToALMJob;
     public static String ReportToALMJobDone;
     public static String ReportingResult;

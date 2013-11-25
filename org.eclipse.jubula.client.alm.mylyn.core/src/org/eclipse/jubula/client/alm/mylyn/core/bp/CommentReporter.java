@@ -267,7 +267,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
         if (!StringUtils.isBlank(almRepositoryName)
                 && (reportSuccess || reportFailure)) {
             Job reportToALMOperation = new Job(NLS.bind(
-                    Messages.ReportToALMJob, almRepositoryName)) {
+                    Messages.ReportToALMJobName, almRepositoryName)) {
                 protected IStatus run(IProgressMonitor monitor) {
                     getConsole().writeLine(
                             NLS.bind(Messages.TaskRepositoryConnectionTest,
