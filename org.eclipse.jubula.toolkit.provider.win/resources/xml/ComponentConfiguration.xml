@@ -122,12 +122,12 @@
 	</concreteComponent>	
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.TreeWinForm" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Tree</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.TreeImplClass</testerClass>
+		<testerClass>com.bredexsw.guidancer.rc.win.tester.TreeTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.TreeWinForm" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.TreeWPF" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Tree</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.TreeImplClass</testerClass>
+		<testerClass>com.bredexsw.guidancer.rc.win.tester.TreeTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.TreeWPF" />
 	</toolkitComponent>
 	
