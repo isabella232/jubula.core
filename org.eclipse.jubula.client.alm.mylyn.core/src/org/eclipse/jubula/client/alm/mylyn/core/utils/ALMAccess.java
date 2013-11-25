@@ -271,8 +271,8 @@ public final class ALMAccess {
             String oldComment = commentAttribute.getValue();
             String newComment = StringConstants.EMPTY;
             for (CommentEntry c : commentEntries) {
-                newComment = newComment + "<br><a href=\""
-                        + c.getDashboardURL() + "\">" + c.toString() + "</a>";
+                newComment = newComment + "<br>" + c.toString() + "<br>"
+                    + c.getDashboardURL();
             }
             
             commentAttribute.setValue(oldComment + newComment);
