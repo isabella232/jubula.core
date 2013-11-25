@@ -171,7 +171,7 @@ public final class ALMAccess {
                 return succeeded;
             }
             
-            ITask task = getTaskByID(repo, taskId, monitor);
+            ITask task = getTaskByID(repo, taskData.getTaskId(), monitor);
             if (task != null) {
                 ITaskDataManager taskDataManager = TasksUi.getTaskDataManager();
                 ITaskDataWorkingCopy taskWorkingCopy = taskDataManager
