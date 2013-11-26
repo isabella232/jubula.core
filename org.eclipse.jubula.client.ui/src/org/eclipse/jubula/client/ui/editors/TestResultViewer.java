@@ -24,6 +24,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -172,14 +173,15 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
         /**
          * {@inheritDoc}
          */
-        public void run(IProgressMonitor monitor) {
-
-            monitor.beginTask("Fetching Test Result data...",  //$NON-NLS-1$
-                    IProgressMonitor.UNKNOWN);
+        public void run(IProgressMonitor pMonitor) {
+            SubMonitor monitor = SubMonitor.convert(pMonitor,
+                "Fetching test result data...", 3); //$NON-NLS-1$
             
             try {
+                monitor.subTask("Loading test results from database..."); //$NON-NLS-1$
                 List<ITestResultPO> testResultList = TestResultPM
                     .computeTestResultListForSummary(m_session, m_summaryId);
+                monitor.worked(1);
                 
                 TestResultNode createdNode = null;
                 Stack<TestResultNode> parentNodeStack = 
@@ -189,11 +191,20 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                     allGuids.add(result.getInternalKeywordGuid());
                 }
 
+                monitor.subTask("Loading " + allGuids.size()  //$NON-NLS-1$
+                    + " backing nodes from database..."); //$NON-NLS-1$
                 Map<String, INodePO> guidToNodeMap = NodePM.getNodes(
                         m_parentProjectId, allGuids, 
                         GeneralStorage.getInstance().getMasterSession());
+                monitor.worked(1);
+
+                int remainingWork = testResultList.size();
+                SubMonitor sMonitor = SubMonitor.convert(monitor,
+                    "Fetching test result data...", //$NON-NLS-1$
+                    remainingWork);
+                sMonitor.subTask("Creating test result tree...");
                 for (ITestResultPO result : testResultList) {
-                    if (monitor.isCanceled()) {
+                    if (pMonitor.isCanceled()) {
                         throw new OperationCanceledException();
                     }
                     int keywordLevel = result.getKeywordLevel();
@@ -231,10 +242,10 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                     if (m_rootNode == null) {
                         m_rootNode = createdNode;
                     }
-                    
+                    sMonitor.worked(1);
                 }
             } finally {
-                monitor.done();
+                pMonitor.done();
             }
         }
 
