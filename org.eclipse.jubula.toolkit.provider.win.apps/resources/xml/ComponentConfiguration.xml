@@ -18,60 +18,60 @@
 	
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonXAML" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Button</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.ButtonImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ButtonTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonXAML" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonInternetExplorer" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Button</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.ButtonImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ButtonTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.ButtonInternetExplorer" />
 	</toolkitComponent>
 	
 	
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.TextXAML" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Text</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.TextImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.LabelTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.TextXAML" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.TextInternetExplorer" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Text</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.TextImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.LabelTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.TextInternetExplorer" />
 	</toolkitComponent>
 	
 	
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.CheckBoxXAML" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.CheckBox</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.CheckBoxImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ButtonTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.CheckBoxXAML" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.CheckBoxInternetExplorer" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.CheckBox</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.CheckBoxImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ButtonTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.CheckBoxInternetExplorer" />
 	</toolkitComponent>
 	
 	
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.EditXAML" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Edit</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.EditImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.AbstractTextComponentTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.EditXAML" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.EditInternetExplorer" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.Edit</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.EditImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.AbstractTextComponentTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.EditInternetExplorer" />
 	</toolkitComponent>
 	
 	
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.RadioButtonXAML" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.RadioButton</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.RadioButtonImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ButtonTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.RadioButtonXAML" />
 	</toolkitComponent>
 	<toolkitComponent type="com.bredexsw.guidancer.rc.dotnet.components.controltype.RadioButtonInternetExplorer" visible="false">
 		<realizes>org.eclipse.jubula.rc.dotnet.components.controltype.RadioButton</realizes>
-		<testerClass>com.bredexsw.guidancer.rc.win.implclasses.RadioButtonImplClass</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ButtonTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.RadioButtonInternetExplorer" />
 	</toolkitComponent>
 	
