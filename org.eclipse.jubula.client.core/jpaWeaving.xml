@@ -9,9 +9,10 @@
 	<property name="currentPluginDir" value="/projects/guidancer/Workspace/hu_snapshot/current/platforms/lin.gtk.x86/guidancer/plugins" />
 	
 	<path id="eclipselink.weaving.classpath">
-		<fileset dir="${currentPluginDir}">
+		<fileset dir="${basedir}/lib">
 			<include name="org.eclipse.persistence.*.jar" />
 			<include name="javax.persistence_*.jar" />
+			<include name="eclipselink.jar" />
 		</fileset>
 	</path>
 
@@ -58,6 +59,9 @@
 		<path id="weaving.classpath">
 			<path refid="maven.compile.classpath" />
 			<fileset dir="${basedir}/../org.eclipse.jubula.tools/lib">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${basedir}/../org.eclipse.jubula.client.core/lib">
 				<include name="*.jar" />
 			</fileset>
 		</path>

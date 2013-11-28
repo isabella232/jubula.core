@@ -48,13 +48,9 @@
       <plugin id="org.eclipse.jubula.dashboard.jettycustomizer" fragment="true"/>
       <plugin id="com.bredexsw.jubula.client.core.driver" fragment="true"/>
       <plugin id="com.ibm.icu.base"/>
-      <plugin id="javax.activation"/>
-      <plugin id="javax.mail"/>
-      <plugin id="javax.persistence"/>
       <plugin id="javax.servlet"/>
       <plugin id="javax.servlet.jsp"/>
       <plugin id="javax.xml"/>
-      <plugin id="javax.xml.stream"/>
       <plugin id="org.apache.commons.beanutils"/>
       <plugin id="org.apache.commons.cli"/>
       <plugin id="org.apache.commons.codec"/>
@@ -104,12 +100,6 @@
       <plugin id="org.eclipse.jubula.ui.compatibility"/>
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.osgi.services"/>
-      <plugin id="org.eclipse.persistence.antlr"/>
-      <plugin id="org.eclipse.persistence.asm"/>
-      <plugin id="org.eclipse.persistence.core"/>
-      <plugin id="org.eclipse.persistence.jpa"/>
-      <plugin id="org.eclipse.persistence.jpa.osgi"/>
-      <plugin id="org.eclipse.persistence.oracle" fragment="true"/>
       <plugin id="org.eclipse.rap.design.example"/>
       <plugin id="org.eclipse.rap.jface"/>
       <plugin id="org.eclipse.rap.jface.databinding"/>

@@ -25,6 +25,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
@@ -64,7 +65,6 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.persistence.exceptions.DatabaseException;
-import org.eclipse.persistence.jpa.osgi.PersistenceProvider;
 import org.eclipse.persistence.sessions.server.ServerSession;
 import org.eclipse.persistence.tools.schemaframework.SchemaManager;
 import org.slf4j.Logger;
@@ -1138,9 +1138,8 @@ public class Persistor {
             properties.put(PersistenceUnitProperties.BATCH_WRITING_SIZE,
                     batchWritingSize);
         }
-        return new PersistenceProvider().createEntityManagerFactory(
-                DEFAULT_PU_NAME, 
-                properties);
+        return Persistence.createEntityManagerFactory(
+                DEFAULT_PU_NAME, properties);
     }
     
     /**

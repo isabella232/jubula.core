@@ -6,9 +6,12 @@ Bundle-Version: 2.3.0.qualifier
 Eclipse-BuddyPolicy: registered
 Bundle-ClassPath: .,
  resources/,
- lib/dom4j-1.6.1.jar
+ lib/dom4j-1.6.1.jar,
+ lib/eclipselink.jar,
+ lib/javax.persistence_2.1.0.v201304241213.jar
 Bundle-Vendor: Eclipse Jubula
-Export-Package: org.dom4j,
+Export-Package: javax.persistence,
+ org.dom4j,
  org.dom4j.bean,
  org.dom4j.datatype,
  org.dom4j.dom,
@@ -49,7 +52,11 @@ Export-Package: org.dom4j,
  org.eclipse.jubula.client.core.preferences.database,
  org.eclipse.jubula.client.core.progress,
  org.eclipse.jubula.client.core.propertytester,
- org.eclipse.jubula.client.core.utils
+ org.eclipse.jubula.client.core.utils,
+ org.eclipse.persistence,
+ org.eclipse.persistence.config,
+ org.eclipse.persistence.jpa,
+ org.eclipse.persistence.sessions
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
  org.eclipse.jubula.ui.compatibility;bundle-version="[2.3.0,2.4.0)",
  org.h2;bundle-version="[1.1.117,2.0.0)",
@@ -59,10 +66,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
  org.apache.commons.cli;bundle-version="[1.2.0,2.0.0)",
  org.apache.commons.beanutils;bundle-version="[1.7.0,2.0.0)",
- javax.persistence;bundle-version="[2.0.3,2.1.0)",
- org.eclipse.persistence.jpa;bundle-version="[2.3.0,2.4.0)",
- org.eclipse.persistence.asm;bundle-version="[2.3.0,2.4.0)",
- org.eclipse.persistence.jpa.osgi;bundle-version="[2.3.0,2.4.0)",
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)",
  ch.qos.logback.classic;bundle-version="[1.0.0,2.0.0)",
  ch.qos.logback.core;bundle-version="[1.0.0,2.0.0)",
