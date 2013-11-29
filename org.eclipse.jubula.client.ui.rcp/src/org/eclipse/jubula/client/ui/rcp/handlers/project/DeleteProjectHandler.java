@@ -104,17 +104,17 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
          * {@inheritDoc}
          */
         public void run(IProgressMonitor monitor) throws InterruptedException {
-            monitor.beginTask(NLS.bind(Messages.DeleteProjectActionDeleting,
-                    new Object[] {m_project.getName(),
-                                  m_project.getMajorProjectVersion(),
-                                  m_project.getMinorProjectVersion()}),  
-                    getTotalWork());
+            final Integer majorVersion = m_project.getMajorProjectVersion();
+            final Integer minorVersion = m_project.getMinorProjectVersion();
+            monitor.beginTask(NLS.bind(Messages.DeleteProjectActionDeleting, 
+                new Object[] { m_project.getName(), majorVersion, 
+                    minorVersion }), getTotalWork());
             try {
                 boolean isRefreshRequired = false;
+                final String guid = m_project.getGuid();
                 if (!m_deleteCurrentProject) {
-                    isRefreshRequired = isRefreshRequired(m_project.getGuid(),
-                        m_project.getMajorProjectVersion(), 
-                        m_project.getMinorProjectVersion());
+                    isRefreshRequired = isRefreshRequired(guid, majorVersion,
+                        minorVersion);
                 }
                 if (m_deleteCurrentProject) {
                     Plugin.getDisplay().syncExec(new Runnable() {
@@ -135,15 +135,11 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                     public IStatus run(IProgressMonitor mon) {
                         mon.beginTask(jobName, IProgressMonitor.UNKNOWN);
                         if (m_keepTestresultSummary) {
-                            TestResultSummaryPM.deleteTestrunsByProject(
-                                    m_project.getGuid(),
-                                    m_project.getMajorProjectVersion(),
-                                    m_project.getMinorProjectVersion(), true);
+                            TestResultSummaryPM.deleteTestrunsByProject(guid,
+                                majorVersion, minorVersion, true);
                         } else {
-                            TestResultSummaryPM.deleteTestrunsByProject(
-                                    m_project.getGuid(),
-                                    m_project.getMajorProjectVersion(),
-                                    m_project.getMinorProjectVersion(), false);
+                            TestResultSummaryPM.deleteTestrunsByProject(guid,
+                                majorVersion, minorVersion, false);
                         }
                         mon.done();
                         ded.fireTestresultChanged(TestresultState.Refresh);

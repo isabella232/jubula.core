@@ -1296,10 +1296,10 @@ public class ProjectPM extends PersistenceManager
         } catch (PersistenceException e) {
             handleDBExceptionForMasterSession(proj, e);
         }
+        final Persistor persistor = Persistor.instance();
         try {
-            deleteSess = Persistor.instance().openSession();
-            EntityTransaction tx = 
-                Persistor.instance().getTransaction(deleteSess);
+            deleteSess = persistor.openSession();
+            EntityTransaction tx = persistor.getTransaction(deleteSess);
             p = deleteSess.find(NodeMaker.getProjectPOClass(), projId);
             if (p == null) {
                 if (isActProject) {
@@ -1311,7 +1311,7 @@ public class ProjectPM extends PersistenceManager
                     + StringConstants.DOT,
                     MessageIDs.E_DELETED_OBJECT);
             }
-            Persistor.instance().lockPO(deleteSess, p);
+            persistor.lockPO(deleteSess, p);
             deleteProjectIndependentDBObjects(deleteSess, p);
 
             // FIXME zeb Workaround for EclipseLink deleting the objects in the
@@ -1327,25 +1327,24 @@ public class ProjectPM extends PersistenceManager
             for (ISpecPersistable po : specObjList) {
                 PersistenceUtil.removeChildNodes(po, deleteSess);
                 p.getSpecObjCont().removeSpecObject(po);
-                Persistor.instance().deletePO(deleteSess, po);
+                persistor.deletePO(deleteSess, po);
             }
             for (IExecPersistable po : execObjList) {
                 PersistenceUtil.removeChildNodes(po, deleteSess);
                 p.getExecObjCont().removeExecObject(po);
-                Persistor.instance().deletePO(deleteSess, po);
+                persistor.deletePO(deleteSess, po);
             }
             deleteSess.flush();
             // FIXME zeb end workaround
-
             
-            Persistor.instance().deletePO(deleteSess, p);
+            persistor.deletePO(deleteSess, p);
             CompNamePM.deleteCompNames(deleteSess, projId);
-            Persistor.instance().commitTransaction(deleteSess, tx);
+            persistor.commitTransaction(deleteSess, tx);
             tx = null;
         } catch (PersistenceException e) {
             handleDBExceptionForAnySession(p, e, deleteSess);
         } finally {
-            Persistor.instance().dropSession(deleteSess);
+            persistor.dropSession(deleteSess);
         }
         ProjectNameBP.getInstance().checkAndDeleteName(proj.getGuid());
     }
@@ -1654,7 +1653,7 @@ public class ProjectPM extends PersistenceManager
                         illegalProjects.add(projectToCheck);
                         
                         // This break statement prevents a 
-                        // ConcurrentModificationException from occuring
+                        // ConcurrentModificationException from occurring
                         // because it stops iteration immediately when
                         // a project is added to the set.
                         break;
@@ -1776,8 +1775,9 @@ public class ProjectPM extends PersistenceManager
         }
         EntityManager session = null;
         String projGuid = null;
+        final Persistor persistor = Persistor.instance();
         try {
-            session = Persistor.instance().openSession();
+            session = persistor.openSession();
             final Query query = 
                 session.createQuery("select project.guid from ProjectPO project where project.id = :projectID"); //$NON-NLS-1$
             query.setParameter("projectID", projId); //$NON-NLS-1$
@@ -1788,29 +1788,30 @@ public class ProjectPM extends PersistenceManager
             throw new JBException(e.getMessage(),
                 MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
-            Persistor.instance().dropSessionWithoutLockRelease(session);
+            persistor.dropSessionWithoutLockRelease(session);
         }
         guidCache.put(projId, projGuid);
         return projGuid;
     }
     
     /**
-     * Chechs if a project with a given ID exists in the DB
+     * Checks if a project with a given ID exists in the DB
      * @param projectId Object ID of project
-     * @return true if the project exist, fals if not or in case of errors
+     * @return true if the project exist, fails if not or in case of errors
      */
     public static boolean doesProjectExist(Long projectId) {
         EntityManager session = null;
         List hits = null;
+        final Persistor persistor = Persistor.instance();
         try {
-            session = Persistor.instance().openSession();
+            session = persistor.openSession();
             Query q = session.createQuery("select node from ProjectPO as node where node.id = ?1"); //$NON-NLS-1$
             q.setParameter(1, projectId);
             hits = q.getResultList();
         } catch (PersistenceException e) {
             log.error(Messages.PersistenceLoadFailed, e);
         } finally {
-            Persistor.instance().dropSessionWithoutLockRelease(session);
+            persistor.dropSessionWithoutLockRelease(session);
         }
         return ((hits != null) && (hits.size() > 0));
 
