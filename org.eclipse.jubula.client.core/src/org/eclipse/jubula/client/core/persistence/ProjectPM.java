@@ -20,7 +20,6 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -1284,10 +1283,10 @@ public class ProjectPM extends PersistenceManager
         final Long projId = proj.getId();
         try {
             if (isActProject) {
-                EntityManager s = 
-                    GeneralStorage.getInstance().getMasterSession();
+                EntityManager s = GeneralStorage.getInstance()
+                    .getMasterSession();
                 IProjectPO currProj = s.find(NodeMaker.getProjectPOClass(),
-                        projId, LockModeType.READ);
+                    projId);
                 if (currProj == null) {
                     throw new ProjectDeletedException(
                         Messages.ProjectWasDeleted,
