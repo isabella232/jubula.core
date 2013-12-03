@@ -404,13 +404,7 @@ public class EditSupport {
     }
     
     /**
-     * because of Persistence (JPA / EclipseLink)-Bug HHH-1280 we can't use
-     * refresh<br>
-     * therefore we use evict to remove the old object from master session and
-     * reload the object<br>
-     * please attend, that in this case the Java-IDs of the old and the reloaded
-     * object are different<br>
-     * refreshs the original versions, which were possibly modified in editor
+     * Refreshes the original versions, which were possibly modified in editor
      * 
      * @throws ProjectDeletedException
      *             if the project was deleted in another instance
@@ -421,7 +415,7 @@ public class EditSupport {
                     .getMasterSession();
             IPersistentObject original = getOriginal();
             if (original != null) {
-                masterSession.refresh(original);
+                masterSession.refresh(masterSession.merge(getWorkVersion()));
                 GeneralStorage.getInstance().fireDataModified(original);
             }
         } catch (PersistenceException e) {

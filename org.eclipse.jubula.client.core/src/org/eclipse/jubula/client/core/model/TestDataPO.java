@@ -139,7 +139,7 @@ class TestDataPO implements ITestDataPO {
     
     
    /**
-    * Overides Object.equals()
+    * Overrides Object.equals()
     * Compares this TestDataPO object to the given object to equality.
     * @param obj the object to compare.
     * @return true or false
