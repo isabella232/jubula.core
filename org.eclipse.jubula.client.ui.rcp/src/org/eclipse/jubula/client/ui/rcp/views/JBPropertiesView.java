@@ -147,8 +147,8 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
     private List<ISelectionChangedListener> m_selectionListener = 
         new ArrayList<ISelectionChangedListener>();
 
-    /** The actual displayed node */
-    private INodePO m_currentNode;
+    /** The actual displayed persistent object */
+    private IPersistentObject m_currentPo;
 
     /** shows, if the Properties view is editable or not */
     private boolean m_isEditable;
@@ -521,16 +521,16 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
         // This will happen if a child of a SpecTC is displayed
         // and the editor with that SpecTC is saved.
         boolean parentMatch = false;
-        if (m_currentNode != null) {
-            INodePO parent = m_currentNode.getParentNode();
+        if (m_currentPo instanceof INodePO) {
+            INodePO parent = ((INodePO)m_currentPo).getParentNode();
             parentMatch = (parent != null) && po.equals(parent);
         }
         
-        if (parentMatch || po.equals(m_currentNode)) {
+        if (parentMatch || po.equals(m_currentPo)) {
             switch (dataState) {
                 case Added:
                 case StructureModified:
-                    if (po instanceof INodePO) {
+                    if (po instanceof IPersistentObject) {
                         m_treeViewer.refresh();
                         expandTrackedChanges();
                     }
@@ -588,8 +588,10 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
     /**
      * Reacts on the changes from the SelectionService of Eclipse.
      * 
-     * @param part the Workbenchpart
-     * @param selection  the selection
+     * @param part
+     *            the workbench part
+     * @param selection
+     *            the selection
      */
     private void reactOnChange(IWorkbenchPart part, 
         IStructuredSelection selection) {
@@ -607,15 +609,14 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
             // e.g. when a project was opened and no view has a selection
             m_treeViewer.setSelection(null);
             m_treeViewer.setInput(null);
-            m_currentNode = null;
-        } else if (!firstElement.equals(oldSelection.getFirstElement())) {
-            if (m_selection.getFirstElement() instanceof INodePO) {
-                INodePO guiNode = (INodePO)m_selection.getFirstElement();
-                m_currentNode = guiNode;
-                m_treeViewer.setInput(guiNode);
-                workaroundSpringySelection(m_focusCellManager);
-            } else {
-                m_treeViewer.setInput(m_selection.getFirstElement());
+            m_currentPo = null;
+        } else {
+            Object oldFirstElement = oldSelection.getFirstElement();
+            if (!firstElement.equals(oldFirstElement)) {
+                if (firstElement instanceof IPersistentObject) {
+                    m_currentPo = (IPersistentObject)firstElement;
+                }
+                m_treeViewer.setInput(firstElement);
                 workaroundSpringySelection(m_focusCellManager);
             }
         }
@@ -1052,7 +1053,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
          * @return the current action
          */
         private Action getAction() {
-            return getComp().findAction(((ICapPO)m_currentNode)
+            return getComp().findAction(((ICapPO)m_currentPo)
                 .getActionName());
         }
 
@@ -1071,7 +1072,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
          */
         private Component getComp() {
             return ComponentBuilder.getInstance().getCompSystem().findComponent(
-                    ((ICapPO)m_currentNode).getComponentType());
+                    ((ICapPO)m_currentPo).getComponentType());
         }
     }
     

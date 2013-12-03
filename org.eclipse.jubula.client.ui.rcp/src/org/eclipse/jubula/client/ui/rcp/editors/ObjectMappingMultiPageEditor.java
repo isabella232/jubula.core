@@ -1621,10 +1621,12 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             }
         }
         
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.fireDataChangedListener(objMap,
+                DataState.StructureModified, UpdateState.onlyInEditor);
         for (IObjectMappingAssoziationPO alteredOMA : alteredOMAs) {
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                alteredOMA.getCategory(), DataState.StructureModified, 
-                UpdateState.onlyInEditor);
+            ded.fireDataChangedListener(alteredOMA,
+                    DataState.StructureModified, UpdateState.onlyInEditor);
             
             IStructuredSelection techNameSelection = 
                     new StructuredSelection(alteredOMA);
@@ -1632,6 +1634,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             m_uiElementTreeViewer.setSelection(techNameSelection);
             m_mappedComponentTreeViewer.setSelection(techNameSelection);
         }
+        getSite().getPage().activate(this);
         
         if (!alteredOMAs.isEmpty()) {
             getEditorHelper().setDirty(true);
