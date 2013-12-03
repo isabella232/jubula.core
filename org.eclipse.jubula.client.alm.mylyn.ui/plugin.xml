@@ -89,6 +89,10 @@
             commandId="org.eclipse.jubula.client.alm.ui.commands.createTaskCommand"
             icon="icons/createTask.gif">
       </image>
+      <image
+            commandId="org.eclipse.jubula.client.alm.ui.commands.openTaskForNodeCommand"
+            icon="icons/task-editor.gif">
+      </image>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
@@ -119,6 +123,21 @@
                id="org.eclipse.mylyn.tasks.ui.views.repositories">
          </viewShortcut>
       </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            class="org.eclipse.jubula.client.alm.mylyn.ui.decorator.TaskDecorator"
+            id="org.eclipse.jubula.client.alm.mylyn.ui.decorator"
+            label="Linked Task Decorator"
+            lightweight="true"
+            location="BOTTOM_RIGHT"
+            objectClass="org.eclipse.jubula.client.core.model.INodePO"
+            state="true">
+         <description>
+            Decorates Test Suites, Test Cases and Test Jobs with an icon indicating that they are connected to a remote Mylyn task.
+         </description>
+      </decorator>
    </extension>
 
 </plugin>

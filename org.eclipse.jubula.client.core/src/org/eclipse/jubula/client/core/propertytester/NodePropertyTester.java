@@ -64,7 +64,7 @@ public class NodePropertyTester extends AbstractBooleanPropertyTester {
      *            The node for which to check the task id.
      * @return whether a task id is set or not
      */
-    private boolean hasTaskIdSet(IPersistentObject po) {
+    public static boolean hasTaskIdSet(IPersistentObject po) {
         if (po instanceof INodePO) {
             INodePO node = (INodePO) po;
             return StringUtils.isNotEmpty(getTaskIdforNode(node));
