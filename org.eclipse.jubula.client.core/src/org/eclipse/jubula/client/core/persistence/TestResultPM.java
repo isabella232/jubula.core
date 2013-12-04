@@ -33,6 +33,8 @@ import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -42,6 +44,9 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  * @created Mar 3, 2010
  */
 public class TestResultPM {
+    
+    /** the logger */
+    private static Logger log = LoggerFactory.getLogger(TestResultPM.class);
     
     /**
      * hide
@@ -60,6 +65,7 @@ public class TestResultPM {
             final EntityTransaction tx = persistor.getTransaction(session);
             persistor.commitTransaction(session, tx);
         } catch (PMException e) {
+            log.error(Messages.StoringOfTestResultsFailed, e);
             throw new JBFatalException(Messages.StoringOfTestResultsFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
         } catch (ProjectDeletedException e) {
@@ -91,6 +97,7 @@ public class TestResultPM {
             
             persistor.commitTransaction(session, tx);
         } catch (PMException e) {
+            log.error(Messages.DeleteTestresultElementFailed, e);
             throw new JBFatalException(Messages.DeleteTestresultElementFailed, 
                     e, MessageIDs.E_DATABASE_GENERAL);
         } catch (ProjectDeletedException e) {
