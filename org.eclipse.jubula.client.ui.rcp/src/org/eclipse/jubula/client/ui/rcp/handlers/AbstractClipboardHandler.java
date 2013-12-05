@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -31,17 +32,13 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  */
 public abstract class AbstractClipboardHandler extends AbstractOpenHandler
         implements ClipboardOwner {
-    /**
-     * <code>OBJECT_TYPE_TESTCASE</code>
-     */
+    /** <code>OBJECT_TYPE_TESTCASE</code> */
     protected static final String OBJECT_TYPE_TESTCASE = "tc"; //$NON-NLS-1$
-    /**
-     * <code>OBJECT_TYPE_TESTSUITE</code>
-     */
+    /** <code>OBJECT_TYPE_TESTSUITE</code> */
     protected static final String OBJECT_TYPE_TESTSUITE = "ts"; //$NON-NLS-1$
-    /**
-     * <code>SPLIT_TOKEN</code>
-     */
+    /** <code>OBJECT_TYPE_TESTJOB</code> */
+    protected static final String OBJECT_TYPE_TESTJOB = "tj"; //$NON-NLS-1$
+    /** <code>SPLIT_TOKEN</code> */
     protected static final String SPLIT_TOKEN = StringConstants.EQUALS_SIGN;
 
     /**
@@ -61,6 +58,8 @@ public abstract class AbstractClipboardHandler extends AbstractOpenHandler
             sb.append(OBJECT_TYPE_TESTCASE);
         } else if (node instanceof ITestSuitePO) {
             sb.append(OBJECT_TYPE_TESTSUITE);
+        } else if (node instanceof ITestJobPO) {
+            sb.append(OBJECT_TYPE_TESTJOB);
         }
         sb.append(SPLIT_TOKEN);
         sb.append(node.getGuid());

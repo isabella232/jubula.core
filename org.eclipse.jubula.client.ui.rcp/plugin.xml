@@ -3743,6 +3743,7 @@
             <or>
               <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
             </or>
           </iterate>
         </and>
