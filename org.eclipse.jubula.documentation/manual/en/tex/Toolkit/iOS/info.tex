@@ -1,0 +1,65 @@
+\index{AUT Agent!iOS}
+\index{iOS!AUT Agent}
+\index{AUT Configuration!iOS}
+\index{iOS!AUT Configuration}
+\index{Start!iOS}
+\index{iOS!Start AUT}
+\index{Object Mapping!iOS}
+\index{iOS!Object Mapping}
+
+\subsubsection{Connecting to the \gdagent{}}
+The \gdagent{} does not need to be started on the simulator or device for testing iOS \gdauts{}. It does, however, need to be started to ensure that the communication can take place.  The actual communication with the simulator or the device is accomplished using a port that is defined in the test \gdaut{} \bxpref{ToolkitiOSSetup} and configured in the \gdaut{} configuration \bxpref{TasksiOSAUTConfig}.
+
+\bxtipp{Since the place where the \gdagent{} is started is not important, we recommend starting it on localhost.}
+
+\subsubsection{Configuring an iOS \gdaut{}}
+\label{TasksiOSAUTConfig}
+\begin{itemize}
+\item Follow the steps to enter the \gdaut{} configuration name, hostname and \gdaut{} ID as documented earlier in the section on configuring Java \gdauts{} \bxpref{TasksConfigureJavaAUT}.
+\item The working directory currently has no effect.
+\item Enter the iOS Device Host: this is the address of the device or simulator in the network that the \gdaut{} will run on. The host will either be a hostname or an IP address. 
+\item Enter the iOS Device Port: this is the port number that is available for communication between the \gdaut{} and the \ite{}. It is defined as a part of the setup of the \gdaut{}. If no port number has been specified in the \gdaut{}, the default of 11022 will be used, and you should enter this number. 
+\end{itemize}
+\bxwarn{Starting iOS \gdauts{} with \bxname{autrun} is not supported.}
+
+\subsubsection{Starting and connecting to iOS \gdauts{}}
+Unlike other \gdauts{}, iOS \gdauts{} are not \textit{started} via the \ite{}, nor by the testexec. Instead, the \gdaut{} must have been made testable \bxpref{ToolkitiOSSetup}, had component naming added \bxpref{ToolkitiOSDFT} and also be started on the simulator or device that it will be tested on. 
+Once these prerequisites have been completed, you can connect to the \gdaut{} from the \ite{} by selecting the \gdaut{} from the list in the \bxcaption{Start \gdaut{}} button on the toolbar. This does not start the \gdaut{} but connects to it. 
+
+\subsubsection{Object mapping in iOS \gdauts{}}
+Object mapping for iOS \gdauts{} is done by tapping the component or clicking it if you are working on a simulator.
+
+There are three types of tap you can use, with different effects:
+\begin{description}
+\item [Single tap:]{This collects the component directly underneath your finger or the mouse cursor.}
+\item [Double tap:]{This collects the component directly underneath your finger or the mouse cursor, plus its direct parent. For example, if you want to collect a OK button, but you click on the ''OK'' label, then a double tap will collect both the label and the button. Double taps are recommended for collecting any components that have text on them -- a single tap may only collect the label, whereas a double-tap will collect the label and the component it is in.}
+\item [Long tap:]{This collects the component directly underneath your finger or the mouse cursor, plus all of its parents. This is useful if you want to collect disabled components (which cannot be collected with a single tap), or if you want to address components that are ''hard to reach'' with a single or double tap.}
+\end{description}
+
+\bxtipp{The \gdaut{} functionality is deactivated during object mapping -- clicks on buttons won't close popovers, for example. To move to another screen, you must stop the \gdomm{}, switch, and then restart the \gdomm{} to continue mapping.}
+
+\textbf{Addressing the correct component in your tests}\\
+\label{ToolkitiOSCorrectComponent}
+One of the specifics of iOS \gdauts{} is that individual components such as labels on buttons are separately collectible. You can specify tests that will tap e.g. the label on a button, but this may not necessarily result in the button itself being tapped. In order to tap the button, it may be necessary to ensure that the action you perform is actually sent to the button, and not the label. 
+
+Another example of this is when dealing with components such as lists and tabbed controls. You can map the individual items within the list or the tabbed control in order to check them or tap them, but it is also possible to map the whole tabbed control or list in order to address the items within the component based on their content or index. Depending on what you want to test, you may want one option or the other. As a general rule, aiming to address the higher-level component (the list instead of the button, for example), is usually preferable. 
+
+
+The different types of object mapping gestures (see above) ensure that you can always see which components are available. Part of your test design will involve identifying the component you want to test and choosing the correct technical name to map to your component name. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

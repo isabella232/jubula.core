@@ -1,0 +1,11 @@
+\index{Design for Testability!iOS}
+\index{iOS!Naming components}
+\index{iOS!Accessibility ID}
+\index{iOS!Design For Testability}
+\index{iOS!Text retrieval support}
+
+\subsubsection{Naming components}
+To be able to robustly test iOS \gdauts{}, we highly recommend naming the components in your \gdaut{}. The name that is used as a part of the object recognition is the \bxname{accessibility identifier}. This is a variable that can be specified for each UI component in an iOS \gdaut{}. It is language-independent and is designed for use in automated tests. We recommend using unique names throughout the \gdaut{}. 
+
+\subsubsection{Adding support for text retrieval}
+If you use custom UI views and cannot access the text contained in them during a test, then you can implement the UITestable protocol, which provides a method allowing the remote control to read the text from such controls. 

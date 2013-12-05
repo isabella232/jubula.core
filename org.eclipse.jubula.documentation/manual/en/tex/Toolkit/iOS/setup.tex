@@ -1,0 +1,107 @@
+\index{iOS}
+\index{AUT!iOS}
+\index{iOS AUT's}
+\index{iOS!Remote Control}
+
+If you want to test an \bxname{iOS} application, you have to prepare the \gdaut{} in order to make it testable. 
+
+\bxtipp{This preparation is designed to be undertaken by a developer who has access to the \gdaut{}'s source code as well as knowledge of developing for iOS using Objective-C and Xcode. These instructions assume you are using Xcode 4. For Xcode 3 please adapt the instructions accordingly.}
+
+\subsubsection{Add the library to your project files}
+
+The first step is to link the \bxname{librc.mobile.ios.nativ} static library and its header file directly 
+into your \bxname{iOS} application. This lets your project and thereby your \bxname{iOS} application be run as a testable \gdaut{}. 
+
+\begin{enumerate}
+\item Locate the \bxname{development/iOS-support.zip} file in the installation directory in Finder.
+\item Unzip it and drag all of its content into the Project Navigator.
+\end{enumerate}
+
+\subsubsection{Create a Testing Target}
+
+We strongly recommend that you create a \textbf{separate target} which contains and uses all the necessary modifications for your \gdaut{} to be testable. 
+Once you have created a second target for the testing-enabled version of your \gdaut{} to test, you can begin testing simply by running this second target. Having a separate target also ensures that no testing code will be released into the productive version of your app. 
+
+The new target will start as a duplicate of your old target. To create the duplicated target:
+\begin{enumerate}
+\item Select the project file for your app in the Project Navigator.
+\item From there, CTRL+click the target for your app and select the \bxcaption{Duplicate} option. Xcode may ask you if you want your copy to be for a different iOS device, which you don't, so choose \bxcaption{Duplicate Only}. 
+\item The new target will be created. We suggest renaming it, e.g. to  \bxname{\gd{} or \jb{} Tests}.
+\item You can  also (optionally) rename the new target from the default \bxname{MyApp copy} to something more meaningful e.g.  \bxname{MyApp (\gd{} or \jb{} Tests)} 
+by selecting the \bxcaption{Build Settings} tab and searching for \bxcaption{Product Name}, then changing the value to a new name.
+\end{enumerate}
+
+
+\subsubsection{Configure the Testing Target}
+
+Now that you have a target for your tests, add the tests to that target. 
+\begin{enumerate}
+\item  With the project settings still selected in the Project Navigator, and the new integration tests target selected in the project settings, select the \bxcaption{Build Phases} tab. 
+\item Under the \bxcaption{Link Binary With Libraries} section, press the \bxcaption{+} button. 
+\item In the sheet that appears, select \bxname{CFNetwork.framework} and click \bxcaption{Add}.
+\item Then click \bxcaption{Add other...} in the lower left corner and locate and select the library \bxname{librc.mobile.ios.nativ.a} and click \bxcaption{Open}.
+\item Next, make sure that the  \bxname{UIRemoteControl.h} header file can be accessed. To do this, add the \bxname{UIRemoteControl.h} to the \bxcaption{Header Search Paths} 
+build setting. Start by selecting the \bxcaption{Build Settings} tab of the project settings, and from there, use the filter control to find the 
+\bxcaption{Header Search Paths} setting. 
+\item Double click the value, and add the file \bxname{UIRemoteControl.h} to the list. If it's not there already, you should 
+add the \$(inherited) entry as the first entry in this list.
+\item  The iOS support takes advantage of Objective C's ability to add categories to an object, but this isn't enabled for static libraries by default. 
+To enable this, add the -ObjC and -all\_load flags to the \bxcaption{Other Linker Flags} build settings.
+\item Finally, add a preprocessor flag to the testing target so that you can conditionally include code. This will help to make sure that none of the 
+testing code makes it into the production app. Call the flag \bxshell{RUN\_FUNCTIONAL\_TESTS} and add it under the \bxcaption{Preprocessor Macros}. Again, make 
+sure the \$(inherited) entry is first in the list.
+\end{enumerate}
+
+\subsubsection{Add hook into the \gdaut{}}
+
+Finally, the app needs a hook so that it actually allows the attachment and running of the tests when executing the Tests target. 
+This is achieved by using the  \bxname{RUN\_FUNCTIONAL\_TESTS} macro that was defined in the preceding section. This \bxcaption{preprocessor macro} is only defined in 
+the testing target, so the remote controlling won't be possible in the regular target. To allow your \gdaut{} to be remote controlled, add the 
+following code to your application delegate:
+
+\begin{verbatim}
+...
+#if RUN_FUNCTIONAL_TESTS
+#import "UIRemoteControl.h"
+#endif
+...
+\end{verbatim}
+
+and the following code to the end of its - (void)applicationDidFinishLaunching[withOptions]: method
+
+\begin{verbatim}
+...
+#if RUN_FUNCTIONAL_TESTS
+    [UIRemoteControl attach];
+    // alternatively you can
+    // allow the UIRemoteControl 
+    // to use a specific port number 
+    // on the iOS device 
+    // by using:
+    // 
+    // [UIRemoteControl attach:<portNo>];
+    // 
+    // this is necessary
+    // e.g. when you're running 
+    // different AUTs in parallel on 
+    // the same iOS device
+#endif
+...
+\end{verbatim}
+
+You also have to make sure that your application delegate provides a UIWindow property called \bxname{window} which contains the window used to present the app's visual content on the device's main screen.
+
+\begin{verbatim}
+...
+#if RUN_FUNCTIONAL_TESTS
+    @property(nonatomic, retain) 
+    UIWindow *window
+#endif
+...
+\end{verbatim}
+
+Everything should now be configured. When you run the \gdaut{} tests target it will launch your app and allow the \ite{} to remotely attach (on the port specified, or on 11022 if none is entered) and execute tests.
+
+\bxwarn{If you do not follow the above steps, the \gdagent{} will not be able to communicate with your \gdaut{}!}
+
+This documentation is derived from the KIF installation documentation (http://github.com/square/KIF) as we make use of KIF internally.
