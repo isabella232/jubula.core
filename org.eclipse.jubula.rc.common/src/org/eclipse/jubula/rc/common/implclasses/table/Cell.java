@@ -20,16 +20,16 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  */
 public class Cell {
     
-    /** The row of the cell. */
+    /** The zero based row of the cell. */
     private int m_row;
     
-    /** The column of the cell. */
+    /** The zero based column of the cell. */
     private int m_col;
     
     /**
      * Creates a new Cell instance.
-     * @param row The row of the cell.
-     * @param col The column of the cell.
+     * @param row The zero based row of the cell.
+     * @param col The zero based column of the cell.
      */
     public Cell(int row, int col) {
         m_row = row;
@@ -37,14 +37,14 @@ public class Cell {
     }
     
     /**
-     * @return The column of the cell.
+     * @return The zero based column of the cell.
      */
     public int getCol() {
         return m_col;
     }
     
     /**
-     * @return The row of the cell.
+     * @return The zero based row of the cell.
      */
     public int getRow() {
         return m_row;
