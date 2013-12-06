@@ -686,12 +686,11 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             setValid(false);
             return;
         }
-        if (m_trackChangesTimespanSelection.isEnabled() 
-                && !m_trackChangesSignature.getText().equals("")
-                && EnvironmentUtils.
-                    getProcessOrSystemProperty(m_trackChangesSignature.
-                                                getText())
-                   == null) {
+        final String trackChangesSignature = m_trackChangesSignature.getText();
+        if (m_trackChangesTimespanSelection.isEnabled()
+            && !StringUtils.isEmpty(trackChangesSignature)
+            && EnvironmentUtils
+                .getProcessOrSystemProperty(trackChangesSignature) == null) {
             setErrorMessage(Messages.PrefPageTrackChangesSignatureInvalid);
             setValid(false);
             return;

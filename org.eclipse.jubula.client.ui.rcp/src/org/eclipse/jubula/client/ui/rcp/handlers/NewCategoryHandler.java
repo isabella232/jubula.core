@@ -105,8 +105,7 @@ public class NewCategoryHandler extends AbstractNewHandler {
         if (Window.OK == dialog.getReturnCode()) {
             String categoryName = dialog.getName();
             ICategoryPO category = NodeMaker.createCategoryPO(categoryName);
-            NodePM.addAndPersistChildNode(categoryParent, category, null, NodePM
-                .getCmdHandleChild(categoryParent, category));
+            NodePM.addAndPersistChildNode(categoryParent, category, null);
             DataEventDispatcher.getInstance().fireDataChangedListener(category, 
                 DataState.Added, UpdateState.all);
             if (activePart instanceof TestCaseBrowser) {

@@ -294,8 +294,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
             ISpecTestCasePO recSpecTestCase = NodeMaker
                     .createSpecTestCasePO(tcName);
             try {
-                NodePM.addAndPersistChildNode(parentPO, recSpecTestCase, null,
-                        NodePM.getCmdHandleChild(parentPO, recSpecTestCase));
+                NodePM.addAndPersistChildNode(parentPO, recSpecTestCase, null);
                 DataEventDispatcher.getInstance().fireDataChangedListener(
                         recSpecTestCase, DataState.Added, UpdateState.all);
                 editor = (TestCaseEditor)AbstractOpenHandler

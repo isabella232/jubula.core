@@ -22,7 +22,6 @@ import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.NodePM.AbstractCmdHandleChild;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -181,12 +180,10 @@ public class TestCaseBP  extends NodeBP {
         
         Integer pos = position;
         ISpecTestCasePO specTC = NodeMaker.createSpecTestCasePO(name);
-        final AbstractCmdHandleChild cmdHandleChild = NodePM
-            .getCmdHandleChild(parent, specTC);
         if (pos != null && pos < 0) {
             pos = null;
         }
-        NodePM.addAndPersistChildNode(parent, specTC, pos, cmdHandleChild);
+        NodePM.addAndPersistChildNode(parent, specTC, pos);
         return specTC;
     }
 

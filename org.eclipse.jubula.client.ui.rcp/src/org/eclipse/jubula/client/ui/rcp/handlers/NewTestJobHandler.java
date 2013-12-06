@@ -23,7 +23,6 @@ import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.NodePM.AbstractCmdHandleChild;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -62,9 +61,7 @@ public class NewTestJobHandler extends AbstractNewHandler {
         }
         try {
             ITestJobPO testJob = NodeMaker.createTestJobPO(dialog.getName());
-            AbstractCmdHandleChild cmd = NodePM.getCmdHandleChild(parent,
-                    testJob);
-            NodePM.addAndPersistChildNode(parent, testJob, null, cmd);
+            NodePM.addAndPersistChildNode(parent, testJob, null);
             DataEventDispatcher.getInstance().fireDataChangedListener(testJob,
                     DataState.Added, UpdateState.all);
         } catch (PMException e) {

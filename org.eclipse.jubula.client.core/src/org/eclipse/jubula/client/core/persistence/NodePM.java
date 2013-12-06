@@ -326,8 +326,6 @@ public class NodePM extends PersistenceManager {
      *            child to insert
      * @param pos
      *            where to insert the child. if null insert after end
-     * @param handler
-     *            Command for adding and removing a child
      * @throws PMSaveException
      *             in case of DB problem or refresh errors
      * @throws PMAlreadyLockedException in case of locked parent
@@ -336,10 +334,11 @@ public class NodePM extends PersistenceManager {
      * instance
      */
     public static void addAndPersistChildNode(INodePO parent, INodePO child,
-        Integer pos, AbstractCmdHandleChild handler)
+        Integer pos)
         throws PMSaveException, PMAlreadyLockedException, PMException, 
         ProjectDeletedException {
-        processAndPersistChildNode(parent, child, pos, handler, true);
+        processAndPersistChildNode(parent, child, pos,
+            getCmdHandleChild(parent, child), true);
     }
 
     /**
@@ -482,9 +481,7 @@ public class NodePM extends PersistenceManager {
         for (INodePO specObj : specObjList) {
             cat.addNode(specObj);
         }
-        AbstractCmdHandleChild handler = getCmdHandleChild(
-            currentProject, cat);
-        addAndPersistChildNode(currentProject, cat, null, handler);
+        addAndPersistChildNode(currentProject, cat, null);
     }
 
     /**

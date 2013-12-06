@@ -24,7 +24,6 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.NodePM.AbstractCmdHandleChild;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -67,9 +66,7 @@ public class NewTestSuiteHandler extends AbstractNewHandler {
             ITestSuitePO testSuite = NodeMaker.createTestSuitePO(dialog
                     .getName());
             setDefaultValuesToTestSuite(testSuite);
-            AbstractCmdHandleChild cmd = NodePM.getCmdHandleChild(finalTSParent,
-                    testSuite);
-            NodePM.addAndPersistChildNode(finalTSParent, testSuite, null, cmd);
+            NodePM.addAndPersistChildNode(finalTSParent, testSuite, null);
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     testSuite, DataState.Added, UpdateState.all);
         } catch (PMException e) {
