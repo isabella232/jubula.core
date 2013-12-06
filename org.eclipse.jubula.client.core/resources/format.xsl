@@ -8,59 +8,59 @@
 				<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>	
 				<style> 
 				body {
-					font-family:Arial;
+					font-family:monospace;
 				}
 				
 				/* Turn off list bullets */
-				ul.htmlReport li {
+				ul.report li {
 					list-style: none;
 				}
 
-				ul.htmlReport,ul.htmlReport ul,ul.htmlReport li {
+				ul.report,ul.report ul,ul.report li {
 					margin: 0;
 					padding: 0;
 				}
 
 				/* This controls the indent for each sublist */
-				ul.htmlReport ul {
+				ul.report ul {
 					padding-left: 14px;
 				}
 
 				@media screen { /* Provide space for our own "bullet" inside the link */
-					ul.htmlReport li a {
+					ul.report li a {
 						padding-left: 14px;
 						text-decoration: none;
 					}
 					/* Show "bullets" in the links, depending on the class of the
 				     LI that the link's in */
-					ul.htmlReport li.htmlReportOpen a {
+					ul.report li.open a {
 						background: url(data:image/gif;base64,R0lGODlhCwALAPcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAP8ALAAAAAALAAsAAAgpAP8BGEiQ4D+BBxMeBLBQYUKGCB1GZFiQYkOJECE6zChxYkWDHUN2DAgAOw==) center left no-repeat;
 					}
-					ul.htmlReport li.htmlReportClosed a {
+					ul.report li.closed a {
 						background: url(data:image/gif;base64,R0lGODlhCwALAPcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAP8ALAAAAAALAAsAAAgqAP8BGEiQ4D+BBxMeBLAwIcOGCCFGZFiQosSHEx1qjKhwYkWDHUOKVBgQADs=) center left no-repeat;
 					}
 				}
 
 				@media print { /* Disable link decoration */
-					ul.htmlReport li a {
+					ul.report li a {
 						text-decoration: none;
 					}
 					/* Show "content-bullets" in the links, depending on the class of the
 				    LI that the link's in */
-					ul.htmlReport  li.htmlReportOpen a[href ^="#"] big :before {
+					ul.report  li.open a[href ^="#"] big :before {
 						content: "[\2013] ";
 					}
-					ul.htmlReport li.htmlReportClosed a[href ^="#"] big :before {
+					ul.report li.closed a[href ^="#"] big :before {
 						content: "[+] ";
 					}
 				}
 
 				/* Actually show and hide sublists */
-				ul.htmlReport li.htmlReportOpen ul {
+				ul.report li.open ul {
 					display: block;
 				}
 
-				ul.htmlReport li.htmlReportClosed ul {
+				ul.report li.closed ul {
 					display: none;
 				}
 				</style>
@@ -68,11 +68,11 @@
 				    function toggle(element) {
 				    var sibling = element.nextSibling;
 				    var parent = element.parentNode;
-				    if (parent.className =='htmlReportOpen') {
-						parent.className = 'htmlReportClosed';
+				    if (parent.className =='open') {
+						parent.className = 'closed';
 						if (sibling) sibling.style.display = 'none';
 				    } else {
-						parent.className = 'htmlReportOpen';
+						parent.className = 'open';
 						if (sibling) sibling.style.display = 'block';
 				    }
 				   }
@@ -96,78 +96,57 @@
 			</HEAD>
 			<body>
 				<table border="0" width="95%" align="center"><tr><td>
-					<h2>
-						Test Result Report
+					<h1>Test Result Report
 						<xsl:if test="report/@style">
 							(<xsl:value-of select="report/@style"/>)
 						</xsl:if>
-					
-					</h2>
+					</h1>
 					<table border="0" width="100%">
 						<tr bgcolor="#DDDDDD">
-							<th colspan="2" align="left">Project Information
-							</th>
+							<th colspan="2" align="left"><h2>Project Information</h2></th>
 						</tr>
 						<tr>
 							<td align="left" width="200">Name</td>
-							<td><xsl:value-of select="report/project/name"/>
-							</td>
+							<td><xsl:value-of select="report/project/name"/></td>
 						</tr>
 						<tr>
 							<td align="left" width="200">Version</td>
-							<td><xsl:value-of select="report/project/version"/>
-							</td>
+							<td><xsl:value-of select="report/project/version"/></td>
 						</tr>
 						<tr bgcolor="#DDDDDD">
-							<th colspan="2" align="left">Execution Information
-							</th>
+							<th colspan="2" align="left"><h2>Execution Information</h2></th>
 						</tr>
 						<tr>
 							<td align="left" width="200">Start Time</td>
-							<td><xsl:value-of select="report/project/test-start"/>
-							</td>
+							<td><xsl:value-of select="report/project/test-start"/></td>
 						</tr>
 						<tr>
 							<td align="left" width="200">End Time</td>
-							<td><xsl:value-of select="report/project/test-end"/>
-								
-							</td>
+							<td><xsl:value-of select="report/project/test-end"/></td>
 						</tr>
 						<tr>
-							<td align="left" width="200">Duration</td>
-							<td><xsl:value-of select="report/project/test-length"/>
-								
-							</td>
+							<td align="left" width="200">Duration (hh:mm:ss)</td>
+							<td><xsl:value-of select="report/project/test-length"/></td>
 						</tr>
 						<tr>
 							<td align="left" width="200">Expected Test Steps</td>
-							<td><xsl:value-of select="report/project/expectedNumSteps"/>
-								
-							</td>
+							<td><xsl:value-of select="report/project/expectedNumSteps"/></td>
 						</tr>
 						<tr>
 							<td align="left" width="200">Executed Test Steps</td>
-							<td><xsl:value-of select="report/project/numStepsTested"/>
-								
-							</td>
+							<td><xsl:value-of select="report/project/numStepsTested"/></td>
 						</tr>
 						<tr>
 							<td align="left" width="200">Event Handler Test Steps</td>
-							<td><xsl:value-of select="report/project/numEventHandlerSteps"/>
-								
-							</td>
+							<td><xsl:value-of select="report/project/numEventHandlerSteps"/></td>
 						</tr>
 						<tr>
 							<td align="left" width="200">Failed Test Steps</td>
-							<td><xsl:value-of select="report/project/numFailedSteps"/>
-								
-							</td>
+							<td><xsl:value-of select="report/project/numFailedSteps"/></td>
 						</tr>
 						<tr>
 							<td align="left" width="200">Language</td>
-							<td><xsl:value-of select="report/project/language"/>
-								
-							</td>
+							<td><xsl:value-of select="report/project/language"/></td>
 						</tr>
 						<xsl:if test="report/project/error-message != 0">
 						
@@ -190,22 +169,21 @@
 	</xsl:template>
 	
 	<xsl:template match="testsuite">
-		<br></br>
 		<table border="0" width="100%">
 			<xsl:choose>
 				<xsl:when test="status = 1">
 					<tr bgcolor="lightgreen">
-						<th colspan="2" align="left">Test Suite Information</th>
+						<th colspan="2" align="left"><h2>Test Suite Information</h2></th>
 					</tr>
 				</xsl:when>
 				<xsl:when test="status = 6">
 					<tr bgcolor="lightgray">
-						<th colspan="2" align="left">Test Suite Information</th>
+						<th colspan="2" align="left"><h2>Test Suite Information</h2></th>
 					</tr>
 				</xsl:when>
 				<xsl:otherwise>
 					<tr bgcolor="#DD0000">
-						<th colspan="2" align="left">Test Suite Information</th>
+						<th colspan="2" align="left"><h2>Test Suite Information</h2></th>
 					</tr>
 				</xsl:otherwise>
 			</xsl:choose>
@@ -232,18 +210,16 @@
 			<xsl:apply-templates select="aut"/>
 		</table>
 		
-		<br></br>
 		<table border="0">
 			<tr bgcolor="#DDDDDD">
-				<th colspan="2" align="left"> Execution Stack
-				</th>
+				<th colspan="2" align="left"><h2>Execution Stack</h2></th>
 			</tr>
 			<tr>
 				<td>
-					<ul class="htmlReport">
+					<ul class="report">
 						<xsl:choose>
 							<xsl:when test="status != 2 and status != 3 and status != 5">
-								<LI class="htmlReportClosed" nowrap="true">
+								<LI class="closed" nowrap="true">
 								<A HREF="#testsuite" onclick="toggle(this)">
 									<xsl:call-template name="writeColored">
 										<!-- quoted String -->
@@ -258,7 +234,7 @@
 								</LI>
 							</xsl:when>
 							<xsl:otherwise>
-								<LI class="htmlReportOpen" nowrap="true">
+								<LI class="open" nowrap="true">
 								<A HREF="#testsuite" onclick="toggle(this)">
 									<xsl:call-template name="writeColored">
 										<!-- quoted String -->
@@ -280,8 +256,8 @@
 	</xsl:template>
 	
 	<xsl:template match="aut">
-		<tr>
-			<th colspan="2" align="left"><br></br>Application Under Test</th>
+		<tr bgcolor="#DDDDDD">
+			<th colspan="2" align="left"><h2>Application Under Test (AUT) Information</h2></th>
 		</tr>
 		<tr>
 			<td>Name</td>
@@ -324,7 +300,7 @@
 		<xsl:choose>
 			<xsl:when test="status != 2 and status != 3 and status != 5">
 				
-				<LI class="htmlReportClosed" nowrap="true">
+				<LI class="closed" nowrap="true">
 				<A HREF="#testcase" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
@@ -343,7 +319,7 @@
 				</LI>
 			</xsl:when>
 			<xsl:otherwise>
-				<LI class="htmlReportOpen" nowrap="true">
+				<LI class="open" nowrap="true">
 				<A HREF="#testcase" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
@@ -368,7 +344,7 @@
 	<xsl:template match="step">
 		<xsl:choose>
 			<xsl:when test="status != 2 and status != 3 and status != 5 and status != 9">
-				<li class="htmlReportClosed" nowrap="true">
+				<li class="closed" nowrap="true">
 				<A HREF="#step" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
@@ -407,7 +383,7 @@
 				</li>
 			</xsl:when>
 			<xsl:otherwise>
-				<li class="htmlReportOpen" nowrap="true">
+				<li class="open" nowrap="true">
 				<A HREF="#step" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
@@ -493,7 +469,7 @@
             <tr><td colspan="3"><hr/></td></tr>
             <tr><th colspan="3">Screenshot</th></tr>
             <tr>
-              <td colspan="3">
+              <td colspan="3" align="center">
                 <img width="400" onclick="toggleSize(this, 400)">
                   <xsl:attribute name="src">data:image/png;base64,<xsl:value-of select="screenshot"/></xsl:attribute>
                 </img>
@@ -506,7 +482,7 @@
 	<xsl:template match="eventhandler">
 		<xsl:choose>
 			<xsl:when test="status != 2 and status != 3 and status != 5">
-				<li class="htmlReportClosed" nowrap="true">
+				<li class="closed" nowrap="true">
 				<A HREF="#eventhandler" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
@@ -534,7 +510,7 @@
 				</li>
 			</xsl:when>
 			<xsl:otherwise>
-				<li class="htmlReportOpen" nowrap="true">
+				<li class="open" nowrap="true">
 				<A HREF="#eventhandler" onclick="toggle(this)">
 					<xsl:call-template name="writeColored">
 						<!-- quoted String -->
