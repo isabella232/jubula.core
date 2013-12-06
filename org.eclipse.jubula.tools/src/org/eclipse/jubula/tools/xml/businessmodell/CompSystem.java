@@ -109,9 +109,9 @@ public class CompSystem {
             m_toolkitDescriptors = new HashMap();
         }
         // FIXME Achim only hard coded EventTypes so far
-        m_eventTypes.put(TestErrorEvent.ID.IMPL_CLASS_ACTION_ERROR, 
+        m_eventTypes.put(TestErrorEvent.ID.ACTION_ERROR, 
             new Integer(7));
-        m_eventTypes.put(TestErrorEvent.ID.COMPONENT_NOT_FOUND_ERROR, 
+        m_eventTypes.put(TestErrorEvent.ID.COMPONENT_NOT_FOUND, 
             new Integer(7));
         m_eventTypes.put(TestErrorEvent.ID.CONFIGURATION_ERROR, new Integer(1));
         m_eventTypes.put(TestErrorEvent.ID.VERIFY_FAILED, new Integer(1));

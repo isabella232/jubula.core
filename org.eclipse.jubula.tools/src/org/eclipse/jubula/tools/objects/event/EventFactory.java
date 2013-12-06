@@ -77,7 +77,7 @@ public class EventFactory {
      * @return The event.
      */
     public static TestErrorEvent createActionError() {
-        return new TestErrorEvent(TestErrorEvent.ID.IMPL_CLASS_ACTION_ERROR);
+        return new TestErrorEvent(TestErrorEvent.ID.ACTION_ERROR);
     }
 
     /**
@@ -107,7 +107,7 @@ public class EventFactory {
     public static TestErrorEvent createActionError(String descriptionKey,
             Object[] parameter) {
         TestErrorEvent event = new TestErrorEvent(
-                TestErrorEvent.ID.IMPL_CLASS_ACTION_ERROR);
+                TestErrorEvent.ID.ACTION_ERROR);
         event.addProp(TestErrorEvent.Property.DESCRIPTION_KEY, descriptionKey);
         event.addProp(TestErrorEvent.Property.PARAMETER_KEY, parameter);
         return event;
@@ -176,13 +176,13 @@ public class EventFactory {
      * @return A new error event with an action error ID.
      */
     public static TestErrorEvent createImplClassErrorEvent() {
-        return new TestErrorEvent(TestErrorEvent.ID.IMPL_CLASS_ACTION_ERROR);
+        return new TestErrorEvent(TestErrorEvent.ID.ACTION_ERROR);
     }
 
     /**
-     * @return a new error event with the ID COMPONENT_NOT_FOUND_ERROR.
+     * @return a new error event with the ID COMPONENT_NOT_FOUND.
      */
     public static TestErrorEvent createComponentNotFoundErrorEvent() {
-        return new TestErrorEvent(TestErrorEvent.ID.COMPONENT_NOT_FOUND_ERROR);
+        return new TestErrorEvent(TestErrorEvent.ID.COMPONENT_NOT_FOUND);
     }
 }

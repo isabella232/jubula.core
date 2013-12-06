@@ -126,14 +126,14 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
         static {
             //FIXME NLS
             eventIdReverseLookup.put(I18n.getString(
-                    TestErrorEvent.ID.COMPONENT_NOT_FOUND_ERROR), 
-                TestErrorEvent.ID.COMPONENT_NOT_FOUND_ERROR);
+                    TestErrorEvent.ID.COMPONENT_NOT_FOUND), 
+                TestErrorEvent.ID.COMPONENT_NOT_FOUND);
             eventIdReverseLookup.put(I18n.getString(
                     TestErrorEvent.ID.CONFIGURATION_ERROR), 
                 TestErrorEvent.ID.CONFIGURATION_ERROR);
             eventIdReverseLookup.put(I18n.getString(
-                    TestErrorEvent.ID.IMPL_CLASS_ACTION_ERROR), 
-                TestErrorEvent.ID.IMPL_CLASS_ACTION_ERROR);
+                    TestErrorEvent.ID.ACTION_ERROR), 
+                TestErrorEvent.ID.ACTION_ERROR);
             eventIdReverseLookup.put(I18n.getString(
                     TestErrorEvent.ID.VERIFY_FAILED), 
                 TestErrorEvent.ID.VERIFY_FAILED);

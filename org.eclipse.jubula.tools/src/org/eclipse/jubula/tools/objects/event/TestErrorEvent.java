@@ -261,26 +261,23 @@ public class TestErrorEvent {
      */
     public static final class ID {
         /**
-         * If the verification of an implementation class fails. Value:
-         * <code>VerifyFailed</code>.
+         * If the verification of an implementation class fails.
          */
         public static final String VERIFY_FAILED = "TestErrorEvent.VerifyFailed";  //$NON-NLS-1$
         /**
          * If the generic graphics component name cannot be mapped to the real
          * graphics component (e.g. invalid object mapping or non-existing
-         * component). Value: <code>ComponentNotFoundError</code>.
+         * component).
          */
-        public static final String COMPONENT_NOT_FOUND_ERROR = "TestErrorEvent.CompNotFound";  //$NON-NLS-1$
+        public static final String COMPONENT_NOT_FOUND = "TestErrorEvent.CompNotFound";  //$NON-NLS-1$
         /**
          * Any kind of AUT server configuration error, for example:
          * <ul>
          * <li>Unsupported graphics component (no corresponding implementation
          * class found)</li>
-         * <li>Relfection errors when invoking the implementation class method
+         * <li>Reflection errors when invoking the implementation class method
          * </li>
          * </ul>
-         * 
-         * Value: <code>ConfigurationError</code>.
          */
         public static final String CONFIGURATION_ERROR = "TestErrorEvent.Config";  //$NON-NLS-1$
         /**
@@ -291,10 +288,8 @@ public class TestErrorEvent {
          * <li>Illegal graphics component state</li>
          * <li>Robot errors (failed moving or clicking)</li>
          * </ul>
-         * 
-         * Value: <code>ImplClassActionError</code>.
          */
-        public static final String IMPL_CLASS_ACTION_ERROR = "TestErrorEvent.Action";  //$NON-NLS-1$
+        public static final String ACTION_ERROR = "TestErrorEvent.Action";  //$NON-NLS-1$
         
         /** to prevent instantiation */
         private ID() {
