@@ -4,7 +4,7 @@ Each repository you want to work with in your \ite{} must be configured in the w
 \item Select:\\ \bxmenu{Window}{Show View}{Other}\\ from the menu.
 \item In the \bxname{Mylyn} section, select \bxname{Task Repositories} and click \bxcaption{OK}. The \bxname{Task Repositories} View will appear. The Bugzilla Repositories for \gd{} and \jb{} are pre-configured.
 \item In the \bxname{Task Repositories} View, right click and select \bxname{Add Task Repository} from the context menu.
-\item In the dialog that appears, you will see the pre-defined task repositories for the \ite{}. You can select one of these or choose to install a different connector. Depending on the connector you want to use, you may require additional software from Tasktop, or the connector may incur license fees.
+\item In the dialog that appears, you will see the pre-defined task repositories for the \ite{}. You can select one of these or choose to install a different connector. Depending on the connector you want to use, you may require additional software from Tasktop, or the connector may incur license fees. If you want to connect to a HP ALM repository, please follow the instructions below \bxpref{TasksHPALMRepo}.
 \item Once you have selected your connector, click \bxcaption{Next}.
 \item On the following page, you will need to configure the task repository. Please refer to the Mylyn documentation for information on repository configuration. 
 \item Click \bxcaption{Finish} once the repository is configured.
@@ -14,3 +14,16 @@ Each repository you want to work with in your \ite{} must be configured in the w
 
 You will now be able to see items in this repository, open them in the \ite{}, add queries for your workspace and work on tasks from this repository. 
 You will also be able to select this repository in the \gdproject{} properties as the repository for your \gdproject{} \bxpref{TasksALMConfigureProject}. 
+
+\subsubsection{Adding a HP ALM repository to your workspace}
+\label{TasksHPALMRepo}
+\begin{enumerate}
+\item To add the connector for a HP ALM repository, you will have to install and license software from Tasktop.
+\item Once you have a Tasktop account and a license for HP ALM, you can install and use the HP ALM connector.
+\item On the www.tasktop.com website, select \bxname{Downloads} and locate the \bxname{Tasktop Dev} product.
+\item Select the option to download the plugin.
+\item Follow the instructions on the Tasktop website to install the the plugin into your \ite{}. You will require the Tasktop Dev Enterprise for the HP ALM connector. 
+\item When prompted to restart the \ite{} automatically, say \bxname{No} and then restart the \ite{} manually via the menu.
+\item When the \ite{} is restarted, you will be prompted to enter your account details for Tasktop.
+\item Once you have entered your information, you will be able to configure the repository via the \bxname{Task Repositories} view.
+\end{enumerate}
