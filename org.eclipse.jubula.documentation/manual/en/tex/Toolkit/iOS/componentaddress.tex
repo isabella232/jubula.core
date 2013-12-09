@@ -1,0 +1,7 @@
+
+One of the specifics of iOS \gdauts{} is that individual components such as labels on buttons are separately collectible. You can specify tests that will tap e.g. the label on a button, but this may not necessarily result in the button itself being tapped. In order to tap the button, it may be necessary to ensure that the action you perform is actually sent to the button, and not the label. 
+
+Another example of this is when dealing with components such as lists and tabbed controls. You can map the individual items within the list or the tabbed control in order to check them or tap them, but it is also possible to map the whole tabbed control or list in order to address the items within the component based on their content or index. Depending on what you want to test, you may want one option or the other. As a general rule, aiming to address the higher-level component (the list instead of the button, for example), is usually preferable. 
+
+
+The different types of object mapping gestures (see \bxpref{TasksOMiOS}) ensure that you can always see which components are available. Part of your test design will involve identifying the component you want to test and choosing the correct technical name to map to your component name. 

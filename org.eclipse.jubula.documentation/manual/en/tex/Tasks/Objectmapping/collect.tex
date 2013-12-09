@@ -24,25 +24,8 @@ To collect components from the \gdaut{}, you must have:
 
 The status bar will show that the \gdomm{} is active. 
 \item Bring the \gdaut{} into focus by clicking on its titlebar. 
-
-\textbf{For Java \gdauts{}:}
-\begin{itemize}
-\item In the \gdaut{} for which the \gdomm{} was started, move the cursor over components. They will be highlighted with a green border (see \bxfigref{greenborders}). 
-\item To collect a technical name for a component, hover the cursor over the component whose name you want to collect. 
-\item Press \bxkey{Ctrl+Shift+Q}.
-\bxtipp{You can change the key combination for the object mapping in the object mapping preferences \bxpref{TasksPrefsOMM}. This is a good idea if the current key combination has a specific meaning in your \gdaut{}. You can also set the object mapping combination to a mouse click if your \gdaut{} does not accept key combinations.}
-\item If no component is collected, then you may need to write an extension to recognize and test the component. More information on this is available in the Extension Manual.
-\end{itemize}
-
-\textbf{For HTML \gdauts{}:}
-\begin{itemize}
-\item While the \gdomm{} is active, the \gdaut{} cannot be used. 
-\item To collect a technical name for a component, click the component whose name you want to collect. 
-\item If the \gdaut{} you are mapping has been specified as a multi-window \gdaut{} in the \gdaut{} configuration \bxpref{AdvancedAUTConfigHTML}, then you will see an extra button in the \gdomeditor{}. When multiple windows are open, then you can choose between the windows -- the window you choose is the window in which the mapping will take place. You should open the new window before starting the \gdomm{}. You can switch back and forth between windows by selecting them in the \gdomeditor{}. 
-\item You will also need to use the HTML actions to switch between windows in your test. 
-\end{itemize}
-
-\item In the \gdomeditor{}, the technical name for this component will appear in the \bxname{unassigned technical names} category. 
+\item Collect the component as described in the sections below for the specific toolkits.
+ \item In the \gdomeditor{}, the technical name for this component will appear in the \bxname{unassigned technical names} category. 
 \bxtipp{If you have already mapped this component, it will be highlighted in the \gdomeditor{}.}
 \item When you collect a technical name, it is displayed with a colored dot in the \gdomeditor{}. The color of the dot indicates the strength of the component recognition for this component, \bxname{in the current state of the \gdaut{}} \bxpref{TasksOMStateColor}.
 \item Collect all the names you need from the \gdaut{} and then click the \bxname{Stop \gdomm{}} button on the toolbar. 
@@ -50,8 +33,36 @@ The status bar will show that the \gdomm{} is active.
 \item You can now map (assign) the component names you used in your \gdcases{} to the technical names you have collected from the \gdaut{} \bxpref{TasksOMMap}.
 \end{enumerate}
 
-\textbf{For other \gdauts{}}
-Specifics on object mapping for other \gdauts{} can be found in the relevant section in the chapter on toolkit-specific information \bxpref{Toolkit}. 
+\subsubsection{For Java and Win (.NET and WinApps) \gdauts{}:}
+\begin{itemize}
+\item In the \gdaut{} for which the \gdomm{} was started, move the cursor over components. They will be highlighted with a green border (see \bxfigref{greenborders}). 
+\item To collect a technical name for a component, hover the cursor over the component whose name you want to collect. 
+\item Press \bxkey{Ctrl+Shift+Q}.
+\bxtipp{You can change the key combination for the object mapping in the object mapping preferences \bxpref{TasksPrefsOMM}. This is a good idea if the current key combination has a specific meaning in your \gdaut{}. You can also set the object mapping combination to a mouse click if your \gdaut{} does not accept key combinations.}
+\item If you are working with WinApps \gdauts{}, you can also use right-click to collect all visible components on the screen. 
+\item If no component is collected, then you may need to write an extension to recognize and test the component. More information on this is available in the Extension Manual.
+\end{itemize}
+
+\subsubsection{For HTML \gdauts{}:}
+\begin{itemize}
+\item While the \gdomm{} is active, the \gdaut{} cannot be used. 
+\item To collect a technical name for a component, click the component whose name you want to collect. 
+\item If the \gdaut{} you are mapping has been specified as a multi-window \gdaut{} in the \gdaut{} configuration \bxpref{AdvancedAUTConfigHTML}, then you will see an extra button in the \gdomeditor{}. When multiple windows are open, then you can choose between the windows -- the window you choose is the window in which the mapping will take place. You should open the new window before starting the \gdomm{}. You can switch back and forth between windows by selecting them in the \gdomeditor{}. 
+\item You will also need to use the HTML actions to switch between windows in your test. 
+\end{itemize}
+
+\subsubsection{For iOS \gdauts{}:}
+\label{TasksOMiOS}
+Object mapping for iOS \gdauts{} is done by tapping the component or clicking it if you are working on a simulator.
+
+There are three types of tap you can use, with different effects. We recommend reading the information on addressing the correct component in your iOS tests in the section on Toolkits \bxpref{ToolkitiOSCorrectComponent}.
+\begin{description}
+\item [Single tap:]{This collects the component directly underneath your finger or the mouse cursor.}
+\item [Double tap:]{This collects the component directly underneath your finger or the mouse cursor, plus its direct parent. For example, if you want to collect a OK button, but you click on the ''OK'' label, then a double tap will collect both the label and the button. Double taps are recommended for collecting any components that have text on them -- a single tap may only collect the label, whereas a double-tap will collect the label and the component it is in.}
+\item [Long tap:]{This collects the component directly underneath your finger or the mouse cursor, plus all of its parents. This is useful if you want to collect disabled components (which cannot be collected with a single tap), or if you want to address components that are ''hard to reach'' with a single or double tap.}
+\end{description}
+
+\bxtipp{The \gdaut{} functionality is deactivated during object mapping -- clicks on buttons won't close popovers, for example. To move to another screen, you must stop the \gdomm{}, switch, and then restart the \gdomm{} to continue mapping.}
 
 \subsubsection{Understanding the colored dots when collecting component names in the \gdomeditor{}}
 \gdhelpid{objectMapEditorContextId}{Object Mapping}

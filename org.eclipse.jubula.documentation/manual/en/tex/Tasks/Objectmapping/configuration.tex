@@ -9,13 +9,12 @@ In the configuration view in the \gdomeditor{} you can alter the object recognit
 \textbf{Understanding object recognition}\\
 Object recognition during test execution is based on a calculation which takes various factors into account. For some applications, some factors may be more important than others, and you can change their weighting accordingly. 
 
-The factors used in the calculation are:
+The object location is a \bxname{heuristic} process. During test execution, a calculation is made for each component in the \gdaut{} to see how similar it is to the originally mapped component. This calculation is based primarily on the component type -- if you mapped a combo box, only combo boxes will considered. For each component of the same type, the similarity to the original is calculated using weighted properties. The factors used in the calculation are:
 
 \begin{description}
 \item [Name:]{The name of the object within the \gdaut{} code, as given by the developer (if a name was given). }
 \item [Path:]{The route through the \gdaut{} hierarchy to get to this component.}
 \item [Context:]{The components in the vicinity of this component.}
-%\bxtipp{The default value for the generated names penalty is 0. You should leave it at this value \emph{if the developers did not provide names for objects in the source code}.}
 \item[Threshold:]{This determines what percentage value a component in the \gdaut{} must have in order to be considered as the originally mapped component. Components with a value under the threshold are not considered. The component with the highest value above the threshold is chosen during execution.}
 \end{description}
 
@@ -38,4 +37,3 @@ You can change the profile used during test execution using the combo box:
 \end{figure}
 
 \bxwarn{Take care when manually customizing the object mapping settings. You may have test execution problems if you have set the values too strictly, or not strictly enough.}
-

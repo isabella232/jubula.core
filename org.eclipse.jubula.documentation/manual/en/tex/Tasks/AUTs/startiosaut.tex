@@ -1,0 +1,26 @@
+\index{AUT Agent!iOS}
+\index{iOS!AUT Agent}
+\index{AUT Configuration!iOS}
+\index{iOS!AUT Configuration}
+\index{Start!iOS}
+\index{iOS!Start AUT}
+
+
+\subsubsection{Connecting to the \gdagent{}}
+The \gdagent{} does not need to be started on the simulator or device for testing iOS \gdauts{}. It does, however, need to be started to ensure that the communication can take place.  The actual communication with the simulator or the device is accomplished using a port that is defined in the test \gdaut{} \bxpref{ToolkitiOSSetup} and configured in the \gdaut{} configuration \bxpref{TasksiOSAUTConfig}.
+
+\bxtipp{Since the place where the \gdagent{} is started is not important, we recommend starting it on localhost.}
+
+\subsubsection{Configuring an iOS \gdaut{}}
+\label{TasksiOSAUTConfig}
+\begin{itemize}
+\item Enter the basic configuration details as described earlier \bxpref{TasksBasicConfigurationInfo}.
+\item The working directory currently has no effect.
+\item Enter the iOS Device Host: this is the address of the device or simulator in the network that the \gdaut{} will run on. The host will either be a hostname or an IP address. 
+\item Enter the iOS Device Port: this is the port number that is available for communication between the \gdaut{} and the \ite{}. It is defined as a part of the setup of the \gdaut{}. If no port number has been specified in the \gdaut{}, the default of 11022 will be used, and you should enter this number. 
+\end{itemize}
+\bxwarn{Starting iOS \gdauts{} with \bxname{autrun} is not supported.}
+
+\subsubsection{Starting and connecting to iOS \gdauts{}}
+Unlike other \gdauts{}, iOS \gdauts{} are not \textit{started} via the \ite{}, nor by the testexec. Instead, the \gdaut{} must have been made testable \bxpref{ToolkitiOSSetup}, had component naming added \bxpref{ToolkitiOSDFT} and also be started on the simulator or device that it will be tested on. 
+Once these prerequisites have been completed, you can connect to the \gdaut{} from the \ite{} by selecting the \gdaut{} from the list in the \bxcaption{Start \gdaut{}} button on the toolbar. This does not start the \gdaut{} but connects to it. 
