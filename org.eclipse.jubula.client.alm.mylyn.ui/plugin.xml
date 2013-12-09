@@ -132,11 +132,13 @@
             label="Linked Task Decorator"
             lightweight="true"
             location="BOTTOM_RIGHT"
-            objectClass="org.eclipse.jubula.client.core.model.INodePO"
-            state="true">
-         <description>
-            Decorates Test Suites, Test Cases and Test Jobs with an icon indicating that they are connected to a remote Mylyn task.
-         </description>
+            state="false">
+	        <enablement>
+	            <objectClass name="org.eclipse.jubula.client.core.model.INodePO" />
+	        </enablement>
+            <description>
+              Decorates Test Suites, Test Cases and Test Jobs with an icon indicating that they are connected to a remote Mylyn task.
+            </description>
       </decorator>
    </extension>
 
