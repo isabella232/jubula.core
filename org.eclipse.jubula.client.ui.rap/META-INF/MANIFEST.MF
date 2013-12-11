@@ -4,7 +4,7 @@ Bundle-Name: Jubula UI (RAP implementation)
 Bundle-SymbolicName: org.eclipse.jubula.client.ui.rap;singleton:=true
 Bundle-Version: 2.3.0.qualifier
 Bundle-Vendor: Eclipse Jubula
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: ch.qos.logback.core;bundle-version="[1.0.0,2.0.0)",
  ch.qos.logback.classic;bundle-version="[1.0.0,2.0.0)",
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)",

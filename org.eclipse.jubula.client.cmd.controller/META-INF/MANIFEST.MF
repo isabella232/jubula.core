@@ -4,7 +4,7 @@ Bundle-Name: Jubula Headless Client Core Controller
 Bundle-SymbolicName: org.eclipse.jubula.client.cmd.controller;singleton:=true
 Bundle-Version: 2.3.0.qualifier
 Bundle-Vendor: Eclipse Jubula
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.eclipse.jubula.client.cmd.controller,
  org.eclipse.jubula.client.cmd.controller.intern;x-friends:="org.eclipse.jubula.app.cmd"
 Bundle-ClassPath: .
