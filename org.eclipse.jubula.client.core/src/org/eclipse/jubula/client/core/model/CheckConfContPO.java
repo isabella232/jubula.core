@@ -17,6 +17,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
@@ -120,4 +122,12 @@ class CheckConfContPO extends WrapperPO implements ICheckConfContPO {
         return super.getParentProjectId();
     }
     
+    /** {@inheritDoc} */
+    @Override
+    @Id
+    @GeneratedValue
+    // FIXME : workaround as described in http://bugs.eclipse.org/411284#c0
+    public Long getId() {
+        return super.getId();
+    }
 }

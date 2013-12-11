@@ -17,6 +17,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
@@ -58,7 +60,7 @@ public class ExecObjContPO extends WrapperPO implements IExecObjContPO {
      * @return Returns the execObjList.
      */
     // FIXME zeb Persistence (JPA / EclipseLink): although this property is semantically a OneToMany, 
-    //                      it must be execified as ManyToMany in order to avoid
+    //                      it must be specified as ManyToMany in order to avoid
     //                      the problem described on the following pages:
     //                      http://opensource.atlassian.com/projects/Persistence (JPA / EclipseLink)/browse/HHH-1268
     //                      http://stackoverflow.com/questions/4022509/constraint-violation-in-Persistence (JPA / EclipseLink)-unidirectional-onetomany-mapping-with-jointable
@@ -101,7 +103,6 @@ public class ExecObjContPO extends WrapperPO implements IExecObjContPO {
         execObj.setParentProjectId(getParentProjectId());
     }
     
-    
     /**
      * @param execObj execObj to remove
      */
@@ -137,4 +138,12 @@ public class ExecObjContPO extends WrapperPO implements IExecObjContPO {
         return super.getParentProjectId();
     }
     
+    /** {@inheritDoc} */
+    @Override
+    @Id
+    @GeneratedValue
+    // FIXME : workaround as described in http://bugs.eclipse.org/411284#c0
+    public Long getId() {
+        return super.getId();
+    }
 }

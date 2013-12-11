@@ -17,6 +17,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
@@ -136,4 +138,12 @@ public class SpecObjContPO extends WrapperPO implements ISpecObjContPO {
         return super.getParentProjectId();
     }
     
+    /** {@inheritDoc} */
+    @Override
+    @Id
+    @GeneratedValue
+    // FIXME : workaround as described in http://bugs.eclipse.org/411284#c0
+    public Long getId() {
+        return super.getId();
+    }
 }

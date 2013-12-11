@@ -16,6 +16,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -113,4 +115,12 @@ class AUTContPO extends WrapperPO implements IAUTContPO {
         return super.getParentProjectId();
     }
     
+    /** {@inheritDoc} */
+    @Override
+    @Id
+    @GeneratedValue
+    // FIXME : workaround as described in http://bugs.eclipse.org/411284#c0
+    public Long getId() {
+        return super.getId();
+    }
 }

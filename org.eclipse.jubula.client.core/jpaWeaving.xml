@@ -10,7 +10,6 @@
 	
 	<path id="eclipselink.weaving.classpath">
 		<fileset dir="${basedir}/lib">
-			<include name="org.eclipse.persistence.*.jar" />
 			<include name="javax.persistence_*.jar" />
 			<include name="eclipselink.jar" />
 		</fileset>
@@ -48,7 +47,7 @@
 		<weave source="${weaving.src}" 
 			   target="${weaving.src}" 
 			   persistenceinfo="${weaving.persistence}" 
-			   loglevel="WARNING">
+			   loglevel="FINEST">
 			<classpath refid="weaving.classpath" />
 		</weave>
 	</target>

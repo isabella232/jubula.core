@@ -12,8 +12,6 @@ package org.eclipse.jubula.client.core.model;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -24,7 +22,6 @@ import javax.persistence.Version;
  */
 @MappedSuperclass
 abstract class WrapperPO implements IPersistentObject {
-    
     /** Persistence (JPA / EclipseLink) version */
     private transient Integer m_version;
     
@@ -52,11 +49,8 @@ abstract class WrapperPO implements IPersistentObject {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
-    @Id
-    @GeneratedValue
     public Long getId() {
         return m_id;
     }
@@ -102,5 +96,4 @@ abstract class WrapperPO implements IPersistentObject {
     void setHbmParentProjectId(Long projectId) {
         m_parentProjectId = projectId;
     }
-        
 }

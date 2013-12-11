@@ -1,15 +1,16 @@
-<?xml version="1.0" encoding="windows-1252" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <entity-mappings
-	xsi:schemaLocation="http://www.eclipse.org/eclipselink/xsds/persistence/orm xsd/eclipselink_orm_1_0.xsd"
 	xmlns="http://www.eclipse.org/eclipselink/xsds/persistence/orm"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
-	<entity
-		class="org.eclipse.jubula.client.core.persistence.locking.ApplicationPO" />
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.eclipse.org/eclipselink/xsds/persistence/orm http://www.eclipse.org/eclipselink/xsds/eclipselink_orm_2_1.xsd"
+	version="2.1">
+	<mapped-superclass class="org.eclipse.jubula.client.core.model.WrapperPO" />
+	<mapped-superclass class="org.eclipse.jubula.client.core.model.AbstractGuidNamePO" />
+	<entity class="org.eclipse.jubula.client.core.persistence.locking.ApplicationPO" />
 	<entity class="org.eclipse.jubula.client.core.persistence.locking.DbGuardPO" />
 	<entity class="org.eclipse.jubula.client.core.model.DBVersionPO" />
 	<entity class="org.eclipse.jubula.client.core.persistence.locking.DbLockPO" />
-	<entity
-		class="org.eclipse.jubula.client.core.persistence.locking.LockedObjectPO" />
+	<entity class="org.eclipse.jubula.client.core.persistence.locking.LockedObjectPO" />
 	<entity class="org.eclipse.jubula.client.core.model.TestResultSummaryPO" />
 	<entity class="org.eclipse.jubula.client.core.model.TestResultPO" />
 	<entity class="org.eclipse.jubula.client.core.model.ParameterDetailsPO" />
@@ -38,12 +39,11 @@
 	<entity class="org.eclipse.jubula.client.core.model.DataSetPO" />
 	<entity class="org.eclipse.jubula.client.core.model.CompIdentifierPO" />
 	<entity class="org.eclipse.jubula.client.core.model.ObjectMappingPO" />
-	<entity
-		class="org.eclipse.jubula.client.core.model.ObjectMappingAssoziationPO" />
+	<entity class="org.eclipse.jubula.client.core.model.ObjectMappingAssoziationPO" />
 	<entity class="org.eclipse.jubula.client.core.model.ObjectMappingCategoryPO" />
 	<entity class="org.eclipse.jubula.client.core.model.CompNamesPairPO" />
 	<entity class="org.eclipse.jubula.client.core.model.AUTContPO" />
-	<entity class="org.eclipse.jubula.client.core.model.SpecObjContPO" />
+    <entity class="org.eclipse.jubula.client.core.model.SpecObjContPO" />
 	<entity class="org.eclipse.jubula.client.core.model.ExecObjContPO" />
 	<entity class="org.eclipse.jubula.client.core.model.TestDataCategoryPO" />
 	<entity class="org.eclipse.jubula.client.core.model.ParamNamePO" />
@@ -53,7 +53,6 @@
 	<entity class="org.eclipse.jubula.client.core.model.ObjectMappingProfilePO" />
 	<entity class="org.eclipse.jubula.client.core.model.CheckConfContPO" />
 	<entity class="org.eclipse.jubula.client.core.model.CheckConfPO" />
-	<embeddable class="org.eclipse.jubula.client.core.model.MonitoringValuePO" />
 	<entity class="org.eclipse.jubula.client.core.model.MonitoringReportPO" />
-
+	<embeddable class="org.eclipse.jubula.client.core.model.MonitoringValuePO" />
 </entity-mappings>
