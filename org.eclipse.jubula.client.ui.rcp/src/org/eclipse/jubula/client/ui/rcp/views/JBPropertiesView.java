@@ -626,6 +626,10 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
                 OMTechNameGUIPropertySourcePropertyInformation, 
                 false);
         
+        // parameters should be expanded by default
+        m_treeViewer.setExpandedState(Messages.
+                SpecTestCaseGUIPropertySourceParameter, true);
+        
         expandTrackedChanges();
 
         setViewEnabled(!(part instanceof TestCaseBrowser
