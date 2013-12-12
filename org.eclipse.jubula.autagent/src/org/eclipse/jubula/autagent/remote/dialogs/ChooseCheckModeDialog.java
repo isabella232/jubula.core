@@ -30,8 +30,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
@@ -119,20 +117,7 @@ public class ChooseCheckModeDialog extends JFrame {
      */
     public ChooseCheckModeDialog() {
         super();
-        try {
-            UIManager.setLookAndFeel(UIManager
-                    .getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }
         createPart();
-        // nothing
     }
 
     /**

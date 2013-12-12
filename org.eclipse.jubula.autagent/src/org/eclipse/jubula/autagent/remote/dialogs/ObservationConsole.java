@@ -20,8 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -59,20 +57,7 @@ public class ObservationConsole extends JFrame {
      */
     public ObservationConsole() {
         super();
-        try {
-            UIManager.setLookAndFeel(UIManager
-                    .getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }
         createPart();
-        // nothing
     }
 
     /**
