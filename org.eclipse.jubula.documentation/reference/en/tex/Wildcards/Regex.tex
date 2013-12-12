@@ -100,7 +100,7 @@ The backslashes before the ordinary slashes are an escape symbol to specify that
 \verb#'^.{'={MIN_COUNT}','={MAX_COUNT}'}$'#
 \item To check for a text which begins with a \bxshell{*}, you must use the escape character: \verb+\\*.*+
 \item To check that a specific string is \textit{not} in a text, use:\\
- \verb+^.*[^(STRING)].*\$+
+ \verb+^((?!STRING)[\s\S])*$+
 \end{itemize}
 
 
