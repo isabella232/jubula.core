@@ -959,6 +959,10 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
                 if (className.indexOf("EditorStateParticipant") != -1) { //$NON-NLS-1$
                     return true;
                 }
+                // http://bugzilla.bredex.de/1258 
+                if (className.indexOf("LightweightDecoratorManager") != -1) { //$NON-NLS-1$
+                    return true;
+                }
             }
             // Recursive activation on MacOSX on expand tree item #3618
             String detailMessage = work.getMessage();

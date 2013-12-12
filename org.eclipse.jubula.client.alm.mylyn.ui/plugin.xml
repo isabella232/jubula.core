@@ -132,7 +132,7 @@
             label="Linked Task Decorator"
             lightweight="true"
             location="BOTTOM_RIGHT"
-            state="false">
+            state="true">
 	        <enablement>
 	            <objectClass name="org.eclipse.jubula.client.core.model.INodePO" />
 	        </enablement>
