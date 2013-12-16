@@ -31,6 +31,7 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 
 
 /**
@@ -260,6 +261,9 @@ public class KeyTyper {
      *         second part of this fix must also be used.
      */
     private boolean hackWindowsNumpadKeys1(int keyCode) {
+        if (!EnvironmentUtils.isWindowsOS()) {
+            return false;
+        }
         // FIXME Fix for MS Windows for keys that also appear on the numpad.
         //       Turns NumLock off.
         boolean isNumpadKey = false;
@@ -286,12 +290,11 @@ public class KeyTyper {
                 m_robot.keyPress(KeyEvent.VK_NUM_LOCK);
                 m_robot.keyRelease(KeyEvent.VK_NUM_LOCK);
                 
-                if (Toolkit.getDefaultToolkit().getLockingKeyState(
-                        KeyEvent.VK_NUM_LOCK)) {
-                    Toolkit.getDefaultToolkit().setLockingKeyState(
-                        KeyEvent.VK_NUM_LOCK, false);
+                final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+                if (defaultToolkit.getLockingKeyState(KeyEvent.VK_NUM_LOCK)) {
+                    defaultToolkit.setLockingKeyState(KeyEvent.VK_NUM_LOCK,
+                        false);
                     wasNumLockToggled = true;
-                    
                 }
             } catch (UnsupportedOperationException usoe) {
                 // OS does not support locking key operations
