@@ -733,8 +733,10 @@ public class TestExecutionContributor
      */
     public  void stopAUT(AutIdentifier autId) {
         fireAndSetAutState(false);
-        if (TestExecution.getInstance().getStartedTestSuite() != null
-            && TestExecution.getInstance().getStartedTestSuite().isStarted()) {
+        final ITestSuitePO startedTestSuite = TestExecution.getInstance()
+            .getStartedTestSuite();
+        if (startedTestSuite != null
+            && startedTestSuite.isStarted()) {
             
             stopTestSuiteAction();
         }
