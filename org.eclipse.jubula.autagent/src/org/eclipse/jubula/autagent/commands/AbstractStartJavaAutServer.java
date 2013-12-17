@@ -20,7 +20,6 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.eclipse.jubula.autagent.AutStarter;
-import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -72,10 +71,9 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
         if (isRunningFromExecutable(parameters)) {
         // agent arguments
             String serverPort = "null"; //$NON-NLS-1$
-            final Communicator autCommunicator = AutStarter.getInstance()
-                .getAutCommunicator();
-            if (autCommunicator != null) {
-                serverPort = String.valueOf(autCommunicator.getLocalPort());
+            if (AutStarter.getInstance().getAutCommunicator() != null) {
+                serverPort = String.valueOf(AutStarter.getInstance()
+                    .getAutCommunicator().getLocalPort());
             }
         
             env += ENV_SEPARATOR + "AUT_SERVER_PORT=" + serverPort; ////$NON-NLS-1$
@@ -171,10 +169,10 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
     protected void createAutServerClasspath(StringBuffer autServerClasspath, 
         List cmds, Map parameters) {
         
-        final Communicator autCommunicator = AutStarter.getInstance()
-            .getAutCommunicator();
-        if (autCommunicator != null) {
-            cmds.add(String.valueOf(autCommunicator.getLocalPort()));
+        if (AutStarter.getInstance().getAutCommunicator() != null) {
+            cmds.add(String.valueOf(
+                    AutStarter.getInstance().getAutCommunicator()
+                        .getLocalPort()));
         } else {
             cmds.add("null"); //$NON-NLS-1$
         }
@@ -241,7 +239,8 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
         cmds.add("-classpath"); //$NON-NLS-1$
         StringBuffer autClassPath = createAutClasspath(parameters);
         String serverBasePath = createServerBasePath(); 
-        cmds.add(autClassPath.append(PATH_SEPARATOR)
+        cmds.add(
+                autClassPath.append(PATH_SEPARATOR)
                     .append(serverBasePath).toString());
         // add classname of autLauncher
         cmds.add(CommandConstants.AUT_SERVER_LAUNCHER);
@@ -269,7 +268,7 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
             }
         }
                 
-        // add debug options (if necessary)
+        // add debug options (if neccessary)
         addDebugParams(cmds, false);
         // add -Duser.dir and workingDir here
     }

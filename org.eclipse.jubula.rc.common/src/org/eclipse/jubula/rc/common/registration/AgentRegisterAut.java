@@ -20,7 +20,6 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 import org.eclipse.jubula.communication.connection.ConnectionState;
-import org.eclipse.jubula.communication.connection.DefaultSocket;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.JBVersionException;
@@ -76,7 +75,7 @@ public class AgentRegisterAut implements IRegisterAut {
                     + m_agentAddr.getHostName() + ":" + m_agentAddr.getPort()); //$NON-NLS-1$
         }
         m_agentConn = 
-            new DefaultSocket(m_agentAddr.getAddress(), m_agentAddr.getPort());
+            new Socket(m_agentAddr.getAddress(), m_agentAddr.getPort());
         
         long waitForServer = 10000;
         long waitTime = 0;

@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * How to use (for further description see the documentation at the methods)
  * <p>
  * 
- * DefaultSocket socket = ... <br>
+ * Socket socket = ... <br>
  * Connection con = new Connection(socket); <br>
  * <p>
  * con.addErrorHandler(...); <br>
@@ -126,7 +126,7 @@ public class Connection {
      * @param socket the socket to use
      * @throws IllegalArgumentException if the socket is null or the socket has no assigned streams
      */
-    public Connection(DefaultClientSocket socket) 
+    public Connection(DefaultSocket socket) 
         throws IOException, IllegalArgumentException {
         
         this(socket, socket.getInputStreamReader());
@@ -255,7 +255,7 @@ public class Connection {
 
     /**
      * Removes the given errorHandler. 
-     * @param errorHandler - the listener to remove, null objects are ignored
+     * @param errorHandler - the listener to remove, null oblects are ignored
      */
     public void removeErrorHandler(IErrorHandler errorHandler) {
         if (errorHandler != null) {

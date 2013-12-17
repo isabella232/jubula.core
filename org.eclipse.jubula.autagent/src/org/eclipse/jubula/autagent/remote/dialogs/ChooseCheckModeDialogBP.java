@@ -352,7 +352,8 @@ public class ChooseCheckModeDialogBP {
                     AutStarter.getInstance().getAutCommunicator();
                 if (autCommunicator != null
                         && autCommunicator.getConnection() != null) {
-                    autCommunicator.send(responseMsg);
+                    AutStarter.getInstance().getAutCommunicator().send(
+                            responseMsg);
                 }
             } catch (CommunicationException e) {
                 LOG.error("Error sending message!", e); //$NON-NLS-1$
