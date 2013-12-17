@@ -27,8 +27,8 @@ import java.util.Set;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.communication.connection.Connection;
 import org.eclipse.jubula.communication.connection.ConnectionState;
+import org.eclipse.jubula.communication.connection.DefaultClientSocket;
 import org.eclipse.jubula.communication.connection.DefaultServerSocket;
-import org.eclipse.jubula.communication.connection.DefaultSocket;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.listener.IErrorHandler;
 import org.eclipse.jubula.communication.listener.IMessageHandler;
@@ -132,14 +132,8 @@ public class Communicator {
     /** the parser converting from String to Message and vice versa */
     private MessageSerializer m_serializer;
 
-    /** default timeout for establishing connections */
-    private int m_initConnectionTimeout = DEFAULT_CONNECTING_TIMEOUT;
-    
     /** flag for accepting thread to continue / stop accepting connections */
     private boolean m_accepting = false;
-
-    /** timeout for requests */
-    private int m_requestTimeout = DEFAULT_REQUEST_TIMEOUT;
 
     /** 
      * Mapping from client type to object responsible for initializing the 
@@ -302,8 +296,9 @@ public class Communicator {
         } else if (m_inetAddress != null) {
             // it's a client
             try {
-                DefaultSocket socket = new DefaultSocket(m_inetAddress, m_port,
-                        m_initConnectionTimeout * THOUSAND); 
+                DefaultClientSocket socket = new DefaultClientSocket(
+                    m_inetAddress, m_port,
+                        DEFAULT_CONNECTING_TIMEOUT * THOUSAND); 
                 if (socket.isConnectionEstablished()) {
                     setup(socket);
                 } else {
@@ -370,34 +365,6 @@ public class Communicator {
         }
     }
 
-    /**
-     * @return Returns the defaultTimeOut in seconds.
-     */
-    public int getRequestTimeout() {
-        return m_requestTimeout;
-    }
-
-    /**
-     * @param defaultTimeOut The defaultTimeOut to set (in seconds).
-     */
-    public void setRequestTimeout(int defaultTimeOut) {
-        m_requestTimeout = defaultTimeOut;
-    }
-
-    /**
-     * @return Returns the defaultAcceptingTimeout in seconds.
-     */
-    public int getInitConnectionTimeout() {
-        return m_initConnectionTimeout;
-    }
-    
-    /**
-     * @param initConnectionTimeout The timeout for initializing the connection to set (in seconds).
-     */
-    public void setInitConnectionTimeout(int initConnectionTimeout) {
-        m_initConnectionTimeout = initConnectionTimeout;
-    }
-    
     /**
      * @return Returns the connectionManager.
      */
@@ -551,7 +518,7 @@ public class Communicator {
                 "no command for receiving response", //$NON-NLS-1$
                 MessageIDs.E_NO_RECEIVING_COMMAND); 
         }
-        int timeoutToUse = m_requestTimeout;
+        int timeoutToUse = DEFAULT_REQUEST_TIMEOUT;
         if (timeout <= 0) {
             log.debug("invalid timeout given to request: " + //$NON-NLS-1$
                 "using default timeout"); //$NON-NLS-1$
@@ -743,7 +710,7 @@ public class Communicator {
      * setting the up the connection with the given socket
      * @param socket the socket, gained by connecting (Socket.Constructor)
      */
-    private void setup(DefaultSocket socket) throws IOException {
+    private void setup(DefaultClientSocket socket) throws IOException {
         m_connection = new Connection(socket);
         setup(m_connection, socket);
     }
