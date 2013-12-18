@@ -68,6 +68,7 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
@@ -440,13 +441,13 @@ public class ProblemsBP implements ICompletenessCheckListener,
             for (IAUTConfigPO config : aut.getAutConfigSet()) {
                 try {
                     configServer = InetAddress.getByName(config.getServer());
-                    if ((configServer.equals(connectedServer)) 
+                    if ((configServer.equals(connectedServer))
                         || (configServer != null
-                        && "127.0.0.1".equals(configServer.getHostAddress()) //$NON-NLS-1$
+                            && EnvConstants.LOCALHOST_IP_ALIAS
+                                .equals(configServer.getHostAddress())
                         && connectedServer.getCanonicalHostName().equals(
-                            InetAddress.getLocalHost()
-                                .getCanonicalHostName()))) {
-                        
+                            EnvConstants.LOCALHOST_FQDN))) {
+
                         isMatchingServer = true;
                         break;
                     }

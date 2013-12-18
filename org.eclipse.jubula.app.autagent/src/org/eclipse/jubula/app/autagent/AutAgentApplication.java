@@ -36,7 +36,7 @@ import org.eclipse.jubula.autagent.AutStarter.Verbosity;
 import org.eclipse.jubula.autagent.agent.AutAgent;
 import org.eclipse.jubula.autagent.desktop.DesktopIntegration;
 import org.eclipse.jubula.communication.connection.ConnectionState;
-import org.eclipse.jubula.tools.constants.ConfigurationConstants;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.osgi.util.NLS;
@@ -292,7 +292,7 @@ public class AutAgentApplication implements IApplication {
      * @return the port number
      */
     private int getPortNumber(CommandLine cmd) {
-        int port = ConfigurationConstants.AUT_AGENT_DEFAULT_PORT;
+        int port = EnvConstants.AUT_AGENT_DEFAULT_PORT;
         if (cmd.hasOption(COMMANDLINE_OPTION_PORT)) {
             port = Integer.valueOf(cmd.getOptionValue(COMMANDLINE_OPTION_PORT))
                 .intValue();

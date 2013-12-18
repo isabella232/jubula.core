@@ -76,8 +76,11 @@ import org.slf4j.LoggerFactory;
  * @created 16.07.2004
  */
 public class Communicator {
+    /** timeout for so server socket */
+    private static final int INFINITE = 0;
+
     /** timeout used as default value for establishing a connection in seconds */
-    private static final int DEFAULT_CONNECTING_TIMEOUT = 10;
+    private static final int DEFAULT_CONNECTING_TIMEOUT = 20;
     
     /** timeout used as default value for request in seconds */
     private static final int DEFAULT_REQUEST_TIMEOUT = 10;
@@ -231,7 +234,7 @@ public class Communicator {
             "object available"); //$NON-NLS-1$
         // create a server socket
         m_serverSocket = new DefaultServerSocket(port);
-        m_serverSocket.setSoTimeout(0);
+        m_serverSocket.setSoTimeout(INFINITE);
 
         // store the opened socket to LOCAL Port
         m_localPort = m_serverSocket.getLocalPort();

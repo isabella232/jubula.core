@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.tools.constants.ConfigurationConstants;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 
 /**
@@ -61,7 +61,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         serverValuesBuilder.append(StringConstants.SEMICOLON);
         serverValuesBuilder.append(new String(
             Base64.encodeBase64(String.valueOf(
-                ConfigurationConstants.AUT_AGENT_DEFAULT_PORT).getBytes())));
+                EnvConstants.AUT_AGENT_DEFAULT_PORT).getBytes())));
         prefStore.setDefault(
                 Constants.AUT_AGENT_SETTINGS_KEY, 
                 serverValuesBuilder.toString());

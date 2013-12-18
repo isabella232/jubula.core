@@ -20,7 +20,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
-import org.eclipse.jubula.tools.constants.ConfigurationConstants;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -306,7 +306,7 @@ public class EnvironmentUtils {
     public static int getAUTAgentEnvironmentPortNo() {
         int port = -1;
         String portStr = EnvironmentUtils.getProcessEnvironment().getProperty(
-                ConfigurationConstants.AUT_AGENT_PORT);
+                EnvConstants.AUT_AGENT_PORT);
         if ((portStr != null)
                 && (!portStr.trim().equals(StringConstants.EMPTY))) {
             try {

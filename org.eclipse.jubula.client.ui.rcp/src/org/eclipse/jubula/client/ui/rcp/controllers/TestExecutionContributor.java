@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.controllers;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
@@ -54,6 +53,7 @@ import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.OMEditorTreeLabel
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsClient;
 import org.eclipse.jubula.tools.exception.Assert;
@@ -369,28 +369,22 @@ public class TestExecutionContributor
      */
     private String getConnectionMessage(String message) {
         String msg = message;
-        try {
+        InetAddress localhost = EnvConstants.LOCALHOST;
+        msg = NLS.bind(Messages.TestExecutionContributorConnectedToAUTAgent1,
+            new Object[] { m_server, m_port });
+        if (Messages.StartAutBPLocalhost.equals(m_server.toLowerCase())) {
             msg = NLS.bind(
-                    Messages.TestExecutionContributorConnectedToAUTAgent1,
-                    new Object[] { m_server, m_port });
-            if (Messages.StartAutBPLocalhost.equals(m_server.toLowerCase())) {
-                msg = NLS.bind(
-                        Messages.TestExecutionContributorConnectedToAUTAgent2,
-                        new Object[] { m_server, m_port });
-            } else if (m_server
-                    .equals(InetAddress.getLocalHost().getHostName())
-                    || m_server.equals(InetAddress.getLocalHost()
-                            .getHostAddress())
-                    || m_server.equals(InetAddress.getLocalHost()
-                            .getCanonicalHostName())) {
+                Messages.TestExecutionContributorConnectedToAUTAgent2,
+                new Object[] { m_server, m_port });
+        } else if (localhost != null
+            && (m_server.equals(localhost.getHostName())
+                || m_server.equals(localhost.getHostAddress()) || m_server
+                    .equals(localhost.getCanonicalHostName()))) {
 
-                msg = NLS.bind(
-                        Messages.TestExecutionContributorConnectedToAUTAgent3,
-                        new Object[] { m_server, Messages.StartAutBPLocalhost,
-                            m_port });
-            }
-        } catch (UnknownHostException e) {
-            // really do nothing
+            msg = NLS
+                .bind(Messages.TestExecutionContributorConnectedToAUTAgent3,
+                    new Object[] { m_server, Messages.StartAutBPLocalhost,
+                        m_port });
         }
         return msg;
     }

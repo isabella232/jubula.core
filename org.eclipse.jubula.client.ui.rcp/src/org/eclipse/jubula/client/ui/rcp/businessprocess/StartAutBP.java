@@ -48,6 +48,7 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 
 
@@ -56,17 +57,6 @@ import org.eclipse.jubula.tools.exception.Assert;
  * @created 13.07.2006
  */
 public class StartAutBP {
-    
-    /**
-     * <code>LOCALHOST_IP_ALIAS</code>
-     */
-    private static final String LOCALHOST_IP_ALIAS = "127.0.0.1"; //$NON-NLS-1$
-
-    /**
-     * <code>LOCALHOST_ALIAS</code>
-     */
-    private static final String LOCALHOST_ALIAS = "localhost"; //$NON-NLS-1$
-
     /** single instance of StartAutBP */
     private static StartAutBP instance = null;
     
@@ -311,17 +301,13 @@ public class StartAutBP {
             Set<String> validHosts = new HashSet<String>();
             validHosts.add(agentIp);
             validHosts.add(agentHostname);
-            try {
-                final InetAddress lh = InetAddress.getLocalHost();
-                if (isConnectedToLocalhost(agentIp, agentHostname, lh)) {
-                    validHosts.add(LOCALHOST_ALIAS);
-                    validHosts.add(LOCALHOST_IP_ALIAS);
-                    validHosts.add(lh.getHostAddress());
-                    validHosts.add(lh.getHostName().toLowerCase());
-                    validHosts.add(lh.getCanonicalHostName().toLowerCase());
-                }
-            } catch (UnknownHostException e) {
-                // really do nothing
+            final InetAddress lh = EnvConstants.LOCALHOST;
+            if (isConnectedToLocalhost(agentIp, agentHostname, lh)) {
+                validHosts.add(EnvConstants.LOCALHOST_ALIAS);
+                validHosts.add(EnvConstants.LOCALHOST_IP_ALIAS);
+                validHosts.add(lh.getHostAddress());
+                validHosts.add(lh.getHostName().toLowerCase());
+                validHosts.add(EnvConstants.LOCALHOST_FQDN.toLowerCase());
             }
             for (IAUTMainPO autForLang : autsForLang) {
                 Set<IAUTConfigPO> confs = autForLang.getAutConfigSet();
@@ -346,7 +332,7 @@ public class StartAutBP {
 
     /**
      * @param agentIp
-     *            the agent ip adress
+     *            the agent IP address
      * @param agentHostname
      *            the agent host name
      * @param localhost
@@ -355,10 +341,14 @@ public class StartAutBP {
      */
     private boolean isConnectedToLocalhost(String agentIp,
             String agentHostname, InetAddress localhost) {
-        if (agentIp.equals(LOCALHOST_IP_ALIAS)
-                || agentHostname.equals(LOCALHOST_ALIAS)) {
+        if (agentIp.equals(EnvConstants.LOCALHOST_IP_ALIAS)
+            || agentHostname.equals(EnvConstants.LOCALHOST_ALIAS)) {
             return true;
         }
+        if (localhost == null) {
+            return false;
+        }
+        
         final String hostAddress = localhost.getHostAddress();
         final String hostName = localhost.getHostName().toLowerCase();
         final String fqHostName = localhost.getCanonicalHostName()

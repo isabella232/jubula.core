@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.core.communication;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Properties;
 
@@ -50,6 +49,7 @@ import org.eclipse.jubula.communication.message.SendAUTListOfSupportedComponents
 import org.eclipse.jubula.communication.message.SendCompSystemI18nMessage;
 import org.eclipse.jubula.communication.message.SetKeyboardLayoutMessage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
@@ -214,7 +214,7 @@ public class AUTConnection extends BaseConnection {
                     new ConnectToAutResponseCommand();
                 AutAgentConnection.getInstance().getCommunicator().request(
                     new ConnectToAutMessage(
-                        InetAddress.getLocalHost().getCanonicalHostName(), 
+                        EnvConstants.LOCALHOST_FQDN, 
                         getCommunicator().getLocalPort(), autId), 
                     responseCommand, 10000);
                 if (responseCommand.getMessage() != null 
@@ -249,8 +249,6 @@ public class AUTConnection extends BaseConnection {
                 }
                 LOG.error(Messages.ConnectionToAUTCouldNotBeEstablished);
             } catch (CommunicationException e) {
-                LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT, e);
-            } catch (UnknownHostException e) {
                 LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT, e);
             } catch (JBVersionException e) {
                 LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT, e);

@@ -37,6 +37,7 @@ import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.PrepareForShutdownMessage;
 import org.eclipse.jubula.communication.message.StartAUTServerMessage;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
@@ -110,8 +111,7 @@ public class AutAgent {
 
                             PrintStream printStream = 
                                 new PrintStream(socket.getOutputStream());
-                            printStream.println(InetAddress.getLocalHost()
-                                    .getCanonicalHostName());
+                            printStream.println(EnvConstants.LOCALHOST_FQDN);
                             printStream.println(autCommunicator.getLocalPort());
                             printStream.flush();
 
@@ -211,7 +211,7 @@ public class AutAgent {
     
     /**
      * Error listener for communication with the AUT Server. Handles 
-     * registration / deregistration when the connection is gained / lost.
+     * registration / de-registration when the connection is gained / lost.
      *
      * @author BREDEX GmbH
      * @created Mar 22, 2010
@@ -324,7 +324,7 @@ public class AutAgent {
 
     /** 
      * flag indicating whether AUTs that attempt to register with an AUT ID 
-     * that is already regsitered should be shutdown 
+     * that is already registered should be shutdown 
      */
     private boolean m_killDuplicateAuts = true;
     
@@ -354,7 +354,7 @@ public class AutAgent {
     /**
      * Constructor
      * 
-     * Starts the contsructed agent on the given port.
+     * Starts the constructed agent on the given port.
      * 
      * @param port The port number on which to start the agent. A port number 
      *             of <code>0</code> starts the agent on an available port. 

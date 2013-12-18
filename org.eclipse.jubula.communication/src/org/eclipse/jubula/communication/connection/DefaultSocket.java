@@ -40,6 +40,6 @@ public class DefaultSocket extends Socket {
      */
     public DefaultSocket(InetAddress address, int port) throws IOException {
         super(address, port);
-        setSoLinger(true, 10);
+        setSoLinger(true, 5);
     }
 }

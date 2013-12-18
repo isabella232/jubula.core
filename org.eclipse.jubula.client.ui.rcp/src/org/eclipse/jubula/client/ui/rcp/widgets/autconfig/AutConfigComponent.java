@@ -49,7 +49,7 @@ import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.ConfigurationConstants;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.i18n.I18n;
@@ -686,7 +686,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 currentlySelectedServer)) {
 
             int defaultServerPort = 
-                    ConfigurationConstants.AUT_AGENT_DEFAULT_PORT;
+                    EnvConstants.AUT_AGENT_DEFAULT_PORT;
             m_listOfServers.addServer(
                 new AutAgentManager.AutAgent(
                     currentlySelectedServer, 
@@ -847,25 +847,23 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     }
 
     /**
-     * @return if the current aut starter is localhost
+     * @return if the current AUT-Agent is localhost
      */
     private boolean isLocalhost() {
-        boolean enable;
-        try {
-            final String serverComboText = getServerCombo().getText();
-            final InetAddress localHost = InetAddress.getLocalHost();
-            final String canonicalHostName = localHost.getCanonicalHostName();
-            enable = (Constants.LOCALHOST1.equals(serverComboText.toLowerCase())
-                || Constants.LOCALHOST2.equals(serverComboText)
-                || localHost.getHostName().equals(serverComboText) 
-                || localHost.getHostAddress().equals(serverComboText)
-                || (canonicalHostName != null
-                    && canonicalHostName.equals(serverComboText)));
-        } catch (UnknownHostException e) {
-            enable = false;
+        final InetAddress localHost = EnvConstants.LOCALHOST;
+        if (localHost == null) {
+            return false;
         }
-        return enable;
+        final String autAgentHostName = getServerCombo().getText();
+        final String canonicalHostName = localHost.getCanonicalHostName();
+        return (Constants.LOCALHOST1.equals(autAgentHostName.toLowerCase())
+            || Constants.LOCALHOST2.equals(autAgentHostName)
+            || localHost.getHostName().equals(autAgentHostName)
+            || localHost.getHostAddress().equals(autAgentHostName) 
+            || (canonicalHostName != null && canonicalHostName
+                .equals(autAgentHostName)));
     }
+    
     /**
      * Handles the button event.
      */

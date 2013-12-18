@@ -12,8 +12,6 @@ package org.eclipse.jubula.client.core;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -93,6 +91,7 @@ import org.eclipse.jubula.toolkit.common.monitoring.MonitoringAttribute;
 import org.eclipse.jubula.toolkit.common.monitoring.MonitoringRegistry;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.constants.InputConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -258,7 +257,7 @@ public class ClientTest implements IClientTest {
             Map<String, String> autConfigMap = createAutConfigMap(conf);
             StartAUTServerMessage startAUTServerMessage = 
                 new StartAUTServerMessage(
-                    InetAddress.getLocalHost().getCanonicalHostName(), 
+                    EnvConstants.LOCALHOST_FQDN, 
                     AUTConnection.getInstance().getCommunicator()
                         .getLocalPort(), autConfigMap, autToolkit, 
                         aut.isGenerateNames());
@@ -269,7 +268,7 @@ public class ClientTest implements IClientTest {
             }
         } catch (NotConnectedException nce) {
             // The AutAgentConnection was closed. This Exception occurs after 
-            // initialising the server, so there must be a shutdown(). The 
+            // initializing the server, so there must be a shutdown(). The 
             // listeners are already notified from the ConnectionListener of
             // the AutAgentConnection, -> just log.
             log.info(nce.getLocalizedMessage(), nce);
@@ -281,17 +280,6 @@ public class ClientTest implements IClientTest {
             // message could not send for any reason, close the connections
             try {
                 closeConnections();
-            } catch (ConnectionException ce) {
-                log.error(Messages.ClosingTheConnectionsFailed, ce);
-            }
-        } catch (UnknownHostException uhe) {
-            log.error(uhe.getLocalizedMessage(), uhe);
-            try {
-                // from InetAdress.getLocalHost().getName(), should not occur 
-                // -> no communication possible -> close the connections as a 
-                // precaution
-                AUTConnection.getInstance().close();
-                AutAgentConnection.getInstance().close();
             } catch (ConnectionException ce) {
                 log.error(Messages.ClosingTheConnectionsFailed, ce);
             }
