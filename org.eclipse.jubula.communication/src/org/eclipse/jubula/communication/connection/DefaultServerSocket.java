@@ -12,10 +12,12 @@ package org.eclipse.jubula.communication.connection;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.slf4j.Logger;
@@ -75,6 +77,7 @@ public class DefaultServerSocket extends ServerSocket {
      * 
      * @param socket The socket on which the communication will take place.
      * @param reader Reader for the given socket's input stream.
+     * @param inputStream the input stream of the given socket
      * @param timeout Maximum time to wait (in milliseconds) for a response.
      * @return the response received from the client, or <code>null</code> if a 
      *         timeout occurs.
@@ -83,7 +86,8 @@ public class DefaultServerSocket extends ServerSocket {
      *             socket
      */
     public static String requestClientType(Socket socket, 
-            BufferedReader reader, long timeout) throws IOException {
+        BufferedReader reader, InputStream inputStream, long timeout) 
+        throws IOException {
         PrintStream outputStream = new PrintStream(socket.getOutputStream());
         final String request = ConnectionState.CLIENT_TYPE_REQUEST 
             + ConnectionState.SEPARATOR 
@@ -101,12 +105,12 @@ public class DefaultServerSocket extends ServerSocket {
 
         long waitTime = 0;
         while (waitTime <= timeout) {
-            if (socket.getInputStream().available() > 0) {
+            if (inputStream.available() > 0) {
                 return reader.readLine();
-                
+
             }
-            TimeUtil.delay(500);
-            waitTime += 500;
+            waitTime += TimeUtil.delay(TimingConstantsServer
+                .POLLING_DELAY_AUT_REGISTER);
         }
 
         log.debug("no client type response received from client"); //$NON-NLS-1$

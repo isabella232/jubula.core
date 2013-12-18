@@ -12,6 +12,7 @@ package org.eclipse.jubula.communication;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -76,12 +77,12 @@ import org.slf4j.LoggerFactory;
  * @created 16.07.2004
  */
 public class Communicator {
+    /** timeout used as default value for establishing a connection in seconds */
+    public static final int DEFAULT_CONNECTING_TIMEOUT = 20;
+
     /** timeout for so server socket */
     private static final int INFINITE = 0;
 
-    /** timeout used as default value for establishing a connection in seconds */
-    private static final int DEFAULT_CONNECTING_TIMEOUT = 20;
-    
     /** timeout used as default value for request in seconds */
     private static final int DEFAULT_REQUEST_TIMEOUT = 10;
 
@@ -984,13 +985,14 @@ public class Communicator {
             while (isAccepting() && !Thread.currentThread().isInterrupted()) {
                 try {
                     Socket socket = m_serverSocket.accept();
+                    final InputStream inputStream = socket.getInputStream();
                     BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(socket.getInputStream(), 
+                            new InputStreamReader(inputStream, 
                                     Connection.IO_STREAM_ENCODING));
 
                     // find out what kind of client initiated the connection
                     String response = DefaultServerSocket.requestClientType(
-                            socket, reader, 
+                            socket, reader, inputStream,
                             DEFAULT_CONNECTING_TIMEOUT * THOUSAND);
 
                     if (response != null) {

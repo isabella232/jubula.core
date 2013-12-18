@@ -19,6 +19,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.connection.ConnectionState;
 import org.eclipse.jubula.communication.connection.DefaultSocket;
 import org.eclipse.jubula.rc.common.AUTServer;
@@ -37,7 +38,6 @@ import org.slf4j.LoggerFactory;
  * @created Dec 11, 2009
  */
 public class AgentRegisterAut implements IRegisterAut {
-
     /** the logger */
     private static final Logger LOG = 
         LoggerFactory.getLogger(AgentRegisterAut.class);
@@ -75,10 +75,11 @@ public class AgentRegisterAut implements IRegisterAut {
                     + "' with agent at "  //$NON-NLS-1$
                     + m_agentAddr.getHostName() + ":" + m_agentAddr.getPort()); //$NON-NLS-1$
         }
-        m_agentConn = 
-            new DefaultSocket(m_agentAddr.getAddress(), m_agentAddr.getPort());
-        
-        long waitForServer = 10000;
+        m_agentConn = new DefaultSocket(
+            m_agentAddr.getAddress(), 
+            m_agentAddr.getPort());
+
+        long waitForServer = Communicator.DEFAULT_CONNECTING_TIMEOUT * 1000;
         long waitTime = 0;
         boolean success = false;
         InputStream inputStream = m_agentConn.getInputStream();
@@ -111,9 +112,8 @@ public class AgentRegisterAut implements IRegisterAut {
                     }
                 }
             } else {
-                TimeUtil.delay(TimingConstantsServer
-                        .POLLING_DELAY_AUT_REGISTER);
-                waitTime += 500;
+                waitTime += TimeUtil.delay(TimingConstantsServer
+                    .POLLING_DELAY_AUT_REGISTER);
             }
         }
 

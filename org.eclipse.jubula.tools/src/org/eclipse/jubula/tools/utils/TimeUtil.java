@@ -33,10 +33,11 @@ public abstract class TimeUtil {
      * by restarting the Thread.sleep(), thus guaranteeing to wait for
      * "delayInMs" milliseconds
      * @param delayInMs the delay in ms, must not be negative
+     * @return the passed delay
      */
-    public static void delay(long delayInMs) {
+    public static long delay(final long delayInMs) {
         if (delayInMs == 0) {
-            return;
+            return delayInMs;
         }
         if (delayInMs < 0) {
             throw new IllegalArgumentException("delay has to be positive"); //$NON-NLS-1$
@@ -51,6 +52,7 @@ public abstract class TimeUtil {
             }
             delay = endTime - (new Date().getTime());
         } while (delay > 0);
+        return delayInMs;
     }
     
     /**

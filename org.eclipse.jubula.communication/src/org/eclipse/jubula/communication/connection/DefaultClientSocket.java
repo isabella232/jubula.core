@@ -18,6 +18,7 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 
+import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.utils.TimeUtil;
@@ -176,8 +177,8 @@ public class DefaultClientSocket extends DefaultSocket {
                             handleState(false);
                     }
                 } else {
-                    TimeUtil.delay(500);
-                    waitTime += 500;
+                    waitTime += TimeUtil.delay(TimingConstantsServer
+                        .POLLING_DELAY_AUT_REGISTER);
                 }
             }
             if (!success) {

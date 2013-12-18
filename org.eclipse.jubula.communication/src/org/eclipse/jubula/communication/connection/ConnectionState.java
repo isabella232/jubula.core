@@ -17,6 +17,7 @@ import java.io.PrintStream;
 import java.util.StringTokenizer;
 
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -32,7 +33,6 @@ import org.slf4j.LoggerFactory;
  * @created 20.09.2004
  */
 public class ConnectionState {
-    
     /** Separator of messages*/
     public static final String SEPARATOR = "/"; //$NON-NLS-1$
     
@@ -194,8 +194,8 @@ public class ConnectionState {
                  * waiting a bit longer for a response, but that shouldn't be a
                  * problem.
                  */
-                TimeUtil.delay(500);
-                waitTime += 500;
+                waitTime += TimeUtil.delay(TimingConstantsServer
+                    .POLLING_DELAY_AUT_REGISTER);
             }
         }
 
