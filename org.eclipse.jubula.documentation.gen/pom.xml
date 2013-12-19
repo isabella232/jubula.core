@@ -20,7 +20,7 @@
     <profile>
       <id>jubula-local-build</id>
       <properties>
-        <target-platform-path>${target-platform-base-path}juno</target-platform-path>
+        <target-platform-path>${target-platform-base-path}jubula</target-platform-path>
       </properties>
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -29,7 +29,7 @@
     <profile>
       <id>jubula-remote-fetch</id>
       <properties>
-        <target-platform-path>${target-platform-base-path}juno+nightly</target-platform-path>
+        <target-platform-path>${target-platform-base-path}jubula+nightly</target-platform-path>
       </properties>
     </profile>
   </profiles>

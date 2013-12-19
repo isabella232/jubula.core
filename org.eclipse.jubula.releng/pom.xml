@@ -146,7 +146,7 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>${project.artifactId}</artifactId>
                 <version>${project.version}</version>
-                <classifier>../org.eclipse.jubula.project.configuration/target/definitions/juno</classifier>
+                <classifier>../org.eclipse.jubula.project.configuration/target/definitions/jubula</classifier>
               </artifact>
           </target>
           <environments>
