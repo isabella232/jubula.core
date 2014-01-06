@@ -114,7 +114,7 @@ import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.model.ITestResultSummary;
+import org.eclipse.jubula.client.core.model.IArchivableTestResultSummary;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
@@ -959,7 +959,7 @@ class XmlImporter {
         
         PropertyDescriptor[] propertiesToImport = 
             BEAN_UTILS.getPropertyUtils().getPropertyDescriptors(
-                    ITestResultSummary.class);
+                    IArchivableTestResultSummary.class);
 
         for (TestresultSummary trsXml : trsListXml.getTestresultSummaryList()) {
         

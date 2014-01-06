@@ -128,12 +128,12 @@ public class ExecTestCaseGUIPropertySource extends
                     new CommentController(), P_ELEMENT_DISPLAY_COMMENT);
         }
         addPropertyDescriptor(m_commentPropDesc);
-
         // Task ID
         if (getTaskIdPropDesc() == null) {
             JBPropertyDescriptor taskIdPropDesc = new JBPropertyDescriptor(
                 new ReadOnlyTaskIdController(),
-                Messages.AbstractGuiNodePropertySourceTaskId);
+                org.eclipse.jubula.client.ui.i18n.Messages
+                    .AbstractGuiNodePropertySourceTaskId);
             taskIdPropDesc.setLabelProvider(new DisabledLabelProvider());
             setTaskIdPropDesc(taskIdPropDesc);
         }

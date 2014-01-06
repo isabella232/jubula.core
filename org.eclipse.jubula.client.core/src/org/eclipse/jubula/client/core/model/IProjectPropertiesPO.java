@@ -19,8 +19,8 @@ import org.eclipse.jubula.client.core.utils.TrackingUnit;
  * @author BREDEX GmbH
  * @created Jun 11, 2007
  */
-public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport {
-
+public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport, 
+    IALMReportingProperties {
     /**
      * @return <code>true</code> if this project is reusable. Otherwise
      *         <code>false</code>.
@@ -128,54 +128,6 @@ public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport {
      */
     public abstract ICheckConfContPO getCheckConfCont();
     
-    /**
-     * @return the URL of the central dashboard instance
-     */
-    public abstract String getDashboardURL();
-
-    /**
-     * @param dashboardURL
-     *            the URL of the central dashboard instance
-     */
-    public abstract void setDashboardURL(String dashboardURL);
-    
-    /**
-     * @return the name of the central ALM repository
-     */
-    public abstract String getALMRepositoryName();
-
-    /**
-     * @param almRepositoryName
-     *             the name of the central ALM repository
-     */
-    public abstract void setALMRepositoryName(String almRepositoryName);
-    
-    /**
-     * @return <code>true</code> if this project should report succeeded test
-     *         executions to the connected ALM repository
-     */
-    public abstract boolean getIsReportOnSuccess();
-
-    /**
-     * @param isReportOnSuccess
-     *            <code>true</code> if this project should report succeeded test
-     *            executions to the connected ALM repository
-     */
-    public void setIsReportOnSuccess(boolean isReportOnSuccess);
-    
-    /**
-     * @return <code>true</code> if this project should report failed test
-     *         executions to the connected ALM repository
-     */
-    public abstract boolean getIsReportOnFailure();
-
-    /**
-     * @param isReportOnFailure
-     *            <code>true</code> if this project should report failed test
-     *            executions to the connected ALM repository
-     */
-    public void setIsReportOnFailure(boolean isReportOnFailure);
-
     /**
      * @return the detail of a user who made a change which is stored for identification
      */

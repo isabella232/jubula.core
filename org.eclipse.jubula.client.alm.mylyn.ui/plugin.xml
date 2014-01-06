@@ -24,12 +24,31 @@
             id="org.eclipse.jubula.client.alm.ui.commands.openTaskForNodeCommand"
             name="Mylyn Task Editor">
       </command>
+      <command
+            categoryId="org.eclipse.jubula.client.alm.ui.commands.category"
+            id="org.eclipse.jubula.client.alm.ui.commands.reportResults"
+            name="Report to ALM">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
             class="org.eclipse.jubula.client.alm.mylyn.ui.handler.AddTaskHandler"
             commandId="org.eclipse.jubula.client.alm.ui.commands.createTaskCommand">
+      </handler>
+      <handler
+            class="org.eclipse.jubula.client.alm.mylyn.ui.handler.ReportToAlmHandler"
+            commandId="org.eclipse.jubula.client.alm.ui.commands.reportResults">
+            <enabledWhen>
+	        <and>
+	          <iterate ifEmpty="false" operator="or">
+	          	<and>
+		            <instanceof value="org.eclipse.jubula.client.core.model.ITestResultSummaryPO" />
+		            <test property="org.eclipse.jubula.client.ui.propertytester.TestResultSummary.hasPendingALMReport" />
+	          	</and>
+	          </iterate>
+	        </and>
+	      </enabledWhen>
       </handler>
       <handler
             class="org.eclipse.jubula.client.alm.mylyn.ui.handler.OpenTaskFromNodeHandler"
@@ -82,6 +101,17 @@
                style="push">
          </command>
       </menuContribution>
+		<menuContribution locationURI="toolbar:org.eclipse.jubula.client.ui.views.TestresultSummaryView?after=additions">
+			<command commandId="org.eclipse.jubula.client.alm.ui.commands.reportResults"
+				style="push">
+			</command>
+		</menuContribution>
+		<menuContribution
+	      locationURI="popup:org.eclipse.jubula.client.ui.views.TestresultSummaryView?after=additions">
+	      <command
+	        commandId="org.eclipse.jubula.client.alm.ui.commands.reportResults"
+	        style="push" />
+		</menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commandImages">
@@ -92,6 +122,10 @@
       <image
             commandId="org.eclipse.jubula.client.alm.ui.commands.openTaskForNodeCommand"
             icon="icons/task-editor.gif">
+      </image>
+      <image
+            commandId="org.eclipse.jubula.client.alm.ui.commands.reportResults"
+            icon="icons/createTask.gif">
       </image>
    </extension>
    <extension
@@ -134,10 +168,13 @@
             location="BOTTOM_RIGHT"
             state="true">
 	        <enablement>
-	            <objectClass name="org.eclipse.jubula.client.core.model.INodePO" />
+	        	<or>
+	            	<objectClass name="org.eclipse.jubula.client.core.model.INodePO" />
+	            	<objectClass name="org.eclipse.jubula.client.core.model.TestResultNode" />
+	        	</or>
 	        </enablement>
             <description>
-              Decorates Test Suites, Test Cases and Test Jobs with an icon indicating that they are connected to a remote Mylyn task.
+              Decorates Test Suites, Test Cases, Test Jobs and Test Result Nodes with an icon indicating that they are connected to a remote Mylyn task.
             </description>
       </decorator>
    </extension>

@@ -14,13 +14,22 @@ import java.util.Map;
 
 import org.eclipse.jubula.tools.objects.IMonitoringValue;
 
-
-
 /**
  * @author BREDEX GmbH
  * @created Jan 22, 2010
  */
-public interface ITestResultSummaryPO extends ITestResultSummary {
+public interface ITestResultSummaryPO extends IArchivableTestResultSummary, 
+    IALMReportingProperties {
+    /** @author BREDEX GmbH */
+    public enum AlmReportStatus {
+        /** */
+        NOT_YET_REPORTED,
+        /** */
+        REPORTED,
+        /** */
+        NOT_CONFIGURED
+    }
+    
     /**
      * <code>DEFAULT_NUMBER_OF_FAILED_TEST_STEPS</code>
      */
@@ -45,6 +54,7 @@ public interface ITestResultSummaryPO extends ITestResultSummary {
      * {@inheritDoc}
      */
     public abstract Integer getVersion();
+    
     /**
      * @param monitoringValue the monitoringValue to set
      */
@@ -64,5 +74,14 @@ public interface ITestResultSummaryPO extends ITestResultSummary {
      * @return the monitoring report for this test result summary
      */
     public abstract MonitoringReportPO getMonitoringReport();
+ 
+    /**
+     * @param status 
+     */
+    public abstract void setAlmReportStatus(AlmReportStatus status);
     
+    /**
+     * @return the ALM reported status
+     */
+    public abstract AlmReportStatus getAlmReportStatus();
 }

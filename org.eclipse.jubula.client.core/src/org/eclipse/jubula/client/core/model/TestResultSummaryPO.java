@@ -21,6 +21,8 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -171,8 +173,19 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     private String m_commentDetail;
     /** true if blob was written, false otherwise */
     private boolean m_blobWritten = false;
+    /** ALM reported flag */
+    private AlmReportStatus m_almStatus = AlmReportStatus.NOT_CONFIGURED;
     /** monitoring value typ */
     private String m_monitoringValueType;
+    /** whether to report in case of a failure */
+    private boolean m_reportOnFailure = false;
+    /** whether to report in case of a success */
+    private boolean m_reportOnSuccess = false;
+    /** the connected ALM repository name */
+    private String m_almRepositoryName = null;
+    /** the URL of the dashboard */
+    private String m_dashboardURL = null;
+    
     /**
      * only for Persistence (JPA / EclipseLink)
      */
@@ -497,9 +510,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         return m_autConfigGuid;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Basic
     @Column(name = "INTERNAL_GUID", length = 32, unique = true)
     public String getInternalGuid() {
@@ -596,9 +607,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         return m_autToolkit;
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Transient
     public String getAutToolkit() {
         return getHbmToolkit();
@@ -770,9 +779,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     }
     
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String toString() {
         return super.toString() + StringConstants.SPACE 
             + StringConstants.LEFT_PARENTHESES + m_id.toString()
@@ -796,9 +803,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         return getInternalGuid().equals(o.getInternalGuid());
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public int hashCode() {
         return getInternalGuid().hashCode();
     }
@@ -874,16 +879,12 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         return m_testsuiteFailedTeststeps;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setTestsuiteFailedTeststeps(int failedCaps) {
         m_testsuiteFailedTeststeps = failedCaps;
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Basic
     @Column(
             name = "COMMENT_TITLE", 
@@ -892,16 +893,12 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         return m_commentTitle;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setCommentTitle(String commentTitle) {
         m_commentTitle = commentTitle;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Basic
     @Column(
             name = "COMMENT_DETAIL", 
@@ -910,16 +907,12 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         return m_commentDetail;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setCommentDetail(String commentDetail) {
         m_commentDetail = commentDetail;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setInternalMonitoringId(String monitoringId) {
         m_monitoringId = monitoringId;
     }
@@ -953,9 +946,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     private Map<String, MonitoringValuePO> getHbmMonitoringValues() {
         return m_monitoringValues;
     } 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Transient
     public Map<String, IMonitoringValue> getMonitoringValues() {
       
@@ -972,9 +963,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         }                
         return tmpMap;
     }
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Transient
     public void setMonitoringValues(Map<String, IMonitoringValue> map) {
                 
@@ -1009,9 +998,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         this.m_monitoringReport = report;
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Basic
     @Column(name = "M_REPORT_WRITTEN", nullable = false)
     public boolean isReportWritten() {
@@ -1019,17 +1006,13 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         return m_blobWritten;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setReportWritten(boolean isWritten) {
         
         this.m_blobWritten = isWritten;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Basic
     @Column(name = "M_VALUE_TYPE", length = 30)
     public String getMonitoringValueType() {
@@ -1037,17 +1020,13 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         return m_monitoringValueType;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setMonitoringValueType(String type) {
         
         this.m_monitoringValueType = type;
         
     }
-    /**
-     * {@inheritDoc}
-     */    
+    /** {@inheritDoc} */    
     @Basic
     @Column(name = "MONITORING_VALUE")
     public String getMonitoringValue() {
@@ -1055,14 +1034,71 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         return m_monitoringValue;
         
     }
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setMonitoringValue(String monitoringValue) {
         
         this.m_monitoringValue = monitoringValue;
     }
 
+    /** {@inheritDoc} */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ALM_REPORT_STATUS", nullable = false)
+    public AlmReportStatus getAlmReportStatus() {
+        return m_almStatus;
+    }
+
+    /** {@inheritDoc} */
+    public void setAlmReportStatus(AlmReportStatus status) {
+        this.m_almStatus = status;
+    }
     
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "INTERNAL_ALM_DASHBOARD_URL", 
+            length = IPersistentObject.MAX_STRING_LENGTH)
+    public String getDashboardURL() {
+        return m_dashboardURL;
+    }
     
+    /** {@inheritDoc} */
+    public void setDashboardURL(String dashboardURL) {
+        m_dashboardURL = dashboardURL;
+    }
+    
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "INTERNAL_ALM_REPOSITORY_NAME", 
+        length = IPersistentObject.MAX_STRING_LENGTH)
+    public String getALMRepositoryName() {
+        return m_almRepositoryName;
+    }
+    
+    /** {@inheritDoc} */
+    public void setALMRepositoryName(String almRepositoryName) {
+        m_almRepositoryName = almRepositoryName;
+    }
+    
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "INTERNAL_ALM_REPORT_SUCCESS")
+    public boolean getIsReportOnSuccess() {
+        return m_reportOnSuccess;
+    }
+    
+    /** {@inheritDoc} */
+    public void setIsReportOnSuccess(boolean isReportOnSuccess) {
+        m_reportOnSuccess = isReportOnSuccess;
+    }
+    
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "INTERNAL_ALM_REPORT_FAILURE")
+    public boolean getIsReportOnFailure() {
+        return m_reportOnFailure;
+    }
+
+    /** {@inheritDoc} */
+    public void setIsReportOnFailure(boolean isReportOnFailure) {
+        m_reportOnFailure = isReportOnFailure;
+    }
 }

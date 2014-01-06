@@ -122,7 +122,8 @@ public class TestSuiteGUIPropertySource
         if (getTaskIdPropDesc() == null) {
             setTaskIdPropDesc(new TextPropertyDescriptor(
                 new TaskIdController(), 
-                Messages.AbstractGuiNodePropertySourceTaskId));
+                org.eclipse.jubula.client.ui.i18n.Messages
+                    .AbstractGuiNodePropertySourceTaskId));
         }
         addPropertyDescriptor(getTaskIdPropDesc());
         

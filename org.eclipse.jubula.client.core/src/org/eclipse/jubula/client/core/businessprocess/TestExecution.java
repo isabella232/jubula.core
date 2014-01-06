@@ -60,7 +60,7 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.model.ITestResultSummary;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
@@ -320,7 +320,7 @@ public class TestExecution {
      */
     public void executeTestSuite(ITestSuitePO testSuite, Locale locale,
         AutIdentifier autId, boolean autoScreenshot,
-        Map<String, String> externalVars, ITestResultSummary summary,
+        Map<String, String> externalVars, ITestResultSummaryPO summary,
         final IProgressMonitor monitor) {
         m_stopped = false;
 

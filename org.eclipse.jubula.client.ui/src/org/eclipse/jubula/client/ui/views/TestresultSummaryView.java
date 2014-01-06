@@ -48,8 +48,8 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultSummaryEventListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
-import org.eclipse.jubula.client.core.model.ITestResultSummary;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Persistor;
@@ -269,6 +269,12 @@ public class TestresultSummaryView extends ViewPart implements
         Messages.TestresultSummaryTestrunState;
 
     /**
+     * <code>TESTRESULT_ALM_REPORT_STATE</code>
+     */
+    private static final String TESTRESULT_ALM_REPORT_STATE = 
+        Messages.TestresultSummaryAlmReportState;
+    
+    /**
      * <code>TESTRESULT_SUMMARY_DATE</code>
      */
     private static final String TESTRESULT_SUMMARY_DATE = 
@@ -412,6 +418,7 @@ public class TestresultSummaryView extends ViewPart implements
         addTestJobStartTimeColumn(m_tableViewer);
         addTestJobColumn(m_tableViewer);
         addStatusDecoratorColumn(m_tableViewer);
+        addAlmStatusDecoratorColumn(m_tableViewer);
         addTsStatusColumn(m_tableViewer);
         addTestsuiteColumn(m_tableViewer);
         addProjectNameColumn(m_tableViewer);
@@ -717,6 +724,7 @@ public class TestresultSummaryView extends ViewPart implements
             TESTRESULT_SUMMARY_DATE,
             TESTRESULT_SUMMARY_COMMENT_TITLE,
             TESTRESULT_SUMMARY_TESTRUN_STATE,
+            TESTRESULT_ALM_REPORT_STATE,
             TESTRESULT_SUMMARY_PROJECT_NAME,
             TESTRESULT_SUMMARY_TESTSUITE,
             TESTRESULT_SUMMARY_TESTSUITE_STATUS,
@@ -1000,6 +1008,37 @@ public class TestresultSummaryView extends ViewPart implements
                 return getCommonsComparator().compare(
                         ((ITestResultSummaryPO)e1).getTestRunState(), 
                         ((ITestResultSummaryPO)e2).getTestRunState());
+            }
+        };
+    }
+    
+    /**
+     * Adds a "Status decorator" column to the given viewer.
+     * @param tableViewer The viewer to which the column will be added.
+     */
+    private void addAlmStatusDecoratorColumn(
+        TableViewer tableViewer) {
+        TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
+        column.getColumn().setWidth(100);
+        column.getColumn().setText(TESTRESULT_ALM_REPORT_STATE);
+        column.getColumn().setMoveable(true);
+        column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
+            public String getText(Object element) {
+                ITestResultSummaryPO row = (ITestResultSummaryPO)element;
+                return Boolean.toString(row.getAlmReportStatus() 
+                    == AlmReportStatus.NOT_YET_REPORTED);
+            }
+            public Image getImage(Object element) {
+                return null;
+            }
+        });
+        createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getAlmReportStatus(), 
+                        ((ITestResultSummaryPO)e2).getAlmReportStatus());
             }
         };
     }
@@ -1314,7 +1353,7 @@ public class TestresultSummaryView extends ViewPart implements
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {
                 return DTF_DEFAULT.format(
-                        ((ITestResultSummary)element).getTestsuiteDate());
+                        ((ITestResultSummaryPO)element).getTestsuiteDate());
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
@@ -1322,8 +1361,8 @@ public class TestresultSummaryView extends ViewPart implements
             @Override
             protected int doCompare(Viewer viewer, Object e1, Object e2) {
                 return getCommonsComparator().compare(
-                        ((ITestResultSummary)e1).getTestsuiteDate(), 
-                        ((ITestResultSummary)e2).getTestsuiteDate());
+                        ((ITestResultSummaryPO)e1).getTestsuiteDate(), 
+                        ((ITestResultSummaryPO)e2).getTestsuiteDate());
             }
         };
     }
@@ -1842,12 +1881,15 @@ public class TestresultSummaryView extends ViewPart implements
             } else if (m_filterType
                     .equals(TESTRESULT_SUMMARY_TEST_JOB_START_TIME)) {
                 Date date = m.getTestJobStartTime();
-                metaValue = 
-                    date != null ? DTF_LONG.format(date) : StringUtils.EMPTY;
+                metaValue = date != null ? DTF_LONG.format(date) 
+                    : StringUtils.EMPTY;
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TEST_JOB)) {
                 metaValue = m.getTestJobName();
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TESTRUN_STATE)) {
                 metaValue = m.getTestRunState();
+            } else if (m_filterType.equals(TESTRESULT_ALM_REPORT_STATE)) {
+                metaValue = Boolean.toString(m.getAlmReportStatus() 
+                    == AlmReportStatus.NOT_YET_REPORTED);
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_PROJECT_NAME)) {
                 metaValue = m.getProjectName();
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TESTSUITE)) {
@@ -1901,11 +1943,7 @@ public class TestresultSummaryView extends ViewPart implements
                     .equals(TESTRESULT_SUMMARY_COMMENT_TITLE)) {
                 metaValue = StringUtils.defaultString(m.getCommentTitle());
             }
-            
-            if (wordMatches(metaValue)) {
-                return true;
-            }
-            return false;
+            return wordMatches(metaValue);
         }
 
         /**

@@ -176,7 +176,6 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
         public void run(IProgressMonitor pMonitor) {
             SubMonitor monitor = SubMonitor.convert(pMonitor,
                 "Fetching test result data...", 3); //$NON-NLS-1$
-            
             try {
                 monitor.subTask("Loading test results from database..."); //$NON-NLS-1$
                 List<ITestResultPO> testResultList = TestResultPM
@@ -228,6 +227,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                                     : parentNodeStack.peek());
                     createdNode.setComponentName(result.getComponentName());
                     createdNode.setComponentType(result.getComponentType());
+                    createdNode.setTaskId(result.getTaskId());
                     
                     for (IParameterDetailsPO param 
                             : result.getUnmodifiableParameterList()) {

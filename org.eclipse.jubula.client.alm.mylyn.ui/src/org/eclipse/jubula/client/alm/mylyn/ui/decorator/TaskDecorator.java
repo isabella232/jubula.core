@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.alm.mylyn.ui.decorator;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.propertytester.NodePropertyTester;
 import org.eclipse.jubula.client.ui.provider.labelprovider.decorators.AbstractLightweightLabelDecorator;
 import org.eclipse.mylyn.tasks.ui.TasksUiImages;
@@ -22,11 +24,17 @@ import org.eclipse.mylyn.tasks.ui.TasksUiImages;
 public class TaskDecorator extends AbstractLightweightLabelDecorator {
     /** {@inheritDoc} */
     public void decorate(Object element, IDecoration decoration) {
+        boolean hasTaskId = false;
+        
         if (element instanceof INodePO) {
-            INodePO node = (INodePO) element;
-            if (NodePropertyTester.hasTaskIdSet(node)) {
-                decoration.addOverlay(TasksUiImages.TASK_REMOTE);
-            }
+            hasTaskId = NodePropertyTester.hasTaskIdSet((INodePO) element);
+        } else if (element instanceof TestResultNode) {
+            hasTaskId = StringUtils.isNotBlank(((TestResultNode) element)
+                    .getTaskId());
+        }
+        
+        if (hasTaskId) {
+            decoration.addOverlay(TasksUiImages.TASK_REMOTE);
         }
     }
 }

@@ -25,18 +25,18 @@ import org.eclipse.jubula.client.alm.mylyn.core.i18n.Messages;
 import org.eclipse.jubula.client.alm.mylyn.core.model.CommentEntry;
 import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
+import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultSummaryEventListener;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
-import org.eclipse.jubula.client.core.propertytester.NodePropertyTester;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TestResultNodeTraverser;
@@ -102,8 +102,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
             boolean didNodePass = CommentEntry
                     .hasPassed(resultNode.getStatus());
 
-            INodePO node = resultNode.getNode();
-            String taskIdforNode = NodePropertyTester.getTaskIdforNode(node);
+            String taskIdforNode = resultNode.getTaskId();
             boolean hasTaskId = taskIdforNode != null;
             
             boolean writeCommentForNode = hasTaskId
@@ -181,8 +180,14 @@ public class CommentReporter implements ITestresultSummaryEventListener {
         TestResultNodeTraverser traverser = new TestResultNodeTraverser(
                 rootResultNode, operation);
         traverser.traverse();
-
-        return reportToALM(monitor, taskIdToComment);
+        final IStatus reportStatus = reportToALM(monitor, taskIdToComment);
+        
+        if (reportStatus.isOK()) {
+            TestresultSummaryBP.getInstance().setALMReportStatus(summary,
+                AlmReportStatus.REPORTED);
+        }
+        
+        return reportStatus;
     }
 
     /**

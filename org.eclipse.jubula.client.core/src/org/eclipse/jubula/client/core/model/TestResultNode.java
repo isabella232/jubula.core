@@ -21,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.jubula.client.core.businessprocess.ITestResultEventListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.propertytester.NodePropertyTester;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.osgi.util.NLS;
@@ -167,6 +168,9 @@ public class TestResultNode {
      */
     private int m_noOfSimilarComponents = -1;
     
+    /** the task Id of the result node */
+    private String m_taskId;
+    
     /**
      * Constructor
      * 
@@ -203,6 +207,7 @@ public class TestResultNode {
         m_status = NOT_YET_TESTED;
         m_event = null;
         m_hasBackingNode = hasBackingNode;
+        m_taskId = NodePropertyTester.getTaskIdforNode(node);
     }
     
     /**
@@ -220,6 +225,7 @@ public class TestResultNode {
         m_status = NOT_YET_TESTED;
         m_event = null;
         m_hasBackingNode = true;
+        m_taskId = NodePropertyTester.getTaskIdforNode(node);
     }
 
     /**
@@ -680,5 +686,19 @@ public class TestResultNode {
             return paramValueBuilder.toString();
         }
         return StringConstants.EMPTY;
+    }
+
+    /**
+     * @return the taskId
+     */
+    public String getTaskId() {
+        return m_taskId;
+    }
+
+    /**
+     * @param taskId the taskId to set
+     */
+    public void setTaskId(String taskId) {
+        m_taskId = taskId;
     }
 }

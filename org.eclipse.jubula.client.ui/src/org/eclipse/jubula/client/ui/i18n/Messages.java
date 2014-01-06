@@ -20,6 +20,7 @@ public class Messages extends NLS {
     public static String AnErrorHasOccurred;
 
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.ui.i18n.messages"; //$NON-NLS-1$
+    public static String AbstractGuiNodePropertySourceTaskId;
     public static String CantLoadMetadataFromDatabase;
     public static String CapGUIPropertySourceAction;
     public static String CapGUIPropertySourceActionType;
@@ -118,6 +119,7 @@ public class Messages extends NLS {
     public static String TestresultSummaryTestJobStartTime;
     public static String TestresultSummaryTestrunID;
     public static String TestresultSummaryTestrunRelevant;
+    public static String TestresultSummaryAlmReportState;
     public static String TestresultSummaryTestrunState;
     public static String TestresultSummaryTestsuite;
     public static String TestresultSummaryTestsuiteStatus;

@@ -124,6 +124,9 @@ class TestResultPO implements ITestResultPO {
     /** the image data */
     private byte[] m_imageData;
     
+    /** the task Id of the result node */
+    private String m_taskId;
+    
     /**
      * <code>m_omHeuristicEquivalence</code>
      */
@@ -701,5 +704,36 @@ class TestResultPO implements ITestResultPO {
     @Column(name = "OM_NO_SIMILAR_COMPONENTS", nullable = false)
     public int getNoOfSimilarComponents() {
         return m_noOfSimilarComponents;
+    }
+    
+    /**
+     * gets the value of the taskId property
+     * 
+     * @return the taskId of the node
+     */
+    @Basic
+    @Column(name = "TASK_ID", length = IPersistentObject.MAX_STRING_LENGTH)
+    public String getTaskId() {
+        return m_taskId;
+    }
+    
+    /**
+     * For Persistence (JPA / EclipseLink) only
+     * Sets the value of the taskId property. If the length of
+     * the trimmed new taskId string is zero, the taskId property
+     * is set to null.
+     * 
+     * @param taskId
+     *            the new value of the taskId property
+     */
+    public void setTaskId(String taskId) {
+        String newTaskId = taskId;
+        if (newTaskId != null) {
+            newTaskId = newTaskId.trim();
+            if (newTaskId.length() == 0) {
+                newTaskId = null;
+            }
+        }
+        m_taskId = newTaskId;
     }
 }

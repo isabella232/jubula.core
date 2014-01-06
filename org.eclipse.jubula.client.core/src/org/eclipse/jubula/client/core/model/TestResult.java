@@ -33,29 +33,7 @@ import org.eclipse.jubula.tools.objects.IMonitoringValue;
  * @created Aug 6, 2010
  */
 public class TestResult extends AbstractTestResult {
-   
-    /** the name of the project within which the test was executed */
-    private String m_projectName;
-
-    /** the GUID of the project within which the test was executed */
-    private String m_projectGuid;
-    
-    /** 
-     * the major version number of the project within which the test was 
-     * executed 
-     */
-    private int m_projectMajorVersionNumber;
-
-    /** 
-     * the minor version number of the project within which the test was 
-     * executed 
-     */
-    private int m_projectMinorVersionNumber;
-
-    /** the database ID of the project within which the test was executed */
-    private long m_projectId;
-    
-    /** the proifling agent id*/
+    /** the profiling agent id*/
     private String m_monitoringId;
     
     /** the calculated monitoring values*/
@@ -64,13 +42,13 @@ public class TestResult extends AbstractTestResult {
     private byte[] m_reportData;   
     /** is monitoring report written? */
     private boolean m_reportWritten;    
-    /** the path to the report, if it was too large to send */
-    private String m_pathToReport;
     
     /**
      * <code>autConfigMap</code> the aut config map
      */
     private Map<String, String> m_autConfigMap;
+    /** the project */
+    private IProjectPO m_project;
 
     /**
      * Constructor
@@ -84,12 +62,7 @@ public class TestResult extends AbstractTestResult {
     public TestResult(TestResultNode rootResultNode,
             Map<String, String> autConfigMap) {
         super(rootResultNode);
-        IProjectPO project = GeneralStorage.getInstance().getProject();
-        m_projectName = project.getName();
-        m_projectGuid = project.getGuid();
-        m_projectMajorVersionNumber = project.getMajorProjectVersion();
-        m_projectMinorVersionNumber = project.getMinorProjectVersion();
-        m_projectId = project.getId();
+        setProject(GeneralStorage.getInstance().getProject());
         setAutConfigMap(autConfigMap);
     }
 
@@ -165,35 +138,35 @@ public class TestResult extends AbstractTestResult {
      * {@inheritDoc}
      */
     public String getProjectGuid() {
-        return m_projectGuid;
+        return getProject().getGuid();
     }
 
     /**
      * {@inheritDoc}
      */
     public long getProjectId() {
-        return m_projectId;
+        return getProject().getId();
     }
 
     /**
      * {@inheritDoc}
      */
     public int getProjectMajorVersion() {
-        return m_projectMajorVersionNumber;
+        return getProject().getMajorProjectVersion();
     }
 
     /**
      * {@inheritDoc}
      */
     public int getProjectMinorVersion() {
-        return m_projectMinorVersionNumber;
+        return getProject().getMinorProjectVersion();
     }
 
     /**
      * {@inheritDoc}
      */
     public String getProjectName() {
-        return m_projectName;
+        return getProject().getName();
     }
 
     /**
@@ -268,20 +241,6 @@ public class TestResult extends AbstractTestResult {
     public void setReportWritten(boolean reportWritten) {
         this.m_reportWritten = reportWritten;
     }    
-    /**
-     * 
-     * @return The path to the report
-     */
-    public String getPathToReport() {
-        return m_pathToReport;
-    }
-    /**
-     * 
-     * @param pathToReport Sets the path to the report
-     */
-    public void setPathToReport(String pathToReport) {
-        this.m_pathToReport = pathToReport;
-    }
 
     /**
      * @param autConfigMap the autConfigMap to set
@@ -295,5 +254,19 @@ public class TestResult extends AbstractTestResult {
      */
     public Map<String, String> getAutConfigMap() {
         return m_autConfigMap;
+    }
+
+    /**
+     * @return the project
+     */
+    public IProjectPO getProject() {
+        return m_project;
+    }
+
+    /**
+     * @param project the project to set
+     */
+    private void setProject(IProjectPO project) {
+        m_project = project;
     }
 }

@@ -24,7 +24,7 @@ import org.apache.commons.lang.StringUtils;
 public class SummarizedTestResult extends AbstractTestResult {
 
     /** the summary providing the actual result data */
-    private ITestResultSummary m_summary;
+    private IArchivableTestResultSummary m_summary;
     
     /**
      * Constructor
@@ -33,7 +33,7 @@ public class SummarizedTestResult extends AbstractTestResult {
      * @param rootResultNode The root of the Test Result tree. Must not be 
      *                       <code>null</code>.
      */
-    public SummarizedTestResult(ITestResultSummary summary, 
+    public SummarizedTestResult(IArchivableTestResultSummary summary, 
             TestResultNode rootResultNode) {
         super(rootResultNode);
         m_summary = summary;

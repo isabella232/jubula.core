@@ -130,7 +130,7 @@
 	        class="org.eclipse.jubula.client.ui.propertytester.TestResultSummaryPropertyTester"
 	        id="org.eclipse.jubula.client.ui.rcp.propertytester.TestResultSummary"
 	        namespace="org.eclipse.jubula.client.ui.propertytester.TestResultSummary"
-	        properties="hasMonitoringData, hasTestResultDetails"
+	        properties="hasMonitoringData, hasTestResultDetails, hasPendingALMReport"
 	        type="org.eclipse.jubula.client.core.model.ITestResultSummaryPO">
   		</propertyTester>
 	</extension>

@@ -109,7 +109,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
 
         final INodePO node = m_node.getNode();        
         PropertyDescriptor propDes = new PropertyDescriptor(
-            new ComponentController() {
+            new PropertyController() {
                 public Object getProperty() {
                     final TestResultNode cap = m_node;
                     Date time = cap.getTimeStamp();
@@ -123,14 +123,14 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         propDes.setCategory(P_TESTSTEP_CAT);
         addPropertyDescriptor(propDes);
         propDes = new PropertyDescriptor(
-            new ComponentController() {
+            new PropertyController() {
                 public Object getProperty() {
                     return m_node.getName();
                 } 
             } , P_ELEMENT_DISPLAY_STEPNAME);
         propDes.setCategory(P_TESTSTEP_CAT);
         addPropertyDescriptor(propDes);
-        propDes = new PropertyDescriptor(new ComponentController() {
+        propDes = new PropertyDescriptor(new PropertyController() {
             public Object getProperty() {
                 return m_node.getTypeOfNode();
             }
@@ -141,21 +141,31 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         }, P_ELEMENT_DISPLAY_STEPTYPE);
         propDes.setCategory(P_TESTSTEP_CAT);
         addPropertyDescriptor(propDes);
-        propDes = new PropertyDescriptor(
-            new ComponentController() {
-                public Object getProperty() {
-                    return node == null || node.getComment() == null 
-                        ? StringUtils.EMPTY : node.getComment();
-                }
-            } , P_ELEMENT_DISPLAY_CAPCOMMENT);
-        propDes.setCategory(P_TESTSTEP_CAT);
-        addPropertyDescriptor(propDes);
+        if (StringUtils.isNotBlank(node.getComment())) {
+            propDes = new PropertyDescriptor(
+                new PropertyController() {
+                    public Object getProperty() {
+                        return node.getComment();
+                    }
+                } , P_ELEMENT_DISPLAY_CAPCOMMENT);
+            propDes.setCategory(P_TESTSTEP_CAT);
+            addPropertyDescriptor(propDes);
+        }
+        if (StringUtils.isNotBlank(m_node.getTaskId())) {
+            propDes = new PropertyDescriptor(
+                new PropertyController() {
+                    public Object getProperty() {
+                        return m_node.getTaskId();
+                    }
+                } , Messages.AbstractGuiNodePropertySourceTaskId);
+            propDes.setCategory(P_TESTSTEP_CAT);
+            addPropertyDescriptor(propDes);
+        }
 
         initResultDetailsPropDesc();
         
         if (node instanceof IEventExecTestCasePO) {
             initEventTestCasePropDescriptor(node);
-
         }
 
         if (m_node.getEvent() != null) { 
@@ -174,7 +184,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
     private void initParameterDescriptor(TestResultNode testResult) {
         for (final TestResultParameter parameter : testResult.getParameters()) {
             PropertyDescriptor propDesc = new PropertyDescriptor(
-                    new ComponentController() {
+                    new PropertyController() {
                         public Object getProperty() {
                             return parameter.getValue();
                         }
@@ -221,7 +231,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
      */
     private void initResultDetailsPropDesc() {
         PropertyDescriptor propDes = new PropertyDescriptor(
-            new ComponentController() {
+            new PropertyController() {
                 public Object getProperty() {
                     return m_node.getStatusString();
                 }
@@ -266,7 +276,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         final String componentName = testResult.getComponentName();
         if (componentName != null) {
             propDes = new PropertyDescriptor(
-                    new ComponentController() {
+                    new PropertyController() {
                         public Object getProperty() {
                             return componentName;
                         }
@@ -278,7 +288,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         final String componentType = testResult.getComponentType();
         if (componentType != null) {
             propDes = new PropertyDescriptor(
-                    new ComponentController() {
+                    new PropertyController() {
                         public Object getProperty() {
                             return componentType;
                         }
@@ -300,7 +310,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         final String actionName = testResult.getActionName();
         if (actionName != null) {
             propDes = new PropertyDescriptor(
-                    new ComponentController() {
+                    new PropertyController() {
                         public Object getProperty() {
                             return actionName;
                         }
@@ -315,7 +325,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
      */
     private void initErrorEventPropDescriptor() {
         PropertyDescriptor propDes = new PropertyDescriptor(
-            new ComponentController() {
+            new PropertyController() {
                 public Object getProperty() {
                     return I18n.getString(m_node
                         .getEvent().getId());
@@ -327,7 +337,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         if (event.getId().equals(TestErrorEvent.ID.VERIFY_FAILED)) {
             Set keys = event.getProps().keySet();
             for (final Object key : keys) {
-                propDes = new PropertyDescriptor(new ComponentController() {
+                propDes = new PropertyDescriptor(new PropertyController() {
                     public Object getProperty() {
                         return event.getProps().get(key);
                     }
@@ -338,7 +348,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         } else if (event.getProps().keySet().contains(
                 TestErrorEvent.Property.DESCRIPTION_KEY)) {
             
-            propDes = new PropertyDescriptor(new ComponentController() {
+            propDes = new PropertyDescriptor(new PropertyController() {
                 public Object getProperty() {
                     String key = (String)event.getProps().get(
                         TestErrorEvent.Property.DESCRIPTION_KEY);
@@ -363,7 +373,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         
         final IEventExecTestCasePO tc = (IEventExecTestCasePO) node;
         PropertyDescriptor propDes = new PropertyDescriptor(
-            new ComponentController() {
+            new PropertyController() {
                 public Object getProperty() {
                     return I18n.getString(tc.getEventType());
                 }
@@ -372,7 +382,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                 Messages.TestResultNodeGUIPropertySourceEventhandler);
         addPropertyDescriptor(propDes);
         propDes = new PropertyDescriptor(
-            new ComponentController() {
+            new PropertyController() {
                 public Object getProperty() {
                     return tc.getReentryProp();
                 }
@@ -383,12 +393,12 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
     }
 
     /**
-     * Class to control component name.
+     * Base class to control properties
      *
      * @author BREDEX GmbH
      * @created 07.01.2005
      */
-    private abstract class ComponentController implements IPropertyController {
+    private abstract class PropertyController implements IPropertyController {
         /** {@inheritDoc} */
         public boolean setProperty(Object value) {
             return true; // readonly

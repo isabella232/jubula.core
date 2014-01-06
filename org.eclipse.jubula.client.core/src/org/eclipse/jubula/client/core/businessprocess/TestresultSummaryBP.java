@@ -20,6 +20,9 @@ import javax.persistence.EntityTransaction;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.IClientTest;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -27,11 +30,13 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterDetailsPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultPO;
-import org.eclipse.jubula.client.core.model.ITestResultSummary;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TestResult;
@@ -39,9 +44,6 @@ import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.model.TestResultParameter;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
-import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -87,7 +89,7 @@ public class TestresultSummaryBP {
      * @param summary The Test Result Summary to fill with data.
      */
     public void fillTestResultSummary(TestResult result,
-            ITestResultSummary summary) {
+        ITestResultSummaryPO summary) {
         TestExecution te = TestExecution.getInstance();
         ITestSuitePO ts = te.getStartedTestSuite();
         IAUTMainPO startedAut = te.getConnectedAut();
@@ -152,9 +154,38 @@ public class TestresultSummaryBP {
         summary.setInternalMonitoringId(
                 MonitoringConstants.EMPTY_MONITORING_ID);         
         summary.setReportWritten(false);
+        determineAlmRepositoryStatus(summary, result);
         summary.setMonitoringValueType(MonitoringConstants.EMPTY_TYPE); 
     }
     
+    /**
+     * @param summary
+     *            the summary to determine the status for
+     * @param result
+     *            the result
+     */
+    private void determineAlmRepositoryStatus(ITestResultSummaryPO summary,
+        TestResult result) {
+        IProjectPO project = result.getProject();
+        final IProjectPropertiesPO projectProperties = project
+            .getProjectProperties();
+        final boolean reportSuccess = projectProperties.getIsReportOnSuccess();
+        final boolean reportFailure = projectProperties.getIsReportOnFailure();
+        final String almRepositoryName = projectProperties
+            .getALMRepositoryName();
+        
+        AlmReportStatus status = AlmReportStatus.NOT_CONFIGURED;
+        if (StringUtils.isNotEmpty(almRepositoryName)
+            && (reportSuccess || reportFailure)) {
+            status = AlmReportStatus.NOT_YET_REPORTED;
+            summary.setALMRepositoryName(almRepositoryName);
+            summary.setIsReportOnSuccess(reportSuccess);
+            summary.setIsReportOnFailure(reportFailure);
+            summary.setDashboardURL(projectProperties.getDashboardURL());
+        }
+        summary.setAlmReportStatus(status);
+    }
+
     /**
      * @param result The Test Result.
      * @param summaryId id of test result summary
@@ -212,6 +243,7 @@ public class TestresultSummaryBP {
         keyword.setKeywordName(node.getName());
         keyword.setInternalKeywordGuid(node.getGuid());
         keyword.setKeywordComment(node.getComment());
+        keyword.setTaskId(node.getTaskId());
         keyword.setInternalKeywordStatus(resultNode.getStatus());
         keyword.setKeywordStatus(resultNode.getStatusString());
         if (resultNode.getTimeStamp() != null) {
@@ -385,5 +417,67 @@ public class TestresultSummaryBP {
             instance = new TestresultSummaryBP();
         }
         return instance;
+    }
+
+    /**
+     * @param selectedSummary summary
+     * @param newRelevance newRelevance
+     */
+    public void setRelevance(ITestResultSummaryPO selectedSummary,
+        boolean newRelevance) {
+        if (selectedSummary != null) {
+            Persistor persistor = Persistor.instance();
+            final EntityManager sess = persistor.openSession();
+            try {
+                final EntityTransaction tx = persistor.getTransaction(sess);
+
+                ITestResultSummaryPO msummary = sess.merge(selectedSummary);
+
+                msummary.setTestsuiteRelevant(newRelevance);
+                persistor.commitTransaction(sess, tx);
+                DataEventDispatcher.getInstance().fireTestresultSummaryChanged(
+                        msummary, DataState.StructureModified);
+            } catch (PMException e) {
+                throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
+                        MessageIDs.E_DATABASE_GENERAL);
+            } catch (ProjectDeletedException e) {
+                throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
+                        MessageIDs.E_PROJECT_NOT_FOUND);
+            } finally {
+                persistor.dropSession(sess);
+            }
+        }
+    }
+    
+    /**
+     * @param selectedSummary
+     *            summary
+     * @param reportStatus
+     *            reportStatus
+     */
+    public void setALMReportStatus(ITestResultSummaryPO selectedSummary,
+        AlmReportStatus reportStatus) {
+        if (selectedSummary != null) {
+            Persistor persistor = Persistor.instance();
+            final EntityManager sess = persistor.openSession();
+            try {
+                final EntityTransaction tx = persistor.getTransaction(sess);
+
+                ITestResultSummaryPO msummary = sess.merge(selectedSummary);
+
+                msummary.setAlmReportStatus(reportStatus);
+                persistor.commitTransaction(sess, tx);
+                DataEventDispatcher.getInstance().fireTestresultSummaryChanged(
+                    msummary, DataState.StructureModified);
+            } catch (PMException e) {
+                throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
+                    MessageIDs.E_DATABASE_GENERAL);
+            } catch (ProjectDeletedException e) {
+                throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
+                    MessageIDs.E_PROJECT_NOT_FOUND);
+            } finally {
+                persistor.dropSession(sess);
+            }
+        }
     }
 }

@@ -197,7 +197,8 @@ public class EventExecTestCaseGUIPropertySource extends
         if (getTaskIdPropDesc() == null) {
             JBPropertyDescriptor taskIdPropDesc = new JBPropertyDescriptor(
                 new ReadOnlyTaskIdController(),
-                Messages.AbstractGuiNodePropertySourceTaskId);
+                org.eclipse.jubula.client.ui.i18n.Messages
+                    .AbstractGuiNodePropertySourceTaskId);
             taskIdPropDesc.setLabelProvider(new DisabledLabelProvider());
             setTaskIdPropDesc(taskIdPropDesc);
         }

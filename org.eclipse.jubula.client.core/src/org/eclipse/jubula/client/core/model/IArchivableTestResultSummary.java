@@ -24,8 +24,7 @@ import java.util.Date;
  * @author BREDEX GmbH
  * @created Jul 22, 2010
  */
-public interface ITestResultSummary {
-
+public interface IArchivableTestResultSummary {
     /**
      * @param jobName the jobName to set
      */
