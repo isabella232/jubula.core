@@ -20,6 +20,7 @@ public class Messages extends NLS {
     
     public static String TaskTitle;
     public static String TaskDescription;
+    public static String BatchALMReporting;
 
     static {
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
