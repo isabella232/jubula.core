@@ -26,6 +26,7 @@ import org.eclipse.jubula.client.alm.mylyn.ui.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.ui.editors.TestResultViewer.GenerateTestResultTreeOperation;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 
@@ -43,7 +44,9 @@ public class ReportToAlmHandler extends AbstractSelectionBasedHandler {
             Object o = iterator.next();
             if (o instanceof ITestResultSummaryPO) {
                 ITestResultSummaryPO summary = (ITestResultSummaryPO) o;
-                if (AlmReportStatus.NOT_YET_REPORTED.equals(summary
+                if (TestResultPM.hasTestResultDetails(GeneralStorage
+                    .getInstance().getMasterSession(), summary.getId())
+                    && AlmReportStatus.NOT_YET_REPORTED.equals(summary
                         .getAlmReportStatus())) {
                     summariesToReportFor.add(summary);
                 }

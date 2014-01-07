@@ -22,11 +22,11 @@ public interface ITestResultSummaryPO extends IArchivableTestResultSummary,
     IALMReportingProperties {
     /** @author BREDEX GmbH */
     public enum AlmReportStatus {
-        /** */
+        /** Do not change - persisted to database */
         NOT_YET_REPORTED,
-        /** */
+        /** Do not change - persisted to database */
         REPORTED,
-        /** */
+        /** Do not change - persisted to database */
         NOT_CONFIGURED
     }
     

@@ -65,6 +65,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.propertytester.TestResultSummaryPropertyTester;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestresultSummaryContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestresultSummaryViewColumnLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
@@ -1025,8 +1026,9 @@ public class TestresultSummaryView extends ViewPart implements
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {
                 ITestResultSummaryPO row = (ITestResultSummaryPO)element;
-                return Boolean.toString(row.getAlmReportStatus() 
-                    == AlmReportStatus.NOT_YET_REPORTED);
+                return Boolean.toString(TestResultSummaryPropertyTester
+                    .hasPendingALMReport(row, GeneralStorage.getInstance()
+                        .getMasterSession()));
             }
             public Image getImage(Object element) {
                 return null;
