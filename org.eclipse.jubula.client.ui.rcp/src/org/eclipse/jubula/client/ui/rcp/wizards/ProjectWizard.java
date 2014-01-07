@@ -42,7 +42,6 @@ import org.eclipse.jubula.client.ui.rcp.databinding.validators.AutIdValidator;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.wizards.pages.AUTSettingWizardPage;
 import org.eclipse.jubula.client.ui.rcp.wizards.pages.AutConfigSettingWizardPage;
-import org.eclipse.jubula.client.ui.rcp.wizards.pages.ProjectInfoWizardPage;
 import org.eclipse.jubula.client.ui.rcp.wizards.pages.ProjectSettingWizardPage;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -78,10 +77,6 @@ public class ProjectWizard extends Wizard implements INewWizard {
     private static final String AUT_CONFIG_SETTING_WP = 
         "org.eclipse.jubula.client.ui.rcp.wizards.pages.AutConfigSettingWizardPage"; //$NON-NLS-1$
     
-    /** the ID for the ProjectInfoWizardPage */
-    private static final String PROJECT_INFO_WP = 
-        "org.eclipse.jubula.client.ui.rcp.wizards.pages.ProjectInfoWizardPage"; //$NON-NLS-1$
-    
     /**
      * Prefix for unbound modules project names
      */
@@ -102,8 +97,6 @@ public class ProjectWizard extends Wizard implements INewWizard {
     private AUTSettingWizardPage m_autSettingWizardPage;
     /** the wizard page for the aut configuration settings */
     private AutConfigSettingWizardPage m_autConfigSettingWizardPage;
-    /** the project information wizard page */
-    private ProjectInfoWizardPage m_projectInfoWizardPage;
 
     /**
      * @return the wizard page for the project settings
@@ -224,13 +217,6 @@ public class ProjectWizard extends Wizard implements INewWizard {
         m_autConfigSettingWizardPage.setPageComplete(true);
         addPage(m_autConfigSettingWizardPage);  
         
-        m_projectInfoWizardPage =
-            new ProjectInfoWizardPage(PROJECT_INFO_WP);
-        m_projectInfoWizardPage.setTitle(Messages.ProjectWizardProjectSettings);
-        m_projectInfoWizardPage.setDescription(
-            Messages.ProjectWizardProjectCreated);
-        m_projectInfoWizardPage.setPageComplete(true);
-        addPage(m_projectInfoWizardPage); 
         Plugin.stopLongRunning();
     }
 
