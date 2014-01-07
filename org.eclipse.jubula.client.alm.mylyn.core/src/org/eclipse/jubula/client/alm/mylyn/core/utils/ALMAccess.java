@@ -271,11 +271,12 @@ public final class ALMAccess {
             String oldComment = commentAttribute.getValue();
             String newComment = StringConstants.EMPTY;
             for (CommentEntry c : commentEntries) {
-                newComment = newComment + "<br>" + c.toString() + "<br>"
-                    + c.getDashboardURL();
+                newComment = c.toString() + "<br>"
+                    + c.getDashboardURL() + "<br>"
+                    + newComment;
             }
             
-            commentAttribute.setValue(oldComment + newComment);
+            commentAttribute.setValue(newComment + oldComment);
             return commentAttribute;
         }
         return null;
