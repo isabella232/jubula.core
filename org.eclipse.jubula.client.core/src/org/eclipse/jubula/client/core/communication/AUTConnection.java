@@ -18,22 +18,19 @@ import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jubula.client.core.AUTEvent;
-import org.eclipse.jubula.client.core.AUTServerEvent;
 import org.eclipse.jubula.client.core.ClientTest;
-import org.eclipse.jubula.client.core.IAUTInfoListener;
 import org.eclipse.jubula.client.core.IClientTest;
-import org.eclipse.jubula.client.core.MessageFactory;
-import org.eclipse.jubula.client.core.ServerEvent;
-import org.eclipse.jubula.client.core.UnknownMessageException;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.commands.AUTStartedCommand;
 import org.eclipse.jubula.client.core.commands.AUTStateCommand;
 import org.eclipse.jubula.client.core.commands.ConnectToAutResponseCommand;
 import org.eclipse.jubula.client.core.commands.GetKeyboardLayoutNameResponseCommand;
+import org.eclipse.jubula.client.core.events.AUTEvent;
+import org.eclipse.jubula.client.core.events.AUTServerEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
+import org.eclipse.jubula.client.core.events.ServerEvent;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
@@ -406,13 +403,9 @@ public class AUTConnection extends BaseConnection {
                 TimeUtil.delay(500);
             }
             if (!command.wasExecuted() && isConnected()) {
-                IAUTInfoListener listener = command.getListener();
-                if (listener != null) {
-                    listener.error(IAUTInfoListener.ERROR_COMMUNICATION);
-                }
                 throw new CommunicationException(
                         Messages.CouldNotRequestComponentsFromAUT,
-                        IAUTInfoListener.ERROR_COMMUNICATION);
+                        MessageIDs.E_COMMUNICATOR_CONNECTION);
             }
         } catch (UnknownMessageException ume) {
             ClientTest.instance().fireAUTServerStateChanged(

@@ -8,23 +8,20 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core;
+package org.eclipse.jubula.client.core.events;
 
-import java.util.EventListener;
+import org.eclipse.jubula.communication.message.ServerLogResponseMessage;
 
 /**
- * The interface for listening to events concerning the AutStarter.
- *
  * @author BREDEX GmbH
- * @created 13.08.2004
+ * @created Feb 8, 2007
  */
-public interface IServerEventListener extends EventListener {
+public interface IServerLogListener {
+
     /**
-     * This method will be called when the state of the Server changes. The
-     * event contains detailed information about the changes.
      * 
-     * @param event -
-     *            the detailed event
+     * @param response The response
      */
-    public void stateChanged(AutAgentEvent event);
+    public void processServerLog(ServerLogResponseMessage response);
+    
 }

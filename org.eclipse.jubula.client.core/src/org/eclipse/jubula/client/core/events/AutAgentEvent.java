@@ -8,7 +8,8 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core;
+package org.eclipse.jubula.client.core.events;
+
 
 /**
  * The event class containing state concerning the AUT Agent.

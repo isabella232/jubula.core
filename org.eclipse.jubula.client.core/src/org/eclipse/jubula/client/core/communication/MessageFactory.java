@@ -8,14 +8,12 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core;
+package org.eclipse.jubula.client.core.communication;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
-import org.eclipse.jubula.client.core.communication.AUTConnection;
-import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.communication.message.ActivateApplicationMessage;

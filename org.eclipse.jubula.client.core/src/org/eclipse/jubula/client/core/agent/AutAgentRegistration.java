@@ -20,13 +20,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.eclipse.jubula.client.core.AutAgentEvent;
 import org.eclipse.jubula.client.core.ClientTest;
-import org.eclipse.jubula.client.core.IServerEventListener;
-import org.eclipse.jubula.client.core.ServerEvent;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent.RegistrationStatus;
 import org.eclipse.jubula.client.core.commands.RegisteredAutListCommand;
 import org.eclipse.jubula.client.core.communication.AutAgentConnection;
+import org.eclipse.jubula.client.core.events.AutAgentEvent;
+import org.eclipse.jubula.client.core.events.IServerEventListener;
+import org.eclipse.jubula.client.core.events.ServerEvent;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;

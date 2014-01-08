@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core;
+package org.eclipse.jubula.client.core.events;
 
 /**
  * Abstract class for server events. Defines constants for the state of a

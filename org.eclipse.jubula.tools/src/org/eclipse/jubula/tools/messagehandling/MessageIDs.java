@@ -370,7 +370,7 @@ public class MessageIDs {
     public static final Integer E_MESSAGE_SEND = new Integer(6014);
     /** if an error occurres while message was requested */
     public static final Integer E_MESSAGE_REQUEST = new Integer(6015);
-    /** if an error occurres while communitcator connection */
+    /** if an error occurres while communicator connection */
     public static final Integer E_COMMUNICATOR_CONNECTION = new Integer(6016);
     /** if there is no command for receiving response */
     public static final Integer E_NO_RECEIVING_COMMAND = new Integer(6017);

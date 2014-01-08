@@ -19,12 +19,12 @@ import java.util.Set;
 
 import org.apache.commons.collections.list.UnmodifiableList;
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.client.core.IRecordListener;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
+import org.eclipse.jubula.client.core.events.IRecordListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;

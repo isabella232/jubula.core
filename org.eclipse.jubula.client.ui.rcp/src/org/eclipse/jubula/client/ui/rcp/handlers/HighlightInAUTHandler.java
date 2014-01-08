@@ -14,12 +14,12 @@ import java.util.ArrayList;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jubula.client.core.AUTEvent;
-import org.eclipse.jubula.client.core.IAUTEventListener;
 import org.eclipse.jubula.client.core.commands.AUTHighlightComponentCommand;
 import org.eclipse.jubula.client.core.commands.AUTModeChangedCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
+import org.eclipse.jubula.client.core.events.AUTEvent;
+import org.eclipse.jubula.client.core.events.IAUTEventListener;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;

@@ -8,30 +8,24 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core;
+package org.eclipse.jubula.client.core.events;
+
+import java.util.EventListener;
 
 /**
- * The interface to pass information about the AUT to interested listeners.
+ * An interface for notification about events concerning the application under
+ * test (AUT).
  * 
  * @author BREDEX GmbH
- * @created 04.10.2004
+ * @created 16.07.2004
  */
-public interface IAUTInfoListener {
-
-    // constants to be used for error()
-
-    /** a timeout has expired */
-    public static final int ERROR_TIMEOUT = 1;
-
-    /** a communication error has occured */
-    public static final int ERROR_COMMUNICATION = 2;
-
+public interface IAUTEventListener extends EventListener {
     /**
-     * This method will be called if an error has occured.
+     * This method will be called when the state of the AUT changes. The event
+     * contains detailed information about the changes.
      * 
-     * @param reason
-     *            see constants
+     * @param event -
+     *            the detailed event
      */
-    public void error(int reason);
-
+    public void stateChanged(AUTEvent event);
 }

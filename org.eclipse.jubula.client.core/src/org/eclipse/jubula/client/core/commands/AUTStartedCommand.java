@@ -10,10 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
-import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.ClientTest;
-import org.eclipse.jubula.client.core.IAUTInfoListener;
 import org.eclipse.jubula.client.core.IClientTest;
+import org.eclipse.jubula.client.core.events.AUTEvent;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.AUTStartStateMessage;
@@ -38,9 +37,6 @@ public class AUTStartedCommand implements ICommand {
     private static Logger log = 
         LoggerFactory.getLogger(AUTStartedCommand.class);
 
-    /** the listener to notify */
-    private IAUTInfoListener m_listener;
-    
     /** the message */
     private AUTStartStateMessage m_message;
 
@@ -55,17 +51,6 @@ public class AUTStartedCommand implements ICommand {
      */
     public AUTStartedCommand() {
         // Nothing to initialize
-    }
-
-    /**
-     * Constructor
-     * 
-     * @param listener
-     *            the listener to callback, may be null
-     */
-    public AUTStartedCommand(IAUTInfoListener listener) {
-        super();
-        setListener(listener);
     }
 
     /**
@@ -137,23 +122,5 @@ public class AUTStartedCommand implements ICommand {
      */
     public void timeout() {
         log.warn(this.getClass().getName() + ".timeout() called"); //$NON-NLS-1$
-        IAUTInfoListener listener = getListener();
-        if (listener != null) {
-            listener.error(IAUTInfoListener.ERROR_TIMEOUT);
-        }
-    }
-
-    /**
-     * @return the listener; may be <code>null</code>!
-     */
-    public IAUTInfoListener getListener() {
-        return m_listener;
-    }
-
-    /**
-     * @param listener the listener to set
-     */
-    private void setListener(IAUTInfoListener listener) {
-        m_listener = listener;
     }
 }

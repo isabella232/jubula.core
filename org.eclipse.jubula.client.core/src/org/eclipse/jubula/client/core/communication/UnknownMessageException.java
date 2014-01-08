@@ -8,20 +8,27 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core;
+package org.eclipse.jubula.client.core.communication;
 
-import org.eclipse.jubula.communication.message.ServerLogResponseMessage;
+import org.eclipse.jubula.tools.exception.CommunicationException;
 
 /**
+ * Exception to throw if an appropriate message could not created. 
+ * 
  * @author BREDEX GmbH
- * @created Feb 8, 2007
+ * @created 09.05.2006
  */
-public interface IServerLogListener {
+public class UnknownMessageException 
+    extends CommunicationException {
 
     /**
+     * public constructor
      * 
-     * @param response The response
+     * @param message The detailed message.
+     * @param id An ErrorMessage.ID.
+     * {@inheritDoc}
      */
-    public void processServerLog(ServerLogResponseMessage response);
-    
+    public UnknownMessageException(String message, Integer id) {
+        super(message, id);
+    }
 }

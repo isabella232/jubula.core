@@ -8,27 +8,23 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core;
+package org.eclipse.jubula.client.core.events;
 
-import org.eclipse.jubula.tools.exception.CommunicationException;
+import java.util.EventListener;
 
 /**
- * Exception to throw if an appropriate message could not created. 
- * 
+ * The interface for listening to events concerning the AutStarter.
+ *
  * @author BREDEX GmbH
- * @created 09.05.2006
+ * @created 13.08.2004
  */
-public class UnknownMessageException 
-    extends CommunicationException {
-
+public interface IServerEventListener extends EventListener {
     /**
-     * public constructor
+     * This method will be called when the state of the Server changes. The
+     * event contains detailed information about the changes.
      * 
-     * @param message The detailed message.
-     * @param id An ErrorMessage.ID.
-     * {@inheritDoc}
+     * @param event -
+     *            the detailed event
      */
-    public UnknownMessageException(String message, Integer id) {
-        super(message, id);
-    }
+    public void stateChanged(AutAgentEvent event);
 }

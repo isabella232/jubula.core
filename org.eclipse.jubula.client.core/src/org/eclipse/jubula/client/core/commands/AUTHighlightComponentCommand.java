@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
-import org.eclipse.jubula.client.core.IAUTEventListener;
+import org.eclipse.jubula.client.core.events.IAUTEventListener;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.AUTHighlightComponentResponseMessage;
 import org.eclipse.jubula.communication.message.Message;

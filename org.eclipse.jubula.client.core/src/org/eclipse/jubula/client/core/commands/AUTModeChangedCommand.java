@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
-import org.eclipse.jubula.client.core.AUTServerEvent;
 import org.eclipse.jubula.client.core.ClientTest;
+import org.eclipse.jubula.client.core.events.AUTServerEvent;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.AUTModeChangedMessage;
