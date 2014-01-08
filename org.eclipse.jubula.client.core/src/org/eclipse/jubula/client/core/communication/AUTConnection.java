@@ -20,7 +20,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.AUTServerEvent;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IAUTInfoListener;
 import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.MessageFactory;
@@ -415,7 +415,7 @@ public class AUTConnection extends BaseConnection {
                         IAUTInfoListener.ERROR_COMMUNICATION);
             }
         } catch (UnknownMessageException ume) {
-            ClientTestFactory.getClientTest().fireAUTServerStateChanged(
+            ClientTest.instance().fireAUTServerStateChanged(
                     new AUTServerEvent(ume.getErrorId()));
         } 
     }
@@ -442,7 +442,7 @@ public class AUTConnection extends BaseConnection {
                     LOG.debug(Messages.SecurityViolationGettingHostNameFromIP);
                 }
             }
-            ClientTestFactory.getClientTest().
+            ClientTest.instance().
                 fireAUTServerStateChanged(new AUTServerEvent(
                     ServerEvent.CONNECTION_GAINED));
         }
@@ -458,7 +458,7 @@ public class AUTConnection extends BaseConnection {
             disconnectFromAut();
             DataEventDispatcher.getInstance().fireAutServerConnectionChanged(
                     ServerState.Disconnected);
-            IClientTest clientTest = ClientTestFactory.getClientTest();
+            IClientTest clientTest = ClientTest.instance();
             clientTest.fireAUTServerStateChanged(new AUTServerEvent(
                     AUTServerEvent.TESTING_MODE));
             clientTest.fireAUTStateChanged(new AUTEvent(AUTEvent.AUT_STOPPED));

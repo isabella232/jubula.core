@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -65,7 +65,7 @@ public class StartTestJobHandler extends AbstractStartTestHandler {
                         }
                     });
                     if (prepareOk.get()) {
-                        ClientTestFactory.getClientTest().startTestJob(
+                        ClientTest.instance().startTestJob(
                                 finalTestJob,
                                 WorkingLanguageBP.getInstance()
                                         .getWorkingLanguage(), autoScreenshots);

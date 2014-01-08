@@ -18,7 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -126,7 +126,7 @@ public class TestresultSummaryBP {
                 + result.getProjectMinorVersion());
         summary.setProjectMajorVersion(result.getProjectMajorVersion());
         summary.setProjectMinorVersion(result.getProjectMinorVersion());
-        IClientTest clientTest = ClientTestFactory.getClientTest();
+        IClientTest clientTest = ClientTest.instance();
         Date startTime = clientTest.getTestsuiteStartTime();
         summary.setTestsuiteStartTime(startTime);
         Date endTime = new Date();

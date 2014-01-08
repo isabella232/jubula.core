@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.commands;
 
 import org.eclipse.jubula.client.core.AUTEvent;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IAUTInfoListener;
 import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.i18n.Messages;
@@ -80,7 +80,7 @@ public class AUTStartedCommand implements ICommand {
      */
     private void fireAutStateChanged() {
         int state = m_stateMessage.getState();
-        IClientTest clientTest = ClientTestFactory.getClientTest();
+        IClientTest clientTest = ClientTest.instance();
         switch (state) {
             case AUTStateMessage.RUNNING:
                 log.info(Messages.AUTIsRunning);

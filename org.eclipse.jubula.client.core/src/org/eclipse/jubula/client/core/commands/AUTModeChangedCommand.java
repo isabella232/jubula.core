@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.commands;
 
 import org.eclipse.jubula.client.core.AUTServerEvent;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.AUTModeChangedMessage;
@@ -73,25 +73,25 @@ public class AUTModeChangedCommand implements ICommand {
             case ChangeAUTModeMessage.OBJECT_MAPPING :
                 event = 
                     new AUTServerEvent(AUTServerEvent.MAPPING_MODE);
-                ClientTestFactory.getClientTest().
+                ClientTest.instance().
                     fireAUTServerStateChanged(event);
                 break;
             case ChangeAUTModeMessage.TESTING :
                 event = 
                     new AUTServerEvent(AUTServerEvent.TESTING_MODE);
-                ClientTestFactory.getClientTest().
+                ClientTest.instance().
                     fireAUTServerStateChanged(event);
                 break;
             case ChangeAUTModeMessage.RECORD_MODE :
                 event = 
                     new AUTServerEvent(AUTServerEvent.RECORD_MODE);
-                ClientTestFactory.getClientTest().
+                ClientTest.instance().
                     fireAUTServerStateChanged(event);
                 break;
             case ChangeAUTModeMessage.CHECK_MODE :
                 event = 
                     new AUTServerEvent(AUTServerEvent.CHECK_MODE);
-                ClientTestFactory.getClientTest().
+                ClientTest.instance().
                     fireAUTServerStateChanged(event);
                 break;
             default : 

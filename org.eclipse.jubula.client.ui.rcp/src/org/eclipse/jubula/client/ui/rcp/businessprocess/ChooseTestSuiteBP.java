@@ -483,9 +483,8 @@ public class ChooseTestSuiteBP {
         }
         TestExecutionGUIController.startTestSuite(tsToStart, autId,
                 autoScreenshot);
-        ChooseTestSuiteBP.getInstance().setLastUsedTestSuite(tsToStart);
-        ChooseTestSuiteBP.getInstance().setLastUsedAUT(autId);
-
+        setLastUsedTestSuite(tsToStart);
+        setLastUsedAUT(autId);
     }
 
     /**

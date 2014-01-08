@@ -19,7 +19,7 @@ import org.apache.commons.lang.time.DurationFormatUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -303,7 +303,7 @@ public abstract class AbstractXMLReportGenerator {
                 }
             }
             
-            if (ClientTestFactory.getClientTest().isScreenshotForXML()) {
+            if (ClientTest.instance().isScreenshotForXML()) {
                 final byte[] screenshotData = resultNode.getScreenshot();
                 if (screenshotData != null) {
                     Element screenshotElement = error.addElement("screenshot"); //$NON-NLS-1$

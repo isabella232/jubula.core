@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.commands;
 
 import org.eclipse.jubula.client.core.AUTEvent;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.AUTServerStateMessage;
@@ -71,25 +71,25 @@ public class AUTServerStateCommand implements ICommand {
             case AUTServerStateMessage.READY: 
                 log.info(Messages.AUTServerIsReady);
                 // State "Ready" mapped to "AUT_RESTARTED" (see JavaDoc)
-                ClientTestFactory.getClientTest().fireAUTStateChanged(
+                ClientTest.instance().fireAUTStateChanged(
                     new AUTEvent(AUTEvent.AUT_RESTARTED));
                 return new AUTStartMessage();
             case AUTServerStateMessage.AUT_NOT_FOUND:
                 log.info(Messages.TheAUTCouldNotFound + StringConstants.DOT 
                     + StringConstants.SPACE + m_message.getDescription());
-                ClientTestFactory.getClientTest().fireAUTStateChanged(
+                ClientTest.instance().fireAUTStateChanged(
                     new AUTEvent(AUTEvent.AUT_NOT_FOUND));
                 break;
             case AUTServerStateMessage.MAIN_METHOD_NOT_FOUND:
                 log.info(Messages.TheMainMethodCouldNotLoaded
                         + StringConstants.DOT + StringConstants.SPACE);
-                ClientTestFactory.getClientTest().fireAUTStateChanged(
+                ClientTest.instance().fireAUTStateChanged(
                     new AUTEvent(AUTEvent.AUT_MAIN_NOT_FOUND));    
                 break;
             case AUTServerStateMessage.EXIT_AUT_WRONG_CLASS_VERSION:
                 log.info(Messages.AUTClassFormatNotSupportedByUsedJRE 
                         + StringConstants.DOT + StringConstants.SPACE);
-                ClientTestFactory.getClientTest().fireAUTStateChanged(
+                ClientTest.instance().fireAUTStateChanged(
                     new AUTEvent(AUTEvent.AUT_CLASS_VERSION_ERROR));    
                 break;
             default:

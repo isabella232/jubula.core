@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.sourceprovider;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.ui.ISources;
@@ -50,7 +50,7 @@ public class TestExecutionSourceProvider extends AbstractJBSourceProvider
      * Constructor
      */
     public TestExecutionSourceProvider() {
-        ClientTestFactory.getClientTest().addTestExecutionEventListener(this);
+        ClientTest.instance().addTestExecutionEventListener(this);
     }
 
 
@@ -58,7 +58,7 @@ public class TestExecutionSourceProvider extends AbstractJBSourceProvider
      * {@inheritDoc}
      */
     public void dispose() {
-        ClientTestFactory.getClientTest()
+        ClientTest.instance()
             .removeTestExecutionEventListener(this);
     }
 

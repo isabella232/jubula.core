@@ -16,7 +16,9 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.State;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jubula.client.core.ClientTest;
+import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
@@ -42,28 +44,28 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
     /**
      * run before test execution
      * 
-     * @return true if preparation has been successfull, false otherwise
+     * @return true if preparation has been successful, false otherwise
      */
     public static boolean prepareTestExecution() {
-        if (Plugin.getDefault().getPreferenceStore().getBoolean(
-                Constants.GENERATEREPORT_KEY)) {
+        final IClientTest clientTest = ClientTest.instance();
+        final IPreferenceStore preferenceStore = Plugin.getDefault()
+            .getPreferenceStore();
+        if (preferenceStore.getBoolean(Constants.GENERATEREPORT_KEY)) {
             URL xslUrl = TestResultBP.getInstance().getXslFileURL();
-            
+
             if (xslUrl == null) {
                 Plugin.getDefault().handleError(
-                        new JBException(Messages.FileNotFoundFormatXsl,
-                                MessageIDs.E_FILE_NOT_FOUND));
+                    new JBException(Messages.FileNotFoundFormatXsl,
+                        MessageIDs.E_FILE_NOT_FOUND));
                 return false;
             }
-            ClientTestFactory.getClientTest().setLogPath(
-                    Plugin.getDefault().getPreferenceStore().getString(
-                            Constants.RESULTPATH_KEY));
-            ClientTestFactory.getClientTest().setLogStyle(
-                    Plugin.getDefault().getPreferenceStore().getString(
-                            Constants.REPORTGENERATORSTYLE_KEY));
+            clientTest.setLogPath(preferenceStore
+                .getString(Constants.RESULTPATH_KEY));
+            clientTest.setLogStyle(preferenceStore
+                .getString(Constants.REPORTGENERATORSTYLE_KEY));
         } else {
-            ClientTestFactory.getClientTest().setLogPath(null);
-            ClientTestFactory.getClientTest().setLogStyle(null);
+            clientTest.setLogPath(null);
+            clientTest.setLogStyle(null);
         }
         return true;
     }
@@ -71,14 +73,14 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
     /**
      * init the GUI test execution part
      * 
-     * @return whether initialisation has been successfull
+     * @return whether initialisation has been successful
      */
     protected boolean initTestExecution() {
         return initTestExecutionRelevantFlag() && initPauseTestExecutionState();
     }
 
     /**
-     * @return true if init has been successfull
+     * @return true if init has been successful
      */
     private boolean initPauseTestExecutionState() {
         ICommandService cmdService = (ICommandService)Plugin.getActivePart()
@@ -98,7 +100,7 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
                                 state.setValue(false);
                             }
                         });
-                        ClientTestFactory.getClientTest()
+                        ClientTest.instance()
                                 .removeTestExecutionEventListener(this);
                     }
 
@@ -117,7 +119,7 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
                         });
                     }
                 };
-                ClientTestFactory.getClientTest()
+                ClientTest.instance()
                         .addTestExecutionEventListener(l);
                 return true;
             }
@@ -129,14 +131,17 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
      * @return true if flag has been successfully determined
      */
     private boolean initTestExecutionRelevantFlag() {
-        int value = Plugin.getDefault().getPreferenceStore().getInt(
-                Constants.TEST_EXEC_RELEVANT);
+        final IPreferenceStore preferenceStore = Plugin.getDefault()
+            .getPreferenceStore();
 
+        int value = preferenceStore.getInt(Constants.TEST_EXEC_RELEVANT);
+
+        final IClientTest clientTest = ClientTest.instance();
         if (value == Constants.TEST_EXECUTION_RELEVANT_YES) {
-            ClientTestFactory.getClientTest().setRelevantFlag(true);
+            clientTest.setRelevantFlag(true);
             return true;
         } else if (value == Constants.TEST_EXECUTION_RELEVANT_NO) {
-            ClientTestFactory.getClientTest().setRelevantFlag(false);
+            clientTest.setRelevantFlag(false);
             return true;
         }
 
@@ -145,42 +150,37 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
         final int returnCodeNO = 257; // since Eclipse3.2 (not 1)
         final int returnCodeCANCEL = -1;
         MessageDialogWithToggle dialog = new MessageDialogWithToggle(
-                getActiveShell(),
-                Messages.TestExecRelevantDialogTitle,
-                null,
-                Messages.TestExecRelevantDialogQuestion,
-                MessageDialog.QUESTION,
-                new String[] {
-                    Messages.UtilsYes, Messages.UtilsNo }, 0, 
-                    Messages.UtilsRemember, false) {
+            getActiveShell(), Messages.TestExecRelevantDialogTitle, null,
+            Messages.TestExecRelevantDialogQuestion, MessageDialog.QUESTION,
+            new String[] { Messages.UtilsYes, Messages.UtilsNo }, 0,
+            Messages.UtilsRemember, false) {
 
             /**
              * {@inheritDoc}
              */
             protected void buttonPressed(int buttonId) {
                 super.buttonPressed(buttonId);
-                Plugin.getDefault().getPreferenceStore().setValue(
-                        Constants.TEST_EXECUTION_RELEVANT_REMEMBER_KEY,
-                        getToggleState());
+                preferenceStore.setValue(
+                    Constants.TEST_EXECUTION_RELEVANT_REMEMBER_KEY,
+                    getToggleState());
                 int val = Constants.TEST_EXECUTION_RELEVANT_PROMPT;
                 if (getToggleState() && getReturnCode() == returnCodeNO) {
                     val = Constants.TEST_EXECUTION_RELEVANT_NO;
                 } else if (getToggleState() && getReturnCode() 
-                        == returnCodeYES) {
+                    == returnCodeYES) {
                     val = Constants.TEST_EXECUTION_RELEVANT_YES;
                 }
-                Plugin.getDefault().getPreferenceStore().setValue(
-                        Constants.TEST_EXEC_RELEVANT, val);
+                preferenceStore.setValue(Constants.TEST_EXEC_RELEVANT, val);
             }
         };
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();
-        ClientTestFactory.getClientTest().setRelevantFlag(true);
+        clientTest.setRelevantFlag(true);
         if (dialog.getReturnCode() == returnCodeNO) {
-            ClientTestFactory.getClientTest().setRelevantFlag(false);
+            clientTest.setRelevantFlag(false);
         } else if (dialog.getReturnCode() == returnCodeCANCEL) {
-            ClientTestFactory.getClientTest().setRelevantFlag(false);
+            clientTest.setRelevantFlag(false);
             return false;
         }
         return true;

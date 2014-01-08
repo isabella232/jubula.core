@@ -14,7 +14,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import org.eclipse.jubula.client.core.AutAgentEvent;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.ServerEvent;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.Communicator;
@@ -138,7 +138,7 @@ public class AutAgentConnection extends BaseConnection {
                     log.debug(Messages.SecurityViolationGettingHostNameFromIP);
                 }
             }
-            ClientTestFactory.getClientTest().fireAutAgentStateChanged(
+            ClientTest.instance().fireAutAgentStateChanged(
                 new AutAgentEvent(ServerEvent.CONNECTION_GAINED));
         }
 
@@ -151,7 +151,7 @@ public class AutAgentConnection extends BaseConnection {
             
             try {
                 AUTConnection.getInstance().close();
-                ClientTestFactory.getClientTest().
+                ClientTest.instance().
                     fireAutAgentStateChanged(
                         new AutAgentEvent(ServerEvent.CONNECTION_CLOSED));
             } catch (ConnectionException ce) {
@@ -185,7 +185,7 @@ public class AutAgentConnection extends BaseConnection {
          */
         public void connectingFailed(InetAddress inetAddress, int port) {
             log.warn(Messages.ConnectingTheAUTAgentFailed);
-            ClientTestFactory.getClientTest().
+            ClientTest.instance().
                 fireAutAgentStateChanged(new AutAgentEvent(
                     AutAgentEvent.SERVER_CANNOT_CONNECTED));
         }

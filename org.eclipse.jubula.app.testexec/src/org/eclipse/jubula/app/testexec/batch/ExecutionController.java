@@ -33,7 +33,7 @@ import org.eclipse.jubula.client.cmd.controller.intern.RmiBase;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.AUTServerEvent;
 import org.eclipse.jubula.client.core.AutAgentEvent;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IAUTEventListener;
 import org.eclipse.jubula.client.core.IAUTServerEventListener;
 import org.eclipse.jubula.client.core.IClientTest;
@@ -134,7 +134,7 @@ public class ExecutionController implements IAUTServerEventListener,
             if (workUnit == null) {
                 m_result = -1;
             } else {
-                ClientTestFactory.getClientTest().startTestSuite(
+                ClientTest.instance().startTestSuite(
                         workUnit,
                         m_job.getLanguage(),
                         m_startedAutId,
@@ -222,7 +222,7 @@ public class ExecutionController implements IAUTServerEventListener,
 
             sysErr(Messages.ExecutionControllerAbort);
 
-            ClientTestFactory.getClientTest().stopTestExecution();
+            ClientTest.instance().stopTestExecution();
             stopProcessing();
             
             // wait 30 seconds, then exit the whole program
@@ -326,7 +326,7 @@ public class ExecutionController implements IAUTServerEventListener,
 
     /** private constructor */
     private ExecutionController() {
-        IClientTest clientTest = ClientTestFactory.getClientTest();
+        IClientTest clientTest = ClientTest.instance();
         clientTest.addAUTServerEventListener(this);
         clientTest.addAutAgentEventListener(this);
         clientTest.addTestEventListener(this);
@@ -400,8 +400,8 @@ public class ExecutionController implements IAUTServerEventListener,
         }
         sysOut(NLS.bind(Messages.ConnectingToAUTAgent,
             new Object[] { m_job.getServer(), m_job.getPort() }));
-        // init ClientTest
-        IClientTest clientTest = ClientTestFactory.getClientTest();
+        // init ClientTestImpl
+        IClientTest clientTest = ClientTest.instance();
         clientTest.connectToAutAgent(m_job.getServer(), m_job.getPort());
         if (!AutAgentConnection.getInstance().isConnected()) {
             throw new CommunicationException(
@@ -460,7 +460,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 sysOut(StringConstants.TAB
                     + NLS.bind(Messages.ExecutionControllerTestSuiteBegin,
                         m_job.getActualTestSuite().getName()));
-                ClientTestFactory.getClientTest().startTestSuite(
+                ClientTest.instance().startTestSuite(
                     m_job.getActualTestSuite(),
                     m_job.getLanguage(),
                     m_startedAutId != null ? m_startedAutId : m_job
@@ -476,7 +476,7 @@ public class ExecutionController implements IAUTServerEventListener,
         sysOut(StringConstants.TAB
                 + NLS.bind(Messages.ExecutionControllerTestJobBegin, m_job
                         .getTestJob().getName()));
-        ClientTestFactory.getClientTest().startTestJob(
+        ClientTest.instance().startTestJob(
                 m_job.getTestJob(), m_job.getLanguage(),
                 m_job.isAutoScreenshot());
     }
@@ -519,7 +519,7 @@ public class ExecutionController implements IAUTServerEventListener,
                         autConfig.getConfigMap().get(
                                 AutConfigConstants.AUT_ID));
                 if (AutAgentConnection.getInstance().isConnected()) {
-                    ClientTestFactory.getClientTest().stopAut(startedAutId);
+                    ClientTest.instance().stopAut(startedAutId);
                 }
             } catch (ConnectionException e) {
                 LOG.info(Messages.ErrorWhileStoppingAUT, e);
@@ -572,7 +572,7 @@ public class ExecutionController implements IAUTServerEventListener,
         if (StringUtils.isNotEmpty(m_job.getResultDir())) {
             Validate.isTrue(FileUtils.isValidPath(m_job.getResultDir()),
                     Messages.ExecutionControllerLogPathError);
-            ClientTestFactory.getClientTest().setLogPath(m_job.getResultDir());
+            ClientTest.instance().setLogPath(m_job.getResultDir());
         }
     }
 
@@ -590,7 +590,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 AutIdentifier autToStart = new AutIdentifier(autConf
                         .getConfigMap().get(AutConfigConstants.AUT_ID));
                 AUTStartListener asl = new AUTStartListener(autToStart);
-                IClientTest clientTest = ClientTestFactory.getClientTest();
+                IClientTest clientTest = ClientTest.instance();
                 clientTest.addTestEventListener(asl);
                 clientTest.addAUTServerEventListener(asl);
                 AutAgentRegistration.getInstance().addListener(asl);
@@ -712,7 +712,7 @@ public class ExecutionController implements IAUTServerEventListener,
         
         /** remove listener */
         protected void removeListener() {
-            IClientTest clientTest = ClientTestFactory.getClientTest();
+            IClientTest clientTest = ClientTest.instance();
             clientTest.removeTestEventListener(this);
             clientTest.removeAUTServerEventListener(this);
             AutAgentRegistration.getInstance().removeListener(this);
@@ -858,7 +858,7 @@ public class ExecutionController implements IAUTServerEventListener,
             case AUTEvent.AUT_STOPPED:
                 if (m_isTestSuiteRunning) {
                     sysErr(Messages.ExecutionControllerAUTConnectionLost);
-                    ClientTestFactory.getClientTest().stopTestExecution();
+                    ClientTest.instance().stopTestExecution();
                 } else {
                     sysOut(NLS.bind(Messages.ExecutionControllerAUT,
                         Messages.ExecutionControllerAUTDisconnected));

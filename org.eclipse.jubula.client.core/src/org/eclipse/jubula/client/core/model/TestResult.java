@@ -16,7 +16,7 @@ import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -102,7 +102,7 @@ public class TestResult extends AbstractTestResult {
      * {@inheritDoc}
      */
     public Date getEndTime() {
-        return ClientTestFactory.getClientTest().getEndTime();
+        return ClientTest.instance().getEndTime();
     }
 
     /**
@@ -173,7 +173,7 @@ public class TestResult extends AbstractTestResult {
      * {@inheritDoc}
      */
     public Date getStartTime() {
-        return ClientTestFactory.getClientTest().getTestsuiteStartTime();
+        return ClientTest.instance().getTestsuiteStartTime();
     }
 
     /**

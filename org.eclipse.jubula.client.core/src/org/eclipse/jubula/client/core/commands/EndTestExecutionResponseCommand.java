@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent.State;
@@ -51,7 +51,7 @@ public class EndTestExecutionResponseCommand implements ICommand {
      */
     public Message execute() {
         
-        ClientTestFactory.getClientTest().fireTestExecutionChanged(
+        ClientTest.instance().fireTestExecutionChanged(
                 new TestExecutionEvent(State.TEST_EXEC_FINISHED));
         TestExecution.getInstance().stopExecution();
         return null;

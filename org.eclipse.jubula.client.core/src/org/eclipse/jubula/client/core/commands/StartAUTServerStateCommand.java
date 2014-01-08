@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.commands;
 
 import org.eclipse.jubula.client.core.AUTServerEvent;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.ICommand;
@@ -54,7 +54,7 @@ public class StartAUTServerStateCommand implements ICommand {
      */
     public Message execute() {
         int state = m_message.getReason();
-        IClientTest clientTest = ClientTestFactory.getClientTest();
+        IClientTest clientTest = ClientTest.instance();
         switch (state) {
             case StartAUTServerStateMessage.OK: 
                 log.info(Messages.AUTServerIsStarting);

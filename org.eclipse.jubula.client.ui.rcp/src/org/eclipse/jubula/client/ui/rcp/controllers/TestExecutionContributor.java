@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.AUTServerEvent;
 import org.eclipse.jubula.client.core.AutAgentEvent;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IAUTEventListener;
 import org.eclipse.jubula.client.core.IAUTServerEventListener;
 import org.eclipse.jubula.client.core.IClientTest;
@@ -83,7 +83,7 @@ public class TestExecutionContributor
     private static Logger log = LoggerFactory
         .getLogger(TestExecutionContributor.class);
     
-    /** ClientTest */
+    /** ClientTestImpl */
     private IClientTest m_clientTest;
     /** the started server */
     private String m_server = StringConstants.EMPTY; 
@@ -95,7 +95,7 @@ public class TestExecutionContributor
      */
     private TestExecutionContributor () {
         super();
-        setClientTest(ClientTestFactory.getClientTest());
+        setClientTest(ClientTest.instance());
         registerAsListener();
     }
     
@@ -105,7 +105,7 @@ public class TestExecutionContributor
      * dispose()..
      */
     private void registerAsListener() {
-        IClientTest clientTest = ClientTestFactory.getClientTest();
+        IClientTest clientTest = ClientTest.instance();
         clientTest.addTestEventListener(this);
         clientTest.addAutAgentEventListener(this);
         clientTest.addAUTServerEventListener(this);
@@ -116,7 +116,7 @@ public class TestExecutionContributor
      * deregister this as listener
      */
     private void deregister() {
-        IClientTest clientTest = ClientTestFactory.getClientTest();
+        IClientTest clientTest = ClientTest.instance();
         clientTest.removeTestEventListener(this);
         clientTest.removeAutAgentEventListener(this);
         clientTest.removeAUTServerEventListener(this);
@@ -127,9 +127,9 @@ public class TestExecutionContributor
      * {@inheritDoc}
      */
     public void dispose() {
-        // remove this as EventListener from ClientTest
+        // remove this as EventListener from ClientTestImpl
         deregister();
-        // free ClientTest reference
+        // free ClientTestImpl reference
         setClientTest(null);
     }
 

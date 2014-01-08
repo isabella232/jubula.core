@@ -31,8 +31,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jubula.client.core.AUTEvent;
 import org.eclipse.jubula.client.core.Activator;
+import org.eclipse.jubula.client.core.ClientTestImpl;
 import org.eclipse.jubula.client.core.ClientTest;
-import org.eclipse.jubula.client.core.ClientTestFactory;
 import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.MessageFactory;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
@@ -269,7 +269,7 @@ public class TestExecution {
         m_postExecCmdFactory = new PostExecCommandFactory();
         setTimerStore(new HashMap<String, Long>());
         m_externalTestDataBP = new ExternalTestDataBP();
-        ClientTestFactory.getClientTest().addTestExecutionEventListener(
+        ClientTest.instance().addTestExecutionEventListener(
                 new ITestExecutionEventListener() {
                     /**
                      * Clears this ExternalTestDataBP (e.g. the caches) 
@@ -350,7 +350,7 @@ public class TestExecution {
                 startTestSuite(testSuite, locale, monitor);
                 
                 final AtomicBoolean testSuiteFinished = new AtomicBoolean();
-                ClientTestFactory.getClientTest().addTestExecutionEventListener(
+                ClientTest.instance().addTestExecutionEventListener(
                         new ITestExecutionEventListener() {
                             public void endTestExecution() {
                                 try {
@@ -358,7 +358,7 @@ public class TestExecution {
                                 } catch (ConnectionException e) {
                                     // Do nothing. Connection is already closed.
                                 }
-                                ClientTestFactory.getClientTest()
+                                ClientTest.instance()
                                         .removeTestExecutionEventListener(this);
                                 testSuiteFinished.set(true);
                             }
@@ -408,7 +408,7 @@ public class TestExecution {
             autName = NLS.bind(Messages.ErrorDetailNO_AUT_ID_FOR_REF_TS_FOUND,
                     testSuite.getName());
         }
-        ClientTestFactory.getClientTest().fireTestExecutionChanged(
+        ClientTest.instance().fireTestExecutionChanged(
                 new TestExecutionEvent(State.TEST_EXEC_FAILED,
                         new JBException(Messages.CouldNotConnectToAUT + autName,
                                 MessageIDs.E_NO_AUT_CONNECTION_ERROR)));
@@ -495,7 +495,7 @@ public class TestExecution {
     protected Map<String, String> getConnectedAUTsConfigMap() {
         if (TestExecution.getInstance().getConnectedAutId() != null) {
             String autID = getConnectedAutId().getExecutableName();
-            return ClientTestFactory.getClientTest()
+            return ClientTest.instance()
                 .requestAutConfigMapFromAgent(autID);
         }
         return null;
@@ -536,7 +536,7 @@ public class TestExecution {
             m_resultTreeTracker = new ResultTreeTracker(resultTreeBuilder.
                     getRootNode(), m_externalTestDataBP);
             IProgressMonitor subMonitor = new SubProgressMonitor(monitor,
-                    ClientTest.TEST_SUITE_EXECUTION_RELATIVE_WORK_AMOUNT);
+                    ClientTestImpl.TEST_SUITE_EXECUTION_RELATIVE_WORK_AMOUNT);
             subMonitor.beginTask(
                     NLS.bind(Messages.ExecutingTestSuite, testSuite.getName()),
                     m_expectedNumberOfSteps);
@@ -545,7 +545,7 @@ public class TestExecution {
 
             // set global delay for each test step
             setStepSpeed(testSuite.getStepDelay());
-            ClientTestFactory.getClientTest().
+            ClientTest.instance().
                 fireTestExecutionChanged(new TestExecutionEvent(
                         State.TEST_EXEC_RESULT_TREE_READY));
             monitor.subTask(
@@ -557,7 +557,7 @@ public class TestExecution {
             fireError(e);
         }
         if (firstCap != null) {
-            ClientTestFactory.getClientTest().
+            ClientTest.instance().
                 fireTestExecutionChanged(new TestExecutionEvent(
                         State.TEST_EXEC_START));
             processCap(firstCap);
@@ -1021,7 +1021,7 @@ public class TestExecution {
                         if (m_autoScreenshot) {
                             addScreenshot(resultNode);
                         }
-                        if (ClientTestFactory.getClientTest()
+                        if (ClientTest.instance()
                                 .isPauseTestExecutionOnError()) {
                             pauseExecution(PauseMode.PAUSE);
                         }
@@ -1185,7 +1185,7 @@ public class TestExecution {
      *            Exception
      */
     private void fireError(Exception e) {
-        ClientTestFactory.getClientTest().fireTestExecutionChanged(
+        ClientTest.instance().fireTestExecutionChanged(
                 new TestExecutionEvent(State.TEST_EXEC_FAILED, e));
         endTestExecution();
     }
@@ -1194,7 +1194,7 @@ public class TestExecution {
      * Fires an event if test fails, because the component name is wrong.
      */
     private void fireComponentError() {
-        ClientTestFactory.getClientTest().
+        ClientTest.instance().
             fireTestExecutionChanged(new TestExecutionEvent(
                 State.TEST_EXEC_COMPONENT_FAILED));
         endTestExecution();
@@ -1235,7 +1235,7 @@ public class TestExecution {
                     LOG.info(Messages.TestsuiteIsStopped);
                 }
                 
-                ClientTestFactory.getClientTest().fireEndTestExecution();
+                ClientTest.instance().fireEndTestExecution();
                 try {
                     AUTConnection.getInstance().close();
                 } catch (ConnectionException e) {
@@ -1323,7 +1323,7 @@ public class TestExecution {
                     if (LOG.isInfoEnabled()) {
                         LOG.info(Messages.TestsuiteIsPaused);
                     }
-                    ClientTestFactory.getClientTest().fireTestExecutionChanged(
+                    ClientTest.instance().fireTestExecutionChanged(
                             new TestExecutionEvent(
                                     State.TEST_EXEC_PAUSED));
                 } else {
@@ -1340,7 +1340,7 @@ public class TestExecution {
                             sendActivateAUTMessage();
                         }
                     }
-                    ClientTestFactory.getClientTest().fireTestExecutionChanged(
+                    ClientTest.instance().fireTestExecutionChanged(
                             new TestExecutionEvent(
                                     State.TEST_EXEC_START));
                 }
@@ -1893,7 +1893,7 @@ public class TestExecution {
                 boolean wasInterrupted = Thread.interrupted();
                 AutAgentRegistration.getInstance().addListener(
                         registrationListener);
-                IClientTest clientTest = ClientTestFactory.getClientTest();
+                IClientTest clientTest = ClientTest.instance();
                 clientTest.fireAUTStateChanged(new AUTEvent(
                         AUTEvent.AUT_ABOUT_TO_TERMINATE));
                 
@@ -1939,7 +1939,7 @@ public class TestExecution {
                     LOG.debug(Messages.ContinueTestExecution);
                 }
                 if (!m_stopped) { // the AUT/TS may be stopped by a project load
-                    ClientTestFactory.getClientTest().fireTestExecutionChanged(
+                    ClientTest.instance().fireTestExecutionChanged(
                             new TestExecutionEvent(
                                     State.TEST_EXEC_RESTART));
                 } else {

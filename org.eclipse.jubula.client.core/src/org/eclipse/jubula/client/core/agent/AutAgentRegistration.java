@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.jubula.client.core.AutAgentEvent;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IServerEventListener;
 import org.eclipse.jubula.client.core.ServerEvent;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent.RegistrationStatus;
@@ -69,7 +69,7 @@ public class AutAgentRegistration
      * Private constructor for singleton.
      */
     private AutAgentRegistration() {
-        ClientTestFactory.getClientTest().addAutAgentEventListener(this);
+        ClientTest.instance().addAutAgentEventListener(this);
     }
     
     /**

@@ -31,7 +31,7 @@ import org.eclipse.jubula.client.cmd.constants.ClientStrings;
 import org.eclipse.jubula.client.cmd.exceptions.PreValidateException;
 import org.eclipse.jubula.client.cmd.i18n.Messages;
 import org.eclipse.jubula.client.cmd.progess.HeadlessProgressProvider;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.AutAgentConnection;
@@ -131,7 +131,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
                         startedConfig.getConfigMap().get(
                                 AutConfigConstants.AUT_ID));
                 if (AutAgentConnection.getInstance().isConnected()) {
-                    ClientTestFactory.getClientTest().stopAut(startedAutId);
+                    ClientTest.instance().stopAut(startedAutId);
                 }
             } catch (ConnectionException e) {
                 log.info(Messages.ErrorWhileShuttingDownStopping, e);
@@ -140,7 +140,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         
         try {
             while (AutAgentConnection.getInstance().isConnected()) {
-                ClientTestFactory.getClientTest().disconnectFromAutAgent();
+                ClientTest.instance().disconnectFromAutAgent();
                 TimeUtil.delay(200);
             }
         } catch (ConnectionException e) {

@@ -309,7 +309,7 @@ public interface Constants {
     
     // -------------------------------------------------------------
     // preference default values
-    // some key, useful for ClientTest has been moved to
+    // some key, useful for ClientTestImpl has been moved to
     // org.eclipse.jubula.tools.constants.TestDataConstants
     // -------------------------------------------------------------
         

@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
 import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
@@ -66,7 +66,7 @@ public class CentralTestDataSetValueFunctionEvaluator
      * execution starts
      */
     static {
-        ClientTestFactory.getClientTest()
+        ClientTest.instance()
             .addTestExecutionEventListener(new ITestExecutionEventListener() {
                 public void stateChanged(TestExecutionEvent event) {
                     if (event.getState() == State.TEST_EXEC_RESULT_TREE_READY) {

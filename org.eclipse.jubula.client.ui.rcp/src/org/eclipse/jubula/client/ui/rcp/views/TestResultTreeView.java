@@ -27,7 +27,7 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
 import org.eclipse.jubula.client.core.businessprocess.ITestResultEventListener;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
@@ -136,7 +136,7 @@ public class TestResultTreeView extends ViewPart
                 new TestResultTreeViewLabelProvider(), Plugin.getDefault()
                     .getWorkbench().getDecoratorManager().getLabelDecorator()));
         
-        ClientTestFactory.getClientTest().addTestExecutionEventListener(this);
+        ClientTest.instance().addTestExecutionEventListener(this);
         getTreeViewer().setUseHashlookup(true);
         getTreeViewer().setInput(getInput());
         getTreeViewer().expandToLevel(0);
@@ -182,7 +182,7 @@ public class TestResultTreeView extends ViewPart
      * {@inheritDoc}
      */
     public void dispose() {
-        ClientTestFactory.getClientTest()
+        ClientTest.instance()
             .removeTestExecutionEventListener(this);
         DataEventDispatcher.getInstance().removeProjectLoadedListener(this);
         DataEventDispatcher.getInstance().removeDataChangedListener(this);

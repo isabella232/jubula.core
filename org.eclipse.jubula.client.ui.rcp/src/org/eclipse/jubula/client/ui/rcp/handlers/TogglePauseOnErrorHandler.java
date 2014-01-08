@@ -15,7 +15,7 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.State;
-import org.eclipse.jubula.client.core.ClientTestFactory;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -35,7 +35,7 @@ public class TogglePauseOnErrorHandler extends AbstractHandler {
         final Display display = HandlerUtil.getActiveShellChecked(event)
                 .getDisplay();
         final Command command = event.getCommand();
-        final IClientTest ct = ClientTestFactory.getClientTest();
+        final IClientTest ct = ClientTest.instance();
         display.syncExec(new Runnable() {
             public void run() {
                 State state = 
