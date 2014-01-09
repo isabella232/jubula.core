@@ -318,20 +318,17 @@ public class AutAgentApplication implements IApplication {
      */
     private void stopAutAgent(String hostname, int port) 
         throws UnknownHostException, IOException, JBVersionException {
-        
-        try {
-            Socket commandSocket = new Socket(hostname, port);
+        try (Socket commandSocket = new Socket(hostname, port)) {
             InputStream inputStream = commandSocket.getInputStream();
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader(inputStream));
-            ConnectionState.respondToTypeRequest(TIMEOUT_SEND_STOP_CMD,
-                    br, inputStream, new PrintStream(commandSocket
-                            .getOutputStream()),
-                    ConnectionState.CLIENT_TYPE_COMMAND_SHUTDOWN);
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                inputStream));
+            ConnectionState.respondToTypeRequest(TIMEOUT_SEND_STOP_CMD, br,
+                inputStream, new PrintStream(commandSocket.getOutputStream()),
+                ConnectionState.CLIENT_TYPE_COMMAND_SHUTDOWN);
             waitForAgentToTerminate(br);
         } catch (ConnectException ce) {
             System.out.println(NLS.bind(Messages.AUTAgentNotFound, hostname,
-                    port));
+                port));
         }
     }
 }
