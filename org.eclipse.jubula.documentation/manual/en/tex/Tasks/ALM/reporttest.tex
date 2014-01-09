@@ -30,7 +30,7 @@ This will let you:
 
 
 
-\subsubsection{Adding task IDs \gdsuites{} and \gdcases{}}
+\subsubsection{Adding task IDs to \gdsuites{} and \gdcases{}}
 \label{TasksALMAddTask}
 
 You can add a task ID to \gdcases{} and \gdsuites{} in your \gdproject{}. 
@@ -49,26 +49,45 @@ To add a task ID to a \gdcase{} or \gdsuite{}:
 \bxtipp{You should ensure that you add task IDs to the right node-level to provide you with the relevant amount of information for the tasks in your repository. This will usually be at the level of Use Cases within a \gdsuite{}. }
 
 \subsubsection{Test execution with reporting to external repositories}
-If your \gdproject{} is joined to an external repository \bxpref{TasksALMConfigureProject}, and you have added task IDs to one or more items in your \gdproject{} \bxpref{TasksALMAddTask}, then the following will happen after a test has run:
+If your \gdproject{} is joined to an external repository \bxpref{TasksALMConfigureProject}, and you have added task IDs to one or more items in your \gdproject{} \bxpref{TasksALMAddTask}, then you will be able to report the test results to the repository after the test has run. The test run can be either via the \ite{} or via the command line \bxname{testexec}.  
 
+\bxtipp{If you run a test via the \ite{} which should report to ALM systems, the reporting is triggered automatically once the test has run. If the reporting for the test run encounters an error, then you will be able to manually trigger the reporting later \bxpref{TasksALMReportTestExec}. To report to ALM systems after running a test via testexec, you must also  manually trigger the recording \bxpref{TasksALMReportTestExec}.}
+
+When reporting is triggered, the following happens:
 \begin{itemize}
-\item The test results are analyzed to see if any comments need to be added in the external repository (you can deactivate commenting for failed nodes or successful nodes in the \gdproject{} properties). 
-\item If there are comments to be added, \ite{} connects to the repository and writes one comment per task, as defined in the \gdproject{} properties. If multiple items reference the same task ID, or if an item with a task ID is executed multiple times,  then each test status and result link is written, but all in one comment. 
+\item A connection is made to ALM system configured in the \gdproject{} properties. 
+\item The test results are then analyzed to see if any comments need to be added in the external repository (commenting can be (de)activated for failed nodes or successful nodes in the \gdproject{} properties, for example). 
+\item If there are comments to be added, the \ite{} writes one comment per task, as defined in the \gdproject{} properties. If multiple items in one test run reference the same task ID, or if an item with a task ID is executed multiple times in the same test run,  then each test status and result link is written, but all in one comment. 
 \bxtipp{Tests that have a status other than \bxname{passed} (e.g. failed, stopped, still testing) are considered as \bxname{failed}.}
 \item You can see the status of the ALM reporting in the console view. 
 \item Once a comment has been written, you can see the comment in the external repository. From there, you can click on the link provided to open the test result report in the \dash{} that you specified for your \gdproject{}. The \dash{} must be already running for this action to succeed. The test results must also still be present in the \gddb{} \bxpref{TasksReopenTestResult}.
-\item In the test result report, the test result report is opened at the node which referenced the current task ID. 
-\bxtipp{The integration for writing to external repositories can be used with Bugzilla 3.6+, JIRA 5.0+, Trac 0.12+ and HP ALM 11+. Other repositories for which there are Mylyn connectors may also work, but these have not been tested.}
+\item The test result report is opened at the node which referenced the current task ID. 
+\bxtipp{The integration for writing to external repositories can be used with Bugzilla 3.6+, JIRA 5.0+ and HP ALM 11+. Other repositories for which there are Mylyn connectors may also work, but these have not been tested.}
 \end{itemize}
 
-\bxwarn{This option is currently only supported for tests started via the \ite{}.}
+\textbf{Reporting to ALM repositories after a test started via testexec}
+\label{TasksALMReportTestExec}
+For tests started via testexec, the reporting does not happen automatically. Instead, you must choose to report to ALM from the \gdtestsummaryview{}.
+
+\begin{enumerate}
+\item In a \gdproject{} that is configured to report to an ALM repository, when a test has run via testexec, you can open the Reporting Perspective and locate the test run in the \gdtestsummaryview{}.
+\item In the \bxname{ALM Report Pending} column, you will see whether there are any reports pending. This is based on various factors:
+\begin{enumerate}
+\item ALM Reporting must have been configured for the \gdproject{}. If no ALM is configured for the \gdproject{}, then the status in the \bxname{ALM Report Pending} column will be \bxname{false}.
+\item The test run must have been designated as relevant. Non-relevant tests show the status \bxname{false} in the \bxname{ALM Report Pending} column.
+\end{enumerate}
+\item Select any test runs whose results you want to report to ALM, and click on the \bxcaption{Report to ALM} button on the toolbar. You can also select this option from the context-sensitive menu. If you select multiple test runs, the reporting will take place sequentially for each test run. 
+\item When you select this option, the reporting will be triggered as described above. If the reporting is successful, the status in the \bxname{ALM Report Pending} column changes from \bxname{true} to \bxname{false}. If an error occurs, then the status remains as \bxname{true}. 
+\bxtipp{If you do not want to report the test results to an ALM tool, you can switch the status of the \bxname{ALM Report Pending} column from \bxname{true} to \bxname{false} by selecting the option to remove pending reports from the context menu. Toggling the relevance of the test run to \bxname{false} will also set the  \bxname{ALM Report Pending status to \bxname{false}, but this will also mean that the test results are not exported and not considered for BIRt reports \bxpref{testresprefs}.}}
+\end{enumerate}
+
 
 \subsubsection{Specific information for HP ALM users}
 \begin{itemize}
 \item To use the HP ALM integration, you must use a separate connector for HP ALM which may incur license costs. Visit the Tasktop website for more details \url{http://www.tasktop.com}.
 \item If you have changed the attribute IDs in your HP ALM installation for defects and / or requirements from their relative defaults (\bxname{BG\_DEV\_COMMENTS} and \bxname{REQ\_DEV\_COMMENTS}), or if you have changed the ID for the connector, then you must modify these properties in the \bxshell{almAccess.properties} file contained in the jar:\\
 \bxname{org.eclipse.jubula.client.alm.mylyn.core} 
-\item Since tasks in HP ALM only have one comment field, the result information is appended to the comment field instead of being added as a new comment each time. The result is formatted as a hyperlink to the dashboard.
+\item Since tasks in HP ALM only have one comment field, the result information is appended to the comment field instead of being added as a new comment each time.
 \item To write to requirements in a default HP ALM installation, you must use the prefix \bxname{REQ}, e.g. REQ100. To write to defects in a default HP ALM installation, you must use the prefix \bxname{DEF}, e.g. DEF42.
 \end{itemize}
 
