@@ -28,6 +28,7 @@
         <module>../org.eclipse.jubula.feature.rc</module>
         <module>../org.eclipse.jubula.site.rc</module>
         <module>../org.eclipse.jubula.product.autagent.start</module>
+        <module>../org.eclipse.jubula.product.autagent.stop</module>
 	</modules>
 
 </project>

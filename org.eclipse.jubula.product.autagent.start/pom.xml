@@ -1,15 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <artifactId>org.eclipse.jubula.releng.client</artifactId>
-    <groupId>org.eclipse.jubula</groupId>
-    <version>2.3.0-SNAPSHOT</version>
-    <relativePath>../org.eclipse.jubula.releng.client</relativePath>
-  </parent>
-  <artifactId>org.eclipse.jubula.product.autagent.start</artifactId>
-  <packaging>eclipse-repository</packaging>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>org.eclipse.jubula.releng.client</artifactId>
+		<groupId>org.eclipse.jubula</groupId>
+		<version>2.3.0-SNAPSHOT</version>
+		<relativePath>../org.eclipse.jubula.releng.client</relativePath>
+	</parent>
+	<artifactId>org.eclipse.jubula.product.autagent.start</artifactId>
+	<packaging>eclipse-repository</packaging>
 
+	<build>
+		<plugins>
+			<!-- image path workaround described in http://software.2206966.n2.nabble.com/How-to-apply-patch-no-launcher-icon-TYCHO-300-td6059641.html -->
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/products/${project.artifactId}/${project.artifactId}/icons/</outputDirectory>
+							<nonFilteredFileExtensions>
+								<nonFilteredFileExtension>ico</nonFilteredFileExtension>
+								<nonFilteredFileExtension>xpm</nonFilteredFileExtension>
+								<nonFilteredFileExtension>icns</nonFilteredFileExtension>
+								<nonFilteredFileExtension>bmp</nonFilteredFileExtension>
+								<nonFilteredFileExtension>gif</nonFilteredFileExtension>
+								<nonFilteredFileExtension>png</nonFilteredFileExtension>
+							</nonFilteredFileExtensions>
+							<resources>
+								<resource>
+									<directory>icons</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-director-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<includeAllDependencies>true</includeAllDependencies>
+				</configuration>
+				<executions>
+					<execution>
+						<id>materialize-products</id>
+						<goals>
+							<goal>materialize-products</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
