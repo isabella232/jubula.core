@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Stop AUT Agent" uid="org.eclipse.jubula.product.autagent.stop" id="org.eclipse.jubula.app.autagent.product" application="org.eclipse.jubula.app.autagent" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
+<product name="Stop AUT Agent" uid="org.eclipse.jubula.product.autagent.stop" id="org.eclipse.jubula.app.autagent.product" application="org.eclipse.jubula.app.autagent" version="2.3.0.qualifier" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
 
    <launcherArgs>
-      <programArgs>-stop localhost</programArgs>
-      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+      <programArgs>-consolelog
+-stop localhost
+--launcher.suppressErrors</programArgs>
+      <programArgsLin>-vm
+..\jre\bin\java</programArgsLin>
+      <programArgsMac>--launcher.secondThread</programArgsMac>
+      <programArgsWin>-vm
+..\jre\bin\java.exe</programArgsWin>
+      <vmArgs>-server
+-Xms128m
+-Xmx1024m
+-XX:MaxPermSize=256m</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread
+-Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
    <windowImages/>
@@ -32,9 +44,8 @@
    </vm>
 
    <plugins>
-      <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.jubula.app.autagent"/>
+      <plugin id="org.eclipse.osgi"/>
    </plugins>
-
 
 </product>
