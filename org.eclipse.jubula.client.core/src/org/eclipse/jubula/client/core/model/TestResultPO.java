@@ -32,7 +32,12 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.persistence.annotations.Index;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -42,6 +47,10 @@ import org.eclipse.persistence.annotations.Index;
 @Entity
 @Table(name = "TESTRESULT")
 class TestResultPO implements ITestResultPO {
+
+    /** standard logging */
+    private static Logger log = LoggerFactory.getLogger(TestResultPO.class);
+    
     /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
     
@@ -576,7 +585,13 @@ class TestResultPO implements ITestResultPO {
      * @param statusDescription the statusDescription to set
      */
     public void setStatusDescription(String statusDescription) {
-        m_statusDescription = statusDescription;
+        if (statusDescription != null && statusDescription.length() > 1000) {
+            log.error(NLS.bind(
+                    Messages.LongerThanExpected,
+                    new Object[]{1000}) + statusDescription);
+        }
+        m_statusDescription = StringUtils.abbreviate(statusDescription, 1000);
+
     }
 
     /**

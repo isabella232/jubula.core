@@ -222,6 +222,7 @@ public class Messages extends NLS {
     public static String LockFailedDueToDeletedPO;
     public static String LockingWontStart;
     public static String LoggingConfigurationError;
+    public static String LongerThanExpected;
     public static String MajorVersionInvalid;
     public static String MappedObject;
     public static String MessageCap;
