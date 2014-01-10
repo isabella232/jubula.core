@@ -15,7 +15,7 @@
       <programArgsMac>--launcher.secondThread</programArgsMac>
       <programArgsWin>-vm
 ..\jre\bin\java.exe</programArgsWin>
-      <vmArgs>-server
+      <vmArgs>-client
 -Xms128m
 -Xmx1024m
 -XX:MaxPermSize=256m</vmArgs>
