@@ -41,11 +41,9 @@ import org.eclipse.jface.viewers.IElementComparer;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.TreeViewerEditor;
@@ -122,13 +120,13 @@ import org.slf4j.LoggerFactory;
  * @created 19.01.2005
  */
 @SuppressWarnings("synthetic-access")
-public class JBPropertiesView extends Page implements IDataChangedListener, 
-    IParamChangedListener, ISelectionProvider, IPartClosedListener, 
-    ILanguageChangedListener, IPropertySheetPage, IAdaptable {
+public class JBPropertiesPage extends Page implements IDataChangedListener,
+    IParamChangedListener, IPartClosedListener, ILanguageChangedListener,
+    IPropertySheetPage, IAdaptable {
     
     /** the logger */
     private static final Logger LOG = 
-        LoggerFactory.getLogger(JBPropertiesView.class);
+        LoggerFactory.getLogger(JBPropertiesPage.class);
     
     /** The property source */
     private IPropertySource m_propSource;
@@ -136,20 +134,10 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
     /** The Tree Viewer of this view */
     private TreeViewer m_treeViewer;
 
-    /** The selection from the selection service */
-    private IStructuredSelection m_selection;
-
     /** listens for selection changes that influence help context */
     private ISelectionChangedListener m_helpContextListener =
         new HelpContextListener();
     
-    /** ISelectionListener */
-    private List<ISelectionChangedListener> m_selectionListener = 
-        new ArrayList<ISelectionChangedListener>();
-
-    /** The actual displayed persistent object */
-    private IPersistentObject m_currentPo;
-
     /** shows, if the Properties view is editable or not */
     private boolean m_isEditable;
     
@@ -357,7 +345,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
      *                   active. May be <code>null</code>, if no specific
      *                   mapper should be used.
      */
-    public JBPropertiesView(
+    public JBPropertiesPage(
             boolean isEditable, IComponentNameMapper compMapper) {
         super();
         m_compMapper = compMapper;
@@ -370,7 +358,6 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
     public void createPartControl(Composite parent) {
         buildTree(parent);
 
-        getSite().setSelectionProvider(this);
         Plugin.getHelpSystem().setHelp(m_treeViewer.getControl(),
                 ContextHelpIds.JB_PROPERTIES_VIEW);
         final DataEventDispatcher dispatcher = 
@@ -521,12 +508,12 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
         // This will happen if a child of a SpecTC is displayed
         // and the editor with that SpecTC is saved.
         boolean parentMatch = false;
-        if (m_currentPo instanceof INodePO) {
-            INodePO parent = ((INodePO)m_currentPo).getParentNode();
+        if (getCurrentPO() instanceof INodePO) {
+            INodePO parent = ((INodePO)getCurrentPO()).getParentNode();
             parentMatch = (parent != null) && po.equals(parent);
         }
         
-        if (parentMatch || po.equals(m_currentPo)) {
+        if (parentMatch || po.equals(getCurrentPO())) {
             switch (dataState) {
                 case Added:
                 case StructureModified:
@@ -545,6 +532,13 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
                 default:
             }
         }
+    }
+    
+    /**
+     * @return the current PO
+     */
+    private IPersistentObject getCurrentPO() {
+        return (IPersistentObject) m_treeViewer.getInput();
     }
 
     /**
@@ -566,7 +560,6 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
                 m_treeViewer.setComparer(null);
                 m_treeViewer.setInput(null);
                 setViewEnabled(false);
-                m_selection = new StructuredSelection();
             }
         });
     }
@@ -597,25 +590,15 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
         IStructuredSelection selection) {
         
         m_correspondingPart = part;
-        if (m_selection == null) {
-            m_selection = new StructuredSelection();
-        }
 
         Object firstElement = selection.getFirstElement();
         
-        IStructuredSelection oldSelection = m_selection;
-        m_selection = selection;
         if (firstElement == null) {
             // e.g. when a project was opened and no view has a selection
             m_treeViewer.setSelection(null);
             m_treeViewer.setInput(null);
-            m_currentPo = null;
         } else {
-            Object oldFirstElement = oldSelection.getFirstElement();
-            if (!firstElement.equals(oldFirstElement)) {
-                if (firstElement instanceof IPersistentObject) {
-                    m_currentPo = (IPersistentObject)firstElement;
-                }
+            if (firstElement instanceof IPersistentObject) {
                 m_treeViewer.setInput(firstElement);
                 workaroundSpringySelection(m_focusCellManager);
             }
@@ -634,7 +617,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
 
         setViewEnabled(!(part instanceof TestCaseBrowser
             || part instanceof TestSuiteBrowser
-            || part instanceof JBPropertiesView
+            || part instanceof JBPropertiesPage
             || part instanceof TestResultTreeView 
             || part instanceof CompNamesView));
 
@@ -1057,7 +1040,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
          * @return the current action
          */
         private Action getAction() {
-            return getComp().findAction(((ICapPO)m_currentPo)
+            return getComp().findAction(((ICapPO)getCurrentPO())
                 .getActionName());
         }
 
@@ -1076,42 +1059,10 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
          */
         private Component getComp() {
             return ComponentBuilder.getInstance().getCompSystem().findComponent(
-                    ((ICapPO)m_currentPo).getComponentType());
+                    ((ICapPO)getCurrentPO()).getComponentType());
         }
     }
     
-    /**
-     * {@inheritDoc}
-     */
-    public void addSelectionChangedListener(
-        ISelectionChangedListener listener) {
-
-        m_selectionListener.add(listener);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public ISelection getSelection() {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void removeSelectionChangedListener(
-        ISelectionChangedListener listener) {   
-        
-        m_selectionListener.remove(listener);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setSelection(ISelection selection) {
-        // do nothing.
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -1129,15 +1080,15 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
             return;
         }
         if (part == m_correspondingPart || m_correspondingPart == null
-                || part instanceof JBPropertiesView) {
+                || part instanceof JBPropertiesPage) {
             
             ISelection sel = 
                 activeWorkbenchWindow.getSelectionService().getSelection();
 
             if (sel == null 
                     || !(part instanceof IDataChangedListener) 
-                    || part instanceof JBPropertiesView
-                    || activePart instanceof JBPropertiesView) {
+                    || part instanceof JBPropertiesPage
+                    || activePart instanceof JBPropertiesPage) {
                 
                 clearView();
                 return;
@@ -1211,7 +1162,7 @@ public class JBPropertiesView extends Page implements IDataChangedListener,
     /**
      * @param currentEditor the currentEditor to set
      */
-    public void setCurrentEditor(AbstractJBEditor currentEditor) {
+    private void setCurrentEditor(AbstractJBEditor currentEditor) {
         m_currentEditor = currentEditor;
     }
 

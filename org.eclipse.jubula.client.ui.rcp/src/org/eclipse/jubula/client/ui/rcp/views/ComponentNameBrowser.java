@@ -189,7 +189,7 @@ public class ComponentNameBrowser extends ViewPart implements
      */
     public Object getAdapter(Class adapter) {
         if (adapter.equals(IPropertySheetPage.class)) {
-            return new JBPropertiesView(false, null);
+            return new JBPropertiesPage(false, null);
         }
         return super.getAdapter(adapter);
     }

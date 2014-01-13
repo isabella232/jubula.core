@@ -178,7 +178,7 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         if (adapter.equals(AbstractJBTreeView.class)) {
             return this;
         } else if (adapter.equals(IPropertySheetPage.class)) {
-            return new JBPropertiesView(false, null);
+            return new JBPropertiesPage(false, null);
         }
         return super.getAdapter(adapter);
     }

@@ -36,7 +36,7 @@ import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.views.JBPropertiesView;
+import org.eclipse.jubula.client.ui.rcp.views.JBPropertiesPage;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.Clipboard;
@@ -183,7 +183,7 @@ public class JBEditorHelper implements ILockedObjects,
             || adapter == IJBEditor.class) {
             return this;
         } else if (adapter.equals(IPropertySheetPage.class)) {
-            return new JBPropertiesView(true, getEditSupport().getCompMapper());
+            return new JBPropertiesPage(true, getEditSupport().getCompMapper());
         } else if (adapter.equals(IComponentNameMapper.class)) {
             return getEditSupport().getCompMapper();
         }
