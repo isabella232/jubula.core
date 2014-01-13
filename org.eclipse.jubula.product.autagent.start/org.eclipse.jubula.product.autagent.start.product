@@ -43,7 +43,6 @@
    </vm>
 
    <plugins>
-      <plugin id="org.eclipse.jubula.app.autagent"/>
       <plugin id="org.eclipse.osgi"/>
    </plugins>
 
