@@ -11,10 +11,10 @@
 -stop localhost
 --launcher.suppressErrors</programArgs>
       <programArgsLin>-vm
-..\jre\bin\java</programArgsLin>
+../jre/bin/java</programArgsLin>
       <programArgsMac>--launcher.secondThread</programArgsMac>
       <programArgsWin>-vm
-..\jre\bin\java.exe</programArgsWin>
+../jre/bin/java.exe</programArgsWin>
       <vmArgs>-client
 -Xms128m
 -Xmx1024m
