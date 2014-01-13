@@ -29,6 +29,11 @@
             id="org.eclipse.jubula.client.alm.ui.commands.reportResults"
             name="Report to ALM">
       </command>
+      <command
+            categoryId="org.eclipse.jubula.client.alm.ui.commands.category"
+            id="org.eclipse.jubula.client.alm.ui.commands.cancelPendingResults"
+            name="Cancel pending report">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -39,6 +44,20 @@
       <handler
             class="org.eclipse.jubula.client.alm.mylyn.ui.handler.ReportToAlmHandler"
             commandId="org.eclipse.jubula.client.alm.ui.commands.reportResults">
+            <enabledWhen>
+	        <and>
+	          <iterate ifEmpty="false" operator="or">
+	          	<and>
+		            <instanceof value="org.eclipse.jubula.client.core.model.ITestResultSummaryPO" />
+		            <test property="org.eclipse.jubula.client.ui.propertytester.TestResultSummary.hasPendingALMReport" />
+	          	</and>
+	          </iterate>
+	        </and>
+	      </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclipse.jubula.client.alm.mylyn.ui.handler.CancelPendingReportHandler"
+            commandId="org.eclipse.jubula.client.alm.ui.commands.cancelPendingResults">
             <enabledWhen>
 	        <and>
 	          <iterate ifEmpty="false" operator="or">
@@ -110,6 +129,12 @@
 	      locationURI="popup:org.eclipse.jubula.client.ui.views.TestresultSummaryView?after=additions">
 	      <command
 	        commandId="org.eclipse.jubula.client.alm.ui.commands.reportResults"
+	        style="push" />
+		</menuContribution>
+		<menuContribution
+	      locationURI="popup:org.eclipse.jubula.client.ui.views.TestresultSummaryView?after=additions">
+	      <command
+	        commandId="org.eclipse.jubula.client.alm.ui.commands.cancelPendingResults"
 	        style="push" />
 		</menuContribution>
    </extension>

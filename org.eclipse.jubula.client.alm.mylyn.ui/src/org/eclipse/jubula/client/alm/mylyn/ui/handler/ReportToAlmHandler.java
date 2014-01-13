@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.alm.mylyn.ui.handler;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -24,41 +22,26 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.alm.mylyn.core.bp.CommentReporter;
 import org.eclipse.jubula.client.alm.mylyn.ui.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.ui.editors.TestResultViewer.GenerateTestResultTreeOperation;
-import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 
 /**
  * @author BREDEX GmbH
  */
-public class ReportToAlmHandler extends AbstractSelectionBasedHandler {
+public class ReportToAlmHandler extends AbstractALMReportHandler {
     /** {@inheritDoc} */
     protected Object executeImpl(ExecutionEvent event)
         throws ExecutionException {
-        Iterator<Object> iterator = getSelection().iterator();
-        final List<ITestResultSummaryPO> summariesToReportFor = 
-            new LinkedList<ITestResultSummaryPO>();
-        while (iterator.hasNext()) {
-            Object o = iterator.next();
-            if (o instanceof ITestResultSummaryPO) {
-                ITestResultSummaryPO summary = (ITestResultSummaryPO) o;
-                if (TestResultPM.hasTestResultDetails(GeneralStorage
-                    .getInstance().getMasterSession(), summary.getId())
-                    && AlmReportStatus.NOT_YET_REPORTED.equals(summary
-                        .getAlmReportStatus())) {
-                    summariesToReportFor.add(summary);
-                }
-            }
-        }
-        final int sumCount = summariesToReportFor.size();
+        final List<ITestResultSummaryPO> summaries = 
+            getPendingSummaries();
+        
+        final int sumCount = summaries.size();
         if (sumCount > 0) {
             Job reportToALMOperation = new Job(Messages.BatchALMReporting) {
                 @Override
                 protected IStatus run(IProgressMonitor monitor) {
                     monitor.beginTask(Messages.BatchALMReporting, sumCount);
-                    for (ITestResultSummaryPO summary : summariesToReportFor) {
+                    for (ITestResultSummaryPO summary : summaries) {
                         try {
                             if (monitor.isCanceled()) {
                                 return Status.CANCEL_STATUS;
