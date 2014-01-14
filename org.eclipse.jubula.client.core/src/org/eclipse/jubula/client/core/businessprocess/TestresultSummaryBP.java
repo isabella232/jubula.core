@@ -244,7 +244,7 @@ public class TestresultSummaryBP {
         keyword.setKeywordName(node.getName());
         keyword.setInternalKeywordGuid(node.getGuid());
         keyword.setKeywordComment(node.getComment());
-        keyword.setTaskId(node.getTaskId());
+        keyword.setTaskId(resultNode.getTaskId());
         keyword.setInternalKeywordStatus(resultNode.getStatus());
         keyword.setKeywordStatus(resultNode.getStatusString());
         if (resultNode.getTimeStamp() != null) {
