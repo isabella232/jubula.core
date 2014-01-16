@@ -38,7 +38,7 @@ Now that you have a target for your tests, add the tests to that target.
 \begin{enumerate}
 \item  With the project settings still selected in the Project Navigator, and the new integration tests target selected in the project settings, select the \bxcaption{Build Phases} tab. 
 \item Under the \bxcaption{Link Binary With Libraries} section, press the \bxcaption{+} button. 
-\item In the sheet that appears, select \bxname{CFNetwork.framework} and click \bxcaption{Add}.
+\item In the sheet that appears, select \bxname{CFNetwork.framework} and \bxname{SenTestingKit.framework} and click \bxcaption{Add}.
 \item Then click \bxcaption{Add other...} in the lower left corner and locate and select the library \bxname{librc.mobile.ios.nativ.a} and click \bxcaption{Open}.
 \item Next, make sure that the  \bxname{UIRemoteControl.h} header file can be accessed. To do this, add the \bxname{UIRemoteControl.h} to the \bxcaption{Header Search Paths} 
 build setting. Start by selecting the \bxcaption{Build Settings} tab of the project settings, and from there, use the filter control to find the 
