@@ -75,6 +75,7 @@ import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.EventHandlerContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TooltipLabelProvider;
+import org.eclipse.jubula.client.ui.rcp.provider.selectionprovider.SelectionProviderIntermediate;
 import org.eclipse.jubula.client.ui.rcp.utils.UIIdentitiyElementComparer;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -120,6 +121,9 @@ public class TestCaseEditor extends AbstractTestCaseEditor
 
     /** the current TreeViewer */
     private TreeViewer m_currentTreeViewer;
+    
+    /** the selection provider to handle both TreeViewer **/
+    private SelectionProviderIntermediate m_selectionProviderDelegate;
 
     /** {@inheritDoc} */
     public void createPartControlImpl(Composite parent) {
@@ -137,6 +141,10 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             checkAndRemoveUnusedTestData();
         }
         m_currentTreeViewer = getMainTreeViewer();
+        m_selectionProviderDelegate = new SelectionProviderIntermediate();
+        m_selectionProviderDelegate
+                .setSelectionProviderDelegate(m_currentTreeViewer);
+        getSite().setSelectionProvider(m_selectionProviderDelegate);
     }
 
     /**
@@ -308,6 +316,8 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             } else if (getEventHandlerTreeViewer().getTree() == tree) {
                 m_currentTreeViewer = getEventHandlerTreeViewer();
             }
+            m_selectionProviderDelegate
+                    .setSelectionProviderDelegate(m_currentTreeViewer);
         }       
     }
 

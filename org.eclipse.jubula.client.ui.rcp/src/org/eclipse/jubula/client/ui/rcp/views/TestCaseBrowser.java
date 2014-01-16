@@ -133,6 +133,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
         }
         // add this TCB to the tracker
         MultipleTCBTracker.getInstance().addTCB(this);
+        getSite().setSelectionProvider(getTreeViewer());
     }
 
     /**

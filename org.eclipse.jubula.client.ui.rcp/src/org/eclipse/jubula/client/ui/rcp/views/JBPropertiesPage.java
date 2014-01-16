@@ -367,8 +367,9 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         dispatcher.addPartClosedListener(this, true);
         dispatcher.addLanguageChangedListener(this, true);
         m_treeViewer.getControl().addHelpListener(m_helpListener);
+        getSite().getWorkbenchWindow().getSelectionService()
+                .addSelectionListener(this);
     }
-    
     /**
      * Creates a new Tree for this View.
      * @param parent the parent composite
@@ -468,6 +469,8 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         dispatcher.removeParamChangedListener(this);
         dispatcher.removePartClosedListener(this);
         dispatcher.removeLanguageChangedListener(this);
+        getSite().getWorkbenchWindow()
+            .getSelectionService().removeSelectionListener(this);
         getSite().setSelectionProvider(null);
         setCurrentEditor(null);
     }
@@ -590,14 +593,13 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         IStructuredSelection selection) {
         
         m_correspondingPart = part;
-
         Object firstElement = selection.getFirstElement();
         
         if (firstElement == null) {
             // e.g. when a project was opened and no view has a selection
             m_treeViewer.setSelection(null);
             m_treeViewer.setInput(null);
-        } else {
+        } else { // TestResultNodes must be excluded
             if (firstElement instanceof IPersistentObject) {
                 m_treeViewer.setInput(firstElement);
                 workaroundSpringySelection(m_focusCellManager);
