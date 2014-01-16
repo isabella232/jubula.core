@@ -14,7 +14,6 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
-import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -27,6 +26,7 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
+import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.rcp.editors.PersistableEditorInput;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -78,10 +78,14 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
     protected void openEditorForSpecTC(ISpecTestCasePO specTc) {
         boolean isNodeEditable = TestCaseBP.belongsToCurrentProject(specTc);
         if (isNodeEditable) {
-            openEditor(specTc);
-            InteractionEventDispatcher.getDefault().
-                fireProgammableSelectionEvent(
+            IEditorPart editor = openEditor(specTc);
+            editor.getSite().getPage().activate(editor);
+            if (editor instanceof AbstractJBEditor) {
+                AbstractJBEditor jbEditor =
+                        (AbstractJBEditor) editor;
+                jbEditor.setSelection(
                         new StructuredSelection(specTc));
+            }
         } else {
             ErrorHandlingUtil.createMessageDialog(
                     MessageIDs.I_NON_EDITABLE_NODE);
