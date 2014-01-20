@@ -208,8 +208,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
             return null;
         }
         String attribute = null;
-        try {
-            JarFile jar = new JarFile(jarFile);
+        try (JarFile jar = new JarFile(jarFile)) {
             Manifest manifest = jar.getManifest();
             if (manifest != null) {
                 attribute = manifest.getMainAttributes().getValue(
