@@ -18,35 +18,28 @@ import java.util.Vector;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.utils.MonitoringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
  * @author BREDEX GmbH
  * @created Jul 6, 2007
- * 
  */
 public class StartSwingAutServerCommand extends AbstractStartJavaAutServer {
-
-    /** the logger */
-    private static final  Logger LOG = 
-        LoggerFactory.getLogger(StartSwingAutServerCommand.class);
-    
-    /** the classpath of the Aut Server */
+    /** the classpath of the AUT Server */
     private String m_autServerClasspath = "AutServerClasspath"; //$NON-NLS-1$
     
     /**
      * {@inheritDoc}
      */
-    protected String[] createCmdArray(String baseCmd, Map parameters) {
-        List cmds = new Vector();
+    protected String[] createCmdArray(String baseCmd,
+        Map<String, Object> parameters) {
+        List<String> cmds = new Vector<String>();
         cmds.add(baseCmd);
         
         StringBuffer autServerClasspath = new StringBuffer();
         createServerClasspath(autServerClasspath);
         
-        List autAgentArgs = new ArrayList();
+        List<String> autAgentArgs = new ArrayList<String>();
         autAgentArgs.add(String.valueOf(
                 parameters.get(AutConfigConstants.AUT_AGENT_HOST)));
         autAgentArgs.add(String.valueOf(
@@ -59,7 +52,7 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAutServer {
                     cmds, autServerClasspath, parameters);
             createAutServerClasspath(autServerClasspath, cmds, parameters);
             cmds.addAll(autAgentArgs);
-            // information for aut server that agent is not used
+            // information for AUT server that agent is not used
             cmds.add(CommandConstants.RC_COMMON_AGENT_INACTIVE);
         } else { 
             String serverBasePath = createServerBasePath(); 
@@ -74,7 +67,8 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAutServer {
     }
 
     @Override
-    protected String[] createEnvArray(Map parameters, boolean isAgentSet) {
+    protected String[] createEnvArray(Map<String, Object> parameters, 
+        boolean isAgentSet) {
         
         if (isRunningFromExecutable(parameters) 
                 || MonitoringUtil.shouldAndCanRunWithMonitoring(parameters)) {
@@ -84,7 +78,6 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAutServer {
         }       
           
         return super.createEnvArray(parameters, isAgentSet);
-        
     }
 
     /**

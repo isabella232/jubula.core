@@ -52,16 +52,14 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
     @Override
     protected abstract String getServerClassName();
 
-    @Override
-    protected abstract String[] createCmdArray(String baseCmd, Map parameters);
-
     /**
      * Sets -javaagent, JRE arguments and the arguments for 
      * the AutServer as environment variables.
      * @param parameters The parameters for starting the AUT
      * @param autServerClasspath The classpath of the AUT Server
      */
-    protected void setEnv(Map parameters, String autServerClasspath) {
+    protected void setEnv(Map<String, Object> parameters, 
+        String autServerClasspath) {
         String env = (String)parameters.get(AutConfigConstants.ENVIRONMENT);
         if (env == null) {
             env = StringConstants.EMPTY;
@@ -169,7 +167,7 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
      * @param parameters The parameters for starting the AUT.
      */
     protected void createAutServerClasspath(StringBuffer autServerClasspath, 
-        List cmds, Map parameters) {
+        List<String> cmds, Map parameters) {
         
         final Communicator autCommunicator = AutStarter.getInstance()
             .getAutCommunicator();
@@ -200,32 +198,33 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
     }
     
     /**
-     * @param parameters The parameters for starting the AUT.
-     * @return The arguments for the AUT that were found in the 
-     *         given parameters.
+     * @param parameters
+     *            The parameters for starting the AUT.
+     * @return The arguments for the AUT that were found in the given
+     *         parameters.
      */
-    protected List createAutArguments(Map parameters) {
-        List argsList = new Vector();
-        if (parameters.get(AutConfigConstants.AUT_RUN_AUT_ARGUMENTS)
-                instanceof String[]) {
-            String[] autArgs = (String[])parameters
-                    .get(AutConfigConstants.AUT_RUN_AUT_ARGUMENTS);
+    protected List<String> createAutArguments(Map<String, Object> parameters) {
+        List<String> argsList = new Vector<String>();
+        final Object autRunArgs = parameters.get(
+            AutConfigConstants.AUT_RUN_AUT_ARGUMENTS);
+        if (autRunArgs instanceof String[]) {
+            String[] autArgs = (String[]) autRunArgs;
             return Arrays.asList(autArgs);
         }
-        String autArguments = 
-            (String)parameters.get(AutConfigConstants.AUT_ARGUMENTS);
-        
+        String autArguments = (String) parameters
+            .get(AutConfigConstants.AUT_ARGUMENTS);
+
         if (autArguments == null) {
             autArguments = StringConstants.EMPTY;
         }
-       
-        StringTokenizer args = new StringTokenizer(autArguments, 
+
+        StringTokenizer args = new StringTokenizer(autArguments,
             WHITESPACE_DELIMITER);
         while (args.hasMoreTokens()) {
             String arg = args.nextToken();
             argsList.add(arg);
         }
-        
+
         return argsList;
     }
     
@@ -234,7 +233,7 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
      * @param autServerClasspath the autServerClassPath to change
      * @param parameters The parameters for starting the AUT.
      */
-    protected void createAutServerLauncherClasspath(List cmds, 
+    protected void createAutServerLauncherClasspath(List<String> cmds, 
             StringBuffer autServerClasspath, Map parameters) {
         
         addBaseSettings(cmds, parameters);
@@ -254,7 +253,7 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
      * @param cmds the commands list
      * @param parameters The parameters for starting the AUT.
      */
-    protected void addBaseSettings(List cmds, Map parameters) {
+    protected void addBaseSettings(List<String> cmds, Map parameters) {
         // add locale
         addLocale(cmds, (Locale)parameters.get(IStartAut.LOCALE)); 
         

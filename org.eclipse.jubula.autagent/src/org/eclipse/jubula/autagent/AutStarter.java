@@ -95,7 +95,7 @@ public class AutStarter {
      */
     private int m_stopAUTServerTimeout = 10000;
 
-    /** the AUT Agent that is used for AUT registration and deregistration */
+    /** the AUT Agent that is used for AUT registration and de-registration */
     private AutAgent m_agent;
     
     /** sends messages using the Agent's communicator(s) */
@@ -693,5 +693,4 @@ public class AutStarter {
             log.info("connection closed"); //$NON-NLS-1$
         }
     }
-
 }

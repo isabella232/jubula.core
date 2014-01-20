@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This MonitoringDataStore is a singelton and can be instantiated in the 
+ * This MonitoringDataStore is a singleton and can be instantiated in the 
  * AutAgent. The AUTConfigMap for each AUT will be saved separately in this
  * DataManager.
  *
@@ -26,8 +26,8 @@ public class MonitoringDataStore {
     private static MonitoringDataStore instance;
 
     /** The list for data storage */
-    private Map<String, Map<String, String>> m_dataStoreMap = 
-        new HashMap<String, Map<String, String>>();   
+    private Map<String, Map<String, Object>> m_dataStoreMap = 
+        new HashMap<String, Map<String, Object>>();   
     
     /** The list off current monitoring agents */
     private Map<String, IMonitoring> m_monitoringAgentMap = 
@@ -56,7 +56,7 @@ public class MonitoringDataStore {
      * @param map The AutConfigMap for the given AutID
      */
     public synchronized void putConfigMap(
-            String autId, Map<String, String> map) {   
+            String autId, Map<String, Object> map) {   
         m_dataStoreMap.put(autId, map); 
     }
     /**
@@ -64,7 +64,7 @@ public class MonitoringDataStore {
      * @param autId The autId 
      * @return The config map for the given autId
      */
-    public Map<String, String> getConfigMap(String autId) {
+    public Map<String, Object> getConfigMap(String autId) {
         
         return m_dataStoreMap.get(autId);
     }    
@@ -140,12 +140,12 @@ public class MonitoringDataStore {
     /** use this method to get data from the MonitoringDataStore 
      *  @param key The key for the stored data
      *  @param autID the AutID 
-     *  @return The String data for the key or null if key dont exists
+     *  @return The String data for the key or null if key don't exists
      */
     public synchronized String getConfigValue(String autID, String key) {    
         
         if (m_dataStoreMap.containsKey(autID)) {
-            return m_dataStoreMap.get(autID).get(key);
+            return (String)m_dataStoreMap.get(autID).get(key);
         }
         return null;
                 

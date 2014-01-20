@@ -252,7 +252,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * @param locale The <code>Locale</code> for the AUT. 
      *               May be <code>null</code> if no locale was specified.
      */
-    protected void addLocale(List cmds, Locale locale) {
+    protected void addLocale(List<String> cmds, Locale locale) {
         if (locale != null) {
             String country = locale.getCountry();
             if (country != null && country.length() > 0) {
@@ -296,7 +296,8 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     /**
      * {@inheritDoc}
      */
-    protected abstract String[] createCmdArray(String baseCmd, Map parameters);
+    protected abstract String[] createCmdArray(String baseCmd, 
+        Map<String, Object> parameters);
     
     /**
      * @param parameters The parameters for starting the AUT.
@@ -313,7 +314,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * @return the _JAVA_OPTIONS environment variable including -javaagent
      * and jre arguments
      */
-    protected String setJavaOptions(Map parameters) {
+    protected String setJavaOptions(Map<String, Object> parameters) {
         StringBuffer sb = new StringBuffer();
         if (isRunningFromExecutable(parameters)) {
             Locale locale = (Locale)parameters.get(IStartAut.LOCALE);
@@ -378,7 +379,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * @return agentString The agent String like -javaagent:myagent.jar
      * or null if the monitoring agent String couldn't be generated
      */        
-    protected String getMonitoringAgent(Map parameters) {
+    protected String getMonitoringAgent(Map<String, Object> parameters) {
         String autId = (String)parameters.get(
                 AutConfigConstants.AUT_ID);
         MonitoringDataStore mds = MonitoringDataStore.getInstance();

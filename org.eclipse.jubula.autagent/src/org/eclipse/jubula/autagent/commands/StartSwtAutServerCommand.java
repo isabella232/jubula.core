@@ -51,10 +51,10 @@ public class StartSwtAutServerCommand extends StartSwingAutServerCommand {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
-    protected String[] createEnvArray(Map parameters, boolean isAgentSet) {
+    protected String[] createEnvArray(Map<String, Object> parameters, 
+        boolean isAgentSet) {
         String [] envArray = super.createEnvArray(parameters, isAgentSet);
         if (envArray == null) {
             envArray = EnvironmentUtils.propToStrArray(
@@ -66,7 +66,6 @@ public class StartSwtAutServerCommand extends StartSwingAutServerCommand {
                 parameters, ENV_VAR_PREFIX, ENV_VALUE_SEP));
         envArray = envList.toArray(new String [envList.size()]);
         return envArray;
-
     }
 
     /**

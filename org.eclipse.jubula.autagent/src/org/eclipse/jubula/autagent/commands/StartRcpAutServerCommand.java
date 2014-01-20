@@ -46,7 +46,7 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
      * @param parameters The startup parameters for the AUT.
      */
     private void createDirectAutJavaCallParameter(final String pathSeparator, 
-        List cmds, Map parameters) { 
+        List<String> cmds, Map parameters) { 
         
         StringBuffer autClassPath = new StringBuffer();
         String autClassPathValue = (String)parameters.get(
@@ -88,8 +88,8 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
      * @param cmds the cmd list
      * @param parameters The startup parameters for the AUT.
      */
-    private void createDirectAutExeCallParameter(List cmds, Map parameters) { 
-        
+    private void createDirectAutExeCallParameter(List<String> cmds, 
+        Map parameters) { 
         final String autArgs = 
             (String)parameters.get(AutConfigConstants.AUT_ARGUMENTS);
         if (autArgs != null) {
@@ -108,13 +108,13 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
      * @return a command line array as list with locale, JRE-parameters and
      * optional debug parameters
      */
-    private List createDirectAutJavaCall(final Map parameters) {
+    private List<String> createDirectAutJavaCall(final Map parameters) {
         
         // create exec string array
-        List cmds = new Vector();
+        List<String> cmds = new Vector<String>();
         // add locale
         addLocale(cmds, (Locale)parameters.get(IStartAut.LOCALE));
-        // add jre params
+        // add JRE parameter
         final String jreParams = (String)parameters.get(
                 AutConfigConstants.JRE_PARAMETER);
         if (jreParams != null && jreParams.length() > 0) {
@@ -124,7 +124,7 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
                 cmds.add(tok.nextToken());
             }
         }
-        // add debug options (if neccessary)
+        // add debug options (if necessary)
         addDebugParams(cmds, true);
         return cmds;
     }
@@ -139,9 +139,10 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
     /**
      * {@inheritDoc}
      */
-    protected String[] createCmdArray(String baseCmd, Map parameters) {
+    protected String[] createCmdArray(String baseCmd, 
+        Map<String, Object> parameters) {
         
-        List cmds;
+        List<String> cmds;
         
         if (!isRunningFromExecutable(parameters)) {
             // Start using java
@@ -152,7 +153,7 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
             addLocale(cmds, (Locale)parameters.get(IStartAut.LOCALE));
         } else {
             // Start using executable file
-            cmds = new Vector();
+            cmds = new Vector<String>();
 
             cmds.add(0, baseCmd);
                         
@@ -183,10 +184,10 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
-    protected String[] createEnvArray(Map parameters, boolean isAgentSet) {
+    protected String[] createEnvArray(Map<String, Object> parameters, 
+        boolean isAgentSet) {
         
         String [] envArray = super.createEnvArray(parameters, isAgentSet);
         if (envArray == null) {

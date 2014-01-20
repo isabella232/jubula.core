@@ -67,12 +67,12 @@ public class ChooseCheckModeDialogBP {
     /**
      * a list of actions
      */
-    private Map m_actionsObj = new HashMap();
+    private Map<String, Action> m_actionsObj = new HashMap<String, Action>();
 
     /**
      * a list of actions
      */
-    private List m_actionsNames = new ArrayList();
+    private List<String> m_actionsNames = new ArrayList<String>();
 
     /** ComponentIdentifier of actual component */
     private IComponentIdentifier m_compId;
@@ -301,7 +301,7 @@ public class ChooseCheckModeDialogBP {
         }
         m_actionsObj.clear();
         Iterator iter = component.getActions().iterator();
-        List names = new LinkedList();
+        List<String> names = new LinkedList<String>();
         while (iter.hasNext()) {
             Action action = (Action) iter.next();
             if (!action.isDeprecated()

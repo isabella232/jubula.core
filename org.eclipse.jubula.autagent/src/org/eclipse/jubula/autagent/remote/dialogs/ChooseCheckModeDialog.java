@@ -79,7 +79,7 @@ public class ChooseCheckModeDialog extends JFrame {
     /**
      * actionCombo
      */
-    private JComboBox m_actionCombo = new JComboBox();
+    private JComboBox<String> m_actionCombo = new JComboBox<String>();
     
     /**
      * middle Panel for content
@@ -89,7 +89,7 @@ public class ChooseCheckModeDialog extends JFrame {
     /**
      * list of parameter TextFields
      */
-    private List m_parameter = new ArrayList();
+    private List<JComponent> m_parameter = new ArrayList<JComponent>();
     
     /**
      * values to check
@@ -231,7 +231,7 @@ public class ChooseCheckModeDialog extends JFrame {
         Object value = m_checkValues.get(param.getName());
         
         if (param.hasValueSet()) {
-            JComboBox combo = new JComboBox();
+            JComboBox<String> combo = new JComboBox<String>();
             for (Iterator valueIter = param.valueSetIterator(); 
                 valueIter.hasNext();) {
                 
@@ -310,8 +310,8 @@ public class ChooseCheckModeDialog extends JFrame {
      * @param l
      *      List
      */
-    public void setActions(List l) {
-        Iterator iter = l.iterator();
+    public void setActions(List<String> l) {
+        Iterator<String> iter = l.iterator();
         while (iter.hasNext()) {
             m_actionCombo.addItem(iter.next());
         }
@@ -337,7 +337,7 @@ public class ChooseCheckModeDialog extends JFrame {
      */
     public List getParameter() {
         Iterator iter = m_parameter.iterator();
-        List result = new ArrayList();
+        List<Object> result = new ArrayList<Object>();
         while (iter.hasNext()) {
             Object component = iter.next();
             if (component instanceof JTextField) {
@@ -354,7 +354,7 @@ public class ChooseCheckModeDialog extends JFrame {
      */
     public List getTextFields() {
         Iterator iter = m_parameter.iterator();
-        List result = new ArrayList();
+        List<Object> result = new ArrayList<Object>();
         while (iter.hasNext()) {
             Object component = iter.next();
             if (component instanceof JTextField) {

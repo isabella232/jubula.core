@@ -59,8 +59,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      *
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
-    public StartAUTServerStateMessage startAut(Map parameters)
+    public StartAUTServerStateMessage startAut(Map<String, Object> parameters)
         throws IOException {
         StartAUTServerStateMessage envCheckMsg = validateEnvironment();
         if (envCheckMsg == null) {
@@ -131,7 +130,8 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      * @param isAgentSet true if executable file and agent are set.
      * @return the environment settings as array.
      */
-    protected String[] createEnvArray(Map parameters, boolean isAgentSet) {
+    protected String[] createEnvArray(Map<String, Object> parameters,
+        boolean isAgentSet) {
         m_isAgentSet = isAgentSet;
         final String environment =
             (String)parameters.get(AutConfigConstants.ENVIRONMENT);
@@ -179,7 +179,8 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      * @return an <code>Array</code> of <code>String</code>s representing
      *         a command line.
      */
-    protected abstract String [] createCmdArray(String baseCmd, Map parameters);
+    protected abstract String[] createCmdArray(String baseCmd,
+        Map<String, Object> parameters);
 
     /**
      * Executes the given command in the given environment with the
@@ -353,7 +354,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      * @param isDirectExec
      *            true if the AUT is started by exec and not by a JVM
      */
-    protected void addDebugParams(List cmds, boolean isDirectExec) {
+    protected void addDebugParams(List<String> cmds, boolean isDirectExec) {
         final String rcDebug = IStartAut.RC_DEBUG;
         if (rcDebug != null) {
             if (isDirectExec) {

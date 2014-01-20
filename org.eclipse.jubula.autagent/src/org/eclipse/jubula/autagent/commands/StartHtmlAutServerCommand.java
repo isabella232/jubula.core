@@ -33,7 +33,8 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
      * mapping from browser type (String) to corresponding 
      * Selenium browser command (String) 
      */
-    private static final Map BROWSER_TO_CMD_MAP = new HashMap();
+    private static final Map<String, String> BROWSER_TO_CMD_MAP = 
+        new HashMap<String, String>();
     
     static {
         BROWSER_TO_CMD_MAP.put("Firefox", "*firefox"); //$NON-NLS-1$ //$NON-NLS-2$
