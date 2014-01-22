@@ -24,7 +24,7 @@ Bundle-ClassPath: .,
  resources/
 Bundle-Vendor: Eclipse Jubula
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.4
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.apache.commons.beanutils,
  org.apache.commons.lang,
  org.eclipse.jubula.communication,

@@ -4,4 +4,4 @@ Bundle-Name: org.eclipse.jubula.examples.extension.swing.rc
 Bundle-SymbolicName: org.eclipse.jubula.examples.extension.swing.rc;singleton:=true
 Bundle-Version: 2.3.0.qualifier
 Fragment-Host: org.eclipse.jubula.rc.swing
-Bundle-RequiredExecutionEnvironment: J2SE-1.4
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
