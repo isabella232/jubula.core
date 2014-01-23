@@ -317,8 +317,9 @@ public class JobConfiguration {
                         m_autConfig = config;
                     }
                 }
-                Validate.notNull(m_autConfig, 
-                        Messages.JobConfigurationValidateAutConf);
+                Validate.notNull(m_autConfig, NLS.bind(
+                    Messages.JobConfigurationValidateAutConf, m_autConfigName,
+                    aut.getName()));
             }
 
             // LanguageCheck
