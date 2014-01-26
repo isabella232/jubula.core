@@ -26,17 +26,11 @@
    <windowImages/>
 
    <launcher name="stopautagent">
-      <linux icon="/org.eclipse.jubula.product.autagent.stop/icons/stop_aut_agent.xpm"/>
-      <macosx icon="/org.eclipse.jubula.product.autagent.stop/icons/stop_aut_agent.icns"/>
+      <linux icon="icons/stop_aut_agent.xpm"/>
+      <macosx icon="icons/stop_aut_agent.icns"/>
       <solaris/>
-      <win useIco="false">
-         <bmp
-            winSmallHigh="/org.eclipse.jubula.product.autagent.stop/icons/stop_aut_agent16x16.bmp"
-            winSmallLow="/org.eclipse.jubula.product.autagent.stop/icons/stop_aut_agent16x16_8bit.bmp"
-            winMediumHigh="/org.eclipse.jubula.product.autagent.stop/icons/stop_aut_agent32x32.bmp"
-            winMediumLow="/org.eclipse.jubula.product.autagent.stop/icons/stop_aut_agent32x32_8bit.bmp"
-            winLargeHigh="/org.eclipse.jubula.product.autagent.stop/icons/stop_aut_agent48x48.bmp"
-            winLargeLow="/org.eclipse.jubula.product.autagent.stop/icons/stop_aut_agent48x48_8bit.bmp"/>
+      <win useIco="true">
+         <ico path="icons/stop_aut_agent.ico"/>
       </win>
    </launcher>
 

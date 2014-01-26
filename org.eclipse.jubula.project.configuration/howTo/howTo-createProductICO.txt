@@ -1,0 +1,6 @@
+1. Create ICO file with (proprietary) tool; see ico/1-create.png
+  - d&d e.g. ICNS file --> derive 7 icons from that (see *.product configuration editor for required formats)
+
+2. Open created ICO with GIMP (e.g. version 2.6.x) 
+  - re-save / overwrite the created ICO file; see ico/2-rewrite.png
+  - make sure to save *all* PNGs uncompressed

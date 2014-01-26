@@ -14,36 +14,6 @@
 
 	<build>
 		<plugins>
-			<!-- image path workaround described in http://software.2206966.n2.nabble.com/How-to-apply-patch-no-launcher-icon-TYCHO-300-td6059641.html -->
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.5</version>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/products/${project.artifactId}/${project.artifactId}/icons/</outputDirectory>
-							<nonFilteredFileExtensions>
-								<nonFilteredFileExtension>ico</nonFilteredFileExtension>
-								<nonFilteredFileExtension>xpm</nonFilteredFileExtension>
-								<nonFilteredFileExtension>icns</nonFilteredFileExtension>
-								<nonFilteredFileExtension>bmp</nonFilteredFileExtension>
-								<nonFilteredFileExtension>gif</nonFilteredFileExtension>
-								<nonFilteredFileExtension>png</nonFilteredFileExtension>
-							</nonFilteredFileExtensions>
-							<resources>
-								<resource>
-									<directory>icons</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-director-plugin</artifactId>
