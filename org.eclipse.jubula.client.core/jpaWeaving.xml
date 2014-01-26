@@ -7,7 +7,8 @@
  -->
 <project name="org.eclipse.jubula.client.core" default="weaveMaven">
 	<property name="currentPluginDir" value="/projects/guidancer/Workspace/hu_snapshot/current/platforms/lin.gtk.x86/guidancer/plugins" />
-	
+	<property name="weaving.log.level" value="WARNING" />
+    
 	<path id="eclipselink.weaving.classpath">
 		<fileset dir="${basedir}/lib">
 			<include name="javax.persistence_*.jar" />
@@ -47,7 +48,7 @@
 		<weave source="${weaving.src}" 
 			   target="${weaving.src}" 
 			   persistenceinfo="${weaving.persistence}" 
-			   loglevel="FINEST">
+			   loglevel="${weaving.log.level}">
 			<classpath refid="weaving.classpath" />
 		</weave>
 	</target>
@@ -70,6 +71,8 @@
 			<classpath refid="weaving.classpath" />
 			<arg value="-classpath" />
 			<arg value="${weaving.classpath.property}" />
+			<arg value="-loglevel" />
+			<arg value="${weaving.log.level}" />
 			<arg value="-persistenceinfo" />
 			<arg value="${basedir}" />
 			<arg value="${basedir}/${classes}" />
