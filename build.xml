@@ -50,7 +50,6 @@
             <env key="MAVEN_OPTS" value="-Xmx512m" />
             <arg value="clean" />
             <arg value="verify" />
-            <arg value="-q" />
             <arg value="-V" />
         </exec>
     </target>

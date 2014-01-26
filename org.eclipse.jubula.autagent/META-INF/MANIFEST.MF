@@ -4,6 +4,7 @@ Bundle-Name: Jubula AUT Agent
 Bundle-SymbolicName: org.eclipse.jubula.autagent;singleton:=true
 Bundle-Version: 2.3.0.qualifier
 Bundle-Vendor: Eclipse Jubula
+Bundle-Localization: plugin
 Export-Package: org.eclipse.jubula.autagent,
  org.eclipse.jubula.autagent.agent,
  org.eclipse.jubula.autagent.commands,

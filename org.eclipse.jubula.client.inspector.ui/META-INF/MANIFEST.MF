@@ -4,6 +4,7 @@ Bundle-Name: Jubula GEF Component Inspector
 Bundle-SymbolicName: org.eclipse.jubula.client.inspector.ui;singleton:=true
 Bundle-Version: 2.3.0.qualifier
 Bundle-Vendor: Eclipse Jubula
+Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Eclipse-RegisterBuddy: org.eclipse.jubula.client.core
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",

@@ -23,6 +23,7 @@ Bundle-ClassPath: .,
  lib/org.eclipse.jubula.rc.common.jar,
  resources/
 Bundle-Vendor: Eclipse Jubula
+Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.apache.commons.beanutils,

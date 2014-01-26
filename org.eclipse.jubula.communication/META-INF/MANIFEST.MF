@@ -5,6 +5,7 @@ Bundle-SymbolicName: org.eclipse.jubula.communication;singleton:=true
 Bundle-Version: 2.3.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Jubula
+Bundle-Localization: plugin
 Export-Package: org.eclipse.jubula.communication,
  org.eclipse.jubula.communication.commands,
  org.eclipse.jubula.communication.connection,

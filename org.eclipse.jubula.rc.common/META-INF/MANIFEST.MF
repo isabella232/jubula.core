@@ -4,6 +4,7 @@ Bundle-Name: Jubula Remote Control - Common
 Bundle-SymbolicName: org.eclipse.jubula.rc.common
 Bundle-Version: 2.3.0.qualifier
 Bundle-Vendor: Eclipse Jubula
+Bundle-Localization: plugin
 Export-Package: org.eclipse.jubula.rc.common,
  org.eclipse.jubula.rc.common.adaptable,
  org.eclipse.jubula.rc.common.businessprocess,

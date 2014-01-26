@@ -5,6 +5,7 @@ Bundle-SymbolicName: org.eclipse.jubula.client.alm.mylyn.ui.bridge;singleton:=tr
 Bundle-Version: 2.3.0.qualifier
 Bundle-Activator: org.eclipse.jubula.client.alm.mylyn.ui.bridge.Activator
 Bundle-Vendor: Eclipse Jubula
+Bundle-Localization: plugin
 Require-Bundle: 
  org.eclipse.mylyn.context.ui;bundle-version="[3.4.1,4.0.0)",
  org.eclipse.mylyn.context.core;bundle-version="[3.4.1,4.0.0)",

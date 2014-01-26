@@ -8,6 +8,7 @@ Bundle-ClassPath: .,
  lib/javax.xml.stream_1.0.1.v201004272200.jar,
  lib/xml
 Bundle-Vendor: Eclipse Jubula
+Bundle-Localization: plugin
 Export-Package: org.eclipse.jubula.client.archive;uses:="org.eclipse.jubula.client.core.model,org.eclipse.core.runtime,org.eclipse.jubula.client.core.businessprocess",
  org.eclipse.jubula.client.archive.businessprocess,
  org.eclipse.jubula.client.archive.errorhandling,

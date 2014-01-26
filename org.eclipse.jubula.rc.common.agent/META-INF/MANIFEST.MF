@@ -5,6 +5,7 @@ Bundle-Name: Jubula RC Java Agent
 Bundle-SymbolicName: org.eclipse.jubula.rc.common.agent
 Bundle-Version: 2.3.0.qualifier
 Bundle-Vendor: Eclipse Jubula
+Bundle-Localization: plugin
 Premain-Class: org.eclipse.jubula.rc.common.agent.RCAgent
 Class-Path: lib/org.eclipse.jubula.rc.common.jar
 Export-Package: org.eclipse.jubula.rc.common.agent
