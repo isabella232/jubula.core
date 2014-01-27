@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>6.2.1.2 Test execution</title>
-    <meta content="6.2.1.2 Test execution" name="description" />
+    <title>4.4.1 Supported HTML AUT&#39;s </title>
+    <meta content="4.4.1 Supported HTML AUT&#39;s " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,9 +10,13 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION00721200000000000000"> <span class="arabic">6</span>.<span class="arabic">2</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Test execution</a></h3> Jubula generally executes tests on your AUT by sending real clicks and key presses, in the same way that a manual tester would. This means that a Jubula test will give you the same results as a manual test - if a menu is disabled, an item can&#39;t be selected and so on. <p> Once clicks and key presses have been sent, Jubula waits for confirmation from the AUT that they have arrived (manual testers use their eyes, Jubula uses confirmers). <p> If the AUT or the components in it need to be scrolled to access the area being tested, scrolling happens automatically. In the same way, if a tree is collapsed, you do not need to specify an expand action before selecting a node. The expansion is done as part of the selection. <p>
+    <h2><a name="SECTION00541000000000000000"> <span class="arabic">4</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Supported HTML AUT&#39;s </a></h2>
+    <p> AUT&#39;s written with the HTML GUI toolkit are supported according to the following points: <p>
+      <ul>
+        <li>The HTML tests are driven by Selenium. We document which version of Selenium we are currently using as a driver in the release notes. Check the release notes for the current Selenium version and check the Selenium documentation for supported browsers. <li>We strongly recommend writing HTML AUT&#39;s so that they are conform to the <i>W3C</i> standard. You can check whether your AUT is <i>W3C</i> conform using an online validator: http://validator.w3.org <li>Some of the actions in the <i>concrete</i> toolkit (i.e. which are theoretically valid for all AUT types) may not (yet) be supported. In some cases, this is because the component doesn&#39;t exist as such in HTML AUT&#39;s (menu bars for example). In other cases, text components such as tables or lists do not have a concept for dealing with selection as they do in e.g. Swing. <li>The <i>autrun</i> option to start AUT&#39;s <a href="node84.html#autrun">3.7.4.6</a> cannot be used for HTML AUT&#39;s . <li>There is a minor difference in the way that clicks are performed in HTML compared to other supported toolkits. In other toolkits such as Swing, an API is used to simulate actions at the OS level so that the the computer itself can&#39;t distinguish whether it came from a tool or a keyboard. A normal click by a user in a browser would go via the mouse through various layers to the webserver, resulting in a request to that webserver. The clicks in the HTML toolkit are performed by firing DOM events using Javascript therefore bypassing the mouse level. So, although the computer can tell the difference, the webserver can&#39;t. <li>HTML AUT&#39;s can be tested in single-window or multi-window mode. If your AUT has functions that cause new windows to open, then you should specify this in the AUT configuration. You can then map components from different windows, and also use specific actions to switch windows during your test. Multi-window mode on Internet Explorer is considerably slower than on Firefox - this is a known issue registered at Selenium. </ul>
+    <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

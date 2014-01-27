@@ -1,26 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.9.2 Deleting central test data sets</title>
-    <meta content="3.12.9.2 Deleting central test data sets" name="description" />
+    <title>3.12.5.2 Using environment variables in tests</title>
+    <meta content="3.12.5.2 Using environment variables in tests" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerCentralTestDataEditorContextId"></a><h3><a name="SECTION004129200000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">9</span>.<span class="arabic">2</span> Deleting central test data sets</a></h3>You can delete a central test data set if the data set has not yet been reused (referenced) in a Test Case <a href="node143.html#TasksCentralDataReference">3.12.9.5</a>. <ol>
-      <li>Select: <br />
-        <table border="0" style="margin:0px;padding:0px;">
-          <tr>
-            <td bgcolor="#DDDDDD">Delete</td>
-          </tr>
-        </table>
-        <br /> from the context-sensitive menu or press <tt>&raquo;DELETE&laquo;</tt>. <p>
-      <li>A dialog will appear if the data set has been reused and cannot be deleted. <li>You can use the search <a href="node268.html#TasksShowWhereUsedDataSet">3.28.4</a> to show where the data set has been used. </ol>
+  <body>
+    <h3><a name="SECTION004125200000000000000"></a> <a name="TasksSystemVariables"></a><a name="2721"></a> <a name="2722"></a> <a name="2723"></a> <a name="2724"></a> <a name="2725"></a> <a name="2726"></a><br /><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">5</span>.<span class="arabic">2</span> Using environment variables in tests </h3>
+    <p> You can add variables to your operating system, which can be used in your tests. <p> You will need to set environment variables which have the form: <br />
+    <p><tt>&quot;TEST_UDV_&lt;variablename&gt;&quot;</tt><br />
+    <p> To use the variable in your tests, enter the variable name (everything after the underscore) preceded by a dollar sign. Do not enter the &quot;<i>TEST_UDV_</i>&quot; part. <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>After entering or changing an environment variable, you will need to restart the ITE . Environment variables for the ITE (i.e. for the test) are only read from the machine on which the ITE is running, not from the machine where the AUT Agent is running.</b></td>
+        </tr>
+      </table>
+    <p> Your system administrator will be able to help you with operating-system specific ways of setting environment variables. <p><span class="textbf">Useful variables</span> These variables can be used as environment variables on your machine or as JVM properties in your AUT configuration. <p>
+      <dl>
+        <dt><strong>TEST_AUT_KEEP_ALIVE_DELAY</strong><dd>This can be useful if you are using the action to <i>prepare for termination</i>. You can use this variable to configure (in millseconds) how long the AUT should be &#39;&#39;kept alive&#39;&#39; after the termination command (e.g. pressing &quot;<i>Exit</i>&quot; in order for the correct communication between the ITE and the AUT to occur. The value is set to 2000ms per default. <dt><strong>TEST_AUT_POST_DEREGISTRATION_DELAY</strong><dd>This can be useful if you are using the action <i>synchronize shutdown and re-start</i>. You can use this variable to configure (in milliseconds) how long your AUT requires after closing to perform tasks such as saving resources and settings. </dl>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

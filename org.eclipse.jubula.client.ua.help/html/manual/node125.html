@@ -1,24 +1,47 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.5 Using variables as data for Test Cases </title>
-    <meta content="3.12.5 Using variables as data for Test Cases " name="description" />
+    <title>3.11.2.1 Using the library to create tests</title>
+    <meta content="3.11.2.1 Using the library to create tests" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerDataSetViewContextId"></a><a name="guidancerPropertiesViewContextId"></a><a name="guidancerCentralTestDataEditorContextId"></a><h2><a name="SECTION004125000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">5</span> Using variables as data for Test Cases </a></h2><a name="TasksVariables"></a><p><a name="2456"></a> <a name="2457"></a><p>
-      <ul>
-        <li>Jubula lets you store values from the AUT to use later. <li>Some actions (e.g. store value) let you save a value as a variable. You specify the name of the variable, e.g. <tt>&quot;USERNAME&quot;</tt>. <li>When you want to use the variable, you can enter it as a parameter by preceding it with a dollar sign: <tt>&quot;$USERNAME&quot;</tt>. </ul> For more information on using variables, see the following sections: <ul>
-        <li>Working with variables in tests <a href="node126.html#TasksAUTVariables">3.12.5.1</a>. <li>Working with system variables <a href="node127.html#TasksSystemVariables">3.12.5.2</a>. <li>Working with the Jubula pre-defined variables <a href="node128.html#TasksPredefinedVariables">3.12.5.3</a>. </ul>
+  <body>
+    <h3><a name="SECTION004112100000000000000"></a> <a name="UseLibrary"></a><br /><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Using the library to create tests </h3> Creating tests with the ITE is really just a matter of: <ul>
+      <li>Deciding how to structure your tests (i.e. what keywords to create and how to combine them). <li>Choosing the Test Cases from the library (or from your own set of Test Cases ) that you need to create these keywords. </ul>
+    <p> To use the Test Cases from the library, you will first need to create a Test Case of your own <a href="node123.html#TasksCreateTC">3.11.1</a>. <p>
+      <ol>
+        <li>Open the Test Case Editor by double-clicking on the Test Case you want to edit in the Test Case Browser . <li>In the Test Case Browser , browse to a Test Case that you want to add. For help on finding your way around the library, see the later section <a href="node127.html#UnderstandingLibrary">3.11.2.3</a>. <li>You can add the Test Case by dragging and dropping from the Test Case Browser to the Test Case Editor or you can right click on the Test Case in the Test Case Editor and select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Reference Existing Test Case </td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">
+                <br />
+              </td>
+            </tr>
+          </table> to see a list of all Test Cases that you can add to this Test Case . <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>You can filter in this dialog using the field at the top. Use star <tt>&quot;*&quot;</tt> as a wild card.</b></td>
+              </tr>
+            </table>
+          <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>You can open the dialog to reference an existing Test Case by pressing <tt>&raquo;ENTER&laquo;</tt> on a Test Case in the Test Case Editor .</b></td>
+              </tr>
+            </table>
+          <p>
+        <li>Once you have added the Test Case , you will need to enter a component name in the Component Names View <a href="node169.html#TasksReassignCompName">3.13.2</a> and you will need to enter data for the Test Case in the Properties View <a href="node133.html#WorkingWithData">3.12</a>. </ol>
     <p>
       <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node126.html" name="tex2html2698"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">5</span>.<span class="arabic">1</span> Reading and using values (variables) from the AUT </a><li><a href="node127.html" name="tex2html2699"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">5</span>.<span class="arabic">2</span> Using environment variables in tests</a><li><a href="node128.html" name="tex2html2700"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">5</span>.<span class="arabic">3</span> Using the Jubula pre-defined test execution variables</a></ul>
-      <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

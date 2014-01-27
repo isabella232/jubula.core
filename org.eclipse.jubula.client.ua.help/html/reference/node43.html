@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>11. Keyboard layout files</title>
-    <meta content="11. Keyboard layout files" name="description" />
+    <title>10.1 Creating a keyboard layout file</title>
+    <meta content="10.1 Creating a keyboard layout file" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,13 +10,22 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h1><a name="SECTION001200000000000000000"></a> <a name="keyboardlayout"></a><br /><span class="arabic">11</span>. Keyboard layout files </h1>
-    <p> For SWT and RCP AUT&#39;s , you need to define a keyboard layouts for the AUT (i.e. which keyboard layout is set for the system on which the AUT runs). <p> Jubula already has the keyboard layouts for German (Germany) and English (US) saved. If you want to use another keyboard layout, follow the instructions in the next section to create one. <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node44.html" name="tex2html688"><span class="arabic">11</span>.<span class="arabic">1</span> Creating a keyboard layout file</a></ul>
+    <h1><a name="SECTION001110000000000000000"> <span class="arabic">10</span>.<span class="arabic">1</span> Creating a keyboard layout file</a></h1>
+    <p>
+      <ol>
+        <li>The name of the file must be in the following format: <br /> keyboardmapping_&lt;language&gt;_&lt;COUNTRY&gt;.properties <br /> e.g. for US English: keyboardmapping_en_US.properties <p> See the section in this document <a href="node41.html#langcodes">9</a> for language codes. <li>In the file, enter the codes for all characters which require you to press a modifier key. <li>The format for these codes is: <br />&lt;Character&gt;=&lt;Modifier&gt;+&lt;Character without modifier&gt; <br /> e.g. for the @ character: @=shift+2 <li>The following symbols must be escaped with a backslash: <br /><code>! = : \ ,</code><br /> e.g. <code>\!=shift+1</code> for ! <li>There are pictures of various keyboards on the following website: <br /><i>http://www.uni-regensburg.de/EDV/Misc/KeyBoards/</i><li>To add the keyboard layout file, you must create a fragment containing your newly added keyboard layout file(s). The host plugin for the fragment is: <br /><i>org.eclipse.jubula.client.core</i><br /> The path within the fragment must be: <br /><i>resources/keyboard_mapping/&lt;name&gt;.properties</i><br />
+          <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>If you name the file with the locale code, then the keyboard layout will be displayed in plain text in the AUT configuration dialog.</b></td>
+            </tr>
+          </table>
+          <p>
+      </ol>
+    <p>
+    <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

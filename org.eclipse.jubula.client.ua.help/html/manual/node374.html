@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.4.13 The Progress View</title>
-    <meta content="5.4.13 The Progress View" name="description" />
+    <title>4.2.4.2 Adding support for text retrieval</title>
+    <meta content="4.2.4.2 Adding support for text retrieval" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,9 +10,13 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION006413000000000000000"> <span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">13</span> The Progress View</a></h2> The progress view shows which longer-running actions are currently being executed. These can include starting AUT&#39;s , connecting to the AUT Agent , and executing tests. <p>
+    <h3><a name="SECTION00524200000000000000"> <span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">4</span>.<span class="arabic">2</span> Adding support for text retrieval</a></h3>
+    <p> You can add support for renderers for SWT components or items without the getText() method in order to access text that is otherwise non-readable during test execution. <p> Use the method <tt>&quot;setData(String key, Object value)&quot;</tt> on the instance of the component or item whose text you want to access. The <i>key</i> is <tt>&quot;TEST_TESTABLE_TEXT&quot;</tt><p> For example, to access an otherwise unreachable text on a label: <br /><tt>&quot;myLabel.setData(&quot;TEST_TESTABLE_TEXT&quot;, label);&quot;</tt><p> If you are making text in e.g. a table accessible, then you will need to add a dynamic part for the column, e.g.: <br /><pre>
+myTableItemInstance.setData
+(&quot;TEST_TESTABLE_TEXT_&quot; + colIdx, text);
+</pre><p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

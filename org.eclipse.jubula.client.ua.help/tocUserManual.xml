@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Jubula User Manual">
+<toc label="Functional Testing User Manual">
      <topic label="1. Introduction" href="html/manual/node2.html">
           <topic label="1.1 Comparison to other testing approaches" href="html/manual/node3.html">
                <topic label="1.1.1 Manual Tests" href="html/manual/node4.html"></topic>
                <topic label="1.1.2 Programmed Tests" href="html/manual/node5.html"></topic>
                <topic label="1.1.3 Recorded Tests" href="html/manual/node6.html"></topic>
-               <topic label="1.1.4 The Jubula approach" href="html/manual/node7.html"></topic>
+               <topic label="1.1.4 Our approach" href="html/manual/node7.html"></topic>
                <topic label="1.1.5 Early test creation" href="html/manual/node8.html"></topic>
                <topic label="1.1.6 Code-free automation" href="html/manual/node9.html"></topic>
                <topic label="1.1.7 Manual tester intelligence" href="html/manual/node10.html"></topic>
@@ -34,340 +34,386 @@
                <topic label="2.4.3 Sample 2.3: testing tables" href="html/manual/node28.html"></topic>
                <topic label="2.4.4 Sample 2.4: testing tabbed panes, lists, combo boxes" href="html/manual/node29.html"></topic>
           </topic>
-          <topic label="2.5 Meters Tests" href="html/manual/node30.html">
-               <topic label="2.5.1 Sample 5: Tests with the Meters tool" href="html/manual/node31.html"></topic>
-          </topic>
      </topic>
-     <topic label="3. Tasks" href="html/manual/node33.html">
-          <topic label="3.1 Starting and connecting to the AUT Agent" href="html/manual/node34.html">
-               <topic label="3.1.1 Starting the AUT Agent" href="html/manual/node35.html"></topic>
-               <topic label="3.1.2 Connecting to the AUT Agent" href="html/manual/node39.html"></topic>
+     <topic label="3. Tasks" href="html/manual/node30.html">
+          <topic label="3.1 Starting and connecting to the AUT Agent" href="html/manual/node31.html">
+               <topic label="3.1.1 Starting the AUT Agent" href="html/manual/node32.html"></topic>
+               <topic label="3.1.2 Connecting to the AUT Agent" href="html/manual/node36.html"></topic>
           </topic>
-          <topic label="3.2 Starting the Integrated Test Environment (ITE )" href="html/manual/node40.html">
-               <topic label="3.2.1 Windows Users" href="html/manual/node41.html"></topic>
-               <topic label="3.2.2 Unix Users" href="html/manual/node42.html"></topic>
-               <topic label="3.2.3 Choosing a workspace" href="html/manual/node43.html"></topic>
-               <topic label="3.2.4 Restarting the ITE" href="html/manual/node44.html"></topic>
-               <topic label="3.2.5 Help system" href="html/manual/node45.html"></topic>
-               <topic label="3.2.6 Working with the AUT Agent and client on one machine" href="html/manual/node46.html"></topic>
+          <topic label="3.2 Starting the Integrated Test Environment (ITE )" href="html/manual/node37.html">
+               <topic label="3.2.1 Windows Users" href="html/manual/node38.html"></topic>
+               <topic label="3.2.2 Unix Users" href="html/manual/node39.html"></topic>
+               <topic label="3.2.3 Choosing a workspace" href="html/manual/node40.html"></topic>
+               <topic label="3.2.4 Restarting the ITE" href="html/manual/node41.html"></topic>
+               <topic label="3.2.5 Help system" href="html/manual/node42.html"></topic>
+               <topic label="3.2.6 Working with the AUT Agent and client on one machine" href="html/manual/node43.html"></topic>
           </topic>
-          <topic label="3.3 Logging into and switching databases" href="html/manual/node47.html">
-               <topic label="3.3.1 Logging in to the Database" href="html/manual/node48.html"></topic>
-               <topic label="3.3.2 Selecting and changing the Database connection" href="html/manual/node49.html"></topic>
+          <topic label="3.3 Logging into and switching databases" href="html/manual/node44.html">
+               <topic label="3.3.1 Logging in to the Database" href="html/manual/node45.html"></topic>
+               <topic label="3.3.2 Selecting and changing the Database connection" href="html/manual/node46.html"></topic>
           </topic>
-          <topic label="3.4 Migrating to newer versions of Jubula" href="html/manual/node50.html"></topic>
-          <topic label="3.5 Working with Projects" href="html/manual/node51.html">
-               <topic label="3.5.1 Creating a new Project" href="html/manual/node52.html"></topic>
-               <topic label="3.5.2 Editing the Project and AUT properties" href="html/manual/node53.html"></topic>
-               <topic label="3.5.3 Reusing (referencing) whole Projects in a Project" href="html/manual/node60.html"></topic>
-               <topic label="3.5.4 Opening Projects" href="html/manual/node62.html"></topic>
-               <topic label="3.5.5 Refreshing Projects" href="html/manual/node64.html"></topic>
-               <topic label="3.5.6 Deleting Projects" href="html/manual/node65.html"></topic>
-               <topic label="3.5.7 Saving a Project as a new Project" href="html/manual/node66.html"></topic>
-               <topic label="3.5.8 Importing Projects" href="html/manual/node67.html"></topic>
-               <topic label="3.5.9 Exporting Projects" href="html/manual/node68.html"></topic>
-               <topic label="3.5.10 Versioning Projects" href="html/manual/node71.html"></topic>
+          <topic label="3.4 Migrating to newer versions" href="html/manual/node47.html"></topic>
+          <topic label="3.5 Working with Projects" href="html/manual/node48.html">
+               <topic label="3.5.1 Creating a new Project" href="html/manual/node49.html"></topic>
+               <topic label="3.5.2 Editing the Project and AUT properties" href="html/manual/node50.html"></topic>
+               <topic label="3.5.3 Reusing (referencing) whole Projects in a Project" href="html/manual/node57.html"></topic>
+               <topic label="3.5.4 Opening Projects" href="html/manual/node59.html"></topic>
+               <topic label="3.5.5 Refreshing Projects" href="html/manual/node61.html"></topic>
+               <topic label="3.5.6 Deleting Projects" href="html/manual/node62.html"></topic>
+               <topic label="3.5.7 Saving a Project as a new Project" href="html/manual/node63.html"></topic>
+               <topic label="3.5.8 Importing Projects" href="html/manual/node64.html"></topic>
+               <topic label="3.5.9 Exporting Projects" href="html/manual/node65.html"></topic>
+               <topic label="3.5.10 Versioning Projects" href="html/manual/node68.html"></topic>
+               <topic label="3.5.11 Tracking changes in a Project" href="html/manual/node69.html"></topic>
           </topic>
           <topic label="3.6 Defining applications under test (AUT's )" href="html/manual/node72.html"></topic>
           <topic label="3.7 Starting and configuring AUT's" href="html/manual/node73.html">
-               <topic label="3.7.1 Configuring AUT's to be started with Jubula" href="html/manual/node74.html"></topic>
-               <topic label="3.7.2 Starting Java AUT's (Swing, SWT/RCP/GEF) with Jubula" href="html/manual/node76.html"></topic>
-               <topic label="3.7.3 Starting Web AUT's (HTML) with Jubula" href="html/manual/node84.html"></topic>
-               <topic label="3.7.4 Starting other AUT's" href="html/manual/node88.html"></topic>
+               <topic label="3.7.1 Configuring AUT's to be started from the ITE" href="html/manual/node74.html"></topic>
+               <topic label="3.7.2 Basic information required for every AUT configuration" href="html/manual/node76.html"></topic>
+               <topic label="3.7.3 Using a working directory in an AUT configuration" href="html/manual/node77.html"></topic>
+               <topic label="3.7.4 Starting Java AUT's (Swing, SWT/RCP/GEF)" href="html/manual/node78.html"></topic>
+               <topic label="3.7.5 Starting Web AUT's (HTML)" href="html/manual/node86.html"></topic>
+               <topic label="3.7.6 Starting Win AUT's (.NET, WPF, WinApps)" href="html/manual/node90.html"></topic>
+               <topic label="3.7.7 Starting iOS AUT's" href="html/manual/node93.html"></topic>
+               <topic label="3.7.8 Starting other AUT's" href="html/manual/node97.html"></topic>
           </topic>
-          <topic label="3.8 Working with browsers: renaming, deleting, using IDs, multiple browsers" href="html/manual/node89.html">
-               <topic label="3.8.1 Renaming items in browsers" href="html/manual/node90.html"></topic>
-               <topic label="3.8.2 Deleting items from browsers" href="html/manual/node91.html"></topic>
-               <topic label="3.8.3 Working with IDs for Test Cases and Test Suites" href="html/manual/node92.html"></topic>
-               <topic label="3.8.4 Opening the Test Case Browser multiple times" href="html/manual/node95.html"></topic>
+          <topic label="3.8 Working with browsers: renaming, deleting, using IDs, multiple browsers" href="html/manual/node98.html">
+               <topic label="3.8.1 Renaming items in browsers" href="html/manual/node99.html"></topic>
+               <topic label="3.8.2 Deleting items from browsers" href="html/manual/node100.html"></topic>
+               <topic label="3.8.3 Working with IDs for Test Cases and Test Suites" href="html/manual/node101.html"></topic>
+               <topic label="3.8.4 Opening the Test Case Browser multiple times" href="html/manual/node104.html"></topic>
+               <topic label="3.8.5 Opening the task editor for items in browsers" href="html/manual/node105.html"></topic>
           </topic>
-          <topic label="3.9 Working with editors: opening, adding/deleting/renaming items, commenting, extracting and replacing, reverting changes" href="html/manual/node96.html">
-               <topic label="3.9.1 Opening items in editors" href="html/manual/node97.html"></topic>
-               <topic label="3.9.2 Adding items to editors" href="html/manual/node98.html"></topic>
-               <topic label="3.9.3 Deleting items from editors" href="html/manual/node99.html"></topic>
-               <topic label="3.9.4 Renaming items in editors" href="html/manual/node100.html"></topic>
-               <topic label="3.9.5 Adding comments to items in editors" href="html/manual/node101.html"></topic>
-               <topic label="3.9.6 Commenting out items in editors" href="html/manual/node102.html"></topic>
-               <topic label="3.9.7 Extracting Test Cases from editors: Refactoring" href="html/manual/node103.html"></topic>
-               <topic label="3.9.8 Replacing Test Cases in editors: Refactoring" href="html/manual/node104.html"></topic>
-               <topic label="3.9.9 Saving Test Cases from an editor as a new Test Case" href="html/manual/node105.html"></topic>
-               <topic label="3.9.10 Reverting changes in an editor" href="html/manual/node106.html"></topic>
+          <topic label="3.9 Working with editors: opening, adding/deleting/renaming items, commenting, extracting and replacing, reverting changes" href="html/manual/node106.html">
+               <topic label="3.9.1 Opening items in editors" href="html/manual/node107.html"></topic>
+               <topic label="3.9.2 Adding items to editors" href="html/manual/node108.html"></topic>
+               <topic label="3.9.3 Deleting items from editors" href="html/manual/node109.html"></topic>
+               <topic label="3.9.4 Renaming items in editors" href="html/manual/node110.html"></topic>
+               <topic label="3.9.5 Adding comments to items in editors" href="html/manual/node111.html"></topic>
+               <topic label="3.9.6 Adding Task IDs to items in editors" href="html/manual/node112.html"></topic>
+               <topic label="3.9.7 Commenting out items in editors" href="html/manual/node113.html"></topic>
+               <topic label="3.9.8 Extracting Test Cases from editors: Refactoring" href="html/manual/node114.html"></topic>
+               <topic label="3.9.9 Replacing Test Cases in editors: Refactoring" href="html/manual/node115.html"></topic>
+               <topic label="3.9.10 Saving Test Cases from an editor as a new Test Case" href="html/manual/node116.html"></topic>
+               <topic label="3.9.11 Reverting changes in an editor" href="html/manual/node117.html"></topic>
           </topic>
-          <topic label="3.10 Working with categories in the browsers and editors" href="html/manual/node107.html">
-               <topic label="3.10.1 Creating a category" href="html/manual/node108.html"></topic>
-               <topic label="3.10.2 Creating Test Cases , Test Suites and Test Jobs in an existing category" href="html/manual/node109.html"></topic>
+          <topic label="3.10 Working with categories in the browsers and editors" href="html/manual/node118.html">
+               <topic label="3.10.1 Creating a category" href="html/manual/node119.html"></topic>
+               <topic label="3.10.2 Creating Test Cases , Test Suites and Test Jobs in an existing category" href="html/manual/node120.html"></topic>
+               <topic label="3.10.3 Adding comments to categories" href="html/manual/node121.html"></topic>
           </topic>
-          <topic label="3.11 Working with Test Cases" href="html/manual/node110.html">
-               <topic label="3.11.1 Creating Test Cases" href="html/manual/node111.html"></topic>
-               <topic label="3.11.2 Creating tests from the library of pre-defined Test Cases" href="html/manual/node112.html"></topic>
-               <topic label="3.11.3 Opening existing Test Cases" href="html/manual/node116.html"></topic>
-               <topic label="3.11.4 Editing Test Cases" href="html/manual/node117.html"></topic>
-               <topic label="3.11.5 Adding and inserting new Test Cases to a Test Case" href="html/manual/node118.html"></topic>
-               <topic label="3.11.6 Moving Test Cases to external Projects" href="html/manual/node119.html"></topic>
+          <topic label="3.11 Working with Test Cases" href="html/manual/node122.html">
+               <topic label="3.11.1 Creating Test Cases" href="html/manual/node123.html"></topic>
+               <topic label="3.11.2 Creating tests from the library of pre-defined Test Cases" href="html/manual/node124.html"></topic>
+               <topic label="3.11.3 Opening existing Test Cases" href="html/manual/node128.html"></topic>
+               <topic label="3.11.4 Editing Test Cases" href="html/manual/node129.html"></topic>
+               <topic label="3.11.5 Adding and inserting new Test Cases to a Test Case" href="html/manual/node130.html"></topic>
+               <topic label="3.11.6 Moving Test Cases to external Projects" href="html/manual/node131.html"></topic>
+               <topic label="3.11.7 Replacing a specific Test Case at places where it has been reused" href="html/manual/node132.html"></topic>
           </topic>
-          <topic label="3.12 Working with test data" href="html/manual/node120.html">
-               <topic label="3.12.1 Data types and entering data for Test Cases" href="html/manual/node121.html"></topic>
-               <topic label="3.12.2 Entering concrete values as data in Test Cases" href="html/manual/node122.html"></topic>
-               <topic label="3.12.3 Using references for data in Test Cases" href="html/manual/node123.html"></topic>
-               <topic label="3.12.4 Using the edit parameters dialog to add, edit and delete references" href="html/manual/node124.html"></topic>
-               <topic label="3.12.5 Using variables as data for Test Cases" href="html/manual/node125.html"></topic>
-               <topic label="3.12.6 Using functions as data for Test Cases" href="html/manual/node129.html"></topic>
-               <topic label="3.12.7 Concatenating (combining) parameters" href="html/manual/node135.html"></topic>
-               <topic label="3.12.8 Viewing and changing data sources for Test Cases" href="html/manual/node136.html"></topic>
-               <topic label="3.12.9 Using central data sets" href="html/manual/node138.html"></topic>
-               <topic label="3.12.10 Using an Excel file as an external data source" href="html/manual/node145.html"></topic>
-               <topic label="3.12.11 Using the Data Sets View to enter data loops and to translate data" href="html/manual/node148.html"></topic>
-               <topic label="3.12.12 Special parameters: empty strings and the escape character" href="html/manual/node151.html"></topic>
-               <topic label="3.12.13 Overwriting data for Test Cases and Test Suites" href="html/manual/node152.html"></topic>
+          <topic label="3.12 Working with test data" href="html/manual/node133.html">
+               <topic label="3.12.1 Data types and entering data for Test Cases" href="html/manual/node134.html"></topic>
+               <topic label="3.12.2 Entering concrete values as data in Test Cases" href="html/manual/node135.html"></topic>
+               <topic label="3.12.3 Using references for data in Test Cases" href="html/manual/node136.html"></topic>
+               <topic label="3.12.4 Using the edit parameters dialog to add, edit and delete references" href="html/manual/node137.html"></topic>
+               <topic label="3.12.5 Using variables as data for Test Cases" href="html/manual/node138.html"></topic>
+               <topic label="3.12.6 Using functions as data for Test Cases" href="html/manual/node142.html"></topic>
+               <topic label="3.12.7 Concatenating (combining) parameters" href="html/manual/node148.html"></topic>
+               <topic label="3.12.8 Viewing and changing data sources for Test Cases" href="html/manual/node149.html"></topic>
+               <topic label="3.12.9 Using central data sets" href="html/manual/node151.html"></topic>
+               <topic label="3.12.10 Using an Excel file as an external data source" href="html/manual/node159.html"></topic>
+               <topic label="3.12.11 Using the Data Sets View to enter data loops and to translate data" href="html/manual/node162.html"></topic>
+               <topic label="3.12.12 Special parameters: empty strings and the escape character" href="html/manual/node165.html"></topic>
+               <topic label="3.12.13 Overwriting data for Test Cases and Test Suites" href="html/manual/node166.html"></topic>
           </topic>
-          <topic label="3.13 Working with component names" href="html/manual/node153.html">
-               <topic label="3.13.1 Creating new component names" href="html/manual/node154.html"></topic>
-               <topic label="3.13.2 Entering and reassigning component names in the Component Names View" href="html/manual/node155.html"></topic>
-               <topic label="3.13.3 Renaming component names" href="html/manual/node158.html"></topic>
-               <topic label="3.13.4 Merging component names" href="html/manual/node159.html"></topic>
-               <topic label="3.13.5 Deleting unused component names" href="html/manual/node160.html"></topic>
-               <topic label="3.13.6 Understanding the component hierarchy" href="html/manual/node161.html"></topic>
+          <topic label="3.13 Working with component names" href="html/manual/node167.html">
+               <topic label="3.13.1 Creating new component names" href="html/manual/node168.html"></topic>
+               <topic label="3.13.2 Entering and reassigning component names in the Component Names View" href="html/manual/node169.html"></topic>
+               <topic label="3.13.3 Renaming component names" href="html/manual/node170.html"></topic>
+               <topic label="3.13.4 Propagating component names" href="html/manual/node171.html"></topic>
+               <topic label="3.13.5 No component type exists message in Component Names View" href="html/manual/node172.html"></topic>
+               <topic label="3.13.6 Merging component names" href="html/manual/node173.html"></topic>
+               <topic label="3.13.7 Deleting unused component names" href="html/manual/node174.html"></topic>
+               <topic label="3.13.8 Understanding the component hierarchy" href="html/manual/node175.html"></topic>
           </topic>
-          <topic label="3.14 Working with Test Suites" href="html/manual/node162.html">
-               <topic label="3.14.1 Creating a Test Suite" href="html/manual/node163.html"></topic>
-               <topic label="3.14.2 Configuring Test Suites in the Properties View" href="html/manual/node164.html"></topic>
+          <topic label="3.14 Working with Test Suites" href="html/manual/node176.html">
+               <topic label="3.14.1 Creating a Test Suite" href="html/manual/node177.html"></topic>
+               <topic label="3.14.2 Configuring Test Suites in the Properties View" href="html/manual/node178.html"></topic>
           </topic>
-          <topic label="3.15 Working with Test Jobs to test multiple AUT's" href="html/manual/node165.html">
-               <topic label="3.15.1 Combining Test Suites into a Test Job" href="html/manual/node166.html"></topic>
-               <topic label="3.15.2 Testing different AUT's in one test run" href="html/manual/node167.html"></topic>
-               <topic label="3.15.3 Creating a new Test Job" href="html/manual/node170.html"></topic>
-               <topic label="3.15.4 Specifying which AUT to test in a Test Job" href="html/manual/node171.html"></topic>
+          <topic label="3.15 Working with Test Jobs to test multiple AUT's" href="html/manual/node179.html">
+               <topic label="3.15.1 Combining Test Suites into a Test Job" href="html/manual/node180.html"></topic>
+               <topic label="3.15.2 Testing different AUT's in one test run" href="html/manual/node181.html"></topic>
+               <topic label="3.15.3 Creating a new Test Job" href="html/manual/node184.html"></topic>
+               <topic label="3.15.4 Specifying which AUT to test in a Test Job" href="html/manual/node185.html"></topic>
           </topic>
-          <topic label="3.16 Information on Test Steps" href="html/manual/node172.html">
-               <topic label="3.16.1 Specifying Test Steps" href="html/manual/node173.html"></topic>
-               <topic label="3.16.2 Editing Test Steps" href="html/manual/node174.html"></topic>
+          <topic label="3.16 Information on Test Steps" href="html/manual/node186.html">
+               <topic label="3.16.1 Specifying Test Steps" href="html/manual/node187.html"></topic>
+               <topic label="3.16.2 Editing Test Steps" href="html/manual/node188.html"></topic>
           </topic>
-          <topic label="3.17 Working with manual Test Cases" href="html/manual/node175.html">
-               <topic label="3.17.1 Creating manual tests" href="html/manual/node176.html"></topic>
-               <topic label="3.17.2 Executing and analyzing manual tests" href="html/manual/node177.html"></topic>
+          <topic label="3.17 Working with manual Test Cases" href="html/manual/node189.html">
+               <topic label="3.17.1 Creating manual tests" href="html/manual/node190.html"></topic>
+               <topic label="3.17.2 Executing and analyzing manual tests" href="html/manual/node191.html"></topic>
           </topic>
-          <topic label="3.18 Object mapping" href="html/manual/node178.html">
-               <topic label="3.18.1 Object mapping" href="html/manual/node179.html"></topic>
-               <topic label="3.18.2 Working with the Object Mapping Editor" href="html/manual/node180.html"></topic>
-               <topic label="3.18.3 Deleting from the Object Mapping Editor" href="html/manual/node187.html"></topic>
-               <topic label="3.18.4 Collecting components (technical names) from the AUT" href="html/manual/node189.html"></topic>
-               <topic label="3.18.5 Mapping (assigning) collected technical names to component names" href="html/manual/node191.html"></topic>
-               <topic label="3.18.6 Object mapping and AUT changes" href="html/manual/node192.html"></topic>
+          <topic label="3.18 Object mapping" href="html/manual/node192.html">
+               <topic label="3.18.1 Object mapping" href="html/manual/node193.html"></topic>
+               <topic label="3.18.2 Working with the Object Mapping Editor" href="html/manual/node194.html"></topic>
+               <topic label="3.18.3 Deleting from the Object Mapping Editor" href="html/manual/node201.html"></topic>
+               <topic label="3.18.4 Collecting components (technical names) from the AUT" href="html/manual/node203.html"></topic>
+               <topic label="3.18.5 Mapping (assigning) collected technical names to component names" href="html/manual/node208.html"></topic>
+               <topic label="3.18.6 Object mapping and AUT changes" href="html/manual/node209.html"></topic>
+               <topic label="3.18.7 Viewing properties for a component in the Object Mapping Mode" href="html/manual/node210.html"></topic>
           </topic>
-          <topic label="3.19 Test execution" href="html/manual/node193.html">
-               <topic label="3.19.1 Prerequisites for test execution" href="html/manual/node194.html"></topic>
-               <topic label="3.19.2 Starting the AUT" href="html/manual/node195.html"></topic>
-               <topic label="3.19.3 Starting, stopping and pausing Test Suites and Test Jobs" href="html/manual/node196.html"></topic>
-               <topic label="3.19.4 Interactive test analysis" href="html/manual/node200.html"></topic>
-               <topic label="3.19.5 Altering the speed of test execution" href="html/manual/node203.html"></topic>
+          <topic label="3.19 Test execution" href="html/manual/node211.html">
+               <topic label="3.19.1 Prerequisites for test execution" href="html/manual/node212.html"></topic>
+               <topic label="3.19.2 Starting the AUT" href="html/manual/node213.html"></topic>
+               <topic label="3.19.3 Starting, stopping and pausing Test Suites and Test Jobs" href="html/manual/node214.html"></topic>
+               <topic label="3.19.4 Interactive test analysis" href="html/manual/node218.html"></topic>
+               <topic label="3.19.5 Altering the speed of test execution" href="html/manual/node221.html"></topic>
           </topic>
-          <topic label="3.20 Working with test results" href="html/manual/node204.html">
-               <topic label="3.20.1 The Test Result View" href="html/manual/node205.html"></topic>
-               <topic label="3.20.2 XML and HTML reports" href="html/manual/node206.html"></topic>
-               <topic label="3.20.3 Working with the Test Result Summary View" href="html/manual/node207.html"></topic>
+          <topic label="3.20 Working with test results" href="html/manual/node222.html">
+               <topic label="3.20.1 The Test Result View" href="html/manual/node223.html"></topic>
+               <topic label="3.20.2 XML and HTML reports" href="html/manual/node224.html"></topic>
+               <topic label="3.20.3 Working with the Test Result Summary View" href="html/manual/node225.html"></topic>
           </topic>
-          <topic label="3.21 Dealing with errors in tests: Event Handlers" href="html/manual/node216.html">
-               <topic label="3.21.1 Adding Event Handlers to a Test Case" href="html/manual/node217.html"></topic>
-               <topic label="3.21.2 Event types" href="html/manual/node218.html"></topic>
-               <topic label="3.21.3 Reentry types" href="html/manual/node219.html"></topic>
+          <topic label="3.21 Dealing with errors in tests: Event Handlers" href="html/manual/node234.html">
+               <topic label="3.21.1 Adding Event Handlers to a Test Case" href="html/manual/node235.html"></topic>
+               <topic label="3.21.2 Event types" href="html/manual/node236.html"></topic>
+               <topic label="3.21.3 Reentry types" href="html/manual/node237.html"></topic>
           </topic>
-          <topic label="3.22 Preferences" href="html/manual/node220.html">
-               <topic label="3.22.1 Test preferences" href="html/manual/node221.html"></topic>
-               <topic label="3.22.2 AUT Agent preferences" href="html/manual/node222.html"></topic>
-               <topic label="3.22.3 Embedded AUT Agent preferences" href="html/manual/node223.html"></topic>
-               <topic label="3.22.4 Database preferences" href="html/manual/node224.html"></topic>
-               <topic label="3.22.5 Editor preferences" href="html/manual/node226.html"></topic>
-               <topic label="3.22.6 Object mapping preferences" href="html/manual/node227.html"></topic>
-               <topic label="3.22.7 Observation mode preferences" href="html/manual/node228.html"></topic>
-               <topic label="3.22.8 Test result preferences" href="html/manual/node229.html"></topic>
-               <topic label="3.22.9 Chronon preferences" href="html/manual/node230.html"></topic>
-               <topic label="3.22.10 Importing and exporting Database preferences" href="html/manual/node231.html"></topic>
-               <topic label="3.22.11 Label decoration preferences" href="html/manual/node232.html"></topic>
-               <topic label="3.22.12 Workspace preferences" href="html/manual/node233.html"></topic>
-               <topic label="3.22.13 General/Keys preferences" href="html/manual/node234.html"></topic>
-               <topic label="3.22.14 Help preferences" href="html/manual/node235.html"></topic>
+          <topic label="3.22 Preferences" href="html/manual/node238.html">
+               <topic label="3.22.1 Test preferences" href="html/manual/node239.html"></topic>
+               <topic label="3.22.2 AUT Agent preferences" href="html/manual/node240.html"></topic>
+               <topic label="3.22.3 Embedded AUT Agent preferences" href="html/manual/node241.html"></topic>
+               <topic label="3.22.4 Database preferences" href="html/manual/node242.html"></topic>
+               <topic label="3.22.5 Editor preferences" href="html/manual/node244.html"></topic>
+               <topic label="3.22.6 Object mapping preferences" href="html/manual/node245.html"></topic>
+               <topic label="3.22.7 Observation mode preferences" href="html/manual/node246.html"></topic>
+               <topic label="3.22.8 Test result preferences" href="html/manual/node247.html"></topic>
+               <topic label="3.22.9 Importing and exporting Database preferences" href="html/manual/node248.html"></topic>
+               <topic label="3.22.10 Label decoration preferences" href="html/manual/node249.html"></topic>
+               <topic label="3.22.11 Workspace preferences" href="html/manual/node250.html"></topic>
+               <topic label="3.22.12 General/Keys preferences" href="html/manual/node251.html"></topic>
+               <topic label="3.22.13 Help preferences" href="html/manual/node252.html"></topic>
           </topic>
-          <topic label="3.23 Observing Test Cases" href="html/manual/node236.html">
-               <topic label="3.23.1 Tips and tricks for using the observation mode" href="html/manual/node237.html"></topic>
-               <topic label="3.23.2 Starting observing" href="html/manual/node238.html"></topic>
-               <topic label="3.23.3 Observing tests in Java AUT's" href="html/manual/node239.html"></topic>
+          <topic label="3.23 Observing Test Cases" href="html/manual/node253.html">
+               <topic label="3.23.1 Tips and tricks for using the observation mode" href="html/manual/node254.html"></topic>
+               <topic label="3.23.2 Starting observing" href="html/manual/node255.html"></topic>
+               <topic label="3.23.3 Observing tests in Java AUT's" href="html/manual/node256.html"></topic>
           </topic>
-          <topic label="3.24 Working with the Problem View" href="html/manual/node242.html">
-               <topic label="3.24.1 The Problem View" href="html/manual/node243.html"></topic>
+          <topic label="3.24 Working with the Problem View" href="html/manual/node259.html">
+               <topic label="3.24.1 The Problem View" href="html/manual/node260.html"></topic>
           </topic>
-          <topic label="3.25 Working with the Teststyle guidelines" href="html/manual/node244.html">
-               <topic label="3.25.1 Activating Teststyle for a Project" href="html/manual/node245.html"></topic>
-               <topic label="3.25.2 Configuring Teststyle for a Project" href="html/manual/node246.html"></topic>
-               <topic label="3.25.3 Working with the Problem View to view and fix Teststyle problems" href="html/manual/node251.html"></topic>
+          <topic label="3.25 Working with the Teststyle guidelines" href="html/manual/node261.html">
+               <topic label="3.25.1 Activating Teststyle for a Project" href="html/manual/node262.html"></topic>
+               <topic label="3.25.2 Configuring Teststyle for a Project" href="html/manual/node263.html"></topic>
+               <topic label="3.25.3 Working with the Problem View to view and fix Teststyle problems" href="html/manual/node268.html"></topic>
           </topic>
-          <topic label="3.26 Working with Metrics in Jubula" href="html/manual/node254.html"></topic>
-          <topic label="3.27 Adapting the user interface" href="html/manual/node258.html">
-               <topic label="3.27.1 Moving Browsers, Views and Editors" href="html/manual/node259.html"></topic>
-               <topic label="3.27.2 Resizing in the user interface" href="html/manual/node260.html"></topic>
-               <topic label="3.27.3 Restoring user interface defaults" href="html/manual/node261.html"></topic>
-               <topic label="3.27.4 Changing perspectives" href="html/manual/node262.html"></topic>
+          <topic label="3.26 Working with Metrics" href="html/manual/node271.html"></topic>
+          <topic label="3.27 Working with external task repositories (ALM Integration)" href="html/manual/node275.html">
+               <topic label="3.27.1 Configuring task repositories in your workspace" href="html/manual/node276.html"></topic>
+               <topic label="3.27.2 Working on tasks in the ITE : contexts" href="html/manual/node278.html"></topic>
+               <topic label="3.27.3 Creating tasks in external repositories from test result reports" href="html/manual/node281.html"></topic>
+               <topic label="3.27.4 Automatically reporting to external repositories after test runs" href="html/manual/node282.html"></topic>
           </topic>
-          <topic label="3.28 Searching in Jubula" href="html/manual/node264.html">
-               <topic label="3.28.1 Searching for and opening the original specification of a Test Case or Test Suite" href="html/manual/node265.html"></topic>
-               <topic label="3.28.2 Searching for places where a Test Case has been used" href="html/manual/node266.html"></topic>
-               <topic label="3.28.3 Searching for places where a component name has been used" href="html/manual/node267.html"></topic>
-               <topic label="3.28.4 Searching for places where a central test data set has been used" href="html/manual/node268.html"></topic>
-               <topic label="3.28.5 Using the search dialog" href="html/manual/node269.html"></topic>
-               <topic label="3.28.6 Using the search result view" href="html/manual/node273.html"></topic>
-               <topic label="3.28.7 Searching for items in editors and browsers" href="html/manual/node274.html"></topic>
-               <topic label="3.28.8 Using filters in Jubula" href="html/manual/node275.html"></topic>
-               <topic label="3.28.9 Other filter options" href="html/manual/node277.html"></topic>
+          <topic label="3.28 Adapting the user interface" href="html/manual/node287.html">
+               <topic label="3.28.1 Moving Browsers, Views and Editors" href="html/manual/node288.html"></topic>
+               <topic label="3.28.2 Resizing in the user interface" href="html/manual/node289.html"></topic>
+               <topic label="3.28.3 Restoring user interface defaults" href="html/manual/node290.html"></topic>
+               <topic label="3.28.4 Changing perspectives" href="html/manual/node291.html"></topic>
           </topic>
-          <topic label="3.29 Troubleshooting" href="html/manual/node278.html">
-               <topic label="3.29.1 General help" href="html/manual/node279.html"></topic>
-               <topic label="3.29.2 I can't start the AUT Agent" href="html/manual/node280.html"></topic>
-               <topic label="3.29.3 I can't connect to the AUT Agent" href="html/manual/node281.html"></topic>
-               <topic label="3.29.4 I can't start the AUT" href="html/manual/node282.html"></topic>
-               <topic label="3.29.5 I can't map components in the Object Mapping Mode" href="html/manual/node283.html"></topic>
-               <topic label="3.29.6 I can't execute my Test Suite" href="html/manual/node284.html"></topic>
-               <topic label="3.29.7 My Test Suite failed" href="html/manual/node285.html"></topic>
-               <topic label="3.29.8 My Test Suite failed when using rdesktop" href="html/manual/node286.html"></topic>
-               <topic label="3.29.9 I can't save my editor" href="html/manual/node287.html"></topic>
-               <topic label="3.29.10 Creating a support information package" href="html/manual/node288.html"></topic>
-               <topic label="3.29.11 Log file locations" href="html/manual/node289.html"></topic>
+          <topic label="3.29 Searching" href="html/manual/node293.html">
+               <topic label="3.29.1 Searching for and opening the original specification of a Test Case or Test Suite" href="html/manual/node294.html"></topic>
+               <topic label="3.29.2 Searching for places where a Test Case or Test Suite has been used" href="html/manual/node295.html"></topic>
+               <topic label="3.29.3 Searching for places where a component name has been used" href="html/manual/node296.html"></topic>
+               <topic label="3.29.4 Searching for places where a central test data set has been used" href="html/manual/node297.html"></topic>
+               <topic label="3.29.5 Using the search dialog" href="html/manual/node298.html"></topic>
+               <topic label="3.29.6 Using the search result view" href="html/manual/node303.html"></topic>
+               <topic label="3.29.7 Searching for items in editors and browsers" href="html/manual/node305.html"></topic>
+               <topic label="3.29.8 Using filters in the ITE" href="html/manual/node306.html"></topic>
+               <topic label="3.29.9 Other filter options" href="html/manual/node308.html"></topic>
           </topic>
-          <topic label="3.30 Finishing up" href="html/manual/node290.html">
-               <topic label="3.30.1 Stopping the AUT" href="html/manual/node291.html"></topic>
-               <topic label="3.30.2 Disconnecting from the AUT Agent" href="html/manual/node292.html"></topic>
-               <topic label="3.30.3 Closing Jubula and stopping the AUT Agent" href="html/manual/node293.html"></topic>
-               <topic label="3.30.4 Stopping the AUT Agent" href="html/manual/node294.html"></topic>
+          <topic label="3.30 Using the test executor for testing from the command line" href="html/manual/node309.html">
+               <topic label="3.30.1 Starting the test executor" href="html/manual/node310.html"></topic>
+               <topic label="3.30.2 Parameters for the test executor" href="html/manual/node311.html"></topic>
+               <topic label="3.30.3 Using the test executor with the embedded Database" href="html/manual/node312.html"></topic>
+               <topic label="3.30.4 Using a configuration file" href="html/manual/node313.html"></topic>
           </topic>
-          <topic label="3.31 Using the test executor for testing from the command line" href="html/manual/node295.html">
-               <topic label="3.31.1 Starting the test executor" href="html/manual/node296.html"></topic>
-               <topic label="3.31.2 Parameters for the test executor" href="html/manual/node297.html"></topic>
-               <topic label="3.31.3 Using the test executor with the embedded Database" href="html/manual/node298.html"></topic>
-               <topic label="3.31.4 Using a configuration file" href="html/manual/node299.html"></topic>
+          <topic label="3.31 Using the dbtool client to import, delete and export from the command line" href="html/manual/node314.html">
+               <topic label="3.31.1 Starting the dbtool" href="html/manual/node315.html"></topic>
+               <topic label="3.31.2 Parameters for the dbtool" href="html/manual/node316.html"></topic>
           </topic>
-          <topic label="3.32 Using the dbtool client to import, delete and export from the command line" href="html/manual/node300.html">
-               <topic label="3.32.1 Starting the dbtool" href="html/manual/node301.html"></topic>
-               <topic label="3.32.2 Parameters for the dbtool" href="html/manual/node302.html"></topic>
+          <topic label="3.32 Working with the dashboard" href="html/manual/node317.html">
+               <topic label="3.32.1 The Dashboard application" href="html/manual/node318.html"></topic>
+               <topic label="3.32.2 Starting the Dashboard application in the browser" href="html/manual/node320.html"></topic>
+               <topic label="3.32.3 Using the Dashboard locally: Starting the Dashboard with default parameters and automatic browser opening" href="html/manual/node321.html"></topic>
+               <topic label="3.32.4 Using the Dashboard over the network: Starting the Dashboard server with custom parameters" href="html/manual/node322.html"></topic>
+               <topic label="3.32.5 Connecting to the Dashboard in the browser" href="html/manual/node323.html"></topic>
+               <topic label="3.32.6 Using the Dashboard" href="html/manual/node324.html"></topic>
+               <topic label="3.32.7 Stopping the Dashboard" href="html/manual/node327.html"></topic>
           </topic>
-          <topic label="3.33 Using Chronon in Jubula" href="html/manual/node303.html">
-               <topic label="3.33.1 Using Chronon in Jubula" href="html/manual/node304.html"></topic>
-               <topic label="3.33.2 Using Chronon when testing your AUT" href="html/manual/node309.html"></topic>
+          <topic label="3.33 Using Chronon" href="html/manual/node328.html">
+               <topic label="3.33.1 Using Chronon when testing your AUT" href="html/manual/node329.html"></topic>
           </topic>
-          <topic label="3.34 Launch Configurations" href="html/manual/node314.html">
-               <topic label="3.34.1 Intro" href="html/manual/node315.html"></topic>
-               <topic label="3.34.2 Requirements" href="html/manual/node316.html"></topic>
-               <topic label="3.34.3 Customizing the Perspective" href="html/manual/node317.html"></topic>
-               <topic label="3.34.4 Starting the AUT" href="html/manual/node318.html"></topic>
-               <topic label="3.34.5 AUT Agent" href="html/manual/node319.html"></topic>
-               <topic label="3.34.6 Additional information for RCP AUT's" href="html/manual/node320.html"></topic>
-               <topic label="3.34.7 Common Pitfalls" href="html/manual/node323.html"></topic>
+          <topic label="3.34 Launch Configurations" href="html/manual/node334.html">
+               <topic label="3.34.1 Intro" href="html/manual/node335.html"></topic>
+               <topic label="3.34.2 Requirements" href="html/manual/node336.html"></topic>
+               <topic label="3.34.3 Customizing the Perspective" href="html/manual/node337.html"></topic>
+               <topic label="3.34.4 Starting the AUT" href="html/manual/node338.html"></topic>
+               <topic label="3.34.5 AUT Agent" href="html/manual/node339.html"></topic>
+               <topic label="3.34.6 Additional information for RCP AUT's" href="html/manual/node340.html"></topic>
+               <topic label="3.34.7 Common Pitfalls" href="html/manual/node343.html"></topic>
+          </topic>
+          <topic label="3.35 Troubleshooting" href="html/manual/node344.html">
+               <topic label="3.35.1 General help" href="html/manual/node345.html"></topic>
+               <topic label="3.35.2 I can't start the AUT Agent" href="html/manual/node346.html"></topic>
+               <topic label="3.35.3 I can't connect to the AUT Agent" href="html/manual/node347.html"></topic>
+               <topic label="3.35.4 I can't start the AUT" href="html/manual/node348.html"></topic>
+               <topic label="3.35.5 I can't map components in the Object Mapping Mode" href="html/manual/node349.html"></topic>
+               <topic label="3.35.6 I can't execute my Test Suite" href="html/manual/node350.html"></topic>
+               <topic label="3.35.7 My Test Suite failed" href="html/manual/node351.html"></topic>
+               <topic label="3.35.8 My Test Suite failed when using rdesktop" href="html/manual/node352.html"></topic>
+               <topic label="3.35.9 I can't save my editor" href="html/manual/node353.html"></topic>
+               <topic label="3.35.10 Creating a support information package" href="html/manual/node354.html"></topic>
+               <topic label="3.35.11 Log file locations" href="html/manual/node355.html"></topic>
+          </topic>
+          <topic label="3.36 Finishing up" href="html/manual/node356.html">
+               <topic label="3.36.1 Stopping the AUT" href="html/manual/node357.html"></topic>
+               <topic label="3.36.2 Disconnecting from the AUT Agent" href="html/manual/node358.html"></topic>
+               <topic label="3.36.3 Closing the ITE and stopping the AUT Agent" href="html/manual/node359.html"></topic>
+               <topic label="3.36.4 Stopping the AUT Agent" href="html/manual/node360.html"></topic>
           </topic>
      </topic>
-     <topic label="4. Toolkit-specific information" href="html/manual/node324.html">
-          <topic label="4.1 Testing Swing AUT's" href="html/manual/node325.html">
-               <topic label="4.1.1 Supported Swing AUT's" href="html/manual/node326.html"></topic>
-               <topic label="4.1.2 Design for testability in Swing" href="html/manual/node327.html"></topic>
+     <topic label="4. Toolkit-specific information" href="html/manual/node361.html">
+          <topic label="4.1 Testing Swing AUT's" href="html/manual/node362.html">
+               <topic label="4.1.1 Supported Swing AUT's" href="html/manual/node363.html"></topic>
+               <topic label="4.1.2 Design for testability in Swing" href="html/manual/node364.html"></topic>
           </topic>
-          <topic label="4.2 Testing RCP AUT's" href="html/manual/node330.html">
-               <topic label="4.2.1 Supported RCP AUT's" href="html/manual/node331.html"></topic>
-               <topic label="4.2.2 Setting up an RCP AUT for testing" href="html/manual/node332.html"></topic>
-               <topic label="4.2.3 Keyboard Layouts" href="html/manual/node334.html"></topic>
-               <topic label="4.2.4 Design for testability in RCP" href="html/manual/node335.html"></topic>
-               <topic label="4.2.5 Component name generation in RCP" href="html/manual/node338.html"></topic>
-               <topic label="4.2.6 Best practices for testing RCP AUT's" href="html/manual/node339.html"></topic>
+          <topic label="4.2 Testing RCP AUT's" href="html/manual/node367.html">
+               <topic label="4.2.1 Supported RCP AUT's" href="html/manual/node368.html"></topic>
+               <topic label="4.2.2 Setting up an RCP AUT for testing" href="html/manual/node369.html"></topic>
+               <topic label="4.2.3 Keyboard Layouts" href="html/manual/node371.html"></topic>
+               <topic label="4.2.4 Design for testability in RCP" href="html/manual/node372.html"></topic>
+               <topic label="4.2.5 Component name generation in RCP" href="html/manual/node375.html"></topic>
+               <topic label="4.2.6 Best practices for testing RCP AUT's" href="html/manual/node376.html"></topic>
           </topic>
-          <topic label="4.3 Testing GEF AUT's" href="html/manual/node340.html">
-               <topic label="4.3.1 Testing GEF components" href="html/manual/node341.html"></topic>
-               <topic label="4.3.2 Using the GEF inspector" href="html/manual/node342.html"></topic>
+          <topic label="4.3 Testing GEF AUT's" href="html/manual/node377.html">
+               <topic label="4.3.1 Testing GEF components" href="html/manual/node378.html"></topic>
+               <topic label="4.3.2 Using the GEF inspector" href="html/manual/node379.html"></topic>
           </topic>
-          <topic label="4.4 Testing HTML AUT's" href="html/manual/node343.html">
-               <topic label="4.4.1 Supported HTML AUT's" href="html/manual/node344.html"></topic>
-               <topic label="4.4.2 Design for testability in HTML AUT's" href="html/manual/node345.html"></topic>
+          <topic label="4.4 Testing HTML AUT's" href="html/manual/node380.html">
+               <topic label="4.4.1 Supported HTML AUT's" href="html/manual/node381.html"></topic>
+               <topic label="4.4.2 Design for testability in HTML AUT's" href="html/manual/node382.html"></topic>
+          </topic>
+          <topic label="4.5 Testing Windows (.NET) AUT's" href="html/manual/node383.html">
+               <topic label="4.5.1 Supported Windows AUT's" href="html/manual/node384.html"></topic>
+               <topic label="4.5.2 Information on the support for Windows AUT's" href="html/manual/node385.html"></topic>
+               <topic label="4.5.3 Information on WinForms AUT's" href="html/manual/node388.html"></topic>
+               <topic label="4.5.4 Information on WPF AUT's" href="html/manual/node391.html"></topic>
+               <topic label="4.5.5 Operating system language, component recognition and extensibility" href="html/manual/node392.html"></topic>
+               <topic label="4.5.6 UI automation and screen scaling" href="html/manual/node393.html"></topic>
+               <topic label="4.5.7 Windows AUT's and the observation mode" href="html/manual/node394.html"></topic>
+               <topic label="4.5.8 Mapping components in WinFormsAUT's" href="html/manual/node395.html"></topic>
+               <topic label="4.5.9 Nested scrolling" href="html/manual/node396.html"></topic>
+               <topic label="4.5.10 autrun not supported" href="html/manual/node397.html"></topic>
+          </topic>
+          <topic label="4.6 Testing Windows Store App AUT's" href="html/manual/node398.html">
+               <topic label="4.6.1 Supported WinApps AUT's" href="html/manual/node399.html"></topic>
+               <topic label="4.6.2 Information on the support for WinApps AUT's" href="html/manual/node400.html"></topic>
+          </topic>
+          <topic label="4.7 Testing iOS AUT's" href="html/manual/node401.html">
+               <topic label="4.7.1 Supported iOS AUT's" href="html/manual/node402.html"></topic>
+               <topic label="4.7.2 Setting up an iOS AUT for testing" href="html/manual/node403.html"></topic>
+               <topic label="4.7.3 Design for testability in iOS AUT's" href="html/manual/node408.html"></topic>
+               <topic label="4.7.4 Addressing the correct component in your iOS tests" href="html/manual/node411.html"></topic>
+               <topic label="4.7.5 Working with iOS components and actions" href="html/manual/node412.html"></topic>
+               <topic label="4.7.6 Testing AUT's written with Monotouch" href="html/manual/node421.html"></topic>
           </topic>
      </topic>
-     <topic label="5. User interface" href="html/manual/node346.html">
-          <topic label="5.1 Perspectives" href="html/manual/node347.html">
-               <topic label="5.1.1 The Functional Test Specification Perspective" href="html/manual/node348.html"></topic>
-               <topic label="5.1.2 The Functional Test Execution Perspective" href="html/manual/node349.html"></topic>
-               <topic label="5.1.3 The Functional Test Reporting Perspective" href="html/manual/node350.html"></topic>
-               <topic label="5.1.4 The Jubula workspace perspective" href="html/manual/node351.html"></topic>
+     <topic label="5. User interface" href="html/manual/node428.html">
+          <topic label="5.1 Perspectives" href="html/manual/node429.html">
+               <topic label="5.1.1 The Functional Test Specification Perspective" href="html/manual/node430.html"></topic>
+               <topic label="5.1.2 The Functional Test Execution Perspective" href="html/manual/node431.html"></topic>
+               <topic label="5.1.3 The Functional Test Reporting Perspective" href="html/manual/node432.html"></topic>
+               <topic label="5.1.4 The workspace perspective" href="html/manual/node433.html"></topic>
           </topic>
-          <topic label="5.2 Browsers" href="html/manual/node352.html">
-               <topic label="5.2.1 The Test Suite Browser" href="html/manual/node353.html"></topic>
-               <topic label="5.2.2 The Test Case Browser" href="html/manual/node354.html"></topic>
-               <topic label="5.2.3 The Component Name Browser  " href="html/manual/node355.html"></topic>
+          <topic label="5.2 Browsers" href="html/manual/node434.html">
+               <topic label="5.2.1 The Test Suite Browser" href="html/manual/node435.html"></topic>
+               <topic label="5.2.2 The Test Case Browser" href="html/manual/node436.html"></topic>
+               <topic label="5.2.3 The Component Name Browser  " href="html/manual/node437.html"></topic>
           </topic>
-          <topic label="5.3 Editors" href="html/manual/node356.html">
-               <topic label="5.3.1 Test Case Editor" href="html/manual/node357.html"></topic>
-               <topic label="5.3.2 Test Suite Editor" href="html/manual/node358.html"></topic>
-               <topic label="5.3.3 Object Mapping Editor" href="html/manual/node359.html"></topic>
-               <topic label="5.3.4 Central Test Data Editor" href="html/manual/node360.html"></topic>
+          <topic label="5.3 Editors" href="html/manual/node438.html">
+               <topic label="5.3.1 Test Case Editor" href="html/manual/node439.html"></topic>
+               <topic label="5.3.2 Test Suite Editor" href="html/manual/node440.html"></topic>
+               <topic label="5.3.3 Object Mapping Editor" href="html/manual/node441.html"></topic>
+               <topic label="5.3.4 Central Test Data Editor" href="html/manual/node442.html"></topic>
           </topic>
-          <topic label="5.4 Views" href="html/manual/node361.html">
-               <topic label="5.4.1 The Properties View" href="html/manual/node362.html"></topic>
-               <topic label="5.4.2 The Data Sets View" href="html/manual/node363.html"></topic>
-               <topic label="5.4.3 The Component Names View" href="html/manual/node364.html"></topic>
-               <topic label="5.4.4 The Test Result View" href="html/manual/node365.html"></topic>
-               <topic label="5.4.5 The Problem View" href="html/manual/node366.html"></topic>
-               <topic label="5.4.6 The search result view" href="html/manual/node367.html"></topic>
-               <topic label="5.4.7 The Navigator View  " href="html/manual/node368.html"></topic>
-               <topic label="5.4.8 The console" href="html/manual/node369.html"></topic>
-               <topic label="5.4.9 The Inspector View" href="html/manual/node370.html"></topic>
-               <topic label="5.4.10 The Test Result Summary View" href="html/manual/node371.html"></topic>
-               <topic label="5.4.11 The Running AUT's View" href="html/manual/node372.html"></topic>
-               <topic label="5.4.12 The Image View" href="html/manual/node373.html"></topic>
-               <topic label="5.4.13 The Progress View" href="html/manual/node374.html"></topic>
+          <topic label="5.4 Views" href="html/manual/node443.html">
+               <topic label="5.4.1 The Properties View" href="html/manual/node444.html"></topic>
+               <topic label="5.4.2 The Data Sets View" href="html/manual/node445.html"></topic>
+               <topic label="5.4.3 The Component Names View" href="html/manual/node446.html"></topic>
+               <topic label="5.4.4 The Test Result View" href="html/manual/node447.html"></topic>
+               <topic label="5.4.5 The Problem View" href="html/manual/node448.html"></topic>
+               <topic label="5.4.6 The search result view" href="html/manual/node449.html"></topic>
+               <topic label="5.4.7 The Navigator View  " href="html/manual/node450.html"></topic>
+               <topic label="5.4.8 The console" href="html/manual/node451.html"></topic>
+               <topic label="5.4.9 The Inspector View" href="html/manual/node452.html"></topic>
+               <topic label="5.4.10 The Test Result Summary View" href="html/manual/node453.html"></topic>
+               <topic label="5.4.11 The Running AUT's View" href="html/manual/node454.html"></topic>
+               <topic label="5.4.12 The Image View" href="html/manual/node455.html"></topic>
+               <topic label="5.4.13 The Progress View" href="html/manual/node456.html"></topic>
           </topic>
-          <topic label="5.5 The status bar" href="html/manual/node375.html"></topic>
+          <topic label="5.5 The status bar" href="html/manual/node457.html"></topic>
      </topic>
-     <topic label="6. Concepts" href="html/manual/node376.html">
-          <topic label="6.1 Overview" href="html/manual/node377.html"></topic>
-          <topic label="6.2 Testing with Jubula" href="html/manual/node378.html">
-               <topic label="6.2.1 Understanding how Jubula works" href="html/manual/node379.html"></topic>
-               <topic label="6.2.2 Standards conformance" href="html/manual/node382.html"></topic>
+     <topic label="6. Concepts" href="html/manual/node458.html">
+          <topic label="6.1 Overview" href="html/manual/node459.html"></topic>
+          <topic label="6.2 Testing" href="html/manual/node460.html">
+               <topic label="6.2.1 Understanding how the ITE and test execution work" href="html/manual/node461.html"></topic>
+               <topic label="6.2.2 Standards conformance" href="html/manual/node464.html"></topic>
           </topic>
-          <topic label="6.3 Architecture" href="html/manual/node383.html">
-               <topic label="6.3.1 ITE" href="html/manual/node384.html"></topic>
-               <topic label="6.3.2 AUT Agent" href="html/manual/node385.html"></topic>
-               <topic label="6.3.3 Working with the ITE and AUT Agent on different machines" href="html/manual/node386.html"></topic>
+          <topic label="6.3 Architecture" href="html/manual/node465.html">
+               <topic label="6.3.1 ITE" href="html/manual/node466.html"></topic>
+               <topic label="6.3.2 AUT Agent" href="html/manual/node467.html"></topic>
+               <topic label="6.3.3 Working with the ITE and AUT Agent on different machines" href="html/manual/node468.html"></topic>
           </topic>
-          <topic label="6.4 Database structure" href="html/manual/node387.html">
-               <topic label="6.4.1 Supported systems" href="html/manual/node388.html"></topic>
-               <topic label="6.4.2 Single-user" href="html/manual/node389.html"></topic>
-               <topic label="6.4.3 Multi-user" href="html/manual/node390.html"></topic>
+          <topic label="6.4 Database structure" href="html/manual/node469.html">
+               <topic label="6.4.1 Supported systems" href="html/manual/node470.html"></topic>
+               <topic label="6.4.2 Single-user" href="html/manual/node471.html"></topic>
+               <topic label="6.4.3 Multi-user" href="html/manual/node472.html"></topic>
           </topic>
-          <topic label="6.5 Approaches to testing" href="html/manual/node391.html">
-               <topic label="6.5.1 Writing modules in advance" href="html/manual/node392.html"></topic>
-               <topic label="6.5.2 Creating modules from existing Test Cases" href="html/manual/node393.html"></topic>
-               <topic label="6.5.3 Choosing a method" href="html/manual/node394.html"></topic>
+          <topic label="6.5 Approaches to testing" href="html/manual/node473.html">
+               <topic label="6.5.1 Writing modules in advance" href="html/manual/node474.html"></topic>
+               <topic label="6.5.2 Creating modules from existing Test Cases" href="html/manual/node475.html"></topic>
+               <topic label="6.5.3 Choosing a method" href="html/manual/node476.html"></topic>
           </topic>
-          <topic label="6.6 Test hierarchy" href="html/manual/node395.html">
-               <topic label="6.6.1 Test Steps" href="html/manual/node396.html"></topic>
-               <topic label="6.6.2 Test Cases" href="html/manual/node397.html"></topic>
-               <topic label="6.6.3 Test Suites" href="html/manual/node398.html"></topic>
-               <topic label="6.6.4 Test Jobs" href="html/manual/node399.html"></topic>
-               <topic label="6.6.5 Projects" href="html/manual/node400.html"></topic>
+          <topic label="6.6 Test hierarchy" href="html/manual/node477.html">
+               <topic label="6.6.1 Test Steps" href="html/manual/node478.html"></topic>
+               <topic label="6.6.2 Test Cases" href="html/manual/node479.html"></topic>
+               <topic label="6.6.3 Test Suites" href="html/manual/node480.html"></topic>
+               <topic label="6.6.4 Test Jobs" href="html/manual/node481.html"></topic>
+               <topic label="6.6.5 Projects" href="html/manual/node482.html"></topic>
           </topic>
-          <topic label="6.7 Reusability" href="html/manual/node401.html"></topic>
-          <topic label="6.8 Multi-lingual testing" href="html/manual/node403.html">
-               <topic label="6.8.1 Project and AUT languages" href="html/manual/node404.html"></topic>
+          <topic label="6.7 Reusability" href="html/manual/node483.html"></topic>
+          <topic label="6.8 Multi-lingual testing" href="html/manual/node485.html">
+               <topic label="6.8.1 Project and AUT languages" href="html/manual/node486.html"></topic>
           </topic>
-          <topic label="6.9 Object mapping" href="html/manual/node405.html">
-               <topic label="6.9.1 Component names" href="html/manual/node406.html"></topic>
-               <topic label="6.9.2 Technical names" href="html/manual/node407.html"></topic>
-               <topic label="6.9.3 Assigning technical names to component names" href="html/manual/node408.html"></topic>
-               <topic label="6.9.4 Locating components during test execution" href="html/manual/node409.html"></topic>
+          <topic label="6.9 Object mapping" href="html/manual/node487.html">
+               <topic label="6.9.1 Component names" href="html/manual/node488.html"></topic>
+               <topic label="6.9.2 Technical names" href="html/manual/node489.html"></topic>
+               <topic label="6.9.3 Assigning technical names to component names" href="html/manual/node490.html"></topic>
+               <topic label="6.9.4 Locating components during test execution" href="html/manual/node491.html"></topic>
           </topic>
-          <topic label="6.10 Test execution" href="html/manual/node410.html">
-               <topic label="6.10.1 Test Step execution" href="html/manual/node411.html"></topic>
+          <topic label="6.10 Test execution" href="html/manual/node492.html">
+               <topic label="6.10.1 Test Step execution" href="html/manual/node493.html"></topic>
           </topic>
-          <topic label="6.11 Observing user actions" href="html/manual/node412.html"></topic>
-          <topic label="6.12 Event Handlers" href="html/manual/node413.html">
-               <topic label="6.12.1 How Event Handlers work" href="html/manual/node414.html"></topic>
-               <topic label="6.12.2 Default Event Handlers" href="html/manual/node415.html"></topic>
-               <topic label="6.12.3 Customized Event Handlers" href="html/manual/node416.html"></topic>
+          <topic label="6.11 Observing user actions" href="html/manual/node494.html"></topic>
+          <topic label="6.12 Event Handlers" href="html/manual/node495.html">
+               <topic label="6.12.1 How Event Handlers work" href="html/manual/node496.html"></topic>
+               <topic label="6.12.2 Default Event Handlers" href="html/manual/node497.html"></topic>
+               <topic label="6.12.3 Customized Event Handlers" href="html/manual/node498.html"></topic>
           </topic>
-          <topic label="6.13 Extensibility" href="html/manual/node417.html"></topic>
-          <topic label="6.14 Summary" href="html/manual/node418.html"></topic>
+          <topic label="6.13 Extensibility" href="html/manual/node499.html"></topic>
+          <topic label="6.14 Summary" href="html/manual/node500.html"></topic>
      </topic>
-     <topic label="7. Glossary" href="html/manual/node419.html"></topic>
-     <topic label="Index" href="html/manual/node420.html"></topic>
+     <topic label="7. Glossary" href="html/manual/node501.html"></topic>
+     <topic label="Index" href="html/manual/node502.html"></topic>
 </toc>

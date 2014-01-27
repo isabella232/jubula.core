@@ -3,538 +3,572 @@
 <contexts>
      <context id="dialogTestcaseAddNewContextId">
           <description>Add New Test Case Dialog</description>
-          <topic href="html/manual/node118.html#dialogTestcaseAddNewContextId" label="3.11.5 Adding and inserting new Test Cases to a Test Case &#10;"></topic>
+          <topic href="html/manual/node130.html#dialogTestcaseAddNewContextId" label="3.11.5 Adding and inserting new Test Cases to a Test Case &#10;"></topic>
      </context>
      <context id="importProjectDialogContextId">
           <description>Importing Projects</description>
-          <topic href="html/manual/node67.html#importProjectDialogContextId" label="3.5.8 Importing Projects &#10;"></topic>
+          <topic href="html/manual/node64.html#importProjectDialogContextId" label="3.5.8 Importing Projects &#10;"></topic>
      </context>
      <context id="testStylePropertyPageEditAttributeContextId">
           <description>Teststyle</description>
-          <topic href="html/manual/node249.html#testStylePropertyPageEditAttributeContextId" label="3.25.2.3 Configuring the attributes for guidelines&#10;"></topic>
+          <topic href="html/manual/node266.html#testStylePropertyPageEditAttributeContextId" label="3.25.2.3 Configuring the attributes for guidelines&#10;"></topic>
      </context>
      <context id="eventHandlerAddContextId">
           <description>Event Handlers</description>
-          <topic href="html/manual/node216.html#eventHandlerAddContextId" label="3.21 Dealing with errors in tests: Event Handlers &#10;"></topic>
-          <topic href="html/manual/node413.html#eventHandlerAddContextId" label="6.12 Event Handlers &#10;"></topic>
+          <topic href="html/manual/node234.html#eventHandlerAddContextId" label="3.21 Dealing with errors in tests: Event Handlers &#10;"></topic>
+          <topic href="html/manual/node495.html#eventHandlerAddContextId" label="6.12 Event Handlers &#10;"></topic>
      </context>
      <context id="newTestDataCategoryContextId">
           <description>New Category</description>
-          <topic href="html/manual/node108.html#newTestDataCategoryContextId" label="3.10.1 Creating a category&#10;"></topic>
+          <topic href="html/manual/node119.html#newTestDataCategoryContextId" label="3.10.1 Creating a category&#10;"></topic>
      </context>
      <context id="searchResultViewContextId">
           <description>Search Result View</description>
-          <topic href="html/manual/node266.html#searchResultViewContextId" label="3.28.2 Searching for places where a Test Case has been used&#10;"></topic>
-          <topic href="html/manual/node267.html#searchResultViewContextId" label="3.28.3 Searching for places where a component name has been used&#10;"></topic>
-          <topic href="html/manual/node268.html#searchResultViewContextId" label="3.28.4 Searching for places where a central test data set has been used&#10;"></topic>
-          <topic href="html/manual/node273.html#searchResultViewContextId" label="3.28.6 Using the search result view&#10;"></topic>
-          <topic href="html/manual/node367.html#searchResultViewContextId" label="5.4.6 The search result view&#10;"></topic>
+          <topic href="html/manual/node132.html#searchResultViewContextId" label="3.11.7 Replacing a specific Test Case at places where it has been reused&#10;"></topic>
+          <topic href="html/manual/node158.html#searchResultViewContextId" label="3.12.9.7 Changing the column used in a central test data set for multiple Test Cases &#10;"></topic>
+          <topic href="html/manual/node295.html#searchResultViewContextId" label="3.29.2 Searching for places where a Test Case or Test Suite has been used&#10;"></topic>
+          <topic href="html/manual/node296.html#searchResultViewContextId" label="3.29.3 Searching for places where a component name has been used&#10;"></topic>
+          <topic href="html/manual/node297.html#searchResultViewContextId" label="3.29.4 Searching for places where a central test data set has been used&#10;"></topic>
+          <topic href="html/manual/node303.html#searchResultViewContextId" label="3.29.6 Using the search result view&#10;"></topic>
+          <topic href="html/manual/node449.html#searchResultViewContextId" label="5.4.6 The search result view&#10;"></topic>
      </context>
      <context id="supportRequestDialogContextId">
           <description>Support Information Package</description>
-          <topic href="html/manual/node288.html#supportRequestDialogContextId" label="3.29.10 Creating a support information package&#10;"></topic>
+          <topic href="html/manual/node354.html#supportRequestDialogContextId" label="3.35.10 Creating a support information package&#10;"></topic>
      </context>
      <context id="dialogProjectImportRenameContextId">
           <description>Project Import Rename Dialog</description>
-          <topic href="html/manual/node67.html#dialogProjectImportRenameContextId" label="3.5.8 Importing Projects &#10;"></topic>
+          <topic href="html/manual/node64.html#dialogProjectImportRenameContextId" label="3.5.8 Importing Projects &#10;"></topic>
      </context>
      <context id="testcaseNewContextId">
           <description>New Test Case Dialog</description>
-          <topic href="html/manual/node111.html#testcaseNewContextId" label="3.11.1 Creating Test Cases &#10;"></topic>
+          <topic href="html/manual/node123.html#testcaseNewContextId" label="3.11.1 Creating Test Cases &#10;"></topic>
      </context>
      <context id="problemViewNoProjectContextId">
           <description>Project Options Dialog</description>
-          <topic href="html/manual/node52.html#problemViewNoProjectContextId" label="3.5.1 Creating a new Project &#10;"></topic>
-          <topic href="html/manual/node62.html#problemViewNoProjectContextId" label="3.5.4 Opening Projects &#10;"></topic>
-          <topic href="html/manual/node67.html#problemViewNoProjectContextId" label="3.5.8 Importing Projects &#10;"></topic>
+          <topic href="html/manual/node49.html#problemViewNoProjectContextId" label="3.5.1 Creating a new Project &#10;"></topic>
+          <topic href="html/manual/node59.html#problemViewNoProjectContextId" label="3.5.4 Opening Projects &#10;"></topic>
+          <topic href="html/manual/node64.html#problemViewNoProjectContextId" label="3.5.8 Importing Projects &#10;"></topic>
      </context>
      <context id="guidancerSpecTestCaseEditorContextId">
           <description>Test Case Editor</description>
-          <topic href="html/manual/node100.html#guidancerSpecTestCaseEditorContextId" label="3.9.4 Renaming items in editors&#10;"></topic>
-          <topic href="html/manual/node101.html#guidancerSpecTestCaseEditorContextId" label="3.9.5 Adding comments to items in editors&#10;"></topic>
-          <topic href="html/manual/node102.html#guidancerSpecTestCaseEditorContextId" label="3.9.6 Commenting out items in editors&#10;"></topic>
-          <topic href="html/manual/node103.html#guidancerSpecTestCaseEditorContextId" label="3.9.7 Extracting Test Cases from editors: Refactoring&#10;"></topic>
-          <topic href="html/manual/node104.html#guidancerSpecTestCaseEditorContextId" label="3.9.8 Replacing Test Cases in editors: Refactoring&#10;"></topic>
-          <topic href="html/manual/node105.html#guidancerSpecTestCaseEditorContextId" label="3.9.9 Saving Test Cases from an editor as a new Test Case &#10;"></topic>
-          <topic href="html/manual/node106.html#guidancerSpecTestCaseEditorContextId" label="3.9.10 Reverting changes in an editor&#10;"></topic>
-          <topic href="html/manual/node111.html#guidancerSpecTestCaseEditorContextId" label="3.11.1 Creating Test Cases &#10;"></topic>
-          <topic href="html/manual/node112.html#guidancerSpecTestCaseEditorContextId" label="3.11.2 Creating tests from the library of pre-defined Test Cases &#10;"></topic>
-          <topic href="html/manual/node116.html#guidancerSpecTestCaseEditorContextId" label="3.11.3 Opening existing Test Cases &#10;"></topic>
-          <topic href="html/manual/node117.html#guidancerSpecTestCaseEditorContextId" label="3.11.4 Editing Test Cases &#10;"></topic>
-          <topic href="html/manual/node121.html#guidancerSpecTestCaseEditorContextId" label="3.12.1 Data types and entering data for Test Cases &#10;"></topic>
-          <topic href="html/manual/node152.html#guidancerSpecTestCaseEditorContextId" label="3.12.13 Overwriting data for Test Cases and Test Suites &#10;"></topic>
-          <topic href="html/manual/node216.html#guidancerSpecTestCaseEditorContextId" label="3.21 Dealing with errors in tests: Event Handlers &#10;"></topic>
-          <topic href="html/manual/node217.html#guidancerSpecTestCaseEditorContextId" label="3.21.1 Adding Event Handlers to a Test Case &#10;"></topic>
-          <topic href="html/manual/node236.html#guidancerSpecTestCaseEditorContextId" label="3.23 Observing Test Cases &#10;"></topic>
-          <topic href="html/manual/node265.html#guidancerSpecTestCaseEditorContextId" label="3.28.1 Searching for and opening the original specification of a Test Case or Test Suite &#10;"></topic>
-          <topic href="html/manual/node266.html#guidancerSpecTestCaseEditorContextId" label="3.28.2 Searching for places where a Test Case has been used&#10;"></topic>
-          <topic href="html/manual/node268.html#guidancerSpecTestCaseEditorContextId" label="3.28.4 Searching for places where a central test data set has been used&#10;"></topic>
-          <topic href="html/manual/node278.html#guidancerSpecTestCaseEditorContextId" label="3.29 Troubleshooting&#10;"></topic>
-          <topic href="html/manual/node357.html#guidancerSpecTestCaseEditorContextId" label="5.3.1 Test Case Editor &#10;"></topic>
-          <topic href="html/manual/node413.html#guidancerSpecTestCaseEditorContextId" label="6.12 Event Handlers &#10;"></topic>
-          <topic href="html/manual/node98.html#guidancerSpecTestCaseEditorContextId" label="3.9.2 Adding items to editors&#10;"></topic>
-          <topic href="html/manual/node99.html#guidancerSpecTestCaseEditorContextId" label="3.9.3 Deleting items from editors&#10;"></topic>
+          <topic href="html/manual/node108.html#guidancerSpecTestCaseEditorContextId" label="3.9.2 Adding items to editors&#10;"></topic>
+          <topic href="html/manual/node109.html#guidancerSpecTestCaseEditorContextId" label="3.9.3 Deleting items from editors&#10;"></topic>
+          <topic href="html/manual/node110.html#guidancerSpecTestCaseEditorContextId" label="3.9.4 Renaming items in editors&#10;"></topic>
+          <topic href="html/manual/node111.html#guidancerSpecTestCaseEditorContextId" label="3.9.5 Adding comments to items in editors&#10;"></topic>
+          <topic href="html/manual/node112.html#guidancerSpecTestCaseEditorContextId" label="3.9.6 Adding Task IDs to items in editors&#10;"></topic>
+          <topic href="html/manual/node113.html#guidancerSpecTestCaseEditorContextId" label="3.9.7 Commenting out items in editors&#10;"></topic>
+          <topic href="html/manual/node114.html#guidancerSpecTestCaseEditorContextId" label="3.9.8 Extracting Test Cases from editors: Refactoring&#10;"></topic>
+          <topic href="html/manual/node115.html#guidancerSpecTestCaseEditorContextId" label="3.9.9 Replacing Test Cases in editors: Refactoring&#10;"></topic>
+          <topic href="html/manual/node116.html#guidancerSpecTestCaseEditorContextId" label="3.9.10 Saving Test Cases from an editor as a new Test Case &#10;"></topic>
+          <topic href="html/manual/node117.html#guidancerSpecTestCaseEditorContextId" label="3.9.11 Reverting changes in an editor&#10;"></topic>
+          <topic href="html/manual/node123.html#guidancerSpecTestCaseEditorContextId" label="3.11.1 Creating Test Cases &#10;"></topic>
+          <topic href="html/manual/node124.html#guidancerSpecTestCaseEditorContextId" label="3.11.2 Creating tests from the library of pre-defined Test Cases &#10;"></topic>
+          <topic href="html/manual/node128.html#guidancerSpecTestCaseEditorContextId" label="3.11.3 Opening existing Test Cases &#10;"></topic>
+          <topic href="html/manual/node129.html#guidancerSpecTestCaseEditorContextId" label="3.11.4 Editing Test Cases &#10;"></topic>
+          <topic href="html/manual/node134.html#guidancerSpecTestCaseEditorContextId" label="3.12.1 Data types and entering data for Test Cases &#10;"></topic>
+          <topic href="html/manual/node166.html#guidancerSpecTestCaseEditorContextId" label="3.12.13 Overwriting data for Test Cases and Test Suites &#10;"></topic>
+          <topic href="html/manual/node234.html#guidancerSpecTestCaseEditorContextId" label="3.21 Dealing with errors in tests: Event Handlers &#10;"></topic>
+          <topic href="html/manual/node235.html#guidancerSpecTestCaseEditorContextId" label="3.21.1 Adding Event Handlers to a Test Case &#10;"></topic>
+          <topic href="html/manual/node253.html#guidancerSpecTestCaseEditorContextId" label="3.23 Observing Test Cases &#10;"></topic>
+          <topic href="html/manual/node294.html#guidancerSpecTestCaseEditorContextId" label="3.29.1 Searching for and opening the original specification of a Test Case or Test Suite &#10;"></topic>
+          <topic href="html/manual/node295.html#guidancerSpecTestCaseEditorContextId" label="3.29.2 Searching for places where a Test Case or Test Suite has been used&#10;"></topic>
+          <topic href="html/manual/node297.html#guidancerSpecTestCaseEditorContextId" label="3.29.4 Searching for places where a central test data set has been used&#10;"></topic>
+          <topic href="html/manual/node344.html#guidancerSpecTestCaseEditorContextId" label="3.35 Troubleshooting&#10;"></topic>
+          <topic href="html/manual/node439.html#guidancerSpecTestCaseEditorContextId" label="5.3.1 Test Case Editor &#10;"></topic>
+          <topic href="html/manual/node495.html#guidancerSpecTestCaseEditorContextId" label="6.12 Event Handlers &#10;"></topic>
      </context>
      <context id="prefPageEmbeddedAgentContextId">
           <description>Embedded AUT Preferences</description>
-          <topic href="html/manual/node223.html#prefPageEmbeddedAgentContextId" label="3.22.3 Embedded AUT Agent preferences&#10;"></topic>
+          <topic href="html/manual/node241.html#prefPageEmbeddedAgentContextId" label="3.22.3 Embedded AUT Agent preferences&#10;"></topic>
      </context>
      <context id="testResultSummaryAddCommentContextId">
           <description>Add Comment Dialog</description>
-          <topic href="html/manual/node215.html#testResultSummaryAddCommentContextId" label="3.20.3.8 Entering comments for test runs in the Test Result Summary View &#10;"></topic>
+          <topic href="html/manual/node233.html#testResultSummaryAddCommentContextId" label="3.20.3.8 Entering comments for test runs in the Test Result Summary View &#10;"></topic>
      </context>
      <context id="autSettingWizardPagePageContextId">
           <description>Defining an AUT</description>
-          <topic href="html/manual/node330.html#autSettingWizardPagePageContextId" label="4.2 Testing RCP AUT's &#10;"></topic>
-          <topic href="html/manual/node338.html#autSettingWizardPagePageContextId" label="4.2.5 Component name generation in RCP&#10;"></topic>
+          <topic href="html/manual/node367.html#autSettingWizardPagePageContextId" label="4.2 Testing RCP AUT's &#10;"></topic>
+          <topic href="html/manual/node375.html#autSettingWizardPagePageContextId" label="4.2.5 Component name generation in RCP&#10;"></topic>
           <topic href="html/manual/node72.html#autSettingWizardPagePageContextId" label="3.6 Defining applications under test (AUT's )&#10;"></topic>
-          <topic href="html/manual/node77.html#autSettingWizardPagePageContextId" label="3.7.2.1 Two options to start Java AUT's &#10;"></topic>
-          <topic href="html/manual/node82.html#autSettingWizardPagePageContextId" label="3.7.2.6 Starting Java AUT's with the autrun command&#10;"></topic>
+          <topic href="html/manual/node79.html#autSettingWizardPagePageContextId" label="3.7.4.1 Two options to start Java AUT's &#10;"></topic>
+          <topic href="html/manual/node84.html#autSettingWizardPagePageContextId" label="3.7.4.6 Starting Java AUT's with the autrun command&#10;"></topic>
      </context>
      <context id="dialogRenameContextId">
           <description>Renaming</description>
-          <topic href="html/manual/node90.html#dialogRenameContextId" label="3.8.1 Renaming items in browsers&#10;"></topic>
+          <topic href="html/manual/node99.html#dialogRenameContextId" label="3.8.1 Renaming items in browsers&#10;"></topic>
      </context>
      <context id="newTestDataCubeNameContextId">
           <description>New Central Data Set</description>
-          <topic href="html/manual/node139.html#newTestDataCubeNameContextId" label="3.12.9.1 Creating and editing central test data sets&#10;"></topic>
+          <topic href="html/manual/node152.html#newTestDataCubeNameContextId" label="3.12.9.1 Creating and editing central test data sets&#10;"></topic>
      </context>
      <context id="findDialogContextId">
           <description>Find Dialog</description>
-          <topic href="html/manual/node274.html#findDialogContextId" label="3.28.7 Searching for items in editors and browsers&#10;"></topic>
+          <topic href="html/manual/node305.html#findDialogContextId" label="3.29.7 Searching for items in editors and browsers&#10;"></topic>
      </context>
      <context id="problemViewContextId">
           <description>Problem View</description>
-          <topic href="html/manual/node110.html#problemViewContextId" label="3.11 Working with Test Cases &#10;"></topic>
-          <topic href="html/manual/node195.html#problemViewContextId" label="3.19.2 Starting the AUT &#10;"></topic>
-          <topic href="html/manual/node243.html#problemViewContextId" label="3.24.1 The Problem View &#10;"></topic>
-          <topic href="html/manual/node251.html#problemViewContextId" label="3.25.3 Working with the Problem View to view and fix Teststyle problems&#10;"></topic>
-          <topic href="html/manual/node258.html#problemViewContextId" label="3.27 Adapting the user interface&#10;"></topic>
-          <topic href="html/manual/node278.html#problemViewContextId" label="3.29 Troubleshooting&#10;"></topic>
-          <topic href="html/manual/node288.html#problemViewContextId" label="3.29.10 Creating a support information package&#10;"></topic>
-          <topic href="html/manual/node292.html#problemViewContextId" label="3.30.2 Disconnecting from the AUT Agent &#10;"></topic>
-          <topic href="html/manual/node293.html#problemViewContextId" label="3.30.3 Closing Jubula and stopping the AUT Agent &#10;"></topic>
-          <topic href="html/manual/node294.html#problemViewContextId" label="3.30.4 Stopping the AUT Agent &#10;"></topic>
-          <topic href="html/manual/node295.html#problemViewContextId" label="3.31 Using the test executor for testing from the command line&#10;"></topic>
-          <topic href="html/manual/node300.html#problemViewContextId" label="3.32 Using the dbtool client to import, delete and export from the command line&#10;"></topic>
-          <topic href="html/manual/node34.html#problemViewContextId" label="3.1 Starting and connecting to the AUT Agent &#10;"></topic>
-          <topic href="html/manual/node366.html#problemViewContextId" label="5.4.5 The Problem View &#10;"></topic>
-          <topic href="html/manual/node39.html#problemViewContextId" label="3.1.2 Connecting to the AUT Agent &#10;"></topic>
-          <topic href="html/manual/node45.html#problemViewContextId" label="3.2.5 Help system&#10;"></topic>
-          <topic href="html/manual/node46.html#problemViewContextId" label="3.2.6 Working with the AUT Agent and client on one machine&#10;"></topic>
+          <topic href="html/manual/node122.html#problemViewContextId" label="3.11 Working with Test Cases &#10;"></topic>
+          <topic href="html/manual/node213.html#problemViewContextId" label="3.19.2 Starting the AUT &#10;"></topic>
+          <topic href="html/manual/node260.html#problemViewContextId" label="3.24.1 The Problem View &#10;"></topic>
+          <topic href="html/manual/node268.html#problemViewContextId" label="3.25.3 Working with the Problem View to view and fix Teststyle problems&#10;"></topic>
+          <topic href="html/manual/node287.html#problemViewContextId" label="3.28 Adapting the user interface&#10;"></topic>
+          <topic href="html/manual/node309.html#problemViewContextId" label="3.30 Using the test executor for testing from the command line&#10;"></topic>
+          <topic href="html/manual/node314.html#problemViewContextId" label="3.31 Using the dbtool client to import, delete and export from the command line&#10;"></topic>
+          <topic href="html/manual/node31.html#problemViewContextId" label="3.1 Starting and connecting to the AUT Agent &#10;"></topic>
+          <topic href="html/manual/node344.html#problemViewContextId" label="3.35 Troubleshooting&#10;"></topic>
+          <topic href="html/manual/node354.html#problemViewContextId" label="3.35.10 Creating a support information package&#10;"></topic>
+          <topic href="html/manual/node358.html#problemViewContextId" label="3.36.2 Disconnecting from the AUT Agent &#10;"></topic>
+          <topic href="html/manual/node359.html#problemViewContextId" label="3.36.3 Closing the ITE and stopping the AUT Agent &#10;"></topic>
+          <topic href="html/manual/node360.html#problemViewContextId" label="3.36.4 Stopping the AUT Agent &#10;"></topic>
+          <topic href="html/manual/node36.html#problemViewContextId" label="3.1.2 Connecting to the AUT Agent &#10;"></topic>
+          <topic href="html/manual/node42.html#problemViewContextId" label="3.2.5 Help system&#10;"></topic>
+          <topic href="html/manual/node43.html#problemViewContextId" label="3.2.6 Working with the AUT Agent and client on one machine&#10;"></topic>
+          <topic href="html/manual/node448.html#problemViewContextId" label="5.4.5 The Problem View &#10;"></topic>
      </context>
      <context id="renameComponentNameContextId">
           <description>Rename Component Name Dialog</description>
-          <topic href="html/manual/node158.html#renameComponentNameContextId" label="3.13.3 Renaming component names&#10;"></topic>
+          <topic href="html/manual/node170.html#renameComponentNameContextId" label="3.13.3 Renaming component names&#10;"></topic>
      </context>
      <context id="dialogTestJobNewContextId">
           <description>New Test Job</description>
-          <topic href="html/manual/node170.html#dialogTestJobNewContextId" label="3.15.3 Creating a new Test Job &#10;"></topic>
+          <topic href="html/manual/node184.html#dialogTestJobNewContextId" label="3.15.3 Creating a new Test Job &#10;"></topic>
      </context>
      <context id="autSettingsPageContextId">
           <description>Adding/editing AUT's</description>
-          <topic href="html/manual/node338.html#autSettingsPageContextId" label="4.2.5 Component name generation in RCP&#10;"></topic>
-          <topic href="html/manual/node57.html#autSettingsPageContextId" label="3.5.2.4 Editing the AUT's in a Project &#10;"></topic>
-          <topic href="html/manual/node58.html#autSettingsPageContextId" label="3.5.2.5 Duplicating AUT configurations&#10;"></topic>
+          <topic href="html/manual/node375.html#autSettingsPageContextId" label="4.2.5 Component name generation in RCP&#10;"></topic>
+          <topic href="html/manual/node54.html#autSettingsPageContextId" label="3.5.2.4 Editing the AUT's in a Project &#10;"></topic>
+          <topic href="html/manual/node55.html#autSettingsPageContextId" label="3.5.2.5 Duplicating AUT configurations&#10;"></topic>
      </context>
      <context id="testExecViewContextId">
           <description>Test Suite Browser</description>
-          <topic href="html/manual/node107.html#testExecViewContextId" label="3.10 Working with categories in the browsers and editors&#10;"></topic>
-          <topic href="html/manual/node163.html#testExecViewContextId" label="3.14.1 Creating a Test Suite &#10;"></topic>
-          <topic href="html/manual/node164.html#testExecViewContextId" label="3.14.2 Configuring Test Suites in the Properties View &#10;"></topic>
-          <topic href="html/manual/node166.html#testExecViewContextId" label="3.15.1 Combining Test Suites into a Test Job &#10;"></topic>
-          <topic href="html/manual/node167.html#testExecViewContextId" label="3.15.2 Testing different AUT's in one test run&#10;"></topic>
-          <topic href="html/manual/node170.html#testExecViewContextId" label="3.15.3 Creating a new Test Job &#10;"></topic>
-          <topic href="html/manual/node171.html#testExecViewContextId" label="3.15.4 Specifying which AUT to test in a Test Job &#10;"></topic>
-          <topic href="html/manual/node177.html#testExecViewContextId" label="3.17.2 Executing and analyzing manual tests&#10;"></topic>
-          <topic href="html/manual/node181.html#testExecViewContextId" label="3.18.2.1 Opening the Object Mapping Editor &#10;"></topic>
-          <topic href="html/manual/node194.html#testExecViewContextId" label="3.19.1 Prerequisites for test execution&#10;"></topic>
-          <topic href="html/manual/node195.html#testExecViewContextId" label="3.19.2 Starting the AUT &#10;"></topic>
-          <topic href="html/manual/node196.html#testExecViewContextId" label="3.19.3 Starting, stopping and pausing Test Suites and Test Jobs &#10;"></topic>
-          <topic href="html/manual/node200.html#testExecViewContextId" label="3.19.4 Interactive test analysis&#10;"></topic>
-          <topic href="html/manual/node203.html#testExecViewContextId" label="3.19.5 Altering the speed of test execution&#10;"></topic>
-          <topic href="html/manual/node216.html#testExecViewContextId" label="3.21 Dealing with errors in tests: Event Handlers &#10;"></topic>
-          <topic href="html/manual/node265.html#testExecViewContextId" label="3.28.1 Searching for and opening the original specification of a Test Case or Test Suite &#10;"></topic>
-          <topic href="html/manual/node266.html#testExecViewContextId" label="3.28.2 Searching for places where a Test Case has been used&#10;"></topic>
-          <topic href="html/manual/node270.html#testExecViewContextId" label="3.28.5.1 Searching for keywords (Test Cases , Test Steps , Test Suites , Test Jobs and categories) throughout the Project &#10;"></topic>
-          <topic href="html/manual/node271.html#testExecViewContextId" label="3.28.5.2 Searching for test data&#10;"></topic>
-          <topic href="html/manual/node272.html#testExecViewContextId" label="3.28.5.3 Searching for files in the workspace&#10;"></topic>
-          <topic href="html/manual/node275.html#testExecViewContextId" label="3.28.8 Using filters in Jubula &#10;"></topic>
-          <topic href="html/manual/node278.html#testExecViewContextId" label="3.29 Troubleshooting&#10;"></topic>
-          <topic href="html/manual/node291.html#testExecViewContextId" label="3.30.1 Stopping the AUT &#10;"></topic>
-          <topic href="html/manual/node39.html#testExecViewContextId" label="3.1.2 Connecting to the AUT Agent &#10;"></topic>
-          <topic href="html/manual/node64.html#testExecViewContextId" label="3.5.5 Refreshing Projects &#10;"></topic>
-          <topic href="html/manual/node90.html#testExecViewContextId" label="3.8.1 Renaming items in browsers&#10;"></topic>
-          <topic href="html/manual/node91.html#testExecViewContextId" label="3.8.2 Deleting items from browsers&#10;"></topic>
-          <topic href="html/manual/node92.html#testExecViewContextId" label="3.8.3 Working with IDs for Test Cases and Test Suites &#10;"></topic>
-          <topic href="html/manual/node97.html#testExecViewContextId" label="3.9.1 Opening items in editors&#10;"></topic>
-          <topic href="html/manual/node98.html#testExecViewContextId" label="3.9.2 Adding items to editors&#10;"></topic>
+          <topic href="html/manual/node100.html#testExecViewContextId" label="3.8.2 Deleting items from browsers&#10;"></topic>
+          <topic href="html/manual/node101.html#testExecViewContextId" label="3.8.3 Working with IDs for Test Cases and Test Suites &#10;"></topic>
+          <topic href="html/manual/node105.html#testExecViewContextId" label="3.8.5 Opening the task editor for items in browsers&#10;"></topic>
+          <topic href="html/manual/node107.html#testExecViewContextId" label="3.9.1 Opening items in editors&#10;"></topic>
+          <topic href="html/manual/node108.html#testExecViewContextId" label="3.9.2 Adding items to editors&#10;"></topic>
+          <topic href="html/manual/node118.html#testExecViewContextId" label="3.10 Working with categories in the browsers and editors&#10;"></topic>
+          <topic href="html/manual/node120.html#testExecViewContextId" label="3.10.2 Creating Test Cases , Test Suites and Test Jobs in an existing category&#10;"></topic>
+          <topic href="html/manual/node121.html#testExecViewContextId" label="3.10.3 Adding comments to categories&#10;"></topic>
+          <topic href="html/manual/node177.html#testExecViewContextId" label="3.14.1 Creating a Test Suite &#10;"></topic>
+          <topic href="html/manual/node178.html#testExecViewContextId" label="3.14.2 Configuring Test Suites in the Properties View &#10;"></topic>
+          <topic href="html/manual/node180.html#testExecViewContextId" label="3.15.1 Combining Test Suites into a Test Job &#10;"></topic>
+          <topic href="html/manual/node181.html#testExecViewContextId" label="3.15.2 Testing different AUT's in one test run&#10;"></topic>
+          <topic href="html/manual/node184.html#testExecViewContextId" label="3.15.3 Creating a new Test Job &#10;"></topic>
+          <topic href="html/manual/node185.html#testExecViewContextId" label="3.15.4 Specifying which AUT to test in a Test Job &#10;"></topic>
+          <topic href="html/manual/node191.html#testExecViewContextId" label="3.17.2 Executing and analyzing manual tests&#10;"></topic>
+          <topic href="html/manual/node195.html#testExecViewContextId" label="3.18.2.1 Opening the Object Mapping Editor &#10;"></topic>
+          <topic href="html/manual/node212.html#testExecViewContextId" label="3.19.1 Prerequisites for test execution&#10;"></topic>
+          <topic href="html/manual/node213.html#testExecViewContextId" label="3.19.2 Starting the AUT &#10;"></topic>
+          <topic href="html/manual/node214.html#testExecViewContextId" label="3.19.3 Starting, stopping and pausing Test Suites and Test Jobs &#10;"></topic>
+          <topic href="html/manual/node218.html#testExecViewContextId" label="3.19.4 Interactive test analysis&#10;"></topic>
+          <topic href="html/manual/node221.html#testExecViewContextId" label="3.19.5 Altering the speed of test execution&#10;"></topic>
+          <topic href="html/manual/node234.html#testExecViewContextId" label="3.21 Dealing with errors in tests: Event Handlers &#10;"></topic>
+          <topic href="html/manual/node294.html#testExecViewContextId" label="3.29.1 Searching for and opening the original specification of a Test Case or Test Suite &#10;"></topic>
+          <topic href="html/manual/node295.html#testExecViewContextId" label="3.29.2 Searching for places where a Test Case or Test Suite has been used&#10;"></topic>
+          <topic href="html/manual/node299.html#testExecViewContextId" label="3.29.5.1 Searching for keywords (Test Cases , Test Steps , Test Suites , Test Jobs and categories) throughout the Project &#10;"></topic>
+          <topic href="html/manual/node300.html#testExecViewContextId" label="3.29.5.2 Searching for test data&#10;"></topic>
+          <topic href="html/manual/node301.html#testExecViewContextId" label="3.29.5.3 Searching for files in the workspace&#10;"></topic>
+          <topic href="html/manual/node306.html#testExecViewContextId" label="3.29.8 Using filters in the ITE &#10;"></topic>
+          <topic href="html/manual/node344.html#testExecViewContextId" label="3.35 Troubleshooting&#10;"></topic>
+          <topic href="html/manual/node357.html#testExecViewContextId" label="3.36.1 Stopping the AUT &#10;"></topic>
+          <topic href="html/manual/node36.html#testExecViewContextId" label="3.1.2 Connecting to the AUT Agent &#10;"></topic>
+          <topic href="html/manual/node61.html#testExecViewContextId" label="3.5.5 Refreshing Projects &#10;"></topic>
+          <topic href="html/manual/node99.html#testExecViewContextId" label="3.8.1 Renaming items in browsers&#10;"></topic>
      </context>
      <context id="dialogNewCategoryContextId">
           <description>New Category Dialog</description>
-          <topic href="html/manual/node107.html#dialogNewCategoryContextId" label="3.10 Working with categories in the browsers and editors&#10;"></topic>
+          <topic href="html/manual/node118.html#dialogNewCategoryContextId" label="3.10 Working with categories in the browsers and editors&#10;"></topic>
+     </context>
+     <context id="searchRefactorReplaceExecutionTestCaseWizardContextId">
+          <description>Replace Test Case</description>
+          <topic href="html/manual/node132.html#searchRefactorReplaceExecutionTestCaseWizardContextId" label="3.11.7 Replacing a specific Test Case at places where it has been reused&#10;"></topic>
      </context>
      <context id="dialogTestcaseInsertNewContextId">
           <description>Insert New Test Case Dialog</description>
-          <topic href="html/manual/node118.html#dialogTestcaseInsertNewContextId" label="3.11.5 Adding and inserting new Test Cases to a Test Case &#10;"></topic>
+          <topic href="html/manual/node130.html#dialogTestcaseInsertNewContextId" label="3.11.5 Adding and inserting new Test Cases to a Test Case &#10;"></topic>
      </context>
      <context id="editParametersDialogContextId">
           <description>Editing Parameters</description>
-          <topic href="html/manual/node124.html#editParametersDialogContextId" label="3.12.4 Using the edit parameters dialog to add, edit and delete references&#10;"></topic>
+          <topic href="html/manual/node137.html#editParametersDialogContextId" label="3.12.4 Using the edit parameters dialog to add, edit and delete references&#10;"></topic>
      </context>
      <context id="inspectorViewContextId">
           <description>GEF Inspector View</description>
-          <topic href="html/manual/node341.html#inspectorViewContextId" label="4.3.1 Testing GEF components&#10;"></topic>
-          <topic href="html/manual/node342.html#inspectorViewContextId" label="4.3.2 Using the GEF inspector&#10;"></topic>
+          <topic href="html/manual/node378.html#inspectorViewContextId" label="4.3.1 Testing GEF components&#10;"></topic>
+          <topic href="html/manual/node379.html#inspectorViewContextId" label="4.3.2 Using the GEF inspector&#10;"></topic>
      </context>
      <context id="deleteProjectDialogContextId">
           <description>Deleting Projects</description>
-          <topic href="html/manual/node65.html#deleteProjectDialogContextId" label="3.5.6 Deleting Projects &#10;"></topic>
+          <topic href="html/manual/node62.html#deleteProjectDialogContextId" label="3.5.6 Deleting Projects &#10;"></topic>
      </context>
      <context id="testSuiteEditorContextId">
           <description>Test Suite Editor</description>
-          <topic href="html/manual/node100.html#testSuiteEditorContextId" label="3.9.4 Renaming items in editors&#10;"></topic>
-          <topic href="html/manual/node101.html#testSuiteEditorContextId" label="3.9.5 Adding comments to items in editors&#10;"></topic>
-          <topic href="html/manual/node102.html#testSuiteEditorContextId" label="3.9.6 Commenting out items in editors&#10;"></topic>
-          <topic href="html/manual/node103.html#testSuiteEditorContextId" label="3.9.7 Extracting Test Cases from editors: Refactoring&#10;"></topic>
-          <topic href="html/manual/node104.html#testSuiteEditorContextId" label="3.9.8 Replacing Test Cases in editors: Refactoring&#10;"></topic>
-          <topic href="html/manual/node105.html#testSuiteEditorContextId" label="3.9.9 Saving Test Cases from an editor as a new Test Case &#10;"></topic>
-          <topic href="html/manual/node106.html#testSuiteEditorContextId" label="3.9.10 Reverting changes in an editor&#10;"></topic>
-          <topic href="html/manual/node164.html#testSuiteEditorContextId" label="3.14.2 Configuring Test Suites in the Properties View &#10;"></topic>
-          <topic href="html/manual/node265.html#testSuiteEditorContextId" label="3.28.1 Searching for and opening the original specification of a Test Case or Test Suite &#10;"></topic>
-          <topic href="html/manual/node266.html#testSuiteEditorContextId" label="3.28.2 Searching for places where a Test Case has been used&#10;"></topic>
-          <topic href="html/manual/node358.html#testSuiteEditorContextId" label="5.3.2 Test Suite Editor &#10;"></topic>
-          <topic href="html/manual/node98.html#testSuiteEditorContextId" label="3.9.2 Adding items to editors&#10;"></topic>
-          <topic href="html/manual/node99.html#testSuiteEditorContextId" label="3.9.3 Deleting items from editors&#10;"></topic>
+          <topic href="html/manual/node108.html#testSuiteEditorContextId" label="3.9.2 Adding items to editors&#10;"></topic>
+          <topic href="html/manual/node109.html#testSuiteEditorContextId" label="3.9.3 Deleting items from editors&#10;"></topic>
+          <topic href="html/manual/node110.html#testSuiteEditorContextId" label="3.9.4 Renaming items in editors&#10;"></topic>
+          <topic href="html/manual/node111.html#testSuiteEditorContextId" label="3.9.5 Adding comments to items in editors&#10;"></topic>
+          <topic href="html/manual/node112.html#testSuiteEditorContextId" label="3.9.6 Adding Task IDs to items in editors&#10;"></topic>
+          <topic href="html/manual/node113.html#testSuiteEditorContextId" label="3.9.7 Commenting out items in editors&#10;"></topic>
+          <topic href="html/manual/node114.html#testSuiteEditorContextId" label="3.9.8 Extracting Test Cases from editors: Refactoring&#10;"></topic>
+          <topic href="html/manual/node115.html#testSuiteEditorContextId" label="3.9.9 Replacing Test Cases in editors: Refactoring&#10;"></topic>
+          <topic href="html/manual/node116.html#testSuiteEditorContextId" label="3.9.10 Saving Test Cases from an editor as a new Test Case &#10;"></topic>
+          <topic href="html/manual/node117.html#testSuiteEditorContextId" label="3.9.11 Reverting changes in an editor&#10;"></topic>
+          <topic href="html/manual/node178.html#testSuiteEditorContextId" label="3.14.2 Configuring Test Suites in the Properties View &#10;"></topic>
+          <topic href="html/manual/node294.html#testSuiteEditorContextId" label="3.29.1 Searching for and opening the original specification of a Test Case or Test Suite &#10;"></topic>
+          <topic href="html/manual/node295.html#testSuiteEditorContextId" label="3.29.2 Searching for places where a Test Case or Test Suite has been used&#10;"></topic>
+          <topic href="html/manual/node440.html#testSuiteEditorContextId" label="5.3.2 Test Suite Editor &#10;"></topic>
      </context>
      <context id="testResultSummaryViewContextId">
           <description>Test Result Summary View</description>
-          <topic href="html/manual/node207.html#testResultSummaryViewContextId" label="3.20.3 Working with the Test Result Summary View &#10;"></topic>
-          <topic href="html/manual/node208.html#testResultSummaryViewContextId" label="3.20.3.1 Re-opening the test result view for a test run&#10;"></topic>
-          <topic href="html/manual/node209.html#testResultSummaryViewContextId" label="3.20.3.2 Filtering and sorting in the Test Result Summary View &#10;"></topic>
-          <topic href="html/manual/node210.html#testResultSummaryViewContextId" label="3.20.3.3 Changing the amount of result summaries shown in the Test Result Summary View &#10;"></topic>
-          <topic href="html/manual/node211.html#testResultSummaryViewContextId" label="3.20.3.4 Changing the relevance of a test run&#10;"></topic>
-          <topic href="html/manual/node212.html#testResultSummaryViewContextId" label="3.20.3.5 Refreshing the Test Result Summary View &#10;"></topic>
-          <topic href="html/manual/node213.html#testResultSummaryViewContextId" label="3.20.3.6 Deleting test runs from the Test Result Summary View &#10;"></topic>
-          <topic href="html/manual/node214.html#testResultSummaryViewContextId" label="3.20.3.7 Exporting test results from the Test Result Summary View as HTML and XML reports&#10;"></topic>
-          <topic href="html/manual/node215.html#testResultSummaryViewContextId" label="3.20.3.8 Entering comments for test runs in the Test Result Summary View &#10;"></topic>
-          <topic href="html/manual/node229.html#testResultSummaryViewContextId" label="3.22.8 Test result preferences&#10;"></topic>
+          <topic href="html/manual/node225.html#testResultSummaryViewContextId" label="3.20.3 Working with the Test Result Summary View &#10;"></topic>
+          <topic href="html/manual/node226.html#testResultSummaryViewContextId" label="3.20.3.1 Re-opening the test result view for a test run&#10;"></topic>
+          <topic href="html/manual/node227.html#testResultSummaryViewContextId" label="3.20.3.2 Filtering and sorting in the Test Result Summary View &#10;"></topic>
+          <topic href="html/manual/node228.html#testResultSummaryViewContextId" label="3.20.3.3 Changing the amount of result summaries shown in the Test Result Summary View &#10;"></topic>
+          <topic href="html/manual/node229.html#testResultSummaryViewContextId" label="3.20.3.4 Changing the relevance of a test run&#10;"></topic>
+          <topic href="html/manual/node230.html#testResultSummaryViewContextId" label="3.20.3.5 Refreshing the Test Result Summary View &#10;"></topic>
+          <topic href="html/manual/node231.html#testResultSummaryViewContextId" label="3.20.3.6 Deleting test runs from the Test Result Summary View &#10;"></topic>
+          <topic href="html/manual/node232.html#testResultSummaryViewContextId" label="3.20.3.7 Exporting test results from the Test Result Summary View as HTML and XML reports&#10;"></topic>
+          <topic href="html/manual/node233.html#testResultSummaryViewContextId" label="3.20.3.8 Entering comments for test runs in the Test Result Summary View &#10;"></topic>
+          <topic href="html/manual/node247.html#testResultSummaryViewContextId" label="3.22.8 Test result preferences&#10;"></topic>
+     </context>
+     <context id="searchRefactorChangeCtdsColumnUsageWizardPagePageContextId">
+          <description>Changing Central Test Data Columns</description>
+          <topic href="html/manual/node158.html#searchRefactorChangeCtdsColumnUsageWizardPagePageContextId" label="3.12.9.7 Changing the column used in a central test data set for multiple Test Cases &#10;"></topic>
      </context>
      <context id="testSpecificationViewContextId">
           <description>Test Case Browser</description>
-          <topic href="html/manual/node107.html#testSpecificationViewContextId" label="3.10 Working with categories in the browsers and editors&#10;"></topic>
-          <topic href="html/manual/node110.html#testSpecificationViewContextId" label="3.11 Working with Test Cases &#10;"></topic>
-          <topic href="html/manual/node111.html#testSpecificationViewContextId" label="3.11.1 Creating Test Cases &#10;"></topic>
-          <topic href="html/manual/node112.html#testSpecificationViewContextId" label="3.11.2 Creating tests from the library of pre-defined Test Cases &#10;"></topic>
-          <topic href="html/manual/node117.html#testSpecificationViewContextId" label="3.11.4 Editing Test Cases &#10;"></topic>
-          <topic href="html/manual/node119.html#testSpecificationViewContextId" label="3.11.6 Moving Test Cases to external Projects &#10;"></topic>
-          <topic href="html/manual/node176.html#testSpecificationViewContextId" label="3.17.1 Creating manual tests&#10;"></topic>
-          <topic href="html/manual/node236.html#testSpecificationViewContextId" label="3.23 Observing Test Cases &#10;"></topic>
-          <topic href="html/manual/node265.html#testSpecificationViewContextId" label="3.28.1 Searching for and opening the original specification of a Test Case or Test Suite &#10;"></topic>
-          <topic href="html/manual/node266.html#testSpecificationViewContextId" label="3.28.2 Searching for places where a Test Case has been used&#10;"></topic>
-          <topic href="html/manual/node270.html#testSpecificationViewContextId" label="3.28.5.1 Searching for keywords (Test Cases , Test Steps , Test Suites , Test Jobs and categories) throughout the Project &#10;"></topic>
-          <topic href="html/manual/node271.html#testSpecificationViewContextId" label="3.28.5.2 Searching for test data&#10;"></topic>
-          <topic href="html/manual/node272.html#testSpecificationViewContextId" label="3.28.5.3 Searching for files in the workspace&#10;"></topic>
-          <topic href="html/manual/node275.html#testSpecificationViewContextId" label="3.28.8 Using filters in Jubula &#10;"></topic>
-          <topic href="html/manual/node354.html#testSpecificationViewContextId" label="5.2.2 The Test Case Browser &#10;"></topic>
-          <topic href="html/manual/node90.html#testSpecificationViewContextId" label="3.8.1 Renaming items in browsers&#10;"></topic>
-          <topic href="html/manual/node91.html#testSpecificationViewContextId" label="3.8.2 Deleting items from browsers&#10;"></topic>
-          <topic href="html/manual/node92.html#testSpecificationViewContextId" label="3.8.3 Working with IDs for Test Cases and Test Suites &#10;"></topic>
-          <topic href="html/manual/node95.html#testSpecificationViewContextId" label="3.8.4 Opening the Test Case Browser multiple times&#10;"></topic>
-          <topic href="html/manual/node97.html#testSpecificationViewContextId" label="3.9.1 Opening items in editors&#10;"></topic>
-          <topic href="html/manual/node98.html#testSpecificationViewContextId" label="3.9.2 Adding items to editors&#10;"></topic>
+          <topic href="html/manual/node100.html#testSpecificationViewContextId" label="3.8.2 Deleting items from browsers&#10;"></topic>
+          <topic href="html/manual/node101.html#testSpecificationViewContextId" label="3.8.3 Working with IDs for Test Cases and Test Suites &#10;"></topic>
+          <topic href="html/manual/node104.html#testSpecificationViewContextId" label="3.8.4 Opening the Test Case Browser multiple times&#10;"></topic>
+          <topic href="html/manual/node105.html#testSpecificationViewContextId" label="3.8.5 Opening the task editor for items in browsers&#10;"></topic>
+          <topic href="html/manual/node107.html#testSpecificationViewContextId" label="3.9.1 Opening items in editors&#10;"></topic>
+          <topic href="html/manual/node108.html#testSpecificationViewContextId" label="3.9.2 Adding items to editors&#10;"></topic>
+          <topic href="html/manual/node118.html#testSpecificationViewContextId" label="3.10 Working with categories in the browsers and editors&#10;"></topic>
+          <topic href="html/manual/node120.html#testSpecificationViewContextId" label="3.10.2 Creating Test Cases , Test Suites and Test Jobs in an existing category&#10;"></topic>
+          <topic href="html/manual/node121.html#testSpecificationViewContextId" label="3.10.3 Adding comments to categories&#10;"></topic>
+          <topic href="html/manual/node122.html#testSpecificationViewContextId" label="3.11 Working with Test Cases &#10;"></topic>
+          <topic href="html/manual/node123.html#testSpecificationViewContextId" label="3.11.1 Creating Test Cases &#10;"></topic>
+          <topic href="html/manual/node124.html#testSpecificationViewContextId" label="3.11.2 Creating tests from the library of pre-defined Test Cases &#10;"></topic>
+          <topic href="html/manual/node129.html#testSpecificationViewContextId" label="3.11.4 Editing Test Cases &#10;"></topic>
+          <topic href="html/manual/node131.html#testSpecificationViewContextId" label="3.11.6 Moving Test Cases to external Projects &#10;"></topic>
+          <topic href="html/manual/node190.html#testSpecificationViewContextId" label="3.17.1 Creating manual tests&#10;"></topic>
+          <topic href="html/manual/node253.html#testSpecificationViewContextId" label="3.23 Observing Test Cases &#10;"></topic>
+          <topic href="html/manual/node294.html#testSpecificationViewContextId" label="3.29.1 Searching for and opening the original specification of a Test Case or Test Suite &#10;"></topic>
+          <topic href="html/manual/node295.html#testSpecificationViewContextId" label="3.29.2 Searching for places where a Test Case or Test Suite has been used&#10;"></topic>
+          <topic href="html/manual/node299.html#testSpecificationViewContextId" label="3.29.5.1 Searching for keywords (Test Cases , Test Steps , Test Suites , Test Jobs and categories) throughout the Project &#10;"></topic>
+          <topic href="html/manual/node300.html#testSpecificationViewContextId" label="3.29.5.2 Searching for test data&#10;"></topic>
+          <topic href="html/manual/node301.html#testSpecificationViewContextId" label="3.29.5.3 Searching for files in the workspace&#10;"></topic>
+          <topic href="html/manual/node306.html#testSpecificationViewContextId" label="3.29.8 Using filters in the ITE &#10;"></topic>
+          <topic href="html/manual/node436.html#testSpecificationViewContextId" label="5.2.2 The Test Case Browser &#10;"></topic>
+          <topic href="html/manual/node99.html#testSpecificationViewContextId" label="3.8.1 Renaming items in browsers&#10;"></topic>
      </context>
      <context id="testStylePropertyPageContextId">
           <description>Teststyle</description>
-          <topic href="html/manual/node245.html#testStylePropertyPageContextId" label="3.25.1 Activating Teststyle for a Project &#10;"></topic>
-          <topic href="html/manual/node246.html#testStylePropertyPageContextId" label="3.25.2 Configuring Teststyle for a Project &#10;"></topic>
-          <topic href="html/manual/node251.html#testStylePropertyPageContextId" label="3.25.3 Working with the Problem View to view and fix Teststyle problems&#10;"></topic>
+          <topic href="html/manual/node262.html#testStylePropertyPageContextId" label="3.25.1 Activating Teststyle for a Project &#10;"></topic>
+          <topic href="html/manual/node263.html#testStylePropertyPageContextId" label="3.25.2 Configuring Teststyle for a Project &#10;"></topic>
+          <topic href="html/manual/node268.html#testStylePropertyPageContextId" label="3.25.3 Working with the Problem View to view and fix Teststyle problems&#10;"></topic>
      </context>
      <context id="testCaseAddExistingContextId">
           <description>Existing Test Case Dialog</description>
-          <topic href="html/manual/node112.html#testCaseAddExistingContextId" label="3.11.2 Creating tests from the library of pre-defined Test Cases &#10;"></topic>
-          <topic href="html/manual/node98.html#testCaseAddExistingContextId" label="3.9.2 Adding items to editors&#10;"></topic>
+          <topic href="html/manual/node108.html#testCaseAddExistingContextId" label="3.9.2 Adding items to editors&#10;"></topic>
+          <topic href="html/manual/node124.html#testCaseAddExistingContextId" label="3.11.2 Creating tests from the library of pre-defined Test Cases &#10;"></topic>
      </context>
      <context id="openProjectImportAllRequiredProjectsContextId">
           <description>Importing Dependent Projects</description>
-          <topic href="html/manual/node67.html#openProjectImportAllRequiredProjectsContextId" label="3.5.8 Importing Projects &#10;"></topic>
+          <topic href="html/manual/node64.html#openProjectImportAllRequiredProjectsContextId" label="3.5.8 Importing Projects &#10;"></topic>
      </context>
      <context id="guidancerTestJobEditorContextId">
           <description>Test Job Editor</description>
-          <topic href="html/manual/node100.html#guidancerTestJobEditorContextId" label="3.9.4 Renaming items in editors&#10;"></topic>
-          <topic href="html/manual/node101.html#guidancerTestJobEditorContextId" label="3.9.5 Adding comments to items in editors&#10;"></topic>
-          <topic href="html/manual/node106.html#guidancerTestJobEditorContextId" label="3.9.10 Reverting changes in an editor&#10;"></topic>
-          <topic href="html/manual/node167.html#guidancerTestJobEditorContextId" label="3.15.2 Testing different AUT's in one test run&#10;"></topic>
-          <topic href="html/manual/node171.html#guidancerTestJobEditorContextId" label="3.15.4 Specifying which AUT to test in a Test Job &#10;"></topic>
-          <topic href="html/manual/node98.html#guidancerTestJobEditorContextId" label="3.9.2 Adding items to editors&#10;"></topic>
-          <topic href="html/manual/node99.html#guidancerTestJobEditorContextId" label="3.9.3 Deleting items from editors&#10;"></topic>
+          <topic href="html/manual/node108.html#guidancerTestJobEditorContextId" label="3.9.2 Adding items to editors&#10;"></topic>
+          <topic href="html/manual/node109.html#guidancerTestJobEditorContextId" label="3.9.3 Deleting items from editors&#10;"></topic>
+          <topic href="html/manual/node110.html#guidancerTestJobEditorContextId" label="3.9.4 Renaming items in editors&#10;"></topic>
+          <topic href="html/manual/node111.html#guidancerTestJobEditorContextId" label="3.9.5 Adding comments to items in editors&#10;"></topic>
+          <topic href="html/manual/node112.html#guidancerTestJobEditorContextId" label="3.9.6 Adding Task IDs to items in editors&#10;"></topic>
+          <topic href="html/manual/node117.html#guidancerTestJobEditorContextId" label="3.9.11 Reverting changes in an editor&#10;"></topic>
+          <topic href="html/manual/node181.html#guidancerTestJobEditorContextId" label="3.15.2 Testing different AUT's in one test run&#10;"></topic>
+          <topic href="html/manual/node185.html#guidancerTestJobEditorContextId" label="3.15.4 Specifying which AUT to test in a Test Job &#10;"></topic>
      </context>
      <context id="testCaseMoveExternalContextId">
           <description>Move Test Cases to an External Project</description>
-          <topic href="html/manual/node119.html#testCaseMoveExternalContextId" label="3.11.6 Moving Test Cases to external Projects &#10;"></topic>
+          <topic href="html/manual/node131.html#testCaseMoveExternalContextId" label="3.11.6 Moving Test Cases to external Projects &#10;"></topic>
      </context>
      <context id="compNameViewContextId">
           <description>Component Names</description>
-          <topic href="html/manual/node155.html#compNameViewContextId" label="3.13.2 Entering and reassigning component names in the Component Names View &#10;"></topic>
-          <topic href="html/manual/node156.html#compNameViewContextId" label="3.13.2.1 Propagating component names: writing Test Cases that can test different components in the AUT &#10;"></topic>
-          <topic href="html/manual/node161.html#compNameViewContextId" label="3.13.6 Understanding the component hierarchy&#10;"></topic>
-          <topic href="html/manual/node364.html#compNameViewContextId" label="5.4.3 The Component Names View &#10;"></topic>
+          <topic href="html/manual/node169.html#compNameViewContextId" label="3.13.2 Entering and reassigning component names in the Component Names View &#10;"></topic>
+          <topic href="html/manual/node171.html#compNameViewContextId" label="3.13.4 Propagating component names&#10;"></topic>
+          <topic href="html/manual/node172.html#compNameViewContextId" label="3.13.5 No component type exists message in Component Names View &#10;"></topic>
+          <topic href="html/manual/node175.html#compNameViewContextId" label="3.13.8 Understanding the component hierarchy&#10;"></topic>
+          <topic href="html/manual/node446.html#compNameViewContextId" label="5.4.3 The Component Names View &#10;"></topic>
      </context>
      <context id="dialogOMCategoryNewContextId">
           <description>New Object Mapping Category Dialog</description>
-          <topic href="html/manual/node183.html#dialogOMCategoryNewContextId" label="3.18.2.3 Working with categories in the Object Mapping Editor &#10;"></topic>
+          <topic href="html/manual/node197.html#dialogOMCategoryNewContextId" label="3.18.2.3 Working with categories in the Object Mapping Editor &#10;"></topic>
      </context>
      <context id="dialogProjectCreateNewVersionContextId">
           <description>Versioning Projects</description>
-          <topic href="html/manual/node71.html#dialogProjectCreateNewVersionContextId" label="3.5.10 Versioning Projects &#10;"></topic>
+          <topic href="html/manual/node68.html#dialogProjectCreateNewVersionContextId" label="3.5.10 Versioning Projects &#10;"></topic>
      </context>
      <context id="prefPageTestResultContextId">
           <description>Test Result Preferences</description>
-          <topic href="html/manual/node206.html#prefPageTestResultContextId" label="3.20.2 XML and HTML reports&#10;"></topic>
-          <topic href="html/manual/node207.html#prefPageTestResultContextId" label="3.20.3 Working with the Test Result Summary View &#10;"></topic>
-          <topic href="html/manual/node229.html#prefPageTestResultContextId" label="3.22.8 Test result preferences&#10;"></topic>
+          <topic href="html/manual/node224.html#prefPageTestResultContextId" label="3.20.2 XML and HTML reports&#10;"></topic>
+          <topic href="html/manual/node225.html#prefPageTestResultContextId" label="3.20.3 Working with the Test Result Summary View &#10;"></topic>
+          <topic href="html/manual/node247.html#prefPageTestResultContextId" label="3.22.8 Test result preferences&#10;"></topic>
      </context>
      <context id="dbLoginContextId">
           <description>Database Login</description>
-          <topic href="html/manual/node47.html#dbLoginContextId" label="3.3 Logging into and switching databases&#10;"></topic>
+          <topic href="html/manual/node44.html#dbLoginContextId" label="3.3 Logging into and switching databases&#10;"></topic>
      </context>
      <context id="mergeComponentNameContextId">
           <description>Merge Component Name Dialog</description>
-          <topic href="html/manual/node159.html#mergeComponentNameContextId" label="3.13.4 Merging component names&#10;"></topic>
+          <topic href="html/manual/node173.html#mergeComponentNameContextId" label="3.13.6 Merging component names&#10;"></topic>
      </context>
      <context id="projectUsedPropertyPageContextId">
           <description>Used Projects Properties</description>
-          <topic href="html/manual/node60.html#projectUsedPropertyPageContextId" label="3.5.3 Reusing (referencing) whole Projects in a Project &#10;"></topic>
-          <topic href="html/manual/node61.html#projectUsedPropertyPageContextId" label="3.5.3.1 Changing the version of a reused Project &#10;"></topic>
+          <topic href="html/manual/node57.html#projectUsedPropertyPageContextId" label="3.5.3 Reusing (referencing) whole Projects in a Project &#10;"></topic>
+          <topic href="html/manual/node58.html#projectUsedPropertyPageContextId" label="3.5.3.1 Changing the version of a reused Project &#10;"></topic>
      </context>
      <context id="testResultViewContextId">
           <description>Test Results View</description>
-          <topic href="html/manual/node200.html#testResultViewContextId" label="3.19.4 Interactive test analysis&#10;"></topic>
-          <topic href="html/manual/node205.html#testResultViewContextId" label="3.20.1 The Test Result View &#10;"></topic>
-          <topic href="html/manual/node207.html#testResultViewContextId" label="3.20.3 Working with the Test Result Summary View &#10;"></topic>
-          <topic href="html/manual/node214.html#testResultViewContextId" label="3.20.3.7 Exporting test results from the Test Result Summary View as HTML and XML reports&#10;"></topic>
-          <topic href="html/manual/node215.html#testResultViewContextId" label="3.20.3.8 Entering comments for test runs in the Test Result Summary View &#10;"></topic>
-          <topic href="html/manual/node365.html#testResultViewContextId" label="5.4.4 The Test Result View &#10;"></topic>
+          <topic href="html/manual/node218.html#testResultViewContextId" label="3.19.4 Interactive test analysis&#10;"></topic>
+          <topic href="html/manual/node223.html#testResultViewContextId" label="3.20.1 The Test Result View &#10;"></topic>
+          <topic href="html/manual/node225.html#testResultViewContextId" label="3.20.3 Working with the Test Result Summary View &#10;"></topic>
+          <topic href="html/manual/node232.html#testResultViewContextId" label="3.20.3.7 Exporting test results from the Test Result Summary View as HTML and XML reports&#10;"></topic>
+          <topic href="html/manual/node233.html#testResultViewContextId" label="3.20.3.8 Entering comments for test runs in the Test Result Summary View &#10;"></topic>
+          <topic href="html/manual/node281.html#testResultViewContextId" label="3.27.3 Creating tasks in external repositories from test result reports&#10;"></topic>
+          <topic href="html/manual/node447.html#testResultViewContextId" label="5.4.4 The Test Result View &#10;"></topic>
      </context>
      <context id="testCaseOpenExistingContextId">
           <description>Open Existing Test Case</description>
-          <topic href="html/manual/node116.html#testCaseOpenExistingContextId" label="3.11.3 Opening existing Test Cases &#10;"></topic>
-          <topic href="html/manual/node97.html#testCaseOpenExistingContextId" label="3.9.1 Opening items in editors&#10;"></topic>
+          <topic href="html/manual/node107.html#testCaseOpenExistingContextId" label="3.9.1 Opening items in editors&#10;"></topic>
+          <topic href="html/manual/node128.html#testCaseOpenExistingContextId" label="3.11.3 Opening existing Test Cases &#10;"></topic>
      </context>
      <context id="com.bredexsw.guidancer.doc.testDataSearchPageContextId">
-          <description>Keyword Search</description>
-          <topic href="html/manual/node271.html#com.bredexsw.guidancer.doc.testDataSearchPageContextId" label="3.28.5.2 Searching for test data&#10;"></topic>
+          <description>Test Data Search</description>
+          <topic href="html/manual/node300.html#com.bredexsw.guidancer.doc.testDataSearchPageContextId" label="3.29.5.2 Searching for test data&#10;"></topic>
+          <topic href="html/manual/node302.html#com.bredexsw.guidancer.doc.testDataSearchPageContextId" label="3.29.5.4 Limiting the search to the selected node&#10;"></topic>
      </context>
      <context id="capContextId">
           <description>Test Steps</description>
-          <topic href="html/manual/node172.html#capContextId" label="3.16 Information on Test Steps &#10;"></topic>
+          <topic href="html/manual/node186.html#capContextId" label="3.16 Information on Test Steps &#10;"></topic>
      </context>
      <context id="guidancerExecTestCaseEditorContextId">
           <description>Test Suite Editor</description>
-          <topic href="html/manual/node152.html#guidancerExecTestCaseEditorContextId" label="3.12.13 Overwriting data for Test Cases and Test Suites &#10;"></topic>
+          <topic href="html/manual/node166.html#guidancerExecTestCaseEditorContextId" label="3.12.13 Overwriting data for Test Cases and Test Suites &#10;"></topic>
      </context>
      <context id="prefPageObjectMapContextId">
           <description>Object Mapping Preferences</description>
-          <topic href="html/manual/node227.html#prefPageObjectMapContextId" label="3.22.6 Object mapping preferences&#10;"></topic>
+          <topic href="html/manual/node245.html#prefPageObjectMapContextId" label="3.22.6 Object mapping preferences&#10;"></topic>
      </context>
      <context id="testExecutionViewContextId">
           <description>Test Suite Browser</description>
-          <topic href="html/manual/node353.html#testExecutionViewContextId" label="5.2.1 The Test Suite Browser &#10;"></topic>
+          <topic href="html/manual/node435.html#testExecutionViewContextId" label="5.2.1 The Test Suite Browser &#10;"></topic>
      </context>
      <context id="autConfigSettingWizardPagePageContextId">
           <description>Configuring an AUT</description>
-          <topic href="html/manual/node222.html#autConfigSettingWizardPagePageContextId" label="3.22.2 AUT Agent preferences&#10;"></topic>
-          <topic href="html/manual/node310.html#autConfigSettingWizardPagePageContextId" label="3.33.2.1 Adding Chronon information in the AUT configuration&#10;"></topic>
-          <topic href="html/manual/node311.html#autConfigSettingWizardPagePageContextId" label="3.33.2.2 Configuring the separate Chronon installation for use with your AUT &#10;"></topic>
-          <topic href="html/manual/node325.html#autConfigSettingWizardPagePageContextId" label="4.1 Testing Swing AUT's &#10;"></topic>
-          <topic href="html/manual/node330.html#autConfigSettingWizardPagePageContextId" label="4.2 Testing RCP AUT's &#10;"></topic>
-          <topic href="html/manual/node340.html#autConfigSettingWizardPagePageContextId" label="4.3 Testing GEF AUT's &#10;"></topic>
-          <topic href="html/manual/node343.html#autConfigSettingWizardPagePageContextId" label="4.4 Testing HTML AUT's &#10;"></topic>
-          <topic href="html/manual/node58.html#autConfigSettingWizardPagePageContextId" label="3.5.2.5 Duplicating AUT configurations&#10;"></topic>
-          <topic href="html/manual/node74.html#autConfigSettingWizardPagePageContextId" label="3.7.1 Configuring AUT's to be started with Jubula &#10;"></topic>
-          <topic href="html/manual/node76.html#autConfigSettingWizardPagePageContextId" label="3.7.2 Starting Java AUT's (Swing, SWT/RCP/GEF) with Jubula &#10;"></topic>
-          <topic href="html/manual/node77.html#autConfigSettingWizardPagePageContextId" label="3.7.2.1 Two options to start Java AUT's &#10;"></topic>
-          <topic href="html/manual/node84.html#autConfigSettingWizardPagePageContextId" label="3.7.3 Starting Web AUT's (HTML) with Jubula &#10;"></topic>
+          <topic href="html/manual/node240.html#autConfigSettingWizardPagePageContextId" label="3.22.2 AUT Agent preferences&#10;"></topic>
+          <topic href="html/manual/node330.html#autConfigSettingWizardPagePageContextId" label="3.33.1.1 Adding Chronon information in the AUT configuration&#10;"></topic>
+          <topic href="html/manual/node331.html#autConfigSettingWizardPagePageContextId" label="3.33.1.2 Configuring the separate Chronon installation for use with your AUT &#10;"></topic>
+          <topic href="html/manual/node362.html#autConfigSettingWizardPagePageContextId" label="4.1 Testing Swing AUT's &#10;"></topic>
+          <topic href="html/manual/node367.html#autConfigSettingWizardPagePageContextId" label="4.2 Testing RCP AUT's &#10;"></topic>
+          <topic href="html/manual/node377.html#autConfigSettingWizardPagePageContextId" label="4.3 Testing GEF AUT's &#10;"></topic>
+          <topic href="html/manual/node380.html#autConfigSettingWizardPagePageContextId" label="4.4 Testing HTML AUT's &#10;"></topic>
+          <topic href="html/manual/node383.html#autConfigSettingWizardPagePageContextId" label="4.5 Testing Windows (.NET) AUT's &#10;"></topic>
+          <topic href="html/manual/node398.html#autConfigSettingWizardPagePageContextId" label="4.6 Testing Windows Store App AUT's &#10;"></topic>
+          <topic href="html/manual/node401.html#autConfigSettingWizardPagePageContextId" label="4.7 Testing iOS AUT's &#10;"></topic>
+          <topic href="html/manual/node55.html#autConfigSettingWizardPagePageContextId" label="3.5.2.5 Duplicating AUT configurations&#10;"></topic>
+          <topic href="html/manual/node74.html#autConfigSettingWizardPagePageContextId" label="3.7.1 Configuring AUT's to be started from the ITE &#10;"></topic>
+          <topic href="html/manual/node76.html#autConfigSettingWizardPagePageContextId" label="3.7.2 Basic information required for every AUT configuration&#10;"></topic>
+          <topic href="html/manual/node77.html#autConfigSettingWizardPagePageContextId" label="3.7.3 Using a working directory in an AUT configuration&#10;"></topic>
+          <topic href="html/manual/node78.html#autConfigSettingWizardPagePageContextId" label="3.7.4 Starting Java AUT's (Swing, SWT/RCP/GEF)&#10;"></topic>
+          <topic href="html/manual/node79.html#autConfigSettingWizardPagePageContextId" label="3.7.4.1 Two options to start Java AUT's &#10;"></topic>
+          <topic href="html/manual/node86.html#autConfigSettingWizardPagePageContextId" label="3.7.5 Starting Web AUT's (HTML)&#10;"></topic>
+          <topic href="html/manual/node90.html#autConfigSettingWizardPagePageContextId" label="3.7.6 Starting Win AUT's (.NET, WPF, WinApps)&#10;"></topic>
      </context>
      <context id="objectMapEditorContextId">
           <description>Object Mapping</description>
-          <topic href="html/manual/node154.html#objectMapEditorContextId" label="3.13.1 Creating new component names&#10;"></topic>
-          <topic href="html/manual/node159.html#objectMapEditorContextId" label="3.13.4 Merging component names&#10;"></topic>
-          <topic href="html/manual/node161.html#objectMapEditorContextId" label="3.13.6 Understanding the component hierarchy&#10;"></topic>
-          <topic href="html/manual/node179.html#objectMapEditorContextId" label="3.18.1 Object mapping&#10;"></topic>
-          <topic href="html/manual/node182.html#objectMapEditorContextId" label="3.18.2.2 The different views in the Object Mapping Editor &#10;"></topic>
-          <topic href="html/manual/node183.html#objectMapEditorContextId" label="3.18.2.3 Working with categories in the Object Mapping Editor &#10;"></topic>
-          <topic href="html/manual/node184.html#objectMapEditorContextId" label="3.18.2.4 The configuration view in the Object Mapping Editor &#10;"></topic>
-          <topic href="html/manual/node185.html#objectMapEditorContextId" label="3.18.2.5 Refreshing the Object Mapping Editor &#10;"></topic>
-          <topic href="html/manual/node186.html#objectMapEditorContextId" label="3.18.2.6 Finding components in the AUT via the Object Mapping Editor : highlight in AUT &#10;"></topic>
-          <topic href="html/manual/node187.html#objectMapEditorContextId" label="3.18.3 Deleting from the Object Mapping Editor &#10;"></topic>
-          <topic href="html/manual/node188.html#objectMapEditorContextId" label="3.18.3.1 Removing unused component names from the Object Mapping Editor &#10;"></topic>
-          <topic href="html/manual/node189.html#objectMapEditorContextId" label="3.18.4 Collecting components (technical names) from the AUT &#10;"></topic>
-          <topic href="html/manual/node190.html#objectMapEditorContextId" label="3.18.4.1 Understanding the colored dots when collecting component names in the Object Mapping Editor &#10;"></topic>
-          <topic href="html/manual/node191.html#objectMapEditorContextId" label="3.18.5 Mapping (assigning) collected technical names to component names&#10;"></topic>
-          <topic href="html/manual/node192.html#objectMapEditorContextId" label="3.18.6 Object mapping and AUT changes&#10;"></topic>
-          <topic href="html/manual/node227.html#objectMapEditorContextId" label="3.22.6 Object mapping preferences&#10;"></topic>
-          <topic href="html/manual/node267.html#objectMapEditorContextId" label="3.28.3 Searching for places where a component name has been used&#10;"></topic>
-          <topic href="html/manual/node275.html#objectMapEditorContextId" label="3.28.8 Using filters in Jubula &#10;"></topic>
-          <topic href="html/manual/node278.html#objectMapEditorContextId" label="3.29 Troubleshooting&#10;"></topic>
-          <topic href="html/manual/node359.html#objectMapEditorContextId" label="5.3.3 Object Mapping Editor &#10;"></topic>
+          <topic href="html/manual/node168.html#objectMapEditorContextId" label="3.13.1 Creating new component names&#10;"></topic>
+          <topic href="html/manual/node173.html#objectMapEditorContextId" label="3.13.6 Merging component names&#10;"></topic>
+          <topic href="html/manual/node175.html#objectMapEditorContextId" label="3.13.8 Understanding the component hierarchy&#10;"></topic>
+          <topic href="html/manual/node193.html#objectMapEditorContextId" label="3.18.1 Object mapping&#10;"></topic>
+          <topic href="html/manual/node196.html#objectMapEditorContextId" label="3.18.2.2 The different views in the Object Mapping Editor &#10;"></topic>
+          <topic href="html/manual/node197.html#objectMapEditorContextId" label="3.18.2.3 Working with categories in the Object Mapping Editor &#10;"></topic>
+          <topic href="html/manual/node198.html#objectMapEditorContextId" label="3.18.2.4 The configuration view in the Object Mapping Editor &#10;"></topic>
+          <topic href="html/manual/node199.html#objectMapEditorContextId" label="3.18.2.5 Refreshing the Object Mapping Editor &#10;"></topic>
+          <topic href="html/manual/node200.html#objectMapEditorContextId" label="3.18.2.6 Finding components in the AUT via the Object Mapping Editor : highlight in AUT &#10;"></topic>
+          <topic href="html/manual/node201.html#objectMapEditorContextId" label="3.18.3 Deleting from the Object Mapping Editor &#10;"></topic>
+          <topic href="html/manual/node202.html#objectMapEditorContextId" label="3.18.3.1 Removing unused component names from the Object Mapping Editor &#10;"></topic>
+          <topic href="html/manual/node203.html#objectMapEditorContextId" label="3.18.4 Collecting components (technical names) from the AUT &#10;"></topic>
+          <topic href="html/manual/node207.html#objectMapEditorContextId" label="3.18.4.4 Understanding the colored dots when collecting component names in the Object Mapping Editor &#10;"></topic>
+          <topic href="html/manual/node208.html#objectMapEditorContextId" label="3.18.5 Mapping (assigning) collected technical names to component names&#10;"></topic>
+          <topic href="html/manual/node209.html#objectMapEditorContextId" label="3.18.6 Object mapping and AUT changes&#10;"></topic>
+          <topic href="html/manual/node210.html#objectMapEditorContextId" label="3.18.7 Viewing properties for a component in the Object Mapping Mode &#10;"></topic>
+          <topic href="html/manual/node245.html#objectMapEditorContextId" label="3.22.6 Object mapping preferences&#10;"></topic>
+          <topic href="html/manual/node296.html#objectMapEditorContextId" label="3.29.3 Searching for places where a component name has been used&#10;"></topic>
+          <topic href="html/manual/node306.html#objectMapEditorContextId" label="3.29.8 Using filters in the ITE &#10;"></topic>
+          <topic href="html/manual/node344.html#objectMapEditorContextId" label="3.35 Troubleshooting&#10;"></topic>
+          <topic href="html/manual/node441.html#objectMapEditorContextId" label="5.3.3 Object Mapping Editor &#10;"></topic>
      </context>
      <context id="prefPageBasicContextId">
           <description>Test Preferences</description>
-          <topic href="html/manual/node221.html#prefPageBasicContextId" label="3.22.1 Test preferences&#10;"></topic>
+          <topic href="html/manual/node239.html#prefPageBasicContextId" label="3.22.1 Test preferences&#10;"></topic>
      </context>
      <context id="guidancerCentralTestDataEditorContextId">
           <description>Central Test Data</description>
-          <topic href="html/manual/node121.html#guidancerCentralTestDataEditorContextId" label="3.12.1 Data types and entering data for Test Cases &#10;"></topic>
-          <topic href="html/manual/node124.html#guidancerCentralTestDataEditorContextId" label="3.12.4 Using the edit parameters dialog to add, edit and delete references&#10;"></topic>
-          <topic href="html/manual/node125.html#guidancerCentralTestDataEditorContextId" label="3.12.5 Using variables as data for Test Cases &#10;"></topic>
-          <topic href="html/manual/node129.html#guidancerCentralTestDataEditorContextId" label="3.12.6 Using functions as data for Test Cases &#10;"></topic>
-          <topic href="html/manual/node138.html#guidancerCentralTestDataEditorContextId" label="3.12.9 Using central data sets&#10;"></topic>
-          <topic href="html/manual/node139.html#guidancerCentralTestDataEditorContextId" label="3.12.9.1 Creating and editing central test data sets&#10;"></topic>
-          <topic href="html/manual/node140.html#guidancerCentralTestDataEditorContextId" label="3.12.9.2 Deleting central test data sets&#10;"></topic>
-          <topic href="html/manual/node141.html#guidancerCentralTestDataEditorContextId" label="3.12.9.3 Adding and modifying parameters for central test data sets&#10;"></topic>
-          <topic href="html/manual/node142.html#guidancerCentralTestDataEditorContextId" label="3.12.9.4 Entering data for central test data sets&#10;"></topic>
-          <topic href="html/manual/node143.html#guidancerCentralTestDataEditorContextId" label="3.12.9.5 Reusing central test data sets in Test Cases &#10;"></topic>
-          <topic href="html/manual/node144.html#guidancerCentralTestDataEditorContextId" label="3.12.9.6 Importing Excel files as central test data&#10;"></topic>
-          <topic href="html/manual/node148.html#guidancerCentralTestDataEditorContextId" label="3.12.11 Using the Data Sets View to enter data loops and to translate data&#10;"></topic>
-          <topic href="html/manual/node151.html#guidancerCentralTestDataEditorContextId" label="3.12.12 Special parameters: empty strings and the escape character&#10;"></topic>
-          <topic href="html/manual/node360.html#guidancerCentralTestDataEditorContextId" label="5.3.4 Central Test Data Editor &#10;"></topic>
+          <topic href="html/manual/node134.html#guidancerCentralTestDataEditorContextId" label="3.12.1 Data types and entering data for Test Cases &#10;"></topic>
+          <topic href="html/manual/node137.html#guidancerCentralTestDataEditorContextId" label="3.12.4 Using the edit parameters dialog to add, edit and delete references&#10;"></topic>
+          <topic href="html/manual/node138.html#guidancerCentralTestDataEditorContextId" label="3.12.5 Using variables as data for Test Cases &#10;"></topic>
+          <topic href="html/manual/node142.html#guidancerCentralTestDataEditorContextId" label="3.12.6 Using functions as data for Test Cases &#10;"></topic>
+          <topic href="html/manual/node151.html#guidancerCentralTestDataEditorContextId" label="3.12.9 Using central data sets&#10;"></topic>
+          <topic href="html/manual/node152.html#guidancerCentralTestDataEditorContextId" label="3.12.9.1 Creating and editing central test data sets&#10;"></topic>
+          <topic href="html/manual/node153.html#guidancerCentralTestDataEditorContextId" label="3.12.9.2 Deleting central test data sets&#10;"></topic>
+          <topic href="html/manual/node154.html#guidancerCentralTestDataEditorContextId" label="3.12.9.3 Adding and modifying parameters for central test data sets&#10;"></topic>
+          <topic href="html/manual/node155.html#guidancerCentralTestDataEditorContextId" label="3.12.9.4 Entering data for central test data sets&#10;"></topic>
+          <topic href="html/manual/node156.html#guidancerCentralTestDataEditorContextId" label="3.12.9.5 Reusing central test data sets in Test Cases &#10;"></topic>
+          <topic href="html/manual/node157.html#guidancerCentralTestDataEditorContextId" label="3.12.9.6 Importing Excel files as central test data&#10;"></topic>
+          <topic href="html/manual/node158.html#guidancerCentralTestDataEditorContextId" label="3.12.9.7 Changing the column used in a central test data set for multiple Test Cases &#10;"></topic>
+          <topic href="html/manual/node162.html#guidancerCentralTestDataEditorContextId" label="3.12.11 Using the Data Sets View to enter data loops and to translate data&#10;"></topic>
+          <topic href="html/manual/node165.html#guidancerCentralTestDataEditorContextId" label="3.12.12 Special parameters: empty strings and the escape character&#10;"></topic>
+          <topic href="html/manual/node442.html#guidancerCentralTestDataEditorContextId" label="5.3.4 Central Test Data Editor &#10;"></topic>
      </context>
      <context id="editorPrefPageContextId">
           <description>Editor Preferences</description>
-          <topic href="html/manual/node226.html#editorPrefPageContextId" label="3.22.5 Editor preferences&#10;"></topic>
+          <topic href="html/manual/node244.html#editorPrefPageContextId" label="3.22.5 Editor preferences&#10;"></topic>
      </context>
      <context id="databaseMigrationAssistantContextId">
           <description>Database Migration</description>
-          <topic href="html/manual/node61.html#databaseMigrationAssistantContextId" label="3.5.3.1 Changing the version of a reused Project &#10;"></topic>
+          <topic href="html/manual/node58.html#databaseMigrationAssistantContextId" label="3.5.3.1 Changing the version of a reused Project &#10;"></topic>
      </context>
      <context id="autWizardPageGenerateNamesPageContextId">
           <description>Name Generation in RCP</description>
-          <topic href="html/manual/node338.html#autWizardPageGenerateNamesPageContextId" label="4.2.5 Component name generation in RCP&#10;"></topic>
+          <topic href="html/manual/node375.html#autWizardPageGenerateNamesPageContextId" label="4.2.5 Component name generation in RCP&#10;"></topic>
      </context>
      <context id="supportRCPAUTStartDelayContextId">
           <description>Starting RCP AUTs</description>
-          <topic href="html/manual/node330.html#supportRCPAUTStartDelayContextId" label="4.2 Testing RCP AUT's &#10;"></topic>
+          <topic href="html/manual/node367.html#supportRCPAUTStartDelayContextId" label="4.2 Testing RCP AUT's &#10;"></topic>
      </context>
      <context id="guidancerDataSetViewContextId">
           <description>Data Sets View</description>
-          <topic href="html/manual/node121.html#guidancerDataSetViewContextId" label="3.12.1 Data types and entering data for Test Cases &#10;"></topic>
-          <topic href="html/manual/node123.html#guidancerDataSetViewContextId" label="3.12.3 Using references for data in Test Cases &#10;"></topic>
-          <topic href="html/manual/node125.html#guidancerDataSetViewContextId" label="3.12.5 Using variables as data for Test Cases &#10;"></topic>
-          <topic href="html/manual/node129.html#guidancerDataSetViewContextId" label="3.12.6 Using functions as data for Test Cases &#10;"></topic>
-          <topic href="html/manual/node135.html#guidancerDataSetViewContextId" label="3.12.7 Concatenating (combining) parameters&#10;"></topic>
-          <topic href="html/manual/node148.html#guidancerDataSetViewContextId" label="3.12.11 Using the Data Sets View to enter data loops and to translate data&#10;"></topic>
-          <topic href="html/manual/node363.html#guidancerDataSetViewContextId" label="5.4.2 The Data Sets View &#10;"></topic>
+          <topic href="html/manual/node134.html#guidancerDataSetViewContextId" label="3.12.1 Data types and entering data for Test Cases &#10;"></topic>
+          <topic href="html/manual/node136.html#guidancerDataSetViewContextId" label="3.12.3 Using references for data in Test Cases &#10;"></topic>
+          <topic href="html/manual/node138.html#guidancerDataSetViewContextId" label="3.12.5 Using variables as data for Test Cases &#10;"></topic>
+          <topic href="html/manual/node142.html#guidancerDataSetViewContextId" label="3.12.6 Using functions as data for Test Cases &#10;"></topic>
+          <topic href="html/manual/node148.html#guidancerDataSetViewContextId" label="3.12.7 Concatenating (combining) parameters&#10;"></topic>
+          <topic href="html/manual/node162.html#guidancerDataSetViewContextId" label="3.12.11 Using the Data Sets View to enter data loops and to translate data&#10;"></topic>
+          <topic href="html/manual/node445.html#guidancerDataSetViewContextId" label="5.4.2 The Data Sets View &#10;"></topic>
      </context>
      <context id="com.bredexsw.guidancer.doc.keywordSearchPageContextId">
           <description>Keyword Search</description>
-          <topic href="html/manual/node270.html#com.bredexsw.guidancer.doc.keywordSearchPageContextId" label="3.28.5.1 Searching for keywords (Test Cases , Test Steps , Test Suites , Test Jobs and categories) throughout the Project &#10;"></topic>
+          <topic href="html/manual/node299.html#com.bredexsw.guidancer.doc.keywordSearchPageContextId" label="3.29.5.1 Searching for keywords (Test Cases , Test Steps , Test Suites , Test Jobs and categories) throughout the Project &#10;"></topic>
+          <topic href="html/manual/node302.html#com.bredexsw.guidancer.doc.keywordSearchPageContextId" label="3.29.5.4 Limiting the search to the selected node&#10;"></topic>
      </context>
      <context id="testStylePropertyPageEditContextContextId">
           <description>Teststyle</description>
-          <topic href="html/manual/node250.html#testStylePropertyPageEditContextContextId" label="3.25.2.4 Configuring the contexts for guidelines&#10;"></topic>
+          <topic href="html/manual/node267.html#testStylePropertyPageEditContextContextId" label="3.25.2.4 Configuring the contexts for guidelines&#10;"></topic>
      </context>
      <context id="openProjectDialogContextId">
           <description>Opening Projects</description>
-          <topic href="html/manual/node62.html#openProjectDialogContextId" label="3.5.4 Opening Projects &#10;"></topic>
-          <topic href="html/manual/node71.html#openProjectDialogContextId" label="3.5.10 Versioning Projects &#10;"></topic>
+          <topic href="html/manual/node59.html#openProjectDialogContextId" label="3.5.4 Opening Projects &#10;"></topic>
+          <topic href="html/manual/node68.html#openProjectDialogContextId" label="3.5.10 Versioning Projects &#10;"></topic>
      </context>
      <context id="runningAutsViewContextId">
           <description>Running AUTs View</description>
-          <topic href="html/manual/node167.html#runningAutsViewContextId" label="3.15.2 Testing different AUT's in one test run&#10;"></topic>
-          <topic href="html/manual/node194.html#runningAutsViewContextId" label="3.19.1 Prerequisites for test execution&#10;"></topic>
-          <topic href="html/manual/node195.html#runningAutsViewContextId" label="3.19.2 Starting the AUT &#10;"></topic>
-          <topic href="html/manual/node196.html#runningAutsViewContextId" label="3.19.3 Starting, stopping and pausing Test Suites and Test Jobs &#10;"></topic>
-          <topic href="html/manual/node200.html#runningAutsViewContextId" label="3.19.4 Interactive test analysis&#10;"></topic>
-          <topic href="html/manual/node203.html#runningAutsViewContextId" label="3.19.5 Altering the speed of test execution&#10;"></topic>
+          <topic href="html/manual/node181.html#runningAutsViewContextId" label="3.15.2 Testing different AUT's in one test run&#10;"></topic>
+          <topic href="html/manual/node212.html#runningAutsViewContextId" label="3.19.1 Prerequisites for test execution&#10;"></topic>
+          <topic href="html/manual/node213.html#runningAutsViewContextId" label="3.19.2 Starting the AUT &#10;"></topic>
+          <topic href="html/manual/node214.html#runningAutsViewContextId" label="3.19.3 Starting, stopping and pausing Test Suites and Test Jobs &#10;"></topic>
+          <topic href="html/manual/node218.html#runningAutsViewContextId" label="3.19.4 Interactive test analysis&#10;"></topic>
+          <topic href="html/manual/node221.html#runningAutsViewContextId" label="3.19.5 Altering the speed of test execution&#10;"></topic>
           <topic href="html/manual/node72.html#runningAutsViewContextId" label="3.6 Defining applications under test (AUT's )&#10;"></topic>
-     </context>
-     <context id="prefPageEmbeddedChrononContextId">
-          <description>Chronon Preferences</description>
-          <topic href="html/manual/node230.html#prefPageEmbeddedChrononContextId" label="3.22.9 Chronon preferences&#10;"></topic>
      </context>
      <context id="guidancerComponentNameBrowserContextId">
           <description>Component Name Browser</description>
-          <topic href="html/manual/node154.html#guidancerComponentNameBrowserContextId" label="3.13.1 Creating new component names&#10;"></topic>
-          <topic href="html/manual/node158.html#guidancerComponentNameBrowserContextId" label="3.13.3 Renaming component names&#10;"></topic>
-          <topic href="html/manual/node159.html#guidancerComponentNameBrowserContextId" label="3.13.4 Merging component names&#10;"></topic>
-          <topic href="html/manual/node160.html#guidancerComponentNameBrowserContextId" label="3.13.5 Deleting unused component names&#10;"></topic>
-          <topic href="html/manual/node161.html#guidancerComponentNameBrowserContextId" label="3.13.6 Understanding the component hierarchy&#10;"></topic>
-          <topic href="html/manual/node267.html#guidancerComponentNameBrowserContextId" label="3.28.3 Searching for places where a component name has been used&#10;"></topic>
-          <topic href="html/manual/node275.html#guidancerComponentNameBrowserContextId" label="3.28.8 Using filters in Jubula &#10;"></topic>
-          <topic href="html/manual/node355.html#guidancerComponentNameBrowserContextId" label="5.2.3 The Component Name Browser   &#10;"></topic>
-          <topic href="html/manual/node90.html#guidancerComponentNameBrowserContextId" label="3.8.1 Renaming items in browsers&#10;"></topic>
-          <topic href="html/manual/node91.html#guidancerComponentNameBrowserContextId" label="3.8.2 Deleting items from browsers&#10;"></topic>
+          <topic href="html/manual/node100.html#guidancerComponentNameBrowserContextId" label="3.8.2 Deleting items from browsers&#10;"></topic>
+          <topic href="html/manual/node168.html#guidancerComponentNameBrowserContextId" label="3.13.1 Creating new component names&#10;"></topic>
+          <topic href="html/manual/node170.html#guidancerComponentNameBrowserContextId" label="3.13.3 Renaming component names&#10;"></topic>
+          <topic href="html/manual/node173.html#guidancerComponentNameBrowserContextId" label="3.13.6 Merging component names&#10;"></topic>
+          <topic href="html/manual/node174.html#guidancerComponentNameBrowserContextId" label="3.13.7 Deleting unused component names&#10;"></topic>
+          <topic href="html/manual/node175.html#guidancerComponentNameBrowserContextId" label="3.13.8 Understanding the component hierarchy&#10;"></topic>
+          <topic href="html/manual/node296.html#guidancerComponentNameBrowserContextId" label="3.29.3 Searching for places where a component name has been used&#10;"></topic>
+          <topic href="html/manual/node306.html#guidancerComponentNameBrowserContextId" label="3.29.8 Using filters in the ITE &#10;"></topic>
+          <topic href="html/manual/node437.html#guidancerComponentNameBrowserContextId" label="5.2.3 The Component Name Browser   &#10;"></topic>
+          <topic href="html/manual/node99.html#guidancerComponentNameBrowserContextId" label="3.8.1 Renaming items in browsers&#10;"></topic>
      </context>
      <context id="dialogProjectSaveAsContextId">
           <description>Saving Projects under a different name</description>
-          <topic href="html/manual/node66.html#dialogProjectSaveAsContextId" label="3.5.7 Saving a Project as a new Project &#10;"></topic>
+          <topic href="html/manual/node63.html#dialogProjectSaveAsContextId" label="3.5.7 Saving a Project as a new Project &#10;"></topic>
      </context>
      <context id="databaseConnectionConfigurationDialogContextId">
           <description>Database connection preferences</description>
-          <topic href="html/manual/node224.html#databaseConnectionConfigurationDialogContextId" label="3.22.4 Database preferences&#10;"></topic>
-          <topic href="html/manual/node231.html#databaseConnectionConfigurationDialogContextId" label="3.22.10 Importing and exporting Database preferences&#10;"></topic>
+          <topic href="html/manual/node242.html#databaseConnectionConfigurationDialogContextId" label="3.22.4 Database preferences&#10;"></topic>
+          <topic href="html/manual/node248.html#databaseConnectionConfigurationDialogContextId" label="3.22.9 Importing and exporting Database preferences&#10;"></topic>
      </context>
      <context id="projectWizardContextId">
           <description>Creating a Project</description>
-          <topic href="html/manual/node325.html#projectWizardContextId" label="4.1 Testing Swing AUT's &#10;"></topic>
-          <topic href="html/manual/node330.html#projectWizardContextId" label="4.2 Testing RCP AUT's &#10;"></topic>
-          <topic href="html/manual/node340.html#projectWizardContextId" label="4.3 Testing GEF AUT's &#10;"></topic>
-          <topic href="html/manual/node343.html#projectWizardContextId" label="4.4 Testing HTML AUT's &#10;"></topic>
-          <topic href="html/manual/node52.html#projectWizardContextId" label="3.5.1 Creating a new Project &#10;"></topic>
+          <topic href="html/manual/node362.html#projectWizardContextId" label="4.1 Testing Swing AUT's &#10;"></topic>
+          <topic href="html/manual/node367.html#projectWizardContextId" label="4.2 Testing RCP AUT's &#10;"></topic>
+          <topic href="html/manual/node377.html#projectWizardContextId" label="4.3 Testing GEF AUT's &#10;"></topic>
+          <topic href="html/manual/node380.html#projectWizardContextId" label="4.4 Testing HTML AUT's &#10;"></topic>
+          <topic href="html/manual/node383.html#projectWizardContextId" label="4.5 Testing Windows (.NET) AUT's &#10;"></topic>
+          <topic href="html/manual/node398.html#projectWizardContextId" label="4.6 Testing Windows Store App AUT's &#10;"></topic>
+          <topic href="html/manual/node49.html#projectWizardContextId" label="3.5.1 Creating a new Project &#10;"></topic>
      </context>
      <context id="runningAUTsViewContextId">
           <description>Running AUTs View</description>
-          <topic href="html/manual/node291.html#runningAUTsViewContextId" label="3.30.1 Stopping the AUT &#10;"></topic>
+          <topic href="html/manual/node357.html#runningAUTsViewContextId" label="3.36.1 Stopping the AUT &#10;"></topic>
      </context>
      <context id="dialogTestsuiteNewContextId">
           <description>New Test Suite Dialog</description>
-          <topic href="html/manual/node163.html#dialogTestsuiteNewContextId" label="3.14.1 Creating a Test Suite &#10;"></topic>
-     </context>
-     <context id="projectSettingsPageContextId">
-          <description>Project Properties</description>
-          <topic href="html/manual/node54.html#projectSettingsPageContextId" label="3.5.2.1 Editing general Project properties&#10;"></topic>
-          <topic href="html/manual/node56.html#projectSettingsPageContextId" label="3.5.2.3 Editing the languages for a Project &#10;"></topic>
+          <topic href="html/manual/node177.html#dialogTestsuiteNewContextId" label="3.14.1 Creating a Test Suite &#10;"></topic>
      </context>
      <context id="newComponentNameContextId">
           <description>New Component Name Dialog</description>
-          <topic href="html/manual/node154.html#newComponentNameContextId" label="3.13.1 Creating new component names&#10;"></topic>
+          <topic href="html/manual/node168.html#newComponentNameContextId" label="3.13.1 Creating new component names&#10;"></topic>
+     </context>
+     <context id="projectSettingsPageContextId">
+          <description>Project Properties</description>
+          <topic href="html/manual/node51.html#projectSettingsPageContextId" label="3.5.2.1 Editing general Project properties&#10;"></topic>
+          <topic href="html/manual/node53.html#projectSettingsPageContextId" label="3.5.2.3 Editing the languages for a Project &#10;"></topic>
+          <topic href="html/manual/node69.html#projectSettingsPageContextId" label="3.5.11 Tracking changes in a Project &#10;"></topic>
      </context>
      <context id="guidancerPropertiesViewContextId">
           <description>Properties View</description>
-          <topic href="html/manual/node121.html#guidancerPropertiesViewContextId" label="3.12.1 Data types and entering data for Test Cases &#10;"></topic>
-          <topic href="html/manual/node122.html#guidancerPropertiesViewContextId" label="3.12.2 Entering concrete values as data in Test Cases &#10;"></topic>
-          <topic href="html/manual/node123.html#guidancerPropertiesViewContextId" label="3.12.3 Using references for data in Test Cases &#10;"></topic>
-          <topic href="html/manual/node124.html#guidancerPropertiesViewContextId" label="3.12.4 Using the edit parameters dialog to add, edit and delete references&#10;"></topic>
-          <topic href="html/manual/node125.html#guidancerPropertiesViewContextId" label="3.12.5 Using variables as data for Test Cases &#10;"></topic>
-          <topic href="html/manual/node129.html#guidancerPropertiesViewContextId" label="3.12.6 Using functions as data for Test Cases &#10;"></topic>
-          <topic href="html/manual/node135.html#guidancerPropertiesViewContextId" label="3.12.7 Concatenating (combining) parameters&#10;"></topic>
-          <topic href="html/manual/node136.html#guidancerPropertiesViewContextId" label="3.12.8 Viewing and changing data sources for Test Cases &#10;"></topic>
-          <topic href="html/manual/node137.html#guidancerPropertiesViewContextId" label="3.12.8.1 Changing the data source for a Test Case &#10;"></topic>
-          <topic href="html/manual/node138.html#guidancerPropertiesViewContextId" label="3.12.9 Using central data sets&#10;"></topic>
-          <topic href="html/manual/node143.html#guidancerPropertiesViewContextId" label="3.12.9.5 Reusing central test data sets in Test Cases &#10;"></topic>
-          <topic href="html/manual/node144.html#guidancerPropertiesViewContextId" label="3.12.9.6 Importing Excel files as central test data&#10;"></topic>
-          <topic href="html/manual/node145.html#guidancerPropertiesViewContextId" label="3.12.10 Using an Excel file as an external data source&#10;"></topic>
-          <topic href="html/manual/node151.html#guidancerPropertiesViewContextId" label="3.12.12 Special parameters: empty strings and the escape character&#10;"></topic>
-          <topic href="html/manual/node152.html#guidancerPropertiesViewContextId" label="3.12.13 Overwriting data for Test Cases and Test Suites &#10;"></topic>
-          <topic href="html/manual/node164.html#guidancerPropertiesViewContextId" label="3.14.2 Configuring Test Suites in the Properties View &#10;"></topic>
-          <topic href="html/manual/node362.html#guidancerPropertiesViewContextId" label="5.4.1 The Properties View &#10;"></topic>
+          <topic href="html/manual/node134.html#guidancerPropertiesViewContextId" label="3.12.1 Data types and entering data for Test Cases &#10;"></topic>
+          <topic href="html/manual/node135.html#guidancerPropertiesViewContextId" label="3.12.2 Entering concrete values as data in Test Cases &#10;"></topic>
+          <topic href="html/manual/node136.html#guidancerPropertiesViewContextId" label="3.12.3 Using references for data in Test Cases &#10;"></topic>
+          <topic href="html/manual/node137.html#guidancerPropertiesViewContextId" label="3.12.4 Using the edit parameters dialog to add, edit and delete references&#10;"></topic>
+          <topic href="html/manual/node138.html#guidancerPropertiesViewContextId" label="3.12.5 Using variables as data for Test Cases &#10;"></topic>
+          <topic href="html/manual/node142.html#guidancerPropertiesViewContextId" label="3.12.6 Using functions as data for Test Cases &#10;"></topic>
+          <topic href="html/manual/node148.html#guidancerPropertiesViewContextId" label="3.12.7 Concatenating (combining) parameters&#10;"></topic>
+          <topic href="html/manual/node149.html#guidancerPropertiesViewContextId" label="3.12.8 Viewing and changing data sources for Test Cases &#10;"></topic>
+          <topic href="html/manual/node150.html#guidancerPropertiesViewContextId" label="3.12.8.1 Changing the data source for a Test Case &#10;"></topic>
+          <topic href="html/manual/node151.html#guidancerPropertiesViewContextId" label="3.12.9 Using central data sets&#10;"></topic>
+          <topic href="html/manual/node156.html#guidancerPropertiesViewContextId" label="3.12.9.5 Reusing central test data sets in Test Cases &#10;"></topic>
+          <topic href="html/manual/node157.html#guidancerPropertiesViewContextId" label="3.12.9.6 Importing Excel files as central test data&#10;"></topic>
+          <topic href="html/manual/node159.html#guidancerPropertiesViewContextId" label="3.12.10 Using an Excel file as an external data source&#10;"></topic>
+          <topic href="html/manual/node165.html#guidancerPropertiesViewContextId" label="3.12.12 Special parameters: empty strings and the escape character&#10;"></topic>
+          <topic href="html/manual/node166.html#guidancerPropertiesViewContextId" label="3.12.13 Overwriting data for Test Cases and Test Suites &#10;"></topic>
+          <topic href="html/manual/node178.html#guidancerPropertiesViewContextId" label="3.14.2 Configuring Test Suites in the Properties View &#10;"></topic>
+          <topic href="html/manual/node282.html#guidancerPropertiesViewContextId" label="3.27.4 Automatically reporting to external repositories after test runs&#10;"></topic>
+          <topic href="html/manual/node444.html#guidancerPropertiesViewContextId" label="5.4.1 The Properties View &#10;"></topic>
      </context>
      <context id="autConfigPropDialogContextId">
           <description>Adding/editing AUT configurations</description>
-          <topic href="html/manual/node222.html#autConfigPropDialogContextId" label="3.22.2 AUT Agent preferences&#10;"></topic>
-          <topic href="html/manual/node325.html#autConfigPropDialogContextId" label="4.1 Testing Swing AUT's &#10;"></topic>
-          <topic href="html/manual/node330.html#autConfigPropDialogContextId" label="4.2 Testing RCP AUT's &#10;"></topic>
-          <topic href="html/manual/node340.html#autConfigPropDialogContextId" label="4.3 Testing GEF AUT's &#10;"></topic>
-          <topic href="html/manual/node343.html#autConfigPropDialogContextId" label="4.4 Testing HTML AUT's &#10;"></topic>
-          <topic href="html/manual/node59.html#autConfigPropDialogContextId" label="3.5.2.6 Editing the AUT configurations in a Project &#10;"></topic>
+          <topic href="html/manual/node240.html#autConfigPropDialogContextId" label="3.22.2 AUT Agent preferences&#10;"></topic>
+          <topic href="html/manual/node362.html#autConfigPropDialogContextId" label="4.1 Testing Swing AUT's &#10;"></topic>
+          <topic href="html/manual/node367.html#autConfigPropDialogContextId" label="4.2 Testing RCP AUT's &#10;"></topic>
+          <topic href="html/manual/node377.html#autConfigPropDialogContextId" label="4.3 Testing GEF AUT's &#10;"></topic>
+          <topic href="html/manual/node380.html#autConfigPropDialogContextId" label="4.4 Testing HTML AUT's &#10;"></topic>
+          <topic href="html/manual/node383.html#autConfigPropDialogContextId" label="4.5 Testing Windows (.NET) AUT's &#10;"></topic>
+          <topic href="html/manual/node398.html#autConfigPropDialogContextId" label="4.6 Testing Windows Store App AUT's &#10;"></topic>
+          <topic href="html/manual/node401.html#autConfigPropDialogContextId" label="4.7 Testing iOS AUT's &#10;"></topic>
+          <topic href="html/manual/node56.html#autConfigPropDialogContextId" label="3.5.2.6 Editing the AUT configurations in a Project &#10;"></topic>
      </context>
      <context id="prefPageServerContextId">
           <description>AUT Agent Preferences</description>
-          <topic href="html/manual/node222.html#prefPageServerContextId" label="3.22.2 AUT Agent preferences&#10;"></topic>
+          <topic href="html/manual/node240.html#prefPageServerContextId" label="3.22.2 AUT Agent preferences&#10;"></topic>
      </context>
      <context id="prefPageObserveJavaContextId">
           <description>Observation Mode Preferences</description>
-          <topic href="html/manual/node228.html#prefPageObserveJavaContextId" label="3.22.7 Observation mode preferences&#10;"></topic>
+          <topic href="html/manual/node246.html#prefPageObserveJavaContextId" label="3.22.7 Observation mode preferences&#10;"></topic>
      </context>
 </contexts>

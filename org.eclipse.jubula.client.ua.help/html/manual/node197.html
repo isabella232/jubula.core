@@ -1,42 +1,57 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.19.3.1 Starting a Test Suite or a Test Job </title>
-    <meta content="3.19.3.1 Starting a Test Suite or a Test Job " name="description" />
+    <title>3.18.2.3 Working with categories in the Object Mapping Editor </title>
+    <meta content="3.18.2.3 Working with categories in the Object Mapping Editor " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION004193100000000000000"></a> <a name="4117"></a> <a name="4118"></a> <a name="4119"></a> <a name="4120"></a> <a name="4121"></a> <a name="4122"></a> <a name="4123"></a><br /><span class="arabic">3</span>.<span class="arabic">19</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Starting a Test Suite or a Test Job </h3>
-    <p> To start a Test Suite or a Test Job , you must: <ul>
-        <li>have started the AUT <a href="node195.html#startaut">3.19.2</a><li>have completed object mapping for the Test Suite or Test Suites <a href="node179.html#objectmappingtasks">3.18.1</a><li>have entered complete test data for your Test Suites , for the language you want the test to run in. </ul>
+  <body><a name="objectMapEditorContextId"></a><a name="dialogOMCategoryNewContextId"></a><h3><a name="SECTION004182300000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Working with categories in the Object Mapping Editor </a></h3><a name="TasksOMCategories"></a><p><span class="textbf">Default categories in the Object Mapping Editor </span><br /><a name="4057"></a> <a name="4058"></a> <a name="4059"></a> <a name="4060"></a> <a name="4061"></a> <a name="4062"></a> <a name="TasksOMDefaultCats"></a>The Object Mapping Editor tree view displays the following categories by default: <dl>
+        <dt><strong>Unassigned component names:</strong><dd>these are the names you have used in your Test Cases or component names that you have created <a href="node168.html#TasksCreateNewCompName">3.13.1</a>. They are unassigned because they have not yet been mapped to a technical name. <dt><strong>Unassigned technical names:</strong><dd>these are the names that you have collected from the AUT <a href="node203.html#TasksOMCollect">3.18.4</a>, but not yet assigned to component names. <dt><strong>Assigned names:</strong><dd>there are pairs of names that have been mapped to each other. Each technical name can be mapped to one or more component names. This mapping tells the ITE which actual components you are referring to in your Test Cases . </dl>
+    <p><span class="textbf">Creating categories in the Object Mapping Editor </span><br /><a name="4074"></a> <a name="4075"></a> <a name="omcats"></a>We recommend creating categories in the Object Mapping Editor to make your mapping work easier. <ul>
+        <li>You can create categories and subcategories in the Object Mapping Editor (tree view) by: <ol>
+            <li>Selecting the category you want your new category to appear in (e.g. in &quot;<i>assigned names</i>&quot;). <li>Selecting &quot;<i>create category</i>&quot; from the context-sensitive menu. <li>Entering a name for the category <table>
+                <tr>
+                  <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+                  <td><b>You can&#39;t have two categories with the same name at the same level.</b></td>
+                </tr>
+              </table>
+          </ol>
+        <li>When you are mapping, you can choose which category to map into. See the next section <a href="#mapcat">3.18.2.3</a> for details. </ul>
     <p>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>Before starting a Test Suite or a Test Job , it is a good idea to review your preferences for the test results <a href="node229.html#testresprefs">3.22.8</a>.</b></td>
+          <td><b>It is a good idea to create categories in the Object Mapping Editor .</b></td>
         </tr>
       </table>
+    <p><span class="textbf">Mapping into categories in the Object Mapping Editor </span><br /><a name="4089"></a> <a name="mapcat"></a>Once you have created categories in the Object Mapping Editor , you can choose to map technical names collected from the AUT directly into a category. This can help if you have created a category for each dialog/window, and you want to map all of the components from it into one category. <p>
+      <ol>
+        <li>When you are in the Object Mapping Mode , right-click onthe category you want to map into and select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Map components into this category</td>
+            </tr>
+          </table>
+          <br /> to make the technical names you collect from the AUT appear in this subcategory. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>If you have already mapped the technical name, the name will be shown in the Object Mapping Editor , but not moved into the category.</b></td>
+            </tr>
+          </table>
+          <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The status bar displays which category you are mapping into.</b></td>
+            </tr>
+          </table>
+      </ol>
     <p>
-      <dl>
-        <dt><strong>Starting a Test Suite :</strong><dd>You can start a Test Suite from the Test Suite Browser or from the Running AUT&#39;s View . Click on the arrow next to the &quot;<i>Start test execution</i>&quot; button and select a Test Suite to start from the list. <dt><strong>Starting a Test Job :</strong><dd>You can start a Test Job from the Test Suite Browser . Click on the arrow next to the &quot;<i>start test execution</i>&quot; button and select a Test Job to start from the list. </dl>
-    <p>
-      <br />
-      <div class="margin"><img align="BOTTOM" alt="Image startSuite" border="0" height="256" src="./startSuite.png" width="256" />&nbsp; start test</div>
-      <br />
-    <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>The amount of Test Suites or Test Jobs in the list for the &quot;<i>start test</i>&quot; button depends on your selection. In the Running AUT&#39;s View , only Test Suites for the currently selected AUT will be shown. In the Test Suite Browser , if you have selected a Test Suite or a Test Job , only the selected item will be startable. </b></td>
-        </tr>
-      </table>
-    <p> When a test is running, you can view the progress of the test in the <i>Progress View</i>. This is especially useful if the ITE and the AUT are running on different machines: you can see how much longer the test will run without having to switch to the machine the AUT is running on. <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

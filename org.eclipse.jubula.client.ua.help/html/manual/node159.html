@@ -1,32 +1,47 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.13.4 Merging component names</title>
-    <meta content="3.13.4 Merging component names" name="description" />
+    <title>3.12.10 Using an Excel file as an external data source</title>
+    <meta content="3.12.10 Using an Excel file as an external data source" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="objectMapEditorContextId"></a><a name="mergeComponentNameContextId"></a><h2><a name="SECTION004134000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">4</span> Merging component names</a></h2><a name="TasksMergeCompName"></a><p><a name="3100"></a> <a name="3101"></a><p> You can merge two or more component names to one unifying name in the Component Name Browser &nbsp; . This makes sense if you have accidentally created two component names for the same component. <p>
-      <table>
+  <body><a name="guidancerPropertiesViewContextId"></a><h2><a name="SECTION0041210000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">10</span> Using an Excel file as an external data source</a></h2><a name="TasksExcel"></a><p><a name="3098"></a> <a name="3099"></a> In the Properties View , you can add Excel files as a data source to Test Cases which contain parameters referenced from the Test Cases or Test Steps they contain. <table>
         <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>The component types must be the same to be able to merge the component names, and the component names must not have already been mapped to different technical names from the AUT . The component names must all come from the current Project , not from any of the reused Projects .</b></td>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>The addition of data via Excel is discouraged, because any problems with the data can only be found once the test is running. We recommend using the central test data sets in the ITE to manage data within the Project <a href="node151.html#TasksCentralData">3.12.9</a>.</b></td>
         </tr>
       </table>
-    <p> To merge component names: <ol>
-        <li>Select the component names you want to merge. Use <tt>&raquo;CTRL&laquo;</tt> to select multiple names. <li>From the context-menu, select: <br />
-          <table border="0" style="margin:0px;padding:0px;">
+      <ol>
+        <li>Navigate to the Properties View for the Test Case you want to add the Excel file to. <li>Enter the path to the Excel file in the <i>Excel data file</i> field. <p> The path to the Excel file can be absolute or relative (if you have specified a data files path <a href="node239.html#gdprefs">3.28</a>). <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>The Excel file must be configured in a specific way in order it to be read <a href="node160.html#TasksConfigureExcel">3.12.10.1</a></b></td>
+              </tr>
+            </table>. <p>
+        <li>If you reuse this Test Case , the Excel file you enter will be reused along with the Test Case . When you reuse the Test Case , you can choose whether you leave this file or change it for another one. <table>
             <tr>
-              <td bgcolor="#DDDDDD">Merge Component Names</td>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor. </b></td>
             </tr>
           </table>
-        <li>A dialog will appear in which you can choose which of the selected names you want to merge all the names to. Select the name you want and click &quot;<i>OK</i>&quot;. <li>The component names you selected will be merged to the name you specified throughout your test. </ol>
+        <li>A Test Case with an Excel file as data is marked with a small Excel icon in the browsers to help you find it more easily later. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>Please note that the Excel file is read at the start of the test execution. Any changes to the file after this will not affect the test data. For information on using the date function in Excel, see the section later <a href="node161.html#exceltoday">3.12.10.2</a>.</b></td>
+            </tr>
+          </table>
+      </ol>
     <p>
       <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node160.html" name="tex2html3306"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">10</span>.<span class="arabic">1</span> Configuring the Excel file</a><li><a href="node161.html" name="tex2html3307"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">10</span>.<span class="arabic">2</span> Using the =TODAY() function in Excel</a></ul>
+      <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

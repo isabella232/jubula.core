@@ -1,53 +1,33 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.11.2.2 Information about the library</title>
-    <meta content="3.11.2.2 Information about the library" name="description" />
+    <title>3.9.8 Extracting Test Cases from editors: Refactoring</title>
+    <meta content="3.9.8 Extracting Test Cases from editors: Refactoring" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION004112200000000000000"></a> <a name="LibraryInformation"></a><br /><span class="arabic">3</span>.<span class="arabic">11</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Information about the library </h3>
-    <ol>
-      <li>Jubula lets you use a highly reusable library of Test Cases to specify tests. <li>The Projects containing the Test Case libraries are located under: <br /><i>examples/testcaseLibrary</i>. <p>
-      <li>The Projects available are: <ul>
-          <li>unbound_modules_concrete <li>unbound_modules_web <li>unbound_modules_swt <li>unbound_modules_rcp </ul>
-        <p>
-      <li>These Projects contain reusable Test Cases which have been created in advance so you do not have to specify them yourself. <table>
-          <tr>
-            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-            <td><b>Refer to the chapter on Components, Actions, and Parameters (--&gt;<i>Reference Manual</i> <a href="../reference/node6.html#actparam"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>) for information on components, the actions they support, and their parameters.</b></td>
-          </tr>
-        </table>
-      <li>The library is split into categories of <i>actions</i> on components. To select something in your AUT , open the <i>select</i> category and then open the category for the type of component you want to select something from. <p>
-          <table>
+  <body><a name="guidancerSpecTestCaseEditorContextId"></a><a name="testSuiteEditorContextId"></a><h2><a name="SECTION00498000000000000000"> <span class="arabic">3</span>.<span class="arabic">9</span>.<span class="arabic">8</span> Extracting Test Cases from editors: Refactoring</a></h2><a name="TasksEditorExtract"></a><p><a name="1930"></a> <a name="1931"></a><p> You can <i>extract</i> Test Cases from other Test Cases and from Test Suites . This lets you create keywords even after you have started specifying. <p>
+      <ol>
+        <li>Open the Test Case Editor or Test Suite Editor by double-clicking on the Test Case or Test Suite you want to edit. <li>Select the Test Cases you want to extract by single-clicking them. Use <tt>&raquo;CTRL&laquo;</tt> to select more than one item. <li>Right-click in the editor and select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
             <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>The names for these Test Cases all begin with &quot;<i>ub</i>&quot;. This means that they are <i>unbound</i> - they are not in any way dependent on an AUT . </b></td>
+              <td bgcolor="#DDDDDD">Refactor</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">Extract Test Case</td>
             </tr>
-          </table>
-      <li>Each Test Case in the library contains one Test Step which corresponds to the action in the Test Case name. The component name is a placeholder, and the parameters have been referenced so that you can enter your own data. <p>
-          <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>The unbound modules Projects which correspond to your chosen Project toolkit are automatically imported into the Database and reused in your Project .</b></td>
-            </tr>
-          </table>
-        <p>
-          <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-              <td><b>We do not recommend making changes to the installed unbound module Projects , for compatibility reasons. If you have Test Cases you want to reuse in other Projects , we advise creating your own library Project .</b></td>
-            </tr>
-          </table>
-        <p>
-    </ol>
+          </table> . <li>When prompted, enter a name for the new Test Case . <li>The Test Cases you selected will be extracted into this new Test Case . <li>The extracted Test Case appears as a reused Test Case in the current editor. It is marked with a small arrow to show that it is reused, and the Test Case name is in angled brackets (<tt>&quot;&lt; &gt;&quot;</tt>) to show that it is the same as the specification name. <li>The Test Case you just created is also visible in the Test Case Browser . </ol>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>Use this feature when you realize that you are planning on reusing one or more Test Cases for the same or a similar action again. You will save yourself time in test creation and maintenance.</b></td>
+        </tr>
+      </table>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.2.5 List</title>
-    <meta content="5.2.5 List" name="description" />
+    <title>4.2.6 Menu Bar</title>
+    <meta content="4.2.6 Menu Bar" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,34 +10,30 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00625000000000000000"> <span class="arabic">5</span>.<span class="arabic">2</span>.<span class="arabic">5</span> List</a></h2><a name="6533"></a> <a name="6534"></a><p><b>Description</b>:<p><a name="CONCRETE_List"></a><p> A <i>List</i> is a component which displays a number of values. Lists allow single or multiple values to be selected. <p> Because the comma (,) is a special symbol for lists, if you want to use a comma as part of your parameter value, you have to mask it. See the section later in this document <a href="node38.html#specialchar">9</a> for more details. <p>
-      <div align="CENTER"><a name="list"></a><a name="6542"></a><table>
-          <caption align="BOTTOM"><strong>Figure 5.8:</strong> List</caption>
+    <h2><a name="SECTION00526000000000000000"> <span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">6</span> Menu Bar</a></h2><a name="7629"></a> <a name="7630"></a><p><b>Description</b>:<p><a name="CONCRETE_MenuBar"></a><p>
+      <ul>
+        <li>A <i>menu bar</i> is the component typically found at the top of an application window. <li>It typically contains menus such as &#39;&#39;File&#39;&#39;, &#39;&#39;Edit&#39;&#39;, &#39;&#39;Help&#39;&#39;, etc. </ul>
+    <p>
+      <div align="CENTER"><a name="menu"></a><a name="7639"></a><table>
+          <caption align="BOTTOM"><strong>Figure 4.10:</strong> Menu Bar</caption>
           <tr>
             <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image List" border="0" height="108" src="./List.png" width="68" /></div>
+              <div align="CENTER"><img align="BOTTOM" alt="Image Menu" border="0" height="87" src="./Menu.png" width="91" /></div>
             </td>
           </tr>
         </table>
       </div>
-    <p><span class="textbf">Mapping lists</span><p> In the Object Mapping Mode , a list to be mapped looks like this: <p>
-      <div align="CENTER"><a name="maplist"></a><a name="6551"></a><table>
-          <caption align="BOTTOM"><strong>Figure 5.9:</strong> List</caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image Maplist" border="0" height="157" src="./Maplist.png" width="87" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
+    <p> Because the forward slash (/) is a special symbol for menus, if you want to use a slash as part of your parameter value, you have to mask it. See the section later in this document <a href="node37.html#specialchar">8</a> for more details. <p><span class="textbf">Mapping menu bars</span><p> Menu bars do not need to be mapped in the Object Mapping Mode as they are automatically found during test execution. <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+          <td><b>Actions on menus are not supported in the HTML toolkit.</b></td>
+        </tr>
+      </table>
     <p>
     <p><b>Synopsis</b>: <br />
       <ul>
-        <li>List (concrete)<ul>
-          <li>Component with Text (abstract)<ul>
-            <li>Graphics Component (abstract)</ul>
-        </ul>
-      </ul>
+        <li>Menu Bar (concrete)</ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -51,272 +47,85 @@
           <td><small>Parameters</small></td>
         </tr>
         <tr>
-          <td><small>Check Existence of Entry by Value</small></td>
-          <td><small>c</small></td>
-          <td><small><p> String:Text <br /> String:Operator <br /> Boolean:Exists <br /></small></td>
-        </tr>
-        <tr>
-          <td> CONCRETE_List_VerifyContainsValue </td>
-        </tr>
-        <tr>
-          <td><small>Check Selection of Entry by Index</small></td>
-          <td><small>c</small></td>
-          <td><small><p> String:Index/Indices <br /> Boolean:Selected <br /></small></td>
-        </tr>
-        <tr>
-          <td> CONCRETE_List_VerifySelectedIndices </td>
-        </tr>
-        <tr>
-          <td><small>Check Selection of Entry by Value</small></td>
-          <td><small>c</small></td>
-          <td><small><p> String:Text <br /> String:Operator <br /> Boolean:Selected <br /></small></td>
-        </tr>
-        <tr>
-          <td> CONCRETE_List_VerifySelectedValue </td>
-        </tr>
-        <tr>
-          <td><small>Drag Entry by Index</small></td>
+          <td><small>Check Enablement of Entry by Indexpath</small></td>
           <td><small>e</small></td>
-          <td><small><p> Integer:Mouse Button <br /> String:Modifier Keys <br /> Integer:Index <br /></small></td>
+          <td><small><p> String:Indexpath <br /> Boolean:Enabled <br /></small></td>
         </tr>
         <tr>
-          <td> CONCRETE_List_DragByIndex </td>
+          <td> CONCRETE_MenuBar_VerifyEnabledByIndexpath </td>
         </tr>
         <tr>
-          <td><small>Drag Entry by Value</small></td>
+          <td><small>Check Enablement of Entry by Textpath</small></td>
           <td><small>e</small></td>
-          <td><small><p> Integer:Mouse Button <br /> String:Modifier Keys <br /> String:Text <br /> String:Operator <br /> String:Search Type <br /></small></td>
+          <td><small><p> String:Menupath <br /> String:Operator <br /> Boolean:Enabled <br /></small></td>
         </tr>
         <tr>
-          <td> CONCRETE_List_DragByValue </td>
+          <td> CONCRETE_MenuBar_VerifyEnabledByTextpath </td>
         </tr>
         <tr>
-          <td><small>Drop on Entry by Index</small></td>
+          <td><small>Check Existence of Entry by Indexpath</small></td>
           <td><small>e</small></td>
-          <td><small><p> Integer:Index <br /> Integer:Delay before drop (milliseconds) <br /></small></td>
+          <td><small><p> String:Indexpath <br /> Boolean:Exists <br /></small></td>
         </tr>
         <tr>
-          <td> CONCRETE_List_DropByIndex </td>
+          <td> CONCRETE_MenuBar_VerifyExistsByIndexpath </td>
         </tr>
         <tr>
-          <td><small>Drop on Entry by Value</small></td>
+          <td><small>Check Existence of Entry by Textpath</small></td>
           <td><small>e</small></td>
-          <td><small><p> String:Text <br /> String:Operator <br /> String:Search Type <br /> Integer:Delay before drop (milliseconds) <br /></small></td>
+          <td><small><p> String:Menupath <br /> String:Operator <br /> Boolean:Exists <br /></small></td>
         </tr>
         <tr>
-          <td> CONCRETE_List_DropByValue </td>
+          <td> CONCRETE_MenuBar_VerifyExistsByTextpath </td>
         </tr>
         <tr>
-          <td><small>Select Entry by Index/Indices</small></td>
+          <td><small>Check Selection of Entry by Indexpath</small></td>
           <td><small>e</small></td>
-          <td><small><p> String:Index/Indices <br /> String:Extend Selection <br /> Integer:Mouse Button <br /> Integer:Number of Clicks <br /></small></td>
+          <td><small><p> String:Indexpath <br /> Boolean:Selected <br /></small></td>
         </tr>
         <tr>
-          <td> CONCRETE_List_SelectIndices </td>
+          <td> CONCRETE_MenuBar_VerifySelectedByIndexpath </td>
         </tr>
         <tr>
-          <td><small>Select Entry by Value(s)</small></td>
+          <td><small>Check Selection of Entry by Textpath</small></td>
           <td><small>e</small></td>
-          <td><small><p> String:Text <br /> String:Operator <br /> String:Search Type <br /> String:Extend Selection <br /> Integer:Mouse Button <br /> Integer:Number of Clicks <br /></small></td>
+          <td><small><p> String:Menupath <br /> String:Operator <br /> Boolean:Selected <br /></small></td>
         </tr>
         <tr>
-          <td> CONCRETE_List_SelectValues </td>
-        </tr>
-      </table>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
+          <td> CONCRETE_MenuBar_VerifySelectedByTextpath </td>
         </tr>
         <tr>
-          <td colspan="4"><b>Inherited Actions</b></td>
-        </tr>
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Type</small></td>
-          <td><small>Parameters</small></td>
-          <td><small>Inherited from</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_VerifyEnabled">Check Enablement</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> Boolean:Enabled <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByIndexpath">Check Enablement of Context Menu Entry by Indexpath</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> String:Indexpath <br /> Boolean:Enabled <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByIndexpathPosition">Check Enablement of Context Menu Entry by Indexpath (Specify Position)</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Indexpath <br /> Boolean:Enabled <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByTextpath">Check Enablement of Context Menu Entry by Textpath</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> String:Textpath <br /> String:Operator <br /> Boolean:Enabled <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyEnabledByTextpathPosition">Check Enablement of Context Menu Entry by Textpath (Specify Position)</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Textpath <br /> String:Operator <br /> Boolean:Enabled <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_VerifyExists">Check Existence</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> Boolean:Exists <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByIndexpath">Check Existence of Context Menu Entry by Indexpath</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> String:Indexpath <br /> Boolean:Exists <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByIndexpathPosition">Check Existence of Context Menu Entry by Indexpath (Specify Position)</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Indexpath <br /> Boolean:Exists <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByTextpath">Check Existence of Context Menu Entry by Textpath</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> String:Textpath <br /> String:Operator <br /> Boolean:Exists <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifyExistsByTextpathPosition">Check Existence of Context Menu Entry by Textpath (Specify Position)</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Textpath <br /> String:Operator <br /> Boolean:Exists <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_VerifyFocus">Check Focus</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> Boolean:Has Focus <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_VerifyProperty">Check Property</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> String:Property Name <br /> String:Property Value <br /> String:Operator <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByIndexpath">Check Selection of Context Menu Entry by Indexpath</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> String:Indexpath <br /> Boolean:Selected <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByIndexpathPosition">Check Selection of Context Menu Entry by Indexpath (Specify Position)</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Indexpath <br /> Boolean:Selected <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByTextpath">Check Selection of Context Menu Entry by Textpath</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> String:Textpath <br /> String:Operator <br /> Boolean:Selected <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupVerifySelectedByTextpathPosition">Check Selection of Context Menu Entry by Textpath (Specify Position)</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Textpath <br /> String:Operator <br /> Boolean:Selected <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node9.html#ABSTRACT_TextVerifiable_VerifyText">Check Text</a></small></td>
-          <td><small>c</small></td>
-          <td><small><p> String:Text <br /> String:Operator <br /></small></td>
-          <td><small>Component with Text (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_Click">Click</a></small></td>
+          <td><small>Select Menu Entry by Indexpath</small></td>
           <td><small>e</small></td>
-          <td><small><p> Integer:Number of Clicks <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
+          <td><small><p> String:Indexpath <br /></small></td>
         </tr>
         <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_ClickDirect">Click in Component</a></small></td>
+          <td> CONCRETE_MenuBar_SelectMenuItemByIndexpath </td>
+        </tr>
+        <tr>
+          <td><small>Select Menu Entry by Textpath</small></td>
           <td><small>e</small></td>
-          <td><small><p> Integer:Number of Clicks <br /> Integer:Mouse Button <br /> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
+          <td><small><p> String:Menupath <br /> String:Operator <br /></small></td>
         </tr>
         <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_Drag">Drag</a></small></td>
-          <td><small>e</small></td>
-          <td><small><p> Integer:Mouse Button <br /> String:Modifier Keys <br /> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
+          <td> CONCRETE_MenuBar_SelectMenuItem </td>
         </tr>
         <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_Drop">Drop</a></small></td>
-          <td><small>e</small></td>
-          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> Integer:Delay before drop (milliseconds) <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupSelectByIndexPathNew">Select Context Menu Entry by Indexpath</a></small></td>
-          <td><small>e</small></td>
-          <td><small><p> String:Indexpath <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupSelectByIndexPathPositionNew">Select Context Menu Entry by Indexpath (Specify Position)</a></small></td>
-          <td><small>e</small></td>
-          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Indexpath <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupSelectByTextPathNew">Select Context Menu Entry by Textpath</a></small></td>
-          <td><small>e</small></td>
-          <td><small><p> String:Textpath <br /> String:Operator <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_PopupSelectByTextPathPositionNew">Select Context Menu Entry by Textpath (Specify Position)</a></small></td>
-          <td><small>e</small></td>
-          <td><small><p> Integer:x-position <br /> String:x-units <br /> Integer:y-position <br /> String:y-units <br /> String:Menupath <br /> String:Operator <br /> Integer:Mouse Button <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_ShowText">Show Text</a></small></td>
-          <td><small>e</small></td>
-          <td><small><p> String:Text <br /> Integer:Text Size (in points) <br /> Integer:Time per Word (in milliseconds) <br /> Integer:Window Width (in pixels) <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_StorePropertyValue">Store Property</a></small></td>
-          <td><small>e</small></td>
-          <td><small><p> Variable:Variable Name <br /> String:Property Name <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node9.html#ABSTRACT_TextVerifiable_ReadValue">Store Value</a></small></td>
-          <td><small>e</small></td>
-          <td><small><p> Variable:Variable Name <br /></small></td>
-          <td><small>Component with Text (abstract)</small></td>
-        </tr>
-        <tr>
-          <td><small> <a href="node11.html#ABSTRACT_Widget_WaitForComponent">Wait for Component</a></small></td>
+          <td><small>Wait for Component</small></td>
           <td><small>e</small></td>
           <td><small><p> Integer:Timeout in ms <br /> Integer:Delay after Visibility <br /></small></td>
-          <td><small>Graphics Component (abstract)</small></td>
+        </tr>
+        <tr>
+          <td> CONCRETE_MenuBar_WaitForComponent </td>
         </tr>
       </table>
     <p>
+    <p><b>Inherited Actions</b><p><i>none</i><p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44650"></a><a name="44651"></a><p><a name="CONCRETE_List_VerifyContainsValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Enablement of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="45434"></a><a name="45435"></a><p><a name="CONCRETE_MenuBar_VerifyEnabledByIndexpath"></a><p>
       <ul>
-        <li>This action tests whether a value you specify is contained in the list. </ul>
+        <li>Use this action to check the enablement status of an item in a menu bar. <li>The item to check is given using the indexpath to the item. </ul>
     <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
@@ -327,15 +136,63 @@
           <td><small>Default</small></td>
         </tr>
         <tr>
-          <td><small>Text</small></td>
+          <td><small>Indexpath</small></td>
           <td><small>String</small></td>
           <td><small>-</small></td>
           <td><small>none</small></td>
         </tr>
-      </table><a name="CONCRETE_List_VerifyContainsValue_Text"></a><p>
+      </table><a name="CONCRETE_MenuBar_VerifyEnabledByIndexpath_IndexPath"></a><p> Use this parameter to specify the menupath to the item you want to check.Make sure you give the whole menupath (start from the very beginning of the menu). <p>
       <ul>
-        <li>Use this parameter to enter the value you want to check for. <li>This parameter will be compared to entries in the List, using the Operator provided. <p>
+        <li>Enter the path to the item as an indexpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;1/2&quot;</tt> (without quotes). <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>The first node is &#39;1&#39; (without quotes)</b></td>
+            </tr>
+          </table>
+          <p>
       </ul>
+    <p>
+      <table border="1" cellpadding="3">
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Data Type</small></td>
+          <td><small>Values</small></td>
+          <td><small>Default</small></td>
+        </tr>
+        <tr>
+          <td><small>Enabled</small></td>
+          <td><small>Boolean</small></td>
+          <td><small>true <br /> false <br /></small></td>
+          <td><small>true</small></td>
+        </tr>
+      </table><a name="CONCRETE_MenuBar_VerifyEnabledByIndexpath_IsEnabled"></a><p>
+      <ul>
+        <li>Set this parameter to true if you expect the menu item to be enabled. <li>Set the parameter to false if you expect the menu item to be disabled. </ul>
+    <p>
+    <p>
+    <p>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Enablement of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="45441"></a><a name="45442"></a><p><a name="CONCRETE_MenuBar_VerifyEnabledByTextpath"></a><p>
+      <ul>
+        <li>Use this action to check whether an item in a menu is enabled. <li>The item to check is given using the textpath to the item. </ul>
+    <p>
+    <p><i>Parameters</i><br />
+      <table border="1" cellpadding="3">
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Data Type</small></td>
+          <td><small>Values</small></td>
+          <td><small>Default</small></td>
+        </tr>
+        <tr>
+          <td><small>Menupath</small></td>
+          <td><small>String</small></td>
+          <td><small>-</small></td>
+          <td><small>none</small></td>
+        </tr>
+      </table><a name="CONCRETE_MenuBar_VerifyEnabledByTextpath_MenuPath"></a><p> Use this parameter to specify the menupath to the item you want to check. Make sure you enter the whole menupath. <p>
+      <ul>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -350,7 +207,115 @@
           <td><small>equals <br /> not equals <br /> matches <br /> simple match <br /></small></td>
           <td><small>equals</small></td>
         </tr>
-      </table><a name="CONCRETE_List_VerifyContainsValue_Operator"></a><p>
+      </table><a name="CONCRETE_MenuBar_VerifyEnabledByTextpath_Operator"></a><p>
+      <ul>
+        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
+    <p>
+      <table border="1" cellpadding="3">
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Data Type</small></td>
+          <td><small>Values</small></td>
+          <td><small>Default</small></td>
+        </tr>
+        <tr>
+          <td><small>Enabled</small></td>
+          <td><small>Boolean</small></td>
+          <td><small>true <br /> false <br /></small></td>
+          <td><small>true</small></td>
+        </tr>
+      </table><a name="CONCRETE_MenuBar_VerifyEnabledByTextpath_IsEnabled"></a><p>
+      <ul>
+        <li>Set this parameter to true if you expect the menu item to be enabled. <li>Set the parameter to false if you expect the menu item to be disabled. </ul>
+    <p>
+    <p>
+    <p>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="45448"></a><a name="45449"></a><p><a name="CONCRETE_MenuBar_VerifyExistsByIndexpath"></a><p>
+      <ul>
+        <li>Use this action to check the existence of an item in a menu bar. <li>The item to check is given using the indexpath to the item. </ul>
+    <p>
+    <p><i>Parameters</i><br />
+      <table border="1" cellpadding="3">
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Data Type</small></td>
+          <td><small>Values</small></td>
+          <td><small>Default</small></td>
+        </tr>
+        <tr>
+          <td><small>Indexpath</small></td>
+          <td><small>String</small></td>
+          <td><small>-</small></td>
+          <td><small>none</small></td>
+        </tr>
+      </table><a name="CONCRETE_MenuBar_VerifyExistsByIndexpath_IndexPath"></a><p> Use this parameter to specify the menupath to the item you want to check. Make sure you give the whole menupath (start from the very beginning of the menu). <p>
+      <ul>
+        <li>Enter the path to the item as an indexpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;1/2&quot;</tt> (without quotes). <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>The first node is &#39;1&#39; (without quotes)</b></td>
+            </tr>
+          </table>
+          <p>
+      </ul>
+    <p>
+      <table border="1" cellpadding="3">
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Data Type</small></td>
+          <td><small>Values</small></td>
+          <td><small>Default</small></td>
+        </tr>
+        <tr>
+          <td><small>Exists</small></td>
+          <td><small>Boolean</small></td>
+          <td><small>true <br /> false <br /></small></td>
+          <td><small>true</small></td>
+        </tr>
+      </table><a name="CONCRETE_MenuBar_VerifyExistsByIndexpath_IsExisting"></a><p>
+      <ul>
+        <li>Set this parameter to true if you expect the menu item to exist. <li>Set the parameter to false if you expect the menu item to <span class="textit">not</span> exist. </ul>
+    <p>
+    <p>
+    <p>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Check Existence of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="45455"></a><a name="45456"></a><p><a name="CONCRETE_MenuBar_VerifyExistsByTextpath"></a><p>
+      <ul>
+        <li>Use this action to check the existence of an item in a menu bar. <li>The item to check is given using the textpath to the item. </ul>
+    <p>
+    <p><i>Parameters</i><br />
+      <table border="1" cellpadding="3">
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Data Type</small></td>
+          <td><small>Values</small></td>
+          <td><small>Default</small></td>
+        </tr>
+        <tr>
+          <td><small>Menupath</small></td>
+          <td><small>String</small></td>
+          <td><small>-</small></td>
+          <td><small>none</small></td>
+        </tr>
+      </table><a name="CONCRETE_MenuBar_VerifyExistsByTextpath_MenuPath"></a><p> Use this parameter to specify the menupath to the item you want to check. Make sure you enter the whole path. <p>
+      <ul>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
+    <p>
+      <table border="1" cellpadding="3">
+        <tr>
+          <td><small>Name</small></td>
+          <td><small>Data Type</small></td>
+          <td><small>Values</small></td>
+          <td><small>Default</small></td>
+        </tr>
+        <tr>
+          <td><small>Operator</small></td>
+          <td><small>String</small></td>
+          <td><small>equals <br /> not equals <br /> matches <br /> simple match <br /></small></td>
+          <td><small>equals</small></td>
+        </tr>
+      </table><a name="CONCRETE_MenuBar_VerifyExistsByTextpath_Operator"></a><p>
       <ul>
         <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
@@ -367,16 +332,16 @@
           <td><small>true <br /> false <br /></small></td>
           <td><small>true</small></td>
         </tr>
-      </table><a name="CONCRETE_List_VerifyContainsValue_Exists"></a><p>
+      </table><a name="CONCRETE_MenuBar_VerifyExistsByTextpath_IsExisting"></a><p>
       <ul>
-        <li>Set this parameter to <i>true</i> if you expect this entry to exist. <li>Set this parameter to <i>false</i> if you expect this entry not to exist. </ul>
+        <li>Set this parameter to true if you expect the menu item to exist. <li>Set the parameter to false if you expect the menu item to <span class="textit">not</span> exist. </ul>
     <p>
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44657"></a><a name="44658"></a><p><a name="CONCRETE_List_VerifySelectedIndices"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="45462"></a><a name="45463"></a><p><a name="CONCRETE_MenuBar_VerifySelectedByIndexpath"></a><p>
       <ul>
-        <li>Use this action to test whether an item in a list is currently selected. <li>The item you want to test is given using its index. </ul>
+        <li>Use this action to check whether an item in a menu is selected. <li>You enter the menupath to the item, and whether you expect it to be selected or not. <li>The menupath is given as an indexpath. </ul>
     <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
@@ -387,14 +352,20 @@
           <td><small>Default</small></td>
         </tr>
         <tr>
-          <td><small>Index/Indices</small></td>
+          <td><small>Indexpath</small></td>
           <td><small>String</small></td>
           <td><small>-</small></td>
           <td><small>none</small></td>
         </tr>
-      </table><a name="CONCRETE_List_VerifySelectedIndices_Index"></a><p>
+      </table><a name="CONCRETE_MenuBar_VerifySelectedByIndexpath_IndexPath"></a><p> Use this parameter to specify the menupath to the item you want to check. Make sure you give the whole menupath (start from the very beginning of the menu). <p>
       <ul>
-        <li>Enter the index for the item you want to check. <li>For example, if you want to check that the first value is selected, enter <tt>&quot;1&quot;</tt>. <li>The first item is always <tt>&quot;1&quot;</tt>. <p>
+        <li>Enter the path to the item as an indexpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;1/2&quot;</tt> (without quotes). <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>The first node is &#39;1&#39; (without quotes)</b></td>
+            </tr>
+          </table>
+          <p>
       </ul>
     <p>
       <table border="1" cellpadding="3">
@@ -410,16 +381,16 @@
           <td><small>true <br /> false <br /></small></td>
           <td><small>true</small></td>
         </tr>
-      </table><a name="CONCRETE_List_VerifySelectedIndices_IsSelected"></a><p>
+      </table><a name="CONCRETE_MenuBar_VerifySelectedByIndexpath_IsSelected"></a><p>
       <ul>
-        <li>Set this parameter to <i>true</i> if you expect this entry to be selected. <li>Set this parameter to <i>false</i> if you expect this entry not to be selected. </ul>
+        <li>Set this parameter to true if you expect the menu item to be selected. <li>Set this parameter to false if you expect the menu item <span class="textit">not</span> to be selected. </ul>
     <p>
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44664"></a><a name="44665"></a><p><a name="CONCRETE_List_VerifySelectedValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Check Selection of Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="45469"></a><a name="45470"></a><p><a name="CONCRETE_MenuBar_VerifySelectedByTextpath"></a><p>
       <ul>
-        <li>Use this action to test whether an item in a list is currently selected. <li>The item you want to test is given using its value (name). </ul>
+        <li>Use this action to check whether an item in a menu is selected. <li>You enter the menupath to the item, and whether you expect it to be selected or not. <li>The menupath is given as a textpath. </ul>
     <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
@@ -430,14 +401,14 @@
           <td><small>Default</small></td>
         </tr>
         <tr>
-          <td><small>Text</small></td>
+          <td><small>Menupath</small></td>
           <td><small>String</small></td>
           <td><small>-</small></td>
           <td><small>none</small></td>
         </tr>
-      </table><a name="CONCRETE_List_VerifySelectedValue_Text"></a><p>
+      </table><a name="CONCRETE_MenuBar_VerifySelectedByTextpath_MenuPath"></a><p> Use this parameter to specify the menupath to the item you want to check. Make sure you enter the whole path. <p>
       <ul>
-        <li>Enter the name of the item you want to check. <li>For example, if you want to check that &quot;<i>England</i>&quot; and &quot;<i>Germany</i>&quot; are selected, enter <tt>&quot;England&quot;</tt> in one Data Set and <tt>&quot;Germany&quot;</tt> in the next. </ul>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -452,7 +423,7 @@
           <td><small>equals <br /> not equals <br /> matches <br /> simple match <br /></small></td>
           <td><small>equals</small></td>
         </tr>
-      </table><a name="CONCRETE_List_VerifySelectedValue_Operator"></a><p>
+      </table><a name="CONCRETE_MenuBar_VerifySelectedByTextpath_Operator"></a><p>
       <ul>
         <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
@@ -469,17 +440,17 @@
           <td><small>true <br /> false <br /></small></td>
           <td><small>true</small></td>
         </tr>
-      </table><a name="CONCRETE_List_VerifySelectedValue_IsSelected"></a><p>
+      </table><a name="CONCRETE_MenuBar_VerifySelectedByTextpath_IsSelected"></a><p>
       <ul>
-        <li>Set this parameter to <i>true</i> if you expect this entry to be selected. <li>Set this parameter to <i>false</i> if you expect this entry not to be selected. </ul>
+        <li>Set this parameter to true if you expect the menu item to be selected. <li>Set this parameter to false if you expect the menu item <span class="textit">not</span> to be selected. </ul>
     <p>
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drag Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44671"></a><a name="44672"></a><p><a name="CONCRETE_List_DragByIndex"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Select Menu Entry by Indexpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="45476"></a><a name="45477"></a><p><a name="CONCRETE_MenuBar_SelectMenuItemByIndexpath"></a><p>
       <ul>
-        <li>This action drags the list item you specify. <li>The item is specified by its index in the list. <li>The cursor is moved over the component. <li>The mouse button you specify is held, and the item is dragged. <li>Follow this action with a <i>drop</i> action </ul>
-    <p> If you want to drag multiple items, use an action to select the items you want to drag before using the drag action. <p>
+        <li>Use this action to select an item from a menu bar. <li>The item you want to select is given using the indexpath to the item. </ul>
+    <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
         <tr>
@@ -489,75 +460,29 @@
           <td><small>Default</small></td>
         </tr>
         <tr>
-          <td><small>Mouse Button</small></td>
-          <td><small>Integer</small></td>
-          <td><small>1 <br /> 2 <br /> 3 <br /></small></td>
-          <td><small>1</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_DragByIndex_MouseButton"></a><p>
-      <ul>
-        <li>Use this parameter to select which mouse button you want to click with. <ul>
-            <li><tt>&quot;1&quot;</tt> = left mouse button <li><tt>&quot;2&quot;</tt> = middle mouse button <li><tt>&quot;3&quot;</tt> = right mouse button </ul>
-        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-              <td><b>Do not enter quotes around the mouse button numbers, enter them in plain text.</b></td>
-            </tr>
-          </table>
-      </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Modifier Keys</small></td>
+          <td><small>Indexpath</small></td>
           <td><small>String</small></td>
-          <td><small>none <br /> shift <br /> control <br /> alt <br /> meta <br /> cmd <br /> mod <br /></small></td>
-          <td><small>none</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_DragByIndex_ModifierSpecification"></a><p>
-      <ul>
-        <li>Use this parameter to specify a key or keys to be pressed at the same time as the action is being executed. <li>You can use this parameter to specify the following keys, or combinations thereof: <dl>
-            <dt><strong><tt>&quot;shift&quot;</tt></strong><dd>
-            <dt><strong><tt>&quot;control&quot;</tt></strong><dd>This is the first modifier for Windows and Linux <dt><strong><tt>&quot;cmd&quot;</tt></strong><dd>This is the first modifier for Mac <dt><strong><tt>&quot;mod&quot;</tt></strong><dd>This is the platform-independent first modifier. It corresponds to <tt>&raquo;CONTROL&laquo;</tt> for Windows and Linux, and <tt>&raquo;CMD&laquo;</tt> for Mac. <dt><strong><tt>&quot;meta&quot;</tt></strong><dd>
-            <dt><strong><tt>&quot;alt&quot;</tt></strong><dd>
-          </dl>
-        <li>You can also select &quot;<i>none</i>&quot; if you do not need a modifier. <li>You can enter multiple modifiers for a key combination by entering a space-separated list of modifiers, e.g. <tt>&quot;alt shift&quot;</tt>. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-              <td><b>Do not use quotes around the modifiers, enter them in plain text</b></td>
-            </tr>
-          </table>
-      </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Index</small></td>
-          <td><small>Integer</small></td>
           <td><small>-</small></td>
           <td><small>none</small></td>
         </tr>
-      </table><a name="CONCRETE_List_DragByIndex_IndexOnly"></a><p>
+      </table><a name="CONCRETE_MenuBar_SelectMenuItemByIndexpath_IndexPath"></a><p> Use this parameter to specify the menupath to the item you want to select.Make sure you give the whole menupath (start from the very beginning of the menu). <p>
       <ul>
-        <li>Use this parameter to enter the item you want to drag. <li>Use the index of the item to indicate which item to drag. <li>For example, if you want to drag the first item from the list, enter: <tt>&quot;1&quot;</tt>. </ul>
+        <li>Enter the path to the item as an indexpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;1/2&quot;</tt> (without quotes). <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
+              <td><b>The first node is &#39;1&#39; (without quotes)</b></td>
+            </tr>
+          </table>
+          <p>
+      </ul>
     <p>
     <p>
     <p>
     <p>
-      <br /><span class="textbf"><big class="LARGE">Drag Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44678"></a><a name="44679"></a><p><a name="CONCRETE_List_DragByValue"></a><p>
+      <br /><span class="textbf"><big class="LARGE">Select Menu Entry by Textpath</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="45483"></a><a name="45484"></a><p><a name="CONCRETE_MenuBar_SelectMenuItem"></a><p>
       <ul>
-        <li>This action drags the list item you specify. <li>The item is specified by its value in the list. <li>The cursor is moved over the component. <li>The mouse button you specify is held, and the item is dragged. <li>Follow this action with a <i>drop</i> action. </ul>
-    <p> If you want to drag multiple items, use an action to select the items you want to drag before using the drag action. <p>
+        <li>Use this action to select an item from a menu bar. <li>The item you want to select is given using the textpath to the item. </ul>
+    <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
         <tr>
@@ -567,67 +492,14 @@
           <td><small>Default</small></td>
         </tr>
         <tr>
-          <td><small>Mouse Button</small></td>
-          <td><small>Integer</small></td>
-          <td><small>1 <br /> 2 <br /> 3 <br /></small></td>
-          <td><small>1</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_DragByValue_MouseButton"></a><p>
-      <ul>
-        <li>Use this parameter to select which mouse button you want to click with. <ul>
-            <li><tt>&quot;1&quot;</tt> = left mouse button <li><tt>&quot;2&quot;</tt> = middle mouse button <li><tt>&quot;3&quot;</tt> = right mouse button </ul>
-        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-              <td><b>Do not enter quotes around the mouse button numbers, enter them in plain text.</b></td>
-            </tr>
-          </table>
-      </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Modifier Keys</small></td>
-          <td><small>String</small></td>
-          <td><small>none <br /> shift <br /> control <br /> alt <br /> meta <br /> cmd <br /> mod <br /></small></td>
-          <td><small>none</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_DragByValue_ModifierSpecification"></a><p>
-      <ul>
-        <li>Use this parameter to specify a key or keys to be pressed at the same time as the action is being executed. <li>You can use this parameter to specify the following keys, or combinations thereof: <dl>
-            <dt><strong><tt>&quot;shift&quot;</tt></strong><dd>
-            <dt><strong><tt>&quot;control&quot;</tt></strong><dd>This is the first modifier for Windows and Linux <dt><strong><tt>&quot;cmd&quot;</tt></strong><dd>This is the first modifier for Mac <dt><strong><tt>&quot;mod&quot;</tt></strong><dd>This is the platform-independent first modifier. It corresponds to <tt>&raquo;CONTROL&laquo;</tt> for Windows and Linux, and <tt>&raquo;CMD&laquo;</tt> for Mac. <dt><strong><tt>&quot;meta&quot;</tt></strong><dd>
-            <dt><strong><tt>&quot;alt&quot;</tt></strong><dd>
-          </dl>
-        <li>You can also select &quot;<i>none</i>&quot; if you do not need a modifier. <li>You can enter multiple modifiers for a key combination by entering a space-separated list of modifiers, e.g. <tt>&quot;alt shift&quot;</tt>. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-              <td><b>Do not use quotes around the modifiers, enter them in plain text</b></td>
-            </tr>
-          </table>
-      </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Text</small></td>
+          <td><small>Menupath</small></td>
           <td><small>String</small></td>
           <td><small>-</small></td>
           <td><small>none</small></td>
         </tr>
-      </table><a name="CONCRETE_List_DragByValue_Text"></a><p>
+      </table><a name="CONCRETE_MenuBar_SelectMenuItem_MenuPath"></a><p> Use this parameter to specify the menupath to the item you want to select. Make sure you enter the whole path. <p>
       <ul>
-        <li>Use this parameter to enter the text or regular expression <a href="node4.html#regex">3</a> you want to drag. <li>This parameter will be compared to entries in the list, using the operator provided. </ul>
+        <li>Enter the path to the item as a textpath. <li>Use slash <tt>&#39;/&#39;</tt> as a path separator (to separate parent nodes from child nodes). <li>For example, <tt>&quot;File/Open&quot;</tt> or <tt>&quot;Category/Horror&quot;</tt> (without quotes). <li>Either make sure that your path is written exactly as it appears in the interface, or use a regular expression to match the text. <li>Each segment of the path will be used to find a corresponding node, using the operator provided. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -642,33 +514,16 @@
           <td><small>equals <br /> not equals <br /> matches <br /> simple match <br /></small></td>
           <td><small>equals</small></td>
         </tr>
-      </table><a name="CONCRETE_List_DragByValue_Operator"></a><p>
+      </table><a name="CONCRETE_MenuBar_SelectMenuItem_Operator"></a><p>
       <ul>
         <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
     <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Search Type</small></td>
-          <td><small>String</small></td>
-          <td><small>absolute <br /> relative <br /></small></td>
-          <td><small>absolute</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_DragByValue_SearchType"></a><p>
+    <p>
+    <p>
+    <p>
+      <br /><span class="textbf"><big class="LARGE">Wait for Component</big></span> <tt><small class="FOOTNOTESIZE">(Menu Bar)</small></tt> <a name="45490"></a><a name="45491"></a><p><a name="CONCRETE_MenuBar_WaitForComponent"></a><p>
       <ul>
-        <li>The <i>search type</i> parameter has two options. <li>&quot;<i>absolute</i>&quot; begins searching for the value at the first entry. <li>Select &quot;<i>relative</i>&quot; to begin the search for the value after the currently selected entry. This allows you to search for the next occurence of a value, ignoring all elements before and including the selected entry. </ul>
-    <p>
-    <p>
-    <p>
-    <p>
-      <br /><span class="textbf"><big class="LARGE">Drop on Entry by Index</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44685"></a><a name="44686"></a><p><a name="CONCRETE_List_DropByIndex"></a><p>
-      <ul>
-        <li>This action drops a list item. <li>The item on which to drop the dragged item is specified by its index in the list. <li>The cursor is moved over the component. <li>The mouse button is let loose, and the item is dropped. <li>Precede this action with a <i>drag</i> action </ul>
+        <li>The wait for menu action lets you wait until the menu is present/loaded before continuing with the next Test Step . </ul>
     <p>
     <p><i>Parameters</i><br />
       <table border="1" cellpadding="3">
@@ -679,14 +534,14 @@
           <td><small>Default</small></td>
         </tr>
         <tr>
-          <td><small>Index</small></td>
+          <td><small>Timeout in ms</small></td>
           <td><small>Integer</small></td>
           <td><small>-</small></td>
-          <td><small>none</small></td>
+          <td><small>1000</small></td>
         </tr>
-      </table><a name="CONCRETE_List_DropByIndex_IndexOnly"></a><p>
+      </table><a name="CONCRETE_MenuBar_WaitForComponent_Timeout"></a><p>
       <ul>
-        <li>Use this parameter to enter the item you want to drag. <li>Use the index of the item to indicate which item to drag. <li>For example, if you want to drag the first item from the list, enter: <tt>&quot;1&quot;</tt>. </ul>
+        <li>Enter the amount of time (in milliseconds) to wait before the Test Step fails. <li>If the menu does not appear in this time frame, the Test Step is unsuccessful. </ul>
     <p>
       <table border="1" cellpadding="3">
         <tr>
@@ -696,312 +551,18 @@
           <td><small>Default</small></td>
         </tr>
         <tr>
-          <td><small>Delay before drop (milliseconds)</small></td>
+          <td><small>Delay after Visibility</small></td>
           <td><small>Integer</small></td>
           <td><small>-</small></td>
-          <td><small>100</small></td>
+          <td><small>200</small></td>
         </tr>
-      </table><a name="CONCRETE_List_DropByIndex_DelayBeforeDrop"></a><p>
+      </table><a name="CONCRETE_MenuBar_WaitForComponent_DelayAfterVisibility"></a><p>
       <ul>
-        <li>Use this parameter to wait before dropping the item you have dragged. <li>This can be useful to give the user interface time to scroll etc. <li>Give the time to delay in milliseconds. </ul>
-    <p>
-    <p>
-    <p>
-    <p>
-      <br /><span class="textbf"><big class="LARGE">Drop on Entry by Value</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44692"></a><a name="44693"></a><p><a name="CONCRETE_List_DropByValue"></a><p>
-      <ul>
-        <li>This action drops a list item. <li>The item on which to drop the dragged item is specified by its value in the list. <li>The cursor is moved over the component. <li>The mouse button is let loose, and the item is dropped. <li>Precede this action with a <i>drag</i> action </ul>
-    <p>
-    <p><i>Parameters</i><br />
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Text</small></td>
-          <td><small>String</small></td>
-          <td><small>-</small></td>
-          <td><small>none</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_DropByValue_Text"></a><p>
-      <ul>
-        <li>Use this parameter to enter the text or regular expression <a href="node4.html#regex">3</a> of theitem you want to drop onto. <li>This parameter will be compared to entries in the list, using the operator provided. </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Operator</small></td>
-          <td><small>String</small></td>
-          <td><small>equals <br /> not equals <br /> matches <br /> simple match <br /></small></td>
-          <td><small>equals</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_DropByValue_Operator"></a><p>
-      <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Search Type</small></td>
-          <td><small>String</small></td>
-          <td><small>absolute <br /> relative <br /></small></td>
-          <td><small>absolute</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_DropByValue_SearchType"></a><p>
-      <ul>
-        <li>The <i>search type</i> parameter has two options. <li>&quot;<i>absolute</i>&quot; begins searching for the value at the first entry. <li>Select &quot;<i>relative</i>&quot; to begin the search for the value after the currently selected entry. This allows you to search for the next occurence of a value, ignoring all elements before and including the selected entry. </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Delay before drop (milliseconds)</small></td>
-          <td><small>Integer</small></td>
-          <td><small>-</small></td>
-          <td><small>100</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_DropByValue_DelayBeforeDrop"></a><p>
-      <ul>
-        <li>Use this parameter to wait before dropping the item you have dragged. <li>This can be useful to give the user interface time to scroll etc. <li>Give the time to delay in milliseconds. </ul>
-    <p>
-    <p>
-    <p>
-    <p>
-      <br /><span class="textbf"><big class="LARGE">Select Entry by Index/Indices</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44699"></a><a name="44700"></a><p><a name="CONCRETE_List_SelectIndices"></a><p>
-      <ul>
-        <li>Use this action to select an item or items from the list. <li>Enter the items you want to select using their indices. <li>Jubula realizes this action by: <ul>
-            <li>Pressing and holding <tt>&raquo;CTRL&laquo;</tt><li>Clicking on the indicated items <li>Releasing <tt>&raquo;CTRL&laquo;</tt></ul>
-      </ul>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-          <td><b>This action is unsupported for the HTML toolkit</b></td>
-        </tr>
-      </table>
-    <p>
-    <p><i>Parameters</i><br />
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Index/Indices</small></td>
-          <td><small>String</small></td>
-          <td><small>-</small></td>
-          <td><small>none</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_SelectIndices_Index"></a><p>
-      <ul>
-        <li>Use this parameter to enter the item or items you want to select. <li>Use numbers separated by commas to indicate which items you want to select. Do not enter a space between list items. <li>For example, if you want to select the first, fourth and sixth items from the list, enter: <tt>&quot;1,4,6&quot;</tt>. </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Extend Selection</small></td>
-          <td><small>String</small></td>
-          <td><small>yes <br /> no <br /></small></td>
-          <td><small>no</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_SelectIndices_ExtendSelection"></a><p>
-      <ul>
-        <li>The <i>Extend Selection</i> parameter has two possible values. <li>&quot;<i>yes</i>&quot; indicates the chosen item will be added to the current selection. <li>Select &quot;<i>no</i>&quot; to begin a new selection with the chosen item. </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Mouse Button</small></td>
-          <td><small>Integer</small></td>
-          <td><small>1 <br /> 2 <br /> 3 <br /></small></td>
-          <td><small>1</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_SelectIndices_MouseButton"></a><p>
-      <ul>
-        <li>Use this parameter to select which mouse button you want to click with. <ul>
-            <li><tt>&quot;1&quot;</tt> = left mouse button <li><tt>&quot;2&quot;</tt> = middle mouse button <li><tt>&quot;3&quot;</tt> = right mouse button </ul>
-        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-              <td><b>Do not enter quotes around the mouse button numbers, enter them in plain text.</b></td>
-            </tr>
-          </table>
-      </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Number of Clicks</small></td>
-          <td><small>Integer</small></td>
-          <td><small>-</small></td>
-          <td><small>1</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_SelectIndices_ClickCount"></a><p>
-      <ul>
-        <li>Enter the amount of clicks that should be performed on the component or item. <li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item. <li>Entering <tt>&quot;1&quot;</tt> (without quotes) will single-click on the component or item. <li>Entering <tt>&quot;2&quot;</tt> (without quotes) will double-click on the component or item. </ul>
-    <p>
-    <p>
-    <p>
-    <p>
-      <br /><span class="textbf"><big class="LARGE">Select Entry by Value(s)</big></span> <tt><small class="FOOTNOTESIZE">(List)</small></tt> <a name="44706"></a><a name="44707"></a><p><a name="CONCRETE_List_SelectValues"></a><p>
-      <ul>
-        <li>Use this action to select an item or items from the list. <li>Enter the items you want to select using their names (values). <li>Jubula realizes this action by: <ul>
-            <li>Pressing and holding <tt>&raquo;CTRL&laquo;</tt><li>Clicking on the indicated items <li>Releasing <tt>&raquo;CTRL&laquo;</tt></ul>
-      </ul>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-          <td><b>This action is unsupported for the HTML toolkit</b></td>
-        </tr>
-      </table>
-    <p>
-    <p><i>Parameters</i><br />
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Text</small></td>
-          <td><small>String</small></td>
-          <td><small>-</small></td>
-          <td><small>none</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_SelectValues_Text"></a><p>
-      <ul>
-        <li>Use this parameter to enter the text or regular expression <a href="node4.html#regex">3</a> you want to select. <li>If you want to select multiple values, separate the values with a comma <tt>&#39;,&#39;</tt>. Do not enter a space between list items. <li>This parameter will be compared to entries in the List, using the Operator provided. </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Operator</small></td>
-          <td><small>String</small></td>
-          <td><small>equals <br /> not equals <br /> matches <br /> simple match <br /></small></td>
-          <td><small>equals</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_SelectValues_Operator"></a><p>
-      <ul>
-        <li>The <i>operator</i> parameter has four possible values. <li>&quot;<i>not equals</i>&quot; looks for something that does <span class="textit">not exactly</span> match. <li>&quot;<i>equals</i>&quot; looks for an <span class="textit">exact</span> match. <li>Select &quot;<i>simple match</i>&quot; to use a simple match expression <a href="node4.html#regex">3</a>. <li>Select &quot;<i>matches</i>&quot; to use a regular expression <a href="node4.html#regex">3</a>. <li>Regardless of the operator used: If a selection action is being used and there is more than one match, then the first item found will be chosen. </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Search Type</small></td>
-          <td><small>String</small></td>
-          <td><small>absolute <br /> relative <br /></small></td>
-          <td><small>absolute</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_SelectValues_SearchType"></a><p>
-      <ul>
-        <li>The <i>search type</i> parameter has two options. <li>&quot;<i>absolute</i>&quot; begins searching for the value at the first entry. <li>Select &quot;<i>relative</i>&quot; to begin the search for the value after the currently selected entry. This allows you to search for the next occurence of a value, ignoring all elements before and including the selected entry. </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Extend Selection</small></td>
-          <td><small>String</small></td>
-          <td><small>yes <br /> no <br /></small></td>
-          <td><small>no</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_SelectValues_ExtendSelection"></a><p>
-      <ul>
-        <li>The <i>Extend Selection</i> parameter has two possible values. <li>&quot;<i>yes</i>&quot; indicates the chosen item will be added to the current selection. <li>Select &quot;<i>no</i>&quot; to begin a new selection with the chosen item. </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Mouse Button</small></td>
-          <td><small>Integer</small></td>
-          <td><small>1 <br /> 2 <br /> 3 <br /></small></td>
-          <td><small>1</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_SelectValues_MouseButton"></a><p>
-      <ul>
-        <li>Use this parameter to select which mouse button you want to click with. <ul>
-            <li><tt>&quot;1&quot;</tt> = left mouse button <li><tt>&quot;2&quot;</tt> = middle mouse button <li><tt>&quot;3&quot;</tt> = right mouse button </ul>
-        <li>The mouse button you use to click with can also have an effect on what happens. <li>The button to click will depend on your AUT and what the click should achieve. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-              <td><b>Do not enter quotes around the mouse button numbers, enter them in plain text.</b></td>
-            </tr>
-          </table>
-      </ul>
-    <p>
-      <table border="1" cellpadding="3">
-        <tr>
-          <td><small>Name</small></td>
-          <td><small>Data Type</small></td>
-          <td><small>Values</small></td>
-          <td><small>Default</small></td>
-        </tr>
-        <tr>
-          <td><small>Number of Clicks</small></td>
-          <td><small>Integer</small></td>
-          <td><small>-</small></td>
-          <td><small>1</small></td>
-        </tr>
-      </table><a name="CONCRETE_List_SelectValues_ClickCount"></a><p>
-      <ul>
-        <li>Enter the amount of clicks that should be performed on the component or item. <li>If you enter <tt>&quot;0&quot;</tt>, the mouse pointer will just be moved over the specified component or item. <li>Entering <tt>&quot;1&quot;</tt> (without quotes) will single-click on the component or item. <li>Entering <tt>&quot;2&quot;</tt> (without quotes) will double-click on the component or item. </ul>
+        <li>Sometimes a widget is not ready to receive events (mouse clicks, key presses) until a few moments after becoming visible. <li>Use this parameter to set the amount of time (in milliseconds) to wait once the widget has appeared before continuing. </ul>
     <p>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.29.7 My Test Suite failed</title>
-    <meta content="3.29.7 My Test Suite failed" name="description" />
+    <title>3.27.4.3 Test execution with reporting to external repositories</title>
+    <meta content="3.27.4.3 Test execution with reporting to external repositories" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,32 +10,41 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION004297000000000000000"></a> <a name="troublefailed"></a><br /><span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">7</span> My Test Suite failed </h2>
-    <p><a name="5661"></a> If your test fails, you can find exact details about the problem by looking at the Test Result View <a href="node205.html#testresultview">3.26</a>. A screenshot of the AUT is automatically taken when an error occurs and can be seen in the Image View . <p> For other problems with test execution, check: <p>
-      <ul>
-        <li>That the AUT is in focus and is visible. You can automatically activate the AUT in the AUT properties <a href="node74.html#configuringaut">3.7.1</a> or you can use a Test Case to activate the AUT . You can also set your preferences to minimize Jubula when test execution begins <a href="node221.html#gdprefs">3.27</a>. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-              <td><b>Bear in mind that different platforms have different focus behavior. You may need to specifically bring the AUT into focus by clicking into it as a part of the test.</b></td>
-            </tr>
-          </table>
-        <li>That the AUT is ready when the test begins. To ensure this, you can insert a Test Case at the beginning of each test which waits for the window or for the first component you want to test. This is especially important when you are running tests from the command line with the Test Executor. <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>Waiting for a window to appear is generally a good idea whenever a new window or dialog is opened during the test. Waiting for the window or the component you want to test will make sure that your tests run even under different timing conditions. </b></td>
-              </tr>
-            </table>
-        <li>Make sure that the Test Cases and Test Steps are in the right order. <li>Ensure that the data you have entered is correct. <li>Check your object mapping configuration <a href="node184.html#TasksOMConfiguration">3.18.2.4</a>. We recommend that you set the recognition to &quot;<i>standard</i>&quot;. <li>If the AUT is an RCP application, make sure that the keyboard layout is correct <a href="node74.html#configuringaut">3.7.1</a>. Otherwise, make sure you have the current version of the RCP Remote Control plugin (start your application with -clean to be sure). <li>Check that the Test Steps preceding the failed Test Step were successful by looking at the state of the application. </ul>
+    <h3><a name="SECTION004274300000000000000"> <span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">4</span>.<span class="arabic">3</span> Test execution with reporting to external repositories</a></h3> If your Project is joined to an external repository <a href="node283.html#TasksALMConfigureProject">3.27.4.1</a>, and you have added task IDs to one or more items in your Project <a href="node284.html#TasksALMAddTask">3.27.4.2</a>, then you will be able to report the test results to the repository after the test has run. The test run can be either via the ITE or via the command line <i>testexec</i>. <p>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>To help you analyze the reasons for Test Suite failure, you can use the <i>pause on error</i> option <a href="node200.html#TasksPauseOnError">3.19.4</a>.</b></td>
+          <td><b>If you run a test via the ITE which should report to ALM systems, the reporting is triggered automatically once the test has run. If the reporting for the test run encounters an error, then you will be able to manually trigger the reporting later <a href="#TasksALMReportTestExec">3.27.4.3</a>. To report to ALM systems after running a test via testexec, you must also manually trigger the recording <a href="#TasksALMReportTestExec">3.27.4.3</a>.</b></td>
         </tr>
       </table>
+    <p> When reporting is triggered, the following happens: <ul>
+        <li>A connection is made to ALM system configured in the Project properties. <li>The test results are then analyzed to see if any comments need to be added in the external repository (commenting can be (de)activated for failed nodes or successful nodes in the Project properties, for example). <li>If there are comments to be added, the ITE writes one comment per task, as defined in the Project properties. If multiple items in one test run reference the same task ID, or if an item with a task ID is executed multiple times in the same test run, then each test status and result link is written, but all in one comment. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>Tests that have a status other than <i>passed</i> (e.g. failed, stopped, still testing) are considered as <i>failed</i>.</b></td>
+            </tr>
+          </table>
+        <li>You can see the status of the ALM reporting in the console view. <li>Once a comment has been written, you can see the comment in the external repository. From there, you can click on the link provided to open the test result report in the Dashboard that you specified for your Project . The Dashboard must be already running for this action to succeed. The test results must also still be present in the Database <a href="node226.html#TasksReopenTestResult">3.20.3.1</a>. <li>The test result report is opened at the node which referenced the current task ID. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The integration for writing to external repositories can be used with Bugzilla 3.6+, JIRA 5.0+ and HP ALM 11+. Other repositories for which there are Mylyn connectors may also work, but these have not been tested.</b></td>
+            </tr>
+          </table>
+      </ul>
+    <p><span class="textbf">Reporting to ALM repositories after a test started via testexec</span> <a name="TasksALMReportTestExec"></a>For tests started via testexec, the reporting does not happen automatically. Instead, you must choose to report to ALM from the Test Result Summary View . <p>
+      <ol>
+        <li>In a Project that is configured to report to an ALM repository, when a test has run via testexec, you can open the Reporting Perspective and locate the test run in the Test Result Summary View . <li>In the <i>ALM Report Pending</i> column, you will see whether there are any reports pending. This is based on various factors: <ol>
+            <li>ALM Reporting must have been configured for the Project . If no ALM is configured for the Project , then the status in the <i>ALM Report Pending</i> column will be <i>false</i>. <li>The test run must have been designated as relevant. Non-relevant tests show the status <i>false</i> in the <i>ALM Report Pending</i> column. </ol>
+        <li>Select any test runs whose results you want to report to ALM, and click on the &quot;<i>Report to ALM</i>&quot; button on the toolbar. You can also select this option from the context-sensitive menu. If you select multiple test runs, the reporting will take place sequentially for each test run. <li>When you select this option, the reporting will be triggered as described above. If the reporting is successful, the status in the <i>ALM Report Pending</i> column changes from <i>true</i> to <i>false</i>. If an error occurs, then the status remains as <i>true</i>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>If you do not want to report the test results to an ALM tool, you can switch the status of the <i>ALM Report Pending</i> column from <i>true</i> to <i>false</i> by selecting the option to cancel pending reports from the context menu. Toggling the relevance of the test run to <i>false</i> will also set the <i>ALM Report Pending status to <i>false</i>, but this will also mean that the test results are not exported and not considered for BIRT reports <a href="node247.html#testresprefs">3.22.8</a>.</i></b></td>
+            </tr>
+          </table>
+      </ol>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

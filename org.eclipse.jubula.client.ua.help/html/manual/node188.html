@@ -1,39 +1,36 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.18.3.1 Removing unused component names from the Object Mapping Editor </title>
-    <meta content="3.18.3.1 Removing unused component names from the Object Mapping Editor " name="description" />
+    <title>3.16.2 Editing Test Steps </title>
+    <meta content="3.16.2 Editing Test Steps " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="objectMapEditorContextId"></a><h3><a name="SECTION004183100000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Removing unused component names from the Object Mapping Editor </a></h3><a name="TasksOMCleanup"></a><a name="3861"></a> <a name="3862"></a><p> Over time, your Project will change, and these changes may mean that component names you had previously used in Test Suites , then mapped to technical names via the Object Mapping, are no longer used. This results in object mappings in which the component name is no longer used in the test for this AUT . Such component names can be recognized by the fact that <i>Show corresponding specification</i> in the Object Mapping Editor <a href="node267.html#TasksSearchCompNameCorresponding">3.28.3</a> returns no search results in the search result view (i.e. the component name is no longer used in the test), or if the search result view shows only Test Cases that are used in other AUT&#39;s . If you perform <i>Show where used</i> in the Component Name Browser &nbsp; <a href="node267.html#TasksSearchCompNameBrowserShowWhereUsed">3.28.3</a> and the only search result is a mapping, then this is also a component name that is no longer used in the test. <p> You can delete any component names from the Object Mapping Editor that are unused in the Project for this AUT : <p>
-      <ol>
-        <li>In the Object Mapping Editor , select: <br />
+  <body>
+    <h2><a name="SECTION004162000000000000000"></a> <a name="editingsteps"></a><br /><span class="arabic">3</span>.<span class="arabic">16</span>.<span class="arabic">2</span> Editing Test Steps </h2>
+    <p><a name="3883"></a> <a name="3884"></a><ol>
+        <li>Open the Test Case Editor by double-clicking the Test Case you want to edit in the Test Case Browser . <li>Single-click the Test Step you want to edit. <li>In the Properties View , you can: <ul>
+            <li>edit the Test Step name <li>add a comment <li>edit the component, component name and action for the Test Step <li>edit the parameter values for the Test Step <a href="node133.html#WorkingWithData">3.12</a></ul>
+        <li>You can also move the Test Step within the Test Case using drag-and-drop. <li>To delete the Test Step , select: <br />
           <table border="0" style="margin:0px;padding:0px;">
             <tr>
-              <td bgcolor="#DDDDDD">Cleanup</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">unused component names</td>
+              <td bgcolor="#DDDDDD">Delete</td>
             </tr>
           </table>
-          <br /> from the context-sensitive menu. <li>The cleanup operation starts, and a progress dialog is shown while unused names are being searched for. Depending on the size of your Project , this search may take some time. <li>If the Object Mapping Editor contains component names that are not used in any of the Test Suites for this AUT (either component names that are already mapped, or are still unassigned), then they are shown in a <i>Delete unused component names</i> dialog. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>If no component names are found, then you will see a message informing you of this.</b></td>
-            </tr>
-          </table>
-        <li>In the dialog to delete unused component names, you can see which component names have been identified for deletion. You can deselect individual component names to opt not to delete them. Once you have specified which component names should be deleted, click &quot;<i>OK</i>&quot;. <li>The component names you specify will be deleted from the Object Mapping Editor . Save the editor to save the changes. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-              <td><b>Removing component names from the Object Mapping Editor does not mean that the component names are deleted from the Project . However, if the deletion from the object map means that the component name is now used nowhere in the Project , then it will appear under the <i>Unused Component Names</i> category in the Component Name Browser &nbsp; and can be deleted from the whole Project <a href="node160.html#TasksDeleteCompName">3.13.5</a></b></td>
-            </tr>
-          </table>. </ol>
+          <br /> from the context-sensitive menu. </ol>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>Select the component or action in the Properties View and press <tt>&raquo;F1&laquo;</tt> to see context-sensitive help about this component or action from the reference manual.</b></td>
+        </tr>
+      </table>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

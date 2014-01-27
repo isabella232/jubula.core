@@ -1,30 +1,67 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.9.6 Importing Excel files as central test data</title>
-    <meta content="3.12.9.6 Importing Excel files as central test data" name="description" />
+    <title>3.12.6.2 Pre-defined functions</title>
+    <meta content="3.12.6.2 Pre-defined functions" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerCentralTestDataEditorContextId"></a><a name="guidancerPropertiesViewContextId"></a><h3><a name="SECTION004129600000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">9</span>.<span class="arabic">6</span> Importing Excel files as central test data</a></h3><a name="TasksCentralDataImport"></a><p> If you have existing Excel files that you want to convert into central test data, then you can import them via the Central Test Data Editor : <p>
-      <ol>
-        <li>In the Central Test Data Editor , right-click and select <table border="0" style="margin:0px;padding:0px;">
-            <tr>
-              <td bgcolor="#DDDDDD">Import</td>
-            </tr>
-          </table> from the context-sensitive menu. <li>In the dialog that appears, browse to the directory containing your Excel file(s). <li>Either select the whole directory (if it contains all Excel files) on the left, or select the individual Excel files on the right. <li>Click &quot;<i>Finish</i>&quot; to start the import. <table>
+  <body>
+    <h3><a name="SECTION004126200000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">6</span>.<span class="arabic">2</span> Pre-defined functions</a></h3> The following functions are available directly in the ITE : <p><span class="textbf">Mathematical functions</span><br /> The following functions give their results as decimal numbers, e.g. 1.0, 1.2 etc. <dl>
+        <dt><strong>add</strong><dd>Adds 0 or more numbers to 0, e.g.: <tt>&quot;?add(1,2)&quot;</tt>. <dt><strong>sub</strong><dd>Subtracts the second number from the first: <tt>&quot;?sub(3,2)&quot;</tt>. <br /> This function only accepts two numbers. <dt><strong>mult</strong><dd>Multiplies 0 or more numbers by 1 e.g.: <tt>&quot;?mult(2,4)&quot;</tt>. <dt><strong>div</strong><dd>Divides the first number by the second: <tt>&quot;?div(2,1)&quot;</tt>. <br /> This function only accepts two numbers. <dt><strong>trunc</strong><dd>Takes two arguments, the decimal to be truncated and the precision (as an integer) to truncate the decimal to. Use <tt>&quot;0&quot;</tt> to cut off the number to no decimal places (i.e. to receive a plain integer), and use <tt>&quot;1&quot;</tt> to cut off the decimal to one decimal place etc: <tt>&quot;?trunc(2.396,0)&quot;</tt> gives <tt>&quot;2&quot;</tt> and <tt>&quot;?trunc(2.789,1) gives <tt>&quot;2.7&quot;</tt>&quot;</tt>. <dt><strong>round</strong><dd>Takes two arguments, the decimal to be rounded and the precision (as an integer) to round to. This function uses <i>half-up</i> rounding to round the number so that if the final decimal place after rounding is 5 or higher, the final number will be incremented by 1 e.g.: <tt>&quot;?round(2.56,1)&quot;</tt> gives <tt>&quot;2.6&quot;</tt>. If the final number after rounding is 4 or less, there is no incrementation, eg. <tt>&quot;?round(2.43,1)&quot;</tt> gives <tt>&quot;2.4&quot;</tt>. <table>
             <tr>
               <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-              <td><b>Your Excel files must contain the correct amount and type of Project languages.</b></td>
+              <td><b>It is currently only possible to use numbers formatted with the decimal mark <i>period</i> or <i>fullstop</i> (<tt>&quot;.&quot;</tt>). Thousands separators may not be used. For example, <tt>&quot;1.5&quot;</tt> is accepted, but <tt>&quot;1,5&quot;</tt> is not. <tt>&quot;1000&quot;</tt> can be entered but <tt>&quot;1,000&quot;</tt> cannot. Entering <tt>&quot;1.000&quot;</tt> is equivalent to entering <tt>&quot;1&quot;</tt>.</b></td>
             </tr>
           </table>
-      </ol>
+      </dl>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>Use single quotes around negative numbers, e.g. &#39;-0.5&#39;.</b></td>
+        </tr>
+      </table>
+    <p><span class="textbf">Date functions</span><br />
+      <dl>
+        <dt><strong>now</strong><dd>Saves the current date in an internal format that can be used as a basis for the formatDate and modifyDate functions. This function takes no arguments: <tt>&quot;?now()&quot;</tt>. <dt><strong>formatDate</strong><dd>Puts a date into a specific format. The date to be formatted is entered as the first argument, followed by the format string e.g. <tt>&quot;?formatDate(?now(), dd-MM-yyyy)&quot;</tt>. The formats that can used here are the formats from the SimpleDateFormat class in Java. <dt><strong>parseDate</strong><dd>Reads a value that is a date and parses it into an internal format based on the format string given (i.e. how the date should be understood). The first argument is the date, and the second is the format string <tt>&quot;?parseDate(2011.06.25,yyyy.MM.dd)&quot;</tt>. This function should be used when reading and working with dates shown in the AUT . <dt><strong>modifyDate</strong><dd>This function can add days (d), months (M), and years (y) to a given date. The date must first be parsed (i.e. using parseDate) so that the correct internal format is used. This function takes two arguments: the first is the date to modify, and the second is the modification to perform, e.g. <tt>&quot;?modifyDate(?now(),1d)&quot;</tt>. Additions are entered as positive integers (but without a plus sign, e.g. 1d, 1M, 1y) and subtractions are entered as negative integers, e.g. -1d, -1M, -1y. </dl>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>If you want to use the result of a date function as a part of your test data (i.e. to enter or check), then you will most likely need to use formatDate on any date modifications you have performed.</b></td>
+        </tr>
+      </table>
+    <p><span class="textbf">Test functions</span><br />
+      <dl>
+        <dt><strong>getNodeAttribute</strong><dd>Reads the value on the node (e.g. Test Case , Test Step ) on which this function is resolved, and uses this as the data for the Test Step . It has two possible arguments, <i>name</i> reads the name of the node, and <i>comment</i> reads the comment on the node. If the comment is empty, the value used is <i>null</i>. If you have overwritten either the name or the comment at this place of reuse, then these new details are used. <dt><strong>getCentralTestDataSetValue</strong><dd>Use this function to access a value saved in a central data set. This lets you combine values that you have defined centrally with values that you use locally, or lets you combine values from different central data sets in your test. It locates a single cell in a specific central data set based on a value in a column that you define as a key, and a column in which to search for the required value. It requires four arguments: the name of the central data set to search in, the name of the column which you wish to use as a &#39;&#39;key&#39;&#39; (you can name the column KEY if you require), the value in the key column (to specify the line), and the column in which the required data cell is located. </dl>
+    <p><span class="textbf">Example of the getCentralTestDataSetValue function</span><br /> The function to retrieve data from a central data set can be exemplified using this example central data set, which is named <i>Customer</i>: <p>
+      <table border="1" cellpadding="3">
+        <tr valign="BASELINE">
+          <th align="LEFT" valign="TOP" width="170"><span class="textbf">CUSTOMER_TYPE</span></th>
+          <th align="LEFT" valign="TOP" width="170"><span class="textbf">CUSTOMER_NAME</span><br />
+          </th>
+        </tr>
+        <tr valign="BASELINE">
+          <td align="LEFT" valign="TOP" width="170">NormalUser</td>
+          <td align="LEFT" valign="TOP" width="170">Bob Normal</td>
+        </tr>
+        <tr valign="BASELINE">
+          <td align="LEFT" valign="TOP" width="170">SuperUser</td>
+          <td align="LEFT" valign="TOP" width="170">Alice Super</td>
+        </tr>
+        <tr valign="BASELINE">
+          <td align="LEFT" valign="TOP" width="170">SupportUser</td>
+          <td align="LEFT" valign="TOP" width="170">John Support</td>
+        </tr>
+      </table>
+    <p> To select a customer name using the customer type, you should enter: <blockquote><span class="textbf">?getCentralTestDataSetValue <br />(Customer,CUSTOMER_TYPE,SuperUser,CUSTOMER_NAME)</span></blockquote> This will look in the central data set called <i>Customer</i>, locate the value <i>SuperUser</i> in the <i>CUSTOMER_TYPE</i> column, and use that line to choose the cell in the <i>CUSTOMER_NAME</i> column - Alice Super. <p><span class="textbf">Wrapped functions from other libraries</span><br /> You can also use the following functions in your tests. For full documentation on them, please refer to the respective library. <dl>
+        <dt><strong>randomInt(exclusive maximum value)</strong><dd>Use this function to generate a random integer up to but not including the value you specify. The function is from <i>org.apache.commons.lang.math.RandomUtils</i><dt><strong>replaceAll(string,regular expression,replacement)</strong><dd>Use this function to replace all of the parts of a string you specify with something else. The string to perform the replacement on is entered as the <i>string</i>, the part(s) of the string to replace are defined by the <i>regular expression</i>, and the string to replace it with is given as the <i>replacement</i>. This function is from <i>java.util.regex</i>. <dt><strong>uuid()</strong><dd>This function generates a universal unique identifier. The function is from <i>java.util.UUID</i>. <dt><strong>base64Encode(string)</strong><dd>This function encodes a string to base 64. The function is from <i>org.apache.commons.codec.binary.Base64</i>. <dt><strong>base64Decode(string)</strong><dd>This function decodes a string from base 64. The function is from <i>org.apache.commons.codec.binary.Base64</i>. </dl>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

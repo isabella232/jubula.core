@@ -1,56 +1,22 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.18.4 Collecting components (technical names) from the AUT </title>
-    <meta content="3.18.4 Collecting components (technical names) from the AUT " name="description" />
+    <title>3.17 Working with manual Test Cases </title>
+    <meta content="3.17 Working with manual Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="objectMapEditorContextId"></a><h2><a name="SECTION004184000000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">4</span> Collecting components (technical names) from the AUT </a></h2><a name="TasksOMCollect"></a><p><a name="3902"></a><p> Once your test specification is ready, you can <i>collect</i> components (technical names) from the AUT to <i>map</i> (assign) to the component names you used in your tests. <p> To collect components from the AUT , you must have: <p>
-      <ul>
-        <li>started and connected to the AUT Agent <a href="node34.html#Agent">3.1</a><li>created a Test Case containing Test Steps <a href="node111.html#TasksCreateTC">3.11.1</a><li>added Test Cases to a Test Suite <a href="node162.html#WorkingWithSuites">3.14</a><li>specified an AUT <a href="node72.html#Defineaut">3.6</a><li>configured an AUT <a href="node74.html#configuringaut">3.7.1</a> if you want to start the AUT via Jubula <li>chosen an AUT for the Test Suite <a href="node164.html#confsuite">3.14.2</a><li>checked that your current working language is supported by the chosen AUT . <li>started the AUT to be mapped <a href="node195.html#startaut">3.19.2</a><li>opened the object mapping editor <a href="node181.html#TasksOpenOME">3.18.2.1</a></ul>
+  <body>
+    <h1><a name="SECTION004170000000000000000"> <span class="arabic">3</span>.<span class="arabic">17</span> Working with manual Test Cases </a></h1>
     <p>
-      <ol>
-        <li>Start the Object Mapping Mode by clicking the arrow next to the<i>Start Object Mapping Mode </i> on the toolbar and selecting which AUT (based on the AUT ID) you want to map. <br />
-          <div class="margin"><img align="BOTTOM" alt="Image startOM" border="0" height="256" src="./startOM.png" width="256" />&nbsp;start Object Mapping Mode </div>
-          <br />
-          <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>If you have the same AUT running more than once, you will only be able to collect components from the AUT whose ID you chose. The object map for AUT&#39;s that are the same is, however, identical.</b></td>
-              </tr>
-            </table>
-          <p> The status bar will show that the Object Mapping Mode is active. <li>Bring the AUT into focus by clicking on its titlebar. <p><span class="textbf">For Java AUT&#39;s :</span><ul>
-              <li>In the AUT for which the Object Mapping Mode was started, move the cursor over components. They will be highlighted with a green border (see <a href="node191.html#greenborders">3.25</a>). <li>To collect a technical name for a component, hover the cursor over the component whose name you want to collect. <li>Press <tt>&raquo;CTRL+SHIFT+Q&laquo;</tt>. <table>
-                  <tr>
-                    <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                    <td><b>You can change the key combination for the object mapping in the object mapping preferences <a href="node227.html#TasksPrefsOMM">3.22.6</a>. This is a good idea if the current key combination has a specific meaning in your AUT . You can also set the object mapping combination to a mouse click if your AUT does not accept key combinations.</b></td>
-                  </tr>
-                </table>
-              <li>If no component is collected, then you may need to extend Jubula to recognize and test the component. More information on extending Jubula is available in the Extension Manual. </ul>
-          <p><span class="textbf">For HTML AUT&#39;s :</span><ul>
-              <li>While the Object Mapping Mode is active, the AUT cannot be used. <li>To collect a technical name for a component, click the component whose name you want to collect. </ul>
-          <p>
-        <li>In the Object Mapping Editor , the technical name for this component will appear in the <i>unassigned technical names</i> category. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>If you have already mapped this component, it will be highlighted in the Object Mapping Editor .</b></td>
-            </tr>
-          </table>
-        <li>When you collect a technical name, it is displayed with a colored dot in the Object Mapping Editor . The color of the dot indicates the strength of the component recognition for this component, <i>in the current state of the AUT </i> <a href="node190.html#TasksOMStateColor">3.18.4.1</a>. <li>Collect all the names you need from the AUT and then click the <i>Stop Object Mapping Mode </i> button on the toolbar. <br />
-          <div class="margin"><img align="BOTTOM" alt="Image stopOM" border="0" height="256" src="./stopOM.png" width="256" />&nbsp; stop Object Mapping Mode </div>
-          <br />
-        <li>You can now map (assign) the component names you used in your Test Cases to the technical names you have collected from the AUT <a href="node191.html#TasksOMMap">3.18.5</a>. </ol>
-    <p><span class="textbf">For other AUT&#39;s </span> Specifics on object mapping for other AUT&#39;s can be found in the relevant section in the chapter on toolkit-specific information <a href="node324.html#Toolkit">4</a>. <p>
       <br />
       <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node190.html" name="tex2html3498"><span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Understanding the colored dots when collecting component names in the Object Mapping Editor </a></ul>
+        <li><a href="node190.html" name="tex2html3674"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">1</span> Creating manual tests</a><li><a href="node191.html" name="tex2html3675"><span class="arabic">3</span>.<span class="arabic">17</span>.<span class="arabic">2</span> Executing and analyzing manual tests</a></ul>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

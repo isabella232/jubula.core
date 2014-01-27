@@ -1,33 +1,37 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>4. Using Simple Match for Text Verification</title>
-    <meta content="4. Using Simple Match for Text Verification" name="description" />
+    <title>4. Components, Actions, and Parameters</title>
+    <meta content="4. Components, Actions, and Parameters" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><h1><a name="SECTION00500000000000000000"> <span class="arabic">4</span>. Using Simple Match for Text Verification</a></h1><a name="simplematch"></a><p><a name="127"></a><p>
-      <ul>
-        <li>Using <i>simple match</i> lets you verify or select text even if you do not know exactly what the text is. <li>Actions which support regular expressions have an additional parameter, &quot;<i>Operator</i>&quot;. From this combo box, you can choose &quot;<i>simple match</i>&quot; to indicate that you want to use simple matching. </ul>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img1.jpg" width="101" /></td>
-          <td><b><i>Simple match</i> is a good option if you are sure that you will only want to use the basic wildcards given below. For more powerful regular expressions, use the <i>matches</i> parameter <a href="node4.html#regex">3</a>.</b></td>
-        </tr>
-      </table>
-    <p><span class="textbf">Simple matching</span><ul>
-        <li><tt>&quot;abc&quot;</tt> matches &quot;<i>abc</i>&quot; and nothing else. </ul>
-    <p><span class="textbf">Wildcards</span><ul>
-        <li><tt>&quot;?&quot;</tt> represents one instance of any character. <li><tt>&quot;*&quot;</tt> represents any number (zero or more) of any characters. </ul>
-    <p><span class="textbf">Useful examples</span><ul>
-        <li>A string that starts with <tt>&quot;a&quot;</tt> is represented by: <tt>&quot;a*&quot;</tt><li>A string that ends in <tt>&quot;a&quot;</tt> is represented by: <tt>&quot;*a&quot;</tt><li>A string that starts with <tt>&quot;a&quot;</tt>, ends in <tt>&quot;b&quot;</tt> and has unknown values (0 or more) in the middle is represented by: <tt>&quot;a*b&quot;</tt><li>A string which contains <tt>&quot;a&quot;</tt> somewhere between other unknown characters (0 or more) is represented by: <tt>&quot;*a*&quot;</tt></ul>
+  <body>
+    <h1><a name="SECTION00500000000000000000"></a> <a name="actparam"></a><br /><span class="arabic">4</span>. Components, Actions, and Parameters </h1>
     <p>
-    <p>
+    <p> This section provides a reference of all currently supported AUT components and the actions that can be applied to them. <p> There are two types of actions that can be applied to a given component: <i>execute</i> and <i>check</i>. <i>Execute</i> actions are marked with an &#39;e&#39; in the description, whereas <i>check</i> actions are marked with a &#39;c&#39;. <p>
+      <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node6.html" name="tex2html195"><span class="arabic">4</span>.<span class="arabic">1</span> abstract Toolkit</a><ul>
+            <li><a href="node7.html" name="tex2html196"><span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Button Component</a><li><a href="node8.html" name="tex2html197"><span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Component with Text</a><li><a href="node9.html" name="tex2html198"><span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">3</span> Component with Text Input</a><li><a href="node10.html" name="tex2html199"><span class="arabic">4</span>.<span class="arabic">1</span>.<span class="arabic">4</span> Graphics Component</a></ul>
+          <br />
+        <li><a href="node11.html" name="tex2html200"><span class="arabic">4</span>.<span class="arabic">2</span> concrete Toolkit</a><ul>
+            <li><a href="node12.html" name="tex2html201"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Application</a><li><a href="node13.html" name="tex2html202"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Button Component</a><li><a href="node14.html" name="tex2html203"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Combo Component</a><li><a href="node15.html" name="tex2html204"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Label</a><li><a href="node16.html" name="tex2html205"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">5</span> List</a><li><a href="node17.html" name="tex2html206"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">6</span> Menu Bar</a><li><a href="node18.html" name="tex2html207"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">7</span> Tabbed Component</a><li><a href="node19.html" name="tex2html208"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">8</span> Table</a><li><a href="node20.html" name="tex2html209"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">9</span> Text Component</a><li><a href="node21.html" name="tex2html210"><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">10</span> Tree</a></ul>
+          <br />
+        <li><a href="node22.html" name="tex2html211"><span class="arabic">4</span>.<span class="arabic">3</span> gef Toolkit</a><ul>
+            <li><a href="node23.html" name="tex2html212"><span class="arabic">4</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Figure Canvas</a></ul>
+          <br />
+        <li><a href="node24.html" name="tex2html213"><span class="arabic">4</span>.<span class="arabic">4</span> html Toolkit</a><ul>
+            <li><a href="node25.html" name="tex2html214"><span class="arabic">4</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Browser</a><li><a href="node26.html" name="tex2html215"><span class="arabic">4</span>.<span class="arabic">4</span>.<span class="arabic">2</span> HTML Hyperlink</a></ul>
+          <br />
+        <li><a href="node27.html" name="tex2html216"><span class="arabic">4</span>.<span class="arabic">5</span> rcp Toolkit</a><li><a href="node28.html" name="tex2html217"><span class="arabic">4</span>.<span class="arabic">6</span> swing Toolkit</a><li><a href="node29.html" name="tex2html218"><span class="arabic">4</span>.<span class="arabic">7</span> swt Toolkit</a><ul>
+            <li><a href="node30.html" name="tex2html219"><span class="arabic">4</span>.<span class="arabic">7</span>.<span class="arabic">1</span> (SWT) Tree</a><li><a href="node31.html" name="tex2html220"><span class="arabic">4</span>.<span class="arabic">7</span>.<span class="arabic">2</span> Toolbar Item</a><li><a href="node32.html" name="tex2html221"><span class="arabic">4</span>.<span class="arabic">7</span>.<span class="arabic">3</span> Tree Table</a></ul>
+      </ul>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

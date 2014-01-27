@@ -1,34 +1,32 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.1 Starting and connecting to the AUT Agent </title>
-    <meta content="3.1 Starting and connecting to the AUT Agent " name="description" />
+    <title>3.1.1.2 Linux users</title>
+    <meta content="3.1.1.2 Linux users" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="problemViewContextId"></a><h1><a name="SECTION00410000000000000000"> <span class="arabic">3</span>.<span class="arabic">1</span> Starting and connecting to the AUT Agent </a></h1>
-    <p><a name="Agent"></a><p><a name="310"></a> <a name="311"></a> <a name="Agent"></a><p> The AUT Agent is the server component for Jubula . It runs on the same machine as the AUT and allows the ITE to communicate with the AUT and control it during test execution. You must be connected to a running AUT Agent in order to be able to perform object mapping, to observe tests, and to execute tests. <p> Jubula offers two options for working with an AUT Agent : <p>
-      <ul>
-        <li>You can start an AUT Agent on a machine (local or remote) and connect to it using the ITE or the Test Executor <a href="node35.html#TasksAgentExternal">3.1.1</a>. <li>You can connect to an embedded AUT Agent that does not have to be started in advance <a href="node39.html#TasksAgentConnect">3.1.2</a>. This option is only available if you are starting your AUT on the same machine as the ITE , and cannot be used for working with the Test Executor. </ul>
+  <body>
+    <h3><a name="SECTION00411200000000000000"> <span class="arabic">3</span>.<span class="arabic">1</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Linux users</a></h3>
+    <p> Use the script: <br /><tt>&quot;./autagent (-p &lt;port number&gt;)&quot;</tt>. <p> You can see and stop the AUT Agent in the system tray. Once the AUT Agent is started, you can connect to it from the ITE <a href="node36.html#TasksAgentConnect">3.1.2</a>. <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>You must wait for the AUT Agent to be running before you can connect to it.</b></td>
+        </tr>
+      </table>
     <p>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>If you are working on a local machine, you can also work with the embedded AUT Agent , which does not require you to start an AUT Agent on your machine <a href="node39.html#TasksAgentConnect">3.1.2</a></b></td>
+          <td><b>The AUT Agent uses the current directory as its working directory on Linux systems.</b></td>
         </tr>
       </table>
     <p>
       <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node35.html" name="tex2html1508"><span class="arabic">3</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Starting the AUT Agent </a><ul>
-            <li><a href="node36.html" name="tex2html1509"><span class="arabic">3</span>.<span class="arabic">1</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Windows users</a><li><a href="node37.html" name="tex2html1510"><span class="arabic">3</span>.<span class="arabic">1</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Linux users</a><li><a href="node38.html" name="tex2html1511"><span class="arabic">3</span>.<span class="arabic">1</span>.<span class="arabic">1</span>.<span class="arabic">3</span> Starting the AUT Agent from the command line: options and parameters</a></ul>
-          <br />
-        <li><a href="node39.html" name="tex2html1512"><span class="arabic">3</span>.<span class="arabic">1</span>.<span class="arabic">2</span> Connecting to the AUT Agent </a></ul>
-      <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

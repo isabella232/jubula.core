@@ -1,29 +1,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.11 Using the Data Sets View to enter data loops and to translate data</title>
-    <meta content="3.12.11 Using the Data Sets View to enter data loops and to translate data" name="description" />
+    <title>3.12.7 Concatenating (combining) parameters</title>
+    <meta content="3.12.7 Concatenating (combining) parameters" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerDataSetViewContextId"></a><a name="guidancerCentralTestDataEditorContextId"></a><h2><a name="SECTION0041211000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">11</span> Using the Data Sets View to enter data loops and to translate data</a></h2><a name="TasksDataSetsView"></a><p><a name="2843"></a> <a name="2844"></a> <a name="2845"></a><p> The Data Sets View lets you do three things: <ul>
-        <li>Enter multiple data sets for a parameter from a Test Case <a href="node149.html#TasksDSVDataSets">3.12.11.1</a>. <li>Enter data sets for a central test data set <a href="node142.html#TasksDSVCentral">3.12.9.4</a>. <li>Translate your parameter values into other languages <a href="node150.html#TasksDSVTranslate">3.12.11.2</a>. </ul>
+  <body><a name="guidancerPropertiesViewContextId"></a><a name="guidancerDataSetViewContextId"></a><h2><a name="SECTION004127000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">7</span> Concatenating (combining) parameters</a></h2><a name="TasksConcatenation"></a><p><a name="2874"></a> <a name="2875"></a><p> The ITE lets you use various different types of parameter: <ul>
+        <li>Concrete values <a href="node135.html#TasksTestdataConcrete">3.12.2</a>. <li>Referenced parameters <a href="node136.html#TasksTestdataReferences">3.12.3</a>. <li>Variables <a href="node138.html#TasksVariables">3.12.5</a>. <li>Functions <a href="node142.html#TasksDataFunctions">3.12.6</a>. </ul>
+    <p> You can use these parameters separately, or you can combine them to create a parameter value. This is useful if a value you want to enter or check consists of parts that change and parts that stay the same. <p> To combine different types of parameter to make one value, you must write them in a specific way: <ol>
+        <li>Referenced parameters must be written with curly brackets around the reference name: <br /><tt>&quot;={REF_NAME}&quot;</tt><li>Variable names must also be written with curly brackets around them: <br /><tt>&quot;${VAR_NAME}&quot;</tt><li>Concrete values are written as normal. <li>For example, you can build a data string that contains all four types of data: <br /><tt>&quot;test_={PROJECTNAME}_${CUSTOMERNUMBER}_?now()&quot;</tt><br />
+          <p>
+      </ol>
     <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>You can also create central test data sets for your Project to reuse in Test Cases <a href="node138.html#TasksCentralData">3.12.9</a>.</b></td>
-        </tr>
-      </table>
-    <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node149.html" name="tex2html2981"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">11</span>.<span class="arabic">1</span> Data Sets View : adding multiple data sets to a Test Case </a><li><a href="node150.html" name="tex2html2982"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">11</span>.<span class="arabic">2</span> Data Sets View : translating test data</a></ul>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

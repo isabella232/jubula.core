@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.26.0.2 Ratio general : specific</title>
-    <meta content="3.26.0.2 Ratio general : specific" name="description" />
+    <title>3.23.3 Observing tests in Java AUT&#39;s </title>
+    <meta content="3.23.3 Observing tests in Java AUT&#39;s " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,9 +10,56 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION004260200000000000000"> <span class="arabic">3</span>.<span class="arabic">26</span>.<span class="arabic">0</span>.<span class="arabic">2</span> Ratio general : specific</a></h3> This metric is in the category <i>Numerical Metrics</i>. <p> This metric calculates the amount of Test Cases or Test Steps used that are generally available for all <i>toolkits</i> (the &quot;<i>concrete</i>&quot; actions). It then counts the amount of actions used that are specific to one or more particular toolkits (e.g. specific to the RCP toolkit or the HTML toolkit). The results are presented as percentages in the Search Result View. <p> Wherever possible, it is preferable to work with more general actions than specific. This metric may help you to gauge how well you are keeping to this guideline. <p>
+    <h2><a name="SECTION004233000000000000000"> <span class="arabic">3</span>.<span class="arabic">23</span>.<span class="arabic">3</span> Observing tests in Java AUT&#39;s </a></h2>
+    <p><a name="5235"></a> <a name="5236"></a> <a name="TasksObserveJava"></a><p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>If you have not already done so, we recommend reading the tips section for the observation mode before beginning observing <a href="node254.html#TasksObsModeTips">3.23.1</a>. </b></td>
+        </tr>
+      </table>
+      <ol>
+        <li>In Java AUT&#39;s (Swing and SWT/RCP, but not GEF components in RCP) the observation mode will automatically record your actions in the user interface. Each action is created as a Test Step in the Test Case Editor for this observed Test Case . <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>See the section later on performing check actions in the observation mode <a href="node258.html#TasksObsCheckJava">3.23.3.2</a>.</b></td>
+              </tr>
+            </table>
+          <p>
+        <li>You can also see which actions have been recorded in the console (<a href="#obsconsole">3.34</a>). <p>
+            <div align="CENTER"><a name="obsconsole"></a><a name="5249"></a><table>
+                <caption align="BOTTOM"><strong>Figure 3.34:</strong> The observation console</caption>
+                <tr>
+                  <td>
+                    <div align="CENTER"><img align="BOTTOM" alt="Image obsconsole" border="0" height="235" src="./obsconsole.png" width="480" /></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>If you are creating tests for SWT and RCP AUT&#39;s , check that you have set the keyboard layout correctly in the Project properties <a href="node82.html#AdvancedAUTConfig">3.7.4.4</a> and that you have defined the right toolkit for the Project <a href="node52.html#ProjPropertiesChangingToolkit">3.5.2.2</a>.</b></td>
+              </tr>
+            </table>
+          <p>
+        <li>Component names for your components are automatically generated and assigned to the technical names from the AUT when you observe Test Steps . If you have already created and mapped a component name for a technical component, this name will be used instead of creating a new one. <li>Once you have recorded the actions you need, stop the observation mode by clicking on the &quot;<i>stop observing Test Case </i>&quot; button <br />
+          <div class="margin"><img align="BOTTOM" alt="Image stopcam" border="0" height="242" src="./stopcam.png" width="256" />&nbsp;stop observation</div>
+          <br /> on the main toolbar. <li>Save the Test Case editor containing the Test Steps you have just observed. <li>Check the Test Steps and their parameter values which have been recorded. You will notice that any text that contains non-alphanumeric characters is enclosed in single quotes. Single quotes are used to cancel any meaning of the characters within the quotes. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>Run the test that you have just recorded to see if it works as you intended. If not, you may need to make some changes to the parameter values, or you may have to supplement the Test Case with Test Cases from the library <a href="node125.html#UseLibrary">3.11.2.1</a>. </b></td>
+            </tr>
+          </table>
+      </ol>
+    <p>
+      <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node257.html" name="tex2html4538"><span class="arabic">3</span>.<span class="arabic">23</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Actions that cannot be recorded</a><li><a href="node258.html" name="tex2html4539"><span class="arabic">3</span>.<span class="arabic">23</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Performing checks in the Java observation mode</a></ul>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

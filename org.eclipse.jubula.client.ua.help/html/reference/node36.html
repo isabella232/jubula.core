@@ -1,31 +1,30 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>7. Overview of Components</title>
-    <meta content="7. Overview of Components" name="description" />
+    <title>7. Using Relative Paths</title>
+    <meta content="7. Using Relative Paths" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h1><a name="SECTION00800000000000000000"></a> <a name="overviewfam"></a><br /><span class="arabic">7</span>. Overview of Components </h1>
-    <p><a name="overviewabstcomp"></a>The following diagram shows which abstract components Jubula uses and for which actions they can be used for. <p>
-      <div align="CENTER"><a name="comp"></a><a name="20174"></a><table>
-          <caption align="BOTTOM"><strong>Figure 7.1:</strong> Jubula component structure</caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image GUIdancerComponentHierarchysmall" border="0" height="752" src="./GUIdancerComponentHierarchysmall.png" width="664" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <p> Figure <a href="#comp">7.1</a> provides an overview of Jubula &#39;s concrete and abstract component structure. This figure can be interpreted as follows: the arrows show inheritance relations between the components. Thus, a <i>Label</i> component has no actions of its own, but inherits them all from <i>Component with Text</i>. The <i>Label</i> component also inherits any actions that <i>Component with Text</i> also inherited. In this case, these are the actions from <i>Graphics component</i>. <p>
+  <body><a name="guidancerPropertiesViewContextId"></a><a name="autConfigSettingWizardPagePageContextId"></a><a name="autConfigPropDialogContextId"></a><h1><a name="SECTION00800000000000000000"> <span class="arabic">7</span>. Using Relative Paths</a></h1><a name="relativepath"></a><p><a name="18745"></a> <a name="18746"></a><ul>
+        <li>In the AUT configuration and in the Properties View you can enter paths to files for your tests. <li>For many paths, you do not have to enter the whole path. Instead, you can use a relative path. <li>The root for relative paths depends on which path you are entering: </ul>
+    <p><span class="textbf">Paths to .JAR files, JRE binaries, classpaths and classnames</span><br /> These items reside on the machine on which the AUT Agent is installed. <ul>
+        <li>The paths to these files are entered in the AUT configuration. <li>They are relative to the AUT <i>working directory</i>, if you have entered one. <li>If no AUT <i>working directory</i> is given, these paths are relative to the &#39;&#39;server&#39;&#39; directory. </ul>
+    <p><span class="textbf">Paths to Excel files</span><br /> External data files reside on the machine on which the ITE is installed. <ul>
+        <li>When you use an Excel file an external data source, you must enter the path to the Excel file in the Properties View . <li>The default root for external data sources is your workspace directory. <li>You can also enter a different root in the preference pages. </ul>
+    <p><span class="textbf">Paths to screenshots taken with the <i>take screenshot</i> actions</span><br />
+      <ul>
+        <li>When you take a screenshot in your test, you must specify a place to save the screenshot. <li>Paths you enter are relative to the AUT <i>base directory</i>, if one has been specified. Otherwise, they are relative to the &#39;&#39;server&#39;&#39; directory. <li>Screenshots taken during the test can only be saved on the machine on which the AUT Agent is running. </ul>
+    <p><span class="textbf">Paths to commands executed with the <i>execute external command</i> action</span><br />
+      <ul>
+        <li>When you use the action <i>execute external command</i>, you specify whether the command should be executed locally or remotely. <li>If you execute a local command, the relative path to it uses the test data directory as specified in the preferences as its root, if you have specified one. If not, the root is your workspace directory. <li>If you execute a remote command, the root directory for the relative path is the AUT <i>working directory</i>, if you have defined one. If not, the default root directory is the &#39;&#39;server&#39;&#39; directory. </ul>
     <p>
     <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>

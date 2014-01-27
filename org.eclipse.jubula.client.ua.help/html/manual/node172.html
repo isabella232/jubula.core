@@ -1,28 +1,42 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.16 Information on Test Steps </title>
-    <meta content="3.16 Information on Test Steps " name="description" />
+    <title>3.13.5 No component type exists message in Component Names View </title>
+    <meta content="3.13.5 No component type exists message in Component Names View " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="capContextId"></a><h1><a name="SECTION004160000000000000000"> <span class="arabic">3</span>.<span class="arabic">16</span> Information on Test Steps </a></h1>
-    <p> Test Steps are the smallest unit in Jubula . They correspond to one action on one component. <p>
+  <body><a name="compNameViewContextId"></a><h2><a name="SECTION004135000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">5</span> No component type exists message in Component Names View </a></h2><a name="TasksCompNamesNoCompTypeExists"></a><p> This situation occurs when a component name that has been propagated and then renamed at the place of reuse is no longer accessible, either because: <p>
+      <ul>
+        <li>the name with which the component was propagated has been changed, or <li>the checkbox to propagate the component name has been deactivated. </ul> In such situations, you will see the message in the Component Names View : <br /><i>No Component Type Exists!</i>. <p>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>Instead of creating Test Steps , we recommend using the library of Test Cases <a href="node112.html#usingtemplate">3.11.2</a>. Each Test Case in the library contains one Test Step , with all the parameters already referenced. Using the library makes test creation much easier!</b></td>
+          <td><b>Saving the Test Case will remove the message, however, you may want to take steps to transfer the component name before removing the message.</b></td>
         </tr>
       </table>
     <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node173.html" name="tex2html3277"><span class="arabic">3</span>.<span class="arabic">16</span>.<span class="arabic">1</span> Specifying Test Steps </a><li><a href="node174.html" name="tex2html3278"><span class="arabic">3</span>.<span class="arabic">16</span>.<span class="arabic">2</span> Editing Test Steps </a></ul>
+      <ul>
+        <li>An example of a situation where this occurs: <ol>
+            <li>You have a Test Case <i>TC1</i> that has a component name propagated from it: <i>nn_nn_grc</i>. <li>You reused the <i>TC1</i> Test Case in another Test Case called <i>TC2</i>, and renamed the component name to <i>LoginDialog_OK_btn</i> at the place of reuse. <li>You then either: <br />
+              <ul>
+                <li>change the component name in the original Test Case to &quot;<i>LoginDialog_AnyButton_btn</i>&quot;, <li>or you deactivate the checkbox for propagating the component name from the original Test Case . </ul>
+          </ol>
+        <li>In the Component Names View for the reused Test Case in <i>TC2</i>, you will see a warning message that the component name has no type. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>The warning field is not editable.</b></td>
+            </tr>
+          </table>
+        <li>Depending on whehter you renamed the component name or removed the checkbox, you can now do one of two things: <ul>
+            <li>If you renamed the component name in the original Test Case (<i>TC1</i>, then you can locate the newly propagated name in the Component Names View and enter the <i>new name</i> for the no longer existent component type in the <i>new name</i> field for the newly propagated name. This essentially points the previous component name hierarchy onto the new one. <li>If you deactivated the checkbox, or if you do not want to transfer the name as mentioned above, you can simply make any change to the Test Case and then save it. The message will disappear. </ul>
+      </ul>
+    <p>
       <br />
       <hr />
-      <address>Copyright BREDEX GmbH 2013. Made available under the Eclipse Public License v1.0.</address>
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
   </body>
 </html>
