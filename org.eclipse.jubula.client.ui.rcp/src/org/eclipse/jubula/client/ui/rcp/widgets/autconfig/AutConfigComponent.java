@@ -462,7 +462,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         } else {
             // set some default values
             m_serverCombo.select(m_serverCombo.indexOf(StringUtils
-                .defaultString(Constants.LOCALHOST1)));
+                .defaultString(EnvConstants.LOCALHOST_ALIAS)));
 
             m_autConfigNameTextField.setText(
                 NLS.bind(Messages.AUTConfigComponentDefaultAUTConfigName, 
@@ -856,8 +856,9 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         }
         final String autAgentHostName = getServerCombo().getText();
         final String canonicalHostName = localHost.getCanonicalHostName();
-        return (Constants.LOCALHOST1.equals(autAgentHostName.toLowerCase())
-            || Constants.LOCALHOST2.equals(autAgentHostName)
+        return (EnvConstants.LOCALHOST_ALIAS.equals(
+                autAgentHostName.toLowerCase())
+            || EnvConstants.LOCALHOST_IP_ALIAS.equals(autAgentHostName)
             || localHost.getHostName().equals(autAgentHostName)
             || localHost.getHostAddress().equals(autAgentHostName) 
             || (canonicalHostName != null && canonicalHostName

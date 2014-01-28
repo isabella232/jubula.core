@@ -25,12 +25,6 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  * @created 17.10.2011
  */
 public class PreferenceInitializer extends AbstractPreferenceInitializer {
-
-    /**
-     * <code>AUT_AGENT_DEFAULT_HOST</code>
-     */
-    private static final String AUT_AGENT_DEFAULT_HOST = "localhost"; //$NON-NLS-1$
-
     @Override
     public void initializeDefaultPreferences() {
         IPreferenceStore prefStore = Plugin.getDefault().getPreferenceStore();
@@ -57,7 +51,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         
         StringBuilder serverValuesBuilder = new StringBuilder();
         serverValuesBuilder.append(new String(Base64.encodeBase64(
-                AUT_AGENT_DEFAULT_HOST.getBytes())));
+                EnvConstants.LOCALHOST_ALIAS.getBytes())));
         serverValuesBuilder.append(StringConstants.SEMICOLON);
         serverValuesBuilder.append(new String(
             Base64.encodeBase64(String.valueOf(

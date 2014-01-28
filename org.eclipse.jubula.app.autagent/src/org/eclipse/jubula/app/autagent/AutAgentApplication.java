@@ -49,7 +49,6 @@ import org.slf4j.LoggerFactory;
  * @created Jun 21, 2011
  */
 public class AutAgentApplication implements IApplication {
-
     /**
      * constant hostname
      */
@@ -64,11 +63,6 @@ public class AutAgentApplication implements IApplication {
      * constant for autagent launcher
      */
     private static final String AUTAGENT_LAUNCHER = "autagent"; //$NON-NLS-1$
-
-    /**
-    * the constant for the default hostname
-    */
-    private static final String DEFAULT_HOSTNAME_LOCALHOST = "localhost"; //$NON-NLS-1$
 
     /** the logger */
     private static final Logger LOG = 
@@ -153,7 +147,7 @@ public class AutAgentApplication implements IApplication {
             int port = getPortNumber(cmd);
             
             if (cmd.hasOption(COMMANDLINE_OPTION_STOP)) {
-                String hostname = DEFAULT_HOSTNAME_LOCALHOST;
+                String hostname = EnvConstants.LOCALHOST_ALIAS;
                 if (cmd.getOptionValue(COMMANDLINE_OPTION_STOP) != null) {
                     hostname = cmd.getOptionValue(COMMANDLINE_OPTION_STOP);
                 }
@@ -244,7 +238,7 @@ public class AutAgentApplication implements IApplication {
         OptionBuilder.hasOptionalArg();
         Option stopOption = OptionBuilder.create(COMMANDLINE_OPTION_STOP);
         stopOption.setDescription(NLS.bind(Messages.OptionStopDescription,
-                DEFAULT_HOSTNAME_LOCALHOST));
+            EnvConstants.LOCALHOST_ALIAS));
         stopOption.setArgName(HOSTNAME);
         startStopOptions.addOption(stopOption);
         options.addOptionGroup(startStopOptions);

@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * @created Mar 21, 2006
  */
 public class TestexecClient extends AbstractCmdlineClient {
-    
     /** log facility */
     private static Logger log = LoggerFactory.getLogger(TestexecClient.class);
 
@@ -102,10 +101,10 @@ public class TestexecClient extends AbstractCmdlineClient {
      * {@inheritDoc}
      */
     protected void extendOptions(Options options, boolean req) {
-        options.addOption(createOption(ClientTestStrings.SERVER, true, 
+        options.addOption(createOption(ClientTestStrings.SERVER, false, 
                 ClientTestStrings.HOSTNAME, 
                 Messages.ClientServerOpt, req));
-        options.addOption(createOption(ClientTestStrings.PORT, true, 
+        options.addOption(createOption(ClientTestStrings.PORT, false, 
                 ClientTestStrings.PORT_NUMBER, 
                 Messages.ClientPortOpt, req)); 
         options.addOption(createOption(ClientTestStrings.PROJECT, true, 
@@ -184,11 +183,11 @@ public class TestexecClient extends AbstractCmdlineClient {
             appendError(errorMsgs, ClientTestStrings.PROJECT_VERSION, 
                     ClientTestStrings.PROJECT_VERSION_EX);
         }
-        if (job.getServer() == null) {
-            appendError(errorMsgs, ClientTestStrings.SERVER, 
-                    ClientTestStrings.HOSTNAME);
+        if (job.getPort() == JobConfiguration.EXIT_INVALID_OPTIONS) {
+            appendError(errorMsgs, ClientTestStrings.PORT,
+                    ClientTestStrings.PORT_NUMBER);
         }
-        if (job.getPort() == null) {
+        if ((job.getServer() != null) && (job.getPort() == 0)) {
             appendError(errorMsgs, ClientTestStrings.PORT, 
                     ClientTestStrings.PORT_NUMBER);
         }   

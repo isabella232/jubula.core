@@ -91,17 +91,17 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     /** the command line representation */
     private CommandLine m_cmd = null;
 
-    /** external configuation file with parameters */
+    /** external configuration file with parameters */
     private File m_configFile;
     /** JobConfiguration created from configFile */
     private JobConfiguration m_job;
 
     /**
-     * @param name name of optione
+     * @param name name of option
      * @param hasArg option has an argument
      * @param argname name of the argument
      * @param text Text for help
-     * @param isReq option sis required
+     * @param isReq option is required
      * @return Option opt 
      */
     protected static Option createOption(String name, boolean hasArg,
@@ -224,6 +224,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
                 m_job.parseJobOptions(m_cmd);
             }
             // check if all needed attributes are set
+            // and if port number is valid
             preValidate(m_job);
 
         } catch (PreValidateException exp) {
@@ -437,6 +438,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     private void preValidate(JobConfiguration job) throws PreValidateException {
         StringBuilder errorMsg = new StringBuilder();
         errorMsg.append(Messages.ClientMissingArgs);
+        StringBuilder errorInvalidArgsMsg = new StringBuilder();
         if (job.getDbConnectionName() == null && job.getDb() == null) {
             appendError(errorMsg, ClientTestStrings.DB_SCHEME, 
                     ClientTestStrings.SCHEME + " OR"); //$NON-NLS-1$
@@ -476,15 +478,13 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         }
     }
 
-
     /**
      * Do validation beyond the basic parameters
      * @param job configuration to check
-     * @param errorMsgs storage for error messages from validation
+     * @param errorMsgs storage for error messages from validation in case required arguments are missing
      */
     protected abstract void extendValidate(JobConfiguration job, 
-            StringBuilder errorMsgs);
-
+              StringBuilder errorMsgs);
 
     /**
      * 

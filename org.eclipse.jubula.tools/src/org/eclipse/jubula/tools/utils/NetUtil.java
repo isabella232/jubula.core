@@ -13,6 +13,8 @@ package org.eclipse.jubula.tools.utils;
 import java.io.IOException;
 import java.net.ServerSocket;
 
+import org.eclipse.jubula.tools.constants.IOConstants;
+import org.eclipse.jubula.tools.i18n.I18n;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,5 +54,28 @@ public final class NetUtil {
                 }
             }
         }
+    }
+    
+    /**
+     * validates the port number
+     * 
+     * @param value
+     *            the value to be validated
+     * @return a string indicating whether the given value is valid; null means
+     *         valid, and non-null means invalid, with the result being the
+     *         error message to display to the end user
+     */
+    public static String isPortNumberValid(String value) {
+        try {
+            int portValue = Integer.parseInt(value);
+            if (portValue < IOConstants.MIN_PORT_NUMBER
+                || portValue > IOConstants.MAX_PORT_NUMBER) {
+                return I18n.getString("ErrorMessage.INVALID_PORT_NUMBER"); //$NON-NLS-1$
+            }
+            return null;
+        } catch (NumberFormatException nfe) {
+            // Fall through
+        }
+        return I18n.getString("ErrorMessage.INVALID_PORT_NUMBER"); //$NON-NLS-1$
     }
 }

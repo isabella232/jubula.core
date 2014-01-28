@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.autagent.preferences.PreferenceInitializer;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.handlers.AUTAgentConnectHandler;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.slf4j.Logger;
@@ -50,11 +51,6 @@ public class ConnectToEmbeddedAutAgentHandler extends AbstractHandler
     protected static final Logger LOG = LoggerFactory
             .getLogger(ConnectToEmbeddedAutAgentHandler.class);
 
-    /** 
-     * hostname to use for starting and accessing the embedded AUT Agent 
-     */
-    private static final String EMBEDDED_AGENT_HOSTNAME = "localhost"; //$NON-NLS-1$
-    
     /** {@inheritDoc} */
     public Object execute(ExecutionEvent event) {
         
@@ -63,9 +59,9 @@ public class ConnectToEmbeddedAutAgentHandler extends AbstractHandler
             // Embedded Agent is not running. We need to start it before
             // trying to connect to it.
             final int port = Platform.getPreferencesService().getInt(
-                    Activator.PLUGIN_ID, 
-                    PreferenceInitializer.PREF_EMBEDDED_AGENT_PORT, 
-                    PreferenceInitializer.DEFAULT_EMBEDDED_AGENT_PORT, null);
+                Activator.PLUGIN_ID,
+                PreferenceInitializer.PREF_EMBEDDED_AGENT_PORT,
+                EnvConstants.AUT_AGENT_DEFAULT_PORT, null);
             try {
                 autAgentInstance.start(
                         port, false, Verbosity.QUIET, false);
@@ -81,7 +77,7 @@ public class ConnectToEmbeddedAutAgentHandler extends AbstractHandler
                 return null;
             }
         }
-        String hostname = EMBEDDED_AGENT_HOSTNAME;
+        String hostname = EnvConstants.LOCALHOST_ALIAS;
         int port = autAgentInstance.getCommunicator().getLocalPort();
         
         Command connectToAutAgentCommand = CommandHelper

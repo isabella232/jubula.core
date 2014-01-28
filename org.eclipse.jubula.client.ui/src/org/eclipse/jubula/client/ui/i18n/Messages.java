@@ -135,7 +135,6 @@ public class Messages extends NLS {
     public static String UtilsRequest2;
     public static String UtilsWarning1;
     public static String UtilsWarning2;
-    public static String ValidationPortErrorInvalidPortNumber;
     public static String WrongElementType;    
     
     static {

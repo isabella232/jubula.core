@@ -41,7 +41,9 @@ import org.eclipse.jubula.client.core.preferences.database.MySQLConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.OracleConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionInfo;
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.utils.NetUtil;
 import org.eclipse.osgi.util.NLS;
 
 import com.thoughtworks.xstream.XStream;
@@ -60,7 +62,8 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 public class JobConfiguration {
     /** Separator between major and minor version numbers */
     public static final char VERSION_SEPARATOR = '.';
-
+    /** exit code in case of invalid options */
+    public static final int EXIT_INVALID_OPTIONS = -2;
     /** String */
     private static final String CONFIGURATION = "configuration";  //$NON-NLS-1$
     
@@ -82,8 +85,6 @@ public class JobConfiguration {
     private String m_dbpw;
     /** configuration detail */
     private String m_server;
-    /** configuration detail */
-    private String m_port;
     /** port of the server */
     private String m_serverport;
     /** configuration detail */
@@ -112,6 +113,8 @@ public class JobConfiguration {
     private String m_dataDir;
     /** timeout for this run */
     private int m_timeout = 0;
+    /** port number for AUT agent */
+    private int m_port = 0;
     /** flag to automatically take screenshots */
     private boolean m_autoScreenshot = true;
     /** flag to save screenshots in XML and HTML */
@@ -248,9 +251,9 @@ public class JobConfiguration {
     }
 
     /**
-     * @return String
+     * @return integer
      */
-    public String getPort() {
+    public int getPort() {
         return m_port;
     }
     
@@ -418,7 +421,8 @@ public class JobConfiguration {
             setServer(cmd.getOptionValue(ClientTestStrings.SERVER)); 
         }
         if (cmd.hasOption(ClientTestStrings.PORT)) { 
-            setPort(cmd.getOptionValue(ClientTestStrings.PORT)); 
+            setPort(validateAndParseIntPortNumber(
+                    cmd.getOptionValue(ClientTestStrings.PORT)));
         }
         parseDBOptions(cmd);
         if (cmd.hasOption(ClientTestStrings.RESULTDIR)) { 
@@ -463,9 +467,22 @@ public class JobConfiguration {
                 setTimeout(Integer.parseInt(cmd
                         .getOptionValue(ClientTestStrings.TIMEOUT)));
             } catch (NumberFormatException e) {
-                setTimeout(-1); // will be reported during validate
+                // will be reported during validate
+                setTimeout(EXIT_INVALID_OPTIONS); 
             }
         }
+    }
+
+    /**
+     * @param portString a port number in String format
+     * @return port number in integer format and -1 in case of invalid port number
+     */
+    public static int validateAndParseIntPortNumber(String portString) {
+        String errorMsg = NetUtil.isPortNumberValid(portString);
+        if (errorMsg == null) {
+            return Integer.parseInt(portString);  
+        }
+        return EXIT_INVALID_OPTIONS;
     }
 
     /**
@@ -499,7 +516,8 @@ public class JobConfiguration {
             setServer(cmd.getOptionValue(ClientTestStrings.SERVER)); 
         }
         if (cmd.hasOption(ClientTestStrings.PORT)) { 
-            setPort(cmd.getOptionValue(ClientTestStrings.PORT)); 
+            setPort(validateAndParseIntPortNumber(
+                    cmd.getOptionValue(ClientTestStrings.PORT)));
         }
         if (cmd.hasOption(ClientTestStrings.AUTO_SCREENSHOT)) { 
             setAutoScreenshot(false);
@@ -625,9 +643,9 @@ public class JobConfiguration {
     }
 
     /**
-     * @param port String
+     * @param port integer
      */
-    private void setPort(String port) {
+    private void setPort(int port) {
         m_port = port;
     }
 
@@ -793,7 +811,8 @@ public class JobConfiguration {
             arg1.endNode();
             
             arg1.startNode(ClientTestStrings.PORT);
-            arg1.setValue(job.getPort());
+            arg1.setValue(String.valueOf(validateAndParseIntPortNumber(
+                    Integer.toString(job.getPort()))));
             arg1.endNode();
         
             arg1.startNode(ClientTestStrings.DBURL);
@@ -847,7 +866,8 @@ public class JobConfiguration {
                     job.setServer(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.PORT)) {
-                    job.setPort(arg0.getValue());
+                    job.setPort(validateAndParseIntPortNumber(
+                                arg0.getValue()));
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.RESULTDIR)) {
                     job.setResultDir(arg0.getValue());
@@ -1043,5 +1063,13 @@ public class JobConfiguration {
         }
 
         return null;
+    }
+
+    /**
+     * in case of using embedded agent sets the "server" parameter (autAgentHostName) 
+     * for testexec to "localhost"
+     */
+    public void setEmbeddedAutAgentHostName() {
+        setServer(EnvConstants.LOCALHOST_ALIAS);
     }
 }

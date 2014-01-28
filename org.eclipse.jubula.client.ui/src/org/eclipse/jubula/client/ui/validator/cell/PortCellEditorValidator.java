@@ -13,9 +13,7 @@ package org.eclipse.jubula.client.ui.validator.cell;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jface.viewers.ICellEditorValidator;
-import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.osgi.util.NLS;
+import org.eclipse.jubula.tools.utils.NetUtil;
 
 /**
  * 
@@ -46,20 +44,6 @@ public class PortCellEditorValidator implements ICellEditorValidator {
      * {@inheritDoc}
      */
     public String isValid(Object value) {
-        try {
-            int portValue = Integer.parseInt(ObjectUtils.toString(value));
-            if (portValue < Constants.MIN_PORT_NUMBER 
-                    || portValue > Constants.MAX_PORT_NUMBER) {
-                return NLS.bind(Messages.ValidationPortErrorInvalidPortNumber,
-                        m_i18nArguments);
-            }
-            return null;
-        } catch (NumberFormatException nfe) {
-            // Fall through
-        }
-        
-        return NLS.bind(Messages.ValidationPortErrorInvalidPortNumber,
-                m_i18nArguments);
+        return NetUtil.isPortNumberValid(ObjectUtils.toString(value));
     }
-
 }

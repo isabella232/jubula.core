@@ -14,6 +14,7 @@ import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.jubula.client.autagent.Activator;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 
 /**
  * 
@@ -26,15 +27,11 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
     public static final String PREF_EMBEDDED_AGENT_PORT = 
         "org.eclipse.jubula.autagent.preference.port"; //$NON-NLS-1$
 
-    /** default value for "Embedded AUT Agent Port" preference */
-    public static final int DEFAULT_EMBEDDED_AGENT_PORT = 60000;
-    
     @Override
     public void initializeDefaultPreferences() {
         IEclipsePreferences preferenceNode = 
             DefaultScope.INSTANCE.getNode(Activator.PLUGIN_ID);
         preferenceNode.putInt(PREF_EMBEDDED_AGENT_PORT, 
-                DEFAULT_EMBEDDED_AGENT_PORT);
+                EnvConstants.AUT_AGENT_DEFAULT_PORT);
     }
-
 }

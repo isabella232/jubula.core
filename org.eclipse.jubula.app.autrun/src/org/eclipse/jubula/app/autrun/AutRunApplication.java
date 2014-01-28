@@ -30,6 +30,7 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jubula.app.autrun.i18n.Messages;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.osgi.util.NLS;
@@ -80,12 +81,6 @@ public class AutRunApplication implements IApplication {
 
     /** <code>DEFAULT_NAME_TECHNICAL_COMPONENTS</code> */
     private static final boolean DEFAULT_NAME_TECHNICAL_COMPONENTS = true;
-
-    /** <code>DEFAULT_AUT_AGENT_PORT</code> */
-    private static final int DEFAULT_AUT_AGENT_PORT = 60000;
-
-    /** <code>DEFAULT_AUT_AGENT_HOST</code> */
-    private static final String DEFAULT_AUT_AGENT_HOST = "localhost"; //$NON-NLS-1$
 
     // - Command line options - Start //
     /** port number for the Aut Agent with which to register */
@@ -235,13 +230,14 @@ public class AutRunApplication implements IApplication {
     private static Options createCmdLineOptions() {
         Options options = new Options();
         Option autAgentHostOption = new Option(OPT_AUT_AGENT_HOST, true,
-                NLS.bind(Messages.infoAutAgentHost, DEFAULT_AUT_AGENT_HOST));
+            NLS.bind(Messages.infoAutAgentHost, EnvConstants.LOCALHOST_ALIAS));
         autAgentHostOption.setLongOpt(OPT_AUT_AGENT_HOST_LONG);
         autAgentHostOption.setArgName(HOSTNAME);
         options.addOption(autAgentHostOption);
 
         Option autAgentPortOption = new Option(OPT_AUT_AGENT_PORT, true,
-                NLS.bind(Messages.infoAutAgentPort, DEFAULT_AUT_AGENT_PORT));
+            NLS.bind(Messages.infoAutAgentPort,
+                EnvConstants.AUT_AGENT_DEFAULT_PORT));
         autAgentPortOption.setLongOpt(OPT_AUT_AGENT_PORT_LONG);
         autAgentPortOption.setArgName(PORT);
         options.addOption(autAgentPortOption);
@@ -347,7 +343,7 @@ public class AutRunApplication implements IApplication {
                 toolkit = RCP_AUT_TOOLKIT_CLASS_PREFIX;
             }
 
-            int autAgentPort = DEFAULT_AUT_AGENT_PORT;
+            int autAgentPort = EnvConstants.AUT_AGENT_DEFAULT_PORT;
             if (cmdLine.hasOption(OPT_AUT_AGENT_PORT)) {
                 try {
                     autAgentPort = Integer.parseInt(cmdLine
@@ -356,7 +352,7 @@ public class AutRunApplication implements IApplication {
                     // use default
                 }
             }
-            String autAgentHost = DEFAULT_AUT_AGENT_HOST;
+            String autAgentHost = EnvConstants.LOCALHOST_ALIAS;
             if (cmdLine.hasOption(OPT_AUT_AGENT_HOST)) {
                 autAgentHost = cmdLine.getOptionValue(OPT_AUT_AGENT_HOST);
             }

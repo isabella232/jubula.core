@@ -26,6 +26,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jubula.app.testexec.i18n.Messages;
+import org.eclipse.jubula.autagent.AutStarter;
+import org.eclipse.jubula.autagent.AutStarter.Verbosity;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.JobConfiguration;
 import org.eclipse.jubula.client.cmd.controller.IClcServer;
@@ -79,6 +81,7 @@ import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.FileUtils;
+import org.eclipse.jubula.tools.utils.NetUtil;
 import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
@@ -398,11 +401,27 @@ public class ExecutionController implements IAUTServerEventListener,
             timer = new WatchdogTimer(m_job.getTimeout());
             timer.start();
         }
+        int autAgentPortNumber = m_job.getPort();
+        if (StringUtils.isEmpty(m_job.getServer())) {
+            // if "port" parameter for testexec was not given (in command line and/or in configuration file) 
+            // port number equals 0 by default and any free port should be used for embedded AUT Agent in this case
+            if (autAgentPortNumber == 0) {
+                autAgentPortNumber = NetUtil.getFreePort();
+            }
+            //the "server" parameter (autAgentHostName) for testexec is set to "localhost"
+            m_job.setEmbeddedAutAgentHostName();
+            if (!startEmbeddedAutAgent(autAgentPortNumber)) {
+                endTestExecution();
+                return false;
+            } 
+        } 
+        String autAgentHostName = m_job.getServer();
         sysOut(NLS.bind(Messages.ConnectingToAUTAgent,
-            new Object[] { m_job.getServer(), m_job.getPort() }));
+            new Object[] { autAgentHostName, autAgentPortNumber }));
         // init ClientTestImpl
         IClientTest clientTest = ClientTest.instance();
-        clientTest.connectToAutAgent(m_job.getServer(), m_job.getPort());
+        clientTest.connectToAutAgent(autAgentHostName, 
+                String.valueOf(autAgentPortNumber));
         if (!AutAgentConnection.getInstance().isConnected()) {
             throw new CommunicationException(
                     Messages.ConnectionToAUTAgentFailed,
@@ -440,6 +459,31 @@ public class ExecutionController implements IAUTServerEventListener,
         }
         
         return isNoErrorWhileExecution();
+    }
+
+    /**
+     * starts the embedded AUT Agent
+     * @param port the port number of the embedded AUT Agent
+     * @throws CommunicationException in case of failure to connect to embedded AUT Agent
+     * @return true if embedded Agent was started successfully and false otherwise
+     */
+    private boolean startEmbeddedAutAgent(int port)
+        throws CommunicationException {
+        AutStarter autAgentInstance = AutStarter.getInstance();
+        if (autAgentInstance.getCommunicator() == null) {
+            // Embedded Agent is not running. We need to start it before
+            // trying to connect to it.
+            try {
+                sysOut(I18n.getString("AUTAgent.EmbeddedAUTAgentStart") + port); //$NON-NLS-1$
+                autAgentInstance.start(
+                        port, false, Verbosity.QUIET, false);
+                return true;
+            } catch (Exception e) {
+                LOG.error(e.getLocalizedMessage(), e);
+                return false;
+            }
+        }
+        return false;
     }
 
     /**

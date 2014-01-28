@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.preferences.database;
 
 import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 
 /**
  * Base class for Connection Info that uses a hostname, port, and some kind of
@@ -32,7 +33,7 @@ public abstract class AbstractHostBasedConnectionInfo
     public static final String PROP_NAME_DB_NAME = "databaseName"; //$NON-NLS-1$
 
     /** hostname of the computer on which the database is running */
-    private String m_hostname = "localhost"; //$NON-NLS-1$
+    private String m_hostname = EnvConstants.LOCALHOST_ALIAS;
     
     /** port on which the database is running */
     private int m_port;

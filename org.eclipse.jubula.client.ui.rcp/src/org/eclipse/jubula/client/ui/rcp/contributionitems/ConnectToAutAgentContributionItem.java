@@ -22,10 +22,10 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.handlers.AUTAgentConnectHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.preferences.AutAgentPreferencePage;
 import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager;
 import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager.AutAgent;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.actions.CompoundContributionItem;
@@ -48,8 +48,7 @@ public class ConnectToAutAgentContributionItem
         int envPort = EnvironmentUtils.getAUTAgentEnvironmentPortNo();
         SortedSet<AutAgent> autAgents = new TreeSet<AutAgentManager.AutAgent>();
         if (envPort > 0) {
-            autAgents.add(new AutAgent(AutAgentPreferencePage.DEFAULT_HOSTNAME,
-                    envPort));
+            autAgents.add(new AutAgent(EnvConstants.LOCALHOST_ALIAS, envPort));
         }
         contributionItems.add(new Separator());
         AutAgentManager serverMgr = AutAgentManager.getInstance();

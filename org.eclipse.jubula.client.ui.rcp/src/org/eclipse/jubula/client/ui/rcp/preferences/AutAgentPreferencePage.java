@@ -39,6 +39,7 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager;
 import org.eclipse.jubula.client.ui.validator.cell.PortCellEditorValidator;
+import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -62,15 +63,9 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  */
 public class AutAgentPreferencePage extends PreferencePage 
     implements IWorkbenchPreferencePage {
-    /** default host name for newly created AUT Starter addresses */
-    public static final String DEFAULT_HOSTNAME = "localhost"; //$NON-NLS-1$
-
     /** <code>LAYOUT_NUM_COLUMNS</code> */
     private static final int LAYOUT_NUM_COLUMNS = 2;
 
-    /** default port for newly created AUT Starter addresses */
-    private static final int DEFAULT_PORT = 60000;
-    
     /**
      * @author BREDEX GmbH
      * @created Jan 18, 2010
@@ -324,7 +319,8 @@ public class AutAgentPreferencePage extends PreferencePage
             public void widgetSelected(SelectionEvent event) {
                 AutAgentManager.AutAgent newAUTAgent = 
                     new AutAgentManager.AutAgent(
-                            DEFAULT_HOSTNAME, DEFAULT_PORT);
+                        EnvConstants.LOCALHOST_ALIAS, 
+                        EnvConstants.AUT_AGENT_DEFAULT_PORT);
                 m_viewModel.add(newAUTAgent);
                 m_addressViewer.refresh();
                 m_addressViewer.editElement(newAUTAgent, 0);

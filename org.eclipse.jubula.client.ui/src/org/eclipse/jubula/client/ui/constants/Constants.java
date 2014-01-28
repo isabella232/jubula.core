@@ -484,18 +484,6 @@ public interface Constants {
     /** Constant for "item" */
     public static final String ITEM = "item"; //$NON-NLS-1$
     
-    /** Constant for the max. port number */
-    public static final int MAX_PORT_NUMBER = 65535;
-    
-    /** Constant for the min. port number */
-    public static final int MIN_PORT_NUMBER = 1024;
-    
-    /** Constant for "localhost" */
-    public static final String LOCALHOST1 = "localhost"; //$NON-NLS-1$
-    
-    /** Constant for "127.0.0.1" */
-    public static final String LOCALHOST2 = "127.0.0.1"; //$NON-NLS-1$
-    
     /** change perspective automatically = yes */
     public static final int PERSPECTIVE_CHANGE_YES = 0;
     /** change perspective automatically = no */
