@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Functional Testing User Manual">
+<toc label="Jubula User Manual">
      <topic label="1. Introduction" href="html/manual/node2.html">
           <topic label="1.1 Comparison to other testing approaches" href="html/manual/node3.html">
                <topic label="1.1.1 Manual Tests" href="html/manual/node4.html"></topic>
