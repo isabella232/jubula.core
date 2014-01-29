@@ -101,12 +101,12 @@ public class TestexecClient extends AbstractCmdlineClient {
      * {@inheritDoc}
      */
     protected void extendOptions(Options options, boolean req) {
-        options.addOption(createOption(ClientTestStrings.SERVER, false, 
+        options.addOption(createOption(ClientTestStrings.SERVER, true, 
                 ClientTestStrings.HOSTNAME, 
-                Messages.ClientServerOpt, req));
-        options.addOption(createOption(ClientTestStrings.PORT, false, 
+                Messages.ClientServerOpt, false));
+        options.addOption(createOption(ClientTestStrings.PORT, true, 
                 ClientTestStrings.PORT_NUMBER, 
-                Messages.ClientPortOpt, req)); 
+                Messages.ClientPortOpt, false)); 
         options.addOption(createOption(ClientTestStrings.PROJECT, true, 
                 ClientTestStrings.PROJECT_NAME, 
                 Messages.ClientProjectOpt, req));
