@@ -305,11 +305,12 @@ public class Connection {
         // check parameter
         Validate.notNull(header, "Message header must not be null"); //$NON-NLS-1$
         Validate.notNull(message, "Message must not be null"); //$NON-NLS-1$
+        MessageWriter writer = null;
         try {
             header.setMessageLength(message.length());
             String serializedHeader = m_headerSerializer.serialize(header);
             // create a buffered message writer
-            MessageWriter writer = new MessageWriter(new OutputStreamWriter(
+            writer = new MessageWriter(new OutputStreamWriter(
                     m_outputStream, IO_STREAM_ENCODING)); 
             // write header
             writer.write(MessageHeader.HEADER_START);
@@ -332,9 +333,12 @@ public class Connection {
             throw ioe;
         } catch (SerialisationException se) {
             getLogger().error("serialisation of " //$NON-NLS-1$ 
-                    + header.toString() 
-                    + "failed", se); //$NON-NLS-1$
+                    + header.toString() + "failed", se); //$NON-NLS-1$
             fireSendFailed(message, header);
+        } finally {
+            if (writer != null) {
+                writer.close();
+            }
         }
     }
 

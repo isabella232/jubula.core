@@ -81,6 +81,8 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.internal.about.AboutUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
@@ -112,7 +114,11 @@ public class JavaAutConfigComponent extends AutConfigComponent {
 
     /** for check if the executable text field is valid */
     private boolean m_isExecFieldValid = true;
-        
+
+    /** the logger */
+    private static Logger log = LoggerFactory
+            .getLogger(JavaAutConfigComponent.class);
+    
     // internally used classes for data handling
     // internally used GUI components
     /** gui component */
@@ -790,13 +796,14 @@ public class JavaAutConfigComponent extends AutConfigComponent {
                     filename = workingDir + "/" + filename; //$NON-NLS-1$
                     file = new File(filename);
                 }
+                JarFile jarFile = null;
                 try {
                     if (!file.exists()) {
                         error = createWarningStatus(
                             NLS.bind(Messages.AUTConfigComponentFileNotFound,
                                     file.getCanonicalPath()));
                     } else {
-                        JarFile jarFile = new JarFile(file);
+                        jarFile = new JarFile(file);
                         Manifest jarManifest = jarFile.getManifest();
                         if (jarManifest == null) {
                             // no manifest for JAR
@@ -821,6 +828,14 @@ public class JavaAutConfigComponent extends AutConfigComponent {
                     error = createWarningStatus(NLS.bind(
                             Messages.AUTConfigComponentFileNotFound,
                                 filename));
+                } finally {
+                    if (jarFile != null) {
+                        try {
+                            jarFile.close();
+                        } catch (IOException e) {
+                            log.error(e.getLocalizedMessage(), e);
+                        }
+                    }
                 }
             }
         } else if (!isEmpty) {

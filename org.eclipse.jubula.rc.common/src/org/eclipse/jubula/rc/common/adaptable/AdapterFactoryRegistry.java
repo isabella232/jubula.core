@@ -323,8 +323,9 @@ public class AdapterFactoryRegistry {
             log.error(uee.getLocalizedMessage(), uee);
         }
         List classes = new ArrayList();
+        JarFile jarFile = null;
         try {            
-            JarFile jarFile = new JarFile(path);        
+            jarFile = new JarFile(path);        
             Enumeration entries = jarFile.entries();
             while (entries.hasMoreElements()) {
                 JarEntry entry = (JarEntry) entries.nextElement();
@@ -346,6 +347,14 @@ public class AdapterFactoryRegistry {
             }
         } catch (IOException ioe) {            
             log.warn(ioe.getLocalizedMessage(), ioe);
+        } finally {
+            if (jarFile != null) {
+                try {
+                    jarFile.close();
+                } catch (IOException e) {
+                    log.error(e.getLocalizedMessage(), e);
+                }
+            }
         }
         return classes;
     }
