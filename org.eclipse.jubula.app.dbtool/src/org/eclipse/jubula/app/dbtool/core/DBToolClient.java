@@ -11,6 +11,7 @@
 package org.eclipse.jubula.app.dbtool.core;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.app.dbtool.i18n.Messages;
 import org.eclipse.jubula.client.archive.businessprocess.FileStorageBP;
+import org.eclipse.jubula.client.archive.businessprocess.ProjectBP.NewVersionOperation;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.JobConfiguration;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -68,6 +70,10 @@ public class DBToolClient extends AbstractCmdlineClient {
     private static final String OPTION_IMPORT = "import"; //$NON-NLS-1$
     /** import value */
     private static final String PAR_IMPORT = "import file"; //$NON-NLS-1$
+    /** create new version parameter */
+    private static final String OPTION_CREATE_VERSION = "createVersion"; //$NON-NLS-1$
+    /** version parameter */
+    private static final String PAR_CREATE_VERSION = "project-name old-version new-version"; //$NON-NLS-1$
 
     /** singleton instance */
     private static DBToolClient instance;
@@ -127,6 +133,13 @@ public class DBToolClient extends AbstractCmdlineClient {
         // import
         opt.addOption(createOption(OPTION_IMPORT, true, PAR_IMPORT, 
                 Messages.DBToolImport, false));
+        
+        // create new version
+        final Option createVersionOption = createOption(OPTION_CREATE_VERSION,
+                true, PAR_CREATE_VERSION, Messages.DBToolCreateNewVersion, 
+                false);
+        createVersionOption.setArgs(3);
+        opt.addOption(createVersionOption);
     }
 
     /**
@@ -141,6 +154,10 @@ public class DBToolClient extends AbstractCmdlineClient {
         args = getCmdLine().getOptionValues(OPTION_EXPORT);
         if ((args != null) && (args.length != 2)) {
             appendError(errorMsgs, OPTION_EXPORT, PAR_PROJECT);
+        }
+        args = getCmdLine().getOptionValues(OPTION_CREATE_VERSION);
+        if ((args != null) && (args.length != 3)) {
+            appendError(errorMsgs, OPTION_CREATE_VERSION, PAR_CREATE_VERSION);
         }
     }
 
@@ -191,6 +208,16 @@ public class DBToolClient extends AbstractCmdlineClient {
                     importProject(cmdLine.getOptionValue(OPTION_IMPORT),
                             projectDir, monitor);
                 }
+                
+                if (cmdLine.hasOption(OPTION_CREATE_VERSION)) {
+                    final String[] projValues = cmdLine.getOptionValues(
+                            OPTION_CREATE_VERSION);
+                    if ((projValues != null) && (projValues.length == 3)) {
+                        createVersion(projValues[0], projValues[1], 
+                                projValues[2], monitor);
+                    }
+                }
+                
                 return Status.OK_STATUS;
             }
             
@@ -314,6 +341,53 @@ public class DBToolClient extends AbstractCmdlineClient {
             Persistor.instance().dropSession(session);
         }
     }
+    
+    /**
+     * Creates a new version of a project from the database
+     * @param name project name
+     * @param oldVersion existing version number in <major>.<minor> format
+     * @param newVersion version number to create in <major>.<minor> format
+     * @param monitor the progress monitor to use
+     */
+    private void createVersion(String name, String oldVersion, 
+            String newVersion, IProgressMonitor monitor) {
+        int[] oldVersionNr = buildVersionNrs(name, oldVersion);
+        int[] newVersionNr = buildVersionNrs(name, newVersion);
+        if (oldVersionNr != null && newVersionNr != null) {
+            
+            IProjectPO projectOldVersion;
+            try {
+                projectOldVersion = ProjectPM.loadProjectByNameAndVersion(name,
+                        oldVersionNr[0], oldVersionNr[1]);
+            } catch (JBException e) {
+                reportMissingProject(name, oldVersion);
+                return;
+            }
+            
+            if (projectOldVersion == null) { 
+                reportMissingProject(name, oldVersion);
+            } else {
+                String guid = projectOldVersion.getGuid();
+                boolean newVersionAlreadyExists = 
+                        ProjectPM.doesProjectVersionExist(
+                                guid, newVersionNr[0], newVersionNr[1]);
+                if (newVersionAlreadyExists) {
+                    reportExistingProject(name, newVersion);
+                } else {
+                    NewVersionOperation op = new NewVersionOperation(
+                            projectOldVersion, newVersionNr[0], 
+                            newVersionNr[1]);
+                    try {
+                        op.run(monitor);
+                    } catch (InvocationTargetException e) {
+                        reportCreateNewVersionFailed(name, newVersion, e);
+                    } catch (InterruptedException e) {
+                        reportCreateNewVersionFailed(name, newVersion, e);
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Delete a project from the database
@@ -435,7 +509,7 @@ public class DBToolClient extends AbstractCmdlineClient {
     }
 
     /**
-     * The deletion of the projct failed
+     * The deletion of the project failed
      * @param name project name
      * @param version project version
      * @param e error condition
@@ -451,9 +525,28 @@ public class DBToolClient extends AbstractCmdlineClient {
         msg.append(StringConstants.NEWLINE);
         msg.append(e.getLocalizedMessage());
         printlnConsoleError(msg.toString());
-
     }
 
+    /**
+     * The creation of a new version of the project failed
+     * @param name project name
+     * @param version project version
+     * @param e error condition
+     */
+    private void reportCreateNewVersionFailed(String name, String version, 
+            Exception e) {
+        StringBuilder msg = new StringBuilder(
+                Messages.DBToolCreateNewVersionFailed);
+        msg.append(StringConstants.SPACE);
+        msg.append(name);
+        msg.append(StringConstants.SPACE + StringConstants.LEFT_BRACKET);
+        msg.append(version);
+        msg.append(StringConstants.RIGHT_BRACKET);
+        msg.append(StringConstants.NEWLINE);
+        msg.append(e.getLocalizedMessage());
+        printlnConsoleError(msg.toString());
+    }
+    
     /**
      * Report a bad version
      * @param name project name
@@ -476,6 +569,21 @@ public class DBToolClient extends AbstractCmdlineClient {
      */
     private void reportMissingProject(String name, String version) {
         StringBuilder msg = new StringBuilder(Messages.DBToolMissingProject);
+        msg.append(StringConstants.SPACE);
+        msg.append(name);
+        msg.append(StringConstants.SPACE + StringConstants.LEFT_BRACKET);
+        msg.append(version);
+        msg.append(StringConstants.RIGHT_BRACKET);
+        printlnConsoleError(msg.toString());
+    }
+    
+    /**
+     * Report a missing project
+     * @param name project name
+     * @param version illegal project version
+     */
+    private void reportExistingProject(String name, String version) {
+        StringBuilder msg = new StringBuilder(Messages.DBToolExistingProject);
         msg.append(StringConstants.SPACE);
         msg.append(name);
         msg.append(StringConstants.SPACE + StringConstants.LEFT_BRACKET);

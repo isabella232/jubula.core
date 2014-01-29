@@ -19,6 +19,8 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.app.dbtool.i18n.messages"; //$NON-NLS-1$
     
+    public static String DBToolCreateNewVersion;
+    public static String DBToolCreateNewVersionFailed;
     public static String DBToolDelete;
     public static String DBToolPerforming;
     public static String DBToolDeleteAll;
@@ -38,10 +40,12 @@ public class Messages extends NLS {
     public static String DBToolImport;
     public static String DBToolInvalidExportDirectory;
     public static String DBToolInvalidVersion;
+    public static String DBToolExistingProject;
     public static String DBToolMissingProject;
     public static String DBToolName;
     public static String DBToolNonEmptyExportDirectory;
     public static String ExecutionControllerInvalidDBDataError;
+
     
     static {
         // initialize resource bundle

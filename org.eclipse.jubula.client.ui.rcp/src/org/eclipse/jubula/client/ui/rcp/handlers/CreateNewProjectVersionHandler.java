@@ -11,33 +11,16 @@
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jubula.client.archive.XmlStorage;
-import org.eclipse.jubula.client.archive.output.NullImportOutput;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
-import org.eclipse.jubula.client.core.businessprocess.INameMapper;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
-import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
-import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
-import org.eclipse.jubula.client.core.businessprocess.ProjectComponentNameMapper;
+import org.eclipse.jubula.client.archive.businessprocess.ProjectBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -51,15 +34,10 @@ import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -68,212 +46,6 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("synthetic-access")
 public class CreateNewProjectVersionHandler extends AbstractHandler {
-    /** standard logging */
-    private static Logger log = LoggerFactory
-            .getLogger(CreateNewProjectVersionHandler.class);
-
-    /**
-     * Operation for Create New Version action.
-     * 
-     * @author BREDEX GmbH
-     * @created Dec 3, 2007
-     */
-    private class NewVersionOperation implements IRunnableWithProgress {
-
-        /** the total work for the operation */
-        private static final int TOTAL_WORK = 100;
-
-        /** the work for gathering project data from the database*/
-        private static final int WORK_GET_PROJECT_FROM_DB = 5;
-        
-        /** the work for creating the domain objects for the project */
-        private static final int WORK_PROJECT_CREATION = 10;
-        
-        /** the work for saving the project to the database */
-        private static final int WORK_PROJECT_SAVE = 
-            TOTAL_WORK - WORK_PROJECT_CREATION - WORK_GET_PROJECT_FROM_DB;
-
-        /** The new major version number */
-        private Integer m_majorVersionNumber;
-
-        /** The new minor version number */
-        private Integer m_minorVersionNumber;
-
-        /**
-         * Constructor
-         * 
-         * @param majorVersionNumber The new major version number
-         * @param minorVersionNumber The new minor version number
-         */
-        public NewVersionOperation(Integer majorVersionNumber, 
-            Integer minorVersionNumber) {
-            m_majorVersionNumber = majorVersionNumber;
-            m_minorVersionNumber = minorVersionNumber;
-        }
-        
-        /**
-         * 
-         * {@inheritDoc}
-         */
-        public void run(IProgressMonitor monitor) throws InterruptedException {
-            String pName = GeneralStorage.getInstance().getProject().getName();
-            final SubMonitor subMonitor = SubMonitor
-                    .convert(
-                            monitor,
-                            NLS.bind(Messages.
-                        CreateNewProjectVersionOperationCreatingNewVersion,
-                                    new Object[] { m_majorVersionNumber,
-                                        m_minorVersionNumber, pName }),
-                            TOTAL_WORK);
-            final ParamNameBPDecorator paramNameMapper = 
-                new ParamNameBPDecorator(ParamNameBP.getInstance());
-            final IWritableComponentNameCache compNameCache = 
-                new ComponentNamesDecorator(null);
-            try {
-                createNewVersion(monitor, subMonitor, paramNameMapper,
-                        compNameCache); 
-            } catch (final PMReadException e) {
-                log.error(Messages.ErrorOccurredWhileCreatingNewProjectVersion,
-                    e);
-            } catch (PMException e) {
-                log.error(Messages.ErrorOccurredWhileCreatingNewProjectVersion,
-                    e);
-            } catch (ProjectDeletedException e) {
-                PMExceptionHandler.handleProjectDeletedException();
-            } catch (JBVersionException e) {
-                // should not be occur
-                log.error(Messages.
-                        ToolkitVersionConflictWhileCreatingNewProjectVersion);
-            } finally {
-                NodePM.getInstance().setUseCache(false);
-                monitor.done();
-                Plugin.stopLongRunning();
-            }
-        }
-
-        /**
-         * Method extraction forced by checkstyle to avoid overly long method.
-         * 
-         * @param monitor The progress monitor for the entire operation.
-         * @param subMonitor The sub-monitor for the operation.
-         * @param paramNameMapper The mapper for Parameter Names.
-         * @param compNameCache The mapper for Component Names.
-         * @throws ProjectDeletedException 
-         * @throws PMException
-         * @throws InterruptedException
-         * @throws PMReadException
-         * @throws JBVersionException
-         * @throws ConverterException
-         */
-        private void createNewVersion(IProgressMonitor monitor,
-                final SubMonitor subMonitor,
-                final ParamNameBPDecorator paramNameMapper,
-                final IWritableComponentNameCache compNameCache)
-            throws ProjectDeletedException, PMException,
-                InterruptedException, PMReadException, JBVersionException {
-            
-            NodePM.getInstance().setUseCache(true);
-            GeneralStorage.getInstance().validateProjectExists(
-                    GeneralStorage.getInstance().getProject());
-            String serializedProject = XmlStorage.save(GeneralStorage
-                .getInstance().getProject(), null, false, subMonitor
-                .newChild(WORK_GET_PROJECT_FROM_DB), false, null);
-            if (monitor.isCanceled() || serializedProject == null) {
-                throw new InterruptedException();
-            }
-            final StringBuilder result = new StringBuilder(
-                serializedProject.length());
-            result.append(serializedProject);
-            final String content = new XmlStorage()
-                .checkAndReduceXmlHeaderForSaveAs(result);
-            if (monitor.isCanceled()) {
-                throw new InterruptedException();
-            }
-            final IProjectPO duplicatedProject = XmlStorage.load(
-                content, false, m_majorVersionNumber, 
-                m_minorVersionNumber, paramNameMapper, compNameCache,
-                subMonitor.newChild(WORK_PROJECT_CREATION),
-                new NullImportOutput(), true);
-            if (monitor.isCanceled()) {
-                throw new InterruptedException();
-            }
-            IWritableComponentNameMapper compNameMapper =
-                new ProjectComponentNameMapper(
-                        compNameCache, duplicatedProject);
-            try {
-                duplicatedProject.setClientMetaDataVersion(
-                    IVersion.JB_CLIENT_METADATA_VERSION);
-                attachProjectWithProgress(
-                        subMonitor.newChild(WORK_PROJECT_SAVE), 
-                        paramNameMapper, compNameMapper, duplicatedProject);
-            } catch (PMSaveException e) {
-                Plugin.stopLongRunning();
-                PMExceptionHandler.handlePMExceptionForMasterSession(
-                    new PMSaveException(e.getMessage(), MessageIDs.
-                        E_CREATE_NEW_VERSION_FAILED)
-                );
-            } catch (PMException e) {
-                Plugin.stopLongRunning();
-                PMExceptionHandler.handlePMExceptionForMasterSession(e);
-            } catch (ProjectDeletedException e) {
-                Plugin.stopLongRunning();
-                PMExceptionHandler.handleProjectDeletedException();
-            }
-        }
-        
-        /**
-         * Attaches the given project to the Master Session and database using
-         * the given parameter name mapper. Reports progress during the
-         * operation.
-         * 
-         * @param monitor
-         *            The progress monitor for the operation.
-         * @param paramNameMapper
-         *            The parameter name mapper to use when adding the project
-         *            to the database.
-         * @param compNameMapper
-         *            The component name mapper to use when adding the project
-         *            to the database.
-         * @param project
-         *            The project to add to the database
-         * @throws PMException
-         *             in case of any db error
-         * @throws ProjectDeletedException
-         *             if project is already deleted
-         * @throws InterruptedException
-         *             if the operation was canceled.
-         */
-        private void attachProjectWithProgress(IProgressMonitor monitor,
-                final ParamNameBPDecorator paramNameMapper,
-                final IWritableComponentNameMapper compNameMapper,
-                final IProjectPO project) throws PMException,
-                ProjectDeletedException, InterruptedException {
-
-            // We need to clear the current project data so 
-            // we are in a known state if the operation is 
-            // canceled.
-            IProjectPO clearedProject = 
-                GeneralStorage.getInstance().getProject();
-            if (clearedProject != null) {
-                Utils.clearClient();
-                GeneralStorage.getInstance().setProject(null);
-                final DataEventDispatcher ded = DataEventDispatcher
-                        .getInstance();
-                ded.fireDataChangedListener(clearedProject, DataState.Deleted,
-                        UpdateState.all);
-            }
-            List<INameMapper> mapperList = new ArrayList<INameMapper>();
-            List<IWritableComponentNameMapper> compNameCacheList = 
-                new ArrayList<IWritableComponentNameMapper>();
-            mapperList.add(paramNameMapper);
-            compNameCacheList.add(compNameMapper);
-            ProjectPM.attachProjectToROSession(project, project.getName(), 
-                    mapperList, compNameCacheList, monitor);
-
-            Plugin.stopLongRunning();
-        }
-    }
-
     /**
      * call this if the "save as" has ended to update the GUI.
      */
@@ -292,7 +64,8 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
         final Integer majorVersionNumber, 
         final Integer minorVersionNumber) {
         
-        return new NewVersionOperation(
+        return new ProjectBP.NewVersionOperation(
+            GeneralStorage.getInstance().getProject(),
             majorVersionNumber, minorVersionNumber);
     }
 
@@ -391,8 +164,17 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
                 fireReady();
                 
             } catch (InvocationTargetException e) {
-                // Error occurred during operation.
-                // Do nothing. The operation has already handled the error.
+                Throwable targetException = e.getTargetException();
+                if (targetException instanceof PMSaveException) {
+                    PMExceptionHandler.handlePMExceptionForMasterSession(
+                            new PMSaveException(targetException.getMessage(), 
+                                    MessageIDs.E_CREATE_NEW_VERSION_FAILED));
+                } else if (targetException instanceof PMException) {
+                    PMExceptionHandler.handlePMExceptionForMasterSession(
+                            (PMException) targetException);
+                } else if (targetException instanceof ProjectDeletedException) {
+                    PMExceptionHandler.handleProjectDeletedException();
+                }
             } catch (InterruptedException e) {
                 // Operation was canceled.
                 // We have to clear the GUI because all of 

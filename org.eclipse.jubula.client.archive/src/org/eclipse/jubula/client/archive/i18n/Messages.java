@@ -25,10 +25,12 @@ public class Messages extends NLS {
     public static String Component;
     public static String CouldNotExportProject;
     public static String CouldNotInitializeProxy;
+    public static String CreateNewProjectVersionOperationCreatingNewVersion;
     public static String DataBaseErrorUpdatingToolkits;
     public static String ErrorMessageIMPORT_PROJECT_XML_FAILED;
     public static String ErrorMessageIMPORT_PROJECT_XML_FAILED_EXISTING;
     public static String ErrorMessagePROJ_CIRC_DEPEND;
+    public static String ErrorOccurredWhileCreatingNewProjectVersion;
     public static String ErrorWhileCloseOS;
     public static String ErrorWhileImportingProject;
     public static String ExportAllBPErrorExportFailedProject;
@@ -84,6 +86,7 @@ public class Messages extends NLS {
     public static String Reading;
     public static String SaveOf;
     public static String ToolkitSupportToolkitNotFound;
+    public static String ToolkitVersionConflictWhileCreatingNewProjectVersion;
     public static String TreeOpsBPImportedCat;
     public static String UnknownErrorType;
     public static String UnparseableParameters;

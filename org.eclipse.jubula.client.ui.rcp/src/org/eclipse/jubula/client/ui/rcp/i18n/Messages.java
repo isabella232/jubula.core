@@ -187,7 +187,6 @@ public class Messages extends NLS {
     public static String CreateNewProjectVersionActionMinorLabel;
     public static String CreateNewProjectVersionActionShellTitle;
     public static String CreateNewProjectVersionActionTitle;
-    public static String CreateNewProjectVersionOperationCreatingNewVersion;
     public static String DatabaseMigrationAssistantFinalInfo;
     public static String DatabaseMigrationAssistantIntroPageDescription;
     public static String DatabaseMigrationAssistantIntroPageText;

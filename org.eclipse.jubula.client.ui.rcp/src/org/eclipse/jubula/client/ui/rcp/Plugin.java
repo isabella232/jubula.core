@@ -36,6 +36,12 @@ import org.eclipse.jubula.client.core.businessprocess.compcheck.ProblemPropagato
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.errorhandling.IErrorMessagePresenter;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
+import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.constants.Constants;
@@ -56,6 +62,7 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.DirtyStarListContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.DirtyStarListLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.search.query.AbstractQuery;
+import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.rcp.widgets.StatusLineContributionItem;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.views.IJBPart;
@@ -153,6 +160,8 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     private MessageConsoleStream m_errorMessageStream;
     /** the currently running application title */
     private String m_runningApplicationTitle = null;
+    /** the DataChangedListener which listens for a project*/
+    private IDataChangedListener m_projectLifecycleLister = null;
     
     static {
         GENERATED_IMAGES.put(IconConstants.TC_IMAGE, 
@@ -209,6 +218,10 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      */
     public void stop(BundleContext context) throws Exception {
         super.stop(context);
+        if (m_projectLifecycleLister != null) {
+            DataEventDispatcher.getInstance().removeDataChangedListener(
+                m_projectLifecycleLister);
+        }
     }
 
     /**
@@ -1047,6 +1060,23 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
             }
         }).start();
         registerPermanentServices();
+        
+        m_projectLifecycleLister = new IDataChangedListener() {
+            
+            @Override
+            public void handleDataChanged(DataChangedEvent... events) {
+                for (DataChangedEvent event : events) {
+                    if (event.getPo() instanceof IProjectPO
+                            && event.getDataState() == DataState.Deleted) {
+                        Utils.clearClient(false);
+                        GeneralStorage.getInstance().setProject(null);
+                    }
+                }
+            }
+        };
+        DataEventDispatcher.getInstance().addDataChangedListener(
+            m_projectLifecycleLister, true);
+        
     }
 
     /**
