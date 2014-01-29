@@ -68,7 +68,7 @@ public class ConfigurableLogger implements Logger {
     }
 
     /** {@inheritDoc} */
-    public void trace(String format, Object[] arguments) {
+    public void trace(String format, Object... arguments) {
         if (isEnabled()) {
             m_logger.trace(format, arguments);
         }
@@ -108,7 +108,7 @@ public class ConfigurableLogger implements Logger {
     }
 
     /** {@inheritDoc} */
-    public void trace(Marker marker, String format, Object[] argArray) {
+    public void trace(Marker marker, String format, Object... argArray) {
         if (isEnabled()) {
             m_logger.trace(marker, format, argArray);
         }
@@ -148,7 +148,7 @@ public class ConfigurableLogger implements Logger {
     }
 
     /** {@inheritDoc} */
-    public void debug(String format, Object[] arguments) {
+    public void debug(String format, Object... arguments) {
         if (isEnabled()) {
             m_logger.debug(format, arguments);
         }
@@ -188,7 +188,7 @@ public class ConfigurableLogger implements Logger {
     }
 
     /** {@inheritDoc} */
-    public void debug(Marker marker, String format, Object[] arguments) {
+    public void debug(Marker marker, String format, Object... arguments) {
         if (isEnabled()) {
             m_logger.debug(marker, format, arguments);
         }
@@ -228,7 +228,7 @@ public class ConfigurableLogger implements Logger {
     }
 
     /** {@inheritDoc} */
-    public void info(String format, Object[] arguments) {
+    public void info(String format, Object... arguments) {
         if (isEnabled()) {
             m_logger.info(format, arguments);
         }
@@ -268,7 +268,7 @@ public class ConfigurableLogger implements Logger {
     }
 
     /** {@inheritDoc} */
-    public void info(Marker marker, String format, Object[] arguments) {
+    public void info(Marker marker, String format, Object... arguments) {
         if (isEnabled()) {
             m_logger.info(marker, format, arguments);
         }
@@ -301,7 +301,7 @@ public class ConfigurableLogger implements Logger {
     }
 
     /** {@inheritDoc} */
-    public void warn(String format, Object[] arguments) {
+    public void warn(String format, Object... arguments) {
         if (isEnabled()) {
             m_logger.warn(format, arguments);
         }
@@ -348,7 +348,7 @@ public class ConfigurableLogger implements Logger {
     }
 
     /** {@inheritDoc} */
-    public void warn(Marker marker, String format, Object[] arguments) {
+    public void warn(Marker marker, String format, Object... arguments) {
         if (isEnabled()) {
             m_logger.warn(marker, format, arguments);
         }
@@ -388,7 +388,7 @@ public class ConfigurableLogger implements Logger {
     }
 
     /** {@inheritDoc} */
-    public void error(String format, Object[] arguments) {
+    public void error(String format, Object... arguments) {
         if (isEnabled()) {
             m_logger.error(format, arguments);
         }
@@ -428,7 +428,7 @@ public class ConfigurableLogger implements Logger {
     }
 
     /** {@inheritDoc} */
-    public void error(Marker marker, String format, Object[] arguments) {
+    public void error(Marker marker, String format, Object... arguments) {
         if (isEnabled()) {
             m_logger.error(marker, format, arguments);
         }
