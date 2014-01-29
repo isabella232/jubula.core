@@ -1062,8 +1062,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         registerPermanentServices();
         
         m_projectLifecycleLister = new IDataChangedListener() {
-            
-            @Override
             public void handleDataChanged(DataChangedEvent... events) {
                 for (DataChangedEvent event : events) {
                     if (event.getPo() instanceof IProjectPO
