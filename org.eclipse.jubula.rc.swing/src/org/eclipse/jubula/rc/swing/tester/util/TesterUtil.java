@@ -264,7 +264,7 @@ public class TesterUtil {
      * @param obj
      *            the object to invoke the method for
      * @param getterName
-     *            the name of the getter Method for string retrival
+     *            the name of the getter Method for string retrieval
      * @return the return value of the given method name or <code>null</code> if
      *         something went wrong during method invocation
      */

@@ -112,12 +112,13 @@ public class JavaAutConfigComponent extends AutConfigComponent {
     /** path of the executable file directory */
     private static String executablePath;
 
+    /** the logger */
+    private static Logger log = LoggerFactory
+        .getLogger(JavaAutConfigComponent.class);
+
     /** for check if the executable text field is valid */
     private boolean m_isExecFieldValid = true;
 
-    /** the logger */
-    private static Logger log = LoggerFactory
-            .getLogger(JavaAutConfigComponent.class);
     
     // internally used classes for data handling
     // internally used GUI components
