@@ -2,7 +2,7 @@
 \begin{enumerate}
 \item Once you have browsed to the  installation directory and entered \bxshell{dbtool}, you can enter the parameters for the \gddb{} actions.
 \item The dbtool uses the parameters described in the table \bxfigref{dbtoolparams}:
-
+\end{enumerate}
 
 \begin{table}[h]
 \label{dbtoolparams}
@@ -19,15 +19,15 @@
                 \hline
                   Delete Project
                   & \bxshell{-delete <project-name project-version>}\\
-		  &e.g. \emph{-delete ''ExampleProject'' 1.0}\\
+		  &e.g. \emph{-delete ''ExampleProject'' 1.0}  \bxpref{TasksDBToolKeepSummary}\\
                   \hline
                   Delete All
                   & \bxshell{-deleteall}\\
-		  &e.g. \emph{-deleteall}\\
+		  &e.g. \emph{-deleteall}  \bxpref{TasksDBToolKeepSummary}\\
                   \hline
                   Keep test result summaries
                   & \bxshell{-keepsummary} (optional)\\
-		  &e.g. \emph{-keepsummary}\\
+		  &e.g. \emph{-keepsummary} \bxpref{TasksDBToolKeepSummary}\\
                  \hline
                   Directory 
                   & \bxshell{-directory <directory path>}\\
@@ -50,6 +50,10 @@
                   & \bxshell{-import <import-file>}\\
 		  &e.g. \emph{-import <ExampleProject.xml>}\\
 		\hline
+                Create Version
+                & \bxshell{-createVersion <project-name> <old-version> <new-version>}\\
+                &e.g. \emph{-createVersion ''MyProject'' ''1.0'' ''1.1''} \bxpref{TasksDBToolCreateVersion}\\
+                \hline
                 Workspace
                   & \bxshell{-data <path to workspace>}\\
                   &e.g. \emph{-data ''<pathToQADocs>/workspace''}\\
@@ -88,10 +92,17 @@
 	\caption{Parameters for the dbtool}
 \end{table}
 
-\item You can use the parameter \bxshell{-keepsummary} to specify that the test result summaries should not be deleted when the \gdproject{} or \gdprojects{} are deleted. This is useful for continuous integration processes, where the test results over time should be kept, but the \gdprojects{} are reimported into the \gddb{} (for example from the version control system) each night. If you do not enter this parameter, the summaries will be deleted with the \gdprojects{}.
+\subsubsection{Deleting \gdprojects{} but keeping test result summaries}
+\label{TasksDBToolKeepSummary}
+You can use the parameter \bxshell{-keepsummary} to specify that the test result summaries should not be deleted when the \gdproject{} or \gdprojects{} are deleted. This is useful for continuous integration processes, where the test results over time should be kept, but the \gdprojects{} are reimported into the \gddb{} (for example from the version control system) each night. If you do not enter this parameter, the summaries will be deleted with the \gdprojects{}.
+
+\subsubsection{Creating new versions of \gdprojects{}}
+\label{TasksDBToolCreateVersion}
+You can use the dbtool to create a new version of a \gdproject{} that already exists in the \gddb{}. You enter the \gdproject{} name, the version you want to create a copy of, and the new version number that the \gdproject{} should be created under. The create new version command functions in the same way as the create new version option in the \ite{} \bxpref{projectversion}. If the \gdproject{} is not in the \gddb{} in the specified version, or if the new version already exists, then the action will fail. We recommend using this when you are sure that no-one is working on the \gdproject{}.
+
 
 \bxtipp{If you are using the embedded \gddb{}, see the section on using the embedded \gddb{} with the Test Executor for information on which username and password to use \bxpref{TasksTestExecEmbedded}}.
-\item Once you have entered all the necessary parameters, press \bxkey{enter}. 
+ Once you have entered all the necessary parameters, press \bxkey{enter}. 
 
-\end{enumerate}
+
   
