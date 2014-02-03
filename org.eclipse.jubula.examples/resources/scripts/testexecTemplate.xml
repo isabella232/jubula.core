@@ -1,5 +1,5 @@
 <!--
-    Copyright (c) 2004, 2010 BREDEX GmbH.
+    Copyright (c) 2004, 2014 BREDEX GmbH.
     All rights reserved. This program and the accompanying materials
     are made available under the terms of the Eclipse Public License v1.0
     which accompanies this distribution, and is available at
@@ -18,8 +18,10 @@
      -->
     <dbuser>YourDatabaseUsername</dbuser>
     <dbpw>YourDatabasePassword</dbpw>
-    <server>YourAUTAgentHostname</server>
-    <port>PortNumberForAUTAgent</port>
+     <!-- the server argument is optional. If you enter it, you must have started a separate AUT Agent. You must then enter the hostname of the AUT Agent in the server parameter and you must also enter the port number for the AUT Agent in the port parameter. If you do not enter a server parameter, then an embedded AUT Agent will be started
+    <server>YourAUTAgentHostname</server> -->
+    <!-- the port parameter is optional if you do not enter a server parameter. In this case, you can either enter a port number. This number will be used for the embedded AUT Agent. If you enter neither a port number nor a server parameter, the embedded AUT Agent will be started on a dynamically chosen port number. You must enter a port number if you are using the server parameter
+    <port>PortNumberForAUTAgent</port> -->
     <language>en_US</language>
     <testsuite>TestSuite</testsuite>
     <!-- or, if you're using Test Jobs
