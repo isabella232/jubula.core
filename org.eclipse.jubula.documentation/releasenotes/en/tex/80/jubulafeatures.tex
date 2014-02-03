@@ -16,6 +16,18 @@
 \item This allows you to add the test results from your continuous integration tests to your issues, bugs and features in your ALM system. 
 \end{itemize}
 
+\textbf{Support for embedded \gdagent{} in testexec}
+\begin{itemize}
+\item When executing tests via the command line using the \bxname{testexec} tool, you can now choose to use an embedded \gdagent{} for the test.
+\item This means that you do not have to start a separate \gdagent{} on the machine you are testing on.
+\item To use an embedded \gdagent{}, don't enter the \bxname{-server} parameter. You can either enter a port number for the embedded \gdagent{} to be started on, or you can also leave out the \bxname{-port} parameter to start the \gdagent{} on a dynamically chosen port.
+\end{itemize}
+
+\textbf{Create New Version is now available in the dbtool}
+\begin{itemize}
+\item You can now create new versions of a \gdproject{} using the dbtool.
+\item Use \bxshell{-createVersion <project-name> <old-version> <new-version>} to create a new version of an existing \gdproject{}.
+\end{itemize}
 
 \textbf{New information in \gdomm{} : property information}
 \begin{itemize}
