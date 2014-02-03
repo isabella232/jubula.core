@@ -169,6 +169,7 @@
 \begin{itemize}
 \item When using testexec, you have the choice between working with an \gdagent{} that you start separately, or using an embedded \gdagent{} that is started automatically by testexec.
 \item If you want to use a separately started \gdagent{}, then the \gdagent{} must be started on the machine you are testing on. Enter the parameters for the server and port number to connect to this \gdagent{}.
+\bxwarn{If you are working with \gdjobs{}, you must use a separately started \gdagent{}, because you will require the \gdagent{} to start the \gdaut{} via \bxname{autrun}.}
 \item If you want to have testexec start and connect to an embedded \gdagent{} automatically, then you have two options:
 \begin{itemize}
 \item You can leave out both the parameters for the server and the port number. This will result in an embedded \gdagent{} being started on a dynamically chosen port.
@@ -182,7 +183,7 @@
 \begin{itemize}
 \item You can either enter a \gdsuite{} to be executed or a \gdjob{}. Only one of these two commands is accepted for the test executor. 
 \item If you are starting a \gdsuite{}, your \gdaut{} will be started from its configuration. You must enter the configuration name using the correct parameter for the testexec.
-\item  If you are starting a \gdjob{}, you must make sure that the first \gdaut{} you require is already started with the \bxname{autrun} command. You must then enter the \gdaut{} ID as a parameter for the testexec. Any other \gdauts{} required during the test must either also be started already, or started as a part of the test itself.
+\item  If you are starting a \gdjob{}, you must make sure that the first \gdaut{} you require is already started with the \bxname{autrun} command. You must then enter the \gdaut{} ID as a parameter for the testexec. Any other \gdauts{} required during the test must either also be started already, or started as a part of the test itself. When working with \gdjobs{}, you must use a separately started \gdagent{}. You cannot use the embedded \gdagent{} with testexec when you are starting a \gdjob{}.
 \end{itemize}
 
 \subsubsection{Using the dburl instead of workspace and dbscheme}
