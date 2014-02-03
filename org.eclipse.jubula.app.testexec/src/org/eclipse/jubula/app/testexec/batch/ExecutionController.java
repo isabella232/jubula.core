@@ -474,7 +474,8 @@ public class ExecutionController implements IAUTServerEventListener,
             // Embedded Agent is not running. We need to start it before
             // trying to connect to it.
             try {
-                sysOut(I18n.getString("AUTAgent.EmbeddedAUTAgentStart") + port); //$NON-NLS-1$
+                sysOut(I18n.getString("AUTAgent.EmbeddedAUTAgentStart",  //$NON-NLS-1$
+                        new String[] {String.valueOf(port)}));
                 autAgentInstance.start(
                         port, false, Verbosity.QUIET, false);
                 return true;
