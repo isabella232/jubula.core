@@ -434,7 +434,6 @@ public class Messages extends NLS {
     public static String ObjectMappingEditorEditor;
     public static String ObjectMappingEditorLogicalName;
     public static String ObjectMappingEditorSplitPaneView;
-    public static String ObjectMappingEditorTableView;
     public static String ObjectMappingEditorTechnicalName;
     public static String ObjectMappingEditorTreeView;
     public static String ObjectMappingPreferencePageCollectShortcut;
@@ -895,8 +894,7 @@ public class Messages extends NLS {
     public static String WrongEditorType;
     public static String WrongEditSupportInTestCaseEditor;
     public static String WrongTypeOfElement;
-    
-    
+
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

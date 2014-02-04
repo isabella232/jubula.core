@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.ui.rcp.editors;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,7 +20,6 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuListener;
@@ -29,27 +27,18 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.jface.viewers.ColumnViewerEditor;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TableViewerEditor;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IObjectMappingObserver;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
@@ -84,7 +73,6 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
-import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -97,9 +85,7 @@ import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.LimitingDragSourceListener;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.OMDropTargetListener;
-import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.OMEditorDndSupport;
 import org.eclipse.jubula.client.ui.rcp.dialogs.NagDialog;
-import org.eclipse.jubula.client.ui.rcp.editingsupport.AbstractObjectMappingEditingSupport;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher;
 import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher.IEditorDirtyStateListener;
@@ -107,23 +93,18 @@ import org.eclipse.jubula.client.ui.rcp.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.rcp.filter.ObjectMappingEditorPatternFilter;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.propertytester.EditorPartPropertyTester;
-import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.objectmapping.OMEditorTableContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.objectmapping.OMEditorTreeContentProvider;
-import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.objectmapping.ObjectMappingRow;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.OMEditorTreeLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.selectionprovider.SelectionProviderIntermediate;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.client.ui.views.ColumnSortListener;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.IMultiTreeViewerContainer;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
-import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
@@ -134,7 +115,6 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -142,7 +122,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -179,18 +158,12 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     private static final Logger LOG = 
         LoggerFactory.getLogger(ObjectMappingMultiPageEditor.class);
     
-    /** separator for categories shown in the table view of this editor */
-    private static final String CAT_SEPARATOR = "/"; //$NON-NLS-1$
-    
     /** page index of the split view */
     private static final int SPLIT_PAGE_IDX = 0;
 
     /** page index of the tree view */
     private static final int TREE_PAGE_IDX = 1;
 
-    /** page index of the table view */
-    private static final int TABLE_PAGE_IDX = 2;
-    
     /** the object responsible for handling JBEditor-related tasks */
     private JBEditorHelper m_editorHelper;
     
@@ -209,9 +182,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     /** the viewer for presenting the tree view within this editor */
     private TreeViewer m_treeViewer;
     
-    /** the viewer for presenting the tree view within this editor */
-    private TableViewer m_tableViewer;
-
     /** 
      * the component responsible for handling the profile 
      * configuration page 
@@ -268,40 +238,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     }
     
     /**
-     * Strategy for activating cell editors in the object mapping editor's 
-     * table view.
-     *
-     * @author BREDEX GmbH
-     * @created Jan 20, 2009
-     */
-    private static class OMTableEditorActivationStrategy 
-            extends ColumnViewerEditorActivationStrategy {
-
-        /**
-         * Constructor
-         * 
-         * @param viewer The viewer that will use this strategy.
-         */
-        public OMTableEditorActivationStrategy(TableViewer viewer) {
-            super(viewer);
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        protected boolean isEditorActivationEvent(
-                ColumnViewerEditorActivationEvent event) {
-            return event.eventType == ColumnViewerEditorActivationEvent
-                                            .TRAVERSAL
-                || event.eventType == ColumnViewerEditorActivationEvent
-                                            .MOUSE_CLICK_SELECTION
-                || event.eventType == ColumnViewerEditorActivationEvent
-                                            .PROGRAMMATIC;
-        }
-
-    }
-    
-    /**
      * Sorter for the Object Mapping Editor's tree view.
      *
      * @author BREDEX GmbH
@@ -321,94 +257,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             }
             return super.category(element);
         }
-    }
-    
-    /**
-     * Editing support for the Component Name column of the 
-     * Object Mapping table.
-     *
-     * @author BREDEX GmbH
-     * @created Apr 2, 2009
-     */
-    private class ObjectMappingCompNameEditingSupport 
-            extends AbstractObjectMappingEditingSupport {
-        
-        /**
-         * Constructor
-         * 
-         * @param compNameMapper
-         *            The mapper to use for finding and modifying 
-         *            Component Names.
-         * @param viewer
-         *            The viewer where the editing will take place.
-         */
-        public ObjectMappingCompNameEditingSupport(
-                IComponentNameMapper compNameMapper, TableViewer viewer) {
-            super(compNameMapper, viewer);
-        }
-
-        /**
-         * 
-         * {@inheritDoc}
-         */
-        protected Object getValue(Object element) {
-            ObjectMappingRow row = (ObjectMappingRow)element;
-            int logicalNameIndex = row.getLogicalNameIndex();
-            if (logicalNameIndex < 0) {
-                return StringConstants.EMPTY;
-            }
-            return getCompMapper().getCompNameCache().getName(
-                    row.getAssociation().getLogicalNames()
-                        .get(logicalNameIndex));
-        }
-
-        /**
-         * 
-         * {@inheritDoc}
-         */
-        protected void doSetValue(Object element, Object value) {
-            Object oldValue = getValue(element);
-            
-            boolean isSameValue = oldValue == null 
-                ? value == null : oldValue.equals(value);
-            if (!isSameValue) {
-                if (value != null 
-                        && value.toString().trim().length() > 0) {
-                    if (getEditorHelper().requestEditableState() 
-                            != EditableState.OK) {
-                        return;
-                    }
-                    ObjectMappingRow row = 
-                        (ObjectMappingRow)element;
-                    final IWritableComponentNameMapper mapper = 
-                        getCompMapper();
-                    String oldGuid = 
-                        mapper.getCompNameCache().getGuidForName(
-                                String.valueOf(oldValue));
-                    String newGuid = 
-                        mapper.getCompNameCache().getGuidForName(
-                                value.toString());
-                    if (newGuid == null) {
-                        String compType = 
-                            ComponentBuilder.getInstance()
-                                .getCompSystem()
-                                .getMostAbstractComponent()
-                                .getType();
-                        newGuid = mapper.getCompNameCache()
-                            .createComponentNamePO(
-                                value.toString(), compType, 
-                                CompNameCreationContext
-                                    .OBJECT_MAPPING).getGuid();
-                    }
-                    OMEditorDndSupport
-                        .checkAndSwapComponentNames(
-                                row.getAssociation(), 
-                                oldGuid, newGuid, 
-                                ObjectMappingMultiPageEditor.this);
-                }
-            }
-        }
-
     }
     
     /**
@@ -534,7 +382,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 createSplitPanePageControl(getContainer(), menuMgr));
         int treeViewIndex = addPage(createTreePageControl(getContainer(), 
                 menuMgr));
-        int tableViewIndex = addPage(createTablePageControl(getContainer()));
         int configViewIndex = addPage(createConfigPageControl(getContainer()));
 
         setPageText(
@@ -544,17 +391,12 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 treeViewIndex, 
                 Messages.ObjectMappingEditorTreeView);
         setPageText(
-                tableViewIndex, 
-                Messages.ObjectMappingEditorTableView);
-
-        setPageText(
                 configViewIndex, 
                 Messages.ObjectMappingEditorConfigView);
         
         m_pageToSelectionProvider.put(splitPaneViewIndex, 
                 m_splitPaneSelectionProvider);
         m_pageToSelectionProvider.put(treeViewIndex, m_treeViewer);
-        m_pageToSelectionProvider.put(tableViewIndex, m_tableViewer);
         m_pageToSelectionProvider.put(
                 configViewIndex, new NullSelectionProvider());
         
@@ -963,247 +805,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     }
 
     /**
-     * Create context menu for the tree-based editor view.
-     */
-    private void createTableContextMenu() {
-        // Create menu manager.
-        MenuManager menuMgr = new MenuManager();
-        menuMgr.setRemoveAllWhenShown(true);
-        menuMgr.addMenuListener(new IMenuListener() {
-            public void menuAboutToShow(IMenuManager mgr) {
-                fillTableContextMenu(mgr);
-            }
-        });
-        // Create menu.
-        Menu menu = menuMgr.createContextMenu(m_tableViewer.getControl());
-        m_tableViewer.getControl().setMenu(menu);
-    }
-
-    /**
-     * fill the tree context menu
-     * 
-     * @param mgr
-     *            IMenuManager
-     */
-    protected void fillTableContextMenu(IMenuManager mgr) {
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.REVERT_CHANGES);
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.REFRESH_COMMAND_ID);
-        mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-    }
-
-    /**
-     * Creates the table page of the editor.
-     * 
-     * @param parent The parent composite.
-     * @return the base control of the table view.
-     */
-    private Control createTablePageControl(Composite parent) {
-        m_tableViewer = new TableViewer(parent, 
-                SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.FULL_SELECTION);
-
-        addLogicalNameColumn(m_tableViewer);
-        addTechNameColumn(m_tableViewer);
-        addCategoryColumn(m_tableViewer);
-        addCompTypeColumn(m_tableViewer);
-
-        TableViewerEditor.create(
-                m_tableViewer, 
-                new OMTableEditorActivationStrategy(m_tableViewer), 
-                ColumnViewerEditor.TABBING_VERTICAL 
-                    | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR 
-                    | ColumnViewerEditor.TABBING_HORIZONTAL);
-
-        m_tableViewer.setContentProvider(new OMEditorTableContentProvider());
-        m_tableViewer.getTable().setLinesVisible(true);
-        m_tableViewer.getTable().setHeaderVisible(true);
-        TableColumn sortColumn = m_tableViewer.getTable().getColumn(0); 
-        m_tableViewer.getTable().setSortColumn(sortColumn);
-        m_tableViewer.getTable().setSortDirection(SWT.DOWN);
-        ColumnSortListener sortListener = new ColumnSortListener(
-                m_tableViewer, sortColumn);
-        for (TableColumn col 
-                : m_tableViewer.getTable().getColumns()) {
-            
-            col.addSelectionListener(sortListener);
-        }
-        m_tableViewer.setUseHashlookup(true);
-        m_tableViewer.setInput(getAut().getObjMap());
-        createTableContextMenu();
-        return m_tableViewer.getControl();
-    }
-
-    /**
-     * Adds a "Component Type" column to the given viewer.
-     * 
-     * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
-     */
-    private TableViewerColumn addCompTypeColumn(TableViewer tableViewer) {
-        TableViewerColumn column = 
-            new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(200);
-        column.getColumn().setText(
-                Messages.ObjectMappingEditorComponentType);
-        column.getColumn().setMoveable(true);
-        column.setLabelProvider(new ColumnLabelProvider() {
-
-            public String getText(Object element) {
-                ObjectMappingRow row = (ObjectMappingRow)element;
-                IObjectMappingAssoziationPO assoc = row.getAssociation(); 
-                
-                String text = StringConstants.EMPTY;
-                
-                if (row.getLogicalNameIndex() 
-                        != ObjectMappingRow.NO_COMP_NAME) {
-                    
-                    String compNameGuid = 
-                        assoc.getLogicalNames().get(row.getLogicalNameIndex());
-                    IComponentNamePO compName = 
-                        getCompMapper().getCompNameCache().getCompNamePo(
-                                compNameGuid);
-                    
-                    text = 
-                        compName != null 
-                            ? CompSystemI18n.getString(
-                                    compName.getComponentType())
-                                    : CompSystemI18n.getString(
-                                            "CompNamesView.errorText"); //$NON-NLS-1$
-                }
-
-                return text;
-            }
-        });
-        
-        return column;
-    }
-
-    /**
-     * Adds a "Category" column to the given viewer.
-     * 
-     * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
-     */
-    private TableViewerColumn addCategoryColumn(TableViewer tableViewer) {
-        TableViewerColumn column = 
-            new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(200);
-        column.getColumn().setImage(IconConstants.CATEGORY_IMAGE);
-        column.getColumn().setText(
-                Messages.ObjectMappingEditorCategory);
-        column.getColumn().setMoveable(true);
-        column.setLabelProvider(new ColumnLabelProvider() {
-
-            public String getText(Object element) {
-                ObjectMappingRow row = (ObjectMappingRow)element;
-                List<String> catPath = new ArrayList<String>();
-                IObjectMappingCategoryPO category = 
-                    row.getAssociation().getCategory(); 
-                while (category != null) {
-                    catPath.add(0, category.getName());
-                    category = category.getParent();
-                }
-                StringBuilder sb = new StringBuilder();
-                Iterator<String> it = catPath.iterator();
-                // Skip the first element because it is the top-level
-                // categorization of "Mapped/UnmappedTech/UnmappedLogical".
-                // This information can just as easily be determined in the
-                // table view by looking at the "Tech Name" and "Logical Name"
-                // column values.
-                if (it.hasNext()) {
-                    it.next();
-                }
-                while (it.hasNext()) {
-                    sb.append(CAT_SEPARATOR).append(it.next());
-                }
-                return sb.toString(); 
-            }
-        });
-        
-        return column;
-    }
-
-    /**
-     * Adds a "Logical Name" column to the given viewer.
-     * 
-     * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
-     */
-    private TableViewerColumn addLogicalNameColumn(TableViewer tableViewer) {
-        TableViewerColumn column = 
-            new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(200);
-        column.getColumn().setImage(IconConstants.LOGICAL_NAME_IMAGE);
-        column.getColumn().setText(
-                Messages.ObjectMappingEditorLogicalName);
-        column.getColumn().setMoveable(true);
-        column.setLabelProvider(new ColumnLabelProvider() {
-            public String getText(Object element) {
-                ObjectMappingRow row = (ObjectMappingRow)element;
-                int logicalNameIndex = row.getLogicalNameIndex();
-                if (logicalNameIndex < 0) {
-                    return null;
-                }
-                return getCompMapper().getCompNameCache().getName(
-                        row.getAssociation().getLogicalNames()
-                            .get(logicalNameIndex));
-            }
-        });
-        column.setEditingSupport(
-                new ObjectMappingCompNameEditingSupport(
-                        getCompMapper(), tableViewer));
-        
-        return column;
-    }
-
-    /**
-     * Adds a "Technical Name" column to the given viewer.
-     * 
-     * @param tableViewer The viewer to which the column will be added.
-     * @return the added column.
-     */
-    private TableViewerColumn addTechNameColumn(final TableViewer tableViewer) {
-        TableViewerColumn column = 
-            new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(200);
-        column.getColumn().setImage(IconConstants.TECHNICAL_NAME_IMAGE);
-        column.getColumn().setText(
-                Messages.ObjectMappingEditorTechnicalName);
-        column.getColumn().setMoveable(true);
-        column.setLabelProvider(new ColumnLabelProvider() {
-            public String getText(Object element) {
-                IObjectMappingAssoziationPO assoc =
-                    ((ObjectMappingRow)element).getAssociation();
-                IComponentIdentifier compId = assoc.getTechnicalName();
-                return compId != null ? compId.getComponentName() : null;
-            }
-            /**{@inheritDoc} */
-            public Color getBackground(Object element) {
-                IObjectMappingAssoziationPO assoc =
-                    ((ObjectMappingRow)element).getAssociation();
-                IComponentIdentifier compId = assoc.getCompIdentifier();
-                switch (OMEditorTreeLabelProvider.getQualitySeverity(compId)) {
-                    case IStatus.OK:
-                        return tableViewer.getTable().getDisplay()
-                                .getSystemColor(SWT.COLOR_GREEN);
-                    case IStatus.WARNING:
-                        return tableViewer.getTable().getDisplay()
-                                .getSystemColor(SWT.COLOR_YELLOW);
-                    case IStatus.ERROR:
-                        return tableViewer.getTable().getDisplay()
-                                .getSystemColor(SWT.COLOR_RED);
-                    default:
-                        break;
-                }
-                return null;
-            }
-        });
-
-        return column;
-    }
-
-    /**
      * {@inheritDoc}
      */
     public void doSave(IProgressMonitor monitor) {
@@ -1436,7 +1037,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             // Clearing the selection seems to help prevent the behavior 
             // noted in bug 334269
             m_treeViewer.setSelection(StructuredSelection.EMPTY);
-            m_tableViewer.setInput(om);
             m_treeViewer.setExpandedElements(expandedElements);
             m_treeViewer.expandToLevel(2);
 
@@ -1512,10 +1112,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                     m_treeViewer.refresh();
                     m_treeViewer.setExpandedElements(expandedElements);
                 }
-                if (i == TABLE_PAGE_IDX) {
-                    m_tableViewer.setInput(getAut().getObjMap());
-                    m_tableViewer.refresh();
-                }
             }
         }
         // fire property for change of dirty state
@@ -1535,9 +1131,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             if (i == getActivePage()) {
                 if (i == TREE_PAGE_IDX) {
                     m_treeViewer.refresh();
-                }
-                if (i == TABLE_PAGE_IDX) {
-                    m_tableViewer.refresh();
                 }
             }
         }
@@ -1649,7 +1242,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         m_treeViewer.refresh();
         m_uiElementTreeViewer.refresh();
         m_mappedComponentTreeViewer.refresh();
-        m_tableViewer.refresh();
     }
     
     /**
@@ -1697,14 +1289,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     public TreeViewer getTreeViewer() {
         return m_treeViewer;
-    }
-    
-    /**
-     * 
-     * @return the table viewer.
-     */
-    public TableViewer getTableViewer() {
-        return m_tableViewer;
     }
     
     /**
