@@ -10,10 +10,15 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
+import java.util.Iterator;
+
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.ui.handlers.AbstractTestResultViewHandler;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author BREDEX GmbH
@@ -22,9 +27,22 @@ import org.eclipse.jubula.client.ui.handlers.AbstractTestResultViewHandler;
 public class ToggleRelevanceHandler extends AbstractTestResultViewHandler {
     /** {@inheritDoc} */
     public Object executeImpl(ExecutionEvent event) {
-        ITestResultSummaryPO selectedSummary = getSelectedSummary(event);
-        TestresultSummaryBP.getInstance().setRelevance(selectedSummary,
-            !selectedSummary.isTestsuiteRelevant());
+        ISelection selection = HandlerUtil.getCurrentSelection(event);
+        if (selection instanceof IStructuredSelection) {
+            IStructuredSelection structuredSelection =
+                (IStructuredSelection)selection;
+            for (Iterator iterator = structuredSelection.iterator(); 
+                    iterator.hasNext();) {
+                Object selectedObject = iterator.next();
+                if (selectedObject instanceof ITestResultSummaryPO) {
+                    ITestResultSummaryPO selectedSummary =
+                            (ITestResultSummaryPO)selectedObject;
+                    TestresultSummaryBP.getInstance().setRelevance(
+                            selectedSummary,
+                            !selectedSummary.isTestsuiteRelevant());
+                }
+            }
+        }
         return null;
     }
 }
