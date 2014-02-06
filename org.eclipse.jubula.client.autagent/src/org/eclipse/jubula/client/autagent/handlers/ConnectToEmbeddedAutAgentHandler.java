@@ -61,7 +61,7 @@ public class ConnectToEmbeddedAutAgentHandler extends AbstractHandler
             final int port = Platform.getPreferencesService().getInt(
                 Activator.PLUGIN_ID,
                 PreferenceInitializer.PREF_EMBEDDED_AGENT_PORT,
-                EnvConstants.AUT_AGENT_DEFAULT_PORT, null);
+                EnvConstants.EMBEDDED_AUT_AGENT_DEFAULT_PORT, null);
             try {
                 autAgentInstance.start(
                         port, false, Verbosity.QUIET, false);
