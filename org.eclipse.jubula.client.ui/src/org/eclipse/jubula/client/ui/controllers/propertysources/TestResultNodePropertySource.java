@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.controllers.propertysources;
 
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -79,6 +80,9 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_ACTIONTYPE = 
         Messages.CapGUIPropertySourceActionType;
+    /** Property m_text on display */
+    public static final String P_ELEMENT_DISPLAY_COMP_MATCH = 
+        Messages.CapGUIPropertySourceCompMatch;
     /** Property m_text on display */
     public static final String P_ELEMENT_DISPLAY_COMPTYPE = 
         Messages.CapGUIPropertySourceCompType;
@@ -297,6 +301,19 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
             addPropertyDescriptor(propDes);
         }
 
+        final double match = testResult.getOmHeuristicEquivalence();
+        if (match >= 0) {
+            propDes = new PropertyDescriptor(
+                    new PropertyController() {
+                public Object getProperty() {
+                            return NumberFormat
+                                .getPercentInstance().format(match);
+                        }
+                    } , P_ELEMENT_DISPLAY_COMP_MATCH);
+            propDes.setCategory(P_CAP_CAT);
+            addPropertyDescriptor(propDes);
+        }
+        
     }
 
     /**

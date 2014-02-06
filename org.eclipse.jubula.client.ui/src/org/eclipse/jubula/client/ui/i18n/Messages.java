@@ -27,6 +27,7 @@ public class Messages extends NLS {
     public static String CapGUIPropertySourceComponent;
     public static String CapGUIPropertySourceComponentName;
     public static String CapGUIPropertySourceCompType;
+    public static String CapGUIPropertySourceCompMatch;
     public static String CapGUIPropertySourceParameter;
     public static String CapGUIPropertySourceParamName;
     public static String CapGUIPropertySourceParams;

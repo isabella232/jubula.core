@@ -239,6 +239,8 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                             generateTestErrorEvent(result));
                     createdNode.setScreenshot(result.getImage());
                     createdNode.setTimestamp(result.getTimestamp());
+                    createdNode.setOmHeuristicEquivalence(result
+                            .getOmHeuristicEquivalence());
                     if (m_rootNode == null) {
                         m_rootNode = createdNode;
                     }
