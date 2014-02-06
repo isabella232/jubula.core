@@ -335,6 +335,13 @@
 						<td>:</td>
 						<td><xsl:value-of select="component-type"/></td>
 					</tr>
+					<xsl:if test="component-heuristic-match != ''">
+						<tr>
+							<td>Heuristic Match</td>
+							<td>:</td>
+							<td><xsl:value-of select='format-number(component-heuristic-match, "##%")' /></td>
+						</tr>
+					</xsl:if>
 					<tr><td colspan="3"><hr/></td></tr>
 					<tr>
 						<td>Action</td>

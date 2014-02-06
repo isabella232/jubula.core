@@ -277,6 +277,13 @@ public abstract class AbstractXMLReportGenerator {
         Element compTypeEl = insertInto.addElement("component-type"); //$NON-NLS-1$
         compTypeEl.addText(CompSystemI18n.getString(cap.getComponentType(), 
             true));
+        
+        double heuristicMatch = resultNode.getOmHeuristicEquivalence();
+        if (heuristicMatch >= 0) {
+            Element heuristicMatchElement = insertInto
+                    .addElement("component-heuristic-match"); //$NON-NLS-1$
+            heuristicMatchElement.addText(String.valueOf(heuristicMatch));
+        }
         Element actionEl = insertInto.addElement("action-type"); //$NON-NLS-1$
         actionEl.addText(CompSystemI18n.getString(cap.getActionName(), true));
         
