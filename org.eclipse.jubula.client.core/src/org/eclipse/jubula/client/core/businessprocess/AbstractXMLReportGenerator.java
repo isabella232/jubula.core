@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -88,31 +89,41 @@ public abstract class AbstractXMLReportGenerator {
         root.addAttribute("style", getStyleName()); //$NON-NLS-1$
         Element general = root.addElement("project"); //$NON-NLS-1$
         
-        general.addElement("name").//$NON-NLS-1$
-            addText(getTestResult().getProjectName());
+        ITestResult testResult = getTestResult();
+		general.addElement("name").//$NON-NLS-1$
+            addText(testResult.getProjectName());
 
         general.addElement("version").//$NON-NLS-1$
-                addText(getTestResult().getProjectMajorVersion()
+                addText(testResult.getProjectMajorVersion()
                         + StringConstants.DOT
-                        + getTestResult().getProjectMinorVersion());
+                        + testResult.getProjectMinorVersion());
 
-        Date startTime = getTestResult().getStartTime();
+        Date startTime = testResult.getStartTime();
         if (startTime != null) {
             general.addElement("test-start").addText(startTime.toString()); //$NON-NLS-1$
         }
-        Date endTime = getTestResult().getEndTime();
+        Date endTime = testResult.getEndTime();
         if (endTime != null) {
             general.addElement("test-end").addText(endTime.toString()); //$NON-NLS-1$
         }
 
         if (startTime != null && endTime != null) {
             general.addElement("test-length").//$NON-NLS-1$
-                addText(TimeUtil.getDurationString(startTime, endTime));
+                    addText(TimeUtil.getDurationString(startTime, endTime));
+            int executedCAPs = testResult.getNumberOfTestedSteps();
+            String averageCAPExecutionTime = "n/a";
+            if (executedCAPs > 0) {
+                averageCAPExecutionTime = String.valueOf(
+                    (endTime.getTime() - startTime.getTime())
+                        / executedCAPs);
+            }
+            general.addElement("average-cap-duration").//$NON-NLS-1$
+                    addText(averageCAPExecutionTime);
         }
         
-        addStepCountElements(getTestResult(), general);
+        addStepCountElements(testResult, general);
         
-        general.addElement("language").addText(getTestResult().getTestLanguage()); //$NON-NLS-1$
+        general.addElement("language").addText(testResult.getTestLanguage()); //$NON-NLS-1$
         
         return general;
     }
