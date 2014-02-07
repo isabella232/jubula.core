@@ -34,7 +34,8 @@ public final class EnvConstants {
     public static final int AUT_AGENT_DEFAULT_PORT = 60000;
     
     /** <code>EMBEDDED_AUT_AGENT_DEFAULT_PORT</code> */
-    public static final int EMBEDDED_AUT_AGENT_DEFAULT_PORT = AUT_AGENT_DEFAULT_PORT + 1;
+    public static final int EMBEDDED_AUT_AGENT_DEFAULT_PORT = 
+        AUT_AGENT_DEFAULT_PORT + 1;
 
     /** <code>LOCALHOST</code>; maybe <code>null</code> if retrieval failed */
     public static final InetAddress LOCALHOST;

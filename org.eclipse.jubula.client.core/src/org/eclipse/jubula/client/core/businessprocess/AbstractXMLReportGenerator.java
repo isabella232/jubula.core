@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -90,7 +89,7 @@ public abstract class AbstractXMLReportGenerator {
         Element general = root.addElement("project"); //$NON-NLS-1$
         
         ITestResult testResult = getTestResult();
-		general.addElement("name").//$NON-NLS-1$
+        general.addElement("name").//$NON-NLS-1$
             addText(testResult.getProjectName());
 
         general.addElement("version").//$NON-NLS-1$

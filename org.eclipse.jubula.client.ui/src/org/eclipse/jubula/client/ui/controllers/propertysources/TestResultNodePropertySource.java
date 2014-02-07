@@ -305,7 +305,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         if (match >= 0) {
             propDes = new PropertyDescriptor(
                     new PropertyController() {
-                public Object getProperty() {
+                        public Object getProperty() {
                             return NumberFormat
                                 .getPercentInstance().format(match);
                         }

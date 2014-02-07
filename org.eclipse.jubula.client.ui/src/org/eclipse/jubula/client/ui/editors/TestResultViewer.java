@@ -196,7 +196,6 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                         m_parentProjectId, allGuids, 
                         GeneralStorage.getInstance().getMasterSession());
                 monitor.worked(1);
-
                 int remainingWork = testResultList.size();
                 SubMonitor sMonitor = SubMonitor.convert(monitor,
                     "Fetching test result data...", //$NON-NLS-1$
@@ -228,7 +227,6 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                     createdNode.setComponentName(result.getComponentName());
                     createdNode.setComponentType(result.getComponentType());
                     createdNode.setTaskId(result.getTaskId());
-                    
                     for (IParameterDetailsPO param 
                             : result.getUnmodifiableParameterList()) {
                         createdNode.addParameter(
