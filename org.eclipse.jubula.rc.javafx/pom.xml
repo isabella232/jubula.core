@@ -8,10 +8,10 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>org.eclipse.jubula.releng.client</artifactId>
-		<groupId>org.eclipse.jubula</groupId>
-		<version>2.3.0-SNAPSHOT</version>
-		<relativePath>../org.eclipse.jubula.releng.client</relativePath>
+		<artifactId>com.bredexsw.guidancer.project.configuration</artifactId>
+		<groupId>com.bredexsw.guidancer</groupId>
+		<version>8.0.0-SNAPSHOT</version>
+		<relativePath>../../guidancer/com.bredexsw.guidancer.project.configuration</relativePath>
 	</parent>
 
 	<artifactId>org.eclipse.jubula.rc.javafx</artifactId>
@@ -30,4 +30,5 @@
 	</build>
 	<packaging>eclipse-plugin</packaging>
 
+	<version>2.3.0-SNAPSHOT</version>
 </project>
