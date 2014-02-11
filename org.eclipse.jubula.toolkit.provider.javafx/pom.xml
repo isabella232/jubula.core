@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>org.eclipse.jubula.releng.client</artifactId>
+    <groupId>org.eclipse.jubula</groupId>
+    <version>2.3.0-SNAPSHOT</version>
+    <relativePath>../org.eclipse.jubula.releng.client</relativePath>
+  </parent>
+  <artifactId>org.eclipse.jubula.toolkit.provider.javafx</artifactId>
+  <packaging>eclipse-plugin</packaging>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <extensions>true</extensions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <dependency-resolution>
+            <optionalDependencies>ignore</optionalDependencies>
+            <extraRequirements>
+              <!-- prefer RCP to RAP for compilation  -->
+              <requirement>
+                <type>eclipse-plugin</type>
+                <id>org.eclipse.swt</id>
+                <versionRange>[3.6,4.0)</versionRange>
+              </requirement>
+              <requirement>
+                <type>eclipse-plugin</type>
+                <id>org.eclipse.jface</id>
+                <versionRange>[3.6,4.0)</versionRange>
+              </requirement>
+              <requirement>
+                <type>eclipse-plugin</type>
+                <id>org.eclipse.jubula.client.ui.rcp</id>
+                <versionRange>[2.3.0,2.4.0)</versionRange>
+              </requirement>
+            </extraRequirements>
+          </dependency-resolution>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

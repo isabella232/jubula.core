@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2013 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<toolchains>
+	<toolchain>
+		<type>jdk</type>
+		<provides>
+			<id>JavaSE-1.7</id>
+		</provides>
+		<configuration>
+			<jdkHome>/devapps/java64/jdk1.8.0</jdkHome>
+			<bootClassPath>
+				<includes>
+					<include>/jre/lib/*.jar</include>
+					<include>/jre/lib/ext/*.jar</include>
+				</includes>
+			</bootClassPath>
+		</configuration>
+	</toolchain>
+</toolchains>
