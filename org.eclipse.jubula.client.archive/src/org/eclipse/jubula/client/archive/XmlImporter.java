@@ -491,7 +491,7 @@ class XmlImporter {
 
     /**
      * Creates the instance of the persistent object which is defined by the
-     * XML element used as prameter. The method generates all dependend objects
+     * XML element used as parameter. The method generates all dependent objects
      * as well.
      * @param xmlProj the XML-Project
      * @param proj the IProjectPO
@@ -620,7 +620,7 @@ class XmlImporter {
     /**
      * @param usedTK toolkits used from project to import
      * @param projName name of project to import
-     * @param errorMsgs list with strings of detailled error messages
+     * @param errorMsgs list with strings of detailed error messages
      * @return if project uses toolkits which client supports 
      */
     private boolean validateToolkitVersion(Set<IUsedToolkitPO> usedTK, 

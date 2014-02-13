@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.archive.businessprocess;
 
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,17 +102,12 @@ public class ProjectBP {
             m_minorVersionNumber = minorVersionNumber;
         }
         
-        /**
-         * 
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void run(IProgressMonitor monitor) throws InterruptedException, 
             InvocationTargetException {
             String pName = m_project.getName();
-            final SubMonitor subMonitor = SubMonitor
-                    .convert(
-                            monitor,
-                            NLS.bind(Messages.
+            final SubMonitor subMonitor = SubMonitor.convert(
+                    monitor, NLS.bind(Messages.
                         CreateNewProjectVersionOperationCreatingNewVersion,
                                     new Object[] { m_majorVersionNumber,
                                         m_minorVersionNumber, pName }),
@@ -121,89 +117,48 @@ public class ProjectBP {
             final IWritableComponentNameCache compNameCache = 
                 new ComponentNamesDecorator(null);
             try {
-                createNewVersion(monitor, subMonitor, paramNameMapper,
-                        compNameCache); 
+                NodePM.getInstance().setUseCache(true);
+                GeneralStorage.getInstance().validateProjectExists(m_project);
+                InputStream xmlProjectInputStream = XmlStorage.save(m_project, null, false, 
+                        subMonitor.newChild(WORK_GET_PROJECT_FROM_DB), false, null);
+                if (monitor.isCanceled()) {
+                    throw new InterruptedException();
+                }
+                final IProjectPO duplicatedProject = XmlStorage.load(
+                    xmlProjectInputStream, false, m_majorVersionNumber, 
+                    m_minorVersionNumber, paramNameMapper, compNameCache,
+                    subMonitor.newChild(WORK_PROJECT_CREATION),
+                    new NullImportOutput(), true);
+                if (monitor.isCanceled()) {
+                    throw new InterruptedException();
+                }
+                IWritableComponentNameMapper compNameMapper =
+                    new ProjectComponentNameMapper(
+                            compNameCache, duplicatedProject);
+                
+                duplicatedProject.setClientMetaDataVersion(
+                    IVersion.JB_CLIENT_METADATA_VERSION);
+                attachProjectWithProgress(
+                        subMonitor.newChild(WORK_PROJECT_SAVE), 
+                        paramNameMapper, compNameMapper, duplicatedProject);
             } catch (final PMSaveException e) {
-                log.error(Messages.ErrorOccurredWhileCreatingNewProjectVersion,
-                        e);
+                log.error(Messages.ErrorWhileCreatingNewProjectVersion, e);
                 throw new InvocationTargetException(e);
             } catch (final PMReadException e) {
-                log.error(Messages.ErrorOccurredWhileCreatingNewProjectVersion,
-                    e);
+                log.error(Messages.ErrorWhileCreatingNewProjectVersion, e);
             } catch (PMException e) {
-                log.error(Messages.ErrorOccurredWhileCreatingNewProjectVersion,
-                    e);
+                log.error(Messages.ErrorWhileCreatingNewProjectVersion, e);
                 throw new InvocationTargetException(e);
             } catch (ProjectDeletedException e) {
                 throw new InvocationTargetException(e);
             } catch (JBVersionException e) {
-                // should not occur
-                log.error(Messages.
-                        ToolkitVersionConflictWhileCreatingNewProjectVersion);
+                log.error(Messages.ToolkitVersionConflictWhileCreatingNewProjectVersion);
             } finally {
                 NodePM.getInstance().setUseCache(false);
                 monitor.done();
             }
         }
 
-        
-        /**
-         * Method extraction forced by checkstyle to avoid overly long method.
-         * 
-         * @param monitor The progress monitor for the entire operation.
-         * @param subMonitor The sub-monitor for the operation.
-         * @param paramNameMapper The mapper for Parameter Names.
-         * @param compNameCache The mapper for Component Names.
-         * @throws ProjectDeletedException 
-         * @throws PMException
-         * @throws InterruptedException
-         * @throws PMReadException
-         * @throws JBVersionException
-         * @throws InvocationTargetException 
-         * @throws ConverterException
-         */
-        private void createNewVersion(IProgressMonitor monitor,
-                final SubMonitor subMonitor,
-                final ParamNameBPDecorator paramNameMapper,
-                final IWritableComponentNameCache compNameCache)
-            throws ProjectDeletedException, PMException,
-                InterruptedException, PMReadException, 
-                JBVersionException, InvocationTargetException {
-            
-            NodePM.getInstance().setUseCache(true);
-            GeneralStorage.getInstance().validateProjectExists(m_project);
-            String serializedProject = XmlStorage.save(m_project, null, false, 
-                    subMonitor.newChild(WORK_GET_PROJECT_FROM_DB), false, null);
-            if (monitor.isCanceled() || serializedProject == null) {
-                throw new InterruptedException();
-            }
-            final StringBuilder result = new StringBuilder(
-                serializedProject.length());
-            result.append(serializedProject);
-            final String content = new XmlStorage()
-                .checkAndReduceXmlHeaderForSaveAs(result);
-            if (monitor.isCanceled()) {
-                throw new InterruptedException();
-            }
-            final IProjectPO duplicatedProject = XmlStorage.load(
-                content, false, m_majorVersionNumber, 
-                m_minorVersionNumber, paramNameMapper, compNameCache,
-                subMonitor.newChild(WORK_PROJECT_CREATION),
-                new NullImportOutput(), true);
-            if (monitor.isCanceled()) {
-                throw new InterruptedException();
-            }
-            IWritableComponentNameMapper compNameMapper =
-                new ProjectComponentNameMapper(
-                        compNameCache, duplicatedProject);
-            
-            duplicatedProject.setClientMetaDataVersion(
-                IVersion.JB_CLIENT_METADATA_VERSION);
-            attachProjectWithProgress(
-                    subMonitor.newChild(WORK_PROJECT_SAVE), 
-                    paramNameMapper, compNameMapper, duplicatedProject);
-
-        }
         /**
          * Attaches the given project to the Master Session and database using
          * the given parameter name mapper. Reports progress during the

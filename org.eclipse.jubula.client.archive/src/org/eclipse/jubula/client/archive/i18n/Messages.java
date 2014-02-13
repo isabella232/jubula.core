@@ -30,7 +30,7 @@ public class Messages extends NLS {
     public static String ErrorMessageIMPORT_PROJECT_XML_FAILED;
     public static String ErrorMessageIMPORT_PROJECT_XML_FAILED_EXISTING;
     public static String ErrorMessagePROJ_CIRC_DEPEND;
-    public static String ErrorOccurredWhileCreatingNewProjectVersion;
+    public static String ErrorWhileCreatingNewProjectVersion;
     public static String ErrorWhileCloseOS;
     public static String ErrorWhileImportingProject;
     public static String ExportAllBPErrorExportFailedProject;
@@ -39,7 +39,6 @@ public class Messages extends NLS {
     public static String ExportAllBPInfoStartingExportProject;
     public static String ExportOperationCanceled;
     public static String Failed;
-    public static String FailedReadingFile;
     public static String File;
     public static String GeneralIoExeption;
     public static String ImportEmptyName;
@@ -71,7 +70,6 @@ public class Messages extends NLS {
     public static String IncompatibleToolkitVersion;
     public static String InvalidImportFile;
     public static String MalformedXMLData;
-    public static String NoHeaderFound;
     public static String NoSupportedFileEncoding;
     public static String NotFound;
     public static String OpenProjectActionToolkitVersionConflict2; 

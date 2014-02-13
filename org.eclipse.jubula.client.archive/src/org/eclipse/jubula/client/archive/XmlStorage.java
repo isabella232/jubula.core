@@ -138,11 +138,6 @@ public class XmlStorage {
     private static final String[] SUPPORTED_CHAR_ENCODINGS = 
         new String[]{RECOMMENDED_CHAR_ENCODING, "UTF-16"};  //$NON-NLS-1$
     
-    /** XML header intro */
-    private static final String XML_HEADER_START = "<?xml"; //$NON-NLS-1$
-    /** XML header end */
-    private static final String XML_HEADER_END = "?>"; //$NON-NLS-1$
-    
     /**
      * the current XML schema namespace
      */
@@ -173,7 +168,7 @@ public class XmlStorage {
      * @param monitor
      *            The progress monitor for this potentially long-running
      *            operation.
-     * @return a String which contains the XML representation, or
+     * @return an input stream to the XML representation, or
      *         <code>null</code> if the operation was cancelled.
      * @throws PMException
      *             of io or encoding errors
@@ -234,11 +229,11 @@ public class XmlStorage {
     }
     
     /**
-     * Takes the supplied xmlString and parses it. According to the content an
+     * Takes the supplied input stream and parses it. According to the content an
      * instance of IProjetPO along with its associated components is created.
      * 
-     * @param xmlString
-     *            XML representation of a project
+     * @param projectXmlStream
+     *            input stream for XML representation of a project
      * @param assignNewGuid
      *            Flag for assigning the project a new GUID and version
      * @param majorVersion
@@ -262,14 +257,14 @@ public class XmlStorage {
      *            whether to skip importing of tracked information
      * @return an transient IProjectPO and its components
      * @throws PMReadException
-     *             in case of a malformed XML string
+     *             in case of a invalid XML string
      * @throws JBVersionException
      *             in case of version conflict between used toolkits of imported
-     *             project and the installed Toolkit Plugins
+     *             project and the installed toolkit plug-ins
      * @throws InterruptedException
      *             if the operation was canceled.
      */
-    public static IProjectPO load(String xmlString, boolean assignNewGuid,
+    public static IProjectPO load(InputStream projectXmlStream, boolean assignNewGuid,
         Integer majorVersion, Integer minorVersion,
         IParamNameMapper paramNameMapper,
         IWritableComponentNameCache compNameCache,
@@ -279,7 +274,7 @@ public class XmlStorage {
         
         ContentDocument contentDoc;
         try {
-            contentDoc = getContent(xmlString);
+            contentDoc = getContent(projectXmlStream);
             Project projectXml = contentDoc.getContent().getProject();
             int numExecTestCases = 
                 projectXml.selectPath(XPATH_FOR_EXEC_TCS).length;
@@ -310,42 +305,51 @@ public class XmlStorage {
 
     /**
      * Reads the content from a string containing XML data
-     * @param xmlString XML data
+     * @param projectXmlStream an input stream to the project XML data
      * @return a ContentDocument which represents the XML data
      * @throws XmlException  if the parsing fails
      * @throws PMReadException if the validation fails
      */
-    private static ContentDocument getContent(String xmlString)
+    private static ContentDocument getContent(InputStream projectXmlStream)
         throws XmlException, PMReadException {
         Map<String, String> substitutes = new HashMap<String, String>();
         substitutes.put(OLD_SCHEMA_NAMESPACE, SCHEMA_NAMESPACE);
         XmlOptions options = new XmlOptions();
         options.setLoadSubstituteNamespaces(substitutes);
 
-        ContentDocument contentDoc = ContentDocument.Factory.parse(xmlString,
-                options);
-        Collection errors = new ArrayList();
-        options.setErrorListener(errors);
-        if (!contentDoc.validate(options)) {
-            StringBuilder msgs = new StringBuilder(StringConstants.NEWLINE);
-            for (Object msg : errors) {
-                msgs.append(msg);
+        ContentDocument contentDoc = null;
+        try {
+            contentDoc = ContentDocument.Factory.parse(
+                    projectXmlStream, options);
+            Collection errors = new ArrayList();
+            options.setErrorListener(errors);
+            if (!contentDoc.validate(options)) {
+                StringBuilder msgs = new StringBuilder(StringConstants.NEWLINE);
+                for (Object msg : errors) {
+                    msgs.append(msg);
+                }
+                if (log.isDebugEnabled()) {
+                    log.debug(Messages.ValidateFailed 
+                            + StringConstants.COLON, msgs);
+                    log.debug(Messages.ValidateFailed 
+                            + StringConstants.COLON, contentDoc);
+                }
+                throw new PMReadException(Messages.InvalidImportFile
+                        + msgs.toString(), MessageIDs.E_LOAD_PROJECT);
             }
-            if (log.isDebugEnabled()) {
-                log.debug(Messages.ValidateFailed 
-                        + StringConstants.COLON, msgs);
-                log.debug(Messages.ValidateFailed 
-                        + StringConstants.COLON, contentDoc);
-            }
-            throw new PMReadException(Messages.InvalidImportFile
-                    + msgs.toString(), MessageIDs.E_LOAD_PROJECT);
+        } catch (IOException e) {
+            log.error(e.getLocalizedMessage(), e);
+            throw new PMReadException(e.getLocalizedMessage(), 
+                    MessageIDs.E_LOAD_PROJECT);
+        } finally {
+            IOUtils.closeQuietly(projectXmlStream);
         }
         return contentDoc;
     }
 
     /**
      * Save a project as XML to a file or return the serialized project as
-     * string, if fileName == null!
+     * an input stream, if fileName == null!
      * 
      * @param proj
      *            project to be saved
@@ -363,7 +367,7 @@ public class XmlStorage {
      * @param listOfProjectFiles
      *            If a project is written into the temp dir then the written
      *            file is added to the list, if the list is not null.
-     * @return the serialized project as string, if fileName == null<br>
+     * @return an input stream to the serialized project if fileName == null<br>
      *         or<br>
      *         <b>Returns:</b><br>
      *         null otherwise. Always returns <code>null</code> if the save
@@ -373,7 +377,7 @@ public class XmlStorage {
      * @throws ProjectDeletedException
      *             in case of current project is already deleted
      */
-    public static String save(IProjectPO proj, String fileName,
+    public static InputStream save(IProjectPO proj, String fileName,
             boolean includeTestResultSummaries,
             IProgressMonitor monitor, boolean writeToSystemTempDir, 
             List<File> listOfProjectFiles)
@@ -389,8 +393,7 @@ public class XmlStorage {
                 includeTestResultSummaries, monitor);
 
             if (fileName == null) {
-                return IOUtils.toString(projXMLStream,
-                    RECOMMENDED_CHAR_ENCODING);
+                return projXMLStream;
             }
 
             if (writeToSystemTempDir) {
@@ -467,126 +470,48 @@ public class XmlStorage {
     }
 
     /**
-     * read data from a file using a specified character encoding
-     * @param projectURL the project XML URL
-     * @param encoding character encoding. Must be a supported encoding or an
-     * UnsupportedEncodingException will be thrown. Null is allowed and means
-     * system default encoding.
-     * @return a Stringbuilder holding the characters from the file
-     * @throws IOException  in  case of io problems
+     * Reads the content of the file and returns it as a string.
+     * 
+     * @param fileURL
+     *            The URL of the project to import
+     * @return an input stream to the URL content
+     * @throws PMReadException
+     *             If the file couldn't be read (wrong file name, IOException)
      */
-    public static StringBuilder readFileContent(
-        URL projectURL, String encoding) throws IOException {
-        StringBuilder result = new StringBuilder();            
-        
-        BufferedReader in = null;
+    private static InputStream openStreamToProjectURL(URL fileURL)
+            throws PMReadException {
         try {
-            if (encoding != null) {
-                in = new BufferedReader(new InputStreamReader(
-                        projectURL.openStream(), encoding));
-            } else {
-                in = new BufferedReader(new InputStreamReader(
-                        projectURL.openStream()));
-            }
-
-            char buff[] = new char[10240];
-            int transfer;
-            while ((transfer = in.read(buff)) != -1) {
-                result.append(buff, 0, transfer);
-            }
-        } finally {
-            if (in != null) {
-                in.close();
-            }
-        }
-        return result;
-    }
-    /**
-     * Reads the content of the file and returns it as a string. 
-     * @param fileURL The URL of the project to import
-     * @return The file content
-     * @throws PMReadException If the file couldn't be read (wrong file name, IOException)
-     */
-    private static String readProjectFile(URL fileURL)
-        throws PMReadException {
-        try {
-            final String encoding = getCharacterEncoding(fileURL);
-            StringBuilder result = readFileContent(fileURL, encoding);
-            String content = checkAndReduceXmlHeader(result);
-            return content;            
-        } catch (FileNotFoundException e) {
-            log.debug(Messages.ClassSerializedCouldntFound, e);
-            throw new PMReadException(e.toString(), 
-                MessageIDs.E_FILE_NOT_FOUND);
+            checkCharacterEncoding(fileURL);
+            return fileURL.openStream();
         } catch (IOException e) {
-            log.debug(Messages.FailedReadingFile + StringConstants.COLON 
-                    + StringConstants.SPACE + fileURL.getFile());
+            log.debug(e.getLocalizedMessage(), e);
             throw new PMReadException(e.toString(), MessageIDs.E_FILE_IO);
-        } catch (XmlException e) {
-            log.debug(Messages.MalformedXMLData);
-            throw new PMReadException(e.toString(), MessageIDs.E_LOAD_PROJECT);
         }
     }
 
     /**
-     * Gets the character encoding of the given XML-URL.
+     * Checks the character encoding of the given XML-URL.
      * 
      * @param xmlProjectURL
      *            a URL-object which must point a valid XML-Structure.
-     * @return The encoding (e.g. UTF-8, UTF-16, ...).
      * @see SUPPORTED_CHAR_ENCODINGS
      * @throws IOException
      *             in case of reading error.
      */
-    public static String getCharacterEncoding(URL xmlProjectURL) throws 
-        IOException {
+    public static void checkCharacterEncoding(URL xmlProjectURL) 
+            throws IOException {
         for (String encoding : SUPPORTED_CHAR_ENCODINGS) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    xmlProjectURL.openStream(), encoding));
-            final String firstLine = reader.readLine();
-            if (firstLine != null && firstLine.contains(encoding)) {
-                return encoding;
+            try (InputStream xmlProjectStream = xmlProjectURL.openStream();
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(xmlProjectStream, encoding)); ) {
+                final String firstLine = reader.readLine();
+                if (firstLine != null && firstLine.contains(encoding)) {
+                    return;
+                }
             }
         }
         throw new IOException(Messages.NoSupportedFileEncoding 
                 + StringConstants.EXCLAMATION_MARK);
-    }
-
-    /**
-     * @param xmlData the contents of the import file
-     * @return the xmlData without the header
-     * @throws XmlException if no header available or the version doesn't match
-     */
-    private static String checkAndReduceXmlHeader(StringBuilder xmlData)
-        throws XmlException {
-        int startPos = xmlData.indexOf(XML_HEADER_START); 
-        int endPos = xmlData.indexOf(XML_HEADER_END);
-        if (startPos != 0 || endPos == -1) {
-            // wrong header, probably invalid
-            throw new XmlException(Messages.NoHeaderFound);
-        }
-        
-        endPos += XML_HEADER_END.length();
-        
-        return xmlData.substring(endPos);
-    }
-    
-    /**
-     * @param xmlData the contents for the "Save As..." action
-     * @return the xmlData without the header
-     * @throws PMReadException if no header available or the version doesn't match
-     */
-    public String checkAndReduceXmlHeaderForSaveAs(StringBuilder xmlData)
-        throws PMReadException {
-        
-        String result = null;
-        try {
-            result = checkAndReduceXmlHeader(xmlData);
-        } catch (XmlException e) {
-            throw new PMReadException(e.toString(), MessageIDs.
-                E_SAVE_AS_PROJECT_FAILED);
-        }
-        return result;
     }
 
     /**
@@ -622,7 +547,7 @@ public class XmlStorage {
         IProgressMonitor monitor, IProgressConsole io) throws PMReadException, 
         JBVersionException, InterruptedException {
 
-        return load(readProjectFile(fileURL), assignNewGuids, null, null,
+        return load(openStreamToProjectURL(fileURL), assignNewGuids, null, null,
                 paramNameMapper, compNameCache, monitor, io, false);
     }
 

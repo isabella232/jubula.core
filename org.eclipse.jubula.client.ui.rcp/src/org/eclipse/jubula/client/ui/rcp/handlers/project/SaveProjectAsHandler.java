@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers.project;
 
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -120,14 +121,14 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 new ComponentNamesDecorator(null);
             try {
                 NodePM.getInstance().setUseCache(true);
-                String content = getContentForNewProject(subMonitor.newChild(
-                        WORK_GET_PROJECT_FROM_DB));
+                InputStream contentStream = getContentForNewProject(
+                        subMonitor.newChild(WORK_GET_PROJECT_FROM_DB));
                 if (monitor.isCanceled()) {
                     throw new InterruptedException();
                 }
-                if (content != null) {
+                if (contentStream != null) {
                     final IProjectPO duplicatedProject = XmlStorage.load(
-                        content, true, null, null, paramNameMapper,
+                        contentStream, true, null, null, paramNameMapper,
                         compNameCache, 
                         subMonitor.newChild(WORK_PROJECT_CREATION),
                         new NullImportOutput(), true);
@@ -195,7 +196,7 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
          * @param project
          *            The project to add to the database
          * @throws PMException
-         *             in case of any db error
+         *             in case of any database error
          * @throws ProjectDeletedException
          *             if project is already deleted
          * @throws InterruptedException
@@ -311,23 +312,18 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
      * @throws InterruptedException
      *             if the operation was canceled.
      */
-    private String getContentForNewProject(IProgressMonitor monitor) 
+    private InputStream getContentForNewProject(IProgressMonitor monitor) 
         throws ProjectDeletedException, InterruptedException, PMException {
         GeneralStorage.getInstance().validateProjectExists(
                 GeneralStorage.getInstance().getProject());
-        String serializedProject = XmlStorage.save(GeneralStorage.getInstance()
+        InputStream projectStream = XmlStorage.save(GeneralStorage.getInstance()
             .getProject(), null, false, monitor, false, null);
 
         if (monitor.isCanceled()) {
             throw new InterruptedException();
         }
-        if (serializedProject != null) {
-            StringBuilder result = new StringBuilder(
-                serializedProject.length());
-            result.append(serializedProject);
-            String content = new XmlStorage()
-                .checkAndReduceXmlHeaderForSaveAs(result);
-            return content;
+        if (projectStream != null) {
+            return projectStream;
         }
         
         return null;

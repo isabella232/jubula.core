@@ -134,7 +134,7 @@ public class FileStorageBP {
          * @param fileURLs
          *              URLs of the project files to read.
          * @param console
-         *              The console to use to display pogress and 
+         *              The console to use to display progress and 
          *              error messages.
          */
         public ReadFilesOperation(boolean isImportWholeProjects, 
@@ -266,7 +266,7 @@ public class FileStorageBP {
          *            Mapping from projects to import to corresponding 
          *            component name mappers.
          * @param console
-         *              The console to use to display pogress and 
+         *              The console to use to display progress and 
          *              error messages.
          */
         public CompleteImportOperation(
@@ -683,7 +683,7 @@ public class FileStorageBP {
          * Creates an error dialog.
          * 
          * @param console
-         *              The console to use to display pogress and 
+         *              The console to use to display progress and 
          *              error messages.
          * @param name The name of the project that is causing the problem.
          */
@@ -818,7 +818,7 @@ public class FileStorageBP {
          * Writes an error to the console.
          * 
          * @param console
-         *              The console to use to display pogress and 
+         *              The console to use to display progress and 
          *              error messages.
          * @param existingName 
          *      Name of the project that already exists in the database
@@ -882,7 +882,7 @@ public class FileStorageBP {
          *            Mapping from projects to import to corresponding 
          *            component name mappers.
          * @param console
-         *              The console to use to display pogress and 
+         *              The console to use to display progress and 
          *              error messages.
          * @param openProject
          *            Flag indicating whether the imported project should be 
@@ -977,7 +977,7 @@ public class FileStorageBP {
          *            Component Name mappers.
          * @param elements elements
          * @param console
-         *              The console to use to display pogress and 
+         *              The console to use to display progress and 
          *              error messages.
          */
         public PartsImportOperation(
@@ -1393,7 +1393,7 @@ public class FileStorageBP {
      *                           list, if the temp dir was used and the list  
      *                           is not null.
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      */
     public static void exportProjectList(List<IProjectPO> projectList, 
@@ -1470,7 +1470,7 @@ public class FileStorageBP {
      * @param importProjectURLs list of file URLs. Each URL must be valid.
      * @param monitor The progress monitor for the operation.
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      * @param openProject
      *            Flag indicating whether the imported project should be 
@@ -1498,7 +1498,7 @@ public class FileStorageBP {
      * @param monitor 
      *            The progress monitor for the operation.
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      * @param openProject
      *            Flag indicating whether the imported project should be 
@@ -1526,7 +1526,7 @@ public class FileStorageBP {
      *            The URLs of the files to import.
      * @param subMonitor @see #importProject(int)
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      * @param openProject
      *            Flag indicating whether the imported project should be 
@@ -1572,7 +1572,7 @@ public class FileStorageBP {
      * error.
      * 
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      * @param e The error that caused the import operation to abort.
      */
@@ -1586,7 +1586,7 @@ public class FileStorageBP {
      * Report to the user that an error occurred while importing the project.
      * 
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      * @param projectFileName The filename of the project that was being 
      *                        imported.
@@ -1604,7 +1604,7 @@ public class FileStorageBP {
      * Report to the user that all projects have been imported.
      * 
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      */
     private static void showFinishedImport(IProgressConsole console) {
@@ -1616,7 +1616,7 @@ public class FileStorageBP {
      * Report to the user that the project has been imported.
      * 
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      * @param projectFileName The filename of the imported project.
      */
@@ -1631,7 +1631,7 @@ public class FileStorageBP {
      * Report to the user that all projects to import have been analyzed.
      * 
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      */
     private static void showFinishedReadingProjects(IProgressConsole console) {
@@ -1645,7 +1645,7 @@ public class FileStorageBP {
      * ofthe current project.
      * 
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      * @param projectName Name of the project to import.
      * @param currentToolkit Toolkit of the current project.
@@ -1664,7 +1664,7 @@ public class FileStorageBP {
      * Report to the user that the import process is beginning.
      * 
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      */
     private static void showStartingImport(IProgressConsole console) {
@@ -1676,7 +1676,7 @@ public class FileStorageBP {
      * Report to the user that the project is being imported.
      * 
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      * @param projectFileName The filename of the imported project.
      */
@@ -1691,7 +1691,7 @@ public class FileStorageBP {
      * Report to the user that all projects to import will be analyzed.
      * 
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      */
     private static void showStartingReadingProjects(IProgressConsole console) {
