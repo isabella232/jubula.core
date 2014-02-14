@@ -264,12 +264,11 @@ public class XmlStorage {
      * @throws InterruptedException
      *             if the operation was canceled.
      */
-    public static IProjectPO load(InputStream projectXmlStream, boolean assignNewGuid,
-        Integer majorVersion, Integer minorVersion,
+    public static IProjectPO load(InputStream projectXmlStream,
+        boolean assignNewGuid, Integer majorVersion, Integer minorVersion,
         IParamNameMapper paramNameMapper,
-        IWritableComponentNameCache compNameCache,
-        IProgressMonitor monitor, IProgressConsole io, 
-        boolean skipTrackingInformation)
+        IWritableComponentNameCache compNameCache, IProgressMonitor monitor,
+        IProgressConsole io, boolean skipTrackingInformation)
         throws PMReadException, JBVersionException, InterruptedException {
         
         ContentDocument contentDoc;
@@ -479,7 +478,7 @@ public class XmlStorage {
      *             If the file couldn't be read (wrong file name, IOException)
      */
     private static InputStream openStreamToProjectURL(URL fileURL)
-            throws PMReadException {
+        throws PMReadException {
         try {
             checkCharacterEncoding(fileURL);
             return fileURL.openStream();
@@ -495,23 +494,24 @@ public class XmlStorage {
      * @param xmlProjectURL
      *            a URL-object which must point a valid XML-Structure.
      * @see SUPPORTED_CHAR_ENCODINGS
+     * @return the encoding or throws exception if not supported encoding used
      * @throws IOException
      *             in case of reading error.
      */
-    public static void checkCharacterEncoding(URL xmlProjectURL) 
-            throws IOException {
+    public static String checkCharacterEncoding(URL xmlProjectURL)
+        throws IOException {
         for (String encoding : SUPPORTED_CHAR_ENCODINGS) {
             try (InputStream xmlProjectStream = xmlProjectURL.openStream();
                 BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(xmlProjectStream, encoding)); ) {
+                    new InputStreamReader(xmlProjectStream, encoding));) {
                 final String firstLine = reader.readLine();
                 if (firstLine != null && firstLine.contains(encoding)) {
-                    return;
+                    return encoding;
                 }
             }
         }
-        throw new IOException(Messages.NoSupportedFileEncoding 
-                + StringConstants.EXCLAMATION_MARK);
+        throw new IOException(Messages.NoSupportedFileEncoding
+            + StringConstants.EXCLAMATION_MARK);
     }
 
     /**

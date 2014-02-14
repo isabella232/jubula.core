@@ -119,8 +119,9 @@ public class ProjectBP {
             try {
                 NodePM.getInstance().setUseCache(true);
                 GeneralStorage.getInstance().validateProjectExists(m_project);
-                InputStream xmlProjectInputStream = XmlStorage.save(m_project, null, false, 
-                        subMonitor.newChild(WORK_GET_PROJECT_FROM_DB), false, null);
+                InputStream xmlProjectInputStream = XmlStorage.save(m_project,
+                    null, false, subMonitor.newChild(WORK_GET_PROJECT_FROM_DB),
+                    false, null);
                 if (monitor.isCanceled()) {
                     throw new InterruptedException();
                 }
@@ -152,7 +153,7 @@ public class ProjectBP {
             } catch (ProjectDeletedException e) {
                 throw new InvocationTargetException(e);
             } catch (JBVersionException e) {
-                log.error(Messages.ToolkitVersionConflictWhileCreatingNewProjectVersion);
+                log.error(Messages.TKVersionCreatingNewProjectVersion);
             } finally {
                 NodePM.getInstance().setUseCache(false);
                 monitor.done();
