@@ -74,6 +74,7 @@ import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -1026,9 +1027,8 @@ public class TestresultSummaryView extends ViewPart implements
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {
                 ITestResultSummaryPO row = (ITestResultSummaryPO)element;
-                return Boolean.toString(TestResultSummaryPropertyTester
-                    .hasPendingALMReport(row, GeneralStorage.getInstance()
-                        .getMasterSession()));
+                return I18n.getString("almReportStatus."  //$NON-NLS-1$
+                        + row.getAlmReportStatus());
             }
             public Image getImage(Object element) {
                 return null;
@@ -1890,8 +1890,8 @@ public class TestresultSummaryView extends ViewPart implements
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TESTRUN_STATE)) {
                 metaValue = m.getTestRunState();
             } else if (m_filterType.equals(TESTRESULT_ALM_REPORT_STATE)) {
-                metaValue = Boolean.toString(m.getAlmReportStatus() 
-                    == AlmReportStatus.NOT_YET_REPORTED);
+                metaValue = I18n.getString("almReportStatus." //$NON-NLS-1$
+                        + m.getAlmReportStatus());
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_PROJECT_NAME)) {
                 metaValue = m.getProjectName();
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TESTSUITE)) {

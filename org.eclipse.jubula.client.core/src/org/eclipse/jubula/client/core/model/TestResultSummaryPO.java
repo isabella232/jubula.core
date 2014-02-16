@@ -175,7 +175,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     private boolean m_blobWritten = false;
     /** ALM reported flag */
     private AlmReportStatus m_almStatus = AlmReportStatus.NOT_CONFIGURED;
-    /** monitoring value typ */
+    /** monitoring value type */
     private String m_monitoringValueType;
     /** whether to report in case of a failure */
     private boolean m_reportOnFailure = false;

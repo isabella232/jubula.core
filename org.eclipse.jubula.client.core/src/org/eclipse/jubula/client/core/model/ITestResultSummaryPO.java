@@ -27,7 +27,9 @@ public interface ITestResultSummaryPO extends IArchivableTestResultSummary,
         /** Do not change - persisted to database */
         REPORTED,
         /** Do not change - persisted to database */
-        NOT_CONFIGURED
+        NOT_CONFIGURED,
+        /** Do not change - persisted to database */
+        REPORT_CANCELLED
     }
     
     /**

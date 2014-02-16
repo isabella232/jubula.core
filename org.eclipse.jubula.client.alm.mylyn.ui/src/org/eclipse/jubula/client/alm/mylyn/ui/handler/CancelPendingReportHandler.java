@@ -30,7 +30,7 @@ public class CancelPendingReportHandler extends AbstractALMReportHandler {
         if (sumCount > 0) {
             for (ITestResultSummaryPO summary : summaries) {
                 TestresultSummaryBP.getInstance().setALMReportStatus(summary,
-                    AlmReportStatus.NOT_CONFIGURED);
+                    AlmReportStatus.REPORT_CANCELLED);
             }
         }
         return null;
