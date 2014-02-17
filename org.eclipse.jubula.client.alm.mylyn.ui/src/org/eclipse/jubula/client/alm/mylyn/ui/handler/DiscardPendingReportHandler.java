@@ -21,7 +21,7 @@ import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus
 /**
  * @author BREDEX GmbH
  */
-public class CancelPendingReportHandler extends AbstractALMReportHandler {
+public class DiscardPendingReportHandler extends AbstractALMReportHandler {
     /** {@inheritDoc} */
     protected Object executeImpl(ExecutionEvent event) 
         throws ExecutionException {
@@ -30,7 +30,7 @@ public class CancelPendingReportHandler extends AbstractALMReportHandler {
         if (sumCount > 0) {
             for (ITestResultSummaryPO summary : summaries) {
                 TestresultSummaryBP.getInstance().setALMReportStatus(summary,
-                    AlmReportStatus.REPORT_CANCELLED);
+                    AlmReportStatus.REPORT_DISCARDED);
             }
         }
         return null;

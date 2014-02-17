@@ -31,8 +31,8 @@
       </command>
       <command
             categoryId="org.eclipse.jubula.client.alm.ui.commands.category"
-            id="org.eclipse.jubula.client.alm.ui.commands.cancelPendingResults"
-            name="Cancel pending report">
+            id="org.eclipse.jubula.client.alm.ui.commands.discardPendingResults"
+            name="Discard pending report">
       </command>
    </extension>
    <extension
@@ -56,8 +56,8 @@
 	      </enabledWhen>
       </handler>
       <handler
-            class="org.eclipse.jubula.client.alm.mylyn.ui.handler.CancelPendingReportHandler"
-            commandId="org.eclipse.jubula.client.alm.ui.commands.cancelPendingResults">
+            class="org.eclipse.jubula.client.alm.mylyn.ui.handler.DiscardPendingReportHandler"
+            commandId="org.eclipse.jubula.client.alm.ui.commands.discardPendingResults">
             <enabledWhen>
 	        <and>
 	          <iterate ifEmpty="false" operator="or">
@@ -134,7 +134,7 @@
 		<menuContribution
 	      locationURI="popup:org.eclipse.jubula.client.ui.views.TestresultSummaryView?after=additions">
 	      <command
-	        commandId="org.eclipse.jubula.client.alm.ui.commands.cancelPendingResults"
+	        commandId="org.eclipse.jubula.client.alm.ui.commands.discardPendingResults"
 	        style="push" />
 		</menuContribution>
    </extension>
