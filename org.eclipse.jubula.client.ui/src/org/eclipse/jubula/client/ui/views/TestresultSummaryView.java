@@ -49,7 +49,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultChan
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultSummaryEventListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Persistor;
@@ -65,7 +64,6 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.propertytester.TestResultSummaryPropertyTester;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestresultSummaryContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestresultSummaryViewColumnLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
