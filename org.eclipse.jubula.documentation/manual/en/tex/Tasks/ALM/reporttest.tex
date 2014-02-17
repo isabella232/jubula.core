@@ -71,14 +71,17 @@ For tests started via testexec, the reporting does not happen automatically. Ins
 
 \begin{enumerate}
 \item In a \gdproject{} that is configured to report to an ALM repository, when a test has run via testexec, you can open the Reporting Perspective and locate the test run in the \gdtestsummaryview{}.
-\item In the \bxname{ALM Report Pending} column, you will see whether there are any reports pending. This is based on various factors:
-\begin{enumerate}
-\item ALM Reporting must have been configured for the \gdproject{}. If no ALM is configured for the \gdproject{}, then the status in the \bxname{ALM Report Pending} column will be \bxname{false}.
-\item The test run must have been designated as relevant. Non-relevant tests show the status \bxname{false} in the \bxname{ALM Report Pending} column.
-\end{enumerate}
+\item In the \bxname{ALM Report Status} column, you will see whether there are any reports pending. You can see various statuses in this column:
+
+\begin{description}
+\item [Not configured:]{if you have not configured ALM reporting for the \gdproject{}, or if the relevance of the test run is false.}
+\item [Not yet reported:]{if reporting was configured, and there is information available to be reported that has not yet been reported.}
+\item [Reported:]{if information was available, and the report has been carried out.}
+\item [Report has been cancelled:]{if reporting information was available, but the report was cancelled (i.e. the information was discarded and not reported). You can do this by selecting the option from the context menu.}
+\end{description}
 \item Select any test runs whose results you want to report to ALM, and click on the \bxcaption{Report to ALM} button on the toolbar. You can also select this option from the context-sensitive menu. If you select multiple test runs, the reporting will take place sequentially for each test run. 
-\item When you select this option, the reporting will be triggered as described above. If the reporting is successful, the status in the \bxname{ALM Report Pending} column changes from \bxname{true} to \bxname{false}. If an error occurs, then the status remains as \bxname{true}. 
-\bxtipp{If you do not want to report the test results to an ALM tool, you can switch the status of the \bxname{ALM Report Pending} column from \bxname{true} to \bxname{false} by selecting the option to cancel pending reports from the context menu. Toggling the relevance of the test run to \bxname{false} will also set the  \bxname{ALM Report Pending status to \bxname{false}, but this will also mean that the test results are not exported and not considered for BIRT reports \bxpref{testresprefs}.}}
+\item When you select this option, the reporting will be triggered as described above. If the reporting is successful, the status in the \bxname{ALM Report Status} column changes from \bxname{Not yet reported} to \bxname{Reported}. If an error occurs, then the status remains as \bxname{Not yet reported}. 
+\item If you do not want to report the test results to an ALM tool, you can discard the reporting information by selecting the option to cancel pending reports from the context menu. This changes the status in the \bxname{ALM Report Status} column  from \bxname{Not yet reported} to \bxname{Report has been cancelled}.
 \end{enumerate}
 
 
