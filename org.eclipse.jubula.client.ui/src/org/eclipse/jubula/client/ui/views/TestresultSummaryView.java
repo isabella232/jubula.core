@@ -49,6 +49,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultChan
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultSummaryEventListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Persistor;
@@ -1025,8 +1026,7 @@ public class TestresultSummaryView extends ViewPart implements
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {
                 ITestResultSummaryPO row = (ITestResultSummaryPO)element;
-                return I18n.getString("almReportStatus."  //$NON-NLS-1$
-                        + row.getAlmReportStatus());
+                return getDescriptiveALMStatusDescription(row);
             }
             public Image getImage(Object element) {
                 return null;
@@ -1042,7 +1042,23 @@ public class TestresultSummaryView extends ViewPart implements
             }
         };
     }
-
+    
+    /**
+     * @param summary
+     *            the summary
+     * @return an i18n value
+     */
+    private String getDescriptiveALMStatusDescription(
+        ITestResultSummaryPO summary) {
+        final AlmReportStatus almReportStatus = summary.getAlmReportStatus();
+        if (almReportStatus == AlmReportStatus.NOT_YET_REPORTED
+            && !summary.isTestsuiteRelevant()) {
+            return Messages.ALMStatusMarkedAsNonRelevant;
+        }
+        return I18n.getString("almReportStatus." //$NON-NLS-1$
+            + almReportStatus);
+    }
+    
     /**
      * Adds a "Project Name" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
@@ -1888,8 +1904,7 @@ public class TestresultSummaryView extends ViewPart implements
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TESTRUN_STATE)) {
                 metaValue = m.getTestRunState();
             } else if (m_filterType.equals(TESTRESULT_ALM_REPORT_STATE)) {
-                metaValue = I18n.getString("almReportStatus." //$NON-NLS-1$
-                        + m.getAlmReportStatus());
+                metaValue = getDescriptiveALMStatusDescription(m);
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_PROJECT_NAME)) {
                 metaValue = m.getProjectName();
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TESTSUITE)) {
