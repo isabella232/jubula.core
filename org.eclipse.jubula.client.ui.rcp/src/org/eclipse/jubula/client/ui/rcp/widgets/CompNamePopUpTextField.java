@@ -196,14 +196,12 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
                 Constants.MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL);
         final DelayableTimer contentProposalTimer = new DelayableTimer(delay,
                 new Runnable() {
-                    @Override
                     public void run() {
                         openContentProposals();
                     }
                 });
         
         addKeyListener(new KeyListener() {
-            @Override
             public void keyReleased(KeyEvent e) {
                 if (!getText().equals(StringConstants.EMPTY)
                         && triggerCharWasTyped(e)) {
@@ -211,7 +209,6 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
                 }
             }
             
-            @Override
             public void keyPressed(KeyEvent e) {
                 contentProposalTimer.cancel();
             }
