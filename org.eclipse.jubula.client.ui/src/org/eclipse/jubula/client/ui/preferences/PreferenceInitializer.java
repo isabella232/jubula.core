@@ -73,6 +73,9 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
                 Constants.MINIMIZEONSUITESTART_KEY_DEFAULT);
         prefStore.setDefault(Constants.SHOWORIGINALNAME_KEY, 
                 Constants.SHOWORIGINALNAME_KEY_DEFAULT);
+        prefStore.setDefault(
+                Constants.MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL,
+                Constants.MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL_DEFAULT);
         prefStore.setDefault(Constants.PERSP_CHANGE_KEY,
                 Constants.PERSP_CHANGE_KEY_DEFAULT);
         prefStore.setDefault(Constants.NODE_INSERT_KEY,

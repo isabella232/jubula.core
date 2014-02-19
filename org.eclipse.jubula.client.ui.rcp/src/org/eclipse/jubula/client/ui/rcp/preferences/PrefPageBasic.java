@@ -23,11 +23,14 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedDirnameText;
+import org.eclipse.jubula.client.ui.rcp.widgets.CheckedIntText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -97,6 +100,8 @@ public class PrefPageBasic extends PreferencePage implements
     private CheckedText m_dataDirPathTextfield;
     /** open a file selection dialog */
     private Button m_dataDirPathButton;
+    /** time after which the content assist for the component names view opens itself*/
+    private CheckedIntText m_compNamesContentAssistTime;
 
     /** Yes = 0; No = 1; Prompt = 2 */
     private int m_perspChangeValue;
@@ -105,7 +110,7 @@ public class PrefPageBasic extends PreferencePage implements
     /** should data be retrieved from workspace */
     private boolean m_dataDirIsWorkspaceValue;
 
-    /** The preferece store to hold the existing preference values. */
+    /** The preference store to hold the existing preference values. */
     private IPreferenceStore m_store = Plugin.getDefault()
             .getPreferenceStore();
     /** a new selection listener */
@@ -169,6 +174,8 @@ public class PrefPageBasic extends PreferencePage implements
         createShowCAPInfosCheckbox(composite);
         createShowTransientChildrensCheckbox(composite);
         createDefaultProjectCheckbox(composite);
+        createSeparator(composite, 3);
+        createComponentNamesViewSettings(composite);
         createSeparator(composite, 3);
         createRememberGroup(composite);
         createSeparator(composite, 3);
@@ -238,9 +245,43 @@ public class PrefPageBasic extends PreferencePage implements
         m_loadDefaultProjectCheckBox = new Button(composite, SWT.CHECK);
         m_loadDefaultProjectCheckBox.setText(
                 Messages.LoadDefaultProject);
-        m_loadDefaultProjectCheckBox.setSelection(Plugin.getDefault()
-                .getPreferenceStore().getBoolean(
+        m_loadDefaultProjectCheckBox.setSelection(m_store.getBoolean(
                         Constants.PERFORM_AUTO_PROJECT_LOAD_KEY));
+    }
+    
+    /**
+     * creates the settings for the component names view
+     * @param composite the parent composite
+     */
+    private void createComponentNamesViewSettings(Composite composite) {
+        Group group = new Group(composite, SWT.NONE);
+        group.setText(Messages.PrefPageBasicComponentNamesView);
+        group.setLayout(new GridLayout());
+        GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
+        layoutData.grabExcessHorizontalSpace = true;
+        group.setLayoutData(layoutData);
+        
+        Composite content = new Composite(group, SWT.None);
+        setGridLayout(content, 2);
+        Label l = new Label(content, SWT.NONE);
+        l.setText(Messages.SetContentAssistTimeForCompNames);
+        m_compNamesContentAssistTime = new CheckedIntText(
+                content, SWT.SINGLE | SWT.BORDER);
+        GridData data = new GridData(GridData.FILL_HORIZONTAL);
+        data.grabExcessHorizontalSpace = true;
+        m_compNamesContentAssistTime.setLayoutData(data);
+        m_compNamesContentAssistTime.setText(m_store.getString(
+                        Constants.MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL));
+        m_compNamesContentAssistTime.addKeyListener(new KeyListener() {
+            public void keyPressed(KeyEvent e) {
+                // nothing
+            }
+            public void keyReleased(KeyEvent e) {
+                validatePage();
+            }
+        });
+        ControlDecorator.decorateInfo(m_compNamesContentAssistTime,
+                "ControlDecorator.ComponentNamesContentAssistInfo", false); //$NON-NLS-1$
     }
 
     /**
@@ -396,15 +437,33 @@ public class PrefPageBasic extends PreferencePage implements
     /**
      * validate the page depending on its components
      */
-    private void validatePage() {        
-        setValid(true);
-        setErrorMessage(null);
+    private void validatePage() {
         if (!m_dataDirIsWorkspaceValue) {
             if (!m_dataDirPathTextfield.isValid()) {
-                setValid(false);
                 setErrorMessage(Messages.PrefPageBasicDataDirInvalid);
+                setValid(false);
+                return;
             }
         }
+        String compNamesContentAssistTime = 
+                m_compNamesContentAssistTime.getText().trim();
+        try {
+            int time = Integer.parseInt(compNamesContentAssistTime);
+            if (time < 0) {
+                setErrorMessage(Messages
+                        .CompNamesViewPreferencePageInvalidContentAssistTime);
+                setValid(false);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            setErrorMessage(Messages
+                    .CompNamesViewPreferencePageInvalidContentAssistTime);
+            setValid(false);
+            return;
+        }
+        
+        setErrorMessage(null);
+        setValid(true);
     }
 
     /**
@@ -522,6 +581,9 @@ public class PrefPageBasic extends PreferencePage implements
         getPreferenceStore().setValue(Constants.REMEMBER_KEY, m_rememberValue);
         getPreferenceStore().setValue(Constants.PERSP_CHANGE_KEY,
                 m_perspChangeValue);
+        getPreferenceStore().setValue(
+                Constants.MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL,
+                m_compNamesContentAssistTime.getValue());
         getPreferenceStore().setValue(Constants.TREEAUTOSCROLL_KEY,
                 m_treeScroll.getSelection());
         getPreferenceStore().setValue(Constants.ASKSTOPAUT_KEY,

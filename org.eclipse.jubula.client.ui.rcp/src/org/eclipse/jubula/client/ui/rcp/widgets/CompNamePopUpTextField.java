@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.widgets;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
@@ -19,15 +22,22 @@ import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.ui.internal.Workbench;
 
 
 /**
@@ -58,6 +68,51 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
             m_popupOpen = true;
         }
     }
+    
+    /**
+     * A timer with a task which can be cancelled an (re-)scheduled
+     */
+    private class DelayableTimer extends Timer {
+        /** the task to be executed */
+        private Runnable m_task;
+        
+        /** the timerTask to execute the task */
+        private TimerTask m_timerTask;
+        
+        /** the time to delay the execution of the task */
+        private long m_delay;
+        
+        /**
+         * the constructor
+         * @param task the task to execute
+         * @param delay the delay before an execution of the task
+         */
+        public DelayableTimer(long delay, Runnable task) {
+            m_task = task;
+            m_delay = delay;
+        }
+        
+        /**
+         * schedules a new delayed execution
+         */
+        public void schedule() {
+            m_timerTask = new TimerTask() { 
+                public void run() { 
+                    m_task.run();
+                }
+            };
+            this.schedule(m_timerTask, m_delay);        
+        }
+        
+        /**
+         * cancels the current plan to execute the task
+         */
+        public void cancel() {
+            if (m_timerTask != null) {
+                m_timerTask.cancel();
+            }
+        }
+    }
 
     /** data key to init pop up or not */
     public static final String INITPOPUP = "INITPOPUP"; //$NON-NLS-1$
@@ -73,11 +128,14 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
 
     /** intern */
     private CompNamesProposalProvider m_contentProposalProvider; 
+    
+    /** intern */
+    private ContentProposalAdapter m_contentProposalAdapter; 
 
     /** intern */
     private ILabelProvider m_labelProvider;
 
-    /** is the opup with the content proposal open? */
+    /** is the popup with the content proposal open? */
     private boolean m_popupOpen = false;
     
     /** was the data modified */
@@ -87,7 +145,7 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
     private IContentProposalListener2 m_popupListener;
 
     /**
-     * Contructs a text field. When pressing STRG+SPACE a list pops up.
+     * Constructs a text field. When pressing STRG+SPACE a list pops up.
      * 
      * @param compMapper The Component Name mapper to use.
      * @param composite The parent composite.
@@ -132,8 +190,47 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
         };
         m_popupListener = new IContentProposalListener2Implementation();
         m_contentProposalProvider = new CompNamesProposalProvider(compMapper);
-        enableContentProposal(m_contentProposalProvider, 
-                ks, createTriggerChars());
+        enableContentProposal(m_contentProposalProvider, ks);
+        
+        int delay = Plugin.getDefault().getPreferenceStore().getInt(
+                Constants.MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL);
+        final DelayableTimer contentProposalTimer = new DelayableTimer(delay,
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        openContentProposals();
+                    }
+                });
+        
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (!getText().equals(StringConstants.EMPTY)
+                        && triggerCharWasTyped(e)) {
+                    contentProposalTimer.schedule();
+                }
+            }
+            
+            @Override
+            public void keyPressed(KeyEvent e) {
+                contentProposalTimer.cancel();
+            }
+        });
+    }
+
+    /**
+     * Checks if a key event was invoked by a character which is supposed to trigger component name proposals
+     * @param e the key event
+     * @return whether the character is supposed to trigger component name proposals
+     */
+    protected boolean triggerCharWasTyped(KeyEvent e) {
+        char[] triggerChars = createTriggerChars();
+        for (char c : triggerChars) {
+            if (e.character == c) {
+                return true;
+            }            
+        }
+        return false;
     }
 
     /**
@@ -182,21 +279,20 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
      * Do the actual registration of the provider
      * @param contentProposalProvider provider for the content
      * @param keyStroke activation KeyStroke
-     * @param autoActivationCharacters characters which will automatically
      * start the proposal
      */
     private void enableContentProposal(
             IContentProposalProvider contentProposalProvider,
-            KeyStroke keyStroke, char[] autoActivationCharacters) {
-        ContentProposalAdapter contentProposalAdapter = 
+            KeyStroke keyStroke) {
+        m_contentProposalAdapter = 
             new ContentProposalAdapter(this,
                 new TextContentAdapter(), contentProposalProvider,
-                keyStroke, autoActivationCharacters);
-        contentProposalAdapter.setLabelProvider(m_labelProvider);
+                keyStroke, null);
+        m_contentProposalAdapter.setLabelProvider(m_labelProvider);
 
-        contentProposalAdapter
+        m_contentProposalAdapter
                 .addContentProposalListener(m_popupListener);
-        contentProposalAdapter
+        m_contentProposalAdapter
                 .setProposalAcceptanceStyle(
                         ContentProposalAdapter.PROPOSAL_REPLACE);
     }
@@ -250,5 +346,33 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
         if (m_contentProposalProvider != null) {
             m_contentProposalProvider.setComponentNameMapper(compMapper);
         }
+    }
+
+    /**
+     * Opens the proposals for the component name
+     */
+    private void openContentProposals() {
+        Display display = Workbench.getInstance().
+                getDisplay();
+        
+        Event ctrlEvent = new Event();
+        ctrlEvent.type = SWT.KeyDown;
+        ctrlEvent.keyCode = SWT.CTRL;
+        display.post(ctrlEvent);
+        
+        Event spaceEvent = new Event();
+        spaceEvent.type = SWT.KeyDown;
+        spaceEvent.character = SWT.SPACE;
+        display.post(spaceEvent);
+        
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException ie) {
+            // do nothing
+        }
+        ctrlEvent.type = SWT.KeyUp;
+        display.post(ctrlEvent);
+        spaceEvent.type = SWT.KeyUp;
+        display.post(spaceEvent);
     }
 }

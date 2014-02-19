@@ -159,6 +159,7 @@ public class Messages extends NLS {
     public static String CompNamesViewNewNameColumn;
     public static String CompNamesViewNoCompNameInfo;
     public static String CompNamesViewOldNameColumn;
+    public static String CompNamesViewPreferencePageInvalidContentAssistTime;
     public static String CompNamesViewTypeColumn;
     public static String CompletenessCheckRunningOperation; 
     public static String Component;
@@ -512,6 +513,7 @@ public class Messages extends NLS {
     public static String PluginTS;
     public static String PrefPageBasicAddNewNode;
     public static String PrefPageBasicAlways;
+    public static String PrefPageBasicComponentNamesView;
     public static String PrefPageBasicDataDirBrowse;
     public static String PrefPageBasicDataDirFileDialogTitle;
     public static String PrefPageBasicDataDirInvalid;
@@ -706,6 +708,7 @@ public class Messages extends NLS {
     public static String ServerName;
     public static String ServerObjectMustNotBeNull;
     public static String ServerPortDefault;
+    public static String SetContentAssistTimeForCompNames;
     public static String ShowResponsibleNodeOperation;
     public static String SimpleSearchBeginTask;
     public static String SimpleSearchTaskScopeAll;

@@ -305,6 +305,8 @@ public interface Constants {
     public static final String PREF_KEY_CACHE_TEST_RESULTS = "CACHE_TEST_RESULTS"; //$NON-NLS-1$
     /** Key for loading the default project automatically */
     public static final String PERFORM_AUTO_PROJECT_LOAD_KEY = "PERFORM_AUTO_PROJECT_LOAD_KEY"; //$NON-NLS-1$
+    /** Key for content assist of component names view to be stored as a resource property */
+    public static final String MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL = "MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL"; //$NON-NLS-1$
     
     
     // -------------------------------------------------------------
@@ -419,6 +421,10 @@ public interface Constants {
     
     /** Key for boolean value to be stored as a resource property */
     public static final boolean REMEMBER_KEY_DEFAULT = false;
+    
+    /** Key for int value to be stored as a resource property */
+    public static final int MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL_DEFAULT =
+            500;
     
     /** Key for boolean value to be stored as a resource property */
     public static final int PERSP_CHANGE_KEY_DEFAULT = 2;
