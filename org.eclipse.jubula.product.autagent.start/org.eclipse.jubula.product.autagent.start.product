@@ -13,7 +13,7 @@
 ../jre/bin/java</programArgsLin>
       <programArgsMac>--launcher.secondThread</programArgsMac>
       <programArgsWin>-vm
-../jre/bin/java.exe</programArgsWin>
+../jre/bin/javaw.exe</programArgsWin>
       <vmArgs>-client
 -Xms128m
 -Xmx1024m
