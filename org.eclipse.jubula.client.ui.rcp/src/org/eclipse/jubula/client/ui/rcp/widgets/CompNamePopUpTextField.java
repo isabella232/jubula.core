@@ -37,7 +37,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.ui.internal.Workbench;
 
 
 /**
@@ -197,7 +196,11 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
         final DelayableTimer contentProposalTimer = new DelayableTimer(delay,
                 new Runnable() {
                     public void run() {
-                        openContentProposals();
+                        Display.getDefault().syncExec(new Runnable() {
+                            public void run() {
+                                openContentProposals();
+                            }
+                        });
                     }
                 });
         
@@ -349,27 +352,20 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
      * Opens the proposals for the component name
      */
     private void openContentProposals() {
-        Display display = Workbench.getInstance().
-                getDisplay();
-        
-        Event ctrlEvent = new Event();
-        ctrlEvent.type = SWT.KeyDown;
-        ctrlEvent.keyCode = SWT.CTRL;
-        display.post(ctrlEvent);
-        
-        Event spaceEvent = new Event();
-        spaceEvent.type = SWT.KeyDown;
-        spaceEvent.character = SWT.SPACE;
-        display.post(spaceEvent);
-        
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException ie) {
-            // do nothing
+        // check if content proposals were already opened
+        if (m_contentProposalAdapter.isProposalPopupOpen()) {
+            return;
         }
-        ctrlEvent.type = SWT.KeyUp;
-        display.post(ctrlEvent);
-        spaceEvent.type = SWT.KeyUp;
-        display.post(spaceEvent);
+        
+        // create a fake event that ctrl+space was pressed, to open content proposals
+        Event triggerEvent = new Event();
+        triggerEvent.character = SWT.SPACE;
+        triggerEvent.doit = true;
+        triggerEvent.keyCode = SWT.SPACE;
+        triggerEvent.stateMask = SWT.MOD1;
+        triggerEvent.type = SWT.KeyDown;
+        triggerEvent.widget = this;
+
+        notifyListeners(SWT.KeyDown, triggerEvent);
     }
 }

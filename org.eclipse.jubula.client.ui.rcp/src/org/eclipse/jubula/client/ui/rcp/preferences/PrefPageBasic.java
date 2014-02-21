@@ -554,6 +554,9 @@ public class PrefPageBasic extends PreferencePage implements
                 .getDefaultBoolean(Constants.SHOWCAPINFO_KEY));
         m_showTransientChildrenCheckBox.setSelection(m_store
                 .getDefaultBoolean(Constants.SHOW_TRANSIENT_CHILDREN_KEY));
+        m_compNamesContentAssistTime.setText(m_store
+                .getDefaultString(
+                        Constants.MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL));
         m_loadDefaultProjectCheckBox.setSelection(m_store
                 .getDefaultBoolean(
                         Constants.PERFORM_AUTO_PROJECT_LOAD_KEY));
