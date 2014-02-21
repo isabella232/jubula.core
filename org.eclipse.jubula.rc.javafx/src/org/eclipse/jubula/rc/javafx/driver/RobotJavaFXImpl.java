@@ -870,15 +870,14 @@ public class RobotJavaFXImpl implements IRobot {
                             }
                             return NodeBounds.checkIfContains(new Point2D(
                                     currMousePos.x, currMousePos.y), comp);
-                        } else {
-                            Stage comp = (Stage) graphicsComponent;
-                            comp.getScene().getRoot().layout();
-                            Bounds stageBounds = new BoundingBox(comp.getX(),
-                                    comp.getY(), comp.getWidth(), comp
-                                            .getHeight());
-                            return stageBounds.contains(new Point2D(
-                                    currMousePos.x, currMousePos.y));
                         }
+                        Stage comp = (Stage) graphicsComponent;
+                        comp.getScene().getRoot().layout();
+                        Bounds stageBounds = new BoundingBox(comp.getX(),
+                                comp.getY(), comp.getWidth(), comp
+                                        .getHeight());
+                        return stageBounds.contains(new Point2D(
+                                currMousePos.x, currMousePos.y));
                     }
                 });
 
