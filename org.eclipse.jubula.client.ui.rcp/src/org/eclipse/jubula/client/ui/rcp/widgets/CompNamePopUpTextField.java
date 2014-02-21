@@ -362,7 +362,7 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
         triggerEvent.character = SWT.SPACE;
         triggerEvent.doit = true;
         triggerEvent.keyCode = SWT.SPACE;
-        triggerEvent.stateMask = SWT.MOD1;
+        triggerEvent.stateMask = SWT.CTRL;
         triggerEvent.type = SWT.KeyDown;
         triggerEvent.widget = this;
 
