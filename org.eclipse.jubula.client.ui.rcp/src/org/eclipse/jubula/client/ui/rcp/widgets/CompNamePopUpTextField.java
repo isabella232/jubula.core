@@ -352,20 +352,22 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
      * Opens the proposals for the component name
      */
     private void openContentProposals() {
-        // check if content proposals were already opened
-        if (m_contentProposalAdapter.isProposalPopupOpen()) {
-            return;
+        if (!isDisposed()) {
+            // check if content proposals were already opened
+            if (m_contentProposalAdapter.isProposalPopupOpen()) {
+                return;
+            }
+            
+            // create a fake event that ctrl+space was pressed, to open content proposals
+            Event triggerEvent = new Event();
+            triggerEvent.character = SWT.SPACE;
+            triggerEvent.doit = true;
+            triggerEvent.keyCode = SWT.SPACE;
+            triggerEvent.stateMask = SWT.CTRL;
+            triggerEvent.type = SWT.KeyDown;
+            triggerEvent.widget = this;
+            
+            notifyListeners(SWT.KeyDown, triggerEvent);
         }
-        
-        // create a fake event that ctrl+space was pressed, to open content proposals
-        Event triggerEvent = new Event();
-        triggerEvent.character = SWT.SPACE;
-        triggerEvent.doit = true;
-        triggerEvent.keyCode = SWT.SPACE;
-        triggerEvent.stateMask = SWT.CTRL;
-        triggerEvent.type = SWT.KeyDown;
-        triggerEvent.widget = this;
-
-        notifyListeners(SWT.KeyDown, triggerEvent);
     }
 }
