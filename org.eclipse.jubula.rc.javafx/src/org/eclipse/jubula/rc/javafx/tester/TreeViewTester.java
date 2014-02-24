@@ -11,7 +11,6 @@ import javafx.scene.control.TreeView;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.AbstractTreeTester;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
@@ -28,10 +27,6 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  */
 public class TreeViewTester extends AbstractTreeTester {
 
-    /** The AUT Server logger. */
-    private static AutServerLogger log = new AutServerLogger(
-            TreeViewTester.class);
-
     @Override
     public void rcVerifyTextAtMousePosition(String txt, String operator) {
         checkNodeText(new Object[] { getNodeAtMousePosition() }, txt, operator);
@@ -42,7 +37,7 @@ public class TreeViewTester extends AbstractTreeTester {
         Point awtPoint = getRobot().getCurrentMousePosition();
         final Point2D point = new Point2D(awtPoint.x, awtPoint.y);
         Object result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getNodeBounds", new Callable<Object>() {
+                "getNodeBounds", new Callable<Object>() { //$NON-NLS-1$
                     @Override
                     public Object call() throws Exception {
                         // Update the layout coordinates otherwise
@@ -58,8 +53,8 @@ public class TreeViewTester extends AbstractTreeTester {
                             }
                         }
                         throw new StepExecutionException(
-                                "No tree node found at mouse position: "
-                                        + "X: " + point.getX()
+                                "No tree node found at mouse position: " //$NON-NLS-1$
+                                        + "X: " + point.getX() //$NON-NLS-1$
                                         + "Y: " + point.getY(), //$NON-NLS-1$
                                 EventFactory
                                         .createActionError(

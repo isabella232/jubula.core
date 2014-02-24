@@ -16,7 +16,12 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.Callable;
 
+import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Control;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
@@ -24,10 +29,14 @@ import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.listener.EventLock;
+import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.AbstractMenuTester;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IWidgetComponent;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.tester.MenuTester;
+import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.TimeUtil;
@@ -35,23 +44,28 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
 /**
  * Implements the interface for widgets and supports basic methods which are
  * needed for nearly all JavaFX UI components.
- *
+ * 
  * @param <T>
  *            type of the Component
- *
+ * 
  * @author BREDEX GmbH
  * @created 30.10.2013
  */
 public class JavaFXComponentAdapter<T extends Node> extends
         AbstractComponentAdapter<T> implements IWidgetComponent {
+    /**
+     * The logger.
+     */
+    private static AutServerLogger log = new AutServerLogger(
+            JavaFXComponentAdapter.class);
 
     /**
      * The Converter Map.
      */
-    private static Map converterTable = null;
+    private static Map<String, Integer> converterTable = null;
 
     static {
-        converterTable = new HashMap();
+        converterTable = new HashMap<String, Integer>();
         converterTable.put(CompSystemConstants.MODIFIER_NONE, new Integer(-1));
         converterTable.put(CompSystemConstants.MODIFIER_SHIFT, new Integer(
                 KeyEvent.VK_SHIFT));
@@ -69,7 +83,7 @@ public class JavaFXComponentAdapter<T extends Node> extends
 
     /**
      * Used to store the component into the adapter.
-     *
+     * 
      * @param objectToAdapt
      *            the object to adapt
      */
@@ -133,8 +147,7 @@ public class JavaFXComponentAdapter<T extends Node> extends
                             throw new StepExecutionException(
                                     e.getMessage(),
                                     EventFactory
-                                            .createActionError(
-                                                    TestErrorEvent.
+                                            .createActionError(TestErrorEvent.
                                                     PROPERTY_NOT_ACCESSABLE));
                         }
                     }
@@ -145,14 +158,65 @@ public class JavaFXComponentAdapter<T extends Node> extends
     @Override
     public AbstractMenuTester showPopup(int xPos, String xUnits, int yPos,
             String yUnits, int button) throws StepExecutionException {
-        // Not implemented
-        return null;
+        Node n = getRealComponent();
+        if (n instanceof Control && ((Control) n).getContextMenu() != null) {
+            Control comp = (Control) n;
+            final EventLock event = new EventLock();
+            ContextMenu cotxMenu = comp.getContextMenu();
+            EventHandler<WindowEvent> filter = new EventHandler<WindowEvent>() {
+
+                @Override
+                public void handle(WindowEvent e) {
+                    synchronized (event) {
+                        event.notifyAll();
+                    }
+                }
+            };
+            cotxMenu.addEventFilter(WindowEvent.WINDOW_SHOWN, filter);
+            // RobotTiming.sleepPreShowPopupDelay();
+            boolean isAbsoluteUnitsX = CompSystemConstants.POS_UNIT_PIXEL
+                    .equalsIgnoreCase(xUnits);
+            boolean isAbsoluteUnitsY = CompSystemConstants.POS_UNIT_PIXEL
+                    .equalsIgnoreCase(yUnits);
+            getRobot().click(
+                    comp,
+                    null,
+                    ClickOptions.create().setClickCount(1)
+                            .setMouseButton(button), xPos, isAbsoluteUnitsX,
+                    yPos, isAbsoluteUnitsY);
+
+            if (!comp.getContextMenu().isShowing()) {
+                try {
+                    synchronized (event) {
+                        event.wait(TimeoutConstants.
+                                SERVER_TIMEOUT_WAIT_FOR_POPUP);
+                    }
+                } catch (InterruptedException e) {
+                    // ignore
+                } finally {
+                    cotxMenu.removeEventFilter(WindowEvent.
+                            WINDOW_SHOWN, filter);
+                }
+
+            }
+            if (comp.getContextMenu().isShowing()) {
+                MenuTester tester = new MenuTester();
+                tester.setComponent(cotxMenu);
+                return tester;
+            }
+            throw new StepExecutionException("Popup could not be opened", //$NON-NLS-1$
+                    EventFactory
+                            .createActionError(TestErrorEvent.POPUP_NOT_FOUND));
+
+        }
+        throw new StepExecutionException("Component has no Popup", //$NON-NLS-1$
+                EventFactory.createActionError(TestErrorEvent.POPUP_NOT_FOUND));
     }
 
     @Override
     public AbstractMenuTester showPopup(int button) {
-        // Not implemented
-        return null;
+        return showPopup(50, CompSystemConstants.POS_UNIT_PERCENT, 50,
+                CompSystemConstants.POS_UNIT_PERCENT, button);
     }
 
     @Override
@@ -190,7 +254,7 @@ public class JavaFXComponentAdapter<T extends Node> extends
 
     /**
      * Presses or releases the given modifier.
-     *
+     * 
      * @param modifier
      *            the modifier.
      * @param press
@@ -214,7 +278,7 @@ public class JavaFXComponentAdapter<T extends Node> extends
 
     /**
      * clicks into the component.
-     *
+     * 
      * @param count
      *            amount of clicks
      * @param button
@@ -255,5 +319,10 @@ public class JavaFXComponentAdapter<T extends Node> extends
                     EventFactory.createConfigErrorEvent());
         }
         return keyCode.intValue();
+    }
+
+    @Override
+    public Window getWindow() {
+        return getRealComponent().getScene().getWindow();
     }
 }

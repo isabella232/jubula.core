@@ -30,7 +30,6 @@ import javafx.scene.layout.Pane;
 
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
-import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
@@ -46,12 +45,8 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * @author BREDEX GmbH
  * @created 7.11.2013
  */
-public class TableAdapter extends JavaFXComponentAdapter<TableView> implements
-        ITableComponent {
-
-    /** The AUT Server logger. */
-    private static AutServerLogger log =
-            new AutServerLogger(TableAdapter.class);
+public class TableAdapter extends JavaFXComponentAdapter<TableView<?>> 
+                          implements ITableComponent {
 
     /**
      * Creates an adapter for a TableView.
@@ -65,7 +60,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView> implements
 
     @Override
     public String getText() {
-        String result = EventThreadQueuerJavaFXImpl.invokeAndWait("getText",
+        String result = EventThreadQueuerJavaFXImpl.invokeAndWait("getText", //$NON-NLS-1$
                 new Callable<String>() {
 
                     @Override
@@ -88,7 +83,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView> implements
     @Override
     public int getColumnCount() {
         int result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getColumnCount", new Callable<Integer>() {
+                "getColumnCount", new Callable<Integer>() { //$NON-NLS-1$
 
                     @Override
                     public Integer call() throws Exception {
@@ -100,12 +95,12 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView> implements
 
     @Override
     public int getRowCount() {
-        int result = EventThreadQueuerJavaFXImpl.invokeAndWait("getRowCount",
+        int result = EventThreadQueuerJavaFXImpl.invokeAndWait("getRowCount", //$NON-NLS-1$
                 new Callable<Integer>() {
 
                     @Override
                     public Integer call() throws Exception {
-                        return getRealComponent().getItems().size(); //$NON-NLS-1$
+                        return getRealComponent().getItems().size();
                     }
                 });
         return result;
@@ -114,7 +109,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView> implements
     @Override
     public String getCellText(final int row, final int column) {
         String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getCellText", new Callable<String>() {
+                "getCellText", new Callable<String>() { //$NON-NLS-1$
 
                     @Override
                     public String call() throws Exception {
@@ -170,7 +165,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView> implements
     @Override
     public int getColumnFromString(final String col, final String operator) {
         Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getColumnFromString", new Callable<Integer>() {
+                "getColumnFromString", new Callable<Integer>() { //$NON-NLS-1$
 
                     @Override
                     public Integer call() throws Exception {
@@ -262,7 +257,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView> implements
     public Rectangle getHeaderBounds(final int column) {
         final Rectangle columnCell = scrollCellToVisible(0, column);
         Rectangle result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getHeaderBounds", new Callable<Rectangle>() {
+                "getHeaderBounds", new Callable<Rectangle>() { //$NON-NLS-1$
 
                     @Override
                     public Rectangle call() throws Exception {
@@ -273,9 +268,9 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView> implements
                         // we would get old position values
                         table.layout();
                         Parent headerRow = (Parent) table
-                                .lookup("TableHeaderRow");
+                                .lookup("TableHeaderRow"); //$NON-NLS-1$
                         Set<Node> columnHeader = headerRow
-                                .lookupAll("column-header");
+                                .lookupAll("column-header"); //$NON-NLS-1$
                         Point2D parentPos = table.localToScreen(0, 0);
 
                         for (Node n : columnHeader) {
@@ -339,7 +334,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView> implements
                     @Override
                     public Boolean call() throws Exception {
                         Pane header = (Pane) getRealComponent().lookup(
-                                "TableHeaderRow");
+                                "TableHeaderRow"); //$NON-NLS-1$
                         if (header != null) {
                             return header.isVisible();
                         }
@@ -402,7 +397,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView> implements
     public Rectangle scrollCellToVisible(final int row, final int column)
         throws StepExecutionException {
         Rectangle result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "scrollCellToVisible", new Callable<Rectangle>() {
+                "scrollCellToVisible", new Callable<Rectangle>() { //$NON-NLS-1$
 
                     @Override
                     public Rectangle call() throws Exception {
@@ -447,7 +442,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView> implements
 
                     @Override
                     public Object call() throws Exception {
-                        return getRealComponent().lookup("TableHeaderRow");
+                        return getRealComponent().lookup("TableHeaderRow"); //$NON-NLS-1$
                     }
                 });
         return result;

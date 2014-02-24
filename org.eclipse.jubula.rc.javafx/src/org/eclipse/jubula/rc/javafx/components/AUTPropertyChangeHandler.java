@@ -13,7 +13,6 @@ package org.eclipse.jubula.rc.javafx.components;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
-import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 
 /**
@@ -23,10 +22,6 @@ import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
  * @created 24.10.2013
  */
 public class AUTPropertyChangeHandler implements ChangeListener<Object> {
-
-    /** the logger */
-    private static AutServerLogger log = new AutServerLogger(
-            AUTPropertyChangeHandler.class);
 
     /** Hierarchy **/
     private AUTJavaFXHierarchy m_hierarchy = ComponentHandler.getAutHierarchy();

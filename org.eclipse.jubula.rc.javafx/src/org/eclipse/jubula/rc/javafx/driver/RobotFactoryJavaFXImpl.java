@@ -12,8 +12,6 @@ package org.eclipse.jubula.rc.javafx.driver;
 
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IMouseMotionTracker;
-import org.eclipse.jubula.rc.common.driver.IRobot;
-import org.eclipse.jubula.rc.common.driver.IRobotEventInterceptor;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 
@@ -24,16 +22,22 @@ import org.eclipse.jubula.rc.common.exception.RobotException;
  * @author BREDEX GmbH
  * @created 30.10.2013
  */
-public class RobotFactoryJavaFXImpl implements IRobotFactory {
+public enum RobotFactoryJavaFXImpl implements IRobotFactory {
+    
+    /**
+     * Singleton realization
+     */
+    INSTANCE;
+    
     /**
      * The Robot.
      */
-    private IRobot m_robot;
+    private RobotJavaFXImpl m_robot;
 
     /**
      * The AWT/Swing interceptor.
      */
-    private IRobotEventInterceptor m_interceptor;
+    private RobotEventInterceptorJavaFXImpl m_interceptor;
 
     /**
      * The AWT/Swing mouse motion tracker.
@@ -48,7 +52,7 @@ public class RobotFactoryJavaFXImpl implements IRobotFactory {
     /**
      * {@inheritDoc}
      */
-    public IRobotEventInterceptor getRobotEventInterceptor() {
+    public RobotEventInterceptorJavaFXImpl getRobotEventInterceptor() {
         if (m_interceptor == null) {
             m_interceptor = new RobotEventInterceptorJavaFXImpl();
         }
@@ -58,7 +62,7 @@ public class RobotFactoryJavaFXImpl implements IRobotFactory {
     /**
      * {@inheritDoc}
      */
-    public IRobot getRobot() throws RobotException {
+    public RobotJavaFXImpl getRobot() throws RobotException {
         if (m_robot == null) {
             m_robot = new RobotJavaFXImpl(this);
         }

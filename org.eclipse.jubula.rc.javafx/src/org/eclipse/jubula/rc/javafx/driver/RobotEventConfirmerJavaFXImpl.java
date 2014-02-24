@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import org.eclipse.jubula.rc.common.driver.IEventMatcher;
 import org.eclipse.jubula.rc.common.driver.IRobotEventConfirmer;
@@ -25,7 +25,6 @@ import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.WorkaroundUtil;
-import org.eclipse.jubula.rc.javafx.components.CurrentStages;
 import org.eclipse.jubula.rc.javafx.util.JavaFXEventConverter;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -37,11 +36,11 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * {@link java.awt.event.AWTEventListener} to the AWT event queue using the
  * <code>InterceptorOptions</code> event mask.
  * </p>
- *
+ * 
  * <p>
  * To confirm an event, call <code>waitToConfirm()</code>.
  * </p>
- *
+ * 
  * @author BREDEX GmbH
  * @created 30.10.2013
  */
@@ -77,21 +76,29 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
     /**
      * Stores all events of a given class after the confirmer has been enabled.
      */
-    private LinkedBlockingQueue<Event> m_eventList =
+    private LinkedBlockingQueue<Event> m_eventList = 
             new LinkedBlockingQueue<Event>();
 
-    /** The stage on which events will be confirmed **/
-    private Stage m_confirmStage;
+    /**
+     * Stores Windows on wich Events could occur, this includes Popups such as
+     * contextmenus
+     */
+    private LinkedBlockingQueue<Window> m_sceneGraphs = 
+            new LinkedBlockingQueue<Window>();
 
     /**
      * Creates a new confirmer for a class of events defined by
      * <code>options</code>.
-     *
+     * 
      * @param options
      *            The options.
+     * @param sceneGraphs
+     *            List with instances of Windows and their Scene-Graphs
      */
-    protected RobotEventConfirmerJavaFXImpl(InterceptorOptions options) {
+    protected RobotEventConfirmerJavaFXImpl(InterceptorOptions options,
+            LinkedBlockingQueue<Window> sceneGraphs) {
         m_options = options;
+        m_sceneGraphs = sceneGraphs;
     }
 
     @Override
@@ -146,8 +153,7 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
                             "Timeout received before confirming the posted event: " //$NON-NLS-1$
                                     + m_eventMatcher.getEventId(),
                             EventFactory
-                                    .createActionError(
-                                            TestErrorEvent.
+                                    .createActionError(TestErrorEvent.
                                             CONFIRMATION_TIMEOUT));
                 }
             }
@@ -162,7 +168,7 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
      * JavaFX Filter is added to the currently focused stage so that the
      * confirmer starts storing events of the configured class of events. If it
      * is disabled, the listener is removed from the AWT event queue.
-     *
+     * 
      * @param enabled
      *            <code>true</code> or <code>false</code>.
      */
@@ -172,16 +178,18 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
         if (m_enabled) {
             long[] masks = m_options.getEventMask();
             for (int i = 0; i < masks.length; i++) {
-
-                m_confirmStage = CurrentStages.getfocusStage();
-                m_confirmStage.addEventFilter(
-                        JavaFXEventConverter.awtToFX(masks[i]), this);
+                for (Window w : m_sceneGraphs) {
+                    w.addEventFilter(
+                            JavaFXEventConverter.awtToFX(masks[i]), this);
+                }             
             }
         } else {
             long[] masks = m_options.getEventMask();
             for (int i = 0; i < masks.length; i++) {
-                m_confirmStage.removeEventFilter(
+                for (Window w : m_sceneGraphs) {
+                    w.removeEventFilter(
                         JavaFXEventConverter.awtToFX(masks[i]), this);
+                }
             }
             m_eventList.clear();
         }
@@ -196,5 +204,4 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
                     + " on Component: " + String.valueOf(m_eventTarget)); //$NON-NLS-1$
         }
     }
-
 }

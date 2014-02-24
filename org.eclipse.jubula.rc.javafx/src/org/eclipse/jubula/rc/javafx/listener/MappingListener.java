@@ -82,7 +82,7 @@ public class MappingListener extends AbstractFXAUTEventHandler {
         @Override
         public void handle(WorkerStateEvent workerEvent) {
             MouseEvent event = (MouseEvent) workerEvent.getSource().getValue();
-            Point2D pos = new Point2D(event.getSceneX(), event.getSceneY());
+            Point2D pos = new Point2D(event.getScreenX(), event.getScreenY());
             Node currN = getCurrentNode();
             if (currN != null) {
                 if (!(NodeBounds.checkIfContains(pos, currN))) {

@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.javafx.commands;
 
 import org.eclipse.jubula.rc.common.commands.AbstractActivateApplicationCommand;
 import org.eclipse.jubula.rc.common.driver.IRobot;
-import org.eclipse.jubula.rc.javafx.driver.RobotFactoryConfig;
+import org.eclipse.jubula.rc.javafx.driver.RobotFactoryJavaFXImpl;
 
 /**
  * @author BREDEX GmbH
@@ -26,6 +26,6 @@ public class ActivateApplicationCommand extends
      * {@inheritDoc}
      */
     protected IRobot getRobot() {
-        return new RobotFactoryConfig().getRobotFactory().getRobot();
+        return RobotFactoryJavaFXImpl.INSTANCE.getRobot();
     }
 }

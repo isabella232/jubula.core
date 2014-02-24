@@ -1,0 +1,72 @@
+package org.eclipse.jubula.rc.javafx.tester.adapter;
+
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
+import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+/**
+ * Adapter for a MenuBar.
+ * 
+ * @author BREDEX GmbH
+ * @created 10.2.2014
+ */
+public class MenuBarAdapter extends JavaFXComponentAdapter<MenuBar> implements
+        IMenuComponent {
+
+    /**
+     * Creates an adapter for a MenuBar.
+     * 
+     * @param objectToAdapt
+     *            the object which needs to be adapted
+     */
+    public MenuBarAdapter(MenuBar objectToAdapt) {
+        super(objectToAdapt);
+    }
+
+    
+    /**
+     * Returns the adapted Menus of this MenuBar
+     * @return the Menus
+     */
+    @Override
+    public IMenuItemComponent[] getItems() {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getItems", //$NON-NLS-1$
+                new Callable<IMenuItemComponent[]>() {
+
+                    @Override
+                    public IMenuItemComponent[] call() throws Exception {
+                        List<Menu> menus = getRealComponent().getMenus();
+                        if (menus.size() > 0) {
+                            IMenuItemComponent[] itemAdapters = 
+                                    new IMenuItemComponent[menus.size()];
+                            for (int i = 0; i < menus.size(); i++) {
+                                itemAdapters[i] = new MenuItemAdapter(menus
+                                        .get(i));
+                            }
+                            return itemAdapters;
+                        }
+
+                        return null;
+                    }
+                });
+    }
+
+    @Override
+    public int getItemCount() {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getItemCount", //$NON-NLS-1$
+                new Callable<Integer>() {
+
+                    @Override
+                    public Integer call() throws Exception {
+                        return getRealComponent().getMenus().size();
+                    }
+
+                });
+    }
+
+}

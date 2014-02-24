@@ -18,7 +18,6 @@ import java.util.concurrent.Callable;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -75,7 +74,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     protected String convertValueToText(final Object node, final int row)
         throws StepExecutionException {
         String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "convertValueToText", new Callable<String>() {
+                "convertValueToText", new Callable<String>() { //$NON-NLS-1$
 
                     @Override
                     public String call() throws Exception {
@@ -111,7 +110,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     public String getRenderedText(final Object node)
         throws StepExecutionException {
         String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getRenderedText", new Callable<String>() {
+                "getRenderedText", new Callable<String>() { //$NON-NLS-1$
 
                     @Override
                     public String call() throws Exception {
@@ -133,7 +132,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
     @Override
     public boolean isVisible(final Object node) {
-        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait("isVisible",
+        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait("isVisible", //$NON-NLS-1$
                 new Callable<Boolean>() {
 
                     @Override
@@ -150,7 +149,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     @Override
     public Rectangle getVisibleRowBounds(final Rectangle rowBounds) {
         Rectangle result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getVisibleRowBounds", new Callable<Rectangle>() {
+                "getVisibleRowBounds", new Callable<Rectangle>() { //$NON-NLS-1$
 
                     @Override
                     public Rectangle call() throws Exception {
@@ -171,7 +170,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     @Override
     public boolean isExpanded(final Object node) {
         boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "isExpanded", new Callable<Boolean>() {
+                "isExpanded", new Callable<Boolean>() { //$NON-NLS-1$
 
                     @Override
                     public Boolean call() throws Exception {
@@ -185,7 +184,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
     @Override
     public void scrollNodeToVisible(final Object node) {
-        EventThreadQueuerJavaFXImpl.invokeAndWait("scrollNodeToVisible",
+        EventThreadQueuerJavaFXImpl.invokeAndWait("scrollNodeToVisible", //$NON-NLS-1$
                 new Callable<Void>() {
 
                     @Override
@@ -212,7 +211,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     @Override
     public void expandNode(final Object node) {
         scrollNodeToVisible(node);
-        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait("expandNode",
+        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait("expandNode", //$NON-NLS-1$
                 new Callable<Object>() {
 
                     @Override
@@ -228,17 +227,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                                 // Update the layout coordinates otherwise
                                 // we would get old position values
                                 tree.layout();
-
-                                Node n = cell.getDisclosureNode();
-                                Bounds b = n.getBoundsInParent();
-
-                                Rectangle cBounds = new Rectangle(
-                                        Rounding.round(b.getMinX()),
-                                        Rounding.round(b.getMinY()),
-                                        Rounding.round(b.getWidth()
-                                                - cell.getGraphicTextGap()),
-                                        Rounding.round(cell.getHeight()));
-                                return n;
+                                return cell.getDisclosureNode();
                             }
                         }
                         return null;
@@ -248,7 +237,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
             getRobot().click(result, null,
                     ClickOptions.create().setClickCount(1).setMouseButton(1));
         }
-        EventThreadQueuerJavaFXImpl.invokeAndWait("expandNodeCheckIfExpanded",
+        EventThreadQueuerJavaFXImpl.invokeAndWait("expandNodeCheckIfExpanded", //$NON-NLS-1$
                 new Callable<Void>() {
 
                     @Override
@@ -256,7 +245,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                         TreeItem<?> item = (TreeItem<?>) node;
                         if (!((TreeView<?>) getTree()).isDisabled()
                                 && !item.isExpanded()) {
-                            log.warn("Expand node fallback used for: "
+                            log.warn("Expand node fallback used for: " //$NON-NLS-1$
                                     + item.getValue());
 
                             item.setExpanded(true);
@@ -270,7 +259,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     public void collapseNode(final Object node) {
         scrollNodeToVisible(node);
         Object result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "collapseNode", new Callable<Object>() {
+                "collapseNode", new Callable<Object>() { //$NON-NLS-1$
 
                     @Override
                     public Object call() throws Exception {
@@ -285,17 +274,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                                 // Update the layout coordinates otherwise
                                 // we would get old position values
                                 tree.layout();
-
-                                Node n = cell.getDisclosureNode();
-                                Bounds b = n.getBoundsInParent();
-
-                                Rectangle cBounds = new Rectangle(
-                                        Rounding.round(b.getMinX()),
-                                        Rounding.round(b.getMinY()),
-                                        Rounding.round(b.getWidth()
-                                                - cell.getGraphicTextGap()),
-                                        Rounding.round(cell.getHeight()));
-                                return n;
+                                return cell.getDisclosureNode();
                             }
                         }
                         return null;
@@ -306,14 +285,14 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                     ClickOptions.create().setClickCount(1).setMouseButton(1));
         }
         EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "collapseNodeCheckIfCollapsed", new Callable<Void>() {
+                "collapseNodeCheckIfCollapsed", new Callable<Void>() { //$NON-NLS-1$
 
                     @Override
                     public Void call() throws Exception {
                         TreeItem<?> item = (TreeItem<?>) node;
                         if (!((TreeView<?>) getTree()).isDisabled()
                                 && item.isExpanded()) {
-                            log.warn("Collapse node fallback used for: "
+                            log.warn("Collapse node fallback used for: " //$NON-NLS-1$
                                     + item.getValue());
 
                             item.setExpanded(false);
@@ -326,7 +305,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     @Override
     public Object getSelectedNode() {
         Object result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getSelectedNode", new Callable<Object>() {
+                "getSelectedNode", new Callable<Object>() { //$NON-NLS-1$
 
                     @Override
                     public Object call() throws Exception {
@@ -346,7 +325,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     @Override
     public Object[] getSelectedNodes() {
         Object[] result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getSelectedNode", new Callable<Object[]>() {
+                "getSelectedNode", new Callable<Object[]>() { //$NON-NLS-1$
 
                     @Override
                     public Object[] call() throws Exception {
@@ -362,7 +341,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     @Override
     public Object[] getRootNodes() {
         Object[] result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getRootNodes", new Callable<Object[]>() {
+                "getRootNodes", new Callable<Object[]>() { //$NON-NLS-1$
 
                     @Override
                     public Object[] call() throws Exception {
@@ -384,7 +363,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
     @Override
     public Object getParent(final Object child) {
-        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait("getParent",
+        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait("getParent", //$NON-NLS-1$
                 new Callable<Object>() {
 
                     @Override
@@ -399,7 +378,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
     @Override
     public Object getChild(final Object parent, final int index) {
-        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait("getChild",
+        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait("getChild", //$NON-NLS-1$
                 new Callable<Object>() {
 
                     @Override
@@ -415,7 +394,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     @Override
     public int getNumberOfChildren(final Object parent) {
         Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getNumberOfChildren", new Callable<Integer>() {
+                "getNumberOfChildren", new Callable<Integer>() { //$NON-NLS-1$
 
                     @Override
                     public Integer call() throws Exception {
@@ -429,7 +408,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
     @Override
     public boolean isLeaf(final Object node) {
-        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait("isLeaf",
+        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait("isLeaf", //$NON-NLS-1$
                 new Callable<Boolean>() {
 
                     @Override
@@ -445,7 +424,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     @Override
     public Object[] getChildren(final Object parent) {
         Object[] result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getSelectedNode", new Callable<Object[]>() {
+                "getSelectedNode", new Callable<Object[]>() { //$NON-NLS-1$
 
                     @Override
                     public Object[] call() throws Exception {
@@ -460,7 +439,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     @Override
     public Rectangle getNodeBounds(final Object node) {
         Rectangle result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getNodeBounds", new Callable<Rectangle>() {
+                "getNodeBounds", new Callable<Rectangle>() { //$NON-NLS-1$
                     @Override
                     public Rectangle call() throws Exception {
                         List<Object> tCells = ComponentHandler
@@ -496,7 +475,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     @Override
     public int getIndexOfChild(final Object parent, final Object child) {
         Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getIndexOfChild", new Callable<Integer>() {
+                "getIndexOfChild", new Callable<Integer>() { //$NON-NLS-1$
 
                     @Override
                     public Integer call() throws Exception {

@@ -10,11 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
-import org.eclipse.jubula.rc.common.driver.IRobot;
-import org.eclipse.jubula.rc.common.driver.IRobotFactory;
+import javafx.stage.Window;
+
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
-import org.eclipse.jubula.rc.javafx.driver.RobotFactoryConfig;
+import org.eclipse.jubula.rc.javafx.driver.RobotFactoryJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.driver.RobotJavaFXImpl;
 
 /**
  * @param <T>
@@ -22,19 +23,20 @@ import org.eclipse.jubula.rc.javafx.driver.RobotFactoryConfig;
  * @author BREDEX GmbH
  * @created 30.10.2013
  */
-public class AbstractComponentAdapter<T> implements IComponent {
+public abstract class AbstractComponentAdapter<T> implements IComponent {
 
     /** the component */
     private T m_component;
 
     /**
      * Used to store the component into the adapter.
-     *
+     * 
      * @param objectToAdapt
      *            the object to adapt
      */
     public AbstractComponentAdapter(T objectToAdapt) {
         m_component = objectToAdapt;
+        getRobot().getInterceptor().addSceneGraph(getWindow());
     }
 
     @Override
@@ -43,20 +45,27 @@ public class AbstractComponentAdapter<T> implements IComponent {
     }
 
     @Override
-    public IRobotFactory getRobotFactory() {
-        IRobotFactory robotFactory = new RobotFactoryConfig().getRobotFactory();
-        return robotFactory;
+    public RobotFactoryJavaFXImpl getRobotFactory() {
+        return RobotFactoryJavaFXImpl.INSTANCE;
     }
 
     /**
      * Gets the Robot.
-     *
+     * 
      * @return The Robot
      * @throws RobotException
      *             If the Robot cannot be created.
      */
-    protected IRobot getRobot() throws RobotException {
+    protected RobotJavaFXImpl getRobot() throws RobotException {
         return getRobotFactory().getRobot();
     }
 
+    /**
+     * Returns the Window this Element belongs to. This could be a Stage or a
+     * popup. The reason for this is to add a listener to it, to confirm Events.
+     * Because events are local to the Window on which they occur.
+     * 
+     * @return an instance of Window
+     */
+    public abstract Window getWindow();
 }

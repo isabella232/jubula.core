@@ -10,9 +10,16 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.driver;
 
+import java.util.concurrent.LinkedBlockingQueue;
+
+import javafx.stage.Window;
+
 import org.eclipse.jubula.rc.common.driver.IRobotEventConfirmer;
 import org.eclipse.jubula.rc.common.driver.IRobotEventInterceptor;
 import org.eclipse.jubula.rc.common.driver.InterceptorOptions;
+import org.eclipse.jubula.rc.common.exception.RobotException;
+import org.eclipse.jubula.tools.objects.event.EventFactory;
+import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
 /**
  * This class intercepts JavaFX events defined by the
@@ -25,15 +32,45 @@ import org.eclipse.jubula.rc.common.driver.InterceptorOptions;
  * @author BREDEX GmbH
  * @created 30.10.2013
  */
-class RobotEventInterceptorJavaFXImpl implements IRobotEventInterceptor {
+public class RobotEventInterceptorJavaFXImpl implements IRobotEventInterceptor {
+    
+    /**
+     * Stores Windows on wich Events could occur, this includes Popups such as
+     * contextmenus
+     */
+    private LinkedBlockingQueue<Window> m_sceneGraphs = 
+            new LinkedBlockingQueue<Window>();
+    
     /**
      * {@inheritDoc}
      */
     public IRobotEventConfirmer intercept(InterceptorOptions options) {
         RobotEventConfirmerJavaFXImpl confirmer =
                 new RobotEventConfirmerJavaFXImpl(
-                options);
+                options, m_sceneGraphs);
         confirmer.setEnabled(true);
         return confirmer;
+    }
+    
+
+    /**
+     * Adds a window with a Scene-Graph, on which we should listen for events to
+     * confirm. This is necessary because there are no system wide events.
+     * 
+     * @param w the Window, containing a Scene-Graph
+     */
+    public void addSceneGraph(Window w) {
+        if (!m_sceneGraphs.contains(w)) {
+            try {
+                m_sceneGraphs.put(w);
+            } catch (InterruptedException e) {
+                new RobotException(
+                        "Could not add Scene-Graph for event-listening: " //$NON-NLS-1$
+                                + w,
+                        EventFactory
+                                .createActionError(TestErrorEvent.
+                                        EXECUTION_ERROR));
+            }
+        }
     }
 }

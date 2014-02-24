@@ -168,10 +168,10 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     public void removeContainer(JavaFXHierarchyContainer ctner) {
         m_lock.lock();
         try {
-            Map<JavaFXComponent, JavaFXHierarchyContainer>
-                contMap = getHierarchyMap();
+            Map contMap = getHierarchyMap();
 
-            Map<Object, JavaFXComponent> realMap = getRealMap();
+            Map realMap = getRealMap();
+            
             JavaFXComponent fxComp = ctner.getComponent();
 
             fxComp.removeChangeListener();
@@ -205,9 +205,9 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     @Override
     public IComponentIdentifier[] getAllComponentId() {
         List<IComponentIdentifier> result = new Vector<IComponentIdentifier>();
-        Set<JavaFXComponent> keys = getHierarchyMap().keySet();
-        for (Iterator<JavaFXComponent> itr = keys.iterator(); itr.hasNext();) {
-            JavaFXComponent wrapComp = itr.next();
+        Set keys = getHierarchyMap().keySet();
+        for (Iterator itr = keys.iterator(); itr.hasNext();) {
+            JavaFXComponent wrapComp = (JavaFXComponent) itr.next();
             Object comp = wrapComp.getRealComponent();
             try {
                 if (AUTServerConfiguration.getInstance().isSupported(comp)) {

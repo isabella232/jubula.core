@@ -51,8 +51,6 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IMouseMotionTracker;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotEventConfirmer;
-import org.eclipse.jubula.rc.common.driver.IRobotEventInterceptor;
-import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.driver.InterceptorOptions;
 import org.eclipse.jubula.rc.common.driver.KeyTyper;
@@ -99,16 +97,12 @@ public class RobotJavaFXImpl implements IRobot {
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
             RobotJavaFXImpl.class);
-    /** max retries to get the location on screen */
-    private static final int MAX_RETRIES = 1;
     /** ID of Metal Look and Feel */
     private static final String METAL_LAF_ID = "Metal"; //$NON-NLS-1$
     /** The AWT Robot instance. */
     private Robot m_robot;
-    /** The toolkit utilities. CURRENTLY NOT USED */
-    private EventFlusher m_eventFlusher;
     /** The event interceptor. */
-    private IRobotEventInterceptor m_interceptor;
+    private RobotEventInterceptorJavaFXImpl m_interceptor;
     /** The mouse motion tracker. */
     private IMouseMotionTracker m_mouseMotionTracker;
     /** The event thread queuer. */
@@ -178,7 +172,8 @@ public class RobotJavaFXImpl implements IRobot {
      * @throws RobotException
      *             If the AWT-Robot cannot be created.
      */
-    public RobotJavaFXImpl(IRobotFactory factory) throws RobotException {
+    public RobotJavaFXImpl(RobotFactoryJavaFXImpl factory) 
+        throws RobotException {
         try {
             m_robot = new Robot();
             m_robot.setAutoWaitForIdle(true);
@@ -195,7 +190,6 @@ public class RobotJavaFXImpl implements IRobot {
         m_interceptor = factory.getRobotEventInterceptor();
         m_mouseMotionTracker = factory.getMouseMotionTracker();
         m_queuer = factory.getEventThreadQueuer();
-        m_eventFlusher = new EventFlusher(m_robot, FLUSH_TIMEOUT);
     }
 
     /**
@@ -469,7 +463,6 @@ public class RobotJavaFXImpl implements IRobot {
      */
     private void mouseMoveFallback(Point pointToGo) {
         Point curPoint = MouseInfo.getPointerInfo().getLocation();
-        int i = 0;
         while (!(curPoint.equals(pointToGo))) {
             m_robot.delay(1);
             curPoint = MouseInfo.getPointerInfo().getLocation();
@@ -525,7 +518,7 @@ public class RobotJavaFXImpl implements IRobot {
                 ensureComponentVisible(node);
             }
             bounds = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                    "Robot get node bounds", new Callable<Rectangle>() {
+                    "Robot get node bounds", new Callable<Rectangle>() { //$NON-NLS-1$
 
                         @Override
                         public Rectangle call() throws Exception {
@@ -856,7 +849,7 @@ public class RobotJavaFXImpl implements IRobot {
      */
     public boolean isMouseInComponent(final Object graphicsComponent) {
         final Point currMousePos = getCurrentMousePosition();
-        return EventThreadQueuerJavaFXImpl.invokeAndWait("isMouseInComponent",
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("isMouseInComponent", //$NON-NLS-1$
                 new Callable<Boolean>() {
 
                     @Override
@@ -971,5 +964,13 @@ public class RobotJavaFXImpl implements IRobot {
     /** {@inheritDoc} */
     public BufferedImage createFullScreenCapture() {
         return LocalScreenshotUtil.createFullScreenCapture();
+    }
+
+    /**
+     * Return the currently used EventInterceptor
+     * @return the Interceptor
+     */
+    public RobotEventInterceptorJavaFXImpl getInterceptor() {
+        return m_interceptor;
     }
 }

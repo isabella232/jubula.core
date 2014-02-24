@@ -72,8 +72,8 @@ public class TableTester extends AbstractTableTester {
      * @return the TableCell at the specified position.
      */
     private TableCell<?, ?> getCellAt(final int row, final int column) {
-        TableCell result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getCellText", new Callable<TableCell>() {
+        TableCell<?, ?> result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getCellText", new Callable<TableCell<?, ?>>() { //$NON-NLS-1$
 
                     @Override
                     public TableCell call() throws Exception {
@@ -108,7 +108,7 @@ public class TableTester extends AbstractTableTester {
     protected Cell getCellAtMousePosition() throws StepExecutionException {
         final Point p = getRobot().getCurrentMousePosition();
         Cell result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getCellAtMousePosition", new Callable<Cell>() {
+                "getCellAtMousePosition", new Callable<Cell>() { //$NON-NLS-1$
 
                     @Override
                     public Cell call() throws Exception {
@@ -146,7 +146,7 @@ public class TableTester extends AbstractTableTester {
      */
     private Rectangle getCellRect(final TableCell<?, ?> cell) {
         Rectangle result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getCellRect", new Callable<Rectangle>() {
+                "getCellRect", new Callable<Rectangle>() { //$NON-NLS-1$
 
                     @Override
                     public Rectangle call() throws Exception {
@@ -181,7 +181,7 @@ public class TableTester extends AbstractTableTester {
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         table.layout();
-                        Parent header = (Parent) table.lookup("TableHeaderRow");
+                        Parent header = (Parent) table.lookup("TableHeaderRow"); //$NON-NLS-1$
                         return NodeBounds.checkIfContains(pos, header);
                     }
                 });
@@ -193,7 +193,7 @@ public class TableTester extends AbstractTableTester {
      */
     public void rcToggleCheckboxInSelectedRow() {
         int row = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "rcToggleCheckboxInSelectedRow", new Callable<Integer>() {
+                "rcToggleCheckboxInSelectedRow", new Callable<Integer>() { //$NON-NLS-1$
 
                     @Override
                     public Integer call() throws StepExecutionException {
@@ -239,7 +239,7 @@ public class TableTester extends AbstractTableTester {
             int row = cell.getRow();
             verifyCheckboxInRow(checked, row);
         } else {
-            log.error("No Ceckbox found at Mouseposition: "
+            log.error("No Ceckbox found at Mouseposition: " //$NON-NLS-1$
                     + getRobot().getCurrentMousePosition());
         }
     }
@@ -272,7 +272,7 @@ public class TableTester extends AbstractTableTester {
     private void verifyCheckboxInRow(boolean checked, final int row) {
         final CheckBox box = (CheckBox) getCheckBoxFirstColumn(row);
         Boolean checkIndex = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "verifyCheckboxInRow", new Callable<Boolean>() {
+                "verifyCheckboxInRow", new Callable<Boolean>() { //$NON-NLS-1$
 
                     @Override
                     public Boolean call() throws StepExecutionException {
@@ -292,7 +292,7 @@ public class TableTester extends AbstractTableTester {
     private Node getCheckBoxFirstColumn(final int row) {
 
         return EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "clickCheckBoxFirstColumn", new Callable<Node>() {
+                "clickCheckBoxFirstColumn", new Callable<Node>() { //$NON-NLS-1$
 
                     @Override
                     public Node call() throws Exception {
@@ -306,7 +306,7 @@ public class TableTester extends AbstractTableTester {
                             CheckBoxTableCell cell = (CheckBoxTableCell) o;
                             if (cell.getTableColumn().equals(col)
                                     && cell.getIndex() == row) {
-                                return cell.lookup("CheckBox");
+                                return cell.lookup("CheckBox"); //$NON-NLS-1$
                             }
                         }
                         // No CheckBoxCell found. Now we have to check all
@@ -317,7 +317,7 @@ public class TableTester extends AbstractTableTester {
                             TableCell cell = (TableCell) o;
                             if (cell.getTableColumn().equals(col)
                                     && cell.getIndex() == row) {
-                                return cell.lookup("CheckBox");
+                                return cell.lookup("CheckBox"); //$NON-NLS-1$
                             }
                         }
                         return null;

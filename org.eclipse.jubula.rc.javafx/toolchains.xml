@@ -13,7 +13,7 @@
 			<id>JavaSE-1.7</id>
 		</provides>
 		<configuration>
-			<jdkHome>/devapps/java64/jdk1.8.0</jdkHome>
+			<jdkHome>/devapps/java64/java8</jdkHome>
 			<bootClassPath>
 				<includes>
 					<include>/jre/lib/*.jar</include>

@@ -17,9 +17,8 @@ import javafx.stage.Stage;
 
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
-import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
-import org.eclipse.jubula.rc.javafx.driver.RobotFactoryConfig;
+import org.eclipse.jubula.rc.javafx.driver.RobotFactoryJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.AbstractFXAUTEventHandler;
 import org.eclipse.jubula.rc.javafx.listener.CheckListener;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
@@ -121,8 +120,7 @@ public class JavaFXAUTServer extends AUTServer {
 
     @Override
     public IRobot getRobot() {
-        IRobotFactory robotFactory = new RobotFactoryConfig().getRobotFactory();
-        return robotFactory.getRobot();
+        return RobotFactoryJavaFXImpl.INSTANCE.getRobot();
     }
 
 }

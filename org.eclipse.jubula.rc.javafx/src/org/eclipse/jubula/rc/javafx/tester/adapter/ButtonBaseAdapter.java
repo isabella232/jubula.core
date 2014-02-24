@@ -16,8 +16,11 @@ import javafx.scene.control.ButtonBase;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Toggle;
 
+import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.tools.objects.event.EventFactory;
+import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
 /**
  * Implementation of the button interface as an adapter which holds the
@@ -55,9 +58,8 @@ public class ButtonBaseAdapter extends JavaFXComponentAdapter<ButtonBase>
     @Override
     public boolean isSelected() {
         final ButtonBase real = getRealComponent();
-        boolean result = false;
         if (real.getClass().isAssignableFrom(Toggle.class)) {
-            result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+            return EventThreadQueuerJavaFXImpl.invokeAndWait(
                     "isSelected", new Callable<Boolean>() { //$NON-NLS-1$
 
                         @Override
@@ -66,7 +68,7 @@ public class ButtonBaseAdapter extends JavaFXComponentAdapter<ButtonBase>
                         }
                     });
         } else if (real instanceof CheckBox) {
-            result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+            return EventThreadQueuerJavaFXImpl.invokeAndWait(
                     "isSelected", new Callable<Boolean>() { //$NON-NLS-1$
 
                         @Override
@@ -75,7 +77,11 @@ public class ButtonBaseAdapter extends JavaFXComponentAdapter<ButtonBase>
                         }
                     });
         }
-        return result;
+        throw new StepExecutionException(
+                "The Button is not a RadioButton and CheckBoxButton", //$NON-NLS-1$
+                EventFactory
+                        .createActionError(
+                                TestErrorEvent.UNSUPPORTED_OPERATION_ERROR));
     }
 
 }
