@@ -52,7 +52,7 @@ public abstract class AbstractSelectDatabaseHandler extends AbstractHandler {
         LoggerFactory.getLogger(AbstractSelectDatabaseHandler.class);
     /** the "select database ..." command parameter */
     private static final  String DB_COMMAND_PARAMETER =
-            "org.eclipse.jubula.client.ui.selectDatabaseParameter";
+            "org.eclipse.jubula.client.ui.selectDatabaseParameter"; //$NON-NLS-1$
     
     /**
      * Checks if automatic database login is active

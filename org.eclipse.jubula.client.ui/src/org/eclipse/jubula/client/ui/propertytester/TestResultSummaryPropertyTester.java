@@ -45,20 +45,23 @@ public class TestResultSummaryPropertyTester
 
     /** {@inheritDoc} */
     public boolean testImpl(Object receiver, String property, Object[] args) {
-        ITestResultSummaryPO summary = (ITestResultSummaryPO) receiver;
-        if (property.equals(HAS_MONITORING_DATA_PROP)) {
-            return summary.isReportWritten();
+        final GeneralStorage instance = GeneralStorage.getInstance();
+        if (instance != null) {
+            final EntityManager masterSession = instance.getMasterSession();
+            if (masterSession.isOpen()) {
+                ITestResultSummaryPO summary = (ITestResultSummaryPO) receiver;
+                if (property.equals(HAS_MONITORING_DATA_PROP)) {
+                    return summary.isReportWritten();
+                }
+                if (property.equals(HAS_TEST_RESULT_DETAILS_PROP)) {
+                    return TestResultPM.hasTestResultDetails(masterSession,
+                        summary.getId());
+                } else if (property.equals(HAS_PENDING_ALM_REPORT_PROP)) {
+                    return hasPendingALMReport(summary, masterSession);
+                }
+            }
         }
-        
-        final EntityManager masterSession = GeneralStorage
-            .getInstance().getMasterSession();
-        if (property.equals(HAS_TEST_RESULT_DETAILS_PROP)) {
-            return TestResultPM.hasTestResultDetails(masterSession, 
-                summary.getId());
-        } else if (property.equals(HAS_PENDING_ALM_REPORT_PROP)) {
-            return hasPendingALMReport(summary, masterSession);
-        }
-        
+
         return false;
     }
 

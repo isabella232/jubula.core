@@ -285,7 +285,7 @@ public class Utils {
                 ded.fireOMStateChanged(OMState.notRunning);
                 ded.fireProjectStateChanged(ProjectState.closed);
                 Plugin.closeAllOpenedJubulaEditors(alsoProjectIndependent);
-                ded.fireTestresultChanged(TestresultState.Refresh);
+                ded.fireTestresultChanged(TestresultState.Clear);
                 setTreeViewerInputNull(Constants.TESTRE_ID);
                 for (TestCaseBrowser tcb : MultipleTCBTracker.getInstance()
                         .getOpenTCBs()) {
@@ -321,7 +321,7 @@ public class Utils {
     
     /**
      * Returns the IEditorPart for the given node or null if no editor is
-     * opend for the given node
+     * opened for the given node
      * 
      * @param po
      *            the persistent object of the wanted editor
@@ -334,9 +334,10 @@ public class Utils {
         }
         return null;
     }
+    
     /**
      * Returns the IEditorReference for the given node or null if no editor is
-     * opend for the given node
+     * opened for the given node
      * 
      * @param po
      *            the persistent object of the wanted editor

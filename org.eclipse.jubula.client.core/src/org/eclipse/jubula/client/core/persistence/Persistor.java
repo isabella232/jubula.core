@@ -181,7 +181,7 @@ public class Persistor {
     }
 
     /**
-     * @return true if successfull; false otherwise
+     * @return true if successful; false otherwise
      */
     private static boolean connectToDB() {
         Job connectToDBJob = new Job(Messages.ConnectingToDatabaseJob) {

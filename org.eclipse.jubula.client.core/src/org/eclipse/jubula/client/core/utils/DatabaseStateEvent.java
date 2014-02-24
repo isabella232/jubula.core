@@ -19,9 +19,9 @@ public class DatabaseStateEvent {
     public enum DatabaseState {
         /** the database scheme has just been created */
         DB_SCHEME_CREATED,
-        /** successfull login */
+        /** successful login */
         DB_LOGIN_SUCCEEDED,
-        /** successfull logout */
+        /** successful logout */
         DB_LOGOUT_SUCCEEDED
     }
 

@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.collections.ComparatorUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
@@ -34,6 +35,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -65,7 +67,6 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.i18n.Messages;
-import org.eclipse.jubula.client.ui.provider.contentprovider.TestresultSummaryContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestresultSummaryViewColumnLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -444,8 +445,7 @@ public class TestresultSummaryView extends ViewPart implements
         addMonitoringReportColumn(m_tableViewer);
         
         getSite().setSelectionProvider(m_tableViewer);
-        m_tableViewer.setContentProvider(
-                new TestresultSummaryContentProvider());
+        m_tableViewer.setContentProvider(new ArrayContentProvider());
         m_tableViewer.getTable().setLinesVisible(true);
         m_tableViewer.getTable().setHeaderVisible(true);
         m_tableViewer.setUseHashlookup(true);
@@ -1815,22 +1815,27 @@ public class TestresultSummaryView extends ViewPart implements
      * Clears the view (table).
      */
     public void clear() {
-        m_tableViewer.getTable().getDisplay().syncExec(new Runnable() {
+        m_tableViewer.getControl().getDisplay().syncExec(new Runnable() {
             public void run() {
-                // avoid resetting selection on database change               
+                // avoid resetting selection on database change
                 m_tableViewer.setSelection(StructuredSelection.EMPTY);
-                m_tableViewer.setInput(null);
-                m_tableViewer.refresh();
+                m_tableViewer.setInput(ArrayUtils.EMPTY_OBJECT_ARRAY);
+                m_tableViewer.refresh(true);
             }
         });
     }
 
     /** {@inheritDoc} */
     public void handleTestresultChanged(TestresultState state) {
-        if (state == TestresultState.Clear) {
-            clear();
-        } else if (state == TestresultState.Refresh) {
-            loadViewInput();
+        switch (state) {
+            case Clear:
+                clear();
+                break;
+            case Refresh:
+                loadViewInput();
+                break;
+            default:
+                break;
         }
     }
 
