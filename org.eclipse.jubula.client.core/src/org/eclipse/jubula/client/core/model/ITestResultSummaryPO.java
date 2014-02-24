@@ -76,14 +76,4 @@ public interface ITestResultSummaryPO extends IArchivableTestResultSummary,
      * @return the monitoring report for this test result summary
      */
     public abstract MonitoringReportPO getMonitoringReport();
- 
-    /**
-     * @param status 
-     */
-    public abstract void setAlmReportStatus(AlmReportStatus status);
-    
-    /**
-     * @return the ALM reported status
-     */
-    public abstract AlmReportStatus getAlmReportStatus();
 }

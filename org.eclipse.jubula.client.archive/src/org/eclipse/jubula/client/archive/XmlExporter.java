@@ -107,6 +107,7 @@ import org.eclipse.jubula.client.core.model.IArchivableTestResultSummary;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
@@ -587,6 +588,10 @@ class XmlExporter {
             checkForCancel();
             if (!poSummary.isTestsuiteRelevant()) {
                 continue;
+            }
+            if (AlmReportStatus.NOT_YET_REPORTED.equals(poSummary
+                .getAlmReportStatus())) {
+                poSummary.setAlmReportStatus(AlmReportStatus.REPORT_DISCARDED);
             }
             TestresultSummary xmlSummary = 
                 xmlSummaryList.addNewTestresultSummary();

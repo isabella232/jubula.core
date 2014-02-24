@@ -116,6 +116,7 @@ import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.IArchivableTestResultSummary;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
@@ -209,7 +210,6 @@ class XmlImporter {
                 return value.toString();
             }
 
-
             public Object convert(Class arg0, Object arg1) {
                 if (arg0.isAssignableFrom(String.class)) {
                     try {
@@ -218,14 +218,23 @@ class XmlImporter {
                         throw new ConversionException(e);
                     }
                 }
-                throw new ConversionException("Can convert only strings");
+                if (arg0.isAssignableFrom(AlmReportStatus.class)) {
+                    try {
+                        return AlmReportStatus.valueOf(String.valueOf(arg1));
+                    } catch (Throwable e) {
+                        throw new ConversionException(e);
+                    }
+                }
+                throw new ConversionException("Type " + arg0.getCanonicalName()
+                    + " not supported for conversion.");
             }
         };
+        
         BEAN_UTILS.getConvertUtils().register(stringConverter, String.class);
         BEAN_UTILS.getConvertUtils().register(converter, Date.class);
     }
     
-    /** number of characters of a guid */
+    /** number of characters of a GUID */
     private static final int GUID_LENGTH = 32; 
     
     /** standard logging */
@@ -282,7 +291,7 @@ class XmlImporter {
     
     /**
      * Creates the instance of the persistent object which is defined by the XML
-     * element used as prameter. The method generates all dependend objects as
+     * element used as parameter. The method generates all dependent objects as
      * well.
      * 
      * @param xml
