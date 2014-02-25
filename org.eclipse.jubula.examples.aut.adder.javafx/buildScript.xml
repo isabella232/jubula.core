@@ -7,54 +7,49 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 <project name="SimpleAdder" default="build" basedir="." xmlns:fx="javafx:com.sun.javafx.tools.ant">
- 
-  <property name="java.home" value="/devapps/java/jdk1.7.0_25"/>
-  <property name="source.dir" value="src"/>
-  <property name="out.dir" value="build"/>
-  <property name="out.dir.classes" value="${out.dir}/classes" />
-  <property name="out.dir.jars" value="${out.dir}/jars"/>
-  <property name="app.jar.name" value="SimpleAdder.jar"/>
- 
-<target name="default">
-	<path id="classpath">
-		<filelist>
-			<file name="${java.home}\..\lib\ant-javafx.jar"/>
-			<file name="${java.home}\lib\jfxrt.jar"/>
-		</filelist>
-	</path>
 
-	<taskdef resource="com/sun/javafx/tools/ant/antlib.xml"      
-		uri="javafx:com.sun.javafx.tools.ant"
-		classpathref="classpath"/>
-</target>
- 
-  <target name="clean">
-    <delete dir="${out.dir}"/>
-  </target>
- 
-  <target name="init" depends="clean">
-    <mkdir dir="${out.dir}"/>
-    <mkdir dir="${out.dir.classes}"/>
-    <mkdir dir="${out.dir.jars}"/>
-  </target>
- 
-  <target name="compile" depends="default, init">
-    <javac srcdir="${source.dir}" destdir="${out.dir}/classes" classpathref="classpath"
-               source="1.7"
-               target="1.7" />
-  </target>
- 
-  <target name="build" depends="compile">
-    <fx:application id="SimpleAdder" mainClass="org.eclipse.jubula.examples.aut.adder.javafx.SimpleAdder"/>
-    <fx:jar destfile="${out.dir.jars}/${app.jar.name}">
-      <fx:application refid="SimpleAdder"/>
- 
-      <manifest>
-        <attribute name="Implementation-Title"
-                           value="SimpleAdder"/>
-      </manifest>
- 
-      <fileset dir="${out.dir.classes}"/>
-    </fx:jar>
-  </target>
+    <property name="java8.jdk.home" value="/devapps/java64/java8" />
+    <property name="source.dir" value="src" />
+    <property name="out.dir" value="build" />
+    <property name="out.dir.classes" value="${out.dir}/classes" />
+    <property name="out.dir.jars" value="${out.dir}/jars" />
+    <property name="app.jar.name" value="SimpleAdder.jar" />
+
+    <target name="default">
+        <path id="classpath">
+            <filelist>
+                <file name="${java8.jdk.home}/lib/ant-javafx.jar" />
+                <file name="${java8.jdk.home}/lib/javafx-mx.jar" />
+            </filelist>
+        </path>
+
+        <taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant" classpathref="classpath" />
+    </target>
+
+    <target name="clean">
+        <delete dir="${out.dir}" />
+    </target>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${out.dir}" />
+        <mkdir dir="${out.dir.classes}" />
+        <mkdir dir="${out.dir.jars}" />
+    </target>
+
+    <target name="compile" depends="default, init">
+        <javac fork="true" executable="${java8.jdk.home}/bin/javac" includeantruntime="false" srcdir="${source.dir}" destdir="${out.dir}/classes" classpathref="classpath" source="1.8" target="1.8" />
+    </target>
+
+    <target name="build" depends="compile">
+        <fx:application id="SimpleAdder" mainClass="org.eclipse.jubula.examples.aut.adder.javafx.SimpleAdder" />
+        <fx:jar destfile="${out.dir.jars}/${app.jar.name}">
+            <fx:application refid="SimpleAdder" />
+
+            <manifest>
+                <attribute name="Implementation-Title" value="SimpleAdder" />
+            </manifest>
+
+            <fileset dir="${out.dir.classes}" />
+        </fx:jar>
+    </target>
 </project>
