@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.Callable;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
@@ -30,7 +31,6 @@ import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.listener.EventLock;
-import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.AbstractMenuTester;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IWidgetComponent;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
@@ -53,11 +53,6 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
  */
 public class JavaFXComponentAdapter<T extends Node> extends
         AbstractComponentAdapter<T> implements IWidgetComponent {
-    /**
-     * The logger.
-     */
-    private static AutServerLogger log = new AutServerLogger(
-            JavaFXComponentAdapter.class);
 
     /**
      * The Converter Map.
@@ -322,7 +317,7 @@ public class JavaFXComponentAdapter<T extends Node> extends
     }
 
     @Override
-    public Window getWindow() {
-        return getRealComponent().getScene().getWindow();
+    public ReadOnlyObjectProperty<Window> getWindow() {
+        return getRealComponent().getScene().windowProperty();
     }
 }

@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.stage.Window;
@@ -83,8 +84,9 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
      * Stores Windows on wich Events could occur, this includes Popups such as
      * contextmenus
      */
-    private LinkedBlockingQueue<Window> m_sceneGraphs = 
-            new LinkedBlockingQueue<Window>();
+    private LinkedBlockingQueue<ReadOnlyObjectProperty
+    <? extends Window>> m_sceneGraphs = new LinkedBlockingQueue
+    <ReadOnlyObjectProperty<? extends Window>>();
 
     /**
      * Creates a new confirmer for a class of events defined by
@@ -95,8 +97,10 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
      * @param sceneGraphs
      *            List with instances of Windows and their Scene-Graphs
      */
-    protected RobotEventConfirmerJavaFXImpl(InterceptorOptions options,
-            LinkedBlockingQueue<Window> sceneGraphs) {
+    protected RobotEventConfirmerJavaFXImpl(
+            InterceptorOptions options,
+            LinkedBlockingQueue<ReadOnlyObjectProperty
+            <? extends Window>> sceneGraphs) {
         m_options = options;
         m_sceneGraphs = sceneGraphs;
     }
@@ -178,17 +182,31 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
         if (m_enabled) {
             long[] masks = m_options.getEventMask();
             for (int i = 0; i < masks.length; i++) {
-                for (Window w : m_sceneGraphs) {
-                    w.addEventFilter(
+                for (ReadOnlyObjectProperty<? extends Window> w 
+                        : m_sceneGraphs) {
+                    if (w.getValue() == null) {
+                        // Removing this property from the list because the
+                        // window it belong to is not present.
+                        m_sceneGraphs.remove(w);
+                        continue;
+                    }
+                    w.getValue().addEventFilter(
                             JavaFXEventConverter.awtToFX(masks[i]), this);
-                }             
+                }
             }
         } else {
             long[] masks = m_options.getEventMask();
             for (int i = 0; i < masks.length; i++) {
-                for (Window w : m_sceneGraphs) {
-                    w.removeEventFilter(
-                        JavaFXEventConverter.awtToFX(masks[i]), this);
+                for (ReadOnlyObjectProperty<? extends Window> w 
+                        : m_sceneGraphs) {
+                    if (w.getValue() == null) {
+                        // Removing this property from the list because the
+                        // window it belong to is not present.
+                        m_sceneGraphs.remove(w);
+                        continue;
+                    }
+                    w.getValue().removeEventFilter(
+                            JavaFXEventConverter.awtToFX(masks[i]), this);
                 }
             }
             m_eventList.clear();

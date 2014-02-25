@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.javafx.driver;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.stage.Window;
 
 import org.eclipse.jubula.rc.common.driver.IRobotEventConfirmer;
@@ -28,45 +29,49 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * {@link org.eclipse.jubula.rc.RobotEventConfirmerJavaFXImpl.driver.awtimpl.RobotEventConfirmerAwtImpl}
  * is created and enabled, so that the confirmer starts collecting events at
  * once.
- *
+ * 
  * @author BREDEX GmbH
  * @created 30.10.2013
  */
 public class RobotEventInterceptorJavaFXImpl implements IRobotEventInterceptor {
-    
+
     /**
      * Stores Windows on wich Events could occur, this includes Popups such as
      * contextmenus
      */
-    private LinkedBlockingQueue<Window> m_sceneGraphs = 
-            new LinkedBlockingQueue<Window>();
-    
+    private LinkedBlockingQueue<ReadOnlyObjectProperty<? extends Window>> 
+    m_sceneGraphs = new LinkedBlockingQueue<ReadOnlyObjectProperty
+        <? extends Window>>();
+
     /**
      * {@inheritDoc}
      */
     public IRobotEventConfirmer intercept(InterceptorOptions options) {
-        RobotEventConfirmerJavaFXImpl confirmer =
+        RobotEventConfirmerJavaFXImpl confirmer = 
                 new RobotEventConfirmerJavaFXImpl(
                 options, m_sceneGraphs);
         confirmer.setEnabled(true);
         return confirmer;
     }
-    
 
     /**
-     * Adds a window with a Scene-Graph, on which we should listen for events to
-     * confirm. This is necessary because there are no system wide events.
+     * Adds a property containing a window and its Scene-Graph, on which we
+     * should listen for events to confirm. This is necessary because there are
+     * no system wide events. We are using a property because some components
+     * don't have their window set, when they are not visible.
      * 
-     * @param w the Window, containing a Scene-Graph
+     * @param windowProp
+     *            the Window, containing a Scene-Graph
      */
-    public void addSceneGraph(Window w) {
-        if (!m_sceneGraphs.contains(w)) {
+    public void addSceneGraph(
+            ReadOnlyObjectProperty<? extends Window> windowProp) {
+        if (!m_sceneGraphs.contains(windowProp)) {
             try {
-                m_sceneGraphs.put(w);
+                m_sceneGraphs.put(windowProp);
             } catch (InterruptedException e) {
                 new RobotException(
                         "Could not add Scene-Graph for event-listening: " //$NON-NLS-1$
-                                + w,
+                                + windowProp,
                         EventFactory
                                 .createActionError(TestErrorEvent.
                                         EXECUTION_ERROR));

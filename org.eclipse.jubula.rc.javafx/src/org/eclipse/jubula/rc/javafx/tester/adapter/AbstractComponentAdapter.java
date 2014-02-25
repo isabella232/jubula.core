@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.stage.Window;
 
 import org.eclipse.jubula.rc.common.exception.RobotException;
@@ -67,5 +68,5 @@ public abstract class AbstractComponentAdapter<T> implements IComponent {
      * 
      * @return an instance of Window
      */
-    public abstract Window getWindow();
+    public abstract ReadOnlyObjectProperty<? extends Window> getWindow();
 }

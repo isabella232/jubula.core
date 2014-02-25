@@ -269,8 +269,8 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
         final Stage s = getStageByTitle(title, operator);
 
         if (s == null) {
-            log.error("no Window found! In rcWaitForWindowActivation. Title: "
-                    + title + "operator: " + operator);
+            log.error("no Window found! In rcWaitForWindowActivation. Title: " //$NON-NLS-1$
+                    + title + "operator: " + operator); //$NON-NLS-1$
             throw new StepExecutionException("no Window found!", //$NON-NLS-1$
                     EventFactory
                             .createActionError(TestErrorEvent.COMP_NOT_FOUND));
@@ -347,8 +347,8 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
         final Stage s = getStageByTitle(title, operator);
 
         if (s == null) {
-            log.error("no Window found! In rcWaitForWindowActivation. Title: "
-                    + title + "operator: " + operator);
+            log.error("no Window found! In rcWaitForWindowActivation. Title: " //$NON-NLS-1$
+                    + title + "operator: " + operator); //$NON-NLS-1$
             throw new StepExecutionException("no Window found!", //$NON-NLS-1$
                     EventFactory
                             .createActionError(TestErrorEvent.EXECUTION_ERROR));

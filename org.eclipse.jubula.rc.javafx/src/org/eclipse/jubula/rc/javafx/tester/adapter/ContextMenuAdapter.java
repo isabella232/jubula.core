@@ -1,24 +1,43 @@
+/*******************************************************************************
+ * Copyright (c) 2014 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import javafx.stage.Window;
 
+import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 
 /**
+ * Adapter for the ContextMenu. 
  * 
  * @author BREDEX GmbH
- *
+ * @created 10.2.2014
  */
 public class ContextMenuAdapter extends AbstractComponentAdapter<ContextMenu> 
                                 implements IMenuComponent {
 
+    /**
+     * The logging.
+     */
+    private static AutServerLogger log = new AutServerLogger(
+            ContextMenuAdapter.class);
+    
     /**
      * Creates an adapter for a Menu.
      * 
@@ -66,8 +85,8 @@ public class ContextMenuAdapter extends AbstractComponentAdapter<ContextMenu>
     }
 
     @Override
-    public Window getWindow() {
-        return getRealComponent();
+    public ReadOnlyObjectProperty<ContextMenu> getWindow() {
+        return new ReadOnlyObjectWrapper<ContextMenu>(getRealComponent());
     }
 
 }
