@@ -58,7 +58,7 @@ public class ButtonBaseAdapter extends JavaFXComponentAdapter<ButtonBase>
     @Override
     public boolean isSelected() {
         final ButtonBase real = getRealComponent();
-        if (real.getClass().isAssignableFrom(Toggle.class)) {
+        if (real instanceof Toggle) {
             return EventThreadQueuerJavaFXImpl.invokeAndWait(
                     "isSelected", new Callable<Boolean>() { //$NON-NLS-1$
 
