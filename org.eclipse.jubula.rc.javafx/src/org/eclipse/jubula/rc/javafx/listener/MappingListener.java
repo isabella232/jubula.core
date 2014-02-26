@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.listener;
 
+import java.util.Map;
+
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
@@ -23,6 +25,7 @@ import org.eclipse.jubula.communication.message.ObjectMappedMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.util.PropertyUtil;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
@@ -109,16 +112,21 @@ public class MappingListener extends AbstractFXAUTEventHandler {
 
         @Override
         public void handle(InputEvent event) {
-            if (getCurrentNode() != null
+            Node currNode = getCurrentNode();
+            if (currNode != null
                     && KeyAcceptor.accept(event) == KeyAcceptor.
                     MAPPING_KEY_COMB) {
                 IComponentIdentifier id;
                 try {
-                    id = ComponentHandler.getIdentifier(getCurrentNode());
+                    id = ComponentHandler.getIdentifier(currNode);
                     if (log.isInfoEnabled()) {
                         log.info("send a message with identifier for the component '" //$NON-NLS-1$
                                 + id + "'"); //$NON-NLS-1$
                     }
+                    
+                    Map componentProperties = PropertyUtil
+                            .getMapOfComponentProperties(currNode);
+                    id.setComponentPropertiesMap(componentProperties);
                     // send a message with the identifier of the selected
                     // component
                     ObjectMappedMessage message = new ObjectMappedMessage();
@@ -126,7 +134,7 @@ public class MappingListener extends AbstractFXAUTEventHandler {
                     AUTServer.getInstance().getCommunicator().send(message);
                 } catch (NoIdentifierForComponentException nifce) {
                     // no identifier for the component, log this as an error
-                    log.error("no identifier for '" + getCurrentNode()); //$NON-NLS-1$
+                    log.error("no identifier for '" + currNode); //$NON-NLS-1$
                 } catch (CommunicationException ce) {
                     log.error(ce);
                     // do nothing here: a closed connection is handled by the
