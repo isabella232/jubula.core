@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<compositeCheatsheet name="Writing your first test">
-   <taskGroup kind="set" name="Creating and executing your first test" skip="false">
+<compositeCheatsheet name="006 Writing your first test with JavaFX">
+   <taskGroup kind="set" name="Creating and executing your first test with JavaFX" skip="false">
       <intro>
-         These cheat sheets take you step-by-step through your first test. 
+         These cheat sheets take you step-by-step through your first test with JavaFX. 
 <br/><br/>
 The requirements for the program we want to test are as follows:
 <br/><br/>
@@ -18,14 +18,11 @@ Make sure that the Integrated Test Environment (ITE)  is maximized to complete t
          <intro>
             This task gives you a quick introduction to working with the cheat sheets.
          </intro>
-         <onCompletion>
-            <b>Conclusion</b>
-         </onCompletion>
          <task kind="cheatsheet" name="Navigating through the cheat sheets" skip="false">
             <onCompletion>
                Once a task is done, you can either review it or click to move to the next task.
             </onCompletion>
-            <param name="path" value="cheatSheetNav.xml">
+            <param name="path" value="../shared/cheatSheetNav.xml">
             </param>
          </task>
       </taskGroup>
@@ -40,14 +37,14 @@ Make sure that the Integrated Test Environment (ITE)  is maximized to complete t
             <onCompletion>
                You will notice that there is a category of blue Test Cases in the Test Case browser. This is a pre-defined library of Test Cases to make test creation easier. We will use these later to create the test.
             </onCompletion>
-            <param name="path" value="createProject.xml">
+            <param name="path" value="../shared/createProject.xml">
             </param>
          </task>
          <task kind="cheatsheet" name="Define an AUT" skip="false">
             <intro>
                Each Project can have one or more AUT&apos;s.
             </intro>
-            <param name="path" value="defineAUT.xml">
+            <param name="path" value="defineFXAUT.xml">
             </param>
          </task>
          <task kind="cheatsheet" name="Configure the AUT" skip="false">
@@ -65,7 +62,7 @@ Some AUT&apos;s will need different configurations so that they can be tested on
 There is more information on configuring AUT&apos;s in the handbook, in the <b>Tasks</b> chapter.  <br/><br/>
 You can also see context-sensitive help by pressing <b>F1</b> in the AUT configuration dialog.
             </onCompletion>
-            <param name="path" value="configureAUT.xml">
+            <param name="path" value="configureFXAUT.xml">
             </param>
          </task>
       </taskGroup>
@@ -84,7 +81,7 @@ Test Cases are reusable modules.
 <br/><br/>
 Note that the following steps are all completed based on the requirements for the AUT - we are not dependent on the AUT to create tests.
             </intro>
-            <param name="path" value="createTestCase.xml">
+            <param name="path" value="../shared/createTestCase.xml">
             </param>
          </task>
          <task kind="cheatsheet" name="Reference Test Cases from the library" skip="false">
@@ -94,7 +91,7 @@ Note that the following steps are all completed based on the requirements for th
             <onCompletion>
                This task has shown you how to use the library of Test Cases to create tests. Test Cases are not copied, they are referenced. You always only have one source - which makes maintainability easier later.
             </onCompletion>
-            <param name="path" value="addReusedTestCases.xml">
+            <param name="path" value="../shared/addReusedTestCases.xml">
             </param>
          </task>
          <task kind="cheatsheet" name="Add data" skip="false">
@@ -104,7 +101,7 @@ Note that the following steps are all completed based on the requirements for th
             <onCompletion>
                The benefit of adding the data here is that it is separate from the test flow. It can easily be changed, read from a central test data set, or translated.
             </onCompletion>
-            <param name="path" value="addData.xml">
+            <param name="path" value="../shared/addData.xml">
             </param>
          </task>
       </taskGroup>
@@ -116,14 +113,14 @@ Note that the following steps are all completed based on the requirements for th
             <intro>
                Test Suites are the executable units.
             </intro>
-            <param name="path" value="createTestSuite.xml">
+            <param name="path" value="../shared/createTestSuite.xml">
             </param>
          </task>
          <task kind="cheatsheet" name="Open the object mapping editor" skip="false">
             <intro>
                The object mapping editor is where you manage the object (GUI) map.
             </intro>
-            <param name="path" value="openOME.xml">
+            <param name="path" value="../shared/openOME.xml">
             </param>
          </task>
          <task kind="cheatsheet" name="Start and connect to the AUT Agent" skip="false">
@@ -131,14 +128,14 @@ Note that the following steps are all completed based on the requirements for th
                You can use the embedded AUT Agent to run tests locally on the same machine as the ITE.  <br/><br/>
 To perform distributed testing, you can install and start the separate AUT Agent on each machine you want to run tests on.
             </intro>
-            <param name="path" value="AUTStarter.xml">
+            <param name="path" value="../shared/AUTStarter.xml">
             </param>
          </task>
          <task kind="cheatsheet" name="Start the AUT" skip="false">
             <intro>
                The AUT must be started in order to object map and execute the tests.
             </intro>
-            <param name="path" value="startAUT.xml">
+            <param name="path" value="../shared/startAUT.xml">
             </param>
          </task>
       </taskGroup>
@@ -151,7 +148,7 @@ Now the AUT can be joined with the specification so that the test can be execute
             <intro>
                Object mapping involves collecting the components you want to test from the running AUT and assigning them to the component names you used in the test.
             </intro>
-            <param name="path" value="objectMap.xml">
+            <param name="path" value="../shared/objectMap.xml">
             </param>
          </task>
       </taskGroup>
@@ -163,7 +160,7 @@ Now the AUT can be joined with the specification so that the test can be execute
             <intro>
                The test can now be executed.
             </intro>
-            <param name="path" value="execute.xml">
+            <param name="path" value="../shared/execute.xml">
             </param>
          </task>
       </taskGroup>

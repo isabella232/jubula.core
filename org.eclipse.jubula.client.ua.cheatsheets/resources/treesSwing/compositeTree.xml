@@ -18,7 +18,7 @@ If you have not already completed the <b>First Steps</b> cheat sheet, we recomme
             <intro>
                If you already have the project open, you can skip this task.
             </intro>
-            <param name="path" value="importProject.xml">
+            <param name="path" value="../shared/importProject.xml">
             </param>
          </task>
       </taskGroup>

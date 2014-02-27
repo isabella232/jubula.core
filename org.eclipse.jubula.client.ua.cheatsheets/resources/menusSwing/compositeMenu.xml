@@ -22,7 +22,7 @@ If you have not already completed the <b>First Steps</b> cheat sheet, we recomme
             <onCompletion>
                Once the project has been opened, you can start creating test cases.
             </onCompletion>
-            <param name="path" value="importProject.xml">
+            <param name="path" value="../shared/importProject.xml">
             </param>
          </task>
       </taskGroup>
