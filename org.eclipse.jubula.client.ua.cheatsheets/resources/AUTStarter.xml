@@ -22,6 +22,6 @@
          skip="true"
          title="Change the port number in the preferences if necessary">
       <description>
-         The standard port for the embedded AUT Agent is 60000. If this is already in use, change the port number via: Window/Preferences. <br/><br/>The setting is found under the <b>Test/AUT Agent/Embedded AUT Agent</b> section.
+         The standard port for the embedded AUT Agent is 60001. If this is already in use, change the port number via: Window/Preferences. <br/><br/>The setting is found under the <b>Test/AUT Agent/Embedded AUT Agent</b> section.
       </description>
    </item></cheatsheet>
