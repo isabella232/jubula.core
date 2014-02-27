@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<compositeCheatsheet name="006 Writing your first test with JavaFX">
+   <taskGroup kind="set" name="Creating and executing your first test with JavaFX" skip="false">
+      <intro>
+         These cheat sheets take you step-by-step through your first test with JavaFX. 
+<br/><br/>
+The requirements for the program we want to test are as follows:
+<br/><br/>
+1. A small calculator which can perform an addition<br/><br/>
+2. There will be two text entry areas and an equals button<br/><br/>
+3. The result of the addition will be shown in the interface<br/>
+<br/>
+Your task is to create a test which will test this functionality via the GUI.
+<br/><br/>
+Make sure that the Integrated Test Environment (ITE)  is maximized to complete these cheat sheets!
+      </intro>
+      <taskGroup kind="set" name="Working with the cheat sheets" skip="false">
+         <intro>
+            This task gives you a quick introduction to working with the cheat sheets.
+         </intro>
+         <task kind="cheatsheet" name="Navigating through the cheat sheets" skip="false">
+            <onCompletion>
+               Once a task is done, you can either review it or click to move to the next task.
+            </onCompletion>
+            <param name="path" value="cheatSheetNav.xml">
+            </param>
+         </task>
+      </taskGroup>
+      <taskGroup kind="set" name="Setting up the Project" skip="false">
+         <intro>
+            This group of tasks deals with creating a Project, and adding and configuring an AUT.
+         </intro>
+         <task kind="cheatsheet" name="Create a Project" skip="false">
+            <intro>
+               A Project contains information about the AUT and also contains the Test Cases to test the AUT.
+            </intro>
+            <onCompletion>
+               You will notice that there is a category of blue Test Cases in the Test Case browser. This is a pre-defined library of Test Cases to make test creation easier. We will use these later to create the test.
+            </onCompletion>
+            <param name="path" value="createProject.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Define an AUT" skip="false">
+            <intro>
+               Each Project can have one or more AUT&apos;s.
+            </intro>
+            <param name="path" value="defineFXAUT.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Configure the AUT" skip="false">
+            <intro>
+               Each AUT can have one or more configurations. 
+<br/><br/>
+A configuration contains details about how to start the AUT.
+<br/><br/>
+For example, you need to define where to start your AUT (on what computer) and with what arguments. 
+<br/><br/>
+Some AUT&apos;s will need different configurations so that they can be tested on different platforms.
+            </intro>
+            <onCompletion>
+               It may be necessary to change or add other information in the AUT configuration dialog when you configure your own AUT - especially if you are working with the AUT on another machine. <br/><br/> 
+There is more information on configuring AUT&apos;s in the handbook, in the <b>Tasks</b> chapter.  <br/><br/>
+You can also see context-sensitive help by pressing <b>F1</b> in the AUT configuration dialog.
+            </onCompletion>
+            <param name="path" value="configureFXAUT.xml">
+            </param>
+         </task>
+      </taskGroup>
+      <taskGroup kind="set" name="Creating the test specification" skip="false">
+         <intro>
+            This group of tasks deals with Test Case creation.
+         </intro>
+         <onCompletion>
+            You have now seen how easy it is to create tests using the library we installed.
+         </onCompletion>
+         <task kind="cheatsheet" name="Create a Test Case" skip="false">
+            <intro>
+               Now you will create a Test Case to make the program perform an addition and check the result.
+<br/><br/>
+Test Cases are reusable modules. 
+<br/><br/>
+Note that the following steps are all completed based on the requirements for the AUT - we are not dependent on the AUT to create tests.
+            </intro>
+            <param name="path" value="createTestCase.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Reference Test Cases from the library" skip="false">
+            <intro>
+               The majority of actions you will require to write tests are already in the  library of reused Test Cases.
+            </intro>
+            <onCompletion>
+               This task has shown you how to use the library of Test Cases to create tests. Test Cases are not copied, they are referenced. You always only have one source - which makes maintainability easier later.
+            </onCompletion>
+            <param name="path" value="addReusedTestCases.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Add data" skip="false">
+            <intro>
+               Now that the test specification is ready, data can be added to the Test Case.
+            </intro>
+            <onCompletion>
+               The benefit of adding the data here is that it is separate from the test flow. It can easily be changed, read from a central test data set, or translated.
+            </onCompletion>
+            <param name="path" value="addData.xml">
+            </param>
+         </task>
+      </taskGroup>
+      <taskGroup kind="set" name="Preparing for execution" skip="false">
+         <intro>
+            This group of tasks shows you how to add Test Cases to a Test Suite to be executed, and also tell you how to start the AUT Agent.
+         </intro>
+         <task kind="cheatsheet" name="Create and fill a Test Suite" skip="false">
+            <intro>
+               Test Suites are the executable units.
+            </intro>
+            <param name="path" value="createTestSuite.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Open the object mapping editor" skip="false">
+            <intro>
+               The object mapping editor is where you manage the object (GUI) map.
+            </intro>
+            <param name="path" value="openOME.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Start and connect to the AUT Agent" skip="false">
+            <intro>
+               You can use the embedded AUT Agent to run tests locally on the same machine as the ITE.  <br/><br/>
+To perform distributed testing, you can install and start the separate AUT Agent on each machine you want to run tests on.
+            </intro>
+            <param name="path" value="AUTStarter.xml">
+            </param>
+         </task>
+         <task kind="cheatsheet" name="Start the AUT" skip="false">
+            <intro>
+               The AUT must be started in order to object map and execute the tests.
+            </intro>
+            <param name="path" value="startAUT.xml">
+            </param>
+         </task>
+      </taskGroup>
+      <taskGroup kind="set" name="Object Mapping" skip="false">
+         <intro>
+            Up until now, the test specification has been separate from the actual AUT. <br/><br/>
+Now the AUT can be joined with the specification so that the test can be executed.
+         </intro>
+         <task kind="cheatsheet" name="Object Mapping" skip="false">
+            <intro>
+               Object mapping involves collecting the components you want to test from the running AUT and assigning them to the component names you used in the test.
+            </intro>
+            <param name="path" value="objectMap.xml">
+            </param>
+         </task>
+      </taskGroup>
+      <taskGroup kind="set" name="Executing the test" skip="false">
+         <intro>
+            This group of tasks shows you how to execute a test.
+         </intro>
+         <task kind="cheatsheet" name="Execute the test" skip="false">
+            <intro>
+               The test can now be executed.
+            </intro>
+            <param name="path" value="execute.xml">
+            </param>
+         </task>
+      </taskGroup>
+   </taskGroup>
+</compositeCheatsheet>

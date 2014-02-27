@@ -67,5 +67,15 @@
             This cheat sheet shows you how to work with Event Handlers in your tests.
          </description>
       </cheatsheet>
+      <cheatsheet
+            category="GDCheatSheets.category1"
+            composite="true"
+            contentFile="$nl$/resources/compositeCheatSheetJavaFX.xml"
+            id="org.eclipse.jubula.client.ua.cheatsheets.cheatsheet1128118092"
+            name="006 Writing your first test with JavaFX">
+         <description>
+            First steps for JavaFX testing
+         </description>
+      </cheatsheet>
    </extension>
 </plugin>
