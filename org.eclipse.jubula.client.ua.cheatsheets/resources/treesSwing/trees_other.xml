@@ -9,7 +9,7 @@
 <cheatsheet title="Other actions available for testing trees">
    <intro>
       <description>
-         This cheat sheet presents some of the other options available to test trees in GUIdancer.
+         This cheat sheet presents some of the other options available to test trees.
       </description>
    </intro>
    <item title="Checking a node exists" dialog="true" skip="false">
