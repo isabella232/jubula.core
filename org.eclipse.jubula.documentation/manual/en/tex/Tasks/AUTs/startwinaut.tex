@@ -8,7 +8,6 @@
 \index{Application activation}
 \index{AUT ID}
 
-When starting Windows \gdauts{},  you must specify whether you are testing a desktop Windows \gdaut{} or an \gdaut{} that is designed to run on a modernUI desktop (i.e. a Windows Store App). 
 
 \subsubsection{\gdaut{} configuration for Windows desktop \gdauts{}}
 To be able to start a Windows desktop \gdaut{}, you should select the \bxname{win} toolkit as the \gdaut{} toolkit in the \gdaut{} definition dialog. 
@@ -17,18 +16,6 @@ You must enter the following information to be able to start a \bxname{win} \gda
 \begin{enumerate}
 \item Enter the basic configuration details as described earlier \bxpref{TasksBasicConfigurationInfo}.
 \item Enter the executable file name in the \bxname{Executable File Name} field. This path can be relative if you define a working directory \bxpref{TasksWorkingDir}).
-\item Enter any necessary command-line arguments for the \gdaut{} in the
- \bxname{AUT Arguments} field. 
-  
-\end{enumerate}
-
-\subsubsection{\gdaut{} configuration for Windows Store \gdauts{}}
-To be able to start a Windows Store \gdaut{}, you should select the \bxname{winApps} toolkit as the \gdaut{} toolkit in the \gdaut{} definition dialog. 
-
-You must enter the following information to be able to start a \bxname{winApps} \gdaut{}:
-\begin{enumerate}
-\item Enter the basic configuration details as described earlier \bxpref{TasksBasicConfigurationInfo}.
-\item Enter the name of the app. This is the name that is shown when the \gdaut{} is installed. This name is locale-dependent -- you will have to have separate \gdaut{} configurations to test your app in different languages. 
 \item Enter any necessary command-line arguments for the \gdaut{} in the
  \bxname{AUT Arguments} field. 
   
