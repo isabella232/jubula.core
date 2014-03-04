@@ -33,6 +33,7 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
@@ -64,7 +65,7 @@ public class SWTAdapterFactory implements IAdapterFactory {
                 Combo.class, CCombo.class, Label.class, CLabel.class, 
                 TabFolder.class, CTabFolder.class, ToolItem.class,
                 DateTime.class, Scale.class, Slider.class, Spinner.class,
-                Link.class, ProgressBar.class };
+                Link.class, ProgressBar.class, Canvas.class };
     
     
     /**
@@ -121,6 +122,8 @@ public class SWTAdapterFactory implements IAdapterFactory {
             } else if (objectToAdapt instanceof ToolItem) {
                 returnvalue = new ToolItemAdapter(objectToAdapt);
             } else if (objectToAdapt instanceof ProgressBar) {
+                returnvalue = new ControlAdapter(objectToAdapt);
+            } else if (objectToAdapt instanceof Canvas) {
                 returnvalue = new ControlAdapter(objectToAdapt);
             }
             return returnvalue;
