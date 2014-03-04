@@ -18,11 +18,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.ImageView;
 
 import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ButtonBaseAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ContextMenuAdapter;
+import org.eclipse.jubula.rc.javafx.tester.adapter.JavaFXComponentAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.LabelAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.MenuBarAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TableAdapter;
@@ -49,7 +51,7 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
     private static final Class[] SUPPORTEDCLASSES = new Class[] {
         ButtonBase.class, MenuItem.class, MenuBar.class, Label.class,
         TextInputControl.class, TreeView.class, TableView.class,
-        ContextMenu.class };
+        ContextMenu.class, ImageView.class };
 
     @Override
     public Class[] getSupportedClasses() {
@@ -78,6 +80,9 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
             } else if (objectToAdapt instanceof MenuBar) {
                 returnvalue = new MenuBarAdapter(
                         (MenuBar) objectToAdapt);
+            } else if (objectToAdapt instanceof ImageView) {
+                returnvalue = new JavaFXComponentAdapter
+                        <ImageView>((ImageView) objectToAdapt);
             }
         }
         return returnvalue;
