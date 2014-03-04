@@ -410,12 +410,6 @@ public class RobotJavaFXImpl implements IRobot {
             if (log.isDebugEnabled()) {
                 log.debug("Moving mouse to: " + p); //$NON-NLS-1$
             }
-            IRobotEventConfirmer confirmer = null;
-            if (clickOptions.isConfirmClick()) {
-                InterceptorOptions options = new InterceptorOptions(
-                        new long[] { AWTEvent.MOUSE_MOTION_EVENT_MASK });
-                confirmer = m_interceptor.intercept(options);
-            }
             Point startpoint = m_mouseMotionTracker.getLastMousePointOnScreen();
             if (startpoint == null) {
                 // If there is no starting point the center of the root
@@ -433,17 +427,35 @@ public class RobotJavaFXImpl implements IRobot {
                     startpoint = getLocation(c, null);
                 }
             }
+            IRobotEventConfirmer confirmer = null;
+            InterceptorOptions options = new InterceptorOptions(
+                    new long[] { AWTEvent.MOUSE_MOTION_EVENT_MASK });
+            //For drag Events we have to register the confirmer earlier
+            //because the drag event is thrown when the movement starts
+            if (DragAndDropHelper.getInstance().isDragMode()) {
+                confirmer = m_interceptor.intercept(options); 
+            }
             final Point[] mouseMove = MouseMovementStrategy.getMovementPath(
                     startpoint, p, clickOptions.getStepMovement(),
                     clickOptions.getFirstHorizontal());
             Point currP = new Point(0, 0);
-            for (int i = 0; i < mouseMove.length; i++) {
+            for (int i = 0; i < mouseMove.length - 1; i++) {
                 m_robot.mouseMove(mouseMove[i].x, mouseMove[i].y);
                 currP.x = mouseMove[i].x;
                 currP.y = mouseMove[i].y;
                 if (!currP.equals(MouseInfo.getPointerInfo().getLocation())) {
                     mouseMoveFallback(currP);
                 }
+            }
+            if (!DragAndDropHelper.getInstance().isDragMode()) {
+                confirmer = m_interceptor.intercept(options); 
+            }
+            m_robot.mouseMove(mouseMove[mouseMove.length - 1].x,
+                    mouseMove[mouseMove.length - 1].y);
+            currP.x = mouseMove[mouseMove.length - 1].x;
+            currP.y = mouseMove[mouseMove.length - 1].y;
+            if (!currP.equals(MouseInfo.getPointerInfo().getLocation())) {
+                mouseMoveFallback(currP);
             }
             if (confirmer != null) {
                 confirmMove(confirmer, graphicsComponent);

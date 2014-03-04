@@ -11,12 +11,14 @@
 package org.eclipse.jubula.rc.javafx.driver;
 
 import java.util.Arrays;
+import java.util.concurrent.Callable;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.WeakEventHandler;
 import javafx.stage.Window;
 
 import org.eclipse.jubula.rc.common.driver.IEventMatcher;
@@ -57,7 +59,7 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
     /**
      * Stores if the confirmer is enabled.
      */
-    private boolean m_enabled = false;
+    private volatile boolean m_enabled = false;
     /**
      * Stores if the confirmer is being waiting for an event to confirm.
      */
@@ -65,7 +67,7 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
     /**
      * The interceptor options.
      */
-    private InterceptorOptions m_options;
+    private volatile InterceptorOptions m_options;
     /**
      * The graphics component on which the event occurs.
      */
@@ -85,8 +87,7 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
      * contextmenus
      */
     private LinkedBlockingQueue<ReadOnlyObjectProperty
-    <? extends Window>> m_sceneGraphs = new LinkedBlockingQueue
-    <ReadOnlyObjectProperty<? extends Window>>();
+            <? extends Window>> m_sceneGraphs;
 
     /**
      * Creates a new confirmer for a class of events defined by
@@ -180,18 +181,33 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
         m_enabled = enabled;
         m_eventList.clear();
         if (m_enabled) {
-            long[] masks = m_options.getEventMask();
+            final long[] masks = m_options.getEventMask();
             for (int i = 0; i < masks.length; i++) {
-                for (ReadOnlyObjectProperty<? extends Window> w 
+                for (final ReadOnlyObjectProperty<? extends Window> w 
                         : m_sceneGraphs) {
                     if (w.getValue() == null) {
                         // Removing this property from the list because the
-                        // window it belong to is not present.
+                        // window it belongs to is not present.
                         m_sceneGraphs.remove(w);
                         continue;
                     }
-                    w.getValue().addEventFilter(
-                            JavaFXEventConverter.awtToFX(masks[i]), this);
+                    final Window win = w.get();
+                    final long mask = masks[i];
+                    final RobotEventConfirmerJavaFXImpl me = this;
+                    EventThreadQueuerJavaFXImpl.invokeAndWait(
+                            "Add EventFilter for conforming", //$NON-NLS-1$
+                            new Callable<Void>() {
+
+                                @Override
+                                public Void call() throws Exception {
+                                    win.addEventFilter(
+                                            JavaFXEventConverter.awtToFX(mask),
+                                            new WeakEventHandler<>(me));
+                                    
+                                    return null;
+                                }
+                            });
+                    
                 }
             }
         } else {
@@ -201,15 +217,27 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
                         : m_sceneGraphs) {
                     if (w.getValue() == null) {
                         // Removing this property from the list because the
-                        // window it belong to is not present.
+                        // window it belongs to is not present.
                         m_sceneGraphs.remove(w);
                         continue;
                     }
-                    w.getValue().removeEventFilter(
-                            JavaFXEventConverter.awtToFX(masks[i]), this);
+                    final Window win = w.get();
+                    final long mask = masks[i];
+                    final RobotEventConfirmerJavaFXImpl me = this;
+                    EventThreadQueuerJavaFXImpl.invokeAndWait(
+                            "Remove EventFilter for conforming", //$NON-NLS-1$
+                            new Callable<Void>() {
+
+                                @Override
+                                public Void call() throws Exception {
+                                    win.removeEventFilter(
+                                            JavaFXEventConverter.awtToFX(mask),
+                                            new WeakEventHandler<>(me));
+                                    return null;
+                                }
+                            });
                 }
             }
-            m_eventList.clear();
         }
     }
 
