@@ -627,7 +627,8 @@ public class RobotJavaFXImpl implements IRobot {
                 "The graphic component must not be null"); //$NON-NLS-1$
         try {
             keyType(graphicsComponent,
-                    java.awt.event.KeyEvent.getExtendedKeyCodeForChar(c));
+                    java.awt.event.KeyEvent.getExtendedKeyCodeForChar(c),
+                    Character.isUpperCase(c));
         } catch (AWTError awte) {
             log.error(awte);
             throw new RobotException(awte);
@@ -649,20 +650,37 @@ public class RobotJavaFXImpl implements IRobot {
             }
         }
     }
-
+    
+    
     /**
      * {@inheritDoc}
      */
-    public void keyType(Object graphicsComponent, int keycode)
+    public void keyType(Object graphicsComponent, int keycode) {
+        keyType(graphicsComponent, keycode, false);
+    }
+
+    /**
+     * @param graphicsComponent The graphics component the key code is typed in, may be null
+     * @param keycode The key code.
+     * @param isUpperCase Boolean whether character is upper case.
+     */
+    public void keyType(Object graphicsComponent, int keycode, 
+            boolean isUpperCase)
         throws RobotException {
         try {
             InterceptorOptions options = new InterceptorOptions(
                     new long[] { AWTEvent.KEY_EVENT_MASK });
             IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
             try {
+                if (isUpperCase) {
+                    m_robot.keyPress(java.awt.event.KeyEvent.VK_SHIFT);
+                }
                 m_robot.keyPress(keycode);
             } finally {
                 m_robot.keyRelease(keycode);
+                if (isUpperCase) {
+                    m_robot.keyRelease(java.awt.event.KeyEvent.VK_SHIFT);
+                }
             }
             confirmer.waitToConfirm(graphicsComponent,
                     new KeyJavaFXEventMatcher(KeyEvent.KEY_RELEASED));
