@@ -39,6 +39,12 @@ public class NodeBounds {
     public static boolean checkIfContains(Point2D point, Node n) {
         Point2D nodePos = n.localToScreen(0, 0);
 
+        // A null value here means that the Node is not in a Window, so its 
+        // (non-existent) bounds cannot contain the given point.
+        if (nodePos == null) {
+            return false;
+        }
+        
         BoundingBox box = new BoundingBox(nodePos.getX(),
                                           nodePos.getY(),
                                           n.getBoundsInParent().getWidth(),
