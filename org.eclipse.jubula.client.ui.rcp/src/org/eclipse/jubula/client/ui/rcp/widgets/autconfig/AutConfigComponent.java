@@ -80,11 +80,12 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
  * 
  */
 public abstract class AutConfigComponent extends ScrolledComposite {
-
     /** layout for buttons */
     public static final GridData BUTTON_LAYOUT;
     /** number of columns for layout purposes */
     public static final int NUM_COLUMNS = 3;
+    /** the number of lines in a text field */
+    protected static final int COMPOSITE_WIDTH = 250;
 
     static {
         BUTTON_LAYOUT = new GridData();

@@ -33,7 +33,7 @@ public class ToolkitProvider implements IToolKitProvider {
         Map<String, String> autConfig, String autName)
         throws ToolkitPluginException {
         return ToolkitUtils.createAutConfigComponent(
-                        "org.eclipse.jubula.client.ui.rcp.widgets.autconfig.JavaAutConfigComponent", //$NON-NLS-1$
+                        "org.eclipse.jubula.client.ui.rcp.widgets.autconfig.JavaFXAutConfigComponent", //$NON-NLS-1$
                         this.getClass().getClassLoader(), parent, style,
                         autConfig, autName);
     }

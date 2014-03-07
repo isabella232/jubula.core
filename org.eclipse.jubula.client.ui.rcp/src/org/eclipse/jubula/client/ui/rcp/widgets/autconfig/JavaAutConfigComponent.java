@@ -92,13 +92,9 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class JavaAutConfigComponent extends AutConfigComponent {
-    
     /** Value for the default AUT Config mode */
     public static final String AUT_CONFIG_DIALOG_MODE_KEY_DEFAULT = 
         JavaAutConfigComponent.Mode.BASIC.name();
-
-    /** the number of lines in a text field */
-    protected static final int COMPOSITE_WIDTH = 250;
     
     /** String constant for getting the main class from a JAR manifest */
     private static final String MAIN_CLASS = "Main-Class"; //$NON-NLS-1$

@@ -115,7 +115,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     }
 
     /**
-     * determines the main class for the aut. <br>
+     * Determines the main class for the AUT. <br>
      * If a main class was transmitted, use it. Otherwise scan the jar.
      * 
      * @param parameters The parameters for starting the AUT.

@@ -73,7 +73,6 @@ public class StartJavaFXAutServerCommand extends AbstractStartJavaAutServer {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     protected String getRcBundleId() {

@@ -40,9 +40,6 @@ import org.eclipse.swt.widgets.Text;
  * ConfigurationArea for Win toolkit projects
  */
 public class WinAutConfigComponent extends AutConfigComponent {
-    /** the number of lines in a text field */
-    protected static final int COMPOSITE_WIDTH = 250;
-    
     /** for check if the executable text field is empty */
     private static boolean isExecFieldEmpty = true;
        
