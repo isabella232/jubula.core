@@ -19,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 
 import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
@@ -28,6 +29,7 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.JavaFXComponentAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.LabelAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.MenuBarAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TableAdapter;
+import org.eclipse.jubula.rc.javafx.tester.adapter.TextAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TextComponentAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TreeViewAdapter;
 
@@ -51,7 +53,7 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
     private static final Class[] SUPPORTEDCLASSES = new Class[] {
         ButtonBase.class, MenuItem.class, MenuBar.class, Label.class,
         TextInputControl.class, TreeView.class, TableView.class,
-        ContextMenu.class, ImageView.class };
+        ContextMenu.class, ImageView.class, Text.class };
 
     @Override
     public Class[] getSupportedClasses() {
@@ -67,6 +69,8 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
                 returnvalue = new ButtonBaseAdapter((ButtonBase) objectToAdapt);
             } else if (objectToAdapt instanceof Label) {
                 returnvalue = new LabelAdapter((Label) objectToAdapt);
+            } else if (objectToAdapt instanceof Text) {
+                returnvalue = new TextAdapter((Text) objectToAdapt);
             } else if (objectToAdapt instanceof TextInputControl) {
                 returnvalue = new TextComponentAdapter(
                         (TextInputControl) objectToAdapt);
