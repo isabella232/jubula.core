@@ -21,7 +21,6 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.factory.ControlFactory;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedURLText;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -36,7 +35,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 
 
 /**
@@ -204,10 +202,7 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
      * @param parent the parent to use
      */
     private void createReportOnSuccess(Composite parent) {
-        Label infoLabel = createLabel(parent, 
-                Messages.ProjectPropertyPageReportOptionsLabel);
-        ControlDecorator.createInfo(infoLabel,
-                Messages.ProjectPropertyPageReportOptionsDecoration, false);
+        createLabel(parent, Messages.ProjectPropertyPageReportOptionsLabel);
         m_reportOnSuccess = new Button(parent, SWT.CHECK);
         m_reportOnSuccess.setText(Messages
                 .ProjectPropertyPageReportOnSuccessLabel);
