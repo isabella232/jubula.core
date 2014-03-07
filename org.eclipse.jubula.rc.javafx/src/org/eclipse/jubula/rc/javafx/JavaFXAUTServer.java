@@ -78,10 +78,10 @@ public class JavaFXAUTServer extends AUTServer {
      *            the handler
      */
     private void addToolkitEventListener(AbstractFXAUTEventHandler handler) {
-        List<Object> stages = ComponentHandler
-                .getAssignableFromType(Stage.class);
-        for (final Object object : stages) {
-            handler.addHandler((Stage) object);
+        List<? extends Stage> stages = 
+                ComponentHandler.getAssignableFromType(Stage.class);
+        for (final Stage stage : stages) {
+            handler.addHandler(stage);
         }
     }
 
@@ -104,10 +104,11 @@ public class JavaFXAUTServer extends AUTServer {
      *            the handler
      */
     private void removeToolkitEventListener(AbstractFXAUTEventHandler handler) {
-        List<Object> stages = ComponentHandler
-                .getAssignableFromType(Stage.class);
-        for (Object object : stages) {
-            handler.removeHandler((Stage) object);
+        List<? extends Stage> stages = 
+                ComponentHandler.getAssignableFromType(Stage.class);
+        
+        for (Stage stage : stages) {
+            handler.removeHandler(stage);
         }
     }
 

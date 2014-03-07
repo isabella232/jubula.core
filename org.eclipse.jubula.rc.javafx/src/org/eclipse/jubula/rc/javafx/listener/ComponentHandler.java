@@ -106,15 +106,16 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      *
      * @param type
      *            the type to look for
+     *            
+     * @param <T> component type
      * @return List
      */
-    public static List<Object> getAssignableFromType(Class<?> type) {
+    public static <T> List<? extends T> getAssignableFromType(Class<T> type) {
         Set<JavaFXComponent> keys = hierarchy.getHierarchyMap().keySet();
-        List<Object> result = new ArrayList<Object>();
+        List<T> result = new ArrayList<T>();
         for (JavaFXComponent object : keys) {
-            if (object.getRealComponentType().isAssignableFrom(type)
-                    || type.isAssignableFrom(object.getRealComponentType())) {
-                result.add(object.getRealComponent());
+            if (type.isAssignableFrom(object.getRealComponentType())) {
+                result.add(type.cast(object.getRealComponent()));
             }
         }
         return result;
@@ -146,10 +147,8 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      * @return the component
      */
     public static Node getComponentByPos(Point2D pos) {
-        List<Object> comps = getAssignableFromType(Node.class);
-        for (Object component : comps) {
-            Node n = (Node) component;
-
+        List<? extends Node> comps = getAssignableFromType(Node.class);
+        for (Node n : comps) {
             Object clazz = null;
             try {
                 if (n != null) {
@@ -162,7 +161,7 @@ public class ComponentHandler implements ListChangeListener<Stage>,
             }
 
             if (NodeBounds.checkIfContains(pos, n) && clazz != null) {
-                return (Node) component;
+                return n;
             }
         }
         return null;
