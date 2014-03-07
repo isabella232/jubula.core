@@ -8,7 +8,7 @@
  -->
 <project name="SimpleAdder" default="build" basedir="." xmlns:fx="javafx:com.sun.javafx.tools.ant">
 
-    <property name="java8.jdk.home" value="/devapps/java64/java8" />
+    <property name="java8.jdk.home" value="/devapps/java/java8" />
     <property name="source.dir" value="src" />
     <property name="out.dir" value="build" />
     <property name="out.dir.classes" value="${out.dir}/classes" />
@@ -41,12 +41,13 @@
     </target>
 
     <target name="build" depends="compile">
-        <fx:application id="SimpleAdder" mainClass="org.eclipse.jubula.examples.aut.adder.javafx.SimpleAdder" />
+        <fx:application id="SimpleAdder" mainClass="it.is.valid.that.this.class.does.not.exist.however.the.attribute.value.is.mandatory" />
         <fx:jar destfile="${out.dir.jars}/${app.jar.name}">
             <fx:application refid="SimpleAdder" />
 
             <manifest>
                 <attribute name="Implementation-Title" value="SimpleAdder" />
+                <attribute name="JavaFX-Application-Class" value="org.eclipse.jubula.examples.aut.adder.javafx.SimpleAdder"/>
             </manifest>
 
             <fileset dir="${out.dir.classes}" />

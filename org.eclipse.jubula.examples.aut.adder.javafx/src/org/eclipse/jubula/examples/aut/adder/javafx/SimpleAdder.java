@@ -31,13 +31,4 @@ public class SimpleAdder extends Application {
             e.printStackTrace();
         }
     }
-
-    /**
-     * The main method
-     * 
-     * @param args a <code>String</code> value
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
