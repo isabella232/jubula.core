@@ -42,9 +42,11 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * MenuItem.
  * 
  * @author BREDEX GmbH
+ * @param <M>
  * @created 10.2.2014
  */
-public class MenuItemAdapter extends AbstractMenuAdapter<MenuItem>
+public class MenuItemAdapter<M extends MenuItem> 
+        extends AbstractMenuAdapter<M>
         implements IMenuItemComponent {
     /**
      * Creates an adapter for a MenuItem.
@@ -52,7 +54,7 @@ public class MenuItemAdapter extends AbstractMenuAdapter<MenuItem>
      * @param objectToAdapt
      *            the object which needs to be adapted
      */
-    public MenuItemAdapter(MenuItem objectToAdapt) {
+    public MenuItemAdapter(M objectToAdapt) {
         super(objectToAdapt);
     }
 
@@ -159,7 +161,7 @@ public class MenuItemAdapter extends AbstractMenuAdapter<MenuItem>
 
     @Override
     public void selectMenuItem() {
-        clickMenuItem(getRealComponent());
+        clickMenuItem();
         getRobot().activateApplication("TITLEBAR"); //$NON-NLS-1$
     }
 
@@ -170,7 +172,7 @@ public class MenuItemAdapter extends AbstractMenuAdapter<MenuItem>
             throw new StepExecutionException("unexpected item found", //$NON-NLS-1$
                     EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
         }
-        clickMenuItem(item);
+        clickMenuItem();
         if (!waitforSubmenuToOpen((Menu) getRealComponent())) {
             throw new StepExecutionException("submenu could not be opened", //$NON-NLS-1$
                     EventFactory.createActionError(TestErrorEvent.
@@ -248,12 +250,10 @@ public class MenuItemAdapter extends AbstractMenuAdapter<MenuItem>
 
     /**
      * Clicks on a menu item
-     * 
-     * @param item
-     *            the menu item
      */
-    private void clickMenuItem(final MenuItem item) {
+    protected void clickMenuItem() {
         final IRobot robot = getRobot();
+        final MenuItem item = getRealComponent();
         Node[] nodes = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "clickMenuItem", new Callable<Node[]>() { //$NON-NLS-1$
 

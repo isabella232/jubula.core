@@ -55,7 +55,7 @@ public class MenuBarAdapter extends JavaFXComponentAdapter<MenuBar> implements
                             IMenuItemComponent[] itemAdapters = 
                                     new IMenuItemComponent[menus.size()];
                             for (int i = 0; i < menus.size(); i++) {
-                                itemAdapters[i] = new MenuItemAdapter(menus
+                                itemAdapters[i] = new MenuBarItemAdapter(menus
                                         .get(i));
                             }
                             return itemAdapters;

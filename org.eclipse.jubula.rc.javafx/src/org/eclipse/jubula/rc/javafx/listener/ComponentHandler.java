@@ -26,7 +26,6 @@ import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
-import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.javafx.components.AUTJavaFXHierarchy;
@@ -38,6 +37,7 @@ import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.xml.businessmodell.ComponentClass;
 
 /**
  * This class is responsible for handling the components of the AUT. <br>
@@ -149,19 +149,14 @@ public class ComponentHandler implements ListChangeListener<Stage>,
     public static Node getComponentByPos(Point2D pos) {
         List<? extends Node> comps = getAssignableFromType(Node.class);
         for (Node n : comps) {
-            Object clazz = null;
-            try {
-                if (n != null) {
-                    clazz = AUTServerConfiguration.getInstance()
-                            .getImplementationClass(n.getClass());
+            Set supportetTypes = AUTServerConfiguration.getInstance().
+                    getSupportedTypes();
+            for (Object object : supportetTypes) {
+                if (((ComponentClass)object).getName().
+                        equals(n.getClass().getName()) 
+                        && NodeBounds.checkIfContains(pos, n)) {
+                    return n;
                 }
-            } catch (UnsupportedComponentException |
-                        IllegalArgumentException e) {
-                // DO nothing
-            }
-
-            if (NodeBounds.checkIfContains(pos, n) && clazz != null) {
-                return n;
             }
         }
         return null;

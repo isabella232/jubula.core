@@ -50,9 +50,7 @@ public class ChildrenGetter {
      */
     public static List<Object> getAsList(Object o) {
         List<Object> result = new ArrayList<Object>();
-        if (o instanceof MenuBar) {
-            result.addAll(getFrom((MenuBar) o));
-        } else if (o instanceof Menu) {
+        if (o instanceof Menu) {
             result.addAll(getFrom((Menu) o));
         } else if (o instanceof Parent) {
             if (o instanceof ScrollPane) {
@@ -155,19 +153,6 @@ public class ChildrenGetter {
     public static ObservableList<Object> getFrom(Menu menu) {
         ObservableList<Object> result = FXCollections.observableArrayList();
         result.addAll(menu.getItems());
-        return result;
-    }
-
-    /**
-     * Returns the Menus on A MenuBar.
-     *
-     * @param menuBar
-     *            the MenuBar
-     * @return List with Menus
-     */
-    public static ObservableList<Object> getFrom(MenuBar menuBar) {
-        ObservableList<Object> result = FXCollections.observableArrayList();
-        result.addAll(menuBar.getMenus());
         return result;
     }
 

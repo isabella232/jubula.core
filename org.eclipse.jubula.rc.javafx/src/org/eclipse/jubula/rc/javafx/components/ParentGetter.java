@@ -103,8 +103,6 @@ public class ParentGetter {
         if (parent == null) {
             parent = menu.getParentPopup().getOwnerNode();
         }
-        System.out.println(menu.getParentMenu());
-        System.out.println(menu.getParentPopup().getOwnerNode());
         return parent;
     }
 

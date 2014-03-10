@@ -47,19 +47,25 @@ public class MenuTester extends AbstractMenuTester {
     @Override
     protected void closeMenu(IMenuComponent menu, String[] textPath,
             String operator) {
-        getRobot().activateApplication("TITLEBAR"); //$NON-NLS-1$
+        getRobot().click(
+                ((MenuItem) menu.getRealComponent()).getParentPopup()
+                        .getOwnerNode(), null);
+
     }
 
     @Override
     protected void closeMenu(IMenuComponent menu, int[] path) {
-        getRobot().activateApplication("TITLEBAR"); //$NON-NLS-1$
+        getRobot().click(
+                ((MenuItem) menu.getRealComponent()).getParentPopup()
+                        .getOwnerNode(), null);
     }
 
     @Override
     public IComponent getComponent() {
         IComponent adapt = super.getComponent();
-        if (adapt != null && (adapt.getRealComponent() instanceof ContextMenu
-                || adapt.getRealComponent() instanceof MenuBar)) {
+        if (adapt != null
+                && (adapt.getRealComponent() instanceof ContextMenu || adapt
+                        .getRealComponent() instanceof MenuBar)) {
             return adapt;
         }
 
@@ -76,5 +82,4 @@ public class MenuTester extends AbstractMenuTester {
         return super.getComponent();
 
     }
-
 }
