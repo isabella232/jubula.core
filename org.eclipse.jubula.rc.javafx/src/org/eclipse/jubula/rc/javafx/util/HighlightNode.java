@@ -12,7 +12,6 @@ package org.eclipse.jubula.rc.javafx.util;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javafx.scene.Node;
 import javafx.scene.effect.Effect;
@@ -59,16 +58,5 @@ public class HighlightNode {
      */
     public static void removeHighlight(Node n) {
         n.setEffect(oldEffects.remove(n));
-    }
-
-    /**
-     * Resets all effects.
-     */
-    public static void clean() {
-        Set<Node> nodes = oldEffects.keySet();
-        for (Node node : nodes) {
-            node.setEffect(oldEffects.remove(node));
-        }
-
     }
 }

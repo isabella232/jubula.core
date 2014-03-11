@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.javafx.listener;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
@@ -18,6 +19,7 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 
 import org.eclipse.jubula.rc.common.listener.AUTEventListener;
+import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.util.HighlightNode;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 
@@ -58,7 +60,15 @@ public abstract class AbstractFXAUTEventHandler implements AUTEventListener,
      */
     public void highlightCurrentNode() {
         if (m_currentNode != null) {
-            HighlightNode.drawHighlight(m_currentNode);
+            EventThreadQueuerJavaFXImpl.invokeAndWait("cleanUp", //$NON-NLS-1$
+                    new Callable<Void>() {
+    
+                    @Override
+                    public Void call() throws Exception {
+                        HighlightNode.drawHighlight(m_currentNode);
+                        return null;
+                    }
+                });
         }
     }
 
@@ -67,7 +77,15 @@ public abstract class AbstractFXAUTEventHandler implements AUTEventListener,
      */
     public void lowlightCurrentNode() {
         if (m_currentNode != null) {
-            HighlightNode.removeHighlight(m_currentNode);
+            EventThreadQueuerJavaFXImpl.invokeAndWait("cleanUp", //$NON-NLS-1$
+                    new Callable<Void>() {
+    
+                    @Override
+                    public Void call() throws Exception {
+                        HighlightNode.removeHighlight(m_currentNode);
+                        return null;
+                    }
+                });
         }
     }
 
@@ -86,10 +104,10 @@ public abstract class AbstractFXAUTEventHandler implements AUTEventListener,
      *            the Stage
      */
     public abstract void removeHandler(Stage s);
-
+        
     @Override
     public void cleanUp() {
-        HighlightNode.clean();
+        lowlightCurrentNode();
     }
 
     @Override
