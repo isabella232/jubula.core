@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
+import org.eclipse.jubula.rc.javafx.components.CurrentStages;
 import org.eclipse.jubula.rc.javafx.driver.RobotFactoryJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.AbstractFXAUTEventHandler;
 import org.eclipse.jubula.rc.javafx.listener.CheckListener;
@@ -83,6 +84,7 @@ public class JavaFXAUTServer extends AUTServer {
         for (final Stage stage : stages) {
             handler.addHandler(stage);
         }
+        CurrentStages.addStagesListener(handler);
     }
 
     @Override
@@ -110,6 +112,8 @@ public class JavaFXAUTServer extends AUTServer {
         for (Stage stage : stages) {
             handler.removeHandler(stage);
         }
+        
+        CurrentStages.removeStagesListener(handler);
     }
 
     @Override

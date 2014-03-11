@@ -41,7 +41,7 @@ public class MenuTester extends AbstractMenuTester {
 
     @Override
     protected IMenuItemComponent newMenuItemAdapter(Object component) {
-        return new MenuItemAdapter((MenuItem) component);
+        return new MenuItemAdapter<MenuItem>((MenuItem) component);
     }
 
     @Override

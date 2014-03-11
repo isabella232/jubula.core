@@ -97,4 +97,15 @@ public class CurrentStages {
         stages.addListener(listener);
     }
 
+    /**
+     * Removes a <code>ListChangeListener</code> from the Stages-List
+     *
+     * @param listener
+     *            the listener
+     */
+    public static void removeStagesListener(ListChangeListener<Stage>
+        listener) {
+        stages.removeListener(listener);
+    }
+
 }

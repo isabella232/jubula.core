@@ -10,7 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.listener;
 
+import java.util.List;
+
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
@@ -22,7 +25,8 @@ import org.eclipse.jubula.tools.objects.IComponentIdentifier;
  * @author BREDEX GmbH
  * @created 15.10.2013
  */
-public abstract class AbstractFXAUTEventHandler implements AUTEventListener {
+public abstract class AbstractFXAUTEventHandler implements AUTEventListener,
+    ListChangeListener<Stage> {
 
     /** The current Node **/
     private Node m_currentNode;
@@ -116,5 +120,18 @@ public abstract class AbstractFXAUTEventHandler implements AUTEventListener {
     public long[] getEventMask() {
 
         return null;
+    }
+    
+    @Override
+    public void onChanged(ListChangeListener.Change<? extends Stage> change) {
+        change.next();
+        List<? extends Stage> changedStages = change.getAddedSubList();
+        for (final Stage stage : changedStages) {
+            addHandler(stage);
+        }
+        changedStages = change.getRemoved();
+        for (final Stage stage : changedStages) {
+            removeHandler(stage);
+        }
     }
 }
