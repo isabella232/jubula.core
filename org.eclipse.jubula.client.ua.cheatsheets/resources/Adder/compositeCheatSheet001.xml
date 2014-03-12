@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<compositeCheatsheet name="006 Writing your first test with JavaFX">
-   <taskGroup kind="set" name="Creating and executing your first test with JavaFX" skip="false">
+<compositeCheatsheet name="Writing your first test">
+   <taskGroup kind="set" name="Creating and executing your first test" skip="false">
       <intro>
-         These cheat sheets take you step-by-step through your first test with JavaFX. 
+         These cheat sheets take you step-by-step through your first test. 
 <br/><br/>
 The requirements for the program we want to test are as follows:
 <br/><br/>
@@ -18,6 +18,9 @@ Make sure that the Integrated Test Environment (ITE)  is maximized to complete t
          <intro>
             This task gives you a quick introduction to working with the cheat sheets.
          </intro>
+         <onCompletion>
+            <b>Conclusion</b>
+         </onCompletion>
          <task kind="cheatsheet" name="Navigating through the cheat sheets" skip="false">
             <onCompletion>
                Once a task is done, you can either review it or click to move to the next task.
@@ -44,7 +47,7 @@ Make sure that the Integrated Test Environment (ITE)  is maximized to complete t
             <intro>
                Each Project can have one or more AUT&apos;s.
             </intro>
-            <param name="path" value="defineFXAUT.xml">
+            <param name="path" value="../shared/defineAUT.xml">
             </param>
          </task>
          <task kind="cheatsheet" name="Configure the AUT" skip="false">
@@ -62,7 +65,7 @@ Some AUT&apos;s will need different configurations so that they can be tested on
 There is more information on configuring AUT&apos;s in the handbook, in the <b>Tasks</b> chapter.  <br/><br/>
 You can also see context-sensitive help by pressing <b>F1</b> in the AUT configuration dialog.
             </onCompletion>
-            <param name="path" value="configureFXAUT.xml">
+            <param name="path" value="../shared/configureAUT.xml">
             </param>
          </task>
       </taskGroup>

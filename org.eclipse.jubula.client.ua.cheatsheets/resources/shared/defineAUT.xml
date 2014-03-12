@@ -21,7 +21,7 @@ Select <b>AUT&apos;s</b> from the list on the left and click <b>Add</b>.
 <br/>
 Enter <b>Adder</b> as the AUT name.
 <br/>
-Choose <b>Swing</b> as the toolkit. 
+Choose <b>Swing</b> or <b>JavaFX</b> as the toolkit, depending on which AUT you want to start (they are both functionally the same). 
 <br/>
 Click <b>OK</b> and then <b>OK</b> again.    </description>
    </item>
