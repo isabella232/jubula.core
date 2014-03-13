@@ -93,9 +93,6 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * @created 31.10.2013
  */
 public class RobotJavaFXImpl implements IRobot {
-    /** the timeout to flush native events. CURRENTLY NOT USED! */
-    private static final int FLUSH_TIMEOUT = 1;
-
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
             RobotJavaFXImpl.class);
@@ -518,10 +515,29 @@ public class RobotJavaFXImpl implements IRobot {
             Stage s = (Stage) comp;
             bounds = new Rectangle(new Point(Rounding.round(s.getX()),
                     Rounding.round(s.getY())));
+
+            // This is not multi display compatible
+            Screen screen = Screen.getPrimary();
+            int displayWidth = Rounding.round(screen.getBounds().getWidth());
+            int displayHeight = Rounding.round(screen.getBounds().getHeight());
             if (s.isFullScreen()) {
-                Screen screen = Screen.getPrimary();
-                bounds.width = Rounding.round(screen.getBounds().getWidth());
-                bounds.height = Rounding.round(screen.getBounds().getHeight());
+                bounds.width = Rounding.round(displayWidth);
+                bounds.height = Rounding.round(displayHeight);
+            } else if (s.isMaximized()) {
+                int x = Rounding.round(s.getX());
+                int y = Rounding.round(s.getY());
+                // trimming the bounds to the display if necessary
+                if (x < 0 || y < 0) {
+                    bounds = new Rectangle(new Point(0, 0));
+                    bounds.width = Rounding.round(s.getWidth());
+                    bounds.height = Rounding.round(s.getHeight());
+                    if (bounds.width > displayWidth) {
+                        bounds.width = displayWidth;
+                    }
+                    if (bounds.height > displayHeight) {
+                        bounds.height = displayHeight;
+                    }
+                }
             } else {
                 bounds.width = Rounding.round(s.getWidth());
                 bounds.height = Rounding.round(s.getHeight());
