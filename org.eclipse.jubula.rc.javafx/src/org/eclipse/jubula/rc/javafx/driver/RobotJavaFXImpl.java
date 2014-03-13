@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.driver;
 
-import java.awt.AWTError;
 import java.awt.AWTEvent;
 import java.awt.AWTException;
 import java.awt.MouseInfo;
@@ -22,6 +21,8 @@ import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Callable;
 
+import javafx.event.Event;
+import javafx.event.EventTarget;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -42,6 +43,7 @@ import javax.swing.UIManager;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
@@ -292,7 +294,7 @@ public class RobotJavaFXImpl implements IRobot {
                     RobotTiming.sleepPostMouseUpDelay();
                 }
                 if (confirmer != null) {
-                    confirmer.waitToConfirm(graphicsComp,
+                    confirmer.waitToConfirm(null,
                             new ClickJavaFXEventMatcher(clickOp));
                 }
             } finally {
@@ -491,10 +493,10 @@ public class RobotJavaFXImpl implements IRobot {
      */
     private void confirmMove(IRobotEventConfirmer confirmer, Object comp) {
         if (DragAndDropHelper.getInstance().isDragMode()) {
-            confirmer.waitToConfirm(comp, new MouseMovedEventMatcher(
+            confirmer.waitToConfirm(null, new MouseMovedEventMatcher(
                     MouseEvent.MOUSE_DRAGGED));
         } else {
-            confirmer.waitToConfirm(comp, new MouseMovedEventMatcher(
+            confirmer.waitToConfirm(null, new MouseMovedEventMatcher(
                     MouseEvent.MOUSE_MOVED));
         }
     }
@@ -621,23 +623,43 @@ public class RobotJavaFXImpl implements IRobot {
      * {@inheritDoc} <br>
      * <b>* Currently delegates the key type to the Robot </b>
      */
-    public void type(Object graphicsComponent, char c) throws RobotException {
-
+    public void type(final Object graphicsComponent, char c) 
+        throws RobotException {
+        
         Validate.notNull(graphicsComponent,
                 "The graphic component must not be null"); //$NON-NLS-1$
-        try {
-            keyType(graphicsComponent,
-                    java.awt.event.KeyEvent.getExtendedKeyCodeForChar(c),
-                    Character.isUpperCase(c));
-        } catch (AWTError awte) {
-            log.error(awte);
-            throw new RobotException(awte);
-        } catch (SecurityException se) {
-            log.error(se);
-            throw new RobotException(se);
-        }
-    }
 
+        final KeyEvent event = new KeyEvent(
+                KeyEvent.KEY_TYPED, String.valueOf(c), 
+                StringUtils.EMPTY, null, false, false, false, false);
+
+        InterceptorOptions options = new InterceptorOptions(
+                new long[] { AWTEvent.KEY_EVENT_MASK });
+        IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
+
+        m_queuer.invokeLater("Type character", new Runnable() { //$NON-NLS-1$
+            @Override
+            public void run() {
+                final Scene scene;
+                if (graphicsComponent instanceof Stage) {
+                    scene = ((Stage)graphicsComponent).getScene();
+                } else {
+                    scene = ((Node)graphicsComponent).getScene();
+                }
+                
+                Node focusOwner = scene.getFocusOwner();
+                EventTarget eventTarget = 
+                        focusOwner != null ? focusOwner : scene;
+                
+                Event.fireEvent(eventTarget, event);
+            }
+        });
+        
+        confirmer.waitToConfirm(graphicsComponent,
+                new KeyJavaFXEventMatcher(KeyEvent.KEY_TYPED));
+
+    }
+    
     /**
      * {@inheritDoc}
      */

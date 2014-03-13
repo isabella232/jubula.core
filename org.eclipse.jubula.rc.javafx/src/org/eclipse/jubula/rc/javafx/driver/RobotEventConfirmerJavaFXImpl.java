@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventTarget;
 import javafx.event.WeakEventHandler;
 import javafx.stage.Window;
 
@@ -28,6 +29,7 @@ import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.WorkaroundUtil;
+import org.eclipse.jubula.rc.javafx.components.ParentGetter;
 import org.eclipse.jubula.rc.javafx.util.JavaFXEventConverter;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -69,14 +71,6 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
      */
     private volatile InterceptorOptions m_options;
     /**
-     * The graphics component on which the event occurs.
-     */
-    private Object m_eventTarget;
-    /**
-     * The event matcher.
-     */
-    private IEventMatcher m_eventMatcher;
-    /**
      * Stores all events of a given class after the confirmer has been enabled.
      */
     private LinkedBlockingQueue<Event> m_eventList = 
@@ -116,12 +110,10 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
     @Override
     public void waitToConfirm(Object eventTarget, IEventMatcher matcher,
             long pTimeout) throws RobotException {
-        m_eventTarget = eventTarget;
-        m_eventMatcher = matcher;
 
         if (log.isDebugEnabled()) {
             log.debug("Waiting for EventID: " + String.valueOf(matcher) //$NON-NLS-1$
-                    + " on Component: " + String.valueOf(m_eventTarget)); //$NON-NLS-1$
+                    + " on Component: " + String.valueOf(eventTarget)); //$NON-NLS-1$
         }
 
         try {
@@ -133,7 +125,7 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
                 long now;
                 do {
                     Event e = m_eventList.poll(timeout, TimeUnit.MILLISECONDS);
-                    if (e != null && m_eventMatcher.isMatching(e)) {
+                    if (isEventMatch(e, matcher, eventTarget)) {
                         return;
                     }
                     now = System.currentTimeMillis();
@@ -148,15 +140,15 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
                 // the event matcher didn't find a matching event.
                 // But the event matcher may accept a different event, which has
                 // already dispatched, as a fall back.
-                boolean fallBackMatching = m_eventMatcher
+                boolean fallBackMatching = matcher
                         .isFallBackEventMatching(
                                 Arrays.asList(m_eventList.toArray()),
-                                m_eventTarget);
+                                eventTarget);
 
                 if (!fallBackMatching && !WorkaroundUtil.isIgnoreTimeout()) {
                     throw new RobotException(
                             "Timeout received before confirming the posted event: " //$NON-NLS-1$
-                                    + m_eventMatcher.getEventId(),
+                                    + matcher.getEventId(),
                             EventFactory
                                     .createActionError(TestErrorEvent.
                                             CONFIRMATION_TIMEOUT));
@@ -166,6 +158,66 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
         } finally {
             setEnabled(false);
         }
+    }
+
+    /**
+     * 
+     * @param e The received event. May be <code>null</code>, in which case 
+     *          <code>false</code> will be returned.
+     * @param matcher The matcher to apply to the event.
+     * @param expectedTarget The expected target (Graphics Component) of the 
+     *                       event. May be <code>null</code>, in which case the 
+     *                       event target is ignored.
+     * @return <code>true</code> if the given event qualifies as a match 
+     *         according to the <code>matcher</code> and 
+     *         </code>expectedTarget</code>.
+     */
+    private boolean isEventMatch(
+            Event e, IEventMatcher matcher, Object expectedTarget) {
+
+        return e != null 
+                && isComponentMatch(expectedTarget, e.getTarget()) 
+                && matcher.isMatching(e);
+    }
+
+    /**
+     * 
+     * @param expectedTarget The expected event target (Graphics Component). 
+     *                       May be <code>null</code>, in which case 
+     *                       <code>true</code> will be returned.
+     * @param actualTarget The actual event target. May be <code>null</code>, 
+     *                     in which case <code>false</code> will be returned 
+     *                     <em>unless</em> <code>expectedTarget</code> is 
+     *                     also <code>null</code>. 
+     * @return <code>true</code> if <code>actualTarget</code> matches 
+     *         <code>expectedTarget</code>. 
+     */
+    private boolean isComponentMatch(
+            Object expectedTarget, EventTarget actualTarget) {
+
+        if (expectedTarget == null) {
+            return true;
+        }
+
+        Object currentExpectedTarget = expectedTarget;
+        while (currentExpectedTarget != null) {
+            if (currentExpectedTarget == actualTarget) {
+                return true;
+            }
+            
+            currentExpectedTarget = ParentGetter.get(currentExpectedTarget);
+        }
+
+        Object currentActualTarget = actualTarget;
+        while (currentActualTarget != null) {
+            if (currentActualTarget == expectedTarget) {
+                return true;
+            }
+            
+            currentActualTarget = ParentGetter.get(currentActualTarget);
+        }
+
+        return false;
     }
 
     /**
@@ -246,8 +298,7 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
         try {
             m_eventList.put(event);
         } catch (InterruptedException e) {
-            log.error("InterruptedException: " + event //$NON-NLS-1$
-                    + " on Component: " + String.valueOf(m_eventTarget)); //$NON-NLS-1$
+            log.error("InterruptedException: " + event); //$NON-NLS-1$
         }
     }
 }
