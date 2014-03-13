@@ -29,9 +29,8 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * @author BREDEX GmbH
  * @created 30.10.2013
  */
-public class ButtonBaseAdapter extends JavaFXComponentAdapter<ButtonBase>
-        implements IButtonComponent {
-
+public class ButtonBaseAdapter extends LabeledAdapter<ButtonBase> 
+    implements IButtonComponent {
     /**
      * Creates an object with the adapted Button.
      *
@@ -40,19 +39,6 @@ public class ButtonBaseAdapter extends JavaFXComponentAdapter<ButtonBase>
      */
     public ButtonBaseAdapter(ButtonBase objectToAdapt) {
         super(objectToAdapt);
-    }
-
-    @Override
-    public String getText() {
-        String text = EventThreadQueuerJavaFXImpl.invokeAndWait("getText", //$NON-NLS-1$
-                new Callable<String>() {
-
-                    @Override
-                    public String call() throws Exception {
-                        return getRealComponent().getText();
-                    }
-                });
-        return text;
     }
 
     @Override

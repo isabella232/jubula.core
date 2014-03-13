@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.javafx.tester.adapter;
 
 import java.util.concurrent.Callable;
 
-import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
@@ -20,19 +20,21 @@ import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 /**
  * Label Adapter
  *
+ * @param <T> a subtype of Labeled 
+ *
  * @author BREDEX GmbH
  * @created 30.10.2013
  */
-public class LabelAdapter extends JavaFXComponentAdapter<Label> implements
-        ITextComponent {
+public class LabeledAdapter<T extends Labeled> extends
+    JavaFXComponentAdapter<T> implements ITextComponent {
 
     /**
      * Creates an object with the adapted Label.
      *
      * @param objectToAdapt
-     *            this must be an object of the Type <code>Label</code>
+     *            this must be an object of the Type <code>Labeled</code>
      */
-    public LabelAdapter(Label objectToAdapt) {
+    public LabeledAdapter(T objectToAdapt) {
         super(objectToAdapt);
     }
 
@@ -50,5 +52,4 @@ public class LabelAdapter extends JavaFXComponentAdapter<Label> implements
                 });
         return text;
     }
-
 }

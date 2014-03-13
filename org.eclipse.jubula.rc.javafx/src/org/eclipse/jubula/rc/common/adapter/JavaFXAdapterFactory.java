@@ -17,6 +17,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -26,7 +27,7 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ButtonBaseAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ContextMenuAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.JavaFXComponentAdapter;
-import org.eclipse.jubula.rc.javafx.tester.adapter.LabelAdapter;
+import org.eclipse.jubula.rc.javafx.tester.adapter.LabeledAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.MenuBarAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TableAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TextAdapter;
@@ -53,7 +54,7 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
     private static final Class[] SUPPORTEDCLASSES = new Class[] {
         ButtonBase.class, MenuItem.class, MenuBar.class, Label.class,
         TextInputControl.class, TreeView.class, TableView.class,
-        ContextMenu.class, ImageView.class, Text.class };
+        ContextMenu.class, ImageView.class, Text.class, TitledPane.class };
 
     @Override
     public Class[] getSupportedClasses() {
@@ -68,7 +69,8 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
             if (objectToAdapt instanceof ButtonBase) {
                 returnvalue = new ButtonBaseAdapter((ButtonBase) objectToAdapt);
             } else if (objectToAdapt instanceof Label) {
-                returnvalue = new LabelAdapter((Label) objectToAdapt);
+                returnvalue = new LabeledAdapter<Label>(
+                        (Label) objectToAdapt);
             } else if (objectToAdapt instanceof Text) {
                 returnvalue = new TextAdapter((Text) objectToAdapt);
             } else if (objectToAdapt instanceof TextInputControl) {
@@ -87,6 +89,9 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
             } else if (objectToAdapt instanceof ImageView) {
                 returnvalue = new JavaFXComponentAdapter
                         <ImageView>((ImageView) objectToAdapt);
+            } else if (objectToAdapt instanceof TitledPane) {
+                returnvalue = new LabeledAdapter<TitledPane>(
+                        (TitledPane) objectToAdapt);
             }
         }
         return returnvalue;
