@@ -22,7 +22,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -193,8 +193,8 @@ public class ComponentHandler implements ListChangeListener<Stage>,
             return null;
         }
         Parent parent = matches.get(0).getParent();
-        // in a StackPane the last child has highest z-coordinate
-        if (parent instanceof StackPane) {
+        // in a Pane the last child has highest z-coordinate
+        if (parent instanceof Pane) {
             ObservableList<Node> children = parent.getChildrenUnmodifiable();
             ArrayList<Node> revertedChildren = new ArrayList<Node>(children);
             Collections.reverse(revertedChildren);
