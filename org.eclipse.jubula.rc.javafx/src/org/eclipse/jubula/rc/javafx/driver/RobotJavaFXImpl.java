@@ -530,7 +530,8 @@ public class RobotJavaFXImpl implements IRobot {
                 bounds.width = Rounding.round(s.getWidth());
                 bounds.height = Rounding.round(s.getHeight());
                 if (x < 0 || y < 0) {
-                    bounds = new Rectangle(new Point(0, 0));
+                    bounds.x = 0;
+                    bounds.y = 0;
                     if (bounds.width > displayWidth) {
                         bounds.width = displayWidth;
                     }
