@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.common.adapter;
 import javafx.scene.control.ButtonBase;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
@@ -28,6 +29,7 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.ButtonBaseAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ContextMenuAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.JavaFXComponentAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.LabeledAdapter;
+import org.eclipse.jubula.rc.javafx.tester.adapter.ListViewAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.MenuBarAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TableAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TextAdapter;
@@ -54,7 +56,8 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
     private static final Class[] SUPPORTEDCLASSES = new Class[] {
         ButtonBase.class, MenuItem.class, MenuBar.class, Label.class,
         TextInputControl.class, TreeView.class, TableView.class,
-        ContextMenu.class, ImageView.class, Text.class, TitledPane.class };
+        ContextMenu.class, ImageView.class, Text.class, TitledPane.class,
+        ListView.class};
 
     @Override
     public Class[] getSupportedClasses() {
@@ -92,6 +95,9 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
             } else if (objectToAdapt instanceof TitledPane) {
                 returnvalue = new LabeledAdapter<TitledPane>(
                         (TitledPane) objectToAdapt);
+            } else if (objectToAdapt instanceof ListView) {
+                returnvalue = new ListViewAdapter<ListView>(
+                    (ListView) objectToAdapt);
             }
         }
         return returnvalue;
