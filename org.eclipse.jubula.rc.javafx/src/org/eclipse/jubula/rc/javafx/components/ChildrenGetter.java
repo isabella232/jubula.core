@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.javafx.components;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
@@ -54,16 +55,34 @@ public class ChildrenGetter {
             result.addAll(getFrom((Menu) o));
         } else if (o instanceof Parent) {
             if (o instanceof ScrollPane) {
-                result.add(getFrom((ScrollPane) o).getValue());
+                add(result, getFrom((ScrollPane) o).getValue());
             } else {
                 result.addAll(getFrom((Parent) o));
             }
         } else if (o instanceof Stage) {
-            result.add(getFrom((Stage) o).getValue());
+            add(result, getFrom((Stage) o).getValue());
         } else if (o instanceof Scene) {
-            result.add(getFrom((Scene) o).getValue());
+            add(result, getFrom((Scene) o).getValue());
         }
+        
         return result;
+    }
+
+    /**
+     * Adds <code>toAdd</code> to <code>collection</code> iff 
+     * <code>toAdd != null</code>.
+     * 
+     * @param collection The collection to be modified by this call.
+     * @param toAdd The element to add.
+     * @return <code>true</code> if <code>collection</code> changed as a result 
+     *         of this call.
+     */
+    private static boolean add(Collection<Object> collection, Object toAdd) {
+        if (toAdd != null) {
+            return collection.add(toAdd);
+        }
+        
+        return false;
     }
 
     /**

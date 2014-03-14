@@ -91,14 +91,21 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     }
 
     /**
-     * Recursively adds Object to the hierarchy from the given Parent.
+     * Adds <code>parent</code> and its sub-tree (children, children's 
+     * children, etc) to the hierarchy.
      *
      * @param parent
-     *            the Parent of the Children
+     *            The component / sub-tree to add to the hierarchy. May be 
+     *            <code>null</code>, in which case this method returns without
+     *            modifying the hierarchy.
      */
     private void createHierarchy(Object parent) {
-        JavaFXHierarchyContainer parentCont;
+        if (parent == null) {
+            return;
+        }
 
+        final JavaFXHierarchyContainer parentCont;
+        
         if (getRealMap().containsKey(parent)) {
             parentCont = getHierarchyContainer(parent);
         } else {
