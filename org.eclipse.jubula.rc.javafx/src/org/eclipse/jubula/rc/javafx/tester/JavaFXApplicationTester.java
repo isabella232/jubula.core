@@ -33,6 +33,7 @@ import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.javafx.components.CurrentStages;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.driver.RobotJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -52,6 +53,16 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
     private static AutServerLogger log = new AutServerLogger(
             JavaFXApplicationTester.class);
 
+    /**
+     * constructor to add the stage which has focus to our event confirming mechanism
+     */
+    public JavaFXApplicationTester() {
+        RobotJavaFXImpl robot = ((RobotJavaFXImpl) getRobot());
+        Stage focusStage = CurrentStages.getfocusStage();
+        robot.getInterceptor().addSceneGraph(
+                focusStage.getScene().windowProperty());
+    }
+    
     @Override
     public String[] getTextArrayFromComponent() {
         return null;
