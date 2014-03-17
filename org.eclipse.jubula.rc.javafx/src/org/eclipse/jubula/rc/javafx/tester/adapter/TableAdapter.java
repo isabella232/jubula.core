@@ -119,10 +119,9 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                         table.scrollTo(row);
                         table.scrollToColumnIndex(column);
                         table.layout();
-                        List<Object> tCells = ComponentHandler
-                                .getInstancesOfType(TableCell.class);
-                        for (Object o : tCells) {
-                            TableCell<?, ?> cell = (TableCell<?, ?>) o;
+                        List<? extends TableCell> tCells = ComponentHandler
+                                .getAssignableFrom(TableCell.class);
+                        for (TableCell<?, ?> cell : tCells) {
                             if (cell.getIndex() == row
                                     && cell.getTableColumn() == col
                                     && cell.getTableView() == table) {
@@ -359,10 +358,10 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                                 table.scrollTo(row);
                                 table.scrollToColumnIndex(column);
                                 table.layout();
-                                List<Object> tCells = ComponentHandler
-                                        .getInstancesOfType(TableCell.class);
-                                for (Object o : tCells) {
-                                    TableCell<?, ?> cell = (TableCell<?, ?>) o;
+                                List<? extends TableCell> tCells = 
+                                        ComponentHandler.getAssignableFrom(
+                                                TableCell.class);
+                                for (TableCell<?, ?> cell : tCells) {
                                     if (cell.getIndex() == row
                                             && cell.getTableColumn() == col
                                             && cell.getTableView() == table) {
@@ -409,10 +408,9 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         table.layout();
-                        List<Object> tCells = ComponentHandler
-                                .getInstancesOfType(TableCell.class);
-                        for (Object o : tCells) {
-                            TableCell<?, ?> cell = (TableCell<?, ?>) o;
+                        List<? extends TableCell> tCells = ComponentHandler
+                                .getAssignableFrom(TableCell.class);
+                        for (TableCell<?, ?> cell : tCells) {
                             if (cell.getIndex() == row
                                     && cell.getTableColumn() == col
                                     && cell.getTableView() == table) {

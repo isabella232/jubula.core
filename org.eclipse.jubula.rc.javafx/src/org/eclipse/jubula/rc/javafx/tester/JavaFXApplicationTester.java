@@ -248,7 +248,7 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
                     @Override
                     public Stage call() throws Exception {
                         List<? extends Stage> stages = ComponentHandler
-                                .getAssignableFromType(Stage.class);
+                                .getAssignableFrom(Stage.class);
                         for (final Stage stage : stages) {
                             if (MatchUtil.getInstance().match(stage.getTitle(),
                                     title, operator)) {

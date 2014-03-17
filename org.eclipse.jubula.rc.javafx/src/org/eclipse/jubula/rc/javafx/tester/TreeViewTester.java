@@ -54,10 +54,9 @@ public class TreeViewTester extends AbstractTreeTester {
                         // we would get old position values
                         ((TreeView) getRealComponent()).layout();
 
-                        List<Object> tCells = ComponentHandler
-                                .getInstancesOfType(TreeCell.class);
-                        for (Object o : tCells) {
-                            TreeCell<?> cell = (TreeCell<?>) o;
+                        List<? extends TreeCell> tCells = ComponentHandler
+                                .getAssignableFrom(TreeCell.class);
+                        for (TreeCell<?> cell : tCells) {
                             if (NodeBounds.checkIfContains(point, cell)) {
                                 return cell.getTreeItem();
                             }

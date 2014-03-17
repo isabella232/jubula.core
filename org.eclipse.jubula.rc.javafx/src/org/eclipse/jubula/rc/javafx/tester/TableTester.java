@@ -93,10 +93,9 @@ public class TableTester extends AbstractTableTester {
                         table.layout();
                         TableColumn<?, ?> col = table
                                 .getVisibleLeafColumn(column);
-                        List<Object> tCells = ComponentHandler
-                                .getInstancesOfType(TableCell.class);
-                        for (Object o : tCells) {
-                            TableCell<?, ?> cell = (TableCell<?, ?>) o;
+                        List<? extends TableCell> tCells = ComponentHandler
+                                .getAssignableFrom(TableCell.class);
+                        for (TableCell<?, ?> cell : tCells) {
                             if (cell.getIndex() == row
                                     && cell.getTableColumn() == col) {
                                 return cell;
@@ -126,10 +125,9 @@ public class TableTester extends AbstractTableTester {
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         table.layout();
-                        List<Object> tCells = ComponentHandler
-                                .getInstancesOfType(TableCell.class);
-                        for (Object o : tCells) {
-                            TableCell<?, ?> cell = (TableCell<?, ?>) o;
+                        List<? extends TableCell> tCells = ComponentHandler
+                                .getAssignableFrom(TableCell.class);
+                        for (TableCell<?, ?> cell : tCells) {
                             Rectangle rec = getCellRect(cell);
                             Point2D tablePos = table.localToScreen(0, 0);
                             rec.x = rec.x + Rounding.round(tablePos.getX());
@@ -310,10 +308,10 @@ public class TableTester extends AbstractTableTester {
                         table.layout();
                         TableColumn<?, ?> col = table.getVisibleLeafColumn(0);
                         // Check if the CheckBox is realized via a CheckBoxCell
-                        List<Object> tCells = ComponentHandler
-                                .getInstancesOfType(CheckBoxTableCell.class);
-                        for (Object o : tCells) {
-                            CheckBoxTableCell cell = (CheckBoxTableCell) o;
+                        List<? extends CheckBoxTableCell> checkboxCells = 
+                                ComponentHandler.getAssignableFrom(
+                                        CheckBoxTableCell.class);
+                        for (CheckBoxTableCell cell : checkboxCells) {
                             if (cell.getTableColumn().equals(col)
                                     && cell.getIndex() == row) {
                                 return cell.lookup("CheckBox"); //$NON-NLS-1$
@@ -321,10 +319,9 @@ public class TableTester extends AbstractTableTester {
                         }
                         // No CheckBoxCell found. Now we have to check all
                         // Cells!
-                        tCells = ComponentHandler
-                                .getInstancesOfType(TableCell.class);
-                        for (Object o : tCells) {
-                            TableCell cell = (TableCell) o;
+                        List<? extends TableCell> cells = ComponentHandler
+                                .getAssignableFrom(TableCell.class);
+                        for (TableCell cell : cells) {
                             if (cell.getTableColumn().equals(col)
                                     && cell.getIndex() == row) {
                                 return cell.lookup("CheckBox"); //$NON-NLS-1$

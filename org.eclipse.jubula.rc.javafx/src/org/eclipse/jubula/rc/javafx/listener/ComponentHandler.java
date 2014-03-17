@@ -114,30 +114,12 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      * @param <T> component type
      * @return List
      */
-    public static <T> List<? extends T> getAssignableFromType(Class<T> type) {
+    public static <T> List<? extends T> getAssignableFrom(Class<T> type) {
         Set<JavaFXComponent> keys = hierarchy.getHierarchyMap().keySet();
         List<T> result = new ArrayList<T>();
         for (JavaFXComponent object : keys) {
             if (type.isAssignableFrom(object.getRealComponentType())) {
                 result.add(type.cast(object.getRealComponent()));
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Searches the hierarchy-map for components of the given type
-     *
-     * @param type
-     *            the type to look for
-     * @return List
-     */
-    public static List<Object> getInstancesOfType(Class<?> type) {
-        Set<JavaFXComponent> keys = hierarchy.getHierarchyMap().keySet();
-        List<Object> result = new ArrayList<Object>();
-        for (JavaFXComponent object : keys) {
-            if (type.isAssignableFrom(object.getRealComponentType())) {
-                result.add(object.getRealComponent());
             }
         }
         return result;
@@ -151,7 +133,7 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      * @return the component
      */
     public static Node getComponentByPos(Point2D pos) {
-        List<? extends Node> comps = getAssignableFromType(Node.class);
+        List<? extends Node> comps = getAssignableFrom(Node.class);
         List<Node> matches = new ArrayList<Node>();
         for (Node n : comps) {
             Set supportetTypes = AUTServerConfiguration.getInstance().

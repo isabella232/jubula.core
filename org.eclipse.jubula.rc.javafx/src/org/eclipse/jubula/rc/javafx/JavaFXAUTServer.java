@@ -80,7 +80,7 @@ public class JavaFXAUTServer extends AUTServer {
      */
     private void addToolkitEventListener(AbstractFXAUTEventHandler handler) {
         List<? extends Stage> stages = 
-                ComponentHandler.getAssignableFromType(Stage.class);
+                ComponentHandler.getAssignableFrom(Stage.class);
         for (final Stage stage : stages) {
             handler.addHandler(stage);
         }
@@ -107,7 +107,7 @@ public class JavaFXAUTServer extends AUTServer {
      */
     private void removeToolkitEventListener(AbstractFXAUTEventHandler handler) {
         List<? extends Stage> stages = 
-                ComponentHandler.getAssignableFromType(Stage.class);
+                ComponentHandler.getAssignableFrom(Stage.class);
         
         for (Stage stage : stages) {
             handler.removeHandler(stage);

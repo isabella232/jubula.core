@@ -114,10 +114,9 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
                     @Override
                     public String call() throws Exception {
-                        List<Object> tCells = ComponentHandler
-                                .getInstancesOfType(TreeCell.class);
-                        for (Object o : tCells) {
-                            TreeCell<?> cell = (TreeCell<?>) o;
+                        List<? extends TreeCell> tCells = ComponentHandler
+                                .getAssignableFrom(TreeCell.class);
+                        for (TreeCell<?> cell : tCells) {
                             TreeItem<?> item = cell.getTreeItem();
                             if (item != null && item.equals(node)) {
                                 return cell.getText();
@@ -216,10 +215,9 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
                     @Override
                     public Object call() throws Exception {
-                        List<Object> tCells = ComponentHandler
-                                .getInstancesOfType(TreeCell.class);
-                        for (Object o : tCells) {
-                            TreeCell<?> cell = (TreeCell<?>) o;
+                        List<? extends TreeCell> tCells = ComponentHandler
+                                .getAssignableFrom(TreeCell.class);
+                        for (TreeCell<?> cell : tCells) {
                             TreeItem<?> item = cell.getTreeItem();
                             if (item != null && item.equals(node)
                                     && !item.isExpanded()) {
@@ -263,10 +261,9 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
                     @Override
                     public Object call() throws Exception {
-                        List<Object> tCells = ComponentHandler
-                                .getInstancesOfType(TreeCell.class);
-                        for (Object o : tCells) {
-                            TreeCell<?> cell = (TreeCell<?>) o;
+                        List<? extends TreeCell> tCells = ComponentHandler
+                                .getAssignableFrom(TreeCell.class);
+                        for (TreeCell<?> cell : tCells) {
                             TreeItem<?> item = cell.getTreeItem();
                             if (item != null && item.equals(node)
                                     && item.isExpanded()) {
@@ -442,10 +439,9 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                 "getNodeBounds", new Callable<Rectangle>() { //$NON-NLS-1$
                     @Override
                     public Rectangle call() throws Exception {
-                        List<Object> tCells = ComponentHandler
-                                .getInstancesOfType(TreeCell.class);
-                        for (Object o : tCells) {
-                            TreeCell cell = (TreeCell<?>) o;
+                        List<? extends TreeCell> tCells = ComponentHandler
+                                .getAssignableFrom(TreeCell.class);
+                        for (TreeCell<?> cell : tCells) {
                             TreeItem<?> item = cell.getTreeItem();
                             TreeView<?> tree = (TreeView<?>) getTree();
                             if ((item != null && item.equals(node))) {

@@ -69,7 +69,8 @@ public class MenuTester extends AbstractMenuTester {
             return adapt;
         }
 
-        List<Object> bars = ComponentHandler.getInstancesOfType(MenuBar.class);
+        List<? extends MenuBar> bars = 
+                ComponentHandler.getAssignableFrom(MenuBar.class);
 
         if (bars.size() > 1) {
             throw new StepExecutionException("Multiple MenuBars found", //$NON-NLS-1$
