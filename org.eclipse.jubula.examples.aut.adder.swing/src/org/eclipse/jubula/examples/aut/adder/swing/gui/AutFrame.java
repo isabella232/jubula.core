@@ -157,9 +157,9 @@ public class AutFrame extends JFrame {
     /**
      * initialize1 - split of initialize for checkstyle reasons
      */
-    private void initialize1() {
+    private void initBasic() {
         setBackground(Color.white);
-        //Layout setzen und Komponenten hinzufï¿½gen
+        // Layout setzen und Komponenten hinzufügen
         m_gbl = new GridBagLayout();
         m_cont = getContentPane();
         m_cont.setLayout(m_gbl);
@@ -220,7 +220,7 @@ public class AutFrame extends JFrame {
     /**
      * initialize2 -- split of initialize only for checkstyle reasons
      */
-    private void initialize2() {
+    private void initComplex() {
         GridBagConstraints gbc;
         
         // Radio buttons controlling the calculation mode
@@ -234,9 +234,11 @@ public class AutFrame extends JFrame {
     }
     
     /**
-     * Initialize the Gui
-     * @param hasAlternativeLayout <code>true</code> to create a frame with the
-     * alternative Layout
+     * Initialize the UI
+     * 
+     * @param hasAlternativeLayout
+     *            <code>true</code> to create a frame with the alternative
+     *            Layout
      */
     private void initialize(boolean hasAlternativeLayout) {
         if (hasAlternativeLayout) {
@@ -244,11 +246,9 @@ public class AutFrame extends JFrame {
         } else {
             m_calculaorPanel = new CalculatorPanel();
         }
-        // "Maximum Method Length: Methode ist 80 Zeilen lang, erlaubt sind
-        //  hï¿½chstens 75."
-        initialize1();
+        initBasic();
         if (m_complexMode) {
-            initialize2();
+            initComplex();
         }
     }
 
