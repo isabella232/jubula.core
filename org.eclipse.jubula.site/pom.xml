@@ -44,6 +44,8 @@
                 </goals>
                 <configuration>
                   <tasks>
+                  	<checksum file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
+									forceOverwrite="yes" algorithm="SHA-512" fileext=".sha" />
                     <delete includeemptydirs="false">
                       <fileset dir="/home/data/httpd/download.eclipse.org/jubula/development">
                         <include name="**" />

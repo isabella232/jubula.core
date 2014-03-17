@@ -15,6 +15,24 @@
   
   <build>
     <plugins>
+		<plugin>
+			<artifactId>maven-antrun-plugin</artifactId>
+			<version>1.7</version>
+			<executions>
+				<execution>
+					<phase>generate-sources</phase>
+					<configuration>
+						<target>
+							<checksum file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
+								forceOverwrite="yes" algorithm="SHA-512" fileext=".sha" />
+						</target>
+					</configuration>
+					<goals>
+						<goal>run</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
         <plugin>
             <groupId>org.eclipse.tycho</groupId>
             <artifactId>tycho-maven-plugin</artifactId>
