@@ -71,12 +71,7 @@ public class MenuItemAdapter<M extends MenuItem>
                         } else if (item instanceof CheckMenuItem) {
                             return ((CheckMenuItem) item).isSelected();
                         }
-                        throw new StepExecutionException(
-                                "The MenuItem is not a RadioMenuItem and" //$NON-NLS-1$
-                                        + " CheckBoxMenuItem", //$NON-NLS-1$
-                                EventFactory
-                                        .createActionError(TestErrorEvent.
-                                                UNSUPPORTED_OPERATION_ERROR));
+                        return false;
                     }
                 });
 

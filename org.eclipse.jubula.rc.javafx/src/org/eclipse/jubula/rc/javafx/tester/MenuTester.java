@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester;
 
+import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import java.util.List;
 
 import javafx.scene.control.ContextMenu;
@@ -47,17 +49,40 @@ public class MenuTester extends AbstractMenuTester {
     @Override
     protected void closeMenu(IMenuComponent menu, String[] textPath,
             String operator) {
-        getRobot().click(
-                ((MenuItem) menu.getRealComponent()).getParentPopup()
-                        .getOwnerNode(), null);
+        IMenuItemComponent item = navigateToMenuItem(menu,
+                Arrays.copyOf(textPath, 1), operator);
+        if (item == null || !item.hasSubMenu()) {
+            getRobot().keyType(null, KeyEvent.VK_ESCAPE);
+        } else {
+            // Press Escape twice, because when the MenuItem the mouse is over
+            // has a sub Menu, it is opened and has to be close separately
+            getRobot().keyType(null, KeyEvent.VK_ESCAPE);
 
+            getRobot().keyType(null, KeyEvent.VK_ESCAPE);
+            // Fallback if the item is still visible
+            if (item.isShowing()) {
+                getRobot().keyType(null, KeyEvent.VK_ESCAPE);
+            }
+        }
     }
 
     @Override
     protected void closeMenu(IMenuComponent menu, int[] path) {
-        getRobot().click(
-                ((MenuItem) menu.getRealComponent()).getParentPopup()
-                        .getOwnerNode(), null);
+        IMenuItemComponent item = navigateToMenuItem(menu,
+                Arrays.copyOf(path, 1));
+        if (item == null || !item.hasSubMenu()) {
+            getRobot().keyType(null, KeyEvent.VK_ESCAPE);
+        } else {
+            // Press Escape twice, because when the MenuItem the mouse is over
+            // has a sub Menu, it is opened and has to be close separately
+            getRobot().keyType(null, KeyEvent.VK_ESCAPE);
+
+            getRobot().keyType(null, KeyEvent.VK_ESCAPE);
+            // Fallback if the item is still visible
+            if (item.isShowing()) {
+                getRobot().keyType(null, KeyEvent.VK_ESCAPE);
+            }
+        }
     }
 
     @Override
@@ -76,7 +101,7 @@ public class MenuTester extends AbstractMenuTester {
             throw new StepExecutionException("Multiple MenuBars found", //$NON-NLS-1$
                     EventFactory
                             .createActionError(TestErrorEvent.
-                                    UNSUPPORTED_OPERATION_ERROR));
+                                    UNSUPPORTED_OPERATION_IN_TOOLKIT_ERROR));
         }
 
         setComponent(bars.get(0));

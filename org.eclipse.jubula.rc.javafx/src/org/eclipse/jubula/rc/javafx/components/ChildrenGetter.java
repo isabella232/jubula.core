@@ -21,6 +21,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
@@ -63,13 +64,24 @@ public class ChildrenGetter {
             add(result, getFrom((Stage) o).getValue());
         } else if (o instanceof Scene) {
             add(result, getFrom((Scene) o).getValue());
+        } else if (o instanceof ContextMenu) {
+            add(result, getFrom((ContextMenu) o).getValue());
         }
         
         return result;
     }
 
     /**
-     * Adds <code>toAdd</code> to <code>collection</code> iff 
+     * Gets the child of the <code>ContextMenu</code>, its <code>Scene</code>
+     * @param c the <code>ContextMenu</code>
+     * @return the <code>Scene</code>
+     */
+    public static ReadOnlyObjectProperty<Scene> getFrom(ContextMenu c) {
+        return c.sceneProperty();
+    }
+
+    /**
+     * Adds <code>toAdd</code> to <code>collection</code> if 
      * <code>toAdd != null</code>.
      * 
      * @param collection The collection to be modified by this call.
@@ -109,6 +121,8 @@ public class ChildrenGetter {
             result = getFrom((Stage) o);
         } else if (o instanceof Scene) {
             result = getFrom((Scene) o);
+        } else if (o instanceof ContextMenu) {
+            result = getFrom((ContextMenu) o);
         }
         return result;
     }

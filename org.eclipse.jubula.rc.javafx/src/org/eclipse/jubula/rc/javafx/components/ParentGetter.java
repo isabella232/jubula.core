@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.javafx.components;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -51,8 +52,19 @@ public class ParentGetter {
             result = getFrom((Stage) o);
         } else if (o instanceof Scene) {
             result = getFrom((Scene) o);
+        } else if (o instanceof ContextMenu) {
+            result = getFrom((ContextMenu) o);
         }
         return result;
+    }
+
+    /**
+     * Gets the Node which is the owner of this ContextMenu
+     * @param o the ContextMenu
+     * @return the owner Node
+     */
+    private static Node getFrom(ContextMenu o) {
+        return o.getOwnerNode();
     }
 
     /**
@@ -61,7 +73,7 @@ public class ParentGetter {
      *            the Scene
      * @return the Parent of the Scene a Window.
      */
-    private static Object getFrom(Scene scene) {
+    private static Window getFrom(Scene scene) {
         return scene.getWindow();
     }
 

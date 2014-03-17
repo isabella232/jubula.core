@@ -37,7 +37,12 @@ public abstract class AbstractComponentAdapter<T> implements IComponent {
      */
     public AbstractComponentAdapter(T objectToAdapt) {
         m_component = objectToAdapt;
-        getRobot().getInterceptor().addSceneGraph(getWindow());
+        // Nullcheck because it is possible to create an adapter for an Object
+        // that doesn't exist. E.g. an adapter for an MenuItem that doesn't
+        // exist.
+        if (objectToAdapt != null) {
+            getRobot().getInterceptor().addSceneGraph(getWindow());
+        }
     }
 
     @Override

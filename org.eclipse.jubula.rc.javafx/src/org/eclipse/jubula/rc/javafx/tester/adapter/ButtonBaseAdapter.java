@@ -67,7 +67,8 @@ public class ButtonBaseAdapter extends LabeledAdapter<ButtonBase>
                 "The Button is not a RadioButton and CheckBoxButton", //$NON-NLS-1$
                 EventFactory
                         .createActionError(
-                                TestErrorEvent.UNSUPPORTED_OPERATION_ERROR));
+                                TestErrorEvent.
+                                UNSUPPORTED_OPERATION_IN_TOOLKIT_ERROR));
     }
 
 }
