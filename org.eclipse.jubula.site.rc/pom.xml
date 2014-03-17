@@ -20,7 +20,7 @@
 			<version>1.7</version>
 			<executions>
 				<execution>
-					<phase>generate-sources</phase>
+					<phase>verify</phase>
 					<configuration>
 						<target>
 							<checksum file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
