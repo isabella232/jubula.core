@@ -217,7 +217,7 @@ public class JavaFXComponentAdapter<T extends Node> extends
     @Override
     public void showToolTip(String text, int textSize, int timePerWord,
             int windowWidth) {
-        // Not Implemented
+        StepExecutionException.throwUnsupportedAction();
     }
 
     @Override

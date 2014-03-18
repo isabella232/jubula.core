@@ -34,7 +34,6 @@ import org.eclipse.jubula.rc.swing.tester.util.EventListener;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil.PopupShownCondition;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.TimeUtil;
@@ -254,10 +253,7 @@ public class JComponentAdapter extends AbstractComponentAdapter
      */
     public void showToolTip(final String text, final int textSize,
             final int timePerWord, final int windowWidth) {
-        throw new StepExecutionException(
-                I18n.getString(TestErrorEvent.UNSUPPORTED_OPERATION_ERROR),
-                EventFactory.createActionError(
-                    TestErrorEvent.UNSUPPORTED_OPERATION_ERROR));
+        StepExecutionException.throwUnsupportedAction();
     }
     
     /**
