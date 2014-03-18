@@ -498,4 +498,14 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
         }
         TimeUtil.delay(delay);
     }
+    
+    @Override
+    public void rcSyncShutdownAndRestart(int timeout) {
+        StepExecutionException.throwUnsupportedAction();
+    }
+    
+    @Override
+    public void rcPrepareForShutdown() {
+        StepExecutionException.throwUnsupportedAction();
+    }
 }
