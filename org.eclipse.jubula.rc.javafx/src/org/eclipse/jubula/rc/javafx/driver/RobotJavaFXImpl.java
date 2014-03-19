@@ -64,6 +64,7 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.LocalScreenshotUtil;
 import org.eclipse.jubula.rc.common.util.PointUtil;
 import org.eclipse.jubula.rc.javafx.components.CurrentStages;
+import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
 import org.eclipse.jubula.tools.constants.InputConstants;
@@ -510,6 +511,8 @@ public class RobotJavaFXImpl implements IRobot {
      */
     private Rectangle getComponentBounds(final Object comp,
             ClickOptions clickOp) {
+
+        ComponentHandler.syncStageResize();
         Rectangle bounds = null;
         if (comp instanceof Stage) {
             Stage s = (Stage) comp;

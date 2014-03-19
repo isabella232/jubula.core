@@ -101,6 +101,40 @@ public class EventThreadQueuerJavaFXImpl implements IEventThreadQueuer {
         }
     }
 
+    /**
+     * Posts an empty {@link Callable} to the FX Thread and waits for the
+     * posted event to be processed.
+     */
+    public static void waitForIdle() {
+        invokeAndWait("waitForIdle", new Callable<Void>() { //$NON-NLS-1$
+            @Override
+            public Void call() throws Exception {
+                return null;
+            }
+        });
+    }
+
+    /**
+     * 
+     * @throws IllegalStateException if the current thread is not the FX Thread.
+     */
+    public static void checkEventThread() throws IllegalStateException {
+        if (!Platform.isFxApplicationThread()) {
+            throw new IllegalStateException("Not on FX application thread; currentThread = " //$NON-NLS-1$
+                    + Thread.currentThread().getName());
+        }
+    }
+
+    /**
+     * 
+     * @throws IllegalStateException if the current thread is the FX Thread.
+     */
+    public static void checkNotEventThread() throws IllegalStateException {
+        if (Platform.isFxApplicationThread()) {
+            throw new IllegalStateException("On FX application thread, although this is not allowed."); //$NON-NLS-1$
+        }
+    }
+    
     @Override
     public Object invokeAndWait(String name, final IRunnable runnable) {
 

@@ -36,6 +36,8 @@ import org.eclipse.jubula.rc.javafx.components.AUTJavaFXHierarchy;
 import org.eclipse.jubula.rc.javafx.components.CurrentStages;
 import org.eclipse.jubula.rc.javafx.components.FindJavaFXComponentBP;
 import org.eclipse.jubula.rc.javafx.components.JavaFXComponent;
+import org.eclipse.jubula.rc.javafx.listener.sync.IStageResizeSync;
+import org.eclipse.jubula.rc.javafx.listener.sync.StageResizeSyncFactory;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
@@ -64,6 +66,10 @@ public class ComponentHandler implements ListChangeListener<Stage>,
     /** Businessprocess for getting components */
     private static FindJavaFXComponentBP findBP = new FindJavaFXComponentBP();
 
+    /** used for synchronizing on stage resize events */
+    private static IStageResizeSync stageResizeSync = 
+            StageResizeSyncFactory.instance();
+    
     /**
      * Constructor. Adds itself as ListChangeListener to the Stages-List
      */
@@ -74,21 +80,21 @@ public class ComponentHandler implements ListChangeListener<Stage>,
     @Override
     public void onChanged(Change<? extends Stage> change) {
         change.next();
-        List<? extends Stage> changedStages = change.getAddedSubList();
-        for (final Stage stage : changedStages) {
-            stage.setOnShown(new EventHandler<WindowEvent>() {
 
+        for (final Stage stage : change.getRemoved()) {
+            hierarchy.removeComponentFromHierarchy(stage);
+        }
+        
+        for (final Stage stage : change.getAddedSubList()) {
+            stage.setOnShown(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
                     hierarchy.createHierarchyFrom(stage);
+                    stageResizeSync.register(stage);
                     stage.setOnShown(null);
                 }
             });
 
-        }
-        changedStages = change.getRemoved();
-        for (final Stage stage : changedStages) {
-            hierarchy.removeComponentFromHierarchy(stage);
         }
     }
 
@@ -353,5 +359,13 @@ public class ComponentHandler implements ListChangeListener<Stage>,
             }
 
         }
+    }
+    
+    /**
+     * Blocks the calling thread until the Stage has been sufficiently resized
+     * to deliver reliable component bounds. May not be called on the FX Thread.
+     */
+    public static void syncStageResize() {
+        stageResizeSync.await();
     }
 }

@@ -57,7 +57,10 @@ public class EnvironmentUtils {
 
     /** Substring for matching MacOS. */
     private static final String OS_NAME_MAC = "mac"; //$NON-NLS-1$
-    
+
+    /** Substring for matching Linux. */
+    private static final String OS_NAME_LIN = "lin"; //$NON-NLS-1$
+
     /**
      * Windows (2000, XP, Vista, Server, etc.) command to get environment
      * variables.
@@ -125,6 +128,14 @@ public class EnvironmentUtils {
      */
     public static boolean isMacOS() {
         return OS_NAME_LOWER_CASE.indexOf(OS_NAME_MAC) != -1;
+    }
+
+    /**
+     * @return <code>true</code> if the current OS is Linux. Otherwise, 
+     *         <code>false</code>
+     */
+    public static boolean isLinuxOS() {
+        return OS_NAME_LOWER_CASE.indexOf(OS_NAME_LIN) != -1;
     }
 
     /**
