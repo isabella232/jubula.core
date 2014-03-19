@@ -10,11 +10,18 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.SkinBase;
 
+import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 
 /**
  * Adapter for a Menu in a MenuBar. This is handled as MenuItem to realize the
@@ -24,6 +31,10 @@ import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
  * @created 10.3.2014
  */
 public class MenuBarItemAdapter extends MenuItemAdapter<Menu> {
+
+    /** The AUT Server logger. */
+    private static AutServerLogger log = new AutServerLogger(
+            MenuBarItemAdapter.class);
 
     /**
      * Creates an adapter for a MenuBarItem.
@@ -37,17 +48,23 @@ public class MenuBarItemAdapter extends MenuItemAdapter<Menu> {
 
     @Override
     protected void clickMenuItem() {
-        EventThreadQueuerJavaFXImpl.invokeAndWait("clickMenuBarItem", //$NON-NLS-1$
-                new Callable<Void>() {
+
+        Node menuButton = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "clickMenuBarItem", //$NON-NLS-1$ 
+                new Callable<Node>() {
 
                     @Override
-                    public Void call() throws Exception {
-                        // .show() because there is no reliable way to get the
-                        // MenuBarButton this menu belongs to.
-                        getRealComponent().show();
-                        return null;
+                    public Node call() throws Exception {
+                        List<? extends MenuBar> bars = ComponentHandler
+                                .getAssignableFrom(MenuBar.class);
+                        MenuBar menuBar = bars.get(0);
+                        SkinBase menuBarSkin = (SkinBase) menuBar.getSkin();
+                        Parent buttonBox = (Parent) menuBarSkin.
+                                getChildren().get(0);
+                        return buttonBox.getChildrenUnmodifiable().get(
+                                menuBar.getMenus().indexOf(getRealComponent()));
                     }
                 });
+        getRobot().click(menuButton, null);
     }
-
 }

@@ -13,9 +13,8 @@ package org.eclipse.jubula.rc.javafx.tester.adapter;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckMenuItem;
@@ -177,53 +176,40 @@ public class MenuItemAdapter<M extends MenuItem>
     }
 
     /**
-     * This code realizes the waiting for the submenu to open
+     * This method realizes the waiting for the submenu to open
      * 
      * @param menu
      *            the menu on whose submenu should be waited for it to open
      * @return true if the submenu opened successfully, false if not
      */
-    private boolean waitforSubmenuToOpen(final Menu menu) {
-        final EventLock event = new EventLock();
-        final ChangeListener<Boolean> visibleListener = 
-                new ChangeListener<Boolean>() {
+    protected boolean waitforSubmenuToOpen(final Menu menu) {
+        final EventLock eventLock = new EventLock();
+        final EventHandler<Event> shownHandler = 
+                new EventHandler<Event>() {
 
                 @Override
-                public void changed(ObservableValue<? extends Boolean> 
-                        observable, Boolean oldValue, Boolean newValue) {
-                    synchronized (event) {
-                        event.notifyAll();
+                public void handle(Event event) {
+                    synchronized (eventLock) {
+                        eventLock.notifyAll();
                     }
-
                 }
             };
-        final BooleanProperty visible = EventThreadQueuerJavaFXImpl
-                .invokeAndWait("openSubMenu", new Callable<BooleanProperty>() { //$NON-NLS-1$
+        EventThreadQueuerJavaFXImpl
+                .invokeAndWait("addShownListener", new Callable<Void>() { //$NON-NLS-1$
 
                     @Override
-                    public BooleanProperty call() throws Exception {
-                        List<MenuItem> subItems = ((Menu) menu).getItems();
-                        if (subItems.size() <= 0) {
-                            throw new StepExecutionException(
-                                    "no items in Submenu", //$NON-NLS-1$
-                                    EventFactory
-                                            .createActionError(TestErrorEvent.
-                                                    NOT_FOUND));
-                        }
-                        MenuItem subItem = subItems.get(0);
-                        if (!subItem.isVisible()) {
-                            subItem.visibleProperty().addListener(
-                                    visibleListener);
-                        }
-                        return subItem.visibleProperty();
+                    public Void call() throws Exception {
+                        menu.addEventHandler(Menu.ON_SHOWN, shownHandler);
+                        return null;
                     }
                 });
         boolean result = false;
         
         try {
-            if (!visible.get()) {
-                synchronized (event) {
-                    event.wait(TimeoutConstants.SERVER_TIMEOUT_WAIT_FOR_POPUP);
+            if (!menu.isShowing()) {
+                synchronized (eventLock) {
+                    eventLock.wait(TimeoutConstants.
+                            SERVER_TIMEOUT_WAIT_FOR_POPUP);
                 }
             }
         } catch (InterruptedException e) {
@@ -235,8 +221,9 @@ public class MenuItemAdapter<M extends MenuItem>
 
                         @Override
                         public Boolean call() throws Exception {
-                            visible.removeListener(visibleListener);
-                            return visible.getValue().booleanValue();
+                            menu.removeEventHandler(Menu.ON_SHOWN,
+                                    shownHandler);
+                            return menu.isShowing();
                         }
                     });
         }
@@ -291,14 +278,11 @@ public class MenuItemAdapter<M extends MenuItem>
                     nodes[0],
                     null,
                     ClickOptions.create()
-                            .setClickType(ClickOptions.ClickType.RELEASED)
                             .setFirstHorizontal(false));
         } else {
             robot.click(
                     nodes[0],
-                    null,
-                    ClickOptions.create().setClickType(
-                            ClickOptions.ClickType.RELEASED));
+                    null);
         }
     }
 
