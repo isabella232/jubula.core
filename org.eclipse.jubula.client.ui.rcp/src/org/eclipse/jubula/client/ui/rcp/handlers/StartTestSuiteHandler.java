@@ -52,7 +52,7 @@ public class StartTestSuiteHandler extends AbstractStartTestHandler
     /**
      * {@inheritDoc}
      */
-    public Object executeImpl(ExecutionEvent event) {
+    public Object executeImpl(final ExecutionEvent event) {
         Object testSuiteToStartObj = null;
         Object runningAutObj = null;
         ITestSuitePO testSuiteToStart = null;
@@ -103,7 +103,7 @@ public class StartTestSuiteHandler extends AbstractStartTestHandler
         }
 
         if (testSuiteToStart != null && runningAut != null
-                && initTestExecution()) {
+                && initTestExecution(event)) {
             final boolean autoScreenshots = Plugin.getDefault()
                     .getPreferenceStore().getBoolean(
                             Constants.AUTO_SCREENSHOT_KEY);

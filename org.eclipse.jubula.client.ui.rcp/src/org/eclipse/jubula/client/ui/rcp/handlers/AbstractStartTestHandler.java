@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 import java.net.URL;
 
 import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.State;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
@@ -32,6 +33,7 @@ import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.handlers.RegistryToggleState;
 
 
@@ -73,18 +75,25 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
     /**
      * init the GUI test execution part
      * 
-     * @return whether initialisation has been successful
+     * @param event
+     *            the execution event
+     * 
+     * @return whether initialization has been successful
      */
-    protected boolean initTestExecution() {
-        return initTestExecutionRelevantFlag() && initPauseTestExecutionState();
+    protected boolean initTestExecution(ExecutionEvent event) {
+        return initTestExecutionRelevantFlag()
+            && initPauseTestExecutionState(event);
     }
 
     /**
+     * @param event
+     *            the execution event
      * @return true if init has been successful
      */
-    private boolean initPauseTestExecutionState() {
-        ICommandService cmdService = (ICommandService)Plugin.getActivePart()
-                .getSite().getService(ICommandService.class);
+    private boolean initPauseTestExecutionState(ExecutionEvent event) {
+        ICommandService cmdService = (ICommandService) HandlerUtil
+            .getActiveWorkbenchWindow(event).getService(
+                ICommandService.class);
         if (cmdService != null) {
             final Command command = cmdService
                     .getCommand(RCPCommandIDs.PAUSE_TEST_SUITE);

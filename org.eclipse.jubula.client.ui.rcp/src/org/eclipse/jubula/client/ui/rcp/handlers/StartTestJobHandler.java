@@ -40,7 +40,8 @@ public class StartTestJobHandler extends AbstractStartTestHandler {
     /**
      * {@inheritDoc}
      */
-    public Object executeImpl(ExecutionEvent event) throws ExecutionException {
+    public Object executeImpl(final ExecutionEvent event) 
+        throws ExecutionException {
         Object testJobToStartObj = null;
         ITestJobPO testJobToStart = null;
         testJobToStartObj = 
@@ -59,7 +60,8 @@ public class StartTestJobHandler extends AbstractStartTestHandler {
                     final AtomicBoolean prepareOk = new AtomicBoolean(false);
                     Plugin.getDisplay().syncExec(new Runnable() {
                         public void run() {
-                            if (prepareTestExecution() && initTestExecution()) {
+                            if (prepareTestExecution() 
+                                && initTestExecution(event)) {
                                 prepareOk.set(true);
                             }
                         }
