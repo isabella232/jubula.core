@@ -68,14 +68,14 @@ public class FindJavaFXComponentBP extends FindComponentBP {
             // Window property isn't set.
             // And therefore the scene isn't available
             Window w = ((Scene) currComp).getWindow();
-            if (w != null) {
-                return w.isShowing();
-            }
-            return false;
+            return w != null && w.isShowing();
         } else if (currComp instanceof Stage) {
             return ((Stage) currComp).isShowing();
         } else if (currComp instanceof Node) {
-            return ((Node) currComp).isVisible();
+            Object parent = ParentGetter.get(currComp);
+            return ((Node) currComp).isVisible()
+                    && parent != null
+                    && isAvailable(parent);
         } else {
             return ((MenuItem) currComp).isVisible();
         }
