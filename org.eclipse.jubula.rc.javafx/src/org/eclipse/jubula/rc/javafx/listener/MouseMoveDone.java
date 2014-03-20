@@ -39,7 +39,7 @@ public class MouseMoveDone implements EventHandler<MouseEvent> {
      * threshold the threshold in milliseconds when a mouse move is interpreted
      * as done
      **/
-    private volatile long m_threshold;
+    private final long m_threshold;
 
     /** Last event **/
     private volatile MouseEvent m_lastEvent;
