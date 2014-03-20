@@ -18,6 +18,9 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
@@ -46,6 +49,13 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
     private static Logger log = 
         LoggerFactory.getLogger(AbstractStartToolkitAut.class);
 
+    /** 
+     * the name of the bundle JAR Manifest Attribute that indicates that the
+     * bundle is a source-bundle
+     */
+    private static final String SOURCE_BUNDLE_MANIFEST_ATTR = 
+            "Eclipse-SourceBundle"; //$NON-NLS-1$
+    
     /**
      * the message to send back if the command for starting the AUTServer could
      * not created
@@ -312,9 +322,13 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
                     if (e != null) {
                         while (e.hasMoreElements()) {
                             URL jarUrl = e.nextElement();
-                            classpathEntries.add(
-                                    new File(bundleFile + jarUrl.getFile())
-                                    .getAbsolutePath());
+                            File jarFile = 
+                                new File(bundleFile + jarUrl.getFile());
+                            if (!isJarFileWithManifestAttr(
+                                    jarFile, SOURCE_BUNDLE_MANIFEST_ATTR)) {
+                                
+                                classpathEntries.add(jarFile.getAbsolutePath());
+                            }
                         }
                     }
                 }
@@ -325,6 +339,48 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
         return classpathEntries.toArray(new String[classpathEntries.size()]);
     }
     
+    /**
+     * 
+     * @param file The file to check.
+     * @param manifestAttr The name of the Manifest Attribute to check for.
+     * @return <code>true</code> iff all of the following statements apply:<ul>
+     *         <li><code>file</code> is a valid, existing JAR file</li>
+     *         <li><code>file</code> has a JAR Manifest</li>
+     *         <li><code>file</code>'s JAR Manifest contains an Attribute 
+     *             named <code>manifestAttr</code></li>
+     *         <li>no error occurs while performing the above checks</li>
+     *         </ul>
+     */
+    private static boolean isJarFileWithManifestAttr(
+            File file, 
+            String manifestAttr) {
+
+        try {
+            JarFile jarFile = new JarFile(file);
+            try {
+                Manifest manifest = jarFile.getManifest();
+                if (manifest != null) {
+                    return manifest.getMainAttributes().containsKey(
+                            new Attributes.Name(manifestAttr));
+                }
+            } catch (IOException ioe) {
+                log.error("Error while reading JAR file.", ioe); //$NON-NLS-1$
+            } finally {
+                try {
+                    jarFile.close();
+                } catch (IOException ioe) {
+                    log.error("Error while closing JAR file.", ioe); //$NON-NLS-1$
+                }
+            }
+        } catch (IOException ioe) {
+            log.error("Error while opening JAR file.", ioe); //$NON-NLS-1$
+        } catch (SecurityException se) {
+            log.error("Error while opening JAR file.", se); //$NON-NLS-1$
+        }
+
+        return false;
+    }
+
     /**
      * 
      * @param bundleId The ID of the bundle to search for a classpath.
