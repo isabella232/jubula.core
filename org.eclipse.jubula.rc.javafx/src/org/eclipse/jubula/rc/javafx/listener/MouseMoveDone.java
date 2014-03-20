@@ -10,15 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.listener;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+
+import org.eclipse.jubula.rc.javafx.util.concurrent.JBExecutors;
 
 /**
  * Alters the JavaFx mouse moved event, which is always fired when the mouse
@@ -63,17 +62,15 @@ public class MouseMoveDone implements EventHandler<MouseEvent> {
         m_deltaY = deltaY;
 
         m_timeService = new Service<MouseEvent>() {
-            private final Executor m_threadPool = Executors
-                    .newFixedThreadPool(1);
-
             @Override
             protected Task<MouseEvent> createTask() {
-
-                this.setExecutor(m_threadPool);
                 return new WaitingTask();
             }
         };
-
+        
+        m_timeService.setExecutor(
+                JBExecutors.newSingleDaemonThreadExecutor(
+                        MouseMoveDone.class.getSimpleName()));
     }
 
     @Override
@@ -98,7 +95,6 @@ public class MouseMoveDone implements EventHandler<MouseEvent> {
      */
     public void addMoveDoneHandler(final EventHandler<WorkerStateEvent> hl) {
         Platform.runLater(new Runnable() {
-
             @Override
             public void run() {
                 m_timeService.setOnSucceeded(hl);
@@ -115,7 +111,6 @@ public class MouseMoveDone implements EventHandler<MouseEvent> {
      */
     public void removeMoveDoneHandler(final EventHandler<WorkerStateEvent> hl) {
         Platform.runLater(new Runnable() {
-
             @Override
             public void run() {
                 m_timeService.removeEventHandler(

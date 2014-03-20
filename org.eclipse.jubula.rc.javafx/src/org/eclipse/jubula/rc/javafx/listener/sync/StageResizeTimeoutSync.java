@@ -10,9 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.listener.sync;
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -22,6 +20,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
 
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.util.concurrent.JBExecutors;
 
 /**
  * "Synchronizes" by waiting a set amount of time. Even if the Stage resizes 
@@ -84,14 +83,8 @@ class StageResizeTimeoutSync implements IStageResizeSync {
 
     /** the executor for fallback unlocking */
     private final ScheduledExecutorService m_executor = 
-            Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
-                @Override
-                public Thread newThread(Runnable r) {
-                    Thread t = new Thread(r);
-                    t.setDaemon(true);
-                    return t;
-                }
-            });
+            JBExecutors.newSingleDaemonThreadScheduledExecutor(
+                    StageResizeTimeoutSync.class.getSimpleName());
     
     /**
      * Acquires the lock
