@@ -438,46 +438,22 @@ public class RobotJavaFXImpl implements IRobot {
             final Point[] mouseMove = MouseMovementStrategy.getMovementPath(
                     startpoint, p, clickOptions.getStepMovement(),
                     clickOptions.getFirstHorizontal());
-            Point currP = new Point(0, 0);
             for (int i = 0; i < mouseMove.length - 1; i++) {
+                
                 m_robot.mouseMove(mouseMove[i].x, mouseMove[i].y);
-                currP.x = mouseMove[i].x;
-                currP.y = mouseMove[i].y;
-                if (!currP.equals(MouseInfo.getPointerInfo().getLocation())) {
-                    mouseMoveFallback(currP);
-                }
+                m_robot.waitForIdle();
             }
             if (!DragAndDropHelper.getInstance().isDragMode()) {
                 confirmer = m_interceptor.intercept(options); 
             }
-            m_robot.mouseMove(mouseMove[mouseMove.length - 1].x,
-                    mouseMove[mouseMove.length - 1].y);
-            currP.x = mouseMove[mouseMove.length - 1].x;
-            currP.y = mouseMove[mouseMove.length - 1].y;
-            if (!currP.equals(MouseInfo.getPointerInfo().getLocation())) {
-                mouseMoveFallback(currP);
-            }
+            
+            Point endPoint = mouseMove[mouseMove.length - 1];
+            m_robot.mouseMove(endPoint.x, endPoint.y);
+            m_robot.waitForIdle();
+
             if (confirmer != null) {
                 confirmMove(confirmer, graphicsComponent);
             }
-        }
-    }
-
-    /**
-     * Checks whether the move was really successful. If not, a few workarounds
-     * are attempted in order to correct the situation. The workarounds are
-     * logged at the warn-level as they are used. If, after all workarounds have
-     * been applied, the mouse pointer is still not at the correct position,
-     * then an error is logged.
-     *
-     * @param pointToGo
-     *            The point where the mouse pointer should currently be.
-     */
-    private void mouseMoveFallback(Point pointToGo) {
-        Point curPoint = MouseInfo.getPointerInfo().getLocation();
-        while (!(curPoint.equals(pointToGo))) {
-            m_robot.delay(1);
-            curPoint = MouseInfo.getPointerInfo().getLocation();
         }
     }
 
