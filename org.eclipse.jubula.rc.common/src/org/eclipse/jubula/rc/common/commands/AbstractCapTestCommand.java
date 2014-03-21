@@ -208,7 +208,7 @@ public abstract class AbstractCapTestCommand implements ICommand {
      *            the timeout
      * @return the found component
      * @throws IllegalArgumentException
-     *             if error occured
+     *             if error occurred
      * @throws ComponentNotFoundException
      *             if component could not found in compHierarchy
      */

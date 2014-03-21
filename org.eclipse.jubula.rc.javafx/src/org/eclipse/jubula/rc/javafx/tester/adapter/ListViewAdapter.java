@@ -10,15 +10,24 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
+import java.awt.Rectangle;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import javafx.collections.ObservableList;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
+import org.eclipse.jubula.rc.javafx.util.Rounding;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
@@ -42,12 +51,12 @@ public class ListViewAdapter<T extends ListView> extends
         super(objectToAdapt);
     }
 
-    @Override
+    /** {@inheritDoc} **/
     public String getText() {
         String result = EventThreadQueuerJavaFXImpl.invokeAndWait("getText", //$NON-NLS-1$
             new Callable<String>() {
 
-                @Override
+                /** {@inheritDoc} **/
                 public String call() throws Exception {
                     ObservableList sItems = getRealComponent() 
                             .getSelectionModel().getSelectedItems();
@@ -62,26 +71,125 @@ public class ListViewAdapter<T extends ListView> extends
         return result;
     }
 
-    @Override
+    /** {@inheritDoc} **/
+    public void clickOnIndex(final Integer index, ClickOptions co) {
+        final int actualItemCount = EventThreadQueuerJavaFXImpl.invokeAndWait(
+            "scrollIndexVisible", //$NON-NLS-1$
+            new Callable<Integer>() {
+                public Integer call() throws Exception {
+                    final ObservableList items = getRealComponent().getItems();
+                    int itemCount = items != null ? items.size() : -1;
+                    return new Integer(itemCount);
+                }
+            }).intValue();
+        
+        if (index >= actualItemCount || (index < 0)) {
+            throw new StepExecutionException("List index '" + index //$NON-NLS-1$
+                + "' is out of range", //$NON-NLS-1$
+                EventFactory.createActionError(TestErrorEvent.INVALID_INDEX));
+        }
+        
+        Rectangle r = EventThreadQueuerJavaFXImpl.invokeAndWait("scrollIndexVisible", //$NON-NLS-1$
+            new Callable<Rectangle>() {
+                public Rectangle call() throws Exception {
+                    final T listView = getRealComponent();
+                    listView.scrollTo(index.intValue());
+                    listView.layout();
+                    List<? extends ListCell> lCells = ComponentHandler
+                        .getAssignableFrom(ListCell.class);
+                    for (ListCell cell : lCells) {
+                        if (cell.getIndex() == index.intValue()
+                                && cell.getListView() == listView) {
+    
+                            Bounds b = cell.getBoundsInParent();
+                            Point2D pos = cell.localToScreen(0, 0);
+                            Point2D parentPos = listView.localToScreen(0, 0);
+                            return new Rectangle(
+                                    Rounding.round(pos.getX()
+                                    - parentPos.getX()),
+                                    Rounding.round(pos.getY()
+                                    - parentPos.getY()),
+                                    Rounding.round(b.getWidth()),
+                                    Rounding.round(b.getHeight()));
+                        }
+                    }
+                    return null;
+                }
+            });
+        
+        getRobot().click(getRealComponent(), r,
+                co.setClickType(ClickOptions.ClickType.RELEASED));
+    }
+
+    /** {@inheritDoc} **/
     public int[] getSelectedIndices() {
-        // FIXME MT: IMPLEMENT
-        return null;
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getSelectedIndices", //$NON-NLS-1$
+            new Callable<int[]>() {
+                /** {@inheritDoc} **/
+                public int[] call() throws Exception {
+                    ObservableList<Integer> sIndices = getRealComponent()
+                        .getSelectionModel().getSelectedIndices();
+                    return ArrayUtils.toPrimitive(sIndices
+                        .toArray(new Integer[0]));
+                }
+            });
     }
-
-    @Override
-    public void clickOnIndex(Integer i, ClickOptions co) {
-        // FIXME MT: IMPLEMENT
-    }
-
-    @Override
+    
+    /** {@inheritDoc} **/
     public String[] getSelectedValues() {
-        // FIXME MT: IMPLEMENT
-        return null;
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getSelectedValues", //$NON-NLS-1$
+            new Callable<String[]>() {
+                /** {@inheritDoc} **/
+                public String[] call() throws Exception {
+                    final T listView = getRealComponent();
+                    ObservableList<Integer> sIndices = listView
+                        .getSelectionModel().getSelectedIndices();
+                    
+                    List<String> selectedValues = new LinkedList<String>();
+                    for (Integer i : sIndices) {
+                        int index = i.intValue();
+                        listView.scrollTo(index);
+                        listView.layout();
+                        List<? extends ListCell> lCells = ComponentHandler
+                            .getAssignableFrom(ListCell.class);
+                        for (ListCell cell : lCells) {
+                            if (cell.getIndex() == index
+                                && cell.getListView() == listView) {
+                                selectedValues.add(cell.getText());
+                                break;
+                            }
+                        }
+                    }
+                    return selectedValues.toArray(new String[0]);
+                }
+            });
     }
 
-    @Override
+    /** {@inheritDoc} **/
     public String[] getValues() {
-        // FIXME MT: IMPLEMENT
-        return null;
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getValues", //$NON-NLS-1$
+            new Callable<String[]>() {
+                /** {@inheritDoc} **/
+                public String[] call() throws Exception {
+                    List<String> values = new LinkedList<String>();
+                    final T listView = getRealComponent();
+                    ObservableList items = listView.getItems();
+                    int itemCount = items != null ? items.size() : -1;
+                    for (int i = 0; i < itemCount; i++) {
+                        listView.scrollTo(i);
+                        listView.layout();
+                        List<? extends ListCell> lCells = ComponentHandler
+                            .getAssignableFrom(ListCell.class);
+                        for (ListCell cell : lCells) {
+                            if (cell.getIndex() == i
+                                && cell.getListView() == listView) {
+                                values.add(cell.getText());
+                                break;
+                            }
+                        }
+                    }
+                    return values.toArray(new String[0]);
+                }
+            });
     }
 }

@@ -211,7 +211,7 @@
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.List" visible="false">
 		<realizes>guidancer.concrete.List</realizes>
-		<testerClass>org.eclipse.jubula.rc.swt.tester.ListTester</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ListTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.List" />
 	</toolkitComponent>
 	

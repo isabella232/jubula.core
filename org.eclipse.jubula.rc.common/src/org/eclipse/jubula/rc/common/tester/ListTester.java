@@ -10,20 +10,22 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
-import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.ListSelectionVerifier;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
+import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.TestDataConstants;
@@ -32,9 +34,7 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.utils.StringParsing;
 
 /**
- * 
  * @author BREDEX GmbH
- *
  */
 public class ListTester extends AbstractTextVerifiableTester {
     
@@ -145,13 +145,13 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param clickCount the click count
      */
     public void rcSelectIndex(String indexList, final String extendSelection,
-            int button, int clickCount) {
-        final boolean isExtendSelection = extendSelection
-                .equals(CompSystemConstants.EXTEND_SELECTION_YES);
-        selectIndices(IndexConverter
-                .toImplementationIndices(parseIndices(indexList)), ClickOptions
-                .create().setClickCount(clickCount).setMouseButton(button),
-                isExtendSelection);
+        int button, int clickCount) {
+        selectIndices(IndexConverter.toImplementationIndices(
+            parseIndices(indexList)),
+            ClickOptions.create()
+                .setClickCount(clickCount)
+                .setMouseButton(button)
+                .setClickModifier(getClickModifier(extendSelection)));
     }
     
     /**
@@ -170,12 +170,11 @@ public class ListTester extends AbstractTextVerifiableTester {
     public void rcSelectValue(String valueList, String operator, 
             String searchType, final String extendSelection, int button,
             int clickCount) {
-        final boolean isExtendSelection = 
-            extendSelection.equals(CompSystemConstants.EXTEND_SELECTION_YES);
         selectValue(valueList, String.valueOf(VALUE_SEPARATOR), operator, 
             searchType, ClickOptions.create()
                 .setClickCount(clickCount)
-                .setMouseButton(button), isExtendSelection); 
+                .setMouseButton(button)
+                .setClickModifier(getClickModifier(extendSelection))); 
     }
     
     /**
@@ -229,7 +228,7 @@ public class ListTester extends AbstractTextVerifiableTester {
         Integer [] indices = findIndicesOfValues(
             new String [] {value}, operator, searchType);
         selectIndices(ArrayUtils.toPrimitive(indices), 
-                ClickOptions.create().setClickCount(0), false);
+                ClickOptions.create().setClickCount(0));
 
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
@@ -253,7 +252,7 @@ public class ListTester extends AbstractTextVerifiableTester {
             Integer [] indices = findIndicesOfValues(
                 new String [] {value}, operator, searchType);
             selectIndices(ArrayUtils.toPrimitive(indices), 
-                    ClickOptions.create().setClickCount(0), false);
+                    ClickOptions.create().setClickCount(0));
             waitBeforeDrop(delayBeforeDrop);
         } finally {
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
@@ -277,7 +276,7 @@ public class ListTester extends AbstractTextVerifiableTester {
 
         selectIndices(
                 new int [] {IndexConverter.toImplementationIndex(index)}, 
-                ClickOptions.create().setClickCount(0), false);
+                ClickOptions.create().setClickCount(0));
 
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
@@ -298,7 +297,7 @@ public class ListTester extends AbstractTextVerifiableTester {
         try {
             selectIndices(
                     new int [] {IndexConverter.toImplementationIndex(index)}, 
-                    ClickOptions.create().setClickCount(0), false);
+                    ClickOptions.create().setClickCount(0));
             waitBeforeDrop(delayBeforeDrop);
         } finally {
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
@@ -344,12 +343,9 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param operator If regular expressions are used
      * @param searchType Determines where the search begins ("relative" or "absolute")
      * @param co the click options to use
-     * @param isExtendSelection Whether this selection extends a previous 
-     *                        selection.
      */
     private void selectValue(String valueList, String separator,
-            String operator, final String searchType, ClickOptions co, 
-            final boolean isExtendSelection) {
+            String operator, final String searchType, ClickOptions co) {
 
         String[] values = null;
         if (StringConstants.EMPTY.equals(valueList)) {
@@ -367,7 +363,7 @@ public class ListTester extends AbstractTextVerifiableTester {
                 + Arrays.asList(values).toString(),
                 EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
         }
-        selectIndices(ArrayUtils.toPrimitive(indices), co, isExtendSelection);
+        selectIndices(ArrayUtils.toPrimitive(indices), co);
     }
     
     /**
@@ -386,44 +382,33 @@ public class ListTester extends AbstractTextVerifiableTester {
     }
     
     /**
-     * @param indices The indices to select
-     * @param co the click options to use
-     * @param isExtendSelection Whether this selection extends a previous 
-     *                          selection. If <code>true</code>, the first 
-     *                          element will be selected with CONTROL as a 
-     *                          modifier.
+     * @param indices
+     *            The indices to select
+     * @param co
+     *            the click options to use
      */
-    private void selectIndices(int[] indices, ClickOptions co, 
-            boolean isExtendSelection) {
-        Object list = getListAdapter().getRealComponent();
-        if (indices.length > 0) {
-            try {
-                if (isExtendSelection) {
-                    getRobot().keyPress(list,
-                            getSystemDefaultModifier());
-                }
-
-                // first selection
-                getListAdapter().clickOnIndex(
-                        new Integer(indices[0]), co);
-            } finally {
-                if (isExtendSelection) {
-                    getRobot().keyRelease(list,
-                            getSystemDefaultModifier());
-                }
+    private void selectIndices(int[] indices, ClickOptions co) {
+        int indexToStart = 0;
+        final int noOfItemsToSelect = indices.length;
+        final ClickModifier currentClickModifier = co.getClickModifier();
+        boolean isExtendSelection = currentClickModifier
+            .hasModifiers(ClickModifier.M1);
+        final IListComponent listAdapter = getListAdapter();
+        if (!isExtendSelection) {
+            if (noOfItemsToSelect > 0) {
+                // set a new first selection
+                listAdapter.clickOnIndex(indices[0], co);
             }
+            indexToStart++;
         }
-        try {
-            getRobot().keyPress(list,
-                    getSystemDefaultModifier());
-            // following selections
-            for (int i = 1; i < indices.length; i++) {
-                getListAdapter().clickOnIndex(
-                        new Integer(indices[i]), co);
-            }
-        } finally {
-            getRobot().keyRelease(list,
-                    getSystemDefaultModifier());
+        
+        // if multiple items should be selected at once implicitly extend selection
+        if (noOfItemsToSelect > 1) {
+            currentClickModifier.add(ClickModifier.M1);
+        }
+        
+        for (int i = indexToStart; i < noOfItemsToSelect; i++) {
+            listAdapter.clickOnIndex(indices[i], co);
         }
     }
     
@@ -432,14 +417,6 @@ public class ListTester extends AbstractTextVerifiableTester {
      */
     public String[] getTextArrayFromComponent() {
         return null;
-    }
-    
-    /**
-     * 
-     * @return -
-     */
-    protected int getSystemDefaultModifier() {
-        return -1;
     }
     
     /**
@@ -456,30 +433,25 @@ public class ListTester extends AbstractTextVerifiableTester {
      *         values array, but may contains <code>null</code> elements for all
      *         values that are not found in the list
      */
-    private Integer[] findIndicesOfValues(
-            final String[] values, final String  operator,
-            final String searchType) {
+    private Integer[] findIndicesOfValues(final String[] values,
+        final String operator, final String searchType) {
         String[] listValues = getListAdapter().getValues();
         int startIndex = getStartingIndex(searchType);
-        final java.util.List indexList = new ArrayList(
-                values.length);
+        final int valuesCount = values.length;
+        final List<Integer> indexList = new LinkedList<Integer>();
         final MatchUtil matchUtil = MatchUtil.getInstance();
-        for (int i = 0; i < values.length; i++) {
+        for (int i = 0; i < valuesCount; i++) {
             final String value = values[i];
-            for (int j = startIndex; 
-                j < listValues.length; j++) {
-                
+            for (int j = startIndex; j < listValues.length; j++) {
+
                 final String listItem = listValues[j];
-                if (matchUtil.match(listItem, value, 
-                    operator)) {
-                    
-                    indexList.add(new Integer(j));
+                if (matchUtil.match(listItem, value, operator)) {
+
+                    indexList.add(j);
                 }
             }
         }
-        Integer[] indices = new Integer[indexList.size()];
-        indexList.toArray(indices);
-        return indices;
+        return indexList.toArray(new Integer[indexList.size()]);
     }
     
     /**

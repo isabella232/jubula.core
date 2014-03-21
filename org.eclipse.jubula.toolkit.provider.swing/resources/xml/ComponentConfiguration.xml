@@ -40,7 +40,7 @@
 	
 	<toolkitComponent type="javax.swing.JList" visible="false">
 		<realizes>guidancer.concrete.List</realizes>
-		<testerClass>org.eclipse.jubula.rc.swing.tester.JListTester</testerClass>
+		<testerClass>org.eclipse.jubula.rc.common.tester.ListTester</testerClass>
 		<componentClass name="javax.swing.JList" />
 	</toolkitComponent>
 	

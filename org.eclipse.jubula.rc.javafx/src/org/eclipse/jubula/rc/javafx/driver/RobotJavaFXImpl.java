@@ -33,6 +33,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Screen;
@@ -330,16 +331,16 @@ public class RobotJavaFXImpl implements IRobot {
     private int[] getModifierMask(ClickModifier clickModifier) {
         int[] modifier = new int[0];
         if (clickModifier.hasModifiers(ClickModifier.M1)) {
-            modifier = ArrayUtils.add(modifier, 1 << 7);
+            modifier = ArrayUtils.add(modifier, KeyCode.CONTROL.impl_getCode());
         }
         if (clickModifier.hasModifiers(ClickModifier.M2)) {
-            modifier = ArrayUtils.add(modifier, 1 << 6);
+            modifier = ArrayUtils.add(modifier, KeyCode.SHIFT.impl_getCode());
         }
         if (clickModifier.hasModifiers(ClickModifier.M3)) {
-            modifier = ArrayUtils.add(modifier, 1 << 9);
+            modifier = ArrayUtils.add(modifier, KeyCode.ALT.impl_getCode());
         }
         if (clickModifier.hasModifiers(ClickModifier.M4)) {
-            modifier = ArrayUtils.add(modifier, 1 << 7);
+            modifier = ArrayUtils.add(modifier, KeyCode.META.impl_getCode());
         }
         return modifier;
     }

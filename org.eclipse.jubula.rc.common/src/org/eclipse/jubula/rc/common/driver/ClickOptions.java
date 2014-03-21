@@ -142,7 +142,7 @@ public class ClickOptions {
     private int m_clickCount = 1;
     
     /**
-     * Configures wether the affected component will be scrolled to visible
+     * Configures whether the affected component will be scrolled to visible
      * before the click is performed.
      */
     private boolean m_scrollToVisible = true;
@@ -220,7 +220,7 @@ public class ClickOptions {
         return this;
     }
     /**
-     * Configures wether the affected component will be scrolled to visible
+     * Configures whether the affected component will be scrolled to visible
      * before the click is performed.
      * 
      * @param scrollToVisible
@@ -232,6 +232,7 @@ public class ClickOptions {
         m_scrollToVisible = scrollToVisible;
         return this;
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -243,6 +244,7 @@ public class ClickOptions {
         return str;
         
     }
+    
     /**
      * Configures the mouse movement strategy.
      * 
@@ -258,7 +260,8 @@ public class ClickOptions {
     public ClickOptions setStepMovement(boolean isMoveInSteps) {
         m_isMoveInSteps = isMoveInSteps;
         return this;
-    }    
+    }
+    
     /**
      * Configures on which axis the movement begins. Standard is horizontal.
      * Also on the x axis.
