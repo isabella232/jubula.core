@@ -15,6 +15,7 @@ Export-Package: com.thoughtworks.xstream,
  org.eclipse.jubula.tools.exception,
  org.eclipse.jubula.tools.i18n,
  org.eclipse.jubula.tools.jarutils,
+ org.eclipse.jubula.tools.logging,
  org.eclipse.jubula.tools.messagehandling,
  org.eclipse.jubula.tools.objects,
  org.eclipse.jubula.tools.objects.event,
@@ -26,4 +27,6 @@ Export-Package: com.thoughtworks.xstream,
  org.eclipse.jubula.tools.xml.businessprocess
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
+ ch.qos.logback.classic;bundle-version="[1.0.0,2.0.0)",
+ ch.qos.logback.core;bundle-version="[1.0.0,2.0.0)",
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)"

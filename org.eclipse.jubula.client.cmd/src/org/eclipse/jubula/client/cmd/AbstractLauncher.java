@@ -19,9 +19,7 @@ import org.eclipse.equinox.app.IApplicationContext;
  * @created Jul 11, 2011
  */
 public abstract class AbstractLauncher implements IApplication {
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Object start(IApplicationContext context) throws Exception {
         return getAbstractCmdLineClient().run(
                 (String[])MapUtils.getObject(context.getArguments(),
@@ -33,9 +31,7 @@ public abstract class AbstractLauncher implements IApplication {
      */
     protected abstract AbstractCmdlineClient getAbstractCmdLineClient();
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void stop() {
         // nothing yet
     }

@@ -235,7 +235,7 @@ public abstract class AUTServer {
     }
 
     /**
-     * @return The mapping listern given to the constructor.
+     * @return The mapping listener given to the constructor.
      */
     protected AUTEventListener getMappingListener() {
         return m_mappingListener;

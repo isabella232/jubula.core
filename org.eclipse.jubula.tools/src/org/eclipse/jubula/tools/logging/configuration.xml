@@ -8,9 +8,9 @@
 		</encoder>
 	</appender>
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-       <file>${user.home}/.jubula/logs/client.log</file>
+       <file>${user.home}/.jubula/logs/${CONTEXT_NAME}.log</file>
        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-           <fileNamePattern>${user.home}/.jubula/logs/archive/client.%i.log.zip</fileNamePattern>
+           <fileNamePattern>${user.home}/.jubula/logs/archive/${CONTEXT_NAME}.%i.log.zip</fileNamePattern>
            <minIndex>1</minIndex>
            <maxIndex>3</maxIndex>
        </rollingPolicy>

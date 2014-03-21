@@ -10,71 +10,31 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.autrun;
 
-import java.io.InputStream;
-
+import org.eclipse.jubula.tools.logging.Configurator;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.slf4j.ILoggerFactory;
-import org.slf4j.LoggerFactory;
-
-import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.joran.JoranConfigurator;
-import ch.qos.logback.core.joran.spi.JoranException;
 
 /**
- * 
  * @author BREDEX GmbH
  * @created Sept 07, 2011
  */
 public class Activator implements BundleActivator {
-    /**
-     * logback configuration file
-     */
-    private static final String LOGBACK_CONFIG_XML = "logback.xml";  //$NON-NLS-1$
     /** the bundle context */
     private static BundleContext context;
 
-    /**
-     * 
-     * @return the bundle context.
-     */
+    /** @return the bundle context. */
     static BundleContext getContext() {
         return context;
     }
 
-    /**
-     *
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void start(BundleContext bundleContext) throws Exception {
         Activator.context = bundleContext;
-        // initialize the logging facility
-        ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
-        if (loggerFactory instanceof LoggerContext) {
-            LoggerContext lc = (LoggerContext)loggerFactory;
-            try {
-                JoranConfigurator configurator = new JoranConfigurator();
-                configurator.setContext(lc);
-                // the context was probably already configured by default
-                // configuration rules
-                lc.reset();
-                InputStream is = 
-                        context.getBundle().getResource(LOGBACK_CONFIG_XML)
-                            .openStream();
-                configurator.doConfigure(is);
-            } catch (JoranException je) {
-                // no logging if logger fails :-(
-            }
-        }
-
+        Configurator.loadLogbackConfiguration("aut_run"); //$NON-NLS-1$
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void stop(BundleContext bundleContext) throws Exception {
         Activator.context = null;
     }
-
 }
