@@ -64,7 +64,7 @@ public class MouseMovementStrategy {
             return new Point [] {new Point(to.x - 1, to.y - 1), to};
         }
         
-        List path = new ArrayList();
+        List<Point> path = new ArrayList<Point>();
         int [] xCoords = getMovementPath(from.x, to.x);
         int [] yCoords = getMovementPath(from.y, to.y);
         if (firstHorizontal) {
