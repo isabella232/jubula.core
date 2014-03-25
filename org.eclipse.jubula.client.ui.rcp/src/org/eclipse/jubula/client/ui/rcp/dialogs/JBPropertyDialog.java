@@ -14,6 +14,7 @@ import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
+import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Shell;
@@ -63,11 +64,11 @@ public class JBPropertyDialog extends PropertyDialog {
      * checks changes in started aut
      */
     private void checkStartedAUT() {
-        if (m_startedAutChanged) {
+        IAUTMainPO connectedAut = TestExecution.getInstance().getConnectedAut();
+        if (m_startedAutChanged && connectedAut != null) {
             ErrorHandlingUtil.createMessageDialog(
                 MessageIDs.I_STARTED_AUT_CHANGED, 
-                new Object[]{TestExecution.getInstance().getConnectedAut()
-                    .getName()}, null);
+                new Object[]{connectedAut.getName()}, null);
         }
     }
 }
