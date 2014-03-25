@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
@@ -33,6 +34,7 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.JavaFXComponentAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.LabeledAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ListViewAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.MenuBarAdapter;
+import org.eclipse.jubula.rc.javafx.tester.adapter.TabPaneAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TableAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TextAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TextComponentAdapter;
@@ -59,7 +61,7 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
         ButtonBase.class, MenuItem.class, MenuBar.class, Label.class,
         TextInputControl.class, TreeView.class, TableView.class,
         ContextMenu.class, ImageView.class, Text.class, TitledPane.class,
-        ListView.class, ComboBox.class};
+        ListView.class, ComboBox.class, TabPane.class};
 
     @Override
     public Class[] getSupportedClasses() {
@@ -103,6 +105,8 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
             } else if (objectToAdapt instanceof ComboBox) {
                 returnvalue = new ComboBoxAdapter<ComboBox>(
                         (ComboBox) objectToAdapt);
+            } else if (objectToAdapt instanceof TabPane) {
+                returnvalue = new TabPaneAdapter((TabPane) objectToAdapt);
             }
         }
         return returnvalue;

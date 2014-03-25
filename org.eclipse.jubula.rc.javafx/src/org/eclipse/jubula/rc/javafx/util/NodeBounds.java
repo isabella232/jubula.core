@@ -10,9 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.util;
 
+import java.awt.Rectangle;
+
 import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+
+import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 
 /**
  * Helperclass for checking node bounds
@@ -52,4 +57,51 @@ public class NodeBounds {
         return box.contains(point);
     }
 
+    /**
+     * Must be called from FX Thread.
+     * 
+     * @param node The component for which to get the bounds.
+     * @return the absolute (screen) bounds of the given component.
+     * 
+     * @throws NullPointerException if <code>node</code> is not in a 
+     *                              {@link Window}.
+     * @throws IllegalStateException if not called from the FX Thread. 
+     */
+    public static Rectangle getAbsoluteBounds(Node node) 
+        throws NullPointerException, IllegalStateException {
+        
+        EventThreadQueuerJavaFXImpl.checkEventThread();
+
+        Bounds bounds = node.localToScreen(node.getBoundsInLocal());
+        return new Rectangle(
+                Rounding.round(bounds.getMinX()), 
+                Rounding.round(bounds.getMinY()), 
+                Rounding.round(bounds.getWidth()), 
+                Rounding.round(bounds.getHeight()));
+    }
+    
+    /**
+     * Must be called from FX Thread.
+     * 
+     * @param node The component for which to get the bounds.
+     * @param relativeTo The component to use as a base location.
+     * @return the bounds of <code>node</code>, relative to the location of 
+     *         <code>relativeTo</code>.
+     *         
+     * @throws NullPointerException if <code>node</code> or 
+     *                              <code>relativeTo</code> is not in a 
+     *                              {@link Window}.
+     * @throws IllegalStateException if not called from the FX Thread. 
+     */
+    public static Rectangle getRelativeBounds(Node node, Node relativeTo) 
+        throws NullPointerException, IllegalStateException {
+        
+        EventThreadQueuerJavaFXImpl.checkEventThread();
+        
+        Rectangle bounds = getAbsoluteBounds(node);
+        Rectangle otherAbsoluteBounds = getAbsoluteBounds(relativeTo);
+        bounds.translate(-otherAbsoluteBounds.x, -otherAbsoluteBounds.y);
+        
+        return bounds;
+    }
 }
