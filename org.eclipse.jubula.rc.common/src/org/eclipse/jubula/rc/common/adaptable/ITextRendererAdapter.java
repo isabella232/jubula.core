@@ -16,7 +16,8 @@ package org.eclipse.jubula.rc.common.adaptable;
  */
 public interface ITextRendererAdapter {
     /**
-     * @return Return the shown / rendered text of a renderer.
+     * @return Return the shown / rendered text of a renderer. May also return
+     *         <code>null</code> which will be treated as an empty String.
      */
     public String getText();
 }

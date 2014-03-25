@@ -37,6 +37,7 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.swing.driver.KeyCodeConverter;
 import org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
@@ -207,7 +208,7 @@ public class TesterUtil {
      * @throws StepExecutionException
      *             If the renderer component is not of type <code>JLabel</code>,
      *             <code>JToggleButton</code>, <code>AbstractButton</code>,
-     *             <code>JTextComponent</code> or supports one of the fallback 
+     *             <code>JTextComponent</code> or supports one of the fallback
      *             methods
      */
     public static String getRenderedText(Component renderer)
@@ -216,10 +217,7 @@ public class TesterUtil {
         if (renderedText != null) {
             return renderedText;
         }
-        throw new StepExecutionException(
-            "Renderer not supported: " + renderer.getClass(), //$NON-NLS-1$
-            EventFactory.createActionError(
-                    TestErrorEvent.RENDERER_NOT_SUPPORTED));
+        return StringConstants.EMPTY;
     }
     
     /**
@@ -228,7 +226,8 @@ public class TesterUtil {
      * @return The string that the renderer displays or <code>null</code> if it
      *         could not be resolved.
      */
-    private static String resolveRenderedText(Component renderer) {
+    private static String resolveRenderedText(Component renderer) 
+        throws StepExecutionException {
         if (renderer instanceof JLabel) {
             return ((JLabel)renderer).getText();
         } else if (renderer instanceof JToggleButton) {
@@ -251,13 +250,28 @@ public class TesterUtil {
                 RENDERER_FALLBACK_TEXT_GETTER_METHOD_1,
                 RENDERER_FALLBACK_TEXT_GETTER_METHOD_2 };
             for (int i = 0; i < methodNames.length; i++) {
-                String text = getTextFromComponent(renderer, methodNames[i]);
-                if (text != null) {
+                String text;
+                try {
+                    text = getTextFromComponent(
+                        renderer, methodNames[i]);
                     return text;
+                } catch (SecurityException e) {
+                    // ignore - continue with next fall back approach
+                } catch (IllegalArgumentException e) {
+                    // ignore - continue with next fall back approach
+                } catch (NoSuchMethodException e) {
+                    // ignore - continue with next fall back approach
+                } catch (IllegalAccessException e) {
+                    // ignore - continue with next fall back approach
+                } catch (InvocationTargetException e) {
+                    // ignore - continue with next fall back approach
                 }
             }
         }
-        return null;
+        throw new StepExecutionException(
+            "Renderer not supported: " + renderer.getClass(), //$NON-NLS-1$
+            EventFactory.createActionError(
+                    TestErrorEvent.RENDERER_NOT_SUPPORTED));
     }
     
     /**
@@ -265,45 +279,39 @@ public class TesterUtil {
      *            the object to invoke the method for
      * @param getterName
      *            the name of the getter Method for string retrieval
-     * @return the return value of the given method name or <code>null</code> if
-     *         something went wrong during method invocation
+     * @return the return value of the given method name
+     * @throws NoSuchMethodException
+     *             may arise during reflection
+     * @throws SecurityException
+     *             may arise during reflection
+     * @throws InvocationTargetException
+     *             may arise during reflection
+     * @throws IllegalAccessException
+     *             may arise during reflection
+     * @throws IllegalArgumentException
+     *             may arise during reflection
      */
-    private static String getTextFromComponent(Object obj, String getterName) {
-        String text = null;
+    private static String getTextFromComponent(Object obj, String getterName)
+        throws SecurityException, NoSuchMethodException,
+        IllegalArgumentException, IllegalAccessException,
+        InvocationTargetException {
+        Method getter = null;
+        Class objClass = obj.getClass();
         try {
-            Method getter = null;
-            Class objClass = obj.getClass();
-            try {
-                getter = objClass.getDeclaredMethod(getterName, null);
-            } catch (NoSuchMethodException e) {
-                // ignore
-            } catch (SecurityException e) {
-                // ignore
-            }
-            if (getter == null) {
-                try {
-                    getter = objClass.getMethod(getterName, null);
-                } catch (NoSuchMethodException e) {
-                    return text;
-                } catch (SecurityException e) {
-                    return text;
-                }
-            }
-            getter.setAccessible(true);
-            Object returnValue = getter.invoke(obj, null);
-            if (returnValue instanceof String) {
-                text = (String) returnValue;
-            }
-            return text;
+            getter = objClass.getDeclaredMethod(getterName, null);
+        } catch (NoSuchMethodException e) {
+            // ignore
         } catch (SecurityException e) {
-            return text;
-        } catch (IllegalArgumentException e) {
-            return text;
-        } catch (IllegalAccessException e) {
-            return text;
-        } catch (InvocationTargetException e) {
-            return text;
+            // ignore
         }
+        if (getter == null) {
+            getter = objClass.getMethod(getterName, null);
+        }
+        getter.setAccessible(true);
+        if (String.class == getter.getReturnType()) {
+            return (String) getter.invoke(obj, null);
+        }
+        throw new NoSuchMethodException();
     }
     
     /**
@@ -328,7 +336,7 @@ public class TesterUtil {
 
     /**
      * Low light the given component, called during object mapping
-     * @param component the component to remove the 'hight light'
+     * @param component the component to remove the 'highlight'
      */
     public static void lowLight(Component component) {
         try {
@@ -343,5 +351,4 @@ public class TesterUtil {
             log.error(bsee);
         }
     }
-    
 }
