@@ -29,6 +29,7 @@ import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
+import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.javafx.components.AUTJavaFXHierarchy;
@@ -42,7 +43,6 @@ import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
-import org.eclipse.jubula.tools.xml.businessmodell.ComponentClass;
 
 /**
  * This class is responsible for handling the components of the AUT. <br>
@@ -144,14 +144,16 @@ public class ComponentHandler implements ListChangeListener<Stage>,
             if (n.getScene() == null) {
                 continue;
             }
-            Set supportetTypes = AUTServerConfiguration.getInstance().
-                    getSupportedTypes();
-            for (Object object : supportetTypes) {
-                if (((ComponentClass)object).getName().
-                        equals(n.getClass().getName()) 
-                        && NodeBounds.checkIfContains(pos, n)) {
-                    matches.add(n);
-                }
+            try {
+                AUTServerConfiguration.getInstance()
+                    .getImplementationClass(n.getClass());
+            } catch (UnsupportedComponentException 
+                    | IllegalArgumentException e) {
+                        
+                continue;
+            }
+            if (NodeBounds.checkIfContains(pos, n)) {
+                matches.add(n);
             }
         }
         
