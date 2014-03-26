@@ -26,8 +26,8 @@ import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.rc.javafx.util.TraverseHelper;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
@@ -95,8 +95,10 @@ public class ListViewAdapter<T extends ListView> extends
                     final T listView = getRealComponent();
                     listView.scrollTo(index.intValue());
                     listView.layout();
-                    List<? extends ListCell> lCells = ComponentHandler
-                        .getAssignableFrom(ListCell.class);
+                    TraverseHelper<ListCell> helper = 
+                            new TraverseHelper<ListCell>();
+                    List<ListCell> lCells = 
+                            helper.getInstancesOf(listView, ListCell.class);
                     for (ListCell cell : lCells) {
                         if (cell.getIndex() == index.intValue()
                                 && cell.getListView() == listView) {
@@ -150,8 +152,10 @@ public class ListViewAdapter<T extends ListView> extends
                         int index = i.intValue();
                         listView.scrollTo(index);
                         listView.layout();
-                        List<? extends ListCell> lCells = ComponentHandler
-                            .getAssignableFrom(ListCell.class);
+                        TraverseHelper<ListCell> helper = 
+                                new TraverseHelper<ListCell>();
+                        List<ListCell> lCells = 
+                                helper.getInstancesOf(listView, ListCell.class);
                         for (ListCell cell : lCells) {
                             if (cell.getIndex() == index
                                 && cell.getListView() == listView) {
@@ -178,8 +182,10 @@ public class ListViewAdapter<T extends ListView> extends
                     for (int i = 0; i < itemCount; i++) {
                         listView.scrollTo(i);
                         listView.layout();
-                        List<? extends ListCell> lCells = ComponentHandler
-                            .getAssignableFrom(ListCell.class);
+                        TraverseHelper<ListCell> helper = 
+                                new TraverseHelper<ListCell>();
+                        List<ListCell> lCells = 
+                                helper.getInstancesOf(listView, ListCell.class);
                         for (ListCell cell : lCells) {
                             if (cell.getIndex() == i
                                 && cell.getListView() == listView) {

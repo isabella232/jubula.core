@@ -10,13 +10,19 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 
+import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.util.TraverseHelper;
+
+import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
 
 /**
  * ComboBox Adapter
@@ -40,20 +46,23 @@ public class ComboBoxAdapter<T extends ComboBox> extends
 
     @Override
     public String getText() {
-        String text = EventThreadQueuerJavaFXImpl.invokeAndWait(
+        return EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getText", new Callable<String>() { //$NON-NLS-1$
 
                     @Override
                     public String call() throws Exception {
-                        return getRealComponent().getValue().toString();
+                        Object value = getRealComponent().getValue();
+                        if (value == null) {
+                            return null;
+                        }
+                        return value.toString();
                     }
                 });
-        return text;
     }
 
     @Override
     public boolean isEditable() {
-        boolean editable = EventThreadQueuerJavaFXImpl.invokeAndWait(
+        return EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "isEditable", new Callable<Boolean>() { //$NON-NLS-1$
 
                     @Override
@@ -61,25 +70,37 @@ public class ComboBoxAdapter<T extends ComboBox> extends
                         return getRealComponent().isEditable();
                     }
                 });
-        return editable;
     }
 
     @Override
     public void selectAll() {
-        // FIXME Auto-generated method stub
-        
+        StepExecutionException.throwUnsupportedAction();
     }
 
     @Override
     public int getSelectedIndex() {
-        // FIXME Auto-generated method stub
-        return 0;
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getSelectedIndex",  //$NON-NLS-1$
+                new Callable<Integer>() {
+                    @Override
+                    public Integer call() throws Exception {
+                        return getRealComponent().getSelectionModel()
+                                .getSelectedIndex();
+                    }
+                });
     }
 
     @Override
-    public void select(int index) {
-        // FIXME Auto-generated method stub
-        
+    public void select(final int index) {
+        final ListView lv = getComboBoxList();
+        T comboBox = getRealComponent();
+        setOpenedStatus(comboBox, true);
+        try {
+            ListViewAdapter listViewAdapter = new ListViewAdapter<ListView>(lv);
+            listViewAdapter.clickOnIndex(index, ClickOptions.create().
+                    setClickCount(1).setMouseButton(1));
+        } finally {
+            setOpenedStatus(comboBox, false);
+        }
     }
 
     @Override
@@ -90,8 +111,54 @@ public class ComboBoxAdapter<T extends ComboBox> extends
 
     @Override
     public String[] getValues() {
-        // FIXME Auto-generated method stub
-        return null;
+        final ListView lv = getComboBoxList();
+        T comboBox = getRealComponent();
+        setOpenedStatus(comboBox, true);
+        String[] values = new String[0];
+        try {
+            ListViewAdapter listViewAdapter = new ListViewAdapter<ListView>(lv);
+            values = listViewAdapter.getValues();
+        } finally {
+            setOpenedStatus(comboBox, false);
+        }
+        return values;
     }
 
+    /**
+     * Returns the list with the items of the combo box.
+     * @return the list
+     */
+    private ListView getComboBoxList() {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getValues", //$NON-NLS-1$
+                new Callable<ListView>() {
+                    /** {@inheritDoc} **/
+                    public ListView call() throws Exception {
+                        T comboBox = getRealComponent();
+                        TraverseHelper<ListView> helper = 
+                                new TraverseHelper<ListView>();
+                        List<ListView> listViewList = helper.getInstancesOf(
+                                comboBox, ListView.class);
+                        if (listViewList.size() == 1) {
+                            return listViewList.get(0);
+                        }
+                        // If there is not exactly one list inside the combo box,
+                        // then use internal api
+                        ComboBoxListViewSkin comboBoxListViewSkin = 
+                                (ComboBoxListViewSkin) comboBox.getSkin();
+                        return (ListView)comboBoxListViewSkin.getPopupContent();
+                    }
+                });
+    }
+
+    /**
+     * Opens or closes the combo box list.
+     * @param comboBox the combo box
+     * @param openStatus whether the combo box should be opened or not
+     */
+    private void setOpenedStatus(T comboBox, boolean openStatus) {
+        if (comboBox.isShowing() != openStatus) {
+            getRobot().click(comboBox, null,
+                    ClickOptions.create().setClickCount(1).setMouseButton(1));
+        }
+    }
 }
