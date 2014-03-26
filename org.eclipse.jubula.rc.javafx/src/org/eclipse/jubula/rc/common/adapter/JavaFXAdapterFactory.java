@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.common.adapter;
 
 import javafx.scene.control.ButtonBase;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -28,6 +29,7 @@ import javafx.scene.text.Text;
 import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ButtonBaseAdapter;
+import org.eclipse.jubula.rc.javafx.tester.adapter.ChoiceBoxAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ComboBoxAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ContextMenuAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.JavaFXComponentAdapter;
@@ -61,7 +63,7 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
         ButtonBase.class, MenuItem.class, MenuBar.class, Label.class,
         TextInputControl.class, TreeView.class, TableView.class,
         ContextMenu.class, ImageView.class, Text.class, TitledPane.class,
-        ListView.class, ComboBox.class, TabPane.class};
+        ListView.class, ComboBox.class, TabPane.class, ChoiceBox.class};
 
     @Override
     public Class[] getSupportedClasses() {
@@ -105,6 +107,9 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
             } else if (objectToAdapt instanceof ComboBox) {
                 returnvalue = new ComboBoxAdapter<ComboBox>(
                         (ComboBox) objectToAdapt);
+            } else if (objectToAdapt instanceof ChoiceBox) {
+                returnvalue = new ChoiceBoxAdapter(
+                        (ChoiceBox) objectToAdapt);
             } else if (objectToAdapt instanceof TabPane) {
                 returnvalue = new TabPaneAdapter((TabPane) objectToAdapt);
             }
