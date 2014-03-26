@@ -22,7 +22,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -142,6 +141,9 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         List<? extends Node> comps = getAssignableFrom(Node.class);
         List<Node> matches = new ArrayList<Node>();
         for (Node n : comps) {
+            if (n.getScene() == null) {
+                continue;
+            }
             Set supportetTypes = AUTServerConfiguration.getInstance().
                     getSupportedTypes();
             for (Object object : supportetTypes) {
@@ -161,41 +163,7 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         }
 
         // multiple matches, try filtering
-        matches = filterMatches(matches);
-        if (matches.size() ==  1) {
-            // only one match left
-            return matches.get(0);
-        }
-        
-        // still multiple matches, guess
-        return guessBestPick(matches);
-    }
-
-    /**
-     * Guesses which Node might be topmost in a list
-     * @param matches the list
-     * @return the guess for the topmost node
-     */
-    private static Node guessBestPick(List<Node> matches) {
-        if (matches.size() == 0) {
-            return null;
-        }
-        Parent parent = matches.get(0).getParent();
-        // in a Pane the last child has highest z-coordinate
-        if (parent instanceof Pane) {
-            ObservableList<Node> children = parent.getChildrenUnmodifiable();
-            ArrayList<Node> revertedChildren = new ArrayList<Node>(children);
-            Collections.reverse(revertedChildren);
-            // Start by checking if the last child of the StackPane is among the matches
-            for (Node child : revertedChildren) {
-                if (matches.contains(child)) {
-                    return child;
-                }
-            }
-        }
-        // FALLBACK: Guess randomly (So every match has a chance to get picked at some try)
-        int randomNumber = (int)(matches.size() * Math.random());
-        return matches.get(randomNumber);
+        return filterMatches(matches);
     }
 
     /**
@@ -203,28 +171,59 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      * @param matches the matches
      * @return the filtered list
      */
-    private static List<Node> filterMatches(List<Node> matches) {
-        List<Node> filteredMatches = new ArrayList<Node>();
+    private static Node filterMatches(List<Node> matches) {
         
-    checkMatches:
+        Node youngesCommonAncestor = findFirstCommonAncestor(matches);
+        /* Always of type Parent */
+        return topMostDescendant((Parent)youngesCommonAncestor, matches);
+    }
+    
+    /**
+     * Returns all instances of the type Node from a given list which are 
+     * descendants of a given parent node
+     * @param parent the parent
+     * @param matches list of possible descendants
+     * @return all descendants of the parent which also occur in the list
+     */
+    private static List<Node> filterDescendants(Parent parent, 
+            List<Node> matches) {
+        List<Node> descendants = new ArrayList<Node>();
         for (Node match : matches) {
-            if (match instanceof Parent) {
-                for (Node otherMatch : matches) {
-                    if (!otherMatch.equals(match)) {
-                        if (isDescendant(otherMatch, match)) {
-                            // If match has another match as a descendant then it
-                            // should not be considered.
-                            // i.e. some kind of mappable container containing a
-                            // mappable component gets filtered out here.
-                            continue checkMatches;
-                        }
-                    }
-                }
+            if (isDescendant(match, parent)) {
+                descendants.add(match);
             }
-            // No descendants found, so the match can still be considered.
-            filteredMatches.add(match);
         }
-        return filteredMatches;
+        return descendants;
+    }
+    
+    /**
+     * Returns the descendant of a parent node from a given list which has 
+     * the highest "z-coordinate".
+     * @param parent the parent
+     * @param matches the list of descendants
+     * @return the top-most descendant from the list
+     */
+    private static Node topMostDescendant(Parent parent, List<Node> matches) {
+        ObservableList<Node> children = parent.getChildrenUnmodifiable();
+        ArrayList<Node> revertedChildren = new ArrayList<Node>(children);
+        Collections.reverse(revertedChildren);
+        // Start by checking if the last child of the StackPane is among the matches
+        for (Node child : revertedChildren) {
+            if (child instanceof Parent) {
+                List<Node> remainingMatches = 
+                        filterDescendants((Parent)child, matches);
+                if (remainingMatches.size() == 1) {
+                    return remainingMatches.get(0);
+                } else if (remainingMatches.size() > 1) {
+                    return topMostDescendant(
+                            ((Parent) child), remainingMatches);
+                }
+            } 
+            if (matches.contains(child)) {
+                return child;
+            }
+        }
+        return null;
     }
 
     /**
@@ -234,22 +233,47 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      * @return whether the candidate is a descendant of the other node
      */
     private static boolean isDescendant(Node candidate, Node node) {
-        if (node instanceof Parent) {
-            List<Node> children = ((Parent) node).getChildrenUnmodifiable();
-            // Check if the candidate is a direct child of the node
-            if (children.contains(candidate)) {
-                return true;
-            }
-            // Check all of the node's children
-            for (Node child : children) {
-                if (isDescendant (candidate, child)) {
-                    return true;
-                }
-            }
+        if (candidate == null) {
+            return false;
+        } else if (candidate == node) {
+            return true;
         }
-        // The candidate is no descendant of the node
-        return false;
+        return isDescendant(candidate.getParent(), node);
     }
+    
+    /**
+     * Finds the first common ancestor of a list of nodes
+     * @param nodelist the list
+     * @return the first common ancestor
+     */
+    private static Node findFirstCommonAncestor(List<Node> nodelist) {
+        if (nodelist.size() <= 0) {
+            return null;
+        } else if (nodelist.size() == 1) {
+            return nodelist.get(0);
+        } else {
+            return findFirstCommonAncestor(nodelist.get(0), 
+                    findFirstCommonAncestor(nodelist.subList(
+                            1, nodelist.size())));
+        }
+    }
+    
+    /**
+     * Finds the first common ancestor of two nodes
+     * @param node1 first node
+     * @param node2 second node
+     * @return their first common ancestor
+     */
+    private static Node findFirstCommonAncestor(Node node1, Node node2) {
+        if (node1 == null || node2 == null) {
+            return null;
+        }
+        if (isDescendant(node1, node2)) {
+            return node2;
+        }
+        return findFirstCommonAncestor(node1, node2.getParent());
+    }
+
 
     /**
      * Investigates the given <code>component</code> for an identifier. It must

@@ -32,6 +32,8 @@ public class NodeBounds {
     }
 
     /**
+     * Must be called from FX Thread.
+     * 
      * Checks if the given point with coordinates relative to the scene is in
      * the given Node.
      *
@@ -41,7 +43,15 @@ public class NodeBounds {
      *            the Node
      * @return true if the Point is in the Node, false if not.
      */
-    public static boolean checkIfContains(Point2D point, Node n) {
+    public static boolean checkIfContains(Point2D point, Node n) 
+        throws IllegalStateException {
+        
+        EventThreadQueuerJavaFXImpl.checkEventThread();
+        
+        if (n.getScene() == null) {
+            return false;
+        }
+        
         Point2D nodePos = n.localToScreen(0, 0);
 
         // A null value here means that the Node is not in a Window, so its 
