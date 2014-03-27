@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.adapter;
 
+import javafx.scene.control.Accordion;
 import javafx.scene.control.ButtonBase;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
@@ -28,6 +29,7 @@ import javafx.scene.text.Text;
 
 import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
+import org.eclipse.jubula.rc.javafx.tester.adapter.AccordionAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ButtonBaseAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ChoiceBoxAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ComboBoxAdapter;
@@ -63,7 +65,8 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
         ButtonBase.class, MenuItem.class, MenuBar.class, Label.class,
         TextInputControl.class, TreeView.class, TableView.class,
         ContextMenu.class, ImageView.class, Text.class, TitledPane.class,
-        ListView.class, ComboBox.class, TabPane.class, ChoiceBox.class};
+        ListView.class, ComboBox.class, TabPane.class, ChoiceBox.class, 
+        Accordion.class};
 
     @Override
     public Class[] getSupportedClasses() {
@@ -112,6 +115,8 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
                         (ChoiceBox) objectToAdapt);
             } else if (objectToAdapt instanceof TabPane) {
                 returnvalue = new TabPaneAdapter((TabPane) objectToAdapt);
+            } else if (objectToAdapt instanceof Accordion) {
+                returnvalue = new AccordionAdapter((Accordion) objectToAdapt);
             }
         }
         return returnvalue;
