@@ -19,6 +19,7 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Stack;
 import java.util.concurrent.Callable;
 
 import javafx.event.Event;
@@ -26,10 +27,12 @@ import javafx.event.EventTarget;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
@@ -129,31 +132,94 @@ public class RobotJavaFXImpl implements IRobot {
          * Scrolls the component to visible.
          *
          * @param component
-         *            The component.
+         *            the component to scroll to
          */
-        private void scrollObjectToVisible(Node component) {
+        private void scrollObjectToVisible(final Node component) {
+            // scroll all parent scroll panes
+            Stack<ScrollPane> panes2Scroll = new Stack<ScrollPane>();
+            Parent p = component.getParent();
+            while (p != null) {
+                if (p instanceof ScrollPane) {
+                    panes2Scroll.push((ScrollPane) p);
+                }
+                p = p.getParent();
+            }
+            
+            // scroll outer panes before inner 
+            for (int i = 0; i < panes2Scroll.size() - 1; i++) {
+                ScrollPane nextPane = panes2Scroll.pop();
+                scrollToNode(nextPane, panes2Scroll.peek());
+            }
+            
             Parent parent = component.getParent();
             Node scrollNode = component;
-            for (; (parent != null) && !(parent instanceof ListView)
+            for (; (parent != null) 
+                    && !(parent instanceof ListView)
                     && !(parent instanceof TableView)
-                    && !(parent instanceof TreeView); parent = parent
-                    .getParent()) {
+                    && !(parent instanceof TreeView)
+                    && !(parent instanceof ScrollPane); 
+                parent = parent.getParent()) {
                 if (parent instanceof TreeCell) {
                     scrollNode = parent;
                 }
             }
-            if ((parent != null) && (parent instanceof ListView)) {
-
+            if (parent instanceof ListView) {
                 ((ListView) parent).scrollTo(scrollNode);
-
-            } else if (parent != null && (parent instanceof TableView)) {
+            } else if (parent instanceof TableView) {
                 ((TableView) parent).scrollTo(scrollNode);
-            } else if (parent != null && (parent instanceof TreeView)) {
+            } else if (parent instanceof TreeView) {
                 if (scrollNode instanceof TreeCell) {
-                    ((TreeView) parent).scrollTo(((TreeView) parent)
-                            .getRow(((TreeCell) scrollNode).getTreeItem()));
+                    final TreeView treeView = (TreeView) parent;
+                    treeView.scrollTo(treeView.getRow(
+                        ((TreeCell) scrollNode).getTreeItem()));
                 }
+            } else if (parent instanceof ScrollPane) {
+                scrollToNode((ScrollPane) parent, scrollNode);
+            } 
+        }
+
+        /**
+         * @param sPane
+         *            the scroll pane to scroll within
+         * @param scrollNode
+         *            the node to scroll to
+         */
+        private void scrollToNode(final ScrollPane sPane, 
+            final Node scrollNode) {
+            final Node sPaneContent = sPane.getContent();
+
+            if (scrollNode == sPaneContent) {
+                return;
             }
+            
+            Bounds nodeInScrollPaneContent = scrollNode.getBoundsInLocal();
+            // translate local node bounds to ScrollPane content node relative bounds
+            Node currentNode = scrollNode;
+            do {
+                nodeInScrollPaneContent = currentNode
+                    .localToParent(nodeInScrollPaneContent);
+                currentNode = currentNode.getParent();
+            } while (currentNode != sPaneContent);
+
+            // determine left upper corner of node to scroll to
+            final double nodeX = nodeInScrollPaneContent.getMinX();
+            final double nodeY = nodeInScrollPaneContent.getMinY();
+
+            // determine scrolling scaling factor - defaults to 1.0
+            final double scaleH = sPane.getHmax() - sPane.getHmin();
+            final double scaleV = sPane.getVmax() - sPane.getVmin();
+
+            // determine the actually scrollable distance in x and y direction
+            final Bounds viewPortBounds = sPane.getViewportBounds();
+            final Bounds contentBounds = sPaneContent.getBoundsInLocal();
+            final double actuallyScrollableHDistance = 
+                contentBounds.getWidth() - viewPortBounds.getWidth();
+            final double actuallyScrollableVDistance = 
+                contentBounds.getHeight() - viewPortBounds.getHeight();
+            
+            // scroll ScrollPane programmatically
+            sPane.setHvalue((nodeX / actuallyScrollableHDistance) * scaleH);
+            sPane.setVvalue((nodeY / actuallyScrollableVDistance) * scaleV);
         }
 
         /**
@@ -219,8 +285,9 @@ public class RobotJavaFXImpl implements IRobot {
         double x = pos.getX();
         double y = pos.getY();
         if (offset == null) {
-            x += comp.getBoundsInParent().getWidth() / 2;
-            y += comp.getBoundsInParent().getHeight() / 2;
+            final Bounds boundsInParent = comp.getBoundsInParent();
+            x += boundsInParent.getWidth() / 2;
+            y += boundsInParent.getHeight() / 2;
         } else {
             x += offset.x;
             y += offset.y;
@@ -498,8 +565,9 @@ public class RobotJavaFXImpl implements IRobot {
 
             // This is not multi display compatible
             Screen screen = Screen.getPrimary();
-            int displayWidth = Rounding.round(screen.getBounds().getWidth());
-            int displayHeight = Rounding.round(screen.getBounds().getHeight());
+            final Rectangle2D screenBounds = screen.getBounds();
+            int displayWidth = Rounding.round(screenBounds.getWidth());
+            int displayHeight = Rounding.round(screenBounds.getHeight());
             if (s.isFullScreen()) {
                 bounds.width = Rounding.round(displayWidth);
                 bounds.height = Rounding.round(displayHeight);
