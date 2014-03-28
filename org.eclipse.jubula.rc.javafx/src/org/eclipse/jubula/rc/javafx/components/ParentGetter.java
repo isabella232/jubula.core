@@ -14,7 +14,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 
 /**
@@ -48,8 +47,6 @@ public class ParentGetter {
             result = getFrom((Menu) o);
         } else if (o instanceof Node) {
             result = getFrom((Node) o);
-        } else if (o instanceof Stage) {
-            result = getFrom((Stage) o);
         } else if (o instanceof Scene) {
             result = getFrom((Scene) o);
         } else if (o instanceof ContextMenu) {
@@ -75,17 +72,6 @@ public class ParentGetter {
      */
     private static Window getFrom(Scene scene) {
         return scene.getWindow();
-    }
-
-    /**
-     * A stage can optionally have an owner Window.
-     *
-     * @param stage
-     *            the Stage
-     * @return the owner Window or null
-     */
-    private static Window getFrom(Stage stage) {
-        return stage.getOwner();
     }
 
     /**

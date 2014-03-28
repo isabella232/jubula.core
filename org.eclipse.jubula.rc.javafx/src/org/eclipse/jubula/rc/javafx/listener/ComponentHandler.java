@@ -173,11 +173,35 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      */
     private static Node filterMatches(List<Node> matches) {
         
-        Node youngesCommonAncestor = findFirstCommonAncestor(matches);
+        List<Node> filteredMatches = filterOutUnfocussedNodes(matches);
+        if (filteredMatches.size() == 1) {
+            return filteredMatches.get(0);
+        }
+        
+        Node firstCommonAncestor = findFirstCommonAncestor(filteredMatches);
         /* Always of type Parent */
-        return topMostDescendant((Parent)youngesCommonAncestor, matches);
+        if (firstCommonAncestor != null) {
+            return topMostDescendant(
+                    (Parent)firstCommonAncestor, filteredMatches);
+        }
+        return null;
     }
     
+    /**
+     * Filters out nodes from unfocused windows from a given list
+     * @param matches the list
+     * @return list containing only the nodes of focused window
+     */
+    private static List<Node> filterOutUnfocussedNodes(List<Node> matches) {
+        List<Node> filteredMatches = new ArrayList<Node>();
+        for (Node match : matches) {
+            if (match.getScene().getWindow().isFocused()) {
+                filteredMatches.add(match);
+            }
+        }
+        return filteredMatches;
+    }
+
     /**
      * Returns all instances of the type Node from a given list which are 
      * descendants of a given parent node
@@ -247,7 +271,7 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      * @return the first common ancestor
      */
     private static Node findFirstCommonAncestor(List<Node> nodelist) {
-        if (nodelist.size() <= 0) {
+        if (nodelist == null || nodelist.size() <= 0) {
             return null;
         } else if (nodelist.size() == 1) {
             return nodelist.get(0);
