@@ -19,7 +19,8 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import javafx.event.Event;
@@ -136,19 +137,19 @@ public class RobotJavaFXImpl implements IRobot {
          */
         private void scrollObjectToVisible(final Node component) {
             // scroll all parent scroll panes
-            Stack<ScrollPane> panes2Scroll = new Stack<ScrollPane>();
+            List<ScrollPane> panes2Scroll = new ArrayList<ScrollPane>();
             Parent p = component.getParent();
             while (p != null) {
                 if (p instanceof ScrollPane) {
-                    panes2Scroll.push((ScrollPane) p);
+                    panes2Scroll.add((ScrollPane) p);
                 }
                 p = p.getParent();
             }
             
-            // scroll outer panes before inner 
-            for (int i = 0; i < panes2Scroll.size() - 1; i++) {
-                ScrollPane nextPane = panes2Scroll.pop();
-                scrollToNode(nextPane, panes2Scroll.peek());
+            // scroll inner panes before outer
+            for (int i = 0; i < panes2Scroll.size(); i++) {
+                ScrollPane nextPane = panes2Scroll.get(i);
+                scrollToNode(nextPane, component);
             }
             
             Parent parent = component.getParent();
