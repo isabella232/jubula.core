@@ -19,7 +19,10 @@ import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
 import java.awt.event.WindowEvent;
 import java.util.EventListener;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import org.apache.commons.lang.SystemUtils;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
@@ -32,6 +35,7 @@ import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.utils.EnvironmentUtils;
 
 
 /**
@@ -59,6 +63,25 @@ public class ComponentHandler extends BaseAWTEventListener
         AWTEvent.WINDOW_EVENT_MASK, AWTEvent.CONTAINER_EVENT_MASK, 
         AWTEvent.COMPONENT_EVENT_MASK};
 
+    /** 
+     * Name of System Property to print thread trace output when a component
+     * cannot be found. This can be used in order to track down racing 
+     * conditions in the RC.
+     * 
+     * We do not advertise this property. It may be used internally for 
+     * tracking down tricky timing issues, but there's no real other use case 
+     * for it. It may be removed at any time.
+     */
+    private static final String PROP_TRACE_COMPONENT_NOT_FOUND =
+            "org.eclipse.jubula.rc.traceComponentNotFound"; //$NON-NLS-1$
+    
+    /**
+     * Whether to print thread trace output when a component cannot be found. 
+     * This can be used in order to track down racing conditions in the RC.
+     */
+    private static final boolean TRACE_COMPONENT_NOT_FOUND =
+            Boolean.parseBoolean(EnvironmentUtils.getProcessOrSystemProperty(
+                    PROP_TRACE_COMPONENT_NOT_FOUND));
     
     /** the Container hierarchy of the AUT*/
     private static AUTSwingHierarchy autHierarchy = new AUTSwingHierarchy();
@@ -138,6 +161,7 @@ public class ComponentHandler extends BaseAWTEventListener
                     }
                 }
             }
+            logStacktrace();
             throw new ComponentNotFoundException(
                         cnme.getMessage(), MessageIDs.E_COMPONENT_NOT_FOUND);
         } catch (IllegalArgumentException iae) {
@@ -262,5 +286,37 @@ public class ComponentHandler extends BaseAWTEventListener
      */
     public static AUTSwingHierarchy getAutHierarchy() {
         return autHierarchy;
+    }
+
+    /**
+     * Pretty prints the stack traces of all currently running threads to the 
+     * log.
+     */
+    private static void logStacktrace() {
+        if (TRACE_COMPONENT_NOT_FOUND) {
+            StringBuilder builder = new StringBuilder();
+            builder.append("Logging stacktrace:" + SystemUtils.LINE_SEPARATOR); //$NON-NLS-1$
+            Thread currentThread = Thread.currentThread();
+            Map<Thread, StackTraceElement[]> stackTraces = 
+                    Thread.getAllStackTraces();
+            for (Entry<Thread, StackTraceElement[]> stackTrace 
+                    : stackTraces.entrySet()) {
+                
+                Thread thread = stackTrace.getKey();
+                
+                if (thread == currentThread) {
+                    builder.append("[current-thread] - "); //$NON-NLS-1$
+                }
+                
+                builder.append(thread.getName() + ":" + SystemUtils.LINE_SEPARATOR); //$NON-NLS-1$
+                for (StackTraceElement e : stackTrace.getValue()) {
+                    builder.append("\t" + e + SystemUtils.LINE_SEPARATOR); //$NON-NLS-1$
+                }
+                
+            }
+            
+            builder.append(SystemUtils.LINE_SEPARATOR);
+            log.warn(builder);
+        }
     }
 }
