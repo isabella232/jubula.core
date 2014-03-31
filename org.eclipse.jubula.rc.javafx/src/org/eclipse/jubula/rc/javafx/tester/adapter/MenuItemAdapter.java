@@ -156,7 +156,6 @@ public class MenuItemAdapter<M extends MenuItem>
     @Override
     public void selectMenuItem() {
         clickMenuItem();
-        getRobot().activateApplication("TITLEBAR"); //$NON-NLS-1$
     }
 
     @Override
