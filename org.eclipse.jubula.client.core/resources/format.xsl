@@ -325,11 +325,14 @@
                         <td>:</td>
                         <td><xsl:value-of select="timestamp"/></td>
                     </tr>
-					<tr>
-						<td nowrap="true">Component Name</td>
-						<td>:</td>
-						<td><xsl:value-of select="component-name"/></td>
-					</tr>
+                    <!-- May be empty e.g. for components with default mapping -->
+                    <xsl:if test="component-name != ''">
+						<tr>
+							<td nowrap="true">Component Name</td>
+							<td>:</td>
+							<td><xsl:value-of select="component-name"/></td>
+						</tr>
+					</xsl:if>
 					<tr>
 						<td>Component Type</td>
 						<td>:</td>
