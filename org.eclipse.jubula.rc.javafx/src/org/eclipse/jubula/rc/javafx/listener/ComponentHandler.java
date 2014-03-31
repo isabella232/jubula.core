@@ -85,14 +85,15 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         }
         
         for (final Stage stage : change.getAddedSubList()) {
-            stage.setOnShown(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
-                    hierarchy.createHierarchyFrom(stage);
-                    stageResizeSync.register(stage);
-                    stage.setOnShown(null);
-                }
-            });
+            stage.addEventFilter(WindowEvent.WINDOW_SHOWN,
+                    new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent event) {
+                        hierarchy.createHierarchyFrom(stage);
+                        stageResizeSync.register(stage);
+                        stage.removeEventFilter(WindowEvent.WINDOW_SHOWN, this);
+                    }
+                });
 
         }
     }
