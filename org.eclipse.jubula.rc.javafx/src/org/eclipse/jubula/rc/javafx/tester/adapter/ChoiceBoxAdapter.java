@@ -10,17 +10,22 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
+import java.awt.event.KeyEvent;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.listener.EventLock;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
@@ -120,6 +125,7 @@ public class ChoiceBoxAdapter extends JavaFXComponentAdapter<ChoiceBox>
         for (int i = 0; i < items.length; i++) {
             result[i] = items[i].getText();
         }
+        closeMenu((ContextMenu) tester.getComponent().getRealComponent());
         return result;
     }
 
@@ -160,5 +166,60 @@ public class ChoiceBoxAdapter extends JavaFXComponentAdapter<ChoiceBox>
                         return menuTester;
                     }
                 });
+    }
+    
+    /**
+     * Closes the Menu of a ChoiceBox and waits for it to be closed
+     * 
+     * @param m
+     *            the menu
+     * @return true if menu was closed successfully, false if not;
+     */
+    private boolean closeMenu(final ContextMenu m) {
+        final EventLock eventLock = new EventLock();
+        final EventHandler<Event> shownHandler = new EventHandler<Event>() {
+
+            @Override
+            public void handle(Event event) {
+                synchronized (eventLock) {
+                    eventLock.notifyAll();
+                }
+            }
+        };
+        EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "addCloseHandler", new Callable<Void>() { //$NON-NLS-1$
+
+                    @Override
+                    public Void call() throws Exception {
+                        m.addEventHandler(
+                                WindowEvent.WINDOW_HIDDEN, shownHandler);
+                        return null;
+                    }
+                });
+        boolean successful = false;
+        getRobot().keyType(null, KeyEvent.VK_ESCAPE);
+        try {
+            if (m.isShowing()) {
+                synchronized (eventLock) {
+                    eventLock
+                            .wait(TimeoutConstants.
+                                    SERVER_TIMEOUT_WAIT_FOR_POPUP);
+                }
+            }
+        } catch (InterruptedException e) {
+            // ignore
+        } finally {
+            successful = EventThreadQueuerJavaFXImpl.invokeAndWait("closeMenu", //$NON-NLS-1$
+                    new Callable<Boolean>() {
+
+                        @Override
+                        public Boolean call() throws Exception {
+                            m.removeEventHandler(
+                                    WindowEvent.WINDOW_HIDDEN, shownHandler);
+                            return !m.isShowing();
+                        }
+                    });
+        }
+        return successful;
     }
 }

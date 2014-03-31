@@ -152,7 +152,7 @@ public class MenuTester extends AbstractMenuTester {
     }
     
     /**
-     * Closes a menu and waits for it to be closed
+     * Closes a ContextMenu and waits for it to be closed
      * 
      * @param m
      *            the menu
