@@ -269,7 +269,10 @@ public class ComponentHandler extends BaseAWTEventListener
      *         registered as a <code>listenerClass</code> listener on the
      *         given <code>component</code>. Otherwise, <code>false</code>.
      */
-    private boolean hasListener(Component component, Class listenerClass) {
+    private boolean hasListener(
+            Component component, 
+            Class<? extends EventListener> listenerClass) {
+        
         EventListener[] listener = component.getListeners(listenerClass);
         int length = listener.length;
         for (int i = 0; i < length; i++) {
