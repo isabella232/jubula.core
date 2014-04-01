@@ -29,6 +29,7 @@ import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -174,9 +175,7 @@ public class RobotJavaFXImpl implements IRobot {
                     treeView.scrollTo(treeView.getRow(
                         ((TreeCell) scrollNode).getTreeItem()));
                 }
-            } else if (parent instanceof ScrollPane) {
-                scrollToNode((ScrollPane) parent, scrollNode);
-            } 
+            }
         }
 
         /**
@@ -197,9 +196,35 @@ public class RobotJavaFXImpl implements IRobot {
             // translate local node bounds to ScrollPane content node relative bounds
             Node currentNode = scrollNode;
             do {
-                nodeInScrollPaneContent = currentNode
-                    .localToParent(nodeInScrollPaneContent);
-                currentNode = currentNode.getParent();
+                Parent nextParent = currentNode.getParent();
+
+                boolean cornerCase = false;
+                if (nextParent instanceof Group) {
+                    // BEGIN: skip skins in between
+                    Parent parentLookup = nextParent.getParent();
+                    while (parentLookup != null
+                            && !(parentLookup instanceof ScrollPane)) {
+                        parentLookup = parentLookup.getParent();
+                    }
+                    // END: skip skins in between
+                    
+                    // there is a corner case if:
+                    // - a group is the direct content node of a scroll pane
+                    if (parentLookup != null) {
+                        ScrollPane potentialGroupParent =
+                                (ScrollPane) parentLookup;
+                        if (potentialGroupParent.getContent() == nextParent) {
+                            cornerCase = true;
+                        }
+                    }
+                }
+
+                if (!cornerCase) {
+                    nodeInScrollPaneContent = currentNode
+                            .localToParent(nodeInScrollPaneContent);
+                }
+                
+                currentNode = nextParent;
             } while (currentNode != sPaneContent);
 
             // determine left upper corner of node to scroll to
@@ -207,8 +232,10 @@ public class RobotJavaFXImpl implements IRobot {
             final double nodeY = nodeInScrollPaneContent.getMinY();
 
             // determine scrolling scaling factor - defaults to 1.0
-            final double scaleH = sPane.getHmax() - sPane.getHmin();
-            final double scaleV = sPane.getVmax() - sPane.getVmin();
+            double hmin = sPane.getHmin();
+            final double scaleH = sPane.getHmax() - hmin;
+            double vmin = sPane.getVmin();
+            final double scaleV = sPane.getVmax() - vmin;
 
             // determine the actually scrollable distance in x and y direction
             final Bounds viewPortBounds = sPane.getViewportBounds();
@@ -219,8 +246,10 @@ public class RobotJavaFXImpl implements IRobot {
                 contentBounds.getHeight() - viewPortBounds.getHeight();
             
             // scroll ScrollPane programmatically
-            sPane.setHvalue((nodeX / actuallyScrollableHDistance) * scaleH);
-            sPane.setVvalue((nodeY / actuallyScrollableVDistance) * scaleV);
+            sPane.setHvalue(hmin
+                    + (nodeX / actuallyScrollableHDistance) * scaleH);
+            sPane.setVvalue(vmin
+                    + (nodeY / actuallyScrollableVDistance) * scaleV);
         }
 
         /**
