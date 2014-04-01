@@ -255,7 +255,7 @@ public class TestTesterUtil {
         } catch (StepExecutionException e) {
             // An error occurring while getting the text does not mean that the
             // renderer is not supported.
-            assertFalse(MessageIDs.E_EVENT_SUPPORT.equals(e.getErrorId()));
+            assertFalse(e.getMessage(), MessageIDs.E_EVENT_SUPPORT.equals(e.getErrorId()));
         }
     }
 }
