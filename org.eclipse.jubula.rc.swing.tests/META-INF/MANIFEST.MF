@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests for Jubula Swing RC
+Bundle-SymbolicName: org.eclipse.jubula.rc.swing.tests;singleton:=true
+Bundle-Version: 2.3.0.qualifier
+Bundle-Vendor: BREDEX GmbH
+Fragment-Host: org.eclipse.jubula.rc.swing;bundle-version="[2.3.0,2.4.0)"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.junit;bundle-version="[4.8.2,5.0.0)"
