@@ -33,9 +33,7 @@ public class RobotTiming extends TimingConstantsServer {
     /** <code>EXTERNAL_PROPERTY_NAME_MAX_AUT_RESPONSE_TIME</code> */
     private static final String EXTERNAL_PROPERTY_NAME_MAX_AUT_RESPONSE_TIME = "TEST_MAX_AUT_RESPONSE_TIME"; //$NON-NLS-1$
     
-    /**
-     * <code>NO_EXTERNAL_WAIT</code>
-     */
+    /** <code>NO_EXTERNAL_WAIT</code> */
     private static final int NO_EXTERNAL_WAIT = -1;
 
     /** the logger */
@@ -181,13 +179,15 @@ public class RobotTiming extends TimingConstantsServer {
      */
     private static final int getExternalWait(String propertyName) {
         int wait = NO_EXTERNAL_WAIT;
-        String delay = System.getProperty(propertyName);
+        String delay = EnvironmentUtils
+            .getProcessOrSystemProperty(propertyName);
         if (delay != null) {
             try {
                 wait = new Integer(delay).intValue();
             } catch (NumberFormatException e) {
-                log.warn("Error while parsing click delay parameter. " //$NON-NLS-1$
-                        + "Using default value.", e); //$NON-NLS-1$
+                log.warn("Error while parsing external process / system property: " //$NON-NLS-1$
+                        + propertyName
+                        + "=" + delay + ". Integer value has been expected", e); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
         return wait;
@@ -205,13 +205,13 @@ public class RobotTiming extends TimingConstantsServer {
 
     /**
      * Sets the EventConfirmTimeout in milliseconds. Default is 2000. <br>
-     * If timout is < 0, timeout is set to default 2000 milliseconds. <br>
+     * If timeout is < 0, timeout is set to default 2000 milliseconds. <br>
      * <b>Note:</b> This is the timeout the event confirmer waits for a
-     * confirmation for a sended event. If the timeout is set too short, the
+     * confirmation for a sent event. If the timeout is set too short, the
      * tests could get inexecutable!
      * 
      * @param timeout
-     *            the timout to set.
+     *            the timeout to set.
      */
     public static final void setEventConfirmTimeout(int timeout) {
         if (timeout < 0) {
@@ -223,7 +223,7 @@ public class RobotTiming extends TimingConstantsServer {
     }
 
     /**
-     * this method sleeps the preconfigured system double click time + 50 to
+     * this method sleeps the pre configured system double click time + 50 to
      * avoid unwanted double clicks during test execution
      */
     public static final void sleepPreClickDelay() {
@@ -246,7 +246,7 @@ public class RobotTiming extends TimingConstantsServer {
     }
 
     /**
-     * sleeps in current thread for the configured pre click delay amount of
+     * sleeps in current thread for the configured post click delay amount of
      * time
      */
     public static final void sleepPostMouseUpDelay() {
