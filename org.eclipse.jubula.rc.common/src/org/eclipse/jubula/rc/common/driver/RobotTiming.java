@@ -24,16 +24,15 @@ import org.eclipse.jubula.tools.utils.TimeUtil;
  * @created Oct 4, 2010
  */
 public class RobotTiming extends TimingConstantsServer {
-    /**
-     * <code>EXTERNAL_PROPERTY_NAME_PRE_MOUSE_UP_DELAY</code>
-     */
+    /** <code>EXTERNAL_PROPERTY_NAME_PRE_MOUSE_UP_DELAY</code> */
     private static final String EXTERNAL_PROPERTY_NAME_PRE_MOUSE_UP_DELAY = "TEST_DELAY_PRE_MOUSE_UP"; //$NON-NLS-1$
 
-    /**
-     * <code>EXTERNAL_PROPERTY_NAME_POST_MOUSE_UP_DELAY</code>
-     */
+    /** <code>EXTERNAL_PROPERTY_NAME_POST_MOUSE_UP_DELAY</code> */
     private static final String EXTERNAL_PROPERTY_NAME_POST_MOUSE_UP_DELAY = "TEST_DELAY_POST_MOUSE_UP"; //$NON-NLS-1$
 
+    /** <code>EXTERNAL_PROPERTY_NAME_MAX_AUT_RESPONSE_TIME</code> */
+    private static final String EXTERNAL_PROPERTY_NAME_MAX_AUT_RESPONSE_TIME = "TEST_MAX_AUT_RESPONSE_TIME"; //$NON-NLS-1$
+    
     /**
      * <code>NO_EXTERNAL_WAIT</code>
      */
@@ -55,6 +54,11 @@ public class RobotTiming extends TimingConstantsServer {
      */
     private static int postMouseDown = -1;
 
+    /**
+     * max AUT response time
+     */
+    private static int maxAUTresponseTime = -1;
+    
     /**
      * The waiting time after mouse up
      */
@@ -130,6 +134,26 @@ public class RobotTiming extends TimingConstantsServer {
         return postMouseDown;
     }
 
+    /**
+     * @return the maximum amount of time the AUT might *hang* / be unresponsive
+     */
+    public static final int getMaxAUTResponseInterval() {
+        if (maxAUTresponseTime >= 0) {
+            return maxAUTresponseTime;
+        }
+
+        int externalWait = getExternalWait(
+                EXTERNAL_PROPERTY_NAME_MAX_AUT_RESPONSE_TIME);
+        if (externalWait != NO_EXTERNAL_WAIT) {
+            maxAUTresponseTime = externalWait;
+            return maxAUTresponseTime;
+        }
+
+        // default
+        maxAUTresponseTime = DEFAULT_MAX_AUT_RESPONSE_TIME;
+        return maxAUTresponseTime;
+    }
+    
     /**
      * @return The waiting time after mouse up.
      */

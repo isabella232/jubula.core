@@ -46,6 +46,9 @@ public abstract class TimingConstantsServer {
     /** Default for time between mouse down and mouse up */
     protected static final int DEFAULT_DELAY_POST_MOUSE_DOWN = 50;
 
+    /** Default for max AUT response time  */
+    protected static final int DEFAULT_MAX_AUT_RESPONSE_TIME = 5000;
+    
     /** Default for wait after mouse up */
     protected static final int DEFAULT_DELAY_POST_MOUSE_UP = 
         DEFAULT_DELAY_POST_MOUSE_DOWN;
