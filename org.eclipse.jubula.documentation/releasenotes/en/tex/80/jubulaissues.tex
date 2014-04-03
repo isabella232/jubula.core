@@ -88,3 +88,10 @@
 \begin{itemize}
 \item We no longer execute regression tests on pure SWT \gdauts{}. We do, however, perform various tests on RCP, which uses SWT components. 
 \end{itemize}
+
+\textbf{\gdagent{} started without console per default}
+\begin{itemize}
+\item The standalone \gdagent{} is now started without a console per default.
+\item If you would like to see the console when starting the \gdagent{}, you must adapt the \bxname{autagent.ini} file.
+\item In the -vm parameter, use \bxname{java} instead of \bxname{javaw}.
+\end{itemize}
