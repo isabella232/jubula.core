@@ -19,12 +19,17 @@ import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jubula.rc.common.exception.RobotException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class is based on the code snippet posted on
  * http://stackoverflow.com/questions/11042979/does-java-awt-robot-waitforidle-wait-for-events-to-be-dispatched
  */
 public class EventFlusher {
+    /** logger */
+    private static final Logger LOG = 
+            LoggerFactory.getLogger(EventFlusher.class);
     /** the toolkit class name */
     private static final String TOOLKIT_CLASS_NAME = "sun.awt.SunToolkit";  //$NON-NLS-1$
     /** the native sync queue method */
@@ -34,7 +39,7 @@ public class EventFlusher {
     /** the robot to use */
     private final Robot m_robot;
     /** the flush timeout to use */
-    private final Long m_flushTimeout;
+    private final long m_flushTimeout;
     /**
      * indicates whether the default toolkit is compatible to the required
      * toolkit implementation for native event flushing
@@ -51,7 +56,7 @@ public class EventFlusher {
      */
     public EventFlusher(Robot robot, long flushTimeout) {
         m_robot = robot;
-        m_flushTimeout = new Long(flushTimeout);
+        m_flushTimeout = flushTimeout;
         m_syncNativeQueue = null;
         m_isSyncNativeQueueZeroArguments = true;
         try {
@@ -71,7 +76,7 @@ public class EventFlusher {
                 if ("syncNativeQueue".equals(name)) { //$NON-NLS-1$
                     List parameterTypes = Arrays.asList(
                             method.getParameterTypes());
-                    if (Arrays.asList(new Object[] { Long.class })
+                    if (Arrays.asList(new Object[] { long.class })
                             .equals(parameterTypes)) {
                         m_isSyncNativeQueueZeroArguments = false;
                     } else if (parameterTypes.isEmpty() 
@@ -141,11 +146,11 @@ public class EventFlusher {
                             new Object[] { m_flushTimeout });
                 }
             } catch (IllegalArgumentException e) {
-                throw new RobotException(e);
+                LOG.error("Error occurred while invoking syncNativeQueue.", e); //$NON-NLS-1$
             } catch (IllegalAccessException e) {
-                throw new RobotException(e);
+                LOG.error("Error occurred while invoking syncNativeQueue.", e); //$NON-NLS-1$
             } catch (InvocationTargetException e) {
-                throw new RobotException(e);
+                LOG.error("Error occurred while invoking syncNativeQueue.", e); //$NON-NLS-1$
             }
         }
 
