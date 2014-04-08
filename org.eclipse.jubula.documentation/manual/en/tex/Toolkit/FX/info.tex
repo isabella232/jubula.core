@@ -11,16 +11,19 @@ Below is an overview of the supported components. You can also see individual ti
 \item [Toggle buttons, radio buttons and checkboxes:]{are supported}
 \item [Text components]{such as labels and text are supported}
 \item [Text input components]{such as text fields and password fields are supported}
-\item [Combo boxes:]{are supported. You can select from combo boxes and check items in them, but we have not yet implemented support for text input on combo boxes}
-\item [Choice boxes]{are supported. To be able to map a choice box, you must ensure that the choice box has a padding (e.g. of 5px) between the choice box itself and its composite components. This allows you to collect the choice box itself in the \gdomm{} instead of the components within it.}
+\item [Combo boxes:]{are supported. You can select from combo boxes and check items in them, but we have not yet implemented support for text input on editable combo boxes. }
+\item [Choice boxes]{are supported. To be able to map a choice box, you must ensure that the choice box has a padding (e.g. of 5px) between the choice box itself and its composite components. This allows you to collect the choice box itself in the \gdomm{} instead of the components within it. You may, in some cases, be able to collect the choice box even without padding by hovering the mouse just outside of its bounds at e.g. the bottom right.}
 \item [Tables:]{TableView tables are supported}
 \item [Trees:]{TreeView trees are supported}
 \item [Lists:]{ListView lists are supported. Drag and drop of list items is not supported. }
 \item [Tabbed components:]{Tab Panes are supported}
 \item [Context menus:]{are supported}
 \item [Menu bars:]{are supported. Only single menu bars are currently supported. If your \gdaut{} has multiple menu bars, an error will be thrown.}
-\item [Accordeons]{are supported. To be able to map an accordeon, you must ensure that the accordeon has a padding (e.g. of 5px) between the accordeon itself and its composite components. This allows you to collect the accordeon itself in the \gdomm{} instead of the components within it.}
+\item [Accordeons]{are supported. To be able to map an accordeon, you must ensure that the accordeon has a padding (e.g. of 5px) between the accordeon itself and its composite components. This allows you to collect the accordeon itself in the \gdomm{} instead of the components within it. You may, in some cases, be able to collect the accordeon even without padding by hovering the mouse just outside of its bounds at e.g. the bottom right.}
 \item [Image views]{are supported. You can perform graphics component actions on them (check, click, wait for, ...)}
 \item [Dialogs from ControlsFX]{Lightweight and heavyweight dialogs from the ControlsFX library are supported}
 \item [Application actions]{are supported. Synchronized termination and restart is not implemented. The simple \bxname{restart} does work, however.}
 \end{description}
+
+\textbf{Other information}
+The observation mode, \bxname{autrun} and code coverage do not work for JavaFX \gdauts{}. 
