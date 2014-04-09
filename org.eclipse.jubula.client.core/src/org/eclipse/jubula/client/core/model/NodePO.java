@@ -46,6 +46,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.progress.ElementLoadedProgressListener;
@@ -733,7 +734,7 @@ abstract class NodePO implements INodePO {
         final String name = project.getProjectProperties()
                 .getTrackChangesSignature();
         String value = StringConstants.EMPTY;
-        if (name != null) {
+        if (!StringUtils.isEmpty(name)) {
             value = EnvironmentUtils.getProcessOrSystemProperty(name);
         }
         if (value != null) {
