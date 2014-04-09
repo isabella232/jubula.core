@@ -27,6 +27,10 @@
 	<property name="ExampleSwingExtensionClient"    value="org.eclipse.jubula.examples.extension.swing.toolkit"/>
 	<property name="ExampleSwingExtensionRC"        value="org.eclipse.jubula.examples.extension.swing.rc"/>
 	<property name="ExampleSwingExtensionFeature"   value="org.eclipse.jubula.examples.extension.swing.feature"/>
+    
+    <property name="ExampleJavaFXExtensionClient"    value="org.eclipse.jubula.examples.extension.javafx.toolkit"/>
+    <property name="ExampleJavaFXExtensionRC"        value="org.eclipse.jubula.examples.extension.javafx.rc"/>
+    <property name="ExampleJavaFXExtensionFeature"   value="org.eclipse.jubula.examples.extension.javafx.feature"/>
 	
 	<property name="ExampleRCPExtensionClient"      value="org.eclipse.jubula.examples.extension.rcp.toolkit"/>
 	<property name="ExampleRCPExtensionRC"          value="org.eclipse.jubula.examples.extension.rcp.rc"/>
@@ -176,6 +180,12 @@
 			<zipfileset dir="../${ExampleSwingExtensionRC}" prefix="${ExampleSwingExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 			<zipfileset dir="../${ExampleSwingExtensionFeature}" prefix="${ExampleSwingExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 		</zip>
+	    
+	    <zip destfile="${extensionSourceDir}/JavaFXExtension.zip">
+            <zipfileset dir="../${ExampleJavaFXExtensionClient}" prefix="${ExampleJavaFXExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+            <zipfileset dir="../${ExampleJavaFXExtensionRC}" prefix="${ExampleJavaFXExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+            <zipfileset dir="../${ExampleJavaFXExtensionFeature}" prefix="${ExampleJavaFXExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+        </zip>
 		
 		<zip destfile="${extensionSourceDir}/RCPExtension.zip">
 			<zipfileset dir="../${ExampleRCPExtensionClient}" prefix="${ExampleRCPExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
