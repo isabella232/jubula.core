@@ -237,7 +237,7 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
             for (int i = 0; i < masks.length; i++) {
                 for (final ReadOnlyObjectProperty<? extends Window> w 
                         : m_sceneGraphs) {
-                    if (w.getValue() == null) {
+                    if (w.getValue() == null || !(w.getValue().isShowing())) {
                         // Removing this property from the list because the
                         // window it belongs to is not present.
                         m_sceneGraphs.remove(w);
@@ -267,7 +267,7 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
             for (int i = 0; i < masks.length; i++) {
                 for (ReadOnlyObjectProperty<? extends Window> w 
                         : m_sceneGraphs) {
-                    if (w.getValue() == null) {
+                    if (w.getValue() == null || !(w.getValue().isShowing())) {
                         // Removing this property from the list because the
                         // window it belongs to is not present.
                         m_sceneGraphs.remove(w);
