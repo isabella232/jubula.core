@@ -209,6 +209,9 @@ public class AutFrameBP {
 
         frame.setLocation(200, 200);
         frame.pack();
+        frame.setSize(
+                Math.max(300, frame.getSize().width + 20),
+                Math.max(200, frame.getSize().height));
         frame.setVisible(true);
     }
 

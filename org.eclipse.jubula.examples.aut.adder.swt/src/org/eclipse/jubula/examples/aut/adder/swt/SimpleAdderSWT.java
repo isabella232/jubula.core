@@ -46,7 +46,8 @@ public class SimpleAdderSWT {
                 - shell.getBounds().width) / 2);
         int y = rect.y + Math.max(0, (rect.height 
                 - shell.getBounds().height) / 2);
-        shell.setBounds(x, y, shell.getBounds().width + 20, 
+        shell.setBounds(x, y,
+                Math.max(300, shell.getBounds().width + 20),
                 shell.getBounds().height);
         shell.open();
         final Display display = shell.getDisplay();

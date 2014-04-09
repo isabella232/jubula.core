@@ -97,6 +97,7 @@ public class AutShell extends Shell {
      */
     private void initControls() {
         GridLayout shellLayout = new GridLayout ();
+        shellLayout.marginWidth = 100;
         setLayout (shellLayout);
         
         Composite composite = new Composite(this, SWT.NONE);
@@ -106,8 +107,8 @@ public class AutShell extends Shell {
         GridData data = new GridData ();
         data.horizontalAlignment = GridData.FILL;
         data.verticalAlignment = GridData.FILL;
-        data.grabExcessHorizontalSpace = true;
-        data.grabExcessVerticalSpace = true;
+        data.grabExcessHorizontalSpace = false;
+        data.grabExcessVerticalSpace = false;
         composite.setLayoutData (data);
         
         new Label(composite, SWT.NONE);
