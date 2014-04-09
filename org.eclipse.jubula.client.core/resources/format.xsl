@@ -497,7 +497,10 @@
 						<xsl:value-of select="$text"/> (testing)</font>
 				</xsl:otherwise>
 			</xsl:choose>
-			</big>
+		</big>
+		<xsl:if test="comment != ''">
+			<abbr><xsl:attribute name="title"><xsl:value-of select="comment"/></xsl:attribute>*</abbr>
+		</xsl:if>
 	</xsl:template>
 	
 </xsl:stylesheet>
