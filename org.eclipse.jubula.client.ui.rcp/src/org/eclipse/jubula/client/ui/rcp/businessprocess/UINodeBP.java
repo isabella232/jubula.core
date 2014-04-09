@@ -95,7 +95,7 @@ public class UINodeBP {
      *            the TreeViewer
      * @param em
      *            the entity manager to use for retrieving the node with the
-     *            given id; bear in mind that if e.g. the entitiy manager is the
+     *            given id; bear in mind that if e.g. the entity manager is the
      *            master session it the object with the given id may be found
      *            within this entity manager but not in the given viewer, as it
      *            does not display this element

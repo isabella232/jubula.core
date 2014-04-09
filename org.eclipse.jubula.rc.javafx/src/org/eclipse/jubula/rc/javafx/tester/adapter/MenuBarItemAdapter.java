@@ -19,7 +19,6 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.SkinBase;
 
-import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 
@@ -31,11 +30,6 @@ import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
  * @created 10.3.2014
  */
 public class MenuBarItemAdapter extends MenuItemAdapter<Menu> {
-
-    /** The AUT Server logger. */
-    private static AutServerLogger log = new AutServerLogger(
-            MenuBarItemAdapter.class);
-
     /**
      * Creates an adapter for a MenuBarItem.
      * 

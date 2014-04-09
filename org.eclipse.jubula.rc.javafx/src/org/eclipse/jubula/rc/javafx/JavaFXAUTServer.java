@@ -25,8 +25,6 @@ import org.eclipse.jubula.rc.javafx.listener.CheckListener;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.listener.MappingListener;
 import org.eclipse.jubula.rc.javafx.listener.RecordListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The AutServer controlling the AUT. <br>
@@ -52,11 +50,6 @@ import org.slf4j.LoggerFactory;
  * @created 24.09.2013
  */
 public class JavaFXAUTServer extends AUTServer {
-
-    /** the logger */
-    private static final Logger LOG = LoggerFactory
-            .getLogger(JavaFXAUTServer.class);
-
     /**
      * constructor instantiates the listeners
      */

@@ -14,7 +14,6 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 
 import org.eclipse.jubula.rc.common.driver.IMouseMotionTracker;
-import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 
 /**
  * Doesn't really track the mouse, because this is not necessary and would cause
@@ -25,12 +24,6 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
  * @created 1.11.2013
  */
 public class MouseMotionTrackerJavaFXImpl implements IMouseMotionTracker {
-    /**
-     * The logger.
-     */
-    private static AutServerLogger log = new AutServerLogger(
-            MouseMotionTrackerJavaFXImpl.class);
-
     /**
      * Add a new Instance of a Mouse Move tracker to all Stages in the Hierarchy
      */

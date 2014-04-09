@@ -18,7 +18,6 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 
-import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
@@ -31,13 +30,6 @@ import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
  */
 public class ContextMenuAdapter extends AbstractComponentAdapter<ContextMenu> 
                                 implements IMenuComponent {
-
-    /**
-     * The logging.
-     */
-    private static AutServerLogger log = new AutServerLogger(
-            ContextMenuAdapter.class);
-    
     /**
      * Creates an adapter for a Menu.
      * 
