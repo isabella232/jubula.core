@@ -18,6 +18,9 @@ import java.io.PrintStream;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -115,14 +118,13 @@ public class AutAgentApplication implements IApplication {
     /** exit code in case of a security exception */
     private static final int EXIT_SECURITY_VIOLATION = 1;
 
-    /** exit code in case of an io exception */
+    /** exit code in case of an I/O exception */
     private static final int EXIT_IO_EXCEPTION = 2;
 
     /** exit code in case of a version error between Client and AutStarter */
     private static final int EXIT_CLIENT_SERVER_VERSION_ERROR = 4;
 
     /**
-     * 
      * {@inheritDoc}
      */
     public Object start(IApplicationContext context) throws Exception {
@@ -130,12 +132,12 @@ public class AutAgentApplication implements IApplication {
                 IApplicationContext.APPLICATION_ARGS);
         if (args == null) {
             args = new String[0];
+        } else {
+            args = workaroundForBug392323(args);
         }
 
-        
         // create the single instance here
         final AutStarter server = AutStarter.getInstance();
-
         CommandLineParser parser = new PosixParser();
         try {
             CommandLine cmd = parser.parse(createOptions(), args);
@@ -196,6 +198,27 @@ public class AutAgentApplication implements IApplication {
         }
 
         return IApplication.EXIT_OK;
+    }
+
+    /**
+     * @see http://eclip.se/392323
+     * 
+     * @param args
+     *            the arguments to check
+     * @return the conditionally cleaned command line arguments
+     */
+    private String[] workaroundForBug392323(final String[] args) {
+        String[] commandlineArgs = args;
+        if (EnvironmentUtils.isMacOS()) {
+            final List<String> argList = Arrays.asList(args);
+            final int loc = argList.indexOf("-showlocation");
+            if (loc >= 0) {
+                List<String> newArgs = new ArrayList<String>(argList);
+                newArgs.remove(loc);
+                commandlineArgs = newArgs.toArray(new String[] {});
+            }
+        }
+        return commandlineArgs;
     }
 
     /**
