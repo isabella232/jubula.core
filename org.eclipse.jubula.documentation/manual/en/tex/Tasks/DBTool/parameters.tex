@@ -4,21 +4,17 @@
 \item The dbtool uses the parameters described in the table \bxfigref{dbtoolparams}:
 \end{enumerate}
 
-\begin{table}[h]
 \label{dbtoolparams}
-	\centering
-	\begin{tabular}{|l|l|}
-
+\tablehead{\hline\textbf{Detail}&\textbf{Parameter}\\\hline}
+\begin{supertabular}{|p{3.0cm}p{9.0cm}|}
 	\hline
-	\textbf{Detail}&\textbf{Parameter}%&\textbf{Example}
-\\
-		\hline
                 Help 
                 &\bxshell{-h}\\
                 & Gives parameter help\\
                 \hline
                   Delete Project
-                  & \bxshell{-delete <project-name project-version>}\\
+                  & \bxshell{-delete <project-name} \\
+                  & \bxshell{project-version>}\\
 		  &e.g. \emph{-delete ''ExampleProject'' 1.0}  \bxpref{TasksDBToolKeepSummary}\\
                   \hline
                   Delete All
@@ -36,7 +32,8 @@
                   & The directory must already exist\\
                  \hline
                   Export Project
-                  & \bxshell{-export <project-name project-version>}\\
+                  & \bxshell{-export <project-name}\\
+                  & \bxshell{project-version>}\\
 		  &e.g. \emph{-export ''ExampleProject'' ''1.0''}\\
                   &Existing files with the same name will be overwritten\\
                  \hline
@@ -51,7 +48,8 @@
 		  &e.g. \emph{-import <ExampleProject.xml>}\\
 		\hline
                 Create Version
-                & \bxshell{-createVersion <project-name> <old-version> <new-version>}\\
+                & \bxshell{-createVersion <project-name>} \\
+                & \bxshell{<old-version> <new-version>}\\
                 &e.g. \emph{-createVersion ''MyProject'' ''1.0'' ''1.1''} \bxpref{TasksDBToolCreateVersion}\\
                 \hline
                 Workspace
@@ -78,7 +76,7 @@
                   & \bxshell{-dbpw <password>}\\
 		&e.g. \emph{-dbpw ''password''}\\
                 &Use <empty> (\bxshell{''''}\\
-                &for the embedded \gddb{} \\      
+                &for the embedded \gddb{}) \\      
 		\hline
 		Database URL (optional)
                   & \bxshell{-dburl <URL>}\\
@@ -88,9 +86,10 @@
                 &need to enter the \bxname{-data} or \bxname{-dbscheme} parameter\\
                 &You can find the dburl in the \gddb{} preferences\\
 		\hline
-	\end{tabular}
-	\caption{Parameters for the dbtool}
-\end{table}
+                %\caption{Parameters for the dbtool}
+                \end{supertabular}
+	
+
 
 \subsubsection{Deleting \gdprojects{} but keeping test result summaries}
 \label{TasksDBToolKeepSummary}
