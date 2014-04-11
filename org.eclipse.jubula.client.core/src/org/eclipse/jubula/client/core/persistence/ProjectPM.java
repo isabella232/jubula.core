@@ -769,7 +769,11 @@ public class ProjectPM extends PersistenceManager
         preloadDataForClass(s, projectIds, "ParamDescriptionPO");
 
         preloadDataForClass(s, projectIds, "TDManagerPO");
-        preloadDataForClass(s, projectIds, "TestDataCubePO");
+        
+        /*
+         * Disable pre-load due to #432394
+         * preloadDataForClass(s, projectIds, "TestDataCubePO"); 
+         */
 
         preloadDataForClass(s, projectIds, "CapPO");
         List<ISpecTestCasePO> testCases =
