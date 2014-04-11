@@ -103,3 +103,15 @@
 \begin{itemize}
 \item Log files that get larger than 10MB are now automatically split and zipped.
 \end{itemize}
+
+\textbf{Closing HTML \gdauts{} via the close button}
+\begin{itemize}
+\item If you close a HTML \gdaut{} by closing the browser, the \ite{} will correctly notice the closure after 5 seconds (configurable) and will remove the \gdaut{} from the running \gdauts{} view.
+\item The mechanism works by polling the \gdaut{}, and if it is no longer there after the configured time, the \gdaut{} is considered to be stopped.
+\item If your \gdaut{} may sometimes be unreachable for longer than the default 5 seconds, you can change this time by using a process or system property:\\
+\bxshell{TEST\_MAX\_AUT\_RESPONSE\_TIME=<timeInMs>}.
+\item Further information on this is available in this issue:\\
+\url{http://bugzilla.bredex.de/1391}.
+\end{itemize}
+
+
