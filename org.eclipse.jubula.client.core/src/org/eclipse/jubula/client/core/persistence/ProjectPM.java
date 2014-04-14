@@ -769,11 +769,8 @@ public class ProjectPM extends PersistenceManager
         preloadDataForClass(s, projectIds, "ParamDescriptionPO");
 
         preloadDataForClass(s, projectIds, "TDManagerPO");
-        
-        /*
-         * Disable pre-load due to #432394
-         * preloadDataForClass(s, projectIds, "TestDataCubePO"); 
-         */
+        // Special pre-load due to #432394
+        preloadDistinctDataForClass(s, projectIds, "TestDataCubePO");
 
         preloadDataForClass(s, projectIds, "CapPO");
         List<ISpecTestCasePO> testCases =
@@ -821,6 +818,27 @@ public class ProjectPM extends PersistenceManager
         return q.getResultList();
     }
 
+    /**
+     * The Class for the given simple name must have the JPA attribute
+     * "hbmParentProjectId", as this attribute will be used to identify
+     * which elements should be preloaded.
+     * 
+     * @param s Session to use
+     * @param projectIds Ids of projects
+     * @param simpleClassName class name for the prefetch
+     * @return list of distinctly pre-loaded data
+     */
+    private static List preloadDistinctDataForClass(
+        EntityManager s, Set projectIds, String simpleClassName) {
+        StringBuilder qString = new StringBuilder(100);
+        qString.append("select DISTINCT e from "); //$NON-NLS-1$
+        qString.append(simpleClassName);
+        qString.append(" as e where e.hbmParentProjectId in :ids"); //$NON-NLS-1$
+        Query q = s.createQuery(qString.toString());
+        q.setParameter("ids", projectIds); //$NON-NLS-1$
+        return q.getResultList();
+    }
+    
     /**
      * 
      * @param proj
