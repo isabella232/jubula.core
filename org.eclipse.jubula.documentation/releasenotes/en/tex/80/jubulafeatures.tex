@@ -1,25 +1,27 @@
 \textbf{Support for JavaFX \gdauts{}}
 \begin{itemize}
-\item We have added initial support for testing JavaFX \gdauts{}. 
+\item We have added support for testing JavaFX \gdauts{}. 
 \item There is an example Simple Adder \gdaut{} in the \bxname{<installation-directory>/examples/AUTs} folder. You can use this to perform example tests as described in the cheat sheets.
+\item You can see the overview of the support via \url{http://eclip.se/421595}.
+\item The toolkit is extensible, and we welcome feedback and contributions.
 \end{itemize}
 
-\textbf{Support for commenting on HP ALM tasks after a test run}
+\textbf{ALM integration: Support for commenting on HP ALM tasks after a test run}
 \begin{itemize}
 \item You can now connect your \ite{} to a HP ALM repository (version 11+) to view tasks from the repository in the \ite{}.
 \item You can also add comments to tasks in a HP ALM repository when a test has run.
 \item To use the HP ALM integration, you must use a separate connector for HP ALM which may incur license costs. Visit the Tasktop website for more details \url{http://www.tasktop.com}.
 \end{itemize} 
 
-\textbf{ALM integration: Amount of reported items shown}
-\begin{itemize}
-\item When reporting to ALM systems takes place, you can now see how many tasks were reported to, how many results were written to each task, and a total amount of tasks written to in the console.
-\end{itemize}
-
 \textbf{ALM integration: Reporting to ALM systems after headless execution now supported}
 \begin{itemize}
 \item When a test has run via testexec, you can now trigger the reporting to ALM tools manually from the \gdtestsummaryview{}. 
 \item This allows you to add the test results from your continuous integration tests to your issues, bugs and features in your ALM system. 
+\end{itemize}
+
+\textbf{ALM integration: Amount of reported items shown}
+\begin{itemize}
+\item When reporting to ALM systems takes place, you can now see how many tasks were reported to, how many results were written to each task, and a total amount of tasks written to in the console.
 \end{itemize}
 
 \textbf{Support for embedded \gdagent{} in testexec}
@@ -33,6 +35,19 @@
 \begin{itemize}
 \item You can now create new versions of a \gdproject{} using the dbtool.
 \item Use \bxshell{-createVersion <project-name> <old-version> <new-version>} to create a new version of an existing \gdproject{}.
+\end{itemize}
+
+\textbf{Change tracking in \gdprojects{}}
+\begin{itemize}
+\item You can now configure in the \gdproject{} properties that changes to \gdcases{}, \gdsuites{} and \gdjobs{} in the \gdproject{} are tracked. You can configure a system / environment property that is shown alongside the timestamp of the change to track e.g. who made the changes. 
+\item When change tracking is activated, when you save an editor for a \gdcase{}, \gdsuite{} or \gdjob{}, the timestamp of the save as well as the property will be saved and displayed in the properties view.
+\item You can specify the amount of changes to track per node, or the length of time that change tracking information should be kept. Once the time has passed or the amount of changes has been reached, the next saving of the node will result in invalid change information being discarded.
+\item You can remove all change tracking information from the \gdproject{} via the \gdproject{} properties. 
+\end{itemize}
+
+\textbf{Support for iOS 7}
+\begin{itemize}
+\item You can now also test \gdauts{} written with iOS 7.
 \end{itemize}
 
 \textbf{New information in \gdomm{} : property information}
@@ -59,14 +74,6 @@
 \textbf{Show where used also available for \gdsuites{}}
 \begin{itemize}
 \item You can now use ''show where used'' on \gdsuites{} to find out which \gdjobs{} they have been reused in.
-\end{itemize}
-
-\textbf{Change tracking in \gdprojects{}}
-\begin{itemize}
-\item You can now configure in the \gdproject{} properties that changes to \gdcases{}, \gdsuites{} and \gdjobs{} in the \gdproject{} are tracked. You can configure a system / environment property that is shown alongside the timestamp of the change to track e.g. who made the changes. 
-\item When change tracking is activated, when you save an editor for a \gdcase{}, \gdsuite{} or \gdjob{}, the timestamp of the save as well as the property will be saved and displayed in the properties view.
-\item You can specify the amount of changes to track per node, or the length of time that change tracking information should be kept. Once the time has passed or the amount of changes has been reached, the next saving of the node will result in invalid change information being discarded.
-\item You can remove all change tracking information from the \gdproject{} via the \gdproject{} properties. 
 \end{itemize}
 
 \textbf{\bxkey{F3} always opens selected item}
