@@ -26,6 +26,8 @@ public class Messages extends NLS {
     public static String ClientBuildingReport;
     public static String ClientCalculating;
     public static String ClientCmdArgs;
+    public static String ClientCmdOutputWithTimeStamp;
+    public static String ClientCmdOutputWithoutTimeStamp;
     public static String ClientCollectingInformation;
     public static String ClientConfigFile;
     public static String ClientConfigOpt;

@@ -13,8 +13,9 @@ package org.eclipse.jubula.client.cmd;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.commons.cli.BasicParser;
@@ -33,8 +34,8 @@ import org.eclipse.jubula.client.cmd.i18n.Messages;
 import org.eclipse.jubula.client.cmd.progess.HeadlessProgressProvider;
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
-import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.AutAgentConnection;
+import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.errorhandling.IErrorMessagePresenter;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
@@ -69,16 +70,12 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     protected static final int EXIT_CODE_OK = 0;
     
     /** error message */
-    protected static final String OPT_NO_VAL = 
-        Messages.NoArgumentFor + StringConstants.COLON;
+    protected static final String OPT_NO_VAL = Messages.NoArgumentFor;
     /** error message */
-    protected static final String OPT_UNKNOWN = 
-        Messages.UnrecognizedOption + StringConstants.COLON 
-        + StringConstants.SPACE;
+    protected static final String OPT_UNKNOWN = Messages.UnrecognizedOption;
     /** error message */
-    protected static final String JDBC_UNKNOWN = 
-        Messages.UnsupportedJDBC + StringConstants.COLON 
-        + StringConstants.SPACE;
+    protected static final String JDBC_UNKNOWN = Messages.UnsupportedJDBC;
+    
     /** log facility */
     private static Logger log = 
         LoggerFactory.getLogger(AbstractCmdlineClient.class);
@@ -296,19 +293,27 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
 
     /**
      * writes an output to console
+     * 
      * @param text
-     *      Message
-     *      @param printTimestamp should a timestamp be printed
+     *            the message
+     * @param printTimestamp
+     *            whether a timestamp should be printed
      */
     public static void printConsoleLn(String text, boolean printTimestamp) {
+        String textToPrint = StringUtils.chomp(text);
+        String consoleOutput = StringConstants.EMPTY;
         if (printTimestamp) {
-            Date now = new Date();
-            String time = now.toString();
-            printConsole(time);
-            printConsole(StringConstants.TAB);
+            String timeStamp = DateFormat.getDateTimeInstance(
+                DateFormat.SHORT,
+                DateFormat.MEDIUM).format(
+                    Calendar.getInstance().getTime());
+            consoleOutput = NLS.bind(Messages.ClientCmdOutputWithTimeStamp,
+                timeStamp, textToPrint);
+        } else {
+            consoleOutput = NLS.bind(Messages.ClientCmdOutputWithoutTimeStamp,
+                textToPrint);
         }
-        printConsole(StringUtils.chomp(text));
-        printConsole(StringConstants.NEWLINE);
+        printConsole(consoleOutput);
     }
     
     /**
@@ -438,7 +443,6 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     private void preValidate(JobConfiguration job) throws PreValidateException {
         StringBuilder errorMsg = new StringBuilder();
         errorMsg.append(Messages.ClientMissingArgs);
-        StringBuilder errorInvalidArgsMsg = new StringBuilder();
         if (job.getDbConnectionName() == null && job.getDb() == null) {
             appendError(errorMsg, ClientTestStrings.DB_SCHEME, 
                     ClientTestStrings.SCHEME + " OR"); //$NON-NLS-1$
@@ -535,8 +539,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     }
 
     /** 
-     * printusage prints the command line syntax
-     *
+     * prints the command line syntax
      */
     private void printUsage() {
         Options options = createOptions(true);
