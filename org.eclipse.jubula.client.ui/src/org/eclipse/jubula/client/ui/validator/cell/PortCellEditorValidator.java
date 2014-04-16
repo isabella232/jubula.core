@@ -16,18 +16,10 @@ import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.jubula.tools.utils.NetUtil;
 
 /**
- * 
  * @author BREDEX GmbH
  * @created 20.01.2011
  */
 public class PortCellEditorValidator implements ICellEditorValidator {
-
-    /** 
-     * the name of the column for the validated cell for use in presenting 
-     * validation errors to the user 
-     */
-    private String [] m_i18nArguments;
-    
     /**
      * Constructor
      * 
@@ -37,7 +29,6 @@ public class PortCellEditorValidator implements ICellEditorValidator {
      */
     public PortCellEditorValidator(String cellName) {
         Validate.notNull(cellName);
-        m_i18nArguments = new String [] {cellName};
     }
     
     /**

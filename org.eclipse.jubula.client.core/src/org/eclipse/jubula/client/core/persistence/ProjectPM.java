@@ -1444,27 +1444,6 @@ public class ProjectPM extends PersistenceManager
     }
 
     /**
-     * @param msg
-     *            msg for log
-     * @param s
-     *            corresponding session
-     * @param tx
-     *            transaction to rollback
-     * @throws PMException
-     *             in case of failed rollback
-     */
-    @SuppressWarnings("unused")
-    private static void rollbackTransaction(EntityManager s, String msg,
-        EntityTransaction tx) throws PMException {
-        try {
-            Persistor.instance().rollbackTransaction(s, tx);
-        } catch (PersistenceException e) {
-            log.error(msg, e);
-            GeneralStorage.getInstance().recoverSession();
-        }
-    }
-
-    /**
      * @param guid
      *            The GUID to search.
      * @return a String representing the highest version number for this project
