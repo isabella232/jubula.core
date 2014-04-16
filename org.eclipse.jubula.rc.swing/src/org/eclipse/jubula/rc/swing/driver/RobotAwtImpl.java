@@ -27,11 +27,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.CellRendererPane;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -59,8 +55,6 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.LocalScreenshotUtil;
 import org.eclipse.jubula.rc.common.util.PointUtil;
-import org.eclipse.jubula.rc.swing.components.SwingHierarchyContainer;
-import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swing.utils.SwingUtils;
 import org.eclipse.jubula.tools.constants.InputConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -242,17 +236,6 @@ public class RobotAwtImpl implements IRobot {
                 point = (Point)m_queuer.invokeAndWait("getLocation", runnable); //$NON-NLS-1$
             } catch (StepExecutionException e) {
                 
-                List allElements = new ArrayList(ComponentHandler.
-                        getAutHierarchy().getHierarchyMap().values());
-                List allCheckBoxes = new ArrayList();
-                for (int i = 0; i < allElements.size(); i++) {
-                    if (((SwingHierarchyContainer)allElements.get(i))
-                            .getComponentID().getRealComponent() 
-                            instanceof JCheckBox) {
-                        
-                        allCheckBoxes.add(allElements.get(i));
-                    }
-                } 
                 exc = e;
                 retries++;
                 log.error("getLocation failed - " + retries); //$NON-NLS-1$
