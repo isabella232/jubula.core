@@ -439,6 +439,19 @@ public class RobotAwtImpl implements IRobot {
         bounds = new Rectangle(getLocation(component, new Point(0, 0)));
         bounds.width = component.getWidth();
         bounds.height = component.getHeight();
+        if (component instanceof Window) {
+            Frame window = (Frame) component;
+            if (bounds.x < 0
+                    && checkExtendedState(window, Frame.MAXIMIZED_HORIZ)) {
+                bounds.width += 2 * bounds.x;
+                bounds.x = 0;
+            }
+            if (bounds.y < 0
+                    && checkExtendedState(window, Frame.MAXIMIZED_VERT)) {
+                bounds.height += 2 * bounds.y;
+                bounds.y = 0;
+            }
+        }
 
         if (constraints != null) {
             bounds.x += constraints.x;
@@ -483,6 +496,17 @@ public class RobotAwtImpl implements IRobot {
                         new MouseMovedAwtEventMatcher());
             }
         }
+    }
+
+    /**
+     *
+     * @param frame the <code>JFrame</code> to to check if it is maximized
+     * @param stateBits see <code>getExtendedState()</code>
+     * @return <code>true</code> if the specified maximize state is set.
+     */
+    private boolean checkExtendedState(Frame frame, int stateBits) {
+        return (frame.getExtendedState() & stateBits)
+                == stateBits;
     }
     
     /**
