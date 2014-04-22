@@ -393,6 +393,13 @@ public class ComponentHandler implements ListChangeListener<Stage>,
                     }
                 }
             }
+            IComponentIdentifier[] container = hierarchy.getAllComponentId();
+            for (IComponentIdentifier id : container) {
+                log.error("#################################################" //$NON-NLS-1$
+                        + "ID: " + id.getComponentName()  //$NON-NLS-1$
+                        + " HIERARCHY: " + id.getHierarchyNames() //$NON-NLS-1$
+                        + " CONTEXT: " + id.getNeighbours()); //$NON-NLS-1$
+            }
             throw new ComponentNotFoundException(cnme.getMessage(),
                     MessageIDs.E_COMPONENT_NOT_FOUND);
         } catch (IllegalArgumentException iae) {
