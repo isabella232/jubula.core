@@ -152,6 +152,14 @@ public class Communicator {
      * The commandFactory for this communicator
      */
     private CommandFactory m_commandFactory;
+
+    /**
+     * boolean if the server socket could be closed, default is
+     * <code>true</code>. Set this variable only to <code>false</code> if the
+     * communicator will be reused for other connections since than the
+     * serverSocket would not be closed
+     */
+    private boolean m_isServerSocketClosable = true;
     /**
      * Constructor explicitly setting the commandFactory.
      * @param inetAddress IP of target
@@ -326,6 +334,16 @@ public class Communicator {
         return acceptingThread;
     }
 
+    /**
+     * 
+     * @param isServerSocketClosable
+     *            the default is <code>true</code>, if you want to have a
+     *            {@link Communicator} which server socket would not be closed
+     *            after it was closed, set it to <code>false</code>
+     */
+    public void setIsServerSocketClosable(boolean isServerSocketClosable) {
+        m_isServerSocketClosable = isServerSocketClosable;
+    }
     /**
      * creates the appropriate command object for this message per reflection.
      * The message is set to the command.
@@ -585,6 +603,13 @@ public class Communicator {
         } else {
             if (log.isDebugEnabled()) {
                 log.debug("close() called for an unconnected communicator"); //$NON-NLS-1$
+            }
+        }
+        if (m_serverSocket != null && m_isServerSocketClosable) {
+            try {
+                m_serverSocket.close();
+            } catch (IOException e) {
+                log.info("Exception in closing server Socket", e); //$NON-NLS-1$
             }
         }
     }

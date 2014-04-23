@@ -109,6 +109,7 @@ public class AUTConnection extends BaseConnection {
             Communicator communicator = new Communicator(0, this.getClass()
                     .getClassLoader());
             communicator.addCommunicationErrorListener(m_autConnectionListener);
+            communicator.setIsServerSocketClosable(false);
             setCommunicator(communicator);
         } catch (IOException ioe) {
             handleInitError(ioe);
@@ -179,6 +180,7 @@ public class AUTConnection extends BaseConnection {
     public synchronized void reset() {
         Communicator communicator = getCommunicator();
         if (communicator != null) {
+            communicator.setIsServerSocketClosable(true);
             communicator.interruptAllTimeouts();
             communicator.clearListeners();
             communicator.close();

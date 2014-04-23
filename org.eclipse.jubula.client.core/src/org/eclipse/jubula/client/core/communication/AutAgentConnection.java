@@ -60,6 +60,7 @@ public class AutAgentConnection extends BaseConnection {
         
         Communicator communicator = new Communicator(inetAddress, port, 
                 this.getClass().getClassLoader()); 
+        communicator.setIsServerSocketClosable(false);
         setCommunicator(communicator);
     }
 
