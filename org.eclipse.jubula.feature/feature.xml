@@ -99,6 +99,13 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.jubula.toolkit.provider.javafx"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.jubula.toolkit.provider.swt"
          download-size="0"
          install-size="0"
@@ -331,6 +338,13 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
 
    <plugin
          id="org.eclipse.jubula.rc.swing"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="org.eclipse.jubula.rc.javafx"
          download-size="0"
          install-size="0"
          version="0.0.0"

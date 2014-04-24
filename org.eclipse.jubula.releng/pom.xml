@@ -11,8 +11,9 @@
   <packaging>pom</packaging>
   
   <properties>
-    <tycho-version>0.19.0</tycho-version>
+    <tycho-version>0.20.0</tycho-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java8.jdk.base.path>${java.home}/../../java8</java8.jdk.base.path>
   </properties>
   
   <profiles>
@@ -24,6 +25,9 @@
           <value>eclipse.org</value>
         </property>
       </activation>
+      <properties>
+      	<java8.jdk.base.path>/opt/public/common/jdk1.8.0_x64-latest</java8.jdk.base.path>
+      </properties>
       <pluginRepositories>
         <pluginRepository>
           <id>m2e-cbi</id>
