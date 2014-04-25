@@ -17,7 +17,7 @@
 		<relativePath>../org.eclipse.jubula.releng.client</relativePath>
 	</parent>
 
-	<artifactId>org.eclipse.jubula.toolkit.provider.javafx</artifactId>
+	<artifactId>org.eclipse.jubula.toolkit.provider.mobile</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
 	<build>

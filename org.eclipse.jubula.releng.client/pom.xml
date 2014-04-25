@@ -34,6 +34,8 @@
 		<module>../org.eclipse.jubula.toolkit.provider.rcp.gef</module>
 		<module>../org.eclipse.jubula.toolkit.provider.swing</module>
 		<module>../org.eclipse.jubula.toolkit.provider.javafx</module>
+		<module>../org.eclipse.jubula.toolkit.provider.mobile</module>
+		<module>../org.eclipse.jubula.toolkit.provider.mobile.ios</module>
 		<module>../org.eclipse.jubula.toolkit.provider.swt</module>
         <module>../org.eclipse.jubula.toolkit.provider.win</module>
         <module>../org.eclipse.jubula.toolkit.provider.win.apps</module>

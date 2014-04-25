@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+    Copyright (c) 2014 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<!--
+	CAUTION: don't format any entries, especially don't use line breaks!
+	The value of the formated item may contain formating characters like
+	tabs or newlines, making them unusable for class or data lookup!
+	-->
+<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../jubula/org.eclipse.jubula.toolkit.common/resources/xml/ToolkitComponentConfiguration.xsd">
+	<configVersion>
+		<majorVersion>1</majorVersion>
+		<minorVersion>0</minorVersion>
+	</configVersion>
+  
+  <!-- Button -->
+  <concreteComponent type="abstract.ios.Button">
+    <realizes>guidancer.concrete.Button</realizes>
+    <action name="CompSystem.Swipe" changed="1.00">
+      <method>rcSwipe</method>
+      <param name="CompSystem.Direction">
+		<type>java.lang.String</type>
+		<defaultValue>right</defaultValue>
+		<valueSet>
+			<element name="CompSystem.Up" value="up"/>
+			<element name="CompSystem.Down" value="down"/>
+			<element name="CompSystem.Right" value="right"/>
+			<element name="CompSystem.Left" value="left"/>
+		</valueSet>
+	  </param>
+    </action>
+  </concreteComponent>
+  <toolkitComponent type="ios.UIButton" visible="false">
+    <realizes>abstract.ios.Button</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UIButtonTester</testerClass>
+    <componentClass name="ios.UIButton" />
+  </toolkitComponent>
+  <toolkitComponent type="ios.UISwitch" visible="false">
+    <realizes>abstract.ios.Button</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UIButtonTester</testerClass>
+    <componentClass name="ios.UISwitch" />
+  </toolkitComponent>
+  
+    <!-- Textfield -->
+  <concreteComponent type="abstract.ios.TextComponent">
+    <realizes>guidancer.concrete.TextComponent</realizes>
+    <action name="CompSystem.Swipe" changed="1.00">
+      <method>rcSwipe</method>
+      <param name="CompSystem.Direction">
+		<type>java.lang.String</type>
+		<defaultValue>right</defaultValue>
+		<valueSet>
+			<element name="CompSystem.Up" value="up"/>
+			<element name="CompSystem.Down" value="down"/>
+			<element name="CompSystem.Right" value="right"/>
+			<element name="CompSystem.Left" value="left"/>
+		</valueSet>
+	  </param>
+    </action>
+  </concreteComponent>
+  <toolkitComponent type="ios.UITextField" visible="false">
+    <realizes>abstract.ios.TextComponent</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextComponentTester</testerClass>
+    <componentClass name="ios.UITextField" />
+  </toolkitComponent>
+  <toolkitComponent type="ios.UITextView" visible="false">
+    <realizes>abstract.ios.TextComponent</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextComponentTester</testerClass>
+    <componentClass name="ios.UITextView" />
+  </toolkitComponent>
+  
+  <!-- Label -->
+  <concreteComponent type="abstract.ios.TextVerifiable">
+    <realizes>guidancer.abstract.TextVerifiable</realizes>
+    <action name="CompSystem.Swipe" changed="1.00">
+      <method>rcSwipe</method>
+      <param name="CompSystem.Direction">
+		<type>java.lang.String</type>
+		<defaultValue>right</defaultValue>
+		<valueSet>
+			<element name="CompSystem.Up" value="up"/>
+			<element name="CompSystem.Down" value="down"/>
+			<element name="CompSystem.Right" value="right"/>
+			<element name="CompSystem.Left" value="left"/>
+		</valueSet>
+	  </param>
+    </action>
+  </concreteComponent>
+  <toolkitComponent type="ios.UILabel" visible="false">
+    <realizes>abstract.ios.TextVerifiable</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
+    <componentClass name="ios.UILabel" />
+  </toolkitComponent>
+  <toolkitComponent type="ios.UITableViewCell" visible="false">
+    <realizes>abstract.ios.TextVerifiable</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
+    <componentClass name="ios.UITableViewCell" />
+  </toolkitComponent>
+  
+  <toolkitComponent type="ios.UINavigationItemView" visible="false">
+    <realizes>abstract.ios.TextVerifiable</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
+    <componentClass name="ios.UINavigationItemView" />
+  </toolkitComponent>
+  <toolkitComponent type="ios.UITabBarButton" visible="false">
+    <realizes>abstract.ios.TextVerifiable</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
+    <componentClass name="ios.UITabBarButton" />
+  </toolkitComponent>
+  
+  <toolkitComponent type="ios.UIImageView" visible="false">
+    <realizes>abstract.ios.TextVerifiable</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
+    <componentClass name="ios.UIImageView" />
+  </toolkitComponent>
+  
+  <!-- List -->
+  <concreteComponent type="abstract.ios.List">
+    <realizes>guidancer.concrete.List</realizes>
+    <action name="CompSystem.Swipe" changed="1.00">
+      <method>rcSwipe</method>
+      <param name="CompSystem.Direction">
+		<type>java.lang.String</type>
+		<defaultValue>right</defaultValue>
+		<valueSet>
+			<element name="CompSystem.Up" value="up"/>
+			<element name="CompSystem.Down" value="down"/>
+			<element name="CompSystem.Right" value="right"/>
+			<element name="CompSystem.Left" value="left"/>
+		</valueSet>
+	  </param>
+    </action>
+  </concreteComponent>
+  <toolkitComponent type="ios.UITableView" visible="false">
+    <realizes>abstract.ios.List</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UIListTester</testerClass>
+    <componentClass name="ios.UITableView" />
+  </toolkitComponent>
+  
+  <!-- Tabbed Control -->
+  <concreteComponent type="abstract.ios.TabComponent">
+    <realizes>guidancer.concrete.TabbedPane</realizes>
+    <action name="CompSystem.Swipe" changed="1.00">
+      <method>rcSwipe</method>
+      <param name="CompSystem.Direction">
+		<type>java.lang.String</type>
+		<defaultValue>right</defaultValue>
+		<valueSet>
+			<element name="CompSystem.Up" value="up"/>
+			<element name="CompSystem.Down" value="down"/>
+			<element name="CompSystem.Right" value="right"/>
+			<element name="CompSystem.Left" value="left"/>
+		</valueSet>
+	  </param>
+    </action>
+  </concreteComponent>
+  <toolkitComponent type="ios.UISegmentedControl" visible="false">
+    <realizes>abstract.ios.TabComponent</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITabComponentTester</testerClass>
+    <componentClass name="ios.UISegmentedControl" />
+  </toolkitComponent>
+  <toolkitComponent type="ios.UITabBar" visible="false">
+    <realizes>abstract.ios.TabComponent</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITabComponentTester</testerClass>
+    <componentClass name="ios.UITabBar" />
+  </toolkitComponent>
+  
+  <!-- Combo Box Controls -->
+  <concreteComponent type="abstract.ios.Picker" visible="true">
+    <realizes>guidancer.concrete.ComboBox</realizes>
+    <action name="CompSystem.Swipe" changed="1.00">
+      <method>rcSwipe</method>
+      <param name="CompSystem.Direction">
+		<type>java.lang.String</type>
+		<defaultValue>right</defaultValue>
+		<valueSet>
+			<element name="CompSystem.Up" value="up"/>
+			<element name="CompSystem.Down" value="down"/>
+			<element name="CompSystem.Right" value="right"/>
+			<element name="CompSystem.Left" value="left"/>
+		</valueSet>
+	  </param>
+    </action>
+    <action name="CompSystem.VerifyContainsValueInColumn" changed="2.2">
+      <method>rcVerifyContainsValue</method>
+      <param name="CompSystem.Text">
+        <type>java.lang.String</type>
+      </param>
+      <param name="CompSystem.Operator">
+        <type>java.lang.String</type>
+        <defaultValue>equals</defaultValue>
+        <valueSet>
+          <element name="CompSystem.Equals" value="equals"/>
+          <element name="CompSystem.NotEquals" value="not equals"/>
+          <element name="CompSystem.MatchesRegExp" value="matches"/>
+          <element name="CompSystem.SimpleMatch" value="simple match"/>
+        </valueSet>
+      </param>
+      <param name="CompSystem.Exists">
+          <type>java.lang.Boolean</type>
+          <defaultValue>true</defaultValue>
+          <valueSet>
+              <element name="CompSystem.True" value="true"/>
+              <element name="CompSystem.False" value="false"/>
+          </valueSet>
+      </param>
+      <param name="CompSystem.Column">
+        <type>java.lang.Integer</type>
+		<defaultValue>1</defaultValue>
+      </param>
+    </action>
+    <action name="CompSystem.VerifySelectedIndexInColumn" changed="2.2">
+      <method>rcVerifySelectedIndex</method>
+      <param name="CompSystem.OneIndex">
+        <type>java.lang.String</type>
+      </param>
+      <param name="CompSystem.IsSelected">
+          <type>java.lang.Boolean</type>
+          <defaultValue>true</defaultValue>
+          <valueSet>
+              <element name="CompSystem.True" value="true"/>
+              <element name="CompSystem.False" value="false"/>
+          </valueSet>
+      </param>
+      <param name="CompSystem.Column">
+        <type>java.lang.Integer</type>
+        <defaultValue>1</defaultValue>
+      </param>
+    </action>
+    <action name="CompSystem.SelectIndexInColumn" changed="1.3">
+      <method>rcSelectIndex</method>
+      <param name="CompSystem.OneIndex">
+        <type>java.lang.String</type>
+      </param>
+      <param name="CompSystem.Column">
+        <type>java.lang.Integer</type>
+      <defaultValue>1</defaultValue>
+      </param>
+    </action>
+    <action name="CompSystem.SelectValueInColumn" changed="1.20">
+      <method>rcSelectValue</method>
+      <param name="CompSystem.Text">
+        <type>java.lang.String</type>
+      </param>
+      <param name="CompSystem.Operator">
+        <type>java.lang.String</type>
+        <defaultValue>equals</defaultValue>
+        <valueSet>
+          <element name="CompSystem.Equals" value="equals"/>
+          <element name="CompSystem.NotEquals" value="not equals"/>
+          <element name="CompSystem.MatchesRegExp" value="matches"/>
+          <element name="CompSystem.SimpleMatch" value="simple match"/>
+        </valueSet>
+      </param>
+      <param name="CompSystem.SearchType">
+        <type>java.lang.String</type>
+        <defaultValue>absolute</defaultValue>
+        <valueSet>
+          <element name="CompSystem.Absolute" value="absolute"/>
+          <element name="CompSystem.Relative" value="relative"/>
+        </valueSet>
+      </param>
+      <param name="CompSystem.Column">
+        <type>java.lang.Integer</type>
+        <defaultValue>1</defaultValue>
+      </param>
+    </action>
+  </concreteComponent>
+  
+  <toolkitComponent type="ios.UIPickerView" visible="false">
+    <realizes>abstract.ios.Picker</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UIPickerViewTester</testerClass>
+    <componentClass name="ios.UIPickerView" />
+  </toolkitComponent>
+
+  <toolkitComponent type="ios.UIApplication" visible="true" hasDefaultMapping="true">
+    <realizes>guidancer.concrete.GraphicApplication</realizes>
+    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UIApplicationTester</testerClass>
+    <componentClass name="ios.UIApplication" />
+    <action name="CompSystem.TapViewWithAccessibilityLabel" changed="1.0">
+      <method>rcTapViewWithAccessibilityLabel</method>
+      <param name="CompSystem.Label">
+        <type>java.lang.String</type>
+      </param>    
+    </action>
+  </toolkitComponent>
+
+</compSystem>
