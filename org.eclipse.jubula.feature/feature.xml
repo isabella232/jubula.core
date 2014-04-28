@@ -11,7 +11,9 @@
       label="Jubula Functional Testing"
       version="2.3.0.qualifier"
       provider-name="Eclipse Jubula"
-      plugin="org.eclipse.jubula.client.ui">
+      plugin="org.eclipse.jubula.client.ui"
+      license-feature="org.eclipse.license"
+      license-feature-version="0.0.0">
 
    <description url="http://www.eclipse.org/jubula">
       Eclipse functional UI testing environment.
@@ -28,7 +30,7 @@ Contributors:
 BREDEX GmbH - initial API and implementation and/or initial documentation
    </copyright>
 
-   <license url="license.html">
+   <license url="%licenseURL">
       %license
    </license>
 
