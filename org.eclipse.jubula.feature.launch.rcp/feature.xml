@@ -10,7 +10,9 @@
       id="org.eclipse.jubula.feature.launch.rcp"
       label="Jubula Launch Support for Eclipse RCP"
       version="2.3.0.qualifier"
-      provider-name="Eclipse Jubula">
+      provider-name="Eclipse Jubula"
+      license-feature="org.eclipse.license"
+      license-feature-version="0.0.0">
 
    <description url="http://www.eclipse.org/jubula">
       Jubula Eclipse plug-in development environment launch integration.
@@ -27,7 +29,7 @@ Contributors:
 BREDEX GmbH - initial API and implementation and/or initial documentation
    </copyright>
 
-   <license url="license.html">
+   <license url="%licenseURL">
       %license
    </license>
 
