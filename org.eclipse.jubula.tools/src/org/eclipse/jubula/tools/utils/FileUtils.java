@@ -12,6 +12,11 @@ package org.eclipse.jubula.tools.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.constants.TestexecConstants;
 
 /**
  * @author BREDEX GmbH
@@ -55,6 +60,23 @@ public class FileUtils {
             valid = false;
         }
         return valid;
+    }
+    /** checks if the given URI is relative and resolve it to the absolute against the base URL
+     * @param basePath the base directory
+     * @param path a text path given by user
+     * @return absolute against the base URL path or EXIT_INVALID_ARG_VALUE ("-2") if invalid URL was given
+     */
+    public static String resolveAgainstBasePath(
+            String path, String basePath) {
+        URI uri = URI.create(path);
+        if (!(uri.isAbsolute()
+                || uri.getPath().startsWith(StringConstants.SLASH))) {
+            if (StringUtils.isEmpty(basePath)) {
+                return String.valueOf(TestexecConstants.INVALID_VALUE);
+            }
+            uri = new File(basePath).toURI().resolve(uri);
+        }
+        return uri.toString();
     }
 
 }

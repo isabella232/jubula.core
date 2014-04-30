@@ -49,6 +49,7 @@ import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionI
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.constants.TestexecConstants;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.Message;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -467,6 +468,13 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         extendValidate(job, errorMsg);
         if (errorOccured) {
             throw new PreValidateException(errorMsg.toString());
+        }
+        // If the datadir directory was not specified by user and the default value (platform's working directory)
+        // cannot be used because the platform is running without an instance location
+        if (job.getDataDir() == String.valueOf(
+                TestexecConstants.INVALID_VALUE)) {
+            throw new PreValidateException(
+                    Messages.NoPlatformInstanceLocation); 
         }
         if (job.getDbscheme() == null && job.getDb() == null) {
             List<DatabaseConnection> availableConnections = 
