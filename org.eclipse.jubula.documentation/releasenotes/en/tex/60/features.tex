@@ -1,1 +1,154 @@
-\input{60/jubulafeatures}
+\textbf{Test Execution Duration now shown for each node in \gdtestresultview{}}\\
+\begin{itemize}
+\item The amount of time taken to execute each \gdstep{}, \gdcase{} and \gdsuite{} is now shown in the \gdtestresultview{}.
+\item You can use this information to see whether your tests or parts of your tests are taking longer than you expected them to, 
+without having to set timers or manually check timestamps.
+\item The HTML and XML reports generated or exported for the test results also show the execution times.
+\item You can switch off the decoration in the \app{} client in the \bxname{label decoration} preferences.
+\end{itemize} 
+
+\textbf{Parameter values now shown for each node in \gdtestresultview{}}\\
+\begin{itemize}
+\item The parameter values entered or used at a specific level (\gdcase{}, \gdstep{}) are now shown in the \gdtestresultview{}.
+\item You can use this information to see which data were used for your \gdcases{}, without having to click through each individual node in the \gdtestresultview{}. This can be especially useful if you have one \gdcase{} that runs multiple times with different datasets.
+\item You can switch off the decoration in the \app{} client in the \bxname{label decoration} preferences.
+\end{itemize} 
+
+\textbf{Missing data decoration now shown in the \gdtestcaseeditor{} and \gdtestsuiteeditor{}}
+\begin{itemize}
+\item When working on a \gdcase{} or \gdsuite{} in their respective editors, you will now see small red crosses on any referenced \gdcases{} or \gdsteps{} in that editor which have missing data \textit{at this level} (i.e. data that should be entered in this editor). 
+\item This will help avoid problems with forgetting to enter data in the \gdpropview{}. 
+
+\end{itemize}
+
+\textbf{Functions can be entered as parameter values}
+\begin{itemize}
+\item Alongside concrete values (\bxshell{abc}), references (\bxshell{=P1}) and variables (\bxshell{\$VAR}), you can now enter functions as data, or as parts of your data.
+\item The sign to introduce a function is the question mark: \bxshell{?}
+\bxwarn{Any question marks used as test data will have to be escaped using one or more backslashes as of this new version. A warning in the console view will appear after importing your \gdproject{} if you have any unescaped question marks in your data. You can then use the search function to find them and mask them.} 
+\item There are functions available out of the box for various mathematical calculations and for working with dates.  
+\item Functions can be embedded in other functions, e.g. \bxshell{?add(?sub(3,2),4)} to add the result of (3-2) to 4. 
+\item Functions can also make use of other data entry options in \app{} such as variables (\bxshell{?add(\${VAR1},={P1})} adds the number in the variable VAR1 to the number in the reference P1). 
+\item You can add your own functions via an extension point. 
+\end{itemize}
+
+\textbf{Categories now supported in the \gdtestsuitebrowser{} and \gddataeditor}\\
+\begin{itemize}
+\item It is now possible to create categories for \gdsuites{} and \gdjobs{} in the \gdtestsuitebrowser{}, as well as for central data sets in the \gddataeditor{}. 
+\item Existing \gdprojects{} will be shown as having two categories (\bxname{Test Suites} and \bxname{Test Jobs}) in the \gdtestsuitebrowser{} as was previously the case. However, you can now rename, delete and rearrange categories in the \gdtestsuitebrowser{}. 
+\end{itemize} 
+
+\textbf{Teststyle framework and some guidelines now also in \jb{}}
+\begin{itemize}
+\item There is a new properties page in the \gdproject{} properties for Teststyle.
+\item The Teststyle framework is a feature that allows \gdprojects{} to be analyzed for their adherence to standards, best practices and rules for test specification.
+\item The framework was previously a part of \gd{} and has now been migrated to \jb{}. 
+\item \jb{} contains a small set of standard rules for test specification. Teststyle in \gd{} contains more guidelines and rules for naming conventions, test specification and test structure. 
+\end{itemize}
+
+\textbf{Analysis framework in \app{}}
+\begin{itemize}
+\item A new analysis framework has been added to \app{} to gain information on the size, ratios and details of a \gdproject{}.
+\item The analysis framework currently contains three example metrics that can be run on existing or new \gdprojects{}. 
+\end{itemize}
+
+\textbf{Save As New \gdcase{}}
+\begin{itemize}
+\item There is a new option in the \gdtestcaseeditor{} and \gdtestsuiteeditor{} to save selected items as a new \gdcase{}.
+\item The selected nodes are added to a new \gdcase{} whose name you define.
+\item The nodes are not copied, but their references are: the effect is the same as if you had manually created a new \gdcase{} and added the \gdcases{} to it. 
+\end{itemize}
+
+\textbf{New action: Store Property Value}\\
+\begin{itemize}
+\item The \bxname{abstract} toolkit contains a new action on the \bxname{Graphics Component} component to store the value of a property.
+\item The action works in a similar way to the \bxname{Check Property} action, except that the expected value must not be entered. Instead, the actual value is saved into a variable you define.
+\item You can use this value later on in the test, or you can compare various values using the actions to compare string values or compare numeric values. 
+\item One example use case for this new action is to test table filters. The rowCount of the table can be saved into a variable before filtering, and the rowCount after filtering into a different variable. The variables can then be compared with each other to ensure that the second value is less than the first, for example.
+\end{itemize} 
+
+\textbf{New extensible adapter mechanism for Swing components}\\
+\begin{itemize}
+\item \app{} now allows you to add support for renderers for Swing components without the getText() method.
+\item An example of the adapter mechanism can be found here:\\
+\bxname{http://git.eclipse.org/c/jubula/org.eclipse.jubula.core.git/}\\
+\bxname{tree/org.eclipse.jubula.examples.extension.swing.rc.adapter}
+\item This does not replace the support for custom Swing renderers that can be changed directly by your developers. 
+\item If you are able to change the renderers yourself, you can still implement one of the following in your renderer:
+\begin{quote}
+public String getTestableText();
+public String getText();
+\end{quote}
+\end{itemize}
+
+\textbf{Completeness check shown as progress window}\\
+\begin{itemize}
+\item After saving in the \ite{}, the completeness check which validates the state of the \gdproject{} (test data, object mapping, missing \gdcases{} etc) is now shown explicitly as a progress window.
+\item This results from performance improvements made to the completeness check.
+\end{itemize} 
+
+\textbf{Eclipse Marketplace Client now accessible from within the \ite{}}
+\begin{itemize}
+\item You can now open the Eclipse Marketplace Client from the \bxmenu{Help}{}{} menu.
+\item You can use the Marketplace Client to search for new software to install. 
+\item Please be aware that we do not test \app{} for compatibility with plugins installed via the Marketplace that are not provided by BREDEX GmbH or the Eclipse \jb{} project and therefore recommend caution when installing new software. 
+\end{itemize}
+
+\textbf{Changes to layout of properties view for test results}\\
+\begin{itemize}
+\item The properties view for test results now shows all test data as two columns: the parameter name and the value.
+\item This reduces the amount of space required to see test data for test results. 
+\end{itemize} 
+
+
+\textbf{GD\_AUT\_STARTUP\_DELAY renamed to TEST\_AUT\_STARTUP\_DELAY}\\
+\begin{itemize}
+\item There is an undocumented variable that can be set as an environment variable to increase the delay between starting an \gdaut{} and checking that it is there.
+\item This delay was named \bxshell{GD\_AUT\_STARTUP\_DELAY} and has now been updated to \bxshell{TEST\_AUT\_STARTUP\_DELAY}. Any customers using this variable should update it in their test environment. 
+\end{itemize}
+
+\textbf{Selenium update}
+\begin{itemize}
+\item The version of Selenium used by \app{} has been updated to 2.12.0.
+\end{itemize}
+
+\textbf{New \dash{} application to view test result reports in the browser}
+\begin{itemize}
+\item \app{} contains a new web application which displays the \reportpersp{}.
+\item Using this \dash{}, you can open and analyze Test Result Reports in a web browser without having to start \app{}, and over the network. 
+\item The \dash{} consists of a server for the \dash{} ( \bxshell{dashboardserver.exe}) can be found in \bxname{<INSTALLATION\_DIR>/dashboard}. 
+\item You can start the application in the browser by entering:\\
+\bxshell{http://<HOSTNAME>:<PORTNUMBER>/dashboard}
+
+\item The \dash{} can also be started in a default mode which starts the \bxname{dashboardserver} with default parameters (for the embedded \gddb{}) and opens the browser on your machine. 
+\end{itemize}
+
+\textbf{New JaCoCo Version allows large reports to be sent to \ite{}}
+\begin{itemize}
+\item \app{} now uses the latest version of JaCoCo, 0.5.5
+\item In the new version, large reports must not be created as zipped files on the \gdagent{} machine, but can be sent to the \ite{} as well.  We have successfully performed code coverage analysis with JaCoCo in  \app{} on an \gdaut{} with 72,000 classes.  
+\item Any increase to heap space must now be done for the \ite{}, no longer for the \gdagent{}, as the handling for reports is now in the client code. 
+\item The documentation has been updated, and now also includes tips on using JaCoCo to see the Lines of Code executed by the test (Class files must be compiled with Debug information) and warns against using JaCoCo at the same time as other byte-code manipulations.
+\item JaCoCo can now be used if you are using the embedded \gdagent{}. 
+\end{itemize}
+
+\textbf{Mylyn tasks can be created from the \reportpersp{}}
+\begin{itemize}
+\item In the \reportpersp{}, you can now create a Mylyn report from within an open \gdtestresultview{} for a test run. 
+\item The Mylyn task is created with the information available in the node you select from the test result. 
+\item This can be used to make entering e.g. issues in bug-tracking systems about failed tests more comfortable. 
+\end{itemize}
+
+\textbf{Mylyn connectors for Bugzilla and Trac available with \app{}}
+\begin{itemize}
+\item In addition to local tasks, there are now Mylyn connectors for Bugzilla and Trac available with \app{}.
+\item The connectors must be configured to your system and are available from \bxname{Add Task Repository} in the New Task Dialog.
+\item The connector for Bugzilla supports 3.0 and later, the connector for Trac supports 0.10 to 0.12 through Web and XML-RPC.
+\end{itemize}
+
+
+\textbf{Altered license terms for maintenance contracts}
+\begin{itemize}
+\item The license terms for maintenance contracts have changed. Maintenance contracts are no longer automatically renewed, but customers are reminded two months in advance of their expiration. 
+\item New maintenance contracts can be purchased before the expiration of the old contract for a discount, or for the full price if they are purchased after the expiration of the old maintenance contract. 
+\end{itemize}

@@ -1,1 +1,105 @@
-\input{80/jubulaissues}
+
+\textbf{Problem displaying component names from browsers}
+\begin{itemize}
+\item In some siutations, when viewing the \gdcompnamesview{} from a browser, you may see GUIDs (a long number/character string) instead of the component name.
+\item This is a problem displaying the component name at the moment and can be considered a display error, albeit a serious one. 
+\item The component names themselves are correct, and can be seen either by opening the editor, or by refreshing the \gdproject{}.
+\end{itemize}
+
+\textbf{Issue with incorrect handling of \bxshell{null} in renderers fixed}
+\begin{itemize}
+\item Renderers in Swing that return \bxshell{null} can now be correctly handled.
+\item See \url{http://eclip.se/426978} for more details. 
+\end{itemize}
+
+\textbf{Selenium update}
+\begin{itemize}
+\item We have updated the version of Selenium used for HTML tests to 2.39.
+\end{itemize}
+
+\textbf{Port number for embedded \gdagent{} changed}
+\begin{itemize}
+\item The default port number for the embedded \gdagent{} is now 60001.
+\item You can change the default port number in the preferences.
+\end{itemize}
+
+\textbf{Table view has been removed from the \gdomeditor{}}
+\begin{itemize}
+\item The table view has been removed from the \gdomeditor{}.
+\end{itemize}
+
+\textbf{Problems opening BIRT reports when using IE11}
+\begin{itemize}
+\item There is a known issue with BIRT reporting that occurs when using Internet Explorer 11. 
+\item There is a ticket open in the \gd{} Bugzilla (\url{https://bugzilla.bredex.de/show_bug.cgi?id=1281}) and in the Eclipse Bugzilla (\url{http://eclip.se/422056}) for this. The ticket in the Eclipse Bugzilla documents workarounds.
+\end{itemize}
+
+\textbf{Java 1.4 \gdauts{} no longer testable}
+\begin{itemize}
+\item As of this version, Java 1.4 \gdauts{} are no longer testable with the \ite{}. 
+\end{itemize}
+
+\textbf{Changes to the launcher for the \gdagent{}}
+\begin{itemize}
+\item The \gdagent{} is no longer available under the name \bxshell{autagent-lin} or \bxshell{autagent-sol}.
+\item Use the launcher \bxshell{autagent} instead.
+\end{itemize}
+
+\textbf{Java 7 tests on Mac}
+\begin{itemize}
+\item There are still some issues running tests on Mac machines with Java 7. We suggest using Java 6 on Mac machines for the moment.
+\end{itemize}
+
+\textbf{Working directory for \ite{} and \gdagent{} on Linux}
+\begin{itemize}
+\item The \gdagent{} and the \ite{} now  use the current directory as their working directory on Linux systems.
+\end{itemize}
+
+
+\textbf{The \ite{} now uses Java 7}
+\begin{itemize}
+\item We have updated the version of Java installed with the \ite{} to version 7.
+\end{itemize}
+
+\textbf{The installer requires Java 7}
+\begin{itemize}
+\item You will need Java 7 installed to be able to run the installer.
+\end{itemize}
+
+\textbf{iOS 5.0 no longer supported}
+\begin{itemize}
+\item We no longer support testing on iOS 5.0 \gdauts{}.
+\end{itemize}
+
+\textbf{Working with RDP connections on Windows 8}
+\begin{itemize}
+\item Windows 8 users working with RDP connections for test execution should ensure that they have installed all updates for Windows. 
+\end{itemize}
+
+\textbf{Updated the version of EclipseLink used}
+\begin{itemize}
+\item In this version, we have switched to EclipseLink 2.5.1 and JPA 2.1.0.
+\end{itemize}
+
+\textbf{Vista support removed}
+\begin{itemize}
+\item We no longer execute tests on Vista: the support for Vista has been removed for this version.
+\end{itemize}
+
+\textbf{Multi-window mode for HTML testing on Mac OSX}
+\begin{itemize}
+\item There are known issues with starting \gdauts{} that are using the multi-window mode on Mac OSX, both in Firefox and Safari.
+\item We have removed these combinations from our tests.
+\end{itemize}
+
+\textbf{Pure SWT \gdauts{} no longer tested}
+\begin{itemize}
+\item We no longer execute regression tests on pure SWT \gdauts{}. We do, however, perform various tests on RCP, which uses SWT components. 
+\end{itemize}
+
+\textbf{\gdagent{} started without console per default}
+\begin{itemize}
+\item The standalone \gdagent{} is now started without a console per default.
+\item If you would like to see the console when starting the \gdagent{}, you must adapt the \bxname{autagent.ini} file.
+\item In the -vm parameter, use \bxname{java} instead of \bxname{javaw}.
+\end{itemize}

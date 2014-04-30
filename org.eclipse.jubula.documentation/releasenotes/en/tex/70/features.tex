@@ -1,1 +1,87 @@
-\input{70/jubulafeatures}
+\textbf{Support for testing \gdauts{} written with e4}
+\begin{itemize}
+\item \gdauts{} that are written with e4 can now also be tested.  
+\item As a result of this, the starting of RCP \gdauts{} has changed slightly -- please read the documentation in the section on \bxname{Toolkits} in the User Manual for more details. 
+\item Currently, GEF figures can only be tested in \gdauts{} written with Eclipse 3.x versions. 
+\end{itemize}
+
+\textbf{Testing of iOS \gdauts{} now supported}
+\begin{itemize}
+\item There is a new toolkit in \app{} for testing iOS \gdauts{}.
+\item You can write tests for iOS apps and run them on the device or simulator.
+\item For more information on the prerequisites for iOS testing, as well as the information on working with the actions, please refer to the section on iOS in the \bxname{Toolkit} chapter of the documentation. 
+\end{itemize}
+
+
+\textbf{Addition of Turkish as supported language for the unbound modules}
+\begin{itemize}
+\item Turkish is now supported in the unbound modules.
+\end{itemize}
+
+\textbf{\app{} is now 64-bit compliant}
+\begin{itemize}
+\item The installation of \app{} is now architecture-dependent.
+\item The \app{}.ini now contains different JVM-arguments defining the allocated heapsize:
+\begin{description}
+\item [1024 mb]{for 32 bit installations}
+\item [2048 mb]{for 64 bit installations}
+\end{description}
+\end{itemize}
+
+\textbf{HTML Test Result Reports now include screenshots on error}
+\begin{itemize}
+\item Any screenshots taken automatically during a test (i.e. when an error occurs) are now also displayed in the HTML Test Result Reports that can be exported from the Reporting Perspective or that are generated automatically after the test. 
+\end{itemize}
+
+\textbf{\gdpropview{} and HTML reports parameter visualization updated}\\
+\begin{itemize}
+\item The layout of the properties view and the HTML reports has been updated so that each parameter (test data) now only takes up one line. 
+\item The name and type of the parameter are in the first column, and the value (which can usually be edited in the \gdpropview{} is in the second column.
+\item This makes the \gdpropview{} easier to read and to use. 
+\end{itemize}
+
+\textbf{\gdpropview{} easier to recognize as uneditable}\\
+\begin{itemize}
+\item When selecting an item from a Browser, the \gdpropview{} is now more recognizable as non-editable.
+\item The background for the whole table is gray, and the color of the text has been changed from black to gray.
+\end{itemize}
+
+\textbf{Double-clicking on any item in a browser opens the relevant editor}
+\begin{itemize}
+\item If you double-click on an item in a browser that is, at the place where you double-click it, actually reused in another element, then the editor for the item's direct parent will be opened, and the item you double-clicked will be selected. 
+\item For example, if you double-click a \gdcase{} in the \gdtestsuitebrowser{} that is reused in a \gdsuite{}, then the \gdtestsuiteeditor{} for the \gdsuite{} will open, and the \gdcase{} you clicked will be selected.
+\item The same behavior applies to \gdcases{} reused in other \gdcases{}, \gdsuites{} reused in \gdjobs{}, and \gdehandlers{} reused in \gdcases{}. 
+\item If the parent comes from a reused \gdproject{}, then the editor will not open.
+\item This behaviour makes it easier to navigate around your \gdproject{}. 
+\end{itemize}
+
+\textbf{Double-clicking on any item in an editor opens the item in its own editor}
+\begin{itemize}
+\item If you double-click on an item in an editor, then the editor for the item you clicked will be opened (i.e. as if you had pressed \bxkey{F3} - open specification). 
+\item For example, if you double-click a \gdcase{} in the \gdtestsuitebrowser{} then the \gdtestcaseeditor{} for the \gdcase{} you clicked will be opened.
+\item The same behavior applies to \gdcases{} reused in other \gdcases{}, \gdsuites{} reused in \gdjobs{}, and \gdehandlers{} reused in \gdcases{}. 
+\item If the item comes from a reused \gdproject{}, then the editor will not open.
+\item Using \bxkey{ENTER} to open the \bxname{Add new Test Case reference} dialog has not changed.
+\item This behaviour makes it easier to navigate around your \gdproject{}. 
+\end{itemize}
+
+\textbf{Selenium version updated}
+\begin{itemize}
+\item The version of Selenium used by \app{} to execute HTML tests has been updated to version 2.30.0.
+\end{itemize}
+
+\textbf{Chronon version in \app{} updated }
+\begin{itemize}
+\item \app{} now uses version 3.2.129 of Chronon for the embedded support.
+\end{itemize}
+
+\textbf{Support for testing on Windows 8}
+\begin{itemize}
+\item Windows 8 is now supported for testing \gdauts{}.
+\end{itemize}
+
+\textbf{Support for own text renderers in SWT}
+\begin{itemize}
+\item If you have components with text that cannot be read due to it being rendered differently, you can now allow the text to be read.
+\item Use \bxshell{setData(TEST\_TESTABLE\_TEXT), text} on the instance of the item or component whose text you want to read in your test. 
+\end{itemize}

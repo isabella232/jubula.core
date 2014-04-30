@@ -1,1 +1,111 @@
-\input{61/jubulafeatures}
+\textbf{Multiple \gdtestcasebrowser{} instances now supported}
+\begin{itemize}
+\item You can now open the \gdtestcasebrowser{} multiple times.
+\item You can designate one \gdtestcasebrowser{} as the main browser. This browser will be used for actions such as show specification etc.
+\end{itemize}
+
+\textbf{Workspace dialog now allows remembering of workspace}
+\begin{itemize}
+\item You can now select the option to remember your default workspace in the workspace chooser.
+\end{itemize}
+
+\textbf{Remember password and auto-login for \gddb{}}
+\begin{itemize}
+\item In the \gddb{} login dialog, you can select the option to remember your password. 
+\item If you have selected this option, you can also specify that the \gddb{} should be used as the default \gddb{} you will be automatically logged in when a \gddb{} connection is required. 
+\item The above options are not available for the embedded \gddb{}.
+\item To change the \gddb{} you are connected to, or to change your default database login, use:\\
+\bxmenu{Test}{Select Database}{}
+\end{itemize}
+
+\textbf{Auto-load for default \gdproject{}}
+\begin{itemize}
+\item In the \bxname{Open Project} dialog, you can now identify the selected \gdproject{} and version number as your default \gdproject{}.
+\item You can have one default \gdproject{} per workspace. 
+\item When you have a default \gdproject{} set, then selecting:\\
+\bxmenu{Test}{Open}{}\\
+will automatically load this \gdproject{}.
+\item You can remove the default loading in the \bxname{Test} preferences. 
+\end{itemize}
+
+\textbf{Testexec and DBTool can use -dburl instead of workspace (-data) parameter}
+\begin{itemize}
+\item To make working with the testexec and dbtool easier, you can now use the dburl parameter to specify which \gddb{} to connect to during the process.
+\item This removes the need to specify which workspace to use (via \bxshell{-data}) when working with the testexec and dbtool. 
+\item You can still enter the workspace and the -dbscheme information if you prefer not to use the -dburl parameter. 
+\end{itemize}
+
+\textbf{Selenium version and tested browsers updated}
+\begin{itemize}
+\item \app{} now uses a newer version of Selenium that supports newer versions of Firefox.
+\item We have updated our tests to run on Firefox version 15.
+\end{itemize}
+
+\textbf{Frames and iFrames now supported for Web Testing}
+\begin{itemize}
+\item \gdauts{} that contain Frames and iFrames can now be tested by \app{}
+\end{itemize}
+
+\textbf{HTML:\bxname{pre} tags now supported as component with text}
+\begin{itemize}
+\item In HTML \gdauts{}, you can now map components that use the \verb+<pre>+ tag and perform e.g. check text actions on them.
+\end{itemize}
+
+\textbf{Chronon: Embedded recorder no longer needs to be commented in}
+\begin{itemize}
+\item You can now start the embedded Chronon recording in \app{} without having to comment it in in the .ini file. 
+\item The only exception to this is on Linux systems, where you must comment Chronon in for the \ite{} in the .ini file by removing the hash signs from the two lines in the .ini file, and then restart \app{}. If you are starting \app{} from the command line with Chronon on Linux, please ensure that your current directory is the \app{} directory, otherwise \app{} will not start.
+\end{itemize}
+
+\textbf{Chronon: New preference page and options for \ite{} Chronon}
+\begin{itemize}
+\item In the preferences dialog, there is now a Chronon category. In this category, you can select the \bxname{ITE Chronon} page. 
+\item On this page, you can configure options for the embedded Chronon in the \ite{}. You can configure the output directory for the Chronon recording, as well as any include or exclude patterns that should be included and / or ignored for the recording.  
+\end{itemize}
+
+\textbf{Chronon: Support for Chronon server installation for use with \gdauts{}}
+\begin{itemize}
+\item When you use Chronon with your \gdaut{}, you now have two choices -- you can use the integrated Chronon to record your \gdaut{} or you can specify where your Chronon installation is, thus allowing you to use the Chronon Recording Server. This is the recommended choice for working in continuous integration processes.   
+\end{itemize}
+
+\textbf{Chronon: Support for exclude patterns in \gdaut{} configurations}
+\begin{itemize}
+\item If you are using the integrated Chronon support for testing your \gdaut{}, then you now have the option to specify exclude patterns for the recording as well as include patterns. 
+\end{itemize}
+
+\textbf{Chronon: \app{} now uses Chronon 3}
+\begin{itemize}
+\item \app{} now uses Chronon version 3 to perform embedded recording (in \app{} itself) and also for the integrated recording in \gdauts{}.
+\end{itemize}
+
+\textbf{JRE version updated}
+\begin{itemize}
+\item \app{} now uses version 1.6.0\_33 of the Java runtime environment.
+\end{itemize}
+
+
+\textbf{\app{} supports the testing of .NET \gdauts{}}
+\begin{itemize}
+\item You can now also test .NET \gdauts{} with \app{}.
+\item Currently, WinForms \gdauts{} can be tested.
+\item Further information is available in the section on Toolkits in the User Manual.
+\end{itemize}
+
+
+\textbf{New metric in \app{}: Waits and Delays}\\
+\begin{itemize}
+\item There is a new metric in \app{} that analyzes the waits and delays used in a test that has run.
+\item You can start the metric from a Test Result Report and enter a parameter for the minimum amount of waited time (in milliseconds) that should be considered.
+\item The Search Result View displays all the static waits within the node you selected. They are sorted according to the action they belong to, and you can see how much time each type of wait accumulates to over the test.  
+\end{itemize}
+
+\textbf{New BIRT Report: Test Execution Overview}
+\begin{itemize}
+\item There is a new BIRT report available to give an overview of the test execution. 
+\item This report shows a list of executed, relevant \gdsuites{} over the time period selected. For each day in the time period, there is a colored block for the \gdsuite{} to display its status. Green means that the test ran without any errors. Red means that the test ran, but with errors. Yellow means that the test ran more than once on that day. White means that the \gdsuite{} did not run on this day. This report is useful for teams with large amounts of \gdsuites{} who need to ensure on a daily basis that all \gdsuites{} were started.
+\end{itemize}
+
+\textbf{New JaCoCo version used}
+\begin{itemize}
+\item \app{} now uses JaCoCo version 0.5.9 for code coverage. Further information on the changes in the new JaCoCo version can be found in the JaCoCo release notes.
+\end{itemize}
