@@ -11,8 +11,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.testexec;
 
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.app.testexec.batch.ExecutionController;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.JobConfiguration;
@@ -73,12 +75,8 @@ public class TestexecClient extends AbstractCmdlineClient {
             ExecutionController controller = ExecutionController.getInstance();
 
             // start job
-            if (isNoRun()) {
-                controller.simulateJob();
-            } else {
-                if (!controller.executeJob()) {
-                    exitCode = EXIT_CODE_ERROR;
-                }
+            if (!controller.executeJob()) {
+                exitCode = EXIT_CODE_ERROR;
             }
         } catch (CommunicationException e) {
             log.error(e.getLocalizedMessage(), e);
@@ -149,9 +147,11 @@ public class TestexecClient extends AbstractCmdlineClient {
         options.addOption(createOption(ClientTestStrings.DATA_DIR, true, 
             ClientTestStrings.DATA_DIR_EX, 
             Messages.ClientDataFile, false));
-        options.addOption(createOption(ClientStrings.NORUN, false, 
-                StringConstants.EMPTY, 
-                Messages.ClientNoRunOpt, false));
+        Option noRunOption = createOption(ClientStrings.NORUN, true, 
+                ClientStrings.NORUN_MODE, 
+                Messages.ClientNoRunOpt, false);
+        noRunOption.setOptionalArg(true);
+        options.addOption(noRunOption);
         options.addOption(createOption(ClientTestStrings.AUTO_SCREENSHOT,
                 false, StringConstants.EMPTY, Messages.ClientAutoScreenshot, 
                     false));
@@ -175,7 +175,7 @@ public class TestexecClient extends AbstractCmdlineClient {
      * {@inheritDoc}
      */
     protected void extendValidate(JobConfiguration job, 
-            StringBuilder errorMsgs) {
+            StringBuilder errorMsgs, StringBuilder errorInvalidArgsMsg) {
         if (job.getProjectName() == null) {
             appendError(errorMsgs, ClientTestStrings.PROJECT, 
                     ClientTestStrings.PROJECT_NAME);
@@ -213,6 +213,12 @@ public class TestexecClient extends AbstractCmdlineClient {
         if (job.getTimeout() < 0) {
             appendError(errorMsgs, ClientTestStrings.TIMEOUT,
                     ClientTestStrings.TIMEOUT);
+        }
+        if ((!StringUtils.isEmpty(job.getNoRunOptMode()))
+                && (job.getNoRunOptMode().equals(
+                        JobConfiguration.EXIT_INVALID_ARGUMENT))) {
+            appendValidationError(errorInvalidArgsMsg, ClientStrings.NORUN,
+                    ClientStrings.NORUN_MODE);
         }
 
     }

@@ -25,6 +25,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jubula.client.cmd.constants.ClientStrings;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
 import org.eclipse.jubula.client.core.businessprocess.db.TestJobBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
@@ -44,6 +45,7 @@ import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionI
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.constants.TestexecConstants;
+import org.eclipse.jubula.tools.constants.TestexecConstants.NoRunSteps;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 import org.eclipse.jubula.tools.utils.FileUtils;
 import org.eclipse.jubula.tools.utils.NetUtil;
@@ -65,6 +67,8 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 public class JobConfiguration {
     /** Separator between major and minor version numbers */
     public static final char VERSION_SEPARATOR = '.';
+    /** exit String in case of invalid options */
+    public static final String EXIT_INVALID_ARGUMENT = "invalid argument"; //$NON-NLS-1$
     /** String */
     private static final String CONFIGURATION = "configuration";  //$NON-NLS-1$
     
@@ -92,6 +96,8 @@ public class JobConfiguration {
     private String m_resultDir;
     /** configuration detail */
     private String m_autConfigName;
+    /** mode for no-run option */
+    private String m_noRunOptMode = StringUtils.EMPTY;
     /** configuration detail */
     private List<String> m_testSuiteNames = new ArrayList<String>();
     /** the name of the Test Job to execute */
@@ -201,6 +207,14 @@ public class JobConfiguration {
         setDbscheme(JobConfiguration.getConnectionInfoForName(connectionName));
     }
 
+    /**
+     * @return String noRunOptMode
+     * return "" (empty string value)  if testexec run without norun option
+     */
+    public String getNoRunOptMode() {
+        return m_noRunOptMode;
+    }
+    
     /**
      * @return String
      */
@@ -414,8 +428,7 @@ public class JobConfiguration {
                     setProjectMajor(Integer.parseInt(numbers[0]));
                     setProjectMinor(Integer.parseInt(numbers[1])); 
                 } catch (NumberFormatException nfe) {
-                    // Do nothing. The version values will not be set and 
-                    // this will be noticed during pre-validation.
+                    // Do nothing. The version values will not be set and this will be noticed during pre-validation.
                 } 
             }
         }
@@ -469,6 +482,37 @@ public class JobConfiguration {
                 setTimeout(TestexecConstants.INVALID_VALUE); 
             }
         }
+        if (cmd.hasOption(ClientStrings.NORUN)) {
+            checkAndSetNoRunOptMode(cmd);
+        }
+    }
+
+    /**checks the value the argument of the no-run option and sets it is case it is valid
+     * @param cmd CommandLine
+     */
+    private void checkAndSetNoRunOptMode(CommandLine cmd) {
+        String noRunModeValue = cmd.getOptionValue(ClientStrings.NORUN);
+        if (!StringUtils.isEmpty(noRunModeValue)) {
+            setNoRunOptMode(isNoRunModeValid(noRunModeValue)
+                    ? noRunModeValue : EXIT_INVALID_ARGUMENT);
+        }
+    }
+
+    /**
+     * validates the no-run mode
+     * 
+     * @param noRunModeValue
+     *            the value to be validated
+     * @return true if value is a valid NoRunOption mode
+     */
+    private static boolean isNoRunModeValid(String noRunModeValue) {
+        for (NoRunSteps noRunOptMode
+                : TestexecConstants.NoRunSteps.values()) {
+            if (noRunOptMode.getStepValue().equals(noRunModeValue)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -482,7 +526,7 @@ public class JobConfiguration {
         }
         return TestexecConstants.INVALID_VALUE;
     }
-
+    
     /**
      * parses the command line parameter when the parameter startserver was set
      * set the parsed parameter into a job object
@@ -549,6 +593,9 @@ public class JobConfiguration {
         if (cmd.hasOption(ClientTestStrings.LANGUAGE)) { 
             setLanguage(LocaleUtil.convertStrToLocale(
                     cmd.getOptionValue(ClientTestStrings.LANGUAGE))); 
+        }
+        if (cmd.hasOption(ClientStrings.NORUN)) {
+            checkAndSetNoRunOptMode(cmd);
         }
 
     }
@@ -692,6 +739,13 @@ public class JobConfiguration {
      */
     private void setProjectName(String projectName) {
         m_projectName = projectName;
+    }
+    
+    /**
+     * @param noRunOptMode String
+     */
+    private void setNoRunOptMode(String noRunOptMode) {
+        m_noRunOptMode = noRunOptMode;
     }
 
     /**
@@ -873,7 +927,12 @@ public class JobConfiguration {
             arg1.startNode(ClientTestStrings.LANGUAGE);
             arg1.setValue(job.getLanguage().toString());
             arg1.endNode();
-
+            
+            arg1.startNode(ClientStrings.NORUN);
+            String noRunOptMode = job.getNoRunOptMode();
+            arg1.setValue(isNoRunModeValid(noRunOptMode)
+                    ? noRunOptMode : EXIT_INVALID_ARGUMENT);
+            arg1.endNode();
         }
 
         /**
@@ -933,19 +992,24 @@ public class JobConfiguration {
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.DATA_DIR)) {
                     job.setDataDir(FileUtils.resolveAgainstBasePath(
-                            arg0.getValue(), 
-                            getInstanceLocationPath()));
+                            arg0.getValue(), getInstanceLocationPath()));
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.TESTSUITE)) {
                     job.setTestSuiteName(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.TESTJOB)) {
                     job.setTestJobName(arg0.getValue());
+                } else if (arg0.getNodeName().
+                        equals(ClientStrings.NORUN)) {
+                    String noRunModeValue = arg0.getValue();
+                    if (!StringUtils.isEmpty(noRunModeValue)) {
+                        job.setNoRunOptMode(isNoRunModeValid(noRunModeValue)
+                                    ? noRunModeValue : EXIT_INVALID_ARGUMENT);
+                    }
                 } else {
                     String platformWorkDir = getInstanceLocationPath(); 
                     job.setDataDir((!StringUtils.isEmpty(platformWorkDir))
-                            ? platformWorkDir 
-                            : String.valueOf(
+                            ? platformWorkDir : String.valueOf(
                                     TestexecConstants.INVALID_VALUE));
                 }
                 arg0.moveUp();

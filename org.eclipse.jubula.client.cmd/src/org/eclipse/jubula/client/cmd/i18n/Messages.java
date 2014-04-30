@@ -18,6 +18,7 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.cmd.i18n.messages"; //$NON-NLS-1$
+
     
     public static String AnErrorOcurred;
     public static String ClientAutconfigOpt;
@@ -43,6 +44,7 @@ public class Messages extends NLS {
     public static String ClientExitCode;
     public static String ClientExitCodeTask;
     public static String ClientHelpOpt;
+    public static String ClientInvalidArgs;
     public static String ClientJobFileError;
     public static String ClientLanguageOpt;
     public static String ClientMissingArgs;
@@ -54,6 +56,7 @@ public class Messages extends NLS {
     public static String ClientProjectOpt;
     public static String ClientProjectVersionOpt;
     public static String ClientQuietOpt;
+    public static String ClientReadUserManual;
     public static String ClientRelevantFlag;
     public static String ClientResultdirOpt;
     public static String ClientServerOpt;

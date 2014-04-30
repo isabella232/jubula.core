@@ -749,7 +749,7 @@ public class TestExecutionContributor
             AutIdentifier autId, boolean autoScreenshot) {
         TimeUtil.delay(TimingConstantsClient.START_TEST_SUITE_DELAY);
         getClientTest().startTestSuite(ts, WorkingLanguageBP.getInstance()
-            .getWorkingLanguage(), autId, autoScreenshot, null);
+            .getWorkingLanguage(), autId, autoScreenshot, null, null);
     }
 
     /**
