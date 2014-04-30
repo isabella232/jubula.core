@@ -1,6 +1,6 @@
 The following metrics and analyses are available:
 
-\subsubsection{Numeric Project Element Counter}
+\subsection{Numeric Project Element Counter}
 This metric is in the category \bxname{Numerical Metrics}.
 
 This metric counts the amount of items in a \gdproject{} according to the following rules:
@@ -17,16 +17,30 @@ This metric counts the amount of items in a \gdproject{} according to the follow
 
 The results are shown in the Search Result View.
 
-\subsubsection{Ratio general : specific}
+\subsection{Ratio general : specific}
 This metric is in the category \bxname{Numerical Metrics}.
 
 This metric calculates the amount of \gdcases{} or \gdsteps{} used that are generally available for all \bxname{toolkits} (the \bxcaption{concrete} actions). It then counts the amount of actions used that are specific to one or more particular toolkits (e.g. specific to the RCP toolkit or the HTML toolkit). The results are presented as percentages in the Search Result View.
 
 Wherever possible, it is preferable to work with more general actions than specific. This metric may help you to gauge how well you are keeping to this guideline. 
 
-\subsubsection{Empty chains analysis}
+\subsection{Empty chains analysis}
 This analysis is in the category \bxname{Analysis}.
 
 This analysis examines the current scope for test hierarchies wherein a \gdcase{} is reused in one place --  alone in another \gdcase{}. This \gdcase{} is then also reused in one place -- again alone  which is then reused in one place alone in another \gdcase{} and so on. Such hierarchies can often be redundant: the \gdcase{} at the bottom of the hierarchy could just as well have been reused directly in the \gdcase{} at the top of the hierarchy. 
 
 Such empty chains are collected during the analysis (which may take longer on larger \gdprojects{}) and displayed in the Search Result View. They are shown in order of their length, starting with the longest chains.
+
+\subsection{Waits and delays}
+This analysis can be performed on Test Result Reports in the \execpersp{} and in the \reportpersp{}. Select a node you want to analyze and select:\\
+\bxmenu{Analyze}{Waits and delays}{}\\
+from the context-sensitive menu.
+
+The analysis examines the selected node and the nodes below it in the Test Result Report for all instances where a wait is performed. This can be the action \bxcaption{Wait} or it could also be the parameters \bxcaption{Delay after...} or \bxcaption{Delay before...}. Basically, any time a static wait (i.e. not a timeout) is performed, then this is analyzed.
+
+You can define a parameter for the analysis which specifies the minimum value of waits to be analyzed (in milliseconds). If you enter e.g. 5000, then only waits above 5000ms will be shown in the results.
+
+Once the results have been calculated, they are shown in the Search Result View. They are organized according to the action that the wait is contained in. The amount of waits corresponding to each action is shown in brackets behind the action name. On the right hand side of the Search Result View, the cumulative values for the amount of waits for each action are shown. The number on the left is the total amount of waits that correspond to the parameter value entered. The number on the right shows the total amount of waits for this action, regardless of the parameter. In this way, it is easier to see whether your tests have a few very large waits, or many smaller waits. 
+
+\bxtipp{Double click on one of the wait actions to jump to this place in the test Result View.}
+
