@@ -23,7 +23,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
@@ -67,13 +66,15 @@ public class ChildrenGetter {
         } else if (o instanceof ContextMenu) {
             add(result, getFrom((ContextMenu) o).getValue());
         }
-        
+
         return result;
     }
 
     /**
      * Gets the child of the <code>ContextMenu</code>, its <code>Scene</code>
-     * @param c the <code>ContextMenu</code>
+     * 
+     * @param c
+     *            the <code>ContextMenu</code>
      * @return the <code>Scene</code>
      */
     public static ReadOnlyObjectProperty<Scene> getFrom(ContextMenu c) {
@@ -81,19 +82,21 @@ public class ChildrenGetter {
     }
 
     /**
-     * Adds <code>toAdd</code> to <code>collection</code> if 
+     * Adds <code>toAdd</code> to <code>collection</code> if
      * <code>toAdd != null</code>.
      * 
-     * @param collection The collection to be modified by this call.
-     * @param toAdd The element to add.
-     * @return <code>true</code> if <code>collection</code> changed as a result 
+     * @param collection
+     *            The collection to be modified by this call.
+     * @param toAdd
+     *            The element to add.
+     * @return <code>true</code> if <code>collection</code> changed as a result
      *         of this call.
      */
     private static boolean add(Collection<Object> collection, Object toAdd) {
         if (toAdd != null) {
             return collection.add(toAdd);
         }
-        
+
         return false;
     }
 
@@ -107,9 +110,7 @@ public class ChildrenGetter {
      */
     public static Object getAsRealType(Object o) {
         Object result = null;
-        if (o instanceof MenuBar) {
-            result = getFrom((MenuBar) o);
-        } else if (o instanceof Menu) {
+        if (o instanceof Menu) {
             result = getFrom((Menu) o);
         } else if (o instanceof Parent) {
             if (o instanceof ScrollPane) {
@@ -150,9 +151,8 @@ public class ChildrenGetter {
     }
 
     /**
-     * Returns the Children of a Parent Node, which could be Nodes or other
-     * Parent Nodes. Some of this Nodes are Nodes from the Internal API like the
-     * Text on a Button.
+     * Returns the Children of a Parent Node, but without the nodes that belong
+     * to the Skin.
      *
      * @param parent
      *            the Parent
