@@ -10,6 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.testexec.batch;
 
+import static org.eclipse.jubula.tools.constants.TestexecConstants.NoRunSteps.CAA;
+import static org.eclipse.jubula.tools.constants.TestexecConstants.NoRunSteps.CC;
+import static org.eclipse.jubula.tools.constants.TestexecConstants.NoRunSteps.CDB;
+import static org.eclipse.jubula.tools.constants.TestexecConstants.NoRunSteps.LP;
+import static org.eclipse.jubula.tools.constants.TestexecConstants.NoRunSteps.SA;
+import static org.eclipse.jubula.tools.utils.TestexecUtils.isExecutionFinished;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -405,25 +412,24 @@ public class ExecutionController implements IAUTServerEventListener,
         //connection to AUT Agent
         if (!prepareAUTAgentConnection(clientTest)) {
             return false;
-        } else if (isExecutionFinished(noRun, 
-                TestexecConstants.NoRunSteps.CAA)) {
+        } else if (isExecutionFinished(noRun, CAA)) {
             return true;
         }
         clientTest.setRelevantFlag(m_job.isRelevant());
         clientTest.setScreenshotXMLFlag(m_job.isXMLScreenshot());
         //prepare connection to the DB
         prepareDBConnection();
-        if (isExecutionFinished(noRun, TestexecConstants.NoRunSteps.CDB)) {
+        if (isExecutionFinished(noRun, CDB)) {
             return true;
         }
         // load project
         loadProject();
-        if (isExecutionFinished(noRun, TestexecConstants.NoRunSteps.LP)) {
+        if (isExecutionFinished(noRun, LP)) {
             return true;
         }
         //check the completeness of the test
         checkTestCompleteness();
-        if (isExecutionFinished(noRun, TestexecConstants.NoRunSteps.CC)) {
+        if (isExecutionFinished(noRun, CC)) {
             return true;
         }
         // start AUT, working will be set false, after AUT started
@@ -441,8 +447,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 //start AUT and check that it was started
                 ensureAutIsStarted(m_job.getActualTestSuite(), 
                       m_job.getAutConfig());
-                if (isExecutionFinished(noRun, 
-                        TestexecConstants.NoRunSteps.SA)) {
+                if (isExecutionFinished(noRun, SA)) {
                     return true;
                 }
                 //start of the test execution
@@ -456,16 +461,6 @@ public class ExecutionController implements IAUTServerEventListener,
             timer.abort();
         }
         return isNoErrorWhileExecution();
-    }
-
-    /**
-     * @param noRunMode String noRun option mode
-     * @param step current step of noRun execution
-     * @return true is no run execution must be finished
-     */
-    private boolean isExecutionFinished(String noRunMode,
-            TestexecConstants.NoRunSteps step) {
-        return noRunMode.equals(step.getStepValue());
     }
 
     /**sets default value of noRunOptMode if no argument was specified and prints the informing message  
