@@ -524,6 +524,11 @@ public class ComponentHandler implements ListChangeListener<Stage>,
                     }
                 }
             }
+            IComponentIdentifier[] ids = hierarchy.getAllComponentId();
+            for (IComponentIdentifier id : ids) {
+                log.error("###### Hierarchy: " + id.getHierarchyNames() 
+                        + " Context: " + id.getNeighbours());
+            }
             throw new ComponentNotFoundException(cnme.getMessage(),
                     MessageIDs.E_COMPONENT_NOT_FOUND);
         } catch (IllegalArgumentException iae) {
