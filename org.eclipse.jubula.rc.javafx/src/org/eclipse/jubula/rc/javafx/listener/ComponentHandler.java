@@ -27,6 +27,8 @@ import javafx.scene.control.Skin;
 import javafx.scene.control.SkinBase;
 import javafx.scene.control.Skinnable;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToolBar;
 import javafx.stage.Stage;
@@ -273,7 +275,19 @@ public class ComponentHandler implements ListChangeListener<Stage>,
                     return true;
                 }
             }
-        }
+        } else if (parent instanceof TabPane) {
+            TraverseHelper<Node> helper = 
+                    new TraverseHelper<>();
+            Tab tab = ((TabPane)parent).getSelectionModel().
+                    getSelectedItem();
+            Node content = tab.getContent();
+            if (content == n) {
+                return true;
+            } else if (content instanceof Parent 
+                    && helper.isChildOf(n, (Parent)content)) {
+                return true;
+            } 
+        } 
         return false;
     }
     
