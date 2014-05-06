@@ -36,12 +36,12 @@
   </concreteComponent>
   <toolkitComponent type="ios.UIButton" visible="false">
     <realizes>abstract.ios.Button</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UIButtonTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UIButtonTester</testerClass>
     <componentClass name="ios.UIButton" />
   </toolkitComponent>
   <toolkitComponent type="ios.UISwitch" visible="false">
     <realizes>abstract.ios.Button</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UIButtonTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UIButtonTester</testerClass>
     <componentClass name="ios.UISwitch" />
   </toolkitComponent>
   
@@ -64,12 +64,12 @@
   </concreteComponent>
   <toolkitComponent type="ios.UITextField" visible="false">
     <realizes>abstract.ios.TextComponent</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextComponentTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITextComponentTester</testerClass>
     <componentClass name="ios.UITextField" />
   </toolkitComponent>
   <toolkitComponent type="ios.UITextView" visible="false">
     <realizes>abstract.ios.TextComponent</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextComponentTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITextComponentTester</testerClass>
     <componentClass name="ios.UITextView" />
   </toolkitComponent>
   
@@ -92,29 +92,29 @@
   </concreteComponent>
   <toolkitComponent type="ios.UILabel" visible="false">
     <realizes>abstract.ios.TextVerifiable</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
     <componentClass name="ios.UILabel" />
   </toolkitComponent>
   <toolkitComponent type="ios.UITableViewCell" visible="false">
     <realizes>abstract.ios.TextVerifiable</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
     <componentClass name="ios.UITableViewCell" />
   </toolkitComponent>
   
   <toolkitComponent type="ios.UINavigationItemView" visible="false">
     <realizes>abstract.ios.TextVerifiable</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
     <componentClass name="ios.UINavigationItemView" />
   </toolkitComponent>
   <toolkitComponent type="ios.UITabBarButton" visible="false">
     <realizes>abstract.ios.TextVerifiable</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
     <componentClass name="ios.UITabBarButton" />
   </toolkitComponent>
   
   <toolkitComponent type="ios.UIImageView" visible="false">
     <realizes>abstract.ios.TextVerifiable</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
     <componentClass name="ios.UIImageView" />
   </toolkitComponent>
   
@@ -137,7 +137,7 @@
   </concreteComponent>
   <toolkitComponent type="ios.UITableView" visible="false">
     <realizes>abstract.ios.List</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UIListTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UIListTester</testerClass>
     <componentClass name="ios.UITableView" />
   </toolkitComponent>
   
@@ -160,12 +160,12 @@
   </concreteComponent>
   <toolkitComponent type="ios.UISegmentedControl" visible="false">
     <realizes>abstract.ios.TabComponent</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITabComponentTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITabComponentTester</testerClass>
     <componentClass name="ios.UISegmentedControl" />
   </toolkitComponent>
   <toolkitComponent type="ios.UITabBar" visible="false">
     <realizes>abstract.ios.TabComponent</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UITabComponentTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITabComponentTester</testerClass>
     <componentClass name="ios.UITabBar" />
   </toolkitComponent>
   
@@ -273,13 +273,13 @@
   
   <toolkitComponent type="ios.UIPickerView" visible="false">
     <realizes>abstract.ios.Picker</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UIPickerViewTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UIPickerViewTester</testerClass>
     <componentClass name="ios.UIPickerView" />
   </toolkitComponent>
 
   <toolkitComponent type="ios.UIApplication" visible="true" hasDefaultMapping="true">
     <realizes>guidancer.concrete.GraphicApplication</realizes>
-    <testerClass>com.bredexsw.guidancer.rc.mobile.ios.impl.UIApplicationTester</testerClass>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UIApplicationTester</testerClass>
     <componentClass name="ios.UIApplication" />
     <action name="CompSystem.TapViewWithAccessibilityLabel" changed="1.0">
       <method>rcTapViewWithAccessibilityLabel</method>
