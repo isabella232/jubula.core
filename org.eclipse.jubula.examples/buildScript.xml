@@ -21,7 +21,6 @@
 	<property name="SimpleAdder.SWT"	value="org.eclipse.jubula.examples.aut.adder.swt"/>
 	<property name="SimpleAdder.Web"	value="org.eclipse.jubula.examples.aut.adder.html"/>
 	<property name="DvdTool"			value="org.eclipse.jubula.examples.aut.dvdtool"/>
-	<property name="GEFExample"         value="com.bredexsw.guidancer.examples.aut.gef"/>
 	
 	<property name="ExampleSwingExtensionAUT"       value="org.eclipse.jubula.examples.extension.swing.aut"/>
 	<property name="ExampleSwingExtensionClient"    value="org.eclipse.jubula.examples.extension.swing.toolkit"/>
@@ -46,7 +45,6 @@
 									releaseSimpleAdderSWT,
 									releaseSimpleAdderWeb,
 									releaseDvdTool,
-                                    releaseGEFExample,
                                     releaseProjects,
 									releaseLibrary,
 									releaseScripts,
@@ -124,22 +122,12 @@
 		<antcall target="markAsExecutable" />
 	</target>
 	
-	<target name="releaseGEFExample">
-        <ant dir="../${guidancerWS}/${GEFExample}" antfile="buildScript.xml" target="build" inheritAll="false" />
-        <copy todir="${examples.aut.dir}">
-            <fileset dir="../${guidancerWS}/${GEFExample}/build"/>
-        </copy>
-        <chmod file="${examples.aut.dir}/GEFExample/GEFExample-lin" perm="775"/>
-        <chmod file="${examples.aut.dir}/GEFExample/GEFExample.app/Contents/MacOS/GEFExample" perm="775"/>
-    </target>
-	
 	<target name="clean">
 		<delete dir="${build.dir}" />
 		<ant dir="../${SimpleAdder.Swing}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 	    <ant dir="../${SimpleAdder.JavaFX}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 		<ant dir="../${SimpleAdder.SWT}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 		<ant dir="../${DvdTool}" antfile="buildScript.xml" target="clean" inheritAll="false" />
-		<ant dir="../${guidancerWS}/${GEFExample}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 	</target>
 
 	<target name="markAsExecutable">
