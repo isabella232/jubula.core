@@ -160,9 +160,8 @@ public class JavaFXComponentAdapter<T extends Node> extends
             return openPropertyContextMenu(xPos, xUnits, yPos, yUnits, button,
                     (Control)n);
 
-        } else {
-            return openContextMenu(xPos, xUnits, yPos, yUnits, button, n);
         }
+        return openContextMenu(xPos, xUnits, yPos, yUnits, button, n);
     }
 
     /**
