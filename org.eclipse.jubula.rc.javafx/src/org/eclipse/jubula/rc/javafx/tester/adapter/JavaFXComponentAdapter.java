@@ -11,7 +11,9 @@
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.Callable;
@@ -155,57 +157,159 @@ public class JavaFXComponentAdapter<T extends Node> extends
             String yUnits, int button) throws StepExecutionException {
         Node n = getRealComponent();
         if (n instanceof Control && ((Control) n).getContextMenu() != null) {
-            Control comp = (Control) n;
-            final EventLock event = new EventLock();
-            ContextMenu cotxMenu = comp.getContextMenu();
-            EventHandler<WindowEvent> filter = new EventHandler<WindowEvent>() {
+            return openPropertyContextMenu(xPos, xUnits, yPos, yUnits, button,
+                    (Control)n);
 
-                @Override
-                public void handle(WindowEvent e) {
-                    synchronized (event) {
-                        event.notifyAll();
+        } else {
+            return openContextMenu(xPos, xUnits, yPos, yUnits, button, n);
+        }
+    }
+
+    /**
+     * Opens the context menu of the given node and finds it with
+     * Window.impl_getWindows(). Use this method for components which are not a
+     * subclass of Control and therefore don't have the context menu property
+     * 
+     * @param xPos
+     *            what x position
+     * @param xUnits
+     *            should x position be pixel or percent values
+     * @param yPos
+     *            what y position
+     * @param yUnits
+     *            should y position be pixel or percent values
+     * @param button
+     *            MouseButton
+     * @param n
+     *            the Node
+     * @return a MenuTester instance which references the context menu
+     */
+    private AbstractMenuTester openContextMenu(int xPos, String xUnits,
+            int yPos, String yUnits, int button, Node n) {
+        boolean isAbsoluteUnitsX = CompSystemConstants.POS_UNIT_PIXEL
+                .equalsIgnoreCase(xUnits);
+        boolean isAbsoluteUnitsY = CompSystemConstants.POS_UNIT_PIXEL
+                .equalsIgnoreCase(yUnits);
+        getRobot().click(
+                n,
+                null,
+                ClickOptions.create().setClickCount(1)
+                        .setMouseButton(button), xPos, isAbsoluteUnitsX,
+                yPos, isAbsoluteUnitsY);
+        return EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "showPopup", new Callable<MenuTester>() { //$NON-NLS-1$
+
+                    @Override
+                    public MenuTester call() throws Exception {
+                        MenuTester menuTester = null;
+                        Iterator<Window> iter = Window.impl_getWindows();
+                        
+                        ArrayList<ContextMenu> result = new ArrayList<>();
+                        
+                        long timeout = TimeoutConstants.
+                                SERVER_TIMEOUT_WAIT_FOR_POPUP;
+                        long done = System.currentTimeMillis() + timeout;
+                        long now;
+                        do {
+                            if (!iter.hasNext()) {
+                                iter = Window.impl_getWindows();
+                            }
+                            Window w = iter.next();
+                            if (w instanceof ContextMenu 
+                                    && !result.contains(w)) {
+                                result.add((ContextMenu) w);
+                            }
+                            now = System.currentTimeMillis();
+                            timeout = done - now;
+                        } while (timeout > 0 
+                                && !(!iter.hasNext() && result.size() > 0));
+                        
+                        if (result.size() == 1) {
+                            ContextMenu cm = result.get(0);
+                            menuTester = new MenuTester();
+                            menuTester.setComponent(cm);
+                        } else if (result.size() == 0) {
+                            throw new StepExecutionException("No Context Menu was found", //$NON-NLS-1$
+                                    EventFactory
+                                            .createActionError(TestErrorEvent.
+                                                    POPUP_NOT_FOUND));
+                        } else if (result.size() > 1) {
+                            throw new StepExecutionException("Multiple Context Menus were found", //$NON-NLS-1$
+                                    EventFactory
+                                            .createActionError(TestErrorEvent.
+                                            UNSUPPORTED_OPERATION_IN_TOOLKIT_ERROR)); //$NON-NLS-1$
+                        }
+                        return menuTester;
                     }
-                }
-            };
-            cotxMenu.addEventFilter(WindowEvent.WINDOW_SHOWN, filter);
-            // RobotTiming.sleepPreShowPopupDelay();
-            boolean isAbsoluteUnitsX = CompSystemConstants.POS_UNIT_PIXEL
-                    .equalsIgnoreCase(xUnits);
-            boolean isAbsoluteUnitsY = CompSystemConstants.POS_UNIT_PIXEL
-                    .equalsIgnoreCase(yUnits);
-            getRobot().click(
-                    comp,
-                    null,
-                    ClickOptions.create().setClickCount(1)
-                            .setMouseButton(button), xPos, isAbsoluteUnitsX,
-                    yPos, isAbsoluteUnitsY);
+                });
+    }
 
-            if (!comp.getContextMenu().isShowing()) {
-                try {
-                    synchronized (event) {
-                        event.wait(TimeoutConstants.
-                                SERVER_TIMEOUT_WAIT_FOR_POPUP);
-                    }
-                } catch (InterruptedException e) {
-                    // ignore
-                } finally {
-                    cotxMenu.removeEventFilter(WindowEvent.
-                            WINDOW_SHOWN, filter);
-                }
+    /**
+     * Opens the context menu of the given control, via the context menu
+     * property.
+     * 
+     * @param xPos
+     *            what x position 
+     * @param xUnits should x position be pixel or percent
+     *            values
+     * @param yPos
+     *            what y position 
+     * @param yUnits should y position be pixel or percent
+     *            values
+     * @param button
+     *            MouseButton
+     * @param comp
+     *            the control
+     * @return a MenuTester instance which references the context menu
+     */
+    private AbstractMenuTester openPropertyContextMenu(int xPos, String xUnits,
+            int yPos, String yUnits, int button, Control comp) {
+        final EventLock event = new EventLock();
+        ContextMenu cotxMenu = comp.getContextMenu();
+        EventHandler<WindowEvent> filter = new EventHandler<WindowEvent>() {
 
+            @Override
+            public void handle(WindowEvent e) {
+                synchronized (event) {
+                    event.notifyAll();
+                }
             }
-            if (comp.getContextMenu().isShowing()) {
-                MenuTester tester = new MenuTester();
-                tester.setComponent(cotxMenu);
-                return tester;
+        };
+        cotxMenu.addEventFilter(WindowEvent.WINDOW_SHOWN, filter);
+        // RobotTiming.sleepPreShowPopupDelay();
+        boolean isAbsoluteUnitsX = CompSystemConstants.POS_UNIT_PIXEL
+                .equalsIgnoreCase(xUnits);
+        boolean isAbsoluteUnitsY = CompSystemConstants.POS_UNIT_PIXEL
+                .equalsIgnoreCase(yUnits);
+        getRobot().click(
+                comp,
+                null,
+                ClickOptions.create().setClickCount(1)
+                        .setMouseButton(button), xPos, isAbsoluteUnitsX,
+                yPos, isAbsoluteUnitsY);
+
+        if (!comp.getContextMenu().isShowing()) {
+            try {
+                synchronized (event) {
+                    event.wait(TimeoutConstants.
+                            SERVER_TIMEOUT_WAIT_FOR_POPUP);
+                }
+            } catch (InterruptedException e) {
+                // ignore
+            } finally {
+                cotxMenu.removeEventFilter(WindowEvent.
+                        WINDOW_SHOWN, filter);
             }
-            throw new StepExecutionException("Popup could not be opened", //$NON-NLS-1$
-                    EventFactory
-                            .createActionError(TestErrorEvent.POPUP_NOT_FOUND));
 
         }
-        throw new StepExecutionException("Component has no Popup", //$NON-NLS-1$
-                EventFactory.createActionError(TestErrorEvent.POPUP_NOT_FOUND));
+        if (comp.getContextMenu().isShowing()) {
+            MenuTester tester = new MenuTester();
+            tester.setComponent(cotxMenu);
+            return tester;
+        }
+        throw new StepExecutionException("Popup could not be opened", //$NON-NLS-1$
+                EventFactory
+                        .createActionError(TestErrorEvent.POPUP_NOT_FOUND));
     }
 
     @Override

@@ -152,7 +152,7 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         List<? extends Node> comps = getAssignableFrom(Node.class);
         List<Node> matches = new ArrayList<Node>();
         for (Node n : comps) {
-            if (n.getScene() == null) {
+            if (n.getScene() == null || !NodeBounds.checkIfContains(pos, n)) {
                 continue;
             }
             if (isSupported(n.getClass())) {
@@ -175,7 +175,7 @@ public class ComponentHandler implements ListChangeListener<Stage>,
                         parent = parent.getParent();
                     }
                 }
-                if (add && NodeBounds.checkIfContains(pos, n)) {
+                if (add) {
                     matches.add(n);
                 }
             }

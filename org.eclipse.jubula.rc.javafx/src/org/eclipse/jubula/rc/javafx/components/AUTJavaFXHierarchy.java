@@ -83,7 +83,6 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
                 lastParent = parent;
                 parent = ParentGetter.get(parent);
             }
-
             createHierarchy(lastParent == null ? o : lastParent);
         } finally {
             m_lock.unlock();
@@ -178,7 +177,6 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
             Map contMap = getHierarchyMap();
 
             Map realMap = getRealMap();
-            
             JavaFXComponent fxComp = ctner.getComponent();
 
             fxComp.removeChangeListener();
