@@ -255,8 +255,7 @@ class TestResultPO implements ITestResultPO {
      * @return the keywordName
      */
     @Basic
-    @Column(
-            name = "KEYWORD_NAME", 
+    @Column(name = "KEYWORD_NAME", 
             length = IPersistentObject.MAX_STRING_LENGTH)
     public String getKeywordName() {
         return m_keywordName;
@@ -293,9 +292,7 @@ class TestResultPO implements ITestResultPO {
      * @return the keywordGuid
      */
     @Basic
-    @Column(
-            name = "INTERNAL_KEYWORD_GUID", 
-            length = IPersistentObject.MAX_STRING_LENGTH)
+    @Column(name = "INTERNAL_KEYWORD_GUID")
     public String getInternalKeywordGuid() {
         return m_keywordGuid;
     }
@@ -400,9 +397,7 @@ class TestResultPO implements ITestResultPO {
      * @return the componentNameGuid
      */
     @Basic
-    @Column(
-            name = "INTERNAL_COMPONENT_NAME", 
-            length = IPersistentObject.MAX_STRING_LENGTH)
+    @Column(name = "INTERNAL_COMPONENT_NAME")
     public String getInternalComponentNameGuid() {
         return m_componentNameGuid;
     }
