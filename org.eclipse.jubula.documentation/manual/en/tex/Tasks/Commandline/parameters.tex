@@ -118,7 +118,6 @@
 		No run option (optional)
                   & \bxshell{-n}\\
                   &e.g. \emph{-n}\\
-                  &There is a set of parameters to configure the no run \bxpref{TasksTestExecNorun}\\
 		&Checks if the \gdsuite{} is startable.\\
 		\hline
 		Quiet option (optional)
@@ -202,6 +201,9 @@ You can use the \bxname{dburl} parameter to specify which \gddb{} should be used
 \end{itemize}
 \bxtipp{To stop the test execution, use \bxkey{Ctrl+C}}
 \end{enumerate}
+
+\subsubsection{The no-run option}
+Using the no run option will check the completeness of the \gdproject{}, test data and the validity of the \gddb{} connection. The \gdagent{} connection is not checked. 
 
 \subsubsection{Passing on arguments to the JVM}
 The test executor also accepts arguments to pass on to the Java Virtual Machine. This means that you can, for example, increase the initial and maximum amount of system memory allocated to the JVM with the parameters \bxshell{-Xms<memory\_size>} and \bxshell{-Xmx<memory\_size>}, respectively. For example, the parameter \bxshell{-Xmx128M} would make a maximum of 128 MB of system memory available to the test executor. When entering the standard parameters for the test executor, you may add \bxshell{-J<JVM\_parameter>} for each JVM parameter you wish to set. For example, \bxshell{-J-Xmx128M}. Multiple parameters, like standard parameters, are separated by spaces. \\
