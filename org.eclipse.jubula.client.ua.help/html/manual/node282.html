@@ -1,18 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.27.4 Automatically reporting to external repositories after test runs</title>
-    <meta content="3.27.4 Automatically reporting to external repositories after test runs" name="description" />
+    <title>3.24.2.6 Passing on arguments to the JVM</title>
+    <meta content="3.24.2.6 Passing on arguments to the JVM" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><h2><a name="SECTION004274000000000000000"> <span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">4</span> Automatically reporting to external repositories after test runs</a></h2><a name="TasksALMReport"></a><p> You can automatically report the status of an automated test to an external system. The reporting is achieved by writing a comment on a task in the external repository. The comment includes a link to the test result in the dasboard. <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node283.html" name="tex2html4867"><span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">4</span>.<span class="arabic">1</span> Configuring a task repository for your Project </a><li><a href="node284.html" name="tex2html4868"><span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">4</span>.<span class="arabic">2</span> Adding task IDs to Test Suites and Test Cases </a><li><a href="node285.html" name="tex2html4869"><span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">4</span>.<span class="arabic">3</span> Test execution with reporting to external repositories</a><li><a href="node286.html" name="tex2html4870"><span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">4</span>.<span class="arabic">4</span> Specific information for HP ALM users</a></ul>
+  <body>
+    <h3><a name="SECTION004242600000000000000"> <span class="arabic">3</span>.<span class="arabic">24</span>.<span class="arabic">2</span>.<span class="arabic">6</span> Passing on arguments to the JVM</a></h3> The test executor also accepts arguments to pass on to the Java Virtual Machine. This means that you can, for example, increase the initial and maximum amount of system memory allocated to the JVM with the parameters <tt>&quot;-Xms&lt;memory_size&gt;&quot;</tt> and <tt>&quot;-Xmx&lt;memory_size&gt;&quot;</tt>, respectively. For example, the parameter <tt>&quot;-Xmx128M&quot;</tt> would make a maximum of 128 MB of system memory available to the test executor. When entering the standard parameters for the test executor, you may add <tt>&quot;-J&lt;JVM_parameter&gt;&quot;</tt> for each JVM parameter you wish to set. For example, <tt>&quot;-J-Xmx128M&quot;</tt>. Multiple parameters, like standard parameters, are separated by spaces. <br /> Here is an example of defining mutliple JVM parameters: <tt>&quot;-J-Xmx128M -JXms128M&quot;</tt>. <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

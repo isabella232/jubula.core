@@ -1,67 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.16.1 Specifying Test Steps </title>
-    <meta content="3.16.1 Specifying Test Steps " name="description" />
+    <title>3.13.8 Understanding the component hierarchy</title>
+    <meta content="3.13.8 Understanding the component hierarchy" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h2><a name="SECTION004161000000000000000"></a> <a name="specsteps"></a><br /><span class="arabic">3</span>.<span class="arabic">16</span>.<span class="arabic">1</span> Specifying Test Steps </h2>
-    <p><a name="3820"></a> <a name="3821"></a> <a name="3822"></a> <a name="3823"></a> <a name="3824"></a> <a name="3825"></a> <a name="3826"></a> <a name="3827"></a><p>
+  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="compNameViewContextId"></a><a name="objectMapEditorContextId"></a><h2><a name="SECTION004138000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">8</span> Understanding the component hierarchy</a></h2><a name="TasksCompNameType"></a><p><a name="3574"></a> <a name="3575"></a> <a name="3576"></a> The component hierarchy is designed to allow flexible test specification and robust tests. For a graphical overview of the component hierarchy, see the reference manual --&gt;<i>Reference Manual</i> <a href="../reference/node35.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
+    <p>
+      <br />
+    <p><span class="textbf">Abstract components</span><br />
+    <p> You can write tests very abstractly at the beginning, only adding detail later. You will notice that the library contains categories such as <i>Component with Text Input</i> and <i>Graphics Component</i>. <p> These are <i>abstract components</i> - actions in these categories can be used on a wide range of actual components in the AUT . You can use a <i>Click</i> action on the <i>Graphics Component</i> to click any component in the AUT . You just need to enter different component names for it in the Component Names View . <p>
+    <p>
+      <br /><span class="textbf">Using the same component name for different component types</span><br />
+    <p> What happens if you want to specify a test that clicks in a table and then selects a cell in the table? <p> The click action is on the <i>Graphics Component</i> and the select cell action is on the <i>Table</i> component - but you don&#39;t want to have two different component names. <p> This isn&#39;t a problem. You can use the same component name for different components as long as these are compatible. So, in this case, the <i>Graphics Component</i> and the <i>Table</i> component can both use the component name e.g. <i>TableView_MainTable_tbl</i>. <p>
       <table>
         <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>You must have created a Test Case <a href="node123.html#TasksCreateTC">3.11.1</a> in order to create Test Steps .</b></td>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>You cannot use the same component name for incompatible types, for example, trees and tables.</b></td>
         </tr>
       </table>
-      <ol>
-        <li>Open the Test Case Editor by double-clicking on the Test Case you want to edit in the Test Case Browser . <li>Create a Test Step from the context-sensitive menu in the Test Case Editor : <br />
-          <table border="0" style="margin:0px;padding:0px;">
-            <tr>
-              <td bgcolor="#DDDDDD">Add</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">New Test Step</td>
-            </tr>
-          </table> . <br />(This adds the Test Step after any other items in the Test Case Editor .) <p>
-        <li>Alternatively, use the option in the context-sensitive menu to insert a Test Step . This inserts the new Test Step above the currently selected item. <li>The <i>New Test Step </i> (<a href="#newstep">3.23</a>) dialog will appear. </ol>
-    <p>
-      <div align="CENTER"><a name="newstep"></a><a name="8834"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.23:</strong> New Test Step Dialog</caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image teststepdialog" border="0" height="271" src="./teststepdialog.png" width="438" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <p><span class="textbf">Filling in the Test Step dialog</span><br /><span class="textbf">Test Step name</span><ol>
-        <li>In the <i>Test Step Name</i> field, enter a name for the Test Step . This name is just for recognition purposes, but should be easily identifiable at a later point. <p><span class="textbf">Component type</span><li>Select the component you want to test from the combo box. <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>A component is an element of the user interface you can execute an action on, e.g. a button, a text field.</b></td>
-              </tr>
-            </table>
-          <p><span class="textbf">Component name</span> <a name="componentnameteststep"></a><li>Enter a component name. This is your user-defined name that you will use to refer to this particular component. It will later be mapped to the real component in the AUT . Again, we suggest using conventions to name components. <p>
-        <li>When you are entering component names, a combo box appears with a list of names you have already used. <p> If any of the names are grayed out, this means they have been used for other component types and cannot be used for the currently selected component type. <p> You can change, or <i>reassign</i> component names later when you reuse this Test Case . Doing this means that you can execute the same actions on different components in the interface. The section on the Component Names View <a href="node169.html#TasksReassignCompName">3.13.2</a> contains information on reassigning component names. <p><span class="textbf">Action</span><p>
-        <li>From the combo box, choose the action you want to execute on this component. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>Refer to the chapter on Components, Actions, and Parameters (--&gt;<i>Reference Manual</i> <a href="../reference/node5.html#actparam"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>) for information on components, the actions they support, and their parameters.</b></td>
-            </tr>
-          </table>
-          <p>
-        <li>Click &quot;<i>OK</i>&quot;. <li>The Test Step will appear as nested in the Test Case . <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>You can change the position of Test Steps using drag-and-drop.</b></td>
-            </tr>
-          </table>
-          <p> You can see and edit the details of any selected Test Step in the Properties View . <p> The next step is to add parameter values (data) for Test Steps in the Properties View <a href="node133.html#WorkingWithData">3.12</a>. </ol>
+    <p> An overview of the component hierarchy can be seen in: --&gt;<i>Reference Manual</i> <a href="../reference/node35.html#overviewabstcomp"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>. <p>
     <p>
       <br />
       <hr />

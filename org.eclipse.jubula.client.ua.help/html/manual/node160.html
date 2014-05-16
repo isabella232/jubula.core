@@ -1,47 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.10.1 Configuring the Excel file</title>
-    <meta content="3.12.10.1 Configuring the Excel file" name="description" />
+    <title>3.12.7 Concatenating (combining) parameters</title>
+    <meta content="3.12.7 Concatenating (combining) parameters" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION0041210100000000000000"></a> <a name="3121"></a> <a name="TasksConfigureExcel"></a><br /><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">10</span>.<span class="arabic">1</span> Configuring the Excel file </h3>
-    <ul>
-      <li>The worksheet in Excel must be named with the language code for the language your data are in. See the Reference Manual (--&gt;<i>Reference Manual</i> <a href="../reference/node41.html#langcodes"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>) for a list of language codes. <p> For example, if the data of your first sheet are for French, then name the first sheet: <tt>&quot;fr_FR&quot;</tt> (<a href="#excel">3.20</a>). <p>
-          <div align="CENTER"><a name="excel"></a><a name="3131"></a><table>
-              <caption align="BOTTOM"><strong>Figure 3.20:</strong> Example Excel Table</caption>
-              <tr>
-                <td>
-                  <div align="CENTER"><img align="BOTTOM" alt="Image excelexample" border="0" height="388" src="./excelexample.png" width="444" /></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-        <p> You can create sheets for every language you need. Make sure that each sheet is named with the language code. The ITE reads the sheet which corresponds to the working language when the test is being executed. <p>
-      <li>Name the top cell of each column with a parameter name from your Test Case . <p> For example, if you entered the reference &quot;<i>=VALUE1</i>&quot;, then you must enter <tt>&quot;VALUE1&quot;</tt> in the top cell of the column which will contain data for that parameter. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-              <td><b>Values are case sensitive.</b></td>
-            </tr>
-          </table>
-      <li>Make sure that all the parameters for your Test Case have a column. <li>Do not leave any gaps in the table. <li>You must have an entry for each parameter used in the Test Case . <li>You can then fill in the values or formulae you want to use for these parameters. Each row in the table represents one set of data for the parameters used. <table>
-          <tr>
-            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-            <td><b>We recommend that you format cells as text <span class="textit">before</span> adding the test data. This ensures that Excel&#39;s number formatting won&#39;t modify the test data in unexpected and undesirable ways. Especially for the boolean values<i>true</i> and <i>false</i>, make sure you format the column as text.</b></td>
-          </tr>
-        </table>
-      <li>If your Excel table contains data which change from day-to-day, then make sure you open the file before starting your test. Otherwise, the data from the last-opened state will be used. <table>
-          <tr>
-            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-            <td><b>If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor. </b></td>
-          </tr>
-        </table>
-      <li>See the section later on using the <i>today</i> function in Excel to get the current date <a href="node161.html#exceltoday">3.12.10.2</a>. <li>Excel files may not contain autofilters in any of the worksheets to be used as data sources. Remove any filters from all your Excel sheets before running a test. </ul>
+  <body><a name="guidancerPropertiesViewContextId"></a><a name="guidancerDataSetViewContextId"></a><h2><a name="SECTION004127000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">7</span> Concatenating (combining) parameters</a></h2><a name="TasksConcatenation"></a><p><a name="2949"></a> <a name="2950"></a><p> The ITE lets you use various different types of parameter: <ul>
+        <li>Concrete values <a href="node147.html#TasksTestdataConcrete">3.12.2</a>. <li>Referenced parameters <a href="node148.html#TasksTestdataReferences">3.12.3</a>. <li>Variables <a href="node150.html#TasksVariables">3.12.5</a>. <li>Functions <a href="node154.html#TasksDataFunctions">3.12.6</a>. </ul>
+    <p> You can use these parameters separately, or you can combine them to create a parameter value. This is useful if a value you want to enter or check consists of parts that change and parts that stay the same. <p> To combine different types of parameter to make one value, you must write them in a specific way: <ol>
+        <li>Referenced parameters must be written with curly brackets around the reference name: <br /><tt>&quot;={REF_NAME}&quot;</tt><li>Variable names must also be written with curly brackets around them: <br /><tt>&quot;${VAR_NAME}&quot;</tt><li>Concrete values are written as normal. <li>For example, you can build a data string that contains all four types of data: <br /><tt>&quot;test_={PROJECTNAME}_${CUSTOMERNUMBER}_?now()&quot;</tt><br />
+          <p>
+      </ol>
     <p>
       <br />
       <hr />

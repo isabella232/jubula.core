@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>4.5.1 Supported Windows AUT&#39;s </title>
-    <meta content="4.5.1 Supported Windows AUT&#39;s " name="description" />
+    <title>3.37.8 My Test Suite failed when using rdesktop</title>
+    <meta content="3.37.8 My Test Suite failed when using rdesktop" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,16 +10,9 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00551000000000000000"> <span class="arabic">4</span>.<span class="arabic">5</span>.<span class="arabic">1</span> Supported Windows AUT&#39;s </a></h2>
-    <p> The following AUT&#39;s written with the .NET framework are supported: <p>
-      <ul>
-        <li>You must be using Windows XP or higher. <li>We have performed our WinForms and WPF tests with an AUT in .NET version 4.0. Although tests may be also be executable with .NET 3.5 (or even lower), the minimum supported version is .NET 4.0. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-              <td><b>The support for WPF AUT&#39;s is currently experimental. We encourage you to test the support with your own AUT&#39;s and welcome feedback about the current support.</b></td>
-            </tr>
-          </table>
-        <li>AUT&#39;s that are not written with WinForms or WPF (e.g. Win32, etc.) are not supported in the current version. </ul>
+    <h2><a name="SECTION004378000000000000000"></a> <a name="troublerdesktop"></a><br /><span class="arabic">3</span>.<span class="arabic">37</span>.<span class="arabic">8</span> My Test Suite failed when using <span class="textit">rdesktop</span></h2>
+    <p><a name="7178"></a><ul>
+        <li>Under a very specific configuration involving <span class="textit">rdesktop 1.5</span>, tests are known to frequently fail with an action error: &#39;Timeout received before confirming the posted event&#39;. <li>This occurs when <span class="textit">rdesktop 1.5</span> is used to log into a user account used for the ITE as well as a separate account for the AUT Agent . <li>The problem does not occur under <span class="textit">rdesktop 1.4.1</span>. </ul>
     <p>
       <br />
       <hr />

@@ -1,41 +1,41 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.14.2 Configuring Test Suites in the Properties View </title>
-    <meta content="3.14.2 Configuring Test Suites in the Properties View " name="description" />
+    <title>3.12.13 Overwriting data for Test Cases and Test Suites </title>
+    <meta content="3.12.13 Overwriting data for Test Cases and Test Suites " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><a name="testSuiteEditorContextId"></a><a name="testExecViewContextId"></a><h2><a name="SECTION004142000000000000000"> <span class="arabic">3</span>.<span class="arabic">14</span>.<span class="arabic">2</span> Configuring Test Suites in the Properties View </a></h2><a name="TestSuiteEdit"></a><p><a name="3585"></a> <a name="3586"></a> <a name="3587"></a> <a name="3588"></a> <a name="3589"></a> <a name="3590"></a> <a name="3591"></a> <a name="3592"></a> <a name="3593"></a> <a name="3594"></a> <a name="3595"></a> <a name="3596"></a> <a name="3597"></a> <a name="3598"></a> <a name="3599"></a> <a name="3600"></a> <a name="3601"></a> <a name="3602"></a> <a name="confsuite"></a><p> To configure a Test Suite , you must first create one <a href="node177.html#TSeditor">3.14.1</a>. <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>If you are editing the Test Suite , the working language (which is specified via the globe button on the toolbar) must be set to a language supported by the chosen AUT for the Test Suite . Otherwise the Test Suite will be uneditable. </b></td>
-        </tr>
-      </table>
+  <body><a name="guidancerPropertiesViewContextId"></a><a name="guidancerSpecTestCaseEditorContextId"></a><a name="guidancerExecTestCaseEditorContextId"></a><h2><a name="SECTION0041213000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">13</span> Overwriting data for Test Cases and Test Suites </a></h2><a name="TasksOverwriteData"></a><p><a name="3314"></a> <a name="3315"></a><p> When you reuse Test Cases , you reuse them with any concrete values they contain, and with any default values that you have entered for their referenced parameters. <p> Data which has been entered for referenced parameters can be overwritten when you reuse a Test Case . <p> Reusing Test Cases happens in two ways: <ul>
+        <li>by adding the Test Case to another Test Case <a href="node120.html#TasksEditorAdd">3.9.2</a>. The Test Case is then <i>nested</i> in the Test Case . <li>by adding the Test Case to a Test Suite <a href="node120.html#TasksEditorAdd">3.9.2</a>. The Test Case is then <i>nested</i> in the Test Suite . </ul>
     <p>
       <ol>
-        <li>Open the Test Suite Editor by double-clicking on the Test Suite you want to configure. <li>In the Properties View , you can: <ol>
-            <li>Change the Test Suite name by entering a new name in the <i>Test Suite name</i> field. <li>Add a comment to the Test Suite <a href="node111.html#TasksEditorAddComment">3.9.5</a>. <li>Enter a value in the <i>step delay</i> field. <p>
-                <table>
-                  <tr>
-                    <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                    <td><b>The step delay is the time left between each Test Step during test execution. The default is 0 milliseconds <a href="node221.html#TasksExecSpeed">3.19.5</a>.</b></td>
-                  </tr>
-                </table>
-              <p>
-            <li>Select the AUT for this Test Suite . To be able to select an AUT (and object map, and execute your test) you must have added at least one AUT to the Project <a href="node72.html#Defineaut">3.6</a>. <p>
-                <table>
-                  <tr>
-                    <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                    <td><b>You don&#39;t have to choose an AUT for a Test Suite as soon as you have created it, but you will have to choose one before object mapping, for example.</b></td>
-                  </tr>
-                </table>
-              <p>
-            <li>Choose a default reentry type for each of the four error types from the combo-boxes. <p> Event Handlers are Test Cases used to deal with errors during test execution. When an error occurs, the current Test Case is searched for an Event Handler for that error type. If none is found, the parent Test Case is searched, and so on. If no Event Handler for the test is found, then a default Event Handler (specified in the Test Suite properties)is activated. <p> As a general rule, you should avoid default Event Handlers being executed. See the sections on Event Handlers for information on the event types <a href="node236.html#eventtype">3.21.2</a>, reentry types <a href="node237.html#reentrytype">3.21.3</a> and creating your own Event Handlers . <li>Save the changes in the Test Suite Editor . </ol>
+        <li>Single-click the reused Test Case in the editor for the Test Case or Test Suite where you have reused it. <p>
+        <li>In the Properties View , you can see the parameters you referenced from in this Test Case . The data source for this Test Case is shown as <i>referenced Test Case </i> to denote that the data have not been changed after reusing the Test Case . <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>A grey diamond next to the <i>parameter value</i> field means that the values in it were entered in the original specification of the Test Case .</b></td>
+              </tr>
+            </table>
+          <p>
+        <li>You can enter parameter values here or reference the parameters again. They would then become parameters of the <i>parent</i> Test Case . <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>If you enter values here, you can see a yellow diamond next to the <i>parameter value</i> field. This means that the original data have been overwritten. The data source changes to <i>local Test Case </i></b></td>
+              </tr>
+            </table>
+          <p> If you add references here, you will be able to enter or overwrite data when you reuse the parent Test Case . <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>Once you change the parameter values of a reused Test Case , any changes to the parameters in the original specification of that Test Case will not affect your new values. You can reset any local changes to the data of the Test Case by removing all Excel files or Central Test Data Sets and then selecting <i>Referenced Test Case </i> from the data source combo box.</b></td>
+              </tr>
+            </table>
       </ol>
     <p>
     <p>

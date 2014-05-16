@@ -1,18 +1,68 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.18.2.5 Refreshing the Object Mapping Editor </title>
-    <meta content="3.18.2.5 Refreshing the Object Mapping Editor " name="description" />
+    <title>3.16.1 Specifying Test Steps </title>
+    <meta content="3.16.1 Specifying Test Steps " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="objectMapEditorContextId"></a><h3><a name="SECTION004182500000000000000"> <span class="arabic">3</span>.<span class="arabic">18</span>.<span class="arabic">2</span>.<span class="arabic">5</span> Refreshing the Object Mapping Editor </a></h3>
-    <p><a name="4137"></a> <a name="4138"></a><ol>
-        <li>Select <i>refresh</i> from the context-sensitive menu in the Object Mapping Editor or press <tt>&raquo;F5&laquo;</tt> to refresh the Object Mapping Editor . <li>Confirm that you want to want to refresh the editor. </ol>
-    <p> When you refresh the Object Mapping Editor , any new component names which have been added to Test Suites for this AUT are collected. <p>
+  <body>
+    <h2><a name="SECTION004161000000000000000"></a> <a name="specsteps"></a><br /><span class="arabic">3</span>.<span class="arabic">16</span>.<span class="arabic">1</span> Specifying Test Steps </h2>
+    <p><a name="3897"></a> <a name="3898"></a> <a name="3899"></a> <a name="3900"></a> <a name="3901"></a> <a name="3902"></a> <a name="3903"></a> <a name="3904"></a><p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>You must have created a Test Case <a href="node135.html#TasksCreateTC">3.11.1</a> in order to create Test Steps .</b></td>
+        </tr>
+      </table>
+      <ol>
+        <li>Open the Test Case Editor by double-clicking on the Test Case you want to edit in the Test Case Browser . <li>Create a Test Step from the context-sensitive menu in the Test Case Editor : <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Add</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">New Test Step</td>
+            </tr>
+          </table> . <br />(This adds the Test Step after any other items in the Test Case Editor .) <p>
+        <li>Alternatively, use the option in the context-sensitive menu to insert a Test Step . This inserts the new Test Step above the currently selected item. <li>The <i>New Test Step </i> (<a href="#newstep">3.24</a>) dialog will appear. </ol>
+    <p>
+      <div align="CENTER"><a name="newstep"></a><a name="9245"></a><table>
+          <caption align="BOTTOM"><strong>Figure 3.24:</strong> New Test Step Dialog</caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image teststepdialog" border="0" height="271" src="./teststepdialog.png" width="438" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <p><span class="textbf">Filling in the Test Step dialog</span><br /><span class="textbf">Test Step name</span><ol>
+        <li>In the <i>Test Step Name</i> field, enter a name for the Test Step . This name is just for recognition purposes, but should be easily identifiable at a later point. <p><span class="textbf">Component type</span><li>Select the component you want to test from the combo box. <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>A component is an element of the user interface you can execute an action on, e.g. a button, a text field.</b></td>
+              </tr>
+            </table>
+          <p><span class="textbf">Component name</span> <a name="componentnameteststep"></a><li>Enter a component name. This is your user-defined name that you will use to refer to this particular component. It will later be mapped to the real component in the AUT . Again, we suggest using conventions to name components. <p>
+        <li>When you are entering component names, a combo box appears with a list of names you have already used. <p> If any of the names are grayed out, this means they have been used for other component types and cannot be used for the currently selected component type. <p> You can change, or <i>reassign</i> component names later when you reuse this Test Case . Doing this means that you can execute the same actions on different components in the interface. The section on the Component Names View <a href="node181.html#TasksReassignCompName">3.13.2</a> contains information on reassigning component names. <p><span class="textbf">Action</span><p>
+        <li>From the combo box, choose the action you want to execute on this component. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>Refer to the chapter on Components, Actions, and Parameters (--&gt;<i>Reference Manual</i> <a href="../reference/node5.html#actparam"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>) for information on components, the actions they support, and their parameters.</b></td>
+            </tr>
+          </table>
+          <p>
+        <li>Click &quot;<i>OK</i>&quot;. <li>The Test Step will appear as nested in the Test Case . <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You can change the position of Test Steps using drag-and-drop.</b></td>
+            </tr>
+          </table>
+          <p> You can see and edit the details of any selected Test Step in the Properties View . <p> The next step is to add parameter values (data) for Test Steps in the Properties View <a href="node145.html#WorkingWithData">3.12</a>. </ol>
+    <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.25 Working with the Teststyle guidelines</title>
-    <meta content="3.25 Working with the Teststyle guidelines" name="description" />
+    <title>3.22.4.3 Test execution with reporting to external repositories</title>
+    <meta content="3.22.4.3 Test execution with reporting to external repositories" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,16 +10,34 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h1><a name="SECTION004250000000000000000"> <span class="arabic">3</span>.<span class="arabic">25</span> Working with the Teststyle guidelines</a></h1>
-    <p> The Teststyle function provides assistance when writing tests. The Teststyle guidelines are a set of standard rules dealing with the creation of Test Suites . <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node262.html" name="tex2html4597"><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">1</span> Activating Teststyle for a Project </a><li><a href="node263.html" name="tex2html4598"><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">2</span> Configuring Teststyle for a Project </a><ul>
-            <li><a href="node264.html" name="tex2html4599"><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Activating and deactivating individual guidelines</a><li><a href="node265.html" name="tex2html4600"><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Setting the message level for guidelines</a><li><a href="node266.html" name="tex2html4601"><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">2</span>.<span class="arabic">3</span> Configuring the attributes for guidelines</a><li><a href="node267.html" name="tex2html4602"><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Configuring the contexts for guidelines</a></ul>
-          <br />
-        <li><a href="node268.html" name="tex2html4603"><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">3</span> Working with the Problem View to view and fix Teststyle problems</a><ul>
-            <li><a href="node269.html" name="tex2html4604"><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Viewing the broken Teststyle rule from the Problem View </a><li><a href="node270.html" name="tex2html4605"><span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Using Quick Fix to fix the problem</a></ul>
+    <h3><a name="SECTION004224300000000000000"> <span class="arabic">3</span>.<span class="arabic">22</span>.<span class="arabic">4</span>.<span class="arabic">3</span> Test execution with reporting to external repositories</a></h3> If your Project is joined to an external repository <a href="node259.html#TasksALMConfigureProject">3.22.4.1</a>, and you have added task IDs to one or more items in your Project <a href="node260.html#TasksALMAddTask">3.22.4.2</a>, then you will be able to report the test results to the repository after the test has run. The test run can be either via the ITE or via the command line <i>testexec</i>. <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>If you run a test via the ITE which should report to ALM systems, the reporting is triggered automatically once the test has run. If the reporting for the test run encounters an error, then you will be able to manually trigger the reporting later <a href="#TasksALMReportTestExec">3.22.4.3</a>. To report to ALM systems after running a test via testexec, you must also manually trigger the recording <a href="#TasksALMReportTestExec">3.22.4.3</a>.</b></td>
+        </tr>
+      </table>
+    <p> When reporting is triggered, the following happens: <ul>
+        <li>A connection is made to ALM system configured in the Project properties. <li>The test results are then analyzed to see if any comments need to be added in the external repository (commenting can be (de)activated for failed nodes or successful nodes in the Project properties, for example). <li>If there are comments to be added, the ITE writes one comment per task, as defined in the Project properties. If multiple items in one test run reference the same task ID, or if an item with a task ID is executed multiple times in the same test run, then each test status and result link is written, but all in one comment. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>Tests that have a status other than <i>passed</i> (e.g. failed, stopped, still testing) are considered as <i>failed</i>.</b></td>
+            </tr>
+          </table>
+        <li>You can see the status of the ALM reporting in the console view. <li>Once a comment has been written, you can see the comment in the external repository. From there, you can click on the link provided to open the test result report in the Dashboard that you specified for your Project . The Dashboard must be already running for this action to succeed. The test results must also still be present in the Database <a href="node238.html#TasksReopenTestResult">3.20.3.1</a>. <li>The test result report is opened at the node which referenced the current task ID. <li>You can see the status of the reporting in the Test Result Summary View <a href="#TasksALMReportTestExec">3.22.4.3</a>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The integration for writing to external repositories can be used with Bugzilla 3.6+, JIRA 5.0+ and HP ALM 11+. Other repositories for which there are Mylyn connectors may also work, but these have not been tested.</b></td>
+            </tr>
+          </table>
       </ul>
+    <p><span class="textbf">Reporting to ALM repositories after a test started via testexec</span> <a name="TasksALMReportTestExec"></a>For tests started via testexec, the reporting does not happen automatically. Instead, you must choose to report to ALM from the Test Result Summary View . <p>
+      <ol>
+        <li>In a Project that is configured to report to an ALM repository, when a test has run via testexec, you can open the Reporting Perspective and locate the test run in the Test Result Summary View . <li>In the <i>ALM Report Status</i> column, you will see whether there are any reports pending. You can see various statuses in this column: <p>
+            <dl>
+              <dt><strong>Not configured:</strong><dd>if you have not configured ALM reporting for the Project , or if the relevance of the test run was set to false when the test was started. <dt><strong>Not yet reported:</strong><dd>if reporting was configured for the Project , and there is information available to be reported that has not yet been reported, e.g. from a test run via testexec. You will also see this status if you have run a test via the ITE that could not report to the ALM system due to e.g. a connection problem. This allows you to report test results later, once the problem has been resolved. <dt><strong>Reported:</strong><dd>this status will be shown if you have run a test with reporting configured via the ITE , which reports automatically. It will also be shown if you have chosen to report to the ALM system after running a test via testexec. This status will also be shown even if the test run was not linked to any tasks, but reporting is configured for the Project . It can be understood as <i>any reporting that was necessary has been carried out</i>. <dt><strong>Report discarded:</strong><dd>if reporting information was available, but the information was discarded and therefore not reported. You can do this by selecting the option to discard a pending report from the context menu. This status will also be shown for any test runs in a Project that you import that had the status <i>Not yet reported</i> when the Project was exported. <dt><strong>Marked as non-relevant:</strong><dd>you will see this status for any test runs that were marked as relevant when the test was started and which have information to report (status: <i>Not yet reported</i>),but which you then mark as non-relevant by toggling the relevance in the Test Result Summary View . This status means that you could report or discard the information, but only if you re-toggle the test run to be relevant. </dl>
+        <li>Select any test runs whose results you want to report to ALM, and click on the &quot;<i>Report to ALM</i>&quot; button on the toolbar. You can also select this option from the context-sensitive menu. If you select multiple test runs, the reporting will take place sequentially for each test run. <li>When you select this option, the reporting will be triggered as described above. If the reporting is successful, the status in the <i>ALM Report Status</i> column changes from <i>Not yet reported</i> to <i>Reported</i>. If an error occurs, then the status remains as <i>Not yet reported</i>. <li>If you do not want to report the test results to an ALM tool, you can discard the reporting information by selecting the option to discard a pending report from the context menu. This changes the status in the <i>ALM Report Status</i> column from <i>Not yet reported</i> to <i>Report discarded</i>. </ol>
+    <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.26.0.1 Numeric Project Element Counter</title>
-    <meta content="3.26.0.1 Numeric Project Element Counter" name="description" />
+    <title>3.23.6.2 Features unavailable in the Dashboard </title>
+    <meta content="3.23.6.2 Features unavailable in the Dashboard " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,10 +10,10 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION004260100000000000000"> <span class="arabic">3</span>.<span class="arabic">26</span>.<span class="arabic">0</span>.<span class="arabic">1</span> Numeric Project Element Counter</a></h3> This metric is in the category <i>Numerical Metrics</i>. <p> This metric counts the amount of items in a Project according to the following rules: <p>
-      <dl>
-        <dt><strong>Test Cases :</strong><dd>How many individual Test Cases have been created. <dt><strong>Test Suites :</strong><dd>How many individual Test Suites have been created. <dt><strong>Test Jobs :</strong><dd>How many individual Test Jobs have been created. <dt><strong>Test Steps :</strong><dd>How many individual Test Steps have been created, plus how many Test Steps have been used from any reused Projects . Test Steps are only counted once for the place they are specified (or, in the case of Test Steps from reused Projects , reused). They are not counted transitively (i.e. if a Project contains a Test Case with one Test Step , and this Test Case is reused four times, there is still only one Test Step . <dt><strong>Referenced Test Cases :</strong><dd>How many separate (not transitive) Test Case references there are in the current scope. If a Test Case <i>TC1</i> is reused twice in a Test Case <i>TC2</i>, then the number of reuses for <i>TC1</i> is two, regardless of how many times <i>TC2</i> is reused. <dt><strong>Event Handlers :</strong><dd>How many Event Handlers are used in the current scope. The same rules for non-transitivity apply - if <i>TC1</i> contains an Event Handler , then this Event Handler is only counted once, regardless how many times <i>TC1</i> is reused. <dt><strong>Categories:</strong><dd>How many categories are created in the current scope. Only categories in the Test Case Browser and Test Suite Browser are currently counted. </dl>
-    <p> The results are shown in the Search Result View. <p>
+    <h3><a name="SECTION004236200000000000000"> <span class="arabic">3</span>.<span class="arabic">23</span>.<span class="arabic">6</span>.<span class="arabic">2</span> Features unavailable in the Dashboard </a></h3>
+    <dl>
+      <dt><strong>Database changes:</strong><dd>You cannot perform any actions in the Dashboard that alter the data in the Database , e.g. deleting test result summaries, entering comments, toggling relevance or reporting to ALM. <dt><strong>Preferences</strong><dd>You also cannot change the preferences via the workspace, so the default period of time for which you see test result summaries is 30 days, and the label decoration for execution duration time and parameter values are displayed <a href="node311.html#TasksPrefsDecoration">3.28.10</a>. <dt><strong>Code coverage</strong><dd>Code coverage reports cannot be opened in the Dashboard . You can, however, see the code coverage values in the Test Result Summary View . <dt><strong>BIRT reports</strong><dd> are not available in the Dashboard . </dl>
+    <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

@@ -1,25 +1,24 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.32.3 Using the Dashboard locally: Starting the Dashboard with default parameters and automatic browser opening</title>
-    <meta content="3.32.3 Using the Dashboard locally: Starting the Dashboard with default parameters and automatic browser opening" name="description" />
+    <title>3.29.5.1 Searching for keywords (Test Cases , Test Steps , Test Suites , Test Jobs and categories) throughout the Project </title>
+    <meta content="3.29.5.1 Searching for keywords (Test Cases , Test Steps , Test Suites , Test Jobs and categories) throughout the Project " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h2><a name="SECTION004323000000000000000"></a> <a name="TasksDashDefault"></a><br /><span class="arabic">3</span>.<span class="arabic">32</span>.<span class="arabic">3</span> Using the Dashboard locally: Starting the Dashboard with default parameters and automatic browser opening </h2>
-    <p> Although the Dashboard is primarily intended to be started on a central machine with access to a central Database in which the test results reside, it is also possible to start the Dashboard in a default configuration to allow access to the embedded Database . This option is useful if you are evaluating the function and want to use the Dashboard on your local machine without having to enter any configuration information. <p>
-      <ol>
-        <li>In the installation directory, open the <i>dashboard</i> folder. <li>In this folder, start the <i>dashboard</i> application (Windows users use <i>dashboard.exe</i>, Unix users use <i>dashboard.sh</i>. <li>Starting this application starts the <i>dashboardserver</i> with default parameters for the embedded database. You can see which parameters are used by looking in the <i>dashboardserver.properties</i> file which is in the same folder as the Dashboard application. <li>While the server is starting, you will see a progress window. A system tray icon for the Dashboard server will appear on your screen. <li>Once the server is started, a browser opens containing the Functional Test Reporting Perspective in which you can view and open Test Result Reports from the Database <a href="node324.html#TasksDashUse">3.32.6</a>. <table>
-            <tr>
-              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-              <td><b>Bear in mind that if you are not using the embedded Database , then you will have to start the Dashboard server with other parameters to connect to the Database you are using <a href="node322.html#TasksDashCustom">3.32.4</a>.</b></td>
-            </tr>
-          </table>
-      </ol>
+  <body><a name="testSpecificationViewContextId"></a><a name="testExecViewContextId"></a><a name="com.bredexsw.guidancer.doc.keywordSearchPageContextId"></a><h3><a name="SECTION004295100000000000000"> <span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">5</span>.<span class="arabic">1</span> Searching for keywords (Test Cases , Test Steps , Test Suites , Test Jobs and categories) throughout the Project </a></h3><a name="TasksSearchKeywords"></a><p> On the first tab of the search dialog, you can search for the following based on their name: <p>
+      <ul>
+        <li>Test Steps <li>Test Cases - either the original specification or places where a Test Case has been reused (referenced) <li>Test Suites - either the original specification or places where a Test Suite has been reused (referenced) <li>Test Jobs <li>Categories </ul>
+    <p> Enter the term you wish to search for and select whether you want the search term to be case sensitive or whether you will be using regular expressions. You can also specify whether you want to search in the whole Project , or just for the selected nodes <a href="node324.html#TasksSearchLimit">3.29.5.4</a>. <p> Click &quot;<i>Search</i>&quot; to start the search. The results are shown in the Search Result View <a href="node325.html#TasksSearchResultView">3.29.6</a>. <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>Only names from within the current Project and in the current working language are displayed. Names from reused Projects are not found.</b></td>
+        </tr>
+      </table>
     <p>
       <br />
       <hr />

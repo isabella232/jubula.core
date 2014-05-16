@@ -1,55 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>4.7.2.4 Add hook into the AUT </title>
-    <meta content="4.7.2.4 Add hook into the AUT " name="description" />
+    <title>4.2.5 Component name generation in RCP</title>
+    <meta content="4.2.5 Component name generation in RCP" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION00572400000000000000"> <span class="arabic">4</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Add hook into the AUT </a></h3>
-    <p> Finally, the app needs a hook so that it actually allows the attachment and running of the tests when executing the Tests target. This is achieved by using the <i>RUN_FUNCTIONAL_TESTS</i> macro that was defined in the preceding section. This &quot;<i>preprocessor macro</i>&quot; is only defined in the testing target, so the remote controlling won&#39;t be possible in the regular target. To allow your AUT to be remote controlled, add the following code to your application delegate: <p><pre>
-...
-#if RUN_FUNCTIONAL_TESTS
-#import &quot;UIRemoteControl.h&quot;
-#endif
-...
-</pre><p> and the following code to the end of its - (void)applicationDidFinishLaunching[withOptions]: method <p><pre>
-...
-#if RUN_FUNCTIONAL_TESTS
-    [UIRemoteControl attach];
-    // alternatively you can
-    // allow the UIRemoteControl 
-    // to use a specific port number 
-    // on the iOS device 
-    // by using:
-    // 
-    // [UIRemoteControl attach:&lt;portNo&gt;];
-    // 
-    // this is necessary
-    // e.g. when you&#39;re running 
-    // different AUTs in parallel on 
-    // the same iOS device
-#endif
-...
-</pre><p> You also have to make sure that your application delegate provides a UIWindow property called <i>window</i> which contains the window used to present the app&#39;s visual content on the device&#39;s main screen. <p><pre>
-...
-#if RUN_FUNCTIONAL_TESTS
-    @property(nonatomic, retain) 
-    UIWindow *window
-#endif
-...
-</pre><p> Everything should now be configured. When you run the AUT tests target it will launch your app and allow the ITE to remotely attach (on the port specified, or on 11022 if none is entered) and execute tests. <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-          <td><b>If you do not follow the above steps, the AUT Agent will not be able to communicate with your AUT !</b></td>
-        </tr>
-      </table>
-    <p> This documentation is derived from the KIF installation documentation (http://github.com/square/KIF) as we make use of KIF internally. <p>
+  <body><a name="autSettingWizardPagePageContextId"></a><a name="autWizardPageGenerateNamesPageContextId"></a><a name="autSettingsPageContextId"></a><h2><a name="SECTION00525000000000000000"></a> <a name="RCPgenerate"></a><br /><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">5</span> Component name generation in RCP </h2>
+    <p><a name="7457"></a><p> RCP AUT&#39;s often use wizards and standard dialogs. The components in these dialogs are not often named by developers, and are in different places on Windows, Linux and Mac systems. <p> You can decide if unique names should be generated for these components in your AUT , if no name has been given. You can configure this in the AUT settings <a href="node80.html#Defineaut">3.6</a>. We recommend selecting this option, as it makes your tests more robust to any changes and also makes platform-independent testing possible in RCP AUT&#39;s . <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

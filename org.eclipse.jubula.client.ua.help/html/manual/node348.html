@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.35.4 I can&#39;t start the AUT </title>
-    <meta content="3.35.4 I can&#39;t start the AUT " name="description" />
+    <title>3.32.3.2 Using Quick Fix to fix the problem</title>
+    <meta content="3.32.3.2 Using Quick Fix to fix the problem" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,13 +10,27 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION004354000000000000000"></a> <a name="troublestartaut"></a><br /><span class="arabic">3</span>.<span class="arabic">35</span>.<span class="arabic">4</span> I can&#39;t start the AUT </h2>
-    <p><a name="6699"></a> <a name="6700"></a> <span class="textbf">If the start AUT button is disabled</span><br /> If you cannot start a particular AUT , this could be because: <p>
-      <ul>
-        <li>You have not connected to the AUT Agent <a href="node36.html#TasksAgentConnect">3.1.2</a>. <li>You have not defined an AUT <a href="node72.html#Defineaut">3.6</a>. <li>You have not configured an AUT <a href="node74.html#configuringaut">3.7.1</a>. <li>The AUT does not support the current working language. </ul>
-    <p><span class="textbf">Errors starting the AUT </span><br /> If there is an error starting the AUT , this could be because: <dl>
-        <dt><strong>The AUT cannot be found:</strong><dd>Make sure that the JAR or executable file for the AUT is correct, or that the classpaths are correct <a href="node74.html#configuringaut">3.7.1</a>. <dt><strong>The main class has not been found:</strong><dd>Make sure that the JAR file or the classpaths you have entered contain the main class <a href="node74.html#configuringaut">3.7.1</a>. <dt><strong>The JAR given as a classpath is not valid:</strong><dd>Check that you have entered the right JAR file, and that the path to it is correct from this computer. If you have entered a relative path, make sure that it is relative to the AUT working directory, if there is one, or to the AUT Agent directory if you have not specified a AUT working directory. <dt><strong>The JAR given as a classpath does not contain a distinct main class:</strong><dd>Check that you have entered a JAR which contains a main class. </dl>
-    <p><span class="textbf">If the AUT does not appear in the Running AUT&#39;s View </span><br /> If the AUT does not appear in the Running AUT&#39;s View and you are testing an RCP application, make sure that the RCP Remote Control plugin has been installed <a href="node367.html#rcpaut">4.2</a>. <p> Otherwise, check that the toolkit you specified in the AUT configuration <a href="node74.html#configuringaut">3.7.1</a> is the right toolkit for this AUT . <p>
+    <h3><a name="SECTION004323200000000000000"> <span class="arabic">3</span>.<span class="arabic">32</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Using Quick Fix to fix the problem</a></h3>
+    <p>
+      <ol>
+        <li>Select the entry or entries you want to work on from the Problem View . <li>Right-click in the Problem View and select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Quick Fix</td>
+            </tr>
+          </table>
+          <br /> from the context-sensitive menu. <li>The Quick Fix dialog <a href="#quickfix">3.43</a> will appear with the options available to fix the problem. The options may range from opening an editor to automatically fixing the problem. <li>Select the option(s) you want to carry out and click &quot;<i>OK</i>&quot;. <li>The option(s) you chose will be executed. </ol>
+    <p>
+      <div align="CENTER"><a name="quickfix"></a><a name="6748"></a><table>
+          <caption align="BOTTOM"><strong>Figure 3.43:</strong> Quick Fix</caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image quickfix" border="0" height="508" src="./quickfix.png" width="501" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

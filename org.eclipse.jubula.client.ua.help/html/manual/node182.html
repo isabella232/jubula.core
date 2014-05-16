@@ -1,24 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.15.2.1 Testing independently started AUT&#39;s </title>
-    <meta content="3.15.2.1 Testing independently started AUT&#39;s " name="description" />
+    <title>3.13.3 Renaming component names</title>
+    <meta content="3.13.3 Renaming component names" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION004152100000000000000"></a> <a name="3681"></a><br /><span class="arabic">3</span>.<span class="arabic">15</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Testing independently started AUT&#39;s </h3>
-    <p> To be able to test multiple AUT&#39;s that are <i>not</i> started by each other, the following criteria must be met: <p>
-      <ul>
-        <li>The AUT&#39;s are either written with the same toolkit (e.g. Swing) or, <li>you have specified your Project at the <i>concrete</i> level, and will only be testing areas of the AUT&#39;s that can be tested with the actions that are valid for all AUT types (i.e. no RCP-specific components are involved in the test) <a href="node49.html#projtoolkit">7</a>. <li>The AUT&#39;s are all defined in the same Project . <li>The first AUT can either be started using the <i>autrun</i> command <a href="node84.html#autrun">3.7.4.6</a> or via an AUT configuration <a href="node74.html#configuringaut">3.7.1</a>. Any other AUT&#39;s required for the Test Job must have been started with the <i>autrun</i> command. </ul>
+  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="renameComponentNameContextId"></a><h2><a name="SECTION004133000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">3</span> Renaming component names</a></h2><a name="TasksRenameCompName"></a><p><a name="3452"></a> <a name="3453"></a><p> Use the rename function to change the name of a component name in your test specification. Whereas <i>reassigning</i> component names results in a new component name being created <a href="node181.html#TasksReassignCompName">3.13.2</a>, renaming just changes the name at all places where it is used. <p> You can rename component names in the Component Name Browser &nbsp; and in the Object Mapping Editor . <ol>
+        <li>Select the component name you want to rename. <li>In the context-menu, select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Rename</td>
+            </tr>
+          </table>
+        <li>In the dialog that appears, enter a new component name to replace the old name. We recommend using naming conventions for component names. <li>Press &quot;<i>OK</i>&quot;. The component name you entered will replace the old name throughout your test. </ol>
     <p>
       <table>
         <tr>
           <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>To run Test Jobs from the test executor, all AUT&#39;s for the test run must already be started when the test execution begins. For unattended build and test processes, this will mean that the AUT&#39;s must be started with the <i>autrun</i> command.</b></td>
+          <td><b>You cannot rename a component name with a name that already exists. To merge two or more component names to the same name, see the section on merging <a href="node185.html#TasksMergeCompName">3.13.6</a>.</b></td>
         </tr>
       </table>
     <p>

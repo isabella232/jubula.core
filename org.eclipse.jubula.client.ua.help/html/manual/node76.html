@@ -1,18 +1,37 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.7.2 Basic information required for every AUT configuration</title>
-    <meta content="3.7.2 Basic information required for every AUT configuration" name="description" />
+    <title>3.5.10 Versioning Projects </title>
+    <meta content="3.5.10 Versioning Projects " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="autConfigSettingWizardPagePageContextId"></a><h2><a name="SECTION00472000000000000000"></a> <a name="TasksBasicConfigurationInfo"></a><br /><span class="arabic">3</span>.<span class="arabic">7</span>.<span class="arabic">2</span> Basic information required for every AUT configuration </h2>
-    <p> Regardless of the type of AUT you want to start, you will always need to enter the following information in the AUT configuration dialog. <p>
-      <ul>
-        <li>A suggested name for this AUT configuration is generated automatically based on your AUT name and the default AUT Agent host. You can change this name if you wish. <li>The default AUT Agent host is also automatically selected. You can select a new AUT Agent from the combo box or add a new one by clicking &quot;<i>New</i>&quot;. For more information on adding and editing an AUT Agent , see the section later <a href="node240.html#TasksPrefsAgent">3.22.2</a>. <li>Enter the AUT ID that will be given to this AUT when it is started. </ul>
+  <body><a name="openProjectDialogContextId"></a><a name="dialogProjectCreateNewVersionContextId"></a><h2><a name="SECTION004510000000000000000"></a> <a name="projectversion"></a><br /><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">10</span> Versioning Projects </h2>
+    <p><a name="1045"></a> <a name="1046"></a><p>
+      <ol>
+        <li>To create a different version of a Project , select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Test</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">Create new version</td>
+            </tr>
+          </table> . <li>An automatic suggestion for the next version number is provided. <li>You can accept this version number or enter a different one. <li>Click &quot;<i>OK</i>&quot; to create the new version. <li>The new version of the Project becomes active in the client. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>Any test result summaries for the Project are not duplicated in the new version. Tests that ran for previous versions of the Project are, however, still in the Database to be used for long term analysis.</b></td>
+            </tr>
+          </table>
+      </ol>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>You can also create a new version using the dbtool <a href="node289.html#TasksDBToolCreateVersion">3.25.2.2</a></b></td>
+        </tr>
+      </table>
     <p>
       <br />
       <hr />

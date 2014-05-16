@@ -1,42 +1,48 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.29.5 Using the search dialog</title>
-    <meta content="3.29.5 Using the search dialog" name="description" />
+    <title>3.27.3 Viewing the code coverage for a test run</title>
+    <meta content="3.27.3 Viewing the code coverage for a test run" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h2><a name="SECTION004295000000000000000"> <span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">5</span> Using the search dialog</a></h2>
-    <p> You can open the search dialog (<a href="#SearchDialog">3.42</a>) from the toolbar, by pressing <tt>&raquo;CTRL+H&laquo;</tt> or via the menu: <br />
-      <table border="0" style="margin:0px;padding:0px;">
+  <body><a name="testResultSummaryViewContextId"></a><h2><a name="SECTION004273000000000000000"> <span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">3</span> Viewing the code coverage for a test run</a></h2>
+    <p> Once a test with code coverage has run, the code coverage information must first be processed in order to show it in the Test Result Summary View . <p> The following columns are available in the Test Result Summary View to show you code coverage information: <p>
+      <table>
         <tr>
-          <td bgcolor="#DDDDDD">Search</td>
-          <td>--&gt;</td>
-          <td bgcolor="#DDDDDD">Search</td>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b> If a column is not visible, you can show it by selecting it from the context-sensitive menu on the header row for the Test Result Summary View .</b></td>
         </tr>
       </table>
-      <br />
     <p>
-      <div align="CENTER"><a name="SearchDialog"></a><a name="5976"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.42:</strong> Search Dialog</caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image SearchDialog" border="0" height="421" src="./SearchDialog.png" width="531" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <p> The search dialog allows you to search the <span class="textbf">current Project in the current working language</span> for: <p>
       <ul>
-        <li>Keywords <a href="node299.html#TasksSearchKeywords">3.29.5.1</a> (Test Cases , Test Steps , Test Suites , Test Jobs and categories). <li>Test data used in Test Cases or central test data sets <a href="node300.html#TasksSearchData">3.29.5.2</a>. <li>Files in the workspace <a href="node301.html#TasksSearchFiles">3.29.5.3</a>. </ul>
+        <li>The <i>Profiling Agent</i> column displays which code coverage agent was selected for the test run. <li>The <i>Measured Value</i> column shows the Instruction Coverage for the test run. You can see the values for other types of coverage in the Properties View when you select the test run. An overview of the meanings of the coverage types is available on the JaCoCo website: <br /><i>http://www.eclemma.org/jacoco/trunk/doc/counters.html</i>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The measured value will become visible once the code coverage information has been processed. You may need to refresh the Test Result Summary View . </b></td>
+            </tr>
+          </table>
+        <li>The <i>Profiling Details</i> column indicates whether the full details for the code coverage report are still in the Database . Full profiling details are removed from the Database at the same time as test run details <a href="node238.html#TasksReopenTestResult">3.20.3.1</a>. The period of time that details remain in the Database can be specified in the Project properties <a href="node59.html#ProjPropertiesGeneral">3.5.2.1</a>. </ul>
+    <p><span class="textbf">Opening and viewing the code coverage report</span><br />
     <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node299.html" name="tex2html5078"><span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">5</span>.<span class="arabic">1</span> Searching for keywords (Test Cases , Test Steps , Test Suites , Test Jobs and categories) throughout the Project </a><li><a href="node300.html" name="tex2html5079"><span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">5</span>.<span class="arabic">2</span> Searching for test data</a><li><a href="node301.html" name="tex2html5080"><span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">5</span>.<span class="arabic">3</span> Searching for files in the workspace</a><li><a href="node302.html" name="tex2html5081"><span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">5</span>.<span class="arabic">4</span> Limiting the search to the selected node</a></ul>
+      <ol>
+        <li>In the Test Result Summary View , select the test run whose code coverage you want to see and click the &quot;<i>Open Profiling Report</i>&quot; button at the top of the view. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>The details about code coverage are available in the Database for the same amount of time as the test result details <a href="node238.html#TasksReopenTestResult">3.20.3.1</a>. After this time, the code coverage details are deleted along with the test run details.</b></td>
+            </tr>
+          </table>
+        <li>In the editor that opens, you can see the details for the code coverage for the test run. <li>If you specified a source file directory for your AUT <a href="node295.html#CCConfigure">3.27.1</a> and compiled your AUT classes with debug information, you will be able to navigate through your classes to see more detailed information about the code coverage through the whole AUT . <li>Once you have opened a code coverage report, it is saved into your workspace. You can reopen it from the Navigator View &nbsp; . <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You should regularly remove old code coverage reports from your workspace to avoid overfilling it.</b></td>
+            </tr>
+          </table>
+      </ol>
+    <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

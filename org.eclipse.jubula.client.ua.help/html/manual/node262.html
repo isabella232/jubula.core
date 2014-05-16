@@ -1,51 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.25.1 Activating Teststyle for a Project </title>
-    <meta content="3.25.1 Activating Teststyle for a Project " name="description" />
+    <title>3.22.4.4 Specific information for HP ALM users</title>
+    <meta content="3.22.4.4 Specific information for HP ALM users" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="testStylePropertyPageContextId"></a><h2><a name="SECTION004251000000000000000"> <span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">1</span> Activating Teststyle for a Project </a></h2><a name="TeststyleActivate"></a><p> You can activate Teststyle for a Project in the Project properties: <p>
-      <ol>
-        <li>Open the Project properties via: <br />
-          <table border="0" style="margin:0px;padding:0px;">
-            <tr>
-              <td bgcolor="#DDDDDD">Test</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">Properties</td>
-            </tr>
-          </table>
-        <li>Select <i>Teststyle</i> from the left. <li>Using the checkbox at the top of the dialog (<a href="#teststyle">3.37</a>), you can centrally activate or deactivate Teststyle for the whole Project . <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>By default, Teststyle is activated for all Projects .</b></td>
-              </tr>
-            </table>
-          <p>
-        <li>Click &quot;<i>OK</i>&quot; in the Project properties to save the changes. <li>If your current Project flouts any of the guidelines that are set, then you will see entries in the Problem View notifying you of the places where guidelines are being flouted. For more information on working with the Problem View to fix tests, see the section later <a href="node268.html#TeststyleProbView">3.25.3</a>. <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>The Teststyle settings are central for the whole Project and will be seen by all users of the Project .</b></td>
-              </tr>
-            </table>
-          <p>
-      </ol>
-    <p>
-      <div align="CENTER"><a name="teststyle"></a><a name="5356"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.37:</strong> Teststyle</caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image teststyle" border="0" height="416" src="./teststyle.png" width="493" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
+  <body>
+    <h3><a name="SECTION004224400000000000000"> <span class="arabic">3</span>.<span class="arabic">22</span>.<span class="arabic">4</span>.<span class="arabic">4</span> Specific information for HP ALM users</a></h3>
+    <ul>
+      <li>To use the HP ALM integration, you must use a separate connector for HP ALM which may incur license costs. Visit the Tasktop website for more details <tt><a href="http://www.tasktop.com" name="tex2html32">http://www.tasktop.com</a></tt>. <li>If you have changed the attribute IDs in your HP ALM installation for defects and / or requirements from their relative defaults (<i>BG_DEV_COMMENTS</i> and <i>REQ_DEV_COMMENTS</i>), or if you have changed the ID for the connector, then you must modify these properties in the <tt>&quot;almAccess.properties&quot;</tt> file contained in the jar: <br /><i>org.eclipse.jubula.client.alm.mylyn.core</i><li>Since tasks in HP ALM only have one comment field, the result information is appended to the comment field instead of being added as a new comment each time. <li>To write to requirements in a default HP ALM installation, you must use the prefix <i>REQ</i>, e.g. REQ100. To write to defects in a default HP ALM installation, you must use the prefix <i>DEF</i>, e.g. DEF42. </ul>
     <p>
       <br />
       <hr />

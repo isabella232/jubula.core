@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.27.4.2 Adding task IDs to Test Suites and Test Cases </title>
-    <meta content="3.27.4.2 Adding task IDs to Test Suites and Test Cases " name="description" />
+    <title>3.24.4 Configuration Files</title>
+    <meta content="3.24.4 Configuration Files" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,24 +10,29 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION004274200000000000000"></a> <a name="TasksALMAddTask"></a><br /><span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">4</span>.<span class="arabic">2</span> Adding task IDs to Test Suites and Test Cases </h3>
-    <p> You can add a task ID to Test Cases and Test Suites in your Project . <p> The task ID should be a valid ID in the repository that you have specified as the repository for this Project <a href="node283.html#TasksALMConfigureProject">3.27.4.1</a>. Adding the task ID to an item in your Project means that this item is the relevant test for that task in your repository. You will be able to report test results for this item as a comment to the task in the repository. The comment will include a link to the dashboard, in which the test result report can be viewed. <p> To add a task ID to a Test Case or Test Suite : <ol>
-        <li>Open the item in the editor by double-clicking it. <li>In the Properties View , in the cell for <i>Task ID</i>, enter the task ID from the external repository. You can only enter task IDs at the place of specification - you cannot overwrite them when you reuse the item. <li>Save the editor. <li>When you have added a task ID to a node, you can open the task for this node from the browser by selecting: <br />
-          <table border="0" style="margin:0px;padding:0px;">
+    <h2><a name="SECTION004244000000000000000"></a> <a name="TasksTestExecConfigFile"></a><br /><span class="arabic">3</span>.<span class="arabic">24</span>.<span class="arabic">4</span> Using a configuration file </h2>
+    <p><a name="5462"></a><ol>
+        <li>You can also enter test executor parameters in an XML configuration file. <table>
             <tr>
-              <td bgcolor="#DDDDDD">Open with</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">Mylyn Task Editor</td>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>The workspace parameter (<i>-data</i>) cannot currently be entered in the configuration file for the test executor, it must be entered directly into the command line interface.</b></td>
             </tr>
           </table>
+        <li>This saves you typing in the same details each time you start a test. <li>To enter the configuration file path, enter the following command: <br /><tt>&quot;-c &lt;path to file&gt;&quot;</tt><p> For example: <span class="textit">-c &#39;&#39; </span><li>You can also overwrite parameters contained in the configuration file by entering another parameter directly into the interface. <li>For example, if your configuration file contains the Test Suite &quot;<i>Suite1</i>&quot;, but you enter <tt>&quot;-testsuite &#39;&#39;Suite2&#39;&#39;&quot;</tt> in the command line interface, the Test Suite called &quot;<i>Suite2</i>&quot; will be started, not &quot;<i>Suite1</i>&quot;. <li>To create an XML file: <ol>
+            <li>Open a text editor of your choice. <li>Enter the desired parameters as shown in the example in the installation. It can be found under: <br /><i>InstallationDirectory/examples/scripts</i><li>Save the file as an XML file. <li>This file will be used when you enter the &quot;<i>-c &lt;path to file&gt;</i>&quot; parameter. <table>
+                <tr>
+                  <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                  <td><b>The no-run, quiet mode, no screenshot, no screenshots in reports, no relevance and <i>-data</i> (for the workspace) parameters can only be entered in the command line interface. They cannot be entered in the configuration file.</b></td>
+                </tr>
+              </table>
+              <table>
+                <tr>
+                  <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                  <td><b>Java Virtual Machine parameters can only be entered in the command line interface. They cannot be entered in the configuration file.</b></td>
+                </tr>
+              </table>
+          </ol>
       </ol>
-    <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>You should ensure that you add task IDs to the right node-level to provide you with the relevant amount of information for the tasks in your repository. This will usually be at the level of Use Cases within a Test Suite . </b></td>
-        </tr>
-      </table>
     <p>
       <br />
       <hr />

@@ -1,23 +1,34 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.29.4 Searching for places where a central test data set has been used</title>
-    <meta content="3.29.4 Searching for places where a central test data set has been used" name="description" />
+    <title>3.27.2 Resetting and accumulating code coverage</title>
+    <meta content="3.27.2 Resetting and accumulating code coverage" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="searchResultViewContextId"></a><a name="guidancerSpecTestCaseEditorContextId"></a><h2><a name="SECTION004294000000000000000"> <span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">4</span> Searching for places where a central test data set has been used</a></h2><a name="TasksShowWhereUsedDataSet"></a><p><a name="5951"></a> <a name="5952"></a> <a name="5953"></a><p> You can find the places where you have used a central test data set from within the Central Test Data Editor : <p>
-      <ol>
-        <li>Select the central data set you want to search for and select: <br />
-          <table border="0" style="margin:0px;padding:0px;">
+  <body><a name="testResultSummaryViewContextId"></a><h2><a name="SECTION004272000000000000000"> <span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">2</span> Resetting and accumulating code coverage</a></h2><a name="CCReset"></a><p> To make sure you get the correct results for your code coverage, it is important to be aware of which actions will accumulate the recorded code coverage and which actions will reset the value back to zero. <p><span class="textbf">Code coverage reset</span><br />
+    <p> The following result in the code coverage value being reset: <p>
+      <ul>
+        <li>Stopping the AUT . When the AUT is started again, the code coverage value is reset to zero. The test executor ensures that all monitoring information is collected before stopping the AUT . </ul>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>If you stop the AUT while code coverage is being calculated, then the value will also be set to zero!</b></td>
+        </tr>
+      </table>
+    <p><span class="textbf">Code coverage accumulation</span><br /> The following result in code coverage information being accumulated: <p>
+      <ul>
+        <li>Any actions you perform manually in an AUT that has been started with code coverage will contribute to the code coverage result. <li>Code coverage is accumulated across Test Suites by default. If you want to reset the code coverage at the beginning of each Test Suite , then select this option in the AUT configuration <a href="node295.html#CCConfigure">3.27.1</a>. <table>
             <tr>
-              <td bgcolor="#DDDDDD">Show where used</td>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>If you are working with Test Jobs , then do not opt to reset the code coverage at the beginning of a Test Suite .</b></td>
             </tr>
           </table>
-          <br /> from the context-sensitive menu. You can also press <tt>&raquo;F7&laquo;</tt> to show the places where the data set has been used. <li>All the places where you have used this data set in this Project will be shown in the &quot;<i>Search Result View</i>&quot; <a href="node303.html#TasksSearchResultView">3.29.6</a>. <li>If you want to change the Test Cases that use this central test data set so that they use a different column from the data set, then you can start this action from the Search Result View <a href="node158.html#TasksChangeCTDSColumn">3.12.9.7</a>. </ol>
+        <li>If you use the <i>restart</i> action during a test, this does <span class="textbf">not</span> result in the code coverage value being reset. </ul>
     <p>
       <br />
       <hr />

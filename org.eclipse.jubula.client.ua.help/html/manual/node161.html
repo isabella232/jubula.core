@@ -1,32 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.10.2 Using the =TODAY() function in Excel</title>
-    <meta content="3.12.10.2 Using the =TODAY() function in Excel" name="description" />
+    <title>3.12.8 Viewing and changing data sources for Test Cases </title>
+    <meta content="3.12.8 Viewing and changing data sources for Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION0041210200000000000000"></a> <a name="3150"></a> <a name="exceltoday"></a><br /><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">10</span>.<span class="arabic">2</span> Using the =TODAY() function in Excel </h3>
-    <ol>
-      <li>Because Excel stores the &quot;<i>=today()</i>&quot; function as a six-digit number, you must use a particular process to use this function to check a date as part of a test. <li>Enter the function <tt>&quot;=today()&quot;</tt> in a a different sheet to the one you are using for your data sets. You can enter it in the same sheet if you want to, but make sure that it has its own column. It must not be in one of the columns you will use as a data set. <li>For example, your =today() function is in sheet one, cell G4. <li>You want your date to appear as dd.mm.yyyy. <li>In the column for your data set, enter the following formula: <blockquote> =text(Sheet1!G4, &#39;&#39;dd.mm.yyyy&#39;&#39;) </blockquote>
-      <li>This will mean that the date will be treated as it appears with Excel. <table>
-          <tr>
-            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-            <td><b>If you are using the =today() function, don&#39;t forget to open the Excel file before starting your test. Otherwise, the data from the last-opened state will be used.</b></td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-            <td><b>If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor. </b></td>
-          </tr>
-        </table>
-    </ol>
-    <p>
+  <body><a name="guidancerPropertiesViewContextId"></a><h2><a name="SECTION004128000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">8</span> Viewing and changing data sources for Test Cases </a></h2><a name="TasksDataSources"></a><p> The Properties View shows the currently used <i>data source</i> for each Test Case . The following data sources are available: <p><span class="textbf">Referenced Test Case</span><br /> The data have come directly from the original specification of this Test Case . If the data in the referenced Test Case change, then the changes will also take effect here. <p><span class="textbf">Local Test Case</span><br /> The data being used were entered for this Test Case . Any changes made in the original specifiation of the Test Case will not affect the data here. <p> You can change from <i>local</i> to <i>referenced</i> test data using the combo box to reset the default value from the referenced Test Case . <p><span class="textbf">Central test data set</span><br /> The data have come from a central test data set <a href="node163.html#TasksCentralData">3.12.9</a>. <p><span class="textbf">Excel data file</span><br /> An Excel file has been entered as the data source <a href="node171.html#TasksExcel">3.12.10</a><p>
+      <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node162.html" name="tex2html3420"><span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">8</span>.<span class="arabic">1</span> Changing the data source for a Test Case </a></ul>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

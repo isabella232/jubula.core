@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.3 Editors</title>
-    <meta content="5.3 Editors" name="description" />
+    <title>4.7.2.2 Create a Testing Target</title>
+    <meta content="4.7.2.2 Create a Testing Target" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,15 +10,10 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h1><a name="SECTION00630000000000000000"> <span class="arabic">5</span>.<span class="arabic">3</span> Editors</a></h1>
-    <p> Editors appear in the editor area in the middle of the perspective when you double-click an item in one of the browsers or in the Navigator View &nbsp; . <p> You can tell what sort of editor it is in two ways: <ol>
-        <li>The tab for each editor shows an ID-code for what type of editor it is: <ul>
-            <li>&quot;<i>TC</i>&quot; for the Test Case Editor <li>&quot;<i>TS</i>&quot; for the Test Suite Editor <li>&quot;<i>OM</i>&quot; for the Object Mapping Editor <li>&quot;<i>TD</i>&quot; for the Central Test Data Editor </ul> The tab also shows the name of the item the editor is for. <p>
-      </ol>
+    <h3><a name="SECTION00572200000000000000"> <span class="arabic">4</span>.<span class="arabic">7</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Create a Testing Target</a></h3>
+    <p> We strongly recommend that you create a <span class="textbf">separate target</span> which contains and uses all the necessary modifications for your AUT to be testable. Once you have created a second target for the testing-enabled version of your AUT to test, you can begin testing simply by running this second target. Having a separate target also ensures that no testing code will be released into the productive version of your app. <p> The new target will start as a duplicate of your old target. To create the duplicated target: <ol>
+        <li>Select the project file for your app in the Project Navigator. <li>From there, CTRL+click the target for your app and select the &quot;<i>Duplicate</i>&quot; option. Xcode may ask you if you want your copy to be for a different iOS device, which you don&#39;t, so choose &quot;<i>Duplicate Only</i>&quot;. <li>The new target will be created. We suggest renaming it, e.g. to <i><b>GUI</b><i>dancer</i> or Jubula Tests</i>. <li>You can also (optionally) rename the new target from the default <i>MyApp copy</i> to something more meaningful e.g. <i>MyApp (<b>GUI</b><i>dancer</i> or Jubula Tests)</i> by selecting the &quot;<i>Build Settings</i>&quot; tab and searching for &quot;<i>Product Name</i>&quot;, then changing the value to a new name. </ol>
     <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node439.html" name="tex2html6938"><span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">1</span> Test Case Editor </a><li><a href="node440.html" name="tex2html6939"><span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">2</span> Test Suite Editor </a><li><a href="node441.html" name="tex2html6940"><span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">3</span> Object Mapping Editor </a><li><a href="node442.html" name="tex2html6941"><span class="arabic">5</span>.<span class="arabic">3</span>.<span class="arabic">4</span> Central Test Data Editor </a></ul>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

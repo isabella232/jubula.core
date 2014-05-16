@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.27.2.2 Working on tasks in the ITE </title>
-    <meta content="3.27.2.2 Working on tasks in the ITE " name="description" />
+    <title>3.24.2.4 Starting the test execution via testexec</title>
+    <meta content="3.24.2.4 Starting the test execution via testexec" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,14 +10,17 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION004272200000000000000"></a> <a name="TasksActivateTask"></a><br /><span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Working on tasks in the ITE </h3> Mylyn supports context- or task-based working. When you work on a task, you only see items relevant to that task, so that coming back to the task later involves less context-switching. <ul>
-      <li>Mylyn supports context-based working. You can work on existing tasks in a configured repository, or you can create tasks to work on. <li>To work on a task, you must <i>activate</i> it. To activate a task, select the task in the <i>Task List</i> and select: <br />
-        <table border="0" style="margin:0px;padding:0px;">
+    <h3><a name="SECTION004242400000000000000"> <span class="arabic">3</span>.<span class="arabic">24</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Starting the test execution via testexec</a></h3>
+    <ol>
+      <li>Once you have entered all the necessary parameters, press <tt>&raquo;ENTER&laquo;</tt>. <li>The client will connect to the AUT Agent (either the defined separate AUT Agent or it will start an embedded AUT Agent then connect to it), connect to the Database , open the Project , start the AUT (for a Test Suite ) or connect to it (for Test Jobs ) and then execute the Test Suite or Test Job you specified. <li>Once the test has finished, the client will show an exit code. <ul>
+          <li>&quot;<i>Exit code: 0</i>&quot; indicates that the test was successful. <li>&quot;<i>Exit code: 1</i>&quot; indicates that the test contained an error. </ul>
+        <table>
           <tr>
-            <td bgcolor="#DDDDDD">Activate</td>
+            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+            <td><b>To stop the test execution, use <tt>&raquo;CTRL+C&laquo;</tt></b></td>
           </tr>
         </table>
-        <br /> from the context-sensitive menu. <li>When you activate a task for the first time, the browsers and editors will seem very empty. This is because nothing is yet a part of the context for this task. <li>You can navigate through the browsers by pressing <tt>&raquo;ALT+CLICK&laquo;</tt> to expand each level, or you can press the <i>Focus on task</i> button in the browsers to show the whole tree (not focusing on the task), or just the items in the current context (focusing on the task). <li>Items are automatically added to your context when you select them in a browser, when you open them in an editor, or when you perform other actions that cause them to be made relevant (e.g. Test Case creation, showing a Test Case specification etc.). Items that are used particularly frequently are marked as <i>landmarks</i> and shown in bold. <li>You can manually alter which items are in your context using the context-sensitive menu for a specific item. You can manually make items landmarks, or remove them from the context. <li>The context that is created for you will be re-created when you reactivate the task at a later point. </ul>
+    </ol>
     <p>
       <br />
       <hr />

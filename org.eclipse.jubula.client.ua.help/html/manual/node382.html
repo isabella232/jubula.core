@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>4.4.2 Design for testability in HTML AUT&#39;s </title>
-    <meta content="4.4.2 Design for testability in HTML AUT&#39;s " name="description" />
+    <title>3.37.6 I can&#39;t execute my Test Suite </title>
+    <meta content="3.37.6 I can&#39;t execute my Test Suite " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,10 +10,22 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00542000000000000000"></a> <a name="DFTWeb"></a><br /><span class="arabic">4</span>.<span class="arabic">4</span>.<span class="arabic">2</span> Design for testability in HTML AUT&#39;s </h2>
-    <p><a name="7191"></a> <a name="7192"></a> <a name="7193"></a><p> Although it is not obligatory to name components in your AUT , you neverthless make your AUT more testable by doing so. <p>
-      <ul>
-        <li>Each supported component in HTML AUT&#39;s can have its own attribute used to identify it during test execution. <li>In your AUT configuration <a href="node81.html#autconfigbasic">3.12</a> , you can define an attribute name which should be used as an identifier for components. <li>For example if your attribute name is <tt>&quot;testid&quot;</tt> (e.g. <tt>&quot;&lt;div testid=&#39;&#39;Username&#39;&#39;&gt;&lt;/div&gt;&quot;</tt>) then you would enter <i>testid</i> in the AUT configuration. </ul>
+    <h2><a name="SECTION004376000000000000000"></a> <a name="troubleexecute"></a><br /><span class="arabic">3</span>.<span class="arabic">37</span>.<span class="arabic">6</span> I can&#39;t execute my Test Suite </h2>
+    <p><a name="7128"></a> <a name="7129"></a> If you cannot start a Test Suite , check that: <ul>
+        <li>The Test Suite has complete data for the current language. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>No parameter values can be empty in a Test Suite . If you no longer need the parameter, delete it.</b></td>
+            </tr>
+          </table>
+        <li>The object mapping is complete <a href="node205.html#objectmappingtasks">3.18.1</a>. <li>The Object Mapping Mode and the observation mode have been switched off. <li>You have connected to the AUT Agent <a href="node44.html#TasksAgentConnect">3.1.2</a>. <li>You have started the AUT <a href="node225.html#startaut">3.19.2</a>. </ul>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>You can use the Test Suite Browser to click through the Test Suite to see the exact places where data and object maps are missing.</b></td>
+        </tr>
+      </table>
     <p>
       <br />
       <hr />

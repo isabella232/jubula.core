@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>7. Glossary</title>
+    <meta content="7. Glossary" name="description" />
+    <meta content="document" name="resource-type" />
+    <meta content="global" name="distribution" />
+    <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
+    <meta content="text/css" http-equiv="Content-Style-Type" />
+    <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
+  </head>
+  <body>
+    <h1><a name="SECTION00800000000000000000"></a> <a name="Glossary"></a><br /><span class="arabic">7</span>. Glossary </h1>
+    <p>
+      <dl>
+        <dt><strong>Action</strong><dd> A method which is carried out on a <i>Component</i>. An <i>Action</i> is part of a Test Step , and serves to either execute a command (e.g. click, enter text), or verify property or state information about a <i>Component</i> (e.g. check <i>Component</i> name, check visibility). <p>
+        <dt><strong>AUT </strong><dd> The Application Under Test. The AUT is the entire program that you wish to test. <p>
+        <dt><strong>AUT Configuration</strong><dd> The information required in order to locate and start an AUT in the configuration desired by the user. An <i>AUT Configuration</i> includes program information such as <i>JRE</i> location and class path, and AUT configuration information such as command-line parameters and environment variables. Details about the AUT are given when a project is created, and are entered into the relevant fields in the Editor . <p>
+        <dt><strong>CAP</strong><dd>The three parts of a Test Step : Component, Action, Parameter. <p>
+        <dt><strong>Classname for AUT </strong><dd> The fully qualified classname which contains the main method of the AUT . <p>
+        <dt><strong>Classpath for AUT </strong><dd> An environment variable that informs <i>Java</i> where to look for the class files which are needed to run the AUT . <p>
+          <p>
+        <dt><strong>Component</strong><dd> A user interface object. Each component has a set of actions that can be carried out upon it. <p>
+        <dt><strong>Component Name</strong><dd> The symbolic name you choose for a component in the AUT and use in a Test Step or Test Case . <p>
+        <dt><strong>Component Names View </strong><dd>In this view, component names in reused Test Cases can be reassigned to create multiple component names for one Test Step . This allows many components of the same type or within the same group or family to be mapped to the same Test Step . The default position of the Component Names View is in the lower right-hand corner of the perspective. <p>
+        <dt><strong>Component Type</strong><dd> The type of graphical user interface object which will be acted upon in a Test Step , e.g. &#39;&#39;Menu Bar&#39;&#39; or &#39;&#39;Combo Box&#39;&#39;. <p>
+        <dt><strong>Data Sets View</strong><dd> The view in which multiple parameter values for a Test Case can be defined and edited. The default position of the Data Sets View is the right-hand side of the perspective, in the middle. <p>
+        <dt><strong>Empty string</strong><dd> To enter an empty string as a parameter (i.e. nothing at all), use backslash <tt>&quot;<span class="MATH"><img align="MIDDLE" alt="$\backslash$" border="0" height="38" src="img3.gif" width="15" /></span>&quot;</tt>. <p> To actually write a backslash, you must enter two backslashes. <p>
+        <dt><strong>Escape character</strong><dd> The character used to cancel any special function that the following symbol may have. The default escape character is <tt>&quot;<span class="MATH"><img align="MIDDLE" alt="$\backslash$" border="0" height="38" src="img3.gif" width="15" /></span>&quot;</tt>. <p>
+        <dt><strong>Event Handling</strong><dd> The process by which errors are dealt with during the execution of a test. If no user-defined Event Handler has been specified, a default Event Handler is activated. <p>
+        <dt><strong>Graphical User Interface</strong><dd> A means of interacting with a computer by the use of a graphically oriented (as opposed to text-oriented) display. Modern graphical user interfaces (GUI&#39;s) are controlled by a mouse as well as a keyboard, and consist of windows, buttons, text areas, and other manipulable objects which are designed to make computer operation simpler and more intuitive. <p>
+        <dt><strong>ITE </strong><dd> Short for <i>Integrated Test Environment</i>. By this we mean the application where tests are written. <p>
+        <dt><strong>JAR</strong><dd><a name="jar"></a>The <i>Java</i><sup><small>TM</small></sup>Archive file format. It allows multiple classes and other program files and data to be combined into one compressed file, which often represents a complete program. In this context, a JAR describes the <i>Java</i><sup><small>TM</small></sup> Archive of the AUT . <p>
+        <dt><strong>Object mapping</strong><dd> The process by which component names you created in your test are attached to the technical names used in the AUT . <p>
+        <dt><strong>Parameters</strong><dd> The information that is given to an action to perform a Test Step , such as name, value, etc. A parameter consists of: <ul>
+            <li>a name <li>a type <li>a value </ul> Most actions require one or more parameters. <p>
+        <dt><strong>Parameter Name</strong><dd> A name which describes a parameter which is sent to an action. <p>
+        <dt><strong>Parameter Type</strong><dd> The type of value which is sent as a parameter to an action. The following parameter types are supported: <ul>
+            <li>String <li>Integer <li>Boolean </ul>
+          <p>
+        <dt><strong>Parameter Value</strong><dd> The contents of the parameter which is sent to an action. A parameter value can either be a static value (e.g. <tt>&quot;Hello&quot;</tt>, 123), a reference (e.g. <tt>&quot;=REFERENCE&quot;</tt>) or a variable. <p>
+        <dt><strong>Port Number</strong><dd> A software address used to identify and communicate between individual programs or services on a single computer or between multiple computers on a network. A hostname and port number must be given in order to connect to an AUT Agent . <p>
+        <dt><strong>Project </strong><dd> A Project contains all the information for the test, including Test Suites and Test Cases , AUT&#39;s and data. Projects are stored in the Database . <p>
+        <dt><strong>Project Properties</strong><dd> Information pertaining to the active project, including the name (all projects in the Database must have unique names), the Project language(s), and the data language for the Project . <p>
+        <dt><strong>Propagation</strong><dd>When references are entered, the parameter they replace is carried up into the next Test Case in the hierarchy. This is propagation. <p>
+        <dt><strong>Properties View </strong><dd> The view for displaying and editing the properties of selected Test Steps or Test Cases , located by default in the top right-hand corner of the perspective. Test Steps and Test Cases can be edited in the Properties View by clicking on their icon in their respective editor. The Properties View is also used to display detailed results of a Test Suite once it has been executed. <p>
+        <dt><strong>Reference Symbol</strong><dd> The character used to denote a reference within a parameter. The default reference symbol is <tt>&quot;=&quot;</tt>. <p>
+        <dt><strong>Specification</strong><dd> The method by which test details and instructions are entered by the user in the ITE . Tests are not <span class="textit">programmed</span>, but rather <span class="textit">specified</span> in plain language, then object-mapped to the program&#39;s technical names. <p>
+        <dt><strong>Step Delay</strong><dd> The time to wait between Test Steps , given in milliseconds. A step delay causes a slower test execution. <p>
+        <dt><strong>Technical Name</strong><dd> A name given to a graphical user interface object of an AUT by a software developer. Technical names are used to uniquely identify an object within an application and are mapped to a component name as defined by the user in a Test Step . <p>
+        <dt><strong>Test Case </strong><dd> A reusable test object which contains Test Steps or other Test Cases . <p>
+        <dt><strong>Test Case Browser </strong><dd> A view which shows the hierarchy of Test Cases as entered and defined by the user. The Test Case Browser is by default in the bottom left-hand corner of the perspective. <p>
+        <dt><strong>Test Case Editor </strong><dd> An editor area used to create and alter Test Cases and Test Steps . The Test Case Editor is located by default in the center of the perspective. <p>
+        <dt><strong>Test Data</strong><dd> Values which are entered into parameters for an action in Test Steps . Test data may be entered directly into a parameter or referenced. <p>
+        <dt><strong>Test Job</strong><dd> A Test Job is a collection of Test Suites which are designed to be executed after each other. The Test Suites can test the samme AUT , different instances of the same AUT , or different AUT&#39;s entirely. <p>
+        <dt><strong>Test Result View </strong><dd> The view which displays the results of an executed Test Suite . <p>
+        <dt><strong>Test Step </strong><dd> The smallest test object. A Test Step belongs to a Test Case . A Test Step consists of <ul>
+            <li>a <span class="textit"><b>C</b>omponent</span><li>an <span class="textit"><b>A</b>ction</span><li>a <span class="textit"><b>P</b>arameter</span></ul>
+          <p>
+        <dt><strong>Test Suite </strong><dd> A Test Suite uses an AUT configuration and contains all Test Cases and their respective Test Steps , in the order in which they are to be tested. <p>
+        <dt><strong>Test Suite Browser </strong><dd> The view containing the Test Suite tree, where the Test Cases in a Test Suite can be seen. The Test Suite Browser is situated by default in the top left-hand corner of the perspective. <p>
+        <dt><strong>Test Suite Editor </strong><dd> An editor pane used to view the properties of the Test Suite and the Test Cases used in it, and to edit their parameter values and names. The Test Suite Editor is located by default in the center of the perspective. <p>
+        <dt><strong>Workspace</strong><dd>Personal preferences relating to the client layout and actions are saved in a Workspace. All changes made in the &quot;<i>Preferences</i>&quot; dialog are stored here. <p>
+      </dl>
+    <p>
+      <br />
+      <hr />
+      <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
+  </body>
+</html>

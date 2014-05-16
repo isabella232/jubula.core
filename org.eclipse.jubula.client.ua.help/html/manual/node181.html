@@ -1,18 +1,68 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.15.2 Testing different AUT&#39;s in one test run</title>
-    <meta content="3.15.2 Testing different AUT&#39;s in one test run" name="description" />
+    <title>3.13.2 Entering and reassigning component names in the Component Names View </title>
+    <meta content="3.13.2 Entering and reassigning component names in the Component Names View " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="testExecViewContextId"></a><a name="runningAutsViewContextId"></a><a name="guidancerTestJobEditorContextId"></a><h2><a name="SECTION004152000000000000000"> <span class="arabic">3</span>.<span class="arabic">15</span>.<span class="arabic">2</span> Testing different AUT&#39;s in one test run</a></h2><a name="TasksSwitchAUT"></a><p> You can test multiple AUT&#39;s in one test run. <p> The AUT&#39;s can be the same actual AUT which has been started multiple times (to test refresh aspects, for example). <p> You can test AUT&#39;s that were started independently, or AUT&#39;s that are launched by other AUT&#39;s . <p>
-      <br />
-      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
-        <li><a href="node182.html" name="tex2html3580"><span class="arabic">3</span>.<span class="arabic">15</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Testing independently started AUT&#39;s </a><li><a href="node183.html" name="tex2html3581"><span class="arabic">3</span>.<span class="arabic">15</span>.<span class="arabic">2</span>.<span class="arabic">2</span> Testing AUT&#39;s that are launched by other AUT&#39;s </a></ul>
+  <body><a name="compNameViewContextId"></a><h2><a name="SECTION004132000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">2</span> Entering and reassigning component names in the Component Names View </a></h2><a name="TasksReassignCompName"></a><p><a name="3388"></a> <a name="3389"></a> <a name="3390"></a> <a name="3391"></a> <a name="3392"></a> <a name="3393"></a> <a name="3394"></a> <a name="3395"></a> <a name="3396"></a> <a name="3397"></a><p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>The following section deals with entering component names in the Component Names View when you have added Test Cases from the library. For information on component names in Test Steps , see the Test Steps section <a href="node199.html#specsteps">3.16.1</a>.</b></td>
+        </tr>
+      </table>
+    <p>
+      <ol>
+        <li>Once you have added a Test Case from the library of Test Cases <a href="node136.html#usingtemplate">3.11.2</a>, you will need to enter a component name for the component you want to test. <li>In the Component Names View , you will see the <i>old name</i> for this component, which was given in the Test Step contained in the library Test Case . The old name is just a placeholder and should be <i>reassigned</i> (<a href="#compnamesview">3.22</a>). <p>
+            <div align="CENTER"><a name="compnamesview"></a><a name="9203"></a><table>
+                <caption align="BOTTOM"><strong>Figure 3.22:</strong> The Component Names View </caption>
+                <tr>
+                  <td>
+                    <div align="CENTER"><img align="BOTTOM" alt="Image compnamesview" border="0" height="265" src="./compnamesview.png" width="461" /></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>When you enter a component name in the Component Names View , you create a new reference to a component in the AUT . This component name appears in the Object Mapping Editor to be mapped to a component in your AUT . A Test Case containing component names to be reassigned can therefore be used at a variety of different places to test different actual components. If you want to rename a component name, you can do so in the Component Name Browser &nbsp; <a href="node182.html#TasksRenameCompName">3.13.3</a>.</b></td>
+              </tr>
+            </table>
+          <p>
+        <li>In the <i>new name</i> field, enter your name for this component, e.g. <tt>&quot;MainWindow_NavigationTree_tre&quot;</tt>. <p> We recommend using naming conventions for component names. <p>
+        <li>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to see a list of component names you have already used for this type of component: <p>
+            <dl>
+              <dt><strong><i>Local</i></strong><dd> component names are names you have used in this Test Case for this component type. <br />
+                <div class="margin"><img align="BOTTOM" alt="Image localName" border="0" height="256" src="./localName.png" width="256" />&nbsp;Local name</div>
+                <br />
+              <dt><strong><i>Global</i></strong><dd> component names are names you have used for this component type, but not in this Test Case . <br />
+                <div class="margin"><img align="BOTTOM" alt="Image globalName" border="0" height="256" src="./globalName.png" width="256" />&nbsp;Global name</div>
+                <br />
+            </dl>
+          <p>
+            <table>
+              <tr>
+                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                <td><b>You can configure how frequently the content assist in the Component Names View should open in the preferences .</b></td>
+              </tr>
+            </table>
+          <p>
+        <li>The component name you enter here will be collected by the Object Mapping Editor when you carry out object mapping so that you can assign it to a component in the AUT . <p>
+        <li>Every time you want to carry out an action on this component, use this name. </ol>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+          <td><b>See the section on the component hierarchy for some tips on using component names in your tests <a href="node187.html#TasksCompNameType">3.13.8</a>.</b></td>
+        </tr>
+      </table>
+    <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

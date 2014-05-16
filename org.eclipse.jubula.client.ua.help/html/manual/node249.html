@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.22.10 Label decoration preferences</title>
-    <meta content="3.22.10 Label decoration preferences" name="description" />
+    <title>3.21.2.1 Creating a BIRT report</title>
+    <meta content="3.21.2.1 Creating a BIRT report" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,9 +10,16 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION0042210000000000000000"></a> <a name="TasksPrefsDecoration"></a><br /><span class="arabic">3</span>.<span class="arabic">22</span>.<span class="arabic">10</span> Label decoration preferences </h2>
-    <p> You can open the label decoration preferences by selecting <i>General - Appearance - Label Decorations</i> from the preference dialog. <p> From this preference page, you can alter your preferences for: <dl>
-        <dt><strong>Completeness Check Decorator:</strong><dd> We recommend leaving this decorator active, as it shows you red crosses and tooltips in the Test Suite Browser when Test Suites and Test Jobs are incomplete. <dt><strong>Test Result Duration Decorator:</strong><dd>Deactivate this option to not see the execution time required for each node in the Test Result View . The times shown are for the execution of each node, including its children. You can use this information to see whether specific Test Cases are taking longer than you expect them to. <dt><strong>Test Result Parameter Decorator:</strong><dd>Deactivate this option to not see the parameter values used at this node (i.e. either entered at this level, or actually used at this place) in the Test Result View . You can use this information to easily see which data were used for your Test Cases , without having to click through each individual node in the Test Result View . This can be especially useful if you have one Test Case that runs multiple times with different datasets. </dl>
+    <h3><a name="SECTION004212100000000000000"> <span class="arabic">3</span>.<span class="arabic">21</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Creating a BIRT report</a></h3> Using the BIRT report designer, you can create your own reports which will display specific information from these tables. <p> In the installation directory, in: <p><i>plugins/com.bredexsw.guidancer.reporting.birt.viewer</i><p> there is the directory <i>reports</i>. <p> In this directory, the templates for the reports available in the ITE are stored. There is also a library which uses the Database as a data source and contains data sets (SQL queries) to this Database . The following information is contained in the library: <p>
+      <dl>
+        <dt><strong>Datasets:</strong><dd>there are views to show details from the four tables for reporting in the Database . <dt><strong>Report parameters:</strong><dd>These are parameters for the Database queries that can be used to limit the scope of a report. <dt><strong>Report items:</strong><dd>These are examples of pre-defined tables and graphs which can be used in other reports. <dt><strong>Master pages:</strong><dd>These define the layout of the reports <dt><strong>Themes:</strong><dd>The themes contain information about colors, fonts etc. The themes are in the ite.css file. </dl>
+    <p>
+      <table>
+        <tr>
+          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+          <td><b>Be careful when working with the reports and themes that you do not break the existing reports!</b></td>
+        </tr>
+      </table>
     <p>
       <br />
       <hr />

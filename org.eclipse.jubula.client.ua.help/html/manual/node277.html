@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.27.1.1 Adding a HP ALM repository to your workspace</title>
-    <meta content="3.27.1.1 Adding a HP ALM repository to your workspace" name="description" />
+    <title>3.24.2.1 Using a separate AUT Agent or the embedded AUT Agent </title>
+    <meta content="3.24.2.1 Using a separate AUT Agent or the embedded AUT Agent " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,9 +10,17 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION004271100000000000000"></a> <a name="TasksHPALMRepo"></a><br /><span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Adding a HP ALM repository to your workspace </h3>
-    <ol>
-      <li>To add the connector for a HP ALM repository, you will have to install and license software from Tasktop. <li>Once you have a Tasktop account and a license for HP ALM, you can install and use the HP ALM connector. <li>On the www.tasktop.com website, select <i>Downloads</i> and locate the <i>Tasktop Dev</i> product. <li>Select the option to download the plugin. <li>Follow the instructions on the Tasktop website to install the the plugin into your ITE . You will require the Tasktop Dev Enterprise for the HP ALM connector. <li>When prompted to restart the ITE automatically, say <i>No</i> and then restart the ITE manually via the menu. <li>When the ITE is restarted, you will be prompted to enter your account details for Tasktop. <li>Once you have entered your information, you will be able to configure the repository via the <i>Task Repositories</i> view. </ol>
+    <h3><a name="SECTION004242100000000000000"></a> <a name="TasksTestExecAgent"></a><br /><span class="arabic">3</span>.<span class="arabic">24</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Using a separate AUT Agent or the embedded AUT Agent </h3>
+    <ul>
+      <li>When using testexec, you have the choice between working with an AUT Agent that you start separately, or using an embedded AUT Agent that is started automatically by testexec. <li>If you want to use a separately started AUT Agent , then the AUT Agent must be started on the machine you are testing on. Enter the parameters for the server and port number to connect to this AUT Agent . <table>
+          <tr>
+            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+            <td><b>If you are working with Test Jobs , you must use a separately started AUT Agent , because you will require the AUT Agent to start the AUT via <i>autrun</i>.</b></td>
+          </tr>
+        </table>
+      <li>If you want to have testexec start and connect to an embedded AUT Agent automatically, then you have two options: <ul>
+          <li>You can leave out both the parameters for the server and the port number. This will result in an embedded AUT Agent being started on a dynamically chosen port. <li>You can leave out the server parameter, but still enter a port number. This will result in an embedded AUT Agent being started on the port you define. </ul>
+    </ul>
     <p>
       <br />
       <hr />

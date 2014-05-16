@@ -1,33 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.5.11.2 Removing change tracking information from a Project </title>
-    <meta content="3.5.11.2 Removing change tracking information from a Project " name="description" />
+    <title>3.5.7 Saving a Project as a new Project </title>
+    <meta content="3.5.7 Saving a Project as a new Project " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body>
-    <h3><a name="SECTION004511200000000000000"></a> <a name="TasksRemoveChangeTracking"></a><br /><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">11</span>.<span class="arabic">2</span> Removing change tracking information from a Project </h3>
-    <ol>
-      <li>To remove all information on all nodes about changes made, open the Project properties: <br />
-        <table border="0" style="margin:0px;padding:0px;">
-          <tr>
-            <td bgcolor="#DDDDDD">Test</td>
-            <td>--&gt;</td>
-            <td bgcolor="#DDDDDD">Properties</td>
-          </tr>
-        </table>
-        <br />
-      <li>Select <i>General</i> from the tree on the left-hand side. <li>Click the button &quot;<i>Delete all tracked data</i>&quot; and confirm when asked. <li>All data will be removed from the Project that were collected for the change tracking. <table>
-          <tr>
-            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-            <td><b>If a node is currently locked, then the data for this node will not be removed. You will see which nodes are affected in a dialog. We recommend deleting change tracking data when you are sure that no one else is using the Project .</b></td>
-          </tr>
-        </table>
-    </ol>
+  <body><a name="dialogProjectSaveAsContextId"></a><h2><a name="SECTION00457000000000000000"></a> <a name="saveproject"></a><br /><span class="arabic">3</span>.<span class="arabic">5</span>.<span class="arabic">7</span> Saving a Project as a new Project </h2>
+    <p><a name="937"></a> <a name="938"></a><p>
+      <ol>
+        <li>To save the currently opened Project as a new Project , select: <br />
+          <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Test</td>
+              <td>--&gt;</td>
+              <td bgcolor="#DDDDDD">Save as...</td>
+            </tr>
+          </table> . <li>Enter the new name for the Project in the dialog that appears. <li>This creates a new Project in the database, saved under the name you entered. <li>If no changes have been made since the previous Project save, the new Project has the same content as the previous one. <li>Otherwise, any modifications are saved under the new Project name, and the old Project is kept in the state of its last save. <li>The new Project becomes active in the ITE . <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>Any test result summaries for the Project are not duplicated in the new Project . Tests that ran for previous versions of the Project are, however, still in the Database to be used for long term analysis.</b></td>
+            </tr>
+          </table>
+      </ol>
     <p>
       <br />
       <hr />

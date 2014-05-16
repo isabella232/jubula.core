@@ -1,35 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.22.9 Importing and exporting Database preferences</title>
-    <meta content="3.22.9 Importing and exporting Database preferences" name="description" />
+    <title>3.21.2 Writing your own BIRT reports</title>
+    <meta content="3.21.2 Writing your own BIRT reports" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="databaseConnectionConfigurationDialogContextId"></a><h2><a name="SECTION004229000000000000000"> <span class="arabic">3</span>.<span class="arabic">22</span>.<span class="arabic">9</span> Importing and exporting Database preferences</a></h2><a name="TasksPrefsImport"></a><p> You can export and import your Database preferences for the ITE . This makes migrating to new versions easier, as you do not have to reenter any Database preferences. <p> To export your Database preferences: <ol>
-        <li>Select: <br />
-          <table border="0" style="margin:0px;padding:0px;">
-            <tr>
-              <td bgcolor="#DDDDDD">File</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">Export</td>
-            </tr>
-          </table>
-          <br /> from the main menu in the ITE . <li>In the dialog that appears, select: <i>General/Preferences</i> and click &quot;<i>Next</i>&quot;. <li>Select the <i>Database Connections</i> option and browse to a place in the file system where you want the preferences to be saved. <li>Click &quot;<i>Finish</i>&quot;. </ol>
-    <p> To import your Database preferences: <ol>
-        <li>Select: <br />
-          <table border="0" style="margin:0px;padding:0px;">
-            <tr>
-              <td bgcolor="#DDDDDD">File</td>
-              <td>--&gt;</td>
-              <td bgcolor="#DDDDDD">Import</td>
-            </tr>
-          </table>
-          <br /> from the main menu in the ITE . <li>In the dialog that appears, select: <i>General/Preferences</i> and click &quot;<i>Next</i>&quot;. <li>Browse to the preference file you wish to import. <li>Select the <i>Database Connections</i> option and click &quot;<i>Finish</i>&quot;. </ol>
+  <body><a name="testResultSummaryViewContextId"></a><h2><a name="SECTION004212000000000000000"> <span class="arabic">3</span>.<span class="arabic">21</span>.<span class="arabic">2</span> Writing your own BIRT reports</a></h2><a name="OwnBIRT"></a><p> The BIRT reports are examples of how you could document your quality over time. You can also create other reports to generate depending on which details you want to see in the reports. To create reports, you will need to use the BIRT designer from Actuate. There is an open source version and a commerical version of the designer. <p> The following information describes what information from the Database can be used to generate BIRT reports. For help using BIRT, please see the BIRT documentation. <p> There are four Database tables that contain relevant data for test results: <p>
+      <dl>
+        <dt><strong>testresult_summary</strong><dd>This table contains one row per executed Test Suite and corresponds to the Test Result Summary View in the ITE . <dt><strong>testresult</strong><dd>This table contains further information about each test run (each row in the <i>testresult_summary</i> table), including all executed nodes. <dt><strong>parameter_details</strong><dd>This table contains the name, type and value for all parameters (data) in the executed test. <dt><strong>parameter_list</strong><dd>This table gives a parent-child relation between the executed nodes from the <i>testresult</i> table and the parameters in the <i>parameter_details</i> table. </dl>
     <p>
+      <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node249.html" name="tex2html4525"><span class="arabic">3</span>.<span class="arabic">21</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Creating a BIRT report</a></ul>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

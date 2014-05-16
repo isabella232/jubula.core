@@ -1,16 +1,45 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.4.4 The Test Result View </title>
-    <meta content="5.4.4 The Test Result View " name="description" />
+    <title>4.7.5.2 Working with iOS Table Views (lists)</title>
+    <meta content="4.7.5.2 Working with iOS Table Views (lists)" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="testResultViewContextId"></a><h2><a name="SECTION00644000000000000000"> <span class="arabic">5</span>.<span class="arabic">4</span>.<span class="arabic">4</span> The Test Result View </a></h2>
-    <p> The Test Result View is in the middle of the Functional Test Execution Perspective by default. It can also be displayed in the bottom right-hand corner of the Functional Test Specification Perspective via the preferences. It follows and displays the results of the test execution. Each Test Step and Test Case is marked with a green tick or a red cross depending on if it passed or failed. <p> If you select an item in the Test Result View , you can see its details in the Properties View . If the Project is open and the item is still available, you can double-click on a Test Step or Test Case in the Test Result View , to highlight it in the Test Suite Browser . Double-clicking on this item in the Test Suite Browser will open the editor for this item in the Functional Test Specification Perspective . <p>
+  <body>
+    <h3><a name="SECTION00575200000000000000"> <span class="arabic">4</span>.<span class="arabic">7</span>.<span class="arabic">5</span>.<span class="arabic">2</span> Working with iOS Table Views (lists)</a></h3>
+    <ul>
+      <li><i>Table Views</i> in iOS are used to organize information on the screen. They may just consist of items (and therefore look like a simple list (<a href="#TableViewSimple">4.2</a>)), or they may contain various sections - each section can contain other components (<a href="#TableViewGrouped">4.3</a>). <li>Both types of <i>Table View</i> are testable using the actions available on the <i>List</i> component. <li>You can, e.g. select items from the list, check their existence etc. <li>In the <i>Table Views</i> that contain other components, you can also address the individual components (labels, buttons etc.) in the list using the actions such as check existence, check text, click etc. <li>When writing a test on these components, it is important to decide which component you want to test <a href="node444.html#ToolkitiOSCorrectComponent">4.7.4</a>. <li>If you need to scroll to a certain section of a list that is currently not visible, you can use the <i>select</i> action on the <i>list</i> component to make the correct portion of the screen visible. You can also use 0 clicks to simply hover over the item instead of tapping it. <table>
+          <tr>
+            <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+            <td><b>Bear in mind that many apps remember where you were on a screen. You may need to add explicit scrolling (via selection) to your tests in order to ensure that the components you require are on screen.</b></td>
+          </tr>
+        </table>
+    </ul>
+    <p>
+      <div align="CENTER"><a name="TableViewSimple"></a><a name="7878"></a><table>
+          <caption align="BOTTOM"><strong>Figure 4.2:</strong> Simple Table View (list component)</caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image TableViewSimple" border="0" height="217" src="./TableViewSimple.png" width="197" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <p>
+      <div align="CENTER"><a name="TableViewGrouped"></a><a name="7885"></a><table>
+          <caption align="BOTTOM"><strong>Figure 4.3:</strong> Grouped Table View (list component)</caption>
+          <tr>
+            <td>
+              <div align="CENTER"><img align="BOTTOM" alt="Image TableViewGrouped" border="0" height="246" src="./TableViewGrouped.png" width="197" /></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

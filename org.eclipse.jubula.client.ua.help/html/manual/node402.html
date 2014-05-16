@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>4.7.1 Supported iOS AUT&#39;s </title>
-    <meta content="4.7.1 Supported iOS AUT&#39;s " name="description" />
+    <title>4.2.2.1 Setting up an RCP AUT for testing as a part of the build process</title>
+    <meta content="4.2.2.1 Setting up an RCP AUT for testing as a part of the build process" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,10 +10,9 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h2><a name="SECTION00571000000000000000"> <span class="arabic">4</span>.<span class="arabic">7</span>.<span class="arabic">1</span> Supported iOS AUT&#39;s </a></h2>
-    <p> The following AUT&#39;s written for iOS are supported: <p>
-      <ul>
-        <li>You must be using iOS SDK 5.0 or higher. iOS AUT&#39;s on version 6.1 and 7.0 of iOS are supported. <li>You can run tests either on a simulator (i386) or on a real device (armv7 and armv7s). </ul>
+    <h3><a name="SECTION00522100000000000000"></a> <a name="ToolkitRCPSetupCI"></a><br /><span class="arabic">4</span>.<span class="arabic">2</span>.<span class="arabic">2</span>.<span class="arabic">1</span> Setting up an RCP AUT for testing as a part of the build process </h3> We recommend adding the RCP accessor to your AUT automatically in one of the following ways. Which way you choose will depend on your AUT , build process and Eclipse version, and you should check with the development team which approach is best: <p>
+      <dl>
+        <dt><strong>During the product build:</strong><dd>Adding the RCP Accessor as a plugin to your AUT as it is being built is one way to ensure that it is present and started when the AUT starts. <dt><strong>Via the OSGI console:</strong><dd>If adding the Accessor during the build is not an option, then you can add it after the build via the OSGI console. The availability of this option is dependent on the version of Eclipse you use, and your AUT : It must allow this type of post-hoc inclusion of plugins for this to work. <dt><strong>Via the P2 director:</strong><dd>Alternatively, you can add it after the product build using the P2 director. The availability of this option is dependent on the version of Eclipse you use, and your AUT : It must allow this type of post-hoc inclusion of plugins for this to work. </dl>
     <p>
       <br />
       <hr />

@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>4.7.5.5 Working with gestures</title>
-    <meta content="4.7.5.5 Working with gestures" name="description" />
+    <title>4.5.1 Supported HTML AUT&#39;s </title>
+    <meta content="4.5.1 Supported HTML AUT&#39;s " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,9 +10,14 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h3><a name="SECTION00575500000000000000"> <span class="arabic">4</span>.<span class="arabic">7</span>.<span class="arabic">5</span>.<span class="arabic">5</span> Working with gestures</a></h3>
-    <ul>
-      <li>In the iOS toolkit, you will find swipe actions for many components. You can use these actions to perform swipes in a specific direction. </ul>
+    <h2><a name="SECTION00551000000000000000"> <span class="arabic">4</span>.<span class="arabic">5</span>.<span class="arabic">1</span> Supported HTML AUT&#39;s </a></h2>
+    <p> AUT&#39;s written with the HTML GUI toolkit are supported according to the following points: <p>
+      <ul>
+        <li>The HTML tests are driven by Selenium. We document which version of Selenium we are currently using as a driver in the release notes. Check the release notes for the current Selenium version and check the Selenium documentation for supported browsers. <li>We strongly recommend writing HTML AUT&#39;s so that they are conform to the <i>W3C</i> standard. You can check whether your AUT is <i>W3C</i> conform using an online validator: http://validator.w3.org <li>We recommend disabling the protected mode in Internet Explorer when testing HTML AUT&#39;s . This may be required in Windows 8+ when performing key combinations as a part of the test, but may also be required for other versions and other actions. <li>Some of the actions in the <i>concrete</i> toolkit (i.e. which are theoretically valid for all AUT types) may not (yet) be supported. In some cases, this is because the component doesn&#39;t exist as such in HTML AUT&#39;s (menu bars for example). In other cases, text components such as tables or lists do not have a concept for dealing with selection as they do in e.g. Swing. <li>The <i>autrun</i> option to start AUT&#39;s <a href="node92.html#autrun">3.7.4.6</a> cannot be used for HTML AUT&#39;s . <li>There is a minor difference in the way that clicks are performed in HTML compared to other supported toolkits. In other toolkits such as Swing, an API is used to simulate actions at the OS level so that the the computer itself can&#39;t distinguish whether it came from a tool or a keyboard. A normal click by a user in a browser would go via the mouse through various layers to the webserver, resulting in a request to that webserver. The clicks in the HTML toolkit are performed by firing DOM events using Javascript therefore bypassing the mouse level. So, although the computer can tell the difference, the webserver can&#39;t. <li>HTML AUT&#39;s can be tested in single-window or multi-window mode. If your AUT has functions that cause new windows to open, then you should specify this in the AUT configuration. You can then map components from different windows, and also use specific actions to switch windows during your test. Multi-window mode on Internet Explorer is considerably slower than on Firefox - this is a known issue registered at Selenium. There are known issues with AUT starting in multi-window mode on OSX systems for Firefox and on Safari - we do not test these combinations. </ul>
+    <p><span class="textbf">Closing HTML AUT&#39;s via the close button</span><ul>
+        <li>If you close a HTML AUT by closing the browser, the ITE will correctly notice the closure after 5 seconds (configurable) and will remove the AUT from the running AUT&#39;s view. <li>The mechanism works by polling the AUT , and if it is no longer there after the configured time, the AUT is considered to be stopped. <li>If your AUT may sometimes be unreachable for longer than the default 5 seconds, you can change this time by using a process or system property: <br /><tt>&quot;TEST_MAX_AUT_RESPONSE_TIME=&lt;timeInMs&gt;&quot;</tt>. <li>Further information on this is available in this issue: <br /><tt><a href="http://bugzilla.bredex.de/1391" name="tex2html48">http://bugzilla.bredex.de/1391</a></tt>. </ul>
+    <p><span class="textbf">Overwriting launcher options now possible</span><ul>
+        <li>You can now manually overwrite launcher options for the launchers for autrun, testexec, dbtool and dashboard. </ul>
     <p>
       <br />
       <hr />

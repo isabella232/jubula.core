@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>5.5 The status bar</title>
-    <meta content="5.5 The status bar" name="description" />
+    <title>4.7.6.3 Setting up linker options</title>
+    <meta content="4.7.6.3 Setting up linker options" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
@@ -10,8 +10,14 @@
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
   <body>
-    <h1><a name="SECTION00650000000000000000"> <span class="arabic">5</span>.<span class="arabic">5</span> The status bar</a></h1>
-    <p><a name="8070"></a><p> The status bar in the lower right-hand corner of the perspective gives important information about the AUT Agent status, working language, AUT and the observation mode and Object Mapping Mode . <p>
+    <h3><a name="SECTION00576300000000000000"> <span class="arabic">4</span>.<span class="arabic">7</span>.<span class="arabic">6</span>.<span class="arabic">3</span> Setting up linker options</a></h3> The file <span class="textit">librc.mobile.ios.nativ.linkwith.cs</span> specifies the linker options. It contains a single annotation named <span class="textit">LinkWith</span>. Change the annotation to: <br /><pre>
+[assembly: LinkWith 
+(&quot;librc.mobile.ios.nativ.a&quot;, 
+LinkTarget.Simulator | LinkTarget.ArmV6 
+| LinkTarget.ArmV7,
+ &quot;-ObjC -all_load&quot;, ForceLoad = true, 
+Frameworks=&quot;CFNetwork&quot;)
+</pre><p> Doing this allows your AUT to be tested on the simulator as well as on iOS devices. The framework <span class="textit">CFNetwork</span> is needed to communicate with the ITE . <p>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

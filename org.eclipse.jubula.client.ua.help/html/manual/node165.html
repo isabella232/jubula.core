@@ -1,30 +1,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.12.12 Special parameters: empty strings and the escape character</title>
-    <meta content="3.12.12 Special parameters: empty strings and the escape character" name="description" />
+    <title>3.12.9.2 Deleting central test data sets</title>
+    <meta content="3.12.9.2 Deleting central test data sets" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerPropertiesViewContextId"></a><a name="guidancerCentralTestDataEditorContextId"></a><h2><a name="SECTION0041212000000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">12</span> Special parameters: empty strings and the escape character</a></h2>
-    <p><a name="3213"></a> <a name="3214"></a> <a name="3215"></a> <a name="3216"></a><p><span class="textbf">Entering empty strings as parameters</span><br /> If you want the parameter you enter to be an <i>empty string</i> (i.e. nothing), use two single quote marks: &#39;&#39; <br />
-    <p> You can use this with the <i>equals</i>, <i>matches</i> or <i>simple match</i> operators. <p> You can also use &#39;<code>^$</code>&#39; or &#39;<code>^\s*$</code>&#39; with the operator <i>matches</i> to check that a text area is empty. <p> You can also use &#39;<code>^$</code>&#39; with the operator <i>matches</i> to check that a text area is empty. <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>If a component looks empty, but entering an empty string doesn&#39;t work, it may be worth asking a developer what is actually in the component.</b></td>
-        </tr>
-      </table>
-    <p><span class="textbf">The escape character</span><br /> Some symbols have a special meaning for test execution. If you want to use the symbol without the special function, you have to <i>escape</i> it. The symbol to negate any special function of the following symbol is a backslash: (<span class="MATH"><img align="MIDDLE" alt="$\backslash$" border="0" height="38" src="img3.gif" width="15" /></span>). <p> See the Reference Manual (--&gt;<i>Reference Manual</i> <a href="../reference/node37.html#specialchar"> <img align="BOTTOM" alt="[*]" border="1" src="crossref.gif" /></a>) for more details on special symbols and escaping them. <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>When you are using regular expressions, you will also need to think about which symbols need neutralising. Sometimes more than one backslash is necessary.</b></td>
-        </tr>
-      </table>
+  <body><a name="guidancerCentralTestDataEditorContextId"></a><h3><a name="SECTION004129200000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">9</span>.<span class="arabic">2</span> Deleting central test data sets</a></h3>You can delete a central test data set if the data set has not yet been reused (referenced) in a Test Case <a href="node168.html#TasksCentralDataReference">3.12.9.5</a>. <ol>
+      <li>Select: <br />
+        <table border="0" style="margin:0px;padding:0px;">
+          <tr>
+            <td bgcolor="#DDDDDD">Delete</td>
+          </tr>
+        </table>
+        <br /> from the context-sensitive menu or press <tt>&raquo;DELETE&laquo;</tt>. <p>
+      <li>A dialog will appear if the data set has been reused and cannot be deleted. <li>You can use the search <a href="node319.html#TasksShowWhereUsedDataSet">3.29.4</a> to show where the data set has been used. </ol>
     <p>
       <br />
       <hr />

@@ -1,23 +1,35 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.29.2 Searching for places where a Test Case or Test Suite has been used</title>
-    <meta content="3.29.2 Searching for places where a Test Case or Test Suite has been used" name="description" />
+    <title>3.27.1 Configuring code coverage for an AUT </title>
+    <meta content="3.27.1 Configuring code coverage for an AUT " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="searchResultViewContextId"></a><a name="testExecViewContextId"></a><a name="testSuiteEditorContextId"></a><a name="testSpecificationViewContextId"></a><a name="guidancerSpecTestCaseEditorContextId"></a><h2><a name="SECTION004292000000000000000"> <span class="arabic">3</span>.<span class="arabic">29</span>.<span class="arabic">2</span> Searching for places where a Test Case or Test Suite has been used</a></h2><a name="TasksShowWhereUsedTestCase"></a><p><a name="5874"></a> <a name="5875"></a> <a name="5876"></a> <a name="5877"></a> <a name="5878"></a><p> To find the places where you have reused a Test Case or a Test Suite : <ol>
-        <li>In a browser or an editor, right-click on the Test Case or Test Suite whose places of reuse you want to find. You must have selected the parent (original specification) for the action to be enabled. <li>Select &quot;<i>show where reused</i>&quot; from the context sensitive menu. You can also press <tt>&raquo;F7&laquo;</tt> to show the places where a Test Case or Test Suite has been reused. <li>In the &quot;<i>Search Result View</i>&quot; <a href="node303.html#TasksSearchResultView">3.29.6</a>, a list of places will appear. These are the places where the Test Case or Test Suite has been reused. <li>Double-click on an icon in the view to highlight and open the place of reuse. <li>If you are using this option on a Test Case and want to replace the Test Case you searched for with another Test Case at some or all of the places where it is reused, you can start this action from the Search Result View <a href="node132.html#TasksSearchResultReplaceTC">3.11.7</a>. </ol>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>If you select this option on a nested Test Case , you will be shown the other places where the Test Case is nested. To see where its parent Test Case is used, you must then carry out the same steps on the parent.</b></td>
-        </tr>
-      </table>
+  <body><a name="autConfigSettingWizardPagePageContextId"></a><h2><a name="SECTION004271000000000000000"> <span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">1</span> Configuring code coverage for an AUT </a></h2><a name="CCConfigure"></a><p> You can activate code coverage for an AUT configuration with the following steps: <p>
+      <ol>
+        <li>Open the AUT configuration dialog from the Project properties <a href="node58.html#projectproperties">3.5.2</a>. <li>Select the <i>Expert</i> configuration. <li>Select the code coverage agent you wish to use (<i>JaCoCo</i> is available out-of-the-box). <li>You can then enter the AUT installation directory and the AUT source directory for the code coverage: <dl>
+            <dt><strong>The AUT installation directory</strong><dd> is the directory containing the class files (compiled Java files) for your AUT . You must enter this directory to make code coverage possible for your test run. <dt><strong>The AUT source directory</strong><dd> is the directory where the source files (i.e. the program code) for your AUT are kept. Entering a directory for the source files is optional, however, if you do not enter one, then you will not be able to view your code coverage results at the source file level. The AUT source directory must contain the source files in their Java package structure. The class files must have been compiled with debug information to make the lines of code executed visible in the code coverage report. <table>
+                <tr>
+                  <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+                  <td><b>You can enter relative paths for the AUT installation and AUT source directories. The paths are relative to the working directory.</b></td>
+                </tr>
+              </table>
+          </dl>
+        <li>To make sure you only monitor your own code, enter a package pattern to specify which packages should be monitored. The pattern must be a valid regular expression. If you do not enter a package pattern, all classes in the virtual machine will be considered for the code coverage value. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>Not entering a package pattern can result in extremely large messages being sent from the AUT Agent , which may cause memory problems <a href="node296.html#CCHeap">3.27.1.1</a>.</b></td>
+            </tr>
+          </table>
+        <li>Select whether you want the code coverage value to be reset when a new Test Suite starts <a href="node297.html#CCReset">3.27.2</a>. </ol>
     <p>
+      <br />
+      <hr /><a name="CHILD_LINKS"><strong>Subsections</strong></a><ul class="ChildLinks">
+        <li><a href="node296.html" name="tex2html5123"><span class="arabic">3</span>.<span class="arabic">27</span>.<span class="arabic">1</span>.<span class="arabic">1</span> Increasing the Java Heap Space for code coverage</a></ul>
       <br />
       <hr />
       <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>

@@ -1,34 +1,35 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.13.1 Creating new component names</title>
-    <meta content="3.13.1 Creating new component names" name="description" />
+    <title>3.12.9.5 Reusing central test data sets in Test Cases </title>
+    <meta content="3.12.9.5 Reusing central test data sets in Test Cases " name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="guidancerComponentNameBrowserContextId"></a><a name="objectMapEditorContextId"></a><a name="newComponentNameContextId"></a><h2><a name="SECTION004131000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">1</span> Creating new component names</a></h2><a name="TasksCreateNewCompName"></a><p><a name="3291"></a> <a name="3292"></a> <a name="3293"></a><p> For information on creating new component names by <i>reassigning</i> old component names (in the Component Names View for example, see the section on reassigning component names <a href="node169.html#TasksReassignCompName">3.13.2</a>. <p> You can create new component names in the Component Name Browser &nbsp; and in the Object Mapping Editor (tree view) via the context menu: <br />
-      <table border="0" style="margin:0px;padding:0px;">
-        <tr>
-          <td bgcolor="#DDDDDD">New Component Name</td>
-        </tr>
-      </table>
-    <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>You can also use the toolbar button to create a new component name when you are in the Object Mapping Editor .</b></td>
-        </tr>
-      </table>
-    <p> A dialog will appear to allow you to enter a component name. We recommend having good naming conventions for component names, as this will help you when mapping later. <p> The component name you enter will be created and will appear in the <i>unassigned component names</i> category in the Object Mapping Editor and in the <i>unused component names</i> category in the Component Name Browser &nbsp; . <p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>Newly created component names have the type <i>graphics component</i> until they are made more specific, either by mapping them to a technical name or by entering this new name in the Component Names View for a more concrete component type. </b></td>
-        </tr>
-      </table>
+  <body><a name="guidancerCentralTestDataEditorContextId"></a><a name="guidancerPropertiesViewContextId"></a><h3><a name="SECTION004129500000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">9</span>.<span class="arabic">5</span> Reusing central test data sets in Test Cases </a></h3><a name="TasksCentralDataReference"></a><p> You can reuse a central test data set in a Test Case to provide the concrete data for the parameters required by the Test Case . <p>
+      <ol>
+        <li>In the Properties View for the Test Case , enter the name of the central test data set you want to use in the <i>Central Test Data Set</i> field. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to see a list of possible data sets for this Test Case . You will only be shown data sets that contain the correct parameters with the correct types.</b></td>
+            </tr>
+          </table>
+        <li>When you have entered a central test data set, then the Properties View shows <i>central test data set</i> as the data type. You will see the data from the central test data set in read-only form in the Data Sets View . <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>If data is missing from the central test data set, you will receive the error that test data is incomplete for any Test Suites this Test Case is used in.</b></td>
+            </tr>
+          </table>
+        <li>You can delete the central test data set used by removing it from the <i>central test data set</i> field. The data type reverts to <i>local data</i>. For more information on the data sources, see the earlier section <a href="node161.html#TasksDataSources">3.12.8</a>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
+              <td><b>You can use central test data sets that contain more parameters than your Test Case . For example, if your Test Case requires the parameters <tt>&quot;NAME, ADDRESS&quot;</tt> and your central test data set contains <tt>&quot;NAME, ADDRESS, POSTCODE&quot;</tt>, you can still use the central test data set.</b></td>
+            </tr>
+          </table>
+      </ol>
     <p>
       <br />
       <hr />

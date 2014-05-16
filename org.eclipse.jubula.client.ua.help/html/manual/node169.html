@@ -1,60 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.13.2 Entering and reassigning component names in the Component Names View </title>
-    <meta content="3.13.2 Entering and reassigning component names in the Component Names View " name="description" />
+    <title>3.12.9.6 Importing Excel files as central test data</title>
+    <meta content="3.12.9.6 Importing Excel files as central test data" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="compNameViewContextId"></a><h2><a name="SECTION004132000000000000000"> <span class="arabic">3</span>.<span class="arabic">13</span>.<span class="arabic">2</span> Entering and reassigning component names in the Component Names View </a></h2><a name="TasksReassignCompName"></a><p><a name="3313"></a> <a name="3314"></a> <a name="3315"></a> <a name="3316"></a> <a name="3317"></a> <a name="3318"></a> <a name="3319"></a> <a name="3320"></a> <a name="3321"></a> <a name="3322"></a><p>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>The following section deals with entering component names in the Component Names View when you have added Test Cases from the library. For information on component names in Test Steps , see the Test Steps section <a href="node187.html#specsteps">3.16.1</a>.</b></td>
-        </tr>
-      </table>
-    <p>
+  <body><a name="guidancerCentralTestDataEditorContextId"></a><a name="guidancerPropertiesViewContextId"></a><h3><a name="SECTION004129600000000000000"> <span class="arabic">3</span>.<span class="arabic">12</span>.<span class="arabic">9</span>.<span class="arabic">6</span> Importing Excel files as central test data</a></h3><a name="TasksCentralDataImport"></a><p> If you have existing Excel files that you want to convert into central test data, then you can import them via the Central Test Data Editor : <p>
       <ol>
-        <li>Once you have added a Test Case from the library of Test Cases <a href="node124.html#usingtemplate">3.11.2</a>, you will need to enter a component name for the component you want to test. <li>In the Component Names View , you will see the <i>old name</i> for this component, which was given in the Test Step contained in the library Test Case . The old name is just a placeholder and should be <i>reassigned</i> (<a href="#compnamesview">3.21</a>). <p>
-            <div align="CENTER"><a name="compnamesview"></a><a name="8793"></a><table>
-                <caption align="BOTTOM"><strong>Figure 3.21:</strong> The Component Names View </caption>
-                <tr>
-                  <td>
-                    <div align="CENTER"><img align="BOTTOM" alt="Image compnamesview" border="0" height="265" src="./compnamesview.png" width="461" /></div>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          <p>
-            <table>
-              <tr>
-                <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-                <td><b>When you enter a component name in the Component Names View , you create a new reference to a component in the AUT . This component name appears in the Object Mapping Editor to be mapped to a component in your AUT . A Test Case containing component names to be reassigned can therefore be used at a variety of different places to test different actual components. If you want to rename a component name, you can do so in the Component Name Browser &nbsp; <a href="node170.html#TasksRenameCompName">3.13.3</a>.</b></td>
-              </tr>
-            </table>
-          <p>
-        <li>In the <i>new name</i> field, enter your name for this component, e.g. <tt>&quot;MainWindow_NavigationTree_tre&quot;</tt>. <p> We recommend using naming conventions for component names. <p>
-        <li>Press <tt>&raquo;CTRL+SPACE&laquo;</tt> to see a list of component names you have already used for this type of component: <p>
-            <dl>
-              <dt><strong><i>Local</i></strong><dd> component names are names you have used in this Test Case for this component type. <br />
-                <div class="margin"><img align="BOTTOM" alt="Image localName" border="0" height="256" src="./localName.png" width="256" />&nbsp;Local name</div>
-                <br />
-              <dt><strong><i>Global</i></strong><dd> component names are names you have used for this component type, but not in this Test Case . <br />
-                <div class="margin"><img align="BOTTOM" alt="Image globalName" border="0" height="256" src="./globalName.png" width="256" />&nbsp;Global name</div>
-                <br />
-            </dl>
-          <p>
-        <li>The component name you enter here will be collected by the Object Mapping Editor when you carry out object mapping so that you can assign it to a component in the AUT . <p>
-        <li>Every time you want to carry out an action on this component, use this name. </ol>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{lightbulb}" border="0" height="91" src="img2.jpg" width="100" /></td>
-          <td><b>See the section on the component hierarchy for some tips on using component names in your tests <a href="node175.html#TasksCompNameType">3.13.8</a>.</b></td>
-        </tr>
-      </table>
+        <li>In the Central Test Data Editor , right-click and select <table border="0" style="margin:0px;padding:0px;">
+            <tr>
+              <td bgcolor="#DDDDDD">Import</td>
+            </tr>
+          </table> from the context-sensitive menu. <li>In the dialog that appears, browse to the directory containing your Excel file(s). <li>Either select the whole directory (if it contains all Excel files) on the left, or select the individual Excel files on the right. <li>Click &quot;<i>Finish</i>&quot; to start the import. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>Your Excel files must contain the correct amount and type of Project languages.</b></td>
+            </tr>
+          </table>
+      </ol>
     <p>
       <br />
       <hr />

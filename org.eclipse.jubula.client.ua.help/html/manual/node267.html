@@ -1,32 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <title>3.25.2.4 Configuring the contexts for guidelines</title>
-    <meta content="3.25.2.4 Configuring the contexts for guidelines" name="description" />
+    <title>3.23.3 Using the Dashboard locally: Starting the Dashboard with default parameters and automatic browser opening</title>
+    <meta content="3.23.3 Using the Dashboard locally: Starting the Dashboard with default parameters and automatic browser opening" name="description" />
     <meta content="document" name="resource-type" />
     <meta content="global" name="distribution" />
     <meta content="LaTeX2HTML v2002-2-1" name="Generator" />
     <meta content="text/css" http-equiv="Content-Style-Type" />
     <link href="/help/topic/com.bredexsw.guidancer.client.ua.help/css/style.css" rel="STYLESHEET" />
   </head>
-  <body><a name="testStylePropertyPageEditContextContextId"></a><h3><a name="SECTION004252400000000000000"> <span class="arabic">3</span>.<span class="arabic">25</span>.<span class="arabic">2</span>.<span class="arabic">4</span> Configuring the contexts for guidelines</a></h3><a name="TeststyleContexts"></a><p> For many of the guidelines in the Project properties, you can set the contexts they should be valid for. Some of the available contexts include Test Cases , Test Suites , or the whole Project . <p> To edit the context for a guideline: <ol>
-        <li>In the Project properties, under the section <i>Teststyle</i>, select the guideline you want to configure. <li>Click &quot;<i>Edit context</i>&quot; to open the context dialog. <li>In the dialog (<a href="#contexts">3.39</a>), you can see and edit any available contexts for this guideline. <li>To activate a context, select the checkbox next to it. To deactivate a context, deselect its checkbox. <li>Confirm your changes in this dialog using &quot;<i>OK</i>&quot;. <li>Click &quot;<i>OK</i>&quot; in the Project properties to save the changes. </ol>
-      <table>
-        <tr>
-          <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
-          <td><b>If you enter an invalid value, the default value will be used in its place.</b></td>
-        </tr>
-      </table>
-    <p>
-      <div align="CENTER"><a name="contexts"></a><a name="5455"></a><table>
-          <caption align="BOTTOM"><strong>Figure 3.39:</strong> Edit Contexts</caption>
-          <tr>
-            <td>
-              <div align="CENTER"><img align="BOTTOM" alt="Image contexts" border="0" height="294" src="./contexts.png" width="508" /></div>
-            </td>
-          </tr>
-        </table>
-      </div>
+  <body>
+    <h2><a name="SECTION004233000000000000000"></a> <a name="TasksDashDefault"></a><br /><span class="arabic">3</span>.<span class="arabic">23</span>.<span class="arabic">3</span> Using the Dashboard locally: Starting the Dashboard with default parameters and automatic browser opening </h2>
+    <p> Although the Dashboard is primarily intended to be started on a central machine with access to a central Database in which the test results reside, it is also possible to start the Dashboard in a default configuration to allow access to the embedded Database . This option is useful if you are evaluating the function and want to use the Dashboard on your local machine without having to enter any configuration information. <p>
+      <ol>
+        <li>In the installation directory, open the <i>dashboard</i> folder. <li>In this folder, start the <i>dashboard</i> application (Windows users use <i>dashboard.exe</i>, Unix users use <i>dashboard.sh</i>. <li>Starting this application starts the <i>dashboardserver</i> with default parameters for the embedded database. You can see which parameters are used by looking in the <i>dashboardserver.properties</i> file which is in the same folder as the Dashboard application. <li>While the server is starting, you will see a progress window. A system tray icon for the Dashboard server will appear on your screen. <li>Once the server is started, a browser opens containing the Functional Test Reporting Perspective in which you can view and open Test Result Reports from the Database <a href="node270.html#TasksDashUse">3.23.6</a>. <table>
+            <tr>
+              <td><img align="BOTTOM" alt="\includegraphics[height=2cm]{danger}" border="0" height="89" src="img1.jpg" width="102" /></td>
+              <td><b>Bear in mind that if you are not using the embedded Database , then you will have to start the Dashboard server with other parameters to connect to the Database you are using <a href="node268.html#TasksDashCustom">3.23.4</a>.</b></td>
+            </tr>
+          </table>
+      </ol>
     <p>
       <br />
       <hr />
