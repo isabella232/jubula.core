@@ -73,7 +73,6 @@ public class Messages extends NLS {
     public static String ExecutionControllerDatabaseStart;
     public static String NoArgumentFor;
     public static String NoCorrespondingMessage;
-    public static String NoPlatformInstanceLocation;
     public static String NoSuchDatabaseConnection;
     public static String UnrecognizedOption;
     public static String UnsupportedJDBC;

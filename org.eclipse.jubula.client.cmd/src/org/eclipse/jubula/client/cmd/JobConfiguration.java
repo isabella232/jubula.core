@@ -24,7 +24,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
 import org.eclipse.jubula.client.core.businessprocess.db.TestJobBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
@@ -43,9 +42,7 @@ import org.eclipse.jubula.client.core.preferences.database.OracleConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionInfo;
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.tools.constants.EnvConstants;
-import org.eclipse.jubula.tools.constants.TestexecConstants;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
-import org.eclipse.jubula.tools.utils.FileUtils;
 import org.eclipse.jubula.tools.utils.NetUtil;
 import org.eclipse.osgi.util.NLS;
 
@@ -65,6 +62,8 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 public class JobConfiguration {
     /** Separator between major and minor version numbers */
     public static final char VERSION_SEPARATOR = '.';
+    /** exit code in case of invalid options */
+    public static final int EXIT_INVALID_OPTIONS = -2;
     /** String */
     private static final String CONFIGURATION = "configuration";  //$NON-NLS-1$
     
@@ -401,7 +400,6 @@ public class JobConfiguration {
      * @param cmd CommandLine
      */
     public void parseJobOptions(CommandLine cmd) {
-        String baseDatadirPath = getInstanceLocationPath();
         if (cmd.hasOption(ClientTestStrings.PROJECT)) { 
             setProjectName(cmd.getOptionValue(ClientTestStrings.PROJECT)); 
         }
@@ -427,8 +425,9 @@ public class JobConfiguration {
                     cmd.getOptionValue(ClientTestStrings.PORT)));
         }
         parseDBOptions(cmd);
-        parseResultDirOptions(cmd);
-        parseDataDirOptions(cmd, baseDatadirPath);
+        if (cmd.hasOption(ClientTestStrings.RESULTDIR)) { 
+            setResultDir(cmd.getOptionValue(ClientTestStrings.RESULTDIR));
+        }
         if (cmd.hasOption(ClientTestStrings.AUT_CONFIG)) { 
             setAutConfigName(cmd.getOptionValue(ClientTestStrings.AUT_CONFIG)); 
         }
@@ -437,6 +436,9 @@ public class JobConfiguration {
             if (autIdString != null) {
                 setAutId(new AutIdentifier(autIdString)); 
             }
+        }
+        if (cmd.hasOption(ClientTestStrings.DATA_DIR)) { 
+            setDataDir(cmd.getOptionValue(ClientTestStrings.DATA_DIR)); 
         }
         if (cmd.hasOption(ClientTestStrings.LANGUAGE)) { 
             setLanguage(LocaleUtil.convertStrToLocale(
@@ -466,7 +468,7 @@ public class JobConfiguration {
                         .getOptionValue(ClientTestStrings.TIMEOUT)));
             } catch (NumberFormatException e) {
                 // will be reported during validate
-                setTimeout(TestexecConstants.INVALID_VALUE); 
+                setTimeout(EXIT_INVALID_OPTIONS); 
             }
         }
     }
@@ -480,7 +482,7 @@ public class JobConfiguration {
         if (errorMsg == null) {
             return Integer.parseInt(portString);  
         }
-        return TestexecConstants.INVALID_VALUE;
+        return EXIT_INVALID_OPTIONS;
     }
 
     /**
@@ -489,7 +491,6 @@ public class JobConfiguration {
      * @param cmd CommandLine
      */
     public void parseOptionsWithServer(CommandLine cmd) {
-        String baseDatadirPath = getInstanceLocationPath();
         parseDBOptions(cmd);
         if (cmd.hasOption(ClientTestStrings.STARTSERVER)) {
             setServerPort(cmd.getOptionValue(ClientTestStrings.STARTSERVER));
@@ -528,9 +529,7 @@ public class JobConfiguration {
             setRelevant(false);
         }
         if (cmd.hasOption(ClientTestStrings.RESULTDIR)) { 
-            setResultDir(FileUtils.resolveAgainstBasePath(
-                    cmd.getOptionValue(ClientTestStrings.RESULTDIR), 
-                    baseDatadirPath));
+            setResultDir(cmd.getOptionValue(ClientTestStrings.RESULTDIR));
         }
         if (cmd.hasOption(ClientTestStrings.AUT_CONFIG)) { 
             setAutConfigName(cmd.getOptionValue(ClientTestStrings.AUT_CONFIG)); 
@@ -542,9 +541,7 @@ public class JobConfiguration {
             }
         }
         if (cmd.hasOption(ClientTestStrings.DATA_DIR)) { 
-            setDataDir(FileUtils.resolveAgainstBasePath(
-                    cmd.getOptionValue(ClientTestStrings.DATA_DIR), 
-                    baseDatadirPath));
+            setDataDir(cmd.getOptionValue(ClientTestStrings.DATA_DIR)); 
         }
         if (cmd.hasOption(ClientTestStrings.LANGUAGE)) { 
             setLanguage(LocaleUtil.convertStrToLocale(
@@ -576,35 +573,7 @@ public class JobConfiguration {
             setDbpw(cmd.getOptionValue(ClientTestStrings.DB_PW)); 
         }
     }
-
-    /**
-     * @param cmd CommandLine
-     * @param baseDatadirPath the default dataDir path (platform's working directory)
-     */
-    private void parseDataDirOptions(CommandLine cmd, String baseDatadirPath) {
-        if (cmd.hasOption(ClientTestStrings.DATA_DIR)) {
-            setDataDir(FileUtils.resolveAgainstBasePath(
-                    cmd.getOptionValue(ClientTestStrings.DATA_DIR),
-                        baseDatadirPath));
-        } else {
-            setDataDir((!StringUtils.isEmpty(baseDatadirPath))
-                    ? baseDatadirPath
-                    : String.valueOf(TestexecConstants.INVALID_VALUE));
-        }
-    }
-
-    /**
-     * @param cmd CommandLine
-     */
-    private void parseResultDirOptions(CommandLine cmd) {
-        if (cmd.hasOption(ClientTestStrings.RESULTDIR)) { 
-            setResultDir(FileUtils.resolveAgainstBasePath(
-                    cmd.getOptionValue(ClientTestStrings.RESULTDIR), 
-                    getInstanceLocationPath()));
-        }
-    }
-
-    
+ 
     /**
      * @param dbURL
      *            the dbURL string to get a database connection information for
@@ -901,9 +870,7 @@ public class JobConfiguration {
                                 arg0.getValue()));
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.RESULTDIR)) {
-                    job.setResultDir(FileUtils.resolveAgainstBasePath(
-                            arg0.getValue(), 
-                            getInstanceLocationPath()));
+                    job.setResultDir(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.DBURL)) {
                     String dbURL = arg0.getValue();
@@ -932,21 +899,13 @@ public class JobConfiguration {
                     job.setAutId(new AutIdentifier(arg0.getValue()));
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.DATA_DIR)) {
-                    job.setDataDir(FileUtils.resolveAgainstBasePath(
-                            arg0.getValue(), 
-                            getInstanceLocationPath()));
+                    job.setDataDir(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.TESTSUITE)) {
                     job.setTestSuiteName(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.TESTJOB)) {
                     job.setTestJobName(arg0.getValue());
-                } else {
-                    String platformWorkDir = getInstanceLocationPath(); 
-                    job.setDataDir((!StringUtils.isEmpty(platformWorkDir))
-                            ? platformWorkDir 
-                            : String.valueOf(
-                                    TestexecConstants.INVALID_VALUE));
                 }
                 arg0.moveUp();
             }
@@ -1019,17 +978,6 @@ public class JobConfiguration {
      */
     public String getDataDir() {
         return m_dataDir;
-    }
-    
-    /**
-     * @return the the path of the instance location (platform's working directory)
-     * <code>null</code> is returned if the platform is running without an instance location.
-     */
-    public static String getInstanceLocationPath() {
-        if (Platform.getInstanceLocation() == null) {
-            return null;
-        }
-        return Platform.getInstanceLocation().getURL().getFile();
     }
 
     /**
