@@ -22,15 +22,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Skin;
-import javafx.scene.control.SkinBase;
-import javafx.scene.control.Skinnable;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.ToolBar;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -47,7 +38,6 @@ import org.eclipse.jubula.rc.javafx.components.JavaFXComponent;
 import org.eclipse.jubula.rc.javafx.listener.sync.IStageResizeSync;
 import org.eclipse.jubula.rc.javafx.listener.sync.StageResizeSyncFactory;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.TraverseHelper;
 import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -152,30 +142,15 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         List<? extends Node> comps = getAssignableFrom(Node.class);
         List<Node> matches = new ArrayList<Node>();
         for (Node n : comps) {
-            if (n.getScene() == null || !NodeBounds.checkIfContains(pos, n)) {
+            if (n.getScene() == null) {
                 continue;
             }
-            if (isSupported(n.getClass())) {
-                boolean add = true;
-                Parent parent = n.getParent();
-                while (parent != null) {
-                    if (parent instanceof Skinnable) {
-                        if (isContentNode(n, parent)) {
-                            break;
-                        }    
-                        Skin skin = ((Skinnable)parent).getSkin();
-                        if (skin instanceof SkinBase) {
-                          //We don't want skin nodes
-                            if (isSkinNode(n, (SkinBase) skin)) {
-                                add = false;
-                                break;
-                            }
-                        }
-                    } else {
-                        parent = parent.getParent();
-                    }
-                }
-                if (add) {
+            Set supportetTypes = AUTServerConfiguration.
+                    getInstance().getSupportedTypes();
+            for (Object object : supportetTypes) {
+                if (((ComponentClass)object).getName().
+                        equals(n.getClass().getName())
+                        && NodeBounds.checkIfContains(pos, n)) {
                     matches.add(n);
                 }
             }
@@ -190,128 +165,6 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         return filterMatches(matches);
     }
     
-    /**
-     * Checks if the given class is supported by the AUT-Server
-     * @param c the class
-     * @return true if the type is supported, false if not
-     */
-    private static boolean isSupported(Class c) {
-        Set supportedTypes = AUTServerConfiguration.getInstance().
-                getSupportedTypes();
-        Class currentClass = c;
-        while (currentClass != null) {
-            for (Object object : supportedTypes) {
-                if (((ComponentClass)object).getName().equals(
-                        currentClass.getName())) {
-                    return true;
-                }
-            }
-            currentClass = currentClass.getSuperclass();
-        }
-        return false;
-    }
-    
-    /**
-     * Checks if the given Node is Part of the Content of the given Parent.
-     * This is checked for the following types:
-     *  TitledPane
-     *  ScrollPane
-     *  SplitPane
-     *  ToolBar
-     * This Classes don't share a parent class which would make accessing 
-     * the Content easier. Therefore this special (bad) code is necessary.
-     * @param n the possible content node.
-     * @param parent a parent of the above mentioned type
-     * @return true if the given node is part of the content, false if not.
-     */
-    private static boolean isContentNode(Node n, Parent parent) {
-        if (parent instanceof TitledPane) {
-            TraverseHelper<Node> helper = 
-                    new TraverseHelper<>();
-            Node content = ((TitledPane)parent).getContent();
-            if (content == n) {
-                return true;
-            } else if (content instanceof Parent 
-                    && helper.isChildOf(n, (Parent)content)) {
-                return true;
-            }
-        } else if (parent instanceof ScrollPane) {
-            TraverseHelper<Node> helper = 
-                    new TraverseHelper<>();
-            Node content = ((ScrollPane)parent).getContent();
-            if (content == n) {
-                return true;
-            } else if (content instanceof Parent 
-                    && helper.isChildOf(n, (Parent)content)) {
-                return true;
-            }
-        } else if (parent instanceof SplitPane) {
-            TraverseHelper<Node> helper = 
-                    new TraverseHelper<>();
-            ObservableList<Node> content = 
-                    ((SplitPane)parent).getItems();
-            if (content.contains(n)) {
-                return true;
-            } 
-            for (Node contentNode : content) {
-                if (contentNode instanceof Parent 
-                        && helper.isChildOf(
-                                n, (Parent)contentNode)) {
-                    return true;
-                }
-            }
-        } else if (parent instanceof ToolBar) {
-            TraverseHelper<Node> helper = 
-                    new TraverseHelper<>();
-            ObservableList<Node> content = 
-                    ((ToolBar)parent).getItems();
-            if (content.contains(n)) {
-                return true;
-            } 
-            for (Node contentNode : content) {
-                if (contentNode instanceof Parent 
-                        && helper.isChildOf(
-                                n, (Parent)contentNode)) {
-                    return true;
-                }
-            }
-        } else if (parent instanceof TabPane) {
-            TraverseHelper<Node> helper = 
-                    new TraverseHelper<>();
-            Tab tab = ((TabPane)parent).getSelectionModel().
-                    getSelectedItem();
-            Node content = tab.getContent();
-            if (content == n) {
-                return true;
-            } else if (content instanceof Parent 
-                    && helper.isChildOf(n, (Parent)content)) {
-                return true;
-            } 
-        } 
-        return false;
-    }
-    
-    /**
-     * Checks if the given node is part of a skin
-     * @param node the node
-     * @param skin the skin
-     * @return true if it is part the given skin, false if not
-     */
-    private static boolean isSkinNode(Node node, SkinBase skin) {
-        ObservableList<Node> skinChildren = skin.getChildren();
-        TraverseHelper<Node> help = new TraverseHelper<>();
-        for (Node n : skinChildren) {
-            if (n == node) {
-                return true;
-            } else if (n instanceof Parent) {
-                if (help.isChildOf(node, (Parent) n)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     /**
      * Filters out all parent in a list of matches
      * @param matches the matches
