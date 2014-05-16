@@ -45,7 +45,6 @@ public class Messages extends NLS {
     public static String ExecutionControllerInvalidMainError;
     public static String ExecutionControllerLoadingProject;
     public static String ExecutionControllerLogPathError;
-    public static String ExecutionControllerNoRunExecutionBegin;
     public static String ExecutionControllerProjectCompleteness;
     public static String ExecutionControllerProjectCompletenessFailed;
     public static String ExecutionControllerProjectLoaded;

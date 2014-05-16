@@ -84,12 +84,8 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     private static boolean quiet = false;
     /** did an error occur during processing */
     private static boolean errorOccured = false;
-    /** did a validation error occur during processing */
-    private static boolean validationErrorOccured = false;
-    /** did a missing argument error occur during processing */
-    private static boolean missingArgErrorOccured = false;
     /** is this a dry run* */
-    private static boolean noRunValue = false;
+    private boolean m_noRun = false;
     /** the command line representation */
     private CommandLine m_cmd = null;
 
@@ -217,7 +213,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
                 quiet = true;
             }
             if (m_cmd.hasOption(ClientStrings.NORUN)) {
-                noRunValue = true;
+                m_noRun = true;
             }
             // then set attributes from command Line and check if parameter -startserver was called
             if (m_cmd.hasOption(ClientTestStrings.STARTSERVER)) {
@@ -448,8 +444,6 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     private void preValidate(JobConfiguration job) throws PreValidateException {
         StringBuilder errorMsg = new StringBuilder();
         errorMsg.append(Messages.ClientMissingArgs);
-        StringBuilder errorInvalidArgsMsg = new StringBuilder();
-        errorInvalidArgsMsg.append(Messages.ClientInvalidArgs);
         if (job.getDbConnectionName() == null && job.getDb() == null) {
             appendError(errorMsg, ClientTestStrings.DB_SCHEME, 
                     ClientTestStrings.SCHEME + " OR"); //$NON-NLS-1$
@@ -471,9 +465,8 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
             appendError(errorMsg, ClientTestStrings.DB_PW, 
                     ClientTestStrings.PASSWORD);
         }
-        extendValidate(job, errorMsg, errorInvalidArgsMsg);
-        if (missingArgErrorOccured) {
-            errorMsg.append(Messages.ClientReadUserManual);
+        extendValidate(job, errorMsg);
+        if (errorOccured) {
             throw new PreValidateException(errorMsg.toString());
         }
         // If the datadir directory was not specified by user and the default value (platform's working directory)
@@ -481,11 +474,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         if (job.getDataDir() == String.valueOf(
                 TestexecConstants.INVALID_VALUE)) {
             throw new PreValidateException(
-                    Messages.NoPlatformInstanceLocation);
-        }
-        if (validationErrorOccured) {
-            errorInvalidArgsMsg.append(Messages.ClientReadUserManual);
-            throw new PreValidateException(errorInvalidArgsMsg.toString());
+                    Messages.NoPlatformInstanceLocation); 
         }
         if (job.getDbscheme() == null && job.getDb() == null) {
             List<DatabaseConnection> availableConnections = 
@@ -505,10 +494,9 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      * Do validation beyond the basic parameters
      * @param job configuration to check
      * @param errorMsgs storage for error messages from validation in case required arguments are missing
-     * @param errorInvalidArgsMsg storage for error messages from validation in case values of given arguments are invalid
      */
     protected abstract void extendValidate(JobConfiguration job, 
-              StringBuilder errorMsgs, StringBuilder errorInvalidArgsMsg);
+              StringBuilder errorMsgs);
 
     /**
      * 
@@ -549,7 +537,6 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      */
     protected void appendError(StringBuilder errorMsg, String msg1, 
             String msg2) {
-        missingArgErrorOccured = true;
         errorOccured = true;
         errorMsg.append(StringConstants.TAB);
         errorMsg.append(StringConstants.MINUS);
@@ -559,24 +546,6 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         errorMsg.append(StringConstants.NEWLINE);   
     }
 
-    /**
-     * 
-     * @param validationErrorMsg Stringbuilder with message
-     * @param msg1 the missing option
-     * @param msg2 the missing option argument
-     */
-    protected void appendValidationError(StringBuilder validationErrorMsg, 
-            String msg1, String msg2) {
-        validationErrorOccured = true;
-        errorOccured = true;
-        validationErrorMsg.append(StringConstants.TAB);
-        validationErrorMsg.append(StringConstants.MINUS);
-        validationErrorMsg.append(msg1);
-        validationErrorMsg.append(StringConstants.SPACE);
-        validationErrorMsg.append(msg2);
-        validationErrorMsg.append(StringConstants.NEWLINE);   
-    }
-    
     /** 
      * prints the command line syntax
      */
@@ -602,8 +571,8 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     /**
      * @return the noRun
      */
-    public static boolean isNoRun() {
-        return noRunValue;
+    public boolean isNoRun() {
+        return m_noRun;
     }
 
     /**
@@ -620,20 +589,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         return errorOccured;
     }
 
-    /**
-     * @return the validationErrorOccured
-     */
-    public static boolean isValidationErrorOccured() {
-        return validationErrorOccured;
-    }
-    
-    /**
-     * @return the missingArgErrorOccured
-     */
-    public static boolean isMissingArgErrorOccured() {
-        return missingArgErrorOccured;
-    }
-    
+
     /**
      * @return CommandLine
      *      the command Line the client was started with

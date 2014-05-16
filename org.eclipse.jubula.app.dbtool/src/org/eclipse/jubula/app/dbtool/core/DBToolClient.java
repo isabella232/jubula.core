@@ -146,7 +146,7 @@ public class DBToolClient extends AbstractCmdlineClient {
      * {@inheritDoc}
      */
     protected void extendValidate(JobConfiguration job, 
-            StringBuilder errorMsgs, StringBuilder errorInvalidArgsMsg) {
+            StringBuilder errorMsgs) {
         String[] args = getCmdLine().getOptionValues(OPTION_DELETE);
         if ((args != null) && (args.length != 2)) {
             appendError(errorMsgs, OPTION_DELETE, PAR_PROJECT);

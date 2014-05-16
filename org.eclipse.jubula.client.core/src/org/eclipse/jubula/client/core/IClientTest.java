@@ -135,12 +135,10 @@ public interface IClientTest {
      *            The ID of the Running AUT on which the test will take place.
      * @param externalVars
      *            a map of externally set variables; may be <code>null</code>
-     * @param noRunOptMode
-     *            The value of no-run option argument if no-run mode was specified, null otherwise
      */
     public abstract void startTestSuite(ITestSuitePO execTestSuite,
         Locale locale, AutIdentifier autId, boolean autoScreenshot,
-        Map<String, String> externalVars, String noRunOptMode);
+        Map<String, String> externalVars);
 
     /**
      * Starts the given Test Job.
@@ -150,10 +148,9 @@ public interface IClientTest {
      * @param autoScreenshot
      *            whether screenshots should be automatically taken in case of
      *            test execution errors
-     * @param noRunOptMode The mode of no run-option if it was specified or null otherwise
      */
     public abstract void startTestJob(ITestJobPO testJob, Locale locale,
-            boolean autoScreenshot, String noRunOptMode);
+            boolean autoScreenshot);
     
     /**
      * Stops test execution.

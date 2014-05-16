@@ -509,9 +509,8 @@ public class ClientTestImpl implements IClientTest {
     public void startTestSuite(final ITestSuitePO execTestSuite,
             final Locale locale, final AutIdentifier autId,
             final boolean autoScreenshot, 
-            final Map<String, String> externalVars,
-            final String noRunOptMode) {
-        final String jobName = NLS.bind(Messages.StartWorkingWithTestSuite,
+            final Map<String, String> externalVars) {
+        final String jobName = NLS.bind(Messages.ExecutingTestSuite,
                 execTestSuite.getName());
         Job runningTestSuite = new Job(jobName) {
             protected IStatus run(IProgressMonitor monitor) {
@@ -523,7 +522,7 @@ public class ClientTestImpl implements IClientTest {
                 setTestresultSummary(PoMaker.createTestResultSummaryPO());
                 TestExecution.getInstance().executeTestSuite(execTestSuite,
                         locale, autId, autoScreenshot, externalVars,
-                        getTestresultSummary(), monitor, noRunOptMode);
+                        getTestresultSummary(), monitor);
                 if (monitor.isCanceled()) {
                     return Status.CANCEL_STATUS;
                 }
@@ -542,7 +541,7 @@ public class ClientTestImpl implements IClientTest {
 
     /** {@inheritDoc} */
     public void startTestJob(ITestJobPO testJob, Locale locale,
-            boolean autoScreenshot, String noRunOptMode) {
+            boolean autoScreenshot) {
         TestExecution.getInstance().setStartedTestJob(testJob);
         m_testjobStartTime = new Date();
         try {
@@ -590,7 +589,7 @@ public class ClientTestImpl implements IClientTest {
                 AutIdentifier autId = new AutIdentifier(refTestSuite
                         .getTestSuiteAutID());
                 startTestSuite(refTestSuite.getTestSuite(), locale, autId,
-                        autoScreenshot, null, noRunOptMode);
+                        autoScreenshot, null);
                 while (!isTestExecutionFinished.get()) {
                     TimeUtil.delay(500);
                 }

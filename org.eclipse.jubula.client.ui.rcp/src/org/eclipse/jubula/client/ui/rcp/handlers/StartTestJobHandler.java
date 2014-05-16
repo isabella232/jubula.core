@@ -70,8 +70,7 @@ public class StartTestJobHandler extends AbstractStartTestHandler {
                         ClientTest.instance().startTestJob(
                                 finalTestJob,
                                 WorkingLanguageBP.getInstance()
-                                        .getWorkingLanguage(),
-                                autoScreenshots, null);
+                                        .getWorkingLanguage(), autoScreenshots);
                     }
                     monitor.done();
                     return Status.OK_STATUS;

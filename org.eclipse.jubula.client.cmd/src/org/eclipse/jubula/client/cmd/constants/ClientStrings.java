@@ -27,8 +27,6 @@ public final class ClientStrings {
 
     /** object attribute */
     public static final String NORUN = "n"; //$NON-NLS-1$
-    /** constant string */
-    public static final String NORUN_MODE = "norun_mode"; //$NON-NLS-1$
 
     /** object attribute */
     public static final String CONFIG = "c"; //$NON-NLS-1$
