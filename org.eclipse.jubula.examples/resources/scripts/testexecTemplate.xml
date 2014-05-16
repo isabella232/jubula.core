@@ -10,28 +10,23 @@
     <version>1.0</version>
     <autconfig>YourAUTConfiguration</autconfig>
     <!-- or, if you're using autrun
-    <autid>YourAUTID</autid> -->
+    <autid>YourAUTID</autid>
+     -->
     <dburl>YourDatabaseURL (visible via the preferences)</dburl>
     <!-- or, if you want to use the DBScheme and workspace (-data) to access the database
-    <dbscheme>YourDBScheme</dbscheme> -->
-    <dbuser>YourDatabaseUsername (use sa for the embedded database)</dbuser>
-    <dbpw>YourDatabasePassword (leave empty for the embedded database)</dbpw>
+    <dbscheme>YourDBScheme</dbscheme>
+     -->
+    <dbuser>YourDatabaseUsername</dbuser>
+    <dbpw>YourDatabasePassword</dbpw>
+     <!-- the server argument is optional. If you enter it, you must have started a separate AUT Agent. You must then enter the hostname of the AUT Agent in the server parameter and you must also enter the port number for the AUT Agent in the port parameter. If you do not enter a server parameter, then an embedded AUT Agent will be started
+    <server>YourAUTAgentHostname</server> -->
+    <!-- the port parameter is optional if you do not enter a server parameter. In this case, you can either enter a port number. This number will be used for the embedded AUT Agent. If you enter neither a port number nor a server parameter, the embedded AUT Agent will be started on a dynamically chosen port number. You must enter a port number if you are using the server parameter
+    <port>PortNumberForAUTAgent</port> -->
     <language>en_US</language>
     <testsuite>TestSuite</testsuite>
     <!-- or, if you're using Test Jobs
-    <testjob>TestJob</testjob> -->
-    <!-- <server>YourAUTAgentHostname</server>
-    The server argument is optional. If you enter it, you must have started a separate AUT Agent. You must then enter the hostname of the AUT Agent in the server 
-     parameter and you must also enter the port number for the AUT Agent in the port parameter. 
-     If you do not enter a server parameter, then an embedded AUT Agent will be started.-->
-    <!-- <port>PortNumberForAUTAgent</port> 
-    The port parameter is optional if you do not enter a server parameter. 
-    In this case, you can choose whether to enter a port number or not. 
-    If you enter a port number, the embedded AUT Agent will be started on this port. 
-    If you enter neither a port number nor a server parameter, the embedded AUT Agent will be started on a dynamically chosen port number. 
-    You must enter a port number if you are using the server parameter.-->
-    <!--  <datadir></datadir> 
-    If you are using e.g. Excel documents as data for your test, enter the path to them using the datadir parameter, e.g. <pathToQADocs>/data -->
-    <!-- <resultdir></resultdir> 
-	If you want the testexec to produce HTML and XML reports after a test run, then enter the path to where they should be saved, e.g.<pathToQADocs>/results  -->
+    <testjob>TestJob</testjob>
+     -->
+    <datadir><!-- e.g. <pathToQADocs>/data --></datadir>
+    <resultdir><!-- e.g. <pathToQADocs>/results --></resultdir>
 </configuration>
