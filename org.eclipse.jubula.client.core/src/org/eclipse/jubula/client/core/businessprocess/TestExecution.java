@@ -10,12 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
-import static org.eclipse.jubula.tools.constants.TestexecConstants.NoRunSteps.BT;
-import static org.eclipse.jubula.tools.constants.TestexecConstants.NoRunSteps.CA;
-import static org.eclipse.jubula.tools.constants.TestexecConstants.NoRunSteps.PTE;
-import static org.eclipse.jubula.tools.constants.TestexecConstants.NoRunSteps.RPV;
-import static org.eclipse.jubula.tools.utils.TestexecUtils.isExecutionFinished;
-
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -103,6 +97,7 @@ import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.constants.TestexecConstants;
 import org.eclipse.jubula.tools.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.constants.TimingConstantsClient;
 import org.eclipse.jubula.tools.exception.CommunicationException;
@@ -344,13 +339,15 @@ public class TestExecution {
         monitor.subTask(NLS.bind(Messages.PreparingTestSuiteExecution,
                 testSuite.getName()));
         m_externalTestDataBP.clearExternalData();
-        if (isExecutionFinished (noRunOptMode, PTE)) {
+        if (noRunOptMode.equals(
+                TestexecConstants.NoRunSteps.PTE.getStepValue())) { 
             return;
         }
         try {
             if (AUTConnection.getInstance().connectToAut(
                     autId, new SubProgressMonitor(monitor, 0))) {
-                if (isExecutionFinished (noRunOptMode, CA)) {
+                if (noRunOptMode.equals(
+                        TestexecConstants.NoRunSteps.CA.getStepValue())) {
                     return;
                 }
                 summary.setAutHostname(
@@ -364,7 +361,8 @@ public class TestExecution {
                 m_varStore.storeEnvironmentVariables();
                 storePredefinedVariables(m_varStore, testSuite);
                 storeExternallyDefinedVariables(m_varStore, externalVars);
-                if (isExecutionFinished (noRunOptMode, RPV)) {
+                if (noRunOptMode.equals(
+                        TestexecConstants.NoRunSteps.RPV.getStepValue())) {
                     return;
                 }
                 startTestSuite(testSuite, locale, monitor, noRunOptMode);
@@ -550,7 +548,8 @@ public class TestExecution {
             }
             Map<String, String> autConfigMap = getConnectedAUTsConfigMap();
             resetMonitoringData(autConfigMap, monitor);
-            if (isExecutionFinished (noRunOptMode, BT)) {
+            if (noRunOptMode.equals(
+                    TestexecConstants.NoRunSteps.BT.getStepValue())) {
                 return;
             }
             // end build tree
