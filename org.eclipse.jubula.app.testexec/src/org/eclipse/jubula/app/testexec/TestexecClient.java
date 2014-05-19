@@ -20,6 +20,7 @@ import org.eclipse.jubula.client.cmd.constants.ClientStrings;
 import org.eclipse.jubula.client.cmd.i18n.Messages;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
 import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.constants.TestexecConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.slf4j.Logger;
@@ -118,7 +119,7 @@ public class TestexecClient extends AbstractCmdlineClient {
                 Messages.ClientLanguageOpt, req));
         options.addOption(createOption(ClientTestStrings.RESULTDIR, true, 
                 ClientTestStrings.RESULTDIR, 
-                Messages.ClientResultdirOpt, req));         
+                Messages.ClientResultdirOpt, false));         
 
         // AUT option group (AUT Configuration / AUT ID)
         OptionGroup autOptionGroup = new OptionGroup();
@@ -147,7 +148,7 @@ public class TestexecClient extends AbstractCmdlineClient {
         
         options.addOption(createOption(ClientTestStrings.DATA_DIR, true, 
             ClientTestStrings.DATA_DIR_EX, 
-            Messages.ClientDataFile, req));
+            Messages.ClientDataFile, false));
         options.addOption(createOption(ClientStrings.NORUN, false, 
                 StringConstants.EMPTY, 
                 Messages.ClientNoRunOpt, false));
@@ -183,7 +184,7 @@ public class TestexecClient extends AbstractCmdlineClient {
             appendError(errorMsgs, ClientTestStrings.PROJECT_VERSION, 
                     ClientTestStrings.PROJECT_VERSION_EX);
         }
-        if (job.getPort() == JobConfiguration.EXIT_INVALID_OPTIONS) {
+        if (job.getPort() == TestexecConstants.INVALID_VALUE) {
             appendError(errorMsgs, ClientTestStrings.PORT,
                     ClientTestStrings.PORT_NUMBER);
         }
@@ -201,14 +202,6 @@ public class TestexecClient extends AbstractCmdlineClient {
         if (job.getLanguage() == null) {
             appendError(errorMsgs, ClientTestStrings.LANGUAGE, 
                     ClientTestStrings.LANGUAGE);
-        }
-        if (job.getResultDir() == null) {
-            appendError(errorMsgs, ClientTestStrings.RESULTDIR, 
-                    ClientTestStrings.RESULTDIR);
-        }
-        if (job.getDataDir() == null) {
-            appendError(errorMsgs, ClientTestStrings.DATA_DIR, 
-                    ClientTestStrings.DATA_DIR_EX);
         }
         if (job.getTestSuiteNames().isEmpty() && job.getTestJobName() == null
                 && job.getServerPort() == null) {

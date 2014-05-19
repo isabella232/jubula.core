@@ -145,24 +145,26 @@ public class ExternalTestDataBP {
      * gets it from the cache if available.
      * @param dataDir
      *      directory for data files
-     * @param fileName the name of the data source
+     * @param filePath the path of the data source
      * @param locale the local of the  data
      * @return a DataTable
      * @throws JBException id data source is not supported
      */
-    public DataTable createDataTable(File dataDir, String fileName, 
+    public DataTable createDataTable(File dataDir, String filePath, 
         Locale locale) throws JBException {
-        
-        File dataFile = new File(dataDir, fileName);
+        File dataFile = new File(filePath);
+        if (!dataFile.isAbsolute()) {
+            dataFile = new File(dataDir, filePath);
+        }
         DataTable dataTable = m_dataTableCache.get(dataFile);
         if (dataTable != null) {
             return dataTable;
         }
         String dataFileName = String.valueOf(dataFile);
         try {
-            IDataImportFilter filter = getFilterFromFileType(fileName);
+            IDataImportFilter filter = getFilterFromFileType(filePath);
             if (filter != null) {
-                dataTable = filter.parse(dataDir, fileName, locale);
+                dataTable = filter.parse(dataDir, filePath, locale);
                 m_dataTableCache.put(dataFile, dataTable);
                 return dataTable;
             } 

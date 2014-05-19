@@ -897,9 +897,11 @@ public class ClientTestImpl implements IClientTest {
                     monitor.beginTask(Messages.ClientWritingReportToDB,
                             IProgressMonitor.UNKNOWN);
                     ITestResultSummaryPO summary = writeTestresultToDB(result);
-                    monitor.beginTask(Messages.ClientWritingReport,
-                            IProgressMonitor.UNKNOWN);
-                    writeReportToFileSystem(result);
+                    if (m_logPath != null) {
+                        monitor.beginTask(Messages.ClientWritingReport,
+                                IProgressMonitor.UNKNOWN);
+                        writeReportToFileSystem(result);
+                    }
                     if (isRunningWithMonitoring()) {
                         monitor.setTaskName(Messages.ClientCalculating);
                         getMonitoringData();
