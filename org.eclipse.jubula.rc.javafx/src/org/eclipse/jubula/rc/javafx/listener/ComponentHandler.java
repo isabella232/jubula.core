@@ -360,14 +360,16 @@ public class ComponentHandler implements ListChangeListener<Stage>,
     public static Object findComponent(
         IComponentIdentifier componentIdentifier, boolean retry, int timeout)
         throws ComponentNotFoundException, IllegalArgumentException {
-
         long start = System.currentTimeMillis();
         ReentrantLock lock = hierarchy.getLock();
         try {
+            lock.lock();
             return hierarchy.findComponent(componentIdentifier);
         } catch (ComponentNotManagedException cnme) {
             if (retry) {
-
+                if (lock.isHeldByCurrentThread()) {
+                    lock.unlock();
+                }
                 while (System.currentTimeMillis() - start < timeout) {
                     try {
                         lock.lock();
@@ -377,7 +379,9 @@ public class ComponentHandler implements ListChangeListener<Stage>,
                                                                // 15:25
                         // OK, we will throw a corresponding exception later
                         // if we really can't find the component
-                        lock.unlock();
+                        if (lock.isHeldByCurrentThread()) {
+                            lock.unlock();
+                        }
                         try {
                             Thread.sleep(TimingConstantsServer.
                                     POLLING_DELAY_FIND_COMPONENT);

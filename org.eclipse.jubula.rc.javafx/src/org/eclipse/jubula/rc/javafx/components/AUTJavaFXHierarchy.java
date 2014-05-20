@@ -54,7 +54,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     private static FindJavaFXComponentBP findBP = new FindJavaFXComponentBP();
 
     /** The lock for accessing the Hierarchy **/
-    private ReentrantLock m_lock = new ReentrantLock();
+    private ReentrantLock m_lock = new ReentrantLock(true);
 
     /**
      * Default constructor
