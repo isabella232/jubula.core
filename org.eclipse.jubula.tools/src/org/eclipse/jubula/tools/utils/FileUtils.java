@@ -63,6 +63,9 @@ public class FileUtils {
      */
     public static String resolveAgainstBasePath(
             String path, String basePath) {
+        if (path == null || basePath == null) {
+            return null;
+        }
         File baseDir = new File(basePath);
         File fpath = new File(path);
         if (!fpath.isAbsolute()) {

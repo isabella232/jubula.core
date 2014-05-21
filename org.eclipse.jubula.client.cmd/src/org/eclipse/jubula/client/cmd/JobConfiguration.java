@@ -401,7 +401,6 @@ public class JobConfiguration {
      * @param cmd CommandLine
      */
     public void parseJobOptions(CommandLine cmd) {
-        String baseDatadirPath = getDefaultDataDirPath();
         if (cmd.hasOption(ClientTestStrings.PROJECT)) { 
             setProjectName(cmd.getOptionValue(ClientTestStrings.PROJECT)); 
         }
@@ -428,7 +427,7 @@ public class JobConfiguration {
         }
         parseDBOptions(cmd);
         parseResultDirOptions(cmd);
-        parseDataDirOptions(cmd, baseDatadirPath);
+        parseDataDirOptions(cmd);
         if (cmd.hasOption(ClientTestStrings.AUT_CONFIG)) { 
             setAutConfigName(cmd.getOptionValue(ClientTestStrings.AUT_CONFIG)); 
         }
@@ -582,14 +581,17 @@ public class JobConfiguration {
      * or sets default value for datadir otherwise
      * <code>INVALID_VALUE</code> is set if the default datadir path is invalid 
      * @param cmd CommandLine
-     * @param baseDatadirPath the default dataDir path
      */
-    private void parseDataDirOptions(CommandLine cmd, String baseDatadirPath) {
+    private void parseDataDirOptions(CommandLine cmd) {
+        String baseDatadirPath = getDefaultDataDirPath();
         if (cmd.hasOption(ClientTestStrings.DATA_DIR)) {
             setDataDir(FileUtils.resolveAgainstBasePath(
                     cmd.getOptionValue(ClientTestStrings.DATA_DIR),
                         baseDatadirPath));
-        } else {
+        }
+        if (getDataDir() == null) {
+            // data dir was neither set via config file, nor via cmd line
+            // use default (if accessible)
             setDataDir((!StringUtils.isEmpty(baseDatadirPath))
                     ? baseDatadirPath
                     : String.valueOf(TestexecConstants.INVALID_VALUE));
@@ -945,12 +947,6 @@ public class JobConfiguration {
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.TESTJOB)) {
                     job.setTestJobName(arg0.getValue());
-                } else {
-                    String defaultDataDirPath = getDefaultDataDirPath(); 
-                    job.setDataDir((!StringUtils.isEmpty(defaultDataDirPath))
-                            ? defaultDataDirPath 
-                            : String.valueOf(
-                                    TestexecConstants.INVALID_VALUE));
                 }
                 arg0.moveUp();
             }
