@@ -30,8 +30,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jubula.client.core.Activator;
-import org.eclipse.jubula.client.core.ClientTestImpl;
 import org.eclipse.jubula.client.core.ClientTest;
+import org.eclipse.jubula.client.core.ClientTestImpl;
 import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent;
@@ -44,9 +44,10 @@ import org.eclipse.jubula.client.core.commands.EndTestExecutionResponseCommand;
 import org.eclipse.jubula.client.core.commands.TakeScreenshotResponseCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.AutAgentConnection;
-import org.eclipse.jubula.client.core.communication.MessageFactory;
 import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
+import org.eclipse.jubula.client.core.communication.MessageFactory;
+import org.eclipse.jubula.client.core.constants.TestExecutionConstants;
 import org.eclipse.jubula.client.core.events.AUTEvent;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
@@ -134,6 +135,10 @@ import org.slf4j.LoggerFactory;
 public class TestExecution {
     /** the component system timeout key */
     public static final String COMP_SYSTEM_TIMEOUT = "CompSystem.Timeout"; //$NON-NLS-1$
+    /** <code>EXIT_CODE_ERROR</code> */
+    protected static final int EXIT_CODE_NORUN_OK = 100;
+    /** <code>EXIT_CODE_OK</code> */
+    protected static final int EXIT_CODE_OK = 0;
     
     /**
      * @author BREDEX GmbH
@@ -317,24 +322,36 @@ public class TestExecution {
      *            The Test Result Summary for the executed test. 
      *            Must not be <code>null</code>.
      * @param monitor the monitor to use
+     * @param noRunOptMode 
+     *            The value of no-run option argument if it was specified, null otherwise
      */
     public void executeTestSuite(ITestSuitePO testSuite, Locale locale,
         AutIdentifier autId, boolean autoScreenshot,
         Map<String, String> externalVars, ITestResultSummaryPO summary,
-        final IProgressMonitor monitor) {
+        final IProgressMonitor monitor, String noRunOptMode) {
         m_stopped = false;
 
         m_autoScreenshot = autoScreenshot;
         setPaused(false);
         Validate.notNull(testSuite, Messages.TestsuiteMustNotBeNull);
         m_executionLanguage = locale;
+        //prepare test execution
         monitor.subTask(NLS.bind(Messages.PreparingTestSuiteExecution,
                 testSuite.getName()));
         m_externalTestDataBP.clearExternalData();
-
+        if (TestExecution.shouldExecutionStop (noRunOptMode, 
+              TestExecutionConstants.runSteps.PTE)) {
+            monitor.setCanceled(true);
+            return;
+        }
         try {
             if (AUTConnection.getInstance().connectToAut(
                     autId, new SubProgressMonitor(monitor, 0))) {
+                if (TestExecution.shouldExecutionStop (noRunOptMode, 
+                        TestExecutionConstants.runSteps.CA)) {
+                    endTestExecution();
+                    return;
+                }
                 summary.setAutHostname(
                         AUTConnection.getInstance().getCommunicator()
                             .getConnection().getAddress()
@@ -346,8 +363,12 @@ public class TestExecution {
                 m_varStore.storeEnvironmentVariables();
                 storePredefinedVariables(m_varStore, testSuite);
                 storeExternallyDefinedVariables(m_varStore, externalVars);
-
-                startTestSuite(testSuite, locale, monitor);
+                if (TestExecution.shouldExecutionStop (noRunOptMode,
+                        TestExecutionConstants.runSteps.RPV)) {
+                    endTestExecution();
+                    return;
+                }
+                startTestSuite(testSuite, locale, monitor, noRunOptMode);
                 
                 final AtomicBoolean testSuiteFinished = new AtomicBoolean();
                 ClientTest.instance().addTestExecutionEventListener(
@@ -506,9 +527,10 @@ public class TestExecution {
      * @param testSuite testSuite
      * @param locale language valid for testexecution
      * @param monitor the progress monitor to use
+     * @param noRunOptMode the value of no-run option argument if it was specified, null otherwise
      */
     private void startTestSuite(ITestSuitePO testSuite, Locale locale,
-        IProgressMonitor monitor) {
+        IProgressMonitor monitor, String noRunOptMode) {
         Validate.notNull(testSuite, "No testsuite available"); //$NON-NLS-1$
         ICapPO firstCap = null;
         m_expectedNumberOfSteps = 0;
@@ -517,6 +539,8 @@ public class TestExecution {
             // build and show result Tree
             monitor.subTask(Messages.
                     StartingTestSuite_resolvingTestStepsToExecute);
+            monitor.subTask(Messages.
+                    StartingTestSuite_buildingTestExecutionTree);
             Traverser copier = new Traverser(testSuite, locale);
             ResultTreeBuilder resultTreeBuilder = new ResultTreeBuilder(copier);
             copier.addExecStackModificationListener(resultTreeBuilder);
@@ -527,6 +551,11 @@ public class TestExecution {
             }
             Map<String, String> autConfigMap = getConnectedAUTsConfigMap();
             resetMonitoringData(autConfigMap, monitor);
+            if (TestExecution.shouldExecutionStop(noRunOptMode,
+                    TestExecutionConstants.runSteps.BT)) {
+                endTestExecution();
+                return;
+            }
             // end build tree
             TestResultBP.getInstance().setResultTestModel(
                     new TestResult(resultTreeBuilder.getRootNode(),
@@ -538,7 +567,8 @@ public class TestExecution {
             IProgressMonitor subMonitor = new SubProgressMonitor(monitor,
                     ClientTestImpl.TEST_SUITE_EXECUTION_RELATIVE_WORK_AMOUNT);
             subMonitor.beginTask(
-                    NLS.bind(Messages.ExecutingTestSuite, testSuite.getName()),
+                    NLS.bind(Messages.StartWorkingWithTestSuite,
+                            testSuite.getName()),
                     m_expectedNumberOfSteps);
             m_stepCounter = new StepCounter(subMonitor);
             addTestExecutionListener();
@@ -2271,5 +2301,20 @@ public class TestExecution {
      */
     private void setPaused(boolean paused) {
         m_paused = paused;
+    }
+
+    /**
+     * @param noRunMode String noRun option mode
+     * @param step current step of noRun execution
+     * @return true is no run execution must be finished
+     * return false if test run without no-run option
+     * or the last step of no run execution is not jet reached
+     */
+    public static boolean shouldExecutionStop(String noRunMode,
+            TestExecutionConstants.runSteps step) {
+        if (StringUtils.isEmpty(noRunMode)) {
+            return false;
+        }
+        return noRunMode.equals(step.getStepValue());
     }
 }

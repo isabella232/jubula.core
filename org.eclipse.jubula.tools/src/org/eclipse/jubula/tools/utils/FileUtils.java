@@ -56,22 +56,5 @@ public class FileUtils {
         }
         return valid;
     }
-    /** checks if the given path is absolute and otherwise resolves it to the absolute against the base path
-     * @param basePath the base path
-     * @param path a path given by user
-     * @return absolute path (the initial one or the resolved against the base path one)
-     */
-    public static String resolveAgainstBasePath(
-            String path, String basePath) {
-        if (path == null || basePath == null) {
-            return null;
-        }
-        File baseDir = new File(basePath);
-        File fpath = new File(path);
-        if (!fpath.isAbsolute()) {
-            fpath = new File(baseDir, path);
-        }
-        return fpath.toString();
-    }
 
 }

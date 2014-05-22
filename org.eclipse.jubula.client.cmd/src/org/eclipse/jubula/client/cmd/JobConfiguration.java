@@ -25,9 +25,12 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.jubula.client.cmd.constants.ClientStrings;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
 import org.eclipse.jubula.client.core.businessprocess.db.TestJobBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
+import org.eclipse.jubula.client.core.constants.Constants;
+import org.eclipse.jubula.client.core.constants.TestExecutionConstants;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -41,11 +44,10 @@ import org.eclipse.jubula.client.core.preferences.database.H2ConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.MySQLConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.OracleConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionInfo;
+import org.eclipse.jubula.client.core.utils.FileUtils;
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.tools.constants.EnvConstants;
-import org.eclipse.jubula.tools.constants.TestexecConstants;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
-import org.eclipse.jubula.tools.utils.FileUtils;
 import org.eclipse.jubula.tools.utils.NetUtil;
 import org.eclipse.osgi.util.NLS;
 
@@ -92,6 +94,8 @@ public class JobConfiguration {
     private String m_resultDir;
     /** configuration detail */
     private String m_autConfigName;
+    /** mode for no-run option */
+    private String m_noRunOptMode;
     /** configuration detail */
     private List<String> m_testSuiteNames = new ArrayList<String>();
     /** the name of the Test Job to execute */
@@ -201,6 +205,13 @@ public class JobConfiguration {
         setDbscheme(JobConfiguration.getConnectionInfoForName(connectionName));
     }
 
+    /**
+     * @return String noRunOptMode
+     */
+    public String getNoRunOptMode() {
+        return m_noRunOptMode;
+    }
+    
     /**
      * @return String
      */
@@ -413,8 +424,7 @@ public class JobConfiguration {
                     setProjectMajor(Integer.parseInt(numbers[0]));
                     setProjectMinor(Integer.parseInt(numbers[1])); 
                 } catch (NumberFormatException nfe) {
-                    // Do nothing. The version values will not be set and 
-                    // this will be noticed during pre-validation.
+                    // Do nothing. The version values will not be set and this will be noticed during pre-validation.
                 } 
             }
         }
@@ -465,8 +475,12 @@ public class JobConfiguration {
                         .getOptionValue(ClientTestStrings.TIMEOUT)));
             } catch (NumberFormatException e) {
                 // will be reported during validate
-                setTimeout(TestexecConstants.INVALID_VALUE); 
+                setTimeout(Constants.INVALID_VALUE); 
             }
+        }
+        if (cmd.hasOption(ClientStrings.NORUN)) {
+            setNoRunOptMode(TestExecutionConstants.runSteps.
+                    validateRunStep(cmd.getOptionValue(ClientStrings.NORUN)));
         }
     }
 
@@ -479,9 +493,9 @@ public class JobConfiguration {
         if (errorMsg == null) {
             return Integer.parseInt(portString);  
         }
-        return TestexecConstants.INVALID_VALUE;
+        return Constants.INVALID_VALUE;
     }
-
+    
     /**
      * parses the command line parameter when the parameter startserver was set
      * set the parsed parameter into a job object
@@ -550,6 +564,10 @@ public class JobConfiguration {
             setLanguage(LocaleUtil.convertStrToLocale(
                     cmd.getOptionValue(ClientTestStrings.LANGUAGE))); 
         }
+        if (cmd.hasOption(ClientStrings.NORUN)) {
+            setNoRunOptMode(TestExecutionConstants.runSteps.
+                    validateRunStep(cmd.getOptionValue(ClientStrings.NORUN)));
+        }
 
     }
     
@@ -594,7 +612,7 @@ public class JobConfiguration {
             // use default (if accessible)
             setDataDir((!StringUtils.isEmpty(baseDatadirPath))
                     ? baseDatadirPath
-                    : String.valueOf(TestexecConstants.INVALID_VALUE));
+                    : String.valueOf(Constants.INVALID_VALUE));
         }
     }
 
@@ -698,6 +716,13 @@ public class JobConfiguration {
      */
     private void setProjectName(String projectName) {
         m_projectName = projectName;
+    }
+    
+    /**
+     * @param noRunOptMode String
+     */
+    private void setNoRunOptMode(String noRunOptMode) {
+        m_noRunOptMode = noRunOptMode;
     }
 
     /**
@@ -879,7 +904,11 @@ public class JobConfiguration {
             arg1.startNode(ClientTestStrings.LANGUAGE);
             arg1.setValue(job.getLanguage().toString());
             arg1.endNode();
-
+            
+            arg1.startNode(ClientStrings.NORUN);
+            arg1.setValue(TestExecutionConstants.runSteps.validateRunStep(
+                    job.getNoRunOptMode()));
+            arg1.endNode();
         }
 
         /**
@@ -947,6 +976,10 @@ public class JobConfiguration {
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.TESTJOB)) {
                     job.setTestJobName(arg0.getValue());
+                } else if (arg0.getNodeName().
+                        equals(ClientStrings.NORUN)) {
+                    job.setNoRunOptMode(TestExecutionConstants.runSteps.
+                            validateRunStep(arg0.getValue()));
                 }
                 arg0.moveUp();
             }

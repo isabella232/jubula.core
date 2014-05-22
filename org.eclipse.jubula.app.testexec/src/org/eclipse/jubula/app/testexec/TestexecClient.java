@@ -11,16 +11,19 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.testexec;
 
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.app.testexec.batch.ExecutionController;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.JobConfiguration;
 import org.eclipse.jubula.client.cmd.constants.ClientStrings;
 import org.eclipse.jubula.client.cmd.i18n.Messages;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
+import org.eclipse.jubula.client.core.constants.Constants;
+import org.eclipse.jubula.client.core.constants.TestExecutionConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.constants.TestexecConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBFatalException;
 import org.slf4j.Logger;
@@ -73,12 +76,8 @@ public class TestexecClient extends AbstractCmdlineClient {
             ExecutionController controller = ExecutionController.getInstance();
 
             // start job
-            if (isNoRun()) {
-                controller.simulateJob();
-            } else {
-                if (!controller.executeJob()) {
-                    exitCode = EXIT_CODE_ERROR;
-                }
+            if (!controller.executeJob()) {
+                exitCode = EXIT_CODE_ERROR;
             }
         } catch (CommunicationException e) {
             log.error(e.getLocalizedMessage(), e);
@@ -119,7 +118,7 @@ public class TestexecClient extends AbstractCmdlineClient {
                 Messages.ClientLanguageOpt, req));
         options.addOption(createOption(ClientTestStrings.RESULTDIR, true, 
                 ClientTestStrings.RESULTDIR, 
-                Messages.ClientResultdirOpt, false));         
+                Messages.ClientResultdirOpt, false));
 
         // AUT option group (AUT Configuration / AUT ID)
         OptionGroup autOptionGroup = new OptionGroup();
@@ -149,9 +148,11 @@ public class TestexecClient extends AbstractCmdlineClient {
         options.addOption(createOption(ClientTestStrings.DATA_DIR, true, 
             ClientTestStrings.DATA_DIR_EX, 
             Messages.ClientDataFile, false));
-        options.addOption(createOption(ClientStrings.NORUN, false, 
-                StringConstants.EMPTY, 
-                Messages.ClientNoRunOpt, false));
+        Option noRunOption = createOption(ClientStrings.NORUN, true,
+                ClientStrings.NORUN_MODE,
+                Messages.ClientNoRunOpt, false);
+        noRunOption.setOptionalArg(true);
+        options.addOption(noRunOption);
         options.addOption(createOption(ClientTestStrings.AUTO_SCREENSHOT,
                 false, StringConstants.EMPTY, Messages.ClientAutoScreenshot, 
                     false));
@@ -175,7 +176,7 @@ public class TestexecClient extends AbstractCmdlineClient {
      * {@inheritDoc}
      */
     protected void extendValidate(JobConfiguration job, 
-            StringBuilder errorMsgs) {
+            StringBuilder errorMsgs, StringBuilder errorInvalidArgsMsg) {
         if (job.getProjectName() == null) {
             appendError(errorMsgs, ClientTestStrings.PROJECT, 
                     ClientTestStrings.PROJECT_NAME);
@@ -184,7 +185,7 @@ public class TestexecClient extends AbstractCmdlineClient {
             appendError(errorMsgs, ClientTestStrings.PROJECT_VERSION, 
                     ClientTestStrings.PROJECT_VERSION_EX);
         }
-        if (job.getPort() == TestexecConstants.INVALID_VALUE) {
+        if (job.getPort() == Constants.INVALID_VALUE) {
             appendError(errorMsgs, ClientTestStrings.PORT,
                     ClientTestStrings.PORT_NUMBER);
         }
@@ -213,6 +214,12 @@ public class TestexecClient extends AbstractCmdlineClient {
         if (job.getTimeout() < 0) {
             appendError(errorMsgs, ClientTestStrings.TIMEOUT,
                     ClientTestStrings.TIMEOUT);
+        }
+        if ((!StringUtils.isEmpty(job.getNoRunOptMode()))
+                && (job.getNoRunOptMode().equals(
+                        TestExecutionConstants.EXIT_INVALID_ARGUMENT))) {
+            appendValidationError(errorInvalidArgsMsg, ClientStrings.NORUN,
+                    ClientStrings.NORUN_MODE);
         }
 
     }

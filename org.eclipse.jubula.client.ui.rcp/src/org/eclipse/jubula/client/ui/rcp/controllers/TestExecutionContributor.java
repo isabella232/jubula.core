@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.commands.AUTModeChangedCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
+import org.eclipse.jubula.client.core.constants.TestExecutionConstants;
 import org.eclipse.jubula.client.core.events.AUTEvent;
 import org.eclipse.jubula.client.core.events.AUTServerEvent;
 import org.eclipse.jubula.client.core.events.AutAgentEvent;
@@ -749,7 +750,8 @@ public class TestExecutionContributor
             AutIdentifier autId, boolean autoScreenshot) {
         TimeUtil.delay(TimingConstantsClient.START_TEST_SUITE_DELAY);
         getClientTest().startTestSuite(ts, WorkingLanguageBP.getInstance()
-            .getWorkingLanguage(), autId, autoScreenshot, null);
+            .getWorkingLanguage(), autId, autoScreenshot, null,
+            TestExecutionConstants.runSteps.NORMAL.getStepValue());
     }
 
     /**

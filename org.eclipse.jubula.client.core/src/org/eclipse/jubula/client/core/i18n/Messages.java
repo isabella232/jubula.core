@@ -321,13 +321,14 @@ public class Messages extends NLS {
     public static String StartingObjectMapping;
     public static String StartingRecordModus;
     public static String StartingTransaction;
-    public static String ExecutingTestSuite;
     public static String PreparingTestSuiteExecution;
     public static String StartingTestSuite;
+    public static String StartingTestSuite_buildingTestExecutionTree;
     public static String StartingTestSuite_resolvingTestStepsToExecute;
     public static String StartingTestSuite_resolvingPredefinedVariables;
     public static String StartingTestSuite_resettingMonitoringData;
     public static String StartingTestSuite_activatingAUT;
+    public static String StartWorkingWithTestSuite;
     public static String StoppingTest;
     public static String StoringOfMetadataFailed;
     public static String StoringOfTestResultsFailed;

@@ -49,6 +49,7 @@ import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.communication.ConnectionException;
+import org.eclipse.jubula.client.core.constants.TestExecutionConstants;
 import org.eclipse.jubula.client.core.events.AUTEvent;
 import org.eclipse.jubula.client.core.events.AUTServerEvent;
 import org.eclipse.jubula.client.core.events.AutAgentEvent;
@@ -142,7 +143,8 @@ public class ExecutionController implements IAUTServerEventListener,
                         m_job.getLanguage(),
                         m_startedAutId,
                         m_job.isAutoScreenshot(),
-                        variables);
+                        variables,
+                        m_job.getNoRunOptMode());
                 m_tsRunning = true;
                 timer.start();
             }
@@ -383,53 +385,53 @@ public class ExecutionController implements IAUTServerEventListener,
     }
     
     /**
-     * only loads projects and do a completeness check
-     */
-    public void simulateJob() {
-        prepareExecution();
-    }
-    
-    /**
      * executes the complete test
      * @throws CommunicationException Error
-     * @return boolean true if all testsuites completed successfully
+     * @return boolean true if all testsuites completed successfully 
+     * or if test execution was successful up to specified mode of no-run option
      */
     public boolean executeJob() throws CommunicationException {
+        String noRun = m_job.getNoRunOptMode();
+        if (AbstractCmdlineClient.isNoRun()) {
+            sysOut(StringConstants.TAB
+                    + NLS.bind(Messages.ExecutionControllerNoRunExecutionBegin,
+                            TestExecutionConstants.runSteps.valueOf(noRun.
+                                    toUpperCase()).getDescription()));
+        }
         // start the watchdog timer
         WatchdogTimer timer = null;
         if (m_job.getTimeout() > 0) {        
             timer = new WatchdogTimer(m_job.getTimeout());
             timer.start();
         }
-        int autAgentPortNumber = m_job.getPort();
-        if (StringUtils.isEmpty(m_job.getServer())) {
-            // if "port" parameter for testexec was not given (in command line and/or in configuration file) 
-            // port number equals 0 by default and any free port should be used for embedded AUT Agent in this case
-            if (autAgentPortNumber == 0) {
-                autAgentPortNumber = NetUtil.getFreePort();
-            }
-            //the "server" parameter (autAgentHostName) for testexec is set to "localhost"
-            m_job.setEmbeddedAutAgentHostName();
-            if (!startEmbeddedAutAgent(autAgentPortNumber)) {
-                endTestExecution();
-                return false;
-            } 
-        } 
-        String autAgentHostName = m_job.getServer();
-        sysOut(NLS.bind(Messages.ConnectingToAUTAgent,
-            new Object[] { autAgentHostName, autAgentPortNumber }));
-        // init ClientTestImpl
         IClientTest clientTest = ClientTest.instance();
-        clientTest.connectToAutAgent(autAgentHostName, 
-                String.valueOf(autAgentPortNumber));
-        if (!AutAgentConnection.getInstance().isConnected()) {
-            throw new CommunicationException(
-                    Messages.ConnectionToAUTAgentFailed,
-                    MessageIDs.E_COMMUNICATOR_CONNECTION);
+        //connection to AUT Agent
+        if (!prepareAUTAgentConnection(clientTest)) {
+            return false;
+        } else if (TestExecution.shouldExecutionStop(noRun,
+                TestExecutionConstants.runSteps.CAA)) {
+            return true;
         }
         clientTest.setRelevantFlag(m_job.isRelevant());
         clientTest.setScreenshotXMLFlag(m_job.isXMLScreenshot());
-        prepareExecution();
+        //prepare connection to the DB
+        prepareDBConnection();
+        if (TestExecution.shouldExecutionStop(noRun,
+                TestExecutionConstants.runSteps.CDB)) {
+            return true;
+        }
+        // load project
+        loadProject();
+        if (TestExecution.shouldExecutionStop(noRun,
+                TestExecutionConstants.runSteps.LP)) {
+            return true;
+        }
+        //check the completeness of the test
+        checkTestCompleteness();
+        if (TestExecution.shouldExecutionStop(noRun,
+                TestExecutionConstants.runSteps.CC)) {
+            return true;
+        }
         // start AUT, working will be set false, after AUT started
         m_idle = true;
         // ends testexecution if shutdown command was received from the client
@@ -441,14 +443,16 @@ public class ExecutionController implements IAUTServerEventListener,
             
             if (m_rmiBase != null) { // run as a CLS server
                 doClcService();
-            } else if (m_job.getTestJob() != null) {
-                ensureAutIsStarted(m_job.getActualTestSuite(), 
-                        m_job.getAutConfig());
-                doTestJob();
             } else {
+                //start AUT and check that it was started
                 ensureAutIsStarted(m_job.getActualTestSuite(), 
-                        m_job.getAutConfig());
-                doTestSuite();
+                      m_job.getAutConfig());
+                if (TestExecution.shouldExecutionStop(noRun,
+                        TestExecutionConstants.runSteps.SA)) {
+                    return true;
+                }
+                //start of the test execution
+                doTest(m_job.getTestJob() != null);
             }
         } catch (ToolkitPluginException e1) {
             sysErr(NLS.bind(Messages.ExecutionControllerAUT,
@@ -457,8 +461,19 @@ public class ExecutionController implements IAUTServerEventListener,
         if (timer != null) {
             timer.abort();
         }
-        
         return isNoErrorWhileExecution();
+    }
+
+    /**
+     * calls the test job or test suite execution depending on what was given as an testexec option
+     * @param testJobIsSpecified boolean is true if test job option was specified in the command line
+     */
+    private void doTest(boolean testJobIsSpecified) {
+        if (testJobIsSpecified) {
+            doTestJob();
+            return;
+        }
+        doTestSuite();
     }
 
     /**
@@ -508,8 +523,10 @@ public class ExecutionController implements IAUTServerEventListener,
                 ClientTest.instance().startTestSuite(
                     m_job.getActualTestSuite(),
                     m_job.getLanguage(),
-                    m_startedAutId != null ? m_startedAutId : m_job
-                        .getAutId(), m_job.isAutoScreenshot(), null);
+                    m_startedAutId != null ? m_startedAutId : m_job.getAutId(), 
+                    m_job.isAutoScreenshot(),
+                    null,
+                    m_job.getNoRunOptMode());
             } 
         }
     }
@@ -523,7 +540,7 @@ public class ExecutionController implements IAUTServerEventListener,
                         .getTestJob().getName()));
         ClientTest.instance().startTestJob(
                 m_job.getTestJob(), m_job.getLanguage(),
-                m_job.isAutoScreenshot());
+                m_job.isAutoScreenshot(), m_job.getNoRunOptMode());
     }
 
     /**
@@ -584,13 +601,49 @@ public class ExecutionController implements IAUTServerEventListener,
             }
         }
     }
-    /**
-     * prepares the test execution by:
-     *   <p> * initializing database connection
-     *   <p> * loading the project
-     *   <p> * validating project
+    
+    /** Prepares the test execution by:
+     *   <p> * starting of the AUT Agent
+     *   <p> * initializing AUT Agent connection
+     *   and checks if these steps were successful
+     *   @param clientTest the clientTest instance
+     *   @throws CommunicationException Error in case of connection to AUT Agent failure
+     *   @return boolean true if connection to the AUT Agent was successful
      */
-    private void prepareExecution() {
+    private boolean prepareAUTAgentConnection(IClientTest clientTest)
+        throws CommunicationException {
+        int autAgentPortNumber = m_job.getPort();
+        if (StringUtils.isEmpty(m_job.getServer())) {
+            // if "port" parameter for testexec was not given (in command line and/or in configuration file) 
+            // port number equals 0 by default and any free port should be used for embedded AUT Agent in this case
+            if (autAgentPortNumber == 0) {
+                autAgentPortNumber = NetUtil.getFreePort();
+            }
+            //the "server" parameter (autAgentHostName) for testexec is set to "localhost"
+            m_job.setEmbeddedAutAgentHostName();
+            if (!startEmbeddedAutAgent(autAgentPortNumber)) {
+                endTestExecution();
+                return false;
+            } 
+        } 
+        String autAgentHostName = m_job.getServer();
+        sysOut(NLS.bind(Messages.ConnectingToAUTAgent,
+            new Object[] { autAgentHostName, autAgentPortNumber }));
+        // init ClientTestImpl
+        clientTest.connectToAutAgent(autAgentHostName, 
+                String.valueOf(autAgentPortNumber));
+        if (!AutAgentConnection.getInstance().isConnected()) {
+            throw new CommunicationException(
+                    Messages.ConnectionToAUTAgentFailed,
+                    MessageIDs.E_COMMUNICATOR_CONNECTION);
+        }
+        return true;
+    }
+    
+    /**
+     * prepares the test execution by initializing database connection
+     */
+    private void prepareDBConnection() {
         // setting LogDir , resource/html must be in classpath
         setLogDir();
         // set data dir for external data
@@ -606,8 +659,6 @@ public class ExecutionController implements IAUTServerEventListener,
             throw new IllegalArgumentException(Messages.
                     ExecutionControllerInvalidDBDataError, null);
         }
-        // load project
-        loadProject();
     }
 
     /**
@@ -803,6 +854,12 @@ public class ExecutionController implements IAUTServerEventListener,
              * during job validation (initAndValidate). */
         }
         
+    }
+
+    /**
+     * checks the completeness of the test
+     */
+    private void checkTestCompleteness() {
         sysOut(Messages.ExecutionControllerProjectCompleteness);
         m_job.initAndValidate();
         boolean noErrors = true;
