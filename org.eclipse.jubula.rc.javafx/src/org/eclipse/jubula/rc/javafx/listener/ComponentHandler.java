@@ -69,6 +69,9 @@ public class ComponentHandler implements ListChangeListener<Stage>,
     private static IStageResizeSync stageResizeSync = 
             StageResizeSyncFactory.instance();
     
+    /**lock for hierarchy access**/
+    private static volatile ReentrantLock lock = AUTJavaFXHierarchy.getLock();
+    
     /**
      * Constructor. Adds itself as ListChangeListener to the Stages-List
      */
@@ -361,7 +364,6 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         IComponentIdentifier componentIdentifier, boolean retry, int timeout)
         throws ComponentNotFoundException, IllegalArgumentException {
         long start = System.currentTimeMillis();
-        ReentrantLock lock = hierarchy.getLock();
         try {
             lock.lock();
             return hierarchy.findComponent(componentIdentifier);
