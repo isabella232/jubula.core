@@ -1,0 +1,15 @@
+The no run option lets you perform steps that are required for test execution without actually executing the test. This is useful to find out whether there are any problems in the test or in the environment that would hinder the test starting.
+
+You can use the no run option with one of the following values. If no value is entered, then ''cc'' is used (up to and including the completeness check step).
+
+\begin{description}
+\item [caa]{the test runs up to and including the step to connect to the \gdaut{} agent}
+\item [cdb]{the test runs up to and including the step to connect to the \gddb{}}
+\item [lp]{the test runs up to and including the step to load the \gdproject{}}
+\item [cc]{the test runs up to and including the completeness check step}
+\item [sa]{the test runs up to and including the step to start the \gdaut{}}
+\item [pte]{the test runs up to and including the step to prepare the test execution}
+\item [ca]{the test runs up to and including the connect to \gdaut{} step}
+\item [rpv]{the test runs up to and including the step to resolve predefined variables}
+\item [bt]{the test runs up to and including the step to build the execution tree}
+\end{description}
