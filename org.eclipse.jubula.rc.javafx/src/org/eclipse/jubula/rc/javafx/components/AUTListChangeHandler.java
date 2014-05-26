@@ -30,13 +30,13 @@ public class AUTListChangeHandler implements ListChangeListener<Object> {
     @Override
     public void onChanged(Change<? extends Object> c) {
         c.next();
-        List<? extends Object> changedObjects = c.getAddedSubList();
-        for (Object o : changedObjects) {
-            m_hierarchy.createHierarchyFrom(o);
-        }
-        changedObjects = c.getRemoved();
+        List<? extends Object> changedObjects = c.getRemoved();
         for (Object o : changedObjects) {
             m_hierarchy.removeComponentFromHierarchy(o);
+        }
+        changedObjects = c.getAddedSubList();
+        for (Object o : changedObjects) {
+            m_hierarchy.createHierarchyFrom(o);
         }
     }
 

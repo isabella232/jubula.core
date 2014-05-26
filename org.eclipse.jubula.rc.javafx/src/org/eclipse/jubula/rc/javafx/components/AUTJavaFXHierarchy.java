@@ -11,7 +11,6 @@
 package org.eclipse.jubula.rc.javafx.components;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -185,19 +184,10 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
             JavaFXHierarchyContainer parent = (JavaFXHierarchyContainer) ctner
                     .getPrnt();
             if (parent != null) {
-                JavaFXHierarchyContainer[] parentComp = parent.getChildren();
-                int i = 0;
-                for (JavaFXHierarchyContainer comp : parentComp) {
-                    if (comp == ctner) {
-                        parentComp[i] = null;
-                        break;
-                    }
-                    i++;
-                }
+                parent.remove(ctner);
             }
-            ArrayList<JavaFXHierarchyContainer> children =
-                    new ArrayList<JavaFXHierarchyContainer>(
-                    Arrays.asList(ctner.getChildren()));
+            List<JavaFXHierarchyContainer> children =
+                    new ArrayList<>(ctner.getContainerList());
 
             for (JavaFXHierarchyContainer child : children) {
                 removeContainer(child);
@@ -354,9 +344,8 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
         parent = (JavaFXHierarchyContainer) comp.getPrnt();
 
         if (parent != null) {
-            JavaFXHierarchyContainer[] comps = parent.getChildren();
-            for (int i = 0; i < comps.length; i++) {
-                JavaFXHierarchyContainer child = comps[i];
+            List<JavaFXHierarchyContainer> comps = parent.getContainerList();
+            for (JavaFXHierarchyContainer child : comps) {
                 if (!child.equals(comp)) {
                     String toAdd = child.getName();
                     context.add(toAdd);
@@ -485,11 +474,9 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
         if (parent == null) {
             return true;
         }
-        JavaFXHierarchyContainer[] compIDs = parent.getChildren();
-        final int length = compIDs.length;
+        List<JavaFXHierarchyContainer> compIDs = parent.getContainerList();
 
-        for (int index = 0; index < length; index++) {
-            JavaFXHierarchyContainer childContainer = compIDs[index];
+        for (JavaFXHierarchyContainer childContainer: compIDs) {
             String childName = childContainer.getName();
 
             if (name.equals(childName) && childContainer != container) {

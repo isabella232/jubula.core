@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.components;
 
+import java.util.List;
+
 import org.eclipse.jubula.rc.common.components.AUTComponent;
 import org.eclipse.jubula.rc.common.components.HierarchyContainer;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
@@ -52,24 +54,6 @@ public class JavaFXHierarchyContainer extends HierarchyContainer {
     }
 
     /**
-     * Get all child container of this container.
-     *
-     * @return JavaFXHierarchyContainer Array with all children
-     */
-    public JavaFXHierarchyContainer[] getChildren() {
-        if (super.getComps().length == 0) {
-            return new JavaFXHierarchyContainer[0];
-        }
-        HierarchyContainer[] containerArray = super.getComps();
-        JavaFXHierarchyContainer[] fxContainerArray =
-                new JavaFXHierarchyContainer[containerArray.length];
-        for (int i = 0; i < containerArray.length; i++) {
-            fxContainerArray[i] = (JavaFXHierarchyContainer) containerArray[i];
-        }
-        return fxContainerArray;
-    }
-
-    /**
      * Checks if this container has the given container as child container
      *
      * @param child
@@ -77,7 +61,7 @@ public class JavaFXHierarchyContainer extends HierarchyContainer {
      * @return true if this container has the given container, false if not.
      */
     public boolean contains(JavaFXHierarchyContainer child) {
-        JavaFXHierarchyContainer[] children = getChildren();
+        List<JavaFXHierarchyContainer> children = getContainerList();
         for (JavaFXHierarchyContainer cont : children) {
             if (cont.equals(child)) {
                 return true;
@@ -85,7 +69,12 @@ public class JavaFXHierarchyContainer extends HierarchyContainer {
         }
         return false;
     }
-
+    
+    @Override
+    protected List<JavaFXHierarchyContainer> getContainerList() {
+        return super.getContainerList();
+    }
+    
     /**
      * Adds a component to the container. Renames it if there is already a
      * container with this name.
