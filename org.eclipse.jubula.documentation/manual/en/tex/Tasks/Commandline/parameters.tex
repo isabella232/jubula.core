@@ -106,14 +106,20 @@
 		&e.g. \emph{-autid ''SimpleAdder1''}\\
                 &Use when \gdaut{} was started via \bxname{autrun} \bxpref{TasksTestExecSuiteOrJob}.\\
                    \hline
-		Data directory
+		Data directory (optional)
                   & \bxshell{-datadir <path to external} \\
                   & \bxshell{test data directory>}\\
                    &e.g. \emph{-datadir ''<pathToQADocs>/data''}\\
+                   &Use when you have test data for the test, e.g. from Excel.\\
+                   &You can use relative paths (relative to the platform working directory).\\
 		\hline
-		Result directory
+		Result directory (optional)
                   & \bxshell{-resultdir <path to directory>}\\
                  &e.g. \emph{-resultdir ''<pathToQADocs>/results''}\\
+                 &Use when you want HTML and XML test result reports to \\
+                 &be produced by the testexec.\\
+                 &Test results will still be written to the database.\\
+                 &You can use relative paths (relative to the platform working directory).\\
                 \hline
 		No run option (optional)
                   & \bxshell{-n}\\
@@ -141,7 +147,7 @@
                   & screenshots will be taken on errors\\
                   & and written to the \gddb{} \\
                   & but they will not appear in the \\
-                  & XML and HTML reports. \\
+                  & XML and HTML reports created if you have specified a resultdir. \\
                   \hline
 		Test results not relevant (optional)
                   & \bxshell{-r }\\
