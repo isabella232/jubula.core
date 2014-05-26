@@ -53,5 +53,6 @@
    * {{{com.bredexsw.guidancer.product.product}}}
  * adjust update site (p2-repositories) files "category.xml"
 
+ * adjust RC artifact retrieval URLs in main {{{com.bredexsw.guidancer.releng/build.xml}}} file in target {{{get.remote.eclipse.content}}}
 
  * last but not least: increase version number in "version.properties" - reset micro version number to 000
