@@ -90,11 +90,13 @@
 	  </param>
     </action>
   </concreteComponent>
+  
   <toolkitComponent type="ios.UILabel" visible="false">
     <realizes>abstract.ios.TextVerifiable</realizes>
     <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
     <componentClass name="ios.UILabel" />
   </toolkitComponent>
+  
   <toolkitComponent type="ios.UITableViewCell" visible="false">
     <realizes>abstract.ios.TextVerifiable</realizes>
     <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
@@ -106,6 +108,7 @@
     <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
     <componentClass name="ios.UINavigationItemView" />
   </toolkitComponent>
+  
   <toolkitComponent type="ios.UITabBarButton" visible="false">
     <realizes>abstract.ios.TextVerifiable</realizes>
     <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITextVerifiableTester</testerClass>
@@ -163,15 +166,26 @@
     <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITabComponentTester</testerClass>
     <componentClass name="ios.UISegmentedControl" />
   </toolkitComponent>
-  <toolkitComponent type="ios.UITabBar" visible="false">
+  
+  <toolkitComponent type="ios.UITabBar" visible="true">
     <realizes>abstract.ios.TabComponent</realizes>
     <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITabComponentTester</testerClass>
     <componentClass name="ios.UITabBar" />
+    <action name="CompSystem.CheckBadgeValue" changed="1.0">
+      <method>rcCheckBadgeValue</method>
+      <param name="CompSystem.Text">
+      	<type>java.lang.String</type>
+      </param>
+      <param name="CompSystem.TabIndex">
+      	<type>java.lang.Integer</type>
+      </param>    
+    </action>
   </toolkitComponent>
   
   <!-- Combo Box Controls -->
   <concreteComponent type="abstract.ios.Picker" visible="true">
     <realizes>guidancer.concrete.ComboBox</realizes>
+    
     <action name="CompSystem.Swipe" changed="1.00">
       <method>rcSwipe</method>
       <param name="CompSystem.Direction">
@@ -185,6 +199,7 @@
 		</valueSet>
 	  </param>
     </action>
+    
     <action name="CompSystem.VerifyContainsValueInColumn" changed="2.2">
       <method>rcVerifyContainsValue</method>
       <param name="CompSystem.Text">
@@ -213,6 +228,7 @@
 		<defaultValue>1</defaultValue>
       </param>
     </action>
+    
     <action name="CompSystem.VerifySelectedIndexInColumn" changed="2.2">
       <method>rcVerifySelectedIndex</method>
       <param name="CompSystem.OneIndex">
