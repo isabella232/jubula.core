@@ -13,6 +13,8 @@ package org.eclipse.jubula.rc.javafx.tester.adapter;
 import java.awt.Rectangle;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import javafx.scene.Node;
@@ -33,7 +35,7 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
  * 
  */
 public class TabPaneAdapter extends JavaFXComponentAdapter<TabPane>
-        implements ITabbedComponent {
+        implements ITabbedComponent, IContainerAdapter {
     
     /**
      * Parameter types of the method to retrieve a Tab Header Skin.
@@ -204,6 +206,24 @@ public class TabPaneAdapter extends JavaFXComponentAdapter<TabPane>
                 "Skin / structure not supported: " + tabPaneSkin.getClass(), //$NON-NLS-1$
                 EventFactory.createActionError(
                         TestErrorEvent.RENDERER_NOT_SUPPORTED));
+    }
+    /**
+     * {@inheritDoc}
+     * In this case the Content-Node of the currently selected Tab will be returned
+     */
+    @Override
+    public List<Node> getContent() {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getContent",
+                new Callable<List<Node>>() {
+
+                    @Override
+                    public List<Node> call() throws Exception {
+                        ArrayList<Node> list = new ArrayList<>();
+                        list.add(getRealComponent().getSelectionModel()
+                                .getSelectedItem().getContent());
+                        return list;
+                    }
+                });
     }
 
 }

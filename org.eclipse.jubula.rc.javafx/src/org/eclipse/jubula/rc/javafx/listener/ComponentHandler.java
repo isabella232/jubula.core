@@ -22,10 +22,14 @@ import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Skin;
+import javafx.scene.control.SkinBase;
+import javafx.scene.control.Skinnable;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
+import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
@@ -37,7 +41,9 @@ import org.eclipse.jubula.rc.javafx.components.FindJavaFXComponentBP;
 import org.eclipse.jubula.rc.javafx.components.JavaFXComponent;
 import org.eclipse.jubula.rc.javafx.listener.sync.IStageResizeSync;
 import org.eclipse.jubula.rc.javafx.listener.sync.StageResizeSyncFactory;
+import org.eclipse.jubula.rc.javafx.tester.adapter.IContainerAdapter;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.util.TraverseHelper;
 import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -145,15 +151,30 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         List<? extends Node> comps = getAssignableFrom(Node.class);
         List<Node> matches = new ArrayList<Node>();
         for (Node n : comps) {
-            if (n.getScene() == null) {
+            if (n.getScene() == null || !NodeBounds.checkIfContains(pos, n)) {
                 continue;
             }
-            Set supportetTypes = AUTServerConfiguration.
-                    getInstance().getSupportedTypes();
-            for (Object object : supportetTypes) {
-                if (((ComponentClass)object).getName().
-                        equals(n.getClass().getName())
-                        && NodeBounds.checkIfContains(pos, n)) {
+            if (isSupported(n.getClass())) {
+                boolean add = true;
+                Parent parent = n.getParent();
+                while (parent != null) {
+                    if (parent instanceof Skinnable) {
+                        if (isContentNode(n, parent)) {
+                            break;
+                        }    
+                        Skin skin = ((Skinnable)parent).getSkin();
+                        if (skin instanceof SkinBase) {
+                          //We don't want skin nodes
+                            if (isSkinNode(n, (SkinBase) skin)) {
+                                add = false;
+                                break;
+                            }
+                        }
+                    } else {
+                        parent = parent.getParent();
+                    }
+                }
+                if (add) {
                     matches.add(n);
                 }
             }
@@ -166,6 +187,85 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         }
         // multiple matches, try filtering
         return filterMatches(matches);
+    }
+    
+    /**
+     * Checks if the given class is supported by the AUT-Server
+     * @param c the class
+     * @return true if the type is supported, false if not
+     */
+    private static boolean isSupported(Class c) {
+        Set supportedTypes = AUTServerConfiguration.getInstance().
+                getSupportedTypes();
+        Class currentClass = c;
+        while (currentClass != null) {
+            for (Object object : supportedTypes) {
+                if (((ComponentClass)object).getName().equals(
+                        currentClass.getName())) {
+                    return true;
+                }
+            }
+            currentClass = currentClass.getSuperclass();
+        }
+        return false;
+    }
+    
+    /**
+     * Checks if the given Node is Part of the Content of the given Parent.
+     * This is checked for the following types:
+     *  TitledPane
+     *  ScrollPane
+     *  SplitPane
+     *  ToolBar
+     * This Classes don't share a parent class which would make accessing 
+     * the Content easier. Therefore this special (bad) code is necessary.
+     * @param n the possible content node.
+     * @param parent a parent of the above mentioned type
+     * @return true if the given node is part of the content, false if not.
+     */
+    private static boolean isContentNode(Node n, Parent parent) {
+        IContainerAdapter adapter = (IContainerAdapter) AdapterFactoryRegistry.
+                getInstance().getAdapter(IContainerAdapter.class, parent);
+        
+        if (adapter != null) {
+            List<Node> content = adapter.getContent();
+            if (content.contains(n)) {
+                return true;
+            }
+            TraverseHelper<Node> helper = 
+                    new TraverseHelper<>();
+            for (Node node : content) {
+                for (Node contentNode : content) {
+                    if (contentNode instanceof Parent 
+                            && helper.isChildOf(
+                                    n, (Parent)contentNode)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Checks if the given node is part of a skin
+     * @param node the node
+     * @param skin the skin
+     * @return true if it is part the given skin, false if not
+     */
+    private static boolean isSkinNode(Node node, SkinBase skin) {
+        ObservableList<Node> skinChildren = skin.getChildren();
+        TraverseHelper<Node> help = new TraverseHelper<>();
+        for (Node n : skinChildren) {
+            if (n == node) {
+                return true;
+            } else if (n instanceof Parent) {
+                if (help.isChildOf(node, (Parent) n)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
     /**
