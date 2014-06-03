@@ -16,9 +16,13 @@ package org.eclipse.jubula.tools.constants;
  */
 public abstract class TimingConstantsServer {
     /**
-     * <code>POLLING_DELAY_FIND_COMPONENT</code>
-     */
-    public static final int POLLING_DELAY_FIND_COMPONENT = 500;
+    * <code>DEFAULT_FIND_COMPONENT_TIMEOUT</code>
+    */
+    public static final int DEFAULT_FIND_COMPONENT_TIMEOUT = 500;
+    /**
+    * <code>POLLING_DELAY_FIND_COMPONENT</code>
+    */
+    public static final int POLLING_DELAY_FIND_COMPONENT = 100;
     
     /** timeout between retries */
     public static final int GET_LOCATION_RETRY_DELAY = 1000;

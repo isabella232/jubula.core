@@ -54,7 +54,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     private static FindJavaFXComponentBP findBP = new FindJavaFXComponentBP();
 
     /** The lock for accessing the Hierarchy **/
-    private ReentrantLock m_lock = new ReentrantLock();
+    private static volatile ReentrantLock lock = new ReentrantLock(true);
 
     /**
      * Default constructor
@@ -69,7 +69,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
      *            the Object
      */
     public void createHierarchyFrom(Object o) {
-        m_lock.lock();
+        lock.lock();
         try {
             Map realMap = getRealMap();
             Object parent = ParentGetter.get(o);
@@ -85,7 +85,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
             }
             createHierarchy(lastParent == null ? o : lastParent);
         } finally {
-            m_lock.unlock();
+            lock.unlock();
         }
     }
 
@@ -172,7 +172,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
      *            the container that will be deleted
      */
     public void removeContainer(JavaFXHierarchyContainer ctner) {
-        m_lock.lock();
+        lock.lock();
         try {
             Map contMap = getHierarchyMap();
 
@@ -203,7 +203,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
                 removeContainer(child);
             }
         } finally {
-            m_lock.unlock();
+            lock.unlock();
         }
     }
 
@@ -504,7 +504,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
      *
      * @return the lock
      */
-    public ReentrantLock getLock() {
-        return m_lock;
+    public static ReentrantLock getLock() {
+        return lock;
     }
 }

@@ -31,6 +31,7 @@ import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.tester.WidgetTester;
 import org.eclipse.jubula.rc.common.util.Verifier;
+import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
@@ -114,7 +115,7 @@ public abstract class AbstractCapTestCommand implements ICommand {
                 Validate.notNull(ci);
             }
             // FIXME : Extra handling for waitForComponent and verifyExists
-            int timeout = 500;
+            int timeout = TimingConstantsServer.DEFAULT_FIND_COMPONENT_TIMEOUT;
             
             boolean isWaitForComponent = 
                     WidgetTester.RC_METHOD_NAME_WAIT_FOR_COMPONENT
