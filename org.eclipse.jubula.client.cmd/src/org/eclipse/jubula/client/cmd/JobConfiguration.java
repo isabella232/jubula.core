@@ -289,12 +289,6 @@ public class JobConfiguration {
      * validates if choosen configuration is valid
      */
     public void initAndValidate() {
-        // all needed properties set correctly?
-        Validate.notNull(m_project, NLS.bind(
-                Messages.JobConfigurationValidateProjectExist,
-                new Object[] {String.valueOf(m_projectName), 
-                    String.valueOf(m_projectMajor), 
-                    String.valueOf(m_projectMinor)}));
         // searching for testsuites with the given names
         for (String name : m_testSuiteNames) {
             for (ITestSuitePO ts : TestSuiteBP.getListOfTestSuites()) {
@@ -351,6 +345,17 @@ public class JobConfiguration {
             Validate.isTrue(autLocales.contains(getLanguage()), 
                 Messages.SpecifiedLanguageNotSupported);
         }
+    }
+
+    /**
+     * Checks whether the set project actually exists.
+     */
+    public void checkProjectExistence() {
+        Validate.notNull(m_project, NLS.bind(
+                Messages.JobConfigurationValidateProjectExist,
+                new Object[] {String.valueOf(m_projectName),
+                    String.valueOf(m_projectMajor),
+                    String.valueOf(m_projectMinor)}));
     }
 
     /**

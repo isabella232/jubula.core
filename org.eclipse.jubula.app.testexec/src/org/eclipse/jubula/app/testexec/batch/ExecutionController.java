@@ -848,6 +848,7 @@ public class ExecutionController implements IAUTServerEventListener,
                     + NLS.bind(Messages.ExecutionControllerProjectLoaded,
                             m_job.getProjectName()));
             }
+            m_job.checkProjectExistence();
         } catch (JBException e1) {
             /* An exception was thrown while loading data or closing a session
              * using Persistence (JPA / EclipseLink). The project is never set. This is detected
