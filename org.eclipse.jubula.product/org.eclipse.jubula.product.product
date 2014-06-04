@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2014 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<?pde version="3.5"?>
+
+<product name="Jubula" uid="org.eclipse.jubula.product" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="2.4.0.qualifier" useFeatures="true" includeLaunchers="true">
+
+   <aboutInfo>
+      <image path="icons/about.png"/>
+      <text>
+         %aboutText
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>-clean
+-name Jubula</programArgs>
+      <programArgsLin>-vm
+../jre/bin/java</programArgsLin>
+      <programArgsWin>-vm
+../jre/bin/javaw</programArgsWin>
+      <vmArgs>-server
+-Duser.language=en
+-Duser.country=US
+#VMARGS_2INSERT
+-Xss1m
+-XX:MaxPermSize=256m</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread 
+-Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages/>
+
+   <splash
+      location="org.eclipse.jubula.app" />
+   <launcher name="jubula">
+      <linux icon="/org.eclipse.jubula.product/icons/jubula.xpm"/>
+      <macosx icon="/org.eclipse.jubula.product/icons/jubula.icns"/>
+      <solaris/>
+      <win useIco="false">
+         <bmp
+            winSmallHigh="/org.eclipse.jubula.product/icons/jubula_16x16_32.bmp"
+            winSmallLow="/org.eclipse.jubula.product/icons/jubula_16x16_8.bmp"
+            winMediumHigh="/org.eclipse.jubula.product/icons/jubula_32x32_32.bmp"
+            winMediumLow="/org.eclipse.jubula.product/icons/jubula_32x32_8.bmp"
+            winLargeHigh="/org.eclipse.jubula.product/icons/jubula_48x48_32.bmp"
+            winLargeLow="/org.eclipse.jubula.product/icons/jubula_48x48_8.bmp"/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="com.bredexsw.guidancer.feature" version="8.1.0.qualifier"/>
+      <feature id="com.bredexsw.jubula.feature" version="2.4.0.qualifier"/>
+   </features>
+   
+   <configurations>
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.jubula.rc.rcp" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="4" />
+      <property name="osgi.splashPath" value="platform:/base/plugins/org.eclipse.jubula.app" />
+      <property name="osgi.instance.area.default" value="@user.home/workspace" />
+   </configurations>
+
+</product>
