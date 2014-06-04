@@ -108,7 +108,7 @@ public final class TestExecutionConstants {
          * @return the default no run mode
          */
         private static String getDefaultNoRunMode() {
-            final runSteps defaultMode = TestExecutionConstants.runSteps.CAA;
+            final runSteps defaultMode = TestExecutionConstants.runSteps.CC;
             return defaultMode.getStepValue();
         }
         
