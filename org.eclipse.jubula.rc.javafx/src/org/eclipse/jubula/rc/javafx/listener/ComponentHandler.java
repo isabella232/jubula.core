@@ -234,13 +234,11 @@ public class ComponentHandler implements ListChangeListener<Stage>,
             }
             TraverseHelper<Node> helper = 
                     new TraverseHelper<>();
-            for (Node node : content) {
-                for (Node contentNode : content) {
-                    if (contentNode instanceof Parent 
-                            && helper.isChildOf(
-                                    n, (Parent)contentNode)) {
-                        return true;
-                    }
+            for (Node contentNode : content) {
+                if (contentNode instanceof Parent 
+                        && helper.isChildOf(
+                                n, (Parent)contentNode)) {
+                    return true;
                 }
             }
         }
