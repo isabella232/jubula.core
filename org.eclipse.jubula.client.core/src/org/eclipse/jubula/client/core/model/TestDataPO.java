@@ -136,33 +136,6 @@ class TestDataPO implements ITestDataPO {
     void setHbmParentProjectId(Long projectId) {
         m_parentProjectId = projectId;
     }
-    
-    
-   /**
-    * Overrides Object.equals()
-    * Compares this TestDataPO object to the given object to equality.
-    * @param obj the object to compare.
-    * @return true or false
-    * {@inheritDoc}
-    */
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj instanceof TestDataPO) {
-            TestDataPO otherTestData = (TestDataPO)obj;
-            return getMap().equals(otherTestData.getMap());
-        }
-        return false;
-    }
-    
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public int hashCode() {
-        return getMap().hashCode();
-    }
 
     /**
      * 
