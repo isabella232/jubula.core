@@ -663,14 +663,6 @@ public abstract class PoMaker {
     public static Class<TestDataPO> getTestDataClass() {
         return TestDataPO.class;
     }
-
-    /**
-     * get the class instance of the PO (needed by Persistor)
-     * @return the class instance of the PO
-     */
-    public static Class<WrapperPO> getWrapperClass() {
-        return WrapperPO.class;
-    }
     
     /**
      * get the class instance of the PO (needed by Persistor)

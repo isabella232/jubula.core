@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -36,7 +38,7 @@ import org.eclipse.persistence.annotations.BatchFetchType;
  */
 @Entity
 @Table(name = "EXEC_CONT")
-public class ExecObjContPO extends WrapperPO implements IExecObjContPO {
+public class ExecObjContPO implements IExecObjContPO {
     
     /**
      * <code>m_execObjList</code>list with all toplevel execTestCases and categories
@@ -46,6 +48,12 @@ public class ExecObjContPO extends WrapperPO implements IExecObjContPO {
 
     /** Persistence (JPA / EclipseLink) version */
     private transient Integer m_version;
+    
+    /** Persistence (JPA / EclipseLink) id*/
+    private transient Long m_id;
+    
+    /** The ID of the parent project */
+    private Long m_parentProjectId = null;
     
     /** default constructor */
     ExecObjContPO() {
@@ -136,35 +144,52 @@ public class ExecObjContPO extends WrapperPO implements IExecObjContPO {
      * {@inheritDoc}
      */
     public void setParentProjectId(Long projectId) {
-        super.setParentProjectId(projectId);
+        setHbmParentProjectId(projectId);
         for (IExecPersistable exec : getExecObjList()) {
             exec.setParentProjectId(projectId);
         }
     }
-
+    
     /**
      * {@inheritDoc}
      */
-    @Transient
-    // FIXME zeb If we don't explicitly declare this method and mark it as 
-    //           @Transient, then EclipseLink assumes (due to the inheritance 
-    //           of the method from the superclass) that the property 
-    //           "parentProjectId" should be persisted. This causes an 
-    //           exception when trying to access an instance of this class 
-    //           from the database. Oddly enough, the exceptions do not occur 
-    //           when running Jubula from the IDE. The exceptions only occur 
-    //           in a deployed Jubula. Once this problem is resolved (for a 
-    //           deployed Jubula), the workaround can be removed.
-    public Long getParentProjectId() {
-        return super.getParentProjectId();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     @Id
     @GeneratedValue
-    // FIXME : workaround as described in http://bugs.eclipse.org/411284#c0
     public Long getId() {
-        return super.getId();
+        return m_id;
+    }
+
+    /**
+     * @param id The id to set.
+     */
+    public void setId(Long id) {
+        m_id = id;
+    } 
+
+    /**
+     *    
+     * {@inheritDoc}
+     */
+    @Transient
+    public Long getParentProjectId() {
+        return getHbmParentProjectId();
+    }
+
+    /**
+     *    
+     * {@inheritDoc}
+     */
+    @Basic
+    @Column(name = "PARENT_PROJ")
+    Long getHbmParentProjectId() {
+        return m_parentProjectId;
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    void setHbmParentProjectId(Long projectId) {
+        m_parentProjectId = projectId;
     }
 }
