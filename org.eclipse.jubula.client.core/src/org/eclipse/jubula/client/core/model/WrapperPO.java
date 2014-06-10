@@ -14,7 +14,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 
 /**
  * @author BREDEX GmbH
@@ -22,31 +21,12 @@ import javax.persistence.Version;
  */
 @MappedSuperclass
 abstract class WrapperPO implements IPersistentObject {
-    /** Persistence (JPA / EclipseLink) version */
-    private transient Integer m_version;
     
     /** Persistence (JPA / EclipseLink) id*/
     private transient Long m_id;
     
     /** The ID of the parent project */
     private Long m_parentProjectId = null;
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @Version
-    public Integer getVersion() {
-        return m_version;
-    }
-
-    /**
-     * @param version version
-     */
-    @SuppressWarnings("unused")
-    private void setVersion(Integer version) {
-        m_version = version;
-    }
 
     /**
      * {@inheritDoc}

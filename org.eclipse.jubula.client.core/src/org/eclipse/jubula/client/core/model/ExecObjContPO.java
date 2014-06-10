@@ -23,6 +23,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.persistence.annotations.BatchFetch;
@@ -43,9 +44,29 @@ public class ExecObjContPO extends WrapperPO implements IExecObjContPO {
     private List<IExecPersistable> m_execObjList = 
             new ArrayList<IExecPersistable>();
 
+    /** Persistence (JPA / EclipseLink) version */
+    private transient Integer m_version;
+    
     /** default constructor */
     ExecObjContPO() {
         // nothing
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    @Version
+    public Integer getVersion() {
+        return m_version;
+    }
+
+    /**
+     * @param version version
+     */
+    @SuppressWarnings("unused")
+    private void setVersion(Integer version) {
+        m_version = version;
     }
 
     /**

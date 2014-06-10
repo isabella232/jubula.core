@@ -24,6 +24,7 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 /**
  * @author BREDEX GmbH
@@ -39,6 +40,26 @@ class CheckConfContPO extends WrapperPO implements ICheckConfContPO {
     /** map of the checkconf and the checkid */
     private Map<String, CheckConfPO> m_confMap = 
         new HashMap<String, CheckConfPO>();
+
+    /** Persistence (JPA / EclipseLink) version */
+    private transient Integer m_version;
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    @Version
+    public Integer getVersion() {
+        return m_version;
+    }
+
+    /**
+     * @param version version
+     */
+    @SuppressWarnings("unused")
+    private void setVersion(Integer version) {
+        m_version = version;
+    }
 
     /**
      * {@inheritDoc}

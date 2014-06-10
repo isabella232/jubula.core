@@ -23,6 +23,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.persistence.annotations.BatchFetch;
@@ -43,9 +44,29 @@ public class SpecObjContPO extends WrapperPO implements ISpecObjContPO {
     private List<ISpecPersistable> m_specObjList = 
             new ArrayList<ISpecPersistable>();
 
+    /** Persistence (JPA / EclipseLink) version */
+    private transient Integer m_version;
+    
     /** default constructor */
     SpecObjContPO() {
         // nothing
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    @Version
+    public Integer getVersion() {
+        return m_version;
+    }
+
+    /**
+     * @param version version
+     */
+    @SuppressWarnings("unused")
+    private void setVersion(Integer version) {
+        m_version = version;
     }
 
     /**

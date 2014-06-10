@@ -22,6 +22,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 /**
  * @author BREDEX GmbH
@@ -39,11 +40,31 @@ class AUTContPO extends WrapperPO implements IAUTContPO {
     private Set<IAUTMainPO> m_autMainList = 
         new HashSet<IAUTMainPO>(DEFAULT_NUMBER_OF_AUTS);
 
+    /** Persistence (JPA / EclipseLink) version */
+    private transient Integer m_version;
+    
     /**
      * Persistence (JPA / EclipseLink) constructor
      */
     AUTContPO() {
         // only for Persistence (JPA / EclipseLink)
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    @Version
+    public Integer getVersion() {
+        return m_version;
+    }
+
+    /**
+     * @param version version
+     */
+    @SuppressWarnings("unused")
+    private void setVersion(Integer version) {
+        m_version = version;
     }
     
     /**
@@ -123,4 +144,6 @@ class AUTContPO extends WrapperPO implements IAUTContPO {
     public Long getId() {
         return super.getId();
     }
+    
+    
 }
