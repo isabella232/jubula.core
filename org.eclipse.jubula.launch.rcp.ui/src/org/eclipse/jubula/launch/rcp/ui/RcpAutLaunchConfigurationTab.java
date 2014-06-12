@@ -22,11 +22,15 @@ import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.launch.rcp.RcpAutLaunchConfigurationConstants;
 import org.eclipse.jubula.launch.rcp.i18n.Messages;
 import org.eclipse.jubula.launch.ui.tab.AutLaunchConfigurationTab;
+import org.eclipse.jubula.tools.constants.AutEnvironmentConstants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
@@ -51,6 +55,11 @@ public class RcpAutLaunchConfigurationTab extends AutLaunchConfigurationTab {
      * @see RcpAutLaunchConfigurationConstants#KEYBOARD_LAYOUT_KEY
      */
     private Text m_keyboardLayoutText;
+    
+    /**
+     * boolean whether component names should be generated
+     */
+    private Button m_generateNamesFlag;
 
     @Override
     public void createControl(Composite parent) {
@@ -76,6 +85,23 @@ public class RcpAutLaunchConfigurationTab extends AutLaunchConfigurationTab {
             }
         });
         
+        UIComponentHelper.createLabel(additionalComposite,
+                Messages.LaunchTab_GenerateNamesLabel, SWT.NONE);
+        m_generateNamesFlag = new Button(additionalComposite, SWT.CHECK);
+        
+        GridDataFactory.fillDefaults().grab(false, false).applyTo(
+                m_generateNamesFlag);
+        
+        m_generateNamesFlag.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
+                setDirty(true);
+                updateLaunchConfigurationDialog();
+            }
+            public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+        });
+        
         setControl(composite);
     }
     
@@ -89,6 +115,13 @@ public class RcpAutLaunchConfigurationTab extends AutLaunchConfigurationTab {
         } catch (CoreException ce) {
             LOG.error("An error occurred while initializing Keyboard Layout text field.", ce); //$NON-NLS-1$
         }
+        try {
+            m_generateNamesFlag.setSelection(configuration.getAttribute(
+                    AutEnvironmentConstants.GENERATE_COMPONENT_NAMES,
+                    true));
+        } catch (CoreException ce) {
+            LOG.error("An error occurred while initializing Generate Names check box.", ce); //$NON-NLS-1$
+        }
     }
     
     @Override
@@ -97,6 +130,9 @@ public class RcpAutLaunchConfigurationTab extends AutLaunchConfigurationTab {
         configuration.setAttribute(
                 RcpAutLaunchConfigurationConstants.KEYBOARD_LAYOUT_KEY, 
                 m_keyboardLayoutText.getText());
+        configuration.setAttribute(
+                AutEnvironmentConstants.GENERATE_COMPONENT_NAMES,
+                m_generateNamesFlag.getSelection());
     }
     
     @Override

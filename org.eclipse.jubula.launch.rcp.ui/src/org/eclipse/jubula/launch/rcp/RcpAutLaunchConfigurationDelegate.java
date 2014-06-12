@@ -23,6 +23,7 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.jubula.launch.AutLaunchUtils;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.AutEnvironmentConstants;
 import org.eclipse.jubula.tools.constants.RcpAccessorConstants;
 import org.eclipse.pde.launching.EclipseApplicationLaunchConfiguration;
 
@@ -66,6 +67,12 @@ public class RcpAutLaunchConfigurationDelegate
                 configuration.getAttribute(
                         RcpAutLaunchConfigurationConstants.KEYBOARD_LAYOUT_KEY, 
                         Locale.getDefault().toString()));
+        environmentVariables.put(
+                AutEnvironmentConstants.GENERATE_COMPONENT_NAMES,
+                Boolean.valueOf(configuration.getAttribute(
+                        AutEnvironmentConstants.GENERATE_COMPONENT_NAMES,
+                        Boolean.TRUE)).toString());
+                
         
         workingCopy.setAttribute(
                 ILaunchManager.ATTR_ENVIRONMENT_VARIABLES, 
