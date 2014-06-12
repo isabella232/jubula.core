@@ -17,6 +17,7 @@ import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.launch.AutLaunchConfigurationConstants;
 import org.eclipse.jubula.launch.ui.i18n.Messages;
 import org.eclipse.swt.SWT;
@@ -139,6 +140,14 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
      */
     public String getName() {
         return Messages.AutLaunchConfigurationTab_name;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public Image getImage() {
+        return IconConstants.TS_VAL_IMAGE;
     }
 
 }

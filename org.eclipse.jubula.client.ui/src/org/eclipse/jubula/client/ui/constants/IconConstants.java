@@ -260,6 +260,8 @@ public class IconConstants {
     public static final Image TC_REF_IMAGE = getImage("testCaseRef.gif"); //$NON-NLS-1$
     /** referenced testSuite image */
     public static final Image TS_REF_IMAGE = getImage("testSuiteRef.gif"); //$NON-NLS-1$
+    /** testSuite validate image */
+    public static final Image TS_VAL_IMAGE = getImage("TestSuite_validate.gif"); //$NON-NLS-1$
     /** logical name image */
     public static final Image LOGICAL_NAME_IMAGE = getImage("OMLogName.gif"); //$NON-NLS-1$
     /** logical name image */
