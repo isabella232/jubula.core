@@ -26,6 +26,7 @@ import javafx.scene.control.Skin;
 import javafx.scene.control.SkinBase;
 import javafx.scene.control.Skinnable;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
@@ -139,6 +140,39 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         }
         return result;
     }
+    
+    /**
+     * Traverses the scene graph from the given parent and adds all nodes to a
+     * result list if the following conditions are met: The node is visible and
+     * the given position is within the bounds of this node
+     * 
+     * @param parent
+     *            the parent
+     * @param pos
+     *            the position
+     * @param resultList
+     *            the result list
+     * @return A list witch all nodes which are visible and the given position is
+     *         within the bounds of this node
+     */
+    private static List<Node> getAllNodesforPos(Parent parent, Point2D pos,
+            List<Node> resultList) {
+        //Blame checkstyle for this extra list
+        List<Node> result = resultList;
+        
+        if (parent.isVisible()) {
+            for (Node child : parent.getChildrenUnmodifiable()) {
+                if (child.isVisible() 
+                        && NodeBounds.checkIfContains(pos, child)) {
+                    result.add(child);
+                    if (child instanceof Parent) {
+                        result = getAllNodesforPos((Parent) child, pos, result);
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
     /**
      * Returns the node under the given point
@@ -148,45 +182,53 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      * @return the component
      */
     public static Node getComponentByPos(Point2D pos) {
-        List<? extends Node> comps = getAssignableFrom(Node.class);
+        List<? extends Window> comps = getAssignableFrom(Window.class);
         List<Node> matches = new ArrayList<Node>();
-        for (Node n : comps) {
-            if (n.getScene() == null || !NodeBounds.checkIfContains(pos, n)) {
+        for (Window window : comps) {
+            if (window.isFocused() && window.isShowing()) {
+                Parent root = window.getScene().getRoot();
+                matches = getAllNodesforPos(root, pos, matches);
+            }
+        }
+        List<Node> result = new ArrayList<Node>();
+        for (Node n : matches) {
+            if (n.getScene() == null || !isSupported(n.getClass())
+                    || !n.isVisible()) {
                 continue;
             }
-            if (isSupported(n.getClass())) {
-                boolean add = true;
-                Parent parent = n.getParent();
-                while (parent != null) {
-                    if (parent instanceof Skinnable) {
-                        if (isContentNode(n, parent)) {
+            boolean add = true;
+            Parent parent = n.getParent();
+            while (parent != null) {
+                if (parent instanceof Skinnable) {
+                    if (isContentNode(n, parent)) {
+                        break;
+                    }
+                    Skin skin = ((Skinnable) parent).getSkin();
+                    if (skin instanceof SkinBase) {
+                        // We don't want skin nodes
+                        if (isSkinNode(n, (SkinBase) skin)) {
+                            add = false;
                             break;
-                        }    
-                        Skin skin = ((Skinnable)parent).getSkin();
-                        if (skin instanceof SkinBase) {
-                          //We don't want skin nodes
-                            if (isSkinNode(n, (SkinBase) skin)) {
-                                add = false;
-                                break;
-                            }
                         }
                     } else {
                         parent = parent.getParent();
                     }
-                }
-                if (add) {
-                    matches.add(n);
+                } else {
+                    parent = parent.getParent();
                 }
             }
+            if (add) {
+                result.add(n);
+            }
         }
-        if (matches.size() == 0) {
+        if (result.size() == 0) {
             return null;
         }
-        if (matches.size() == 1) {
-            return matches.get(0);
+        if (result.size() == 1) {
+            return result.get(0);
         }
         // multiple matches, try filtering
-        return filterMatches(matches);
+        return filterMatches(result);
     }
     
     /**
