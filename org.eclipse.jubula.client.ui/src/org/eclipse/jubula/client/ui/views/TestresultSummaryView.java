@@ -412,17 +412,17 @@ public class TestresultSummaryView extends ViewPart implements
         createSearchFilter(parent);
         m_tableViewer = new TableViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL
                 | SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI | SWT.VIRTUAL);
-        addDetailsColumn(m_tableViewer);
         addDateColumn(m_tableViewer);
+        addDetailsColumn(m_tableViewer);
+        addStatusDecoratorColumn(m_tableViewer);
+        addTestsuiteColumn(m_tableViewer);
         addCommentTitleColumn(m_tableViewer);
         addTestrunIdColumn(m_tableViewer);
         addTestRelevantColumn(m_tableViewer);
         addTestJobStartTimeColumn(m_tableViewer);
         addTestJobColumn(m_tableViewer);
-        addStatusDecoratorColumn(m_tableViewer);
         addAlmStatusDecoratorColumn(m_tableViewer);
         addTsStatusColumn(m_tableViewer);
-        addTestsuiteColumn(m_tableViewer);
         addProjectNameColumn(m_tableViewer);
         addAutIdColumn(m_tableViewer);
         addAutNameColumn(m_tableViewer);
@@ -573,7 +573,12 @@ public class TestresultSummaryView extends ViewPart implements
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public Image getImage(Object element) {
-                return null;
+                String text = String.valueOf(m_detailedSummaryIds
+                        .contains(((ITestResultSummaryPO)element).getId()));
+                if (text.equals(Boolean.TRUE.toString())) {
+                    return IconConstants.TRSV_DETAILS;
+                }
+                return IconConstants.TRSV_NODETAILS;
             }
             public String getText(Object element) {
                 return String.valueOf(m_detailedSummaryIds
@@ -1020,7 +1025,7 @@ public class TestresultSummaryView extends ViewPart implements
     private void addAlmStatusDecoratorColumn(
         TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(100);
+        column.getColumn().setWidth(0);
         column.getColumn().setText(TESTRESULT_ALM_REPORT_STATE);
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
@@ -1065,7 +1070,7 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private void addProjectNameColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(200);
+        column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.PROJECT_IMAGE);
         column.getColumn().setText(TESTRESULT_SUMMARY_PROJECT_NAME);
         column.getColumn().setMoveable(true);
@@ -1092,7 +1097,7 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private void addTestsuiteColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(200);
+        column.getColumn().setWidth(250);
         column.getColumn().setImage(IconConstants.TS_IMAGE);
         column.getColumn().setText(TESTRESULT_SUMMARY_TESTSUITE);
         column.getColumn().setMoveable(true);
@@ -1173,7 +1178,7 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private void addAutIdColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(200);
+        column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.AUT_RUNNING_IMAGE);
         column.getColumn().setText(TESTRESULT_SUMMARY_AUT_ID);
         column.getColumn().setMoveable(true);
@@ -1469,7 +1474,7 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private void addDurationColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(200);
+        column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.CLOCK_IMAGE);
         column.getColumn().setText(TESTRESULT_SUMMARY_DURATION);
         column.getColumn().setMoveable(true);
@@ -1609,7 +1614,7 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private void addTestrunIdColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(200);
+        column.getColumn().setWidth(0);
         column.getColumn().setText(TESTRESULT_SUMMARY_TESTRUN_ID);
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
@@ -1635,7 +1640,7 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private void addTestRelevantColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(200);
+        column.getColumn().setWidth(0);
         column.getColumn().setText(TESTRESULT_SUMMARY_TESTRUN_RELEVANT);
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
@@ -1661,7 +1666,7 @@ public class TestresultSummaryView extends ViewPart implements
     private void addMonitoringReportColumn(
             TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(200);
+        column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.INFO_IMAGE);
         column.getColumn().setText(MONITORING_DETAILS);
         column.getColumn().setMoveable(true);
@@ -1689,7 +1694,7 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private void addMonitoringIdColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(200);
+        column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.INFO_IMAGE);
         column.getColumn().setText(MONITORING_ID);
         column.getColumn().setMoveable(true);
@@ -1716,7 +1721,7 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private void addMonitoringValueColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(80);
+        column.getColumn().setWidth(0);
         column.getColumn().setImage(IconConstants.INFO_IMAGE);
         column.getColumn().setText(MONITORING_VALUE);
         column.getColumn().setMoveable(true);        

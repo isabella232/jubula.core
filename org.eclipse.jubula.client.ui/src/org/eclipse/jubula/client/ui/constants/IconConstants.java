@@ -324,6 +324,10 @@ public class IconConstants {
     public static final Image PAUSE_IMAGE = getImage("pause.gif"); //$NON-NLS-1$
     /** no aut image */
     public static final Image NO_AUT_IMAGE = getImage("NoAUT.gif"); //$NON-NLS-1$
+    /** TestResultSummaryView details image */
+    public static final Image TRSV_DETAILS = getImage("TRSV_Details.gif"); //$NON-NLS-1$
+    /** TestResultSummaryView no details image */
+    public static final Image TRSV_NODETAILS = getImage("TRSV_NoDetails.gif"); //$NON-NLS-1$
     
     /** to prevent instantiation */
     private IconConstants() {
