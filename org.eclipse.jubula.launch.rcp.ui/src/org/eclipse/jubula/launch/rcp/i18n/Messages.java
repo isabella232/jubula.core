@@ -20,7 +20,6 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.launch.rcp.i18n.messages"; //$NON-NLS-1$
     
-    public static String LaunchTab_GenerateNamesLabel;
     public static String LaunchTab_KeyboardLayoutLabel;
     public static String LaunchTab_KeyboardLayout_InvalidLocale;
     public static String LaunchTab_KeyboardLayout_ErrorDuringValidation;

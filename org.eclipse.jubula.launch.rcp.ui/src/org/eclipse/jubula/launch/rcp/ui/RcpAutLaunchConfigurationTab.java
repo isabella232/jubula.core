@@ -18,11 +18,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.launch.rcp.RcpAutLaunchConfigurationConstants;
 import org.eclipse.jubula.launch.rcp.i18n.Messages;
 import org.eclipse.jubula.launch.ui.tab.AutLaunchConfigurationTab;
 import org.eclipse.jubula.tools.constants.AutEnvironmentConstants;
+import org.eclipse.jubula.tools.i18n.I18n;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -32,6 +34,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,8 +88,19 @@ public class RcpAutLaunchConfigurationTab extends AutLaunchConfigurationTab {
             }
         });
         
-        UIComponentHelper.createLabel(additionalComposite,
-                Messages.LaunchTab_GenerateNamesLabel, SWT.NONE);
+        Composite workaroundComposite =
+                new Composite(additionalComposite, SWT.NONE);
+        GridDataFactory.fillDefaults().grab(false, false).applyTo(
+                workaroundComposite);
+        workaroundComposite.setLayout(new GridLayout(2, false));
+        
+        Label label = new Label(workaroundComposite, SWT.NONE);
+        label.setText(
+                org.eclipse.jubula.client.ui.rcp.i18n.Messages.
+                AUTPropertiesDialogGenerateNames);
+        ControlDecorator.createInfo(label,
+                I18n.getString("AUTPropertiesDialog.generateNamesDescription"),
+                false);
         m_generateNamesFlag = new Button(additionalComposite, SWT.CHECK);
         
         GridDataFactory.fillDefaults().grab(false, false).applyTo(
