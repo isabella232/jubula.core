@@ -202,22 +202,19 @@ public class ComponentBuilder extends AbstractComponentBuilder {
     }
     
     /**
-     * 
-     * @return The IDs of the installed independent CompSystems without
-     * abstract an concrete.
+     * @return The IDs of the installed independent CompSystems without abstract
+     *         an concrete.
      */
-    @SuppressWarnings("unchecked")
     public List<String> getLevelToolkitIds() {
-        List<ToolkitPluginDescriptor> toolkitDescriptors = 
-            super.getCompSystem().getIndependentToolkitPluginDescriptors(true);
+        List<ToolkitPluginDescriptor> toolkitDescriptors = super
+            .getCompSystem().getIndependentToolkitPluginDescriptors(true);
 
         List<String> toolkitIds = new ArrayList<String>();
-        
+
         for (ToolkitPluginDescriptor desc : toolkitDescriptors) {
             toolkitIds.add(desc.getToolkitID());
         }
-        
+
         return toolkitIds;
     }
-        
 }

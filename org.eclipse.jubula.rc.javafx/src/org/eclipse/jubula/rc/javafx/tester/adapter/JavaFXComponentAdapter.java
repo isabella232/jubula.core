@@ -411,7 +411,7 @@ public class JavaFXComponentAdapter<T extends Node> extends
             throw new RobotException("Key is null!", //$NON-NLS-1$
                     EventFactory.createConfigErrorEvent());
         }
-        final Integer keyCode = (Integer) converterTable.get(key.toLowerCase());
+        final Integer keyCode = converterTable.get(key.toLowerCase());
         if (keyCode == null) {
             throw new RobotException("No KeyCode found for key '" + key + "'", //$NON-NLS-1$//$NON-NLS-2$
                     EventFactory.createConfigErrorEvent());

@@ -57,9 +57,9 @@ public class BundleInstaller implements BundleActivator {
      */
     public void start(BundleContext context) throws Exception {
         // install and start the bundles for the RCP accessor
-        List bundleFolderSuffixes = getBundleFolderSuffixes(context);
+        List<String> bundleFolderSuffixes = getBundleFolderSuffixes(context);
         try {
-            List installedBundles = installAllBundles(
+            List<Bundle> installedBundles = installAllBundles(
                     context, bundleFolderSuffixes);
             startBundles(installedBundles);
         } catch (Throwable t) {
@@ -73,9 +73,9 @@ public class BundleInstaller implements BundleActivator {
      *         identified by the existence of {@link #E4_SPECIFIC_BUNDLE},
      *         i.e. {@link #BUNDLE_FOLDER_SUFFIX_E3} or {@link #BUNDLE_FOLDER_SUFFIX_E4_SWT}.
      */
-    private static List getBundleFolderSuffixes(
+    private static List<String> getBundleFolderSuffixes(
             BundleContext context) {
-        List bundleFolderSuffixes = new ArrayList();
+        List<String> bundleFolderSuffixes = new ArrayList<String>();
         bundleFolderSuffixes.add(""); //$NON-NLS-1$
         Bundle[] installedBundles = context.getBundles();
         if (isBundleInstalled(installedBundles, E4_SPECIFIC_BUNDLE)) {
@@ -118,14 +118,14 @@ public class BundleInstaller implements BundleActivator {
      * @throws IOException
      * @see BundleIterator#installBundle()
      */
-    private static List installAllBundles(
-            BundleContext context, List bundleFolderSuffixes)
+    private static List<Bundle> installAllBundles(
+            BundleContext context, List<String> bundleFolderSuffixes)
         throws BundleException, IOException {
-        List bundles = new ArrayList();
-        Iterator suffixes = bundleFolderSuffixes.iterator();
+        List<Bundle> bundles = new ArrayList<Bundle>();
+        Iterator<String> suffixes = bundleFolderSuffixes.iterator();
         while (suffixes.hasNext()) {
             bundles.addAll(installBundlesWithSuffix(
-                    context, (String) suffixes.next()));
+                    context, suffixes.next()));
         }
         return bundles;
     }
@@ -141,11 +141,11 @@ public class BundleInstaller implements BundleActivator {
      * @param suffix The string defining the suffix of the bundle folder.
      * @return The newly installed bundles.
      */
-    private static List installBundlesWithSuffix(BundleContext context,
+    private static List<Bundle> installBundlesWithSuffix(BundleContext context,
             String suffix)
         throws IOException, BundleException,
                 SecurityException, IllegalArgumentException {
-        List bundles = new ArrayList();
+        List<Bundle> bundles = new ArrayList<Bundle>();
         BundleIterator it = new BundleIterator(context, suffix);
         while (it.hasNext()) {
             it.next(); // move to next bundle in bundle folder
@@ -171,10 +171,9 @@ public class BundleInstaller implements BundleActivator {
      * @param bundles The list of bundles to start.
      * @throws BundleException
      */
-    private static void startBundles(List bundles) throws BundleException {
-        Iterator it = bundles.iterator();
-        while (it.hasNext()) {
-            Bundle bundle = ((Bundle) (it.next()));
+    private static void startBundles(List<Bundle> bundles)
+        throws BundleException {
+        for (Bundle bundle : bundles) {
             bundle.start();
         }
     }
@@ -194,11 +193,11 @@ public class BundleInstaller implements BundleActivator {
      *        which defines the bundles to stop.
      */
     private static void stopAllBundles(
-            BundleContext context, List bundleFolderSuffixes) {
-        Iterator itSuffixes = bundleFolderSuffixes.iterator();
+            BundleContext context, List<String> bundleFolderSuffixes) {
+        Iterator<String> itSuffixes = bundleFolderSuffixes.iterator();
         while (itSuffixes.hasNext()) {
             BundleIterator it = new BundleIterator(
-                    context, (String) itSuffixes.next());
+                    context, itSuffixes.next());
             while (it.hasNext()) {
                 it.next();
                 try {

@@ -45,22 +45,22 @@ public class CompSystem {
     private static Logger log = LoggerFactory.getLogger(CompSystem.class); 
     
     /** The list of all components. */
-    private List m_components;
+    private List<Component> m_components;
     
     /** fast lookup */
-    private Map m_componentsByType;
+    private Map<String, Component> m_componentsByType;
     
     /** fast lookup */
-    private Map m_componentsByTypeLowerCase;
+    private Map<String, Component> m_componentsByTypeLowerCase;
     
     /** The list of abstract components. */
-    private List m_abstractComponents;
+    private List<AbstractComponent> m_abstractComponents;
     
     /** The list of concrete components. */
-    private List m_concreteComponents;
+    private List<ConcreteComponent> m_concreteComponents;
     
     /** The List of Event Types. */
-    private Map m_eventTypes;
+    private Map<String, Integer> m_eventTypes;
     
     /** The most abstract component in the hierarchy */
     private Component m_mostAbstractComponent;
@@ -69,16 +69,16 @@ public class CompSystem {
      * Map of {@link ToolkitPluginDescriptor}
      * Key: id of toolkit, value: ToolkitPluginDescriptor
      */
-    private Map m_toolkitDescriptors;
+    private Map<String, ToolkitPluginDescriptor> m_toolkitDescriptors;
     
-    /** Stores wether the component is initialized. */
+    /** Stores whether the component is initialized. */
     private boolean m_initialized = false;
     
     /** <code>m_configVersion</code> version for clientConfig.xml */
     private ConfigVersion m_configVersion = null;
 
     /** A List of all DataTypes */
-    private Set m_dataTypes = null;
+    private Set<String> m_dataTypes = null;
     
     /** Default constructor */
     public CompSystem() {
@@ -88,25 +88,26 @@ public class CompSystem {
     /**  */
     private void init() {
         if (m_components == null) {
-            m_components = new ArrayList();
+            m_components = new ArrayList<Component>();
         }
         if (m_componentsByType == null) {
-            m_componentsByType = new HashMap(1001);
+            m_componentsByType = new HashMap<String, Component>(1001);
         }
         if (m_componentsByTypeLowerCase == null) {
-            m_componentsByTypeLowerCase = new HashMap(1001);
+            m_componentsByTypeLowerCase = new HashMap<String, Component>(1001);
         }
         if (m_abstractComponents == null) {
-            m_abstractComponents = new ArrayList();
+            m_abstractComponents = new ArrayList<AbstractComponent>();
         }
         if (m_concreteComponents == null) {
-            m_concreteComponents = new ArrayList();
+            m_concreteComponents = new ArrayList<ConcreteComponent>();
         }
         if (m_eventTypes == null) {
-            m_eventTypes = new HashMap(4);
+            m_eventTypes = new HashMap<String, Integer>(4);
         }
         if (m_toolkitDescriptors == null) {
-            m_toolkitDescriptors = new HashMap();
+            m_toolkitDescriptors = 
+                new HashMap<String, ToolkitPluginDescriptor>();
         }
         // FIXME Achim only hard coded EventTypes so far
         m_eventTypes.put(TestErrorEvent.ID.ACTION_ERROR, 
@@ -122,7 +123,7 @@ public class CompSystem {
      * Gets the list with all components of all installed Toolkit-Plugins.
      * @return List A <code>List</code> object.
      */
-    public List getComponents() {
+    public List<Component> getComponents() {
         return m_components;
     }
 
@@ -137,8 +138,9 @@ public class CompSystem {
      * (and its included Toolkit if <code>addIncludedToolkits</code> is 
      * <code>true</code>).
      */
-    public List getComponents(String toolkitId, boolean addReferencedToolkits) {
-        final List toolkitComponents = new ArrayList();
+    public List<Component> getComponents(String toolkitId, 
+        boolean addReferencedToolkits) {
+        final List<Component> toolkitComponents = new ArrayList<Component>();
         final ToolkitPluginDescriptor currDescriptor = 
             getToolkitPluginDescriptor(toolkitId);
         String includesToolkit = currDescriptor.getIncludes();
@@ -152,10 +154,8 @@ public class CompSystem {
         } else {
             includesToolkit = ToolkitConstants.NO_VALID_INCLUDE_TOOLKIT;
         }
-        final List dependsToolkits = getDependsToolkitIds(toolkitId);
-        Iterator compIter = getComponents().iterator();
-        while (compIter.hasNext()) {
-            Component component = (Component)compIter.next();
+        final List<String> dependsToolkits = getDependsToolkitIds(toolkitId);
+        for (Component component : getComponents()) {
             final String compToolkitId = component.getToolkitDesriptor()
                 .getToolkitID();
             if (toolkitId.equals(compToolkitId)
@@ -174,25 +174,29 @@ public class CompSystem {
     /**
      * @return Returns the abstractComponents.
      */
-    public List getAbstractComponents() {
+    public List<AbstractComponent> getAbstractComponents() {
         return m_abstractComponents;
     }
     
     /**
      * @return Returns the concreteComponents.
      */
-    public List getConcreteComponents() {
+    public List<ConcreteComponent> getConcreteComponents() {
         return m_concreteComponents;
     }
     
     /**
-     * Gets a List of all includes toolkits (the whole hierachy) of the given 
+     * Gets a List of all includes toolkits (the whole hierarchy) of the given
      * toolkit and the given toolkit itself.
-     * @param toolkitId the id of a toolkit whose include hierachy is wanted. 
-     * @param toolkits an empty List.
-     * @return the given  toolkits List
+     * 
+     * @param toolkitId
+     *            the id of a toolkit whose include hierarchy is wanted.
+     * @param toolkits
+     *            an empty List.
+     * @return the given toolkits List
      */
-    private List getIncludesToolkits(String toolkitId, List toolkits) {
+    private List<String> getIncludesToolkits(String toolkitId,
+        List<String> toolkits) {
         toolkits.add(toolkitId);
         final ToolkitPluginDescriptor toolkitPluginDescriptor = 
             getToolkitPluginDescriptor(toolkitId);
@@ -206,18 +210,15 @@ public class CompSystem {
     }
     
     /**
-     * 
-     * @param toolkitId a Toolkit id
+     * @param toolkitId
+     *            a Toolkit id
      * @return a List of toolkit names which depends on the given toolkit id.
      */
-    private List getDependsToolkitIds(String toolkitId) {
-        final List dependsToolkits = new ArrayList();
-        for (Iterator toolkitIdsIt = m_toolkitDescriptors.keySet().iterator();
-            toolkitIdsIt.hasNext();) {
-            
-            final String tkId = (String)toolkitIdsIt.next();
-            final ToolkitPluginDescriptor tkDescr = (ToolkitPluginDescriptor)
-                m_toolkitDescriptors.get(tkId);
+    private List<String> getDependsToolkitIds(String toolkitId) {
+        final List<String> dependsToolkits = new ArrayList<String>();
+        for (String tkId : m_toolkitDescriptors.keySet()) {
+            final ToolkitPluginDescriptor tkDescr = m_toolkitDescriptors
+                .get(tkId);
             if (toolkitId.equals(tkDescr.getDepends())) {
                 dependsToolkits.add(tkId);
             }
@@ -233,21 +234,19 @@ public class CompSystem {
      * @return A List of Component-Types
      */
     public String[] getComponentTypes(String toolkitId) {
-        final List compTypes = new ArrayList();
-        List toolkits = new ArrayList();
+        final List<String> compTypes = new ArrayList<String>();
+        List<String> toolkits = new ArrayList<String>();
         toolkits = getIncludesToolkits(toolkitId, toolkits);
         toolkits.addAll(getDependsToolkitIds(toolkitId));
-        for (Iterator compIter = getComponents().iterator(); compIter
-            .hasNext();) {
-            
-            final Component comp = (Component)compIter.next();
+        for (Component comp : getComponents()) {
+
             final String compToolkitId = comp.getToolkitDesriptor()
                 .getToolkitID();
             if (!comp.isExtender() && toolkits.contains(compToolkitId)) {
                 compTypes.add(comp.getType());
             }
         }
-        return (String[])compTypes.toArray(new String[compTypes.size()]);
+        return compTypes.toArray(new String[compTypes.size()]);
     }
     
 
@@ -256,7 +255,7 @@ public class CompSystem {
     * 
     * @return a <code>String</code> Array of Event Types.
     */
-    public Map getEventTypes() {
+    public Map<String, Integer> getEventTypes() {
         return m_eventTypes;
     }
     
@@ -271,9 +270,7 @@ public class CompSystem {
      * 
      */
     private void check(Component component) {
-        Iterator it = getComponents().iterator();
-        while (it.hasNext()) {
-            Component current = (Component)it.next();
+        for (Component current : getComponents()) {
             if (current.getType().equals(component.getType())) {
                 final String msg = "multiple definition of component type " //$NON-NLS-1$
                         + component.getType();
@@ -303,8 +300,8 @@ public class CompSystem {
     }
     /**
      * Adds an Event Type to the List.
-     * @param eventType a <code>String</code> object which discribes the Event Type.
-     * @param reentryProp The reentry property (<code>Integer</code> object).
+     * @param eventType a <code>String</code> object which describes the Event Type.
+     * @param reentryProp The re-entry property (<code>Integer</code> object).
      * 
      */
     public void addEventType(String eventType, Integer reentryProp) {
@@ -320,7 +317,8 @@ public class CompSystem {
         ToolkitPluginDescriptor descriptor) {
         
         if (m_toolkitDescriptors == null) {
-            m_toolkitDescriptors = new HashMap();
+            m_toolkitDescriptors = 
+                new HashMap<String, ToolkitPluginDescriptor>();
         }
         m_toolkitDescriptors.put(toolkitId, descriptor);
     }
@@ -335,19 +333,22 @@ public class CompSystem {
     public ToolkitPluginDescriptor getToolkitPluginDescriptor(
         String toolkitId) {
         if (m_toolkitDescriptors == null) {
-            m_toolkitDescriptors = new HashMap();
+            m_toolkitDescriptors = 
+                new HashMap<String, ToolkitPluginDescriptor>();
         }
-        return (ToolkitPluginDescriptor)m_toolkitDescriptors.get(toolkitId);
+        return m_toolkitDescriptors.get(toolkitId);
     }
     
     /**
      * @return the {@link ToolkitPluginDescriptor}s of all toolkits
      */
-    public List getAllToolkitPluginDescriptors() {
+    public List<ToolkitPluginDescriptor> getAllToolkitPluginDescriptors() {
         if (m_toolkitDescriptors == null) {
-            m_toolkitDescriptors = new HashMap();
+            m_toolkitDescriptors = 
+                new HashMap<String, ToolkitPluginDescriptor>();
         }
-        return new ArrayList(m_toolkitDescriptors.values());
+        return new ArrayList<ToolkitPluginDescriptor>(
+            m_toolkitDescriptors.values());
     }
    
     /**
@@ -357,33 +358,33 @@ public class CompSystem {
      * @return the {@link ToolkitPluginDescriptor}s of all independent 
      *         toolkits with the given level.
      */
-    public List getIndependentToolkitPluginDescriptors(String level) {
+    public List<ToolkitPluginDescriptor> getIndependentToolkitPluginDescriptors(
+        String level) {
         final String emptyStr = StringConstants.EMPTY;
         
-        List toolkitDesriptors = getAllToolkitPluginDescriptors();
+        List<ToolkitPluginDescriptor> toolkitDesriptors = 
+            getAllToolkitPluginDescriptors();
         
         Collections.sort(toolkitDesriptors);
 
-        Iterator descIt = toolkitDesriptors.iterator();
+        Iterator<ToolkitPluginDescriptor> descIt = toolkitDesriptors.iterator();
 
-        // Remove all non-independant and invalid toolkits
+        // Remove all non-independent and invalid toolkits
         while (descIt.hasNext()) {
-            ToolkitPluginDescriptor desc = 
-                (ToolkitPluginDescriptor)descIt.next();
+            ToolkitPluginDescriptor desc = descIt.next();
 
             final String includes = desc.getIncludes();
             String toolkitID = desc.getToolkitID();
 
-            boolean removeDueToToolkitLevel = 
-                level != null && !level.equals(desc.getLevel());
+            boolean removeDueToToolkitLevel = level != null
+                && !level.equals(desc.getLevel());
             if (removeDueToToolkitLevel
-                    || (!ToolkitConstants.LEVEL_ABSTRACT.equals(level)
-                           && (emptyStr.equals(includes) 
-                                || ToolkitConstants.EMPTY_EXTPOINT_ENTRY
-                                    .equals(includes.toLowerCase())
-                                || emptyStr.equals(toolkitID) 
-                                || ToolkitConstants.EMPTY_EXTPOINT_ENTRY
-                                    .equals(toolkitID.toLowerCase())))) {
+                || (!ToolkitConstants.LEVEL_ABSTRACT.equals(level) && (emptyStr
+                    .equals(includes)
+                    || ToolkitConstants.EMPTY_EXTPOINT_ENTRY.equals(includes
+                        .toLowerCase()) || emptyStr.equals(toolkitID) 
+                            || ToolkitConstants.EMPTY_EXTPOINT_ENTRY
+                                .equals(toolkitID.toLowerCase())))) {
 
                 descIt.remove();
             }
@@ -396,28 +397,21 @@ public class CompSystem {
     /**
      * @return A List of all DataTypes of the Actions.
      */
-    public Set getDataTypes() {
+    public Set<String> getDataTypes() {
         if (m_dataTypes != null && !m_dataTypes.isEmpty()) {
             return m_dataTypes;
         }
-        m_dataTypes = new HashSet();
-        final List components = getComponents();
-        for (Iterator compIt = components.iterator(); compIt.hasNext();) {
-            final Component component = (Component)compIt.next();
-            final List actions = component.getActions();
-            for (Iterator actIt = actions.iterator(); actIt.hasNext();) {
-                final Action action = (Action)actIt.next();
-                final List params = action.getParams();
-                for (Iterator paramIt = params.iterator(); paramIt.hasNext();) {
-                    final Param param = (Param)paramIt.next();
-                    final String type = param.getType();
-                    m_dataTypes.add(type);
+        m_dataTypes = new HashSet<String>();
+        final List<Component> components = getComponents();
+        for (Component component : components) {
+            for (Action action : component.getActions()) {
+                for (Param param : action.getParams()) {
+                    m_dataTypes.add(param.getType());
                 }
             }
         }
         return m_dataTypes;
     }
-    
     
     /**
      * Returns the component with the specified typeName.
@@ -436,7 +430,7 @@ public class CompSystem {
             return new InvalidComponent();
         }
         
-        Component comp = (Component)m_componentsByType.get(typeName);
+        Component comp = m_componentsByType.get(typeName);
         if (comp != null) {
             return comp;
         }
@@ -457,9 +451,9 @@ public class CompSystem {
      *            Name of the specified component (the I18N key).
      * @return the specified Components.
      */
-    public List findComponents(String typeName) {
+    public List<Component> findComponents(String typeName) {
         Validate.notNull(typeName);
-        List comps = new LinkedList();
+        List<Component> comps = new LinkedList<Component>();
         if (StringConstants.EMPTY.equals(typeName)) {
             if (log.isDebugEnabled()) {
                 log.debug("CompSystem.findComponent(...) called with empty String. Returning InvalidComponent."); //$NON-NLS-1$
@@ -468,10 +462,7 @@ public class CompSystem {
             return comps;
         }
         
-        Iterator it = getComponents().iterator();
-
-        while (it.hasNext()) {
-            Component comp = (Component) it.next();
+        for (Component comp : getComponents()) {
             if (comp instanceof ConcreteComponent) {
                 ConcreteComponent ccomp = (ConcreteComponent)comp;
                 if (typeName.equals(ccomp.getComponentClass())) {
@@ -536,17 +527,14 @@ public class CompSystem {
         addAll(m_concreteComponents);
         addAll(m_abstractComponents);
         
-        for (Iterator it = getComponents().iterator(); it.hasNext();) {
-            Component component = (Component)it.next();
+        for (Component component : getComponents()) {
             component.completeActions(this);
             handleRealizer(component);
             handleExtender(component);
             handleDepender(component);
         }
         validateComponents();
-        
-        for (Iterator it = getAbstractComponents().iterator(); it.hasNext();) {
-            Component component = (Component)it.next();
+        for (Component component : getAbstractComponents()) {
             if (component.getRealized().isEmpty()) {
                 m_mostAbstractComponent = component;
                 break;
@@ -570,7 +558,7 @@ public class CompSystem {
             && toolkitDesriptor.isUserToolkit()) {
             
             final ToolkitPluginDescriptor dependsDescr = 
-                (ToolkitPluginDescriptor)m_toolkitDescriptors.get(depends);
+                m_toolkitDescriptors.get(depends);
             if (dependsDescr != null) {
                 component.setToolkitDesriptor(dependsDescr);
             }
@@ -581,28 +569,26 @@ public class CompSystem {
      * Validates the Components.
      */
     private void validateComponents() {
-        for (Iterator it = m_abstractComponents.iterator(); it.hasNext();) {
-            AbstractComponent ac = (AbstractComponent)it.next();
+        for (AbstractComponent ac : m_abstractComponents) {
             if (ac.getRealizers().isEmpty()) {
                 String message = "AbstractComponent " + ac.getType() //$NON-NLS-1$
-                    + " has no realizing concreteComponents";  //$NON-NLS-1$
+                    + " has no realizing concreteComponents"; //$NON-NLS-1$
                 if (ac.isVisible()) {
                     log.error("visible " + message); //$NON-NLS-1$
                     throw new ConfigXmlException("visible " + message, //$NON-NLS-1$
-                        MessageIDs.E_NO_ABSTRACT_COMPONENT); 
+                        MessageIDs.E_NO_ABSTRACT_COMPONENT);
                 }
                 log.warn(message);
             }
         }
-        for (Iterator it = m_concreteComponents.iterator(); it.hasNext();) {
-            final ConcreteComponent cc = (ConcreteComponent)it.next();
+        for (ConcreteComponent cc : m_concreteComponents) {
             if (cc.isExtender() && !StringUtils.isBlank(
-                    cc.getComponentClass())) {
+                cc.getComponentClass())) {
                 // extender must not have a componentClass!
                 final String msg = "Extending ConcreteComponent '" //$NON-NLS-1$
                     + cc.getType() + "' must not have a componentClass!"; //$NON-NLS-1$
                 log.error(msg);
-                throw new ConfigXmlException(msg, 
+                throw new ConfigXmlException(msg,
                     MessageIDs.E_GENERAL_COMPONENT_ERROR);
             }
         }
@@ -615,16 +601,15 @@ public class CompSystem {
      */
     private void handleRealizer(Component component) {
         final boolean isConcrete = component.isConcrete();
-        Set realizedSet = component.getAllRealized();
-        for (Iterator realIt = realizedSet.iterator(); realIt.hasNext();) {
-            Component realized = (Component)realIt.next();
+        Set<Component> realizedSet = component.getAllRealized();
+        for (Component realized : realizedSet) {
             if (isConcrete) {
-                realized.addRealizer((ConcreteComponent)component);
+                realized.addRealizer((ConcreteComponent) component);
             }
             realized.addAllRealizer(component);
         }
         if (isConcrete) {
-            component.addRealizer((ConcreteComponent)component);
+            component.addRealizer((ConcreteComponent) component);
         }
         component.addAllRealizer(component);
     }
@@ -636,29 +621,24 @@ public class CompSystem {
      */
     private void handleExtender(Component component) {
         if (component.isExtender()) {
-            final List extenderActions = component.getActions();
-            final List extendedTypes = component.getExtendedTypes();
+            final List<Action> extenderActions = component.getActions();
+            final List<String> extendedTypes = component.getExtendedTypes();
             final boolean isExtenderVisible = component.isVisible();
-            for (Iterator extTypesIt = extendedTypes.iterator();
-                extTypesIt.hasNext();) {
-                
-                final String extendedType = (String)extTypesIt.next();
+            for (String extendedType : extendedTypes) {
                 final Component extendedComponent = findComponent(extendedType);
                 if (!extendedComponent.isVisible()) {
                     extendedComponent.setVisible(isExtenderVisible);
                 }
-                for (Iterator extActionsIt = extenderActions.iterator();
-                    extActionsIt.hasNext();) {
-                    
-                    final Action extenderAction = (Action)extActionsIt.next();
+                for (Action extenderAction : extenderActions) {
                     extendedComponent.addAction(extenderAction);
                     if (component instanceof ConcreteComponent
                         && extendedComponent instanceof ConcreteComponent) {
+
+                        final ConcreteComponent extender = 
+                            (ConcreteComponent) component;
+                        final ConcreteComponent extended = 
+                            (ConcreteComponent) extendedComponent;
                         
-                        final ConcreteComponent extender = (ConcreteComponent)
-                            component;
-                        final ConcreteComponent extended = (ConcreteComponent)
-                            extendedComponent;
                         extended.setTesterClass(extender.getTesterClass());
                     }
                 }
@@ -674,17 +654,15 @@ public class CompSystem {
     }
     
     /**
-     * 
      * @param type a Component Type.
      * @return The Component of the given Component Type or null if no 
      * Component was found.
      */
     private Component getComponentForType(String type) {
-        return (Component)m_componentsByTypeLowerCase.get(type.toLowerCase());
+        return m_componentsByTypeLowerCase.get(type.toLowerCase());
     }
     
     /**
-     * 
      * @return The most abstract component in the hierarchy.
      */
     public final Component getMostAbstractComponent() {
@@ -732,7 +710,7 @@ public class CompSystem {
      * 
      * @param comp1 a Component
      * @param comp2 a Component
-     * @return the more conrete Component or null if the given Components are 
+     * @return the more concrete Component or null if the given Components are 
      * incompatible.
      */
     private Component getMoreConcreteComponent(Component comp1, 
@@ -747,7 +725,7 @@ public class CompSystem {
      * @param comp1 a Component
      * @param comp2 a Component
      * @param isFirstCall caller should set this to true always!
-     * @return the more conrete Component or null if the given Components are 
+     * @return the more concrete Component or null if the given Components are 
      * incompatible.
      */
     private Component getMoreConcreteComponentImpl(Component comp1, 
@@ -760,10 +738,7 @@ public class CompSystem {
             return comp1;
         }
         final String comp2Type = comp2.getType();
-        for (Iterator realizerIt = comp1.getAllRealizers().iterator(); 
-            realizerIt.hasNext();) {
-
-            final Component realizer = (Component)realizerIt.next();
+        for (Component realizer : comp1.getAllRealizers()) {
             if (realizer.getType().equals(comp2Type)) {
                 return realizer;
             }
@@ -790,13 +765,13 @@ public class CompSystem {
     }
     
     /**
-     * 
-     * @param toolkitLevel true if only toolkits with level "toolkit" 
-     * are wanted, false if all toolkits are wanted.
-     * @return a List of I18N names of the toolkits or a List
-     * of toolkit IDs.
+     * @param toolkitLevel
+     *            true if only toolkits with level "toolkit" are wanted, false
+     *            if all toolkits are wanted.
+     * @return a List of I18N names of the toolkits or a List of toolkit IDs.
      */
-    public List getIndependentToolkitPluginDescriptors(boolean toolkitLevel) {
+    public List<ToolkitPluginDescriptor> getIndependentToolkitPluginDescriptors(
+        boolean toolkitLevel) {
         String level = toolkitLevel ? ToolkitConstants.LEVEL_TOOLKIT : null;
         return getIndependentToolkitPluginDescriptors(level);
     }
@@ -810,23 +785,21 @@ public class CompSystem {
      *         given class name, or <code>null</code> if no such Component
      *         is found.
      */
-    public static String getComponentType(
-            String componentClassName, Collection availableComponents) {
+    public static String getComponentType(String componentClassName,
+        Collection<Component> availableComponents) {
 
         Validate.notNull(componentClassName);
         Validate.allElementsOfType(availableComponents, Component.class);
-        
-        for (Iterator compIter = availableComponents.iterator(); compIter
-                .hasNext();) {
-            Component currentComp = (Component)compIter.next();
+
+        for (Component currentComp : availableComponents) {
             if (currentComp instanceof ConcreteComponent
-                    && componentClassName.equals(
-                        ((ConcreteComponent)currentComp).getComponentClass())) {
-                
+                && componentClassName.equals(((ConcreteComponent) currentComp)
+                    .getComponentClass())) {
+
                 return currentComp.getType();
             }
         }
-        
+
         return null;
     }
 }

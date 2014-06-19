@@ -56,7 +56,7 @@ public class QueryAnalyzeResultListContentProvider implements
         for (Map.Entry<Analyze, AnalyzeResult> e : m_qr.getResultMap()
                 .entrySet()) {
             // put the ResultValues in an Array
-            value[counter] =  (Object) e.getValue().getResult();
+            value[counter] =  e.getValue().getResult();
             counter++;
         }
         

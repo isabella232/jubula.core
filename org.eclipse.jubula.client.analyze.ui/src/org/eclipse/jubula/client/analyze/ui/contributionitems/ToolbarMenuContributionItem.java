@@ -65,7 +65,7 @@ public class ToolbarMenuContributionItem extends CompoundContributionItem {
 
         for (Map.Entry<String, Category> e : ExtensionRegistry.getCategory()
                 .entrySet()) {
-            Category c = (Category) e.getValue();
+            Category c = e.getValue();
             createMenuEntry(c, contributionItems, null);
         }
         return contributionItems
@@ -92,7 +92,7 @@ public class ToolbarMenuContributionItem extends CompoundContributionItem {
         } else {
             for (Map.Entry<String, Category> e : ExtensionRegistry.getCategory()
                     .entrySet()) {
-                Category cat = (Category) e.getValue();
+                Category cat = e.getValue();
                 if (cat.getID().equals(c.getParentCatID())) {
                     MenuManager mgr = new MenuManager(cat.getName());
                     mgr.add(createSubMenuEntry(c));

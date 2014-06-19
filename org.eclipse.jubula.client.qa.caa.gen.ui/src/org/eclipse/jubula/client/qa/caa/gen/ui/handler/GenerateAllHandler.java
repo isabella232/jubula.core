@@ -158,7 +158,7 @@ public class GenerateAllHandler extends AbstractHandler {
         NodePM.addAndPersistChildNode(typeCat, actionsCat, null);
 
         final StringHelper sh = StringHelper.getInstance();
-        final List actions = c.getActions();
+        final List<Action> actions = c.getActions();
         
         Collections.sort(actions, new Comparator<Action>() {
             public int compare(Action o1, Action o2) {
@@ -168,9 +168,7 @@ public class GenerateAllHandler extends AbstractHandler {
             }
         });
         
-        for (int i = 0; i < actions.size(); i++) {
-            Action action = (Action)actions.get(i);
-            
+        for (Action action : actions) {
             final String actionName = sh.get(
                 action.getName(), true);
             ICategoryPO actionCat = NodeMaker.createCategoryPO(actionName);
@@ -247,8 +245,8 @@ public class GenerateAllHandler extends AbstractHandler {
         List<ConcreteComponent> toolkitComponents = 
             new ArrayList<ConcreteComponent>();
         for (ConcreteComponent component : allComponents) {
-            if (component.getToolkitDesriptor().getToolkitID()
-                .matches(string)) {
+            if (component.getToolkitDesriptor()
+                    .getToolkitID().matches(string)) {
                 toolkitComponents.add(component);
             }
         }

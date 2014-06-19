@@ -29,7 +29,7 @@ import org.eclipse.jubula.tools.exception.AssertException;
  */
 public class ConcreteComponent extends Component {
     /** the component class */
-    private List m_compClass = new ArrayList();
+    private List<ComponentClass> m_compClass = new ArrayList<ComponentClass>();
     
     /** The testerClass of the component. */
     private String m_testerClass;
@@ -96,12 +96,12 @@ public class ConcreteComponent extends Component {
     }
     
     /** @return Returns the componentClass. */
-    public List getCompClass() {
+    public List<ComponentClass> getCompClass() {
         return m_compClass;
     }
     
     /** @param componentClass The componentClass to set. */
-    public void setCompClass(List componentClass) {
+    public void setCompClass(List<ComponentClass> componentClass) {
         m_compClass = componentClass;
     }
     
@@ -110,9 +110,9 @@ public class ConcreteComponent extends Component {
      * @return Returns the componentClassName.
      */
     public String getComponentClass() {
-        List compClassList = getCompClass();
+        List<ComponentClass> compClassList = getCompClass();
         if (!compClassList.isEmpty()) {
-            return ((ComponentClass)compClassList.get(0)).getName();
+            return compClassList.get(0).getName();
         }
         return StringConstants.EMPTY;
     }
@@ -122,9 +122,9 @@ public class ConcreteComponent extends Component {
         if (StringUtils.isBlank(componentClass)) {
             throw new AssertException("component class must point to a valid identifier"); //$NON-NLS-1$
         }
-        List compClassList = getCompClass();
+        List<ComponentClass> compClassList = getCompClass();
         if (!compClassList.isEmpty()) {
-            ((ComponentClass)compClassList.get(0)).setName(componentClass);
+            compClassList.get(0).setName(componentClass);
         } else {
             compClassList.add(new ComponentClass(componentClass));
         }

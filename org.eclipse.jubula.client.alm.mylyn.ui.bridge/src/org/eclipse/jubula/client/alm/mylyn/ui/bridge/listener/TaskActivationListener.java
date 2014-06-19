@@ -132,7 +132,7 @@ public class TaskActivationListener implements ITaskActivationListener,
 
         for (TestCaseBrowser tcb : MultipleTCBTracker.getInstance()
                 .getOpenTCBs()) {
-            collapseTree((ITreeViewerContainer) tcb);
+            collapseTree(tcb);
         }
     }
 

@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * @created 08.07.2005
  */
 public abstract class Component {
-    
     /**
      * the separator to use when listing action/method arguments
      */
@@ -45,37 +44,38 @@ public abstract class Component {
      * List of directly realized Components
      * ("direct superclasses").
      */
-    private List m_realized = new ArrayList();
+    private List<Component> m_realized = new ArrayList<Component>();
     
     /** List of extended Components. */
-    private List m_extendedTypes = new ArrayList();
+    private List<String> m_extendedTypes = new ArrayList<String>();
     
     /**
      * List of type names of directly realized AbstractComponents
      * ("direct superclasses").
      */
-    private List m_realizedTypes = new ArrayList();
+    private List<String> m_realizedTypes = new ArrayList<String>();
     
     /**
      * Set of all ConcreteComponent classes realizing this
      * Component. For Concrete Components, this set contains exactly 
      * this ConcreteComponent itself.
      */
-    private Set m_realizers = new HashSet();
+    private Set<ConcreteComponent> m_realizers = 
+        new HashSet<ConcreteComponent>();
     
     /**
      * Set of all Component classes realizing this
      * Component.
      */
-    private transient Set m_allRealizers = new HashSet();
+    private transient Set<Component> m_allRealizers = new HashSet<Component>();
     
     /** Action list of the component. */
-    private List m_actions = new ArrayList();
+    private List<Action> m_actions = new ArrayList<Action>();
     
     /** The name of the component. */
     private String m_type;
     
-    /** The descriptor of the ToolkitPlugin of this Comnponent */
+    /** The descriptor of the ToolkitPlugin of this Component */
     private ToolkitPluginDescriptor m_toolkitDesriptor;
     
     /**
@@ -95,12 +95,12 @@ public abstract class Component {
 
     /**
      * <code>m_visible</code> property indicating whether this
-     * Component shall be usable within the client gui
+     * Component shall be usable within the client UI
      */
     private boolean m_visible = true;
     
     /**
-     * <code>m_completionDone</code> falg indicating 
+     * <code>m_completionDone</code> flag indicating 
      * completeActions has been called once before and 
      * is ready. If m_completionStarted is set but not
      * m_completionDone during a completeActions call, we 
@@ -121,32 +121,32 @@ public abstract class Component {
     /**
      * @return Returns the list actions.
      */
-    public List getActions() {
+    public List<Action> getActions() {
         return m_actions;
     }
     
     /**
      * @return the directly realized "super"-components
      */
-    public List getRealized() {
+    public List<Component> getRealized() {
         return m_realized;
     }
     /**
      * @return the directly realized "super"-component's type names
      */
-    public List getRealizedTypes() {
+    public List<String> getRealizedTypes() {
         return m_realizedTypes;
     }
     /**
      * @return all directly or indirectly realized "super"-components
      * (excluding this Component itself)
      */
-    public Set getAllRealized() {
-        Set result = new HashSet();        
+    public Set<Component> getAllRealized() {
+        Set<Component> result = new HashSet<Component>();        
         result.addAll(m_realized);
-        Iterator realizedIt = m_realized.iterator();
+        Iterator<Component> realizedIt = m_realized.iterator();
         while (realizedIt.hasNext()) {
-            Component comp = (Component)realizedIt.next();
+            Component comp = realizedIt.next();
             result.addAll(comp.getAllRealized());
         }
         return result;            
@@ -161,9 +161,9 @@ public abstract class Component {
      */
     public boolean isRealizing(String type) {
         Validate.notNull(type, "The component type name must not be null"); //$NON-NLS-1$
-        Iterator realizedIt = getAllRealized().iterator();
+        Iterator<Component> realizedIt = getAllRealized().iterator();
         while (realizedIt.hasNext()) {
-            Component comp = (Component)realizedIt.next();
+            Component comp = realizedIt.next();
             if (type.equals(comp.getType())) {
                 return true;
             }
@@ -215,9 +215,9 @@ public abstract class Component {
      * @param action an <code>Action</code> object.
      */
     public void addAction(Action action) {
-        Iterator actionIt = m_actions.iterator();
+        Iterator<Action> actionIt = m_actions.iterator();
         while (actionIt.hasNext()) {
-            Action present = (Action)actionIt.next();
+            Action present = actionIt.next();
             if (present.equals(action)) {
                 return; // just ignore the second
                         // attempt to add the same 
@@ -244,10 +244,10 @@ public abstract class Component {
      */
     public Action findAction(String name) {
         Validate.notNull(name);      
-        List actionList = getActions();
-        Iterator actionIt = actionList.iterator();
+        List<Action> actionList = getActions();
+        Iterator<Action> actionIt = actionList.iterator();
         while (actionIt.hasNext()) {
-            Action action = (Action)actionIt.next();
+            Action action = actionIt.next();
             if (name.equals(action.getName())) {
                 return action;
             }
@@ -269,10 +269,10 @@ public abstract class Component {
             String[] argTypes) {
         
         Validate.notNull(methodName);      
-        List actionList = getActions();
-        Iterator actionIt = actionList.iterator();
+        List<Action> actionList = getActions();
+        Iterator<Action> actionIt = actionList.iterator();
         while (actionIt.hasNext()) {
-            Action action = (Action)actionIt.next();
+            Action action = actionIt.next();
             if (isSignatureMatch(action, methodName, argTypes)) {
                 return action;
             }
@@ -350,7 +350,7 @@ public abstract class Component {
      * For ConcreteComponents themselves, this is a set with exactly
      * one element, namely itself.)
      */
-    public Set getRealizers() {
+    public Set<ConcreteComponent> getRealizers() {
         return m_realizers;
     }
     
@@ -359,7 +359,7 @@ public abstract class Component {
      * @return Returns the realizers (all Components
      * that directly or indirectly realize this Component.
      */
-    public Set getAllRealizers() {
+    public Set<Component> getAllRealizers() {
         return m_allRealizers;
     }
     
@@ -395,13 +395,13 @@ public abstract class Component {
         }
         resolveRealized(compSystem);
         m_completionStarted = true;
-        Iterator realIt = m_realized.iterator();
+        Iterator<Component> realIt = m_realized.iterator();
         while (realIt.hasNext()) {
-            Component realized = (Component)realIt.next();
+            Component realized = realIt.next();
             realized.completeActions(compSystem);
-            Iterator actionIt = realized.getActions().iterator();
+            Iterator<Action> actionIt = realized.getActions().iterator();
             while (actionIt.hasNext()) {
-                addAction((Action)actionIt.next());
+                addAction(actionIt.next());
             }
         }
         m_completionDone = true;
@@ -412,9 +412,9 @@ public abstract class Component {
      */
     private void resolveRealized(CompSystem compSystem) {
         if (m_realized.isEmpty() && !m_realizedTypes.isEmpty()) {
-            Iterator typeIt = m_realizedTypes.iterator();
+            Iterator<String> typeIt = m_realizedTypes.iterator();
             while (typeIt.hasNext()) {
-                String type = (String)typeIt.next();
+                String type = typeIt.next();
                 Component comp = compSystem.findComponent(type);
                 if (!(comp instanceof InvalidComponent)) {
                     addRealized(comp);
@@ -544,7 +544,7 @@ public abstract class Component {
     /**
      * @return the directly extended "super"-component's type names
      */
-    public List getExtendedTypes() {
+    public List<String> getExtendedTypes() {
         return m_extendedTypes;
     }
     

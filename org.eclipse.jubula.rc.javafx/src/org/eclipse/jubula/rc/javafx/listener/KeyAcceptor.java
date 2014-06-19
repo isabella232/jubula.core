@@ -123,7 +123,7 @@ public class KeyAcceptor {
     public static int getAWTKeyCode(KeyEvent event) {
         KeyCode code = event.getCode();
         if (code.isLetterKey()) {
-            return java.awt.event.KeyEvent.getExtendedKeyCodeForChar((int) code
+            return java.awt.event.KeyEvent.getExtendedKeyCodeForChar(code
                     .getName().charAt(0));
         } else if (code.isFunctionKey()) {
             switch (code) {

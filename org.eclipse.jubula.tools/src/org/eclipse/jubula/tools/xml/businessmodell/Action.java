@@ -34,8 +34,8 @@ public class Action {
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(Action.class);
 
-    /** paramlist of action */
-    private List m_params = new ArrayList();
+    /** parameter list of action */
+    private List<Param> m_params = new ArrayList<Param>();
     
     /** Name of action */
     private String m_name;
@@ -69,7 +69,7 @@ public class Action {
     /**
      * @return Returns the list of params.
      */
-    public List getParams() {
+    public List<Param> getParams() {
         return m_params;
     }
 
@@ -95,7 +95,7 @@ public class Action {
     }
 
     /**
-     * Returns a string represantation of the action object.
+     * Returns a string representation of the action object.
      * @return String
      */
     public String toString() {
@@ -252,6 +252,4 @@ public class Action {
     public void setClientAction(boolean clientAction) {
         m_clientAction = clientAction;
     }
-    
-    
 }
