@@ -647,8 +647,8 @@ public class TestresultSummaryView extends ViewPart implements
      * restore view settings like column order, width etc
      */
     private void restoreViewStatus() {
+        Table table = m_tableViewer.getTable();
         if (m_memento != null) {
-            Table table = m_tableViewer.getTable();
             // restore columns
             IMemento children[] = m_memento.getChildren(TAG_COLUMN);
             if (children.length == table.getColumnCount()) {
@@ -691,24 +691,37 @@ public class TestresultSummaryView extends ViewPart implements
                 IMemento sortChild = m_memento.getChild(TAG_SORT);
                 if (sortChild != null) {
                     String sortHeader = sortChild.getString(TAG_SORT_COL);
-                    for (int i = 0; i < table.getColumnCount(); i++) {
-                        TableColumn tblCol = table.getColumn(i);
-                        if (tblCol.getText().equals(sortHeader)) {
-                            //set sort column
-                            table.setSortColumn(tblCol);
-                            //set sort direction
-                            final Integer direction = sortChild
-                                    .getInteger(TAG_SORT_DIRECTION);
-                            table.setSortDirection(direction);
-                            tblCol.notifyListeners(SWT.Selection, new Event());
-                            if (direction == SWT.DOWN) {
-                                tblCol.notifyListeners(SWT.Selection, 
-                                        new Event());
-                            }
-                            break;
-                        }
-                    }
+                    final Integer direction = sortChild.getInteger(
+                            TAG_SORT_DIRECTION);
+                    sortTable(table, sortHeader, direction);
                 }
+            }
+        } else {
+            // apply default behavior for new workspaces
+            sortTable(table, TESTRESULT_SUMMARY_DATE, SWT.DOWN);
+        }
+    }
+
+    /**
+     * sorts a table by a given column
+     * @param table the table
+     * @param sortHeader the header of the sort column
+     * @param direction the direction
+     * @return
+     */
+    public void sortTable(Table table, String sortHeader, Integer direction) {
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            TableColumn tblCol = table.getColumn(i);
+            if (tblCol.getText().equals(sortHeader)) {
+                //set sort column
+                table.setSortColumn(tblCol);
+                //set sort direction
+                table.setSortDirection(direction);
+                tblCol.notifyListeners(SWT.Selection, new Event());
+                if (direction == SWT.DOWN) {
+                    tblCol.notifyListeners(SWT.Selection, new Event());
+                }
+                break;
             }
         }
     }
@@ -1394,7 +1407,7 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private void addCommentTitleColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(200);
+        column.getColumn().setWidth(0);
         column.getColumn().setText(TESTRESULT_SUMMARY_COMMENT_TITLE);
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
