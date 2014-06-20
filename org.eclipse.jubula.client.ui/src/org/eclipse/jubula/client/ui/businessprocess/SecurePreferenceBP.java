@@ -245,7 +245,7 @@ public class SecurePreferenceBP {
         // rename secure storage
         ISecurePreferences root = SecurePreferencesFactory.getDefault();
         if (root == null) {
-            LOG.error("No root node found");
+            LOG.error("No root node found"); //$NON-NLS-1$
         }
         if (oldProfileName != null) {
             ISecurePreferences node = root
@@ -402,7 +402,7 @@ public class SecurePreferenceBP {
         ISecurePreferences root = SecurePreferencesFactory.getDefault();
         ISecurePreferences node = root;
         if (root == null) {
-            LOG.error("No root node found");
+            LOG.error("No root node found"); //$NON-NLS-1$
         } else if (profileName != null) {
             node = root
                     .node(getSecureStorageProfilePath(profileName));

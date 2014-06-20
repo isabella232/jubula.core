@@ -86,7 +86,7 @@ public class TableTester extends AbstractTableTester {
                 "getCellText", new Callable<TableCell<?, ?>>() { //$NON-NLS-1$
 
                     @Override
-                    public TableCell call() throws Exception {
+                    public TableCell<?, ?> call() throws Exception {
                         TableView<?> table = (TableView<?>) getRealComponent();
                         table.scrollTo(row);
                         table.scrollToColumnIndex(column);
@@ -121,7 +121,7 @@ public class TableTester extends AbstractTableTester {
 
                     @Override
                     public Cell call() throws Exception {
-                        TableView table = (TableView<?>) getRealComponent();
+                        TableView<?> table = (TableView<?>) getRealComponent();
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         table.layout();
@@ -311,7 +311,7 @@ public class TableTester extends AbstractTableTester {
                         List<? extends CheckBoxTableCell> checkboxCells = 
                                 ComponentHandler.getAssignableFrom(
                                         CheckBoxTableCell.class);
-                        for (CheckBoxTableCell cell : checkboxCells) {
+                        for (CheckBoxTableCell<?, ?> cell : checkboxCells) {
                             if (cell.getTableColumn().equals(col)
                                     && cell.getIndex() == row) {
                                 return cell.lookup("CheckBox"); //$NON-NLS-1$
@@ -321,7 +321,7 @@ public class TableTester extends AbstractTableTester {
                         // Cells!
                         List<? extends TableCell> cells = ComponentHandler
                                 .getAssignableFrom(TableCell.class);
-                        for (TableCell cell : cells) {
+                        for (TableCell<?, ?> cell : cells) {
                             if (cell.getTableColumn().equals(col)
                                     && cell.getIndex() == row) {
                                 return cell.lookup("CheckBox"); //$NON-NLS-1$

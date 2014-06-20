@@ -225,8 +225,8 @@ class XmlImporter {
                         throw new ConversionException(e);
                     }
                 }
-                throw new ConversionException("Type " + arg0.getCanonicalName()
-                    + " not supported for conversion.");
+                throw new ConversionException("Type " + arg0.getCanonicalName() //$NON-NLS-1$
+                    + " not supported for conversion."); //$NON-NLS-1$
             }
         };
         
@@ -885,7 +885,7 @@ class XmlImporter {
         EntityManager attrDescSession, boolean assignNewGuid)
         throws InterruptedException, InvalidDataException {
         if (!xml.getTestsuiteList().isEmpty()) {
-            ICategoryPO catTS = NodeMaker.createCategoryPO("Test Suites");
+            ICategoryPO catTS = NodeMaker.createCategoryPO("Test Suites"); //$NON-NLS-1$
             for (TestSuite tsXml : xml.getTestsuiteList()) {
                 checkCancel();
                 ITestSuitePO tsPO = createTestSuite(proj, tsXml, assignNewGuid);
@@ -894,7 +894,7 @@ class XmlImporter {
             proj.getExecObjCont().addExecObject(catTS);
         }
         if (!xml.getTestsuiteList().isEmpty()) {
-            ICategoryPO catTJ = NodeMaker.createCategoryPO("Test Jobs");
+            ICategoryPO catTJ = NodeMaker.createCategoryPO("Test Jobs"); //$NON-NLS-1$
             for (TestJobs tjXml : xml.getTestJobsList()) {
                 checkCancel();
                 catTJ.addNode(createTestJob(tjXml, assignNewGuid));

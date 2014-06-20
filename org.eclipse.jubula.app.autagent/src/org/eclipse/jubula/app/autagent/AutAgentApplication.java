@@ -211,7 +211,7 @@ public class AutAgentApplication implements IApplication {
         String[] commandlineArgs = args;
         if (EnvironmentUtils.isMacOS()) {
             final List<String> argList = Arrays.asList(args);
-            final int loc = argList.indexOf("-showlocation");
+            final int loc = argList.indexOf("-showlocation"); //$NON-NLS-1$
             if (loc >= 0) {
                 List<String> newArgs = new ArrayList<String>(argList);
                 newArgs.remove(loc);

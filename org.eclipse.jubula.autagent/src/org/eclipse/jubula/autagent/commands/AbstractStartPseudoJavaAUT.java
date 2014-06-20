@@ -19,7 +19,8 @@ public abstract class AbstractStartPseudoJavaAUT
             .getLogger(AbstractStartPseudoJavaAUT.class);
     
     /** {@inheritDoc} */
-    protected String createBaseCmd(Map parameters) throws IOException {
+    protected String createBaseCmd(Map<String, Object> parameters) 
+        throws IOException {
         String jre = System.getProperty("java.home") + FILE_SEPARATOR//$NON-NLS-1$ 
                 + "bin" + FILE_SEPARATOR + "java"; //$NON-NLS-1$ //$NON-NLS-2$
         

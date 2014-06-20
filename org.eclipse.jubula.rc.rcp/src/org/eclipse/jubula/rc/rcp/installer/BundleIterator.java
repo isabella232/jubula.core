@@ -13,9 +13,9 @@ package org.eclipse.jubula.rc.rcp.installer;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
@@ -40,7 +40,7 @@ public class BundleIterator {
     private BundleContext m_context;
 
     /** The URL list of the bundles to install. */
-    private Enumeration m_urls;
+    private Enumeration<URL> m_urls;
 
     /** The current URL of the iterator. */
     private URL m_url;
@@ -59,8 +59,7 @@ public class BundleIterator {
      */
     public BundleIterator(BundleContext context, String bundleFolderSuffix) {
         this.m_context = context; // store context for later usage
-        m_urls = context.getBundle()
-                    .findEntries(
+        m_urls = context.getBundle().findEntries(
                          // the directory searching for bundles
                         BUNDLES_DIR + bundleFolderSuffix,
                         // the file pattern (*.jar)
@@ -69,7 +68,8 @@ public class BundleIterator {
                         false);
         if (m_urls == null) {
             // create an empty enumeration if no bundles have been found
-            m_urls = Collections.enumeration(new ArrayList());
+            final List<URL> emptyList = Collections.emptyList();
+            m_urls = Collections.enumeration(emptyList);
         }
     }
 
@@ -88,7 +88,7 @@ public class BundleIterator {
      * @return The current bundle, if it is already installed, otherwise null.
      */
     public Bundle next() {
-        m_url = (URL) m_urls.nextElement();
+        m_url = m_urls.nextElement();
         m_bundleName = getBundleName(m_url);
         m_bundle = Platform.getBundle(m_bundleName);
         return m_bundle;
@@ -127,7 +127,7 @@ public class BundleIterator {
     public boolean uninstallBundle() {
         if (m_bundle != null) {
             try {
-                m_bundle.uninstall(); // uninstall bundle
+                m_bundle.uninstall(); // un-install bundle
                 return true;
             } catch (Throwable e) {
                 System.err.println(e);

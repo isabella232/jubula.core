@@ -203,10 +203,10 @@ public class ComponentHandler implements ListChangeListener<Stage>,
                     if (isContentNode(n, parent)) {
                         break;
                     }
-                    Skin skin = ((Skinnable) parent).getSkin();
+                    Skin<?> skin = ((Skinnable) parent).getSkin();
                     if (skin instanceof SkinBase) {
                         // We don't want skin nodes
-                        if (isSkinNode(n, (SkinBase) skin)) {
+                        if (isSkinNode(n, (SkinBase<?>) skin)) {
                             add = false;
                             break;
                         }
@@ -236,14 +236,14 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      * @param c the class
      * @return true if the type is supported, false if not
      */
-    private static boolean isSupported(Class c) {
-        Set supportedTypes = AUTServerConfiguration.getInstance().
-                getSupportedTypes();
-        Class currentClass = c;
+    private static boolean isSupported(Class<?> c) {
+        Set<ComponentClass> supportedTypes = AUTServerConfiguration
+            .getInstance().getSupportedTypes();
+        Class<?> currentClass = c;
         while (currentClass != null) {
             for (Object object : supportedTypes) {
-                if (((ComponentClass)object).getName().equals(
-                        currentClass.getName())) {
+                if (((ComponentClass) object).getName().equals(
+                    currentClass.getName())) {
                     return true;
                 }
             }
@@ -293,7 +293,7 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      * @param skin the skin
      * @return true if it is part the given skin, false if not
      */
-    private static boolean isSkinNode(Node node, SkinBase skin) {
+    private static boolean isSkinNode(Node node, SkinBase<?> skin) {
         ObservableList<Node> skinChildren = skin.getChildren();
         TraverseHelper<Node> help = new TraverseHelper<>();
         for (Node n : skinChildren) {

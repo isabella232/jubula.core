@@ -271,13 +271,13 @@ public class ChainRenderer implements IResultRendererUI {
 
             for (List<String> list : getChainModel().getResult()) {
                 String prev = "";
-                for (Iterator it = list.iterator(); it.hasNext();) {
-                    String guid = (String) it.next();
+                for (Iterator<String> it = list.iterator(); it.hasNext();) {
+                    String guid = it.next();
                     if (prev.equals(guid)) {
 
                         ISpecTestCasePO node = NodePM.getSpecTestCase(
                                 GeneralStorage.getInstance().getProject()
-                                        .getId(), (String) it.next());
+                                        .getId(), it.next());
                         String[] res = new String[1];
                         res[0] = node.getName();
                         return res;
@@ -298,7 +298,7 @@ public class ChainRenderer implements IResultRendererUI {
         public boolean hasChildren(Object element) {
             if (element instanceof String) {
                 for (List<String> list : getChainModel().getResult()) {
-                    for (Iterator it = list.iterator(); 
+                    for (Iterator<String> it = list.iterator(); 
                             it.hasNext();) {
                         return it.hasNext();
                     }

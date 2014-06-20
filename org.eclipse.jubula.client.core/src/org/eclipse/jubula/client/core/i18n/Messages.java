@@ -239,6 +239,7 @@ public class Messages extends NLS {
     public static String MissingParameterTypeForTestcase;
     public static String MissingPermission;
     public static String NeitherValueNorReferenceForNode;
+    public static String Na;
     public static String NoAUTActivationMessageClassFoundForToolkit;
     public static String Node;
     public static String NoDefaultObjectMappingsCouldBeFoundForTheAUT;

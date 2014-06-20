@@ -66,7 +66,8 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     /**
      * {@inheritDoc}
      */
-    protected String createBaseCmd(Map parameters) throws IOException {
+    protected String createBaseCmd(Map<String, Object> parameters) 
+        throws IOException {
         String executableFileName = (String)parameters.get(
                 AutConfigConstants.EXECUTABLE);
         if (executableFileName != null && executableFileName.length() > 0) {
@@ -293,12 +294,6 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
         return clientPath.replaceAll(CLIENT_PATH_SEPARATOR, PATH_SEPARATOR);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected abstract String[] createCmdArray(String baseCmd, 
-        Map<String, Object> parameters);
-    
     /**
      * @param parameters The parameters for starting the AUT.
      * @return <code>true</code> if the AUT is being started via an executable

@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -43,13 +44,16 @@ public interface IStartAut {
     public static final String FILE_SEPARATOR = System.getProperty("file.separator"); //$NON-NLS-1$
     
     /** Delimiter for key and value of properties (key=value) */
-    public static final String PROPERTY_DELIMITER = "=";  //$NON-NLS-1$
+    public static final String PROPERTY_DELIMITER = 
+        StringConstants.EQUALS_SIGN;
     
     /** Whitespace delimiter */
-    public static final String WHITESPACE_DELIMITER = " "; //$NON-NLS-1$
+    public static final String WHITESPACE_DELIMITER = 
+        StringConstants.SPACE;
     
-    /** The separator used when composing the Classpath in the AUT Configuration */
-    public static final String CLIENT_PATH_SEPARATOR = ";"; //$NON-NLS-1$
+    /** The separator used when composing the classpath in the AUT Configuration */
+    public static final String CLIENT_PATH_SEPARATOR = 
+        StringConstants.SEMICOLON;
 
     /**
      * Starts the AUT with the given parameters.
@@ -60,5 +64,4 @@ public interface IStartAut {
      */
     public StartAUTServerStateMessage startAut(Map<String, Object> parameters) 
         throws IOException;
-    
 }

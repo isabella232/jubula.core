@@ -44,13 +44,9 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
     private static final String ENV_SEPARATOR = "\n"; //$NON-NLS-1$
     
     /**
-     * 
      * @return the Id of the specific rc bundle
      */
     protected abstract String getRcBundleClassPath();
-
-    @Override
-    protected abstract String getServerClassName();
 
     /**
      * Sets -javaagent, JRE arguments and the arguments for 

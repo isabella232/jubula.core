@@ -32,7 +32,7 @@ import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
  * @author BREDEX GmbH
  * @created 20.03.2014
  */
-public class ComboBoxAdapter<T extends ComboBox> extends
+public class ComboBoxAdapter<T extends ComboBox<?>> extends
     JavaFXComponentAdapter<T> implements IComboComponent {
     /**
      * Creates an object with the adapted Label.
@@ -91,11 +91,12 @@ public class ComboBoxAdapter<T extends ComboBox> extends
 
     @Override
     public void select(final int index) {
-        final ListView lv = getComboBoxList();
+        final ListView<?> lv = getComboBoxList();
         T comboBox = getRealComponent();
         setOpenedStatus(comboBox, true);
         try {
-            ListViewAdapter listViewAdapter = new ListViewAdapter<ListView>(lv);
+            ListViewAdapter<ListView<?>> listViewAdapter = 
+                new ListViewAdapter<ListView<?>>(lv);
             listViewAdapter.clickOnIndex(index, ClickOptions.create().
                     setClickCount(1).setMouseButton(1));
         } finally {
@@ -111,12 +112,13 @@ public class ComboBoxAdapter<T extends ComboBox> extends
 
     @Override
     public String[] getValues() {
-        final ListView lv = getComboBoxList();
+        final ListView<?> lv = getComboBoxList();
         T comboBox = getRealComponent();
         setOpenedStatus(comboBox, true);
         String[] values = new String[0];
         try {
-            ListViewAdapter listViewAdapter = new ListViewAdapter<ListView>(lv);
+            ListViewAdapter<?> listViewAdapter = 
+                new ListViewAdapter<ListView<?>>(lv);
             values = listViewAdapter.getValues();
         } finally {
             setOpenedStatus(comboBox, false);
@@ -128,11 +130,11 @@ public class ComboBoxAdapter<T extends ComboBox> extends
      * Returns the list with the items of the combo box.
      * @return the list
      */
-    private ListView getComboBoxList() {
+    private ListView<?> getComboBoxList() {
         return EventThreadQueuerJavaFXImpl.invokeAndWait("getValues", //$NON-NLS-1$
-                new Callable<ListView>() {
+                new Callable<ListView<?>>() {
                     /** {@inheritDoc} **/
-                    public ListView call() throws Exception {
+                    public ListView<?> call() throws Exception {
                         T comboBox = getRealComponent();
                         TraverseHelper<ListView> helper = 
                                 new TraverseHelper<ListView>();
@@ -142,10 +144,11 @@ public class ComboBoxAdapter<T extends ComboBox> extends
                             return listViewList.get(0);
                         }
                         // If there is not exactly one list inside the combo box,
-                        // then use internal api
-                        ComboBoxListViewSkin comboBoxListViewSkin = 
-                                (ComboBoxListViewSkin) comboBox.getSkin();
-                        return (ListView)comboBoxListViewSkin.getPopupContent();
+                        // then use internal API
+                        ComboBoxListViewSkin<?> comboBoxListViewSkin = 
+                                (ComboBoxListViewSkin<?>) comboBox.getSkin();
+                        return (ListView<?>)comboBoxListViewSkin
+                            .getPopupContent();
                     }
                 });
     }

@@ -20,6 +20,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.eclipse.jubula.client.core.ClientTest;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -110,7 +111,7 @@ public abstract class AbstractXMLReportGenerator {
             general.addElement("test-length").//$NON-NLS-1$
                     addText(TimeUtil.getDurationString(startTime, endTime));
             int executedCAPs = testResult.getNumberOfTestedSteps();
-            String averageCAPExecutionTime = "n/a";
+            String averageCAPExecutionTime = Messages.Na; 
             if (executedCAPs > 0) {
                 averageCAPExecutionTime = String.valueOf(
                     (endTime.getTime() - startTime.getTime())

@@ -59,7 +59,7 @@ public class AUTServerConfiguration {
     /** the map for the implementation class names: 
      * key = component class name, value = implementation class name
      */
-    private Map m_implClassNames;
+    private Map<String, String> m_implClassNames;
     
     /**
      * A cache for implementation class instances
@@ -135,21 +135,21 @@ public class AUTServerConfiguration {
     /**
      * the complete list of supported components, what actions are supported etc.
      */
-    private List m_components;
+    private List<ConcreteComponent> m_components;
 
     /**
      * the set of actually supported component class names
      */
-    private Set m_supportedComponentTypes;
+    private Set<ComponentClass> m_supportedComponentTypes;
     
     /**
      * private constructor (singleton) <br>
      * initializes the cache 
      */
     private AUTServerConfiguration() {
-        m_implClassNames = new HashMap();
+        m_implClassNames = new HashMap<String, String>();
         m_implClassCache = new HashMap();
-        m_components = new ArrayList();
+        m_components = new ArrayList<ConcreteComponent>();
     }
     
     /**
@@ -228,11 +228,11 @@ public class AUTServerConfiguration {
         Validate.notNull(componentClass);
         Class currentClass = componentClass;
         
-        String implClassName = (String)m_implClassNames.get(
+        String implClassName = m_implClassNames.get(
             currentClass.getName());
         while (implClassName == null && currentClass.getSuperclass() != null) {
             currentClass = currentClass.getSuperclass();
-            implClassName = (String)m_implClassNames.get(
+            implClassName = m_implClassNames.get(
                 currentClass.getName());
         }
         return createInstance(componentClass.getName(), implClassName,
@@ -256,7 +256,7 @@ public class AUTServerConfiguration {
         throws UnsupportedComponentException, 
         IllegalArgumentException {
         Validate.notNull(componentClassName);
-        String implClassName = (String)m_implClassNames.get(
+        String implClassName = m_implClassNames.get(
             componentClassName);
         return createInstance(componentClassName, implClassName, null);
     }
@@ -395,7 +395,7 @@ public class AUTServerConfiguration {
     /**
      * @return Returns the components.
      */
-    public List getComponents() {
+    public List<ConcreteComponent> getComponents() {
         return m_components;
     }
     /**
@@ -419,10 +419,10 @@ public class AUTServerConfiguration {
      */
     public Component findComponent(String typeName) {
         Validate.notNull(typeName);
-        List list = getComponents();
-        Iterator it = list.iterator();
+        List<ConcreteComponent> list = getComponents();
+        Iterator<ConcreteComponent> it = list.iterator();
         while (it.hasNext()) {
-            Component comp = (Component) it.next();
+            Component comp = it.next();
             if (comp instanceof ConcreteComponent) {
                 ConcreteComponent ccomp = (ConcreteComponent)comp;
                 if (ccomp.getComponentClass() != null
@@ -446,13 +446,13 @@ public class AUTServerConfiguration {
      * @param typeName Name of the specified component.
      * @return the specified Components.
      */
-    public List findComponents(String typeName) {
+    public List<ConcreteComponent> findComponents(String typeName) {
         Validate.notNull(typeName);
-        List list = getComponents();
-        Iterator it = list.iterator();
-        List comps = new LinkedList();
+        List<ConcreteComponent> list = getComponents();
+        Iterator<ConcreteComponent> it = list.iterator();
+        List<ConcreteComponent> comps = new LinkedList<ConcreteComponent>();
         while (it.hasNext()) {
-            Component comp = (Component) it.next();
+            Component comp = it.next();
             if (comp instanceof ConcreteComponent) {
                 ConcreteComponent ccomp = (ConcreteComponent)comp;
                 if (ccomp.getComponentClass() != null
@@ -676,16 +676,16 @@ public class AUTServerConfiguration {
     /**
      * @return a set of supported type identifier
      */
-    public Set getSupportedTypes() {
+    public Set<ComponentClass> getSupportedTypes() {
         if (m_supportedComponentTypes != null) {
             return m_supportedComponentTypes;
         }
-        m_supportedComponentTypes = new HashSet();
-        List supportedComponents = AUTServerConfiguration
+        m_supportedComponentTypes = new HashSet<ComponentClass>();
+        List<ConcreteComponent> supportedComponents = AUTServerConfiguration
                 .getInstance().getComponents();
-        Iterator iterator = supportedComponents.iterator();
+        Iterator<ConcreteComponent> iterator = supportedComponents.iterator();
         while (iterator.hasNext()) {
-            ConcreteComponent c = (ConcreteComponent) iterator.next();
+            ConcreteComponent c = iterator.next();
             if (!c.hasDefaultMapping()) {
                 List ccl = c.getCompClass();
                 Iterator compClassIterator = ccl.iterator();

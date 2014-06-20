@@ -19,6 +19,7 @@ import java.util.TreeMap;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 /**
  * @author BREDEX GmbH
@@ -38,10 +39,11 @@ public class PropertyUtil {
      *              the component
      * @return the sorted map of properties
      */
-    public static Map getMapOfComponentProperties(final Object currComp) {
+    public static Map<String, String> getMapOfComponentProperties(
+        final Object currComp) {
         PropertyDescriptor[] propertyDescriptors = PropertyUtils
                 .getPropertyDescriptors(currComp);
-        Map componentProperties = new TreeMap();
+        Map<String, String> componentProperties = new TreeMap<String, String>();
         for (int i = 0; i < propertyDescriptors.length; i++) {
             PropertyDescriptor pd = propertyDescriptors[i];
             try {
@@ -57,7 +59,7 @@ public class PropertyUtil {
                     if (obj instanceof Character) {
                         Character c = (Character)obj;
                         if (c.charValue() == 0) {
-                            value = ""; //$NON-NLS-1$
+                            value = StringConstants.EMPTY;
                         }
                     }
                     componentProperties.put(pd.getName(), value);

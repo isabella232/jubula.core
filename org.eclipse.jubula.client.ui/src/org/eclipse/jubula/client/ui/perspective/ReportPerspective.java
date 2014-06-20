@@ -25,7 +25,7 @@ public class ReportPerspective implements IPerspectiveFactory {
 
     /** perspective ID */
     public static final String PERSPECTIVE_ID = 
-            "org.eclipse.jubula.client.ui.perspectives.ReportPerspective"; 
+            "org.eclipse.jubula.client.ui.perspectives.ReportPerspective";  //$NON-NLS-1$
     
     /**
      * constructor

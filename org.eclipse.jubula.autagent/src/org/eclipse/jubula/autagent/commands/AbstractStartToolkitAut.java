@@ -180,7 +180,8 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      * @return a <code>String</code> that represents a
      * call to an executable. Ex. "java" or "/opt/java1.6/java".
      */
-    protected abstract String createBaseCmd(Map parameters) throws IOException;
+    protected abstract String createBaseCmd(Map<String, Object> parameters) 
+        throws IOException;
 
     /**
      *

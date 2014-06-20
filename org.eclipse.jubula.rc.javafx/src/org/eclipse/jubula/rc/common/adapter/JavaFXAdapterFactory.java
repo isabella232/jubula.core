@@ -96,9 +96,9 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
                 returnvalue = new TextComponentAdapter(
                         (TextInputControl) objectToAdapt);
             } else if (objectToAdapt instanceof TreeView) {
-                returnvalue = new TreeViewAdapter((TreeView) objectToAdapt);
+                returnvalue = new TreeViewAdapter((TreeView<?>) objectToAdapt);
             } else if (objectToAdapt instanceof TableView) {
-                returnvalue = new TableAdapter((TableView) objectToAdapt);
+                returnvalue = new TableAdapter((TableView<?>) objectToAdapt);
             } else if (objectToAdapt instanceof ContextMenu) {
                 returnvalue = new ContextMenuAdapter(
                         (ContextMenu) objectToAdapt);
@@ -111,13 +111,14 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
                 returnvalue = new LabeledAdapter<TitledPane>(
                         (TitledPane) objectToAdapt);
             } else if (objectToAdapt instanceof ListView) {
-                returnvalue = new ListViewAdapter<ListView>(
-                        (ListView) objectToAdapt);
+                returnvalue = new ListViewAdapter<ListView<?>>(
+                        (ListView<?>) objectToAdapt);
             } else if (objectToAdapt instanceof ComboBox) {
-                returnvalue = new ComboBoxAdapter<ComboBox>(
-                        (ComboBox) objectToAdapt);
+                returnvalue = new ComboBoxAdapter<ComboBox<?>>(
+                        (ComboBox<?>) objectToAdapt);
             } else if (objectToAdapt instanceof ChoiceBox) {
-                returnvalue = new ChoiceBoxAdapter((ChoiceBox) objectToAdapt);
+                returnvalue = new ChoiceBoxAdapter(
+                    (ChoiceBox<?>) objectToAdapt);
             } else if (objectToAdapt instanceof Accordion) {
                 returnvalue = new AccordionAdapter((Accordion) objectToAdapt);
             }

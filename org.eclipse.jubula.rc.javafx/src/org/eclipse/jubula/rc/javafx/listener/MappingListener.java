@@ -124,7 +124,7 @@ public class MappingListener extends AbstractFXAUTEventHandler {
                                 + id + "'"); //$NON-NLS-1$
                     }
                     
-                    Map componentProperties = PropertyUtil
+                    Map<String, String> componentProperties = PropertyUtil
                             .getMapOfComponentProperties(currNode);
                     id.setComponentPropertiesMap(componentProperties);
                     // send a message with the identifier of the selected
