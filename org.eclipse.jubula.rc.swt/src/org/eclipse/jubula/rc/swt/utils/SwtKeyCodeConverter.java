@@ -36,7 +36,8 @@ public class SwtKeyCodeConverter {
      * the data in the character field rather than the keyCode field.
      * String <=> Character
      */
-    private static final Map CHAR_MAP = new HashMap();
+    private static final Map<String, Character> CHAR_MAP = 
+        new HashMap<String, Character>();
 
     static {
         // Value entered by tester <=> SWT Key Code
@@ -48,7 +49,8 @@ public class SwtKeyCodeConverter {
      * (see org.eclipse.swt.SWT).
      * String <=> Integer
      */
-    private static final Map KEY_MAP = new HashMap();
+    private static final Map<String, Integer> KEY_MAP = 
+        new HashMap<String, Integer>();
     
     static {
         // Value entered by tester <=> SWT Key Code
@@ -96,7 +98,8 @@ public class SwtKeyCodeConverter {
      * (see org.eclipse.swt.SWT).
      * String <=> Integer
      */
-    private static final Map MOD_MAP = new HashMap();
+    private static final Map<String, Integer> MOD_MAP = 
+        new HashMap<String, Integer>();
     
     static {
         MOD_MAP.put("SHIFT", new Integer(SWT.SHIFT));  //$NON-NLS-1$
@@ -108,7 +111,8 @@ public class SwtKeyCodeConverter {
     /** Map for translating keycodes from SWT keyevents to the ITE 
      *  Integer <=> String
      */
-    private static final Map KEYCODE_MAP = new HashMap();
+    private static final Map<Integer, String> KEYCODE_MAP = 
+        new HashMap<Integer, String>();
 
     static {
         int swtSpace = 32;
@@ -170,7 +174,8 @@ public class SwtKeyCodeConverter {
     /** Map for translating modifiers from swt keyevents to the ITE 
      *  Integer <=> String
      */
-    private static final Map MODIFIER_MAP = new HashMap();
+    private static final Map<Integer, String> MODIFIER_MAP = 
+        new HashMap<Integer, String>();
 
     static {
         // Value entered by tester <=> SWT Key Code        
