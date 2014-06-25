@@ -452,7 +452,7 @@ public class SwtUtils {
      */
     private static Widget[] getWidgetChildrenImpl(final Widget widget, 
         final boolean recurse) {
-        List objT = new LinkedList();
+        List<Object> objT = new LinkedList<Object>();
         if (widget == null || widget.isDisposed()) {
             return new Widget[0];
         }
@@ -816,7 +816,7 @@ public class SwtUtils {
         }
         int hwndHeader = 0;
         try {
-            Class clazz = parent.getClass();
+            Class<? extends Tree> clazz = parent.getClass();
             Field f = clazz.getDeclaredField("hwndHeader"); //$NON-NLS-1$
             f.setAccessible(true);
             hwndHeader = f.getInt(parent);  
@@ -880,7 +880,7 @@ public class SwtUtils {
     static Rectangle gtkgetBounds(TableColumn tableColumn) {
         Rectangle bounds = new Rectangle(0, 0, 0, 0);
         try {
-            Class clazz = tableColumn.getClass();
+            Class<? extends TableColumn> clazz = tableColumn.getClass();
             Field f = clazz.getDeclaredField("buttonHandle"); //$NON-NLS-1$
             f.setAccessible(true);
             int handle = f.getInt(tableColumn);         
@@ -902,7 +902,7 @@ public class SwtUtils {
     static Rectangle gtkgetBounds(TreeColumn treeColumn) {
         Rectangle bounds = new Rectangle(0, 0, 0, 0);
         try {
-            Class clazz = treeColumn.getClass();
+            Class<? extends TreeColumn> clazz = treeColumn.getClass();
             Field f = clazz.getDeclaredField("buttonHandle"); //$NON-NLS-1$
             f.setAccessible(true);
             int handle = f.getInt(treeColumn);          

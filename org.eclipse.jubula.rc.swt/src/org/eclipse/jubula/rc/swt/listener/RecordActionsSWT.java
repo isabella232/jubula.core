@@ -66,13 +66,14 @@ public class RecordActionsSWT {
         RecordListener.class);
     
     /** map to store contents of TextComponents */
-    private Map m_map = new HashMap();
+    private Map<Widget, String> m_map = new HashMap<Widget, String>();
     
     /** map to store logical Names */
-    private Map m_logNameMap = new HashMap();
+    private Map<String, IComponentIdentifier> m_logNameMap = 
+        new HashMap<String, IComponentIdentifier>();
     
     /** map to store technical Names */
-    private Map m_techNameMap = new HashMap();
+    private Map<Widget, String> m_techNameMap = new HashMap<Widget, String>();
     
     /** The RecordActions */
     private int m_popupMouseBtn = SWT.BUTTON3;
@@ -91,14 +92,14 @@ public class RecordActionsSWT {
      * contents of TextComponents
      * @return map 
      */
-    public Map getTextCompContent() {
+    public Map<Widget, String> getTextCompContent() {
         return m_map;
     }
     /**
      * contents of TextComponents
      * @param map The message data
      */
-    public void setTextCompContent(Map map) {
+    public void setTextCompContent(Map<Widget, String> map) {
         m_map = map;
     }    
     /**
@@ -143,7 +144,7 @@ public class RecordActionsSWT {
                 entr = entr.concat(","); //$NON-NLS-1$
             }
         }
-        java.util.List lstValues = new LinkedList();
+        java.util.List<String> lstValues = new LinkedList<String>();
         lstValues.add(entr);
         lstValues.add(Constants.REC_OPERATOR);
         lstValues.add(Constants.REC_SEARCH_MODE);
@@ -173,7 +174,7 @@ public class RecordActionsSWT {
             extraMsg = Constants.REC_CLICK_MSG;
         }
         String clCount = String.valueOf(count);
-        java.util.List treValues = new LinkedList();
+        java.util.List<String> treValues = new LinkedList<String>();
         treValues.add(Constants.REC_SEARCH_MODE);
         treValues.add("0"); //$NON-NLS-1$
         treValues.add(nodepath);                
@@ -208,7 +209,7 @@ public class RecordActionsSWT {
             extraMsg = Constants.REC_CLICK_MSG;
         }
         String clCount = String.valueOf(count);
-        java.util.List treValues = new LinkedList();
+        java.util.List<String> treValues = new LinkedList<String>();
         treValues.add(Constants.REC_SEARCH_MODE);
         treValues.add("0"); //$NON-NLS-1$
         treValues.add(nodepath);                
@@ -230,7 +231,7 @@ public class RecordActionsSWT {
      */
     protected void selectTab(TabFolder tf, IComponentIdentifier id,
             Action a) {
-        java.util.List tpnValues = new LinkedList();
+        java.util.List<String> tpnValues = new LinkedList<String>();
         String tpnTitle = StringParsing.singleQuoteText(tf
                 .getItem(tf.getSelectionIndex()).getText());
         tpnTitle = SwtUtils.removeMnemonics(tpnTitle);
@@ -250,7 +251,7 @@ public class RecordActionsSWT {
      */
     protected void selectCTab(CTabFolder ctf, IComponentIdentifier id,
             Action a) {
-        java.util.List tpnValues = new LinkedList();
+        java.util.List<String> tpnValues = new LinkedList<String>();
         String tpnTitle = StringParsing.singleQuoteText(ctf
                 .getSelection().getText());
         tpnTitle = SwtUtils.removeMnemonics(tpnTitle);
@@ -275,7 +276,7 @@ public class RecordActionsSWT {
         if (cbxText.equals(StringConstants.EMPTY) || cbxText == null) {
             cbxText = Constants.EMPTY_ITEM;
         }
-        java.util.List cbxValues = new LinkedList();
+        java.util.List<String> cbxValues = new LinkedList<String>();
         cbxValues.add(cbxText);
         cbxValues.add(Constants.REC_OPERATOR);
         cbxValues.add(Constants.REC_SEARCH_MODE);
@@ -297,7 +298,7 @@ public class RecordActionsSWT {
         if (ccbxText.equals(StringConstants.EMPTY) || ccbxText == null) {
             ccbxText = Constants.EMPTY_ITEM;
         }
-        java.util.List ccbxValues = new LinkedList();
+        java.util.List<String> ccbxValues = new LinkedList<String>();
         ccbxValues.add(ccbxText);
         ccbxValues.add(Constants.REC_OPERATOR);
         ccbxValues.add(Constants.REC_SEARCH_MODE);
@@ -327,7 +328,7 @@ public class RecordActionsSWT {
         }
         String clCount = (new Integer(count)
             .toString());
-        java.util.List tblValues = new LinkedList();
+        java.util.List<String> tblValues = new LinkedList<String>();
         tblValues.add(rowStr);
         tblValues.add(MatchUtil.EQUALS);
         tblValues.add(columnStr);
@@ -355,7 +356,7 @@ public class RecordActionsSWT {
             Action a, String logName) {
         String pth = m_recordHelperSWT.getMenuPath(mni);
         pth = SwtUtils.removeMnemonics(pth);
-        java.util.List parValues = new LinkedList();
+        java.util.List<String> parValues = new LinkedList<String>();
         parValues.add(pth);
         parValues.add(Constants.REC_OPERATOR);
         if (a.getName().equals("CompSystem.PopupSelectByTextPathNew")) { //$NON-NLS-1$
@@ -385,7 +386,7 @@ public class RecordActionsSWT {
             nodepath = m_recordHelperSWT.getTreePath(event.item);
             m_recordHelperSWT.setTreePath(StringConstants.EMPTY);
             Action a = m_recordHelperSWT.compSysToAction(id, collOrExp);
-            java.util.List treValues = new LinkedList();
+            java.util.List<String> treValues = new LinkedList<String>();
             treValues.add(Constants.REC_SEARCH_MODE);
             treValues.add("0"); //$NON-NLS-1$
             treValues.add(nodepath);                
@@ -428,7 +429,7 @@ public class RecordActionsSWT {
             String mbutton = (new Integer(event.button)
                 .toString());
             Action a = m_recordHelperSWT.compSysToAction(id, "CompSystem.Click"); //$NON-NLS-1$
-            java.util.List parValues = new LinkedList();
+            java.util.List<String> parValues = new LinkedList<String>();
             parValues.add(clickcount);
             parValues.add(mbutton);
             
@@ -469,7 +470,7 @@ public class RecordActionsSWT {
         String percentYString = new Integer(percentYInt).toString();
         Action a = m_recordHelperSWT.compSysToAction(id, "CompSystem.ClickDirect"); //$NON-NLS-1$   
         String units = Constants.REC_UNITS;
-        java.util.List parValues = new LinkedList();
+        java.util.List<String> parValues = new LinkedList<String>();
         parValues.add(clickcount);
         parValues.add(mbutton);
         parValues.add(percentXString);
@@ -493,7 +494,8 @@ public class RecordActionsSWT {
         Action a = new Action();
         a = m_recordHelperSWT.compSysToAction(id, "CompSystem.KeyStroke"); //$NON-NLS-1$
         
-        java.util.List parameterValues = new LinkedList();            
+        java.util.List<String> parameterValues = 
+            new LinkedList<String>();            
         String modifierKey = null;
         if (e.stateMask == 0) {
             modifierKey = "none"; //$NON-NLS-1$
@@ -583,7 +585,8 @@ public class RecordActionsSWT {
                 
                 text = StringParsing.singleQuoteText(text);
 
-                java.util.List parameterValues = new LinkedList();
+                java.util.List<String> parameterValues = 
+                    new LinkedList<String>();
                 parameterValues.add(text);
                 
                 String logName = createLogicalName(source, id);
@@ -619,7 +622,8 @@ public class RecordActionsSWT {
                 int column = cell.getCol();
                 String rowStr = (new Integer(row + 1)).toString();
                 String columnStr = (new Integer(column + 1)).toString();
-                java.util.List parameterValues = new LinkedList();
+                java.util.List<String> parameterValues = 
+                    new LinkedList<String>();
                 parameterValues.add(txt);
                 parameterValues.add(rowStr);
                 parameterValues.add(columnStr);
@@ -660,7 +664,7 @@ public class RecordActionsSWT {
             timeout = new Integer(timeoutInt).toString();
         }
         
-        java.util.List shlValues = new LinkedList();
+        java.util.List<String> shlValues = new LinkedList<String>();
         shlValues.add(title);
         shlValues.add(operator);
         shlValues.add(timeout);
@@ -675,7 +679,7 @@ public class RecordActionsSWT {
      * @param parValues List of values
      */
     private void createCAP(Action a,
-            IComponentIdentifier id, java.util.List parValues) {
+            IComponentIdentifier id, java.util.List<String> parValues) {
         String defaultName = "default"; //$NON-NLS-1$
         String defaultMsg = StringConstants.EMPTY;
         createCAP(a, id, parValues, defaultName, defaultMsg);
@@ -690,7 +694,7 @@ public class RecordActionsSWT {
      * @param extraMsg additonal Message for Observation Console
      */
     private void createCAP(Action a,
-            IComponentIdentifier id, java.util.List parValues,
+            IComponentIdentifier id, java.util.List<String> parValues,
                 String logName, String extraMsg) {
         MessageCap messageCap = new MessageCap();        
         
@@ -703,7 +707,7 @@ public class RecordActionsSWT {
         messageCap.setCi(id);
         
         // setup parameters in MessageCap
-        java.util.List parameterValues = parValues;
+        java.util.List<String> parameterValues = parValues;
         java.util.List params = a.getParams();
 
         for (int i = 0; i < params.size(); i++) {
@@ -713,7 +717,7 @@ public class RecordActionsSWT {
             String emptyString = StringConstants.EMPTY;
             String value = 
                 emptyString.equals(parameterValues.get(i)) ? null 
-                    : (String)parameterValues.get(i);            
+                    : parameterValues.get(i);            
             messageParam.setValue(value);
             messageCap.addMessageParam(messageParam);
             
@@ -745,21 +749,21 @@ public class RecordActionsSWT {
      */
     private String createLogicalName(Widget w, IComponentIdentifier id) {
         
-        String logName = (String)m_techNameMap.get(w);
+        String logName = m_techNameMap.get(w);
         
         if (logName == null) {
             logName = m_recordHelperSWT.generateLogicalName(w, id);
             
             if (logName != null) {
                 IComponentIdentifier id2 = 
-                    (IComponentIdentifier)m_logNameMap.get(logName);
+                    m_logNameMap.get(logName);
                 if (m_logNameMap.containsKey(logName)) {
                     if (!(m_recordHelperSWT.isCiEqual(id, id2))) {
-                        Collection col = m_techNameMap.values();
-                        Iterator it = col.iterator();
+                        Collection<String> col = m_techNameMap.values();
+                        Iterator<String> it = col.iterator();
                         int counter = 0;
                         while (it.hasNext()) {
-                            String name = (String)it.next();
+                            String name = it.next();
                             if (name.equals(logName)
                                     || name.equals(
                                             logName + "_" + (counter + 1))) { //$NON-NLS-1$

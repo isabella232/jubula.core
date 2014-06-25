@@ -127,7 +127,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
                     try {
                         id = ComponentHandler
                             .getIdentifier(getCurrentComponent());
-                        Map checkValues = getCheckValues(getCurrentComponent());
+                        Map<String, String> checkValues = getCheckValues(
+                            getCurrentComponent());
                         
                         String logName = m_recordHelperSWT.generateLogicalName(
                                 getCurrentComponent(), id);
@@ -158,8 +159,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param checkValues List
      * @param logName String of Logical Name
      */
-    protected void openCheckDialog(IComponentIdentifier id, Map checkValues,
-            String logName) {
+    protected void openCheckDialog(IComponentIdentifier id,
+        Map<String, String> checkValues, String logName) {
         try {            
             // send a message with the identifier of the selected component
             AUTServer.getInstance().setMode(
@@ -204,8 +205,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param enabled String
      * @return the map with added focus-, existence- and enablement-information
      */
-    protected Map addFocExistEnbl(Map valueMap, String hasFocus,
-            String exists, String enabled) {
+    protected Map<String, String> addFocExistEnbl(Map<String, String> valueMap,
+        String hasFocus, String exists, String enabled) {
         valueMap.put("CompSystem.HasFocus", hasFocus); //$NON-NLS-1$
         valueMap.put("CompSystem.IsExisting", exists); //$NON-NLS-1$
         valueMap.put("CompSystem.IsEnabled", enabled); //$NON-NLS-1$
@@ -221,7 +222,7 @@ public class CheckListener extends AbstractAutSwtEventListener {
      */
     private void sendMessage(IComponentIdentifier id, 
         org.eclipse.jubula.tools.xml.businessmodell.Component comp,
-            Map checkValues, String logName)
+            Map<String, String> checkValues, String logName)
         throws CommunicationException {
         ServerShowDialogMessage message =
             new ServerShowDialogMessage(comp, id, checkValues);
@@ -241,8 +242,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param widget Widget
      * @return the map of values to check
      */
-    protected Map getCheckValues(Widget widget) {
-        Map valueMap = new HashMap();
+    protected Map<String, String> getCheckValues(Widget widget) {
+        Map<String, String> valueMap = new HashMap<String, String>();
         if (widget instanceof Text) {
             valueMap = getTextValues(widget);
         }
@@ -290,8 +291,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param widget Widget
      * @return text values to check
      */
-    protected Map getTextValues(Widget widget) {
-        Map map = new HashMap();    
+    protected Map<String, String> getTextValues(Widget widget) {
+        Map<String, String> map = new HashMap<String, String>();    
         Text t = (Text)widget;
         String text = StringParsing.singleQuoteText(t.getText());
         map.put("CompSystem.Text", text); //$NON-NLS-1$
@@ -308,8 +309,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param widget Widget
      * @return button values to check
      */
-    protected Map getButtonValues(Widget widget) {
-        Map map = new HashMap();
+    protected Map<String, String> getButtonValues(Widget widget) {
+        Map<String, String> map = new HashMap<String, String>();
         Button ab = (Button)widget;
         String text = StringParsing.singleQuoteText(ab.getText());
         text = SwtUtils.removeMnemonics(text);
@@ -327,8 +328,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param widget Widget
      * @return Label values to check
      */
-    protected Map getLabelValues(Widget widget) {
-        Map map = new HashMap();
+    protected Map<String, String> getLabelValues(Widget widget) {
+        Map<String, String> map = new HashMap<String, String>();
         Label lbl = (Label)widget;
         String text = StringParsing.singleQuoteText(lbl.getText());
         text = SwtUtils.removeMnemonics(text);
@@ -344,8 +345,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param widget Widget
      * @return CLabel values to check
      */
-    protected Map getCLabelValues(Widget widget) {
-        Map map = new HashMap();
+    protected Map<String, String> getCLabelValues(Widget widget) {
+        Map<String, String> map = new HashMap<String, String>();
         CLabel clbl = (CLabel)widget;
         String text = StringParsing.singleQuoteText(clbl.getText());
         text = SwtUtils.removeMnemonics(text);
@@ -361,8 +362,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param widget Widget
      * @return tree values to check
      */
-    protected Map getTreeValues(Widget widget) {
-        Map map = new HashMap();
+    protected Map<String, String> getTreeValues(Widget widget) {
+        Map<String, String> map = new HashMap<String, String>();
         Tree tre = (Tree)widget;
         if (tre.getSelectionCount() != 0) {
             TreeItem[] entries = tre.getSelection();
@@ -398,8 +399,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param widget Widget
      * @return List values to check
      */
-    protected Map getListValues(Widget widget) {
-        Map map = new HashMap();
+    protected Map<String, String> getListValues(Widget widget) {
+        Map<String, String> map = new HashMap<String, String>();
         List lst = (List)widget;         
         if (lst.getSelectionCount() != 0) {
             String[] entries = lst.getSelection();
@@ -433,8 +434,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param widget Widget
      * @return Combo values to check
      */
-    protected Map getComboValues(Widget widget) {
-        Map map = new HashMap();
+    protected Map<String, String> getComboValues(Widget widget) {
+        Map<String, String> map = new HashMap<String, String>();
         Combo cbx = (Combo)widget;
         if (cbx.getSelectionIndex() != -1) {
             String cbxText = StringParsing.singleQuoteText(cbx
@@ -451,8 +452,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param widget Widget
      * @return CCombo values to check
      */
-    protected Map getCComboValues(Widget widget) {
-        Map map = new HashMap();
+    protected Map<String, String> getCComboValues(Widget widget) {
+        Map<String, String> map = new HashMap<String, String>();
         CCombo ccbx = (CCombo)widget;
         if (ccbx.getSelectionIndex() != -1) {
             String ccbxText = StringParsing.singleQuoteText(ccbx
@@ -470,8 +471,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param widget Widget
      * @return TabFolder values to check
      */
-    protected Map getTabFolderValues(Widget widget) {
-        Map map = new HashMap();
+    protected Map<String, String> getTabFolderValues(Widget widget) {
+        Map<String, String> map = new HashMap<String, String>();
         TabFolder tp = (TabFolder)widget;
         String title = StringParsing.singleQuoteText(tp
                 .getItem(tp.getSelectionIndex()).getText());
@@ -491,8 +492,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param widget Widget
      * @return CTabFolder values to check
      */
-    protected Map getCTabFolderValues(Widget widget) {
-        Map map = new HashMap();
+    protected Map<String, String> getCTabFolderValues(Widget widget) {
+        Map<String, String> map = new HashMap<String, String>();
         CTabFolder ctp = (CTabFolder)widget;
         if (ctp.getSelection() != null) {
             String title = StringParsing.singleQuoteText(
@@ -514,8 +515,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param widget Widget
      * @return CTabFolder values to check
      */
-    protected Map getTableValues(Widget widget) {
-        Map map = new HashMap();
+    protected Map<String, String> getTableValues(Widget widget) {
+        Map<String, String> map = new HashMap<String, String>();
         Table tbl = (Table)widget;
         if (tbl.getSelectionCount() != 0) { //tbl.SelectedColumnCount()
             Cell cell = TableSelectionTracker
@@ -545,8 +546,8 @@ public class CheckListener extends AbstractAutSwtEventListener {
      * @param widget Widget
      * @return ToolItem values to check
      */
-    protected Map getToolItemValues(Widget widget) {
-        Map map = new HashMap();
+    protected Map<String, String> getToolItemValues(Widget widget) {
+        Map<String, String> map = new HashMap<String, String>();
         ToolItem ti = (ToolItem)widget;      
         String toolText = StringParsing.singleQuoteText(ti.getText());
         toolText = SwtUtils.removeMnemonics(toolText);

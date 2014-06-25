@@ -156,7 +156,8 @@ public class CheckListener extends AbstractAutSwingEventListener {
                             .getIdentifier(getCurrentComponent());
                         }
                         
-                        Map checkValues = getCheckValues(getCurrentComponent());
+                        Map<String, String> checkValues = getCheckValues(
+                            getCurrentComponent());
                         String logName = m_recordHelper.generateLogicalName(
                                 getCurrentComponent(), id);
                         openCheckDialog(id, checkValues, logName);
@@ -176,7 +177,7 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @param logName logical Name
      */
     protected void openCheckDialog(IComponentIdentifier id,
-            Map checkValues, String logName) {
+            Map<String, String> checkValues, String logName) {
         try {            
             // send a message with the identifier of the selected component
             AUTServer.getInstance().setMode(
@@ -214,8 +215,8 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @param enabled String
      * @return the map with added focus-, existence- and enablement-information
      */
-    protected Map addFocExistEnbl(Map valueMap, String hasFocus,
-            String exists, String enabled) {
+    protected Map<String, String> addFocExistEnbl(Map<String, String> valueMap, 
+        String hasFocus, String exists, String enabled) {
         valueMap.put("CompSystem.HasFocus", hasFocus); //$NON-NLS-1$
         valueMap.put("CompSystem.IsExisting", exists); //$NON-NLS-1$
         valueMap.put("CompSystem.IsEnabled", enabled); //$NON-NLS-1$
@@ -226,8 +227,8 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @param component Component
      * @return the map of values to check
      */
-    protected Map getCheckValues(Component component) {
-        Map valueMap = new HashMap();
+    protected Map<String, String> getCheckValues(Component component) {
+        Map<String, String> valueMap = new HashMap<String, String>();
         if (component instanceof JTextComponent) {
             valueMap = getTextCompValues(component);
         }
@@ -262,8 +263,8 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @param c Component
      * @return text values to check
      */
-    private Map getTextCompValues(Component c) {
-        Map map = new HashMap();
+    private Map<String, String> getTextCompValues(Component c) {
+        Map<String, String> map = new HashMap<String, String>();
         JTextComponent t = (JTextComponent)c;
         
         String text = StringParsing.singleQuoteText(t.getText());
@@ -282,8 +283,8 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @param c Component
      * @return button values to check
      */
-    private Map getButtonValues(Component c) {
-        Map map = new HashMap();
+    private Map<String, String> getButtonValues(Component c) {
+        Map<String, String> map = new HashMap<String, String>();
         AbstractButton ab = (AbstractButton)c;
         String text = StringParsing.singleQuoteText(ab.getText());
         String hasFocus = StringParsing.boolToString(ab.hasFocus());
@@ -300,8 +301,8 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @param c Component
      * @return label values to check
      */
-    private Map getLabelValues(Component c) {
-        Map map = new HashMap();
+    private Map<String, String> getLabelValues(Component c) {
+        Map<String, String> map = new HashMap<String, String>();
         JLabel lbl = (JLabel)c;
         String text = StringParsing.singleQuoteText(lbl.getText());
         String hasFocus = StringParsing.boolToString(lbl.hasFocus());
@@ -316,8 +317,8 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @param c Component
      * @return tree values to check
      */
-    private Map getTreeValues(Component c) {
-        Map map = new HashMap();
+    private Map<String, String> getTreeValues(Component c) {
+        Map<String, String> map = new HashMap<String, String>();
         JTree tre = (JTree)c;
         if (tre.getSelectionCount() != 0) {
             TreePath[] selNodes = tre.getSelectionPaths();
@@ -353,8 +354,8 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @param c Component
      * @return list values to check
      */
-    private Map getListValues(Component c) {
-        Map map = new HashMap();
+    private Map<String, String> getListValues(Component c) {
+        Map<String, String> map = new HashMap<String, String>();
         JList lst = (JList)c;            
         if (lst.getSelectedIndices().length != 0) {
             String[] entries = m_recordHelper.getRenderedListValues(lst);
@@ -384,8 +385,8 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @param c Component
      * @return combo values to check
      */
-    private Map getComboValues(Component c) {
-        Map map = new HashMap();
+    private Map<String, String> getComboValues(Component c) {
+        Map<String, String> map = new HashMap<String, String>();
         JComboBox cbx = (JComboBox)c;
         String cbxText = StringConstants.EMPTY;
         boolean isCbxItem = true;
@@ -422,8 +423,8 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @param c Component
      * @return tabbedpane values to check
      */
-    private Map getTpnValues(Component c) {
-        Map map = new HashMap();
+    private Map<String, String> getTpnValues(Component c) {
+        Map<String, String> map = new HashMap<String, String>();
         JTabbedPane tp = (JTabbedPane)c;
         String hasFocus = StringParsing.boolToString(tp.hasFocus());
         String exists = StringParsing.boolToString(tp.isShowing());
@@ -445,8 +446,8 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @param c Component
      * @return table values to check
      */
-    private Map getTableValues(Component c) {
-        Map map = new HashMap();
+    private Map<String, String> getTableValues(Component c) {
+        Map<String, String> map = new HashMap<String, String>();
         JTable tbl = (JTable)c;
         int row = tbl.getSelectedRow();
         int column = tbl.getSelectedColumn();
@@ -479,8 +480,8 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @param c Component
      * @return text values to check
      */
-    private Map getMenuItemValues(Component c) {
-        Map map = new HashMap();
+    private Map<String, String> getMenuItemValues(Component c) {
+        Map<String, String> map = new HashMap<String, String>();
         JMenuItem m = (JMenuItem)c;
 
         String menupath = m_recordHelper.getPath(m);
@@ -506,7 +507,7 @@ public class CheckListener extends AbstractAutSwingEventListener {
      */
     private void sendMessage(IComponentIdentifier id, 
         org.eclipse.jubula.tools.xml.businessmodell.Component comp,
-            Map checkValues, String logName) 
+            Map<String, String> checkValues, String logName) 
         throws CommunicationException {
         ServerShowDialogMessage message =
             new ServerShowDialogMessage(comp, id, checkValues);

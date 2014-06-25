@@ -594,7 +594,6 @@ public class ComponentNamesBP
      *         Returns <code>null</code> if <code>component</code> and
      *         its ancestors are all invisible.
      */
-    @SuppressWarnings("unchecked")
     private Component getMostConcreteVisibleAncestor(Component component,
             CompSystem compSystem) {
 

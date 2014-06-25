@@ -52,7 +52,6 @@ public class ControlFactory {
      * @param parent the parent of the Combo
      * @return a Combo with all independent toolkit entries.
      */
-    @SuppressWarnings("unchecked")
     public static DirectCombo<String> createToolkitCombo(Composite parent) {
         
         final List<ToolkitPluginDescriptor> descriptors = 
@@ -210,7 +209,6 @@ public class ControlFactory {
      * @throws ToolkitPluginException if the toolkit for the given project 
      *         cannot be found.
      */
-    @SuppressWarnings("unchecked")
     public static List<ToolkitPluginDescriptor> getAutToolkits(
         IProjectPO project) throws ToolkitPluginException {
         

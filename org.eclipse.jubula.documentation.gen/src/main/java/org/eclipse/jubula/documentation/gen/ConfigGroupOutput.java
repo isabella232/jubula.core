@@ -212,7 +212,6 @@ public class ConfigGroupOutput {
     /**
      * 
      */
-    @SuppressWarnings("unchecked")
     private void handleDeprecated() {
         final String gdrefdepbegin = m_group.getProp("gdrefdepbegin"); //$NON-NLS-1$
         final String gdrefdepend = m_group.getProp("gdrefdepend"); //$NON-NLS-1$
@@ -239,7 +238,6 @@ public class ConfigGroupOutput {
     /**
      * 
      */
-    @SuppressWarnings("unchecked")
     private void handleDeprecatedDescription() {
         String outputdir = m_descrDir + File.separator
             + m_group.getProp("outputdir"); //$NON-NLS-1$
@@ -317,7 +315,6 @@ public class ConfigGroupOutput {
     /**
      * 
      */
-    @SuppressWarnings("unchecked")
     private void handleDefault() {
         // output for all components, multiple files.
         CompSystemProcessor processor = (CompSystemProcessor)m_processor;

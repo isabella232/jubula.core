@@ -60,7 +60,7 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
      * a list of all neighbours of a component
      * this is some context information
      */
-    private List m_neighbours = new ArrayList();
+    private List<String> m_neighbours = new ArrayList<String>();
     
     /** the name of the class of the component, such as 'javax.swing.JButton' 
      *  this attribute decides how to test a class. So if class itself is not
@@ -72,7 +72,7 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
      * the hierarchy for the component. The names of the container hierarchy
      * from top to (checkstyle :-) down, inclusive the component name itself
      */
-    private List m_hierarchyNames = new ArrayList();
+    private List<String> m_hierarchyNames = new ArrayList<String>();
 
     /**
      * the alternative name for display of the component or null if the normal 
@@ -135,7 +135,7 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
         // return the last element
         try {
             if (m_hierarchyNames != null && m_hierarchyNames.size() > 0) {
-                return (String)m_hierarchyNames.get(
+                return m_hierarchyNames.get(
                         m_hierarchyNames.size() - 1);
             }
         } catch (ClassCastException cce) {
@@ -148,9 +148,9 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
      * @param hierarchyNames
      *            The hierarchyNames to set. if null, the list will be cleared.
      */
-    public void setHierarchyNames(List hierarchyNames) {
+    public void setHierarchyNames(List<String> hierarchyNames) {
         if (hierarchyNames == null) {
-            m_hierarchyNames = new ArrayList();
+            m_hierarchyNames = new ArrayList<String>();
         } else {
             m_hierarchyNames = hierarchyNames;
         }
@@ -160,7 +160,7 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
     /**
      * @return Returns the hierarchyNames.
      */
-    public List getHierarchyNames() {
+    public List<String> getHierarchyNames() {
         return m_hierarchyNames;
     }
     /**
@@ -194,14 +194,14 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
      */
     public IComponentIdentifier makeClone() {
         IComponentIdentifier clone = new ComponentIdentifier();
-        clone.setHierarchyNames(new ArrayList(
+        clone.setHierarchyNames(new ArrayList<String>(
             m_hierarchyNames));
         clone.setComponentClassName(m_componentClassName);
         if (m_supportedClassName != null) {
             clone.setSupportedClassName(m_supportedClassName);
         }
         if (m_neighbours != null) {
-            clone.setNeighbours(new ArrayList(m_neighbours));
+            clone.setNeighbours(new ArrayList<String>(m_neighbours));
         }
         clone.setAlternativeDisplayName(m_alternativeDisplayName);
         return clone;
@@ -222,13 +222,13 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
     /**
      * @return Returns the neighbours.
      */
-    public List getNeighbours() {
+    public List<String> getNeighbours() {
         return m_neighbours;
     }
     /**
      * @param neighbours The neighbours to set.
      */
-    public void setNeighbours(List neighbours) {
+    public void setNeighbours(List<String> neighbours) {
         m_neighbours = neighbours;
     }
 
@@ -260,9 +260,9 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
         }
 
         StringBuffer hash = new StringBuffer();
-        Iterator iter = getHierarchyNames().iterator();
+        Iterator<String> iter = getHierarchyNames().iterator();
         while (iter.hasNext()) {
-            hash.append((String)iter.next()); 
+            hash.append(iter.next()); 
         }
         returnVal += hash.toString().hashCode(); 
         returnVal += ")"; //$NON-NLS-1$
@@ -331,8 +331,9 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
     public boolean equals(Object obj) {
         if (obj instanceof IComponentIdentifier) {
             IComponentIdentifier compId = (IComponentIdentifier)obj;
-            List neighbours1 = new ArrayList(getNeighbours());
-            List neighbours2 = new ArrayList(compId.getNeighbours());
+            List<String> neighbours1 = new ArrayList<String>(getNeighbours());
+            List<String> neighbours2 = new ArrayList<String>(
+                compId.getNeighbours());
             Collections.sort(neighbours1);
             Collections.sort(neighbours2);
             return new EqualsBuilder()
@@ -347,7 +348,7 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
      * {@inheritDoc}
      */
     public int hashCode() {
-        List neighbours = new ArrayList(getNeighbours());
+        List<String> neighbours = new ArrayList<String>(getNeighbours());
         Collections.sort(neighbours);
         return new HashCodeBuilder()
             .append(getHierarchyNames())

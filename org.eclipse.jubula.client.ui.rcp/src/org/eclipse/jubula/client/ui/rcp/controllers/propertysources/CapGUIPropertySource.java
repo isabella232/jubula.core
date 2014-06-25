@@ -244,7 +244,6 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
     /**
      * Inits the List of action types depending on the selected component type.
      */
-    @SuppressWarnings("unchecked")
     private void initActionTypes() {
         List <String> tmpList = new ArrayList <String> ();
         List <String> tmpSubList = new ArrayList <String> ();

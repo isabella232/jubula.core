@@ -89,7 +89,6 @@ public class StringHelper {
     /**
      * Initializes m_map with name strings from xml file and its translations.
      */
-    @SuppressWarnings("unchecked")
     private void initMap() {
         m_map = new HashMap<String, String>(10007);
         CompSystem compSystem = ComponentBuilder.getInstance().getCompSystem();

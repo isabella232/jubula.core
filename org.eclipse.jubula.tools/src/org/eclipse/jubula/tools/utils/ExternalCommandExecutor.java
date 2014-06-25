@@ -122,11 +122,11 @@ public class ExternalCommandExecutor {
                     } else {
                         m_cmd = StringConstants.EMPTY;
                     }
-                    List params = new ArrayList();
+                    List<String> params = new ArrayList<String>();
                     while (tk.nextToken() != StreamTokenizer.TT_EOF) {
                         params.add(tk.sval);                        
                     }
-                    m_cmdParams = (String[])params.toArray(new String[params
+                    m_cmdParams = params.toArray(new String[params
                             .size()]);
                 } catch (IOException e) {
                     // error handling below
@@ -157,7 +157,7 @@ public class ExternalCommandExecutor {
                             m_cmd = absCmdFile.getCanonicalPath();
                         }
                     }
-                    List commandTokens = new ArrayList();
+                    List<String> commandTokens = new ArrayList<String>();
                     for (int i = 0; i < m_prepend.length; ++i) {
                         commandTokens.add(m_prepend[i]);
                     }
@@ -170,7 +170,7 @@ public class ExternalCommandExecutor {
                     for (int i = 0; i < m_cmdParams.length; ++i) {
                         commandTokens.add(m_cmdParams[i]);
                     }
-                    m_process = runtime.exec((String[])commandTokens
+                    m_process = runtime.exec(commandTokens
                             .toArray(new String[commandTokens.size()]), null,
                             m_dir);
                     

@@ -138,12 +138,14 @@ public class MatchUtil {
     /**
      * Maps operators to operations
      */
-    private Map m_operationMap = new HashMap();
+    private Map<String, MatchOperation> m_operationMap = 
+        new HashMap<String, MatchOperation>();
 
     /**
      * Maps operators to operations
      */
-    private Map m_findOperationMap = new HashMap();
+    private Map<String, FindOperation> m_findOperationMap = 
+        new HashMap<String, FindOperation>();
 
     /**
      * forbid construction
@@ -230,7 +232,7 @@ public class MatchUtil {
                 TestErrorEvent.MALFORMED_REGEXP, new Object[] { pattern });
             throw new StepExecutionException("null pattern", event); //$NON-NLS-1$
         }
-        FindOperation op = (FindOperation)m_findOperationMap.get(operator);
+        FindOperation op = m_findOperationMap.get(operator);
         
         return op.find(text == null ? StringConstants.EMPTY : text, pattern);
     }
@@ -258,7 +260,7 @@ public class MatchUtil {
                     TestErrorEvent.UNKNOWN_OPERATOR, new Object[] { operator });
             throw new StepExecutionException("unknown operator", event); //$NON-NLS-1$
         }
-        MatchOperation op = (MatchOperation)m_operationMap.get(operator);
+        MatchOperation op = m_operationMap.get(operator);
         return op.matches(text == null ? StringConstants.EMPTY : text, pattern);
     }
 

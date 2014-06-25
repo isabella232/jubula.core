@@ -66,10 +66,10 @@ public class HighlightInAUTHandler
             if (assoCompId != null) {
                 compId.setComponentClassName(
                         assoCompId.getComponentClassName());
-                compId.setHierarchyNames(new ArrayList<Object>(assoCompId
-                        .getHierarchyNames()));
-                compId.setNeighbours(new ArrayList<Object>(assoCompId
-                        .getNeighbours()));
+                compId.setHierarchyNames(new ArrayList<String>(
+                        assoCompId.getHierarchyNames()));
+                compId.setNeighbours(new ArrayList<String>(
+                        assoCompId.getNeighbours()));
                 compId.setSupportedClassName(
                         assoCompId.getSupportedClassName());
                 compId.setAlternativeDisplayName(assoCompId

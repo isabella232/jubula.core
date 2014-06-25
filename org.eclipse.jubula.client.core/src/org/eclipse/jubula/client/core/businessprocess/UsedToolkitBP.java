@@ -433,7 +433,6 @@ public class UsedToolkitBP {
      * @return A List of {@link ToolkitPluginError.ERROR}, or an empty List
      *  if there are no errors.
      */
-    @SuppressWarnings("unchecked")
     public List<ToolkitPluginError> checkUsedToolkitPluginVersions(
         Set<IUsedToolkitPO> usedToolkits) {
         
@@ -658,7 +657,6 @@ public class UsedToolkitBP {
      * @param project the Project
      * @return A List of the allowed toolkits for the given project.
      */
-    @SuppressWarnings("unchecked")
     public List<ToolkitPluginDescriptor> getAllowedProjectToolkits(
         IProjectPO project) {
         
@@ -782,7 +780,6 @@ public class UsedToolkitBP {
      * @return A set of allowed toolkits containing the most concrete instance 
      *         in <code>toolkits</code> and all of its descendants.
      */
-    @SuppressWarnings("unchecked")
     private Set<ToolkitPluginDescriptor> getMostConcreteAllowed(
             Set<ToolkitPluginDescriptor> toolkits) {
 
@@ -841,7 +838,6 @@ public class UsedToolkitBP {
      * @param projectAuts Set of AUTs contained in a project.
      * @return allowed toolkits.
      */
-    @SuppressWarnings("unchecked")
     private Set<ToolkitPluginDescriptor> getAllowedProjectToolkitsAut(
             Set<IAUTMainPO> projectAuts) {
 
@@ -899,7 +895,6 @@ public class UsedToolkitBP {
      * @return all descendants of <code>toolkit</code> within the toolkit
      *         hierarchy. This <em>includes</em> the given toolkit.
      */
-    @SuppressWarnings("unchecked")
     private Set<ToolkitPluginDescriptor> getDescendants(
             ToolkitPluginDescriptor toolkit) {
 

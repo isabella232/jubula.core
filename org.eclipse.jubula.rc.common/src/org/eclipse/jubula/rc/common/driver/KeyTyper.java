@@ -119,7 +119,7 @@ public class KeyTyper {
                 && keyDownMatcher != null && keyUpMatcher != null;
             InterceptorOptions options = new InterceptorOptions(new long[]{
                 AWTEvent.KEY_EVENT_MASK});
-            List keycodes = modifierKeyCodes(keyStroke);
+            List<Integer> keycodes = modifierKeyCodes(keyStroke);
             keycodes.add(new Integer(keyStroke.getKeyCode()));
             if (log.isDebugEnabled()) {
                 String keyModifierText = KeyEvent.getKeyModifiersText(keyStroke
@@ -140,11 +140,11 @@ public class KeyTyper {
             // first press all keys, then release all keys, but
             // avoid to press and release any key twice (even if perhaps alt
             // and meta should have the same keycode(??)
-            Set alreadyDown = new HashSet();
-            ListIterator i = keycodes.listIterator();
+            Set<Integer> alreadyDown = new HashSet<Integer>();
+            ListIterator<Integer> i = keycodes.listIterator();
             try {
                 while (i.hasNext()) {
-                    Integer keycode = (Integer)i.next();
+                    Integer keycode = i.next();
                     if (log.isDebugEnabled()) {
                         log.debug("trying to press: " + keycode); //$NON-NLS-1$
                     }
@@ -228,8 +228,8 @@ public class KeyTyper {
      * @param keyStroke KeyStroke whose modifiers are requested
      * @return a List of KeyCodes (hopefully) realising the ModifierMask contained in the KeyStroke
      */
-    private List modifierKeyCodes(KeyStroke keyStroke) {
-        List l = new LinkedList();
+    private List<Integer> modifierKeyCodes(KeyStroke keyStroke) {
+        List<Integer> l = new LinkedList<Integer>();
         int modifiers = keyStroke.getModifiers();
         // this is jdk 1.3 - code.
         // use ALT_DOWN_MASK instead etc. with jdk 1.4 !
@@ -325,15 +325,15 @@ public class KeyTyper {
      * @param keyUpMatcher The event matcher to be used for key release event
      *                     confirmation.
      */
-    private void releaseKeys(InterceptorOptions options, Set alreadyDown, 
-        ListIterator i, IRobotEventInterceptor interceptor, 
-        IEventMatcher keyUpMatcher) {
+    private void releaseKeys(InterceptorOptions options,
+        Set<Integer> alreadyDown, ListIterator<Integer> i,
+        IRobotEventInterceptor interceptor, IEventMatcher keyUpMatcher) {
         
         boolean waitForConfirm = interceptor != null && keyUpMatcher != null;
         // Release all keys in reverse order.
-        Set alreadyUp = new HashSet();
+        Set<Integer> alreadyUp = new HashSet<Integer>();
         while (i.hasPrevious()) {
-            Integer keycode = (Integer)i.previous();
+            Integer keycode = i.previous();
             if (log.isDebugEnabled()) {
                 log.debug("trying to release: " + keycode.intValue()); //$NON-NLS-1$
             }

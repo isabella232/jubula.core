@@ -83,13 +83,15 @@ public class RecordActions {
     private int[] m_tableRowColumn = {0, 0};
     
     /** map to store contents of TextComponents */
-    private Map m_map = new HashMap();
+    private Map<Component, String> m_map = new HashMap<Component, String>();
     
     /** map to store logical Names */
-    private Map m_logNameMap = new HashMap();
+    private Map<String, IComponentIdentifier> m_logNameMap = 
+        new HashMap<String, IComponentIdentifier>();
     
     /** map to store technical Names */
-    private Map m_techNameMap = new HashMap();
+    private Map<Component, String> m_techNameMap = new 
+        HashMap<Component, String>();
     
     /** mouse button for popups */
     private int m_popupMouseBtn = MouseEvent.BUTTON3;
@@ -108,14 +110,14 @@ public class RecordActions {
      * contents of TextComponents
      * @return map 
      */
-    public Map getTextCompContent() {
+    public Map<Component, String> getTextCompContent() {
         return m_map;
     }
     /**
      * contents of TextComponents
      * @param map The message data
      */
-    public void setTextCompContent(Map map) {
+    public void setTextCompContent(Map<Component, String> map) {
         m_map = map;
     }    
     /**
@@ -204,7 +206,7 @@ public class RecordActions {
                 entr = entr.concat(","); //$NON-NLS-1$
             }
         }
-        List lstValues = new LinkedList();
+        List<String> lstValues = new LinkedList<String>();
         lstValues.add(entr);
         lstValues.add(Constants.REC_OPERATOR);
         lstValues.add(Constants.REC_SEARCH_MODE);
@@ -231,7 +233,7 @@ public class RecordActions {
             count = 1;
         }
         String clCount = String.valueOf(count);
-        List treValues = new LinkedList();
+        List<String> treValues = new LinkedList<String>();
         treValues.add(Constants.REC_SEARCH_MODE);
         treValues.add("0"); //$NON-NLS-1$
         treValues.add(nodepath);                
@@ -257,7 +259,7 @@ public class RecordActions {
         String nodepath = null;
         nodepath = m_recordHelper.treepathToTextpath(jtre, path);
         Action a = m_recordHelper.compSysToAction(id, collOrExp);
-        java.util.List treValues = new LinkedList();
+        java.util.List<String> treValues = new LinkedList<String>();
         treValues.add(Constants.REC_SEARCH_MODE);
         treValues.add("0"); //$NON-NLS-1$
         treValues.add(nodepath);                
@@ -276,7 +278,7 @@ public class RecordActions {
      */
     protected void selectTab(JTabbedPane jtpn, IComponentIdentifier id,
             Action a) {
-        List tpnValues = new LinkedList();
+        List<String> tpnValues = new LinkedList<String>();
         String tpnTitle = StringParsing.singleQuoteText(jtpn
                 .getTitleAt(jtpn.getSelectedIndex()));
         tpnValues.add(tpnTitle);
@@ -300,7 +302,7 @@ public class RecordActions {
         if (cbxText.equals(StringConstants.EMPTY) || cbxText == null) {
             cbxText = Constants.EMPTY_ITEM;
         }
-        List cbxValues = new LinkedList();
+        List<String> cbxValues = new LinkedList<String>();
         cbxValues.add(cbxText);
         cbxValues.add(Constants.REC_OPERATOR);
         cbxValues.add(Constants.REC_SEARCH_MODE);
@@ -329,7 +331,7 @@ public class RecordActions {
             .toString());
         String rowStr = (new Integer(row + 1)).toString();
         String columnStr = (new Integer(column + 1)).toString();
-        List tblValues = new LinkedList();
+        List<String> tblValues = new LinkedList<String>();
         tblValues.add(rowStr);
         tblValues.add(MatchUtil.EQUALS);
         tblValues.add(columnStr);
@@ -377,7 +379,7 @@ public class RecordActions {
         Action a = new Action();                    
         if (comp instanceof JComponent) {
             String pth = m_recordHelper.getPath(mi);            
-            List parValues = new LinkedList();
+            List<String> parValues = new LinkedList<String>();
             parValues.add(pth);
             parValues.add(Constants.REC_OPERATOR);
             
@@ -417,7 +419,7 @@ public class RecordActions {
         Action a = new Action();
         a = m_recordHelper.compSysToAction(id, "CompSystem.KeyStroke"); //$NON-NLS-1$
         
-        List parameterValues = new LinkedList();            
+        List<String> parameterValues = new LinkedList<String>();            
         String modifierKey = null;
         if (ke.getModifiers() == 0) {
             modifierKey = "none"; //$NON-NLS-1$
@@ -465,7 +467,7 @@ public class RecordActions {
             String mbutton = (new Integer(me.getButton())
                 .toString());
             Action a = m_recordHelper.compSysToAction(id, "CompSystem.Click"); //$NON-NLS-1$
-            List parValues = new LinkedList();
+            List<String> parValues = new LinkedList<String>();
             parValues.add(clCount);
             parValues.add(mbutton);
             
@@ -498,7 +500,7 @@ public class RecordActions {
         int percentY = (int)(me.getY() / bounds.getHeight() * 100);
         String percentYString = new Integer(percentY).toString();
         String units = Constants.REC_UNITS;
-        List parValues = new LinkedList();
+        List<String> parValues = new LinkedList<String>();
         parValues.add(clCount);
         parValues.add(mbutton);
         parValues.add(percentXString);
@@ -580,7 +582,7 @@ public class RecordActions {
                 id = ComponentHandler.getIdentifier(src);
                 Action a = new Action();
                 a = m_recordHelper.compSysToAction(id, "CompSystem.InputText"); //$NON-NLS-1$        
-                List parameterValues = new LinkedList();
+                List<String> parameterValues = new LinkedList<String>();
                 text = StringParsing.singleQuoteText(text);                
                 parameterValues.add(text);                
                 String logName = createLogicalName(src, id);                 
@@ -613,7 +615,7 @@ public class RecordActions {
                 int column = getTableRowColumn()[1];
                 String rowStr = (new Integer(row + 1)).toString();
                 String columnStr = (new Integer(column + 1)).toString();
-                List parameterValues = new LinkedList();
+                List<String> parameterValues = new LinkedList<String>();
                 if (txt.equals(StringConstants.EMPTY) || txt == null) {
                     txt = "''"; //$NON-NLS-1$
                 }
@@ -667,7 +669,7 @@ public class RecordActions {
                 timeout = new Integer(timeoutInt).toString();
             }
             
-            java.util.List winValues = new LinkedList();
+            java.util.List<String> winValues = new LinkedList<String>();
             winValues.add(title);
             winValues.add(operator);
             winValues.add(timeout);
@@ -683,7 +685,7 @@ public class RecordActions {
      * @param parValues List of values
      */
     private void createCAP(Action a,
-            IComponentIdentifier id, List parValues) {
+            IComponentIdentifier id, List<String> parValues) {
         String defaultName = "default"; //$NON-NLS-1$
         createCAP(a, id, parValues, defaultName);
     }
@@ -696,7 +698,7 @@ public class RecordActions {
      * @param logName Logical Name
      */
     private void createCAP(Action a,
-            IComponentIdentifier id, List parValues, String logName) {
+            IComponentIdentifier id, List<String> parValues, String logName) {
         MessageCap messageCap = new MessageCap();        
         
         // setup Action in MessageCap
@@ -708,7 +710,7 @@ public class RecordActions {
         messageCap.setCi(id);
         
         // setup parameters in MessageCap
-        List parameterValues = parValues;
+        List<String> parameterValues = parValues;
         List params = a.getParams();
 
         for (int i = 0; i < params.size(); i++) {
@@ -718,7 +720,7 @@ public class RecordActions {
             String emptyString = StringConstants.EMPTY;
             String value = 
                 emptyString.equals(parameterValues.get(i)) ? null 
-                    : (String)parameterValues.get(i);            
+                    : parameterValues.get(i);            
             messageParam.setValue(value);
             messageCap.addMessageParam(messageParam);
             
@@ -748,21 +750,21 @@ public class RecordActions {
      */
     private String createLogicalName(Component c, IComponentIdentifier id) {
         
-        String logName = (String)m_techNameMap.get(c);
+        String logName = m_techNameMap.get(c);
         
         if (logName == null) {
             logName = m_recordHelper.generateLogicalName(c, id);
             
             if (logName != null) {
                 IComponentIdentifier id2 = 
-                    (IComponentIdentifier)m_logNameMap.get(logName);
+                    m_logNameMap.get(logName);
                 if (m_logNameMap.containsKey(logName)) {
                     if (!(m_recordHelper.isCiEqual(id, id2))) {
-                        Collection col = m_techNameMap.values();
-                        Iterator it = col.iterator();
+                        Collection<String> col = m_techNameMap.values();
+                        Iterator<String> it = col.iterator();
                         int counter = 0;
                         while (it.hasNext()) {
-                            String name = (String)it.next();
+                            String name = it.next();
                             if (name.equals(logName)
                                     || name.equals(
                                             logName + "_" + (counter + 1))) { //$NON-NLS-1$

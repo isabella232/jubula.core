@@ -38,13 +38,13 @@ public interface IComponentIdentifier {
      * @param hierarchyNames
      *            The hierarchyNames to set. if null, the list will be cleared.
      */
-    public abstract void setHierarchyNames(List hierarchyNames);
+    public abstract void setHierarchyNames(List<String> hierarchyNames);
 
-    // getter and settor for serialisation 
+    // getter and setter for serialization 
     /**
      * @return Returns the hierarchyNames.
      */
-    public abstract List getHierarchyNames();
+    public abstract List<String> getHierarchyNames();
 
     /**
      * @param hierarchyNames The hierarchyNames to add.
@@ -57,7 +57,7 @@ public interface IComponentIdentifier {
     public abstract String toString();
 
     /**
-     * clears the hierarchynames list
+     * clears the hierarchy names list
      *
      */
     public abstract void clearHierarchyNames();
@@ -80,12 +80,12 @@ public interface IComponentIdentifier {
     /**
      * @return Returns the neighbours.
      */
-    public abstract List getNeighbours();
+    public abstract List<String> getNeighbours();
 
     /**
      * @param neighbours The neighbours to set.
      */
-    public abstract void setNeighbours(List neighbours);
+    public abstract void setNeighbours(List<String> neighbours);
 
     /**
      * @param neighbours The hierarchyNames to add.

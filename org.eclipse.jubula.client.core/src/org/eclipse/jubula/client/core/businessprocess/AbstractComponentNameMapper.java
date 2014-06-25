@@ -92,7 +92,6 @@ public abstract class AbstractComponentNameMapper implements
      * 
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     public void changeReuse(
             IComponentNameReuser user, String oldGuid, String newGuid) 
         throws IncompatibleTypeException, PMException {

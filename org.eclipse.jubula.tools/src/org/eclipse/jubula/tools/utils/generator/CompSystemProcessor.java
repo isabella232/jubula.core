@@ -66,8 +66,8 @@ public class CompSystemProcessor implements IProcessor {
     /**
      * @return a list of Infos for all toolkits
      */
-    public List getToolkitInfos() {
-        List infos = new ArrayList();
+    public List<ToolkitInfo> getToolkitInfos() {
+        List<ToolkitInfo> infos = new ArrayList<ToolkitInfo>();
         List descriptors = m_compSystem.getAllToolkitPluginDescriptors();
         for (Iterator i = descriptors.iterator(); i.hasNext();) {
             ToolkitPluginDescriptor descr = (ToolkitPluginDescriptor)i.next();
@@ -91,8 +91,8 @@ public class CompSystemProcessor implements IProcessor {
     /**
      * @return A list of all components encapsulated in infos
      */
-    public List getCompInfos() {
-        List infos = new ArrayList();
+    public List<ComponentInfo> getCompInfos() {
+        List<ComponentInfo> infos = new ArrayList<ComponentInfo>();
 
         for (Iterator it = m_compSystem.getComponents().iterator(); it
                 .hasNext();) {
@@ -114,8 +114,9 @@ public class CompSystemProcessor implements IProcessor {
      *            components should be listed.
      * @return the list of components
      */
-    public List getCompInfos(String toolkitId, String toolkitName) {
-        List infos = new ArrayList();
+    public List<ComponentInfo> getCompInfos(String toolkitId, 
+        String toolkitName) {
+        List<ComponentInfo> infos = new ArrayList<ComponentInfo>();
         ToolkitInfo tkInfo = new ToolkitInfo(toolkitName, toolkitId);
         for (Iterator it = 
                 m_compSystem.getComponents(toolkitId, false).iterator();
@@ -136,7 +137,7 @@ public class CompSystemProcessor implements IProcessor {
      * @param level
      *            The current inheritance hierarchy level
      */
-    private void getHierarchyCompInfosImpl(List types,
+    private void getHierarchyCompInfosImpl(List<ComponentInfo> types,
             ComponentInfo componentInfo, int level) {
 
         Component component = componentInfo.getComponent();
@@ -162,8 +163,9 @@ public class CompSystemProcessor implements IProcessor {
      * @return A list of all super components in the hierarchy of the passed
      *         component in <code>componentInfo</code>
      */
-    public List getHierarchyCompInfos(ComponentInfo componentInfo) {
-        List types = new ArrayList();
+    public List<ComponentInfo> getHierarchyCompInfos(
+        ComponentInfo componentInfo) {
+        List<ComponentInfo> types = new ArrayList<ComponentInfo>();
         getHierarchyCompInfosImpl(types, componentInfo, 0);
         return types;
     }
@@ -180,10 +182,10 @@ public class CompSystemProcessor implements IProcessor {
             Action action) {
 
         ComponentInfo result = null;
-        List types = getHierarchyCompInfos(componentInfo);
+        List<ComponentInfo> types = getHierarchyCompInfos(componentInfo);
         for (int i = 0; i < types.size(); i++) {
             try {
-                ComponentInfo info = (ComponentInfo)types.get(i);
+                ComponentInfo info = types.get(i);
 
                 if (!(info.getComponent().findAction(action.getName())
                         instanceof InvalidAction)) {
@@ -207,13 +209,13 @@ public class CompSystemProcessor implements IProcessor {
      * @return a list of ComponentInfos: all components that use the actions
      *         from this component
      */
-    public List getUsingComps(ComponentInfo compInfo) {
+    public List<ComponentInfo> getUsingComps(ComponentInfo compInfo) {
         Component comp = compInfo.getComponent();
         Set realizerSet = comp.getRealizers();
         // getRealizers includes comp in it's result. We don't need that.
         realizerSet.remove(comp);
 
-        List realizerList = new ArrayList();
+        List<ComponentInfo> realizerList = new ArrayList<ComponentInfo>();
         Iterator i = realizerSet.iterator();
         while (i.hasNext()) {
             Component compNext = (Component)i.next();
@@ -236,7 +238,8 @@ public class CompSystemProcessor implements IProcessor {
      *            inherits from super components.
      * @return The list of actions
      */
-    public List getActions(ComponentInfo componentInfo, boolean newActions) {
+    public List<ActionInfo> getActions(ComponentInfo componentInfo,
+        boolean newActions) {
         return getActions(componentInfo, newActions, false);
     }
 
@@ -250,9 +253,9 @@ public class CompSystemProcessor implements IProcessor {
      *            whether to return deprecated actions or not
      * @return a list of actions as specified
      */
-    public List getActions(ComponentInfo componentInfo, boolean newActions,
-            boolean deprecated) {
-        List actions = new ArrayList();
+    public List<ActionInfo> getActions(ComponentInfo componentInfo,
+        boolean newActions, boolean deprecated) {
+        List<ActionInfo> actions = new ArrayList<ActionInfo>();
 
         for (Iterator it = componentInfo.getComponent().getActions()
                 .iterator(); it.hasNext();) {
@@ -273,8 +276,8 @@ public class CompSystemProcessor implements IProcessor {
     /**
      * @return a list of all deprecated actions
      */
-    public List getDeprecatedActions() {
-        List deprecated = new ArrayList();
+    public List<ActionInfo> getDeprecatedActions() {
+        List<ActionInfo> deprecated = new ArrayList<ActionInfo>();
 
         for (Iterator i = m_compSystem.getComponents().iterator();
             i.hasNext();) {
@@ -282,9 +285,9 @@ public class CompSystemProcessor implements IProcessor {
             ComponentInfo ci = new ComponentInfo(comp, getToolkitInfo(comp
                     .getToolkitDesriptor()));
             // we only want the non-inherited new actions (I think)
-            List actions = getActions(ci, true, true);
-            for (Iterator j = actions.iterator(); j.hasNext();) {
-                ActionInfo ai = (ActionInfo)j.next();
+            List<ActionInfo> actions = getActions(ci, true, true);
+            for (Iterator<ActionInfo> j = actions.iterator(); j.hasNext();) {
+                ActionInfo ai = j.next();
                 deprecated.add(ai);
             }
         }

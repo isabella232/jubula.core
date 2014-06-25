@@ -895,8 +895,8 @@ public class RobotSwtImpl implements IRobot {
      * @return a list of key typers capable of generating the necessary
      *         events to simulate the modifiers of the given key stroke.
      */
-    private List modifierKeyTypers(KeyStroke keyStroke) {
-        List l = new LinkedList();
+    private List<AbstractKeyTyper> modifierKeyTypers(KeyStroke keyStroke) {
+        List<AbstractKeyTyper> l = new LinkedList<AbstractKeyTyper>();
         int modifiers = keyStroke.getModifiers();
         // this is jdk 1.3 - code.
         // use ALT_DOWN_MASK instead etc. with jdk 1.4 !
@@ -942,15 +942,17 @@ public class RobotSwtImpl implements IRobot {
      */
     public void keyStroke(final String keyStrokeSpec) throws RobotException {
         final KeyStroke keyStroke = getKeyStroke(keyStrokeSpec);
-        final List keyTyperList = modifierKeyTypers(keyStroke);
+        final List<AbstractKeyTyper> keyTyperList = 
+            modifierKeyTypers(keyStroke);
         keyTyperList.add(getBaseKeyTyper(keyStrokeSpec));
 
         m_robot.setAutoWaitForIdle(true);
         // first press all keys, then release all keys, but
         // avoid to press and release any key twice (even if perhaps alt
         // and meta should have the same keycode(??)
-        final Set alreadyDown = new HashSet();
-        final ListIterator i = keyTyperList.listIterator();
+        final Set<AbstractKeyTyper> alreadyDown = 
+            new HashSet<AbstractKeyTyper>();
+        final ListIterator<AbstractKeyTyper> i = keyTyperList.listIterator();
         final InterceptorOptions options = new InterceptorOptions(
                 new long[] { SWT.KeyUp });
         try {
@@ -959,7 +961,7 @@ public class RobotSwtImpl implements IRobot {
                         public Object run() { // SYNCH THREAD START
                             boolean success = true;
                             while (i.hasNext()) {
-                                AbstractKeyTyper keyTyper = (AbstractKeyTyper)i
+                                AbstractKeyTyper keyTyper = i
                                         .next();
                                 if (log.isDebugEnabled()) {
                                     log.debug("trying to press: " + keyTyper); //$NON-NLS-1$
@@ -1169,11 +1171,13 @@ public class RobotSwtImpl implements IRobot {
             || !activated && !isActivated(key)) {
             return;
         }
-        List keyTyperList = new LinkedList();
+        List<AbstractKeyTyper> keyTyperList = 
+            new LinkedList<AbstractKeyTyper>();
         keyTyperList.add(new KeyCodeTyper(key));
         m_robot.setAutoWaitForIdle(true);
-        final Set alreadyDown = new HashSet();
-        final ListIterator i = keyTyperList.listIterator();
+        final Set<AbstractKeyTyper> alreadyDown = 
+            new HashSet<AbstractKeyTyper>();
+        final ListIterator<AbstractKeyTyper> i = keyTyperList.listIterator();
         final InterceptorOptions options = new InterceptorOptions(
             new long[]{SWT.KeyUp});
         try {
@@ -1182,7 +1186,7 @@ public class RobotSwtImpl implements IRobot {
                     new IRunnable() {
                             public Object run() { // SYNCH THREAD START
                                 AbstractKeyTyper keyTyper = 
-                                    (AbstractKeyTyper)i.next();
+                                    i.next();
                                 if (log.isDebugEnabled()) {
                                     log.debug("trying to press: " + keyTyper); //$NON-NLS-1$
                                 }
@@ -1379,10 +1383,11 @@ public class RobotSwtImpl implements IRobot {
      * @param i ListIterator
      */
     private void releaseKeys(final InterceptorOptions options,
-        final Set alreadyDown, final ListIterator i) {
+        final Set<AbstractKeyTyper> alreadyDown,
+        final ListIterator<AbstractKeyTyper> i) {
         
         // Release all keys in reverse order.
-        final Set alreadyUp = new HashSet();
+        final Set<AbstractKeyTyper> alreadyUp = new HashSet<AbstractKeyTyper>();
         try {
             while (i.hasPrevious()) {
                 IRobotEventConfirmer confirmer = m_interceptor
@@ -1391,7 +1396,7 @@ public class RobotSwtImpl implements IRobot {
                     new IRunnable() {
                             public Object run() { // SYNCH THREAD START
                                 AbstractKeyTyper keyTyper = 
-                                    (AbstractKeyTyper)i.previous();
+                                    i.previous();
                                 if (log.isDebugEnabled()) {
                                     log.debug("trying to release: " + keyTyper); //$NON-NLS-1$
                                 }

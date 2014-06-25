@@ -74,7 +74,6 @@ public class SynopsisGenerator extends Generator {
      *      org.eclipse.jubula.documentation.gen.ComponentInfo,
      *      org.eclipse.jubula.documentation.gen.ConfigGroup)
      */
-    @SuppressWarnings("unchecked")
     public String generate() {
         
         String begingdrefsynopsis = m_group.getProp("begingdrefsynopsis"); //$NON-NLS-1$

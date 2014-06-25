@@ -116,7 +116,6 @@ public class InspectorView extends ViewPart {
      *               viewer model.
      * @return the top-level elements of the converted viewer model.
      */
-    @SuppressWarnings("unchecked")
     private TreeNode [] convertToViewerModel(IComponentIdentifier compId) {
         if (compId == null) {
             return null;

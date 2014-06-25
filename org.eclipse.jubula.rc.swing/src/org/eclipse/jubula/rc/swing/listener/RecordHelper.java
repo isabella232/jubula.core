@@ -73,7 +73,8 @@ public class RecordHelper {
      * Map for translating keycodes from keyevents to the ITE 
      * Integer <=> String
      */
-    private static final Map KEYCODE_MAP = new HashMap();
+    private static final Map<Integer, String> KEYCODE_MAP = 
+        new HashMap<Integer, String>();
 
     static {
         // Swing Key Code <=> Value to Enter
@@ -138,7 +139,8 @@ public class RecordHelper {
     /** Map for translating modifiers from keyevents to the ITE 
      *  Integer <=> String
      */
-    private static final Map MODIFIER_MAP = new HashMap();
+    private static final Map<Integer, String> MODIFIER_MAP = 
+        new HashMap<Integer, String>();
 
     static {
         // Swing Modifier <=> Value to Enter
@@ -194,7 +196,7 @@ public class RecordHelper {
         throws StepExecutionException {
 
         String keyname = KEYCODE_MAP.containsKey(new Integer(keycode)) 
-            ? (String)KEYCODE_MAP.get(new Integer(keycode)) : null;
+            ? KEYCODE_MAP.get(new Integer(keycode)) : null;
 
         if (keyname == null && log.isInfoEnabled()) {
             log.info("The keycode '" + keycode //$NON-NLS-1$
@@ -213,7 +215,7 @@ public class RecordHelper {
         throws StepExecutionException {
 
         String modname = MODIFIER_MAP.containsKey(new Integer(modifier)) 
-            ? (String)MODIFIER_MAP.get(new Integer(modifier)) : null;
+            ? MODIFIER_MAP.get(new Integer(modifier)) : null;
 
         if (modname == null && log.isInfoEnabled()) {
             log.info("The modifier '" + modifier //$NON-NLS-1$

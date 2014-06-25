@@ -631,7 +631,6 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
      * Creates the {@link CellEditor}s of the given Table.
      * @param table a Table
      */
-    @SuppressWarnings("unchecked")
     private void createTableCellEditors(final Table table) {
         
         final TextCellEditor paramNameTextCellEditor = new TextCellEditor(

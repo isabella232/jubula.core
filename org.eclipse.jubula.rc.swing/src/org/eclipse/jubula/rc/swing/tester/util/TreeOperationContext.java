@@ -73,7 +73,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
             return getRootNodes();
         }
         int childCount = m_model.getChildCount(parent);
-        List childList = new ArrayList();
+        List<Object> childList = new ArrayList<Object>();
         for (int i = 0; i < childCount; i++) {
             childList.add(m_model.getChild(parent, i));
         }
@@ -84,8 +84,8 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     /**
      * {@inheritDoc}
      */
-    public Collection getNodeTextList(Object node) {
-        Collection res = new ArrayList();
+    public Collection<String> getNodeTextList(Object node) {
+        Collection<String> res = new ArrayList<String>();
         int row = getRowForTreeNode(node);
         String valText = convertValueToText(node, row);
         if (valText != null) {
@@ -218,7 +218,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
      */
     private Object[] getPathToRoot(Object node) {
         Object rootNode = m_model.getRoot();
-        List path = getPathToRootImpl(node, rootNode);
+        List<Object> path = getPathToRootImpl(node, rootNode);
         return path.toArray();
     }
     
@@ -457,16 +457,16 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
      * @param currentNode The node currently being checked.
      * @return a List containing the elements of the path in the proper order.
      */
-    private List getPathToRootImpl(Object node, Object currentNode) {
+    private List<Object> getPathToRootImpl(Object node, Object currentNode) {
         if (ObjectUtils.equals(currentNode, node)) {
-            List retList = new ArrayList();
+            List<Object> retList = new ArrayList<Object>();
             retList.add(currentNode);
             return retList;
         }
         
         int childCount = m_model.getChildCount(currentNode);
         for (int i = 0; i < childCount; i++) {
-            List path = getPathToRootImpl(
+            List<Object> path = getPathToRootImpl(
                     node, m_model.getChild(currentNode, i)); 
             if (path != null) {
                 // prepend the current node to the path and return

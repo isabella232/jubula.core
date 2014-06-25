@@ -117,7 +117,6 @@ public class ToolkitUtils {
      * @return the toolkit name of the given toolkitID or the given ID if no
      * name was found.
      */
-    @SuppressWarnings("unchecked")
     public static String getToolkitName(String toolkitId) {
         final List<ToolkitPluginDescriptor> toolkitPluginDescriptors = 
             ComponentBuilder.getInstance().getCompSystem()

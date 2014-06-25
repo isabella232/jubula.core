@@ -182,7 +182,6 @@ public class AddEventHandlerDialog extends TitleAreaDialog {
      * @param parent
      *            the parent for the widgets.
      */
-    @SuppressWarnings("unchecked")
     private void createWidgets(Composite parent) {
         // create a non-editable text field for the name of the event handler
         Label eventNameLabel = new Label(parent, SWT.NONE);

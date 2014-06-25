@@ -506,8 +506,8 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     /**
      * {@inheritDoc}
      */
-    public Collection getNodeTextList(Object node) {
-        final Collection res = new ArrayList();
+    public Collection<String> getNodeTextList(Object node) {
+        final Collection<String> res = new ArrayList<String>();
         final TreeItem item = castToTreeItem(node);
         
         getQueuer().invokeAndWait("getNodeText: " + item,  //$NON-NLS-1$

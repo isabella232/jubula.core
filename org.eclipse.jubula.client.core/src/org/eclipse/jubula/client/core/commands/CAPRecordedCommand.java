@@ -430,7 +430,6 @@ public class CAPRecordedCommand implements ICommand {
      * @return the highest component that supports the current action (e.g.
      *         gdSelect on TreeTable will return Tree)
      */
-    @SuppressWarnings("unchecked")
     private Component getComponentToUse(MessageCap messageCap,
             CompSystem compSystem, String componentType) {
         List<Component> supportedComponents = 

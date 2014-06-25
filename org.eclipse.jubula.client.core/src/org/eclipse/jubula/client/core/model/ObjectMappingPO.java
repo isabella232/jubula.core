@@ -265,7 +265,6 @@ class ObjectMappingPO implements IObjectMappingPO {
      *             error
      * @return the technicalName to a logical name or <code>null</code>
      */
-    @SuppressWarnings("unchecked")
     public IComponentIdentifier getTechnicalName(String logical) throws
         LogicComponentNotManagedException {
         IObjectMappingAssoziationPO asso = getLogicalNameAssoc(logical);

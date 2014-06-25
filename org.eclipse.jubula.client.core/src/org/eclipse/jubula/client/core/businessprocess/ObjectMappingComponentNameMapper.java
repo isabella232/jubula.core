@@ -80,7 +80,6 @@ public class ObjectMappingComponentNameMapper
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     public Set<String> getUsedTypes(String compNameGuid) {
         Long currentProjectId = 
             GeneralStorage.getInstance().getProject().getId();

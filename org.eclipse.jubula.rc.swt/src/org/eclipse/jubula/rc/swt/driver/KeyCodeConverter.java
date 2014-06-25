@@ -30,10 +30,10 @@ public class KeyCodeConverter {
     /**
      * The Converter Map.
      */
-    private static Map converterTable = null;
+    private static Map<String, Integer> converterTable = null;
     
     static {
-        converterTable = new HashMap();
+        converterTable = new HashMap<String, Integer>();
         converterTable.put(CompSystemConstants.MODIFIER_NONE, 
                 new Integer(-1));
         converterTable.put(CompSystemConstants.MODIFIER_SHIFT, 
@@ -68,7 +68,7 @@ public class KeyCodeConverter {
             throw new RobotException("Key is null!",  //$NON-NLS-1$
                     EventFactory.createConfigErrorEvent());
         }
-        final Integer keyCode = (Integer)converterTable.get(key.toLowerCase());
+        final Integer keyCode = converterTable.get(key.toLowerCase());
         if (keyCode == null) {
             throw new RobotException("No KeyCode found for key '" + key + "'",   //$NON-NLS-1$//$NON-NLS-2$
                     EventFactory.createConfigErrorEvent());
