@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.swing.tester.adapter;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
+
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
@@ -22,7 +23,6 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
-import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -139,21 +139,6 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
                     return selected;
                 }
             });
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public boolean containsValue(String value, String operator) {
-        String[] listValues = getValues();
-        for (int i = 0; i < listValues.length; i++) {
-            boolean contains = MatchUtil.getInstance()
-                    .match(listValues[i], value, operator);
-            if (contains) {
-                return contains;
-            }
-        }
-        return false;
     }
     
     /**
