@@ -75,7 +75,7 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
     public void clickOnIndex(final Integer i,
             ClickOptions co, double maxWidth) {
         final int index = i.intValue();
-        ListModel model = m_list.getModel();
+        final ListModel model = m_list.getModel();
         if ((model == null) || (index >= model.getSize())
             || (index < 0)) {
             throw new StepExecutionException("List index '" + i //$NON-NLS-1$
@@ -84,7 +84,7 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
         }
         // Call of JList.ensureIndexIsVisible() is not required,
         // because the Robot scrolls the click rectangle to visible.
-        Rectangle r = (Rectangle) getRobotFactory().getEventThreadQueuer()
+        final Rectangle r = (Rectangle) getRobotFactory().getEventThreadQueuer()
                 .invokeAndWait("getCellBounds", new IRunnable() { //$NON-NLS-1$
 
                     public Object run() throws StepExecutionException {
@@ -99,13 +99,18 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
         }
         
         // if possible adjust height and width for items
-        ListCellRenderer lcr = m_list.getCellRenderer();
-        if (lcr != null) {
-            Component listItem = lcr.getListCellRendererComponent(m_list, model
-                    .getElementAt(index), index, false, false);
-            Dimension preferredSize = listItem.getPreferredSize();
-            r.setSize(preferredSize);
-        }
+        getRobotFactory().getEventThreadQueuer().invokeAndWait("getItemSize", new IRunnable() { //$NON-NLS-1$
+            public Object run() throws StepExecutionException {
+                ListCellRenderer lcr = m_list.getCellRenderer();
+                if (lcr != null) {
+                    Component listItem = lcr.getListCellRendererComponent(
+                        m_list, model.getElementAt(index), index, false, false);
+                    Dimension preferredSize = listItem.getPreferredSize();
+                    r.setSize(preferredSize);
+                }                
+                return null;
+            }
+        });     
         
         if (maxWidth != JComboBoxAdapter.NO_MAX_WIDTH
                 && r.getWidth() > maxWidth) {
