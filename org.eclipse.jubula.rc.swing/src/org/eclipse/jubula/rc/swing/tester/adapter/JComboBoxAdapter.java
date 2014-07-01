@@ -66,14 +66,20 @@ public class JComboBoxAdapter extends JComponentAdapter implements
      */
     public String getText() {
         String comboBoxText;
-        if (m_comboBox.isEditable()) { 
+        if (isEditable()) { 
             comboBoxText = TesterUtil.getRenderedText(
                     getComboBoxEditorComponent(m_comboBox), true);
         } else {
-            final int selIndex = m_comboBox.getSelectedIndex();
+            final int selIndex = getSelectedIndex();
             if (selIndex == -1) {
-                comboBoxText = String.valueOf(
-                        m_comboBox.getSelectedItem());
+                comboBoxText = (String) getEventThreadQueuer().invokeAndWait(
+                        "getSelectedItemText", //$NON-NLS-1$
+                        new IRunnable() {
+                            public Object run() {
+                                return String.valueOf(m_comboBox
+                                        .getSelectedItem());
+                            }
+                        });
             } else {
                 final JList jlist = new JList(m_comboBox.getModel());
                 Object o = getEventThreadQueuer().invokeAndWait(

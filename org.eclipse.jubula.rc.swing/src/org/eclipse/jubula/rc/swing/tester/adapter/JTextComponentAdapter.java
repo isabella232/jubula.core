@@ -39,7 +39,12 @@ public class JTextComponentAdapter extends JComponentAdapter
      * {@inheritDoc}
      */
     public String getText() {
-        return m_textComponent.getText();
+        return (String) getEventThreadQueuer().invokeAndWait(
+                "getText", new IRunnable() { //$NON-NLS-1$
+                    public Object run() {
+                        return m_textComponent.getText();
+                    }
+                });
     }
     
     /**

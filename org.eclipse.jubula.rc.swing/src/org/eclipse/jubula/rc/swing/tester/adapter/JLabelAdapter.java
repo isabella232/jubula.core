@@ -12,24 +12,31 @@ package org.eclipse.jubula.rc.swing.tester.adapter;
 
 import javax.swing.JLabel;
 
+import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
+
 /**
  * @author BREDEX GmbH
  */
-public class JLabelAdapter extends JComponentAdapter 
-    implements ITextComponent {
+public class JLabelAdapter extends JComponentAdapter implements ITextComponent {
     /**
-     * @param objectToAdapt the component
+     * @param objectToAdapt
+     *            the component
      */
     public JLabelAdapter(Object objectToAdapt) {
         super(objectToAdapt);
-        
+
     }
 
     /**
      * {@inheritDoc}
      */
     public String getText() {
-        return ((JLabel) getRealComponent()).getText();
+        return (String) getEventThreadQueuer().invokeAndWait(
+                "getText", new IRunnable() { //$NON-NLS-1$
+                    public Object run() {
+                        return ((JLabel) getRealComponent()).getText();
+                    }
+                });
     }
 }
