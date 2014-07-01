@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.widgets;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
@@ -25,6 +22,7 @@ import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.utils.DelayableTimer;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
@@ -68,51 +66,6 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
         }
     }
     
-    /**
-     * A timer with a task which can be cancelled an (re-)scheduled
-     */
-    private class DelayableTimer extends Timer {
-        /** the task to be executed */
-        private Runnable m_task;
-        
-        /** the timerTask to execute the task */
-        private TimerTask m_timerTask;
-        
-        /** the time to delay the execution of the task */
-        private long m_delay;
-        
-        /**
-         * the constructor
-         * @param task the task to execute
-         * @param delay the delay before an execution of the task
-         */
-        public DelayableTimer(long delay, Runnable task) {
-            m_task = task;
-            m_delay = delay;
-        }
-        
-        /**
-         * schedules a new delayed execution
-         */
-        public void schedule() {
-            m_timerTask = new TimerTask() { 
-                public void run() { 
-                    m_task.run();
-                }
-            };
-            this.schedule(m_timerTask, m_delay);        
-        }
-        
-        /**
-         * cancels the current plan to execute the task
-         */
-        public void cancel() {
-            if (m_timerTask != null) {
-                m_timerTask.cancel();
-            }
-        }
-    }
-
     /** data key to init pop up or not */
     public static final String INITPOPUP = "INITPOPUP"; //$NON-NLS-1$
     
