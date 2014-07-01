@@ -1,0 +1,47 @@
+= Pre-requisites =
+
+== General Setup of BIRT in our project ==
+Two versions of BIRT involved
+
+=== one to render / display the report in the ITE: the BIRT WebViewer ===
+   * responsible bundle: com.bredexsw.guidancer.reporting.birt.viewer
+    * hold all dependencies to the necessary BIRT bundles (WebViewer, Output Types [PDF, HTML...])
+     * org.eclipse.birt.chart.device.pdf --> PDF output
+     * org.eclipse.birt.report.engine.script.javascript --> report parameter dialog (date combo boxes)
+     * ...
+    * ***must*** be a directory shaped bundle as it is passing the reports file URL
+    * most important class: com.bredexsw.guidancer.reporting.birt.viewer.handler.CreateBirtReportHandler
+     * responsible for invoking the WebViewer with all parameter
+      * report
+      * JDBC URL
+      * DB driver class
+      * username
+      * password
+      * ... 
+   * BIRT engine + WebViewer itself: org.eclipse.birt.feature
+   * ODA (open data access) feature for JDBC / data sources: org.eclipse.datatools.connectivity.feature
+    * important to know
+     * ODA establishes a ***separate*** JDBC connection to the DB (does not use EclipseLink) and makes use of plain SQL
+     * database drivers are located at **2** places: 
+      * c.b.j.client.core fragment
+      * c.b.g.reporting.birt.report.data.oda.jdbc.driver
+
+=== one to write the report: the BIRT Report Designer ===
+   * reports are located here: com.bredexsw.guidancer.reporting.birt.viewer/reports/*.rptdesign
+    * most of them make use of the iteLIB.rptlibrary but the following do ***NOT***:
+     * Test Execution Overview.rptdesign (has once been designed by FZ)
+   * Versions
+    * Eclipse BIRT Designer Version 2.6.2.r262_v20110209 Build 2.6.2.v20110214-1523
+    * Eclipse BIRT Designer Version 2.3.2.v20091214-1508 Build 2.3.2.v20091214-1508
+
+ * to start editing / extending / testing reports in the designer
+  * find, download and start the ***exact same*** version of the report designer
+  * do it on a UNIX system (line endings)
+  * configure JDBC driver in report designer
+  * test connection to db and run a report to check whether its output is the same as in the ITE
+  * make sure that the preview function is working (check Browser rendering engine)
+   * -Dorg.eclipse.swt.browser.UseWebKitGTK=true  
+
+= Legacy =
+
+* TODO: MT
