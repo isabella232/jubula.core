@@ -179,6 +179,16 @@
       <param name="CompSystem.TabIndex">
       	<type>java.lang.Integer</type>
       </param>    
+      <param name="CompSystem.Operator">
+        <type>java.lang.String</type>
+        <defaultValue>equals</defaultValue>
+        <valueSet>
+          <element name="CompSystem.Equals" value="equals"/>
+          <element name="CompSystem.NotEquals" value="not equals"/>
+          <element name="CompSystem.MatchesRegExp" value="matches"/>
+          <element name="CompSystem.SimpleMatch" value="simple match"/>
+        </valueSet>
+      </param>
     </action>
   </toolkitComponent>
   
