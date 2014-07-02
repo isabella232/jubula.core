@@ -88,7 +88,7 @@ public class MouseMovementStrategy {
             path.add(new Point(to));
         }
         
-        return (Point [])path.toArray(new Point [path.size()]);
+        return path.toArray(new Point [path.size()]);
     }
 
     /**

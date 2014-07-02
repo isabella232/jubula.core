@@ -522,7 +522,7 @@ public class SwtUtils {
             }
             objT.addAll(extendedFamily);
         }
-        return (Widget[])(objT.toArray(new Widget[objT.size()]));
+        return (objT.toArray(new Widget[objT.size()]));
     }
 
     /**

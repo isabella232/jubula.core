@@ -204,7 +204,7 @@ public class SwtKeyCodeConverter {
         throws StepExecutionException {
         
         int code = KEY_MAP.containsKey(keyCodeName) 
-            ? ((Integer)KEY_MAP.get(keyCodeName)).intValue() : -1;
+            ? KEY_MAP.get(keyCodeName).intValue() : -1;
 
         if (code == -1 && log.isInfoEnabled()) {
             log.info("The key expression '" + keyCodeName //$NON-NLS-1$
@@ -223,7 +223,7 @@ public class SwtKeyCodeConverter {
         throws StepExecutionException {
         
         int code = MOD_MAP.containsKey(modifierName) 
-            ? ((Integer)MOD_MAP.get(modifierName)).intValue() : -1;
+            ? MOD_MAP.get(modifierName).intValue() : -1;
 
         if (code == -1 && log.isInfoEnabled()) {
             log.info("The key expression '" + modifierName //$NON-NLS-1$

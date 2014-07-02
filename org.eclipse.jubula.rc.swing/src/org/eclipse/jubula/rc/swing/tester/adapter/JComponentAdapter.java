@@ -115,7 +115,7 @@ public class JComponentAdapter extends AbstractComponentAdapter
                                 ? Boolean.TRUE : Boolean.FALSE;
                     }
                 });
-        return (boolean) returnvalue.booleanValue();
+        return returnvalue.booleanValue();
     }
 
     /**
@@ -129,7 +129,7 @@ public class JComponentAdapter extends AbstractComponentAdapter
                                 ? Boolean.TRUE : Boolean.FALSE;
                     }
                 });
-        return (boolean) returnvalue.booleanValue();
+        return returnvalue.booleanValue();
     }
     
     /**
@@ -143,7 +143,7 @@ public class JComponentAdapter extends AbstractComponentAdapter
                                 ? Boolean.TRUE : Boolean.FALSE;
                     }
                 });
-        return (boolean) returnvalue.booleanValue();
+        return returnvalue.booleanValue();
     }
     
     /**

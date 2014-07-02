@@ -378,7 +378,7 @@ public class JComboBoxAdapter extends JComponentAdapter implements
                                 ? Boolean.TRUE : Boolean.FALSE;
                     }
                 });
-        return (boolean) returnvalue.booleanValue();
+        return returnvalue.booleanValue();
     }
 
     /**
