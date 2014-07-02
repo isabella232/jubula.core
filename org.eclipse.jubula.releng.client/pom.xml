@@ -25,6 +25,7 @@
         <module>../org.eclipse.jubula.client.alm.mylyn.ui</module>
         <module>../org.eclipse.jubula.client.alm.mylyn.ui.bridge</module>
 		<module>../org.eclipse.jubula.client.ui.rcp</module>
+		<module>../org.eclipse.jubula.client.toolkit.ui</module>
 		<module>../org.eclipse.jubula.client.qa.caa.gen.ui</module>
 		<module>../org.eclipse.jubula.client.inspector.ui</module>
 		<module>../org.eclipse.jubula.client.archive</module>
