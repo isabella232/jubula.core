@@ -55,7 +55,7 @@ import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,7 +135,7 @@ public class UsedToolkitBP {
         final CompSystem compSystem = ComponentBuilder.getInstance()
             .getCompSystem();
         final Component component = compSystem.findComponent(compType);
-        final ToolkitPluginDescriptor descr = component.getToolkitDesriptor();
+        final ToolkitDescriptor descr = component.getToolkitDesriptor();
         final Long projectID = project.getId();
         final IUsedToolkitPO usedToolkit = PoMaker.createUsedToolkitsPO(
             descr.getToolkitID(), 
@@ -438,13 +438,13 @@ public class UsedToolkitBP {
         
         final List<ToolkitPluginError> errors = 
             new ArrayList<ToolkitPluginError>(0);
-        final List<ToolkitPluginDescriptor> toolkitPluginDescriptors = 
+        final List<ToolkitDescriptor> toolkitPluginDescriptors = 
             ComponentBuilder.getInstance().getCompSystem()
-                .getAllToolkitPluginDescriptors();
+                .getAllToolkitDescriptors();
         for (IUsedToolkitPO usedTk : usedToolkits) {
             final int usedTkMajVers = usedTk.getMajorVersion();
             final int usedTkMinVers = usedTk.getMinorVersion();
-            for (ToolkitPluginDescriptor plDescr : toolkitPluginDescriptors) {
+            for (ToolkitDescriptor plDescr : toolkitPluginDescriptors) {
 
                 if (usedTk.getToolkitId().equals(plDescr.getToolkitID())) {
                     final int pluginMajVers = plDescr.getMajorVersion();
@@ -632,20 +632,20 @@ public class UsedToolkitBP {
      *                toolkit.
      * @return the tree path for the given toolkit.
      */
-    private List<ToolkitPluginDescriptor> getPathToRoot(
-            ToolkitPluginDescriptor toolkit) {
+    private List<ToolkitDescriptor> getPathToRoot(
+            ToolkitDescriptor toolkit) {
         
-        List<ToolkitPluginDescriptor> path = 
-            new LinkedList<ToolkitPluginDescriptor>();
-        ToolkitPluginDescriptor currentToolkit = toolkit;
+        List<ToolkitDescriptor> path = 
+            new LinkedList<ToolkitDescriptor>();
+        ToolkitDescriptor currentToolkit = toolkit;
         while (currentToolkit != null) {
             path.add(0, currentToolkit);
-            ToolkitPluginDescriptor included =
+            ToolkitDescriptor included =
                 ComponentBuilder.getInstance().getCompSystem()
-                    .getToolkitPluginDescriptor(currentToolkit.getIncludes());
+                    .getToolkitDescriptor(currentToolkit.getIncludes());
             currentToolkit = included != null ? included 
                     : ComponentBuilder.getInstance().getCompSystem()
-                        .getToolkitPluginDescriptor(
+                        .getToolkitDescriptor(
                                 currentToolkit.getDepends());
             
         }
@@ -657,11 +657,11 @@ public class UsedToolkitBP {
      * @param project the Project
      * @return A List of the allowed toolkits for the given project.
      */
-    public List<ToolkitPluginDescriptor> getAllowedProjectToolkits(
+    public List<ToolkitDescriptor> getAllowedProjectToolkits(
         IProjectPO project) {
         
-        List<ToolkitPluginDescriptor> allowedToolkits = 
-            new ArrayList<ToolkitPluginDescriptor>();
+        List<ToolkitDescriptor> allowedToolkits = 
+            new ArrayList<ToolkitDescriptor>();
         try {
             refreshToolkitInfo(project);
         } catch (PMException e) {
@@ -670,16 +670,16 @@ public class UsedToolkitBP {
             // nothing
         }
 
-        Set<ToolkitPluginDescriptor> allowedByAuts = 
+        Set<ToolkitDescriptor> allowedByAuts = 
             getAllowedProjectToolkitsAut(project.getAutMainList());
-        Set<ToolkitPluginDescriptor> allowedByReusedProjects =
+        Set<ToolkitDescriptor> allowedByReusedProjects =
             getAllowedProjectToolkitsReused(project.getUsedProjects());
-        Set<ToolkitPluginDescriptor> allowedBySteps =
+        Set<ToolkitDescriptor> allowedBySteps =
             getAllowedProjectToolkitsStep(getUsedToolkits());
         
         // Take intersection of allowed toolkits
         allowedToolkits.addAll(ComponentBuilder.getInstance().getCompSystem()
-                .getAllToolkitPluginDescriptors());
+                .getAllToolkitDescriptors());
         allowedToolkits.retainAll(allowedByAuts);
         allowedToolkits.retainAll(allowedByReusedProjects);
         allowedToolkits.retainAll(allowedBySteps);
@@ -696,14 +696,14 @@ public class UsedToolkitBP {
      *                     project.
      * @return allowed toolkits.
      */
-    private Set<ToolkitPluginDescriptor> getAllowedProjectToolkitsStep(
+    private Set<ToolkitDescriptor> getAllowedProjectToolkitsStep(
             Set<IUsedToolkitPO> usedToolkits) {
 
-        Set<ToolkitPluginDescriptor> stepToolkits = 
-            new HashSet<ToolkitPluginDescriptor>();
+        Set<ToolkitDescriptor> stepToolkits = 
+            new HashSet<ToolkitDescriptor>();
         for (IUsedToolkitPO usedTk : usedToolkits) {
             stepToolkits.add(ComponentBuilder.getInstance().getCompSystem()
-                    .getToolkitPluginDescriptor(usedTk.getToolkitId()));
+                    .getToolkitDescriptor(usedTk.getToolkitId()));
         }
 
         return getMostConcreteAllowed(stepToolkits);
@@ -719,13 +719,13 @@ public class UsedToolkitBP {
      * @return The path to root for the most concrete element in 
      *         <code>toolkits</code>.
      */
-    private List<ToolkitPluginDescriptor> getLongestPathToRoot(
-            Set<ToolkitPluginDescriptor> toolkits) {
+    private List<ToolkitDescriptor> getLongestPathToRoot(
+            Set<ToolkitDescriptor> toolkits) {
 
-        List<ToolkitPluginDescriptor> longestPath = 
-            new ArrayList<ToolkitPluginDescriptor>();
-        for (ToolkitPluginDescriptor toolkit : toolkits) {
-            List<ToolkitPluginDescriptor> pathToRoot = getPathToRoot(toolkit);
+        List<ToolkitDescriptor> longestPath = 
+            new ArrayList<ToolkitDescriptor>();
+        for (ToolkitDescriptor toolkit : toolkits) {
+            List<ToolkitDescriptor> pathToRoot = getPathToRoot(toolkit);
             if (pathToRoot.size() > longestPath.size()) {
                 longestPath = pathToRoot;
             }
@@ -741,11 +741,11 @@ public class UsedToolkitBP {
      * @param reusedProjects Set of projects reused by a project.
      * @return allowed toolkits.
      */
-    private Set<ToolkitPluginDescriptor> getAllowedProjectToolkitsReused(
+    private Set<ToolkitDescriptor> getAllowedProjectToolkitsReused(
             Set<IReusedProjectPO> reusedProjects) {
 
-        Set<ToolkitPluginDescriptor> reusedToolkits = 
-            new HashSet<ToolkitPluginDescriptor>();
+        Set<ToolkitDescriptor> reusedToolkits = 
+            new HashSet<ToolkitDescriptor>();
         for (IReusedProjectPO reused : reusedProjects) {
             IProjectPO reusedProject;
             try {
@@ -755,7 +755,7 @@ public class UsedToolkitBP {
                 if (reusedProject != null) {
                     reusedToolkits.add(
                             ComponentBuilder.getInstance().getCompSystem()
-                            .getToolkitPluginDescriptor(
+                            .getToolkitDescriptor(
                                     reusedProject.getToolkit()));
                 }
             } catch (JBException e) {
@@ -780,17 +780,17 @@ public class UsedToolkitBP {
      * @return A set of allowed toolkits containing the most concrete instance 
      *         in <code>toolkits</code> and all of its descendants.
      */
-    private Set<ToolkitPluginDescriptor> getMostConcreteAllowed(
-            Set<ToolkitPluginDescriptor> toolkits) {
+    private Set<ToolkitDescriptor> getMostConcreteAllowed(
+            Set<ToolkitDescriptor> toolkits) {
 
-        Set<ToolkitPluginDescriptor> allowedToolkits = 
-            new HashSet<ToolkitPluginDescriptor>();
+        Set<ToolkitDescriptor> allowedToolkits = 
+            new HashSet<ToolkitDescriptor>();
         allowedToolkits.addAll(ComponentBuilder.getInstance()
-                .getCompSystem().getAllToolkitPluginDescriptors());
-        List<ToolkitPluginDescriptor> longestPathToRoot = 
+                .getCompSystem().getAllToolkitDescriptors());
+        List<ToolkitDescriptor> longestPathToRoot = 
             getLongestPathToRoot(toolkits);
         if (longestPathToRoot.size() > 0) {
-            ToolkitPluginDescriptor mostConcreteToolkit = 
+            ToolkitDescriptor mostConcreteToolkit = 
                 longestPathToRoot.get(longestPathToRoot.size() - 1);
             mostConcreteToolkit = 
                 getMostConcreteIndependentToolkit(mostConcreteToolkit);
@@ -812,18 +812,18 @@ public class UsedToolkitBP {
      *         independent. Will be <code>null</code> if no independent Toolkit
      *         can be found among <code>baseToolkit</code>'s ancestor Toolkits. 
      */
-    private ToolkitPluginDescriptor getMostConcreteIndependentToolkit(
-            ToolkitPluginDescriptor baseToolkit) {
+    private ToolkitDescriptor getMostConcreteIndependentToolkit(
+            ToolkitDescriptor baseToolkit) {
 
-        ToolkitPluginDescriptor currentToolkit = baseToolkit;
+        ToolkitDescriptor currentToolkit = baseToolkit;
         CompSystem compSystem = ComponentBuilder.getInstance().getCompSystem();
         while (currentToolkit != null 
-                && compSystem.getToolkitPluginDescriptor(
+                && compSystem.getToolkitDescriptor(
                         currentToolkit.getIncludes()) == null
-                && compSystem.getToolkitPluginDescriptor(
+                && compSystem.getToolkitDescriptor(
                         currentToolkit.getDepends()) != null) {
 
-            currentToolkit = compSystem.getToolkitPluginDescriptor(
+            currentToolkit = compSystem.getToolkitDescriptor(
                     currentToolkit.getDepends());
             
         }
@@ -838,44 +838,44 @@ public class UsedToolkitBP {
      * @param projectAuts Set of AUTs contained in a project.
      * @return allowed toolkits.
      */
-    private Set<ToolkitPluginDescriptor> getAllowedProjectToolkitsAut(
+    private Set<ToolkitDescriptor> getAllowedProjectToolkitsAut(
             Set<IAUTMainPO> projectAuts) {
 
         final CompSystem compSys = 
             ComponentBuilder.getInstance().getCompSystem();
-        Set<ToolkitPluginDescriptor> allowedToolkits =
-            new HashSet<ToolkitPluginDescriptor>();
-        final Set<ToolkitPluginDescriptor> autToolkits = 
-            new HashSet<ToolkitPluginDescriptor>();
+        Set<ToolkitDescriptor> allowedToolkits =
+            new HashSet<ToolkitDescriptor>();
+        final Set<ToolkitDescriptor> autToolkits = 
+            new HashSet<ToolkitDescriptor>();
         if (projectAuts.isEmpty()) {
             // If no AUT is defined, then the project toolkit is not
             // restricted based on defined AUTs.
-            allowedToolkits.addAll(compSys.getAllToolkitPluginDescriptors());
+            allowedToolkits.addAll(compSys.getAllToolkitDescriptors());
         }
         
         for (IAUTMainPO autMain : projectAuts) {
             final String autToolkit = autMain.getToolkit();
-            autToolkits.add(compSys.getToolkitPluginDescriptor(autToolkit));
+            autToolkits.add(compSys.getToolkitDescriptor(autToolkit));
         }
 
         // Determine paths to root for all aut toolkits
-        List<List<ToolkitPluginDescriptor>> pathsToRoot = 
-            new LinkedList<List<ToolkitPluginDescriptor>>();
-        for (ToolkitPluginDescriptor toolkit : autToolkits) {
-            List<ToolkitPluginDescriptor> path = getPathToRoot(toolkit);
+        List<List<ToolkitDescriptor>> pathsToRoot = 
+            new LinkedList<List<ToolkitDescriptor>>();
+        for (ToolkitDescriptor toolkit : autToolkits) {
+            List<ToolkitDescriptor> path = getPathToRoot(toolkit);
             pathsToRoot.add(path);
         }
 
         // Add all common ancestors
         if (!pathsToRoot.isEmpty()) {
             // The path to which all other paths can be compared
-            List<ToolkitPluginDescriptor> refPath = pathsToRoot.get(0);
+            List<ToolkitDescriptor> refPath = pathsToRoot.get(0);
             
             for (int i = 0; i < refPath.size(); i++) {
-                ToolkitPluginDescriptor toolkit = refPath.get(i);
+                ToolkitDescriptor toolkit = refPath.get(i);
                 boolean isCommon = true;
                 for (int j = 1; j < pathsToRoot.size() && isCommon; j++) {
-                    List<ToolkitPluginDescriptor> otherPath = 
+                    List<ToolkitDescriptor> otherPath = 
                         pathsToRoot.get(j);
                     isCommon = otherPath.size() > i 
                         && otherPath.get(i).equals(toolkit);
@@ -895,16 +895,16 @@ public class UsedToolkitBP {
      * @return all descendants of <code>toolkit</code> within the toolkit
      *         hierarchy. This <em>includes</em> the given toolkit.
      */
-    private Set<ToolkitPluginDescriptor> getDescendants(
-            ToolkitPluginDescriptor toolkit) {
+    private Set<ToolkitDescriptor> getDescendants(
+            ToolkitDescriptor toolkit) {
 
-        Set<ToolkitPluginDescriptor> descendants = 
-            new HashSet<ToolkitPluginDescriptor>();
+        Set<ToolkitDescriptor> descendants = 
+            new HashSet<ToolkitDescriptor>();
         descendants.add(toolkit);
-        List<ToolkitPluginDescriptor> allToolkits = 
+        List<ToolkitDescriptor> allToolkits = 
             ComponentBuilder.getInstance().getCompSystem()
-                .getAllToolkitPluginDescriptors();
-        for (ToolkitPluginDescriptor toolkitDesc : allToolkits) {
+                .getAllToolkitDescriptors();
+        for (ToolkitDescriptor toolkitDesc : allToolkits) {
             if (ToolkitUtils.doesToolkitInclude(toolkitDesc.getToolkitID(), 
                     toolkit.getToolkitID())) {
                 

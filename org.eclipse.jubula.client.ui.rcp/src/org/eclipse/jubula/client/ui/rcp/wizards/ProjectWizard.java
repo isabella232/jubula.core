@@ -50,7 +50,7 @@ import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
@@ -281,9 +281,9 @@ public class ProjectWizard extends Wizard implements INewWizard {
     private void addUnboundModules(IProjectPO newProject) {
 
         // Use toolkit-specific module, and modules for all required toolkits
-        ToolkitPluginDescriptor desc = 
+        ToolkitDescriptor desc = 
             ComponentBuilder.getInstance().getCompSystem()
-            .getToolkitPluginDescriptor(newProject.getToolkit());
+            .getToolkitDescriptor(newProject.getToolkit());
 
         while (desc != null) {
             try {
@@ -306,7 +306,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
                         + e.getMessage());
             }
             desc = ComponentBuilder.getInstance().getCompSystem()
-                .getToolkitPluginDescriptor(desc.getIncludes());
+                .getToolkitDescriptor(desc.getIncludes());
         }
 
     }

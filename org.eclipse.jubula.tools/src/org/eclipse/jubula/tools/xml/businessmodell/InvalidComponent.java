@@ -34,7 +34,7 @@ public class InvalidComponent extends Component {
     /** Constructor */
     public InvalidComponent() {
         setType(INVALID_COMPONENT_TYPE);
-        setToolkitDesriptor(new ToolkitPluginDescriptor(
+        setToolkitDesriptor(new ToolkitDescriptor(
             INVALID_COMPONENT_TYPE, INVALID_COMPONENT_TYPE, 
             INVALID_COMPONENT_TYPE,  INVALID_COMPONENT_TYPE, 
             StringConstants.EMPTY, INVALID_NUMBER, true, INVALID_NUMBER,

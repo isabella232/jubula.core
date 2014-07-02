@@ -26,7 +26,7 @@ import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Composite;
 import org.slf4j.Logger;
@@ -118,10 +118,10 @@ public class ToolkitUtils {
      * name was found.
      */
     public static String getToolkitName(String toolkitId) {
-        final List<ToolkitPluginDescriptor> toolkitPluginDescriptors = 
+        final List<ToolkitDescriptor> toolkitPluginDescriptors = 
             ComponentBuilder.getInstance().getCompSystem()
-                .getAllToolkitPluginDescriptors();
-        for (ToolkitPluginDescriptor desc : toolkitPluginDescriptors) {
+                .getAllToolkitDescriptors();
+        for (ToolkitDescriptor desc : toolkitPluginDescriptors) {
             if (desc.getToolkitID().equalsIgnoreCase(toolkitId)) {
                 return desc.getName();
             }
@@ -142,8 +142,8 @@ public class ToolkitUtils {
         
         CompSystem compSys = ComponentBuilder.getInstance().getCompSystem();
         
-        ToolkitPluginDescriptor desc = 
-            compSys.getToolkitPluginDescriptor(toolkitId);
+        ToolkitDescriptor desc = 
+            compSys.getToolkitDescriptor(toolkitId);
         
         String includes = desc.getIncludes();
         
@@ -154,7 +154,7 @@ public class ToolkitUtils {
         while (desc != null && includes != null 
             && !ToolkitConstants.EMPTY_EXTPOINT_ENTRY.equals(includes)) {
             
-            desc = compSys.getToolkitPluginDescriptor(includes);
+            desc = compSys.getToolkitDescriptor(includes);
             if (desc != null) {
                 includes = desc.getIncludes();
                 if (includes != null && includes.equals(includedToolkitId)) {

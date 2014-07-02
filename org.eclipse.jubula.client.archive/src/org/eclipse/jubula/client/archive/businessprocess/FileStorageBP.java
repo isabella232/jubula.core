@@ -84,7 +84,7 @@ import org.eclipse.jubula.tools.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.jarutils.IVersion;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1162,8 +1162,8 @@ public class FileStorageBP {
             
             CompSystem compSys = 
                 ComponentBuilder.getInstance().getCompSystem();
-            ToolkitPluginDescriptor desc = 
-                compSys.getToolkitPluginDescriptor(
+            ToolkitDescriptor desc = 
+                compSys.getToolkitDescriptor(
                     toolkitId);
             if (desc == null) {
                 throw new ToolkitPluginException(NLS.bind(

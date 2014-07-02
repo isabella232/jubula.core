@@ -26,7 +26,7 @@ public class ParamValueSet {
      * (specifically, an {@link ArrayList}): See the javadoc for 
      * {@link com.thoughtworks.xstream.XStream#addImplicitCollection(Class, String)}.
      */
-    private List m_valueSet;
+    private List<ValueSetElement> m_valueSet;
 
     /** whether the values contained in the set can be combined */
     private boolean m_isCombinable;
@@ -48,7 +48,7 @@ public class ParamValueSet {
     }
 
     /** @return an iterator over the contained set of values. */
-    public Iterator iterator() {
+    public Iterator<ValueSetElement> iterator() {
         return getValueSet().iterator();
     }
 
@@ -87,9 +87,9 @@ public class ParamValueSet {
      * {@link NullPointerException} during {@link #iterator()}.
      * @return the contained set of values.
      */
-    private Collection getValueSet() {
+    private Collection<ValueSetElement> getValueSet() {
         if (m_valueSet == null) {
-            m_valueSet = new ArrayList();
+            m_valueSet = new ArrayList<ValueSetElement>();
         }
         return m_valueSet;
     }

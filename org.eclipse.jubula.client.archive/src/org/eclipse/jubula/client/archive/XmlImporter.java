@@ -150,7 +150,7 @@ import org.eclipse.jubula.tools.objects.IMonitoringValue;
 import org.eclipse.jubula.tools.objects.MonitoringValue;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -643,9 +643,9 @@ class XmlImporter {
         for (ToolkitPluginError error : errors) {
             final StringBuilder strBuilder = new StringBuilder();
             String toolkitId = error.getToolkitId();
-            ToolkitPluginDescriptor desc = 
+            ToolkitDescriptor desc = 
                 ComponentBuilder.getInstance().getCompSystem()
-                .getToolkitPluginDescriptor(toolkitId);
+                .getToolkitDescriptor(toolkitId);
             String toolkitName = desc != null ? desc.getName() : toolkitId;
             strBuilder.append(Messages.OpenProjectActionToolkitVersionConflict2)
                 .append(toolkitName)

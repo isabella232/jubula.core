@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            category="org.eclipse.jubula.client.views"
+            class="org.eclipse.jubula.client.toolkit.ui.view.ToolkitOverView"
+            id="org.eclipse.jubula.client.toolkit.ui.overView"
+            name="Toolkit Hierarchy"
+            restorable="true">
+      </view>
+   </extension>
+	
+</plugin>

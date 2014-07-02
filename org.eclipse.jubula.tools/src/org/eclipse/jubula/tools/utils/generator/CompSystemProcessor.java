@@ -20,11 +20,11 @@ import org.eclipse.jubula.tools.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.InvalidAction;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 
 
 /**
- * This class processes the contents of the Guidancer component system. It
+ * This class processes the contents of the Component system. It
  * provides methods used by the Tex generators.
  * 
  * @author BREDEX GmbH
@@ -68,9 +68,9 @@ public class CompSystemProcessor implements IProcessor {
      */
     public List<ToolkitInfo> getToolkitInfos() {
         List<ToolkitInfo> infos = new ArrayList<ToolkitInfo>();
-        List descriptors = m_compSystem.getAllToolkitPluginDescriptors();
+        List descriptors = m_compSystem.getAllToolkitDescriptors();
         for (Iterator i = descriptors.iterator(); i.hasNext();) {
-            ToolkitPluginDescriptor descr = (ToolkitPluginDescriptor)i.next();
+            ToolkitDescriptor descr = (ToolkitDescriptor)i.next();
             ToolkitInfo info = getToolkitInfo(descr);
             infos.add(info);
         }
@@ -82,7 +82,7 @@ public class CompSystemProcessor implements IProcessor {
      *            the toolkit plugin descriptor
      * @return the toolkitinfo corresponding to the plugin descriptor
      */
-    public static ToolkitInfo getToolkitInfo(ToolkitPluginDescriptor descr) {
+    public static ToolkitInfo getToolkitInfo(ToolkitDescriptor descr) {
         Info info = new ToolkitInfo(descr.getName(),
                 descr.getToolkitID());
         return (ToolkitInfo)info;

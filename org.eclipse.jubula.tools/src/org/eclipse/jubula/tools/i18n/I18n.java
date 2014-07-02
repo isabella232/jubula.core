@@ -47,7 +47,7 @@ public class I18n {
      * Constructor
      */
     private I18n() {
-        // private constructor to prevent instantiation of class utitlity
+        // private constructor to prevent instantiation of class utility
     }
 
     /**

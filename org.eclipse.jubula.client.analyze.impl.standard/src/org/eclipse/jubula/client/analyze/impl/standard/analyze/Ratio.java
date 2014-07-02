@@ -30,7 +30,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 /**
  * 
  * @author volker
@@ -181,7 +181,7 @@ public class Ratio implements IAnalyze {
                                 .equals(StringConstants.EMPTY)) {
                     type = Messages.General;
                 } else {
-                    ToolkitPluginDescriptor tkpd = 
+                    ToolkitDescriptor tkpd = 
                             getParentToolkitPluginDescriptor(comp.
                                     getToolkitDesriptor());     
                     type = tkpd.getName();
@@ -205,18 +205,18 @@ public class Ratio implements IAnalyze {
          * 
          * @param toolkitdesc
          *            The given Component
-         * @return The parent ToolkitPluginDescriptor or the given one, if there
-         *         is no parent ToolkitPluginDescriptor
+         * @return The parent ToolkitDescriptor or the given one, if there
+         *         is no parent ToolkitDescriptor
          */
-        private ToolkitPluginDescriptor getParentToolkitPluginDescriptor(
-                ToolkitPluginDescriptor toolkitdesc) {
+        private ToolkitDescriptor getParentToolkitPluginDescriptor(
+                ToolkitDescriptor toolkitdesc) {
 
             if (toolkitdesc.getDepends().equals(
                     ToolkitConstants.EMPTY_EXTPOINT_ENTRY)) {
                 return toolkitdesc;
             }
-            ToolkitPluginDescriptor desc = ComponentBuilder.getInstance()
-                    .getCompSystem().getToolkitPluginDescriptor(
+            ToolkitDescriptor desc = ComponentBuilder.getInstance()
+                    .getCompSystem().getToolkitDescriptor(
                             toolkitdesc.getDepends());
             return getParentToolkitPluginDescriptor(desc);
         }

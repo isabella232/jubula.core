@@ -17,7 +17,7 @@ import org.eclipse.jubula.toolkit.common.IToolKitProvider;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.i18n.Messages;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,9 +33,9 @@ public class ToolkitSupportBP {
     private static Logger log = LoggerFactory.getLogger(ToolkitSupportBP.class);
     
     /** Map of {@link IToolKitProvider} */
-    private static Map<ToolkitPluginDescriptor, IToolKitProvider> 
+    private static Map<ToolkitDescriptor, IToolKitProvider> 
     toolkitProvider = 
-        new HashMap<ToolkitPluginDescriptor, IToolKitProvider>();
+        new HashMap<ToolkitDescriptor, IToolKitProvider>();
 
     /**
      * Utility Constructor.
@@ -89,7 +89,7 @@ public class ToolkitSupportBP {
     public static String getToolkitLevel(String toolkitName) 
         throws ToolkitPluginException {
         
-        ToolkitPluginDescriptor descr = getToolkitDescriptor(toolkitName);
+        ToolkitDescriptor descr = getToolkitDescriptor(toolkitName);
         return descr.getLevel();
     }
     
@@ -107,7 +107,7 @@ public class ToolkitSupportBP {
             log.error(msg);
             throwToolkitPluginException(msg, null);
         }
-        final ToolkitPluginDescriptor descr = getToolkitDescriptor(name);
+        final ToolkitDescriptor descr = getToolkitDescriptor(name);
         return toolkitProvider.get(descr);
     }
     
@@ -126,7 +126,7 @@ public class ToolkitSupportBP {
             log.error(msg);
             throwToolkitPluginException(msg, null);
         }
-        final ToolkitPluginDescriptor descr = getToolkitDescriptor(name);
+        final ToolkitDescriptor descr = getToolkitDescriptor(name);
         final String superId = descr.getIncludes();
         final IToolKitProvider superToolkitProv = getToolkitProvider(superId);
         return toolkitProvider.get(superToolkitProv);
@@ -135,10 +135,10 @@ public class ToolkitSupportBP {
     /**
      * 
      * @param toolkitId the id of the toolkit
-     * @return the {@link ToolkitPluginDescriptor} of the toolkit with the 
+     * @return the {@link ToolkitDescriptor} of the toolkit with the 
      * given id.
      */
-    public static ToolkitPluginDescriptor getToolkitDescriptor(
+    public static ToolkitDescriptor getToolkitDescriptor(
         String toolkitId) throws ToolkitPluginException {
         
         if (toolkitId == null) {
@@ -147,7 +147,7 @@ public class ToolkitSupportBP {
             log.error(msg);
             throwToolkitPluginException(msg, null);
         }
-        for (ToolkitPluginDescriptor descr : toolkitProvider.keySet()) {
+        for (ToolkitDescriptor descr : toolkitProvider.keySet()) {
             if (toolkitId.equals(descr.getToolkitID())) {
                 return descr;
             }
@@ -162,11 +162,11 @@ public class ToolkitSupportBP {
     
     /**
      * Adds a new {@link IToolKitProvider} with the dependent 
-     * {@link ToolkitPluginDescriptor} as key.
-     * @param descr a ToolkitPluginDescriptor (key)
+     * {@link ToolkitDescriptor} as key.
+     * @param descr a ToolkitDescriptor (key)
      * @param provider a IToolKitProvider (value)
      */
-    public static void addToolkitProvider(ToolkitPluginDescriptor descr, 
+    public static void addToolkitProvider(ToolkitDescriptor descr, 
         IToolKitProvider provider) {
         
         toolkitProvider.put(descr, provider);

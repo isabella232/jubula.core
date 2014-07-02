@@ -33,7 +33,7 @@ import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.utils.generator.AbstractComponentBuilder;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.jubula.tools.xml.businessprocess.ConfigVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,7 +83,7 @@ public class ComponentBuilder extends AbstractComponentBuilder {
                     InputStream inputStream = getInputStream(
                         componentConfigurationURL);
                     CompSystem compSystem = createCompSystem(inputStream);
-                    ToolkitPluginDescriptor descr = 
+                    ToolkitDescriptor descr = 
                         createToolkitDescriptor(element, compSystem);
                     final ResourceBundle resourceBundle = provider
                         .getI18nResourceBundle();
@@ -113,22 +113,22 @@ public class ComponentBuilder extends AbstractComponentBuilder {
     }
 
     /**
-     * Creates a {@link ToolkitPluginDescriptor} which hold the attributes
+     * Creates a {@link ToolkitDescriptor} which hold the attributes
      * of the Toolkit and adds the Descriptor to the given CompSystem.
      * @param element an IConfigurationElement
      * @param compSystem the CompSystem
-     * @return {@link ToolkitPluginDescriptor}
+     * @return {@link ToolkitDescriptor}
      * Constants.ATTR_<attribute_name>
      * @throws ToolkitPluginException if an error occurs
      */
-    private ToolkitPluginDescriptor createToolkitDescriptor(
+    private ToolkitDescriptor createToolkitDescriptor(
         IConfigurationElement  element, CompSystem compSystem) 
         throws ToolkitPluginException {
         
         final String toolkitId = element.getAttribute(
             ToolkitConstants.ATTR_TOOLKITID);
         try {
-            if (compSystem.getToolkitPluginDescriptor(toolkitId) == null) {
+            if (compSystem.getToolkitDescriptor(toolkitId) == null) {
                 
                 final String name = element.getAttribute(
                     ToolkitConstants.ATTR_NAME);
@@ -146,8 +146,8 @@ public class ComponentBuilder extends AbstractComponentBuilder {
                     .getConfigVersion();
                 final int majorVersion = configVersion.getMajorVersion();
                 final int minorVersion = configVersion.getMinorVersion();
-                final ToolkitPluginDescriptor descr = 
-                    new ToolkitPluginDescriptor(toolkitId, name, 
+                final ToolkitDescriptor descr = 
+                    new ToolkitDescriptor(toolkitId, name, 
                         includes, depends, level, order, isUserToolkit, 
                         majorVersion, minorVersion);
                 compSystem.addToolkitPluginDescriptor(toolkitId, descr);
@@ -206,12 +206,12 @@ public class ComponentBuilder extends AbstractComponentBuilder {
      *         an concrete.
      */
     public List<String> getLevelToolkitIds() {
-        List<ToolkitPluginDescriptor> toolkitDescriptors = super
-            .getCompSystem().getIndependentToolkitPluginDescriptors(true);
+        List<ToolkitDescriptor> toolkitDescriptors = super
+            .getCompSystem().getIndependentToolkitDescriptors(true);
 
         List<String> toolkitIds = new ArrayList<String>();
 
-        for (ToolkitPluginDescriptor desc : toolkitDescriptors) {
+        for (ToolkitDescriptor desc : toolkitDescriptors) {
             toolkitIds.add(desc.getToolkitID());
         }
 

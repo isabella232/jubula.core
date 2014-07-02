@@ -39,12 +39,14 @@ public class CompSystemI18n {
     private static Logger log = LoggerFactory.getLogger(CompSystemI18n.class);
     
     /** List of ResourceBundles */
-    private static final List PLUGIN_BUNDLES = new LinkedList();
+    private static final List<ResourceBundle> PLUGIN_BUNDLES = 
+        new LinkedList<ResourceBundle>();
     
     /** 
      * mapping from i18n keys (String) to i18n values (String)
      */
-    private static final Map I18N_MAP = new HashMap();
+    private static final Map<String, String> I18N_MAP = 
+        new HashMap<String, String>();
     
     /**
      * Constructor
@@ -122,14 +124,14 @@ public class CompSystemI18n {
             return StringUtils.EMPTY;
         }
         
-        String value = (String)I18N_MAP.get(key);
+        String value = I18N_MAP.get(key);
         if (value != null) {
             return value;
         }
 
-        Iterator bundleIter = PLUGIN_BUNDLES.iterator();
+        Iterator<ResourceBundle> bundleIter = PLUGIN_BUNDLES.iterator();
         while (bundleIter.hasNext()) {
-            ResourceBundle bundle = (ResourceBundle)bundleIter.next();
+            ResourceBundle bundle = bundleIter.next();
             try {
                 value = bundle.getString(key);
                 I18N_MAP.put(key, value);
@@ -188,10 +190,10 @@ public class CompSystemI18n {
         final String keyValueSeparator = "="; //$NON-NLS-1$
         final String lineBreak = "\n"; //$NON-NLS-1$
         final StringBuffer entries = new StringBuffer();
-        for (Iterator bundlesIt = PLUGIN_BUNDLES.iterator(); 
+        for (Iterator<ResourceBundle> bundlesIt = PLUGIN_BUNDLES.iterator(); 
             bundlesIt.hasNext();) {
             
-            final ResourceBundle bundle = (ResourceBundle)bundlesIt.next();
+            final ResourceBundle bundle = bundlesIt.next();
             for (Enumeration keys = bundle.getKeys(); keys.hasMoreElements();) {
                 final String key = String.valueOf(keys.nextElement());
                 final String value = bundle.getString(key);

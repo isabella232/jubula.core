@@ -76,7 +76,7 @@ public abstract class Component {
     private String m_type;
     
     /** The descriptor of the ToolkitPlugin of this Component */
-    private ToolkitPluginDescriptor m_toolkitDesriptor;
+    private ToolkitDescriptor m_toolkitDesriptor;
     
     /**
      * <code>m_completionStarted</code> flag indicating
@@ -530,14 +530,14 @@ public abstract class Component {
     /**
      * @return the description of the Toolkit of this Component
      */
-    public ToolkitPluginDescriptor getToolkitDesriptor() {
+    public ToolkitDescriptor getToolkitDesriptor() {
         return m_toolkitDesriptor;
     }
     
     /**
      * @param toolkitDesriptor the toolkitDesriptor to set
      */
-    public void setToolkitDesriptor(ToolkitPluginDescriptor toolkitDesriptor) {
+    public void setToolkitDesriptor(ToolkitDescriptor toolkitDesriptor) {
         m_toolkitDesriptor = toolkitDesriptor;
     }
     

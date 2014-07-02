@@ -34,7 +34,7 @@ import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 
 
 /**
@@ -115,9 +115,9 @@ public class ToolkitBP implements IProjectLoadedListener, IDataChangedListener {
         strBuilder.append(Messages.OpenProjectActionToolkitVersionConflict1);
         for (ToolkitPluginError error : errors) {
             String toolkitId = error.getToolkitId();
-            ToolkitPluginDescriptor desc = 
+            ToolkitDescriptor desc = 
                 ComponentBuilder.getInstance().getCompSystem()
-                .getToolkitPluginDescriptor(toolkitId);
+                .getToolkitDescriptor(toolkitId);
             String toolkitName = desc != null ? desc.getName() : toolkitId;
             strBuilder.append(Messages.OpenProjectActionToolkitVersionConflict2)
                 .append(toolkitName)

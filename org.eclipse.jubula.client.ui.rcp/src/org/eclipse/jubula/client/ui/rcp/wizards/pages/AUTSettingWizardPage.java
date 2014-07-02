@@ -39,7 +39,7 @@ import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
@@ -656,21 +656,21 @@ public class AUTSettingWizardPage extends WizardPage {
     public void setVisible(boolean visible) {
         fillLanguageLists();
         super.setVisible(visible);
-        java.util.List<ToolkitPluginDescriptor> toolkits;
+        java.util.List<ToolkitDescriptor> toolkits;
         java.util.List<String> values = new ArrayList<String>();
         java.util.List<String> displayValues = new ArrayList<String>();
         try {
             toolkits = ControlFactory
                 .getAutToolkits(m_project);
 
-            for (ToolkitPluginDescriptor desc : toolkits) {
+            for (ToolkitDescriptor desc : toolkits) {
                 values.add(desc.getToolkitID());
                 displayValues.add(desc.getName());
             }
         } catch (ToolkitPluginException tpe) {
-            ToolkitPluginDescriptor autToolkit =
+            ToolkitDescriptor autToolkit =
                 ComponentBuilder.getInstance().getCompSystem()
-                .getToolkitPluginDescriptor(m_autMain.getToolkit());
+                .getToolkitDescriptor(m_autMain.getToolkit());
             
             if (autToolkit != null) {
                 values.add(autToolkit.getToolkitID());

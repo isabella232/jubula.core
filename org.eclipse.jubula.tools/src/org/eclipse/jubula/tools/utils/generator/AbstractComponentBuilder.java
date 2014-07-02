@@ -26,7 +26,7 @@ import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.utils.ClassPathHacker;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,7 +120,7 @@ public class AbstractComponentBuilder {
                 String xmlPluginPath = config.getPluginXMLPath(configName);
                 ToolkitPluginParser parser = 
                     new ToolkitPluginParser(xmlPluginPath, compSystem);
-                ToolkitPluginDescriptor descr = parser.getToolkitDescriptor();
+                ToolkitDescriptor descr = parser.getToolkitDescriptor();
                 compSystem.addToolkitPluginDescriptor(
                     descr.getToolkitID(), descr);
                 setToolkitDescriptorToComponents(compSystem, descr);
@@ -171,10 +171,10 @@ public class AbstractComponentBuilder {
      * Sets the attributes given in the Map to all Components in the given
      * CompSystem.
      * @param compSystem the CompSystem
-     * @param pluginDescr the {@link ToolkitPluginDescriptor}
+     * @param pluginDescr the {@link ToolkitDescriptor}
      */
     protected void setToolkitDescriptorToComponents(CompSystem compSystem, 
-        ToolkitPluginDescriptor pluginDescr) {
+        ToolkitDescriptor pluginDescr) {
         
         List components = new ArrayList();
         List tmpComponents = compSystem.getAbstractComponents();

@@ -118,7 +118,7 @@ import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.xml.businessmodell.Param;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.osgi.framework.Constants;
 import org.slf4j.Logger;
@@ -879,7 +879,7 @@ public class TestExecution {
             if (cc.hasDefaultMapping() && cc.getComponentClass() != null) {
                 Set realizers = cc.getAllRealizers();
                 String toolkit = aut.getToolkit();
-                ToolkitPluginDescriptor tpd = null;
+                ToolkitDescriptor tpd = null;
                 while (!StringUtils.isEmpty(toolkit)) {
 
                     for (Iterator iterator = realizers.iterator(); iterator

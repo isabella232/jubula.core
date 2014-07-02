@@ -26,7 +26,7 @@ import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -54,12 +54,12 @@ public class ControlFactory {
      */
     public static DirectCombo<String> createToolkitCombo(Composite parent) {
         
-        final List<ToolkitPluginDescriptor> descriptors = 
+        final List<ToolkitDescriptor> descriptors = 
             ComponentBuilder.getInstance().getCompSystem()
-                .getIndependentToolkitPluginDescriptors(false);
+                .getIndependentToolkitDescriptors(false);
         List<String> values = new ArrayList<String>();
         List<String> displayValues = new ArrayList<String>();
-        for (ToolkitPluginDescriptor desc : descriptors) {
+        for (ToolkitDescriptor desc : descriptors) {
             values.add(desc.getToolkitID());
             displayValues.add(desc.getName());
         }
@@ -85,11 +85,11 @@ public class ControlFactory {
     public static DirectCombo<String> createAutToolkitCombo(Composite parent, 
         IProjectPO project, String currentValue) throws ToolkitPluginException {
         
-        final List<ToolkitPluginDescriptor> toolkits = getAutToolkits(project);
+        final List<ToolkitDescriptor> toolkits = getAutToolkits(project);
 
         List<String> values = new ArrayList<String>();
         List<String> displayValues = new ArrayList<String>();
-        for (ToolkitPluginDescriptor desc : toolkits) {
+        for (ToolkitDescriptor desc : toolkits) {
             values.add(desc.getToolkitID());
             displayValues.add(desc.getName());
         }
@@ -116,12 +116,12 @@ public class ControlFactory {
         Composite parent) {
 
         final IProjectPO project = GeneralStorage.getInstance().getProject();
-        final List<ToolkitPluginDescriptor> toolkits = 
+        final List<ToolkitDescriptor> toolkits = 
             UsedToolkitBP.getInstance().getAllowedProjectToolkits(project);
 
         final List<String> values = new ArrayList<String>();
         final List<String> displayValues = new ArrayList<String>();
-        for (ToolkitPluginDescriptor desc : toolkits) {
+        for (ToolkitDescriptor desc : toolkits) {
             values.add(desc.getToolkitID());
             displayValues.add(desc.getName());
         }
@@ -182,9 +182,9 @@ public class ControlFactory {
     public static DirectCombo<String> createAutToolkitCombo(Composite parent, 
         IAUTMainPO aut) {
 
-        final ToolkitPluginDescriptor toolkit = 
+        final ToolkitDescriptor toolkit = 
             ComponentBuilder.getInstance().getCompSystem()
-                .getToolkitPluginDescriptor(aut.getToolkit());
+                .getToolkitDescriptor(aut.getToolkit());
         final List<String> values = new ArrayList<String>();
         final List<String> displayValues = new ArrayList<String>();
         if (toolkit != null) {
@@ -209,26 +209,26 @@ public class ControlFactory {
      * @throws ToolkitPluginException if the toolkit for the given project 
      *         cannot be found.
      */
-    public static List<ToolkitPluginDescriptor> getAutToolkits(
+    public static List<ToolkitDescriptor> getAutToolkits(
         IProjectPO project) throws ToolkitPluginException {
         
         CompSystem compSys = ComponentBuilder.getInstance().getCompSystem();
         final String projToolkit = project.getToolkit();
         if (projToolkit == null) {
-            return compSys.getIndependentToolkitPluginDescriptors(
+            return compSys.getIndependentToolkitDescriptors(
                     ToolkitConstants.LEVEL_TOOLKIT);
         }
         final String level = ToolkitSupportBP.getToolkitLevel(projToolkit);
         if (ToolkitConstants.LEVEL_TOOLKIT.equals(level)) {
-            final List<ToolkitPluginDescriptor> toolkitList = 
-                new ArrayList<ToolkitPluginDescriptor>(1);
-            toolkitList.add(compSys.getToolkitPluginDescriptor(projToolkit));
+            final List<ToolkitDescriptor> toolkitList = 
+                new ArrayList<ToolkitDescriptor>(1);
+            toolkitList.add(compSys.getToolkitDescriptor(projToolkit));
             
             for (Object descObj 
-                    : compSys.getIndependentToolkitPluginDescriptors(
+                    : compSys.getIndependentToolkitDescriptors(
                             ToolkitConstants.LEVEL_TOOLKIT)) {
                 
-                ToolkitPluginDescriptor desc = (ToolkitPluginDescriptor)descObj;
+                ToolkitDescriptor desc = (ToolkitDescriptor)descObj;
                 
                 if (ToolkitUtils.doesToolkitInclude(
                         desc.getToolkitID(), projToolkit)) {
@@ -239,7 +239,7 @@ public class ControlFactory {
             return toolkitList;
         }
 
-        return compSys.getIndependentToolkitPluginDescriptors(
+        return compSys.getIndependentToolkitDescriptors(
             ToolkitConstants.LEVEL_TOOLKIT);
     }
     

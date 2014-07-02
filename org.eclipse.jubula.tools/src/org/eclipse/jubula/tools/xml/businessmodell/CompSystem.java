@@ -66,10 +66,10 @@ public class CompSystem {
     private Component m_mostAbstractComponent;
     
     /**
-     * Map of {@link ToolkitPluginDescriptor}
-     * Key: id of toolkit, value: ToolkitPluginDescriptor
+     * Map of {@link ToolkitDescriptor}
+     * Key: id of toolkit, value: ToolkitDescriptor
      */
-    private Map<String, ToolkitPluginDescriptor> m_toolkitDescriptors;
+    private Map<String, ToolkitDescriptor> m_toolkitDescriptors;
     
     /** Stores whether the component is initialized. */
     private boolean m_initialized = false;
@@ -107,7 +107,7 @@ public class CompSystem {
         }
         if (m_toolkitDescriptors == null) {
             m_toolkitDescriptors = 
-                new HashMap<String, ToolkitPluginDescriptor>();
+                new HashMap<String, ToolkitDescriptor>();
         }
         // FIXME Achim only hard coded EventTypes so far
         m_eventTypes.put(TestErrorEvent.ID.ACTION_ERROR, 
@@ -141,11 +141,11 @@ public class CompSystem {
     public List<Component> getComponents(String toolkitId, 
         boolean addReferencedToolkits) {
         final List<Component> toolkitComponents = new ArrayList<Component>();
-        final ToolkitPluginDescriptor currDescriptor = 
-            getToolkitPluginDescriptor(toolkitId);
+        final ToolkitDescriptor currDescriptor = 
+            getToolkitDescriptor(toolkitId);
         String includesToolkit = currDescriptor.getIncludes();
-        final ToolkitPluginDescriptor includesDescriptor = 
-            getToolkitPluginDescriptor(includesToolkit);
+        final ToolkitDescriptor includesDescriptor = 
+            getToolkitDescriptor(includesToolkit);
         if (includesDescriptor != null) {
             final String includesLevel = includesDescriptor.getLevel();
             if (!ToolkitConstants.LEVEL_TOOLKIT.equals(includesLevel)) {
@@ -198,8 +198,8 @@ public class CompSystem {
     private List<String> getIncludesToolkits(String toolkitId,
         List<String> toolkits) {
         toolkits.add(toolkitId);
-        final ToolkitPluginDescriptor toolkitPluginDescriptor = 
-            getToolkitPluginDescriptor(toolkitId);
+        final ToolkitDescriptor toolkitPluginDescriptor = 
+            getToolkitDescriptor(toolkitId);
         if (toolkitPluginDescriptor != null) {
             final String includes = toolkitPluginDescriptor.getIncludes();
             if (!ToolkitConstants.EMPTY_EXTPOINT_ENTRY.equals(includes)) {
@@ -217,7 +217,7 @@ public class CompSystem {
     private List<String> getDependsToolkitIds(String toolkitId) {
         final List<String> dependsToolkits = new ArrayList<String>();
         for (String tkId : m_toolkitDescriptors.keySet()) {
-            final ToolkitPluginDescriptor tkDescr = m_toolkitDescriptors
+            final ToolkitDescriptor tkDescr = m_toolkitDescriptors
                 .get(tkId);
             if (toolkitId.equals(tkDescr.getDepends())) {
                 dependsToolkits.add(tkId);
@@ -311,43 +311,44 @@ public class CompSystem {
     /**
      * 
      * @param toolkitId the id of the toolkit
-     * @param descriptor the {@link ToolkitPluginDescriptor}
+     * @param descriptor the {@link ToolkitDescriptor}
      */
     public void addToolkitPluginDescriptor(String toolkitId, 
-        ToolkitPluginDescriptor descriptor) {
+        ToolkitDescriptor descriptor) {
         
         if (m_toolkitDescriptors == null) {
             m_toolkitDescriptors = 
-                new HashMap<String, ToolkitPluginDescriptor>();
+                new HashMap<String, ToolkitDescriptor>();
         }
         m_toolkitDescriptors.put(toolkitId, descriptor);
     }
     
     /**
      * 
-     * @param toolkitId the id of the toolkit
-     * @return the {@link ToolkitPluginDescriptor} for the given toolkit ID,
-     *         or <code>null</code> if the given toolkit ID does not have a
+     * @param toolkitId
+     *            the id of the toolkit
+     * @return the {@link ToolkitDescriptor} for the given toolkit ID, or
+     *         <code>null</code> if the given toolkit ID does not have a
      *         corresponding active plugin.
      */
-    public ToolkitPluginDescriptor getToolkitPluginDescriptor(
+    public ToolkitDescriptor getToolkitDescriptor(
         String toolkitId) {
         if (m_toolkitDescriptors == null) {
             m_toolkitDescriptors = 
-                new HashMap<String, ToolkitPluginDescriptor>();
+                new HashMap<String, ToolkitDescriptor>();
         }
         return m_toolkitDescriptors.get(toolkitId);
     }
     
     /**
-     * @return the {@link ToolkitPluginDescriptor}s of all toolkits
+     * @return the {@link ToolkitDescriptor}s of all toolkits
      */
-    public List<ToolkitPluginDescriptor> getAllToolkitPluginDescriptors() {
+    public List<ToolkitDescriptor> getAllToolkitDescriptors() {
         if (m_toolkitDescriptors == null) {
             m_toolkitDescriptors = 
-                new HashMap<String, ToolkitPluginDescriptor>();
+                new HashMap<String, ToolkitDescriptor>();
         }
-        return new ArrayList<ToolkitPluginDescriptor>(
+        return new ArrayList<ToolkitDescriptor>(
             m_toolkitDescriptors.values());
     }
    
@@ -355,23 +356,23 @@ public class CompSystem {
      * @param level Only Toolkits with this level will be returned. May be
      *              <code>null</code>, in which case independent toolkits
      *              for all levels will be returned.
-     * @return the {@link ToolkitPluginDescriptor}s of all independent 
+     * @return the {@link ToolkitDescriptor}s of all independent 
      *         toolkits with the given level.
      */
-    public List<ToolkitPluginDescriptor> getIndependentToolkitPluginDescriptors(
+    public List<ToolkitDescriptor> getIndependentToolkitDescriptors(
         String level) {
         final String emptyStr = StringConstants.EMPTY;
         
-        List<ToolkitPluginDescriptor> toolkitDesriptors = 
-            getAllToolkitPluginDescriptors();
+        List<ToolkitDescriptor> toolkitDesriptors = 
+            getAllToolkitDescriptors();
         
         Collections.sort(toolkitDesriptors);
 
-        Iterator<ToolkitPluginDescriptor> descIt = toolkitDesriptors.iterator();
+        Iterator<ToolkitDescriptor> descIt = toolkitDesriptors.iterator();
 
         // Remove all non-independent and invalid toolkits
         while (descIt.hasNext()) {
-            ToolkitPluginDescriptor desc = descIt.next();
+            ToolkitDescriptor desc = descIt.next();
 
             final String includes = desc.getIncludes();
             String toolkitID = desc.getToolkitID();
@@ -549,7 +550,7 @@ public class CompSystem {
      * @param component A Component.
      */
     private void handleDepender(Component component) {
-        final ToolkitPluginDescriptor toolkitDesriptor = component
+        final ToolkitDescriptor toolkitDesriptor = component
             .getToolkitDesriptor();
         final String depends = toolkitDesriptor.getDepends();
         if (!component.isExtender()
@@ -557,7 +558,7 @@ public class CompSystem {
             && !ToolkitConstants.EMPTY_EXTPOINT_ENTRY.equals(depends)
             && toolkitDesriptor.isUserToolkit()) {
             
-            final ToolkitPluginDescriptor dependsDescr = 
+            final ToolkitDescriptor dependsDescr = 
                 m_toolkitDescriptors.get(depends);
             if (dependsDescr != null) {
                 component.setToolkitDesriptor(dependsDescr);
@@ -770,10 +771,10 @@ public class CompSystem {
      *            if all toolkits are wanted.
      * @return a List of I18N names of the toolkits or a List of toolkit IDs.
      */
-    public List<ToolkitPluginDescriptor> getIndependentToolkitPluginDescriptors(
+    public List<ToolkitDescriptor> getIndependentToolkitDescriptors(
         boolean toolkitLevel) {
         String level = toolkitLevel ? ToolkitConstants.LEVEL_TOOLKIT : null;
-        return getIndependentToolkitPluginDescriptors(level);
+        return getIndependentToolkitDescriptors(level);
     }
 
     /**

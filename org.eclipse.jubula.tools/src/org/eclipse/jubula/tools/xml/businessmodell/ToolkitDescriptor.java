@@ -14,7 +14,7 @@ package org.eclipse.jubula.tools.xml.businessmodell;
  * @author BREDEX GmbH
  * @created 24.05.2007
  */
-public class ToolkitPluginDescriptor implements Comparable {
+public class ToolkitDescriptor implements Comparable {
     /** m_toolkitID */
     private String m_toolkitID;
     
@@ -43,7 +43,7 @@ public class ToolkitPluginDescriptor implements Comparable {
     private String m_level;
     
     /** Only for deserialisation! */
-    public ToolkitPluginDescriptor() {
+    public ToolkitDescriptor() {
         super();
     }
     
@@ -62,7 +62,7 @@ public class ToolkitPluginDescriptor implements Comparable {
      * @param majorVersion the major version
      * @param minorVersion the minor version
      */
-    public ToolkitPluginDescriptor(String toolkitID, String name, 
+    public ToolkitDescriptor(String toolkitID, String name, 
         String includes, String depends, String level, int order, 
         boolean isUserToolkit, int majorVersion, int minorVersion) {
 
@@ -130,10 +130,10 @@ public class ToolkitPluginDescriptor implements Comparable {
 
     /** {@inheritDoc} */
     public int compareTo(Object o) {
-        if (!(o instanceof ToolkitPluginDescriptor)) {
+        if (!(o instanceof ToolkitDescriptor)) {
             return 0;            
         }
-        ToolkitPluginDescriptor descr = (ToolkitPluginDescriptor)o;
+        ToolkitDescriptor descr = (ToolkitDescriptor)o;
         return getToolkitID().compareTo(descr.getToolkitID());
     }
 

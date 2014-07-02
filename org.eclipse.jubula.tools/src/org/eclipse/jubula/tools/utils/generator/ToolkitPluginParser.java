@@ -19,7 +19,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
-import org.eclipse.jubula.tools.xml.businessmodell.ToolkitPluginDescriptor;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.jubula.tools.xml.businessprocess.ConfigVersion;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -61,7 +61,7 @@ public class ToolkitPluginParser {
     /**
      * @return the toolkit descriptor
      */
-    public ToolkitPluginDescriptor getToolkitDescriptor() {
+    public ToolkitDescriptor getToolkitDescriptor() {
         DocumentBuilder db = null;
         Document xmlDom = null;
         try {
@@ -99,7 +99,7 @@ public class ToolkitPluginParser {
         final ConfigVersion configVersion = m_compSystem.getConfigVersion();
         final int majorVersion = configVersion.getMajorVersion().intValue();
         final int minorVersion = configVersion.getMinorVersion().intValue();
-        final ToolkitPluginDescriptor descr = new ToolkitPluginDescriptor(
+        final ToolkitDescriptor descr = new ToolkitDescriptor(
                 toolkitID, toolkitName, includes, depends, level, order, 
                 isUserToolkit, majorVersion , minorVersion);
 
