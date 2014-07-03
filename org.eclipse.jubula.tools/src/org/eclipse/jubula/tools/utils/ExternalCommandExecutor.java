@@ -51,9 +51,6 @@ public class ExternalCommandExecutor {
         /** Process state. True if inner process is finished. */
         private boolean m_finished = false;
         
-        /** Process exit code. */
-        private int m_exitCode = 0;
-        
         /** Inner process, started by the Runtime.exec() in the ExecuteTask. */
         private Process m_process = null;
 
@@ -177,7 +174,7 @@ public class ExternalCommandExecutor {
                     if (m_process != null) {
                         new DevNull(m_process.getErrorStream()).start();
                         new DevNull(m_process.getInputStream()).start();
-                        m_exitCode = m_process.waitFor();
+                        m_process.waitFor();
                     } else {
                         m_isCmdValid = false;
                     }
