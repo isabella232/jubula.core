@@ -44,4 +44,8 @@ Two versions of BIRT involved
 
 = Legacy =
 
-* TODO: MT
+* Fix for http://eclip.se/406191: temporarily remove rowFetchSize during work with library : otherwise Report Designer shows errors
+* report file names / report items / data sources differ in naming : should be unified
+* different BIRT versions for reports in use (see above)
+* one BIRT report (see above) does not make use of the library
+* naming of styling attributes / master pages / etc. makes use of "GD" related prefixes 
