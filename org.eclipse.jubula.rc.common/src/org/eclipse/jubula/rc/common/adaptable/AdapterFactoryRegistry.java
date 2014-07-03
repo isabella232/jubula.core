@@ -54,7 +54,8 @@ public class AdapterFactoryRegistry {
      * Map that manages the registration. Key is always a class Value is a
      * collection of IAdapterFactory
      */
-    private Map m_registrationMap = new HashMap();
+    private Map<Class, Collection<IAdapterFactory>> m_registrationMap = 
+        new HashMap<Class, Collection<IAdapterFactory>>();
 
     /**
      * Call Constructor only by using getInstance
@@ -80,10 +81,10 @@ public class AdapterFactoryRegistry {
     public void registerFactory(IAdapterFactory factory) {
         Class[] supportedClasses = factory.getSupportedClasses();
         for (int i = 0; i < supportedClasses.length; i++) {
-            Collection registeredFactories = (Collection) m_registrationMap
+            Collection<IAdapterFactory> registeredFactories = m_registrationMap
                     .get(supportedClasses[i]);
             if (registeredFactories == null) {
-                registeredFactories = new ArrayList();
+                registeredFactories = new ArrayList<IAdapterFactory>();
             }
             registeredFactories.add(factory);
             m_registrationMap.put(supportedClasses[i], registeredFactories);
@@ -100,8 +101,8 @@ public class AdapterFactoryRegistry {
         Class[] supportedClasses = factory.getSupportedClasses();
         for (int i = 0; i < supportedClasses.length; i++) {
             final Class supportedClass = supportedClasses[i];
-            Collection registeredFactories = (Collection) m_registrationMap
-                    .get(supportedClass);
+            Collection<IAdapterFactory> registeredFactories = 
+                m_registrationMap.get(supportedClass);
             if (registeredFactories == null) {
                 return;
             }
@@ -124,21 +125,20 @@ public class AdapterFactoryRegistry {
      *         handle the objectToAdapt
      */
     public Object getAdapter(Class targetAdapterClass, Object objectToAdapt) {
-        Collection registeredFactories = null;
+        Collection<IAdapterFactory> registeredFactories = null;
         Class superClass = objectToAdapt.getClass();
         while (registeredFactories == null && superClass != Object.class) {
-            registeredFactories = (Collection) m_registrationMap
-                    .get(superClass);
+            registeredFactories = m_registrationMap.get(superClass);
             superClass = superClass.getSuperclass();
         }
         if (registeredFactories == null) {
             return null;
         }
-        for (Iterator iterator = registeredFactories.iterator(); iterator
-                .hasNext();) {
-            IAdapterFactory adapterFactory = (IAdapterFactory) iterator.next();
+        for (Iterator<IAdapterFactory> iterator = registeredFactories
+            .iterator(); iterator.hasNext();) {
+            IAdapterFactory adapterFactory = iterator.next();
             Object object = adapterFactory.getAdapter(targetAdapterClass,
-                    objectToAdapt);
+                objectToAdapt);
 
             if (object != null) {
                 return object;
@@ -154,10 +154,9 @@ public class AdapterFactoryRegistry {
      */
     public static void initRegistration(IUrlLocator urlLocator) {
         Class[] adapterFactories = findClassesOfType(urlLocator,
-                ADAPTER_PACKAGE_NAME,
-                IAdapterFactory.class);
+                ADAPTER_PACKAGE_NAME, IAdapterFactory.class);
 
-        //Register all found factories
+        // Register all found factories
         for (int i = 0; i < adapterFactories.length; i++) {
             try {
                 IAdapterFactory factory = (IAdapterFactory) adapterFactories[i]
@@ -192,11 +191,11 @@ public class AdapterFactoryRegistry {
      * @return found classes
      */
     private static Class[] findClassesOfType(IUrlLocator urlLocator,
-            String packageName, Class superclass) {
+            String packageName, Class<IAdapterFactory> superclass) {
         try {
             Class[] allClasses = getClasses(urlLocator, packageName);
 
-            List assignableClasses = new ArrayList();
+            List<Class> assignableClasses = new ArrayList<Class>();
             for (int i = 0; i < allClasses.length; i++) {
                 if (superclass.isAssignableFrom(allClasses[i]) 
                         && superclass != allClasses[i]) {
@@ -218,10 +217,10 @@ public class AdapterFactoryRegistry {
      *            List of classes
      * @return array of classes
      */
-    private static Class[] castListToClassArray(List classes) {
+    private static Class[] castListToClassArray(List<Class> classes) {
         Class[] arrayClasses = new Class[classes.size()];
         for (int i = 0; i < arrayClasses.length; i++) {
-            arrayClasses[i] = (Class) classes.get(i);
+            arrayClasses[i] = classes.get(i);
         }
         return arrayClasses;
     }
@@ -242,11 +241,11 @@ public class AdapterFactoryRegistry {
         throws ClassNotFoundException, IOException {
         ClassLoader classLoader = AdapterFactoryRegistry.class.getClassLoader();
         String path = packageName.replace('.', '/');
-        Enumeration resources = classLoader.getResources(path);
-        List dirs = new ArrayList();
+        Enumeration<URL> resources = classLoader.getResources(path);
+        List<URL> dirs = new ArrayList<URL>();
 
         while (resources.hasMoreElements()) {
-            URL resource = (URL) resources.nextElement();
+            URL resource = resources.nextElement();
             try {
                 resource = urlLocator.convertUrl(resource);
                 dirs.add(resource);
@@ -254,12 +253,12 @@ public class AdapterFactoryRegistry {
                 log.error(e.getLocalizedMessage(), e);
             }
         }
-        List classes = new ArrayList();
+        List<Class> classes = new ArrayList<Class>();
         for (int i = 0; i < dirs.size(); i++) {
             if (dirs.get(i).toString().startsWith("jar:")) { //$NON-NLS-1$
-                classes.addAll(findClassesInJar((URL)dirs.get(i), packageName));
+                classes.addAll(findClassesInJar(dirs.get(i), packageName));
             } else {
-                classes.addAll(findClasses((URL) dirs.get(i), packageName));
+                classes.addAll(findClasses(dirs.get(i), packageName));
             }
         }
         return castListToClassArray(classes);
@@ -277,9 +276,9 @@ public class AdapterFactoryRegistry {
      * @return The classes
      * @throws ClassNotFoundException
      */
-    private static List findClasses(URL directoryUrl, String packageName)
+    private static List<Class> findClasses(URL directoryUrl, String packageName)
         throws ClassNotFoundException {
-        List classes = new ArrayList();
+        List<Class> classes = new ArrayList<Class>();
         File directory = new File(directoryUrl.getFile());
         if (!directory.exists()) {
             return classes;
@@ -307,12 +306,12 @@ public class AdapterFactoryRegistry {
      * method to find all classes in a given jar
      * 
      * @param resource
-     *            The url to the jar file
+     *            The URL to the jar file
      * @param pkgname
      *            The package name for classes found inside the base directory
      * @return The classes
      */
-    private static List findClassesInJar(URL resource, String pkgname) {
+    private static List<Class> findClassesInJar(URL resource, String pkgname) {
         String relPath = pkgname.replace('.', '/');
         String path = resource.getPath()
                 .replaceFirst("[.]jar[!].*", ".jar") //$NON-NLS-1$ //$NON-NLS-2$
@@ -322,13 +321,13 @@ public class AdapterFactoryRegistry {
         } catch (UnsupportedEncodingException uee) {
             log.error(uee.getLocalizedMessage(), uee);
         }
-        List classes = new ArrayList();
+        List<Class> classes = new ArrayList<Class>();
         JarFile jarFile = null;
         try {            
             jarFile = new JarFile(path);        
-            Enumeration entries = jarFile.entries();
+            Enumeration<JarEntry> entries = jarFile.entries();
             while (entries.hasMoreElements()) {
-                JarEntry entry = (JarEntry) entries.nextElement();
+                JarEntry entry = entries.nextElement();
                 String entryName = entry.getName();
                 String className = null;
                 if (entryName.endsWith(".class")  //$NON-NLS-1$
@@ -358,5 +357,4 @@ public class AdapterFactoryRegistry {
         }
         return classes;
     }
-    
 }

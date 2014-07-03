@@ -21,11 +21,11 @@ import java.awt.event.AWTEventListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
-import java.util.Collection;
 import java.util.ConcurrentModificationException;
-import java.util.Iterator;
+import java.util.Set;
 
 import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.common.components.AUTComponent;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.listener.EventLock;
@@ -470,24 +470,24 @@ public class SwingApplicationTester extends AbstractApplicationTester {
         do {
             try {
                 wasInterrupted = false;
-                Collection components = ComponentHandler.getAutHierarchy()
-                        .getHierarchyMap().keySet();
-                for (Iterator it = components.iterator(); it.hasNext();) {
-                    Component c = ((SwingComponent)it.next())
+                Set<? extends AUTComponent> components = ComponentHandler
+                    .getAutHierarchy().getHierarchyMap().keySet();
+                for (AUTComponent component : components) {
+                    Component c = ((SwingComponent) component)
                         .getRealComponent();
                     if (c.isShowing()) {
                         if (c instanceof Frame) {
-                            Frame frame = (Frame)c;
-                            if (MatchUtil.getInstance().match(frame.getTitle(), 
+                            Frame frame = (Frame) c;
+                            if (MatchUtil.getInstance().match(frame.getTitle(),
                                 title, operator)) {
 
                                 return true;
                             }
                         }
                         if (c instanceof Dialog) {
-                            Dialog dialog = (Dialog)c;
-                            if (MatchUtil.getInstance().match(dialog.getTitle(),
-                                title, operator)) {
+                            Dialog dialog = (Dialog) c;
+                            if (MatchUtil.getInstance().match(
+                                dialog.getTitle(), title, operator)) {
 
                                 return true;
                             }

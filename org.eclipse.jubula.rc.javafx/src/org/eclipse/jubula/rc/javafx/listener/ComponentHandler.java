@@ -131,7 +131,8 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      * @return List
      */
     public static <T> List<? extends T> getAssignableFrom(Class<T> type) {
-        Set<JavaFXComponent> keys = hierarchy.getHierarchyMap().keySet();
+        Set<JavaFXComponent> keys = (Set<JavaFXComponent>) 
+            hierarchy.getHierarchyMap().keySet();
         List<T> result = new ArrayList<T>();
         for (JavaFXComponent object : keys) {
             if (type.isAssignableFrom(object.getRealComponentType())) {

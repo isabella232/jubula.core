@@ -15,10 +15,6 @@ import java.util.List;
 
 /**
  * @author BREDEX GmbH
- * @created Jul 4, 2007
- */
-/**
- * @author BREDEX GmbH
  * @created Jul 11, 2007
  */
 public class ToolkitConfig {
@@ -42,7 +38,7 @@ public class ToolkitConfig {
     /**
      * 
      */
-    private List m_toolkitNames;
+    private List<String> m_toolkitNames;
     /**
      * <code>m_outputdir</code>
      */
@@ -50,15 +46,15 @@ public class ToolkitConfig {
     
     /**
      * @param basedir the base directory for the toolkit plugin
-     * @param xmlPath the filename used for xml toolkit files
+     * @param xmlPath the filename used for XML toolkit files
      * @param resourceBundlePath the filename used for resource bundles in toolkits
-     * @param resourceBundlefqn the fqn of the resource bundle (template)
-     * @param outputDir the outputdirectory
+     * @param resourceBundlefqn the FQN of the resource bundle (template)
+     * @param outputDir the output directory
      * @param toolkitNames the names (dirs) of all toolkits to be generated
      */
     public ToolkitConfig(String basedir, String xmlPath, 
             String resourceBundlePath, String resourceBundlefqn, 
-            String outputDir, List toolkitNames) {
+            String outputDir, List<String> toolkitNames) {
         super();
         m_basedir = basedir;
         m_xmlPath = xmlPath;
@@ -71,13 +67,13 @@ public class ToolkitConfig {
     /**
      * @return a list of toolkit names
      */
-    public List getToolkitNames() {
+    public List<String> getToolkitNames() {
         return m_toolkitNames;
     }
 
     /**
      * @param toolkitName the name of the toolkit
-     * @return the path to the xml file
+     * @return the path to the XML file
      */
     public String getXMLPath(String toolkitName) {
         StringBuffer path = new StringBuffer();
@@ -118,7 +114,7 @@ public class ToolkitConfig {
     
     /**
      * @param toolkitName the name of the toolkit
-     * @return the fqn of the resource bundle for the toolkit
+     * @return the FQN of the resource bundle for the toolkit
      */
     public String getResourceBundleFQN(String toolkitName) {
         String fqn = MessageFormat.format(m_resourceBundleFQN,
@@ -143,5 +139,4 @@ public class ToolkitConfig {
     public String getOutputdir() {
         return m_outputdir;
     }
-
 }

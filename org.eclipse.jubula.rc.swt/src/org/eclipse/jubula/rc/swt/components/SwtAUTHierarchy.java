@@ -79,12 +79,13 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
     private static FindSWTComponentBP findBP = new FindSWTComponentBP();
     
     /** Mapping from Shells to their corresponding listeners */
-    private Map m_shellToListenerMap = new HashMap();
+    private Map<Shell, ShellClosingListener> m_shellToListenerMap = 
+        new HashMap<Shell, ShellClosingListener>();
     
     // methods operating on meta data, parameters are from the AUT
     /**
      * Adds the complete hierarchy of the given <code>window</code> to the
-     * hierary. <br>
+     * hierarchy. <br>
      * @param window a new (and opened) Shell
      */
     public void add(Shell window) {
@@ -150,7 +151,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
         }
         if (!window.isDisposed() && m_shellToListenerMap.containsKey(window)) {
             window.removeShellListener(
-                (ShellClosingListener)m_shellToListenerMap.get(window));
+                m_shellToListenerMap.get(window));
         }
         m_shellToListenerMap.remove(window);
 
@@ -169,7 +170,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
                     parentContainer.remove(windowContainer);
                 }
                 
-                // Remove recursivly all hierarchy container from the maps and
+                // Remove recursively all hierarchy container from the maps and
                 // remove all listener from the container of the AUT. If the window
                 // is displayed again, the complete hierarchy is rebuilded.
                 removeFromHierarchy(windowContainer);            
@@ -201,7 +202,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
             result.setSupportedClassName(AUTServerConfiguration
                 .getInstance().getTestableClass(
                     component.getClass()).getName());
-            List hierarchy = getPathToRoot(component);
+            List<String> hierarchy = getPathToRoot(component);
             result.setHierarchyNames(hierarchy);
             result.setNeighbours(getComponentContext(component));
             HierarchyContainer container = getHierarchyContainer(component);
@@ -224,9 +225,9 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
     /**
      * {@inheritDoc}
      */
-    protected List getComponentContext(Object component) {
+    protected List<String> getComponentContext(Object component) {
         Widget comp = (Widget)component;
-        List context = new ArrayList();
+        List<String> context = new ArrayList<String>();
         Widget widgetParent = SwtUtils.getWidgetParent(comp);
         if (widgetParent != null) {
             SwtHierarchyContainer parent = getHierarchyContainer(widgetParent);
@@ -259,7 +260,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
      * {@inheritDoc}
      */
     public synchronized IComponentIdentifier[] getAllComponentId() {
-        List result = new Vector();
+        List<IComponentIdentifier> result = new Vector<IComponentIdentifier>();
         Set keys = getHierarchyMap().keySet();
         for (Iterator iter = keys.iterator(); iter.hasNext();) {
             Widget component = ((SwtComponent)iter.next()).getRealComponent();
@@ -279,14 +280,14 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
                 // and continue
             }
         }
-        return (IComponentIdentifier[]) result
+        return result
                 .toArray(new IComponentIdentifier[result.size()]);
     }
     
     /**
-     * Searchs for the component in the AUT with the given <code>componentIdentifier</code>.
+     * Search for the component in the AUT with the given <code>componentIdentifier</code>.
      * @param componentIdentifier the identifier created in object mapping mode
-     * @throws IllegalArgumentException if the given identifer is null or <br>
+     * @throws IllegalArgumentException if the given identifier is null or <br>
      *         the hierarchy is not valid: empty or containing null elements
      * @throws InvalidDataException if the hierarchy in the componentIdentifier does not consist of strings
      * @throws ComponentNotManagedException if no component could be found for the identifier
@@ -330,17 +331,17 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
      * Strings (the name of the components).
      * @param component the component to start, it's an instance from the AUT, must not be null
      * @throws IllegalArgumentException if component is null
-     * @throws ComponentNotManagedException if no hierarchy conatiner exists for the component
+     * @throws ComponentNotManagedException if no hierarchy container exists for the component
      * @return the path to root, the first elements contains the root, the last element contains the component itself.
      */
-    private List getPathToRoot(Widget component) 
+    private List<String> getPathToRoot(Widget component) 
         throws IllegalArgumentException, ComponentNotManagedException {
         
         if (log.isInfoEnabled()) {
             log.info("pathToRoot called for " + component); //$NON-NLS-1$            
         }
         Validate.notNull(component, "The component must not be null"); //$NON-NLS-1$ 
-        List hierarchy = new ArrayList();
+        List<String> hierarchy = new ArrayList<String>();
         SwtHierarchyContainer autContainer = getHierarchyContainer(component);
         if (autContainer != null) {
             // add the name of the container itself
@@ -348,7 +349,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
             SwtHierarchyContainer parent = autContainer.getParent();
             // prepend the name of the container up to the root container
             while (parent != null) {
-                ((ArrayList)hierarchy).add(0, parent.getName());
+                ((ArrayList<String>)hierarchy).add(0, parent.getName());
                 parent = parent.getParent();
             }
         } else {
@@ -699,9 +700,9 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
         }
         name(hierarchyContainer);
 
-        Collection collection = getComponents(container);
-        for (Iterator iter = collection.iterator(); iter.hasNext();) {
-            Widget comp = (Widget)iter.next();
+        Collection<Widget> collection = getComponents(container);
+        for (Iterator<Widget> iter = collection.iterator(); iter.hasNext();) {
+            Widget comp = iter.next();
             if (getHierarchyContainer(comp) != null) {
                 return;
             }
@@ -735,9 +736,9 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
         }
         removeFromHierachyMap(container);
         if (!autComp.isDisposed()) {
-            Collection childs = getComponents(autComp);
-            for (Iterator iter = childs.iterator(); iter.hasNext();) {
-                removeFromHierarchy(getHierarchyContainer((Widget)iter.next()));
+            Collection<Widget> childs = getComponents(autComp);
+            for (Iterator<Widget> iter = childs.iterator(); iter.hasNext();) {
+                removeFromHierarchy(getHierarchyContainer(iter.next()));
             }
         }
     }
@@ -892,8 +893,8 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
      * @param component a <code>Widget</code> 
      * @return a collection of all components in the hierarchy empty <code>collection</code> if nothing was found or <code>c</code> is null.
      */
-    private Collection getComponents(Widget component) {
-        List children = new LinkedList();
+    private Collection<Widget> getComponents(Widget component) {
+        List<Widget> children = new LinkedList<Widget>();
         if (component instanceof Composite) {
             Composite cont = (Composite) component;
             children.addAll(Arrays.asList(cont.getChildren()));

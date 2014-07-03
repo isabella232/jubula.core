@@ -40,16 +40,16 @@ public abstract class FindComponentBP {
     private double m_thresholdValue = Constants.THRESHOLD_VALUE;
     /** the factor how strong name equivalenz will increase total equivalenz */
     private double m_nameFactor = Constants.NAME_FACTOR;
-    /** the current aut hierarchy */
+    /** the current AUT hierarchy */
     private AUTHierarchy m_hierarchy;
     
     /**
-     * Searchs for the component in the AUT with the given
+     * Search for the component in the AUT with the given
      * <code>componentIdentifier</code>.
      * 
      * @param componentIdentifier the identifier created in object mapping mode
-     * @param hierarchy the current aut hierarchy
-     * @throws IllegalArgumentException if the given identifer is null or <br>
+     * @param hierarchy the current AUT hierarchy
+     * @throws IllegalArgumentException if the given identifier is null or <br>
      *             the hierarchy is not valid: empty or containing null elements
      * @return the instance of the component of the AUT 
      */
@@ -61,13 +61,14 @@ public abstract class FindComponentBP {
         m_hierarchy = hierarchy;
         setProfile(AUTServerConfiguration.getInstance().getProfile());
         // Fuzzy logic parameter
-        List hierarchyNames = null;
+        List<String> hierarchyNames = null;
         // parameter check
         Validate.notNull(componentIdentifier, "The component identifier must not be null."); //$NON-NLS-1$
         hierarchyNames = componentIdentifier.getHierarchyNames();
         Validate.noNullElements(hierarchyNames,
                 "The component identifier contains  no hierarchy information."); //$NON-NLS-1$
-        Iterator allComponents = new ArrayList(m_hierarchy.getHierarchyMap()
+        Iterator<HierarchyContainer> allComponents = 
+            new ArrayList<HierarchyContainer>(m_hierarchy.getHierarchyMap()
                 .values()).iterator();
         HierarchyContainer bestMatch = null;
         double bestMatchPercentage = 0;
@@ -77,8 +78,7 @@ public abstract class FindComponentBP {
             .getInstance();
         int numberOfOtherMatchingComponents = 0;
         while (allComponents.hasNext()) {
-            HierarchyContainer current = (HierarchyContainer) 
-                allComponents.next();
+            HierarchyContainer current = allComponents.next();
             Object currComp = current.getCompID().getComp();
             // check class compatibility first
             if (isAvailable(currComp) 
@@ -118,7 +118,7 @@ public abstract class FindComponentBP {
 
 
     /**
-     * Checks if the given currcomp class or one of its superclass is testable 
+     * Checks if the given current component class or one of its superclass is testable 
      * with the given suppClassName.
      * @param autServerConf the AUTServerConfiguration
      * @param suppClassName the class name of the supported component 
@@ -188,7 +188,7 @@ public abstract class FindComponentBP {
      * @param current
      *            HierarchyContainer
      * @return double indicating the equivalence; THIS METHOD uses a shortcut to
-     *         decide continuuing the equivalence computing or not - this may
+     *         decide continuing the equivalence computing or not - this may
      *         lead to a "guessed" equivalence which is higher as the real
      *         equivalence but still lower than the specified threshold
      *         equivalence.
@@ -323,9 +323,9 @@ public abstract class FindComponentBP {
                 || (comp.getHierarchyNames().size() == 0)) {
             return 0;
         }
-        List l1 = comp.getHierarchyNames().subList(
+        List<String> l1 = comp.getHierarchyNames().subList(
             0, comp.getHierarchyNames().size() - 1);
-        List l2 = new ArrayList();
+        List<String> l2 = new ArrayList<String>();
         HierarchyContainer iter = hierarchyContainer.getPrnt();
         while (iter != null) {
             l2.add(0, iter.getName());
@@ -352,8 +352,8 @@ public abstract class FindComponentBP {
     private double getContextEquivalence(IComponentIdentifier comp, 
             HierarchyContainer hierarchyContainer) {
         
-        List compNeighbours = comp.getNeighbours();
-        List compContext = m_hierarchy.getComponentContext(
+        List<String> compNeighbours = comp.getNeighbours();
+        List<String> compContext = m_hierarchy.getComponentContext(
                 hierarchyContainer.getCompID().getComp());
         Collections.sort(compNeighbours);
         Collections.sort(compContext);
@@ -382,7 +382,7 @@ public abstract class FindComponentBP {
      * @param t The second List. Must not be <code>null</code>.
      * @return result distance
      */
-    private int getLevenshteinListDistanceImp (List s, List t) {
+    private int getLevenshteinListDistanceImp (List<String> s, List<String> t) {
         if (s == null || t == null) {
             throw new IllegalArgumentException("Lists must not be null"); //$NON-NLS-1$
         }
@@ -441,7 +441,7 @@ public abstract class FindComponentBP {
     }
 
     /**
-     * checks if name is a genereated Name
+     * checks if name is a generated Name
      * @param className String
      * @param name String
      * @return boolean
@@ -452,7 +452,7 @@ public abstract class FindComponentBP {
     
     /**
      * @param currentComponent the component to get the name for
-     * @return the comp name of the current component
+     * @return the component name of the current component
      */
     protected abstract String getCompName(Object currentComponent);
 }

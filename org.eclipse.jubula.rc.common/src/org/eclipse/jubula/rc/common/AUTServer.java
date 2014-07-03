@@ -99,7 +99,7 @@ public abstract class AUTServer {
     private String m_autMainClassName;
 
     /** the class of the AUT, containing the main - method */
-    private Class m_autMainClass;
+    private Class<?> m_autMainClass;
     
     /** the main method of the AUT to invoke*/
     private Method m_autMainMethod;
@@ -141,7 +141,8 @@ public abstract class AUTServer {
     private boolean m_isAgentSet = false;
     
     /** appenders that will be called when the Inspector is activated */
-    private List m_inspectorListenerAppenders = new ArrayList();
+    private List<IAutListenerAppender> m_inspectorListenerAppenders = 
+        new ArrayList<IAutListenerAppender>();
 
     /** the hostname of the AUT-Agent to use for registration */
     private String m_autAgentHost;
@@ -178,7 +179,7 @@ public abstract class AUTServer {
         m_autAgentHost = args[Constants.ARG_REG_HOST];
         m_autAgentPort = args[Constants.ARG_REG_PORT];
         m_autID = args[Constants.ARG_AUT_NAME]; 
-        // arguments for the aut, is >= 0, see definition of the constants
+        // arguments for the AUT, is >= 0, see definition of the constants
         int numberAutArgs = args.length - Constants.MIN_ARGS_REQUIRED;
         m_autArgs = new String[numberAutArgs];
         for (int i = 0; i < numberAutArgs; i++) {
@@ -209,7 +210,7 @@ public abstract class AUTServer {
     /**
      * @return Returns the autMainClass.
      */
-    public Class getAutMainClass() {
+    public Class<?> getAutMainClass() {
         return m_autMainClass;
     }
     
@@ -946,10 +947,9 @@ public abstract class AUTServer {
      * 
      */
     public final void startInspector() {
-        IAutListenerAppender [] inspectorAppenders = 
-            (IAutListenerAppender [])m_inspectorListenerAppenders.toArray(
-                    new IAutListenerAppender[
-                        m_inspectorListenerAppenders.size()]);
+        IAutListenerAppender[] inspectorAppenders = m_inspectorListenerAppenders
+            .toArray(new IAutListenerAppender[m_inspectorListenerAppenders
+                .size()]);
         for (int i = 0; i < inspectorAppenders.length; i++) {
             inspectorAppenders[i].addAutListener();
         }

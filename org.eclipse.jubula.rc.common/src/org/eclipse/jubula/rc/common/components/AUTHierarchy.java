@@ -39,35 +39,36 @@ public abstract class AUTHierarchy {
      * a hashtable to find the HierarchyContainer for a component from
      * the AUT: key=componentID, value=HierarchyContainer
      */
-    private volatile Map m_hierarchyMap; 
+    private volatile Map<AUTComponent, HierarchyContainer> m_hierarchyMap; 
     
     /**
      * a hashtable to find the HierarchyContainer for a component from
      * the AUT: key=component.getRealComponent, value=AUTComponent
      */
-    private volatile Map m_realHierarchyMap; 
+    private volatile Map<Object, AUTComponent> m_realHierarchyMap; 
     
     /**
      * default constructor <br>
      * initializes the HashTables m_hierarchyMap and m_topLevelContainerMap;
      */
     public AUTHierarchy() {
-        m_hierarchyMap = new Hashtable(Constants.INITIAL_CAPACITY_HIERARCHY);
-        m_realHierarchyMap = new Hashtable(
-                Constants.INITIAL_CAPACITY_HIERARCHY);
+        m_hierarchyMap = new Hashtable<AUTComponent, HierarchyContainer>(
+            Constants.INITIAL_CAPACITY_HIERARCHY);
+        m_realHierarchyMap = new Hashtable<Object, AUTComponent>(
+            Constants.INITIAL_CAPACITY_HIERARCHY);
     }
     
     /**
      * @return all hierarchyContainer
      */
-    public Map getHierarchyMap() {
+    public Map<? extends AUTComponent, HierarchyContainer> getHierarchyMap() {
         return m_hierarchyMap;
     }
     
     /**
      * @return all AUTcomponent
      */
-    protected Map getRealMap() {
+    protected Map<Object, AUTComponent> getRealMap() {
         return m_realHierarchyMap;
     }
 
@@ -126,7 +127,7 @@ public abstract class AUTHierarchy {
      * Creates a name for the given component and the given postFix. <br>
      * The class name of the component is used.
      * 
-     * @param componentName the original comp name
+     * @param componentName the original component name
      * @param postFix a string to append
      * @return the new name
      */
@@ -137,21 +138,21 @@ public abstract class AUTHierarchy {
     /**
      * @return all hierarchyContainer of the hierarchyMap
      */
-    protected Collection getHierarchyValues() {
+    protected Collection<HierarchyContainer> getHierarchyValues() {
         return m_hierarchyMap.values();
     }
     
     /**
-     * returns the conext of a component. If there are other components in the
+     * returns the context of a component. If there are other components in the
      * same container, their names will be added.
      * @param component component
      * @return List
      */
-    protected abstract List getComponentContext(Object component);
+    protected abstract List<String> getComponentContext(Object component);
     
     /**
      * @param container the hierarchy container that corresponds to component
-     * @param component the gui component that corresponds to the identifier
+     * @param component the UI component that corresponds to the identifier
      * @param identifier the identifier to set alternative display name on it
      */
     protected final void setAlternativeDisplayName(HierarchyContainer container,
@@ -168,8 +169,8 @@ public abstract class AUTHierarchy {
     
     /**
      * @param container the hierarchy container that corresponds to component
-     * @param component the gui component to build a display name for
-     * @return display name to be used for the gui component
+     * @param component the UI component to build a display name for
+     * @return display name to be used for the UI component
      */
     private final String buildDisplayName(HierarchyContainer container,
             Object component) {
@@ -187,8 +188,8 @@ public abstract class AUTHierarchy {
     }
 
     /**
-     * @param component the gui component to get the string array from
-     * @return string array from the given gui component
+     * @param component the UI component to get the string array from
+     * @return string array from the given UI component
      */
     private String[] getTextArrayFromComponent(Object component) {
         String[] componentTextArray = null;
@@ -213,7 +214,7 @@ public abstract class AUTHierarchy {
 
     /**
      * @param componentTextArray the array containing none, one or many texts
-     *                           representing a componnent
+     *                           representing a component
      * @return improved name builded from componentTextArray
      */
     private String buildImprovedName(String[] componentTextArray) {

@@ -19,7 +19,7 @@ import org.apache.commons.lang.Validate;
  */
 public abstract class AUTComponent {
     /** Component from the AUT. This may be null if no actual component
-     * was used, i.e. the ID was generated for inheretance checking.
+     * was used, i.e. the ID was generated for inheritance checking.
      */
     private Object m_component = null;
 
@@ -96,8 +96,8 @@ public abstract class AUTComponent {
         m_name = name;
     }
     
-    /** set the aut component 
-     * @param comp the comp to set
+    /** set the AUT component 
+     * @param comp the component to set
      */
     protected void setComp(Object comp) { 
         m_component = comp;
