@@ -62,7 +62,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * class to persist und read testcase
+ * Class to persist and read nodes
  * 
  * @author BREDEX GmbH
  * @created 07.09.2004
@@ -581,16 +581,11 @@ public class NodePM extends PersistenceManager {
         String tsGuid, List<Long> parentProjectIds, EntityManager s) {
 
         StringBuffer queryBuffer = new StringBuffer(
-            "select ref from RefTestSuitePO as ref where ref.testSuiteGuid = :tsGuid and ("); //$NON-NLS-1$
-    
-        for (long id : parentProjectIds) {
-            queryBuffer.append("ref.hbmParentProjectId = " + id + " or "); //$NON-NLS-1$ //$NON-NLS-2$
-        }
-        // Remove the last " or ", and close the statement
-        queryBuffer.delete(queryBuffer.length() - 4, queryBuffer.length());
-        queryBuffer.append(")"); //$NON-NLS-1$
+            "select ref from RefTestSuitePO as ref where ref.testSuiteGuid = :tsGuid and ref.hbmParentProjectId in :ids"); //$NON-NLS-1$
         Query q = s.createQuery(queryBuffer.toString());
         q.setParameter("tsGuid", tsGuid); //$NON-NLS-1$
+        q.setParameter("ids", parentProjectIds); //$NON-NLS-1$
+        
         List<IRefTestSuitePO> refTestSuiteList = q.getResultList();
         return refTestSuiteList;
     }
@@ -700,16 +695,12 @@ public class NodePM extends PersistenceManager {
         String specTcGuid, List<Long> parentProjectIds, EntityManager s) {
 
         StringBuffer queryBuffer = new StringBuffer(
-            "select ref from ExecTestCasePO as ref where ref.specTestCaseGuid = :specTcGuid and ("); //$NON-NLS-1$
+            "select ref from ExecTestCasePO as ref where ref.specTestCaseGuid = :specTcGuid and ref.hbmParentProjectId in :ids"); //$NON-NLS-1$
     
-        for (long id : parentProjectIds) {
-            queryBuffer.append("ref.hbmParentProjectId = " + id + " or "); //$NON-NLS-1$ //$NON-NLS-2$
-        }
-        // Remove the last " or ", and close the statement
-        queryBuffer.delete(queryBuffer.length() - 4, queryBuffer.length());
-        queryBuffer.append(")"); //$NON-NLS-1$
         Query q = s.createQuery(queryBuffer.toString());
         q.setParameter("specTcGuid", specTcGuid); //$NON-NLS-1$
+        q.setParameter("ids", parentProjectIds); //$NON-NLS-1$
+        
         List<IExecTestCasePO> execTcList = q.getResultList();
 
         return execTcList;
