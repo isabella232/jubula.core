@@ -1,0 +1,120 @@
+ \begin{itemize}
+\item For many search and selection actions, you can use regular expressions (using the \bxname{matches} operator) or simple matching (using the \bxname{simple match} operator) to avoid having to enter strings as exactly as they appear in the user interface. 
+\item Using regular expressions lets you verify or select text even if you do not know exactly what the text is.
+\item Using a system of placeholders for characters and some function symbols, you can enter a regular expression to find or check a text.
+\item Actions which support regular expressions have an additional parameter, \bxcaption{Operator}. 
+\end{itemize}
+
+\subsection{Using the 'matches' operator}
+\label{regex}
+
+\textbf{Simple matching}
+\begin{itemize}
+\item \bxshell{abc} matches \bxcaption{abc} and nothing else.
+\end{itemize}
+
+\textbf{Wildcards}
+\begin{itemize}
+\item \bxshell{.} represents one instance of any character.
+\item \bxshell{..} represents two characters.  
+\end{itemize}
+
+\textbf{Repetition}
+\begin{itemize}
+\item Instead of using \bxshell{.} for each character, you can use symbols to indicate how many characters you are replacing with wildcards.
+\item \bxshell{?} matches the previous character or group 0 or 1 time(s). E.g. \bxshell{a?} represents ''none or one \bxshell{a}''.
+\item \bxshell{*} matches the previous character or group 0 or more time(s). E.g. \bxshell{a*} represents ''none or more \bxshell{a}''.
+\item \bxshell{+} matches the previous character or group 1 or more time(s). E.g. \bxshell{a+} represents ''one or more \bxshell{a}''.
+\item You can also use curly brackets \bxshell{\{\}}  to specify the minimum and maximum number of repetitions, e.g. \bxshell{\{4,7\}} looks for a minimum of four and a maximum of seven repetitions of the previous character.
+\item To specify that a character must be repeated a minimum of four times, use: \bxshell{\{4,\}}
+\end{itemize}
+
+\textbf{Combining wildcards with repetition}
+\begin{itemize}
+\item You can specify a whole area of unknown text using \bxshell{.} and one of the repetition methods.
+\item  \bxshell{.*} is an unlimited amount of any character, or none at all.
+\item \bxshell{.?} is 0 or one of any character.
+\item \bxshell{.+} is an unlimited amount of any character, but the character must appear at least once. 
+\end{itemize}
+\bxtipp{The regular expression is applied to your entire string. To search for a match within a string, wildcards need to be placed on either side. See the examples below for more information.}
+
+
+\textbf{Ranges}
+\begin{itemize}
+\item For each individual character, you can specify a range of things it is allowed to be. 
+\item A range is specified using square brackets (\bxshell{[]}) and a dash \bxshell{-}. 
+\item For example, you can specify that a particular character can be any capital letter: \bxshell{[A-Z]}.
+\end{itemize}
+\bxtipp{Note that there are no spaces between the ranges. }
+
+\textbf{Alternatives}
+\begin{itemize}
+\item Use a pipe ('{\tt |}') to specify alternatives.
+\item For example, \bxshell{[a|b].*} will match a string that begins with \bxshell{a} or \bxshell{b}.
+\end{itemize}
+
+\textbf{Escape character}
+\begin{itemize}
+\item Backslash \bxshell{$\backslash$} is used to negate the effect of the character following the backslash.
+\item The characters that are used to construct a regular expression need to be escaped if they are to be matched within a string.
+\item The characters are: \newline
+ \verb1 [ ] \ . | ? * + ( ) { } ^ $  1\newline 
+\item Because backslash is already used as an escape symbol, you will need to use two backslashes to escape regular expression characters. 
+\item For example, to check for a tree node:\\
+\bxshell{x/y/z/***} \\
+where the slashes are a part of the node, your regular expression in the \ite{} would look like this: \verb1 x\/y\/z\/\\*\\*\\* 1\newline
+The backslashes before the ordinary slashes are an escape symbol to specify that the following sign is not a path separator. The extra backslash before the stars means that the second backslash is to be interpreted as a backslash in the regular expression, i.e. as an escape symbol.  
+\item E.g. If you want to check for a star (\bxshell{*}), then you have to enter \bxshell{$\backslash$$\backslash$*}. 
+\end{itemize}
+
+\textbf{Verbatim}
+\begin{itemize}
+\item You can avoid having to use multiple backslashes by putting the whole regular expression in single quotes:
+\item The example above for a tree node could be entered thus:\\
+\bxshell{'x/y/z/***'} 
+\end{itemize}
+
+\textbf{Useful examples}
+\begin{itemize}
+\item An empty field is represented by: \verb+^$+%$
+\item A string that starts with \bxshell{a} is represented by: \bxshell{a.*}
+\item A string that ends in \bxshell{a} is represented by: \bxshell{.*a}
+\item A string that starts with \bxshell{a}, ends in \bxshell{b} and has unknown values (0 or more) in the middle is represented by: \bxshell{a.*b}
+\item A string which contains \bxshell{a} somewhere between other unknown characters (0 or more) is represented by: \bxshell{.*a.*}
+\item A password which can only contain capital letters and which must be between six and eight letters is represented by: \bxshell{[A-Z]\{6,8\}}.
+\item A password which can contain any alphanumerical values and which must be at least six characters is represented by: \bxshell{[A-Za-z0-9]\{6,\}}.
+\item You can check that a string corresponds to a minimum and maximum length using: \\
+\verb#'^.{'={MIN_COUNT}','={MAX_COUNT}'}$'#
+\item To check for a text which begins with a \bxshell{*}, you must use the escape character: \verb+\\*.*+
+\item To check that a specific string is \textit{not} in a text, use:\\
+ \verb+^((?!STRING)[\s\S])*$+
+\end{itemize}
+
+
+For additional information about syntax and usage of regular
+expressions in general, please consult one
+of the many textbooks on the subject.
+
+\subsection{Using the 'simple match' operator}
+
+\bxname{Simple match} is a good option if you are sure that you will only want to use the basic wildcards given below. For more powerful regular expressions, use the \bxname{matches} parameter \bxpref{regex}.
+
+\textbf{Simple matching}
+\begin{itemize}
+\item \bxshell{abc} matches \bxcaption{abc} and nothing else.
+\end{itemize}
+
+\textbf{Wildcards}
+\begin{itemize}
+\item \bxshell{?} represents one instance of any character.
+\item \bxshell{*} represents any number (zero or more) of any characters.  
+\end{itemize}
+
+\textbf{Useful examples}
+\begin{itemize}
+\item A string that starts with \bxshell{a} is represented by: \bxshell{a*}
+\item A string that ends in \bxshell{a} is represented by: \bxshell{*a}
+\item A string that starts with \bxshell{a}, ends in \bxshell{b} and has unknown values (0 or more) in the middle is represented by: \bxshell{a*b}
+\item A string which contains \bxshell{a} somewhere between other unknown characters (0 or more) is represented by: \bxshell{*a*}
+\end{itemize}
+ 
