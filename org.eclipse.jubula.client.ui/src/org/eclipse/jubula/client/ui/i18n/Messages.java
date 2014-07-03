@@ -95,6 +95,8 @@ public class Messages extends NLS {
     public static String TestresultSummaryAutName;
     public static String TestresultSummaryAutOS;
     public static String TestresultSummaryCmdParam;
+    public static String TestresultSummaryColumnDescriptionDetails;
+    public static String TestresultSummaryColumnDescriptionStatus;
     public static String TestresultSummaryCommentTitle;
     public static String TestresultSummaryDate;
     public static String TestresultSummaryDetailsAvailable;
@@ -116,6 +118,7 @@ public class Messages extends NLS {
     public static String TestresultSummaryNoData;
     public static String TestresultSummaryNumberOfFailedCaps;
     public static String TestresultSummaryProjectName;
+    public static String TestresultSummaryProjectVersion;
     public static String TestresultSummaryStartTime;
     public static String TestresultSummaryTestJob;
     public static String TestresultSummaryTestJobStartTime;

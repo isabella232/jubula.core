@@ -92,6 +92,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
@@ -263,6 +264,12 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private static final String TESTRESULT_SUMMARY_PROJECT_NAME = 
         Messages.TestresultSummaryProjectName;
+    
+    /**
+     * <code>TESTRESULT_SUMMARY_PROJECT_VERSION</code>
+     */
+    private static final String TESTRESULT_PROJECT_VERSION = 
+        Messages.TestresultSummaryProjectVersion;
 
     /**
      * <code>TESTRESULT_SUMMARY_TESTRUN_STATE</code>
@@ -424,6 +431,7 @@ public class TestresultSummaryView extends ViewPart implements
         addAlmStatusDecoratorColumn(m_tableViewer);
         addTsStatusColumn(m_tableViewer);
         addProjectNameColumn(m_tableViewer);
+        addProjectVersionColumn(m_tableViewer);
         addAutIdColumn(m_tableViewer);
         addAutNameColumn(m_tableViewer);
         addAutConfColumn(m_tableViewer);
@@ -568,7 +576,9 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private void addDetailsColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(75);
+        column.getColumn().setWidth(70);
+        column.getColumn().setToolTipText(
+                Messages.TestresultSummaryColumnDescriptionDetails);
         column.getColumn().setText(TESTRESULT_SUMMARY_DETAILS_AVAILABLE);
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
@@ -581,8 +591,7 @@ public class TestresultSummaryView extends ViewPart implements
                 return IconConstants.TRSV_NODETAILS;
             }
             public String getText(Object element) {
-                return String.valueOf(m_detailedSummaryIds
-                        .contains(((ITestResultSummaryPO)element).getId()));
+                return null;
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
@@ -745,6 +754,7 @@ public class TestresultSummaryView extends ViewPart implements
             TESTRESULT_SUMMARY_TESTRUN_STATE,
             TESTRESULT_ALM_REPORT_STATE,
             TESTRESULT_SUMMARY_PROJECT_NAME,
+            TESTRESULT_PROJECT_VERSION,
             TESTRESULT_SUMMARY_TESTSUITE,
             TESTRESULT_SUMMARY_TESTSUITE_STATUS,
             TESTRESULT_SUMMARY_AUT_NAME,
@@ -914,6 +924,51 @@ public class TestresultSummaryView extends ViewPart implements
         gridData.grabExcessVerticalSpace = true;
         gridData.horizontalAlignment = GridData.FILL;
         m_tableViewer.getControl().setLayoutData(gridData);
+        
+    }
+
+    /**
+     * 
+     */
+    public void manageColumnWidths() {
+        int availableWidth = m_tableViewer.getTable().getBounds().width;
+        final ScrollBar verticalBar = m_tableViewer.getTable().getVerticalBar();
+        if (verticalBar.isVisible()) {
+            // The +5 because of the space between table and the vertical scrollbar
+            availableWidth -= verticalBar.getSize().x + 5;            
+        }
+        TableColumn[] columns = m_tableViewer.getTable().getColumns();
+        List<TableColumn> columnsWithVariableWidth = new ArrayList();
+        for (TableColumn column : columns) {
+            String columnName = column.getText();
+            if (columnName.equals(TESTRESULT_ALM_REPORT_STATE)
+                    || columnName.equals(TESTRESULT_SUMMARY_DATE)
+                    || columnName.equals(TESTRESULT_SUMMARY_DETAILS_AVAILABLE)
+                    || columnName.equals(TESTRESULT_PROJECT_VERSION)
+                    || columnName.equals(TESTRESULT_SUMMARY_START_TIME)
+                    || columnName.equals(TESTRESULT_SUMMARY_END_TIME)
+                    || columnName.equals(TESTRESULT_SUMMARY_DURATION)
+                    || columnName.equals(TESTRESULT_SUMMARY_EXECUTED_CAPS)
+                    || columnName.equals(TESTRESULT_SUMMARY_EXPECTED_CAPS)
+                    || columnName.equals(TESTRESULT_SUMMARY_HANDLER_CAPS)
+                    || columnName.equals(TESTRESULT_SUMMARY_LANGUAGE)
+                    || columnName.equals(TESTRESULT_SUMMARY_TESTRUN_RELEVANT)
+                    || columnName.equals(TESTRESULT_SUMMARY_TOOLKIT)
+                    || columnName.equals(TESTRESULT_SUMMARY_TESTRUN_STATE)) {
+                availableWidth -= column.getWidth();
+            } else if (column.getWidth() > 0) {
+                columnsWithVariableWidth.add(column);
+            }
+        }
+        int numberOfVariableColums = columnsWithVariableWidth.size();
+        if (numberOfVariableColums == 0) {
+            return;
+        }
+        int columnWidth = Math.max(150, 
+                availableWidth / numberOfVariableColums);
+        for (TableColumn column : columnsWithVariableWidth) {
+            column.setWidth(columnWidth);
+        }
     }
     
     /**
@@ -982,13 +1037,14 @@ public class TestresultSummaryView extends ViewPart implements
     private void addStatusDecoratorColumn(
             TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(100);
+        column.getColumn().setWidth(60);
+        column.getColumn().setToolTipText(
+                Messages.TestresultSummaryColumnDescriptionStatus);
         column.getColumn().setText(TESTRESULT_SUMMARY_TESTRUN_STATE);
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {
-                ITestResultSummaryPO row = (ITestResultSummaryPO)element;
-                return row.getTestRunState();
+                return null;
             }
             public Image getImage(Object element) {
                 ITestResultSummaryPO row = (ITestResultSummaryPO)element;
@@ -1103,17 +1159,66 @@ public class TestresultSummaryView extends ViewPart implements
             }
         };
     }
+    
+
+    /** Gives the project version of a test result summary [major.minor]
+     * @param element the test result summary
+     * @return the project version
+     */
+    private String getProjectVersion(ITestResultSummaryPO element) {
+        return StringUtils.defaultString(
+            String.valueOf(element.getProjectMajorVersion())
+            + StringConstants.DOT
+            + String.valueOf(element.getProjectMinorVersion()));
+    }
+    
+    /**
+     * Adds a "Project Name" column to the given viewer.
+     * @param tableViewer The viewer to which the column will be added.
+     */
+    private void addProjectVersionColumn(TableViewer tableViewer) {
+        TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
+        column.getColumn().setWidth(0);
+        column.getColumn().setImage(IconConstants.PROJECT_IMAGE);
+        column.getColumn().setText(TESTRESULT_PROJECT_VERSION);
+        column.getColumn().setMoveable(true);
+        column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
+            public String getText(Object element) {
+                return getProjectVersion((ITestResultSummaryPO) element);
+            }
+
+        });
+        createMenuItem(m_headerMenu, column.getColumn());
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                ITestResultSummaryPO testResultSummary1 = 
+                        (ITestResultSummaryPO)e1;
+                ITestResultSummaryPO testResultSummary2 = 
+                        (ITestResultSummaryPO)e2;
+                int majDif = testResultSummary1.getProjectMajorVersion()
+                        - testResultSummary2.getProjectMajorVersion();
+                if (majDif != 0) {
+                    return majDif;
+                }
+                return testResultSummary1.getProjectMinorVersion()
+                        - testResultSummary2.getProjectMinorVersion();
+            }
+        };
+    }
 
     /**
      * Adds a "Testsuite name" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
      */
     private void addTestsuiteColumn(TableViewer tableViewer) {
-        TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
+        final TableViewerColumn column =
+                new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(250);
         column.getColumn().setImage(IconConstants.TS_IMAGE);
         column.getColumn().setText(TESTRESULT_SUMMARY_TESTSUITE);
         column.getColumn().setMoveable(true);
+
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {
                 return StringUtils.defaultString(
@@ -1930,6 +2035,8 @@ public class TestresultSummaryView extends ViewPart implements
                 metaValue = getDescriptiveALMStatusDescription(m);
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_PROJECT_NAME)) {
                 metaValue = m.getProjectName();
+            } else if (m_filterType.equals(TESTRESULT_PROJECT_VERSION)) {
+                metaValue = getProjectVersion(m);
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TESTSUITE)) {
                 metaValue = m.getTestsuiteName();
             } else if (m_filterType.equals(

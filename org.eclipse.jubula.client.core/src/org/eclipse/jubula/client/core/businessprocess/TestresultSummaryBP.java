@@ -121,9 +121,7 @@ public class TestresultSummaryBP {
         summary.setTestsuiteName(ts.getName());
         summary.setInternalProjectGuid(result.getProjectGuid());
         summary.setInternalProjectID(result.getProjectId());
-        summary.setProjectName(result.getProjectName() + StringConstants.SPACE
-                + result.getProjectMajorVersion() + StringConstants.DOT
-                + result.getProjectMinorVersion());
+        summary.setProjectName(result.getProjectName());
         summary.setProjectMajorVersion(result.getProjectMajorVersion());
         summary.setProjectMinorVersion(result.getProjectMinorVersion());
         IClientTest clientTest = ClientTest.instance();

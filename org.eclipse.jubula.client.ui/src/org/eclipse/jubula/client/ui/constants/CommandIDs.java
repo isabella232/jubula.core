@@ -35,6 +35,9 @@ public interface CommandIDs {
     /** the ID of the "Open test result detail" command */
     public static final String OPEN_TEST_RESULT_DETAIL_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.OpenTestResultViewer"; //$NON-NLS-1$
     
+    /** the ID of the "Open test result detail" command */
+    public static final String AUTOSIZE_COLUMNS_TEST_RESULT_SUMMARY_VIEW_COMMAND_ID = "org.eclipse.jubula.client.ui.commands.AutoSizeColumnsTestResultSummaryView"; //$NON-NLS-1$
+        
     /** the ID of the "Open test result detail" command parameter */
     public static final String OPEN_TEST_RESULT_DETAIL_COMMAND_PARAMETER_SUMMARY_ID = OPEN_TEST_RESULT_DETAIL_COMMAND_ID + ".parameter.summaryId"; //$NON-NLS-1$
     

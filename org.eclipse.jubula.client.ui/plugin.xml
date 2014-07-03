@@ -36,6 +36,10 @@
            commandId="org.eclipse.jubula.client.ui.commands.OpenTestResultViewer"
            style="push">
      </command>
+     <command
+           commandId="org.eclipse.jubula.client.ui.commands.AutoSizeColumnsTestResultSummaryView"
+           style="push">
+     </command>
     <command commandId="org.eclipse.ui.file.refresh" style="push">
     </command>
     <command
@@ -85,6 +89,10 @@
   <image
         commandId="org.eclipse.jubula.client.ui.commands.OpenTestResultViewer"
         icon="icons/testResultTree.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.AutoSizeColumnsTestResultSummaryView"
+        icon="icons/arrangeTable.png">
   </image>
   <image
         commandId="org.eclipse.jubula.client.ui.commands.AddComment"
@@ -139,6 +147,10 @@
   <handler
         class="org.eclipse.jubula.client.ui.handlers.open.OpenTestResultViewerHandler"
         commandId="org.eclipse.jubula.client.ui.commands.OpenTestResultViewer">
+  </handler>
+  <handler
+        class="org.eclipse.jubula.client.ui.handlers.AutoSizeColumnsTestResultSummaryViewHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.AutoSizeColumnsTestResultSummaryView">
   </handler>
 	<handler
 		class="org.eclipse.jubula.client.ui.handlers.ExpandTreeItemHandler"
@@ -206,6 +218,11 @@
 	        name="resultNode"
 	        optional="true" />
         </command>
+      <command
+            categoryId="org.eclipse.jubula.client.ui.commands"
+            id="org.eclipse.jubula.client.ui.commands.AutoSizeColumnsTestResultSummaryView"
+            name="%AutoSizeColumnsTestResultSummaryView">
+      </command>
       <command
             categoryId="org.eclipse.jubula.client.ui.commands"
             id="org.eclipse.jubula.client.ui.commands.AddComment"
