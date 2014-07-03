@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.core;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageRegistry;
@@ -38,6 +40,7 @@ import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -195,7 +198,8 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
         AbstractUIPlugin plugin = Activator.getDefault();
         ImageRegistry imageRegistry = plugin.getImageRegistry();
-        getWindowConfigurer().getWindow().getShell().setImages(
+        final Shell shell = getWindowConfigurer().getWindow().getShell();
+        shell.setImages(
                 new Image [] {
                         imageRegistry.get(Activator.IMAGE_GIF_JB_16_16_ID),
                         imageRegistry.get(Activator.IMAGE_GIF_JB_32_32_ID),
@@ -208,7 +212,11 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                         imageRegistry.get(Activator.IMAGE_PNG_JB_64_64_ID),
                         imageRegistry.get(Activator.IMAGE_PNG_JB_128_128_ID)
                 });
-                
+        
+        if (ArrayUtils.contains(Platform.getCommandLineArgs(), "--maximized")) { //$NON-NLS-1$
+            shell.setMaximized(true);
+        }
+        
         Plugin.createStatusLineItems();
         Plugin.showStatusLine((IWorkbenchPart)null);
         addMainWindowTitleUpdater();
