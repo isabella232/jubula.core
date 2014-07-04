@@ -28,7 +28,7 @@ public class ProfileBuilder {
     /**
      * The System of components.
      */
-    private static List profiles = null;
+    private static List<Profile> profiles = null;
     
     /** 
      * Default constructor
@@ -41,9 +41,9 @@ public class ProfileBuilder {
      * Returns a List of all profiles
      * @return List
      */
-    public static List getProfiles() {
+    public static List<Profile> getProfiles() {
         if (profiles == null) {
-            profiles = new ArrayList();
+            profiles = new ArrayList<Profile>();
 
             Profile profile = new Profile("Standard", 0.60, 0.30, 0.10, 0.85); //$NON-NLS-1$
             profiles.add(profile);
@@ -63,11 +63,11 @@ public class ProfileBuilder {
      * @return String Array
      */
     public static String[] getProfileNames() {
-        Iterator iter = getProfiles().iterator();
+        Iterator<Profile> iter = getProfiles().iterator();
         String[] names = new String[getProfiles().size()];
         int index = 0;
         while (iter.hasNext()) {
-            names[index] = ((Profile) iter.next()).getName();
+            names[index] = iter.next().getName();
             index++;
         }
         return names;
@@ -80,9 +80,9 @@ public class ProfileBuilder {
      *      Profile
      */
     public static Profile getProfile(String name) {
-        Iterator iter = getProfiles().iterator();
+        Iterator<Profile> iter = getProfiles().iterator();
         while (iter.hasNext()) {
-            Profile prof = ((Profile) iter.next());
+            Profile prof = iter.next();
             if (prof.getName().equals(name)) {
                 return prof;
             }
@@ -94,6 +94,6 @@ public class ProfileBuilder {
      * @return the default object mapping profile.
      */
     public static Profile getDefaultProfile() {
-        return (Profile)ProfileBuilder.getProfiles().get(0);
+        return ProfileBuilder.getProfiles().get(0);
     }
 }
