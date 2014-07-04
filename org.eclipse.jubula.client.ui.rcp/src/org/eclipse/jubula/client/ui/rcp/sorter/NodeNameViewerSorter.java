@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.sorter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -24,36 +27,27 @@ import org.eclipse.jubula.client.core.model.IReusedProjectPO;
  * @created 18.02.2009
  */
 public class NodeNameViewerSorter extends ViewerSorter {
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public int compare(Viewer viewer, Object e1, Object e2) {
-        // Show categories before all other elements
-        if (isOnlyFirstObjectInstanceOfClass(e1, e2, ICategoryPO.class)
-                || isOnlyFirstObjectInstanceOfClass(e1, e2, 
-                        IReusedProjectPO.class)) {
-            return -1;
-        }
-
-        if (isOnlyFirstObjectInstanceOfClass(e2, e1, ICategoryPO.class)
-                || isOnlyFirstObjectInstanceOfClass(e2, e1, 
-                        IReusedProjectPO.class)) {
-            return 1;
+        List<Class<?>> preferredTypes = new ArrayList<>(3);
+        // Show reused project before all other elements
+        preferredTypes.add(IReusedProjectPO.class);
+        // After that categories 
+        preferredTypes.add(ICategoryPO.class);
+        // Show Event Handler before all other nested exec test cases
+        preferredTypes.add(IEventExecTestCasePO.class);
+        
+        for (Class c: preferredTypes) {
+            if (isOnlyFirstObjectInstanceOfClass(e1, e2, c)) {
+                return -1;
+            }
+            
+            if (isOnlyFirstObjectInstanceOfClass(e2, e1, c)) {
+                return 1;
+            }
         }
         
-        // Show Event Handler before all other nested exec test cases
-        if (isOnlyFirstObjectInstanceOfClass(e1, e2, 
-                IEventExecTestCasePO.class)) {
-            return -1;
-        }
-
-        if (isOnlyFirstObjectInstanceOfClass(e2, e1, 
-                IEventExecTestCasePO.class)) {
-            return 1;
-        }
-
-        // do not sort the sequence of exec test cases or caps in spec test
-        // cases
+        // do not sort the sequence of exec test cases or caps in spec test cases
         if (e1 instanceof IExecTestCasePO 
                 || e2 instanceof IExecTestCasePO
                 || e1 instanceof ICapPO 
