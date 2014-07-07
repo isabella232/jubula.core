@@ -138,7 +138,7 @@ public class TestresultSummaryBP {
                     + te.getNumberOfRetriedSteps());
         summary.setTestsuiteFailedTeststeps(te.getNumberOfFailedSteps());
         summary.setTestsuiteLanguage(te.getLocale().getDisplayName());
-        summary.setTestsuiteRelevant(clientTest.isRelevant());
+        summary.setTestsuiteRelevant(te.getStartedTestSuite().getRelevant());
         ITestJobPO tj = te.getStartedTestJob();
         if (tj != null) {
             summary.setTestJobName(tj.getName());

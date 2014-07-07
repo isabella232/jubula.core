@@ -56,6 +56,10 @@ public class TestSuiteGUIPropertySource
     private static final String P_AUT_DISPLAY_NAME =
         Messages.TestSuiteGUIPropertySourceAUTName;
     
+    /** Constant for the String relevant */
+    private static final String P_RELEVANT =
+        Messages.TestSuiteGUIPropertySourceRelevant;
+    
     /** Constant for the String step delay */
     private static final String P_STEPDELAY_DISPLAY_NAME =
         Messages.TestSuiteGUIPropertySourceStepDelay;
@@ -69,6 +73,10 @@ public class TestSuiteGUIPropertySource
 
     /** List of auts */
     private IAUTMainPO[] m_autSubList = new IAUTMainPO[0];
+    
+    /** List of relevant states */
+    private String[] m_relevantStatesList = {Boolean.FALSE.toString(),
+            Boolean.TRUE.toString()};
     
     /** List of event handler names */
     private String[] m_reentryTypeList = new String[0];
@@ -84,6 +92,9 @@ public class TestSuiteGUIPropertySource
     
     /** cached property descriptor for aut */
     private IPropertyDescriptor m_autPropDesc = null;
+
+    /** cached property descriptor for relevance */
+    private IPropertyDescriptor m_relevancePropDesc = null;
     
     /** cached property descriptors for event handler reentry types */
     private List<IPropertyDescriptor> m_eventHandlerDescriptors =
@@ -138,6 +149,9 @@ public class TestSuiteGUIPropertySource
         // AUT list
         addPropertyDescriptor(getAUTPropDesc());
         
+        // Relevance
+        addPropertyDescriptor(getRelevancePropDesc());
+        
         // eventHandler
         addPropertyDescriptor(getEventHandlerDescriptors());
 
@@ -168,6 +182,33 @@ public class TestSuiteGUIPropertySource
             }
         }
         return m_eventHandlerDescriptors;
+    }
+    
+    /**
+     * @return the relevance property descriptor.
+     */
+    @SuppressWarnings("synthetic-access")
+    private IPropertyDescriptor getRelevancePropDesc() {
+        if (m_relevancePropDesc == null) {
+            ComboBoxPropertyDescriptor cbpd = new ComboBoxPropertyDescriptor(
+                    new RelevanceController(), P_RELEVANT,
+                    m_relevantStatesList);
+            cbpd.setLabelProvider(new LabelProvider() {
+                public String getText(Object element) {
+                    if (element instanceof Integer) {
+                        if (m_relevantStatesList.length == 0
+                                || ((Integer)element).intValue() == -1) {
+                            return StringConstants.EMPTY;
+                        }
+                        return m_relevantStatesList[((Integer)element)];
+                    }
+                    Assert.notReached(Messages.WrongAUT + StringConstants.DOT);
+                    return String.valueOf(element);
+                }
+            });
+            m_relevancePropDesc = cbpd;
+        }
+        return m_relevancePropDesc;
     }
 
     /**
@@ -283,6 +324,61 @@ public class TestSuiteGUIPropertySource
             int autListLength = m_autSubList.length;
             for (int i = 0; i < autListLength; i++) {
                 if (m_autSubList[i].equals(aut)) {
+                    return Integer.valueOf(i);
+                }
+            }
+            return Integer.valueOf(-1);
+        }
+    }
+    
+    /**
+     * Class to control the list containing valid relevance states. 
+     * @author BREDEX GmbH
+     * @created 24.10.2005
+     */
+    private class RelevanceController extends AbstractPropertyController {
+
+        /**
+         * {@inheritDoc}
+         */
+        @SuppressWarnings("synthetic-access")
+        public boolean setProperty(Object value) {
+            if (value == null) {
+                return false;
+            }
+            ITestSuitePO testSuite = (ITestSuitePO)getPoNode();
+            int relevant = ((Integer)value).intValue();
+            testSuite.setRelevant(
+                    Boolean.valueOf(m_relevantStatesList[relevant]));
+            return true;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public Object getProperty() {
+            return getIndexOfState();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public Image getImage() {
+            return DEFAULT_IMAGE;
+        }
+
+        /**
+         * Returns the index of the type from the String-Array for the
+         * ComboBoxPropertyDescriptor.
+         * @return an <code>Integer</code> value. The index.
+         */
+        @SuppressWarnings("synthetic-access")
+        private Integer getIndexOfState() {
+            ITestSuitePO testSuite = (ITestSuitePO)getPoNode();
+            Boolean relevant = testSuite.getRelevant();
+            for (int i = 0; i < m_relevantStatesList.length; i++) {
+                if (Boolean.valueOf(m_relevantStatesList[i])
+                        .equals(relevant)) {
                     return Integer.valueOf(i);
                 }
             }

@@ -124,8 +124,6 @@ public class JobConfiguration {
     private boolean m_autoScreenshot = true;
     /** flag to save screenshots in XML and HTML */
     private boolean m_xmlScreenshot = true;
-    /** flag to mark test execution as relevant or not */
-    private boolean m_relevant = true;
     
     /**
      * constructor
@@ -468,9 +466,6 @@ public class JobConfiguration {
         if (cmd.hasOption(ClientTestStrings.AUTO_SCREENSHOT)) { 
             setAutoScreenshot(false);
         }
-        if (cmd.hasOption(ClientTestStrings.TEST_EXECUTION_RELEVANT)) { 
-            setRelevant(false);
-        }
         if (cmd.hasOption(ClientTestStrings.NO_XML_SCREENSHOT)) { 
             setXMLScreenshot(false);
         }
@@ -542,9 +537,6 @@ public class JobConfiguration {
         }
         if (cmd.hasOption(ClientTestStrings.NO_XML_SCREENSHOT)) { 
             setXMLScreenshot(false);
-        }
-        if (cmd.hasOption(ClientTestStrings.TEST_EXECUTION_RELEVANT)) { 
-            setRelevant(false);
         }
         if (cmd.hasOption(ClientTestStrings.RESULTDIR)) { 
             setResultDir(FileUtils.resolveAgainstBasePath(
@@ -1125,20 +1117,6 @@ public class JobConfiguration {
      */
     public boolean isXMLScreenshot() {
         return m_xmlScreenshot;
-    }
-    
-    /**
-     * @param relevant the relevant to set
-     */
-    public void setRelevant(boolean relevant) {
-        m_relevant = relevant;
-    }
-
-    /**
-     * @return the relevant
-     */
-    public boolean isRelevant() {
-        return m_relevant;
     }
     
     /**

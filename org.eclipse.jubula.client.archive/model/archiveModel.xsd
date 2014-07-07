@@ -211,6 +211,7 @@
           <xs:element name="commandLineParameter" type="xs:string" nillable="true" default="" />
           <xs:element name="usedTestcase" type="gd:refTestCase" minOccurs="0" maxOccurs="unbounded" />
           <xs:element name="eventHandler" type="gd:eventHandler" minOccurs="0" maxOccurs="unbounded" />
+          <xs:element name="relevant" type="xs:boolean" minOccurs="0" maxOccurs="1" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

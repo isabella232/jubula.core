@@ -47,6 +47,9 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
     /** the step delay */
     private int m_stepDelay;
     
+    /** the relevance */
+    private boolean m_relevant = true;
+    
     /** the name of the AUT of this test suite */
     private IAUTMainPO m_aut;
 
@@ -122,6 +125,23 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
     public void setStepDelay(int stepDelay) {
         m_stepDelay = stepDelay;
     }
+    
+    /**
+     * 
+     * @return Returns whether the test suite is relevant.
+     */
+    @Basic
+    public boolean getRelevant() {
+        return m_relevant;
+    }
+    
+    /**
+     * @param relevant whether the test suite is relevant.
+     */
+    public void setRelevant(boolean relevant) {
+        m_relevant = relevant;
+    }
+    
     /**
      * 
      * @return Returns the AUT.

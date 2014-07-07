@@ -2006,6 +2006,11 @@ class XmlImporter {
         }
         ts.setDefaultEventHandler(defaultEventHandler);
         ts.setStepDelay(xml.getStepDelay());
+        if (!xml.isSetRelevant()) {
+            ts.setRelevant(true);
+        } else {
+            ts.setRelevant(xml.getRelevant());
+        }
         return ts;
     }
     

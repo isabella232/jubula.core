@@ -36,7 +36,17 @@ public interface ITestSuitePO extends INodePO, IExecPersistable, Comparable {
      * @param stepDelay The stepDelay to set.
      */
     public abstract void setStepDelay(int stepDelay);
+    
+    /**
+     * @return Returns whether test suite is relevant.
+     */
+    public abstract boolean getRelevant();
 
+    /**
+     * @param relevant whether test suite is relevant.
+     */
+    public abstract void setRelevant(boolean relevant);
+    
     /**
      * @return Returns the AUT.
      */

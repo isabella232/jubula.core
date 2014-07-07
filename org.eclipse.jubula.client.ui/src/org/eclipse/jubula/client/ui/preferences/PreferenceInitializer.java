@@ -110,8 +110,6 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
                 Constants.MAX_NUMBER_OF_DAYS_KEY_DEFAULT);
         prefStore.setDefault(Constants.AUTO_SCREENSHOT_KEY, 
                 Constants.AUTO_SCREENSHOT_KEY_DEFAULT);
-        prefStore.setDefault(Constants.TEST_EXEC_RELEVANT,
-                Constants.TEST_EXECUTION_RELEVANT_DEFAULT);
         prefStore.setDefault(Constants.TEST_EXECUTION_RELEVANT_REMEMBER_KEY,
                 Constants.TEST_EXECUTION_RELEVANT_REMEMBER_KEY_DEFAULT);
     }

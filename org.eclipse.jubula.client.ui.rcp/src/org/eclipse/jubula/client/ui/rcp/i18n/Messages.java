@@ -834,13 +834,13 @@ public class Messages extends NLS {
     public static String TestResultViewPreferencePagePathInvalid;
     public static String TestResultViewPreferencePagePathText;
     public static String TestResultViewPreferencePageStyleText;
-    public static String TestResultViewPreferencePageTestExecRelevant;
     public static String TestResultViewPreferencePageTitle;
     public static String TestResultViewPreferencePageTrackResults;
     public static String TestSuiteBrowserAdd;
     public static String TestSuiteEditorEmptyStepDelay;
     public static String TestSuiteGUIPropertySourceAUTName;
     public static String TestSuiteGUIPropertySourceEventHandler;
+    public static String TestSuiteGUIPropertySourceRelevant;
     public static String TestSuiteGUIPropertySourceStepDelay;
     public static String TestSuiteGUIPropertySourceTestSuiteName;
     public static String TheComponentName;

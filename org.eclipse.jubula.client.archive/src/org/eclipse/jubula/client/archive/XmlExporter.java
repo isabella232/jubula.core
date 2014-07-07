@@ -808,6 +808,7 @@ class XmlExporter {
             xml.setSelectedAut(null);
         }
         xml.setStepDelay(po.getStepDelay());
+        xml.setRelevant(po.getRelevant());
         xml.setCommandLineParameter(po.getCmdLineParameter());
 
         for (Object o : po.getUnmodifiableNodeList()) {

@@ -412,7 +412,6 @@ public class ExecutionController implements IAUTServerEventListener,
                 TestExecutionConstants.runSteps.CAA)) {
             return true;
         }
-        clientTest.setRelevantFlag(m_job.isRelevant());
         clientTest.setScreenshotXMLFlag(m_job.isXMLScreenshot());
         //prepare connection to the DB
         prepareDBConnection();

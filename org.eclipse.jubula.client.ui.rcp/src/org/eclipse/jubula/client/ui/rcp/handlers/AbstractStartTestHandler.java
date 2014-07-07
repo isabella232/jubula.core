@@ -15,8 +15,6 @@ import java.net.URL;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.State;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IClientTest;
@@ -28,7 +26,6 @@ import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.exception.JBException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Display;
@@ -81,8 +78,7 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
      * @return whether initialization has been successful
      */
     protected boolean initTestExecution(ExecutionEvent event) {
-        return initTestExecutionRelevantFlag()
-            && initPauseTestExecutionState(event);
+        return initPauseTestExecutionState(event);
     }
 
     /**
@@ -136,62 +132,4 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
         return false;
     }
 
-    /**
-     * @return true if flag has been successfully determined
-     */
-    private boolean initTestExecutionRelevantFlag() {
-        final IPreferenceStore preferenceStore = Plugin.getDefault()
-            .getPreferenceStore();
-
-        int value = preferenceStore.getInt(Constants.TEST_EXEC_RELEVANT);
-
-        final IClientTest clientTest = ClientTest.instance();
-        if (value == Constants.TEST_EXECUTION_RELEVANT_YES) {
-            clientTest.setRelevantFlag(true);
-            return true;
-        } else if (value == Constants.TEST_EXECUTION_RELEVANT_NO) {
-            clientTest.setRelevantFlag(false);
-            return true;
-        }
-
-        // if --> value = Constants.TEST_EXECUTION_RELEVANT_PROMPT:
-        final int returnCodeYES = 256; // since Eclipse3.2 (not 0)
-        final int returnCodeNO = 257; // since Eclipse3.2 (not 1)
-        final int returnCodeCANCEL = -1;
-        MessageDialogWithToggle dialog = new MessageDialogWithToggle(
-            getActiveShell(), Messages.TestExecRelevantDialogTitle, null,
-            Messages.TestExecRelevantDialogQuestion, MessageDialog.QUESTION,
-            new String[] { Messages.UtilsYes, Messages.UtilsNo }, 0,
-            Messages.UtilsRemember, false) {
-
-            /**
-             * {@inheritDoc}
-             */
-            protected void buttonPressed(int buttonId) {
-                super.buttonPressed(buttonId);
-                preferenceStore.setValue(
-                    Constants.TEST_EXECUTION_RELEVANT_REMEMBER_KEY,
-                    getToggleState());
-                int val = Constants.TEST_EXECUTION_RELEVANT_PROMPT;
-                if (getToggleState() && getReturnCode() == returnCodeNO) {
-                    val = Constants.TEST_EXECUTION_RELEVANT_NO;
-                } else if (getToggleState() && getReturnCode() 
-                    == returnCodeYES) {
-                    val = Constants.TEST_EXECUTION_RELEVANT_YES;
-                }
-                preferenceStore.setValue(Constants.TEST_EXEC_RELEVANT, val);
-            }
-        };
-        dialog.create();
-        DialogUtils.setWidgetNameForModalDialog(dialog);
-        dialog.open();
-        clientTest.setRelevantFlag(true);
-        if (dialog.getReturnCode() == returnCodeNO) {
-            clientTest.setRelevantFlag(false);
-        } else if (dialog.getReturnCode() == returnCodeCANCEL) {
-            clientTest.setRelevantFlag(false);
-            return false;
-        }
-        return true;
-    }
 }

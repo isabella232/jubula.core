@@ -23,25 +23,21 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.widgets.I18nStringCombo;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
@@ -99,19 +95,7 @@ public class TestResultPreferencePage extends PreferencePage
     
     /** Browse Button */
     private Button m_browser = null;
-    
-    /** widgets used in preference page to define preference values private */
-    private Button m_relevant0Button;
-    /** widgets used in preference page to define preference values private */
-    private Button m_relevant1Button;
-    /** widgets used in preference page to define preference values private */
-    private Button m_relevant2Button;
-    /** Yes = 0; No = 1; Prompt = 2 */
-    private int m_relevantValue;
-    /** a new selection listener */
-    private final WidgetSelectionListener m_selectionListener = 
-        new WidgetSelectionListener();
-    
+        
     /**
      * textfield to define maximum number of results in the test result summary
      * view
@@ -122,33 +106,6 @@ public class TestResultPreferencePage extends PreferencePage
      * <code>m_testExecRememberValue</code>
      */
     private boolean m_testExecRememberValue;
-
-    /**
-     * @author BREDEX GmbH
-     * @created May 3, 2010
-     */
-    private class WidgetSelectionListener extends SelectionAdapter {
-        /**
-         * @param e
-         *            The selection event.
-         */
-        public void widgetSelected(SelectionEvent e) {
-            Object o = e.getSource();
-            if (o == m_relevant0Button) {
-                m_relevantValue = Constants.TEST_EXECUTION_RELEVANT_YES;
-                return;
-            } else if (o == m_relevant1Button) {
-                m_relevantValue = Constants.TEST_EXECUTION_RELEVANT_NO;
-                return;
-            } else if (o == m_relevant2Button) {
-                m_relevantValue = Constants.TEST_EXECUTION_RELEVANT_PROMPT;
-                return;
-            }
-            Assert.notReached(Messages.EventActivatedUnknownWidget 
-                    + StringConstants.LEFT_PARENTHESES + o 
-                    + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
-        }
-    }
     
     /**
      * Default Constructor  
@@ -180,14 +137,12 @@ public class TestResultPreferencePage extends PreferencePage
         createOpenResultView(composite);
         createGenerateReport(composite);
 
-        createRelevantGroup(composite);
         createMaxNumberOfResults(composite);
         // context sensitive help
         Plugin.getHelpSystem().setHelp(parent,
                 ContextHelpIds.PREFPAGE_TESTRESULT);
         initPreferences();
 
-        addListener();
         /** return the widget used as the base for the user interface */
         scrollComposite.setContent(composite);
         scrollComposite.setExpandHorizontal(true);
@@ -230,60 +185,6 @@ public class TestResultPreferencePage extends PreferencePage
                 checkCompleteness();
             }
         });
-    }
-
-    /**
-     * 
-     */
-    private void addListener() {
-        m_relevant0Button.addSelectionListener(m_selectionListener);
-        m_relevant1Button.addSelectionListener(m_selectionListener);
-        m_relevant2Button.addSelectionListener(m_selectionListener);   
-    }
-
-    /**
-     * @param composite the composite
-     */
-    private void createRelevantGroup(Composite composite) {
-        Group group = new Group(composite, SWT.NONE);
-        group.setText(
-                Messages.TestResultViewPreferencePageTestExecRelevant);
-        RowLayout layout = new RowLayout();
-        group.setLayout(layout);
-        GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
-        layoutData.grabExcessHorizontalSpace = true;
-        layoutData.horizontalSpan = 4;
-        group.setLayoutData(layoutData);
-        m_relevant0Button = new Button(group, SWT.RADIO);
-        m_relevant0Button.setText(Messages.PrefPageBasicAlways);
-        m_relevant1Button = new Button(group, SWT.RADIO);
-        m_relevant1Button.setText(Messages.PrefPageBasicNever);
-        m_relevant2Button = new Button(group, SWT.RADIO);
-        m_relevant2Button.setText(Messages.PrefPageBasicPrompt);
-        m_relevantValue = getPreferenceStore().getInt(
-                Constants.TEST_EXEC_RELEVANT);
-        setRadioSelection();
-    }
-
-    /**
-     * Sets the selection the radio buttons.
-     */
-    private void setRadioSelection() {
-        if (m_relevantValue == Constants.TEST_EXECUTION_RELEVANT_YES) {
-            m_relevant0Button.setSelection(true);
-            m_relevant1Button.setSelection(false);
-            m_relevant2Button.setSelection(false);
-        }
-        if (m_relevantValue == Constants.TEST_EXECUTION_RELEVANT_NO) {
-            m_relevant0Button.setSelection(false);
-            m_relevant1Button.setSelection(true);
-            m_relevant2Button.setSelection(false);
-        }
-        if (m_relevantValue == Constants.TEST_EXECUTION_RELEVANT_PROMPT) {
-            m_relevant0Button.setSelection(false);
-            m_relevant1Button.setSelection(false);
-            m_relevant2Button.setSelection(true);
-        }
     }
     
     /**
@@ -536,11 +437,8 @@ public class TestResultPreferencePage extends PreferencePage
             Constants.TRACKRESULTS_KEY));
         m_autoScreenshots.setSelection(getDefaultPrefsBool(
                 Constants.AUTO_SCREENSHOT_KEY));
-        m_relevantValue = getPreferenceStore().getDefaultInt(
-                Constants.TEST_EXEC_RELEVANT);
         m_testExecRememberValue = getPreferenceStore().getDefaultBoolean(
                 Constants.TEST_EXECUTION_RELEVANT_REMEMBER_KEY);
-        setRadioSelection();
         m_reportStyle.setText(getDefaultPrefsString(
             Constants.REPORTGENERATORSTYLE_KEY));
         m_reportStyle.setEnabled(m_generateReport.getSelection());
@@ -624,22 +522,10 @@ public class TestResultPreferencePage extends PreferencePage
             Constants.RESULTPATH_KEY, m_path.getText());
         getPreferenceStore().setValue(Constants.MAX_NUMBER_OF_DAYS_KEY,
                 m_numberOfDays.getText());
-        getPreferenceStore().setValue(Constants.TEST_EXEC_RELEVANT,
-                m_relevantValue);
         getPreferenceStore().setValue(
                 Constants.TEST_EXECUTION_RELEVANT_REMEMBER_KEY,
                 m_testExecRememberValue);
-        removeListener();
         return super.performOk();
-    }
-
-    /**
-     * 
-     */
-    private void removeListener() {
-        m_relevant0Button.removeSelectionListener(m_selectionListener);
-        m_relevant1Button.removeSelectionListener(m_selectionListener);
-        m_relevant2Button.removeSelectionListener(m_selectionListener);
     }
 
     /**

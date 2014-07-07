@@ -279,8 +279,6 @@ public interface Constants {
     /** Key for m_text value to be stored as a resource property */
     public static final String PERSP_CHANGE_KEY = "PERSP_CHANGE_KEY"; //$NON-NLS-1$
     /** Key for m_text value to be stored as a resource property */
-    public static final String TEST_EXEC_RELEVANT = "TEST_EXECUTION_RELEVANT"; //$NON-NLS-1$
-    /** Key for m_text value to be stored as a resource property */
     public static final String USER_KEY = "USER_KEY"; //$NON-NLS-1$
     /** Key for m_text value to be stored as a resource property */
     public static final String SCHEMA_KEY = "SCHEMA_KEY"; //$NON-NLS-1$

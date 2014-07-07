@@ -159,10 +159,6 @@ public class TestexecClient extends AbstractCmdlineClient {
         options.addOption(createOption(ClientTestStrings.NO_XML_SCREENSHOT,
                 false, StringConstants.EMPTY, Messages.ClientNoXmlScreenshot, 
                     false));
-        options.addOption(createOption(
-                ClientTestStrings.TEST_EXECUTION_RELEVANT,
-                false, StringConstants.EMPTY, Messages.ClientRelevantFlag, 
-                    false));
         options.addOption(createOption(ClientTestStrings.TIMEOUT, true,
                 ClientTestStrings.TIMEOUT, Messages.ClientTimeout, 
                     false));  
