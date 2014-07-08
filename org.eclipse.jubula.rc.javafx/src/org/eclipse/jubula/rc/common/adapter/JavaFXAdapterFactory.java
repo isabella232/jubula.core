@@ -26,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToolBar;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -50,6 +51,7 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.TextAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TextComponentAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TitledPaneAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ToolBarAdapter;
+import org.eclipse.jubula.rc.javafx.tester.adapter.TreeTableViewAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TreeViewAdapter;
 
 /**
@@ -75,7 +77,7 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
         ContextMenu.class, ImageView.class, Text.class, TitledPane.class,
         ListView.class, ComboBox.class, TabPane.class, ChoiceBox.class,
         Accordion.class, ScrollPane.class, TitledPane.class,
-        SplitPane.class, ToolBar.class};
+        SplitPane.class, ToolBar.class, TreeTableView.class};
 
     @Override
     public Class[] getSupportedClasses() {
@@ -121,6 +123,9 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
                     (ChoiceBox<?>) objectToAdapt);
             } else if (objectToAdapt instanceof Accordion) {
                 returnvalue = new AccordionAdapter((Accordion) objectToAdapt);
+            } else if (objectToAdapt instanceof TreeTableView) {
+                returnvalue = new TreeTableViewAdapter(
+                        (TreeTableView<?>) objectToAdapt);
             }
         }
         if (returnvalue == null
