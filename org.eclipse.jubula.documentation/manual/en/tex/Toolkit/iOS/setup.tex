@@ -3,19 +3,9 @@
 \index{iOS AUT's}
 \index{iOS!Remote Control}
 
-If you want to test an \bxname{iOS} application, you have to prepare the \gdaut{} in order to make it testable. 
+If you want to test an \bxname{iOS} application, you have to prepare the \gdaut{} in order to make it testable.
 
-\bxtipp{This preparation is designed to be undertaken by a developer who has access to the \gdaut{}'s source code as well as knowledge of developing for iOS using Objective-C and Xcode. These instructions assume you are using Xcode 4. For Xcode 3 please adapt the instructions accordingly.}
-
-\subsubsection{Add the library to your project files}
-
-The first step is to link the \bxname{librc.mobile.ios.nativ} static library and its header file directly 
-into your \bxname{iOS} application. This lets your project and thereby your \bxname{iOS} application be run as a testable \gdaut{}. 
-
-\begin{enumerate}
-\item Locate the \bxname{development/iOS-support.zip} file in the installation directory in Finder.
-\item Unzip it and drag all of its content into the Project Navigator.
-\end{enumerate}
+\bxtipp{This preparation is designed to be undertaken by a developer who has access to the \gdaut{}'s source code as well as knowledge of developing for iOS using Objective-C and Xcode. These instructions assume you are using Xcode 5. For other Xcode versions please adapt the instructions accordingly.}
 
 \subsubsection{Create a Testing Target}
 
@@ -25,31 +15,83 @@ Once you have created a second target for the testing-enabled version of your \g
 The new target will start as a duplicate of your old target. To create the duplicated target:
 \begin{enumerate}
 \item Select the project file for your app in the Project Navigator.
-\item From there, CTRL+click the target for your app and select the \bxcaption{Duplicate} option. Xcode may ask you if you want your copy to be for a different iOS device, which you don't, so choose \bxcaption{Duplicate Only}. 
-\item The new target will be created. We suggest renaming it, e.g. to  \bxname{\gd{} or \jb{} Tests}.
-\item You can  also (optionally) rename the new target from the default \bxname{MyApp copy} to something more meaningful e.g.  \bxname{MyApp (\gd{} or \jb{} Tests)} 
-by selecting the \bxcaption{Build Settings} tab and searching for \bxcaption{Product Name}, then changing the value to a new name.
+\item In the project setting page, click on the black arrow icon \bxcaption{Show project and targets list} in the main content area in the very top left that hides/shows the project and targets list. 
+To duplicate your target select it and press \bxkey{Command key+D}, or right+click the target and choose \bxcaption{Duplicate} entry of the context menu. 
+\item The new target will be created. We suggest renaming it, e.g. to  \bxname{\gd{} or \jb{} Tests} by double-clicking the target in the list of project targets and changing the value to a new name.
+\item You can also (optionally) rename your \bxname{iOS} application to something more meaningful e.g. \bxname{MyApp (\gd{} or \jb{} Tests)} by selecting the \bxcaption{Build Settings} tab and searching for \bxcaption{Product Name}, then changing the value to a new name. 
+After target name change the product name will also have this new name if you give the next name to \bxcaption{Product Name} in build settings:
+\begin{verbatim}
+${TARGET_NAME} 
+\end{verbatim}
 \end{enumerate}
 
+\index{iOS!CocoaPods}
 
-\subsubsection{Configure the Testing Target}
+\bxtipp{Making the \gdaut{} testable can be achieved more easily and quickly by using a CocoaPods, however its usage is not obligatory.  CocoaPods is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries in your projects. You can find more details about CocoaPods at \\\url{http://cocoapods.org}.} Below, two ways to configure the Testing Target are described: with and without the CocoaPods usage.
+
+\subsubsection{Configure the Testing Target without CocoaPods}
 
 Now that you have a target for your tests, add the tests to that target. 
 \begin{enumerate}
-\item  With the project settings still selected in the Project Navigator, and the new integration tests target selected in the project settings, select the \bxcaption{Build Phases} tab. 
+\item The first step is to link/add the \bxname{librc.mobile.ios.nativ} static library and \bxname{UIRemoteControl.h} file directly into your \bxname{iOS} application. Locate the \bxname{development/iOS-support.zip} file in the installation directory in Finder. 
+Unzip it and drag all of its content into the Project Navigator. In the dialog to choose options for adding these files use \bxcaption{Add to target} option by checking a checkbox 
+of the target you want to work with from the target list.
+This lets your project and thereby your \bxname{iOS} application be run as a testable \gdaut{}. 
+\item With the project settings still selected in the Project Navigator, and the new integration tests target selected in the project settings, select the \bxcaption{Build Phases} tab. 
 \item Under the \bxcaption{Link Binary With Libraries} section, press the \bxcaption{+} button. 
-\item In the sheet that appears, select \bxname{CFNetwork.framework} and \bxname{SenTestingKit.framework} and click \bxcaption{Add}.
+\item In the sheet that appears, select \bxname{CFNetwork.framework}, \bxname{XCTest.framework} and \bxname{SenTestingKit.framework} and click \bxcaption{Add}.
 \item Then click \bxcaption{Add other...} in the lower left corner and locate and select the library \bxname{librc.mobile.ios.nativ.a} and click \bxcaption{Open}.
 \item Next, make sure that the  \bxname{UIRemoteControl.h} header file can be accessed. To do this, add the \bxname{UIRemoteControl.h} to the \bxcaption{Header Search Paths} 
 build setting. Start by selecting the \bxcaption{Build Settings} tab of the project settings, and from there, use the filter control to find the 
 \bxcaption{Header Search Paths} setting. 
 \item Double click the value, and add the file \bxname{UIRemoteControl.h} to the list. If it's not there already, you should 
 add the \$(inherited) entry as the first entry in this list.
-\item  The iOS support takes advantage of Objective C's ability to add categories to an object, but this isn't enabled for static libraries by default. 
+\item The iOS support takes advantage of Objective C's ability to add categories to an object, but this isn't enabled for static libraries by default. 
 To enable this, add the -ObjC and -all\_load flags to the \bxcaption{Other Linker Flags} build settings.
+\item If you build for iOS Simulator, but linking against dylib built, build error with linker command failed might occur. To avoid  this, add 
+to the \bxcaption{Framework Search Paths} build setting the line \bxcaption{\$(SDKROOT)/Developer/Library/Frameworks} right after the \$(inherited) entry. 
 \item Finally, add a preprocessor flag to the testing target so that you can conditionally include code. This will help to make sure that none of the 
 testing code makes it into the production app. Call the flag \bxshell{RUN\_FUNCTIONAL\_TESTS} and add it under the \bxcaption{Preprocessor Macros}. Again, make 
 sure the \$(inherited) entry is first in the list.
+\end{enumerate}
+
+\subsubsection{Configure the Testing Target with the CocoaPods}
+
+\index{iOS!CocoaPods}
+
+\bxwarn{You need to have CocoaPods installed on your machine before you start making your \gdaut{} testable with its help.}
+
+To configure the Testing Target with CocoaPods, you need a specification - \bxname{.podspec} file. It describes a version of the \bxname{Pod} library and includes 
+details about where the source should be fetched from, what files to use, the build settings to apply, 
+and other general metadata such as its name, version, and description. 
+We provide two types of such files. The \bxname{rcmobile.podspec} file will add a static library, while the \bxname{rcmobile-debug.podspec} file will import 
+all source files to the project dynamically, which allows you to  change code for testing and to debug more deeply. 
+\begin{enumerate}
+\item  In the installation directory you will find a development folder and an \bxname{iOS-support} zip archive inside it which you have to unzip.
+There you will see a \bxname{rcmobile.podspec}. \bxname{rcmobile-debug.podspec} is located in a \bxcaption{development/git/com.bredexsw.jubula.core/com.bredexsw.jubula.rc.mobile.ios.nativ} folder of the installation directory.
+\item In a directory of your \gdaut{} XCode project location create a \bxname{Podfile}  by running this command in a terminal:
+\\\bxshell{\$ pod init}
+\item Open the newly created \bxname{Podfile} and add \bxcaption{rcmobile} static library (as a local source) or dynamically linked source files with help of \bxcaption{rcmobile-debug} by entering the following line inside the \bxcaption{do ... end} block for each target you want to make testable:
+\begin{verbatim}
+target "TargetName" do
+pod 'rcmobile', :path => 'iOS-support-path'
+end
+
+or 
+
+target "TargetName" do
+pod 'rcmobile-debug', :path => 'sources-path'
+end
+\end{verbatim}
+\bxcaption{iOS-support-path} is the path where \bxname{rcmobile.podspec} file is located. 
+\bxcaption{sources-path} is the path where \bxname{rcmobile-debug.podspec} file and folder with sources are located. By default both of them are located in the \bxcaption{development/git/com.bredexsw.jubula.core/com.bredexsw.jubula.rc.mobile.ios.nativ} folder of the installation directory.
+Other \bxname{Podfile} content may remain as it is.
+\item Install the \bxname{Podfile} to add the library to the \gdaut{} by running this command in the terminal: 
+\\\bxshell{\$ pod install}
+\bxwarn{You must use the \bxkey{'}  (apostrophe) symbol around the library name and the path in the \bxname{Podfile} to install it, otherwise you will receive the  error "Invalid 'Podfile' file".}
+\item From now on the \bxname{project-name.xcworkspace} file must be used instead of the project file.
+\item If you have used the \bxname{rcmobile.podspec}, the static library is now added to the project. If you used the \bxname{rcmobile-debug.podspec} file 
+all source files are dynamically linked to the project through the alias and you can find them under the \bxname{Development Pods library} in the XCode workspace of your project.
 \end{enumerate}
 
 \subsubsection{Add hook into the \gdaut{}}
@@ -85,17 +127,6 @@ and the following code to the end of its - (void)applicationDidFinishLaunching[w
     // e.g. when you're running 
     // different AUTs in parallel on 
     // the same iOS device
-#endif
-...
-\end{verbatim}
-
-You also have to make sure that your application delegate provides a UIWindow property called \bxname{window} which contains the window used to present the app's visual content on the device's main screen.
-
-\begin{verbatim}
-...
-#if RUN_FUNCTIONAL_TESTS
-    @property(nonatomic, retain) 
-    UIWindow *window
 #endif
 ...
 \end{verbatim}
