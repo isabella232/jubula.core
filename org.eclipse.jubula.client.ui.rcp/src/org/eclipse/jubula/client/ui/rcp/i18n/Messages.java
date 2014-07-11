@@ -19,6 +19,7 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.ui.rcp.i18n.messages"; //$NON-NLS-1$
 
+
     public static String AbstractGuiNodePropertySourceComment;
     public static String Action;
     public static String ActionBuilderExportAll;
@@ -36,6 +37,9 @@ public class Messages extends NLS {
     public static String AddEventHandlerDialogNoEventTypeSel;
     public static String AddEventHandlerDialogNoReentryTypeSel;
     public static String AddEventHandlerDialogReentryType;
+    public static String ALMReportRuleField;
+    public static String ALMReportRuleName;
+    public static String ALMReportRuleValue;
     public static String AnErrorOccurredDuringMigration;
     public static String AnErrorOccurredWhileInitializingTheDestinationPath;
     public static String AutAgentPreferencePageButtonAdd;
@@ -551,9 +555,17 @@ public class Messages extends NLS {
     public static String ProjectPropertyPageALMLabel;
     public static String ProjectPropertyPageALMRepositoryLabel;
     public static String ProjectPropertyPageALMConnectionTest;
+    public static String ProjectPropertyPageALMReportRuleAdd;
+    public static String ProjectPropertyPageALMReportRuleEdit;
+    public static String ProjectPropertyPageALMReportRuleRemove;
+    public static String ProjectPropertyPageALMReportingRuleAddDialog;
+    public static String ProjectPropertyPageALMReportingRuleAddDialogMessage;
+    public static String ProjectPropertyPageALMReportingRuleEditDialog;
     public static String ProjectPropertyPageReportOptionsLabel;
     public static String ProjectPropertyPageReportOnSuccessLabel;
     public static String ProjectPropertyPageReportOnFailureLabel;
+    public static String ProjectPropertyPageReportRulesLabel;
+    public static String ProjectPropertyPageReportWriteCommentLabel;
     public static String ProjectPropertyPageAutToolKitLabel;
     public static String ProjectPropertyPageDownToolTip;
     public static String ProjectPropertyPageIsProtected;

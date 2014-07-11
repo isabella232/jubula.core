@@ -364,6 +364,22 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      * {@inheritDoc}
      */
     @Transient
+    public List<IALMReportingRulePO> getALMReportingRules() {
+        return getProjectProperties().getALMReportingRules();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setALMReportingRules(
+            List<IALMReportingRulePO> reportingRules) {
+        getProjectProperties().setALMReportingRules(reportingRules);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Transient
     public boolean getIsTrackingActivated() {
         return getProjectProperties().getIsTrackingActivated();
     }

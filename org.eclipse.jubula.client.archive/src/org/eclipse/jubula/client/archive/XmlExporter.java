@@ -56,6 +56,7 @@ import org.eclipse.jubula.client.archive.schema.Project;
 import org.eclipse.jubula.client.archive.schema.ReentryProperty;
 import org.eclipse.jubula.client.archive.schema.RefTestCase;
 import org.eclipse.jubula.client.archive.schema.RefTestSuite;
+import org.eclipse.jubula.client.archive.schema.ReportingRule;
 import org.eclipse.jubula.client.archive.schema.ReusedProject;
 import org.eclipse.jubula.client.archive.schema.SummaryAttribute;
 import org.eclipse.jubula.client.archive.schema.TechnicalName;
@@ -73,8 +74,10 @@ import org.eclipse.jubula.client.archive.schema.UsedToolkit;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
+import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.IArchivableTestResultSummary;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICapParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -103,11 +106,10 @@ import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.model.IArchivableTestResultSummary;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
-import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
@@ -419,13 +421,29 @@ class XmlExporter {
                 projectProperties.getCheckConfCont().getEnabled());
         xml.setTestResultDetailsCleanupInterval(
                 po.getTestResultCleanupInterval());
-        xml.setAlmRepositoryName(projectProperties.getALMRepositoryName());
+        fillALM(xml, projectProperties);
         xml.setIsReportOnSuccess(projectProperties.getIsReportOnSuccess());
         xml.setIsReportOnFailure(projectProperties.getIsReportOnFailure());
         xml.setDashboardURL(projectProperties.getDashboardURL());
         fillTrackingConfig(xml, projectProperties);
         
         m_monitor.worked(1);
+    }
+
+    /**
+     * writes alm reporting rules from to project xml
+     * @param xml the project
+     * @param projectProperties project properties po
+     */
+    private void fillALM(Project xml, IProjectPropertiesPO projectProperties) {
+        xml.setAlmRepositoryName(projectProperties.getALMRepositoryName());
+        
+        for (IALMReportingRulePO rule : projectProperties
+                .getALMReportingRules()) {
+            checkForCancel();
+            ReportingRule xmlRule = xml.addNewReportingRules();
+            fillReportingRule(xmlRule, rule);
+        }
     }
 
     /**
@@ -752,7 +770,21 @@ class XmlExporter {
         xml.setMajorProjectVersion(po.getMajorNumber());
         xml.setMinorProjectVersion(po.getMinorNumber());
     }
-
+    
+    /**
+     * converts alm reporting rule from po to xml
+     * @param xml
+     *            The XML element to be filled
+     * @param po
+     *            The persistent object which contains the information
+     */
+    private void fillReportingRule(ReportingRule xml, IALMReportingRulePO po) {
+        xml.setName(po.getName());
+        xml.setFieldID(po.getFieldID());
+        xml.setValue(po.getValue());
+        xml.setType(po.getType().toString());            
+    }
+    
     /**
      * Write the information from the Object to its corresponding XML element.
      * 

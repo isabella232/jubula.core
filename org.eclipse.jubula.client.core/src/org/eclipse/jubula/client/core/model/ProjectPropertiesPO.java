@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
@@ -126,6 +127,11 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
      * the URL of the dashboard
      */
     private String m_dashboardURL = null;
+
+    /**
+     * list of ALM reporting rules
+     */
+    private List<IALMReportingRulePO> m_reportingRules;
     
     /**
      * For Persistence (JPA / EclipseLink)
@@ -345,6 +351,28 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     @Transient
     public String getToolkit() {
         return getHbmToolkit();
+    }
+    
+    /**
+     * only for Persistence (JPA / EclipseLink)
+     * 
+     * @return Returns the reporting rules set for success.
+     */
+    @OneToMany(cascade = CascadeType.ALL,
+               orphanRemoval = true,
+               targetEntity = ALMReportingRulePO.class,
+               fetch = FetchType.EAGER)
+    @JoinColumn(name = "FK_PROJ_PROPERTIES")
+    public List<IALMReportingRulePO> getALMReportingRules() {
+        return m_reportingRules;
+    }
+    
+    /**
+     * @param reportingRules The reporting rules to set.
+     */
+    public void setALMReportingRules(
+            List<IALMReportingRulePO> reportingRules) {
+        m_reportingRules = reportingRules;
     }
 
     /**

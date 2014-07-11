@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -53,6 +54,17 @@ public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport,
      * @param isProtected Whether the project should be protected.
      */
     public void setIsProtected(boolean isProtected);
+    
+    /**
+     * @return Returns the reporting rules set.
+     */
+    public List<IALMReportingRulePO> getALMReportingRules();
+    
+    /**
+     * @param reportingRules The reporting rules to set.
+     */
+    public void setALMReportingRules(
+            List<IALMReportingRulePO> reportingRules);
     
     /**
      * 

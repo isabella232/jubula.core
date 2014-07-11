@@ -41,7 +41,8 @@
 	<entity class="org.eclipse.jubula.client.core.model.ObjectMappingAssoziationPO" />
 	<entity class="org.eclipse.jubula.client.core.model.ObjectMappingCategoryPO" />
 	<entity class="org.eclipse.jubula.client.core.model.CompNamesPairPO" />
-	<entity class="org.eclipse.jubula.client.core.model.AUTContPO" />
+    <entity class="org.eclipse.jubula.client.core.model.AUTContPO" />
+	<entity class="org.eclipse.jubula.client.core.model.ALMReportingRulePO" />
     <entity class="org.eclipse.jubula.client.core.model.SpecObjContPO" />
 	<entity class="org.eclipse.jubula.client.core.model.ExecObjContPO" />
 	<entity class="org.eclipse.jubula.client.core.model.TestDataCategoryPO" />

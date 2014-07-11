@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -163,6 +164,17 @@ public interface IProjectPO extends IParamNodePO {
      * @param isProtected Whether the project should be protected.
      */
     public void setIsProtected(boolean isProtected);
+    
+    /**
+     * @return the ALM reporting rules of this project
+     */
+    public List<IALMReportingRulePO> getALMReportingRules();
+
+    /**
+     * @param reportingRules the ALM reporting rules of this project
+     */
+    public void setALMReportingRules(
+            List<IALMReportingRulePO> reportingRules);
         
     /**
      * @return Whether changes to the project should be stored.

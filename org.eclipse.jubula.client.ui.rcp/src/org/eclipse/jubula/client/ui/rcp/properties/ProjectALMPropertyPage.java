@@ -10,31 +10,52 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.properties;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
+import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
+import org.eclipse.jubula.client.core.utils.ReportRuleType;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.dialogs.CreateALMReportingRuleDialog;
 import org.eclipse.jubula.client.ui.rcp.factory.ControlFactory;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedURLText;
+import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
+import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
 
 
 /**
@@ -93,6 +114,46 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
      * in case of a succeeded test
      */
     private Button m_reportOnSuccess = null;
+
+    /** group for on success */
+    private Group m_onSuccessGroup;
+
+    /** group for on failure */
+    private Group m_onFailureGroup;
+
+    /** label advertising the comment writing rules on success*/ 
+    private Label m_onSuccessRulesLabel;
+
+    /** label advertising the comment writing rules on failure*/ 
+    private Label m_onFailureRulesLabel;
+
+    /** table viewer containing rules on success*/ 
+    private TableViewer m_onSuccessTableViewer;
+
+    /** table viewer containing rules on failure*/ 
+    private TableViewer m_onFailureTableViewer;
+    
+    /** the add button */
+    private Button m_onSuccessAddButton = null;
+
+    /** the edit button */
+    private Button m_onSuccessEditButton = null;
+
+    /** the delete button */
+    private Button m_onSuccessRemoveButton = null;
+
+    /** the add button */
+    private Button m_onFailureAddButton = null;
+
+    /** the edit button */
+    private Button m_onFailureEditButton = null;
+
+    /** the delete button */
+    private Button m_onFailureRemoveButton = null;
+    
+    /** list containing on success report rules */
+    private List<IALMReportingRulePO> m_reportingRules;
+    
     /** listener to keep the data in sync */
     private ModifyListener m_dataUpdater = new DataUpdateListener();
     
@@ -138,9 +199,9 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         createEmptyLabel(main);
         
         createALMrepositoryChooser(main);
+        createDashboardURL(main);
         createReportOnSuccess(main);
         createReportOnFailure(main);
-        createDashboardURL(main);
         
         Event event = new Event();
         event.type = SWT.Selection;
@@ -178,40 +239,94 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
      * @param parent the parent to use
      */
     private void createReportOnFailure(Composite parent) {
-        createEmptyLabel(parent);
-        m_reportOnFailure = new Button(parent, SWT.CHECK);
-        m_reportOnFailure.setText(Messages
-                .ProjectPropertyPageReportOnFailureLabel);
-        GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-        gridData.grabExcessHorizontalSpace = false;
-        m_reportOnFailure.setLayoutData(gridData);
-        boolean reportOnFailure = m_origProjectProps.getIsReportOnFailure();
-        m_reportOnFailure.setSelection(reportOnFailure);
-        m_reportOnFailure.addSelectionListener(new SelectionListener() {
-            public void widgetSelected(SelectionEvent e) {
-                updateALMData();
-            }
-
-            public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
-            }
-        });
+        m_onFailureAddButton = new Button(parent, SWT.PUSH);
+        m_onFailureEditButton = new Button(parent, SWT.PUSH);
+        m_onFailureRemoveButton = new Button(parent, SWT.PUSH);
+        Composite leftPart = createComposite(parent, NUM_COLUMNS_1,
+                GridData.FILL, true);
+        m_onFailureGroup = new Group(parent, NONE);
+        m_reportOnFailure = new Button(leftPart, SWT.CHECK);
+        m_reportOnFailure.setSelection(
+                m_origProjectProps.getIsReportOnFailure());
+        m_onFailureRulesLabel = new Label(leftPart, NONE);
+        m_onFailureTableViewer = new TableViewer(leftPart, SWT.MULTI
+                | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION
+                | SWT.BORDER);
+        m_onFailureTableViewer.addFilter(
+                new RuleTypeFilter(ReportRuleType.ONFAILURE));
+        
+        createRuleGroup(leftPart,
+                m_onFailureGroup,
+                m_reportOnFailure,
+                m_onFailureRulesLabel,
+                m_onFailureTableViewer,
+                Messages.ProjectPropertyPageReportOnFailureLabel,
+                m_onFailureAddButton,
+                m_onFailureEditButton,
+                m_onFailureRemoveButton);
     }
     
     /**
      * @param parent the parent to use
      */
     private void createReportOnSuccess(Composite parent) {
-        createLabel(parent, Messages.ProjectPropertyPageReportOptionsLabel);
-        m_reportOnSuccess = new Button(parent, SWT.CHECK);
-        m_reportOnSuccess.setText(Messages
-                .ProjectPropertyPageReportOnSuccessLabel);
-        GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-        gridData.grabExcessHorizontalSpace = false;
-        m_reportOnSuccess.setLayoutData(gridData);
-        boolean reportOnSuccess = m_origProjectProps.getIsReportOnSuccess();
-        m_reportOnSuccess.setSelection(reportOnSuccess);
-        m_reportOnSuccess.addSelectionListener(new SelectionListener() {
+        
+        m_onSuccessAddButton = new Button(parent, SWT.PUSH);
+        m_onSuccessEditButton = new Button(parent, SWT.PUSH);
+        m_onSuccessRemoveButton = new Button(parent, SWT.PUSH);
+        Composite leftPart = createComposite(parent, NUM_COLUMNS_1,
+                GridData.FILL, true);
+        m_onSuccessGroup = new Group(parent, NONE);
+        m_reportOnSuccess = new Button(leftPart, SWT.CHECK);
+        m_reportOnSuccess.setSelection(
+                m_origProjectProps.getIsReportOnSuccess());
+        m_onSuccessRulesLabel = new Label(leftPart, NONE);
+        m_onSuccessTableViewer = new TableViewer(leftPart, SWT.MULTI
+                | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION
+                | SWT.BORDER);
+        m_onSuccessTableViewer.addFilter(
+                new RuleTypeFilter(ReportRuleType.ONSUCCESS));
+        
+        createRuleGroup(leftPart,
+                m_onSuccessGroup,
+                m_reportOnSuccess,
+                m_onSuccessRulesLabel,
+                m_onSuccessTableViewer,
+                Messages.ProjectPropertyPageReportOnSuccessLabel,
+                m_onSuccessAddButton,
+                m_onSuccessEditButton,
+                m_onSuccessRemoveButton);
+    }
+
+    /**
+     * Creates UI for managing reporting rules for on success / on failure.
+     * Designed to allow creation of identical groups as easy as possible.
+     * @param leftPart composite for layout
+     * @param group composite for layout
+     * @param report button whether results should be reported
+     * @param rulesLabel label
+     * @param tableViewer the table containing the reporting rules
+     * @param groupTitle title of the group
+     * @param addButton add button
+     * @param editButton edit button
+     * @param removeButton remove button
+     */
+    private void createRuleGroup(Composite leftPart, Group group,
+            Button report, Label rulesLabel, final TableViewer tableViewer,
+            String groupTitle, Button addButton, Button editButton,
+            Button removeButton) {
+        GridData groupGridData = new GridData(SWT.LEFT, SWT.TOP, false, false);
+        groupGridData.horizontalSpan = 2;
+        group.setLayout(new GridLayout(2, false));
+        group.setLayoutData(groupGridData);
+        group.setText(groupTitle);
+        leftPart.setParent(group);
+        report.setText(Messages
+                .ProjectPropertyPageReportWriteCommentLabel);
+        GridData labelGridData = new GridData(GridData.FILL_VERTICAL);
+        labelGridData.grabExcessHorizontalSpace = false;
+        report.setLayoutData(labelGridData);
+        report.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
                 updateALMData();
             }
@@ -220,6 +335,93 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                 widgetSelected(e);
             }
         });
+        rulesLabel.setText(Messages
+                .ProjectPropertyPageReportRulesLabel);
+        ArrayContentProvider provider = new ArrayContentProvider();
+        tableViewer.setContentProvider(provider);
+        m_reportingRules = getProject().getProjectProperties()
+                .getALMReportingRules();
+        createTableContent(tableViewer);
+        tableViewer.setInput(m_reportingRules);
+        
+        final Table table = tableViewer.getTable();
+        table.setHeaderVisible(true);
+        table.setLinesVisible(true);
+        GridData layoutData = new GridData(600, 150);
+        table.setLayoutData(layoutData);
+        
+        Composite rightPart = new Composite(group, SWT.NONE);
+        GridLayout compositeLayout = new GridLayout();
+        compositeLayout.numColumns = NUM_COLUMNS_1;
+        rightPart.setLayout(compositeLayout);
+        GridData compositeData = new GridData(
+                SWT.RIGHT, SWT.BOTTOM, false, false);
+        compositeData.horizontalAlignment = GridData.FILL;
+        compositeData.grabExcessHorizontalSpace = true;
+        rightPart.setLayoutData(compositeData);
+        
+        WidgetSelectionListener selectionListener =
+                new WidgetSelectionListener(tableViewer);
+        
+        addButton.setParent(rightPart);
+        addButton.setText(Messages.ProjectPropertyPageALMReportRuleAdd);
+        addButton.setLayoutData(buttonGrid());
+        addButton.addSelectionListener(selectionListener);
+
+        editButton.setParent(rightPart);
+        editButton.setText(Messages.ProjectPropertyPageALMReportRuleEdit);
+        editButton.setLayoutData(buttonGrid());
+        editButton.addSelectionListener(selectionListener);
+
+        removeButton.setParent(rightPart);
+        removeButton.setText(Messages.ProjectPropertyPageALMReportRuleRemove);
+        removeButton.setLayoutData(buttonGrid());
+        removeButton.addSelectionListener(selectionListener);
+    }
+
+    /** creates the content of the table 
+     * @param tableViewer the associated table viewer
+     */
+    private void createTableContent(final TableViewer tableViewer) {
+        TableViewerColumn nameColumn =
+                new TableViewerColumn(tableViewer, SWT.LEFT);
+        nameColumn.getColumn().setText(Messages.ALMReportRuleName);
+        nameColumn.getColumn().setWidth(200);
+        nameColumn.setLabelProvider(new ColumnLabelProvider() {
+            public String getText(Object element) {
+                if (element instanceof IALMReportingRulePO) {
+                    return ((IALMReportingRulePO) element).getName();
+                }
+                return null;
+            }
+        });
+        
+        TableViewerColumn fieldColumn =
+                new TableViewerColumn(tableViewer, SWT.LEFT);
+        fieldColumn.getColumn().setText(Messages.ALMReportRuleField);
+        fieldColumn.getColumn().setWidth(200);
+        fieldColumn.setLabelProvider(new ColumnLabelProvider() {
+            public String getText(Object element) {
+                if (element instanceof IALMReportingRulePO) {
+                    return ((IALMReportingRulePO) element).getFieldID();
+                }
+                return null;
+            }
+        });
+        
+        TableViewerColumn valueColumn =
+                new TableViewerColumn(tableViewer, SWT.LEFT);
+        valueColumn.getColumn().setText(Messages.ALMReportRuleValue);
+        valueColumn.getColumn().setWidth(200);
+        valueColumn.setLabelProvider(new ColumnLabelProvider() {
+            public String getText(Object element) {
+                if (element instanceof IALMReportingRulePO) {
+                    return ((IALMReportingRulePO) element).getValue();
+                }
+                return null;
+            }
+        });
+        
     }
 
     /**
@@ -251,13 +453,13 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
             public void widgetSelected(SelectionEvent e) {
                 m_connectionTest.setImage(IconConstants.STEP_TESTING_IMAGE);
                 if (m_almRepoCombo.getSelectedObject() == null) {
-                    m_reportOnFailure.setEnabled(false);
-                    m_reportOnSuccess.setEnabled(false);
                     m_dashboardURL.setEnabled(false);
+                    m_onSuccessGroup.setEnabled(false);
+                    m_onFailureGroup.setEnabled(false);
                 } else {
-                    m_reportOnFailure.setEnabled(true);
-                    m_reportOnSuccess.setEnabled(true);
                     m_dashboardURL.setEnabled(true);
+                    m_onSuccessGroup.setEnabled(true);
+                    m_onFailureGroup.setEnabled(true);
                 }
                 setErrorMessage(null);
                 updateALMData();
@@ -294,6 +496,186 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         }
         if (m_dashboardURL != null) {
             props.setDashboardURL(m_dashboardURL.getText().trim());
+        }
+        if (m_reportingRules != null) {
+            props.setALMReportingRules(m_reportingRules);
+        }
+    }
+    
+    /**
+     * This private inner class contains a new SelectionListener.
+     * It assigns actions to different button types.
+     * 
+     * @author BREDEX GmbH
+     * @created 11.07.2014
+     */
+    private class WidgetSelectionListener implements SelectionListener {
+
+        /** table on which the button action should be performed */
+        private TableViewer m_tableViewer;
+        
+        /** constructor
+         * @param tableViewer the table on which the button action should be performed
+         */
+        WidgetSelectionListener(TableViewer tableViewer) {
+            m_tableViewer = tableViewer;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public void widgetSelected(SelectionEvent e) {
+            handleSelectionEvent(e);
+        }
+
+        /**
+         * @param e a SelectionEvent
+         */
+        private void handleSelectionEvent(SelectionEvent e) {
+            Object o = e.getSource();
+            if (o.equals(m_onSuccessAddButton)
+                    || o.equals(m_onFailureAddButton)) {
+                handleAddButtonEvent((Button) o, m_tableViewer);
+                return;
+            } else if (o.equals(m_onSuccessEditButton)
+                    || o.equals(m_onFailureEditButton)) {
+                handleEditButtonEvent((Button) o, m_tableViewer);
+                return;
+            } else if (o.equals(m_onSuccessRemoveButton)
+                    || o.equals(m_onFailureRemoveButton)) {
+                handleRemoveButtonEvent(m_tableViewer);
+                return;
+            }
+
+            Assert.notReached(Messages.EventActivatedUnknownWidget 
+                + StringConstants.COLON + StringConstants.SPACE 
+                + StringConstants.APOSTROPHE + String.valueOf(e.getSource()) 
+                + StringConstants.APOSTROPHE);
+        }
+        
+        /**
+         * Reacts, when an object is double clicked.
+         * {@inheritDoc}
+         */
+        public void widgetDefaultSelected(SelectionEvent e) {
+            handleSelectionEvent(e);
+        }
+    }
+    
+    /** Handles the add-button event by opening a dialogue to add a
+     *  reporting rule to a given table.
+     * @param button the add button
+     * @param tableViewer the table viewer
+     */
+    void handleAddButtonEvent(Button button, TableViewer tableViewer) {
+        ReportRuleType type = null;
+        if (tableViewer.equals(m_onSuccessTableViewer)) {
+            type = ReportRuleType.ONSUCCESS;
+        } else if (tableViewer.equals(m_onFailureTableViewer)) {
+            type = ReportRuleType.ONFAILURE;
+        }
+        CreateALMReportingRuleDialog dialog = new CreateALMReportingRuleDialog(
+            button.getShell(), null, type);
+        dialog.create();
+        DialogUtils.setWidgetNameForModalDialog(dialog);
+        dialog.getShell().setText(
+                Messages.ProjectPropertyPageALMReportingRuleAddDialog);
+        dialog.open();
+        if (dialog.getReturnCode() == Window.OK) {
+            m_reportingRules.add(dialog.getRule());
+            tableViewer.refresh();
+            tableViewer.setSelection(
+                    new StructuredSelection(dialog.getRule()));
+        }
+    }
+
+    /** Handles the edit-button event by opening a dialogue to edit a
+     *  reporting rule of a given table.
+     * @param button the add button
+     * @param tableViewer the table viewer
+     */
+    void handleEditButtonEvent(Button button, TableViewer tableViewer) {
+        StructuredSelection selection = 
+                (StructuredSelection) tableViewer.getSelection();
+        if (selection.size() != 1) {
+            return;
+        }
+        ReportRuleType type = null;
+        if (tableViewer.equals(m_onSuccessTableViewer)) {
+            type = ReportRuleType.ONSUCCESS;
+        } else if (tableViewer.equals(m_onFailureTableViewer)) {
+            type = ReportRuleType.ONFAILURE;
+        }
+        CreateALMReportingRuleDialog dialog = new CreateALMReportingRuleDialog(
+                button.getShell(),
+                (IALMReportingRulePO) selection.getFirstElement(), type);
+        dialog.create();
+        DialogUtils.setWidgetNameForModalDialog(dialog);
+        dialog.getShell().setText(
+                Messages.ProjectPropertyPageALMReportingRuleAddDialog);
+        dialog.open();
+        if (dialog.getReturnCode() == Window.OK) {
+            tableViewer.refresh();
+            tableViewer.setSelection(
+                    new StructuredSelection(dialog.getRule()));
+        }
+    }
+    
+    /** Handles the remove-button event of a given table by deleting the selected
+     *  reporting rule from the given table.
+     * @param tableViewer the table viewer
+     */
+    void handleRemoveButtonEvent(TableViewer tableViewer) {
+        StructuredSelection selection = 
+                (StructuredSelection) tableViewer.getSelection();
+        
+        Iterator itr = selection.iterator();
+        while (itr.hasNext()) {
+            m_reportingRules.remove(itr.next());
+        }
+        tableViewer.refresh();
+    }
+    
+
+    /**
+     * Creates new gridData for the buttons.
+     * @return The new GridData.
+     */
+    private GridData buttonGrid() {
+        GridData buttonData = new GridData();
+        buttonData.horizontalAlignment = GridData.FILL;
+        return buttonData;      
+    }
+    
+    /**
+     * Viewer filter which only shows ALM reporting rules of a given type
+     *  
+     * @author BREDEX GmbH
+     * @created 29.07.2014
+     */
+    private class RuleTypeFilter extends ViewerFilter {
+        
+        /** the type of the rules to show */
+        private ReportRuleType m_type = null;
+
+        /**
+         * constructor
+         * @param type the type to show
+         */
+        public RuleTypeFilter(ReportRuleType type) {
+            m_type = type;
+        }
+        
+        @Override
+        public boolean select(Viewer viewer, Object parentElement,
+                Object element) {
+            if (element instanceof IALMReportingRulePO) {
+                IALMReportingRulePO rule = (IALMReportingRulePO) element;
+                if (rule.getType() == m_type) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

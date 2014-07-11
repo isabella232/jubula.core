@@ -63,6 +63,7 @@ import org.eclipse.jubula.client.archive.schema.ParamDescription;
 import org.eclipse.jubula.client.archive.schema.Project;
 import org.eclipse.jubula.client.archive.schema.RefTestCase;
 import org.eclipse.jubula.client.archive.schema.RefTestSuite;
+import org.eclipse.jubula.client.archive.schema.ReportingRule;
 import org.eclipse.jubula.client.archive.schema.ReusedProject;
 import org.eclipse.jubula.client.archive.schema.SummaryAttribute;
 import org.eclipse.jubula.client.archive.schema.TechnicalName;
@@ -85,6 +86,7 @@ import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPluginError;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPluginError.ERROR;
+import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -133,6 +135,7 @@ import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOper
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
+import org.eclipse.jubula.client.core.utils.ReportRuleType;
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -825,7 +828,36 @@ class XmlImporter {
                     TrackingUnit.valueOf(xml.getTrackingUnit()));
         }
         projProperties.setTrackChangesSpan(xml.getTrackingSpan());
+        
+        List<IALMReportingRulePO> reportingRules = 
+                new ArrayList<IALMReportingRulePO>();
+        for (ReportingRule rule : xml.getReportingRulesList()) {
+            reportingRules.add(createReportingRule(rule));
+        }
+        projProperties.setALMReportingRules(reportingRules);
+        
         return projProperties;
+    }
+
+    /**
+     * converts alm reporting rule from xml to po
+     * @param xml rule from xml file
+     * @return the converted rule
+     */
+    private IALMReportingRulePO createReportingRule(ReportingRule xml) {
+        String name = xml.getName();
+        String fieldID = xml.getFieldID();
+        String value = xml.getValue();
+        String xmlType = xml.getType();
+        ReportRuleType type = null;
+        if (xmlType.equals(ReportRuleType.ONSUCCESS.toString())) {
+            type = ReportRuleType.ONSUCCESS;
+        } else if (xmlType.equals(ReportRuleType.ONFAILURE.toString())) {
+            type = ReportRuleType.ONFAILURE;
+        }
+        IALMReportingRulePO rule = PoMaker.createALMReportingRulePO(
+                name, fieldID, value, type);
+        return rule;
     }
 
     /**
