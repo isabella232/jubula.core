@@ -74,6 +74,9 @@ public abstract class TimingConstantsServer {
      */
     protected static final int POST_WINDOW_ACTIVATION_DELAY = 200;
 
+    /** Default for wait after mouse up */
+    protected static final int DEFAULT_KEY_INPUT_POST_DELAY = 300;
+
     /**
      * Constructor
      */

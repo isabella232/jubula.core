@@ -33,6 +33,9 @@ public class RobotTiming extends TimingConstantsServer {
     /** <code>EXTERNAL_PROPERTY_NAME_MAX_AUT_RESPONSE_TIME</code> */
     private static final String EXTERNAL_PROPERTY_NAME_MAX_AUT_RESPONSE_TIME = "TEST_MAX_AUT_RESPONSE_TIME"; //$NON-NLS-1$
     
+    /** <code>EXTERNAL_PROPERTY_NAME_KEY_INPUT_POST_DELAY</code> */
+    private static final String EXTERNAL_PROPERTY_NAME_KEY_INPUT_POST_DELAY = "TEST_KEY_INPUT_POST_DELAY"; //$NON-NLS-1$
+
     /** <code>NO_EXTERNAL_WAIT</code> */
     private static final int NO_EXTERNAL_WAIT = -1;
 
@@ -71,6 +74,11 @@ public class RobotTiming extends TimingConstantsServer {
      * The timestamp of the most recently performed wait
      */
     private static long lastPerformedClick = -1;
+
+    /**
+     * The delay between key input
+     */
+    private static int keyInputPostDelay = -1;
 
     /**
      * Constructor
@@ -169,6 +177,26 @@ public class RobotTiming extends TimingConstantsServer {
 
         // default
         postMouseUp = DEFAULT_DELAY_POST_MOUSE_UP;
+        return postMouseUp;
+    }
+
+    /**
+     * @return The delay between key input
+     */
+    public static final int getKeyInputPostDelay() {
+        if (keyInputPostDelay >= 0) {
+            return keyInputPostDelay;
+        }
+
+        int externalWait = getExternalWait(
+                EXTERNAL_PROPERTY_NAME_KEY_INPUT_POST_DELAY);
+        if (externalWait != NO_EXTERNAL_WAIT) {
+            keyInputPostDelay = externalWait;
+            return keyInputPostDelay;
+        }
+
+        // default
+        keyInputPostDelay = DEFAULT_KEY_INPUT_POST_DELAY;
         return postMouseUp;
     }
 
