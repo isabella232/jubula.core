@@ -59,12 +59,12 @@ public abstract class AbstractApplicationTester implements ITester {
     /**
      * The default format to use when writing images to disk.
      */
-    private static final String DEFAULT_IMAGE_FORMAT = "png"; //$NON-NLS-1$
+    protected static final String DEFAULT_IMAGE_FORMAT = "png"; //$NON-NLS-1$
     
     /**
      * The string used to separate filename and file extension.
      */
-    private static final String EXTENSION_SEPARATOR = "."; //$NON-NLS-1$
+    protected static final String EXTENSION_SEPARATOR = "."; //$NON-NLS-1$
     
     /**
      * The logging.
@@ -550,7 +550,7 @@ public abstract class AbstractApplicationTester implements ITester {
      *         not contain an instance of the extension separator or ends with
      *         the extension separator. For example, "example" or "example.".
      */
-    private String getExtension(String filename) {
+    protected String getExtension(String filename) {
         File file = new File(filename);
         int extensionIndex = file.getName().lastIndexOf(EXTENSION_SEPARATOR);
         return extensionIndex == -1 
