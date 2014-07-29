@@ -12,18 +12,12 @@ package org.eclipse.jubula.tools.utils;
 
 import java.awt.AWTError;
 import java.awt.Toolkit;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
 import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Utility class for handling environment variables.
@@ -60,25 +54,6 @@ public class EnvironmentUtils {
 
     /** Substring for matching Linux. */
     private static final String OS_NAME_LIN = "lin"; //$NON-NLS-1$
-
-    /**
-     * Windows (2000, XP, Vista, Server, etc.) command to get environment
-     * variables.
-     */
-    private static final String ENV_CMD_WIN = "cmd.exe /c set"; //$NON-NLS-1$
-
-    /**
-     * Windows 9x command to get environment variables.
-     */
-    private static final String ENV_CMD_WIN9X = "command.com /c set"; //$NON-NLS-1$
-
-    /**
-     * Linux command to get environment variables.
-     */
-    private static final String ENV_CMD_LINUX = "env"; //$NON-NLS-1$
-
-    /** the logger */
-    private static Logger log = LoggerFactory.getLogger(EnvironmentUtils.class);
 
     /**
      * Private constructor
@@ -140,53 +115,13 @@ public class EnvironmentUtils {
 
     /**
      * Gets the environment settings of the current process.
-     * On Windows uses the "set" command,
-     * on Unix uses the "env" command to get the environment parameter.
      * 
      * @return a <code>Properties</code> object with the
      *         defined environments variables and corresponding values.
-     * 
      */
     public static Properties getProcessEnvironment() {
-        // Do not use System.getenv() here because it is only available 
-        // since java 1.5! 
         final Properties env = new Properties();
-        try {
-            String consoleCmd = ENV_CMD_LINUX;
-            if (isWin9xOS()) {
-                consoleCmd = ENV_CMD_WIN9X;
-            } else  if (isWindowsOS()) {
-                consoleCmd = ENV_CMD_WIN;
-            } 
-            Process process = Runtime.getRuntime().exec(consoleCmd);
-            final InputStream in = process.getInputStream();
-            final int buffSize = 1024;
-            final byte buff[] = new byte[buffSize];
-            final OutputStream outStream = new ByteArrayOutputStream(buffSize);
-            int k = -1;
-            while ((k = in.read(buff)) != -1) {
-                outStream.write(buff, 0, k);
-            }
-            String envString = StringConstants.EMPTY + outStream.toString();
-            StringTokenizer tok = new StringTokenizer(envString, "\r\n"); //$NON-NLS-1$
-            while (tok.hasMoreElements()) {
-                String pair = tok.nextToken();
-                String key = StringConstants.EMPTY;
-                String value = StringConstants.EMPTY;
-                StringTokenizer tok2 = new StringTokenizer(pair, "="); //$NON-NLS-1$
-                if (tok2.hasMoreElements()) {
-                    key = tok2.nextToken();
-                }
-                if (tok2.hasMoreElements()) {
-                    value = tok2.nextToken();
-                }
-                env.setProperty(key, value);
-            }
-        } catch (IOException ioe) {
-            log.error("Error while getting process environment"    //$NON-NLS-1$
-                       + "in EnvironmentUtils."     //$NON-NLS-1$
-                       + "getProcessEnvironment() ", ioe); //$NON-NLS-1$
-        }
+        env.putAll(System.getenv());
         return env;
     }
 
@@ -316,7 +251,7 @@ public class EnvironmentUtils {
      */
     public static int getAUTAgentEnvironmentPortNo() {
         int port = -1;
-        String portStr = EnvironmentUtils.getProcessEnvironment().getProperty(
+        String portStr = getProcessEnvironment().getProperty(
                 EnvConstants.AUT_AGENT_PORT);
         if ((portStr != null)
                 && (!portStr.trim().equals(StringConstants.EMPTY))) {

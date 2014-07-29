@@ -226,7 +226,7 @@ public class KeyTyper {
 
     /**
      * @param keyStroke KeyStroke whose modifiers are requested
-     * @return a List of KeyCodes (hopefully) realising the ModifierMask contained in the KeyStroke
+     * @return a List of KeyCodes (hopefully) realizing the ModifierMask contained in the KeyStroke
      */
     private List<Integer> modifierKeyCodes(KeyStroke keyStroke) {
         List<Integer> l = new LinkedList<Integer>();
