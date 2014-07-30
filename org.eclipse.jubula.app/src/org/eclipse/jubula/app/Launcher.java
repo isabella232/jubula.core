@@ -412,9 +412,8 @@ public class Launcher implements IApplication {
             } catch (IOException e) {
                 IDEWorkbenchPlugin.log("Could not obtain lock for workspace location", //$NON-NLS-1$
                         e);             
-                MessageDialog.openError(shell,
-                        IDEWorkbenchMessages.InternalError,
-                        e.getMessage());                
+                MessageDialog.openError(shell, IDEWorkbenchMessages
+                    .InternalError, e.getMessage());                
             }            
             return EXIT_OK;
         }
@@ -439,8 +438,7 @@ public class Launcher implements IApplication {
                     return null;
                 }
             } catch (IllegalStateException e) {
-                MessageDialog.openError(shell,
-                    IDEWorkbenchMessages.
+                MessageDialog.openError(shell, IDEWorkbenchMessages.
                         IDEApplication_workspaceCannotBeSetTitle,
                     IDEWorkbenchMessages.
                         IDEApplication_workspaceCannotBeSetMessage);
@@ -450,9 +448,11 @@ public class Launcher implements IApplication {
             }
             // by this point it has been determined that the workspace is
             // already in use -- force the user to choose again
-            MessageDialog.openError(shell, IDEWorkbenchMessages
-                .IDEApplication_workspaceInUseTitle, 
-                    IDEWorkbenchMessages.IDEApplication_workspaceInUseMessage);
+            MessageDialog.openError(shell,
+                IDEWorkbenchMessages.IDEApplication_workspaceInUseTitle,
+                NLS.bind(
+                    IDEWorkbenchMessages.IDEApplication_workspaceInUseMessage,
+                    workspaceUrl.getFile()));
         }
     }
 
