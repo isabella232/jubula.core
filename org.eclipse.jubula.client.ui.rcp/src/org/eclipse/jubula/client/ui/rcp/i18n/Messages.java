@@ -556,7 +556,6 @@ public class Messages extends NLS {
     public static String ProjectPropertyPageALMRepositoryLabel;
     public static String ProjectPropertyPageALMConnectionTest;
     public static String ProjectPropertyPageALMReportRuleAdd;
-    public static String ProjectPropertyPageALMReportRuleEdit;
     public static String ProjectPropertyPageALMReportRuleRemove;
     public static String ProjectPropertyPageALMReportingRuleAddDialog;
     public static String ProjectPropertyPageALMReportingRuleAddDialogMessage;

@@ -16,28 +16,36 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.ColumnViewerEditor;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
+import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TableViewerEditor;
+import org.eclipse.jface.viewers.TableViewerFocusCellManager;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
+import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.utils.ReportRuleType;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.dialogs.CreateALMReportingRuleDialog;
 import org.eclipse.jubula.client.ui.rcp.factory.ControlFactory;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedURLText;
-import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -136,17 +144,11 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
     /** the add button */
     private Button m_onSuccessAddButton = null;
 
-    /** the edit button */
-    private Button m_onSuccessEditButton = null;
-
     /** the delete button */
     private Button m_onSuccessRemoveButton = null;
 
     /** the add button */
     private Button m_onFailureAddButton = null;
-
-    /** the edit button */
-    private Button m_onFailureEditButton = null;
 
     /** the delete button */
     private Button m_onFailureRemoveButton = null;
@@ -240,7 +242,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
      */
     private void createReportOnFailure(Composite parent) {
         m_onFailureAddButton = new Button(parent, SWT.PUSH);
-        m_onFailureEditButton = new Button(parent, SWT.PUSH);
         m_onFailureRemoveButton = new Button(parent, SWT.PUSH);
         Composite leftPart = createComposite(parent, NUM_COLUMNS_1,
                 GridData.FILL, true);
@@ -262,7 +263,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                 m_onFailureTableViewer,
                 Messages.ProjectPropertyPageReportOnFailureLabel,
                 m_onFailureAddButton,
-                m_onFailureEditButton,
                 m_onFailureRemoveButton);
     }
     
@@ -272,7 +272,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
     private void createReportOnSuccess(Composite parent) {
         
         m_onSuccessAddButton = new Button(parent, SWT.PUSH);
-        m_onSuccessEditButton = new Button(parent, SWT.PUSH);
         m_onSuccessRemoveButton = new Button(parent, SWT.PUSH);
         Composite leftPart = createComposite(parent, NUM_COLUMNS_1,
                 GridData.FILL, true);
@@ -294,7 +293,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                 m_onSuccessTableViewer,
                 Messages.ProjectPropertyPageReportOnSuccessLabel,
                 m_onSuccessAddButton,
-                m_onSuccessEditButton,
                 m_onSuccessRemoveButton);
     }
 
@@ -308,13 +306,11 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
      * @param tableViewer the table containing the reporting rules
      * @param groupTitle title of the group
      * @param addButton add button
-     * @param editButton edit button
      * @param removeButton remove button
      */
     private void createRuleGroup(Composite leftPart, Group group,
             Button report, Label rulesLabel, final TableViewer tableViewer,
-            String groupTitle, Button addButton, Button editButton,
-            Button removeButton) {
+            String groupTitle, Button addButton, Button removeButton) {
         GridData groupGridData = new GridData(SWT.LEFT, SWT.TOP, false, false);
         groupGridData.horizontalSpan = 2;
         group.setLayout(new GridLayout(2, false));
@@ -368,11 +364,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         addButton.setLayoutData(buttonGrid());
         addButton.addSelectionListener(selectionListener);
 
-        editButton.setParent(rightPart);
-        editButton.setText(Messages.ProjectPropertyPageALMReportRuleEdit);
-        editButton.setLayoutData(buttonGrid());
-        editButton.addSelectionListener(selectionListener);
-
         removeButton.setParent(rightPart);
         removeButton.setText(Messages.ProjectPropertyPageALMReportRuleRemove);
         removeButton.setLayoutData(buttonGrid());
@@ -395,6 +386,8 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                 return null;
             }
         });
+        nameColumn.setEditingSupport(
+                new ReportingRuleNameEditingSupport(tableViewer));
         
         TableViewerColumn fieldColumn =
                 new TableViewerColumn(tableViewer, SWT.LEFT);
@@ -408,6 +401,8 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                 return null;
             }
         });
+        fieldColumn.setEditingSupport(
+                new ReportingRuleFieldIDEditingSupport(tableViewer));
         
         TableViewerColumn valueColumn =
                 new TableViewerColumn(tableViewer, SWT.LEFT);
@@ -421,7 +416,34 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                 return null;
             }
         });
+        valueColumn.setEditingSupport(
+                new ReportingRuleValueEditingSupport(tableViewer));
         
+        TableViewerFocusCellManager focusCellManager = 
+                new TableViewerFocusCellManager(tableViewer,
+                        new FocusCellOwnerDrawHighlighter(tableViewer));
+        ColumnViewerEditorActivationStrategy actSupport = 
+            new ColumnViewerEditorActivationStrategy(tableViewer) {
+                protected boolean isEditorActivationEvent(
+                        ColumnViewerEditorActivationEvent event) {
+                    return event.eventType 
+                            == ColumnViewerEditorActivationEvent.TRAVERSAL
+                        || event.eventType 
+                            == ColumnViewerEditorActivationEvent.
+                                MOUSE_DOUBLE_CLICK_SELECTION
+                        || (event.eventType 
+                                == ColumnViewerEditorActivationEvent.KEY_PRESSED
+                            && event.keyCode == SWT.CR)
+                        || event.eventType 
+                            == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
+                }
+            };
+            
+        TableViewerEditor.create(tableViewer, focusCellManager, 
+                actSupport, ColumnViewerEditor.TABBING_HORIZONTAL
+                    | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
+                    | ColumnViewerEditor.TABBING_VERTICAL 
+                    | ColumnViewerEditor.KEYBOARD_ACTIVATION);
     }
 
     /**
@@ -454,12 +476,18 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                 m_connectionTest.setImage(IconConstants.STEP_TESTING_IMAGE);
                 if (m_almRepoCombo.getSelectedObject() == null) {
                     m_dashboardURL.setEnabled(false);
-                    m_onSuccessGroup.setEnabled(false);
-                    m_onFailureGroup.setEnabled(false);
+                    setEnabledRecursive(m_onSuccessGroup, false);
+                    setEnabledRecursive(m_onFailureGroup, false);
+                    m_onSuccessTableViewer.setSelection(null);
+                    m_onFailureTableViewer.setSelection(null);
+                    m_onSuccessTableViewer.getTable().setEnabled(false);
+                    m_onFailureTableViewer.getTable().setEnabled(false);
                 } else {
                     m_dashboardURL.setEnabled(true);
-                    m_onSuccessGroup.setEnabled(true);
-                    m_onFailureGroup.setEnabled(true);
+                    setEnabledRecursive(m_onSuccessGroup, true);
+                    setEnabledRecursive(m_onFailureGroup, true);
+                    m_onSuccessTableViewer.getTable().setEnabled(true);
+                    m_onFailureTableViewer.getTable().setEnabled(true);
                 }
                 setErrorMessage(null);
                 updateALMData();
@@ -478,6 +506,22 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         m_connectionTest.setText(Messages.ProjectPropertyPageALMConnectionTest);
         m_connectionTest.setImage(IconConstants.STEP_TESTING_IMAGE);
         m_connectionTest.addSelectionListener(new ConnectionTestListener());
+    }
+    
+    /**
+     * recursively dis-/enable control and all its children
+     * @param control the control
+     * @param enabled whether the control should be enabled
+     */
+    public void setEnabledRecursive(Control control, boolean enabled) {
+        if (control instanceof Composite) {
+            Composite composite = (Composite) control;
+            for (Control c : composite.getChildren()) {
+                setEnabledRecursive(c, enabled);
+            }
+        } else {
+            control.setEnabled(enabled);
+        }
     }
 
     /**
@@ -537,10 +581,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                     || o.equals(m_onFailureAddButton)) {
                 handleAddButtonEvent((Button) o, m_tableViewer);
                 return;
-            } else if (o.equals(m_onSuccessEditButton)
-                    || o.equals(m_onFailureEditButton)) {
-                handleEditButtonEvent((Button) o, m_tableViewer);
-                return;
             } else if (o.equals(m_onSuccessRemoveButton)
                     || o.equals(m_onFailureRemoveButton)) {
                 handleRemoveButtonEvent(m_tableViewer);
@@ -574,51 +614,13 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         } else if (tableViewer.equals(m_onFailureTableViewer)) {
             type = ReportRuleType.ONFAILURE;
         }
-        CreateALMReportingRuleDialog dialog = new CreateALMReportingRuleDialog(
-            button.getShell(), null, type);
-        dialog.create();
-        DialogUtils.setWidgetNameForModalDialog(dialog);
-        dialog.getShell().setText(
-                Messages.ProjectPropertyPageALMReportingRuleAddDialog);
-        dialog.open();
-        if (dialog.getReturnCode() == Window.OK) {
-            m_reportingRules.add(dialog.getRule());
-            tableViewer.refresh();
-            tableViewer.setSelection(
-                    new StructuredSelection(dialog.getRule()));
-        }
-    }
-
-    /** Handles the edit-button event by opening a dialogue to edit a
-     *  reporting rule of a given table.
-     * @param button the add button
-     * @param tableViewer the table viewer
-     */
-    void handleEditButtonEvent(Button button, TableViewer tableViewer) {
-        StructuredSelection selection = 
-                (StructuredSelection) tableViewer.getSelection();
-        if (selection.size() != 1) {
-            return;
-        }
-        ReportRuleType type = null;
-        if (tableViewer.equals(m_onSuccessTableViewer)) {
-            type = ReportRuleType.ONSUCCESS;
-        } else if (tableViewer.equals(m_onFailureTableViewer)) {
-            type = ReportRuleType.ONFAILURE;
-        }
-        CreateALMReportingRuleDialog dialog = new CreateALMReportingRuleDialog(
-                button.getShell(),
-                (IALMReportingRulePO) selection.getFirstElement(), type);
-        dialog.create();
-        DialogUtils.setWidgetNameForModalDialog(dialog);
-        dialog.getShell().setText(
-                Messages.ProjectPropertyPageALMReportingRuleAddDialog);
-        dialog.open();
-        if (dialog.getReturnCode() == Window.OK) {
-            tableViewer.refresh();
-            tableViewer.setSelection(
-                    new StructuredSelection(dialog.getRule()));
-        }
+        IALMReportingRulePO rule = PoMaker.createALMReportingRulePO(
+                StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY,
+                type);
+        m_reportingRules.add(rule);
+        tableViewer.refresh();
+        tableViewer.reveal(rule);
+        tableViewer.editElement(rule, 0);
     }
     
     /** Handles the remove-button event of a given table by deleting the selected
@@ -676,6 +678,143 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                 }
             }
             return false;
+        }
+    }
+    
+    /**
+     *
+     * @author BREDEX GmbH
+     * @created Jul 30, 2014
+     */
+    private abstract static class ReportingRuleEditingSupport
+            extends EditingSupport {
+
+        /**
+         * Constructor
+         * 
+         * @param viewer The viewer
+        */
+        public ReportingRuleEditingSupport(ColumnViewer viewer) {
+            super(viewer);
+        }
+    
+        /**
+         * {@inheritDoc}
+         */
+        protected boolean canEdit(Object element) {
+            return true;
+        }
+    
+        /**
+         * {@inheritDoc}
+         */
+        protected CellEditor getCellEditor(Object element) {
+            return new TextCellEditor((Composite)getViewer().getControl());
+        }
+    }
+    
+    /**
+     *
+     * @author BREDEX GmbH
+     * @created Jul 31, 2014
+     */
+    private static class ReportingRuleNameEditingSupport
+            extends ReportingRuleEditingSupport {
+        
+        /**
+         * Constructor
+         * 
+         * @param viewer The viewer
+        */
+        public ReportingRuleNameEditingSupport(ColumnViewer viewer) {
+            super(viewer);
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        protected Object getValue(Object element) {
+            return StringUtils.defaultString(
+                    ((IALMReportingRulePO)element).getName());
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        protected void setValue(Object element, Object value) {
+            String hostNameValue = String.valueOf(value);
+            ((IALMReportingRulePO)element).setName(hostNameValue);
+            getViewer().update(element, null);
+        }
+    }
+    
+    /**
+    *
+    * @author BREDEX GmbH
+    * @created Jul 31, 2014
+    */
+    private static class ReportingRuleFieldIDEditingSupport
+           extends ReportingRuleEditingSupport {
+       
+        /**
+         * Constructor
+         * 
+         * @param viewer The viewer
+        */
+        public ReportingRuleFieldIDEditingSupport(ColumnViewer viewer) {
+            super(viewer);
+        }
+       
+        /**
+         * {@inheritDoc}
+         */
+        protected Object getValue(Object element) {
+            return StringUtils.defaultString(
+                    ((IALMReportingRulePO)element).getFieldID());
+        }
+       
+        /**
+         * {@inheritDoc}
+         */
+        protected void setValue(Object element, Object value) {
+            String hostNameValue = String.valueOf(value);
+            ((IALMReportingRulePO)element).setFieldID(hostNameValue);
+            getViewer().update(element, null);
+        }
+    }
+   
+     /**
+      *
+      * @author BREDEX GmbH
+      * @created Jul 31, 2014
+     */
+    private static class ReportingRuleValueEditingSupport
+            extends ReportingRuleEditingSupport {
+      
+        /**
+         * Constructor
+         * 
+         * @param viewer The viewer
+        */
+        public ReportingRuleValueEditingSupport(ColumnViewer viewer) {
+            super(viewer);
+        }
+      
+        /**
+         * {@inheritDoc}
+         */
+        protected Object getValue(Object element) {
+            return StringUtils.defaultString(
+                    ((IALMReportingRulePO)element).getValue());
+        }
+      
+        /**
+         * {@inheritDoc}
+         */
+        protected void setValue(Object element, Object value) {
+            String hostNameValue = String.valueOf(value);
+            ((IALMReportingRulePO)element).setValue(hostNameValue);
+            getViewer().update(element, null);
         }
     }
 }
