@@ -17,7 +17,19 @@
             visible="true">
          <run
                class="org.eclipse.jubula.app.dashboard.DashboardApp">
-            <parameter
+         </run>
+      </application>
+   </extension>
+   <extension
+         id="dashboardHttpServer"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="org.eclipse.jubula.app.dashboard.DashboardHttpServerApp">
+               <parameter
                   name="org.eclipse.jubula.app.dashboard.defaultPort"
                   value="60001">
             </parameter>
@@ -29,21 +41,9 @@
          name="ITE - Functional Testing Dashboard"
          point="org.eclipse.core.runtime.products">
       <product
-            application="org.eclipse.jubula.app.dashboard.dashboardHttpServer"
+            application="org.eclipse.jubula.app.dashboard.dashboardApp"
             name="ITE - Functional Testing Dashboard">
       </product>
-   </extension>
-   <extension
-         id="dashboardHttpServer"
-         point="org.eclipse.core.runtime.applications">
-      <application
-            cardinality="singleton-global"
-            thread="main"
-            visible="true">
-         <run
-               class="org.eclipse.jubula.app.dashboard.DashboardHttpServerApp">
-         </run>
-      </application>
    </extension>
 
  <extension

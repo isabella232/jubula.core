@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.dashboard;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
@@ -252,11 +255,32 @@ public class DashboardApp implements IApplication {
      * {@inheritDoc} 
      */
     public Object start(IApplicationContext context) throws Exception {
-        final String driverClassName = System
-            .getProperty(PROP_DRIVER_CLASS_NAME);
+        final String testdriverClassName = System
+                .getProperty(PROP_DRIVER_CLASS_NAME);
+        if (testdriverClassName == null) {
+            FileInputStream configFileInputStream = null;
+            Properties configuration = new Properties();
+            try {
+                String home = System.getProperty("user.home");
+                String path = home + "/.jubula/dashboardserver.properties";
+                System.out.println(path);
+                configFileInputStream = new FileInputStream(path);
+                configuration.load(configFileInputStream);
+                System.getProperties().putAll(configuration);
+            } catch (FileNotFoundException fnfe) {
+                System.out.println(fnfe.getLocalizedMessage());
+                System.out.println(fnfe.getStackTrace());
+            } finally {
+                if (configFileInputStream != null) {
+                    configFileInputStream.close();
+                }
+            }
+        }
         final String connectionUrl = System.getProperty(PROP_JDBC_URL);
         final String username = System.getProperty(PROP_USERNAME);
         final String password = System.getProperty(PROP_PASSWORD);
+        final String driverClassName = System
+                .getProperty(PROP_DRIVER_CLASS_NAME);
 
         final DatabaseConnectionInfo connectionInfo = 
             new DatabaseConnectionInfo() {

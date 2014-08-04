@@ -26,7 +26,8 @@
     <profile>
       <id>jubula-local-build</id>
       <modules>
-        <module>../../jubula/org.eclipse.jubula.releng</module>
+         <!-- comment this in to use this as an standalone build -->
+         <!-- <module>../org.eclipse.jubula.releng</module> -->
       </modules>
       <properties>
         <target-platform-path>${target-platform-base-path}dashboard-local</target-platform-path>
@@ -44,11 +45,12 @@
   </profiles>
 
   <modules>
-    <module>../org.eclipse.jubula.releng</module>
     <module>../org.eclipse.jubula.client.ui.rap</module>
     <module>../org.eclipse.jubula.dashboard.jettycustomizer</module>
     <module>../org.eclipse.jubula.app.dashboard</module>
+    <module>../org.eclipse.jubula.feature.dashboard</module>
     <module>../org.eclipse.jubula.product.dashboard</module>
+    <module>../org.eclipse.jubula.product.dashboard.webapp</module>
     <module>../org.eclipse.jubula.dashboard.starter</module>
   </modules>
 
