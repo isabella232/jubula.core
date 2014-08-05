@@ -30,6 +30,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -363,6 +364,7 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
                targetEntity = ALMReportingRulePO.class,
                fetch = FetchType.EAGER)
     @JoinColumn(name = "FK_PROJ_PROPERTIES")
+    @OrderColumn(name = "IDX")
     public List<IALMReportingRulePO> getALMReportingRules() {
         return m_reportingRules;
     }
