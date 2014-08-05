@@ -12,20 +12,6 @@
    <configIni use="default">
    </configIni>
 
-   <launcherArgs>
-      <programArgs>-data
-@user.home/.jubula/dashboardWorkspace</programArgs>
-      <programArgsLin>-vm ../jre/bin</programArgsLin>
-      <programArgsWin>-vm ../jre/bin</programArgsWin>
-      <vmArgs>-server
--Dosgi.noShutdown=true
--Dorg.eclipse.equinox.http.jetty.context.sessioninactiveinterval=0
--Dorg.eclipse.equinox.http.jetty.autostart=false
--Xms128m
--Xmx1024m
--XX:MaxPermSize=256m</vmArgs>
-   </launcherArgs>
-
    <windowImages/>
 
    <launcher name="dashboardserver">

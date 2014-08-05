@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.dashboard;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -45,6 +46,12 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
  * @created Sep 22, 2011
  */
 public class DashboardApp implements IApplication {
+    /** Name of the properties file */
+    private static final String PROPERTIES_FILE_NAME = "dashboardserver.properties"; //$NON-NLS-1$
+
+    /** Jubula home directory */
+    private static final String JUBULA_HOME = ".jubula"; //$NON-NLS-1$
+
     /**
      * @author BREDEX GmbH
      */
@@ -261,15 +268,14 @@ public class DashboardApp implements IApplication {
             FileInputStream configFileInputStream = null;
             Properties configuration = new Properties();
             try {
-                String home = System.getProperty("user.home");
-                String path = home + "/.jubula/dashboardserver.properties";
-                System.out.println(path);
+                String home = System.getProperty("user.home");  //$NON-NLS-1$
+                String path = home + File.separator + JUBULA_HOME
+                        + File.separator + PROPERTIES_FILE_NAME;
                 configFileInputStream = new FileInputStream(path);
                 configuration.load(configFileInputStream);
                 System.getProperties().putAll(configuration);
             } catch (FileNotFoundException fnfe) {
                 System.out.println(fnfe.getLocalizedMessage());
-                System.out.println(fnfe.getStackTrace());
             } finally {
                 if (configFileInputStream != null) {
                     configFileInputStream.close();
