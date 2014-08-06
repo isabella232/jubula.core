@@ -24,15 +24,15 @@
 
     <target name="cleanBuild-dashboard" description="Clean build for the dashboard product">
         <!-- dynamically / temporarily remove external (optional) dependencies -->
-        <property name="dashboardProductLocation" value="org.eclipse.jubula.product.dashboard/org.eclipse.jubula.product.dashboard.product" />
-        <copy file="${dashboardProductLocation}" tofile="${dashboardProductLocation}.tmp" overwrite="yes">
+        <property name="dashboardFeatureLocation" value="org.eclipse.jubula.feature.dashboard/feature.xml" />
+        <copy file="${dashboardFeatureLocation}" tofile="${dashboardFeatureLocation}.tmp" overwrite="yes">
             <filterchain>
                 <linecontains negate="true">
                     <contains value="com.bredexsw" />
                 </linecontains>
             </filterchain>
         </copy>
-        <move tofile="${dashboardProductLocation}" file="${dashboardProductLocation}.tmp" overwrite="yes" />
+        <copy tofile="${dashboardFeatureLocation}" file="${dashboardFeatureLocation}.tmp" overwrite="yes" />
 
         <antcall target="cleanBuild-template">
             <param name="buildBaseDir" value="org.eclipse.jubula.releng.dashboard" />
@@ -41,7 +41,7 @@
         <!-- revert the dynamically / temporarily remove external (optional) dependencies -->
         <exec dir="${basedir}" executable="git">
             <arg value="checkout" />
-            <arg value="${dashboardProductLocation}" />
+            <arg value="${dashboardFeatureLocation}" />
         </exec>
     </target>
 
