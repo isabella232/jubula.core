@@ -348,7 +348,7 @@ public final class ALMAccess {
                 .getRepositoryConnector(repository.getConnectorKind());
         if (connector == null) {
             return new Status(IStatus.ERROR, Activator.ID, NLS.bind(
-                    Messages.TaskRepositoryNoCredentialsStored, repoLabel));
+                    Messages.TaskRepositoryNoConnectorFound, repoLabel));
         }
         
         try {
