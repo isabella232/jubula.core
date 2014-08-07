@@ -656,4 +656,9 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     public JobConfiguration getJob() {
         return m_job;
     }
+    
+    /** {@inheritDoc} */
+    public void writeWarningLine(String line) {
+        writeLine(line);
+    }
 }

@@ -19,18 +19,18 @@ import org.eclipse.jubula.client.core.progress.IProgressConsole;
  * @created 19.03.2009
  */
 public class NullImportOutput implements IProgressConsole {
-
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void writeErrorLine(String line) {
         // no output
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void writeLine(String line) {
+        // no output
+    }
+
+    /** {@inheritDoc} */
+    public void writeWarningLine(String line) {
         // no output
     }
 }

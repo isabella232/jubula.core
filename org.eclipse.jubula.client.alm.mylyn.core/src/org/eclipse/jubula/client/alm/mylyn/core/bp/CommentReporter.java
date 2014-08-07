@@ -217,7 +217,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
                 List<CommentEntry> comments = taskIdToComment.get(taskId);
                 int commentAmount = comments.size();
                 if (commentAmount > 1) {
-                    c.writeLine(NLS.bind(Messages.ReportingResults,
+                    c.writeWarningLine(NLS.bind(Messages.ReportingResults,
                         commentAmount, taskId));
                 } else {
                     c.writeLine(NLS.bind(Messages.ReportingResult, taskId));

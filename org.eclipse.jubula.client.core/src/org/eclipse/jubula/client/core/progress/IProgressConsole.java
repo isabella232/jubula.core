@@ -17,13 +17,19 @@ package org.eclipse.jubula.client.core.progress;
  * @created Jun 4, 2010
  */
 public interface IProgressConsole {
-
     /**
      * Writes a single line to the console.
      * 
      * @param line The text to write to the console.
      */
     public void writeLine(String line);
+    
+    /**
+     * Writes a single warning line to the console.
+     * 
+     * @param line The text to write as a warning to the console.
+     */
+    public void writeWarningLine(String line);
     
     /**
      * Writes a single error line to the console.

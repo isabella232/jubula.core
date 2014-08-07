@@ -158,6 +158,8 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     private MessageConsoleStream m_standardMessageStream;
     /** error message stream for the console */
     private MessageConsoleStream m_errorMessageStream;
+    /** warning message stream for the console */
+    private MessageConsoleStream m_warningMessageStream;
     /** the currently running application title */
     private String m_runningApplicationTitle = null;
     /** the DataChangedListener which listens for a project*/
@@ -1277,6 +1279,53 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         writeErrorLineToConsole(line, true);
     }
 
+    /** {@inheritDoc} */
+    public void writeWarningLine(String line) {
+        writeWarningLineToConsole(line, true);
+    }
+    
+    /**
+     * Writes a line of text to the console.
+     * 
+     * @param msg the message to print.
+     * @param forceActivate whether the console should be activated if it is not
+     *                      already open.
+     */
+    public void writeWarningLineToConsole(String msg, boolean forceActivate) {
+        // FIXME zeb this "if" statement is necessary because the DB Tool, which never
+        //           starts the workbench because it never intends to use PlatformUI,
+        //           depends on and uses methods from ClientGUI.
+        //           Thus, these dependencies should be removed, and then the "if"
+        //           statement should thereafter also be removed.
+        if (PlatformUI.isWorkbenchRunning()) {
+            MessageConsoleStream stream = getWarningConsoleStream();
+            if (forceActivate) {
+                stream.getConsole().activate();
+            }
+    
+            stream.println(msg);
+        }
+    }
+
+    /**
+     * Lazy retrieval of the warning message console stream.
+     * 
+     * @return the warning message stream for the console
+     */
+    private synchronized MessageConsoleStream getWarningConsoleStream() {
+        if (m_warningMessageStream == null) {
+            m_warningMessageStream = getConsole().newMessageStream();
+            final Display d = getDisplay();
+            final MessageConsoleStream stream = m_warningMessageStream;
+            d.syncExec(new Runnable() {
+                public void run() {
+                    stream.setColor(d.getSystemColor(SWT.COLOR_DARK_YELLOW));
+                }
+            });
+        }
+        return m_warningMessageStream;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -1359,5 +1408,4 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     public static Plugin getDefault() {
         return plugin;
     }
-
 }
