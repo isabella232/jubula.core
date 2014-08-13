@@ -8,5 +8,21 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 <plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.eclipse.jubula.client.views"
+            class="org.eclipse.jubula.client.wiki.ui.views.DocumentationView"
+            icon="icons/sample.gif"
+            id="org.eclipse.jubula.client.wiki.ui.views.DocumentationView"
+            name="Docu View">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
 
 </plugin>
