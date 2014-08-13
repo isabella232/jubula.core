@@ -22,6 +22,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.search.data.FieldName;
 import org.eclipse.jubula.client.ui.rcp.search.data.SearchOptions;
 import org.eclipse.jubula.client.ui.rcp.search.data.TypeName;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -123,6 +124,7 @@ public abstract class AbstractSearchPage extends DialogPage implements
         DataBindingContext dbc = new DataBindingContext();
         createSearchOptionsGroup(pageContent);
         createSearchInGroup(dbc, pageContent);
+        createSearchForGroup(dbc, pageContent);
         createScopeGroup(dbc, pageContent);
         dbc.updateTargets();
         setControl(pageContent);
@@ -145,21 +147,42 @@ public abstract class AbstractSearchPage extends DialogPage implements
     }
 
     /**
-     * Create search in group. Subclasses may override.
-     * @param dbc The data binding context.
-     * @param parent the parent
+     * Create search for group. Subclasses may override.
+     * 
+     * @param dbc
+     *            The data binding context.
+     * @param parent
+     *            the parent
      */
-    private void createSearchInGroup(
-            DataBindingContext dbc,
-            Composite parent) {
-        Group group = createGroup(
-                parent,
-                Messages.SimpleSearchPageSearchInGroupHeader, 3);
-        group.setLayoutData(
-                createGridData(NUM_COLUMNS, true));
-        for (TypeName searchableType : getSearchData()
-                .getSearchableTypes()) {
+    private void createSearchForGroup(DataBindingContext dbc, 
+        Composite parent) {
+        Group group = createGroup(parent,
+            Messages.SimpleSearchPageSearchForGroupHeader, 3);
+        group.setLayoutData(createGridData(NUM_COLUMNS, true));
+        for (TypeName searchableType : getSearchData().getSearchableTypes()) {
             createTypeCheck(dbc, group, searchableType);
+        }
+    }
+    
+    /**
+     * Create search in group. Subclasses may override.
+     * 
+     * @param dbc
+     *            The data binding context.
+     * @param parent
+     *            the parent
+     */
+    private void createSearchInGroup(DataBindingContext dbc, 
+        Composite parent) {
+        final FieldName[] searchableFieldNames = 
+            getSearchData().getSearchableFieldNames();
+        if (searchableFieldNames != null) {
+            Group group = createGroup(parent,
+                Messages.SimpleSearchPageSearchInGroupHeader, 3);
+            group.setLayoutData(createGridData(NUM_COLUMNS, true));
+            for (FieldName searchableField : searchableFieldNames) {
+                createFieldCheck(dbc, group, searchableField);
+            }
         }
     }
 
@@ -227,6 +250,28 @@ public abstract class AbstractSearchPage extends DialogPage implements
                 .observeSelection(check);
         IObservableValue modelElement = PojoObservables.observeValue(
                 searchableType, "selected"); //$NON-NLS-1$
+        dbc.bindValue(guiElement, modelElement);
+    }
+    
+    /**
+     * @param dbc
+     *            the data binding context
+     * @param parent
+     *            the parent
+     * @param searchableField
+     *            the type to search for
+     */
+    private void createFieldCheck(DataBindingContext dbc, Composite parent,
+        FieldName searchableField) {
+        Button check = new Button(parent, SWT.CHECK);
+        GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+        check.setLayoutData(gd);
+        check.setText(searchableField.getDescName());
+
+        IObservableValue guiElement = SWTObservables
+                .observeSelection(check);
+        IObservableValue modelElement = PojoObservables.observeValue(
+                searchableField, "selected"); //$NON-NLS-1$
         dbc.bindValue(guiElement, modelElement);
     }
 

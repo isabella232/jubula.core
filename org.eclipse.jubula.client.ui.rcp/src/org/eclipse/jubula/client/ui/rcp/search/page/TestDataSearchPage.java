@@ -24,7 +24,6 @@ import org.eclipse.search.ui.ISearchQuery;
  * @created Aug 10, 2010
  */
 public class TestDataSearchPage extends AbstractSearchPage {
-
     /** The static list of checked state for controls. */
     private static ButtonSelections enablements = new ButtonSelections();
 
@@ -44,27 +43,21 @@ public class TestDataSearchPage extends AbstractSearchPage {
         };
         searchData = new SearchOptions(
                 Messages.SimpleSearchPageResultTestData,
-                searchableTypes);
+                searchableTypes, null);
     }
 
-    @Override
+    /** {@inheritDoc} */
     protected ButtonSelections getButtonSelections() {
         return enablements;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     protected ISearchQuery getNewQuery() {
-        return new TestDataQuery(
-                new SearchOptions(searchData));
+        return new TestDataQuery(new SearchOptions(searchData));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     protected SearchOptions getSearchData() {
         return searchData;
     }
-
 }

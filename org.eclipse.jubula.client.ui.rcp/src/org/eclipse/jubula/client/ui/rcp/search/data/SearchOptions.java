@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.search.query.Operation;
+import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.osgi.util.NLS;
 
 
@@ -29,6 +30,9 @@ public class SearchOptions {
 
     /** A human readable search name for NLS. */
     private final String m_searchNameNLS;
+
+    /** The list of fields this search data is able to search in. */
+    private final FieldName[] m_searchableFieldNames;
 
     /** The list of types this search data is able to search for. */
     private final TypeName[] m_searchableTypes;
@@ -67,11 +71,13 @@ public class SearchOptions {
      * Constructor. Default search operation is MATCH_CASE.
      * @param searchNameNLS A human readable search name for NLS.
      * @param searchableTypes The list of node types searching for.
+     * @param searchableFieldNames the 
      */
     public SearchOptions(String searchNameNLS,
-            TypeName[] searchableTypes) {
+            TypeName[] searchableTypes, FieldName[] searchableFieldNames) {
         m_searchNameNLS = searchNameNLS;
         m_searchableTypes = searchableTypes;
+        m_searchableFieldNames = searchableFieldNames;
         m_recent = new ArrayList<String>(MAX_RECENT);
     }
 
@@ -79,8 +85,7 @@ public class SearchOptions {
      * Constructor used for simple searches.
      */
     public SearchOptions() {
-        this("",  //$NON-NLS-1$
-                new TypeName[] {});
+        this(StringConstants.EMPTY, new TypeName[] {}, null);
     }
 
     /**
@@ -90,6 +95,7 @@ public class SearchOptions {
     public SearchOptions(SearchOptions searchData) {
         m_searchNameNLS = searchData.m_searchNameNLS;
         m_searchableTypes = searchData.m_searchableTypes;
+        m_searchableFieldNames = searchData.getSearchableFieldNames();
         m_selectedSearchableTypes = searchData.m_selectedSearchableTypes;
         m_searchName = searchData.m_searchName;
         m_searchString = searchData.m_searchString;
@@ -251,4 +257,10 @@ public class SearchOptions {
         return m_isSearchingInReusedProjects;
     }
 
+    /**
+     * @return the searchableFieldNames
+     */
+    public FieldName[] getSearchableFieldNames() {
+        return m_searchableFieldNames;
+    }
 }

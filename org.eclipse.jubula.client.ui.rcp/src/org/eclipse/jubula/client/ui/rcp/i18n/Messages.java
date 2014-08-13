@@ -739,6 +739,7 @@ public class Messages extends NLS {
     public static String SimpleSearchPageScopeTestCaseBrowserMainRadio;
     public static String SimpleSearchPageScopeTestCaseBrowserAllRadio;
     public static String SimpleSearchPageSearch;
+    public static String SimpleSearchPageSearchForGroupHeader;
     public static String SimpleSearchPageSearchInGroupHeader;
     public static String SpecTestCaseGUIPropertySourceDataSource;
     public static String SpecTestCaseGUIPropertySourceLockedParameters;

@@ -10,11 +10,17 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.search.query;
 
+import java.lang.reflect.InvocationTargetException;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.ui.rcp.search.data.FieldName;
 import org.eclipse.jubula.client.ui.rcp.search.data.SearchOptions;
+import org.eclipse.jubula.tools.constants.StringConstants;
 
 
 /**
@@ -24,7 +30,6 @@ import org.eclipse.jubula.client.ui.rcp.search.data.SearchOptions;
  * @created Aug 9, 2010
  */
 public class KeywordQuery extends AbstractTraverserQuery {
-
     /**
      * @param searchData The search data to use for this query.
      */
@@ -54,11 +59,24 @@ public class KeywordQuery extends AbstractTraverserQuery {
      * {@inheritDoc}
      */
     protected boolean operate(INodePO node) {
-        if (matchingSearchType(node) && matchSearchString(node.getName())) {
-            // found node with keyword and correct type
-            add(node);
+        FieldName[] searchableFieldNames = getSearchOptions()
+            .getSearchableFieldNames();
+        if (matchingSearchType(node)) {
+            for (FieldName field : searchableFieldNames) {
+                try {
+                    String fieldValue = StringUtils.defaultString(
+                        BeanUtils.getProperty(node, field.getName()),
+                        StringConstants.EMPTY);
+                    if (matchSearchString(fieldValue)) {
+                        // found node with keyword and correct type
+                        add(node);
+                    }
+                } catch (IllegalAccessException | InvocationTargetException
+                    | NoSuchMethodException e) {
+                    // ignore and continue
+                }
+            }
         }
         return true;
     }
-
 }

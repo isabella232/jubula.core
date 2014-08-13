@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.search.page;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.search.data.FieldName;
 import org.eclipse.jubula.client.ui.rcp.search.data.SearchOptions;
 import org.eclipse.jubula.client.ui.rcp.search.data.TypeName;
 import org.eclipse.jubula.client.ui.rcp.search.query.KeywordQuery;
@@ -43,30 +44,30 @@ public class KeywordSearchPage extends AbstractSearchPage {
             new TypeName(NodeMaker.getCategoryPOClass(), true),
             new TypeName(NodeMaker.getRefTestSuitePOClass(), true),
             new TypeName(NodeMaker.getExecTestCasePOClass(), true)};
+        
+        // create the static search data object
+        FieldName[] searchableFields = new FieldName[] {
+            new FieldName("search.query.field.name", true), //$NON-NLS-1$
+            new FieldName("search.query.field.comment", true), //$NON-NLS-1$
+            new FieldName("search.query.field.taskId", true), //$NON-NLS-1$
+        }; 
         searchData = new SearchOptions(
                 Messages.SimpleSearchPageResultKeyword,
-                searchableTypes);
+                searchableTypes, searchableFields);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     protected ButtonSelections getButtonSelections() {
         return enablements;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     protected ISearchQuery getNewQuery() {
         return new KeywordQuery(new SearchOptions(searchData));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     protected SearchOptions getSearchData() {
         return searchData;
     }
-
 }
