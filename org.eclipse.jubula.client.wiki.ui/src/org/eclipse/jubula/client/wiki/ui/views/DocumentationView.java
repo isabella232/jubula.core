@@ -10,10 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.wiki.ui.views;
 
-import org.eclipse.mylyn.wikitext.core.parser.MarkupParser;
 import org.eclipse.mylyn.wikitext.tracwiki.core.TracWikiLanguage;
+import org.eclipse.mylyn.wikitext.ui.viewer.MarkupViewer;
+import org.eclipse.mylyn.wikitext.ui.viewer.MarkupViewerConfiguration;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
@@ -21,25 +21,34 @@ import org.eclipse.ui.part.ViewPart;
  * @author BREDEX GmbH
  */
 public class DocumentationView extends ViewPart {
-    /**
-     * the browser to display the documentation content
-     */
-    private Browser m_browser;
+    /** the viewer to display the documentation */
+    private MarkupViewer m_viewer;
 
     @Override
     public void createPartControl(Composite parent) {
-        m_browser = new Browser(parent, SWT.NONE);
+        m_viewer = new MarkupViewer(parent, null, SWT.MULTI | SWT.WRAP
+            | SWT.V_SCROLL);
+        m_viewer.setMarkupLanguage(new TracWikiLanguage());
 
-        MarkupParser markupParser = new MarkupParser();
-        markupParser.setMarkupLanguage(new TracWikiLanguage());
-
-        String htmlContent = markupParser
-            .parseToHtml("= H1 = \n == H2 == \n === H3 ==="); //$NON-NLS-1$
-        m_browser.setText(htmlContent);
+        MarkupViewerConfiguration configuration = 
+            new MarkupViewerConfiguration(m_viewer);
+        m_viewer.configure(configuration);
+        
+        m_viewer.getTextWidget().setEditable(false);
+        StringBuilder sb = new StringBuilder();
+        sb.append("= H1 = \n"); //$NON-NLS-1$
+        sb.append("= H2 = \n"); //$NON-NLS-1$
+        sb.append("= H3 = \n"); //$NON-NLS-1$
+        sb.append("= H4 = \n"); //$NON-NLS-1$
+        sb.append(" * bullets list \n"); //$NON-NLS-1$
+        sb.append(" * another bullet \n"); //$NON-NLS-1$
+        sb.append("http://www.eclipse.org/jubula \n"); //$NON-NLS-1$
+        
+        m_viewer.setMarkup(sb.toString());
     }
 
     @Override
     public void setFocus() {
-        m_browser.setFocus();
+        m_viewer.getTextWidget().setFocus();
     }
 }
