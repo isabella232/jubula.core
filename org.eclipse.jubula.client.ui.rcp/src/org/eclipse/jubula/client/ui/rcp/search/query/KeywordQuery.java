@@ -54,7 +54,7 @@ public class KeywordQuery extends AbstractTraverserQuery {
      * {@inheritDoc}
      */
     protected boolean operate(INodePO node) {
-        if (matchSearchString(node.getName()) && matchingSearchType(node)) {
+        if (matchingSearchType(node) && matchSearchString(node.getName())) {
             // found node with keyword and correct type
             add(node);
         }
