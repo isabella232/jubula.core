@@ -12,10 +12,10 @@
          point="org.eclipse.ui.views">
       <view
             category="org.eclipse.jubula.client.views"
-            class="org.eclipse.jubula.client.wiki.ui.views.DocumentationView"
-            icon="icons/sample.gif"
-            id="org.eclipse.jubula.client.wiki.ui.views.DocumentationView"
-            name="Documentation View">
+            class="org.eclipse.jubula.client.wiki.ui.views.DescriptionView"
+            icon="icons/descriptionView.png"
+            id="org.eclipse.jubula.client.wiki.ui.views.DescriptionView"
+            name="Description">
       </view>
    </extension>
 
