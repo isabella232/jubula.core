@@ -18,5 +18,15 @@
             name="Description">
       </view>
    </extension>
-
+<extension point="org.eclipse.ui.perspectiveExtensions">
+    <perspectiveExtension targetID="org.eclipse.jubula.client.ui.rcp.perspectives.SpecificationPerspective">
+      <viewShortcut id="org.eclipse.jubula.client.wiki.ui.views.DescriptionView" />
+    </perspectiveExtension>
+    <perspectiveExtension targetID="org.eclipse.jubula.client.ui.rcp.perspectives.ExecutionPerspective">
+      <viewShortcut id="org.eclipse.jubula.client.wiki.ui.views.DescriptionView" />
+    </perspectiveExtension>
+    <perspectiveExtension targetID="org.eclipse.jubula.client.ui.perspectives.ReportPerspective">
+      <viewShortcut id="org.eclipse.jubula.client.wiki.ui.views.DescriptionView" />
+    </perspectiveExtension>
+   </extension>
 </plugin>
