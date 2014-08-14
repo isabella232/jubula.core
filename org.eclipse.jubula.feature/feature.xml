@@ -55,6 +55,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
       <import feature="org.eclipse.mylyn.commons" version="3.8.0" match="compatible"/>
       <import feature="org.eclipse.mylyn.context_feature" version="3.8.0" match="compatible"/>
       <import feature="org.eclipse.mylyn_feature" version="3.8.0" match="compatible"/>
+      <import feature="org.eclipse.mylyn.wikitext_feature" version="1.7.0" match="compatible"/>
       <import plugin="org.eclipse.mylyn.help.ui"/>
    </requires>
 
@@ -151,6 +152,13 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
 
    <plugin
          id="org.eclipse.jubula.client.toolkit.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.wiki.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
