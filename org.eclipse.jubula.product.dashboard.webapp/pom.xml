@@ -51,7 +51,7 @@
             <descriptor>assembly.xml</descriptor>
           </descriptors>
           <!-- Configure the war's filename -->
-          <finalName>dashboard</finalName>
+          <finalName>testresults</finalName>
           <appendAssemblyId>false</appendAssemblyId>
         </configuration>
         <executions>

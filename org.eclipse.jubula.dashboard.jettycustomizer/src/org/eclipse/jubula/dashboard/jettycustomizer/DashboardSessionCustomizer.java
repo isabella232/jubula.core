@@ -36,6 +36,8 @@ public class DashboardSessionCustomizer extends JettyCustomizer {
         // see http://wiki.eclipse.org/RAP/FAQ#Jetty
         if (context instanceof ServletContextHandler) {
             ServletContextHandler jettyContext = (ServletContextHandler)context;
+            // This is the context path for compatibility to the war product
+            jettyContext.setContextPath("/testresults"); //$NON-NLS-1$
             SessionHandler sessionHandler = jettyContext.getSessionHandler();
             if (sessionHandler != null) {
                 SessionManager sessionManager = 
