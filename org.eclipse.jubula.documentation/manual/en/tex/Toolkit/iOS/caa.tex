@@ -137,11 +137,9 @@ The following components are not a part of the iOS toolkit, and their actions fr
 \textbf{Non-supported actions}\\
 The following actions are currently not supported:
 \begin{description}
-\item [Take screenshot:]{It is currently not possible to take screenshots as a part of the test. Automatic screenshots on errors are, however, produced.}
 \item [Restart:]{The restart action restarts the internal connection to the \gdaut{}, not the \gdaut{} itself. This means that you should consider how to reset your \gdaut{} to a known starting point as part of your \gdehandlers{} (to ensure that the test can continue despite an error). How to do this will be dependent on your \gdaut{}.}
 \item [Check text on secure textfields:]{The text on a secure textfield cannot be accessed, e.g. to perform check text.}
 \item [Check / store property]{ actions are not supported in the current version.}
-\item [Application input text]{ is not supported. Use input text or replace text on \bxname{Component with Text Input} instead.}
 \item [Copy to clipboard]{ is currently not supported.}
 \end{description}
 
@@ -151,6 +149,7 @@ The following actions are currently not supported:
 \item [Support characters for text input:]{Any keys on the keyboard that are only accessible by a long press, and not by switching the whole keyboard (e.g. characters with umlauts) cannot currently be entered.}
 \item [Long taps and continuous gestures:]{cannot currently be carried out.}
 \item [Disabled components]{ cannot be mapped directly using e.g. tap. Instead, to collect the technical name for a disabled component, you should use the \bxname{long tap} gesture to collect all of the visible components. This includes the disabled components. }
+\item [Check badge value:]{There is an action in the iOS unbound modules to let you check the text on  badges within a tab bar.}
 \end{description}
 
 
