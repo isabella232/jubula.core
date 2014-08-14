@@ -15,7 +15,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.wiki.ui.i18n.Messages;
-import org.eclipse.mylyn.wikitext.tracwiki.core.TracWikiLanguage;
+import org.eclipse.mylyn.wikitext.mediawiki.core.MediaWikiLanguage;
 import org.eclipse.mylyn.wikitext.ui.viewer.MarkupViewer;
 import org.eclipse.mylyn.wikitext.ui.viewer.MarkupViewerConfiguration;
 import org.eclipse.swt.SWT;
@@ -66,7 +66,7 @@ public class DescriptionView extends ViewPart {
     public void createPartControl(Composite parent) {
         m_viewer = new MarkupViewer(parent, null, SWT.MULTI | SWT.WRAP
             | SWT.V_SCROLL);
-        m_viewer.setMarkupLanguage(new TracWikiLanguage());
+        m_viewer.setMarkupLanguage(new MediaWikiLanguage());
 
         MarkupViewerConfiguration configuration = 
             new MarkupViewerConfiguration(m_viewer);
