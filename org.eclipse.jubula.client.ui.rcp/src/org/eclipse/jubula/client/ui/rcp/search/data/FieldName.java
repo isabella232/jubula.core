@@ -34,7 +34,7 @@ public class FieldName extends SelectionState {
      * @return A human readable name.
      */
     public String getDescName() {
-        return I18n.getString(getName());
+        return I18n.getString("search.query.field." + getName()); //$NON-NLS-1$
     }
 
 

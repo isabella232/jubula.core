@@ -47,9 +47,9 @@ public class KeywordSearchPage extends AbstractSearchPage {
         
         // create the static search data object
         FieldName[] searchableFields = new FieldName[] {
-            new FieldName("search.query.field.name", true), //$NON-NLS-1$
-            new FieldName("search.query.field.comment", true), //$NON-NLS-1$
-            new FieldName("search.query.field.taskId", true), //$NON-NLS-1$
+            new FieldName("name", true), //$NON-NLS-1$
+            new FieldName("comment", true), //$NON-NLS-1$
+            new FieldName("taskId", true), //$NON-NLS-1$
         }; 
         searchData = new SearchOptions(
                 Messages.SimpleSearchPageResultKeyword,

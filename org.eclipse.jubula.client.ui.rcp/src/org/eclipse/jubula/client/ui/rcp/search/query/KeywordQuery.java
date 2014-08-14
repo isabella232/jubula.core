@@ -63,17 +63,19 @@ public class KeywordQuery extends AbstractTraverserQuery {
             .getSearchableFieldNames();
         if (matchingSearchType(node)) {
             for (FieldName field : searchableFieldNames) {
-                try {
-                    String fieldValue = StringUtils.defaultString(
-                        BeanUtils.getProperty(node, field.getName()),
-                        StringConstants.EMPTY);
-                    if (matchSearchString(fieldValue)) {
-                        // found node with keyword and correct type
-                        add(node);
+                if (field.isSelected()) {
+                    try {
+                        String fieldValue = StringUtils.defaultString(
+                            BeanUtils.getProperty(node, field.getName()),
+                            StringConstants.EMPTY);
+                        if (matchSearchString(fieldValue)) {
+                            // found node with keyword and correct type
+                            add(node);
+                        }
+                    } catch (IllegalAccessException | InvocationTargetException
+                        | NoSuchMethodException e) {
+                        // ignore and continue
                     }
-                } catch (IllegalAccessException | InvocationTargetException
-                    | NoSuchMethodException e) {
-                    // ignore and continue
                 }
             }
         }
