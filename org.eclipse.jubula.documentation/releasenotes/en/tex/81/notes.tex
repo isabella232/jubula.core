@@ -45,3 +45,11 @@
 \begin{itemize}
 \item We no longer support iOS 6 for testing. The iOS support is now for 7 applications. 
 \end{itemize}
+
+\textbf{Relevance now a property of \gdsuites{}}
+\begin{itemize}
+\item Whether or not a test run is relevant is now determined by a property on each \gdsuite{}. This better reflects the situation that specific \gdsuites{} will always be relevant and others never. 
+\item The meaning of relevance has not changed. However, the entry from the preferences has been removed and the parameter for the testexec is no longer accepted. 
+\item All \gdsuites{} in newly imported \gdprojects{} are automatically set to true for relevance.
+\item Newly created \gdsuites{} are created as being relevant.
+\end{itemize}

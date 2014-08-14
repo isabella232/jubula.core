@@ -28,14 +28,10 @@ To configure a \gdsuite{}, you must first create one \bxpref{TSeditor}.
 \begin{enumerate}
 \item Change the \gdsuite{} name by entering a new name in the \bxname{\gdsuite{} name} field.  
 \item Add a comment to the \gdsuite{} \bxpref{TasksEditorAddComment}. 
-\item Enter a value in the \bxname{step delay} field. 
-
-\bxtipp{The step delay is the time left between each \gdstep{} during test execution. The default is 0 milliseconds \bxpref{TasksExecSpeed}.}
-
+\item Enter a value in the \bxname{step delay} field. The step delay is the time left between each \gdstep{} during test execution. The default is 0 milliseconds \bxpref{TasksExecSpeed}.
+\item Enter a Task ID to link this \gdsuite{} to a task in an external system \bxpref{TasksALMAddTask}.
+\item Set whether this \gdsuite{} should be relevant or not. If a \gdsuite{} is marked as non-relevant, test results for ths \gdsuite{} are created but are not exported with the \gdproject{}, are not considered for any BIRT reports \bxpref{TasksBIRT} and do not save details to be reported to external ALM repositories \bxpref{TasksALMReport}. 
 \item Select the \gdaut{} for this \gdsuite{}. To be able to select an \gdaut{} (and object map, and execute your test) you must have added at least one \gdaut{} to the \gdproject{} \bxpref{Defineaut}.
-
-
-
 \bxtipp{You don't have to choose an \gdaut{} for a \gdsuite{} as soon as you have created it, but you will have to choose one before object mapping, for example.}
 
 \item Choose a default reentry type for each of the four error types  from the combo-boxes. 
