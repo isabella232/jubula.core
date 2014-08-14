@@ -199,6 +199,7 @@ public class Persistor {
                     }
                     return Status.OK_STATUS;
                 } catch (PMDatabaseConfException e) {
+                    log.error(e.getLocalizedMessage());
                     if (e.getErrorId().equals(MessageIDs.
                             E_INVALID_DB_VERSION)) {
                         message = MessageIDs.E_INVALID_DB_VERSION;
@@ -288,9 +289,14 @@ public class Persistor {
                     validateDBVersion(em);
                     monitor.subTask(Messages.DatabaseConnectionEstablished);
                 } catch (AmbiguousDatabaseVersionException e) {
-                    throw new PMDatabaseConfException(Messages.DBVersionProblem
-                            + StringConstants.DOT,
-                            MessageIDs.E_NOT_CHECKABLE_DB_VERSION);
+                    throw new PMDatabaseConfException(NLS.bind(
+                        Messages.DBVersionProblem, new Object[] {
+                            -1, 
+                            -1, 
+                            IVersion.JB_DB_MAJOR_VERSION,
+                            IVersion.JB_DB_MINOR_VERSION 
+                        }),
+                        MessageIDs.E_NOT_CHECKABLE_DB_VERSION);
                 }
             } catch (PersistenceException e) {
 
@@ -590,7 +596,7 @@ public class Persistor {
      * @param pwd
      *            The password.
      * @param url
-     *            connection string / url
+     *            connection string / URL
      * @param monitor the progress monitor to use           
      * @return the only instance of the Persistor, building the connection to
      *         the database
@@ -604,26 +610,28 @@ public class Persistor {
             try {
                 instance = new Persistor(userName, pwd, url, monitor);
                 DatabaseStateDispatcher.notifyListener(new DatabaseStateEvent(
-                        DatabaseState.DB_LOGIN_SUCCEEDED));
+                    DatabaseState.DB_LOGIN_SUCCEEDED));
             } catch (DatabaseVersionConflictException e) {
-                if (IVersion.JB_DB_MAJOR_VERSION > e
-                        .getDatabaseMajorVersion()
-                        || (IVersion.JB_DB_MAJOR_VERSION.equals(e
-                                .getDatabaseMajorVersion()) 
-                                && 
-                                IVersion.JB_DB_MINOR_VERSION > e
-                                .getDatabaseMinorVersion())) {
+                final Integer dbMajorVersion = e.getDatabaseMajorVersion();
+                final Integer dbMinorVersion = e.getDatabaseMinorVersion();
+                final Integer cDBMajorVersion = IVersion.JB_DB_MAJOR_VERSION;
+                final Integer cDBMinorVersion = IVersion.JB_DB_MINOR_VERSION;
+                final String errorMessage = NLS.bind(
+                    Messages.DBVersionProblem, new Object[] { dbMajorVersion,
+                        dbMinorVersion, cDBMajorVersion, cDBMinorVersion });
+                if (cDBMajorVersion > dbMajorVersion
+                    || (cDBMajorVersion.equals(dbMajorVersion) 
+                        && cDBMinorVersion > dbMinorVersion)) {
                     // Client is newer than database schema
                     if (!handleDatabaseVersionConflict(e)) {
                         throw new PMDatabaseConfException(
-                                Messages.DBVersionProblem + StringConstants.DOT,
-                                    MessageIDs.E_INVALID_DB_VERSION);
+                            errorMessage,
+                            MessageIDs.E_INVALID_DB_VERSION);
                     }
                 } else {
                     // Client is older than database schema
-                    throw new PMDatabaseConfException(
-                            Messages.DBVersionProblem + StringConstants.DOT, 
-                                MessageIDs.E_INVALID_DB_VERSION);
+                    throw new PMDatabaseConfException(errorMessage,
+                        MessageIDs.E_INVALID_DB_VERSION);
                 }
             }
 
