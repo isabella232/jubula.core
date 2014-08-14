@@ -32,7 +32,7 @@
                 </linecontains>
             </filterchain>
         </copy>
-        <copy tofile="${dashboardFeatureLocation}" file="${dashboardFeatureLocation}.tmp" overwrite="yes" />
+        <move tofile="${dashboardFeatureLocation}" file="${dashboardFeatureLocation}.tmp" overwrite="yes" />
 
         <antcall target="cleanBuild-template">
             <param name="buildBaseDir" value="org.eclipse.jubula.releng.dashboard" />
