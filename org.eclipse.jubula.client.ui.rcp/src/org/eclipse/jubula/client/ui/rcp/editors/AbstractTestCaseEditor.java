@@ -174,7 +174,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     protected abstract DropTargetListener getViewerDropAdapter();
 
     /**
-     * @param parent the paent of the SashForm.
+     * @param parent the parent of the SashForm.
      * @return the created SashForm.
      */
     protected SashForm createSashForm(Composite parent) {

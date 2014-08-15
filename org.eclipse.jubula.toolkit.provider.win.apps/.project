@@ -35,21 +35,7 @@
 		<link>
 			<name>.settings</name>
 			<type>2</type>
-			<locationURI>copy_PARENT11/org.eclipse.jubula.project.configuration/settings/1.5</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/org.eclipse.jubula.project.configuration/settings/1.7</locationURI>
 		</link>
 	</linkedResources>
-	<variableList>
-		<variable>
-			<name>copy_PARENT</name>
-			<value>$%7BPARENT-1-PROJECT_LOC%7D/jubula</value>
-		</variable>
-		<variable>
-			<name>copy_PARENT1</name>
-			<value>$%7Bcopy_PARENT%7D/jubula</value>
-		</variable>
-		<variable>
-			<name>copy_PARENT11</name>
-			<value>$%7Bcopy_PARENT1%7D/jubula</value>
-		</variable>
-	</variableList>
 </projectDescription>
