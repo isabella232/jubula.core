@@ -143,7 +143,7 @@ public class DashboardStarter {
         StringBuilder uriBuilder = new StringBuilder();
         uriBuilder.append("http://localhost:"); //$NON-NLS-1$
         uriBuilder.append(System.getProperty(PROP_PORT));
-        uriBuilder.append("/dashboard"); //$NON-NLS-1$
+        uriBuilder.append("/testresults/dashboard"); //$NON-NLS-1$
         
         URI dashboardUri = new URI(uriBuilder.toString());
 
