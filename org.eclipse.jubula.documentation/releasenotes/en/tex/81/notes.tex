@@ -46,7 +46,15 @@
 \item There is a new action just for iOS \bxname{check badge value}. Use this action to check the text on a badge based on the index of that badge within a tab bar. 
 \end{itemize}
 
+\textbf{Dashboard as a deployable web application}
+\begin{itemize}
+\item You can now use the testresults.war found in the \bxname{dashboard/webapp} folder to deploy the dashboard into your own server.
+\item The URL for the standalone and deployable dashboard has changed to unify it. You must update any links to the dashboard to use this new URL.
+\begin{verbatim}
+http://HOSTNAME:SERVERPORT/testresults/dashboard
+\end{verbatim}
 
+\end{itemize}
 
 \subsection{Known issues and other information}
 \textbf{Support for iOS 6 dropped}
@@ -60,4 +68,9 @@
 \item The meaning of relevance has not changed. However, the entry from the preferences has been removed and the parameter for the testexec is no longer accepted. 
 \item All \gdsuites{} in newly imported \gdprojects{} are automatically set to true for relevance.
 \item Newly created \gdsuites{} are created as being relevant.
+\end{itemize}
+
+\textbf{Dashboard URL has been changed}
+\begin{itemize}
+\item The dashboard URL has been changed due to 
 \end{itemize}
