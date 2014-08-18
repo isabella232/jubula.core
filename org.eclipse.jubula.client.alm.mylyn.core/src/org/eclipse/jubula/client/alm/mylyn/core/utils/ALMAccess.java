@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.alm.mylyn.core.utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.alm.mylyn.core.Activator;
+import org.eclipse.jubula.client.alm.mylyn.core.exceptions.InvalidALMAttributeException;
 import org.eclipse.jubula.client.alm.mylyn.core.i18n.Messages;
+import org.eclipse.jubula.client.alm.mylyn.core.model.ALMChange;
 import org.eclipse.jubula.client.alm.mylyn.core.model.CommentEntry;
+import org.eclipse.jubula.client.alm.mylyn.core.model.FieldUpdate;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.mylyn.commons.net.AuthenticationType;
 import org.eclipse.mylyn.tasks.core.AbstractRepositoryConnector;
@@ -151,6 +155,7 @@ public final class ALMAccess {
     }
 
     /**
+     * Writes comments to ALM system
      * @param repoLabel
      *            repoLabel
      * @param taskId
@@ -187,15 +192,14 @@ public final class ALMAccess {
                 TaskAttribute rootData = taskModel.getTaskData()
                     .getRoot();
                 CONNECTOR handle = determineConnectorHandling(connectorKind);
-                
                 TaskAttribute change = null;
                 switch (handle) {
                     case HP_ALM:
-                        change = hpAlmHandling(comments, rootData);
+                        change = hpAlmCommentHandling(comments, rootData);
                         break;
                     case DEFAULT:
                     default:
-                        change = defaultHandling(comments, rootData);
+                        change = defaultCommentHandling(comments, rootData);
                         break;
                 }
                 if (change == null) {
@@ -215,6 +219,125 @@ public final class ALMAccess {
             LOG.error(e.getLocalizedMessage(), e);
         }
         return succeeded;
+    }
+
+    /**
+     * Updates fields in ALM system
+     * @param repoLabel name of repo
+     * @param taskId task id
+     * @param fieldUpdates list of field updates
+     * @param monitor monitor
+     * @return OK if succeeded; WARNING when problems; ERROR otherwise
+     */
+    public static IStatus updateFields(String repoLabel, String taskId,
+            List<FieldUpdate> fieldUpdates, IProgressMonitor monitor) {
+        IStatus status = new Status(IStatus.ERROR, Activator.ID,
+                "Unknown error."); //$NON-NLS-1$
+        TaskRepository repo = getRepositoryByLabel(repoLabel);
+        try {
+            TaskData taskData = getTaskDataByID(repo, taskId, monitor);
+            if (taskData == null) {
+                return status;
+            }
+            
+            ITask task = getTaskByID(repo, taskData.getTaskId(), monitor);
+            if (task != null) {
+                ITaskDataManager taskDataManager = TasksUi.getTaskDataManager();
+                ITaskDataWorkingCopy taskWorkingCopy = taskDataManager
+                    .createWorkingCopy(task, taskData);
+                TaskDataModel taskModel = new TaskDataModel(repo, task,
+                    taskWorkingCopy);
+                
+                String connectorKind = repo.getConnectorKind();
+                AbstractRepositoryConnector connector = TasksUi
+                    .getRepositoryConnector(connectorKind);
+                AbstractTaskDataHandler taskDataHandler = connector
+                    .getTaskDataHandler();
+                TaskAttribute rootData = taskModel.getTaskData()
+                    .getRoot();
+                CONNECTOR handle = determineConnectorHandling(connectorKind);
+                List<TaskAttribute> changes = null;
+                switch (handle) {
+                    case HP_ALM:
+                    case DEFAULT:
+                    default:
+                        changes = defaultFieldUpdateHandling(
+                                fieldUpdates, rootData);
+                        break;
+                }
+                if (changes.isEmpty()) {
+                    return status;
+                }
+                for (TaskAttribute change : changes) {
+                    taskModel.attributeChanged(change);
+                }
+                
+                RepositoryResponse response = taskDataHandler.postTaskData(
+                    taskModel.getTaskRepository(), taskModel.getTaskData(),
+                    taskModel.getChangedOldAttributes(), monitor);
+                
+                if (RepositoryResponse.ResponseKind.TASK_UPDATED
+                        .equals(response.getReposonseKind())) {
+                    status = new Status(IStatus.OK, Activator.ID,
+                            "Task has been updated."); //$NON-NLS-1$
+                } else {
+                    status = new Status(IStatus.WARNING, Activator.ID,
+                            "Task has not been updated successfully."); //$NON-NLS-1$
+                }
+            }
+        } catch (InvalidALMAttributeException e) {
+            status = new Status(IStatus.ERROR, Activator.ID,
+                    e.getMessage());
+        } catch (CoreException e) {
+            status = new Status(IStatus.ERROR, Activator.ID,
+                    e.getLocalizedMessage());
+        }
+        return status;
+    }
+    
+    /**
+     * Creates list of task attributes to change for default repository type
+     * @param fieldUpdates the field updates
+     * @param rootAttr root attribute
+     * @return list of task attributes to change
+     * @throws InvalidALMAttributeException 
+     */
+    private static List<TaskAttribute> defaultFieldUpdateHandling(
+            List<FieldUpdate> fieldUpdates, TaskAttribute rootAttr)
+        throws InvalidALMAttributeException {
+        List<TaskAttribute> changes = new ArrayList<TaskAttribute>();
+
+        for (FieldUpdate u : fieldUpdates) {
+            Map<String, Object> attributesToChange = u.getAttributesToChange();
+            for (String key : attributesToChange.keySet()) {
+                TaskAttribute fieldUpdate = rootAttr.getAttribute(key);
+                if (fieldUpdate == null) {
+                    throw new InvalidALMAttributeException(NLS.bind(
+                            Messages.InvalidAttributeID, key));
+                }
+                if (fieldUpdate.getMetaData().isReadOnly()) {
+                    throw new InvalidALMAttributeException(NLS.bind(
+                            Messages.ReadOnlyAttributeID, key));
+                }
+                Object value = attributesToChange.get(key);
+                if (value instanceof String) {                    
+                    Map<String, String> options = fieldUpdate.getOptions();
+                    if (options != null && !options.isEmpty()) {
+                        if (!options.containsKey(value)) {
+                            throw new InvalidALMAttributeException(NLS.bind(
+                                    Messages.InvalidValue, value, key));
+                        }
+                    }
+                    fieldUpdate.setValue((String)value);
+                } else {
+                    //TODO what can happen here?
+                    fieldUpdate.setValue(value.toString());
+                }
+                changes.add(fieldUpdate);
+            }
+        }
+
+        return changes;
     }
 
     /**
@@ -240,39 +363,39 @@ public final class ALMAccess {
     }
     
     /**
-     * @param commentEntries
+     * @param comments
      *            the commentEntries to add
      * @param attr
      *            the attribute to modify
      * @return a flag indicating the success of attribute handling
      */
-    private static TaskAttribute hpAlmHandling(
-        List<CommentEntry> commentEntries, TaskAttribute attr) {
+    private static TaskAttribute hpAlmCommentHandling(
+        List<CommentEntry> comments, TaskAttribute attr) {
         Properties almProps = Activator.getDefault().getAlmAccessProperties();
         
         String hpTaskKindKeyPrefix = CONNECTOR.HP_ALM.toString()
                 + StringConstants.DOT + TaskAttribute.TASK_KIND;
-        String req = hpTaskKindKeyPrefix + ".REQUIREMENT";
+        String req = hpTaskKindKeyPrefix + ".REQUIREMENT"; //$NON-NLS-1$
         String hpTaskKindReq = almProps.getProperty(req);
-        String def = hpTaskKindKeyPrefix + ".DEFECT";
+        String def = hpTaskKindKeyPrefix + ".DEFECT"; //$NON-NLS-1$
         String hpTaskKindDefect = almProps.getProperty(def);
 
         String taskKindValue = attr.getMappedAttribute(
                 TaskAttribute.TASK_KIND).getValue();
         String attrName = null;
         if (hpTaskKindReq.equals(taskKindValue)) {
-            attrName = almProps.getProperty(req + ".comment");
+            attrName = almProps.getProperty(req + ".comment"); //$NON-NLS-1$
         } else if (hpTaskKindDefect.equals(taskKindValue)) {
-            attrName = almProps.getProperty(def + ".comment");
+            attrName = almProps.getProperty(def + ".comment"); //$NON-NLS-1$
         }
 
         if (attrName != null) {
             TaskAttribute commentAttribute = attr.getMappedAttribute(attrName);
             String oldComment = commentAttribute.getValue();
             String newComment = StringConstants.EMPTY;
-            for (CommentEntry c : commentEntries) {
-                newComment = c.toString() + "<br>"
-                    + c.getDashboardURL() + "<br>"
+            for (ALMChange c : comments) {
+                newComment = c.toString() + "<br>" //$NON-NLS-1$
+                    + c.getDashboardURL() + "<br>" //$NON-NLS-1$
                     + newComment;
             }
             
@@ -283,19 +406,19 @@ public final class ALMAccess {
     }
 
     /**
-     * @param commentEntries
+     * @param comments
      *            the commentEntries to add
      * @param attr
      *            the attribute to modify
      * @return a flag indicating the success of attribute handling
      */
-    private static TaskAttribute defaultHandling(
-        List<CommentEntry> commentEntries, TaskAttribute attr) {
+    private static TaskAttribute defaultCommentHandling(
+        List<CommentEntry> comments, TaskAttribute attr) {
         TaskAttribute newComment = attr
             .createMappedAttribute(TaskAttribute.COMMENT_NEW);
         String comment = StringConstants.EMPTY;
 
-        for (CommentEntry c : commentEntries) {
+        for (CommentEntry c : comments) {
             comment = comment + StringConstants.NEWLINE + c.toString()
                 + StringConstants.NEWLINE + c.getDashboardURL()
                 + StringConstants.NEWLINE + StringConstants.NEWLINE;

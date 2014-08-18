@@ -28,14 +28,14 @@ public interface IALMReportingRulePO extends IPersistentObject, Comparable {
     public abstract void setName(String name);
 
     /**
-     * @return the id of the field where the rule gets applied to
+     * @return the id of the attribute where the rule gets applied to
      */
-    public abstract String getFieldID();
+    public abstract String getAttributeID();
 
-    /** sets the id of the field where the rule gets applied to
-     * @param fieldID the id
+    /** sets the id of the attribute where the rule gets applied to
+     * @param attributeID the id
      */
-    public abstract void setFieldID(String fieldID);
+    public abstract void setAttributeID(String attributeID);
 
     /**
      * @return the value which will be written into the field

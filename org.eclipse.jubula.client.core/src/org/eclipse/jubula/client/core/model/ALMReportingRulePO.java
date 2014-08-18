@@ -108,14 +108,14 @@ public class ALMReportingRulePO implements IALMReportingRulePO {
      */
     @Basic
     @Column(name = "FIELD_ID")
-    public String getFieldID() {
+    public String getAttributeID() {
         return m_fieldID;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void setFieldID(String fieldID) {
+    public void setAttributeID(String fieldID) {
         m_fieldID = fieldID;
     }
     

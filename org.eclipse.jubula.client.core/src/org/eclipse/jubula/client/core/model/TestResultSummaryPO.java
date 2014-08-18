@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.core.model;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Basic;
@@ -181,6 +182,8 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     private boolean m_reportOnFailure = false;
     /** whether to report in case of a success */
     private boolean m_reportOnSuccess = false;
+    /** list of ALM reporting rules */
+    private List<IALMReportingRulePO> m_reportingRules;
     /** the connected ALM repository name */
     private String m_almRepositoryName = null;
     /** the URL of the dashboard */
@@ -1100,5 +1103,17 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     /** {@inheritDoc} */
     public void setIsReportOnFailure(boolean isReportOnFailure) {
         m_reportOnFailure = isReportOnFailure;
+    }
+
+    /** {@inheritDoc} */
+    public void setALMReportingRules(List<IALMReportingRulePO> reportingRules) {
+        m_reportingRules = reportingRules;
+    }
+
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "INTERNAL_ALM_REPORTING_RULES")
+    public List<IALMReportingRulePO> getALMReportingRules() {
+        return m_reportingRules;
     }
 }

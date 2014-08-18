@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
+import java.util.List;
+
 /**
  * @author BREDEX GmbH
  */
@@ -61,5 +63,16 @@ public interface IALMReportingProperties {
      *            executions to the connected ALM repository
      */
     public abstract void setIsReportOnFailure(boolean isReportOnFailure);
+
+    /**
+     * @param reportingRules The reporting rules to set.
+     */
+    public void setALMReportingRules(
+            List<IALMReportingRulePO> reportingRules);
+
+    /**
+     * @return Returns the reporting rules set.
+     */
+    public List<IALMReportingRulePO> getALMReportingRules();
 
 }

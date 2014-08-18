@@ -31,13 +31,18 @@ public class Messages extends NLS {
     public static String ReportToALMJobName;
     public static String ReportToALMJob;
     public static String ReportToALMJobDone;
-    public static String ReportingResult;
-    public static String ReportingResults;
+    public static String ReportingComment;
+    public static String ReportingComments;
+    public static String ReportingFieldUpdate;
+    public static String ReportingFieldUpdates;
     public static String ReportingTaskFailed;
     public static String NotAvailable;
     public static String TaskRepositoryConnectionTest;
     public static String TaskRepositoryConnectionTestFailed;
     public static String TaskRepositoryConnectionTestSucceeded;
+    public static String InvalidAttributeID;
+    public static String InvalidValue;
+    public static String ReadOnlyAttributeID;
     
     static {
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

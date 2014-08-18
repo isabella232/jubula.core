@@ -376,7 +376,7 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
     private void createTableContent(final TableViewer tableViewer) {
         TableViewerColumn nameColumn =
                 new TableViewerColumn(tableViewer, SWT.LEFT);
-        nameColumn.getColumn().setText(Messages.ALMReportRuleName);
+        nameColumn.getColumn().setText(Messages.ALMReportRuleDescription);
         nameColumn.getColumn().setWidth(200);
         nameColumn.setLabelProvider(new ColumnLabelProvider() {
             public String getText(Object element) {
@@ -396,7 +396,7 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         fieldColumn.setLabelProvider(new ColumnLabelProvider() {
             public String getText(Object element) {
                 if (element instanceof IALMReportingRulePO) {
-                    return ((IALMReportingRulePO) element).getFieldID();
+                    return ((IALMReportingRulePO) element).getAttributeID();
                 }
                 return null;
             }
@@ -770,7 +770,7 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
          */
         protected Object getValue(Object element) {
             return StringUtils.defaultString(
-                    ((IALMReportingRulePO)element).getFieldID());
+                    ((IALMReportingRulePO)element).getAttributeID());
         }
        
         /**
@@ -778,7 +778,7 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
          */
         protected void setValue(Object element, Object value) {
             String hostNameValue = String.valueOf(value);
-            ((IALMReportingRulePO)element).setFieldID(hostNameValue);
+            ((IALMReportingRulePO)element).setAttributeID(hostNameValue);
             getViewer().update(element, null);
         }
     }

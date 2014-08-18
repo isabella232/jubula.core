@@ -23,6 +23,7 @@ import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -169,6 +170,8 @@ public class TestresultSummaryBP {
             .getProjectProperties();
         final boolean reportSuccess = projectProperties.getIsReportOnSuccess();
         final boolean reportFailure = projectProperties.getIsReportOnFailure();
+        final List<IALMReportingRulePO> reportingRules =
+                projectProperties.getALMReportingRules();
         final String almRepositoryName = projectProperties
             .getALMRepositoryName();
         
@@ -180,6 +183,7 @@ public class TestresultSummaryBP {
             summary.setALMRepositoryName(almRepositoryName);
             summary.setIsReportOnSuccess(reportSuccess);
             summary.setIsReportOnFailure(reportFailure);
+            summary.setALMReportingRules(reportingRules);
             summary.setDashboardURL(projectProperties.getDashboardURL());
         }
         summary.setAlmReportStatus(status);

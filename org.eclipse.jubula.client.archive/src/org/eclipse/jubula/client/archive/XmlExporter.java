@@ -780,7 +780,7 @@ class XmlExporter {
      */
     private void fillReportingRule(ReportingRule xml, IALMReportingRulePO po) {
         xml.setName(po.getName());
-        xml.setFieldID(po.getFieldID());
+        xml.setFieldID(po.getAttributeID());
         xml.setValue(po.getValue());
         xml.setType(po.getType().toString());            
     }

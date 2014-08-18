@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.alm.mylyn.core.bp;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,7 +24,9 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.alm.mylyn.core.Activator;
 import org.eclipse.jubula.client.alm.mylyn.core.i18n.Messages;
+import org.eclipse.jubula.client.alm.mylyn.core.model.ALMChange;
 import org.eclipse.jubula.client.alm.mylyn.core.model.CommentEntry;
+import org.eclipse.jubula.client.alm.mylyn.core.model.FieldUpdate;
 import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
 import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
@@ -31,6 +34,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultSummaryEventListener;
 import org.eclipse.jubula.client.core.model.IALMReportingProperties;
+import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
@@ -40,6 +44,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
+import org.eclipse.jubula.client.core.utils.ReportRuleType;
 import org.eclipse.jubula.client.core.utils.TestResultNodeTraverser;
 import org.eclipse.osgi.util.NLS;
 
@@ -57,14 +62,16 @@ public class CommentReporter implements ITestresultSummaryEventListener {
     /**
      * @author BREDEX GmbH
      */
-    private static class CommentEntryCreationOperation implements
+    private static class ALMChangeCreationOperation implements
             ITreeNodeOperation<TestResultNode> {
         /** the taskIdToComment mapping */
-        private Map<String, List<CommentEntry>> m_taskIdToComment;
+        private Map<String, List<ALMChange>> m_taskIdToALMChange;
         /** report failure */
         private final boolean m_reportFailure;
         /** report success */
         private final boolean m_reportSuccess;
+        /** reporting rules */
+        private final List<IALMReportingRulePO> m_reportingRules;
         /** dashboard URL */
         private String m_dashboardURL;
         /** the summary id */
@@ -75,23 +82,27 @@ public class CommentReporter implements ITestresultSummaryEventListener {
         /**
          * Constructor
          * 
-         * @param taskIdToComment
+         * @param taskIdToALMChange
          *            the mapping to fill with entries
          * @param reportSuccess
          *            reportSuccess
          * @param reportFailure
          *            reportFailure
+         * @param reportingRules
+         *            reportingRules
          * @param dashboardURL
          *            dashboardURL
          * @param summaryId 
          */
-        public CommentEntryCreationOperation(
-            Map<String, List<CommentEntry>> taskIdToComment,
-            boolean reportFailure, boolean reportSuccess, String dashboardURL,
-            String summaryId) {
-            m_taskIdToComment = taskIdToComment;
+        public ALMChangeCreationOperation(
+            Map<String, List<ALMChange>> taskIdToALMChange,
+            boolean reportFailure, boolean reportSuccess,
+            List<IALMReportingRulePO> reportingRules,
+            String dashboardURL, String summaryId) {
+            m_taskIdToALMChange = taskIdToALMChange;
             m_reportFailure = reportFailure;
             m_reportSuccess = reportSuccess;
+            m_reportingRules = reportingRules;
             m_dashboardURL = dashboardURL;
             m_summaryIdString = summaryId;
         }
@@ -103,30 +114,66 @@ public class CommentReporter implements ITestresultSummaryEventListener {
             m_nodeCount++;
             boolean didNodePass = CommentEntry
                     .hasPassed(resultNode.getStatus());
-
             String taskIdforNode = resultNode.getTaskId();
             boolean hasTaskId = taskIdforNode != null;
             
             boolean writeCommentForNode = hasTaskId
                  && ((m_reportSuccess && didNodePass) 
                   || (m_reportFailure && !didNodePass));
+            
+            boolean writeFieldUpdateForNode = hasTaskId 
+                  && !getApplicableRules(didNodePass).isEmpty();
 
             if (writeCommentForNode) {
                 CommentEntry c = new CommentEntry(resultNode, m_dashboardURL,
                         m_summaryIdString, m_nodeCount);
-
-                List<CommentEntry> comments = m_taskIdToComment
-                        .get(taskIdforNode);
-                if (comments != null) {
-                    comments.add(c);
-                } else {
-                    List<CommentEntry> cs = new LinkedList<CommentEntry>();
-                    cs.add(c);
-                    m_taskIdToComment.put(taskIdforNode, cs);
-                }
+                addALMChangeToNode(taskIdforNode, c);
+            }
+            if (writeFieldUpdateForNode) {
+                FieldUpdate f = new FieldUpdate(resultNode, m_dashboardURL,
+                        m_summaryIdString, m_nodeCount,
+                        getApplicableRules(didNodePass));
+                addALMChangeToNode(taskIdforNode, f);
             }
 
             return true;
+        }
+
+        /**
+         * Processes an ALM change
+         * @param taskIdforNode task ID for the node
+         * @param change the change
+         */
+        private void addALMChangeToNode(String taskIdforNode,
+                ALMChange change) {
+            List<ALMChange> changes = m_taskIdToALMChange
+                    .get(taskIdforNode);
+            if (changes != null) {
+                changes.add(change);
+            } else {
+                List<ALMChange> cs = new LinkedList<ALMChange>();
+                cs.add(change);
+                m_taskIdToALMChange.put(taskIdforNode, cs);
+            }
+        }
+
+        /**
+         * Returns the applicable reporting rules
+         * @param didNodePass whether node passed
+         * @return the applicable reporting rules
+         */
+        private List<IALMReportingRulePO> getApplicableRules(
+                boolean didNodePass) {
+            List<IALMReportingRulePO> applicableRules =
+                    new ArrayList<IALMReportingRulePO>();
+            ReportRuleType type = didNodePass ? ReportRuleType.ONSUCCESS
+                    : ReportRuleType.ONFAILURE;
+            for (IALMReportingRulePO rule : m_reportingRules) {
+                if (rule.getType() == type) {
+                    applicableRules.add(rule);
+                }
+            }
+            return applicableRules;
         }
 
         /** {@inheritDoc} */
@@ -162,6 +209,8 @@ public class CommentReporter implements ITestresultSummaryEventListener {
      *            reportSuccess
      * @param monitor
      *            monitor
+     * @param reportingRules 
+     *            reportingRules
      * @param summary
      *            the summary the result tree belongs to
      * @param rootResultNode
@@ -170,18 +219,19 @@ public class CommentReporter implements ITestresultSummaryEventListener {
      */
     private IStatus processResultTree(IProgressMonitor monitor,
         boolean reportSuccess, boolean reportFailure,
+        List<IALMReportingRulePO> reportingRules,
         ITestResultSummaryPO summary, TestResultNode rootResultNode) {
-        Map<String, List<CommentEntry>> taskIdToComment = 
-            new HashMap<String, List<CommentEntry>>();
+        Map<String, List<ALMChange>> taskIdToALMChange = 
+            new HashMap<String, List<ALMChange>>();
 
         ITreeNodeOperation<TestResultNode> operation = 
-            new CommentEntryCreationOperation(
-                taskIdToComment, reportFailure, reportSuccess,
+            new ALMChangeCreationOperation(
+                taskIdToALMChange, reportFailure, reportSuccess, reportingRules,
                 m_reportProps.getDashboardURL(), summary.getId().toString());
         TestResultNodeTraverser traverser = new TestResultNodeTraverser(
                 rootResultNode, operation);
         traverser.traverse();
-        final IStatus reportStatus = reportToALM(monitor, taskIdToComment);
+        final IStatus reportStatus = reportToALM(monitor, taskIdToALMChange);
         
         if (reportStatus.isOK()) {
             TestresultSummaryBP.getInstance().setALMReportStatus(summary,
@@ -194,15 +244,15 @@ public class CommentReporter implements ITestresultSummaryEventListener {
     /**
      * @param monitor
      *            the monitor to use
-     * @param taskIdToComment
+     * @param taskIdToALMChange
      *            the comment mapping
      * @return status
      */
     private IStatus reportToALM(IProgressMonitor monitor,
-            Map<String, List<CommentEntry>> taskIdToComment) {
+            Map<String, List<ALMChange>> taskIdToALMChange) {
         String repoLabel = m_reportProps.getALMRepositoryName();
         boolean failed = false;
-        Set<String> taskIds = taskIdToComment.keySet();
+        Set<String> taskIds = taskIdToALMChange.keySet();
         int taskAmount = taskIds.size();
         IProgressConsole c = getConsole();
         if (taskAmount > 0) {
@@ -213,29 +263,53 @@ public class CommentReporter implements ITestresultSummaryEventListener {
             c.writeLine(out);
             int successCount = 0;
             int overallCommentCount = 0;
+            int overallFieldUpdateCount = 0;
             for (String taskId : taskIds) {
-                List<CommentEntry> comments = taskIdToComment.get(taskId);
+                List<ALMChange> changes = taskIdToALMChange.get(taskId);
+                List<CommentEntry> comments = new LinkedList<CommentEntry>();
+                List<FieldUpdate> fieldUpdates = new LinkedList<FieldUpdate>();
+                split(changes, comments, fieldUpdates);
+                boolean commentingSucceeded = true;
+                IStatus fieldUpdateStatus = Status.OK_STATUS;
+                
                 int commentAmount = comments.size();
-                if (commentAmount > 1) {
-                    c.writeWarningLine(NLS.bind(Messages.ReportingResults,
-                        commentAmount, taskId));
-                } else {
-                    c.writeLine(NLS.bind(Messages.ReportingResult, taskId));
+                if (commentAmount > 0) {
+                    writeStatus(c, taskId, commentAmount, Messages.
+                            ReportingComment, Messages.ReportingComments);
+                    commentingSucceeded = ALMAccess.createComment(
+                            repoLabel, taskId, comments, monitor);
+                    if (!commentingSucceeded) {
+                        failed = true;
+                        c.writeErrorLine(
+                                NLS.bind(Messages.ReportingTaskFailed, taskId));
+                    } else {
+                        overallCommentCount += commentAmount;
+                    }
                 }
-                boolean succeeded = ALMAccess.createComment(repoLabel, taskId,
-                    comments, monitor);
-                if (!succeeded) {
-                    failed = true;
-                    c.writeErrorLine(
-                        NLS.bind(Messages.ReportingTaskFailed, taskId));
-                } else {
+                int fieldUpdateAmount = fieldUpdates.size();
+                if (fieldUpdateAmount > 0) {
+                    writeStatus(c, taskId, fieldUpdateAmount,
+                            Messages.ReportingFieldUpdate,
+                            Messages.ReportingFieldUpdates);
+                    fieldUpdateStatus = ALMAccess.updateFields(
+                            repoLabel, taskId, fieldUpdates, monitor);
+                    if (!fieldUpdateStatus.isOK()) {
+                        failed = true;
+                        c.writeErrorLine(fieldUpdateStatus.getMessage());
+                        c.writeErrorLine(
+                                NLS.bind(Messages.ReportingTaskFailed, taskId));
+                    } else {
+                        overallFieldUpdateCount += fieldUpdateAmount;
+                    }
+                }
+                if (fieldUpdateStatus.isOK() && commentingSucceeded) {
                     successCount++;
-                    overallCommentCount += commentAmount;
                 }
                 monitor.worked(1);
             }
             c.writeLine(NLS.bind(Messages.ReportToALMJobDone, new Integer[] {
-                overallCommentCount, successCount, taskAmount }));
+                overallCommentCount, overallFieldUpdateCount, successCount,
+                taskAmount }));
             monitor.done();
         } else {
             c.writeLine(Messages.NothingToReport);
@@ -245,6 +319,40 @@ public class CommentReporter implements ITestresultSummaryEventListener {
         }
         return new Status(IStatus.ERROR, Activator.ID,
             "Reporting comments performed with errors...");
+    }
+
+    /**
+     * writes the status of the commenting to a task to the console
+     * @param c console
+     * @param taskId task
+     * @param changeAmount amount of changes 
+     * @param one output if only one change
+     * @param mult output if multiple changes
+     */
+    private void writeStatus(IProgressConsole c, String taskId,
+            int changeAmount, String one, String mult) {
+        if (changeAmount > 1) {
+            c.writeWarningLine(NLS.bind(mult, changeAmount, taskId));
+        } else {
+            c.writeLine(NLS.bind(one, taskId));
+        }
+    }
+
+    /**
+     * Splits a list of ALM changes into comments and field updates
+     * @param changes the changes
+     * @param comments the comments
+     * @param fieldUpdates the field updates
+     */
+    private void split(List<ALMChange> changes, List<CommentEntry> comments,
+            List<FieldUpdate> fieldUpdates) {
+        for (ALMChange change : changes) {
+            if (change instanceof CommentEntry) {
+                comments.add((CommentEntry)change);
+            } else if (change instanceof FieldUpdate) {
+                fieldUpdates.add((FieldUpdate)change);
+            }
+        }
     }
 
     /**
@@ -295,10 +403,12 @@ public class CommentReporter implements ITestresultSummaryEventListener {
         m_reportProps = properties;
         final boolean reportSuccess = properties.getIsReportOnSuccess();
         final boolean reportFailure = properties.getIsReportOnFailure();
+        final List<IALMReportingRulePO> reportingRules = 
+                properties.getALMReportingRules();
         final String almRepositoryName = properties.getALMRepositoryName();
 
         if (!StringUtils.isBlank(almRepositoryName)
-            && (reportSuccess || reportFailure)) {
+            && (reportSuccess || reportFailure || !reportingRules.isEmpty())) {
             Job reportToALMOperation = new Job(NLS.bind(
                 Messages.ReportToALMJobName, almRepositoryName)) {
                 protected IStatus run(IProgressMonitor monitor) {
@@ -313,7 +423,8 @@ public class CommentReporter implements ITestresultSummaryEventListener {
                                 Messages.TaskRepositoryConnectionTestSucceeded,
                                 almRepositoryName));
                         return processResultTree(monitor, reportSuccess,
-                            reportFailure, summary, rootResultNode);
+                            reportFailure, reportingRules, summary,
+                            rootResultNode);
                     }
                     getConsole().writeErrorLine(
                         NLS.bind(Messages.TaskRepositoryConnectionTestFailed,

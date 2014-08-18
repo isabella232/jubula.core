@@ -38,7 +38,7 @@ public class Messages extends NLS {
     public static String AddEventHandlerDialogNoReentryTypeSel;
     public static String AddEventHandlerDialogReentryType;
     public static String ALMReportRuleField;
-    public static String ALMReportRuleName;
+    public static String ALMReportRuleDescription;
     public static String ALMReportRuleValue;
     public static String AnErrorOccurredDuringMigration;
     public static String AnErrorOccurredWhileInitializingTheDestinationPath;
