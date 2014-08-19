@@ -330,7 +330,6 @@ public final class ALMAccess {
                     }
                     fieldUpdate.setValue((String)value);
                 } else {
-                    //TODO what can happen here?
                     fieldUpdate.setValue(value.toString());
                 }
                 changes.add(fieldUpdate);
