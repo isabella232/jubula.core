@@ -23,6 +23,20 @@ public class FileUtils {
     private FileUtils() {
         // utility class
     }
+
+    /**
+     *
+     * @param filePath the path to the file
+     * @return true if the file is not existent or can be overwritten
+     */
+    public static boolean isWritableFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            return true;
+        }
+        return file.canWrite();
+    }
+
     /**
      * checks if a path is writable
      * @param path

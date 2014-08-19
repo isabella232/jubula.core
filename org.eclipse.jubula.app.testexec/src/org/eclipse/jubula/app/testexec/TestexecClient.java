@@ -119,7 +119,9 @@ public class TestexecClient extends AbstractCmdlineClient {
         options.addOption(createOption(ClientTestStrings.RESULTDIR, true, 
                 ClientTestStrings.RESULTDIR, 
                 Messages.ClientResultdirOpt, false));
-
+        options.addOption(createOption(ClientStrings.RESULT_NAME, true, 
+                ClientStrings.RESULT_NAME, 
+                Messages.ClientResultnameOpt, false));
         // AUT option group (AUT Configuration / AUT ID)
         OptionGroup autOptionGroup = new OptionGroup();
         autOptionGroup.setRequired(false);
@@ -216,6 +218,13 @@ public class TestexecClient extends AbstractCmdlineClient {
                         TestExecutionConstants.EXIT_INVALID_ARGUMENT))) {
             appendValidationError(errorInvalidArgsMsg, ClientStrings.NORUN,
                     ClientStrings.NORUN_MODE);
+        }
+        if ((!StringUtils.isEmpty(job.getFileName()))
+                && (job.getFileName()
+                        .equals(TestExecutionConstants.
+                                EXIT_INVALID_ARGUMENT))) {
+            appendValidationError(errorInvalidArgsMsg,
+                    ClientStrings.RESULT_NAME, ClientStrings.RESULT_NAME);
         }
 
     }

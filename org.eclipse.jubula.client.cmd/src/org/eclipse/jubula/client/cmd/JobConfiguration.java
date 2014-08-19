@@ -124,6 +124,8 @@ public class JobConfiguration {
     private boolean m_autoScreenshot = true;
     /** flag to save screenshots in XML and HTML */
     private boolean m_xmlScreenshot = true;
+    /** file name for the xml and html document */
+    private String m_fileName;
     
     /**
      * constructor
@@ -481,6 +483,9 @@ public class JobConfiguration {
         if (cmd.hasOption(ClientStrings.NORUN)) {
             setNoRunOptMode(TestExecutionConstants.runSteps.
                     validateRunStep(cmd.getOptionValue(ClientStrings.NORUN)));
+        }
+        if (cmd.hasOption(ClientStrings.RESULT_NAME)) {
+            setFileName(cmd.getOptionValue(ClientStrings.RESULT_NAME));
         }
     }
 
@@ -906,6 +911,10 @@ public class JobConfiguration {
             arg1.setValue(TestExecutionConstants.runSteps.validateRunStep(
                     job.getNoRunOptMode()));
             arg1.endNode();
+            
+            arg1.startNode(ClientStrings.RESULT_NAME);
+            arg1.setValue(job.getFileName());
+            arg1.endNode();
         }
 
         /**
@@ -977,6 +986,9 @@ public class JobConfiguration {
                         equals(ClientStrings.NORUN)) {
                     job.setNoRunOptMode(TestExecutionConstants.runSteps.
                             validateRunStep(arg0.getValue()));
+                } else if (arg0.getNodeName().equals(
+                        ClientStrings.RESULT_NAME)) {
+                    job.setFileName(arg0.getValue());
                 }
                 arg0.moveUp();
             }
@@ -1146,6 +1158,27 @@ public class JobConfiguration {
      */
     public void setEmbeddedAutAgentHostName() {
         setServer(EnvConstants.LOCALHOST_ALIAS);
+    }
+
+    /**
+     * 
+     * @return the name of the file
+     */
+    public String getFileName() {
+        return m_fileName;
+    }
+    
+    /**
+     * Sets the name of the file without endings, if it is blank it is an
+     * invalid name
+     * @param fileName the name of the file
+     */
+    public void setFileName(String fileName) {
+        if (StringUtils.isBlank(fileName)) {
+            m_fileName = TestExecutionConstants.EXIT_INVALID_ARGUMENT;
+        } else {
+            m_fileName = fileName;
+        }
     }
     
 }

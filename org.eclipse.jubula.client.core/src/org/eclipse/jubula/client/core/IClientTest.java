@@ -346,4 +346,10 @@ public interface IClientTest {
      * @return whether the XML and HTML testresults should have screenshots
      */    
     public boolean isScreenshotForXML();
+
+    /**
+     * Sets the fileName which should be used for the HTML and XML documents
+     * @param fileName the name of the file
+     */
+    public void setFileName(String fileName);
 }

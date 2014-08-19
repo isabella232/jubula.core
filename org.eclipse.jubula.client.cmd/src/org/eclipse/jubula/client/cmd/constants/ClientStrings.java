@@ -38,6 +38,9 @@ public final class ClientStrings {
 
     /** object attribute */
     public static final String CONFIGFILE = "configfile"; //$NON-NLS-1$
+    
+    /** object attribute */
+    public static final String RESULT_NAME = "resultname"; //$NON-NLS-1$
 
     /** to prevent instantiation */
     private ClientStrings() {

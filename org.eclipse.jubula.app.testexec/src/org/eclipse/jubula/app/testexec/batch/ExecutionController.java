@@ -669,6 +669,18 @@ public class ExecutionController implements IAUTServerEventListener,
                     Messages.ExecutionControllerLogPathError);
             ClientTest.instance().setLogPath(m_job.getResultDir());
         }
+        if (StringUtils.isNotBlank(m_job.getFileName())) {
+            String filePath = m_job.getResultDir() + StringConstants.SLASH
+                    + m_job.getFileName();
+            boolean isWritable = FileUtils.isWritableFile(filePath + ".xml");
+            if (isWritable) {
+                isWritable = FileUtils.isWritableFile(filePath + ".html");
+            }
+            Validate.isTrue(isWritable,
+                    Messages.ExecutionControllerResultNameError);
+
+            ClientTest.instance().setFileName(m_job.getFileName());
+        }
     }
 
     /**

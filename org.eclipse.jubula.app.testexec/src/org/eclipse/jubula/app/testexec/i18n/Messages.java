@@ -49,6 +49,7 @@ public class Messages extends NLS {
     public static String ExecutionControllerProjectCompleteness;
     public static String ExecutionControllerProjectCompletenessFailed;
     public static String ExecutionControllerProjectLoaded;
+    public static String ExecutionControllerResultNameError;
     public static String ExecutionControllerServer;
     public static String ExecutionControllerServerNotInstantiated;
     public static String ExecutionControllerTestJobBegin;

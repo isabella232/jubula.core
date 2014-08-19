@@ -195,6 +195,11 @@ public class ClientTestImpl implements IClientTest {
     private boolean m_pauseOnError = false;
 
     /**
+     * name of the file which is overwriting the default behavior
+     */
+    private String m_fileName;
+
+    /**
      * empty default constructor
      */
     public ClientTestImpl() {
@@ -1072,7 +1077,12 @@ public class ClientTestImpl implements IClientTest {
      */
     private void writeReport(AbstractXMLReportGenerator generator) {
         Document document = generator.generateXmlReport();
-        String fileName = createFilename(generator.getTestResult());
+        String fileName;
+        if (StringUtils.isBlank(m_fileName)) {
+            fileName = createFilename(generator.getTestResult());  
+        } else {
+            fileName = m_logPath + StringConstants.SLASH + m_fileName;
+        }
         try {
             new FileXMLReportWriter(fileName).write(document);
         } catch (IOException e) {
@@ -1240,6 +1250,13 @@ public class ClientTestImpl implements IClientTest {
      */
     public boolean isScreenshotForXML() {
         return m_xmlScrennshot;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setFileName(String fileName) {
+        m_fileName = fileName;
     }
     
 }
