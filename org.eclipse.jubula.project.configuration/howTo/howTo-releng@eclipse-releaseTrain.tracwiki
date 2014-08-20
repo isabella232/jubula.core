@@ -37,3 +37,20 @@ Signed artifacts can only be created within the  Eclipse common build infrastruc
   * http://wiki.eclipse.org/Simrel/Contributing_to_Simrel_Aggregation_Build
  * Information about world accessible / downloadable files can be found here 
   * http://wiki.eclipse.org/IT_Infrastructure_Doc#Downloads
+  
+= Recipe for a release train M-X / RC-X participation =
+ * download artifacts to publish from hudson.eclipse org (most of the time the jubula-nightly artifacts are taken) 
+  * make sanity check e.g. 
+   * validate checksums of file / test whether the ZIP is ok (unzip -t <filename>)
+   * check contained Jubula features / bundles
+   * check versions and timestamps of bundles
+   * check inlined orbit dependencies
+  * login to build.eclipse.org and prepare destination (**/jubula/(release|milestones)/<createNewDir>)
+  * upload artifact via e.g. scp to newly create destination
+  * login to build.eclipse.org and validate whether file has been transfered completly (e.g. again test the unzipping)
+  * unzip it and check dir (775) and file (664) permissions of unzipped content
+  * delete transferred ZIP file
+  * alter jubula.b3aggrcon file in org.eclipse.simrel repository (use b3 Aggregator to validate changes)
+  * commit (use meaningful commit message) and push change
+  * monitor aggregation run to pick up new p2-repo location and content and check for errors during validation
+  * wait for EPP builds and check for errors during package creation
