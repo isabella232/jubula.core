@@ -34,4 +34,7 @@
     If you are using e.g. Excel documents as data for your test, enter the path to them using the datadir parameter, e.g. <pathToQADocs>/data -->
     <!-- <resultdir></resultdir> 
 	If you want the testexec to produce HTML and XML reports after a test run, then enter the path to where they should be saved, e.g.<pathToQADocs>/results  -->
+	<!-- <resultname></resultname> 
+	If you have specified that testexec should write HTML and XML reports after a test run, you can use this parameter to specify a file name 
+	that should be used instead of the default name. Enter the name without a file extension. -->
 </configuration>

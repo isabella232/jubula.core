@@ -120,6 +120,18 @@
                  &Test results will still be written to the database.\\
                  &You can use relative paths (relative to the platform working directory).\\
                 \hline
+                Result file name (optional)
+                  & \bxshell{-resultname <filename>}\\
+                 &e.g. \emph{-resultname ''PRODUCTIVE\_TEST''}\\
+                 &Use this to specify a name for the HTML and XML test result reports \\
+                 &that testexec writes \\
+                 &(if you have configured this).\\
+                 &If you do not use this parameter, a default name will be used that \\
+                 &consists of the \gdsuite{} name.\\
+                 &Do not write a file extension -- they are added automatically.\\
+                 &If a file with the same name exists, it will be overwritten.\\
+                 &You cannot write file names containing path information.\\
+                \hline
 		No run option (optional)
                   & \bxshell{-n}\\
                   &e.g. \emph{-n}\\
