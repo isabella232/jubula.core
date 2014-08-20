@@ -34,8 +34,8 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
    </license>
 
    <requires>
-      <import plugin="org.eclipse.pde.launching"/>
-      <import feature="org.eclipse.jubula.feature" version="2.4.0" match="compatible"/>
+      <import plugin="org.eclipse.pde.launching" />
+      <import feature="org.eclipse.jubula.feature" />
    </requires>
 
    <plugin
