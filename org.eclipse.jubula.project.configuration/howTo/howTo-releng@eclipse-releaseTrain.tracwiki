@@ -1,0 +1,42 @@
+= Release-Engineering bei Eclipse.org =
+== Allgemeine Informationen ==
+Gebaut wird stündlich (immer 20 min vor der vollen Stunde - getriggert durch SCM Änderungen) bei http://hudson.eclipse.org mit Maven3
+
+ * [https://hudson.eclipse.org/hudson/job/jubula-nightly/ Jubula Hudson - nightly]
+ * '''ausschließlich '''dieser Job (bspw. keine maintenance Jobs) soll seine Artefakte während des Builds auf "http://download.eclipse.org/jubula/development" veröffentlichen - dieses p2-Repository wird dann in den Target-Definitions der ITE Standalone verwendet
+
+Außerdem gibt es aktuell folgende Targets für die entsprechende Eclipse Versionen
+
+ * [https://hudson.eclipse.org/hudson/job/jubula-helios/ Jubula Hudson - 3.6 - helios]
+ * [https://hudson.eclipse.org/hudson/job/jubula-indigo/ Jubula Hudson - 3.7 - indigo]
+ * [https://hudson.eclipse.org/hudson/job/jubula-juno/ Jubula Hudson - 4.2 - juno]
+ * [https://hudson.eclipse.org/hudson/job/jubula-kepler/ Jubula Hudson - 4.3 - kepler]
+ * [https://hudson.eclipse.org/hudson/job/jubula-luna/ Jubula Hudson - 4.4 - luna]
+ * [https://hudson.eclipse.org/hudson/job/jubula-mars/ Jubula Hudson - 4.5 - mars]
+
+Neue Hudson Jobs können durch "reopen" des folgenden Tickets angefordert werden: http://eclip.se/334525
+
+Die "Aggregation" von Jubula in die offiziellen Update Site lässt sich hier verfolgen (bspw. im Job "<currentReleaseTrainName>.runAggregator")
+
+ * https://hudson.eclipse.org/hudson/view/Repository%20Aggregation/
+
+ * EPP Testing Package Maintaining Enhancement Request[[BR]]http://eclip.se/344369
+
+ * Es können ausschließlich in der Eclipse-Infrastruktur '''signierte Artefakte''' erzeugt werden - das Triggern des Signings (und Packings) geschieht durch das setzen einer JVM Option "'''-Dbuild.env=eclipse.org'''" im mvn3 invoke des Hudson Jobs
+
+== Nützliche Befehle / Skripte ==
+ * Bei Problemen mit der IT Infrastruktur bei Eclipse bitte den IT SLA beachten
+   * http://wiki.eclipse.org/IT_SLA
+ * Einloggen auf build.eclipse.org
+   * `ssh <commiterId>@build.eclipse.org`
+ * Einloggen auf dev.eclipse.org - vorsicht: nur restricted-Shell Zugriff
+   * `ssh <commiterId>@dev.eclipse.org`
+
+ * Hudson-archivierte Artifakten kopieren
+   * cp /shared/jobs/<job-name>/lastSuccessful/archive/<path-to-artifact> /home/data/users/<commiterID>/downloads/jubula/release/<name>
+ * Hochladen von Daten (bspw. Update-Sites) via SCP
+   * `scp <pathToLocalFile> <commiterId>@build.eclipse.org:/home/data/users/<commiterID>/downloads/jubula/release/<name>/xyz.zip`
+
+== Eclipse Release Train / Aggregator ==
+ * Allgemeine Informationen zum ReleaseTrain sind zu finden unter http://wiki.eclipse.org/Simrel/Contributing_to_Simrel_Aggregation_Build
+ * Informationen zum Publizieren "downloadbarer" Dateien findet man hier [[BR]]http://wiki.eclipse.org/IT_Infrastructure_Doc#Downloads
