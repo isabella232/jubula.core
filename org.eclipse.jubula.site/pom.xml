@@ -12,7 +12,7 @@
   </parent>
   <artifactId>org.eclipse.jubula.site</artifactId>
   <packaging>eclipse-repository</packaging>
-  <name>Jubula for Eclipse 3.6 and 3.7</name>
+  <name>Jubula for Eclipse</name>
   
   <pluginRepositories>
     <pluginRepository>
