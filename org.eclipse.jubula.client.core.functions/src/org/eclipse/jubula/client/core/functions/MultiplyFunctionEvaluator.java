@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.functions;
 
+
 /**
  * Function that multiplies 0..n numbers.
  */

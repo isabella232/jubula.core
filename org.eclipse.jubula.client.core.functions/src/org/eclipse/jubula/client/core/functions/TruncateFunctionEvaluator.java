@@ -16,7 +16,6 @@ import java.math.RoundingMode;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 
 
-
 /**
  * Function that truncates a number a certain number of characters after the
  * decimal point.
