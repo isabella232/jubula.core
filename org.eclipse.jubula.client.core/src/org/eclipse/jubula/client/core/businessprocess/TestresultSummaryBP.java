@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -172,6 +173,11 @@ public class TestresultSummaryBP {
         final boolean reportFailure = projectProperties.getIsReportOnFailure();
         final List<IALMReportingRulePO> reportingRules =
                 projectProperties.getALMReportingRules();
+        final List<IALMReportingRulePO> reportingRulesCopy =
+                new ArrayList<IALMReportingRulePO>();
+        for (IALMReportingRulePO rule : reportingRules) {
+            reportingRulesCopy.add(rule.copy());
+        }
         final String almRepositoryName = projectProperties
             .getALMRepositoryName();
         
@@ -183,7 +189,7 @@ public class TestresultSummaryBP {
             summary.setALMRepositoryName(almRepositoryName);
             summary.setIsReportOnSuccess(reportSuccess);
             summary.setIsReportOnFailure(reportFailure);
-            summary.setALMReportingRules(reportingRules);
+            summary.setALMReportingRules(reportingRulesCopy);
             summary.setDashboardURL(projectProperties.getDashboardURL());
         }
         summary.setAlmReportStatus(status);

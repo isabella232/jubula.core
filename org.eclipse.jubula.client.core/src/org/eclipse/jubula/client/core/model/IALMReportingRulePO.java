@@ -57,4 +57,9 @@ public interface IALMReportingRulePO extends IPersistentObject, Comparable {
      * @param type the type 
      */
     public abstract void setType(ReportRuleType type);
+
+    /** Returns a copy of the instance
+     * @return the copy
+     */
+    public abstract IALMReportingRulePO copy();
 }

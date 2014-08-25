@@ -832,7 +832,8 @@ class XmlImporter {
         List<IALMReportingRulePO> reportingRules = 
                 new ArrayList<IALMReportingRulePO>();
         for (ReportingRule rule : xml.getReportingRulesList()) {
-            reportingRules.add(createReportingRule(rule));
+            IALMReportingRulePO newReportingRule = createReportingRule(rule);
+            reportingRules.add(newReportingRule);
         }
         projProperties.setALMReportingRules(reportingRules);
         

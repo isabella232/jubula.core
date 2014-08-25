@@ -194,6 +194,21 @@ public class TestResultPM {
         }
         resultQuery.executeUpdate();
 
+        StringBuilder deleteReportingRulesQueryBuilder = new StringBuilder();
+        deleteReportingRulesQueryBuilder.append(
+                "delete from ALM_REPORTING_RULE where " //$NON-NLS-1$
+                + "FK_TESTRESULT_SUM is not null"); //$NON-NLS-1$
+        if (!isDeleteAll) {
+            deleteReportingRulesQueryBuilder.append(
+                    " and FK_TESTRESULT_SUM = #id"); //$NON-NLS-1$
+        }
+        Query reportingRulesResultQuery = session
+                .createNativeQuery(deleteReportingRulesQueryBuilder.toString());
+        if (!isDeleteAll) {
+            reportingRulesResultQuery.setParameter("id", resultId); //$NON-NLS-1$
+        }
+        reportingRulesResultQuery.executeUpdate();
+
     }
     
     /**

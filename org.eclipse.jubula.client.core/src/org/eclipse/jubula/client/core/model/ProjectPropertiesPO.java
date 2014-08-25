@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -135,7 +136,8 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     /**
      * list of ALM reporting rules
      */
-    private List<IALMReportingRulePO> m_reportingRules;
+    private List<IALMReportingRulePO> m_reportingRules =
+            new ArrayList<IALMReportingRulePO>();
     
     /**
      * For Persistence (JPA / EclipseLink)
@@ -213,6 +215,9 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
         }
         if (getCheckConfCont() != null) {
             getCheckConfCont().setParentProjectId(projectId);
+        }
+        for (IALMReportingRulePO rule : getALMReportingRules()) {
+            rule.setParentProjectId(projectId);
         }
     }
 
@@ -362,12 +367,13 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
      * 
      * @return Returns the reporting rules set for success.
      */
-    @OneToMany(cascade = CascadeType.ALL,
-               orphanRemoval = true,
-               targetEntity = ALMReportingRulePO.class,
-               fetch = FetchType.EAGER)
-    @JoinColumn(name = "FK_PROJ_PROPERTIES")
-    @OrderColumn(name = "IDX")
+    @OneToMany (
+        fetch = FetchType.EAGER,
+        cascade = CascadeType.ALL,
+        orphanRemoval = true,
+        targetEntity = ALMReportingRulePO.class)
+    @JoinColumn(name = "FK_PROJECT_PROP", nullable = true)
+    @OrderColumn(name = "IDX_PROJECT_PROP")
     public List<IALMReportingRulePO> getALMReportingRules() {
         return m_reportingRules;
     }

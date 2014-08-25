@@ -27,8 +27,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -1111,8 +1114,13 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     }
 
     /** {@inheritDoc} */
-    @Basic
-    @Column(name = "INTERNAL_ALM_REPORTING_RULES")
+    @OneToMany (
+        fetch = FetchType.EAGER,
+        cascade = CascadeType.ALL,
+        orphanRemoval = true,
+        targetEntity = ALMReportingRulePO.class)
+    @JoinColumn(name = "FK_TESTRESULT_SUM", nullable = true)
+    @OrderColumn(name = "IDX_TESTRESULT_SUM")
     public List<IALMReportingRulePO> getALMReportingRules() {
         return m_reportingRules;
     }

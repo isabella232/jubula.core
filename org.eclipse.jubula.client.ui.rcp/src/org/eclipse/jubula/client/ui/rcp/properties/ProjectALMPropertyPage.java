@@ -618,6 +618,7 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                 StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY,
                 type);
         m_reportingRules.add(rule);
+        rule.setParentProjectId(getProject().getId());
         tableViewer.refresh();
         tableViewer.reveal(rule);
         tableViewer.editElement(rule, 0);

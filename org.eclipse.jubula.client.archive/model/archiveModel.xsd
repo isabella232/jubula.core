@@ -90,10 +90,8 @@
         		minOccurs="0" maxOccurs="1" default="false" />
         	<xs:element name="isReportOnFailure" type="xs:boolean"
         		minOccurs="0" maxOccurs="1" default="false" />
-          
             <xs:element name="reportingRules" type="gd:reportingRule"
                 minOccurs="0" maxOccurs="unbounded" />
-                
         	<xs:element name="dashboardURL" type="xs:string" minOccurs="0"
         		maxOccurs="1" nillable="true" />
         	<xs:element name="trackingEnabled" type="xs:boolean" minOccurs="0"

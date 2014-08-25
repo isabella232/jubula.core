@@ -25,7 +25,7 @@ import org.eclipse.jubula.client.core.utils.ReportRuleType;
  * @created Jul 09, 2014
  */
 @Entity
-@Table(name = "ALM_REPORTING_RULES")
+@Table(name = "ALM_REPORTING_RULE")
 public class ALMReportingRulePO implements IALMReportingRulePO {
     
     /** the name */
@@ -192,5 +192,12 @@ public class ALMReportingRulePO implements IALMReportingRulePO {
      */
     public void setType(ReportRuleType type) {
         m_type = type;
+    }
+    
+    /** {@inheritDoc} */
+    public IALMReportingRulePO copy() {
+        return new ALMReportingRulePO(
+                getName(), getAttributeID(), 
+                getValue(), getType());
     }
 }
