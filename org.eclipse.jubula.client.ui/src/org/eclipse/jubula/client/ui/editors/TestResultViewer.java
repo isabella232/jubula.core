@@ -193,8 +193,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                 monitor.subTask("Loading " + allGuids.size()  //$NON-NLS-1$
                     + " backing nodes from database..."); //$NON-NLS-1$
                 Map<String, INodePO> guidToNodeMap = NodePM.getNodes(
-                        m_parentProjectId, allGuids, 
-                        GeneralStorage.getInstance().getMasterSession());
+                        m_parentProjectId, allGuids, m_session);
                 monitor.worked(1);
                 int remainingWork = testResultList.size();
                 SubMonitor sMonitor = SubMonitor.convert(monitor,
@@ -295,10 +294,8 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                     ITestSuitePO backingTestSuite = NodeMaker
                             .createTestSuitePO(result.getKeywordName(),
                                     result.getInternalKeywordGuid());
-                    ITestResultSummaryPO summary = GeneralStorage
-                        .getInstance().getMasterSession()
-                            .find(PoMaker.getTestResultSummaryClass(),
-                                    m_summaryId);
+                    ITestResultSummaryPO summary = m_session.find(
+                        PoMaker.getTestResultSummaryClass(), m_summaryId);
                     backingTestSuite.setAut(PoMaker.createAUTMainPO(summary
                             .getAutName()));
                     return backingTestSuite;
