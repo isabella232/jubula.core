@@ -27,8 +27,8 @@ public interface IRobotEventConfirmer {
      * expected event can be confirmed or a timeout happens.
      * 
      * @param eventTarget The graphics component the Robot event is
-     * dispathed to.
-     * @param matcher The event matcher to check wether the event matches
+     * dispatched to.
+     * @param matcher The event matcher to check whether the event matches
      * the expected properties.
      * @throws RobotException If a timeout occurs.
      */
@@ -41,8 +41,8 @@ public interface IRobotEventConfirmer {
      * expected event can be confirmed or a timeout happens.
      * 
      * @param eventTarget The graphics component the Robot event is
-     * dispathed to.
-     * @param matcher The event matcher to check wether the event matches
+     * dispatched to.
+     * @param matcher The event matcher to check whether the event matches
      * the expected properties.
      * @param timeout The amount of time to wait (in milliseconds). If the 
      * expected event does not occur within this time, a timeout happens.
