@@ -39,6 +39,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OrderColumn;
@@ -153,6 +154,9 @@ abstract class NodePO implements INodePO {
     
     /** set of problems */
     private Set<IProblem> m_problems = new HashSet<IProblem>(5);
+    
+    /** string for description */
+    private String m_description;
 
     /**
      * constructor for a node with a pre-existing GUID
@@ -805,5 +809,21 @@ abstract class NodePO implements INodePO {
     public void deleteTrackedChanges() {
         m_trackedChangesMap.clear();
     }
-
+    
+    /**
+     * 
+     * @return Returns the m_description.
+     */
+    @Column(name = "DESCRIPTION_TXT")
+    @Lob
+    public String getDescription() {
+        return m_description;
+    }
+    
+    /**
+     * @param description The m_description to set.
+     */
+    public void setDescription(String description) {
+        m_description = description;
+    }
 }

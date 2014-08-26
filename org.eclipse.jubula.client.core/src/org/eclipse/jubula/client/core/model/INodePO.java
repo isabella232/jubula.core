@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
+
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 
 /**
@@ -263,5 +264,14 @@ public interface INodePO extends ITimestampPO {
      */
     public abstract void deleteTrackedChanges();
 
+    /**
+     * @return Returns the m_description.
+     */
+    public String getDescription();
+    
+    /**
+     * @param description The m_description to set.
+     */
+    public void setDescription(String description);
 
 }
