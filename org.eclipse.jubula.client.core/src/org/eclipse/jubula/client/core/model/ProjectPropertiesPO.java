@@ -104,6 +104,9 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     /** The timespan of how long changes should be stored */
     private Integer m_trackChangesSpan = null;
     
+    /** */
+    private String m_markupLanguage = null;
+    
     /**
      * Indicates whether this project is protected against undo-able
      * modifications
@@ -651,5 +654,17 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     /** {@inheritDoc} */
     public void setTrackChangesSpan(Integer span) {
         m_trackChangesSpan = span;
+    }
+
+    /** {@inheritDoc} */
+    public void setMarkupLanguage(String markupLanguage) {
+        m_markupLanguage = markupLanguage;
+    }
+
+    /** {@inheritDoc} */
+    @Basic
+    @Column(name = "MARKUP_LANGUAGE")
+    public String getMarkupLanguage() {
+        return m_markupLanguage;
     }
 }

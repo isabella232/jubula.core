@@ -157,4 +157,14 @@ public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport,
      * @param span the timespan of how long changes should be stored
      */
     public abstract void setTrackChangesSpan(Integer span);
+    
+    /**
+     * @param markupLanguage the markup language used for the description text
+     */
+    public void setMarkupLanguage(String markupLanguage);
+    
+    /**
+     * @return the markup language used for the description text
+     */
+    public String getMarkupLanguage();
 }
