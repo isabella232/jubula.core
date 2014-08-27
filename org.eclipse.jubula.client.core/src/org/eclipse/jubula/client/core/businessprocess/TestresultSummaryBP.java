@@ -183,7 +183,7 @@ public class TestresultSummaryBP {
         
         AlmReportStatus status = AlmReportStatus.NOT_CONFIGURED;
         if (StringUtils.isNotEmpty(almRepositoryName)
-            && (reportSuccess || reportFailure)
+            && (reportSuccess || reportFailure || !reportingRules.isEmpty())
             && summary.isTestsuiteRelevant()) {
             status = AlmReportStatus.NOT_YET_REPORTED;
             summary.setALMRepositoryName(almRepositoryName);

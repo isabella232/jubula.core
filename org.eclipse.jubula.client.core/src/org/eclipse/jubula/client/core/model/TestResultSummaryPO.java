@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -186,7 +187,8 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     /** whether to report in case of a success */
     private boolean m_reportOnSuccess = false;
     /** list of ALM reporting rules */
-    private List<IALMReportingRulePO> m_reportingRules;
+    private List<IALMReportingRulePO> m_reportingRules =
+            new ArrayList<IALMReportingRulePO>();
     /** the connected ALM repository name */
     private String m_almRepositoryName = null;
     /** the URL of the dashboard */
