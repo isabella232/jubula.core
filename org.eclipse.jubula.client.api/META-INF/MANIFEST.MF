@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula Client - API
+Bundle-SymbolicName: org.eclipse.jubula.client.api
+Bundle-Version: 2.4.0.qualifier
+Bundle-Vendor: Eclipse Jubula
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
