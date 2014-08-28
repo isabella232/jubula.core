@@ -23,6 +23,7 @@ import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
@@ -100,7 +101,7 @@ public class MatchUtil {
          * @param pattern
          *          a pattern
          * @return
-         *          postion and value of match
+         *          position and value of match
          */
         public FindResult find(String text, String pattern);
     }
@@ -108,22 +109,22 @@ public class MatchUtil {
     /**
      * match if text equals pattern
      */
-    public static final String EQUALS = "equals"; //$NON-NLS-1$
-    
+    public static final String EQUALS = Operator.equals.getValue();
+
     /**
      * match if text and pattern are not equal
      */
-    public static final String NOT_EQUALS = "not equals"; //$NON-NLS-1$
+    public static final String NOT_EQUALS = Operator.notEquals.getValue();
     
     /**
      * match if text matches a regexp pattern 
      */
-    public static final String MATCHES_REGEXP = "matches"; //$NON-NLS-1$
+    public static final String MATCHES_REGEXP = Operator.matches.getValue();
     
     /**
      * match if text matches a Unix-style glob pattern 
      */
-    public static final String MATCHES_GLOB = "simple match"; //$NON-NLS-1$
+    public static final String MATCHES_GLOB = Operator.simpleMatch.getValue();
     
     /**
      * default operator
@@ -215,7 +216,7 @@ public class MatchUtil {
      * @param operator
      *          operator used for matching
      * @return
-     *          postion and value of match
+     *          position and value of match
      * @throws StepExecutionException
      *          if the operator is not known
      */
@@ -401,7 +402,7 @@ public class MatchUtil {
      * @param pattern
      *          a pattern
      * @return
-     *          value and posotion of match
+     *          value and position of match
      */
     private FindResult findGlob(String text, String pattern) {
         return findRegExp(text, GlobCompiler.globToPerl5(pattern.toCharArray(),

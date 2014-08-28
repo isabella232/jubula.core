@@ -115,6 +115,7 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
                               CommandConstants.TOOLS_BUNDLE_ID,
                               CommandConstants.COMMUNICATION_BUNDLE_ID,
                               CommandConstants.RC_COMMON_BUNDLE_ID,
+                              CommandConstants.TOOLKIT_API_BUNDLE_ID,
                               CommandConstants.RC_BREDEX_COMMON_BUNDLE_ID,
                               CommandConstants.SLF4J_JCL_BUNDLE_ID,
                               CommandConstants.ORG_SLF4J_JUL_BUNDLE_ID,

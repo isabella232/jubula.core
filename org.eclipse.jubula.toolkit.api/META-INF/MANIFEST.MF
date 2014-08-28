@@ -4,6 +4,7 @@ Bundle-Name: Jubula Toolkit - API
 Bundle-SymbolicName: org.eclipse.jubula.toolkit.api
 Bundle-Version: 2.4.0.qualifier
 Bundle-Vendor: Eclipse Jubula
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
+Export-Package: org.eclipse.jubula.toolkit.enums
