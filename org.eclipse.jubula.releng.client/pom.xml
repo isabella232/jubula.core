@@ -29,18 +29,18 @@
 		<module>../org.eclipse.jubula.client.qa.caa.gen.ui</module>
 		<module>../org.eclipse.jubula.client.inspector.ui</module>
 		<module>../org.eclipse.jubula.client.archive</module>
-		<module>../org.eclipse.jubula.toolkit.provider.base</module>
-		<module>../org.eclipse.jubula.toolkit.provider.concrete</module>
-		<module>../org.eclipse.jubula.toolkit.provider.html</module>
-		<module>../org.eclipse.jubula.toolkit.provider.rcp</module>
-		<module>../org.eclipse.jubula.toolkit.provider.rcp.gef</module>
-		<module>../org.eclipse.jubula.toolkit.provider.swing</module>
-		<module>../org.eclipse.jubula.toolkit.provider.javafx</module>
-		<module>../org.eclipse.jubula.toolkit.provider.mobile</module>
-		<module>../org.eclipse.jubula.toolkit.provider.mobile.ios</module>
-		<module>../org.eclipse.jubula.toolkit.provider.swt</module>
-        <module>../org.eclipse.jubula.toolkit.provider.win</module>
-        <module>../org.eclipse.jubula.toolkit.provider.win.apps</module>
+		<module>../org.eclipse.jubula.toolkit.base.provider</module>
+		<module>../org.eclipse.jubula.toolkit.concrete.provider</module>
+		<module>../org.eclipse.jubula.toolkit.html.provider</module>
+		<module>../org.eclipse.jubula.toolkit.rcp.provider</module>
+		<module>../org.eclipse.jubula.toolkit.rcp.gef.provider</module>
+		<module>../org.eclipse.jubula.toolkit.swing.provider</module>
+		<module>../org.eclipse.jubula.toolkit.javafx.provider</module>
+		<module>../org.eclipse.jubula.toolkit.mobile.provider</module>
+		<module>../org.eclipse.jubula.toolkit.mobile.ios.provider</module>
+		<module>../org.eclipse.jubula.toolkit.swt.provider</module>
+        <module>../org.eclipse.jubula.toolkit.win.provider</module>
+        <module>../org.eclipse.jubula.toolkit.win.apps.provider</module>
 		<module>../org.eclipse.jubula.toolkit.common</module>
 		<module>../org.eclipse.jubula.client.ua.cheatsheets</module>
 		<module>../org.eclipse.jubula.client.ua.welcome</module>

@@ -49,35 +49,35 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.html.source"
+         id="org.eclipse.jubula.toolkit.html.provider.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.rcp.source"
+         id="org.eclipse.jubula.toolkit.rcp.provider.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.rcp.gef.source"
+         id="org.eclipse.jubula.toolkit.rcp.gef.provider.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.swing.source"
+         id="org.eclipse.jubula.toolkit.swing.provider.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.swt.source"
+         id="org.eclipse.jubula.toolkit.swt.provider.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -119,14 +119,14 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.base.source"
+         id="org.eclipse.jubula.toolkit.base.provider.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.concrete.source"
+         id="org.eclipse.jubula.toolkit.concrete.provider.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

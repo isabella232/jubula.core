@@ -357,63 +357,63 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.base"
+         id="org.eclipse.jubula.toolkit.base.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.concrete"
+         id="org.eclipse.jubula.toolkit.concrete.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.html"
+         id="org.eclipse.jubula.toolkit.html.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.javafx"
+         id="org.eclipse.jubula.toolkit.javafx.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.rcp"
+         id="org.eclipse.jubula.toolkit.rcp.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.rcp.gef"
+         id="org.eclipse.jubula.toolkit.rcp.gef.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.swing"
+         id="org.eclipse.jubula.toolkit.swing.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.swt"
+         id="org.eclipse.jubula.toolkit.swt.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.provider.win"
+         id="org.eclipse.jubula.toolkit.win.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
