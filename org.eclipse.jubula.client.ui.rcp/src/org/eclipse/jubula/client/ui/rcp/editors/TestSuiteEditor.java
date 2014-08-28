@@ -257,6 +257,7 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
                 RCPCommandIDs.REPLACE_WITH_TESTCASE);
         CommandHelper.createContributionPushItem(submenuRefactor,
                 RCPCommandIDs.SAVE_AS_NEW);
+        mgr.add(new GroupMarker("editing")); //$NON-NLS-1$
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.REVERT_CHANGES);
         mgr.add(new Separator());

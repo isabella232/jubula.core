@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.apache.commons.collections.IteratorUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -137,6 +138,7 @@ public class TestJobEditor extends AbstractJBEditor {
      * {@inheritDoc}
      */
     protected void fillContextMenu(IMenuManager mgr) {
+        mgr.add(new GroupMarker("editing")); //$NON-NLS-1$
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.REVERT_CHANGES);
         CommandHelper.createContributionPushItem(mgr,
