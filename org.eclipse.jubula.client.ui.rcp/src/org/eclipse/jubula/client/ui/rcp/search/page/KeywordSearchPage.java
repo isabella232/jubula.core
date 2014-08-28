@@ -50,6 +50,7 @@ public class KeywordSearchPage extends AbstractSearchPage {
             new FieldName("name", true), //$NON-NLS-1$
             new FieldName("comment", true), //$NON-NLS-1$
             new FieldName("taskId", true), //$NON-NLS-1$
+            new FieldName("description", true), //$NON-NLS-1$
         }; 
         searchData = new SearchOptions(
                 Messages.SimpleSearchPageResultKeyword,

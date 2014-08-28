@@ -291,6 +291,10 @@ public interface ContextHelpIds {
     /** help context id for the edit parameters dialog */
     public static final String EDIT_PARAMETERS = PRAEFIX
         + "editParametersDialogContextId"; //$NON-NLS-1$
+    
+    /** help context id for the edit parameters dialog */
+    public static final String EDIT_DESCRIPTION = PRAEFIX
+        + "editDescriptionDialogContextId"; //$NON-NLS-1$
 
     /** help context id for aut classpath */
     public static final String CLASSPATH_AUT = PRAEFIX

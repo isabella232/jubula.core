@@ -678,6 +678,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.EDIT_PARAMETERS);
+        mgr.add(new GroupMarker("editing")); //$NON-NLS-1$
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.REVERT_CHANGES);
         mgr.add(new Separator());

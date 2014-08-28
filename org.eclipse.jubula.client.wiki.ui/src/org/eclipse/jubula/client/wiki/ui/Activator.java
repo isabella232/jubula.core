@@ -10,15 +10,18 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.wiki.ui;
 
-import org.osgi.framework.BundleActivator;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
  * @author BREDEX GmbH
  */
-public class Activator implements BundleActivator {
+public class Activator extends AbstractUIPlugin {
     /** context */
     private static BundleContext context;
+    
+    /** single instance of plugin */
+    private static Activator activator;
 
     /** @return the context */
     static BundleContext getContext() {
@@ -28,10 +31,18 @@ public class Activator implements BundleActivator {
     /** {@inheritDoc} */
     public void start(BundleContext bundleContext) throws Exception {
         Activator.context = bundleContext;
+        activator = this;
     }
 
     /** {@inheritDoc} */
     public void stop(BundleContext bundleContext) throws Exception {
         Activator.context = null;
+    }
+    /**
+     * gets the plugin activator
+     * @return the plugin activator
+     */
+    public static Activator getActivator() {
+        return activator;
     }
 }

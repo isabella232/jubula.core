@@ -29,4 +29,81 @@
       <viewShortcut id="org.eclipse.jubula.client.wiki.ui.views.DescriptionView" />
     </perspectiveExtension>
    </extension>
+<extension
+      point="org.eclipse.ui.commands">
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.EditDescription"
+      name="Edit Description" />
+</extension>
+<extension
+      point="org.eclipse.ui.handlers">
+    <handler
+      class="org.eclipse.jubula.client.wiki.ui.handlers.EditDescriptionHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.EditDescription">
+      <activeWhen>
+        <and>
+          <or>
+            <with variable="activePartId">
+              <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
+            </with>
+            <with variable="activePartId">
+              <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor" />
+            </with>
+            <with variable="activePartId">
+              <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor" />
+            </with>
+          </or>
+          <count value="1" />
+          <iterate
+            ifEmpty="false"
+            operator="or">
+            <or>
+              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.IRefTestSuitePO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.ITestCasePO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
+            </or>
+          </iterate>
+        </and>
+      </activeWhen>
+    </handler>
+        
+</extension>
+<extension
+      point="org.eclipse.ui.menus">
+     <menuContribution
+           allPopups="true"
+           locationURI="menu:edit?before=JubulaEditSeparator1"> 
+     <command
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.EditDescription"
+        style="push">
+      </command>
+     </menuContribution>
+     <menuContribution
+           allPopups="true"
+           locationURI="popup:org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor?before=editing">
+     <command
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.EditDescription"
+        style="push">
+      </command>
+     </menuContribution>
+          <menuContribution
+           allPopups="true"
+           locationURI="popup:org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor?before=editing">
+     <command
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.EditDescription"
+        style="push">
+      </command>
+     </menuContribution>
+     <menuContribution
+           allPopups="true"
+           locationURI="popup:org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor?before=editing">
+     <command
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.EditDescription"
+        style="push">
+      </command>
+     </menuContribution>
+</extension>
 </plugin>
