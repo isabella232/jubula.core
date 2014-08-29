@@ -14,11 +14,13 @@
 
 	<modules>
 		<module>../org.eclipse.jubula.site</module>
+		<module>../org.eclipse.jubula.site.api</module>
 		<module>../org.eclipse.jubula.app</module>
 		<module>../org.eclipse.jubula.app.testexec</module>
 		<module>../org.eclipse.jubula.app.dbtool</module>
 		<module>../org.eclipse.jubula.feature</module>
         <module>../org.eclipse.jubula.feature.source</module>
+        <module>../org.eclipse.jubula.feature.api</module>
 		<module>../org.eclipse.jubula.client.api</module>
 		<module>../org.eclipse.jubula.client.core</module>
         <module>../org.eclipse.jubula.client.ui</module>
