@@ -804,6 +804,7 @@ class XmlExporter {
         }
         xml.setName(po.getName());
         xml.setComment(po.getComment());
+        xml.setDescription(po.getDescription());
         xml.setGUID(po.getGuid());
         xml.setGenerated(po.isGenerated());
         xml.setActive(po.isActive());

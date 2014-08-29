@@ -1453,6 +1453,7 @@ class XmlImporter {
         }
         cat.setGenerated(xml.getGenerated());
         cat.setComment(xml.getComment());
+        cat.setDescription(xml.getDescription());
         cat.setTaskId(xml.getTaskId());
         
         for (ExecCategory catXml  : xml.getCategoryList()) {
@@ -1946,6 +1947,7 @@ class XmlImporter {
         }
         
         tc.setComment(xml.getComment());
+        tc.setDescription(xml.getDescription());
         tc.setGenerated(xml.getGenerated());
         tc.setTaskId(xml.getTaskId());
         tc.setInterfaceLocked(xml.getInterfaceLocked());
@@ -2018,6 +2020,7 @@ class XmlImporter {
         }
         
         ts.setComment(xml.getComment());
+        ts.setDescription(xml.getDescription());
         ts.setTaskId(xml.getTaskId());
         
         fillTrackedChangesInformation(ts, xml);
@@ -2070,6 +2073,7 @@ class XmlImporter {
             tj = NodeMaker.createTestJobPO(xml.getName());
         }
         tj.setComment(xml.getComment());
+        tj.setDescription(xml.getDescription());
         tj.setTaskId(xml.getTaskId());
         fillTrackedChangesInformation(tj, xml);
         
@@ -2095,6 +2099,7 @@ class XmlImporter {
 
             }
             rts.setComment(xmlRts.getComment());
+            rts.setDescription(xmlRts.getDescription());
             tj.addNode(rts);
         }
         return tj;
@@ -2134,6 +2139,7 @@ class XmlImporter {
         
         exec.setName(xml.getName());
         exec.setComment(xml.getComment());
+        exec.setDescription(xml.getDescription());
         exec.setGenerated(xml.getGenerated());
         exec.setTaskId(xml.getTaskId());
         if (xml.isSetActive()) {
