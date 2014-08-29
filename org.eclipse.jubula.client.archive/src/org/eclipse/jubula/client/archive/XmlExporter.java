@@ -425,6 +425,7 @@ class XmlExporter {
         xml.setIsReportOnSuccess(projectProperties.getIsReportOnSuccess());
         xml.setIsReportOnFailure(projectProperties.getIsReportOnFailure());
         xml.setDashboardURL(projectProperties.getDashboardURL());
+        xml.setMarkupLanguage(projectProperties.getMarkupLanguage());
         fillTrackingConfig(xml, projectProperties);
         
         m_monitor.worked(1);

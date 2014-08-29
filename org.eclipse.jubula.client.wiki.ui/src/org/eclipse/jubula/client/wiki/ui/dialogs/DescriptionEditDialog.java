@@ -19,8 +19,8 @@ import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.utils.DelayableTimer;
 import org.eclipse.jubula.client.wiki.ui.i18n.Messages;
+import org.eclipse.jubula.client.wiki.ui.utils.ProjectMarkupUtil;
 import org.eclipse.jubula.client.wiki.ui.Activator;
-import org.eclipse.mylyn.wikitext.tracwiki.core.TracWikiLanguage;
 import org.eclipse.mylyn.wikitext.ui.editor.MarkupSourceViewer;
 import org.eclipse.mylyn.wikitext.ui.editor.MarkupSourceViewerConfiguration;
 import org.eclipse.mylyn.wikitext.ui.viewer.MarkupViewer;
@@ -142,7 +142,7 @@ public class DescriptionEditDialog extends TitleAreaDialog {
     private MarkupSourceViewer createsMarkupSourceViewer(Composite parent,
             int styles) {
         final MarkupSourceViewer sourceViewer = new MarkupSourceViewer(parent,
-                null, styles, new TracWikiLanguage());
+                null, styles, ProjectMarkupUtil.getProjectMarkupLanguage());
         sourceViewer.setDocument(m_description);
         MarkupSourceViewerConfiguration sourceViewerConfig = 
                 new MarkupSourceViewerConfiguration(null);
@@ -165,7 +165,7 @@ public class DescriptionEditDialog extends TitleAreaDialog {
         viewerConfiguration.setEnableSelfContainedIncrementalFind(true);
         viewerConfiguration.setDisableHyperlinkModifiers(false);
         viewer.configure(viewerConfiguration);
-        viewer.setMarkupLanguage(new TracWikiLanguage());
+        viewer.setMarkupLanguage(ProjectMarkupUtil.getProjectMarkupLanguage());
         viewer.getControl().setLayoutData(createGridData());
         viewer.setDocument(new Document(m_workNode.getDescription()));
         return viewer;

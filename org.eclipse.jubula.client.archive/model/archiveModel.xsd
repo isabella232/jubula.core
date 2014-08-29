@@ -103,6 +103,8 @@
         		maxOccurs="1" nillable="true" />
         	<xs:element name="trackingSpan" type="xs:int" minOccurs="0"
         		maxOccurs="1" nillable="true" />
+            <xs:element name="markupLanguage" type="xs:string" minOccurs="0" 
+                nillable="true" maxOccurs="1" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

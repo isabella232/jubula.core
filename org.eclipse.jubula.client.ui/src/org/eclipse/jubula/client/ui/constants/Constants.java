@@ -313,6 +313,9 @@ public interface Constants {
     // org.eclipse.jubula.tools.constants.TestDataConstants
     // -------------------------------------------------------------
         
+    /** the default markup language for descriptions */
+    public static final String DEFAULT_MARKUP = "mediawiki"; //$NON-NLS-1$
+    
     /** Default value of the "Use workspace as data directory" preference */
     public static final boolean DATADIR_WS_KEY_DEFAULT = true;
 

@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.factory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
@@ -19,6 +20,7 @@ import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
@@ -28,6 +30,7 @@ import org.eclipse.jubula.tools.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
+import org.eclipse.mylyn.wikitext.core.WikiText;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
@@ -137,6 +140,33 @@ public class ControlFactory {
         
         return new DirectCombo<String>(parent, SWT.NONE, values,
             displayValues, false, true);
+    }
+    
+    /**
+     * Creates a Combo for MarkupLanguages
+     * @param parent the parent of the Combo
+     * @return a Combo with all available MarkupLanguages
+     */
+    public static DirectCombo<String> createProjectMarkupLanguageCombo(
+            Composite parent) {
+        final List<String> values = new ArrayList<String>();
+        final List<String> displayValues = new ArrayList<String>();
+        
+        Set<String> markupLanguagesFileExt = WikiText.getMarkupFileExtensions();
+        for (String value : markupLanguagesFileExt) {
+            values.add(value);
+            displayValues.add(WikiText.getMarkupLanguageNameForFilename(value));
+        }
+        String markupLang = GeneralStorage.getInstance()
+                .getProject().getMarkupLanguage();
+        if (StringUtils.isBlank(markupLang)) {
+            markupLang = WikiText
+                    .getMarkupLanguageNameForFilename(Constants.DEFAULT_MARKUP);
+        }
+        DirectCombo<String> combo = new DirectCombo<String>(parent, SWT.NONE,
+                values, displayValues, false, true);
+        combo.setSelectedObject(markupLang);
+        return combo;
     }
     
     /**

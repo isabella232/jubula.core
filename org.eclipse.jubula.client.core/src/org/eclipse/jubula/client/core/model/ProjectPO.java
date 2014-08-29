@@ -169,6 +169,21 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     public void setDefaultLanguage(Locale defaultLanguage) {
         m_projectProperties.setDefaultLanguage(defaultLanguage);
     }    
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Transient
+    public String getMarkupLanguage() {
+        return m_projectProperties.getMarkupLanguage();
+    }
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public void setMarkupLanguage(String markupLanguage) {
+        m_projectProperties.setMarkupLanguage(markupLanguage);
+    }  
 
     /**
      * {@inheritDoc}

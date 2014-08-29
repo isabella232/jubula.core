@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.wiki.ui.views;
 
 import java.net.URL;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.hyperlink.URLHyperlink;
@@ -21,10 +22,11 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.wiki.ui.i18n.Messages;
+import org.eclipse.jubula.client.wiki.ui.utils.ProjectMarkupUtil;
 import org.eclipse.mylyn.wikitext.core.parser.MarkupParser;
-import org.eclipse.mylyn.wikitext.mediawiki.core.MediaWikiLanguage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.LocationEvent;
@@ -120,7 +122,8 @@ public class DescriptionView extends ViewPart implements IDataChangedListener {
         });
         
         m_markupParser = new MarkupParser();
-        m_markupParser.setMarkupLanguage(new MediaWikiLanguage());
+        m_markupParser.setMarkupLanguage(ProjectMarkupUtil
+                .getProjectMarkupLanguage());
 
         getSite().getWorkbenchWindow().getSelectionService()
             .addSelectionListener(m_listener);
@@ -142,6 +145,11 @@ public class DescriptionView extends ViewPart implements IDataChangedListener {
     public void handleDataChanged(DataChangedEvent... events) {
         boolean isRefreshNecessary = false;
         for (DataChangedEvent dataChangedEvent : events) {
+            if (dataChangedEvent.getPo() instanceof IProjectPropertiesPO) {
+                m_markupParser.setMarkupLanguage(ProjectMarkupUtil
+                        .getProjectMarkupLanguage());
+                isRefreshNecessary = true;
+            }
             if (m_selectedNode.equals(dataChangedEvent.getPo())) {
                 isRefreshNecessary = true;
             }

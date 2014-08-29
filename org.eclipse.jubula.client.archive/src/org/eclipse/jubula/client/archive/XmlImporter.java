@@ -808,6 +808,7 @@ class XmlImporter {
     public IProjectPropertiesPO fillProjectProperties(IProjectPO proj,
             Project xml) {
         proj.setComment(xml.getComment());
+        proj.setMarkupLanguage(xml.getMarkupLanguage());
         proj.setDefaultLanguage(LocaleUtil.convertStrToLocale(xml
                 .getDefaultLanguage()));
         proj.setToolkit(xml.getAutToolKit());

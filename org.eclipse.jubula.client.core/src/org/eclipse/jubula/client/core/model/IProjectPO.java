@@ -85,6 +85,16 @@ public interface IProjectPO extends IParamNodePO {
     public abstract void setDefaultLanguage(Locale defaultLanguage);
 
     /**
+     * @return Returns the markupLanguage.
+     */
+    public abstract String getMarkupLanguage();
+
+    /**
+     * @param markupLanguage The markupLanguage to set.
+     */
+    public abstract void setMarkupLanguage(String markupLanguage);
+
+    /**
      * @return Returns the langHelper.
      */
     public abstract LanguageHelper getLangHelper();

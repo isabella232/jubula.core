@@ -128,6 +128,12 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         new ToolkitComboSelectionListener();
     /** the Combo to select the toolkit */
     private DirectCombo<String> m_projectToolkitCombo;
+    
+    /** the StateController for the markup combo */
+    private final MarkupComboSelectionListener m_markupComboListener = 
+        new MarkupComboSelectionListener();
+    /** the combo to select the MarkupLanguate */
+    private DirectCombo<String> m_projectMarkupCombo;
     /** the new project name */
     private String m_newProjectName;
     
@@ -200,6 +206,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         createEmptyLabel(projectNameComposite);
 
         createAutToolKit(projectNameComposite);
+        createMarkupLanguage(projectNameComposite);
         separator(projectNameComposite, NUM_COLUMNS_2);
         createEmptyLabel(projectNameComposite);
         
@@ -373,9 +380,29 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 textGridData, m_projectDescriptionTextField);
         m_projectDescriptionTextField.setLayoutData(textGridData);
         LayoutUtil.setMaxChar(m_projectDescriptionTextField,
-                IPersistentObject.MAX_STRING_LENGTH);
+                IPersistentObject.MAX_STRING_LENGTH);   
     }
     
+    /**
+     * @param parent the parent composite
+     */
+    private void createMarkupLanguage(Composite parent) {
+        Composite leftComposite = createComposite(parent, NUM_COLUMNS_1,
+                GridData.BEGINNING, false);
+        Composite rightComposite = createComposite(parent, NUM_COLUMNS_2,
+                GridData.FILL, true);
+        Label label = createLabel(leftComposite,
+                Messages.ProjectPropertyPageMarkupLanguageLabel);
+        ControlDecorator.createInfo(label,
+                Messages.ProjectPropertyPageMarkupLanguageInfo, false);
+        m_projectMarkupCombo = ControlFactory
+                .createProjectMarkupLanguageCombo(rightComposite);
+
+        GridData textGridData = new GridData();
+        textGridData.grabExcessHorizontalSpace = true;
+        textGridData.horizontalAlignment = GridData.FILL;
+        m_projectToolkitCombo.setLayoutData(textGridData);
+    }
     /**
      * @param parent the parent composite
      */
@@ -868,6 +895,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
     private void addListener() {
         m_projectNameTextField.addModifyListener(m_modifyListener);
         m_projectToolkitCombo.addSelectionListener(m_toolkitComboListener);
+        m_projectMarkupCombo.addSelectionListener(m_markupComboListener);
     }
     
     /** 
@@ -936,7 +964,37 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             }
         }       
     }
-    
+    /**
+     * @author BREDEX GmbH
+     */
+    private class MarkupComboSelectionListener implements SelectionListener {
+
+        /** {@inheritDoc} */
+        public void widgetSelected(SelectionEvent e) {
+            Object o = e.getSource();
+            if (o.equals(m_projectMarkupCombo)) {
+                handleMarkupSelection();
+                return;
+            }
+            Assert.notReached(Messages.EventActivatedUnknownWidget
+                    + StringConstants.DOT);
+        }
+        /**
+         * handles the selection of the markupLanguageCombo
+         */
+        private void handleMarkupSelection() {
+            final String newMarkup = m_projectMarkupCombo
+                    .getSelectedObject();
+            final IProjectPO project = getProject();
+            project.setMarkupLanguage(newMarkup);
+        }
+
+        /** {@inheritDoc} */
+        public void widgetDefaultSelected(SelectionEvent e) {
+            Assert.notReached(Messages.EventActivatedUnknownWidget
+                    + StringConstants.DOT);
+        }
+    }
     /**
      * This private inner class contains a new SelectionListener.
      * @author BREDEX GmbH

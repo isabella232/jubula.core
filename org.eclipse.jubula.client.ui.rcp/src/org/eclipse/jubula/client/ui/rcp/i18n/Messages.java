@@ -20,6 +20,8 @@ public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.ui.rcp.i18n.messages"; //$NON-NLS-1$
 
 
+
+
     public static String AbstractGuiNodePropertySourceComment;
     public static String Action;
     public static String ActionBuilderExportAll;
@@ -570,6 +572,8 @@ public class Messages extends NLS {
     public static String ProjectPropertyPageIsProtected;
     public static String ProjectPropertyPageIsReusable;
     public static String ProjectPropertyPageLanguageLabel;
+    public static String ProjectPropertyPageMarkupLanguageInfo;
+    public static String ProjectPropertyPageMarkupLanguageLabel;
     public static String ProjectPropertyPageNoProjectLanguage;
     public static String ProjectPropertyPageProjectGuid;
     public static String ProjectPropertyPageProjectName;
