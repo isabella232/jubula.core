@@ -10,11 +10,30 @@
 	<groupId>org.eclipse.jubula.qa</groupId>
 	<artifactId>org.eclipse.jubula.qa.api</artifactId>
 
+	<repositories>
+		<repository>
+			<id>local-api-repo</id>
+			<url>file://${project.build.directory}/../../org.eclipse.jubula.feature.api/m2-repo</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jubula</groupId>
+			<artifactId>org.eclipse.jubula.client.api</artifactId>
+			<version>2.4.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jubula</groupId>
+			<artifactId>org.eclipse.jubula.toolkit.api</artifactId>
+			<version>2.4.0-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

@@ -18,6 +18,7 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>lib</id>
 						<phase>process-sources</phase>
 						<goals>
 							<goal>copy-dependencies</goal>
@@ -27,11 +28,23 @@
 							<overWriteReleases>true</overWriteReleases>
 							<overWriteSnapshots>false</overWriteSnapshots>
 							<overWriteIfNewer>true</overWriteIfNewer>
-							<!-- this option do not work with true in the current version of maven, 
-								but for our purpose it is not needed. -->
 							<excludeTransitive>false</excludeTransitive>
-							<!-- strip version qualifier including underscore from jar file -->
 							<stripVersion>true</stripVersion>
+						</configuration>
+					</execution>
+					<execution>
+						<id>m2-repo</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>m2-repo</outputDirectory>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<excludeTransitive>false</excludeTransitive>
+							<useRepositoryLayout>true</useRepositoryLayout>
 						</configuration>
 					</execution>
 				</executions>
@@ -43,9 +56,10 @@
 					<filesets>
 						<fileset>
 							<directory>lib</directory>
-							<includes>
-								<include>*.jar</include>
-							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+						<fileset>
+							<directory>m2-repo</directory>
 							<followSymlinks>false</followSymlinks>
 						</fileset>
 					</filesets>

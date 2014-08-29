@@ -12,27 +12,14 @@ package org.eclipse.jubula.qa.api;
 
 import junit.framework.Assert;
 
-import org.junit.After;
-import org.junit.Before;
+import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.junit.Test;
 
 /** @author BREDEX GmbH */
 public class TestValueSets {
-    /** @throws java.lang.Exception */
-    @Before
-    public void setUp() throws Exception {
-        // empty
-    }
-
-    /** @throws java.lang.Exception */
-    @After
-    public void tearDown() throws Exception {
-        // empty
-    }
-
     /** the actual test method */
     @Test
     public void test() {
-        Assert.assertNull(null);
+        Assert.assertEquals(Operator.equals.getValue(), "equals"); //$NON-NLS-1$
     }
 }
