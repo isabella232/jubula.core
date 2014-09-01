@@ -18,33 +18,42 @@ import org.eclipse.jubula.tools.messagehandling.MessageIDs;
  * @author BREDEX GmbH
  */ 
 public class NodeAttributeEvaluator extends AbstractFunctionEvaluator {
-    /**
-     * the comment attribute name
-     */
+    /** the comment attribute name */
     private static final String COMMENT_ATTRIBUTE = "comment"; //$NON-NLS-1$
     
-    /**
-     * the name attribute name
-     */
+    /** the name attribute name */
     private static final String NAME_ATTRIBUTE = "name"; //$NON-NLS-1$
+    
+    /** the description attribute name */
+    private static final String DESCRIPTION_ATTRIBUTE = "description"; //$NON-NLS-1$
+    
+    /** the taskId attribute name */
+    private static final String TASK_ID_ATTRIBUTE = "taskId"; //$NON-NLS-1$
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String evaluate(String[] arguments) throws InvalidDataException {
         validateParamCount(arguments, 1);
-        String arg0 = arguments[0].toLowerCase();
+        final String attributeName = arguments[0].toLowerCase();
         String attributeValue = null;
         FunctionContext context = getContext();
         if (context != null) {
             INodePO node = context.getNode();
-            if (NAME_ATTRIBUTE.equals(arg0)) {
-                attributeValue = node.getName();
-            } else if (COMMENT_ATTRIBUTE.equals(arg0)) {
-                attributeValue = node.getComment();
-            } else {
-                throw new InvalidDataException("Unkown attribute: " //$NON-NLS-1$
-                        + arg0, MessageIDs.E_FUNCTION_EVAL_ERROR);
+            switch (attributeName) {
+                case NAME_ATTRIBUTE:
+                    attributeValue = node.getName();
+                    break;
+                case COMMENT_ATTRIBUTE:
+                    attributeValue = node.getComment();
+                    break;
+                case DESCRIPTION_ATTRIBUTE:
+                    attributeValue = node.getDescription();
+                    break;
+                case TASK_ID_ATTRIBUTE:
+                    attributeValue = node.getTaskId();
+                    break;
+                default:
+                    throw new InvalidDataException("Unkown attribute: " //$NON-NLS-1$
+                        + attributeName, MessageIDs.E_FUNCTION_EVAL_ERROR);
             }
         } else {
             throw new InvalidDataException(
