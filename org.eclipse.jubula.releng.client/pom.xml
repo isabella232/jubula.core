@@ -14,7 +14,6 @@
 
 	<modules>
 		<module>../org.eclipse.jubula.site</module>
-		<module>../org.eclipse.jubula.site.api</module>
 		<module>../org.eclipse.jubula.app</module>
 		<module>../org.eclipse.jubula.app.testexec</module>
 		<module>../org.eclipse.jubula.app.dbtool</module>
