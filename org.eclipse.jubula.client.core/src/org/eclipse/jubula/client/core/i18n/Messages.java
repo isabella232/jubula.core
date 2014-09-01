@@ -20,7 +20,6 @@ public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.core.i18n.messages"; //$NON-NLS-1$
     
     public static String AcceptingFailed;
-    public static String AcceptingFailedCalledAlthoughThisIsClient;
     public static String ActualExecutedCap;
     public static String ActualPeekObjectOnStack;
     public static String AddingIAUTEventListener;
@@ -28,7 +27,6 @@ public class Messages extends NLS {
     public static String AlreadyLockedCurrentlyLockAttemptFailed;
     public static String AndDatasetNumberZero;
     public static String AndGUID;
-    public static String AndLocalPort;
     public static String AndName;
     public static String ApplicationID;
     public static String AttemptToAddAnEventhandlerTwice;
@@ -57,14 +55,12 @@ public class Messages extends NLS {
     public static String ClientWritingReportError;
     public static String ClientWritingReportToDB;
     public static String CloseSessionFailed;
-    public static String ClosingConnectionToTheAUTAgent;
     public static String ClosingConnectionToTheAUTServer;
     public static String ClosingConnectionToTheAutStarter;
     public static String ClosingTheConnectionsFailed;
     public static String CommunicationErrorSettingUpAUT;
     public static String CommunicationErrorWhileSettingResourceBundle;
     public static String CommunicationWithAUTFails;
-    public static String CommunicatorMustNotBeNull;
     public static String CompNameIncompatibleTypeDetail;
     public static String CompNameUnknownTypeDetail;
     public static String Component;
@@ -76,12 +72,9 @@ public class Messages extends NLS {
     public static String ConnectedTo;
     public static String ConnectedToTheServer;
     public static String ConnectingFailed;
-    public static String ConnectingTheAUTAgentFailed;
     public static String ConnectingToAUT;
     public static String ConnectingToDatabase;
     public static String ConnectingToDatabaseJob;
-    public static String ConnectionEstablishedOnPort;
-    public static String ConnectionToAUTAgentClosed;
     public static String ConnectionToAUTCouldNotBeEstablished;
     public static String ConnectionToAUTEstablished;
     public static String ConnectionToAUTServerClosed;
@@ -309,11 +302,9 @@ public class Messages extends NLS {
     public static String ReturnType;
     public static String ReturnValue;
     public static String RollbackFailed;
-    public static String RunCalledToAnAlreadyConnectedConnection;
     public static String SavingProjectFailed;
     public static String SecurityViolationGettingHostNameFromIP;
     public static String SendingMessageFailed;
-    public static String ServerConnectionIsNotInitialized;
     public static String SessionAndTransactionDontMatch;
     public static String SetNameNotSupportedOnProjectPO;
     public static String ShowWhereUsedSearching;
@@ -367,7 +358,6 @@ public class Messages extends NLS {
     public static String TheMainMethodCouldNotLoaded;
     public static String TheSecondNameMustNotBeNull;
     public static String TheUniqueIdMustNotBeNull;
-    public static String ThisConnectionIsAlreadyConnected;
     public static String TimeoutCalled;
     public static String TimeoutExpired;
     public static String TimeoutOccuredGettingCompAUT;

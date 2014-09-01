@@ -11,13 +11,10 @@
 package org.eclipse.jubula.client.core.communication;
 
 import java.net.InetAddress;
-
-import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -69,8 +66,7 @@ public abstract class BaseConnection {
     protected synchronized void setCommunicator(Communicator communicator) {
         // check parameter
         if (communicator == null) {
-            throw new IllegalArgumentException(
-                    Messages.CommunicatorMustNotBeNull);
+            throw new IllegalArgumentException("Communicator must not be null"); //$NON-NLS-1$
         }
         m_communicator = communicator;
         // add an private listener for monitoring connection state
@@ -90,19 +86,17 @@ public abstract class BaseConnection {
     JBVersionException {
         
         if (isConnected()) {
-            log.error(Messages.RunCalledToAnAlreadyConnectedConnection);
+            log.error("run() called to an already connected connection"); //$NON-NLS-1$
             throw new AlreadyConnectedException(
-                Messages.ThisConnectionIsAlreadyConnected,
+                "This connection is already connected", //$NON-NLS-1$
                 MessageIDs.E_CONNECTED_CONNECTION);
         }
         m_communicator.run();
         if (log.isDebugEnabled()) {
-            log.debug(this.getClass().getName() + StringConstants.COLON
-                + StringConstants.SPACE + Messages.ConnectionEstablishedOnPort
-                + StringConstants.COLON + StringConstants.SPACE
-                + getCommunicator().getPort() + StringConstants.SPACE
-                + Messages.AndLocalPort + StringConstants.COLON 
-                + StringConstants.SPACE + getCommunicator().getLocalPort());
+            log.debug(this.getClass().getName() 
+                + ": Connection established on port: " //$NON-NLS-1$
+                + getCommunicator().getPort() + " and local port: "  //$NON-NLS-1$
+                + getCommunicator().getLocalPort());
         }
     }
 

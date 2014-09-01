@@ -16,7 +16,6 @@ import java.net.UnknownHostException;
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.events.AutAgentEvent;
 import org.eclipse.jubula.client.core.events.ServerEvent;
-import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.message.Message;
@@ -108,7 +107,7 @@ public class AutAgentConnection extends BaseConnection {
     public static synchronized AutAgentConnection getInstance() throws 
         ConnectionException {
         if (instance == null) {
-            String message = Messages.ServerConnectionIsNotInitialized;
+            String message = "ServerConnection is not initialized"; //$NON-NLS-1$
             throw new ConnectionException(message, 
                 MessageIDs.E_NO_SERVER_CONNECTION_INIT);
         }
@@ -130,13 +129,12 @@ public class AutAgentConnection extends BaseConnection {
         public void connectionGained(InetAddress inetAddress, int port) {
             if (log.isInfoEnabled()) {
                 try {
-                    String logMessage = Messages.ConnectedTo 
-                        + StringConstants.SPACE 
+                    String logMessage = "connected to "  //$NON-NLS-1$
                         + inetAddress.getHostName() 
                         + StringConstants.COLON + String.valueOf(port);
                     log.info(logMessage);
                 } catch (SecurityException se) {
-                    log.debug(Messages.SecurityViolationGettingHostNameFromIP);
+                    log.debug("security violation while getting the host name from IP-address"); //$NON-NLS-1$
                 }
             }
             ClientTest.instance().fireAutAgentStateChanged(
@@ -147,8 +145,8 @@ public class AutAgentConnection extends BaseConnection {
          * {@inheritDoc}
          */
         public void shutDown() {
-            log.info(Messages.ConnectionToAUTAgentClosed);
-            log.info(Messages.ClosingConnectionToTheAUTServer);
+            log.info("connection to AUT Agent closed"); //$NON-NLS-1$
+            log.info("closing connection to the AUTServer"); //$NON-NLS-1$
             
             try {
                 AUTConnection.getInstance().close();
@@ -166,9 +164,9 @@ public class AutAgentConnection extends BaseConnection {
          * {@inheritDoc}
          */
         public void sendFailed(Message message) {
-            log.warn(Messages.SendingMessageFailed + StringConstants.COLON 
+            log.warn("sending message failed:"  //$NON-NLS-1$
                 + message.toString());
-            log.info(Messages.ClosingConnectionToTheAUTAgent);
+            log.info("closing connection to the AUT Agent"); //$NON-NLS-1$
             
             close();
         }
@@ -177,15 +175,15 @@ public class AutAgentConnection extends BaseConnection {
          * {@inheritDoc}
          */
         public void acceptingFailed(int port) {
-            log.error(Messages.AcceptingFailedCalledAlthoughThisIsClient 
-                + StringConstants.COLON + String.valueOf(port));
+            log.error("accepting failed() called although this is a 'client':" //$NON-NLS-1$
+                + String.valueOf(port));
         }
 
         /**
          * {@inheritDoc}
          */
         public void connectingFailed(InetAddress inetAddress, int port) {
-            log.warn(Messages.ConnectingTheAUTAgentFailed);
+            log.warn("connecting the AUT Agent failed"); //$NON-NLS-1$
             ClientTest.instance().
                 fireAutAgentStateChanged(new AutAgentEvent(
                     AutAgentEvent.SERVER_CANNOT_CONNECTED));
