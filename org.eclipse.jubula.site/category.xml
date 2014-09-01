@@ -18,4 +18,7 @@
    <feature url="features/org.eclipse.jubula.feature.launch.rcp_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.rcp" version="2.4.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
+   <feature url="features/org.eclipse.jubula.feature.api_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature.api" version="2.4.0.qualifier">
+      <category name="org.eclipse.test"/>
+   </feature>
 </site>
