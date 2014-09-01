@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.functions;
 
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.propertytester.NodePropertyTester;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 
@@ -28,7 +29,7 @@ public class NodeAttributeEvaluator extends AbstractFunctionEvaluator {
     private static final String DESCRIPTION_ATTRIBUTE = "description"; //$NON-NLS-1$
     
     /** the taskId attribute name */
-    private static final String TASK_ID_ATTRIBUTE = "taskId"; //$NON-NLS-1$
+    private static final String TASK_ID_ATTRIBUTE = "task.id"; //$NON-NLS-1$
 
     /** {@inheritDoc} */
     public String evaluate(String[] arguments) throws InvalidDataException {
@@ -49,7 +50,7 @@ public class NodeAttributeEvaluator extends AbstractFunctionEvaluator {
                     attributeValue = node.getDescription();
                     break;
                 case TASK_ID_ATTRIBUTE:
-                    attributeValue = node.getTaskId();
+                    attributeValue = NodePropertyTester.getTaskIdforNode(node);
                     break;
                 default:
                     throw new InvalidDataException("Unkown attribute: " //$NON-NLS-1$
