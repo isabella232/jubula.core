@@ -1,0 +1,48 @@
+<%@ jet 
+package="org.eclipse.jubula.toolkit.api.gen" 
+imports="java.util.* 
+         org.eclipse.jubula.tools.xml.businessmodell.*" 
+class="ComponentGenerator"%>
+<%
+	Component component = (Component)argument;
+	String name = component.getType();
+	List<Action> actions = component.getActions(); 
+	%>
+/**
+ * Copyright (c) 2014 BREDEX GmbH.
+ * All rights reserved. 
+ */
+package <%="org.eclipse.jubula.toolkit.base"%>;
+
+public class <%=name%> extends {
+	Object m_component;
+
+	public <%=name%>(Object component) {
+		m_component = component;
+	}
+	<%
+	Iterator<Action> actionsIterator = actions.iterator();
+	while (actionsIterator.hasNext()) {	
+		Action action = actionsIterator.next();
+		String actionName = action.getName();
+		List<Param> params = action.getParams();
+	%>
+	public void rc<%=actionName%>(
+	<%	
+	Iterator<Param> paramIterator = params.iterator();
+	while (paramIterator.hasNext()) {
+	Param param = paramIterator.next();
+	String paramType = param.getType();
+	String paramName = param.getName();
+	%>
+	<%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
+	<%
+	}
+	%> 
+	) {
+		
+	}
+	<%
+	}
+	%> 
+}
