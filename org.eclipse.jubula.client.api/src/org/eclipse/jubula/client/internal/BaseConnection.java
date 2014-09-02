@@ -8,9 +8,10 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core.communication;
+package org.eclipse.jubula.client.internal;
 
 import java.net.InetAddress;
+
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
@@ -79,8 +80,8 @@ public abstract class BaseConnection {
      * 
      * @throws AlreadyConnectedException
      *             if this connection is already connected.
-     * @throws JBVersionException in case of version error between Client
-     *  and AutStarter 
+     * @throws JBVersionException
+     *             in case of version error between client and remote side
      */
     public synchronized void run() throws AlreadyConnectedException, 
     JBVersionException {

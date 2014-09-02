@@ -179,6 +179,13 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.jubula.client.api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.jubula.client.core"
          download-size="0"
          install-size="0"

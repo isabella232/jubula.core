@@ -25,6 +25,13 @@
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>.settings</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/org.eclipse.jubula.project.configuration/settings/1.7</locationURI>
+		</link>
+	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1409218333740</id>
@@ -36,11 +43,4 @@
 			</matcher>
 		</filter>
 	</filteredResources>
-	<linkedResources>
-		<link>
-			<name>.settings</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/org.eclipse.jubula.project.configuration/settings/1.7</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

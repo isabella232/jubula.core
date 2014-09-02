@@ -11,12 +11,12 @@
 package org.eclipse.jubula.client.ui.rcp.businessprocess;
 
 import org.eclipse.jubula.client.core.commands.ServerLogResponseCommand;
-import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.IServerLogListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IServerConnectionListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
+import org.eclipse.jubula.client.core.events.IServerLogListener;
+import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.communication.message.SendServerLogMessage;
 import org.eclipse.jubula.communication.message.ServerLogResponseMessage;

@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core;
 
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.jubula.tools.logging.Configurator;
+import org.eclipse.jubula.client.core.logging.Configurator;
 import org.osgi.framework.BundleContext;
 
 /**

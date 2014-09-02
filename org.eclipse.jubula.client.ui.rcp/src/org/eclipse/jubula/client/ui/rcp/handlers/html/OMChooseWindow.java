@@ -16,7 +16,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.State;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
-import org.eclipse.jubula.client.core.communication.BaseConnection.NotConnectedException;
+import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.ui.rcp.utils.HTMLAutWindowManager;
 import org.eclipse.jubula.communication.message.html.OMSelectWindowMessage;
 import org.eclipse.jubula.tools.exception.CommunicationException;

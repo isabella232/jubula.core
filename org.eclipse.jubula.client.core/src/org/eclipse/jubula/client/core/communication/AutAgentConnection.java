@@ -16,6 +16,7 @@ import java.net.UnknownHostException;
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.events.AutAgentEvent;
 import org.eclipse.jubula.client.core.events.ServerEvent;
+import org.eclipse.jubula.client.internal.BaseConnection;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.message.Message;
