@@ -32,6 +32,7 @@
 		<module>../org.eclipse.jubula.client.inspector.ui</module>
 		<module>../org.eclipse.jubula.client.archive</module>
 		<module>../org.eclipse.jubula.toolkit.api</module>
+		<module>../org.eclipse.jubula.toolkit.api.gen</module>
 		<module>../org.eclipse.jubula.toolkit.base.api</module>
 		<module>../org.eclipse.jubula.toolkit.base.provider</module>
 		<module>../org.eclipse.jubula.toolkit.concrete.api</module>
