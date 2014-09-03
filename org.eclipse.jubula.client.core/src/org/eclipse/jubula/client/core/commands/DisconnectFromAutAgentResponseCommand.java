@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
-import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.internal.AutAgentConnection;
+import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.DisconnectFromAutAgentResponseMessage;
 import org.eclipse.jubula.communication.message.Message;

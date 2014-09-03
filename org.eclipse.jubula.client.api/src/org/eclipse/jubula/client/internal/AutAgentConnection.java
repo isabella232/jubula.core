@@ -8,19 +8,13 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core.communication;
+package org.eclipse.jubula.client.internal;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.eclipse.jubula.client.core.ClientTest;
-import org.eclipse.jubula.client.core.events.AutAgentEvent;
-import org.eclipse.jubula.client.core.events.ServerEvent;
-import org.eclipse.jubula.client.internal.BaseConnection;
+import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.Communicator;
-import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * @created 22.07.2004
  */
 public class AutAgentConnection extends BaseConnection {
-    
     /**
      * Job Family ID. All Jobs dealing with connecting to the AUT Agent
      * will return <code>true</code> when their {@link Job#belongsTo(Object)}
@@ -62,15 +55,6 @@ public class AutAgentConnection extends BaseConnection {
                 this.getClass().getClassLoader()); 
         communicator.setIsServerSocketClosable(false);
         setCommunicator(communicator);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected synchronized void setCommunicator(Communicator communicator) {
-        super.setCommunicator(communicator);
-        communicator.addCommunicationErrorListener(
-                new ServerConnectionListener());
     }
 
     /**
@@ -115,80 +99,4 @@ public class AutAgentConnection extends BaseConnection {
 
         return instance;
     }
-    /**
-     * The listener listening to the communicator.
-     *
-     * @author BREDEX GmbH
-     * @created 12.08.2004
-     */
-    private class ServerConnectionListener implements
-        ICommunicationErrorListener {
-
-        /**
-         * {@inheritDoc}
-         */
-        public void connectionGained(InetAddress inetAddress, int port) {
-            if (log.isInfoEnabled()) {
-                try {
-                    String logMessage = "connected to "  //$NON-NLS-1$
-                        + inetAddress.getHostName() 
-                        + StringConstants.COLON + String.valueOf(port);
-                    log.info(logMessage);
-                } catch (SecurityException se) {
-                    log.debug("security violation while getting the host name from IP-address"); //$NON-NLS-1$
-                }
-            }
-            ClientTest.instance().fireAutAgentStateChanged(
-                new AutAgentEvent(ServerEvent.CONNECTION_GAINED));
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void shutDown() {
-            log.info("connection to AUT Agent closed"); //$NON-NLS-1$
-            log.info("closing connection to the AUTServer"); //$NON-NLS-1$
-            
-            try {
-                AUTConnection.getInstance().close();
-                ClientTest.instance().
-                    fireAutAgentStateChanged(
-                        new AutAgentEvent(ServerEvent.CONNECTION_CLOSED));
-            } catch (ConnectionException ce) {
-                // the connection to the AUTServer is not established
-                // -> just log this
-                log.debug(ce.getLocalizedMessage(), ce);
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void sendFailed(Message message) {
-            log.warn("sending message failed:"  //$NON-NLS-1$
-                + message.toString());
-            log.info("closing connection to the AUT Agent"); //$NON-NLS-1$
-            
-            close();
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void acceptingFailed(int port) {
-            log.error("accepting failed() called although this is a 'client':" //$NON-NLS-1$
-                + String.valueOf(port));
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void connectingFailed(InetAddress inetAddress, int port) {
-            log.warn("connecting the AUT Agent failed"); //$NON-NLS-1$
-            ClientTest.instance().
-                fireAutAgentStateChanged(new AutAgentEvent(
-                    AutAgentEvent.SERVER_CANNOT_CONNECTED));
-        }
-    }
-    
 }

@@ -17,10 +17,10 @@ import java.net.UnknownHostException;
 
 import org.apache.poi.util.IOUtils;
 import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
-import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.TestResult;
+import org.eclipse.jubula.client.internal.AutAgentConnection;
+import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendMonitoringReportMessage;

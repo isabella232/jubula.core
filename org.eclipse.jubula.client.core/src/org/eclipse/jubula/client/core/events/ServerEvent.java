@@ -36,17 +36,14 @@ public abstract class ServerEvent {
     public static final int NUMBER_OF_CONSTANTS = 2;
 
     /** description of CONNECTION_GAINED for logging purpose */
-    private static final String CG_DESCRIPTION =
-        "connection established"; //$NON-NLS-1$
+    private static final String CG_DESCRIPTION = "connection established"; //$NON-NLS-1$
 
     /** description of CONNECTION_CLOSED for logging purpose */
-    private static final String CC_DESCRIPTION =
-        "connection closed"; //$NON-NLS-1$
+    private static final String CC_DESCRIPTION = "connection closed"; //$NON-NLS-1$
     
     /** description of unknown state (this means it's an programming error)
      *  for logging purpose */
-    private static final String US_DESCRIPTION =
-        "unknown state"; //$NON-NLS-1$
+    private static final String US_DESCRIPTION = "unknown state"; //$NON-NLS-1$
     
     /** the new state */
     private int m_state;
@@ -86,5 +83,4 @@ public abstract class ServerEvent {
                 return US_DESCRIPTION;
         }
     }
-    
 }    

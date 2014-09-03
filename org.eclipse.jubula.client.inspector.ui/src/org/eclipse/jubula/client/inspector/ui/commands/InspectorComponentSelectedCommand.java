@@ -11,10 +11,10 @@
 package org.eclipse.jubula.client.inspector.ui.commands;
 
 import org.eclipse.jubula.client.core.communication.AUTConnection;
-import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.inspector.ui.i18n.Messages;
 import org.eclipse.jubula.client.inspector.ui.model.InspectedComponent;
 import org.eclipse.jubula.client.inspector.ui.provider.sourceprovider.InspectorStateProvider;
+import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.InspectorComponentSelectedMessage;
 import org.eclipse.jubula.communication.message.Message;

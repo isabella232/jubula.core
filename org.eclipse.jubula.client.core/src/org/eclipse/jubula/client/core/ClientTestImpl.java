@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -53,13 +54,12 @@ import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.commands.DisconnectFromAutAgentResponseCommand;
 import org.eclipse.jubula.client.core.commands.GetAutConfigMapResponseCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
-import org.eclipse.jubula.client.core.communication.AutAgentConnection;
-import org.eclipse.jubula.client.core.communication.ConnectionException;
 import org.eclipse.jubula.client.core.communication.UnknownMessageException;
 import org.eclipse.jubula.client.core.events.AUTEvent;
 import org.eclipse.jubula.client.core.events.AUTServerEvent;
 import org.eclipse.jubula.client.core.events.AutAgentEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.ServerEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.IAUTEventListener;
 import org.eclipse.jubula.client.core.events.IAUTServerEventListener;
@@ -81,9 +81,12 @@ import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
+import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.BaseConnection;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
+import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.ICommand;
+import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.message.BuildMonitoringReportMessage;
 import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.communication.message.DisconnectFromAutAgentMessage;
@@ -1138,7 +1141,11 @@ public class ClientTestImpl implements IClientTest {
         
         try {
             AutAgentConnection.createInstance(serverName, port);
-            AutAgentConnection.getInstance().run();
+            final AutAgentConnection instance = 
+                AutAgentConnection.getInstance();
+            instance.getCommunicator().addCommunicationErrorListener(
+                new AUTAgentConnectionListener());
+            instance.run();
             if (log.isDebugEnabled()) {
                 log.debug(Messages.ConnectedToTheServer);
             }
@@ -1259,4 +1266,81 @@ public class ClientTestImpl implements IClientTest {
         m_fileName = fileName;
     }
     
+    /**
+     * The listener listening to the communicator.
+     *
+     * @author BREDEX GmbH
+     * @created 12.08.2004
+     */
+    private class AUTAgentConnectionListener implements
+        ICommunicationErrorListener {
+
+        /**
+         * {@inheritDoc}
+         */
+        public void connectionGained(InetAddress inetAddress, int port) {
+            if (log.isInfoEnabled()) {
+                try {
+                    String logMessage = "connected to "  //$NON-NLS-1$
+                        + inetAddress.getHostName() 
+                        + StringConstants.COLON + String.valueOf(port);
+                    log.info(logMessage);
+                } catch (SecurityException se) {
+                    log.debug("security violation while getting the host name from IP-address"); //$NON-NLS-1$
+                }
+            }
+            fireAutAgentStateChanged(
+                new AutAgentEvent(ServerEvent.CONNECTION_GAINED));
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public void shutDown() {
+            log.info("connection to AUT Agent closed"); //$NON-NLS-1$
+            log.info("closing connection to the AUTServer"); //$NON-NLS-1$
+            
+            try {
+                AUTConnection.getInstance().close();
+                fireAutAgentStateChanged(
+                        new AutAgentEvent(ServerEvent.CONNECTION_CLOSED));
+            } catch (ConnectionException ce) {
+                // the connection to the AUTServer is not established
+                // -> just log this
+                log.debug(ce.getLocalizedMessage(), ce);
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public void sendFailed(Message message) {
+            log.warn("sending message failed:"  //$NON-NLS-1$
+                + message.toString());
+            log.info("closing connection to the AUT Agent"); //$NON-NLS-1$
+            
+            try {
+                AutAgentConnection.getInstance().close();
+            } catch (ConnectionException e) {
+                log.warn(e.getLocalizedMessage());
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public void acceptingFailed(int port) {
+            log.error("accepting failed() called although this is a 'client':" //$NON-NLS-1$
+                + String.valueOf(port));
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public void connectingFailed(InetAddress inetAddress, int port) {
+            log.warn("connecting the AUT Agent failed"); //$NON-NLS-1$
+            fireAutAgentStateChanged(new AutAgentEvent(
+                    AutAgentEvent.SERVER_CANNOT_CONNECTED));
+        }
+    }
 }

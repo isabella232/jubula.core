@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.core.events;
 
 
 
+
 /**
  * The event class containing state concerning the AUTServer.
  *

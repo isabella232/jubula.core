@@ -13,11 +13,11 @@ package org.eclipse.jubula.client.ui.rcp.sourceprovider;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jubula.client.core.communication.ConnectionException;
-import org.eclipse.jubula.client.core.communication.AutAgentConnection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IServerConnectionListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
+import org.eclipse.jubula.client.internal.AutAgentConnection;
+import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.ui.ISources;
 
 

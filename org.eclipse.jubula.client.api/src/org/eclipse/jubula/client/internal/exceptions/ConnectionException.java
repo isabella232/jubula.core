@@ -8,13 +8,13 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core.communication;
+package org.eclipse.jubula.client.internal.exceptions;
 
 import org.eclipse.jubula.tools.exception.CommunicationException;
 
 /**
- * An exception thrown if a connection to the AutStarter or to the AUTServer
- * could not initialised.
+ * An exception thrown if a connection to the AUT-Agent or to the AUTServer
+ * could not initialized.
  * 
  * @author BREDEX GmbH
  * @created 12.08.2004
