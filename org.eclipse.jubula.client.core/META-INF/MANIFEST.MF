@@ -80,3 +80,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Activator: org.eclipse.jubula.client.core.Activator
 Bundle-ActivationPolicy: lazy
 JPA-PersistenceUnits: org.eclipse.jubula
+Eclipse-RegisterBuddy: org.eclipse.jubula.client.api

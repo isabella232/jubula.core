@@ -12,3 +12,4 @@ Require-Bundle: org.slf4j.api;bundle-version="[1.7.2,2.0.0)",
  org.eclipse.jubula.communication;bundle-version="[2.4.0,2.5.0)"
 Export-Package: org.eclipse.jubula.client.internal.exceptions,
  org.eclipse.jubula.client.internal
+Eclipse-BuddyPolicy: registered
