@@ -26,6 +26,7 @@
 		<path id="weaving.classpath">
 			<pathelement location="${basedir}/../org.eclipse.jubula.tools/bin" />
 			<pathelement location="${basedir}/../org.eclipse.jubula.communication/bin" />
+			<pathelement location="${basedir}/../org.eclipse.jubula.client.api/bin" />
 			<fileset dir="${currentPluginDir}">
 				<include name="**/*.jar" />
 				<exclude name="**/*org.eclipse.jubula.client.core*"/>
