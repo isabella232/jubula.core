@@ -33,7 +33,7 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
-import org.eclipse.jubula.rc.javafx.util.TraverseHelper;
+import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 /**
  * This context holds the tree and supports access to the Robot. It also
  * implements some general operations on the tree inside a TreeTableView.
@@ -153,7 +153,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                             TreeTableView<?> treeTable = 
                                     ((TreeTableView<?>) getTree());
                             List<TreeTableCell> cells = 
-                                    new TraverseHelper<TreeTableCell>()
+                                    new NodeTraverseHelper<TreeTableCell>()
                                     .getInstancesOf(treeTable,
                                             TreeTableCell.class);
                             for (TreeTableCell cell : cells) {
@@ -274,7 +274,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                         TreeTableView<?> treeTable = 
                                 ((TreeTableView<?>) getTree());
                         List<TreeTableCell> cells = 
-                                new TraverseHelper<TreeTableCell>()
+                                new NodeTraverseHelper<TreeTableCell>()
                                 .getInstancesOf(treeTable, TreeTableCell.class);
                         for (TreeTableCell treeTableCell : cells) {
                             // Nullchecks because of the virtual flow cells
@@ -334,7 +334,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                         TreeTableView<?> treeTable = 
                                 ((TreeTableView<?>) getTree());
                         List<TreeTableCell> cells = 
-                                new TraverseHelper<TreeTableCell>()
+                                new NodeTraverseHelper<TreeTableCell>()
                                 .getInstancesOf(treeTable, TreeTableCell.class);
                         for (TreeTableCell treeTableCell : cells) {
                             // Nullchecks because of the virtual flow cells
@@ -523,7 +523,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                         treeTable.layout();
                         TreeItem<?> item = (TreeItem<?>) node;
                         List<TreeTableCell> cells = 
-                                new TraverseHelper<TreeTableCell>()
+                                new NodeTraverseHelper<TreeTableCell>()
                                 .getInstancesOf(treeTable, TreeTableCell.class);
                         for (TreeTableCell cell : cells) {
                             // Nullchecks because of the virtual flow cells

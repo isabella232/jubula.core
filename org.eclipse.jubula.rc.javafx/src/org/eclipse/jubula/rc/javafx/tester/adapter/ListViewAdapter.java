@@ -27,7 +27,7 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
-import org.eclipse.jubula.rc.javafx.util.TraverseHelper;
+import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
@@ -95,8 +95,8 @@ public class ListViewAdapter<T extends ListView> extends
                     final T listView = getRealComponent();
                     listView.scrollTo(index.intValue());
                     listView.layout();
-                    TraverseHelper<ListCell> helper = 
-                            new TraverseHelper<ListCell>();
+                    NodeTraverseHelper<ListCell> helper = 
+                            new NodeTraverseHelper<ListCell>();
                     List<ListCell> lCells = 
                             helper.getInstancesOf(listView, ListCell.class);
                     for (ListCell cell : lCells) {
@@ -152,8 +152,8 @@ public class ListViewAdapter<T extends ListView> extends
                         int index = i.intValue();
                         listView.scrollTo(index);
                         listView.layout();
-                        TraverseHelper<ListCell> helper = 
-                                new TraverseHelper<ListCell>();
+                        NodeTraverseHelper<ListCell> helper = 
+                                new NodeTraverseHelper<ListCell>();
                         List<ListCell> lCells = 
                                 helper.getInstancesOf(listView, ListCell.class);
                         for (ListCell cell : lCells) {
@@ -182,8 +182,8 @@ public class ListViewAdapter<T extends ListView> extends
                     for (int i = 0; i < itemCount; i++) {
                         listView.scrollTo(i);
                         listView.layout();
-                        TraverseHelper<ListCell> helper = 
-                                new TraverseHelper<ListCell>();
+                        NodeTraverseHelper<ListCell> helper = 
+                                new NodeTraverseHelper<ListCell>();
                         List<ListCell> lCells = 
                                 helper.getInstancesOf(listView, ListCell.class);
                         for (ListCell cell : lCells) {

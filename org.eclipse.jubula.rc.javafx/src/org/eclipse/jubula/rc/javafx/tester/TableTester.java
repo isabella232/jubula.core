@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.javafx.tester;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -23,20 +24,29 @@ import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumnBase;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 
+import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.AbstractTableTester;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
+import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
+import org.eclipse.jubula.rc.javafx.util.AbstractTraverser;
+import org.eclipse.jubula.rc.javafx.util.GenericTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.tools.constants.TestDataConstants;
+import org.eclipse.jubula.tools.objects.event.EventFactory;
+import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
 /**
  * Toolkit specific commands for the <code>TableView</code>
@@ -125,6 +135,7 @@ public class TableTester extends AbstractTableTester {
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         table.layout();
+                        
                         List<? extends TableCell> tCells = ComponentHandler
                                 .getAssignableFrom(TableCell.class);
                         for (TableCell<?, ?> cell : tCells) {
@@ -134,8 +145,9 @@ public class TableTester extends AbstractTableTester {
                             rec.y = rec.y + Rounding.round(tablePos.getY());
                             if (rec.contains(p)
                                     && cell.getTableView().equals(table)) {
-                                int col = table.getColumns().indexOf(
-                                        cell.getTableColumn());
+                                TableColumn cellColumn = cell
+                                        .getTableColumn();
+                                int col = table.getVisibleLeafIndex(cellColumn);
                                 return new Cell(cell.getIndex(), col);
                             }
                         }
@@ -143,6 +155,30 @@ public class TableTester extends AbstractTableTester {
                     }
                 });
         return result;
+    }
+    
+    /**
+     * Gets the index path for a given column 
+     * @param column the column
+     * @param table the table of the column
+     * @return the index path
+     */
+    private String getColumnPath(TableColumnBase column, TableView table) {
+        String colPath = "";
+        TableColumnBase nxtColumn = column;
+        while (nxtColumn.getParentColumn() != null) {
+            colPath = TestDataConstants.
+                    PATH_CHAR_DEFAULT
+                    + (nxtColumn.getParentColumn()
+                            .getColumns()
+                            .indexOf(nxtColumn) + 1)
+                    + colPath;
+
+            nxtColumn = nxtColumn.getParentColumn();
+        }
+        colPath = (table.getColumns()
+                .indexOf(nxtColumn) + 1) + colPath;
+        return colPath;
     }
 
     /**
@@ -332,4 +368,221 @@ public class TableTester extends AbstractTableTester {
                 });
     }
 
+    @Override
+    public void rcVerifyValueInRow(final String row, final String rowOperator,
+            final String value, final String operator, final String searchType,
+            boolean exists)
+        throws StepExecutionException {
+
+        final ITableComponent adapter = (ITableComponent) getComponent();
+        final int implRow = adapter.getRowFromString(row, rowOperator);
+        // if row is header
+        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "rcVerifyValueInRow", new Callable<Boolean>() {
+
+                    @Override
+                    public Boolean call() throws Exception {
+                        boolean valueIsExisting = false;
+                        if (implRow == -1) {
+                            valueIsExisting = (getColumnByName(value, operator,
+                                    searchType, adapter, implRow) != null) 
+                                    ? true : false;
+                        } else {
+                            valueIsExisting = (getColumnByValue(value, operator,
+                                    searchType, adapter, implRow) != null) 
+                                    ? true : false;
+                        }
+                        return valueIsExisting;
+                    }
+                });
+
+        Verifier.equals(exists, result);
+    }
+    
+    /**
+     * Returns the internal index of the first column which has the given name
+     * CALL IN JAVAFX-THREAD!
+     * @param name the name of the column
+     * @param operator the operator
+     * @param searchType the searchType
+     * @param adapter the adapter class
+     * @param implRow the row
+     * @return String with the column path or null
+     */
+    private String getColumnByName(final String name, final String operator,
+            final String searchType, final ITableComponent adapter,
+            final int implRow) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getColumnByName",
+                new Callable<String>() {
+
+                    @Override
+                    public String call() throws Exception {
+                        final int columnCount = adapter.getColumnCount();
+                        if (columnCount > 0) {
+                            List<TableColumn> columns = getColumnsFromTable(
+                                    searchType, adapter);
+                            for (TableColumn column : columns) {
+                                if (MatchUtil.getInstance().match(
+                                        column.getText(), name, operator)) {
+                                    return getColumnPath(column,
+                                                            (TableView) 
+                                                            getRealComponent());
+                                }
+                            }
+                        }
+                        return null;
+                    }
+                });
+    }
+    
+    /**
+     * Returns a list of columns. if the search type is "relative" all Columns
+     * relative to the current selection.
+     * 
+     * CALL IN JAVAFX-THREAD!
+     * 
+     * @param searchType the searchType
+     * @param adapter the adapter
+     * @return list of columns
+     */
+    private List<TableColumn> getColumnsFromTable(final String searchType,
+            final ITableComponent adapter) {
+        ArrayList<TableColumn> columns = new ArrayList<>();
+        if (searchType
+                .equalsIgnoreCase(CompSystemConstants.SEARCH_TYPE_RELATIVE)) {
+            TableView table = (TableView) adapter.getRealComponent();
+            TableColumn selColumn = ((TablePosition) table.getSelectionModel()
+                    .getSelectedCells().get(0)).getTableColumn();
+            TableColumnBase parCol = selColumn.getParentColumn();
+            while (parCol != null) {
+                selColumn = (TableColumn) parCol;
+                parCol = parCol.getParentColumn();
+            }
+
+            columns.addAll(new GenericTraverseHelper<TableColumn, TableColumn>()
+                    .getInstancesOf(
+                            new AbstractTraverser<TableColumn, TableColumn>(
+                                    selColumn) {
+
+                                @Override
+                                public Iterable<TableColumn> 
+                                getTraversableData() {
+                                    return this.getObject().getColumns();
+                                }
+                            }, TableColumn.class));
+        } else {
+            for (TableColumn column : ((TableView<?>) getRealComponent())
+                    .getColumns()) {
+                columns.addAll(new GenericTraverseHelper
+                        <TableColumn, TableColumn>()
+                        .getInstancesOf(
+                                new AbstractTraverser<TableColumn, TableColumn>(
+                                        column) {
+
+                                    @Override
+                                    public Iterable<TableColumn> 
+                                    getTraversableData() {
+                                        return this.getObject().getColumns();
+                                    }
+                                }, TableColumn.class));
+            }
+            columns.addAll(((TableView)adapter.getRealComponent()).
+                    getColumns());
+        }
+        return columns;
+    }
+
+    /**
+     * Returns the internal index of the first column which contains the given value
+     * CALL IN JAVAFX-THREAD!
+     * @param value the value
+     * @param operator the operator
+     * @param searchType the searchType
+     * @param adapter the adapter class
+     * @param implRow the row
+     * @return String with the column path or null
+     */
+    private String getColumnByValue(final String value, final String operator,
+            final String searchType, final ITableComponent adapter,
+            final int implRow) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getColumnByValue", new Callable<String>() {
+
+                    @Override
+                    public String call() throws Exception {
+                        final int columnCount = adapter.getColumnCount();
+                        if (columnCount > 0) {
+                            int startIndex = getStartingColIndex(searchType);
+                            List<TableColumn> columns = 
+                                    ((TableView) getRealComponent())
+                                    .getVisibleLeafColumns();
+                            for (int i = startIndex; i < columns.size(); i++) {
+                                TableColumn column = columns.get(i);
+                                int index = adapter.getColumnFromString(
+                                        getColumnPath(column,
+                                                (TableView) getRealComponent()),
+                                                "equals");
+                                String cellValue = adapter.
+                                        getCellText(implRow, index);
+                                if (MatchUtil.getInstance().match(
+                                        cellValue,
+                                        value,
+                                        operator)) {
+                                    return getColumnPath(column,
+                                            (TableView) getRealComponent());
+                                }
+                            }
+                        }
+                        return null;
+                    }
+                    
+                });
+    }
+
+    @Override
+    public void rcSelectCellByColValue(final String row,
+            final String rowOperator, final String value,
+            final String operator, int clickCount,
+            final String extendSelection, final String searchType,
+            final int button) {
+        final ITableComponent adapter = (ITableComponent) getComponent();
+        final int implRow = adapter.getRowFromString(row, rowOperator);
+        // if row is header
+        String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "rcSelectCellByColValue", new Callable<String>() {
+
+                    @Override
+                    public String call() throws Exception {
+                        if (implRow == -1) {
+                            return getColumnByName(value, operator, searchType,
+                                    adapter, implRow);
+                        } else {
+                            return getColumnByValue(value, operator,
+                                    searchType, adapter, implRow);
+                        }
+                    }
+                });
+        if (result == null) {
+            throw new StepExecutionException("no such cell found", EventFactory //$NON-NLS-1$
+                    .createActionError(TestErrorEvent.NOT_FOUND));
+        }
+        rcSelectCell(row, rowOperator, result, operator, clickCount, 50,
+                CompSystemConstants.POS_UNIT_PERCENT, 50,
+                CompSystemConstants.POS_UNIT_PERCENT, extendSelection, button);
+    }
+    
+    /**
+     * @param searchType Determines column where the search begins ("relative" or "absolute")
+     * @return The index from which to begin a search, based on the search type
+     *         and (if appropriate) the currently selected cell.
+     */
+    private int getStartingColIndex(String searchType) {
+        int startingIndex = 0;
+        if (searchType.equalsIgnoreCase(
+                CompSystemConstants.SEARCH_TYPE_RELATIVE)) {
+            startingIndex = ((ITableComponent)getComponent())
+                    .getSelectedCell().getCol() + 1;
+        }
+        return startingIndex;
+    } 
 }

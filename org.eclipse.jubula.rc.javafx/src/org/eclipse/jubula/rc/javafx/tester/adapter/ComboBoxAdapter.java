@@ -20,7 +20,7 @@ import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.TraverseHelper;
+import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 
 import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
 
@@ -136,8 +136,8 @@ public class ComboBoxAdapter<T extends ComboBox<?>> extends
                     /** {@inheritDoc} **/
                     public ListView<?> call() throws Exception {
                         T comboBox = getRealComponent();
-                        TraverseHelper<ListView> helper = 
-                                new TraverseHelper<ListView>();
+                        NodeTraverseHelper<ListView> helper = 
+                                new NodeTraverseHelper<ListView>();
                         List<ListView> listViewList = helper.getInstancesOf(
                                 comboBox, ListView.class);
                         if (listViewList.size() == 1) {

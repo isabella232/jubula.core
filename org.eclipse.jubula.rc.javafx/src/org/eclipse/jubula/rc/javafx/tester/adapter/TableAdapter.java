@@ -11,6 +11,8 @@
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -35,9 +37,15 @@ import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
+import org.eclipse.jubula.rc.javafx.util.AbstractTraverser;
+import org.eclipse.jubula.rc.javafx.util.GenericTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.tools.constants.TestDataConstants;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.utils.StringParsing;
+
+import com.sun.javafx.scene.control.skin.TableColumnHeader;
 
 /**
  * Adapter for a TableView(Table)
@@ -48,6 +56,11 @@ import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 public class TableAdapter extends JavaFXComponentAdapter<TableView<?>> 
                           implements ITableComponent {
 
+    /**
+     * Workaround to support nested Columns without modifying classes which would
+     * affect other toolkits
+     **/
+    private List<TableColumn> m_columns = new ArrayList<TableColumn>();
     /**
      * Creates an adapter for a TableView.
      *
@@ -79,6 +92,18 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                 });
         return result;
     }
+    
+    /**
+     * 
+     * @param column the column to get the internal index for
+     * @return the index which is used internally to identify nested columns
+     */
+    private int getAdapterColumnIndex(TableColumn column) {
+        if (!m_columns.contains(column)) {
+            m_columns.add(column);
+        }
+        return m_columns.indexOf(column);
+    }
 
     @Override
     public int getColumnCount() {
@@ -87,7 +112,25 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
 
                     @Override
                     public Integer call() throws Exception {
-                        return getRealComponent().getColumns().size();
+                        int counter = 0;
+                        for (TableColumn column : getRealComponent()
+                                .getColumns()) {
+                            counter += new GenericTraverseHelper
+                                    <TableColumn, TableColumn>()
+                                    .getInstancesOf(
+                                            new AbstractTraverser
+                                            <TableColumn, TableColumn>(
+                                                    column) {
+
+                                                @Override
+                                                public Iterable<TableColumn> 
+                                                getTraversableData() {
+                                                    return this.getObject()
+                                                            .getColumns();
+                                                }
+                                            }, TableColumn.class).size();
+                        }
+                        return counter + getRealComponent().getColumns().size();
                     }
                 });
         return result;
@@ -114,10 +157,9 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                     @Override
                     public String call() throws Exception {
                         TableView<?> table = getRealComponent();
-                        TableColumn<?, ?> col = table
-                                .getVisibleLeafColumn(column);
+                        TableColumn col = table.getVisibleLeafColumn(column);
                         table.scrollTo(row);
-                        table.scrollToColumnIndex(column);
+                        table.scrollToColumn(col);
                         table.layout();
                         List<? extends TableCell> tCells = ComponentHandler
                                 .getAssignableFrom(TableCell.class);
@@ -153,8 +195,12 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
 
                     @Override
                     public String call() throws Exception {
-                        TableColumn tCol = getRealComponent()
-                                .getVisibleLeafColumn(column);
+                        if (m_columns.size() > 0) {
+                            TableColumn tCol = m_columns.get(column);
+                            return tCol.getText();
+                        }
+                        TableColumn tCol = getRealComponent().
+                                getVisibleLeafColumn(column);
                         return tCol.getText();
                     }
                 });
@@ -162,49 +208,77 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
     }
 
     @Override
-    public int getColumnFromString(final String col, final String operator) {
+    public int getColumnFromString(final String colPath, final String op) {
         Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getColumnFromString", new Callable<Integer>() { //$NON-NLS-1$
 
                     @Override
                     public Integer call() throws Exception {
-                        int column = -2;
                         TableView table = getRealComponent();
-                        try {
-                            int usrIdxCol = Integer.parseInt(col);
-                            if (usrIdxCol == 0) {
-                                usrIdxCol = usrIdxCol + 1;
-                            }
-                            column = IndexConverter
-                                    .toImplementationIndex(usrIdxCol);
-                        } catch (NumberFormatException nfe) {
-                            try {
-                                if (table.getColumns().size() <= 0) {
-                                    throw new StepExecutionException(
-                                            "No Columns", //$NON-NLS-1$
-                                            EventFactory
-                                                    .createActionError(
-                                                            TestErrorEvent.
-                                                            NO_HEADER));
-                                }
-                                int colN = table.getColumns().size();
-                                for (int i = 0; i < colN; i++) {
-                                    TableColumn c = (TableColumn) table
-                                            .getColumns().get(i);
-                                    String header = c.getText();
-                                    if (MatchUtil.getInstance().match(header,
-                                            col, operator)) {
-                                        column = i;
-                                    }
-                                }
-                            } catch (IllegalArgumentException iae) {
-                                // do nothing here
-                            }
+                        TableColumn column = null;
+                        List<String> path = StringParsing.splitToList(colPath,
+                                TestDataConstants.PATH_CHAR_DEFAULT,
+                                TestDataConstants.ESCAPE_CHAR_DEFAULT, false);
+                        ObservableList<TableColumn> columns;
+                        if (colPath.contains("" + TestDataConstants.
+                                PATH_CHAR_DEFAULT)) {
+                            columns = table.getColumns();
+                        } else {
+                            columns = table.getVisibleLeafColumns();
                         }
-
-                        return new Integer(column);
+                        Iterator<String> pathIterator = path.iterator();
+                        String currCol = null;
+                        while (pathIterator.hasNext()) {
+                            try {
+                                currCol = pathIterator.next();
+                                int usrIdxCol = Integer.parseInt(currCol);
+                                if (usrIdxCol == 0) {
+                                    usrIdxCol = usrIdxCol + 1;
+                                }
+                                int i = IndexConverter
+                                        .toImplementationIndex(usrIdxCol);
+                                if (pathIterator.hasNext()) {
+                                    columns = columns.get(i).getColumns();
+                                } else {
+                                    column = columns.get(i);
+                                }
+                            } catch (NumberFormatException nfe) {
+                                try {
+                                    columns = table.getColumns();
+                                    if (columns.size() <= 0) {
+                                        throw new StepExecutionException(
+                                                "No Columns", //$NON-NLS-1$
+                                                EventFactory
+                                                        .createActionError(
+                                                                TestErrorEvent.
+                                                                NO_HEADER));
+                                    }
+                                    for (int i = 0; i < columns.size(); i++) {
+                                        TableColumn c = columns.get(i);
+                                        String header = c.getText();
+                                        if (MatchUtil.getInstance().match(
+                                                header, currCol, op)) {
+                                            if (pathIterator.hasNext()) {
+                                                columns = columns.get(i)
+                                                        .getColumns();
+                                            } else {
+                                                column = columns.get(i);
+                                            }
+                                        }
+                                    }
+                                } catch (IllegalArgumentException iae) {
+                                    // do nothing here
+                                }
+                            }
+                        }                      
+                        if (table.getVisibleLeafColumns().contains(column)) {
+                            return table.getVisibleLeafColumns().
+                                    indexOf(column);
+                        } else {
+                            m_columns.add(column);
+                            return m_columns.indexOf(column);
+                        } 
                     }
-
                 });
         return result.intValue();
     }
@@ -254,36 +328,41 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
 
     @Override
     public Rectangle getHeaderBounds(final int column) {
-        final Rectangle columnCell = scrollCellToVisible(0, column);
         Rectangle result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getHeaderBounds", new Callable<Rectangle>() { //$NON-NLS-1$
 
                     @Override
                     public Rectangle call() throws Exception {
                         TableView<?> table = getRealComponent();
-                        TableColumn col = table.getVisibleLeafColumn(column);
+                        TableColumn col;
+                        if (m_columns.size() > 0) {
+                            col = m_columns.get(column);
+                        }
+                        col = getRealComponent().
+                                getVisibleLeafColumn(column);
                         table.scrollToColumn(col);
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         table.layout();
                         Parent headerRow = (Parent) table
                                 .lookup("TableHeaderRow"); //$NON-NLS-1$
-                        Set<Node> columnHeader = headerRow
+                        Set<Node> columnHeaders = headerRow
                                 .lookupAll("column-header"); //$NON-NLS-1$
                         Point2D parentPos = table.localToScreen(0, 0);
 
-                        for (Node n : columnHeader) {
-                            Bounds b = n.getBoundsInParent();
-                            Point2D pos = n.localToScreen(0, 0);
-
-                            Rectangle columnRec = new Rectangle(Rounding
-                                    .round(pos.getX() - parentPos.getX()),
-                                    Rounding.round(pos.getY()
-                                            - parentPos.getY()), Rounding
-                                            .round(b.getWidth()), Rounding
-                                            .round(b.getHeight()));
-                            if (columnCell.x == columnRec.x) {
-                                return columnRec;
+                        for (Node n : columnHeaders) {
+                            //DEPENDENCY TO INTERNAL API
+                            TableColumnHeader colH = (TableColumnHeader) n;
+                            if (colH.getTableColumn().equals(col)) {
+                                Bounds b = n.getBoundsInParent();
+                                Point2D pos = n.localToScreen(0, 0);
+    
+                                return new Rectangle(Rounding
+                                        .round(pos.getX() - parentPos.getX()),
+                                        Rounding.round(pos.getY()
+                                                - parentPos.getY()), Rounding
+                                                .round(b.getWidth()), Rounding
+                                                .round(b.getHeight()));
                             }
                         }
                         return null;
@@ -352,11 +431,11 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                     public Boolean call() throws Exception {
                         TableView<?> table = getRealComponent();
                         if (table.isEditable()) {
-                            TableColumn<?, ?> col = table
-                                    .getVisibleLeafColumn(column);
+                            TableColumn col = table.
+                                    getVisibleLeafColumn(column);
                             if (col.isEditable()) {
                                 table.scrollTo(row);
-                                table.scrollToColumnIndex(column);
+                                table.scrollToColumn(col);
                                 table.layout();
                                 List<? extends TableCell> tCells = 
                                         ComponentHandler.getAssignableFrom(

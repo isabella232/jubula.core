@@ -36,7 +36,7 @@ import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TreeTableOperationContext;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.TraverseHelper;
+import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.tools.objects.event.EventFactory;
 import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
 
@@ -63,7 +63,7 @@ public class TreeTableViewTester extends TreeViewTester {
                         ((TreeTableView<?>) getRealComponent()).layout();
 
                         List<TreeTableCell> tCells = 
-                                new TraverseHelper<TreeTableCell>()
+                                new NodeTraverseHelper<TreeTableCell>()
                                 .getInstancesOf((Parent) getRealComponent(),
                                         TreeTableCell.class);
                         for (TreeTableCell cell : tCells) {

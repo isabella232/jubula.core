@@ -44,7 +44,7 @@ import org.eclipse.jubula.rc.javafx.listener.sync.IStageResizeSync;
 import org.eclipse.jubula.rc.javafx.listener.sync.StageResizeSyncFactory;
 import org.eclipse.jubula.rc.javafx.tester.adapter.IContainerAdapter;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.TraverseHelper;
+import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.tools.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
 import org.eclipse.jubula.tools.messagehandling.MessageIDs;
@@ -275,8 +275,8 @@ public class ComponentHandler implements ListChangeListener<Stage>,
             if (content.contains(n)) {
                 return true;
             }
-            TraverseHelper<Node> helper = 
-                    new TraverseHelper<>();
+            NodeTraverseHelper<Node> helper = 
+                    new NodeTraverseHelper<>();
             for (Node contentNode : content) {
                 if (contentNode instanceof Parent 
                         && helper.isChildOf(
@@ -296,7 +296,7 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      */
     private static boolean isSkinNode(Node node, SkinBase<?> skin) {
         ObservableList<Node> skinChildren = skin.getChildren();
-        TraverseHelper<Node> help = new TraverseHelper<>();
+        NodeTraverseHelper<Node> help = new NodeTraverseHelper<>();
         for (Node n : skinChildren) {
             if (n == node) {
                 return true;
