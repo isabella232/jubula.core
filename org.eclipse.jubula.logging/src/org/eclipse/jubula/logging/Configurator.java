@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core.logging;
+package org.eclipse.jubula.logging;
 
 import java.io.InputStream;
 

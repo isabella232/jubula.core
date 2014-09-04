@@ -121,6 +121,7 @@
   <modules>
     <module>../org.eclipse.jubula.tools</module>
     <module>../org.eclipse.jubula.communication</module>
+    <module>../org.eclipse.jubula.logging</module>
     <module>../org.eclipse.jubula.documentation.gen</module>
     <module>../org.eclipse.jubula.ui.compatibility</module>
     <module>../org.eclipse.jubula.releng.server</module>

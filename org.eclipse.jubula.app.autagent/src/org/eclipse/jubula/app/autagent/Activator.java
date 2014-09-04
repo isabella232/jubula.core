@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.autagent;
 
-import org.eclipse.jubula.client.core.logging.Configurator;
+import org.eclipse.jubula.logging.Configurator;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 

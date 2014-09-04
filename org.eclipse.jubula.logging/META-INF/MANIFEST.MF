@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula - Logging
+Bundle-SymbolicName: org.eclipse.jubula.logging
+Bundle-Version: 2.4.0.qualifier
+Bundle-Vendor: Eclipse Jubula
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Export-Package: org.eclipse.jubula.logging
+Require-Bundle: org.slf4j.api;bundle-version="[1.7.2,2.0.0)",
+ ch.qos.logback.classic;bundle-version="[1.0.0,2.0.0)",
+ ch.qos.logback.core;bundle-version="[1.0.0,2.0.0)"
