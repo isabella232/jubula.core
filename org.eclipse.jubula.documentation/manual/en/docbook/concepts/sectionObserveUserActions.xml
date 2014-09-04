@@ -1,0 +1,45 @@
+<section id="observing-user-actions" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Observing user actions</title>
+  <para>
+    As explained in the introduction (<xref linkend="recorded-tests"/>) and in
+    the section on how to record (<xref linkend="tips-and-tricks-observation-mode"/>), we believe
+    that recording tests has various disadvantages in any tool.
+  </para>
+  <para>
+    However, you can observe Test Cases in a running Java AUT.
+    You can record actions and checks in your AUT, and the output
+    for these actions is Test Steps.
+  </para>
+  <para>
+    You can create the same tests with observing as you can with
+    specification. The real differences are:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        object mapping is carried out automatically in observing mode.
+        Because of this, you do not provide a component name, but one
+        is created automatically.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        you must use concrete values for parameters in the observation
+        mode. You can (and should), however, change these to
+        references in the specification perspective later so that your
+        tests are more reusable.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    You can reuse observed Test Cases in the same ways as you can
+    reuse specified Test Cases.
+  </para>
+  <para>
+    <para role="tip">The observation mode supports high level actions. To find out
+    exactly how an action works, look up the component and its action in
+    the reference manual</para>.
+  </para>
+</section>

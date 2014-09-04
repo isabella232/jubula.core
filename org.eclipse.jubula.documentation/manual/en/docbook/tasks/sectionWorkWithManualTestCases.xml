@@ -1,0 +1,149 @@
+<section id="working-with-manual" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Working with manual Test Cases</title>
+  <section id="creating-manual-tests">
+    <title>Creating manual tests</title>
+    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <para>
+      You can create manual tests to be executed and analyzed.
+    </para>
+    <para>
+      A Test Case containing manual Test Steps is the same as an
+      automated Test Case for all intents and purposes. You can add
+      data, reuse it in other Test Cases, and add it to Test Suites to
+      be executed. The only difference is during execution: manual
+      tests are executed in an interactive mode
+      (<xref linkend="executing-and-analyzing-manual-tests"/>).
+    </para>
+    <para>
+      To create a manual test:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Create a Test Case (<xref linkend="creating-test-cases"/>)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Add the module for <emphasis>manual Test Case</emphasis>
+          from the library of Test Cases (category: Manual Test Step).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the Properties View, you can enter three pieces of data:
+        </para>
+        <variablelist>
+          <varlistentry>
+            <term>
+              The action(s) to perform:
+            </term>
+            <listitem>
+              <para>
+                Enter a short description which should appear when the
+                test is being executed. You can also enter referenced
+                parameters (<xref linkend="using-references-for-data-in-test-cases"/>) or
+                variables (<xref linkend="using-variables-as-data-for-test-cases"/>) here to specify
+                different data for the test.
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              The expected behaviour:
+            </term>
+            <listitem>
+              <para>
+                Enter the description (any any data) of the expected
+                outcome of the Test Step.
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              Timeout:
+            </term>
+            <listitem>
+              <para>
+                Enter how long the test execution should wait before
+                receiving the information that the Test Step passed or
+                failed. We recommend setting this timeout value high
+                enough for a manual tester to be able to complete the
+                Test Step and enter any comments.
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </listitem>
+      <listitem>
+        <para>
+          Once your manual Test Case is finished, then you can add it
+          to a Test Suite (<xref linkend="adding-items-to-editors"/>) to be executed
+          (<xref linkend="executing-and-analyzing-manual-tests"/>).
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <para role="tip">We recommend keeping manual Test Cases in a separate
+      category to automated Test Cases. Although it is possible to
+      combine manual and automated Test Cases in one test, make sure
+      you know which Test Suites can be run completely automatically
+      for your unattended tests!</para>
+    </para>
+  </section>
+  <section id="executing-and-analyzing-manual-tests">
+    <title>Executing and analyzing manual tests</title>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <para>
+      Once you have created a manual Test Case
+      (<xref linkend="creating-manual-tests"/>), you can execute it.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Start the AUT (<xref linkend="starting-the-aut"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Start the Test Suite containing the manual Test Steps
+          (<xref linkend="starting-stopping-and-pausing-test-suites-and-test-jobs"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For each manual Test Step in the test, a dialog will appear
+          with the descriptions and data you entered for the
+          <emphasis>action to perform</emphasis> and the
+          <emphasis>expected behavior</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Execute the Test Step as described, enter a comment if
+          necessary, then click either ”<emphasis>passed</emphasis>”
+          or ”<emphasis>failed</emphasis>” in the dialog to move to
+          the next Test Step. <para role="tip">If the Test Step fails, then an
+          automatic screenshot will be taken
+          (<xref linkend="test-result-preferences"/>), and any Event Handlers
+          (<xref linkend="dealing-with-errors-in-tests"/>) for this Test Case will be
+          activated.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once the dialog has been closed, the next Test Step dialog
+          will appear.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          At the end of the test, you can see the test result report
+          like any other automated test (<xref linkend="testresultview"/>).
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

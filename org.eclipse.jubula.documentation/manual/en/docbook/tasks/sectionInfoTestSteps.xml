@@ -1,0 +1,216 @@
+<section id="information-on" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                           xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Information on Test Steps</title>
+  <anchor role="helpid" id="capContextId">Test Steps</anchor>
+  <para>
+    Test Steps are the smallest unit in a test. They correspond to one
+    action on one component.
+  </para>
+  <para>
+    <para role="tip">Instead of creating Test Steps, we recommend using the
+    library of Test Cases (<xref linkend="creating-tests-from-the-library-of-pre-defined-test-cases"/>). Each Test Case
+    in the library contains one Test Step, with all the parameters
+    already referenced. Using the library makes test creation much
+    easier!</para>
+  </para>
+  <section id="specsteps">
+    <title>Specifying Test Steps</title>
+    <para>
+      <para role="tip">You must have created a Test Case (<xref linkend="creating-test-cases"/>) in order to create Test Steps.</para>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the Test Case Editor by double-clicking on the
+          Test Case you want to edit in the Test Case Browser.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Create a Test Step from the context-sensitive menu in the Test Case Editor:
+          
+          <para>
+            <emphasis role="menupath">Add</emphasis>--&gt;<emphasis role="menupath">New Test Step</emphasis>.
+          </para>
+          
+          (This adds the Test Step after any other items in the Test Case Editor.)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Alternatively, use the option in the context-sensitive menu
+          to insert a Test Step. This inserts the new Test Step above
+          the currently selected item.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The <emphasis>New Test Step</emphasis> (<xref linkend="newstep"/>) dialog will
+          appear.
+        </para>
+      </listitem>
+    </orderedlist>
+    <figure id="newstep">
+      <title>New Test Step Dialog</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/teststepdialog.png"/>
+        </imageobject>
+        <textobject><phrase>New Test Step Dialog</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <para>
+      <emphasis role="strong">Filling in the Test Step dialog</emphasis><?linebreak?>
+      <emphasis role="strong">Test Step name</emphasis>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          In the <emphasis>Test Step Name</emphasis> field, enter a name for the
+          Test Step. This name is just for recognition purposes, but
+          should be easily identifiable at a later point.
+        </para>
+        <para>
+          <emphasis role="strong">Component type</emphasis>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select the component you want to test from the combo box.
+        </para>
+        <para>
+          <para role="tip">A component is an element of the user interface you can execute an action on, e.g. a button, a text field.</para>
+        </para>
+        <para>
+          <emphasis role="strong">Component name</emphasis>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter a component name. This is your user-defined name that
+          you will use to refer to this particular component. It will
+          later be mapped to the real component in the AUT.
+          Again, we suggest using conventions to name components.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When you are entering component names, a combo box appears
+          with a list of names you have already used.
+        </para>
+        <para>
+          If any of the names are grayed out, this means they have
+          been used for other component types and cannot be used for
+          the currently selected component type.
+        </para>
+        <para>
+          You can change, or <emphasis>reassign</emphasis> component names later
+          when you reuse this Test Case. Doing this means that you can
+          execute the same actions on different components in the
+          interface. The section on the Component Names View
+          (<xref linkend="entering-and-reassigning-component-names-in-the-component-names-view"/>) contains information on
+          reassigning component names.
+        </para>
+        <para>
+          <emphasis role="strong">Action</emphasis>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the combo box, choose the action you want to execute on
+          this component.
+          <para role="tip">Refer to the chapter on Components, Actions, and Parameters for information on components, the
+          actions they support, and their parameters.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Click ”<emphasis>OK</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Test Step will appear as nested in the Test Case.
+          <para role="tip">You can change the position of Test Steps using drag-and-drop.</para>
+        </para>
+        <para>
+          You can see and edit the details of any selected Test Step
+          in the Properties View.
+        </para>
+        <para>
+          The next step is to add parameter values (data) for
+          Test Steps in the Properties View (<xref linkend="working-with-data"/>).
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="editingsteps">
+    <title>Editing Test Steps</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the Test Case Editor by double-clicking the Test Case
+          you want to edit in the Test Case Browser.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Single-click the Test Step you want to edit.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the Properties View, you can:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              edit the Test Step name
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              add a comment
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              edit the component, component name and action for the
+              Test Step
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              edit the parameter values for the Test Step
+              (<xref linkend="working-with-data"/>)
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>
+          You can also move the Test Step within the Test Case using
+          drag-and-drop.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To delete the Test Step, select:
+          
+          <para>
+            <emphasis role="menuPath">Delete</emphasis>
+          </para>
+          
+          from the context-sensitive menu.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <para role="tip">Select the component or action in the Properties View and
+      press <emphasis role="input">»F1«</emphasis> to see
+      context-sensitive help about this component or action from the
+      reference manual.</para>
+    </para>
+  </section>
+</section>

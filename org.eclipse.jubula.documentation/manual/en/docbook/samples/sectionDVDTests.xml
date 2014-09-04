@@ -1,0 +1,81 @@
+<section id="Samplesdvdtests" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>DVD Tool Tests</title>
+  <section id="sample-2.1-testing-the-menu-bar-and-dialog-boxes">
+    <title>Sample 2.1: testing the menu bar and dialog boxes</title>
+    <para>
+      This category and the ones following it contain Test Cases which
+      are used in the executable Test Case
+      <emphasis>2_DVD_TOOL_FULL_TEST</emphasis> and the Test Suite of
+      the same name.
+    </para>
+    <para>
+      The Test Case in this category contains a reused Test Case from
+      the <emphasis>bound_modules_samples</emphasis> Project. It
+      contains Test Cases to add a category to the DVD Tool via the
+      menu. The parameter for the category name has been referenced,
+      as has a variable to read the category name entered for use
+      later in the test.
+    </para>
+    <para>
+      The original Test Case in the
+      <emphasis>bound_modules_samples</emphasis> Project had no data.
+      When it was reused here, three data sets were added. This means
+      that the Test Case is executed three times, each time entering a
+      different category name, and storing the name as a variable.
+    </para>
+  </section>
+  <section id="sample-2.2-testing-trees">
+    <title>Sample 2.2: testing trees</title>
+    <para>
+      This category contains a Test Case which checks that a tree node
+      exists, based on its textpath. Three data sets have been
+      entered, which use the variables stored in the previous Test
+      Case to complete the textpath.
+    </para>
+    <para>
+      For example, one of the stored variables was
+      <emphasis>CATEGORY1</emphasis>. The textpath to test is entered
+      as <literal>Category/${CATEGORY1}</literal>.
+    </para>
+  </section>
+  <section id="sample-2.3-testing-tables">
+    <title>Sample 2.3: testing tables</title>
+    <para>
+      This category contains a Test Case which contains two Test
+      Cases. The first selects a category node in the tree and then
+      selects the option from the context menu to add a DVD. The
+      second Test Case enters text into the cells in the table. This
+      Test Case has four data sets, so that the four cells can be
+      filled with one Test Case.
+    </para>
+  </section>
+  <section id="sample-2.4-testing-tabbed-panes-lists-combo-boxes">
+    <title>Sample 2.4: testing tabbed panes, lists, combo
+    boxes</title>
+    <para>
+      This category contains four Test Cases. The first two,
+      <emphasis>Fill in the Content Tab</emphasis> and <emphasis>Fill
+      in the Technics Tab</emphasis> contain Test Cases reused from
+      the <emphasis>unbound_modules_concrete</emphasis> Project and
+      the <emphasis>bound_modules_samples</emphasis> Project. These
+      Test Cases execute various actions on the tabbed panes in the
+      DVD Tool. There is a lot of reuse of Test Cases, especially on
+      different components. The <emphasis>Enter a Text
+      Detail</emphasis> Test Case, for example, is reused three times,
+      with a different component name each time. The <emphasis>Fill in
+      the Technics Tab</emphasis> Test Case also contains an Event
+      Handler to check a checkbox if it isn’t already done so. Many of
+      the parameters in these Test Cases have been referenced so that
+      values can be entered for them later.
+    </para>
+    <para>
+      The last two Test Cases each contain a Test Case to select a
+      DVD, and then contain the <emphasis>Fill in the Content
+      Tab</emphasis> and <emphasis>Fill in the Technics Tab</emphasis>
+      Test Cases. Because the values in these Test Cases were left
+      empty, different data can be entered for each Test Case.
+    </para>
+  </section>
+</section>

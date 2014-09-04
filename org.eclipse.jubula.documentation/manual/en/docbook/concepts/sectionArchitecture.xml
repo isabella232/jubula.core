@@ -1,0 +1,87 @@
+<section id="architecture" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Architecture</title>
+  <para>
+    This is a client-server application. We refer to the client part
+    as the Integrated Test Environment or ITE, and the server
+    component as the AUT Agent.:
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        The ITE
+      </term>
+      <listitem>
+        <para>
+          is where tests are specified and evaluated.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        The AUT Agent
+      </term>
+      <listitem>
+        <para>
+          controls the application under test (AUT) and executes the
+          specified tests. 
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+  <para>
+    You can install the ITE and AUT Agent on different machines; even
+    on different platforms. This lets you specify and run your tests
+    on different machines, and means that you can run the same test on
+    different platforms.
+  </para>
+  <section id="ite">
+    <title>ITE</title>
+    <para>
+      The ITE is the interface between you and the AUT. It provides you with browsers
+      to see Test Cases and Test Suites, and editors to modify them.
+    </para>
+    <para>
+      In the client, you specify your tests without any programming.
+      You can write tests modularly, structure them to fit your needs,
+      and easily change them to follow developments in the AUT.
+    </para>
+  </section>
+  <section id="aut-agent-1">
+    <title>AUT Agent</title>
+    <para>
+      The AUT Agent is the link between your specified tests and the AUT. Once the AUT Agent has
+      started the AUT, object mapping can take place, and tests can be observed and executed.
+    </para>
+    <para>
+      You can install the AUT Agent on the same machine as the client
+      or on any other machine in the network, as long as the AUT can
+      also run on the machine. The AUT Agent can even run on a
+      different platform than the client.
+    </para>
+    <para>
+      This separation of the client and AUT Agent means that you don’t
+      have to sacrifice control of your machine during test execution.
+      It also means that you can test your AUT on different systems
+      using the same test, and from the same client.
+    </para>
+  </section>
+  <section id="working-with-the-ite-and-aut-agent-on-different-machines">
+    <title>Working with the ITE and AUT Agent on different
+    machines</title>
+    <para>
+      You can install the ITE on any machine in the network, and then
+      install the AUT Agent on various other machines in the network.
+    </para>
+    <para>
+      Within the ITE, you can define configurations for your AUT. The
+      configurations specify where the AUT jar or exe file is, the JRE
+      binary etc., and on which machine it should look.
+    </para>
+    <para>
+      You can specify different AUT Agent hosts and port numbers to
+      connect to.
+    </para>
+  </section>
+</section>

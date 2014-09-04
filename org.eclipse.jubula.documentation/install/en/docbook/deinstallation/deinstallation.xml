@@ -1,0 +1,45 @@
+<chapter id="deinstallation" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                           xmlns:xl="http://www.w3.org/1999/xlink">
+  <?dbhtml dir="deinstallation"?>
+  <title>Deinstallation</title>
+  <orderedlist>
+    <listitem>
+      <para>
+        In Unix, start <emphasis role="input">./uninstall</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In Windows, select <emphasis role="input">uninstall</emphasis> from the start
+        menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A dialog box will appear to confirm this choice.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you click yes, you will see a dialog which will remind you to
+        export your Projects from the current database, and to backup
+        any extensions of configurations you have used. If you are
+        uninstalling as part of the migration process, please refer to
+        the migration information (<xref linkend="migrate"/>) before uninstalling!
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select the options you have completed and then click
+        ”<emphasis>Yes</emphasis>” again to uninstall the program.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Once the program has been uninstalled, you will see a message to
+        confirm this.
+      </para>
+    </listitem>
+  </orderedlist>
+</chapter>

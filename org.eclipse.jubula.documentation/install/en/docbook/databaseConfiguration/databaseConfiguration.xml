@@ -1,0 +1,21 @@
+<chapter id="database-configuration" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                   xmlns:xi="http://www.w3.org/2001/XInclude" >
+  <?dbhtml dir="databaseConfiguration"?>
+  <title>Database configuration</title>
+  <para>
+    The ITE uses a database to store Projects. The necessary tables for
+    the database are created automatically. For this reason, it is
+    important to use a clean database with no other tables in it.
+  </para>
+  <para>
+    You can configure the type of database to use in the ITE via the
+    preferences. The following sections give some advice on configuring
+    the database setup for optimum use.
+  </para>
+  
+  <xi:include href="sectionUsingEmbeddedDatabase.xml"/>
+  <xi:include href="sectionUsingOracleDatabase.xml"/>
+  <xi:include href="sectionUsingMySQLDatabase.xml"/>
+  <xi:include href="sectionUsingPostgreSQLDatabase.xml"/>
+  
+</chapter>

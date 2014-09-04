@@ -1,0 +1,314 @@
+<section id="remoteControlExtension" xmlns="http://docbook.org/ns/docbook"
+                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                     xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Remote control extension</title>
+  <para>
+    AUTs are controlled by the remote control called AUT Agent. The
+    ITE can also execute the remote control if the embedded AUT Agent
+    is used. Otherwise, the normal AUT Agent runs as a remote control
+    in a separate process independently from the ITE. For each
+    supported component known, a Tester Class must exist. This class
+    implements the test actions that can be carried out on the
+    component. You need to write a fragment for your component, which
+    contains the Tester Class and a corresponding adapter factory.
+  </para>
+  <section id="creating-the-fragment">
+    <title>Creating the fragment</title>
+    <para>
+      The following steps have to be done to extend the remote
+      control:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Reference the zip-file<?linebreak?>
+          <emphasis role="input">development/extension-toolkit-rc.zip</emphasis><?linebreak?>
+          as a <emphasis role="strong">Software Site</emphasis> in your <emphasis role="strong">Target Platform</emphasis>. Verify while adding the software site, that the check box <emphasis role="strong">Include required software</emphasis> is not checked. This software site also includes the Java documention of the source code.
+          If you are writing an extension for the JavaFX toolkit, you need to clone the Jubula repository to get access to the required source code because it is not yet available in the zip-file.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Set the installed software site as your target platform.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Create a fragment project with one of the following IDs as
+          host:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis role="input">org.eclipse.jubula.rc.swing</emphasis><?linebreak?>
+              for extending Swing support.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="input">org.eclipse.jubula.rc.swt</emphasis><?linebreak?>
+              for extending SWT support without RCP environment.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="input">org.eclipse.jubula.rc.rcp.swt</emphasis><?linebreak?>
+              for extending SWT support in Eclipse 3.x and 4.x (including compat layer).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="input">org.eclipse.jubula.rc.rcp.e3.swt</emphasis><?linebreak?>
+              for extending GEF support in Eclipse 3.x (without compat layer).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="input">org.eclipse.jubula.rc.javafx</emphasis><?linebreak?>
+              for extending JavaFX support.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>
+          Write your own adapter and Tester Classes.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para role="tip">If you are writing an extension for the JavaFX
+      toolkit, make sure that your adapter and Tester Classes really
+      get compiled with Java 8.
+    </para>
+    <para>
+      Adapters are used for all supported toolkits, i.e. Swing, SWT,
+      GEF, RCP and JavaFX. They wrap and specify graphic components in
+      a form we need for our Tester Classes. You can write your own
+      adapter or reuse our existing adapters. We recommend reusing our
+      adapters to take advantage of the already existing code.
+    </para>
+    <para>
+      Before we have a look at the remote control extension examples
+      in <xref linkend="extensionExamples"/>, we describe in general how
+      to create an adapter and Tester Classes.
+    </para>
+    <section id="creating-an-adapter">
+      <title>Creating an adapter</title>
+      <para>
+        To use an adapter you have to implement the interface
+        <emphasis role="input">IAdapterFactory</emphasis>, which is defined in the package named
+        
+        <para>
+          <emphasis>org.eclipse.jubula.rc.common.adaptable</emphasis>.
+        </para>
+        
+        It is necessary that the implementation of this interface resists in a package named
+        
+        <para>
+          <emphasis>org.eclipse.jubula.rc.common.adapter</emphasis>.
+        </para>
+        
+        The package naming is important for the remote control extension, because adapters can only be found if they are located in a package with the mentioned name.
+      </para>
+      <para>
+        In order to support your own components, the targeted type must be an instance of <emphasis role="input">IComponent</emphasis>, which is defined in the package named
+        
+        <para>
+          <emphasis>org.eclipse.jubula.rc.common.tester.adapter.interfaces</emphasis>.
+        </para>
+        
+        This targeted type can be used for text components. If you want to support your own graphical component, you should at least use the interface <emphasis role="input">IWidgetComponent</emphasis> as the targeted type, which is a child of <emphasis role="input">IComponent</emphasis>. Both interfaces are defined in the same package.
+      </para>
+      <para>
+        For Swing, SWT and JavaFX there are also specific implementations of different adapters in the following packages, which can be used for your own component:
+        <para>
+          <emphasis>org.eclipse.jubula.rc.swing.tester.adapter</emphasis><?linebreak?>
+          <emphasis>org.eclipse.jubula.rc.swt.tester.adapter</emphasis><?linebreak?>
+          <emphasis>org.eclipse.jubula.rc.javafx.tester.adapter</emphasis>
+        </para>
+      </para>
+      <para>
+        Now we know how to create an own adapter in general. The next
+        step is to implement one or more Tester Class.
+      </para>
+    </section>
+    <section id="creating-a-tester-class">
+      <title>Creating a Tester Class</title>
+      <para>
+        The functionally important aspect of a Tester Class is that it
+        contains public methods for the test actions, which will
+        appear in the client. These methods are linked to testable
+        actions within a user-defined ITE toolkit plug-in.
+      </para>
+      <para>
+        Each ITE toolkit extension provides an XML configuration file,
+        which defines the available methods with parameters, as well
+        as information for string externalization. Reflection is used
+        to call these methods. For this reason, the signature of a
+        defined method including its name, and the ordered parameter
+        types are important for the remote control extension.
+      </para>
+      <para>
+        You can write your own Tester Classes, but if you only want to support a new component with existing actions, you could use one of our existing Tester Classes, which you can find in the package named
+        
+        <para>
+          <emphasis>org.eclipse.jubula.rc.common.tester</emphasis>.
+        </para> 
+        
+        For Swing, SWT and JavaFX there are also specific implementations in the following packages:
+        <para>
+          <emphasis>org.eclipse.jubula.rc.swing.tester</emphasis><?linebreak?>
+          <emphasis>org.eclipse.jubula.rc.swt.tester</emphasis><?linebreak?>
+          <emphasis>org.eclipse.jubula.rc.javafx.tester</emphasis>
+        </para>
+      </para>
+      <para>
+        Please take the following guidelines into consideration for
+        creating Tester Classes:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            The class must be compatible with <emphasis>Java
+            1.4</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            It must either implement
+          </para>
+          <itemizedlist>
+            <listitem>
+              <para>
+                the interface <emphasis role="input">ITester</emphasis> defined in the package named<?linebreak?>
+                <emphasis>org.eclipse.jubula.rc.common.tester.interfaces</emphasis>,
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                or the abstract class <emphasis role="input">AbstractUITester</emphasis> defined in the package named<?linebreak?>
+                <emphasis>org.eclipse.jubula.rc.common.tester</emphasis>.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>
+            The component must provide
+            <emphasis role="strong">public</emphasis> methods for all
+            actions declared by the XML configuration file of the
+            corresponding ITE toolkit extension.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Each method that implements an action must throw a
+            <emphasis role="input">StepExecutionException</emphasis> defined in the
+            package named
+
+            <para>
+              <emphasis>org.eclipse.jubula.rc.common.exception</emphasis>
+            </para>
+            
+            to notify the ITE if the execution of the action has failed.
+            
+          </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </section>
+  <section id="deploying-the-fragment">
+    <title>Deploying the fragment</title>
+    <para>
+      Once you have written your fragment, you still need to make all
+      components aware of its presence. This is done by exporting the
+      fragment and deploying it into the remote control.
+    </para>
+    <para>
+      There are different ways for installing your fragment into the
+      remote control, depending on the AUT Agent used and the specific
+      AUT. You are free to use either the embedded AUT Agent or the
+      standalone AUT Agent. Also your AUT can be based upon the OSGi
+      framework or not. The following table shows an overview, where
+      to deploy your fragment:
+    </para>
+    <informaltable>
+      <tgroup cols="3">
+        <colspec align="center" />
+        <colspec align="center" />
+        <colspec align="center" />
+        <tbody>
+          <row>
+            <entry>
+               
+            </entry>
+            <entry>
+              without OSGi<?linebreak?>(Swing, SWT, JavaFX)
+            </entry>
+            <entry>
+              with OSGi<?linebreak?>(RCP, GEF)
+            </entry>
+          </row>
+          <row>
+            <entry>
+              embedded<?linebreak?>AUT Agent
+            </entry>
+            <entry>
+              ITE
+            </entry>
+            <entry morerows="1">
+              AUT
+            </entry>
+          </row>
+          <row>
+            <entry>
+              standalone<?linebreak?>AUT agent
+            </entry>
+            <entry>
+              standalone<?linebreak?>AUT agent
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+    <para>
+      It shows, in which case you usually deploy your fragment into
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          the ITE with a feature including your fragment,
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          the standalone AUT Agent by adding your fragment to its
+          configuration, or
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          the AUT with a feature including your fragment.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      The configuration of the standalone AUT Agent can be done by modifying the file
+      
+      <para>
+        <emphasis role="input">server/configuration/config.ini</emphasis>
+      </para>
+      
+      There you have to append <emphasis role="input">,fragment_id</emphasis> at the end of the line starting with 
+      <emphasis role="input">osgi.bundles=</emphasis>. Make sure that the bundles are comma-separated. It is also necessary
+      to add the argument <emphasis role="input">-clean</emphasis> in the file <emphasis role="input">server/autagent.ini</emphasis>,
+      when deploying a new version with the same fragment ID. Apart from the deploying methods mentioned, it is also possible to install
+      your fragment using a p2 repository or the OSGi console.
+    </para>
+    <para>
+      You should be able to test your new component once you have
+      installed the toolkit feature into the ITE and the fragment as
+      described below.
+    </para>
+  </section>
+</section>

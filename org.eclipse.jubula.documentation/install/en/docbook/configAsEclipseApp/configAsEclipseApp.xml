@@ -1,0 +1,20 @@
+<chapter id="configuring-as-an-eclipse-application" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                  xmlns:xl="http://www.w3.org/1999/xlink">
+  <?dbhtml dir="configAsEclipseApp"?>
+  <title>Configuring as an Eclipse application</title>
+  <para>
+    As the ITE is an Eclipse application, it can be configured just like
+    any other Eclipse application can – including setups for multi
+    users.
+  </para>
+  <para>
+    If multiple users should have access to e.g. extensions, then we
+    recommend using a shared configuration area.
+  </para>
+  <para>
+    Further information on different configurations for Eclipse
+    applications can be found at:
+    <link xl:href="http://help.eclipse.org/juno/topic/org.eclipse.platform.doc.isv/reference/misc/multi_user_installs.html?cp=2_1_3_7">http://help.eclipse.org/juno/topic/org.eclipse.platform.doc.isv/reference/misc/multi_user_installs.html?cp=2_1_3_7</link>
+  </para>
+</chapter>

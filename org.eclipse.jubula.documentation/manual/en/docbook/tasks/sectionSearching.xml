@@ -1,0 +1,639 @@
+<section id="searching" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                      xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Searching</title>
+  <section id="searching-for-and-opening-the-original-specification-of-a-test-case-or-test-suite">
+    <title>Searching for and opening the original specification of a Test Case or Test Suite</title>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <para>
+      To find the the original specification of any reused Test Case
+      or Test Suite:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Single-click the Test Case or Test Suite whose specification
+          you want to find.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Right-click on the Test Case or Test Suite and select
+          ”<emphasis>Show specification</emphasis>” from the
+          context-sensitive menu. You can also press
+          <emphasis role="input">»F6«</emphasis> to show the
+          specification.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The originally specified Test Case or Test Suite will be
+          highlighted in the Test Case Browser or Test Suite Browser.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can open the specified Test Case or Test Suite
+          automatically by selecting ”<emphasis>Open
+          specification</emphasis>” or by pressing
+          <emphasis role="input">»F3«</emphasis>. This also works on the
+          original specification of Test Cases, Test Suites and Test
+          Jobs in the brosers.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you double-click the Test Case or Test Suite while it is
+          in an editor, then this will also open the original
+          specification (as if you had pressed
+          <emphasis role="input">»F3«</emphasis>). <para role="tip">Test Cases and
+          Test Suites that are not visible due to active filters in
+          the browser are not displayed when show specification is
+          used. You can, however, use <emphasis>open
+          specification</emphasis> to directly open a filtered Test
+          Case or Test Suite.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="searching-for-places-where-a-test-case-or-test-suite-has-been-used">
+    <title>Searching for places where a Test Case or Test Suite has been used</title>
+    <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <para>
+      To find the places where you have reused a Test Case or a Test
+      Suite:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          In a browser or an editor, right-click on the Test Case or
+          Test Suite whose places of reuse you want to find. You must
+          have selected the parent (original specification) for the
+          action to be enabled.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select ”<emphasis>show where reused</emphasis>” from the
+          context sensitive menu. You can also press
+          <emphasis role="input">»F7«</emphasis> to show the places where
+          a Test Case or Test Suite has been reused.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the ”<emphasis>Search Result View</emphasis>”
+          (<xref linkend="using-the-search-result-view"/>), a list of places will appear.
+          These are the places where the Test Case or Test Suite has
+          been reused.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Double-click on an icon in the view to highlight and open
+          the place of reuse.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you are using this option on a Test Case and want to
+          replace the Test Case you searched for with another Test
+          Case at some or all of the places where it is reused, you
+          can start this action from the Search Result View
+          (<xref linkend="replacing-a-specific-test-case-at-places-where-it-has-been-reused"/>).
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <para role="tip">If you select this option on a nested Test Case, you will
+      be shown the other places where the Test Case is nested. To see
+      where its parent Test Case is used, you must then carry out the
+      same steps on the parent.</para>
+    </para>
+  </section>
+  <section id="searching-for-places-where-a-component-name-has-been-used">
+    <title>Searching for places where a component name has been used</title>
+    <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
+    <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+    <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+    <para>
+      You can find the places where you have used a component name
+      from within the Object Mapping Editor and the Component Names
+      Browser.
+    </para>
+    <para>
+      <emphasis role="strong">In the Component Names
+      Browser</emphasis>:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select the component name you want to search for and select:
+          
+          <para>
+            <emphasis role="menuPath">Show where used</emphasis>
+          </para>
+          
+          from the context-sensitive menu. You can also press <emphasis role="input">»F7«</emphasis> to show the places where the name has been used.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          All the places where you have used this component name in
+          this Project will be shown in the Search Result View
+          (<xref linkend="using-the-search-result-view"/>). Both Test Cases and object
+          mappings where the component name was used will be shown.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <emphasis role="strong">In the Object Mapping Editor: Show where
+      used</emphasis>:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select the component name you want to search for and select:
+          
+          <para>
+            <emphasis role="menuPath">Show where used</emphasis>
+          </para>
+          
+          from the context-sensitive menu. You can also press <emphasis role="input">»F7«</emphasis> to show the places where the name has been used.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          All the places where you have used this component name in
+          this Project will be shown in the Search Result View
+          (<xref linkend="using-the-search-result-view"/>).
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <emphasis role="strong">In the Object Mapping Editor: Show corresponding specification</emphasis>:<?linebreak?>
+      Use this option when a component name appears in the Object Mapping Editor that should have been overwritten, but hasn’t been.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select the component name you want to search for and select:
+          
+          <para>
+            <emphasis role="menuPath">Show corresponding specification</emphasis>
+          </para>
+          
+          from the context-sensitive menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Search Result View only shows places which could have
+          lead to this component name appearing in the Object Mapping
+          Editor, not all places in the test where it has been used.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="searching-for-places-where-a-central-test-data-set-has-been-used">
+    <title>Searching for places where a central test data set has been used</title>
+    <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <para>
+      You can find the places where you have used a central test data
+      set from within the Central Test Data Editor:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select the central data set you want to search for and select:
+          
+          <para>
+            <emphasis role="menuPath">Show where used</emphasis>
+          </para>
+          
+          from the context-sensitive menu. You can also press <emphasis role="input">»F7«</emphasis> to show the places where the data set has been used.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          All the places where you have used this data set in this
+          Project will be shown in the ”<emphasis>Search Result
+          View</emphasis>” (<xref linkend="using-the-search-result-view"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you want to change the Test Cases that use this central
+          test data set so that they use a different column from the
+          data set, then you can start this action from the Search
+          Result View (<xref linkend="changing-the-column-used-in-a-central-test-data-set-for-multiple"/>).
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="using-the-search-dialog">
+    <title>Using the search dialog</title>
+    <para>
+      You can open the search dialog (<xref linkend="SearchDialog"/>) from the toolbar, by pressing <emphasis role="input">»CTRL+H«</emphasis> or via the menu:
+      
+      <para>
+        <emphasis role="menuPath">Search</emphasis>--&gt;<emphasis role="menuPath">Search</emphasis>
+      </para>
+    </para>
+    <figure id="SearchDialog">
+      <title>Search Dialog</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/SearchDialog.png"/>
+        </imageobject>
+        <textobject><phrase>Search Dialog</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <para>
+      The search dialog allows you to search the
+      <emphasis role="strong">current Project in the current working
+      language</emphasis> for:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Keywords (<xref linkend="searching-for-keywords"/>) (Test Cases, Test
+          Steps, Test Suites, Test Jobs and categories).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Test data used in Test Cases or central test data sets
+          (<xref linkend="searching-for-test-data"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Files in the workspace (<xref linkend="searching-for-files"/>).
+        </para>
+      </listitem>
+    </itemizedlist>
+    <section id="searching-for-keywords">
+      <title>Searching for keywords (Test Cases, Test Steps, Test Suites, Test Jobs and categories) throughout the Project</title>
+      <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+      <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+      <anchor role="helpid" id="com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
+      <para>
+        On the first tab of the search dialog, you can search for the
+        following based on their name:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Test Steps
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Test Cases – either the original specification or places
+            where a Test Case has been reused (referenced)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Test Suites – either the original specification or places
+            where a Test Suite has been reused (referenced)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Test Jobs
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Categories
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        Enter the term you wish to search for and select whether you
+        want the search term to be case sensitive or whether you will
+        be using regular expressions. You can also specify whether you
+        want to search in the whole Project, or just for the selected
+        nodes (<xref linkend="limiting-the-search-to-the-selected-node"/>).
+      </para>
+      <para>
+        Click ”<emphasis>Search</emphasis>” to start the search. The
+        results are shown in the Search Result View
+        (<xref linkend="using-the-search-result-view"/>).
+      </para>
+      <para>
+        <para role="tip">Only names from within the current Project and in the
+        current working language are displayed. Names from reused
+        Projects are not found.</para>
+      </para>
+    </section>
+    <section id="searching-for-test-data">
+      <title>Searching for test data</title>
+      <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+      <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+      <anchor role="helpid" id="com.bredexsw.guidancer.doc.testDataSearchPageContextId">Test Data Search</anchor>
+      <para>
+        On the second tab of the search dialog, you can search for
+        test data in the following:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Central test data sets
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Test Cases – either either the original specification or
+            places where a Test Case has been reused (referenced)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Test Steps
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        <para role="tip">The search does not consider the
+        <emphasis>name</emphasis> of the central test data set, for
+        example, only the data contained in it.</para>
+      </para>
+      <para>
+        Enter the term you wish to search for and select whether you
+        want the search term to be case sensitive or whether you will
+        be using regular expressions. You can also specify whether you
+        want to search in the whole Project, or just for the selected
+        nodes (<xref linkend="limiting-the-search-to-the-selected-node"/>).
+      </para>
+      <para>
+        Click ”<emphasis>Search</emphasis>” to start the search. The
+        results are shown in the Search Result View
+        (<xref linkend="using-the-search-result-view"/>).
+      </para>
+      <para>
+        <para role="tip">Only test data from within the current Project and in
+        the current working language is displayed. Data from reused
+        Projects is not found.</para>
+      </para>
+    </section>
+    <section id="searching-for-files">
+      <title>Searching for files in the workspace</title>
+      <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+      <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+      <para>
+        On the third tab of the search dialog, you can search for and
+        in files contained in your workspace.
+      </para>
+      <para>
+        Enter the term you wish to search for and click
+        ”<emphasis>Search</emphasis>” to start the search. The results
+        are shown in the Search Result View
+        (<xref linkend="using-the-search-result-view"/>).
+      </para>
+    </section>
+    <section id="limiting-the-search-to-the-selected-node">
+      <title>Limiting the search to the selected node</title>
+      <anchor role="helpid" id="com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
+      <anchor role="helpid" id="com.bredexsw.guidancer.doc.testDataSearchPageContextId">Test Data Search</anchor>
+      <para>
+        In the search dialog, you can specify whether the search you
+        define should be performed on the whole Project, or just on
+        the node you have selected in a browser. If you select to just
+        search within the selected node, then you can define which
+        browser or browsers to search in (you may have more than one
+        active selection in your browsers):
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            Test Suite Browser
+          </term>
+          <listitem>
+            <para>
+              This search will be limited to the selected item (Test
+              Suite, Test Job, category) in the Test Suite Browser. If
+              you select the root node in the Test Suite Browser, then
+              the whole Test Suite Browser will be searched. 
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Main Test Case Browser
+          </term>
+          <listitem>
+            <para>
+              This search will be limited to the selected item (Test
+              Case, category) in the Test Case Browser. If you have
+              more than one Test Case Browser open
+              (<xref linkend="opening-the-test-case-browser-multiple-times"/>), then the one marked as
+              <emphasis>Main</emphasis> will be used. If you select
+              the root node in the Test Case Browser, then the whole
+              Test Case Browser will be searched.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            All Test Case Browsers
+          </term>
+          <listitem>
+            <para>
+              If you have more than one Test Case Browser open
+              (<xref linkend="opening-the-test-case-browser-multiple-times"/>), then the selected nodes in all
+              of them will be searched.If you select the root node in
+              the Test Case Browser, then the whole Test Case Browser
+              will be searched.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+      <para>
+        You can select one or more of these options to perform the
+        search.
+      </para>
+    </section>
+  </section>
+  <section id="using-the-search-result-view">
+    <title>Using the search result view</title>
+    <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
+    <para>
+      The Search Result View shows any items found during a search –
+      either via the search dialog or the ”<emphasis>Show where
+      used</emphasis>” action.
+    </para>
+    <para>
+      From the Search Result View, you can:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Double-click on an item to open its editor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Re-run the search using the button in the top right-hand
+          corner of the view.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Perform various actions on your search results
+          (<xref linkend="using-search-results-to-make-changes"/>)
+        </para>
+      </listitem>
+    </itemizedlist>
+    <section id="using-search-results-to-make-changes">
+      <title>Using search results to make wide-reaching changes to
+      your Project</title>
+      <para>
+        Once you have performed a search, you can perform specific
+        actions on the results:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            You can replace a Test Case at multiple places where it
+            has been reused with another Test Case
+            (<xref linkend="replacing-a-specific-test-case-at-places-where-it-has-been-reused"/>).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            You can change the column of a central test data set used
+            by any Test Cases that use this central test data set
+            (<xref linkend="changing-the-column-used-in-a-central-test-data-set-for-multiple"/>).
+          </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </section>
+  <section id="searching-for-items-in-editors-and-browsers">
+    <title>Searching for items in editors and browsers</title>
+    <anchor role="helpid" id="findDialogContextId">Find Dialog</anchor>
+    <para>
+      The ITE offers a search function in most editors and views.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Start the search function either via:
+          
+          <para>
+            <emphasis role="menupath">Edit</emphasis>--&gt;<emphasis role="menupath">Find</emphasis>
+          </para>
+          
+          or using the context-sensitive menu in the editors and browsers.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the find dialog, you can enter the following criteria:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              The text you are searching for.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              The direction you want to search in.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Whether the search is case sensitive or not.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Whether you are using regular expressions
+              (<xref linkend="using-matching-and-regex"/>).
+              <para role="tip">Regular expression searches are case-sensitive.  </para>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Whether the search should be wrapped. This will carry on
+              the search from the top of the browser once you reach
+              the bottom of the browser.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>
+          Items which correspond to the search terms are highlighted
+          in gray.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="using-filters-in-the-ite">
+    <title>Using filters in the ITE</title>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+    <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+    <section id="text-filters">
+      <title>Text filters</title>
+      <para>
+        The Test Case Browser, the Test Suite Browser, the Component
+        Names Browser and the Object Mapping Editor (in the tree view)
+        all contain a filter area at the top. You can enter a filter
+        text into this area to show matches to the text in the browser
+        or editor. Use star (*) as a wildcard.
+      </para>
+      <para>
+        In the Test Case Browser, the Component Names Browser and the
+        Test Suite Browser, the names of the items in the browser are
+        considered for the filter.
+      </para>
+      <para>
+        In the Object Mapping Editor, the names and
+        <emphasis>types</emphasis> of the components are considered
+        for the filter.
+      </para>
+    </section>
+  </section>
+  <section id="other-filter-options">
+    <title>Other filter options</title>
+    <para>
+      Some browsers offer pre-defined filters in the top right-hand
+      corner.
+    </para>
+    <para>
+      In the Component Names Browser, you have the following options:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Sort by name or by type
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Hide component names from reused Projects.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      In the Test Case Browser, you can also show any unused Test
+      Cases. <para role="tip">We recommend using this filter to refactor or
+      clear up your test.</para>
+    </para>
+  </section>
+</section>

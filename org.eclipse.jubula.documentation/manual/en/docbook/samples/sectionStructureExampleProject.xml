@@ -1,0 +1,69 @@
+<section id="the-structure-of-the-example-project" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>The structure of the example Project</title>
+  <para>
+    The Project contains a variety of Test Cases and Test Suites. The
+    Test Cases are grouped according to which AUT they test, and are
+    also further grouped into categories corresponding to individual
+    tests.
+  </para>
+  <section id="the-reused-projects">
+    <title>The reused Projects</title>
+    <para>
+      The Project <emphasis>unbound_modules_concrete</emphasis> is
+      reused in this Project. This Project is a library of actions
+      that are relevant cross-toolkit.
+    </para>
+    <para>
+      The Project <emphasis>bound_modules_samples</emphasis> is also
+      reused. This contains Test Cases which are reused in the samples
+      tests.
+    </para>
+    <para>
+      <para role="warning">We do not recommend making any changes in these Projects.
+      </para>
+    </para>
+  </section>
+  <section id="the-categories">
+    <title>The categories</title>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Executable Test Cases:
+        </term>
+        <listitem>
+          <para>
+            This category contains Test Cases which are ready to be
+            executed. Each Test Case corresponds to one Test Suite,
+            and is named accordingly. The executable Test Case
+            contains all the Test Cases necessary for a particular
+            test, and includes all the data. 
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Tests with the Simple Adder:
+        </term>
+        <listitem>
+          <para>
+            This category contains the Test Cases which test the
+            Simple Adder program (<xref linkend="Samplesaddertests"/>).
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Tests with the DVD Tool:
+        </term>
+        <listitem>
+          <para>
+            This category contains the Test Cases which test the DVD
+            Tool program (<xref linkend="Samplesdvdtests"/>).
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </section>
+</section>

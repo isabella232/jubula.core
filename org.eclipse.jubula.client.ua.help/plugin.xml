@@ -14,13 +14,15 @@
    <extension point="org.eclipse.help.toc">
       <toc primary="true" file="tocUserManual.xml"/>
       <toc primary="true" file="tocReferenceManual.xml"/>
+      <toc primary="true" file="tocExtensionManual.xml"/>
    </extension>
 
    <!--
    		Define F1 context files
    -->
    <extension point="org.eclipse.help.contexts">
-      <contexts file="contextUserManual.xml"/>
-      <contexts file="contextReferenceManual.xml"/>
+      <contexts file="contextUserManual.xml" plugin="org.eclipse.jubula.client.ua.help"/>
+      <contexts file="contextReferenceManual.xml" plugin="org.eclipse.jubula.client.ua.help"/>
+      <contexts file="contextExtensionManual.xml" plugin="org.eclipse.jubula.client.ua.help"/>
    </extension>
 </plugin>

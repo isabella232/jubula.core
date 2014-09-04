@@ -1,0 +1,33 @@
+<section id="requirements" xmlns="http://docbook.org/ns/docbook"
+                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                           xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Requirements</title>
+  <para>
+    To create your own ITE toolkit and remote control extensions, you
+    need:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        <emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis>
+        7.0 / Jubula 2.0 or later
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Eclipse 3.4 or later (4.2 recommended)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        JDK 5.0
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Full write access in installation directory for deploying the
+        extension.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

@@ -1,0 +1,47 @@
+<section id="working-with-the" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Working with the Problems View</title>
+  <section id="the-problems-view">
+    <title>The Problems View</title>
+    <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+    <para>
+      The Problems View (<xref linkend="probview"/>) is in the middle of the specification perspective,
+      at the bottom, by default.
+    </para>
+    <para>
+      It shows three types of message:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <mediaobject role="icon" file="../images/info.png"/> Information
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <mediaobject role="icon" file="../images/error.png"/> Errors
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <mediaobject role="icon" file="../images/warning.png"/> Warnings
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      Right-clicking on a message and selecting <emphasis>Quick
+      Fix</emphasis> will either solve the problem or take you to the
+      place where you can solve the problem, if this is possible.
+    </para>
+    <figure id="probview">
+      <title>Problems View</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/probview.png"/>
+        </imageobject>
+        <textobject><phrase>Problems View</phrase></textobject>
+      </mediaobject>
+    </figure>
+  </section>
+</section>

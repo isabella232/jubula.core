@@ -1,0 +1,26 @@
+<chapter id="concepts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                     xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="concepts"?>
+  <title>Concepts</title>
+  <para>
+    The following sections introduce the concepts and capabilities of
+    the tool.
+  </para>
+  
+  <xi:include href="sectionOverview.xml"/>
+  <xi:include href="sectionTesting.xml"/>
+  <xi:include href="sectionArchitecture.xml"/>
+  <xi:include href="sectionDatabaseStructure.xml"/>
+  <xi:include href="sectionApproachesToTesting.xml"/>
+  <xi:include href="sectionTestHierarchy.xml"/>
+  <xi:include href="sectionReusability.xml"/>
+  <xi:include href="sectionMultiLingualTesting.xml"/>
+  <xi:include href="sectionObjectMappingConcepts.xml"/>
+  <xi:include href="sectionTestExecConcepts.xml"/>
+  <xi:include href="sectionObserveUserActions.xml"/>
+  <xi:include href="sectionEventHandlers.xml"/>
+  <xi:include href="sectionExtensibility.xml"/>
+  <xi:include href="sectionSummary.xml"/>
+  
+</chapter>

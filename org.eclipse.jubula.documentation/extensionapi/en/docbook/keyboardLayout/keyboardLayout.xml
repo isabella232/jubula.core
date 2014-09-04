@@ -1,0 +1,61 @@
+<chapter id="keyboardLayout" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                           xmlns:xl="http://www.w3.org/1999/xlink">
+  <?dbhtml dir="keyboardLayout"?>
+  <title>Adding keyboard layout files</title>
+  <para>
+    For SWT and RCP AUTs, you need to define a keyboard layouts for the
+    AUT (i.e. which keyboard layout is set for the system on which the AUT
+    runs).
+  </para>
+  <para>
+    The keyboard layouts for German (Germany) and English (US) are already
+    present. If you want to use another keyboard layout, follow the
+    instructions in the next section to create one.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        The name of the file must be in the following format:<?linebreak?>
+        keyboardmapping_&lt;language&gt;_&lt;COUNTRY&gt;.properties<?linebreak?>
+        e.g. for US English: keyboardmapping_en_US.properties
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the file, enter the codes for all characters which require you
+        to press a modifier key.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The format for these codes is:<?linebreak?>
+        &lt;Character&gt;=&lt;Modifier&gt;+&lt;Character without modifier&gt;<?linebreak?>
+        e.g. for the @ character: @=shift+2
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The following symbols must be escaped with a backslash:<?linebreak?>
+        <literal>! = : \ ,</literal><?linebreak?>
+        e.g. <literal>\!=shift+1</literal> for !
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        There are pictures of various keyboards on the following website:<?linebreak?>
+        <emphasis>http://www.uni-regensburg.de/EDV/Misc/KeyBoards/</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To add the keyboard layout file, you must create a fragment containing your newly added keyboard layout file(s). The host plugin for the fragment is:<?linebreak?>
+        <emphasis>org.eclipse.jubula.client.core</emphasis><?linebreak?>
+        The path within the fragment must be:<?linebreak?>
+        <emphasis>resources/keyboard_mapping/&lt;name&gt;.properties</emphasis>
+      </para>
+
+      <para role="tip">If you name the file with the locale code, then the keyboard layout will be displayed in plain text in the AUT configuration dialog.</para>
+    </listitem>
+  </orderedlist>
+</chapter>

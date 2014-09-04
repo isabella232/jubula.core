@@ -1,0 +1,47 @@
+<section id="hardware-requirements" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                  xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Hardware requirements</title>
+  <para>
+    Since the ITE is <emphasis>Java</emphasis>-based, it is
+    theoretically independent of any specific hardware platform, and
+    can run on any hardware setup for which a
+    <emphasis>Java</emphasis> implementation exists. However, certain
+    minimum resource requirements should be met, as stated below.
+  </para>
+  <para>
+    <emphasis role="strong">Minimal setup</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        A 1 Ghz processor
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        1GB RAM
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        600MB free hard drive space
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Recommended setup</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        A 2 Ghz processor
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        2GB+ random access memory
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

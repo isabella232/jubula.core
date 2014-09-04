@@ -1,0 +1,330 @@
+<section id="working-with-code-coverage-with-java-tests" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Working with code coverage with Java tests</title>
+  <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" id="org.eclipse.ui.resource_view_context">Navigator View</anchor>
+  <para>
+    The ITE is integrated with the <emphasis>JaCoCo</emphasis> code
+    coverage tool for Java applications to let you run and analyze
+    code coverage for your tests.
+  </para>
+  <para>
+    <para role="warning">Code coverage is only available for AUTs started via an AUT
+    configuration (<xref linkend="configuringaut"/>) (i.e. not using the
+    <emphasis>autrun</emphasis> command), and which use Java 1.5 or
+    higher.</para>
+  </para>
+  <section id="configuring-code-coverage-for-an-aut">
+    <title>Configuring code coverage for an AUT</title>
+    <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+    <para>
+      You can activate code coverage for an AUT configuration with the
+      following steps:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the AUT configuration dialog from the Project
+          properties (<xref linkend="projectproperties"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select the <emphasis>Expert</emphasis> configuration.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select the code coverage agent you wish to use
+          (<emphasis>JaCoCo</emphasis> is available out-of-the-box).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can then enter the AUT installation directory and the
+          AUT source directory for the code coverage:
+        </para>
+        <variablelist>
+          <varlistentry>
+            <term>
+              The AUT installation directory
+            </term>
+            <listitem>
+              <para>
+                 is the directory containing the class files (compiled
+                Java files) for your AUT. You must enter this
+                directory to make code coverage possible for your test
+                run.
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              The AUT source directory
+            </term>
+            <listitem>
+              <para>
+                 is the directory where the source files (i.e. the
+                program code) for your AUT are kept. Entering a
+                directory for the source files is optional, however,
+                if you do not enter one, then you will not be able to
+                view your code coverage results at the source file
+                level. The AUT source directory must contain the
+                source files in their Java package structure. The
+                class files must have been compiled with debug
+                information to make the lines of code executed visible
+                in the code coverage report. <para role="tip">You can enter
+                relative paths for the AUT installation and AUT source
+                directories. The paths are relative to the working
+                directory.</para>
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </listitem>
+      <listitem>
+        <para>
+          To make sure you only monitor your own code, enter a package
+          pattern to specify which packages should be monitored. The
+          pattern must be a valid regular expression. If you do not
+          enter a package pattern, all classes in the virtual machine
+          will be considered for the code coverage value. <para role="warning">Not
+          entering a package pattern can result in extremely large
+          messages being sent from the AUT Agent, which may cause
+          memory problems (<xref linkend="increasing-the-java-heap"/>).</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select whether you want the code coverage value to be reset
+          when a new Test Suite starts (<xref linkend="resetting-and-accumulating-code-coverage"/>).
+        </para>
+      </listitem>
+    </orderedlist>
+    <section id="increasing-the-java-heap">
+      <title>Increasing the Java Heap Space for code coverage</title>
+      <para>
+        Running a test with a code coverage profiler leads to an
+        increased memory requirement for the ITE. You can increase the
+        heap space for the ITE and also enter a package pattern
+        (<xref linkend="configuring-code-coverage-for-an-aut"/>) to reduce the amount of files considered
+        for code coverage.
+      </para>
+      <para>
+        <para role="tip">Users working with a MySQL database should also follow
+        the steps from the Installation Manual to increase the maximum
+        allowed packet for the database. </para>
+      </para>
+    </section>
+  </section>
+  <section id="resetting-and-accumulating-code-coverage">
+    <title>Resetting and accumulating code coverage</title>
+    <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <para>
+      To make sure you get the correct results for your code coverage,
+      it is important to be aware of which actions will accumulate the
+      recorded code coverage and which actions will reset the value
+      back to zero.
+    </para>
+    <para>
+      <emphasis role="strong">Code coverage reset</emphasis>
+    </para>
+    <para>
+      The following result in the code coverage value being reset:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Stopping the AUT. When the AUT is started again, the code
+          coverage value is reset to zero. The test executor ensures
+          that all monitoring information is collected before stopping
+          the AUT.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <para role="warning">If you stop the AUT while code coverage is being
+      calculated, then the value will also be set to zero!</para>
+    </para>
+    <para>
+      <emphasis role="strong">Code coverage accumulation</emphasis><?linebreak?>
+      The following result in code coverage information being accumulated:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Any actions you perform manually in an AUT that has been
+          started with code coverage will contribute to the code
+          coverage result.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Code coverage is accumulated across Test Suites by default.
+          If you want to reset the code coverage at the beginning of
+          each Test Suite, then select this option in the AUT
+          configuration (<xref linkend="configuring-code-coverage-for-an-aut"/>). <para role="tip">If you are working
+          with Test Jobs, then do not opt to reset the code coverage
+          at the beginning of a Test Suite.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you use the <emphasis>restart</emphasis> action during a
+          test, this does <emphasis role="strong">not</emphasis>
+          result in the code coverage value being reset.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="viewing-the-code-coverage-for-a-test-run">
+    <title>Viewing the code coverage for a test run</title>
+    <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <para>
+      Once a test with code coverage has run, the code coverage
+      information must first be processed in order to show it in the
+      Test Result Summary View.
+    </para>
+    <para>
+      The following columns are available in the Test Result Summary
+      View to show you code coverage information:
+    </para>
+    <para>
+      <para role="tip"> If a column is not visible, you can show it by selecting
+      it from the context-sensitive menu on the header row for the
+      Test Result Summary View.</para>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The <emphasis>Profiling Agent</emphasis> column displays
+          which code coverage agent was selected for the test run.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The <emphasis>Measured Value</emphasis> column shows the Instruction Coverage for the test run. You can see the values for other types of coverage in the Properties View when you select the test run. An overview of the meanings of the coverage types is available on the JaCoCo website:
+          
+          <para>
+            <emphasis>http://www.eclemma.org/jacoco/trunk/doc/counters.html</emphasis>.
+          </para>
+          
+          <para role="tip">The measured value will become visible once the code coverage information has been processed. You may need to refresh the Test Result Summary View. </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The <emphasis>Profiling Details</emphasis> column indicates
+          whether the full details for the code coverage report are
+          still in the database. Full profiling details are removed
+          from the database at the same time as test run details
+          (<xref linkend="re-opening-the-test-result-view-for-a-test-run"/>). The period of time that
+          details remain in the database can be specified in the
+          Project properties (<xref linkend="editing-general-project-properties"/>).
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Opening and viewing the code coverage report</emphasis>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          In the Test Result Summary View, select the test run whose
+          code coverage you want to see and click the ”<emphasis>Open
+          Profiling Report</emphasis>” button at the top of the view.
+          <para role="warning">The details about code coverage are available in the
+          database for the same amount of time as the test result
+          details (<xref linkend="re-opening-the-test-result-view-for-a-test-run"/>). After this time,
+          the code coverage details are deleted along with the test
+          run details.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the editor that opens, you can see the details for the
+          code coverage for the test run.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you specified a source file directory for your AUT
+          (<xref linkend="configuring-code-coverage-for-an-aut"/>) and compiled your AUT classes with debug
+          information, you will be able to navigate through your
+          classes to see more detailed information about the code
+          coverage through the whole AUT.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once you have opened a code coverage report, it is saved
+          into your workspace. You can reopen it from the Navigation
+          View. <para role="tip">You should regularly remove old code coverage
+          reports from your workspace to avoid overfilling it.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="troubleshooting-code-coverage">
+    <title>Troubleshooting code coverage</title>
+    <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <para>
+      When using code coverage, please bear the following in mind:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Code Coverage is only possible with AUTs started via an AUT
+          configuration (<xref linkend="configuringaut"/>) (i.e. not using the
+          <emphasis>autrun command</emphasis>), and which use Java 1.5
+          or higher.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          JaCoCo manipulates the byte code of your AUT at runtime to
+          be able to measure code coverage. It is therefore highly
+          sensitive to other byte code manipulations that take place
+          at the same time (e.g. cglib).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you wish to analyze the Code Coverage at the source code
+          level, as well as entering the <emphasis>Source
+          Directory</emphasis> in the AUT configuration, you must also
+          ensure that your class files have been compiled with debug
+          information.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Running Code Coverage analyses can become memory-intensive
+          for larger AUTs. A pattern can be used to reduce the code
+          analyzed. You can also increase the heap space for the ITE
+          to ensure that enough memory is available. We have
+          successfully performed code coverage analysis with JaCoCo on
+          an AUT with 72,000 classes.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Users working with the embedded database may run into memory
+          problems sooner than users working with an Oracle database.
+          Please remember that we do not recommend working with the
+          embedded database for productive use.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">The AUT does not start when Code Coverage is enabled</emphasis><?linebreak?>
+      If the AUT starts normally without Code Coverage but does not when Code Coverage is activated, ensure that you are not using the embedded AUT Agent.
+    </para>
+    <para>
+      <emphasis role="strong">The Test Result Summary View displays the monitoring agent as <emphasis>JaCoCo</emphasis>, but the coverage value is 0</emphasis><?linebreak?>
+      If you can open the HTML report for the Code Coverage, but it shows ”<emphasis>NaN</emphasis>”, then this could mean that the class files for the analysis were not found. Check the path to the <emphasis>Installation Directory</emphasis> in the AUT configuration. It could also be the case that other byte code manipulations were running at the same time as JaCoCo.
+    </para>
+  </section>
+</section>

@@ -1,0 +1,269 @@
+<section id="dealing-with-errors-in-tests" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Dealing with errors in tests: Event Handlers</title>
+  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" id="eventHandlerAddContextId">Event Handlers</anchor>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <para>
+    Event Handlers are Test Cases used to deal with deviations during
+    test execution. When an error occurs, the current Test Case is
+    searched for an Event Handler for that error type. If none is
+    found, the parent Test Case is searched, and so on. If no Event
+    Handler for the test is found, then a default Event Handler is
+    activated. Default Event Handlers are specified in the Test Suite
+    properties (<xref linkend="configuring-test-suites-in-the-properties-view"/>).
+  </para>
+  <para>
+    The advantage of adding your own Event Handlers is that you can
+    define specific behavior for certain errors in each Test Case. An
+    Event Handler can be an empty Test Case, or can contain Test Cases
+    to be executed when the error occurs.
+  </para>
+  <para>
+    For each Event Handler, you must specify:
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        an event type
+      </term>
+      <listitem>
+        <para>
+          to define what sort of error should activate this Test Case
+          (<xref linkend="event-types"/>).
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        a reentry type
+      </term>
+      <listitem>
+        <para>
+          to define how the test should continue once the Event
+          Handler has been executed (<xref linkend="reentry-types"/>).
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+  <section id="adding-event-handlers-to-a-test-case">
+    <title>Adding Event Handlers to a Test Case</title>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <para>
+      This section deals with adding Event Handlers to Test Cases.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the Test Case Editor by double-clicking on the Test
+          Case you want to edit in the Test Case Browser.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select
+          
+          <para>
+            <emphasis role="menuPath">Add</emphasis>--&gt;<emphasis role="menuPath">Test Case as Event Handler</emphasis>
+          </para>
+          
+          from the context-sensitive menu in the editor or use <emphasis role="input">»CTRL+ENTER«</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Choose a Test Case to add from the dialog that appears.
+          <para role="tip">You can also drag the Test Case you want to use
+          straight into the Event Handlers area of at the bottom of th
+          the Test Case Editor. </para> <para role="tip">You can’t add a Test Case to
+          itself as an Event Handler, because this would create an
+          infinite loop. </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can optionally add a name for the Event Handler that
+          will be used as the referenced name for this Event Handler.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select an event type from the combo box (<xref linkend="event-types"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select a reentry type from the combo box
+          (<xref linkend="reentry-types"/>). <para role="tip">For each Test Case you can only
+          add one Event Handler for each event type.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Click ”<emphasis>OK</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Event Handler <mediaobject role="icon" file="../images/EventHandler.png"/> appears
+          in the lower half of the Test Case Editor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Save the changes in the editor.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="event-types">
+    <title>Event types</title>
+    <para>
+      The event type is the type of error the Event Handler will react
+      to. There are four event types. They correspond to common errors
+      which happen during test execution.
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Component not found
+        </term>
+        <listitem>
+          <para>
+            If a component in the AUT cannot be found, an error
+            occurs. The component might not be found if it has been
+            changed, is not (yet) visible or has been deleted. 
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Check failed
+        </term>
+        <listitem>
+          <para>
+            For some actions, you can specify an expected value to
+            check. If the value you specify is not true, then a
+            <emphasis>check failed</emphasis> error occurs.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Action error
+        </term>
+        <listitem>
+          <para>
+            Action errors occur when an action cannot be carried out
+            on a component, when the data is invalid (e.g. an invalid
+            menu path) or when an action takes too long and there is a
+            timeout.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Configuration error
+        </term>
+        <listitem>
+          <para>
+            Configuration errors occur when there is an internal
+            problem, for example a changed implementation class in the
+            XML file. 
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </section>
+  <section id="reentry-types">
+    <title>Reentry types</title>
+    <para>
+      The reentry type specifies how the test should continue once the Event Handler Test Case
+      has been executed.
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Break
+        </term>
+        <listitem>
+          <para>
+            The test execution leaves the Test Case in which the error
+            occurred and continues at the next Test Case or Test Step.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Continue
+        </term>
+        <listitem>
+          <para>
+            The test execution carries on at the next Test Case or
+            Test Step. This is a good option when the error is
+            relatively unimportant and does not affect the following
+            Test Steps. 
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Exit
+        </term>
+        <listitem>
+          <para>
+            The test execution is stopped. Use this when the error is
+            so severe that the test cannot be continued.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Return
+        </term>
+        <listitem>
+          <para>
+            The test execution leaves the Test Case in which the
+            activated Event Handler is nested. This could be the
+            current Test Case or one higher up in the hierarchy. This
+            option is useful if you have a use case, which contains
+            Test Cases to test a particular area or function. You can
+            decide to leave this part of the test, and carry on at the
+            next use case. <emphasis>Return</emphasis> will continue
+            at the next Test Suite in a Test Job if it is activated as
+            a default Event Handler or if there are no further steps
+            in the current Test Suite.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Pause
+        </term>
+        <listitem>
+          <para>
+            The test execution is paused. To restart the test, click
+            the <emphasis>pause</emphasis> button in the toolbar in
+            the ITE.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Retry
+        </term>
+        <listitem>
+          <para>
+            The failed Test Step is repeated as many times as you
+            specify in the Properties View. If the Test Step is
+            successful on repeating, it is marked as successful after
+            retrying. If the Test Step fails on all retries, the error
+            type is passed on to the next parent Test Case and this
+            Test Step (and therefore the test) is marked as failed. 
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </section>
+</section>

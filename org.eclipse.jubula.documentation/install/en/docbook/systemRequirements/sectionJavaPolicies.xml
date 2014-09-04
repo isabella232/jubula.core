@@ -1,0 +1,57 @@
+<section id="java-policies-and-security-managers" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Java policies and security managers</title>
+  <para>
+    If the AUT uses a security manager (or, in some cases, a Java
+    Policy), please be aware that the service component requires
+    permission to create and use ClassLoader instances. Most policies
+    will not permit this action for security reasons. The service
+    component uses the ClassLoader to separate the program code used
+    to inspect the AUT from the AUT itself as much as possible.
+  </para>
+  <para>
+    To grant the necessary permission, please use the following policy
+    snippet (please use a personal installation directory instead of
+    the installation directory).
+  </para>
+  <programlisting>
+grant {
+  permission java.io.FilePermission &quot;&lt;&lt;ALL FILES&gt;&gt;&quot;,
+             &quot;read, write, delete, execute&quot;;
+  permission java.lang.RuntimePermission
+             &quot;getClassLoader&quot;;
+  permission java.lang.RuntimePermission
+             &quot;createClassLoader&quot;;
+  permission java.lang.RuntimePermission
+             &quot;setContextClassLoader&quot;;
+  permission java.lang.RuntimePermission
+             &quot;accessDeclaredMembers&quot;;
+  permission java.lang.RuntimePermission
+             &quot;modifyThreadGroup&quot;;
+  permission java.lang.RuntimePermission &quot;exitVM&quot;;
+  permission java.lang.reflect.ReflectPermission 
+             &quot;suppressAccessChecks&quot;;
+  permission java.util.logging.LoggingPermission
+             &quot;control&quot;;
+  permission java.util.PropertyPermission &quot;*&quot;,
+             &quot;read, write&quot;;
+  permission java.net.SocketPermission &quot;*&quot;, 
+             &quot;accept, connect, listen, resolve&quot;;
+  permission java.awt.AWTPermission
+             &quot;listenToAllAWTEvents&quot;;
+  permission java.awt.AWTPermission
+             &quot;showWindowWithoutWarningBanner&quot;;
+  permission java.awt.AWTPermission &quot;createRobot&quot;;
+  permission java.awt.AWTPermission &quot;accessClipboard&quot;;
+  permission java.awt.AWTPermission &quot;accessEventQueue&quot;;
+  access : access denied (java.lang.RuntimePermission accessClassInPackage.sun.reflect)
+}; 
+ 
+</programlisting>
+  <para>
+    If these permissions are not granted, a SecurityException will be
+    thrown when the AUT is started. This means that the AUT cannot be
+    tested.
+  </para>
+</section>

@@ -1,0 +1,11 @@
+<section id="aut-agent-requirements" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                   xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>AUT Agent requirements</title>
+  <para>
+    The AUT Agent requires a system with a TCP/IP-capable network. To
+    run the server, the system should have at least 1 GB free random
+    access memory. Additional requirements for the AUT Agent depend on
+    the application under test (AUT).
+  </para>
+</section>

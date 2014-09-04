@@ -1,0 +1,24 @@
+<chapter id="creating-gef-toolkit-extensions" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="gefToolkitExtension"?>
+  <title>Creating GEF toolkit extensions</title>
+  <para>
+    Although the identification and testing of GEF components is
+    supported out-of-the-box, it is highly recommended that application
+    developers enhance this support by implementing an accessibility
+    plug-in for their application. Such a plug-in makes identification
+    of GEF components more robust and allows tests to reference
+    additional components, such as connection anchors.
+  </para>
+  <para>
+    Apart from the general description for creating toolkit extensions
+    in the extension manual, we give further information for extending
+    the GEF toolkit. The following sections explain how to develop a GEF
+    accessibility plug-in.
+  </para>
+  
+  <xi:include href="sectionCreatingAccessibilityPlugin.xml"/>
+  <xi:include href="sectionAccessibilityPluginExample.xml"/>
+  
+</chapter>

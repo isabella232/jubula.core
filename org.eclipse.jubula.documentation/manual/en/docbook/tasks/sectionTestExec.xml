@@ -1,0 +1,332 @@
+<section id="testexec" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                     xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Test execution</title>
+  <section id="prerequisites-for-test-execution">
+    <title>Prerequisites for test execution</title>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" id="runningAutsViewContextId">Running AUTs View</anchor>
+    <para>
+      To be able to start a test you must:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Create a Test Suite (<xref linkend="creating-a-test-suite"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Add Test Cases to be executed to the Test Suite
+          (<xref linkend="adding-items-to-editors"/>)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Define an AUT (<xref linkend="define-aut"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Configure an AUT (<xref linkend="configuringaut"/>) if you want to start
+          the AUT from the ITE.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Choose an AUT for the Test Suite (<xref linkend="configuring-test-suites-in-the-properties-view"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Set the working language to the language you want to execute
+          the test in.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Connect to the AUT Agent (<xref linkend="connect-aut-agent"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Start the AUT (<xref linkend="starting-the-aut"/>) (either from the ITE or using
+          the <emphasis>autrun command</emphasis>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Complete object mapping (<xref linkend="object-mapping-1"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Make sure that your test data is complete in your Test
+          Cases.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <para role="tip">It is a good idea to set your preferences for test
+      results in the preferences dialog (<xref linkend="gdprefs"/>) before
+      test execution.</para>
+    </para>
+  </section>
+  <section id="starting-the-aut">
+    <title>Starting the AUT</title>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+    <anchor role="helpid" id="runningAutsViewContextId">Running AUTs View</anchor>
+    <para>
+      To start the AUT, you must:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          have defined an AUT (<xref linkend="define-aut"/>)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          have connected to the AUT Agent (<xref linkend="connect-aut-agent"/>)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          if you want to start your AUT from the ITE, and not using
+          the <emphasis>autrun</emphasis> option, then you must have
+          configured an AUT (<xref linkend="configuringaut"/>)
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <para role="tip">You can only start AUTs from the ITE which support the
+      current working language. Change the working language if
+      necessary by selecting a language from the list next to the
+      language button on the toolbar.</para>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          On the toolbar, click on the arrow next to the
+          ”<emphasis>Start AUT</emphasis>” button
+          <mediaobject role="icon" file="../images/startAUT.png"/>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select an AUT and the configuration to start it with from
+          the list.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The AUT will be started in the current working language.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Clicking directly on the ”<emphasis>Start AUT</emphasis>”
+          button will start the most recently started AUT (marked with
+          a tick in the list of AUTs and configurations).
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      Once the AUT has been started, it will appear in the running
+      AUTs view. <para role="tip">Further information on starting specific types
+      of AUT is available in the toolkit-specific details
+      (<xref linkend="toolkit"/>).</para>
+    </para>
+  </section>
+  <section id="starting-stopping-and-pausing-test-suites-and-test-jobs">
+    <title>Starting, stopping and pausing Test Suites and Test Jobs</title>
+    <anchor role="helpid" id="runningAutsViewContextId">Running AUTs View</anchor>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <section id="starting-a-test-suite-or-a-test-job">
+      <title>Starting a Test Suite or a Test Job</title>
+      <para>
+        To start a Test Suite or a Test Job, you must:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            have started the AUT (<xref linkend="starting-the-aut"/>)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            have completed object mapping for the Test Suite or Test
+            Suites (<xref linkend="object-mapping-1"/>)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            have entered complete test data for your Test Suites, for
+            the language you want the test to run in.
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        <para role="tip">Before starting a Test Suite or a Test Job, it is a
+        good idea to review your preferences for the test results
+        (<xref linkend="test-result-preferences"/>).</para>
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            Starting a Test Suite:
+          </term>
+          <listitem>
+            <para>
+              You can start a Test Suite from the Test Suite Browser
+              or from the Running AUTs View. Click on the arrow next
+              to the ”<emphasis>Start test execution</emphasis>”
+              button and select a Test Suite to start from the list.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Starting a Test Job:
+          </term>
+          <listitem>
+            <para>
+              You can start a Test Job from the Test Suite Browser.
+              Click on the arrow next to the ”<emphasis>start test
+              execution</emphasis>” button <mediaobject role="icon" file="../images/startSuite.png"/>
+              and select a Test Job to start from the list.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+      <para>
+        <para role="tip">The amount of Test Suites or Test Jobs in the list for
+        the ”<emphasis>start test</emphasis>” button depends on your
+        selection. In the Running AUTs View, only Test Suites for the
+        currently selected AUT will be shown. In the Test Suite
+        Browser, if you have selected a Test Suite or a Test Job, only
+        the selected item will be startable. </para>
+      </para>
+      <para>
+        When a test is running, you can view the progress of the test
+        in the <emphasis>Progress View</emphasis>. This is especially
+        useful if the ITE and the AUT are running on different
+        machines: you can see how much longer the test will run
+        without having to switch to the machine the AUT is running on.
+      </para>
+    </section>
+    <section id="stopping-a-test-suite-or-test-job">
+      <title>Stopping a Test Suite or Test Job</title>
+      <para>
+        To stop the test at any point, click on the ”<emphasis>stop
+        test execution</emphasis>” button <mediaobject role="icon" file="../images/stop.png"/> 
+        on the toolbar. The test stops automatically when it finishes or
+        when an error occurs whose Event Handler has <emphasis>exit</emphasis>
+        as a reentry type.
+      </para>
+    </section>
+    <section id="pausing-exec">
+      <title>Pausing a Test Suite or Test Job</title>
+      <orderedlist>
+        <listitem>
+          <para>
+            To pause a test, click on the ”<emphasis>pause test
+            execution</emphasis>” button <mediaobject role="icon" file="../images/pause.png"/>
+            on the main toolbar.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            To continue with the test, press the ”<emphasis>Pause test
+            execution</emphasis>” button again. <para role="tip">You can opt to
+            automatically pause the test execution when an error
+            occurs via the toolbar (<xref linkend="interactive-test-analysis"/>).</para>
+            <para role="warning">If the client and AUT Agent are installed on the
+            same machine, moving the mouse will disrupt the test. </para>
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+  </section>
+  <section id="interactive-test-analysis">
+    <title>Interactive test analysis</title>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" id="runningAutsViewContextId">Running AUTs View</anchor>
+    <anchor role="helpid" id="testResultViewContextId">Test Results View</anchor>
+    <para>
+      If you are executing tests interactively, you can use the ITE to
+      help you analyze any errors that occur.
+    </para>
+    <section id="pause-on-error">
+      <title>Pause on Error</title>
+      <para>
+        On the toolbar in the ITE, click the ”<emphasis>Pause on Test
+        Execution Errors</emphasis>” button or press
+        <emphasis role="input">»F9«</emphasis> to cause the test to pause
+        when it encounters an error.
+      </para>
+      <para>
+        <para role="tip">Failed Test Steps that have a retry Event Handler will
+        not be paused unless the final retry fails.</para>
+      </para>
+    </section>
+    <section id="continuing-after-an-error">
+      <title>Continuing after an error</title>
+      <para>
+        Once you have analyzed the error in the AUT or in the test
+        specification, you have two options:
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            Continue with the Event Handler:
+          </term>
+          <listitem>
+            <para>
+              Press the ”<emphasis>Pause test execution</emphasis>”
+              button on the toolbar (<xref linkend="pausing-exec"/>) to continue with
+              the test. This will result in a Event Handler (either a
+              default Event Handler or one of your own) being
+              activated.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Continue without Event Handler:
+          </term>
+          <listitem>
+            <para>
+              Press the ”<emphasis>Continue without Event
+              Handler</emphasis>” button or
+              <emphasis role="input">»F8«</emphasis> to continue with the
+              test <emphasis>as if the failed Test Step had been
+              successful</emphasis>. No Event Handler is activated.
+              This option is useful if the Event Handler that would be
+              activated would restart the AUT or exit the test, but
+              you are either able to ignore the error for the moment
+              or make changes in the AUT to ensure that the test will
+              be able to continue. 
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+      <para>
+        <para role="warning">Any changes you make to the test specification while
+        the test is paused will not become valid until the next test
+        execution start.</para>
+      </para>
+    </section>
+  </section>
+  <section id="altering-the-speed-of-test-execution">
+    <title>Altering the speed of test execution</title>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" id="runningAutsViewContextId">Running AUTs View</anchor>
+    <para>
+      You can slow down the speed of test execution to be able to
+      watch your tests by entering a <emphasis>step delay</emphasis>
+      in the Properties View for the Test Suite (<xref linkend="configuring-test-suites-in-the-properties-view"/>).
+    </para>
+  </section>
+</section>

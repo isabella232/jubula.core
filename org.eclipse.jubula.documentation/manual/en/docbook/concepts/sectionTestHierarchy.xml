@@ -1,0 +1,182 @@
+<section id="test-hierarchy" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                           xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Test hierarchy</title>
+  <para>
+    The following sections describe the test hierarchy in the ITE.
+    Basically, you can think of the test hierarchy as a tree structure
+    which can be of any size, complexity and depth
+    (<xref linkend="treestructure"/>).
+  </para>
+  <figure id="treestructure">
+    <title>Test Hierarchy</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="../images/treestructure.png"/>
+      </imageobject>
+      <textobject><phrase>Test Hierarchy</phrase></textobject>
+    </mediaobject>
+  </figure>
+  <para>
+    The hierarchical structure gives you flexibility in your tests to
+    make changes and keep the test in touch with current software
+    development.
+  </para>
+  <section id="test-steps">
+    <title>Test Steps</title>
+    <para>
+      A Test Step is the smallest unit in the test hierarchy. Each
+      Test Step represents one action on one component (or
+      user-interface element) in the AUT.
+    </para>
+    <para>
+      The interaction is composed of three details, which we refer to
+      as ”<emphasis>CAP</emphasis>” (component, action, parameter):
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Component:
+        </term>
+        <listitem>
+          <para>
+            a component is a user-interface object (e.g. a button, a
+            combo box).
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Action:
+        </term>
+        <listitem>
+          <para>
+            the action is the operation to be executed on the selected
+            component. Each component has a number of actions which
+            can be executed on it, for example, buttons can be
+            clicked, an input can be made into a text field. 
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Parameter:
+        </term>
+        <listitem>
+          <para>
+            the parameter(s) are the data or variables associated with
+            an action. When a button is clicked, the parameter is the
+            amount of clicks. When you are entering text into a text
+            field, the parameter is the text you want to enter. The
+            amount and type of parameters depends on the action.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      The only detail which needs to be fixed at this point in the
+      specification is the action. The actual component to be tested
+      and the parameters can be added or changed later on.
+    </para>
+    <para>
+      The specification is also separate from the AUT. You give the
+      component you specify a <emphasis>component name</emphasis>,
+      which you use to identify the component in your test. This
+      component name is assigned to the actual component in the AUT at
+      a later point. In this way, specification can begin before the
+      AUT is available.
+    </para>
+    <para>
+      An example if a Test Step could be entering text (e.g. <emphasis role="input">hello</emphasis>) into a text field:
+    </para>
+    <informaltable frame="none">
+      <tgroup cols="2">
+        <colspec align="left"/>
+        <colspec align="left"/>
+        <tbody>
+          <row>
+            <entry><emphasis role="strong">Component</emphasis></entry>
+            <entry>Text field/text area/text pane/...</entry>
+          </row>
+          <row>
+            <entry><emphasis role="strong">Action</emphasis></entry>
+            <entry>Enter text</entry>
+          </row>
+          <row>
+            <entry><emphasis role="strong">Parameter</emphasis></entry>
+            <entry>hello</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+    <para>
+      <para role="tip">We recommend using the Test Cases in the library Projects
+      installed with instead of writing Test Steps. Using the Test
+      Cases from the library Projects saves time and improves the
+      flexibility of your tests.</para>
+    </para>
+  </section>
+  <section id="test-cases">
+    <title>Test Cases</title>
+    <para>
+      Test Cases are a level up from Test Steps in the test hierarchy.
+      They are the building blocks or keywords from which other Test
+      Cases and Test Suites are made. They are the reusable elements
+      of your tests.
+    </para>
+    <para>
+      A Test Case can contain any number of Test Steps and other Test
+      Cases nested to any depth. Test Cases are given user-defined
+      names.
+    </para>
+    <para>
+      Test Cases can be reused – in other Test Cases and in Test
+      Suites. There are no limits on how often a Test Case can be
+      reused, as long as no circular dependencies (infinite loops) are
+      created.
+    </para>
+  </section>
+  <section id="test-suites">
+    <title>Test Suites</title>
+    <para>
+      Test Suites are the containers for Test Cases to be executed and
+      can contain as many Test Cases as necessary. Each Test Suite
+      must be bound to one AUT which it will test. An AUT can be bound
+      to more than one Test Suite.
+    </para>
+    <para>
+      An important concept for testing is the ability to test a
+      program modularly. Program parts can be tested as and when they
+      are delivered using the specific Test Suites for each part. Only
+      the chosen Test Suite in a project will be executed, which means
+      that testing can begin whether all program components are
+      available/functional or not.
+    </para>
+  </section>
+  <section id="test-jobs">
+    <title>Test Jobs</title>
+    <para>
+      Test Jobs are the containers for Test Suites which are to be
+      executed in a sequence. A Test Job can contain Test Suites which
+      test different AUTs or different instances of the same AUT (with
+      some restrictions, see the previous
+      <xref linkend="testing-different-auts-in-one-test-run"/> for details). Each Test Suite in a Test
+      Job is bound to an AUT and specifies which AUT it will test
+      based on the AUT ID.
+    </para>
+  </section>
+  <section id="projects">
+    <title>Projects</title>
+    <para>
+      Tests are organized into Projects. A Project is the top-level
+      container. Projects contain runnable tests and the details about
+      the AUTs to be tested (how to start them, in which language
+      etc.).
+    </para>
+    <para>
+      You can work jointly on Projects using the multi-user database,
+      and you can also share Projects using the import and export
+      functions.
+    </para>
+  </section>
+</section>

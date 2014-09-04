@@ -1,0 +1,127 @@
+<section id="software-requirements" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                  xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Software requirements</title>
+  <section id="supported-operating-systems">
+    <title>Supported operating systems</title>
+    <para>
+      The following operating systems are supported:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Microsoft Windows (tested on Windows 7 and 8), 32- and
+          64-bit
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Linux (tested on Centos with GTK), 32- and 64-bit
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Mac OSX (not for SWT AUTs), 64-bit
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      Although the software may run on other systems, we cannot
+      guarantee that the components will run properly on them; nor can
+      we support an installation on such systems.
+    </para>
+  </section>
+  <section id="supported-java-environments">
+    <title>Supported <emphasis>Java</emphasis> environments</title>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Installer:
+        </term>
+        <listitem>
+          <para>
+            Java 7
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Client component (Integrated Test Environment, ITE):
+        </term>
+        <listitem>
+          <para>
+            Java 7 minimum
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Server component (AUT Agent):
+        </term>
+        <listitem>
+          <para>
+            Java 7 minimum
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          AUT:
+        </term>
+        <listitem>
+          <para>
+            Java 1.5 minimum
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      Java 7 is provided in the installation for Linux and Windows.
+    </para>
+  </section>
+  <section id="database-requirements">
+    <title>Database requirements</title>
+    <para>
+      The ITE supports <emphasis>Oracle</emphasis> as a multi-user
+      database. There is an embedded database which is installed as
+      well, but we only recommend using this for demo purposes.
+    </para>
+    <para>
+      Other databases may work, as supported by <emphasis>Eclipse
+      Link</emphasis>, but we can offer neither guarantee of their
+      proper use nor technical support.
+    </para>
+  </section>
+  <section id="firewalls">
+    <title>Firewalls</title>
+    <para>
+      The ITE and AUT Agent have to be able to perform interprocess
+      communication in order to run tests. No information is sent to
+      external sources during this process.
+    </para>
+    <para>
+      The ports required are:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          From the ITE to the AUT Agent: this port is defined in the
+          preferences.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the AUT to the ITE: this port is dynamically chosen,
+          and cannot currently be defined. Therefore, any ports
+          available on your test machine must also be open on the
+          machine from which the test is being run.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      If opening all ports in this way is not an option, we recommend
+      using the test executor on the test machine to run the tests, so
+      that all communication is done locally.
+    </para>
+  </section>
+</section>

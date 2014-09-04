@@ -1,0 +1,11 @@
+<chapter id="system-requirements" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                xmlns:xi="http://www.w3.org/2001/XInclude">
+  <?dbhtml dir="systemRequirements"?>
+  <title>System requirements</title>
+  
+  <xi:include href="sectionHardwareRequirements.xml"/>
+  <xi:include href="sectionSoftwareRequirements.xml"/>
+  <xi:include href="sectionAUTAgentRequirements.xml"/>
+  <xi:include href="sectionJavaPolicies.xml"/>
+
+</chapter>

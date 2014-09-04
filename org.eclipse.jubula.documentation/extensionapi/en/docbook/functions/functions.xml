@@ -1,0 +1,15 @@
+<chapter id="functions" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                      xmlns:xl="http://www.w3.org/1999/xlink">
+  <?dbhtml dir="functions"?>
+  <title>Creating ITE functions</title>
+  <para>
+    Functions represent program code that is evaluated during test
+    execution. In order to define a new function, you will need to
+    create an extension for the extension point
+    <emphasis>org.eclipse.jubula.client.core.functions</emphasis>, which
+    can be found in the bundle
+    <emphasis>org.eclipse.jubula.client.core</emphasis>. This bundle
+    also contains reference implementations of the extension point.
+  </para>
+</chapter>

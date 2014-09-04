@@ -1,0 +1,558 @@
+<section id="troubleshooting" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Troubleshooting</title>
+  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <section id="general-help">
+    <title>General help</title>
+    <para>
+      Always check in the Problems View first for any help with your
+      tests. The messages there should help you with most of the
+      problems. The ITE also highlights problems in the browsers and
+      views with red crosses. Hover the mouse over the item to see a
+      tool tip with more information.
+    </para>
+    <para>
+      In some text fields you can only enter certain characters. A red
+      background in a text field means that you have entered something
+      incorrect in that field. A yellow background means that the
+      information entered is incomplete.
+    </para>
+    <para>
+      Looking in the log files may help to resolve some problems. Logs for the client (ITE) and AUT Agent can be found via:
+      
+      <para>
+        <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">Show Client/AUT Agent Log</emphasis> <para role="tip">The ITE can only access an AUT Agent log file if it is currently connected to a AUT Agent.</para>
+      </para>
+    </para>
+    <para>
+      This section contains information on some of the more common
+      problems:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Starting the AUT Agent (<xref linkend="troublestartserver"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Connecting to the AUT Agent (<xref linkend="troubleconnectserver"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Starting the AUT (<xref linkend="troublestartaut"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Mapping components from the AUT
+          (<xref linkend="troubleobjectmapping"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Executing Test Suites (<xref linkend="troubleexecute"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Failed Test Suites (<xref linkend="troublefailed"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Locked Test Cases (<xref linkend="troublelocked"/>).
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      For other problems, look in the relevant section of the user
+      manual or the reference manual. There are also FAQs on the
+      BREDEX website.
+    </para>
+  </section>
+  <section id="troublestartserver">
+    <title>I can’t start the AUT Agent</title>
+    <para>
+      Check:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          That you have used the right port number and that it is not
+          being used by any other program.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Whether the computer on which the AUT Agent is installed is
+          switched on.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          That there are no network problems, and that all necessary
+          hardware is connected.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      For information on starting the AUT Agent, refer to the section
+      earlier in this (<xref linkend="starting-and-connecting-aut-agent"/>).
+    </para>
+  </section>
+  <section id="troubleconnectserver">
+    <title>I can’t connect to the AUT Agent</title>
+    <para>
+      Check:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          That the AUT Agent you want to connect to has been started
+          and is running (<xref linkend="start-aut-agent"/>). <para role="tip">If you
+          have not started an AUT Agent, you can work with the
+          embedded AUT Agent (<xref linkend="connect-aut-agent"/>).</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          That you are connecting the AUT Agent to the right port
+          number and AUT Agent hostname.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          That you are connecting to the right version of the AUT
+          Agent.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      For more information on connecting to the AUT Agent, see the
+      section earlier in this (<xref linkend="connect-aut-agent"/>).
+    </para>
+  </section>
+  <section id="troublestartaut">
+    <title>I can’t start the AUT</title>
+    <para>
+      <emphasis role="strong">If the start AUT button is disabled</emphasis><?linebreak?>
+      If you cannot start a particular AUT, this could be because:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You have not connected to the AUT Agent
+          (<xref linkend="connect-aut-agent"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You have not defined an AUT (<xref linkend="define-aut"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You have not configured an AUT (<xref linkend="configuringaut"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The AUT does not support the current working language.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <para>
+        <emphasis role="strong">Errors starting the AUT</emphasis>
+      </para>
+      
+      If there is an error starting the AUT, this could be because:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          The AUT cannot be found:
+        </term>
+        <listitem>
+          <para>
+            Make sure that the JAR or executable file for the AUT is
+            correct, or that the classpaths are correct
+            (<xref linkend="configuringaut"/>).
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          The main class has not been found:
+        </term>
+        <listitem>
+          <para>
+            Make sure that the JAR file or the classpaths you have
+            entered contain the main class (<xref linkend="configuringaut"/>).
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          The JAR given as a classpath is not valid:
+        </term>
+        <listitem>
+          <para>
+            Check that you have entered the right JAR file, and that
+            the path to it is correct from this computer. If you have
+            entered a relative path, make sure that it is relative to
+            the AUT working directory, if there is one, or to the AUT
+            Agent directory if you have not specified a AUT working
+            directory. 
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          The JAR given as a classpath does not contain a distinct
+          main class:
+        </term>
+        <listitem>
+          <para>
+            Check that you have entered a JAR which contains a main
+            class.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      <emphasis role="strong">If the AUT does not appear in the Running AUTs View</emphasis><?linebreak?>
+      If the AUT does not appear in the Running AUTs View and you are testing an RCP application, make sure that the RCP Remote Control plugin has been installed (<xref linkend="rcpaut"/>).
+    </para>
+    <para>
+      Otherwise, check that the toolkit you specified in the AUT
+      configuration (<xref linkend="configuringaut"/>) is the right toolkit for
+      this AUT.
+    </para>
+  </section>
+  <section id="troubleobjectmapping">
+    <title>I can’t map components in the Object Mapping Mode</title>
+    <para>
+      <emphasis role="strong">Green border does not appear in Java AUTs</emphasis><?linebreak?>
+      If you are in the Object Mapping Mode and cannot see a green border around components, then this could mean the following:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The border cannot be drawn – try collecting the component
+          anyway and see if the technical name appears in the Object
+          Mapping Editor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The component is not supported – find out whether the
+          component in your AUT is a standard component or a custom
+          component. If it is a custom component, you may need to
+          write an extension to be able to test it.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Green border is shown but component cannot be mapped</emphasis><?linebreak?>
+      If you can see the green border in the Object Mapping Mode but cannot collect the component, this could mean the following:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The key combination you are using is being blocked by the
+          AUT – try changing the combination (<xref linkend="object-mapping-preferences"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The component is already mapped. Check whether a technical
+          name in the <emphasis>unassigned technical names</emphasis>
+          or <emphasis>assigned names</emphasis> category is being
+          highlighted.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The component is not supported – find out whether the
+          component in your AUT is a standard component or a custom
+          component. If it is a custom component, you may need to
+          write an extension to be able to test it.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Problems with GTK</emphasis><?linebreak?>
+      The GTK graphics toolkit (often used with Linux) can make object mapping with the default settings impossible for certain components. If the AUT that you are mapping is running under Linux, please change the object mapping shortcut key combination to anything <emphasis>other than</emphasis> <emphasis role="input">»CTRL+SHIFT+[0-9 or A-F]«</emphasis>.
+    </para>
+  </section>
+  <section id="troubleexecute">
+    <title>I can’t execute my Test Suite</title>
+    <para>
+      If you cannot start a Test Suite, check that:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The Test Suite has complete data for the current language.
+          <para role="warning">No parameter values can be empty in a Test Suite. If
+          you no longer need the parameter, delete it.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The object mapping is complete (<xref linkend="object-mapping-1"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Object Mapping Mode and the observation mode have been
+          switched off.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You have connected to the AUT Agent
+          (<xref linkend="connect-aut-agent"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You have started the AUT (<xref linkend="starting-the-aut"/>).
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <para role="tip">You can use the Test Suite Browser to click through the
+      Test Suite to see the exact places where data and object maps
+      are missing.</para>
+    </para>
+  </section>
+  <section id="troublefailed">
+    <title>My Test Suite failed</title>
+    <para>
+      If your test fails, you can find exact details about the problem by looking at the Test
+      Result View (<xref linkend="testresultview"/>). A screenshot of the AUT is automatically
+      taken when an error occurs and can be seen in the Image View.
+    </para>
+    <para>
+      For other problems with test execution, check:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          That the AUT is in focus and is visible. You can
+          automatically activate the AUT in the AUT properties
+          (<xref linkend="configuringaut"/>) or you can use a Test Case to
+          activate the AUT. You can also set your preferences to
+          minimize the ITE when test execution begins (<xref linkend="gdprefs"/>).
+          <para role="warning">Bear in mind that different platforms have different
+          focus behavior. You may need to specifically bring the AUT
+          into focus by clicking into it as a part of the test.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          That the AUT is ready when the test begins. To ensure this,
+          you can insert a Test Case at the beginning of each test
+          which waits for the window or for the first component you
+          want to test. This is especially important when you are
+          running tests from the command line with the Test Executor.
+        </para>
+        <para>
+          <para role="tip">Waiting for a window to appear is generally a good
+          idea whenever a new window or dialog is opened during the
+          test. Waiting for the window or the component you want to
+          test will make sure that your tests run even under different
+          timing conditions. </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Make sure that the Test Cases and Test Steps are in the
+          right order.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Ensure that the data you have entered is correct.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Check your object mapping configuration
+          (<xref linkend="the-configuration-view-in-the-object-mapping-editor"/>). We recommend that you set the
+          recognition to ”<emphasis>standard</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the AUT is an RCP application, make sure that the
+          keyboard layout is correct (<xref linkend="configuringaut"/>).
+          Otherwise, make sure you have the current version of the RCP
+          Remote Control plugin (start your application with -clean to
+          be sure).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Check that the Test Steps preceding the failed Test Step
+          were successful by looking at the state of the application.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <para role="tip">To help you analyze the reasons for Test Suite failure,
+      you can use the <emphasis>pause on error</emphasis> option
+      (<xref linkend="interactive-test-analysis"/>).</para>
+    </para>
+  </section>
+  <section id="troublerdesktop">
+    <title>My Test Suite failed when using
+    <emphasis>rdesktop</emphasis></title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Under a very specific configuration involving
+          <emphasis>rdesktop 1.5</emphasis>, tests are known to
+          frequently fail with an action error: ’Timeout received
+          before confirming the posted event’.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This occurs when <emphasis>rdesktop 1.5</emphasis> is used
+          to log into a user account used for the ITE as well as a
+          separate account for the AUT Agent.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The problem does not occur under <emphasis>rdesktop
+          1.4.1</emphasis>.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="troublelocked">
+    <title>I can’t save my editor</title>
+    <para>
+      If you are working in a multi-user environment, or if you are
+      working on multiple editors at once, the editors may be locked.
+      This is to secure the editors so that conflicting changes do not
+      take place. You will be able to save changes in your editor once
+      the changes by the other tester or in the other editor have been
+      saved.
+    </para>
+    <para>
+      After an irregular shutdown, you may find that some editors may
+      still be locked. This is temporary and will pass.
+    </para>
+  </section>
+  <section id="creating-a-support-information-package">
+    <title>Creating a support information package</title>
+    <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+    <anchor role="helpid" id="supportRequestDialogContextId">Support Information Package</anchor>
+    <para>
+      If you have found a problem with the ITE itself, you can create
+      a support information package from within the ITE. You can
+      choose which information to include in the package, which can be
+      uploaded to a bug-tracking system as a .zip file.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select:
+          
+          <para>
+            <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">Create Support Information Package</emphasis>
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the dialog which appears, select what to add to the
+          package:
+        </para>
+        <variablelist>
+          <varlistentry>
+            <term>
+              Configuration information:
+            </term>
+            <listitem>
+              <para>
+                This includes information about how you have
+                configured the ITE, which other plugins you are using,
+                and information about your environment. 
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              The AUT Agent log
+            </term>
+            <listitem>
+              <para>
+                This lets us see the messages from the AUT Agent. If
+                you are not connected to the AUT Agent, this option
+                will be grayed out. 
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              The client log
+            </term>
+            <listitem>
+              <para>
+                This lets us see the messages from the ITE. 
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              The Project and depending Projects
+            </term>
+            <listitem>
+              <para>
+                The currently open Project and any Projects it reuses.
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </listitem>
+      <listitem>
+        <para>
+          Browse to the destination to save the .zip file.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Click ”<emphasis>OK</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The prepared package will be saved to the destination you
+          specified.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="log-file-locations">
+    <title>Log file locations</title>
+    <para>
+      The logs for the ITE and the AUT Agent can be found in your home directory under:
+      
+      <para>
+        <emphasis>.jubula/logs</emphasis>
+      </para>
+    </para>
+  </section>
+</section>

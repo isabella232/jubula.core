@@ -1,0 +1,13 @@
+<section id="summary" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Summary</title>
+  <para>
+    After reading this chapter, the structure and concepts of the tool
+    should be clear. You can specify reusable Test Cases to make Test
+    Suites in a Project. To enhance the reusability and structure of
+    test elements and the ease of use, there are various features
+    supported by the program. To look at these features in more detail
+    and find out how to use them, see the <xref linkend="tasks"/>.
+  </para>
+</section>

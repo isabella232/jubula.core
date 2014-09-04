@@ -1,0 +1,60 @@
+<section id="database-structure" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                               xmlns:xi="http://www.w3.org/2001/XInclude"
+                                               xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Database structure</title>
+  <para>
+    You can store your Projects in a single-user database or in a
+    multi-user database (recommended).
+  </para>
+  <section id="supported-systems">
+    <title>Supported systems</title>
+    <para>
+      The ITE uses <emphasis>Eclipse Link</emphasis>
+      as an object relational mapping layer.
+    </para>
+    <para>
+      The ITE is tested with <emphasis>Oracle</emphasis>. Other
+      database solutions supported by <emphasis>Eclipse
+      Link</emphasis> may also be used as a database, though these
+      have not been tested by our team.
+    </para>
+  </section>
+  <section id="single-user">
+    <title>Single-user</title>
+    <para>
+      If you work on a single-user database, only one tester can work
+      on a specific Project at a time. This also applies to the test
+      executor – the ITE and the test executor cannot access a
+      single-user database at the same time.
+    </para>
+    <para>
+      This method reduces the complexity of the system and its
+      configuration, and should really only be used for demo purposes.
+      Project sharing remains possible, however, through
+      import/export.
+    </para>
+  </section>
+  <section id="multi-user">
+    <title>Multi-user</title>
+    <para>
+      When using a multi-user database, multiple testers can work on a
+      single Project concurrently.
+    </para>
+    <para>
+      Within such a scenario, all testers currently working on a
+      Project may view and execute all parts of it. As soon as one
+      tester alters a part of the Project, a lock is placed on that
+      unit to disallow other users from making changes of their own.
+      They are, however, still able to view and execute a locked test
+      unit. Once the user with the lock has saved all changes, the
+      lock is removed, and the test unit is once again available for
+      editing.
+    </para>
+    <para>
+      This database scenario is well-suited for larger testing
+      operations, allowing for tight collaboration among testers and
+      reducing the overall time needed to specify complex testing
+      projects.
+    </para>
+  </section>
+</section>

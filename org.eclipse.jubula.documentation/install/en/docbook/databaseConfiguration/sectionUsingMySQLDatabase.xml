@@ -1,0 +1,39 @@
+<section id="using-a-mysql-database" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                   xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Using a MySQL database</title>
+  <para>
+    Users working with a MySQL database may want to increase the
+    maximum allowed packet size to avoid problems during the
+    communication of large amounts of information (more than one
+    MegaByte) between the AUT Agent and the ITE.
+  </para>
+  <para>
+    To change the default packet value, you must:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Log into the MySQL command line client.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Enter the following into the console:<?linebreak?>
+        <emphasis role="input">SET GLOBAL max\_allowed\_packet=33554432</emphasis><?linebreak?>
+        This sets a value of 32 MegaBytes (1048576 * 32 = 33554432).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Check that the value has been successfully set using:<?linebreak?>
+        <emphasis role="input">SHOW VARIABLES</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Restart the ITE for the changes to take place.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

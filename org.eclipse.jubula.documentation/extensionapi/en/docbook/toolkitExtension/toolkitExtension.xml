@@ -1,0 +1,49 @@
+<chapter id="toolkitExtension" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink">
+  <?dbhtml dir="toolkitExtension"?>
+  <title>Creating toolkit extensions</title>
+  <para>
+    The following chapter describes the general steps to take for
+    creating an ITE toolkit extension with custom defined components and
+    actions. This chapter begins by listing the requirements followed by
+    showing the necessary steps for creating an ITE and remote control
+    extension. The ITE toolkit extension is described in <xref linkend="iteExtension"/>
+    and the implementation for the remote control extension in <xref linkend="remoteControlExtension"/>.
+  </para>
+  <para>
+    Extension examples with source code can be found in the subdirectory
+    
+    <para>
+      <emphasis role="input">examples/development/extension/src/</emphasis>
+    </para>
+    of the installation.
+  </para>
+  <para>
+    In general you always have to extend two things:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The ITE toolkit extension – by writing your own <emphasis role="strong">toolkit</emphasis> plug-in:
+        This will tell the ITE which new components and actions are available.
+      </para>
+    </listitem>
+    <listitem>
+    <para>
+      The remote control extension – by writing your own <emphasis role="strong">fragment</emphasis>:
+      This part actually performs the actions on the new components.
+    </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    In this chapter all used directory names are located in the
+    installation directory as long as nothing else is specified.
+  </para>
+
+  <xi:include href="sectionRequirements.xml"/>
+  <xi:include href="sectionITEExtension.xml"/>
+  <xi:include href="sectionRemoteControlExtension.xml"/>
+  <xi:include href="sectionExtensionExamples.xml"/>
+  
+</chapter>

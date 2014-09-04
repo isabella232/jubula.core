@@ -1,0 +1,18 @@
+<section id="using-the-embedded-database" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                        xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Using the embedded database</title>
+  <para>
+    The embedded database is the default database. If you do not
+    specify a different database, a connection will automatically be
+    made to the embedded database.
+  </para>
+  <para>
+    The embedded database is a H2 file-based database. It is saved to:<?linebreak?>
+    <emphasis>home/.jubula/database</emphasis>
+  </para>
+  <para>
+    <para role="tip">We recommend only using the embedded database for demo or
+    tryout purposes. </para>
+  </para>
+</section>

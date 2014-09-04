@@ -1,0 +1,1951 @@
+<section id="working-with-data" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Working with test data</title>
+  <section id="data-types-and-entering-data-for-test-cases">
+    <title>Data types and entering data for Test Cases</title>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <para>
+      Most actions in the library require one or more
+      <emphasis>parameters</emphasis> (e.g. how often to click, what
+      text to enter). Once you have added Test Cases or Test Steps to
+      a Test Case, you will see which parameters are required by this
+      action in the Properties View.
+    </para>
+    <para>
+      <para role="tip">You can also enter <emphasis>data sets</emphasis> in the
+      Data Sets View (<xref linkend="using-the-data-sets-view"/>) and you can create
+      central data sets to be reused throughout the Project
+      (<xref linkend="using-central-data-sets"/>). </para>
+    </para>
+    <para>
+      You can be very flexible with data, so you have a choice about
+      what to enter in the Properties View:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Concrete values (<xref linkend="entering-concrete-values-as-data-in-test-cases"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          References (<xref linkend="using-references-for-data-in-test-cases"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Variables (<xref linkend="using-variables-as-data-for-test-cases"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Functions (<xref linkend="using-functions-as-data-for-test-cases"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          A mixture of the above (<xref linkend="concatenating-combining-parameters"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          An Excel file (<xref linkend="using-an-excel-file-as-an-external-data-source"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          A reference to a central data set (<xref linkend="using-central-data-sets"/>).
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="entering-concrete-values-as-data-in-test-cases">
+    <title>Entering concrete values as data in Test Cases</title>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <itemizedlist>
+      <listitem>
+        <para>
+          In the Properties View for a Test Case, you can enter a
+          <emphasis>concrete value</emphasis> as a parameter e.g.
+          <emphasis role="input">Hello</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This means that this particular parameter cannot be changed
+          when you reuse its parent Test Case.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter concrete values for things that you expect to stay the
+          same, like your choice of <emphasis>operator</emphasis>
+          (i.e. matches, equals) or the click count. Deciding which
+          data not to parametrize is an important decision is test
+          creation. <para role="tip">Press
+          <emphasis role="input">»CTRL+SPACE«</emphasis> to get content
+          assist in the Properties View for certain parameters. </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Depending on your test structure, you may want to use
+          concrete values for all the parameters in a keyword. If, for
+          example, you have a keyword to open the ”<emphasis>New
+          Category</emphasis>” dialog from a menu, you will probably
+          want to write the menupath as a concrete value. After all,
+          this Test Case is designed to open this specific dialog, so
+          the menupath is fixed. <para role="tip">Any concrete values you enter
+          into a Test Case are valid whenever you reuse this Test
+          Case. If you change the concrete values in the original Test
+          Case, all of the places you have reused it will change as
+          well. </para>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="using-references-for-data-in-test-cases">
+    <title>Using references for data in Test Cases</title>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
+    <itemizedlist>
+      <listitem>
+        <para>
+          If there are parameters in a Test Case that you want to
+          change when you reuse it, you can enter a reference instead
+          of a concrete value. Deciding which data to parametrize is
+          an important decision in test creation. <para role="tip">Press
+          <emphasis role="input">»CTRL+SPACE«</emphasis> to get content
+          assist in the Properties View for certain parameters. </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To enter a reference for a parameter, in the Properties
+          View, enter a reference name, preceded by an equals sign:
+          <emphasis role="input">=REF_NAME</emphasis>.
+        </para>
+        <para>
+          <para role="tip">Reference names may only consist of letters, numbers
+          and underscores. You cannot use spaces in reference names.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Press <emphasis role="input">»ENTER«</emphasis>. A yellow arrow
+          <mediaobject role="icon" file="../images/refArrow.png"/>
+          will appear next to the <emphasis>parameter</emphasis> field
+          in the Properties View.
+          
+          <para role="tip">It helps to choose names that are meaningful so that
+          you know what sort of data to enter later. Instead of
+          <emphasis>=TEXT</emphasis>, you could use
+          <emphasis>=CATEGORY_NAME</emphasis>, for example.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You will see that the reference becomes a parameter of the
+          parent Test Case. It appears in the Test Case Browser next
+          to the parent Test Case in square brackets.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You will be able to enter data for this parameter when you
+          reuse the Test Case. <para role="tip">You can enter data for it now if
+          you want to – this is essentially like having default data.
+          They appear when you reuse the Test Case, but you can
+          overwrite them (<xref linkend="overwriting-data-for-test-cases-and-test-suites"/>).</para>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      For information on editing and deleting referenced parameters
+      from Test Cases, see the following 
+      <xref linkend="using-the-edit-parameters-dialog-to-add-edit-and-delete-references"/>.
+    </para>
+  </section>
+  <section id="using-the-edit-parameters-dialog-to-add-edit-and-delete-references">
+    <title>Using the edit parameters dialog to add, edit and delete references</title>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" id="editParametersDialogContextId">Editing Parameters</anchor>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <para>
+      You can use the edit parameters dialog to add, edit and delete
+      parameters for a Test Case or a central test data set. This
+      section is concerned with using the dialog for editing
+      parameters in a Test Case. For editing parameters for a central
+      test data set, see the section later (<xref linkend="using-central-data-sets"/>).
+    </para>
+    <para>
+      To edit the parameters for a Test Case:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the edit parameters dialog by right-clicking on the
+          root node in the Test Case Editor and selecting <emphasis role="menuPath">Edit
+          parameters</emphasis> from the context-sensitive menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the dialog, you can see any parameters you have
+          referenced for this Test Case, and what type of parameters
+          they are.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the dialog, you can add new parameters to the Test
+          Case, edit existing parameters, and delete parameters. You
+          can also change the order the parameters appear in.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Use the <emphasis>lock</emphasis> option to lock the
+          parameters for this Test Case. This means that you cannot
+          delete them, rename them or remove them in this Test Case.
+          <para role="warning">In the Properties View, you can only
+          <emphasis>add</emphasis> references for parameters. To edit
+          or delete references, you must use this dialog.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="using-variables-as-data-for-test-cases">
+    <title>Using variables as data for Test Cases</title>
+    <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can store values from the AUT during a test to use
+          later in the test.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Some actions (e.g. store value) let you save a value as a
+          variable. You specify the name of the variable, e.g.
+          <emphasis role="input">USERNAME</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When you want to use the variable, you can enter it as a
+          parameter by preceding it with a dollar sign:
+          <emphasis role="input">$USERNAME</emphasis>.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      For more information on using variables, see the following
+      sections:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Working with variables in tests (<xref linkend="reading-and-using-values-variables-from-the-aut"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Working with system variables (<xref linkend="using-environment-variables-in-tests"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Working with the pre-defined variables
+          (<xref linkend="using-the-pre-defined-test-execution-variables"/>).
+        </para>
+      </listitem>
+    </itemizedlist>
+    <section id="reading-and-using-values-variables-from-the-aut">
+      <title>Reading and using values (variables) from the
+      AUT</title>
+      <para>
+        You can store values read from the AUT to use as data in
+        other Test Cases.
+      </para>
+      <orderedlist>
+        <listitem>
+          <para>
+            Use one of the <emphasis>store value</emphasis> actions on the various
+            components to reads a value from a component in the
+            AUT.
+            <para role="tip">You can also use the <emphasis>store value</emphasis> action on the <emphasis>application</emphasis> component to store a value you enter.</para>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the parameter field, enter a name for this variable
+            (e.g. USERNAME).
+          </para>
+          <para>
+            <para role="tip">Variable names may only contain letters, numbers and underscores</para>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            When you want to use this value as data for a parameter,
+            enter the variable name preceded by a dollar sign ($) as
+            the parameter value (e.g. $USERNAME).
+          </para>
+          <para>
+            Bear in mind that the variable has to be stored before it
+            can be used as a parameter value.
+          </para>
+        </listitem>
+      </orderedlist>
+      <para>
+        Read the following sections for more information on:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Using system variables in tests
+            (<xref linkend="using-environment-variables-in-tests"/>).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Using the pre-defined variables in tests
+            (<xref linkend="using-the-pre-defined-test-execution-variables"/>)
+          </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section id="using-environment-variables-in-tests">
+      <title>Using environment variables in tests</title>
+      <para>
+        You can add variables to your operating system, which can be
+        used in your tests.
+      </para>
+      <para>
+        You will need to set environment variables which have the form:
+        
+        <para>
+          <emphasis role="input">TEST_UDV_&lt;variablename&gt;</emphasis>
+        </para>
+      </para>
+      <para>
+        To use the variable in your tests, enter the variable name
+        (everything after the underscore) preceded by a dollar sign.
+        Do not enter the ”<emphasis>TEST_UDV_</emphasis>” part.
+      </para>
+      <para>
+        <para role="warning">After entering or changing an environment variable, you will need to restart the ITE. Environment variables for the ITE (i.e. for the test) are only read from the machine on which the ITE is running, not from the machine where the AUT Agent is running.</para>
+      </para>
+      <para>
+        Your system administrator will be able to help you with
+        operating-system specific ways of setting environment
+        variables.
+      </para>
+      <para>
+        <emphasis role="strong">Useful variables</emphasis> These
+        variables can be used as environment variables on your machine
+        or as JVM properties in your AUT configuration.
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            TEST_AUT_KEEP_ALIVE_DELAY
+          </term>
+          <listitem>
+            <para>
+              This can be useful if you are using the action to
+              <emphasis>prepare for termination</emphasis>. You can use this
+              variable to configure (in millseconds) how long the
+              AUT should be ”kept alive” after the termination
+              command (e.g. pressing ”<emphasis>Exit</emphasis>” in order for the
+              correct communication between the ITE and the
+              AUT to occur). The value is set to 2000ms per
+              default. 
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            TEST_AUT_POST_DEREGISTRATION_DELAY
+          </term>
+          <listitem>
+            <para>
+              This can be useful if you are using the action
+              <emphasis>synchronize shutdown and re-start</emphasis>. You can use
+              this variable to configure (in milliseconds) how long
+              your AUT requires after closing to perform tasks
+              such as saving resources and settings. 
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section id="using-the-pre-defined-test-execution-variables">
+      <title>Using the pre-defined test execution variables</title>
+      <orderedlist>
+        <listitem>
+          <para>
+            There are pre-defined test execution variables which you
+            can use in your tests.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            The following variables are automatically initialized when
+            executing a Test Suite:
+          </para>
+          <variablelist>
+            <varlistentry>
+              <term>
+                TEST_TESTSUITE:
+              </term>
+              <listitem>
+                <para>
+                  The Test Suite name.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>
+                TEST_USERNAME:
+              </term>
+              <listitem>
+                <para>
+                  The account name you are logged into your computer
+                  under.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>
+                TEST_DBUSERNAME:
+              </term>
+              <listitem>
+                <para>
+                  The database user.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>
+                TEST_AUTAGENT:
+              </term>
+              <listitem>
+                <para>
+                  The hostname for the AUT Agent the test is running
+                  on.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>
+                TEST_PORTNUMBER:
+              </term>
+              <listitem>
+                <para>
+                  The port number for the AUT Agent the test is
+                  running on.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>
+                TEST_AUT:
+              </term>
+              <listitem>
+                <para>
+                  The AUT name.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>
+                TEST_AUTCONFIG:
+              </term>
+              <listitem>
+                <para>
+                  The AUT configuration name.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>
+                TEST_CLIENTVERSION:
+              </term>
+              <listitem>
+                <para>
+                  The version of the ITE you are using.
+                </para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>
+                TEST_LANGUAGE:
+              </term>
+              <listitem>
+                <para>
+                  The language the AUT and the test are running in,
+                  e.g en_US. 
+                </para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+        <listitem>
+          <para>
+            To use the value of one of these variables in your test, enter:
+            
+            <para>
+              <literal>${VARIABLE_NAME}</literal>
+            </para>
+            
+            as the parameter value.
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+  </section>
+  <section id="using-functions-as-data-for-test-cases">
+    <title>Using functions as data for Test Cases</title>
+    <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <para>
+      You can calculate specific values without to enter the results
+      yourself using <emphasis>functions</emphasis>. There are
+      specific functions that work out-of-the-box, and additional
+      functions can be added as well.
+    </para>
+    <section id="syntax-for-functions">
+      <title>Syntax for functions</title>
+      <para>
+        The sign used to introduce a function is the question mark: <emphasis role="input">?</emphasis>
+        (without quotes).
+      </para>
+      <para>
+        After the sign, you must enter the name of the function
+        followed by the arguments the function requires, e.g.:
+      </para>
+      <para>
+        <literal>?add(arg1,arg2)</literal>
+      </para>
+      <para>
+        The arguments are separated by commas and are placed within
+        round brackets.
+      </para>
+    </section>
+    <section id="pre-defined-functions">
+      <title>Pre-defined functions</title>
+      <para>
+        The following functions are available directly in the ITE:
+      </para>
+      <para>
+        <emphasis role="strong">Mathematical functions</emphasis><?linebreak?>
+        The following functions give their results as decimal numbers, e.g. 1.0, 1.2 etc.
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            add
+          </term>
+          <listitem>
+            <para>
+              Adds 0 or more numbers to 0, e.g.:
+              <emphasis role="input">?add(1,2)</emphasis>.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            sub
+          </term>
+          <listitem>
+            <para>
+              Subtracts the second number from the first: <emphasis role="input">?sub(3,2)</emphasis>.<?linebreak?>
+              This function only accepts two numbers.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            mult
+          </term>
+          <listitem>
+            <para>
+              Multiplies 0 or more numbers by 1 e.g.:
+              <emphasis role="input">?mult(2,4)</emphasis>.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            div
+          </term>
+          <listitem>
+            <para>
+              Divides the first number by the second: <emphasis role="input">?div(2,1)</emphasis>.<?linebreak?>
+              This function only accepts two numbers.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            trunc
+          </term>
+          <listitem>
+            <para>
+              Takes two arguments, the decimal to be truncated and the
+              precision (as an integer) to truncate the decimal to.
+              Use <emphasis role="input">0</emphasis> to cut off the number to no
+              decimal places (i.e. to receive a plain integer), and
+              use <emphasis role="input">1</emphasis> to cut off the decimal to one
+              decimal place etc: <emphasis role="input">?trunc(2.396,0)</emphasis> gives
+              <emphasis role="input">2</emphasis> and <emphasis role="input">?trunc(2.789,1)</emphasis>
+              gives <emphasis role="input">2.7</emphasis>.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            round
+          </term>
+          <listitem>
+            <para>
+              Takes two arguments, the decimal to be rounded and the
+              precision (as an integer) to round to. This function
+              uses <emphasis>half-up</emphasis> rounding to round the
+              number so that if the final decimal place after rounding
+              is 5 or higher, the final number will be incremented by
+              1 e.g.: <emphasis role="input">?round(2.56,1)</emphasis> gives
+              <emphasis role="input">2.6</emphasis>. If the final number after rounding
+              is 4 or less, there is no incrementation, eg.
+              <emphasis role="input">?round(2.43,1)</emphasis> gives
+              <emphasis role="input">2.4</emphasis>. <para role="warning">It is currently only
+              possible to use numbers formatted with the decimal mark
+              <emphasis>period</emphasis> or
+              <emphasis>fullstop</emphasis> (<emphasis role="input">.</emphasis>).
+              Thousands separators may not be used. For example,
+              <emphasis role="input">1.5</emphasis> is accepted, but <emphasis role="input">1,5</emphasis>
+              is not. <emphasis role="input">1000</emphasis> can be entered but
+              <emphasis role="input">1,000</emphasis> cannot. Entering
+              <emphasis role="input">1.000</emphasis> is equivalent to entering
+              <emphasis role="input">1</emphasis>.</para>
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+      <para>
+        <para role="tip">Use single quotes around negative numbers, e.g.
+        ’-0.5’.</para>
+      </para>
+      <para>
+        <emphasis role="strong">Date functions</emphasis>
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            now
+          </term>
+          <listitem>
+            <para>
+              Saves the current date in an internal format that can be
+              used as a basis for the formatDate and modifyDate
+              functions. This function takes no arguments:
+              <emphasis role="input">?now()</emphasis>.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            formatDate
+          </term>
+          <listitem>
+            <para>
+              Puts a date into a specific format. The date to be
+              formatted is entered as the first argument, followed by
+              the format string e.g.
+              <emphasis role="input">?formatDate(?now(), dd-MM-yyyy)</emphasis>. The
+              formats that can used here are the formats from the
+              SimpleDateFormat class in Java.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            parseDate
+          </term>
+          <listitem>
+            <para>
+              Reads a value that is a date and parses it into an
+              internal format based on the format string given (i.e.
+              how the date should be understood). The first argument
+              is the date, and the second is the format string
+              <emphasis role="input">?parseDate(2011.06.25,yyyy.MM.dd)</emphasis>. This
+              function should be used when reading and working with
+              dates shown in the AUT. 
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            modifyDate
+          </term>
+          <listitem>
+            <para>
+              This function can add days (d), months (M), and years
+              (y) to a given date. The date must first be parsed (i.e.
+              using parseDate) so that the correct internal format is
+              used. This function takes two arguments: the first is
+              the date to modify, and the second is the modification
+              to perform, e.g. <emphasis role="input">?modifyDate(?now(),1d)</emphasis>.
+              Additions are entered as positive integers (but without
+              a plus sign, e.g. 1d, 1M, 1y) and subtractions are
+              entered as negative integers, e.g. -1d, -1M, -1y.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+      <para>
+        <para role="tip">If you want to use the result of a date function as a
+        part of your test data (i.e. to enter or check), then you will
+        most likely need to use formatDate on any date modifications
+        you have performed.</para>
+      </para>
+      <para>
+        <emphasis role="strong">Test functions</emphasis>
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            getNodeAttribute
+          </term>
+          <listitem>
+            <para>
+              Reads the value on the node (e.g. Test Case, Test Step)
+              on which this function is resolved, and uses this as the
+              data for the Test Step. It has two possible arguments,
+              <emphasis>name</emphasis> reads the name of the node,
+              and <emphasis>comment</emphasis> reads the comment on
+              the node. If the comment is empty, the value used is
+              <emphasis>null</emphasis>. If you have overwritten
+              either the name or the comment at this place of reuse,
+              then these new details are used.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            getCentralTestDataSetValue
+          </term>
+          <listitem>
+            <para>
+              Use this function to access a value saved in a central
+              data set. This lets you combine values that you have
+              defined centrally with values that you use locally, or
+              lets you combine values from different central data sets
+              in your test. It locates a single cell in a specific
+              central data set based on a value in a column that you
+              define as a key, and a column in which to search for the
+              required value. It requires four arguments: the name of
+              the central data set to search in, the name of the
+              column which you wish to use as a ”key” (you can name
+              the column KEY if you require), the value in the key
+              column (to specify the line), and the column in which
+              the required data cell is located.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+      <para>
+        <emphasis role="strong">Example of the getCentralTestDataSetValue function</emphasis><?linebreak?>
+        The function to retrieve data from a central data set can be exemplified using this example central data set, which is named <emphasis>Customer</emphasis>:
+      </para>
+      <para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec align="center"/>
+            <colspec align="center"/>
+            <thead>
+              <row>
+                <entry>CUSTOMER_TYPE</entry>
+                <entry>CUSTOMER_NAME</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry>NormalUser</entry>
+                <entry>Bob Normal</entry>
+              </row>
+              <row>
+                <entry>SuperUser</entry>
+                <entry>Alice Super</entry>
+              </row>
+              <row>
+                <entry>SupportUser</entry>
+                <entry>John Support</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </para>
+      <para>
+        To select a customer name using the customer type, you should
+        enter:
+      </para>
+      <blockquote>
+        <para>
+          <emphasis role="strong">?getCentralTestDataSetValue<?linebreak?>
+          (Customer,CUSTOMER_TYPE,SuperUser,CUSTOMER_NAME)</emphasis>
+        </para>
+      </blockquote>
+      <para>
+        This will look in the central data set called
+        <emphasis>Customer</emphasis>, locate the value
+        <emphasis>SuperUser</emphasis> in the
+        <emphasis>CUSTOMER_TYPE</emphasis> column, and use that line
+        to choose the cell in the <emphasis>CUSTOMER_NAME</emphasis>
+        column – Alice Super.
+      </para>
+      <para>
+        <emphasis role="strong">Wrapped functions from other libraries</emphasis><?linebreak?>
+        You can also use the following functions in your tests. For full documentation on them, please refer to the respective library.
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            randomInt(exclusive maximum value)
+          </term>
+          <listitem>
+            <para>
+              Use this function to generate a random integer up to but
+              not including the value you specify. The function is
+              from
+              <emphasis>org.apache.commons.lang.math.RandomUtils</emphasis>
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            replaceAll(string,regular expression,replacement)
+          </term>
+          <listitem>
+            <para>
+              Use this function to replace all of the parts of a
+              string you specify with something else. The string to
+              perform the replacement on is entered as the
+              <emphasis>string</emphasis>, the part(s) of the string
+              to replace are defined by the <emphasis>regular
+              expression</emphasis>, and the string to replace it with
+              is given as the <emphasis>replacement</emphasis>. This
+              function is from <emphasis>java.util.regex</emphasis>.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            uuid()
+          </term>
+          <listitem>
+            <para>
+              This function generates a universal unique identifier.
+              The function is from
+              <emphasis>java.util.UUID</emphasis>.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            base64Encode(string)
+          </term>
+          <listitem>
+            <para>
+              This function encodes a string to base 64. The function
+              is from
+              <emphasis>org.apache.commons.codec.binary.Base64</emphasis>.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            base64Decode(string)
+          </term>
+          <listitem>
+            <para>
+              This function decodes a string from base 64. The
+              function is from
+              <emphasis>org.apache.commons.codec.binary.Base64</emphasis>.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section id="embedding-functions-in-other-functions">
+      <title>Embedding functions in other functions</title>
+      <para>Functions can be added as arguments to other functions. If, for example, you want to use the result of a subtraction as the first argument of your addition, you could write it like this:
+      
+        <para>
+          <emphasis role="input">?add(?sub(2,1),1)</emphasis>
+        </para>
+      
+      Results in <emphasis role="input">1.0 + 1</emphasis>, i.e. <emphasis role="input">1.0</emphasis>
+      </para>
+    </section>
+    <section id="useful-examples-for-functions">
+      <title>Useful examples for functions</title>
+      <para>
+        Especially when it comes to the date functions, it is often
+        necessary to use multiple functions embedded within each
+        other.
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            ?formatDate(?now(), dd’ MMMM ’yyyy)
+          </term>
+          <listitem>
+            <para>
+              e.g. 29 February 2012
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            ?formatDate(?now(), dd’ MMM ’yyyy)
+          </term>
+          <listitem>
+            <para>
+              e.g. 29 Feb 2012
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            ?formatDate(?now(), dd-MMM-yyyy)
+          </term>
+          <listitem>
+            <para>
+              e.g. 29-Feb-2012
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            ?formatDate(?now(), dd.MM.yyyy)
+          </term>
+          <listitem>
+            <para>
+              e.g. 29.02.2012
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            ?formatDate(?now(), dd/MM/yyyy)
+          </term>
+          <listitem>
+            <para>
+              e.g. 29/02/2012
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+      <para>
+        A more complex example involving embedded functions is e.g.:
+      </para>
+      <blockquote>
+        <para>
+          <emphasis role="strong">?formatDate(?modifyDate(?parseDate<?linebreak?>
+          (22.2.2012, dd.MM.yyyy),-1d),dd.MM.yy)</emphasis><?linebreak?>
+          This function will parse the date 22.2.2012 into an internal format, subtract one day and then format it as a dd.MM.yy, in this case: 21.2.12.
+        </para>
+      </blockquote>
+    </section>
+    <section id="adding-your-own-functions">
+      <title>Adding your own functions</title>
+      <para>
+        You can also add your own functions using an extension point.
+        This is described in the Extension Manual.
+      </para>
+    </section>
+  </section>
+  <section id="concatenating-combining-parameters">
+    <title>Concatenating (combining) parameters</title>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
+    <para>
+      The ITE lets you use various different types of parameter:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Concrete values (<xref linkend="entering-concrete-values-as-data-in-test-cases"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Referenced parameters (<xref linkend="using-references-for-data-in-test-cases"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Variables (<xref linkend="using-variables-as-data-for-test-cases"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Functions (<xref linkend="using-functions-as-data-for-test-cases"/>).
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      You can use these parameters separately, or you can combine them
+      to create a parameter value. This is useful if a value you want
+      to enter or check consists of parts that change and parts that
+      stay the same.
+    </para>
+    <para>
+      To combine different types of parameter to make one value, you
+      must write them in a specific way:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Referenced parameters must be written with curly brackets around the reference name:
+          
+          <para>
+            <emphasis role="input">={REF_NAME</emphasis>}
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>Variable names must also be written with curly brackets around them:
+        
+          <para>
+            <emphasis role="input">${VAR_NAME}</emphasis>
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Concrete values are written as normal.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For example, you can build a data string that contains all four types of data:
+          
+          <para>
+            <emphasis role="input">test_={PROJECTNAME}_${CUSTOMERNUMBER}_?now()</emphasis>
+          </para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="viewing-and-changing-data-sources-for-test-cases">
+    <title>Viewing and changing data sources for Test Cases</title>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <para>
+      The Properties View shows the currently used <emphasis>data
+      source</emphasis> for each Test Case. The following data sources
+      are available:
+    </para>
+    <para>
+      <emphasis role="strong">Referenced Test Case</emphasis><?linebreak?>
+      The data have come directly from the original specification of this Test Case. If the data in the referenced Test Case change, then the changes will also take effect here.
+    </para>
+    <para>
+      <emphasis role="strong">Local Test Case</emphasis><?linebreak?>
+      The data being used were entered for this Test Case. Any changes made in the original specifiation of the Test Case will not affect the data here.
+    </para>
+    <para>
+      You can change from <emphasis>local</emphasis> to
+      <emphasis>referenced</emphasis> test data using the combo box to
+      reset the default value from the referenced Test Case.
+    </para>
+    <para>
+      <emphasis role="strong">Central test data set</emphasis><?linebreak?>
+      The data have come from a central test data set (<xref linkend="using-central-data-sets"/>).
+    </para>
+    <para>
+      <emphasis role="strong">Excel data file</emphasis><?linebreak?>
+      An Excel file has been entered as the data source (<xref linkend="using-an-excel-file-as-an-external-data-source"/>)
+    </para>
+    <section id="changing-the-data-source-for-a-test-case">
+      <title>Changing the data source for a Test Case</title>
+      <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+      <itemizedlist>
+        <listitem>
+          <para>
+            The data source changes automatically to reflect the new
+            data source when you enter an Excel file, a Central Test
+            Data Set or when you enter new data in the Test Case.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            To change the data set back to the original specification
+            data (<emphasis>referenced Test Case</emphasis>), first
+            remove all Excel files or Central Test Data Sets, then
+            change the data source in the combo box back to
+            <emphasis>referenced Test Case</emphasis>.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </section>
+  <section id="using-central-data-sets">
+    <title>Using central data sets</title>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <para>
+      You can create and manage central test data sets for a
+      Project which can be reused in Test Cases.
+    </para>
+    <section id="creating-and-editing-central-test-data-sets">
+      <title>Creating and editing central test data sets</title>
+      <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+      <anchor role="helpid" id="newTestDataCubeNameContextId">New Central Data Set</anchor>
+      <para>
+        To create a central test data set:
+      </para>
+      <orderedlist>
+        <listitem>
+          <para>
+            Open the Central Test Data Editor by clicking the ”<emphasis>Central Test Data Editor</emphasis>” button on the toolbar or selecting:
+            
+            <para>
+              <emphasis role="menupath">Open with</emphasis>--&gt;<emphasis role="menupath">Central Test Data Editor</emphasis>
+            </para>
+            
+            from the Test Suite Browser.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the Central Test Data Editor, select:
+            
+            <para>
+              <emphasis role="menupath">Add new Data Set</emphasis>
+            </para>
+              
+            from the context-sensitive menu or press <emphasis role="input">»Insert«</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the dialog that appears, enter a name for the new data
+            set and click ”<emphasis>OK</emphasis>”.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            The new data set appears in the Central Test Data Editor. You can
+            now add parameters to the data set
+            (<xref linkend="adding-and-modifying-parameters-for-central-test-data-sets"/>).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            You can rename the data set by pressing<emphasis role="input">»F2«</emphasis> or selecting:
+            
+            <para>
+              <emphasis role="menupath">Rename</emphasis>
+            </para>
+            
+            from the context sensitive menu.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            You can categorize your central data sets using the
+            <emphasis>Add category</emphasis> function from the context-sensitive
+            menu (<xref linkend="working-with-categories-in-the-browsers-and-editors"/>).
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section id="deleting-central-test-data-sets">
+      <title>Deleting central test data sets</title>
+      <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+      <para>
+        You can delete a central test data set if the data set has not
+        yet been reused (referenced) in a Test Case
+        (<xref linkend="reusing-central-test-data-sets-in-test-cases"/>).
+      </para>
+      <orderedlist>
+        <listitem>
+          <para>
+            Select:
+            
+            <para>
+              <emphasis role="menupath">Delete</emphasis>
+            </para>
+            
+            from the context-sensitive menu or press <emphasis role="input">»DELETE«</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            A dialog will appear if the data set has been reused and
+            cannot be deleted.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            You can use the search (<xref linkend="searching-for-places-where-a-test-case-or-test-suite-has-been-used"/>)
+            to show where the data set has been used.
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section id="adding-and-modifying-parameters-for-central-test-data-sets">
+      <title>Adding and modifying parameters for central test data sets</title>
+      <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+      <para>
+        Once you have created a central test data set
+        (<xref linkend="creating-and-editing-central-test-data-sets"/>), you can add parameters to the
+        data set using the <emphasis>Edit Parameters</emphasis> dialog.
+      </para>
+      <orderedlist>
+        <listitem>
+          <para>
+            Open the edit parameters dialog for the central data set
+            by double-clicking on the data set in the Central Test Data Editor.
+            You can also select <emphasis role="menupath">Edit parameters</emphasis> from the
+            context-sensitive menu.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the <emphasis>Edit Parameters</emphasis> dialog, you can see any
+            parameters you have already added for this data set, and
+            what type of parameters they are.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Use the ”<emphasis>Add</emphasis>” button to create a new parameter
+            for the data set.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Enter a name for the parameter and select the type of
+            parameter it should be (e.g. String, Integer, ...). The
+            type of parameter it should be will depend on which
+            actions are using it. A list of actions and their
+            parameters (and types) is available in the reference
+            manual.
+            <para role="tip">Names for referenced parameters may only consist of letters, numbers and underscores. You cannot use spaces.</para>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            You can also change the order the parameters appear in,
+            edit their types and names, and delete them completely
+            using this dialog.
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section id="entering-data-for-central-test-data-sets">
+      <title>Entering data for central test data sets</title>
+      <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+      <para>
+        Once you have created a central test data set
+        (<xref linkend="creating-and-editing-central-test-data-sets"/>) and have added parameters to
+        the central test data set (<xref linkend="adding-and-modifying-parameters-for-central-test-data-sets"/>)
+        then you can enter data for these parameters in the
+        Data Sets View.
+      </para>
+      <para>
+        To enter data sets for a central test data set:
+      </para>
+      <orderedlist>
+        <listitem>
+          <para>
+            Open the Central Test Data Editor by clicking the ”<emphasis>Central Test Data Editor</emphasis>” on the toolbar or selecting:
+            
+            <para>
+              <emphasis role="menupath">Open with</emphasis>--&gt;<emphasis role="menupath">Central Test Data Editor</emphasis>
+            </para>
+            
+            from the Test Suite Browser.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the editor, single-click the central test data set you
+            want to add data to.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the Data Sets View, make sure the language in the
+            combo box on the right is the right language for your
+            data.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Select ”<emphasis>Add</emphasis>” to add a row.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Enter the values for the parameters in the row.
+            <para role="tip">You cannot add referenced parameters (i.e. reference names preceded by the equals sign) in the Data Sets View for a central test data set.</para>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Use the buttons in the Data Sets View to add more rows,
+            delete rows and insert rows above the currently selected
+            row.
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section id="reusing-central-test-data-sets-in-test-cases">
+      <title>Reusing central test data sets in Test Cases</title>
+      <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+      <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+      <para>
+        You can reuse a central test data set in a Test Case to
+        provide the concrete data for the parameters required by the
+        Test Case.
+      </para>
+      <orderedlist>
+        <listitem>
+          <para>
+            In the Properties View for the Test Case, enter the name of
+            the central test data set you want to use in the
+            <emphasis>Central Test Data Set</emphasis> field.
+            <para role="tip">Press <emphasis role="input">»CTRL+SPACE«</emphasis> to see a list of possible data sets for this Test Case. You will only be shown data sets that contain the correct parameters with the correct types.</para>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            When you have entered a central test data set, then the
+            Properties View shows <emphasis>central test data set</emphasis> as the
+            data type. You will see the data from the central test
+            data set in read-only form in the Data Sets View.
+            <para role="tip">If data is missing from the central test data set, you will receive the error that test data is incomplete for any  Test Suites this Test Case is used in.</para>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            You can delete the central test data set used by removing
+            it from the <emphasis>central test data set</emphasis> field. The data
+            type reverts to <emphasis>local data</emphasis>. For more information
+            on the data sources, see the earlier section
+            (<xref linkend="viewing-and-changing-data-sources-for-test-cases"/>).
+            <para role="tip">You can use central test data sets that contain more parameters than your Test Case. For example, if your Test Case requires the parameters <emphasis role="input">NAME, ADDRESS</emphasis> and your central test data set contains <emphasis role="input">NAME, ADDRESS, POSTCODE</emphasis>, you can still use the central test data set.</para>
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section id="importing-excel-files-as-central-test-data">
+      <title>Importing Excel files as central test data</title>
+      <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+      <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+      <para>
+        If you have existing Excel files that you want to convert into
+        central test data, then you can import them via the
+        Central Test Data Editor:
+      </para>
+      <orderedlist>
+        <listitem>
+          <para>
+            In the Central Test Data Editor, right-click and select
+            <emphasis role="menupath">Import</emphasis> from the context-sensitive menu.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the dialog that appears, browse to the directory
+            containing your Excel file(s).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Either select the whole directory (if it contains all
+            Excel files) on the left, or select the individual Excel
+            files on the right.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click ”<emphasis>Finish</emphasis>” to start the import.
+            <para role="warning">Your Excel files must contain the correct amount and type of Project languages.</para>
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section id="changing-the-column-used-in-a-central-test-data-set-for-multiple">
+      <title>Changing the column used in a central test data set for multiple Test Cases</title>
+      <anchor role="helpid" id="searchRefactorChangeCtdsColumnUsageWizardPagePageContextId">Changing Central Test Data Columns</anchor>
+      <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+      <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
+      <para>
+        If you have used a central test data set in multiple Test Cases and later realize that you
+        have two columns in the central test data set that contain the
+        same information, then you can change all Test Cases that use
+        this central test data set to just use one column. Once you
+        have done this, you can remove the unnecessary column from the
+        central test data set.
+      </para>
+      <para>
+        <para role="warning">In order to perform this action, all Test Cases to be changed must not be in use by anyone else using the Project -- you should ensure that this is the case before performing the action, otherwise the action cannot be carried out.</para>
+      </para>
+      <orderedlist>
+        <listitem>
+          <para>
+            Search for all places where the central test data set
+            whose column usage you want to change is used. Use
+            <emphasis>Show where used</emphasis> on the central test data set to
+            see all places (<xref linkend="searching-for-places-where-a-test-case-or-test-suite-has-been-used"/>).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the Search Result View, you will see all places
+            where the selected central test data set is reused in this
+            Project, including any original specifications of
+            Test Cases that use it, and any reused Test Cases that use
+            it (as Test Cases or as Event Handlers. We recommend
+            selecting all entries to perform the action, otherwise you
+            may have incomplete test data after only changing a
+            subset.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            You will only be able to perform the changes if:
+          </para>
+          <itemizedlist>
+            <listitem>
+              <para>
+                All the selected Test Cases use the same central test
+                data set.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                All the selected Test Cases have their original
+                specification in this Project, i.e. you do not
+                have a Test Case from a reused Project that uses
+                the central test data set in this Project.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                The Project is not protected.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                The Test Cases you have selected are present (i.e.
+                they are not missing from e.g. reused Projects.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                None of the selected Test Cases uses two different
+                central test data sets (e.g. one central test data set
+                on the originally specified Test Case, and another one
+                at a place where it is reused).
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                The selected Test Cases have at least one referenced
+                parameter and at least one of the referenced
+                parameters has the same type as another parameter in
+                the central test data set.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>
+            If the Project is protected, or Test Cases are
+            missing, the context-menu entry will be disabled. If any
+            of the other prerequisites are not fulfilled, you will see
+            an information dialog that lets you automatically deselect
+            any invalid Test Cases.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            From the context menu, select:
+            
+            <para>
+              <emphasis role="menupath">Change central test data set column usage</emphasis>
+            </para>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the dialog that appears, you can select a parameter to
+            change on the left-hand side, and the column to change it
+            to on the right-hand side. You can only change the usage
+            of columns whose types are the same. If you have e.g.
+            TEXT1 (string) and TEXT2 (string) in your central test
+            data set and Test Cases, but you only require TEXT1, then
+            select TEXT2 on the left-hand side and TEXT1 on the right
+            hand side.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click ”<emphasis>Finish</emphasis>” to perform the action.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            All selected Test Cases will be altered to use the newly
+            chosen column in place of the previously used column.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            If the newly chosen column was already used in one or more
+            of the selected Test Cases, then all places within the
+            Test Case that referenced the old column are changed to
+            reference the newly chosen column. Using the example from
+            above, all places where TEXT2 was referenced in the
+            selected Test Case will be changed to TEXT1. The changed
+            name remains at the interface of the Test Case; TEXT2 is
+            not deleted from the Test Case, but it is no longer used.
+            If the newly chosen column was not yet used in one or more
+            of the selected Test Cases, the old parameter name of the
+            Test Case is renamed to the newly chosen column.
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+  </section>
+  <section id="using-an-excel-file-as-an-external-data-source">
+    <title>Using an Excel file as an external data source</title>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <para>
+      In the Properties View, you can add Excel files as a data source to
+      Test Cases which contain parameters referenced from the
+      Test Cases or Test Steps they contain.
+      <para role="warning">The addition of data via Excel is discouraged, because any problems with the data can only be found once the test is running. We recommend using the central test data sets in the ITE to manage data within the Project (<xref linkend="using-central-data-sets"/>).</para>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Navigate to the Properties View for the Test Case you want to
+          add the Excel file to.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter the path to the Excel file in the
+          <emphasis>Excel data file</emphasis> field.
+        </para>
+        <para>
+          The path to the Excel file can be absolute or relative (if
+          you have specified a data files path (<xref linkend="gdprefs"/>)).
+        </para>
+        <para>
+          <para role="tip">The Excel file must be configured in a specific way in order it to be read (<xref linkend="configuring-the-excel-file"/>)</para>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you reuse this Test Case, the Excel file you enter will
+          be reused along with the Test Case. When you reuse the
+          Test Case, you can choose whether you leave this file or
+          change it for another one.
+          <para role="tip">If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor. </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          A Test Case with an Excel file as data is marked with a
+          small Excel icon in the browsers to help you find it more
+          easily later.
+          <para role="warning">Please note that the Excel file is read at the start of the test execution. Any changes to the file after this will not affect the test data. For information on using the date function in Excel, see the section later <xref linkend="using-the-today-function-in-excel"/>.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+    <section id="configuring-the-excel-file">
+      <title>Configuring the Excel file</title>
+      <itemizedlist>
+        <listitem>
+          <para>
+            The worksheet in Excel must be named with the language
+            code for the language your data are in.
+          </para>
+          <para>
+            For example, if the data of your first sheet are for
+            French, then name the first sheet: <emphasis role="input">fr_FR</emphasis>
+            (<xref linkend="excel"/>).
+          </para>
+          <figure id="excel">
+            <title>Example Excel Table</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="../images/excelexample.png"/>
+              </imageobject>
+              <textobject><phrase>Example Excel
+              Table</phrase></textobject>
+            </mediaobject>
+          </figure>
+          <para>
+            You can create sheets for every language you need. Make
+            sure that each sheet is named with the language code. The
+            ITE reads the sheet which corresponds to the working
+            language when the test is being executed.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Name the top cell of each column with a parameter name
+            from your Test Case.
+          </para>
+          <para>
+            For example, if you entered the reference
+            ”<emphasis>=VALUE1</emphasis>”, then you must enter <emphasis role="input">VALUE1</emphasis>
+            in the top cell of the column which will contain data for
+            that parameter. <para role="tip">Values are case sensitive.</para>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Make sure that all the parameters for your Test Case have
+            a column.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Do not leave any gaps in the table.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            You must have an entry for each parameter used in the
+            Test Case.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            You can then fill in the values or formulae you want to
+            use for these parameters. Each row in the table represents
+            one set of data for the parameters used.
+            <para role="tip">We recommend that you format cells as text <emphasis>before</emphasis> adding the test data. This ensures that Excel's number formatting won't modify the test data in unexpected and undesirable ways. Especially for the boolean values <emphasis>true</emphasis> and <emphasis>false</emphasis>, make sure you format the column as text.</para>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            If your Excel table contains data which change from
+            day-to-day, then make sure you open the file before
+            starting your test. Otherwise, the data from the
+            last-opened state will be used.
+            <para role="tip">If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor. </para>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            See the section later on using the <emphasis>today</emphasis> function
+            in Excel to get the current date (<xref linkend="using-the-today-function-in-excel"/>).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Excel files may not contain autofilters in any of the
+            worksheets to be used as data sources. Remove any filters
+            from all your Excel sheets before running a test.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section id="using-the-today-function-in-excel">
+      <title>Using the =TODAY() function in Excel</title>
+      <orderedlist>
+        <listitem>
+          <para>
+            Because Excel stores the ”<emphasis>=today()</emphasis>” function as
+            a six-digit number, you must use a particular process to
+            use this function to check a date as part of a test.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Enter the function <emphasis role="input">=today()</emphasis> in a a different
+            sheet to the one you are using for your data sets. You can
+            enter it in the same sheet if you want to, but make sure
+            that it has its own column. It must not be in one of the
+            columns you will use as a data set.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            For example, your =today() function is in sheet one, cell
+            G4.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            You want your date to appear as dd.mm.yyyy.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the column for your data set, enter the following
+            formula:
+          </para>
+          <blockquote>
+            <para>
+              =text(Sheet1!G4, ”dd.mm.yyyy”)
+            </para>
+          </blockquote>
+        </listitem>
+        <listitem>
+          <para>
+            This will mean that the date will be treated as it appears
+            with Excel.
+            <para role="tip">If you are using the =today() function, don't forget to open the Excel file before  starting your test. Otherwise, the data from the last-opened state will be used.</para>
+            <para role="tip">If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor. </para>
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+  </section>
+  <section id="using-the-data-sets-view">
+    <title>Using the Data Sets View to enter data loops and to translate data</title>
+    <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <para>
+      The Data Sets View lets you do three things:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Enter multiple data sets for a parameter from a Test Case
+          (<xref linkend="adding-multiple-data-sets"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter data sets for a central test data set
+          (<xref linkend="entering-data-for-central-test-data-sets"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Translate your parameter values into other languages
+          (<xref linkend="translating-test-data"/>).
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <para role="tip">You can also create central test data sets for your
+      Project to reuse in Test Cases (<xref linkend="using-central-data-sets"/>).</para>
+    </para>
+    <section id="adding-multiple-data-sets">
+      <title>Data Sets View: adding multiple data sets to a Test
+      Case</title>
+      <para>
+        If your Test Case has parameters which have been referenced
+        from the Test Cases and Test Steps it contains, you can enter
+        <emphasis>data sets</emphasis> in the Data Sets View.
+      </para>
+      <para>
+        This means that the Test Case will loop and be executed for
+        each set of data you enter.
+      </para>
+      <para>
+        To enter data sets for a Test Case:
+      </para>
+      <orderedlist>
+        <listitem>
+          <para>
+            Open the Test Case Editor or Test Suite Editor by
+            double-clicking on the Test Case or Test Suite you want to
+            edit in the browser.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the editor, single-click the Test Case you want to add
+            data to.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In the Data Sets View, make sure the language in the combo
+            box on the right is the right language for your data.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Select ”<emphasis>Add</emphasis>” to add a row.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Enter the values for the parameters in the row. <para role="tip">You
+            can also add references in the Data Sets View if you want
+            to specify the concrete values for your data sets when you
+            reuse this Test Case. </para>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Use the buttons in the Data Sets View to add more rows,
+            delete rows (if no row is selected, the last row is
+            deleted) and insert rows above the currently selected row.
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section id="translating-test-data">
+      <title>Data Sets View: translating test data</title>
+      <para>
+        You can add data for other languages supported by your AUT by
+        changing the language in the combo box in the Data Sets View.
+      </para>
+      <para>
+        <para role="tip">You can add supported languages in the Project
+        properties dialog (<xref linkend="projectproperties"/>).</para>
+      </para>
+      <para>
+        The other combo boxes are there to help you see the Data Sets
+        View in different ways. You can see all the data for one
+        parameter, for one data set or for one language.
+      </para>
+    </section>
+  </section>
+  <section id="special-parameters-empty-strings-and-the-escape-character">
+    <title>Special parameters: empty strings and the escape character</title>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <para>
+      <emphasis role="strong">Entering empty strings as parameters</emphasis><?linebreak?>
+      If you want the parameter you enter to be an <emphasis>empty string</emphasis> (i.e. nothing), use two single quote marks: ”
+    </para>
+    <para>
+      You can use this with the <emphasis>equals</emphasis>, <emphasis>matches</emphasis> or
+      <emphasis>simple match</emphasis> operators.
+    </para>
+    <para>
+      You can also use ’<literal>^$</literal>’ or
+      ’<literal>^\s*$</literal>’ with the operator <emphasis>matches</emphasis> to
+      check that a text area is empty.
+    </para>
+    <para>
+      You can also use ’<literal>^$</literal>’ with the operator
+      <emphasis>matches</emphasis> to check that a text area is empty.
+    </para>
+    <para>
+      <para role="tip">If a component looks empty, but entering an empty string doesn't work, it may be worth asking a developer what is actually in the component.</para>
+    </para>
+    <para>
+      <emphasis role="strong">The escape character</emphasis><?linebreak?>
+      Some symbols have a special meaning for test execution. If you want to use the symbol without the special function, you have to <emphasis>escape</emphasis> it. The symbol to negate any special function of the following symbol is a backslash: (∖).
+    </para>
+    <para>
+      See the section later <xref linkend="special-characters"/> for more
+      details on special symbols and escaping them.
+    </para>
+    <para>
+      <para role="tip">When you are using regular expressions, you will also need to think about which symbols need neutralising. Sometimes more than one backslash is necessary.</para>
+    </para>
+  </section>
+  <section id="overwriting-data-for-test-cases-and-test-suites">
+    <title>Overwriting data for Test Cases and Test Suites</title>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <anchor role="helpid" id="guidancerExecTestCaseEditorContextId">Test Suite Editor</anchor>
+    <para>
+      When you reuse Test Cases, you reuse them with any concrete
+      values they contain, and with any default values that you have
+      entered for their referenced parameters.
+    </para>
+    <para>
+      Data which has been entered for referenced parameters can be
+      overwritten when you reuse a Test Case.
+    </para>
+    <para>
+      Reusing Test Cases happens in two ways:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          by adding the Test Case to another Test Case
+          (<xref linkend="adding-items-to-editors"/>). The Test Case is then
+          <emphasis>nested in the Test Case</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          by adding the Test Case to a Test Suite
+          (<xref linkend="adding-items-to-editors"/>). The Test Case is then
+          <emphasis>nested in the Test Suite</emphasis>.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <orderedlist>
+      <listitem>
+        <para>
+          Single-click the reused Test Case in the editor for the Test
+          Case or Test Suite where you have reused it.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the Properties View, you can see the parameters you
+          referenced from in this Test Case. The data source for this
+          Test Case is shown as <emphasis>referenced Test
+          Case</emphasis> to denote that the data have not been
+          changed after reusing the Test Case.
+        </para>
+        <para>
+          <para role="tip">A grey diamond next to the <emphasis>parameter
+          value</emphasis> field means that the values in it were
+          entered in the original specification of the Test Case.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can enter parameter values here or reference the
+          parameters again. They would then become parameters of the
+          <emphasis>parent</emphasis> Test Case.
+        </para>
+        <para>
+          <para role="tip">If you enter values here, you can see a yellow
+          diamond next to the <emphasis>parameter value</emphasis>
+          field. This means that the original data have been
+          overwritten. The data source changes to <emphasis>local Test
+          Case</emphasis></para>
+        </para>
+        <para>
+          If you add references here, you will be able to enter or
+          overwrite data when you reuse the parent Test Case.
+        </para>
+        <para>
+          <para role="tip">Once you change the parameter values of a reused Test
+          Case, any changes to the parameters in the original
+          specification of that Test Case will not affect your new
+          values. You can reset any local changes to the data of the
+          Test Case by removing all Excel files or Central Test Data
+          Sets and then selecting <emphasis>Referenced Test
+          Case</emphasis> from the data source combo box.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

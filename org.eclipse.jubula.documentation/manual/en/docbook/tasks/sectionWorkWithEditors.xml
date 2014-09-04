@@ -1,0 +1,680 @@
+<section id="working-with-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Working with editors: opening, adding/deleting/renaming
+  items, commenting, extracting and replacing, reverting
+  changes</title>
+  <para>
+    The editors for Test Cases, Test Suites and Test Jobs all let you
+    work in a similar way in the ITE. When you are working in an
+    editor, the Properties View, Data Sets View and Component Names
+    View on the right hand side of the screen contain information
+    about the selected item.
+  </para>
+  <section id="opening-items-in-editors">
+    <title>Opening items in editors</title>
+    <anchor role="helpid" id="testCaseOpenExistingContextId">Open Existing Test Case</anchor>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <para>
+      To open an existing Test Case, Test Suite or Test Job in an editor, you can either double-click the item you want to open in its browser or you can select:
+      
+      <para>
+        <emphasis role="menuPath">Open With</emphasis>--&gt;<emphasis role="menuPath">... Editor</emphasis>
+      </para>
+      
+      from the context-sensitive menu for the item.
+    </para>
+    <para>
+      <para role="tip">If you double-click on an item in a browser that is
+      reused in another item (e.g. you double-click a Test Case that
+      is reused in another Test Case), the editor for its direct
+      parent will open, and the item you double-clicked is selected.</para>
+    </para>
+    <para>
+      You can also open an existing Test Case without having to select
+      it from the Test Case Browser using the <emphasis>Open Test
+      Case</emphasis> dialog (<xref linkend="opening-existing-test-cases"/>).
+    </para>
+  </section>
+  <section id="adding-items-to-editors">
+    <title>Adding items to editors</title>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" id="testCaseAddExistingContextId">Existing Test Case Dialog</anchor>
+    <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+    <para>
+      You can add (reference) Test Cases in other Test Cases and in
+      Test Suites. You can also add (reference) Test Suites in Test
+      Jobs.
+    </para>
+    <para>
+      To add items to an editor:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the editor by double-clicking the item you want to add
+          things to.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can now:
+        </para>
+        <orderedlist>
+          <listitem>
+            <para>
+              Add items via drag and drop from the browser into the
+              editor:
+            </para>
+            <para>
+              <emphasis role="strong">Test Cases</emphasis>:<?linebreak?>
+              Test Cases can be added to other Test Cases and Test Suites by selecting the Test Case from the Test Case Browser and dragging it into the editor.
+            </para>
+            <para>
+              <emphasis role="strong">Test Suites</emphasis>:<?linebreak?>
+              Test Suites can be referenced in Test Jobs by selecting the Test Suite to reference from the Test Suite Browser and dragging it into the Test Job Editor.
+            </para>
+            <para>
+              <para role="tip">Once you have added a Test Suite to a Test Job,
+              you must enter the AUT ID for the AUT to be tested in
+              the Properties View.</para>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              For Test Cases, you can also use the <emphasis>Reference Existing Test Case</emphasis> dialog. Using the context-sensitive menu in the editor, select:
+              
+              <para>
+                <emphasis role="menuPath">Reference Existing Test Case</emphasis>
+              </para>
+            </para>
+            <para>
+              <para role="tip">You can also press
+              <emphasis role="input">»ENTER«</emphasis> in the editor to
+              open the <emphasis>Reference Existing Test Case
+              dialog.</emphasis></para>
+            </para>
+            <para>
+              Using this dialog (<xref linkend="referencetestcasedialog"/>), you
+              can choose a Test Case or Test Cases to add to the
+              editor. You can filter in through the dialog using the
+              field at the top. Use star <emphasis role="input">*</emphasis> as a wild
+              card.
+            </para>
+            <figure id="referencetestcasedialog">
+              <title>Add Test Case reference dialog</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="../images/referencetestcasedialog.png"/>
+                </imageobject>
+                <textobject><phrase>Add Test Case reference
+                dialog</phrase></textobject>
+              </mediaobject>
+            </figure>
+          </listitem>
+        </orderedlist>
+      </listitem>
+    </orderedlist>
+    <para>
+      Items you reference in editors are marked with a small arrow to
+      show that they are reused (referenced) here. The name of the
+      item is contained in angled brackets (<emphasis role="input">&lt; &gt;</emphasis>)
+      to show that it is the same name that you used when you
+      specified the Test Case. Items can be renamed to reflect their
+      particular use in this editor (<xref linkend="renaming-items-in-editors"/>).
+    </para>
+    <para>
+      <para role="warning">You can’t add items which would cause an infinite loop.</para>
+    </para>
+  </section>
+  <section id="deleting-items-from-editors">
+    <title>Deleting items from editors</title>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+    <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the item from which you want to delete other items in
+          the editor
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Right-click on the item(s) to be deleted (use
+          <emphasis role="input">»CTRL«</emphasis> to select multiple
+          items) and select ”<emphasis>Delete</emphasis>” from the
+          context-sensitive menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can also use <emphasis role="input">»DELETE«</emphasis> to
+          delete items.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Save the changes in the editor.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="renaming-items-in-editors">
+    <title>Renaming items in editors</title>
+    <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+    <para>
+      You can rename items referenced in Test Cases, Test Suites and
+      Test Jobs.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the editor containing the items you want to rename.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select the item you want to rename in the editor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the Properties View, enter the new name for the item in
+          the <emphasis>Reference Name</emphasis> field at the top of
+          the Properties View.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Save the editor.
+        </para>
+        <para>
+          The angled brackets from the item you just edited will
+          disappear from the name in the editor. This indicates that
+          the item has been renamed here. You will still see the
+          original item name behind the new name in brackets. In the
+          preferences, you can opt not to see the original name when
+          you have renamed an item (<xref linkend="gdprefs"/>).
+        </para>
+        <para>
+          The original item in the browser still has its original
+          name. The referenced item you just renamed will keep its new
+          name even if you rename the original item.
+        </para>
+        <para>
+          If you want to reset the original specification name, empty
+          the <emphasis>Reference Name</emphasis> field and save the
+          editor. The item will redisplay the angled brackets and will
+          have the same name as the specification name.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="adding-comments-to-items-in-editors">
+    <title>Adding comments to items in editors</title>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+    <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+    <para>
+      You can add comments to items via the editor for an item. You
+      can add comments to the item itself, or to other items used in
+      it.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the editor for the item you want to add comments to.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter a comment in the <emphasis>comment</emphasis> field in
+          the Properties View.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Save the changes
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Comments can be overwritten when an item is reused.
+          <para role="tip">You can see the comment for a Test Case when you
+          hover over it in the Test Case Browser or the Test Suite
+          Browser or in the search results view.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <para role="tip">You can also add comments to categories using the context-menu in the browser (<xref linkend="adding-comments-to-categories"/>) and to the Project itself via the Project properties (<xref linkend="editing-general-project-properties"/>).</para>
+    </para>
+  </section>
+  <section id="adding-task-ids-to-items-in-editors">
+    <title>Adding Task IDs to items in editors</title>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+    <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+    <para>
+      You can add a Task ID to a Test Case, Test Suite or Test Job in
+      the relevant editor. You can add a task ID to the item itself,
+      but not to other items used in it (unless you edit them in their
+      own editor).
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the editor for the item you want to add a task ID to.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter a task ID in the <emphasis>Task ID</emphasis> field in
+          the Properties View.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Save the changes
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Task IDs cannot be overwritten when an item is reused.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="commenting-out-items-in-editors">
+    <title>Commenting out items in editors</title>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+    <para>
+      In the Test Case Editor and the Test Suite Editor, you can
+      deactivate and reactivate Test Cases and Test Steps.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select the Test Steps or Test Cases you want to deactivate and select:
+          
+          <para>
+            <emphasis role="menuPath">Set as active / inactive</emphasis>
+          </para>
+
+          from the context menu. <para role="tip">You can also use <emphasis role="input">»CTRL+7«</emphasis> to toggle the items as active or inactive.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The items you selected will be set as inactive. They are
+          shown with green text and the sign <literal>//</literal>
+          before the Test Case or Test Step name.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Any inactive items are not considered in Test Suite
+          validation, nor are they executed during a test run.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can reactivate the items by selecting:
+          
+          <para>
+            <emphasis role="menuPath">Set as active / inactive</emphasis>
+          </para>
+          
+          from the context menu.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="extracting-test-cases-from-editors-refactoring">
+    <title>Extracting Test Cases from editors: Refactoring</title>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+    <para>
+      You can <emphasis>extract</emphasis> Test Cases from other Test
+      Cases and from Test Suites. This lets you create keywords even
+      after you have started specifying.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the Test Case Editor or Test Suite Editor by
+          double-clicking on the Test Case or Test Suite you want to
+          edit.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select the Test Cases you want to extract by single-clicking
+          them. Use <emphasis role="input">»CTRL«</emphasis> to select
+          more than one item.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Right-click in the editor and select:
+          
+          <para>
+            <emphasis role="menuPath">Refactor</emphasis>--&gt;<emphasis role="menuPath">Extract Test Case</emphasis>.
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When prompted, enter a name for the new Test Case.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Test Cases you selected will be extracted into this new
+          Test Case.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The extracted Test Case appears as a reused Test Case in the
+          current editor. It is marked with a small arrow to show that
+          it is reused, and the Test Case name is in angled brackets
+          (<emphasis role="input">&lt; &gt;</emphasis>) to show that it is the same as
+          the specification name.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Test Case you just created is also visible in the Test
+          Case Browser.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <para role="tip">Use this feature when you realize that you are planning
+      on reusing one or more Test Cases for the same or a similar
+      action again. You will save yourself time in test creation and
+      maintenance.</para>
+    </para>
+  </section>
+  <section id="replacing-test-cases-in-editors-refactoring">
+    <title>Replacing Test Cases in editors: Refactoring</title>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+    <para>
+      You can <emphasis>replace</emphasis> one or more Test Cases in
+      an editor with another Test Case from your library of Test
+      Cases. This is useful if you have created a module to replace
+      one or more Test Cases and you want to be guided through the
+      replacement process.
+    </para>
+    <para>
+      <para role="tip">To replace a specific Test Case at all / multiple places
+      where it has been reused, use the option available in the Search
+      Result View (<xref linkend="replacing-a-specific-test-case-at-places-where-it-has-been-reused"/>).</para>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the Test Case Editor or Test Suite Editor by
+          double-clicking on the Test Case or Test Suite you want to
+          edit.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select the Test Cases you want to replace by single-clicking
+          them. Use <emphasis role="input">»CTRL«</emphasis> to select
+          more than one item.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Right-click in the editor and select:
+          
+          <para>
+            <emphasis role="menuPath">Refactor</emphasis>--&gt;<emphasis role="menuPath">Replace with Test Case</emphasis>.
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The first page of a wizard appears in which you can replace
+          selected the Test Cases in a series of steps.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <para role="warning">You may only replace single Test Cases which neither have
+      multiple data sets nor central test data / Excel files as data.</para>
+    </para>
+    <para>
+      <emphasis role="strong">Page 1: Replacing the Test
+      Cases</emphasis>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          On the first page of the wizard
+          (<xref linkend="ReplaceTC-ChooseTC"/>), you can select a new Test Case
+          to replace the selected Test Cases.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Browse to and select the Test Case you want to add to the
+          editor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Click ”<emphasis>Next</emphasis>” to match the component
+          names for the old and new Test Cases, or click
+          ”<emphasis>Finish</emphasis>” to replace the selected Test
+          Cases with the bare new Test Case, without any component
+          names transferred.
+        </para>
+      </listitem>
+    </orderedlist>
+    <figure id="ReplaceTC-ChooseTC">
+      <title>Select Test Case</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/ReplaceTC_ChooseTC.png"/>
+        </imageobject>
+        <textobject><phrase>Select Test Case</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <para>
+      <emphasis role="strong">Page 2: Matching component
+      names</emphasis>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          On the second page of the wizard
+          (<xref linkend="ReplaceTC-CompNames"/>), you can see an overview of
+          component names for the replacement.
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              On the left-hand side you can see any component names
+              that were entered for the Test Cases to be replaced. If
+              the component names were propagated
+              (<xref linkend="propagating-component-names"/>), you will see a small
+              yellow arrow on the component name icon. <para role="tip">If the
+              old Test Cases contained no component names, then you
+              will see the text <emphasis>no component
+              names</emphasis>.</para>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              On the right-hand side, you can see the Component Names
+              View, which shows any component names that are required
+              by the new Test Case.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>
+          Use this dialog to transfer any component names from the old
+          Test Cases to the new Test Cases. You can enter component
+          names, or you can leave the new component names as they are.
+          You can also set the checkbox in the Component Names View to
+          propagate the name to the next Test Case in the hierarchy.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once you have transferred the component names, you can click
+          ”<emphasis>Next</emphasis>” to add further information or
+          you can click ”<emphasis>Finish</emphasis>” to replace the
+          selected Test Cases with the new Test Case and the selected
+          component names.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <emphasis role="strong">Page 3: Further information</emphasis>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          On the final page of the wizard, you can enter a Test Case
+          reference name and a comment for the new Test Case.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once you have entered a name and/or a comment, you can click
+          ”<emphasis>Finish</emphasis>” to complete the replacement.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      Once you have replaced the Test Case, you must manually adapt
+      the parameters for the new Test Case.
+    </para>
+    <figure id="ReplaceTC-CompNames">
+      <title>Match component names</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/ReplaceTC_CompNames.png"/>
+        </imageobject>
+        <textobject><phrase>Match component
+        names</phrase></textobject>
+      </mediaobject>
+    </figure>
+  </section>
+  <section id="saving-test-cases-from-an-editor-as-a-new-test-case">
+    <title>Saving Test Cases from an editor as a new Test Case</title>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+    <para>
+      You can save selected Test Cases from other Test Cases and from
+      Test Suites. This lets you create a new keyword that contains
+      the selected modules without having to manually find them and
+      reuse them.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the Test Case Editor or Test Suite Editor by
+          double-clicking on the Test Case or Test Suite you want to
+          edit.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select the Test Cases you want to save into the new Test
+          Case by single-clicking them. Use
+          <emphasis role="input">»CTRL«</emphasis> to select more than one
+          item.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Right-click in the editor and select:
+          
+          <para>
+            <emphasis role="menuPath">Refactor</emphasis>--&gt;<emphasis role="menuPath">Save as new...</emphasis>.
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When prompted, enter a name for the new Test Case.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          A new Test Case will be created containing the Test Cases
+          you selected, with the data and component names they used in
+          the current editor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Test Case you just created is visible in the Test Case
+          Browser.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <para role="warning">Use this feature if you have created reusable Test Cases
+      that are correctly modularized, but you require them again (e.g.
+      prerequisites for another Test Case). If the sequence of actions
+      you require is a recurring logical sequence (e.g. enter
+      username, enter password, then click OK for a login dialog),
+      then we strongly recommend using the
+      <emphasis>Extract</emphasis> function
+      (<xref linkend="extracting-test-cases-from-editors-refactoring"/>) instead. This will give you one
+      reusable module, and therefore one central place to make any
+      changes should this sequence change.</para>
+    </para>
+  </section>
+  <section id="reverting-changes-in-an-editor">
+    <title>Reverting changes in an editor</title>
+    <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+    <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+    <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+    <para>
+      You can revert an editor you are working in to the state of the last save.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          In the editor you are in, right-click and select:
+          
+          <para>
+            <emphasis role="menuPath">Revert changes</emphasis>
+          </para>
+          
+          from the context sensitive menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Confirm that you want to revert the changes when prompted.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The editor will be reverted. Any changes you have made since
+          the last save will be lost.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

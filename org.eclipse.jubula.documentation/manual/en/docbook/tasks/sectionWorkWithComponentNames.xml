@@ -1,0 +1,507 @@
+<section id="working-with-component-names" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Working with component names</title>
+  <para>
+    Component names are the names you use to refer to the user
+    interface components you want your actions to be executed on.
+    These component names are collected and assigned to real
+    components when you carry out object mapping
+    (<xref linkend="object-mapping-1"/>).
+  </para>
+  <para>
+    <para role="tip">A component is an element of the user interface you can
+    execute an action on, e.g. a button, a text field.</para>
+  </para>
+  <para>
+    Each component you are planning on testing requires a component
+    name. We recommend using well-thought out names so that object
+    mapping and test creation / maintenance are easier.
+  </para>
+  <section id="creating-new-component-names">
+    <title>Creating new component names</title>
+    <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+    <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+    <anchor role="helpid" id="newComponentNameContextId">New Component Name Dialog</anchor>
+    <para>
+      For information on creating new component names by
+      <emphasis>reassigning</emphasis> old component names (in the
+      Component Names View for example, see the section on reassigning
+      component names (<xref linkend="entering-and-reassigning-component-names-in-the-component-names-view"/>).
+    </para>
+    <para>
+      You can create new component names in the Component Names Browser and in the Object Mapping Editor (tree view) via the context menu:
+      
+      <para>
+        <emphasis role="menuPath">New Component Name</emphasis>
+      </para>
+    </para>
+    <para>
+      <para role="tip">You can also use the toolbar button to create a new
+      component name when you are in the Object Mapping Editor.</para>
+    </para>
+    <para>
+      A dialog will appear to allow you to enter a component name. We
+      recommend having good naming conventions for component names, as
+      this will help you when mapping later.
+    </para>
+    <para>
+      The component name you enter will be created and will appear in
+      the <emphasis>unassigned component names</emphasis> category in
+      the Object Mapping Editor and in the <emphasis>unused component
+      names</emphasis> category in the Component Names Browser.
+    </para>
+    <para>
+      <para role="tip">Newly created component names have the type
+      <emphasis>graphics component</emphasis> until they are made more
+      specific, either by mapping them to a technical name or by
+      entering this new name in the Component Names View for a more
+      concrete component type. </para>
+    </para>
+  </section>
+  <section id="entering-and-reassigning-component-names-in-the-component-names-view">
+    <title>Entering and reassigning component names in the Component Names View</title>
+    <anchor role="helpid" id="compNameViewContextId">Component Names View</anchor>
+    <para>
+      <para role="tip">The following section deals with entering component names
+      in the Component Names View when you have added Test Cases from
+      the library. For information on component names in Test Steps,
+      see the Test Steps section (<xref linkend="specsteps"/>).</para>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Once you have added a Test Case from the library of Test
+          Cases (<xref linkend="creating-tests-from-the-library-of-pre-defined-test-cases"/>), you will need to enter a
+          component name for the component you want to test.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the Component Names View, you will see the <emphasis>old
+          name</emphasis> for this component, which was given in the
+          Test Step contained in the library Test Case. The old name
+          is just a placeholder and should be
+          <emphasis>reassigned</emphasis> (<xref linkend="compnamesview"/>).
+        </para>
+        <figure id="compnamesview">
+          <title>The Component Names View</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="../images/compnamesview.png"/>
+            </imageobject>
+            <textobject><phrase>The Component Names
+            View</phrase></textobject>
+          </mediaobject>
+        </figure>
+        <para>
+          <para role="tip">When you enter a component name in the Component
+          Names View, you create a new reference to a component in the
+          AUT. This component name appears in the Object Mapping
+          Editor to be mapped to a component in your AUT. A Test Case
+          containing component names to be reassigned can therefore be
+          used at a variety of different places to test different
+          actual components. If you want to rename a component name,
+          you can do so in the Component Names Browser
+          (<xref linkend="renaming-component-names"/>).</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the <emphasis>new name</emphasis> field, enter your name
+          for this component, e.g.
+          <emphasis role="input">MainWindow_NavigationTree_tre</emphasis>.
+        </para>
+        <para>
+          We recommend using naming conventions for component names.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Press <emphasis role="input">»CTRL+SPACE«</emphasis> to see a
+          list of component names you have already used for this type
+          of component:
+        </para>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <mediaobject role="icon" file="../images/localName.png"/> <emphasis>Local</emphasis>
+            </term>
+            <listitem>
+              <para>
+                component names are names you have used in this Test
+                Case for this component type .
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <mediaobject role="icon" file="../images/globalName.png"/> <emphasis>Global</emphasis>
+            </term>
+            <listitem>
+              <para>
+                component names are names you have used for this
+                component type, but not in this Test Case.
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+        <para>
+          <para role="tip">You can configure how frequently the content assist
+          in the Component Names View should open in the preferences.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The component name you enter here will be collected by the
+          Object Mapping Editor when you carry out object mapping so
+          that you can assign it to a component in the AUT.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Every time you want to carry out an action on this
+          component, use this name.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <para role="tip">See the section on the component hierarchy for some tips
+      on using component names in your tests
+      (<xref linkend="understanding-the-component-hierarchy"/>).</para>
+    </para>
+  </section>
+  <section id="renaming-component-names">
+    <title>Renaming component names</title>
+    <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+    <anchor role="helpid" id="renameComponentNameContextId">Rename Component Name Dialog</anchor>
+    <para>
+      Use the rename function to change the name of a component name
+      in your test specification. Whereas
+      <emphasis>reassigning</emphasis> component names results in a
+      new component name being created (<xref linkend="entering-and-reassigning-component-names-in-the-component-names-view"/>),
+      renaming just changes the name at all places where it is used.
+    </para>
+    <para>
+      You can rename component names in the Component Names Browser
+      and in the Object Mapping Editor.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select the component name you want to rename.
+        </para>
+      </listitem>
+      <listitem>
+        <para>In the context-menu, select:
+        
+          <para>
+            <emphasis role="menuPath">Rename</emphasis>
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the dialog that appears, enter a new component name to
+          replace the old name. We recommend using naming conventions
+          for component names.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Press ”<emphasis>OK</emphasis>”. The component name you
+          entered will replace the old name throughout your test.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <para role="tip">You cannot rename a component name with a name that
+      already exists. To merge two or more component names to the same
+      name, see the section on merging
+      (<xref linkend="merging-component-names"/>).</para>
+    </para>
+  </section>
+  <section id="propagating-component-names">
+    <title>Propagating component names</title>
+    <anchor role="helpid" id="compNameViewContextId">Component Names View</anchor>
+    <para>
+      Select the checkbox on the left of the Component Names View to
+      <emphasis>propagate</emphasis> this component name. This means
+      that you will be able to see and edit (reassign) this component
+      name when you reuse the parent of the Test Case you are editing.
+    </para>
+    <para>
+      This is useful for creating flexible keywords that can be used
+      for the same workflow on different components. Depending on what
+      you want the keyword to do when you reuse it, you can reassign
+      the name to test different components in the AUT.
+    </para>
+    <para>
+      For example, if you create a keyword ”<emphasis>Replace and
+      Check</emphasis>” which contains an action to replace a text and
+      then check it. If you want to be able to use this keyword to
+      enter and check text on any field in your AUT, then you should
+      propagate the component names from the actions by checking the
+      checkbox in the Component Names View. Each time you reuse
+      ”<emphasis>Replace and Check</emphasis>”, then you will be able
+      to enter a new name for the propagated component, allowing you
+      to choose different names that can be mapped to different
+      components.
+    </para>
+  </section>
+  <section id="no-component-type-exists-message-in-component-names-view">
+    <title>No component type exists message in Component Names View</title>
+    <anchor role="helpid" id="compNameViewContextId">Component Names View</anchor>
+    <para>
+      This situation occurs when a component name that has been
+      propagated and then renamed at the place of reuse is no longer
+      accessible, either because:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          the name with which the component was propagated has been
+          changed, or
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          the checkbox to propagate the component name has been
+          deactivated.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      In such situations, you will see the message in the Component Names View :
+      
+      <para>
+        <emphasis>No Component Type Exists!</emphasis>.
+      </para>
+    </para>
+    <para>
+      <para role="tip">Saving the Test Case will remove the message, however,
+      you may want to take steps to transfer the component name before
+      removing the message.</para>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          An example of a situation where this occurs:
+        </para>
+        <orderedlist>
+          <listitem>
+            <para>
+              You have a Test Case <emphasis>TC1</emphasis> that has a
+              component name propagated from it:
+              <emphasis>nn_nn_grc</emphasis>.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              You reused the <emphasis>TC1</emphasis> Test Case in
+              another Test Case called <emphasis>TC2</emphasis>, and
+              renamed the component name to
+              <emphasis>LoginDialog_OK_btn</emphasis> at the place of
+              reuse.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              You then either:
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>
+                  change the component name in the original Test Case
+                  to ”<emphasis>LoginDialog_AnyButton_btn</emphasis>”,
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  or you deactivate the checkbox for propagating the
+                  component name from the original Test Case.
+                </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </orderedlist>
+      </listitem>
+      <listitem>
+        <para>
+          In the Component Names View for the reused Test Case in
+          <emphasis>TC2</emphasis>, you will see a warning message
+          that the component name has no type. <para role="warning">The warning
+          field is not editable.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Depending on whehter you renamed the component name or
+          removed the checkbox, you can now do one of two things:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              If you renamed the component name in the original Test
+              Case (<emphasis>TC1</emphasis>, then you can locate the
+              newly propagated name in the Component Names View and
+              enter the <emphasis>new name</emphasis> for the no
+              longer existent component type in the <emphasis>new
+              name</emphasis> field for the newly propagated name.
+              This essentially points the previous component name
+              hierarchy onto the new one.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              If you deactivated the checkbox, or if you do not want
+              to transfer the name as mentioned above, you can simply
+              make any change to the Test Case and then save it. The
+              message will disappear.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="merging-component-names">
+    <title>Merging component names</title>
+    <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+    <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+    <anchor role="helpid" id="mergeComponentNameContextId">Merge Component Name Dialog</anchor>
+    <para>
+      You can merge two or more component names to one unifying name
+      in the Component Names Browser. This makes sense if you have
+      accidentally created two component names for the same component.
+    </para>
+    <para>
+      <para role="tip">The component types must be the same to be able to merge
+      the component names, and the component names must not have
+      already been mapped to different technical names from the AUT.
+      The component names must all come from the current Project, not
+      from any of the reused Projects.</para>
+    </para>
+    <para>
+      To merge component names:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select the component names you want to merge. Use
+          <emphasis role="input">»CTRL«</emphasis> to select multiple
+          names.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the context-menu, select:
+          
+          <para>
+            <emphasis role="menuPath">Merge Component Names</emphasis>
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          A dialog will appear in which you can choose which of the
+          selected names you want to merge all the names to. Select
+          the name you want and click ”<emphasis>OK</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The component names you selected will be merged to the name
+          you specified throughout your test.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="deleting-unused-component-names">
+    <title>Deleting unused component names</title>
+    <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+    <para>
+      When you reassign component names in the Component Names View,
+      you automatically create new component names if the name you
+      enter did not previously exist in the Project.
+    </para>
+    <para>
+      Larger Projects can often end up with a number of component
+      names that are no longer used. You can see and delete these
+      names in the Component Names Browser. The names in the
+      <emphasis>Unused Component Names</emphasis> category
+      (<xref linkend="compnamebrowser"/>) are not used anywhere in this
+      Project – they are not present in any Test Cases and they have
+      not been mapped to any technical names from the AUT in the
+      Object Mapping Editor.
+    </para>
+    <figure id="compnamebrowser">
+      <title>The Component Names Browser</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/compnamebrowser.png"/>
+        </imageobject>
+        <textobject><phrase>The Component Names
+        Browser</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <para>
+      To delete unused component names, select the name you want to delete and select:
+      
+      <para>
+        <emphasis role="menuPath">Delete</emphasis>
+      </para>
+      
+      from the context-menu.
+    </para>
+    <para>
+      <para role="tip">To cleanup component names that are only used in
+      mappings, or that are no longer used for a specific AUT, use the
+      function <emphasis>Cleanup unused component names</emphasis> in
+      the Object Mapping Editor (<xref linkend="removing-unused-component-names-from-the-object-mapping-editor"/>).</para>
+    </para>
+  </section>
+  <section id="understanding-the-component-hierarchy">
+    <title>Understanding the component hierarchy</title>
+    <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+    <anchor role="helpid" id="compNameViewContextId">Component Names View</anchor>
+    <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+    <para>
+      The component hierarchy is designed to allow flexible test
+      specification and robust tests.
+    </para>
+    <para>
+      <emphasis role="strong">Abstract components</emphasis>
+    </para>
+    <para>
+      You can write tests very abstractly at the beginning, only
+      adding detail later. You will notice that the library contains
+      categories such as <emphasis>Component with Text Input</emphasis> and
+      <emphasis>Graphics Component</emphasis>.
+    </para>
+    <para>
+      These are <emphasis>abstract components</emphasis> – actions in these categories can be used on a wide range of actual components in the AUT. You can use a <emphasis>Click</emphasis> action on the <emphasis>Graphics Component</emphasis> to click any component in the AUT. You just need to enter different component names for it in the Component Names View.
+    </para>
+    <para>
+      <emphasis role="strong">Using the same component name for different component types</emphasis>
+    </para>
+    <para>
+      What happens if you want to specify a test that clicks in a
+      table and then selects a cell in the table?
+    </para>
+    <para>
+      The click action is on the <emphasis>Graphics Component</emphasis> and the
+      select cell action is on the <emphasis>Table</emphasis> component – but you
+      don’t want to have two different component names.
+    </para>
+    <para>
+      This isn’t a problem. You can use the same component name for
+      different components as long as these are compatible. So, in
+      this case, the <emphasis>Graphics Component</emphasis> and the
+      <emphasis>Table</emphasis> component can both use the component name e.g.
+      <emphasis>TableView_MainTable_tbl</emphasis>.
+    </para>
+    <para>
+      <para role="warning">You cannot use the same component name for incompatible types, for example, trees and tables.</para>
+    </para>
+  </section>
+</section>

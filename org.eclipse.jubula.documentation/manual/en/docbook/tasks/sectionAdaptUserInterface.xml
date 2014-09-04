@@ -1,0 +1,150 @@
+<section id="adapting-the-user-interface" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Adapting the user interface</title>
+  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <para>
+    You can individualize the user interface in various ways.
+  </para>
+  <section id="moving-browsers-views-and-editors">
+    <title>Moving Browsers, Views and Editors</title>
+    <para>
+      You can move items in the user interface in two ways:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Drag-and-drop views or browsers. While the mouse button is
+          held, the target location is marked by a gray rectangle.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Right mouse-click on the tab area and select
+          ”<emphasis>Move</emphasis>” and then either ”<emphasis>View</emphasis>” or
+          ”<emphasis>Tab Group</emphasis>”. Single-click to drop the item.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="resizing-in-the-user-interface">
+    <title>Resizing in the user interface</title>
+    <para>
+      To change the size of the views and browsers:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Double-click on the tab of a view, browser or editor to
+          maximize it. Double-click again to minimize it.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Use the buttons in the top right-hand corner of the view or
+          browser to minimize, maximize or restore it.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Drag the borders of the view or browser to enlarge or reduce
+          it.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Right mouse-click on the name of the view or browser and
+          select ”<emphasis>Size</emphasis>” and then the side to be adjusted.
+          The chosen side appears as a blue line which can be dragged
+          and dropped.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To turn the view or browser into a separate window, select
+          ”<emphasis>Detached</emphasis>” from the context-sensitive menu
+          of the tab area.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="restoring-user-interface-defaults">
+    <title>Restoring user interface defaults</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          You can restore the default perspective at any time:
+          
+          <para>
+            <emphasis role="menupath">Window</emphasis>--&gt;<emphasis role="menupath">Reset Perspective</emphasis>.
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To show or restore individual views or browsers, choose either the ”<emphasis>restore</emphasis>” icon in the tab for the view or select:
+          
+          <para>
+            <emphasis role="menupath">Window</emphasis>--&gt;<emphasis role="menupath">Show View</emphasis>
+          </para>
+          
+          and then choose which view to display.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="changing-perspectives">
+    <title>Changing perspectives</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          To change between perspectives, select:
+          
+          <para>
+            <emphasis role="menupath">Window</emphasis>--&gt;<emphasis role="menupath">Open Perspective</emphasis>.
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select which perspective to open.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Alternatively, you can use the icons in the top left-hand
+          corner of the current perspective to toggle between
+          perspectives.
+        </para>
+      </listitem>
+    </orderedlist>
+    <section id="automatically-changing-perspective">
+      <title>Automatically changing perspective</title>
+      <para>
+        By selecting:
+        
+        <para>
+          <emphasis role="menupath">Window</emphasis>--&gt;<emphasis role="menupath">Preferences</emphasis>,
+        </para>
+        
+        you can choose to automatically change to the Execution Perspective when test execution starts, or to be asked each time a Test Suite is started.
+      </para>
+    </section>
+  </section>
+  <section id="keyboard-shortcuts">
+    <title>Keyboard shortcuts</title>
+    <para>
+      The ITE offers various keyboard shortcuts to make working
+      with the keyboard easier and quicker.
+    </para>
+    <para>
+      Most of the shortcuts can be changed in the <emphasis>Preferences</emphasis>
+      in the ITE. Shortcuts for object mapping and observation are
+      in the preferences. Other shortcuts can be seen and changed in
+      the <emphasis>General/Keys</emphasis> preferences.
+    </para>
+    <para>
+      <para role="tip">Press <emphasis role="input">»CTRL+SHIFT+L«</emphasis> twice to see the list of shortcuts used in the ITE and Eclipse. </para>
+    </para>
+  </section>
+</section>

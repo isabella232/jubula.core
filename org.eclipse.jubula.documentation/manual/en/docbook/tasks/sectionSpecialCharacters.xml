@@ -1,0 +1,234 @@
+<section id="special-characters" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                               xmlns:xi="http://www.w3.org/2001/XInclude"
+                                               xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Special characters</title>
+  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
+  <para>
+    There are a few symbols with a special function
+    (<xref linkend="specialchars"/>). If you want to use these symbols as a
+    part of a text entry or verification, you must mask them with a
+    backslash.
+  </para>
+  <section id="verbatimsymbol">
+    <title>Verbatim text symbol</title>
+    <para>
+      If you have a lot of characters that need to be masked, you can place the data in single quote marks:
+      
+      <para>
+        ’DATA’
+      </para>
+      
+      This means that any special functions of the characters between the quote marks are ignored.
+    </para>
+  </section>
+  <section id="general-special-characters">
+    <title>General special characters</title>
+    <table id="specialchars">
+      <title>Special symbols</title>
+      <tgroup cols="4">
+        <colspec align="left" />
+        <colspec align="left" />
+        <colspec align="left" />
+        <colspec align="left" />
+        <thead>
+          <row>
+            <entry>
+              Name
+            </entry>
+            <entry>
+              Symbol
+            </entry>
+            <entry>
+              Function
+            </entry>
+            <entry>
+              Masked version
+            </entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>
+              Open curly brackets
+            </entry>
+            <entry>
+              {
+            </entry>
+            <entry>
+              Delimits reference/variable names within a concatenated parameter value
+            </entry>
+            <entry>
+              <literal>\{</literal>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              Close curly brackets
+            </entry>
+            <entry>
+              }
+            </entry>
+            <entry>
+              Delimits reference/variable names within a concatenated parameter value
+            </entry>
+            <entry>
+              <literal>\}</literal>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              Single quote
+            </entry>
+            <entry>
+              '
+            </entry>
+            <entry>
+              Delimits a verbatim area in a parameter
+            </entry>
+            <entry>
+              <literal>\'</literal>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              Two single quotes
+            </entry>
+            <entry>
+              ''
+            </entry>
+            <entry>
+              Denotes an empty string
+            </entry>
+            <entry>
+              <literal>\'\'</literal>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              Dollar
+            </entry>
+            <entry>
+              $
+            </entry>
+            <entry>
+              Denotes a variable
+            </entry>
+            <entry>
+              <literal>\$</literal>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              Equals
+            </entry>
+            <entry>
+              =
+            </entry>
+            <entry>
+              Denotes a referenced parameter
+            </entry>
+            <entry>
+              <literal>\=</literal>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              Question mark
+            </entry>
+            <entry>
+              ?
+            </entry>
+            <entry>
+              Denotes a function
+            </entry>
+            <entry>
+              <literal>?</literal>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              Backslash
+            </entry>
+            <entry>
+              \
+            </entry>
+            <entry>
+              The escape symbol
+            </entry>
+            <entry>
+              <literal>\\</literal>
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </section>
+  <section id="symbols-with-special-meanings-for-certain-parameters">
+    <title>Symbols with special meanings for certain
+    parameters</title>
+    <para>
+      In addition to these general symbols, there are a few symbols
+      which have a special meaning for particular components
+      (<xref linkend="specialcompsymbols"/>). They must be masked if you want
+      to use them without their special function
+      <emphasis>for these components only</emphasis>. Masking these symbols must
+      be done with a double backslash.
+    </para>
+    <table id="specialcompsymbols">
+      <title>Symbols for components</title>
+      <tgroup cols="4">
+        <colspec align="left" />
+        <colspec align="left" />
+        <colspec align="left" />
+        <colspec align="left" />
+        <thead>
+          <row>
+            <entry>
+              Name
+            </entry>
+            <entry>
+              Symbol
+            </entry>
+            <entry>
+              Function
+            </entry>
+            <entry>
+              Masked version
+            </entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>
+              Comma
+            </entry>
+            <entry>
+              ,
+            </entry>
+            <entry>
+              Separator for lists
+            </entry>
+            <entry>
+              <literal>\\,</literal>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              Forward slash
+            </entry>
+            <entry>
+              /
+            </entry>
+            <entry>
+              Separator for paths in menus and trees
+            </entry>
+            <entry>
+              <literal>\\/</literal>
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </section>
+</section>

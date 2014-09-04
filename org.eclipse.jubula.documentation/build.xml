@@ -19,42 +19,46 @@
 		</exec>
 	</target>
 	
-	<target name="buildDocumentation" depends="
+	<target name="buildDocumentationDocbook" depends="
 		buildInstallationManual,
-		buildExtensionManual,
+		buildUserManual,
+		buildExtensionManual">
+	</target>
+	
+	<target name="buildDocumentation" depends="
 		buildReferenceManual,
-		buildReleaseNotes,
-		buildUserManual">
+		buildReleaseNotes">
 		<exec executable="make" failonerror="true" dir="${buildRoot}">
 			<arg line="remove" />
 		</exec>
 	</target>
 
-	<target name="buildInstallationManual" depends="setupBuildDocumentation">
-		<exec executable="/bin/sh" failonerror="true" dir="${buildRoot}">
-			<arg value="-c" />
-			<arg value="make installDoc &gt; ${buildLogDir}/installDoc.log 2&gt;&amp;1" />
-		</exec>
+	<target name="buildInstallationManual">
+		<ant antfile="buildManual.xml">
+			<property name="name" value="InstallationManual"/>
+			<property name="dir" value="install"/>
+			<property name="output" value="html"/>
+		</ant>
+	</target>
+
+	<target name="buildUserManual">
+		<ant antfile="buildManual.xml">
+			<property name="name" value="UserManual"/>
+			<property name="dir" value="manual"/>
+		</ant>
+	</target>
+
+	<target name="buildExtensionManual">
+		<ant antfile="buildManual.xml">
+			<property name="name" value="ExtensionManual"/>
+			<property name="dir" value="extensionapi"/>
+		</ant>
 	</target>
 
 	<target name="buildReleaseNotes" depends="setupBuildDocumentation">
 		<exec executable="/bin/sh" failonerror="true" dir="${buildRoot}">
 			<arg value="-c" />
 			<arg value="make releaseNotes &gt; ${buildLogDir}/releaseNotes.log 2&gt;&amp;1" />
-		</exec>
-	</target>
-
-	<target name="buildUserManual" depends="setupBuildDocumentation">
-		<exec executable="/bin/sh" failonerror="true" dir="${buildRoot}">
-			<arg value="-c" />
-			<arg value="make user-manual-html &gt; ${buildLogDir}/user-manual-html.log 2&gt;&amp;1" />
-		</exec>
-	</target>
-
-	<target name="buildExtensionManual" depends="setupBuildDocumentation">
-		<exec executable="/bin/sh" failonerror="true" dir="${buildRoot}">
-			<arg value="-c" />
-			<arg value="make extensionapi &gt; ${buildLogDir}/extensionapi.log 2&gt;&amp;1" />
 		</exec>
 	</target>
 

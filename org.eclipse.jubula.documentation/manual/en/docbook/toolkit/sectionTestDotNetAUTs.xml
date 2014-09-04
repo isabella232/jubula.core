@@ -1,0 +1,304 @@
+<section id="dotnetaut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                      xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Testing Windows (.NET) AUTs</title>
+  <anchor role="helpid" id="projectWizardContextId">Creating a Project</anchor>
+  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+  <para>
+    You can write tests for Windows AUTs that use the .NET
+    framework when you select the toolkit <emphasis>concrete</emphasis> or
+    <emphasis>win</emphasis> in the Project properties. The win and concrete
+    toolkits actually contain the same actions as each other.
+  </para>
+  <para>
+    When you select <emphasis>win</emphasis> as the Project toolkit, the
+    library Project <emphasis>unbound_modules_concrete</emphasis> is
+    automatically reused in your Project. The actions in this
+    library are described in the reference manual.
+  </para>
+  <section id="supported-windows-auts">
+    <title>Supported Windows AUTs</title>
+    <para>
+      The following AUTs written with the .NET framework are
+      supported:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You must be using Windows XP or higher.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          We have performed our WinForms and WPF tests with an AUT in
+          .NET version 4.0. Although tests may be also be executable
+          with .NET 3.5 (or even lower), the minimum supported version
+          is .NET 4.0. <para role="warning">The support for WPF AUTs is currently
+          experimental. We encourage you to test the support with your
+          own AUTs and welcome feedback about the current support.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          AUTs that are not written with WinForms or WPF (e.g. Win32,
+          etc.) are not supported in the current version.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="information-on-the-support-for-windows-auts">
+    <title>Information on the support for Windows AUTs</title>
+    <section id="the-ui-automation-framework-and-clicking">
+      <title>The UI Automation Framework and clicking</title>
+      <para>
+        The Windows support is realized using the Microsoft UI
+        Automation Framework. This framework is used to access
+        components and to perform many of the supported actions. The
+        Automation Framework is the recommended approach to
+        controlling .NET AUTs, and it does not perform clicks or text
+        inputs at the Operating System level; rather it invokes
+        functions on the components.
+      </para>
+      <para>
+        For the majority of the click actions, however, we have
+        implemented real clicks that are performed at the Operating
+        System level in order to allow e.g. opening of context-menus
+        via right click, clicks at specific positions and
+        position-based access (e.g. for context-menus, move actions
+        and check at mouse position).
+      </para>
+    </section>
+    <section id="supported-auts">
+      <title>Supported AUTs</title>
+      <para>
+        We currently only support WinForms and WPF AUTs. It may be
+        possible to map components from e.g. Win32 AUTs, but the tests
+        on such components may fail. It is therefore worth checking
+        with your development team what components the AUT you are
+        testing is using.
+      </para>
+    </section>
+  </section>
+  <section id="information-on-winforms-auts">
+    <title>Information on WinForms AUTs</title>
+    <section id="supported-and-unsupported-components">
+      <title>Supported and unsupported components</title>
+      <para>
+        Our regression tests are performed on a variety of components,
+        including (but not limited to): buttons (push, checkbox,
+        radio), textfields, trees, tables, menus, context menus,
+        lists, combo boxes and tabbed panes.
+      </para>
+      <para>
+        <emphasis role="strong">Possible component
+        restrictions</emphasis>
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            Tables:
+          </term>
+          <listitem>
+            <para>
+              Our actions have been written for and tested on tables
+              of type System.Windows.Forms.DataGridView. Since the
+              introduction of this component in .NET 2.0, the older
+              System.Windows.Forms.DataGrid is no longer recommended.
+              System.Windows.Forms.DataGrid tables are not supported.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section id="supported-and-unsupported-actions">
+      <title>Supported and unsupported actions</title>
+      <para>
+        Most of the actions that are available in the
+        <emphasis>concrete</emphasis> toolkit have been implemented
+        for Windows AUTs. These include, but are not limited to:
+        clicking, checking, entering text and selecting.
+      </para>
+      <para>
+        <emphasis role="strong">Actions not (yet)
+        implemented</emphasis>
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            Drag and Drop
+          </term>
+          <listitem>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Using row headers for table selection:
+          </term>
+          <listitem>
+            <para>
+              Unlike other supported toolkits, Windows AUTs have
+              integrated row headers in tables. These are not yet
+              supported. When using the actions <emphasis>Select Value
+              from Row</emphasis> and <emphasis>Select
+              Cell</emphasis>, the row can therefore only be selected
+              using its index. It is not possible to enter the value
+              in the first column to identify the row as is the case
+              in other toolkits.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Combo box: Check selection of entry by index:
+          </term>
+          <listitem>
+            <para>
+              This action will not be implemented for Windows AUTs, as
+              the dropdown list needs to be opened to access the list
+              items. If text is already in the text field of the combo
+              box when it is opened, then the first item that matches
+              the entered text is selected – this may change the
+              selected item and therefore the index.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Combo box: Relative selection:
+          </term>
+          <listitem>
+            <para>
+              For the same reason as above, only the value
+              <emphasis>absolute</emphasis> is supported for
+              selections by value from the combo box. 
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Trees: Multiselection:
+          </term>
+          <listitem>
+            <para>
+              As WinForms does not support true multiselection for
+              Trees, any actions used to test the multiselection of a
+              Tree will fail.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Deprecated actions:
+          </term>
+          <listitem>
+            <para>
+              Any actions marked as <emphasis>deprecated</emphasis>
+              have not been implemented.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Show Text
+          </term>
+          <listitem>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Editability checks for tables:
+          </term>
+          <listitem>
+            <para>
+              The actions for check editability on a whole table, or
+              on individual cells within it, are not supported in the
+              current version.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Checking the text of password fields:
+          </term>
+          <listitem>
+            <para>
+              The contents of password fields cannot be checked in
+              tests for Windows AUTs, as the Windows RC does not run
+              in the same process as the AUT itself. Such checks on
+              password fields will always fail with a Check Failed
+              error.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+  </section>
+  <section id="information-on-wpf-auts">
+    <title>Information on WPF AUTs</title>
+    <para>
+      The support for WPF AUTs is currently experimental. We encourage
+      you to test the support with your own AUTs and welcome feedback
+      about the current support.
+    </para>
+  </section>
+  <section id="operating-system-language-component-recognition-and-extensibility">
+    <title>Operating system language, component recognition and
+    extensibility</title>
+    <para>
+      The UI automation framework does not provide
+      language-independent component types for component recognition.
+      As this would have otherwise lead to language-dependent mapping,
+      we have implemented an internal map from the component type ID
+      to our own designation of the component type. This makes object
+      mapping language-independent, but means that the Windows toolkit
+      cannot currently be extended to add support for new components.
+    </para>
+  </section>
+  <section id="ui-automation-and-screen-scaling">
+    <title>UI automation and screen scaling</title>
+    <para>
+      We recommend against changing the DPI settings on your test
+      machines to make components and text appear larger. Such
+      modifications may lead to unpredictable problems for test
+      execution. The resolution of the screen, however, has no bearing
+      on object recognition.
+    </para>
+  </section>
+  <section id="windows-auts-and-the-observation-mode">
+    <title>Windows AUTs and the observation mode</title>
+    <para>
+      The observation mode cannot be used for Windows (.NET) AUTs.
+    </para>
+  </section>
+  <section id="mapping-components-in-winformsauts">
+    <title>Mapping components in WinFormsAUTs</title>
+    <para>
+      <emphasis role="strong">Composite components may be mappable as separate parts</emphasis><?linebreak?>
+      For some components that consist of other components (e.g. combo boxes that consist of a textfield and a button), it may be possible to collect the individual components (textfield, button) as well as the whole composite (the combo box). When performing mapping, you should make sure that you are collecting the component that it makes sense to perform your chosen action on. For example, you can only perform a <emphasis>Select from Combo Box</emphasis> on a combo box. While it may be possible to perform a <emphasis>Replace Text</emphasis> on the textfield included in the combo box, it will almost always make more sense to deal with the logical component as opposed to its parts.
+    </para>
+    <para>
+      <emphasis role="strong">Mapping of dynamic content items in components</emphasis><?linebreak?>
+      It may be possible to map individual items within components that are addressed as a whole component in the test specification. For example, it may be possible to map individual list entries. Even when this is the case, we recommend mapping the <emphasis>list</emphasis> component and performing actions on the whole component that deal with its content (e.g. <emphasis>Select entry from list</emphasis>, <emphasis>Check existence of entry in list</emphasis>). This makes tests more robust and able to deal with dynamic data.
+    </para>
+    <para>
+      <emphasis role="strong">Mapping components in tabbed panes</emphasis><?linebreak?>
+      When mapping a component that is contained in a tabbed pane, it is important to move the mouse cursor quickly and directly to the component you want to map, to avoid collecting the tabbed pane itself.
+    </para>
+  </section>
+  <section id="nested-scrolling">
+    <title>Nested scrolling</title>
+    <para>
+      AUTs in which scrollable components are nested (e.g. a
+      scrollable component within a scrollable component and so on)
+      may not be supported in the current version.
+    </para>
+  </section>
+  <section id="autrun-not-supported">
+    <title>autrun not supported</title>
+    <para>
+      Starting WinForms AUTs with <emphasis>autrun</emphasis> is not
+      yet supported.
+    </para>
+  </section>
+</section>

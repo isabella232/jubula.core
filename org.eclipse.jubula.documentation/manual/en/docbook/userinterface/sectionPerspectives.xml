@@ -1,0 +1,201 @@
+<section id="perspectives" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Perspectives</title>
+  <section id="the-specification-perspective">
+    <title>The Specification Perspective</title>
+    <para>
+      The Specification Perspective (<xref linkend="clientwindow"/>) provides browsers, editors and views
+      to let you create and edit tests.
+    </para>
+    <para>
+      It contains:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The Test Suite Browser
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Test Case Browser
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Component Names Browser
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The editor area
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Properties View
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Data Sets View
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Component Names View
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Problems View
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The search result view (behind the Problems View)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Running AUTs View
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      The Component Names View, Data Sets View and Properties View
+      show you details about the currently selected item in the
+      browser or editor.
+    </para>
+    <figure id="clientwindow">
+      <title>Specification Perspective</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/client.png"/>
+        </imageobject>
+        <textobject><phrase>Specification
+        Perspective</phrase></textobject>
+      </mediaobject>
+    </figure>
+  </section>
+  <section id="the-execution-perspective">
+    <title>The Execution Perspective</title>
+    <para>
+      In the Execution Perspective, you can see the following
+      (<xref linkend="executionclient"/>):
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The Test Suite Browser
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Test Result View
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Properties View
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Image View
+        </para>
+      </listitem>
+    </itemizedlist>
+    <figure id="executionclient">
+      <title>Execution Perspective</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/executionclient.png"/>
+        </imageobject>
+        <textobject><phrase>Execution
+        Perspective</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <para>
+      You cannot edit in the Execution Perspective, but you can see
+      the results of tests that have been started interactively..
+    </para>
+  </section>
+  <section id="the-reporting-perspective">
+    <title>The Functional Test Reporting Perspective</title>
+    <para>
+      In the Functional Test Reporting Perspective, you can see an overview of all the
+      test runs in the current database, for all Projects it contains.
+      You can reopen test runs if the details for the report are still
+      in the database (<xref linkend="re-opening-the-test-result-view-for-a-test-run"/>) and analyze the
+      test using the Properties View and the Image View.
+    </para>
+    <para>
+      The Functional Test Reporting Perspective (<xref linkend="reportingperspective"/>)
+      contains the following views:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The Test Result View
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Properties View
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Image View
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Test Result Summary View
+        </para>
+      </listitem>
+    </itemizedlist>
+    <figure id="reportingperspective">
+      <title>Reporting Perspective</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/reportingperspective.png"/>
+        </imageobject>
+        <textobject><phrase>Reporting
+        Perspective</phrase></textobject>
+      </mediaobject>
+    </figure>
+  </section>
+  <section id="the-workspace-perspective">
+    <title>The workspace perspective</title>
+    <para>
+      In the workspace perspective (<xref linkend="workspaceperspective"/>),
+      you can view the Projects and files in your workspace. The
+      workspace perspective contains the following:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Navigation View
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          An editor area to view e.g. Excel and HTML files.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <figure id="workspaceperspective">
+      <title>Workspace Perspective</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="../images/workspaceperspective.png"/>
+        </imageobject>
+        <textobject><phrase>Workspace
+        Perspective</phrase></textobject>
+      </mediaobject>
+    </figure>
+  </section>
+</section>

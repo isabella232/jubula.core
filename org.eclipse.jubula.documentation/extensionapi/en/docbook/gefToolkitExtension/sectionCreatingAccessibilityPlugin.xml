@@ -1,0 +1,118 @@
+<section id="creating-an-accessibility-plug-in" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Creating an accessibility plug-in</title>
+  <section id="setting-up-your-workspace">
+    <title>Setting up your Workspace</title>
+    <para>
+      Although you can use the IDE of your choice to develop your
+      accessibility plug-in, this guide will use Eclipse with PDE
+      plug-ins.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Once you have created your new workspace, change that
+          workspace’s <emphasis role="strong">Target
+          Platform</emphasis> by using the description mentioned in
+          the extension manual, as well as all plug-ins that make up
+          your AUT.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Create a new <emphasis role="strong">Plug-in
+          Project</emphasis>. The default values proposed by the
+          wizard are acceptable, so simply enter a name for your new
+          accessibility project and complete the wizard without
+          additional modifications.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You now have a workspace with a properly configured target
+          platform as well as a new plug-in project. You can now begin
+          developing your GEF toolkit extension.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="walkthrough">
+    <title>Walkthrough</title>
+    <para>
+      The first step for implementing your accessibility plug-in is to
+      create identifiers for each type of GEF component that you wish
+      to make accessible for tests. An identifier is a Java class that
+      implements <emphasis role="input">IEditPartIdentifier</emphasis> from the package
+      named
+      <emphasis>org.eclipse.jubula.rc.rcp.e3.gef.identifier</emphasis>
+      and provides additional and/or more precise information about a
+      specific <emphasis role="input">EditPart</emphasis> from the package named
+      <emphasis>org.eclipse.gef</emphasis>. The granularity of your
+      identifier classes will depend on the class hierarchy of the
+      edit parts in the AUT. For example, if many of the edit parts
+      share a common superclass, then you can write a single
+      Identifier for that superclass that will be able to provide
+      accessibility for all edit parts that inherit from that
+      superclass. See the example in <xref linkend="gefreference"/>, which
+      shows a sample implementation.
+    </para>
+    <para>
+      The next step is to create an adapter factory. This extension
+      provides information regarding which identifier to use for each
+      edit part.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the <emphasis role="input">plugin.xml</emphasis> file from your
+          accessibility plug-in and select the
+          <emphasis role="strong">Extension</emphasis> tab.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Add an instance of the
+          <emphasis>org.eclipse.core.runtime.adapters</emphasis>
+          extension.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Add a <emphasis role="strong">factory</emphasis> to the new
+          extension for each type of GEF component for which you wish
+          to provide accessibility. Each factory must implement
+          <emphasis role="input">IEditPartIdentifier</emphasis> from the package named
+          <emphasis>org.eclipse.jubula.rc.rcp.e3.gef.identifier</emphasis>
+          to provide adapters from the GEF component that implements
+          <emphasis role="input">EditPart</emphasis> from
+          <emphasis>org.eclipse.gef</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once you have defined your adapter factory, you will need to
+          implement it. Your adapter factory, which must implement
+          <emphasis role="input">IAdapaterFactory</emphasis> from the package named
+          <emphasis>org.eclipse.core.runtime</emphasis>, provides
+          appropriate instances of your created identifiers for a
+          given edit part. See <xref linkend="gefreference"/> for a sample
+          implementation.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once you have created your identifiers<?linebreak?> and adapter
+          factories, you can export and deploy your plug-in to use it
+          in your AUT.
+        </para>
+        <para role="tip">
+          When starting your AUT after adding
+          or replacing your accessibility plug-in, it is recommended
+          that the AUT starts with the <emphasis role="input">-clean</emphasis>
+          parameter.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

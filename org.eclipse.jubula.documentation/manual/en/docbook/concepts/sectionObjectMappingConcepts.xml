@@ -1,0 +1,92 @@
+<section id="object-mapping-2" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Object mapping</title>
+  <para>
+    Object mapping is the process which joins your <emphasis>component
+    names</emphasis> from your Test Steps to the actual
+    <emphasis>technical names</emphasis> for the components in the
+    AUT. Because object mapping can be the last step before execution,
+    you can start specifying tests before the software is even
+    available.
+  </para>
+  <para>
+    Object mapping consists of two steps:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Collecting the technical names for the components from the
+        AUT.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Assigning these technical names to the component names you
+        used in your Test Steps.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <para role="tip">Object mapping is bound to the AUT, not to a Test
+    Suite. All Test Suites which use the same AUT share an object map.
+    </para>
+  </para>
+  <section id="component-names">
+    <title>Component names</title>
+    <para>
+      When you specify Test Steps, you specify component names for the
+      components you want to test. When you add Test Cases to a Test
+      Suite, all component names used in the Test Cases are collected
+      by the Object Mapping Editor. You can then collect the technical
+      names from the AUT.
+    </para>
+  </section>
+  <section id="technical-names">
+    <title>Technical names</title>
+    <para>
+      You do not need to consult the developers to collect technical
+      names; you use the running AUT to collect the names. If the
+      developers have named the components, this name will be
+      collected. If the developers have not named the component, a
+      name is generated.
+    </para>
+    <para>
+      <para role="tip">In the mapping mode, high-level components are usually
+      addressed. You will not be able to map individual menu entries
+      or tree nodes on desktop applications, for example. Instead, you
+      map the tree component, and specify which entry/node to
+      select/check as a parameter for the action. </para>
+    </para>
+  </section>
+  <section id="assigning-technical-names-to-component-names">
+    <title>Assigning technical names to component names</title>
+    <para>
+      Once you have collected the technical names from the AUT, you
+      can ”assign” them to the component names using drag-and-drop. In
+      this way, you are telling your test which real component you are
+      referring to in each Test Step.
+    </para>
+    <para>
+      The fact that the object map is separate from the specification
+      means that any changes that need to be made to update a test
+      only need to be made once.
+    </para>
+  </section>
+  <section id="locating-components-during-test-execution">
+    <title>Locating components during test execution</title>
+    <para>
+      The component recognition system uses various details about
+      mapped components to find the right component during the test.
+      The location of the component in the AUT hierarchy, the
+      components near to it and the name of the component all play a
+      role in component recognition. For each possible component, the
+      similarity to the originally mapped component is calculated. The
+      component with the highest result is selected.
+    </para>
+    <para>
+      This method makes object mapping generally resilient to changes
+      in the AUT.
+    </para>
+  </section>
+</section>

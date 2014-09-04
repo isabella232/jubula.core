@@ -21,7 +21,7 @@ images:
 	chmod 775 ${SCRIPTDIR}/html/*.pl
 	find . -type d -name "PS" -print -exec ${SCRIPTDIR}/image/psd2latex {} \;
 
-pdf:	clean-pdf UserManual.aux pdf-nocirc
+pdf:	clean-pdf pdf-nocirc
 # prevent circular calls due to joint dependence
 pdf-nocirc: images
 	if [ ! -d ${OUTPUTBASE} ]; then mkdir ${OUTPUTBASE}; fi
@@ -42,7 +42,7 @@ html-simple:
 	if [ ! -d ${OUTPUTHTML}/tmp ]; then mkdir -p ${OUTPUTHTML}/tmp; fi
 	latex2html -dir ${OUTPUTHTML}/tmp -address "'Copyright BREDEX GmbH ${MYDATE}'" -nonavigation -noinfo -html_version 4.0 -verbosity 0 ${DOC} > ${OUTPUTHTML}/l2h.log
 
-htmlandpdf: clean-html pdf userlabels.pl
+htmlandpdf: clean-html pdf
 	if [ ! -d ${OUTPUTHTML}/tex ]; then mkdir -p ${OUTPUTHTML}/tex; fi
 	if [ ! -d ${OUTPUTHTML}/html ]; then mkdir ${OUTPUTHTML}/html; fi
 	latex -output-directory ${OUTPUTHTML}/tex -shell-escape --halt-on-error ${DOC} ;\
@@ -64,13 +64,6 @@ htmlandpdf: clean-html pdf userlabels.pl
 texgen:
 	if [ ! -d Action/Generated ]; then mkdir Action/Generated; fi
 	cd ${TEXGEN}/script; sh texgen.sh ../../org.eclipse.jubula.documentation/reference/en/tex/Action/Generated en_US actions
-UserManual.aux:
-	cd ../../../manual/en/tex ; make pdf-nocirc
-	cp ../../../manual/en/build/pdf/UserManual.aux .
-userlabels.pl:
-	cd ../../../manual/en/tex ; make html-simple
-	if [ ! -d ${OUTPUTHTML}/html ] ; then mkdir -p ${OUTPUTHTML}/html ; fi
-	cp ../../../manual/en/build/onlinehelp/tmp/labels.pl ${OUTPUTHTML}/html/userlabels.pl
 clean-pdf:
 	@rm -Rf ${OUTPUTPDF}
 	@if [ -f UserManual.aux ] ; then rm UserManual.aux ; fi

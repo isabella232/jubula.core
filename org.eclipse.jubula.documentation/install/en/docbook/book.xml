@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<book id="installManual" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                       xmlns:xi="http://www.w3.org/2001/XInclude"
+                                       xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Installation Manual</title>
+  
+  <xi:include href="systemRequirements/systemRequirements.xml"/>
+  <xi:include href="migrate/migrate.xml"/>
+  <xi:include href="installation/installation.xml"/>
+  <xi:include href="databaseConfiguration/databaseConfiguration.xml"/>
+  <xi:include href="configAsEclipseApp/configAsEclipseApp.xml"/>
+  <xi:include href="deinstallation/deinstallation.xml"/>
+
+</book>

@@ -1,0 +1,250 @@
+<section id="iteExtension" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                         xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>ITE extension</title>
+  <para>
+    This section shows you how to develop the ITE toolkit extension.
+    We describe the steps to create the toolkit plug-in and how it can
+    be exported.
+  </para>
+  <section id="creating-the-toolkit-plug-in">
+    <title>Creating the toolkit plug-in</title>
+    <para>
+      The following steps have to be done to extend the ITE toolkit:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Create a <emphasis role="strong">Plug-in Project</emphasis>
+          for your toolkit project.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Create a <emphasis role="strong">Feature Project</emphasis>
+          referencing your toolkit project from the previous step for
+          an easier installation into the ITE.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Set the features
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis>org.eclipse.rcp</emphasis> and
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis>org.eclipse.jubula.feature</emphasis>
+            </para>
+          </listitem>
+        </itemizedlist>
+        <para>
+          from the installation folder as your
+          <emphasis role="strong">Target Platform</emphasis> in the
+          workspace preferences. Information on configuring the target
+          platform can be found in Eclipse’s online Help under
+          <emphasis>Plug-in Development Environment Guide &gt; Tools
+          &gt; Preferences &gt; Target Plug-ins</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Add the following dependencies to your toolkit project:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis>org.eclipse.jubula.tools</emphasis> and
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis>org.eclipse.jubula.toolkit.common</emphasis>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>
+          Use and configure the following extension point in your toolkit project:
+          <para>
+            <emphasis>org.eclipse.jubula.toolkit.common.toolkitsupport</emphasis>.
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Implement the interface <emphasis role="input">IToolkitProvider</emphasis>
+          from the extension point of the previous step.
+        </para>
+      </listitem>
+      <listitem>
+      <para>
+        Create the definition of your own toolkit in the file
+        <emphasis role="input">ComponentExtension.xml</emphasis> by choosing one or more of the following possibilities:
+      </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              Extend existing toolkit components with new actions,
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              derive new components from existing toolkit components, or
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              define a new toolkit component.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>
+          Manage the i18n keys in the properties file.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      You will find projects in zip-files as a showcase for steps 1-8, which are located in the directory
+      <para>
+        <emphasis role="input">examples/development/extension/src</emphasis>.
+      </para>
+      Each zip-file contains an example for a specific toolkit, e.g. a Swing example extends the <emphasis role="input">JSlider</emphasis> component.
+    </para>
+    <para>
+      These example projects can be simply imported into your Eclipse
+      workspace. Set the target after importing the projects as
+      described in step 3. All other steps have already been done in
+      the examples.
+    </para>
+  </section>
+  <section id="deploying-the-toolkit-plug-in">
+    <title>Deploying the toolkit plug-in</title>
+    <para>
+      Once the toolkit feature has been created, it must be deployed
+      in the ITE. The toolkit feature must be exported to an update
+      site and then installed via this update site into the ITE. If
+      you want to execute tests on your new components via testexec,
+      it is important that you have write access to the ITE so that
+      the installed feature can be accessed during test execution.
+    </para>
+    <section id="create-an-update-site-for-the-toolkit-feature">
+      <title>Create an update site for the toolkit feature</title>
+      <orderedlist>
+        <listitem>
+          <para>
+            Create an <emphasis role="strong">Update Site
+            Project</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Add a category to your update site that defines its
+            <emphasis>ID</emphasis> and <emphasis>Name</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Add your toolkit feature to the category created in the
+            previous step.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Build the created toolkit update site. The directory of
+            the toolkit update site project serves as an update site,
+            which is later used to install your toolkit feature into
+            the ITE. Remember to build and then synchronize this
+            update site if you have changed the toolkit feature.
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section id="install-the-toolkit-feature-from-the-update-site">
+      <title>Install the toolkit feature from the update site</title>
+      <orderedlist>
+        <listitem>
+          <para>
+            Start the ITE and select from the main menu
+            <emphasis role="menupath">Help</emphasis>--&gt;<emphasis role="menupath">Install new software...</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click the ”<emphasis>Add...</emphasis>” button in the
+            <emphasis>Install</emphasis> dialog that appears.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click the ”<emphasis>Local...</emphasis>” button in the
+            <emphasis>Add Repository</emphasis> dialog that appears
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Navigate to the directory that contains your update site
+            and confirm your selection.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click ”<emphasis>OK</emphasis>” to exit the <emphasis>Add
+            Repository</emphasis> dialog. The active dialog should now
+            be <emphasis>Install</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Ensure that the check box named <emphasis>Group items by
+            category</emphasis> is deselected. Your feature should be
+            visible in the central table of the dialog.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Ensure that the check box next to your feature is selected
+            and click ”<emphasis>Next</emphasis>”.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Confirm the <emphasis>Installation Details</emphasis> by
+            clicking the ”<emphasis>Next</emphasis>” button again.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Accept the license agreement terms and click
+            ”<emphasis>Finish</emphasis>”.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            A warning dialog may appear to warn you are installing
+            unsigned content. Click ”<emphasis>OK</emphasis>” in this
+            dialog if the feature comes from a trusted source. This
+            should be the case as long as you install your own
+            feature. Then the installation process begins.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click the ”<emphasis>Restart Now</emphasis>” button to
+            perform a restart, when a dialog appears to prompt the
+            restart that will safely finish the update / installation.
+            After the restart your ITE toolkit extension feature is
+            installed.
+          </para>
+        </listitem>
+      </orderedlist>
+    </section>
+  </section>
+</section>

@@ -1,0 +1,23 @@
+<section id="known-issue-with-an-environment-variable" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                     xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Known issue with an environment variable</title>
+  <para>
+    There is a known problem with an environment variable which is
+    installed with certain products, including other test tools, and
+    may not be uninstalled when these products are uninstalled.
+  </para>
+  <para>
+    The variable is called ”_JAVA_OPTION” and causes problems for the
+    ITE and possibly also for other Java-based software.
+  </para>
+  <para>
+    To see if this variable is installed on your computer, locate your
+    list of environment variables.
+  </para>
+  <para>
+    If the ”_JAVA_OPTION” variable is present, and you have
+    uninstalled the program which used it, then you can simply remove
+    the variable.
+  </para>
+</section>

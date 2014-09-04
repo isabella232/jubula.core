@@ -1,0 +1,229 @@
+<project name="buildHelp" default="build">
+    <property name="client.ua.help.path" value="../org.eclipse.jubula.client.ua.help"/>
+    <property name="html.path" value="html/${dir}"/>
+    <property name="output" value="onlinehelp"/>
+    <property name="build.path" value="${dir}/en/build/${output}"/>
+    <property name="manual.name" value="${name}"/>
+    
+    <target name="checkParam">
+        <fail unless="name" message="Please provide a value for the parameter 'name'!"/>
+        <fail unless="dir" message="Please provide a value for the parameter 'dir'!"/>
+        
+        <condition property="standalone">
+            <equals arg1="${output}" arg2="html"/>
+        </condition>
+    </target>
+    
+    <target name="clean" depends="checkParam">
+        <delete dir="${build.path}"/>
+        <delete dir="${client.ua.help.path}/${html.path}"/>
+        <delete dir="html"/>
+    </target>
+    
+    <target name="makeDir" depends="clean, checkParam">
+        <mkdir dir="${build.path}"/>
+        <mkdir dir="${html.path}"/>
+        <mkdir dir="${html.path}/images"/>
+    </target>
+    
+    <target name="build" depends="buildOnlineHelp, buildHTML">
+        <echo>Build done!</echo>
+    </target>
+    
+    <target name="buildHtmlImageLister" depends="checkParam">
+        <delete file="HtmlImageLister.jar"/>
+        <move file="lib/HtmlImageLister/lib/org.jsoup.jar" tofile="lib/HtmlImageLister/lib/jsoup-1.7.2.jar" failonerror="false"/>
+        
+        <exec executable="javac" dir="lib/HtmlImageLister" failonerror="true">
+            <arg line="-cp 'lib/jsoup-1.7.2.jar'"/>
+            <arg line="HtmlImageLister.java"/>
+        </exec>
+        
+        <jar destfile="HtmlImageLister.jar">
+            <zipfileset src="lib/HtmlImageLister/lib/jsoup-1.7.2.jar">
+                <exclude name="**/*.SF"/>
+            </zipfileset>
+            
+            <fileset dir="lib/HtmlImageLister" excludes="**/*.java, **/.* **/lib/**"/>
+            
+            <manifest>
+                <attribute name="Main-Class" value="HtmlImageLister"/>
+                <attribute name="Class-Path" value="lib"/>
+            </manifest>
+        </jar>
+    </target>
+    
+    <target name="buildOnlineHelp" unless="standalone" depends="checkParam, buildHtmlImageLister">
+        <antcall target="makeDir"/>
+        
+        <copy todir="${html.path}/images">
+            <fileset dir="${dir}/en/docbook/images">
+                <include name="*.jpg" />
+                <include name="*.png" />
+            </fileset>
+        </copy>
+        
+        <exec executable="xsltproc" failonerror="true">
+            <arg line="--xinclude"/>
+            <arg line="--stringparam base.dir ${html.path}"/>
+            <arg line="--stringparam html.stylesheet ../../css/style.css"/>
+            <arg line="--stringparam docbook.css.source ''"/>
+            <arg line="--stringparam section.autolabel 1"/>
+            <arg line="--stringparam section.label.includes.component.label 1"/>
+            <arg line="--stringparam make.clean.html 1"/>
+            <arg line="--stringparam use.id.as.filename 1"/>
+            <arg line="--stringparam generate.toc 'chapter nop
+                                                   book    toc,title'"/>
+            <arg line="--stringparam formal.title.placement 'figure    after
+                                                             example   after
+                                                             equation  after
+                                                             table     after
+                                                             procedure after'"/>
+            <arg line="--stringparam toc.section.depth 3"/>
+            <arg line="--stringparam collect.xref.targets yes"/>
+            <arg line="--stringparam current.docid ${manual.name}"/>
+            <arg line="--stringparam target.database.document ../../olinkdb.xml"/>
+            <arg line="--stringparam chunker.output.indent yes"/>
+            <arg line="--stringparam chunk.first.sections 1"/>
+            <arg line="--stringparam chunk.section.depth 2"/>
+            <arg line="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates.xsl"/>
+            <arg line="${dir}/en/docbook/book.xml"/>
+            <redirector output="output.log"/>
+        </exec>
+        
+        <antcall target="checkForErrors"/>
+        
+        <delete file="${html.path}/index.xml"/>
+        <delete file="plugin.xml"/>
+        <delete dir="${html.path}/en"/>
+        
+        <antcall target="moveGeneratedFiles"/>
+    </target>
+
+    <target name="buildHTML" if="standalone" depends="checkParam, buildHtmlImageLister">
+        <copy todir="${build.path}/images">
+            <fileset dir="${dir}/en/docbook/images">
+                <include name="*.jpg" />
+                <include name="*.png" />
+            </fileset>
+        </copy>
+        
+        <copy todir="${build.path}/css">
+            <fileset dir="${dir}/en/docbook/css">
+                <include name="*.css" />
+            </fileset>
+        </copy>
+        
+        <exec executable="xsltproc" failonerror="true" output="output.log">
+            <arg line="--xinclude"/>
+            <arg line="-o ${build.path}/html/index.html"/>
+            <arg line="--stringparam base.dir ${html.path}"/>
+            <arg line="--stringparam html.stylesheet ../css/style.css"/>
+            <arg line="--stringparam docbook.css.source ''"/>
+            <arg line="--stringparam section.autolabel 1"/>
+            <arg line="--stringparam section.label.includes.component.label 1"/>
+            <arg line="--stringparam make.clean.html 1"/>
+            <arg line="--stringparam generate.toc 'chapter nop
+                                                   book    toc,title'"/>
+            <arg line="--stringparam formal.title.placement 'figure    after
+                                                             example   after
+                                                             equation  after
+                                                             table     after
+                                                             procedure after'"/>
+            <arg line="--stringparam toc.section.depth 3"/>
+            <arg line="--stringparam current.docid ${manual.name}"/>
+            <arg line="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates_html.xsl"/>
+            <arg line="${dir}/en/docbook/book.xml"/>
+        </exec>
+        
+        <antcall target="checkForErrors"/>
+    </target>
+    
+    <target name="checkForErrors">
+        <loadfile property="errorlines" srcfile="output.log">
+            <filterchain>
+                <linecontainsregexp>
+                    <regexp pattern="(ERROR:|[Ee]rror:|WARNING:|[Ww]arning:)"/>
+                </linecontainsregexp>
+            </filterchain>
+        </loadfile>
+        
+        <property name="errorlines" value=""/>
+        
+        <condition property="error">
+            <length string="${errorlines}" when="greater" length="0"/>
+        </condition>
+        
+        <fail if="${error}">
+            ${errorlines}
+        </fail>
+        
+        <delete file="output.log"/>
+    </target>
+    
+    <target name="checkImages">
+        <java jar="HtmlImageLister.jar" outputProperty="imageList" failonerror="true" fork="true">
+            <arg value="./${dir}"/>
+        </java>
+        
+        <filelist id="files" dir="./${dir}/en/docbook" files="${imageList}" />
+               
+        <restrict id="missing.files">
+            <filelist refid="files"/>
+            <not>
+                <exists/>
+            </not>
+        </restrict>
+            
+        <property name="missingFiles" refid="missing.files" />
+            
+        <condition property="filesExist" value="true">
+            <length string="${missingFiles}" length="0" />
+        </condition>
+        
+        <concat destFile="imagesMissing.log">${missingFiles}
+            <filterchain>
+                <linecontainsregexp>
+                    <regexp pattern='.*'/>
+                </linecontainsregexp>
+                <tokenfilter>
+                    <replaceregex pattern=":" replace="${line.separator}" flags="g"/>
+                </tokenfilter>
+            </filterchain>
+        </concat>
+            
+        <loadfile property="missingFilesFormatted" srcfile="imagesMissing.log"/>
+            
+        <fail unless="${filesExist}">
+            Missing Image Files:${line.separator}${missingFilesFormatted}
+        </fail>
+            
+        <delete file="imagesMissing.log"/>
+    </target>
+    
+    <target name="moveGeneratedFiles">
+        <move file="contexts.xml" tofile="context${manual.name}.xml"/>
+        <move file="toc.xml" tofile="toc${manual.name}.xml"/>
+        <move todir="${html.path}" file="target.db"/>
+        
+        <move todir="${build.path}">
+            <fileset file="toc${manual.name}.xml"/>
+            <fileset file="context${manual.name}.xml"/>
+        </move>
+        
+        <move todir="${build.path}/html" >
+            <fileset dir="html"/>
+        </move>
+        
+        <copy todir="${client.ua.help.path}">
+            <fileset file="${build.path}/toc${manual.name}.xml"/>
+            <fileset file="${build.path}/context${manual.name}.xml"/>
+        </copy>
+        
+        <copy todir="${client.ua.help.path}/${html.path}">
+            <fileset dir="${build.path}/${html.path}"/>
+        </copy>
+        
+        <antcall target="checkImages"/>
+    </target>
+</project>

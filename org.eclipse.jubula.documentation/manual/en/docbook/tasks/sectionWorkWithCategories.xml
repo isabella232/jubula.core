@@ -1,0 +1,157 @@
+<section id="working-with-categories-in-the-browsers-and-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Working with categories in the browsers and editors</title>
+  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="dialogNewCategoryContextId">New Category Dialog</anchor>
+  <para>
+    Categories let you group items together to be able to keep an
+    overview of your data and find things more easily. You can use
+    categories in the Test Case Browser, in the Test Suite Browser, in
+    the Central Test Data Editor and in the Object Mapping Editor (see
+    the section on object mapping for information on categories in the
+    Object Mapping Editor (<xref linkend="working-with-categories-in-the-object-mapping-editor"/>)).
+  </para>
+  <section id="creating-a-category">
+    <title>Creating a category</title>
+    <anchor role="helpid" id="newTestDataCategoryContextId">New Category</anchor>
+    <orderedlist>
+      <listitem>
+        <para>
+          In the browser or editor, select:
+          
+          <para>
+            <emphasis role="menuPath">New</emphasis>--&gt;<emphasis role="menuPath">Category</emphasis> from the context-sensitive menu.
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Name the category when prompted.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once you have a category, you can add items to it by drag
+          and drop, and also by double-clicking to add new items (only
+          in the browsers).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can also nest categories in other categories.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can do this either by dragging and dropping a category
+          into another category, or by right-clicking in an already
+          present category and choosing the option to create a new
+          category.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="creating-test-cases-test-suites-and-test-jobs-in-an-existing-category">
+    <title>Creating Test Cases, Test Suites and Test Jobs in an existing category</title>
+    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <para>
+      <emphasis role="strong">Creating Test Cases within an already
+      existing category:</emphasis>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          To create a Test Case in an already existing category,
+          select the category in which you want to create the Test
+          Case with a single-click in the Test Case Browser.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Create a Test Case via the context-sensitive menu
+          (<xref linkend="creating-test-cases"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can also simply double-click on the category in which
+          you want to create the Test Case.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <emphasis role="strong">Creating Test Suites and Test Jobs
+      within an already existing category:</emphasis>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          To create a Test Suite or a Test Job in an already existing
+          category, select the category in which you want to create
+          the Test Suite or Test Job with a single-click in the Test
+          Suite Browser.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Create a Test Suite or Test Job via the context-sensitive
+          menu (<xref linkend="creating-a-test-suite"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To create a Test Suite, you can also simply double-click on
+          the category in which you want to create the Test Suite.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="adding-comments-to-categories">
+    <title>Adding comments to categories</title>
+    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <para>
+      You can add comments to categories in the Test Suite Browser and
+      Test Case Browser to add information on the purpose of the
+      category:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          In the browser, select the category you want to add a
+          comment to, or edit a comment on.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the context-menu, select:
+          
+          <para>
+            <emphasis role="menuPath">Edit comment</emphasis>
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the dialog that appears, enter the comment for this
+          category and press ”<emphasis>OK</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You will be able to see the comment in the Properties View
+          for this category, and as a tooltip (as long as the category
+          has no errors or warnings).
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <para role="tip">You can also add comments to Test Cases, and Test Suites
+      (<xref linkend="adding-comments-to-items-in-editors"/>) as well as to the Project as
+      a whole (<xref linkend="projectproperties"/>).</para>
+    </para>
+  </section>
+</section>

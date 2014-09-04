@@ -1,0 +1,16 @@
+<section id="using-a-postgresql-database" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                        xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Using a PostgreSQL database</title>
+  <para>
+    Users working with a PostgreSQL database that is version 9.0 or
+    higher should be aware that the default format from version 9.0
+    for bytea data types is <emphasis>hex</emphasis>. This results in
+    screenshots in the database not being able to be displayed.
+  </para>
+  <para>
+    The default behavior can be changed to <emphasis>escape</emphasis>
+    in <emphasis>postgresql.conf</emphasis> or by executing a command
+    to set the default behavior on a per database basis.
+  </para>
+</section>

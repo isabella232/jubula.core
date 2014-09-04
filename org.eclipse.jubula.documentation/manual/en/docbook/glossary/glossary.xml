@@ -1,0 +1,433 @@
+<chapter id="glossary" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                     xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="glossary"?>
+  <title>Glossary</title>
+  <variablelist>
+    <varlistentry>
+      <term>Action</term>
+      <listitem>
+        <para>
+          A method which is carried out on a Component. An
+          <emphasis>Action</emphasis> is part of a Test Step, and serves to either execute a
+          command (e.g. click, enter text), or verify property or state
+          information about a <emphasis>Component</emphasis> (e.g. check <emphasis>Component
+          name</emphasis>, check visibility).
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>AUT</term>
+      <listitem>
+        <para>
+          The Application Under Test. The AUT is the entire program that you wish to test.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>AUT Conﬁguration</term>
+      <listitem>
+        <para>
+          The information required in order to locate and start an AUT in the conﬁguration
+          desired by the user. An <emphasis>AUT Conﬁguration</emphasis> includes program information
+          such as <emphasis>JRE</emphasis> location and class path, and AUT conﬁguration information such as
+          command-line parameters and environment variables. Details about the AUT are given
+          when a project is created, and are entered into the relevant ﬁelds in the Test Suite
+          Editor.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>CAP</term>
+      <listitem>
+        <para>
+          The three parts of a Test Step : Component, Action, Parameter.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Classname for AUT</term>
+      <listitem>
+        <para>
+          The fully qualiﬁed classname which contains the main method of the AUT.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Classpath for AUT</term>
+      <listitem>
+        <para>
+          An environment variable that informs <emphasis>Java</emphasis> where to look for the class ﬁles
+          which are needed to run the AUT.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Component</term>
+      <listitem>
+        <para>
+          A user interface object. Each component has a set of actions that can be carried
+          out upon it.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Component Name</term>
+      <listitem>
+        <para>
+          The symbolic name you choose for a component in the AUT and use in a Test Step or
+          Test Case.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Component Names View</term>
+      <listitem>
+        <para>
+          In this view, component names in reused Test Cases can be reassigned to create
+          multiple component names for one Test Step. This allows many components of the
+          same type or within the same group or family to be mapped to the same Test Step.
+          The default position of the Component Names View is in the lower right-hand corner
+          of the perspective.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Component Type</term>
+      <listitem>
+        <para>
+          The type of graphical user interface object which will be acted upon in a Test Step,
+          e.g. ”Menu Bar” or ”Combo Box”.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Data Sets View</term>
+      <listitem>
+        <para>
+          The view in which multiple parameter values for a Test Case can be deﬁned and edited.
+          The default position of the Data Sets View is the right-hand side of the perspective,
+          in the middle.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Empty string</term>
+      <listitem>
+        <para>
+          To enter an empty string as a parameter (i.e. nothing at all), use backslash \.<?linebreak?>
+          To actually write a backslash, you must enter two backslashes.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Escape character</term>
+      <listitem>
+        <para>
+          The character used to cancel any special function that the following symbol may have.
+          The default escape character is \.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Event Handling</term>
+      <listitem>
+        <para>
+          The process by which errors are dealt with during the execution of a test. If no 
+          user-deﬁned Event Handler has been speciﬁed, a default Event Handler is activated.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Graphical User Interface</term>
+      <listitem>
+        <para>
+          A means of interacting with a computer by the use of a graphically oriented (as
+          opposed to text-oriented) display. Modern graphical user interfaces (GUI’s) are
+          controlled by a mouse as well as a keyboard, and consist of windows, buttons, text
+          areas, and other manipulable objects which are designed to make computer operation
+          simpler and more intuitive.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>ITE</term>
+      <listitem>
+        <para>
+          Short for <emphasis>Integrated Test Environment</emphasis>. By this we mean the application where tests
+          are written.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>JAR</term>
+      <listitem>
+        <para>
+          The <emphasis>Java</emphasis>™Archive ﬁle format. It allows multiple classes and other program ﬁles and
+          data to be combined into one compressed ﬁle, which often represents a complete
+          program. In this context, a JAR describes the <emphasis>Java</emphasis>™Archive of the AUT.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Object mapping</term>
+      <listitem>
+        <para>
+          The process by which component names you created in your test are attached to the
+          technical names used in the AUT.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Parameters</term>
+      <listitem>
+        <para>
+          The information that is given to an action to perform a Test Step, such as name, value,
+          etc. A parameter consists of:
+          
+          <itemizedlist>
+            <listitem>a name</listitem>
+            <listitem>a type</listitem>
+            <listitem>a value</listitem>
+          </itemizedlist>
+          
+          Most actions require one or more parameters.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Parameter Name</term>
+      <listitem>
+        <para>
+          A name which describes a parameter which is sent to an action.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Parameter Type</term>
+      <listitem>
+        <para>
+          The type of value which is sent as a parameter to an action. The following parameter
+          types are supported:
+          
+          <itemizedlist>
+            <listitem>String</listitem>
+            <listitem>Integer</listitem>
+            <listitem>Boolean</listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Parameter Value</term>
+      <listitem>
+        <para>
+          The contents of the parameter which is sent to an action. A parameter value can either
+          be a static value (e.g. <emphasis role="input">Hello</emphasis>, 123), a reference (e.g.
+          <emphasis role="input">=REFERENCE</emphasis>) or a variable.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Port Number</term>
+      <listitem>
+        <para>
+          A software address used to identify and communicate between individual programs or
+          services on a single computer or between multiple computers on a network. A hostname
+          and port number must be given in order to connect to an AUT Agent.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Project</term>
+      <listitem>
+        <para>
+          A Project contains all the information for the test, including Test Suites and Test
+          Cases, AUT’s and data. Projects are stored in the database.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Project Properties</term>
+      <listitem>
+        <para>
+          Information pertaining to the active project, including the name (all projects in the
+          database must have unique names), the Project language(s), and the data language for
+          the Project.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Propagation</term>
+      <listitem>
+        <para>
+          When references are entered, the parameter they replace is carried up into the next
+          Test Case in the hierarchy. This is propagation.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Properties View</term>
+      <listitem>
+        <para>
+          The view for displaying and editing the properties of selected Test Steps or Test
+          Cases, located by default in the top right-hand corner of the perspective. Test Steps
+          and Test Cases can be edited in the Properties View by clicking on their icon in their
+          respective editor. The Properties View is also used to display detailed results of a
+          Test Suite once it has been executed.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Reference Symbol</term>
+      <listitem>
+        <para>
+          The character used to denote a reference within a parameter. The default reference
+          symbol is =.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Speciﬁcation</term>
+      <listitem>
+        <para>
+          The method by which test details and instructions are entered by the user in the ITE.
+          Tests are not <emphasis>programmed</emphasis>, but rather <emphasis>speciﬁed</emphasis>
+          in plain language, then object-mapped to the program’s technical names.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Step Delay</term>
+      <listitem>
+        <para>
+          The time to wait between Test Steps, given in milliseconds. A step delay causes a
+          slower test execution.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Technical Name</term>
+      <listitem>
+        <para>
+          A name given to a graphical user interface object of an AUT by a software developer.
+          Technical names are used to uniquely identify an object within an application and are
+          mapped to a component name as deﬁned by the user in a Test Step.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Test Case</term>
+      <listitem>
+        <para>
+          A reusable test object which contains Test Steps or other Test Cases.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Test Case Browser</term>
+      <listitem>
+        <para>
+          A view which shows the hierarchy of Test Cases as entered and deﬁned by the user.
+          The Test Case Browser is by default in the bottom left-hand corner of the perspective.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Test Case Editor</term>
+      <listitem>
+        <para>
+          An editor area used to create and alter Test Cases and Test Steps. The Test Case
+          Editor is located by default in the center of the perspective.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Test Data</term>
+      <listitem>
+        <para>
+          Values which are entered into parameters for an action in Test Steps. Test data may
+          be entered directly into a parameter or referenced.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Test Job</term>
+      <listitem>
+        <para>
+          A Test Job is a collection of Test Suites which are designed to be executed after each
+          other. The Test Suites can test the samme AUT, different instances of the same AUT, or
+          different AUT’s entirely.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Test Result View</term>
+      <listitem>
+        <para>
+          The view which displays the results of an executed Test Suite.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Test Result View</term>
+      <listitem>
+        <para>
+          The view which displays the results of an executed Test Suite.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Test Step</term>
+      <listitem>
+        <para>
+          The smallest test object. A Test Step belongs to a Test Case. A Test Step consists of
+
+          <itemizedlist>
+            <listitem>a <emphasis role="strong">C</emphasis>omponent</listitem>
+            <listitem>an <emphasis role="strong">A</emphasis>ction</listitem>
+            <listitem>a <emphasis role="strong">P</emphasis>arameter</listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Test Suite</term>
+      <listitem>
+        <para>
+          A Test Suite uses an AUT conﬁguration and contains all Test Cases and their respective
+          Test Steps, in the order in which they are to be tested.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Test Suite Browser</term>
+      <listitem>
+        <para>
+          The view containing the Test Suite tree, where the Test Cases in a Test Suite can be
+          seen. The Test Suite Browser is situated by default in the top left-hand corner of the
+          perspective.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Test Suite Editor</term>
+      <listitem>
+        <para>
+          An editor pane used to view the properties of the Test Suite and the Test Cases used
+          in it, and to edit their parameter values and names. The Test Suite Editor is located
+          by default in the center of the perspective.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>Workspace</term>
+      <listitem>
+        <para>
+          Personal preferences relating to the client layout and actions are saved in a Workspace.
+          All changes made in the <emphasis>”Preferences”</emphasis> dialog are stored here.
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+</chapter>

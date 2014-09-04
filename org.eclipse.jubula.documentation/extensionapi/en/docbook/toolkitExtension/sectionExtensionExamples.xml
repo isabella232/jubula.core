@@ -1,0 +1,74 @@
+<section id="extensionExamples" xmlns="http://docbook.org/ns/docbook"
+                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>ITE and remote control extension examples</title>
+  <para>
+    In the installation, there are source code examples for extending supported toolkits.
+    The examples can be found in the directory
+    
+    <para>
+      <emphasis role="input">examples/development/extension</emphasis>,
+    </para>
+    
+    which contains the following sub-folders:
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        src
+      </term>
+      <listitem>
+        <para>
+          Contains some zip-files with example source code projects,
+          which can be imported by Eclipse:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              <emphasis role="input">RCPExtension.zip</emphasis><?linebreak?>
+              An extension supporting <emphasis role="input">Group</emphasis> for SWT including client
+              and remote control projects. After deploying these projects you should be able to test the
+              <emphasis role="input">Group</emphasis> in RCP applications.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="input">SwingAUT.zip</emphasis><?linebreak?>
+              An AUT using <emphasis role="input">JSlider</emphasis> from Swing.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="input">SwingExtension.zip</emphasis><?linebreak?>
+              The extension supporting <emphasis role="input">JSlider</emphasis> for Swing including client
+              and remote control projects. After deploying these projects you should be able to test the
+              <emphasis role="input">JSlider</emphasis> in the Swing example AUT.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <emphasis role="input">SwingRendererExtension.zip</emphasis><?linebreak?>
+              A remote control extension supporting a custom graphics component for
+              Swing.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        AUT
+      </term>
+      <listitem>
+        <para>
+          Contains the binary file <emphasis role="input">JSlider.jar</emphasis>, which
+          is a simple example AUT using the normally unsupported
+          component <emphasis role="input">JSlider</emphasis>. After installing the
+          <emphasis role="input">JSlider</emphasis> example extension from the
+          <emphasis role="strong">src</emphasis> folder, you will be
+          able to test this new component.
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+</section>
