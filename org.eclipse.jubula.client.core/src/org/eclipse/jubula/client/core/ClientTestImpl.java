@@ -218,7 +218,7 @@ public class ClientTestImpl implements IClientTest {
         
         try {
             if (!initServerConnection(serverName, port)) {
-                // *ServerEvnetListener are already notfied from 
+                // *ServerEvnetListener are already notified from 
                 // initConnections() 
                 fireAutAgentStateChanged(new AutAgentEvent(
                         AutAgentEvent.SERVER_CANNOT_CONNECTED));
@@ -235,7 +235,7 @@ public class ClientTestImpl implements IClientTest {
      * {@inheritDoc}
      */
     public void disconnectFromAutAgent() {
-        // Send request to aut starter and wait for response
+        // Send request to AUT-Agent and wait for response
         ICommand command = new DisconnectFromAutAgentResponseCommand();
         Message message = new DisconnectFromAutAgentMessage();
         try {

@@ -39,7 +39,7 @@ public class CommandFactory {
     }
     /** 
      * creates the appropriate command object for this message per reflection.
-     * The message is set to the comand.
+     * The message is set to the command.
      * @param commandClassName name for command class
      * @throws UnknownCommandException -
      *             the exception thrown if the instantiation of command failed.

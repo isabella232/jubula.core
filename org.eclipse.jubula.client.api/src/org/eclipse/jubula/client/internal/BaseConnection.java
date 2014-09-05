@@ -168,7 +168,7 @@ public abstract class BaseConnection {
     public void close() {
         if (log.isDebugEnabled()) {
             log.debug("close() called on " + this.getClass().getName() //$NON-NLS-1$
-                + "on port: " + getCommunicator().getPort() + "and local port: " //$NON-NLS-1$ //$NON-NLS-2$
+                + "on port: " + getCommunicator().getPort() + " and local port: " //$NON-NLS-1$ //$NON-NLS-2$
                 + getCommunicator().getLocalPort()); 
         }
         if (!isConnected()) {
@@ -180,7 +180,7 @@ public abstract class BaseConnection {
             setConnected(false);
         }
         if (log.isDebugEnabled()) {
-            log.debug("leaving close() f "  + this.getClass().getName()); //$NON-NLS-1$
+            log.debug("leaving close() in: "  + this.getClass().getName()); //$NON-NLS-1$
         }
     }
 

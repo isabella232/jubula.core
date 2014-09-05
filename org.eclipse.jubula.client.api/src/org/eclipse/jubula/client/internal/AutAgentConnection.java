@@ -59,8 +59,11 @@ public class AutAgentConnection extends BaseConnection {
 
     /**
      * creates the "singleton".
-     * @param serverName The name of the server.
-     * @param port The port number.
+     * 
+     * @param serverName
+     *            The name of the server.
+     * @param port
+     *            The port number.
      * @throws ConnectionException
      *             if a connection to the given server could not made, e.g. the
      *             name from AUTConfigPO can not resolved to a host.
