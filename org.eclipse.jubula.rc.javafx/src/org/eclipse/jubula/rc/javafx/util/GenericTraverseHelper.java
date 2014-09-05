@@ -42,7 +42,7 @@ ParentType extends Object> {
             Class<Type> type) {
         for (Type object : traverser.getTraversableData()) {
             if (type.isAssignableFrom(object.getClass())) {
-                m_result.add((Type) object);
+                m_result.add(object);
             }
             if (traverser.getObject().getClass()
                     .isAssignableFrom(object.getClass())) {
