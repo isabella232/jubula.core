@@ -274,10 +274,9 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                         if (table.getVisibleLeafColumns().contains(column)) {
                             return table.getVisibleLeafColumns().
                                     indexOf(column);
-                        } else {
-                            m_columns.add(column);
-                            return m_columns.indexOf(column);
-                        } 
+                        }
+                        m_columns.add(column);
+                        return m_columns.indexOf(column); 
                     }
                 });
         return result.intValue();

@@ -556,10 +556,9 @@ public class TableTester extends AbstractTableTester {
                         if (implRow == -1) {
                             return getColumnByName(value, operator, searchType,
                                     adapter, implRow);
-                        } else {
-                            return getColumnByValue(value, operator,
-                                    searchType, adapter, implRow);
                         }
+                        return getColumnByValue(value, operator,
+                                searchType, adapter, implRow);
                     }
                 });
         if (result == null) {
