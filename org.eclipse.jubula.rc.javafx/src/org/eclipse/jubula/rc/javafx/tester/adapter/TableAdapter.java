@@ -93,18 +93,6 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
         return result;
     }
     
-    /**
-     * 
-     * @param column the column to get the internal index for
-     * @return the index which is used internally to identify nested columns
-     */
-    private int getAdapterColumnIndex(TableColumn column) {
-        if (!m_columns.contains(column)) {
-            m_columns.add(column);
-        }
-        return m_columns.indexOf(column);
-    }
-
     @Override
     public int getColumnCount() {
         int result = EventThreadQueuerJavaFXImpl.invokeAndWait(
