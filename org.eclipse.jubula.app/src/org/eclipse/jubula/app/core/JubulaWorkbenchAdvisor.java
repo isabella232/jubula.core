@@ -13,6 +13,7 @@ package org.eclipse.jubula.app.core;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ConcurrentModificationException;
 
 import javax.persistence.PersistenceException;
 
@@ -264,23 +265,24 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
     private boolean checkStackTrace(Throwable exception,
             StackTraceElement[] stackTraceArray) {
         for (int i = 0; i < stackTraceArray.length; ++i) {
-            String className = stackTraceArray[i].getClassName();
+            final StackTraceElement stackTraceElement = stackTraceArray[i];
+            String className = stackTraceElement.getClassName();
             if ((exception instanceof IllegalArgumentException)
                 && KeySequence.class.getName().equals(className)) {
                 // ignore exception from eclipse framework, that occurs 
                 // in key binding table when binding is selected and 
                 // delete or backspace was pressed
                 return false;
-            } else if ((exception instanceof IllegalArgumentException)
-                    && stackTraceArray[i].toString().contains("mylyn")) { //$NON-NLS-1$
-                // ignore all mylyn IllegalArgumentExceptions
-                // needed for exporting a local tasks id or URL
-                return false;
-            } else if ((exception instanceof ClassCastException)
-                    && stackTraceArray[i].toString().contains("mylyn")) { //$NON-NLS-1$
-                // ignore all mylyn ClassCastExceptions
-                // needed for exporting uncategorised task categorys
-                return false;
+            } else if (stackTraceElement.toString().contains("mylyn")) { //$NON-NLS-1$
+                // ignore some Mylyn exceptions
+                // IllegalArgumentExceptions: needed for exporting a local tasks id or URL
+                if ((exception instanceof IllegalArgumentException)
+                    // needed for exporting uncategorized task categories
+                    || (exception instanceof ClassCastException)
+                    // http://bugzilla.bredex.de/1521
+                    || (exception instanceof ConcurrentModificationException)) {
+                    return false;
+                }
             } else if ((exception instanceof NullPointerException)
                 && KeySequenceText.class.getName().equals(className)) {
                 // ignore exception from eclipse framework, that occurs 
