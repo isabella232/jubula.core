@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="default"
+            class="org.eclipse.jubula.examples.aut.adder.rcp.ui.DefaultPerspective"
+            id="org.eclipse.jubula.examples.aut.adder.rcp.default">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eclipse.jubula.examples.aut.adder.rcp.ui.View"
+            id="org.eclipse.jubula.examples.aut.adder.rcp.view"
+            name="View"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               label="File">
+            <command
+                  commandId="org.eclipse.ui.file.exit"
+                  label="Exit"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application >
+         <run
+               class="org.eclipse.jubula.examples.aut.adder.rcp.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.jubula.examples.aut.adder.rcp.application"
+            name="SimpleAdder - RCP">
+         <property
+               name="appName"
+               value="SimpleAdder - RCP">
+         </property>
+      </product>
+   </extension>
+
+</plugin>
