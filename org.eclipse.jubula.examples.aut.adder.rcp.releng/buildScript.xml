@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+    Copyright (c) 2014 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<project name="SimpleAdder-RCP" default="cleanBuild" basedir=".">
+
+    <target name="clean">
+        <exec executable="mvn" dir="." failonerror="true">
+            <env key="MAVEN_OPTS" value="-Xmx512m" />
+            <arg value="clean" />
+        </exec>
+    </target>
+
+    <target name="cleanBuild">
+        <exec executable="mvn" dir="." failonerror="true">
+            <env key="MAVEN_OPTS" value="-Xmx512m" />
+            <arg value="clean" />
+            <arg value="verify" />
+        </exec>
+    </target>
+
+</project>
