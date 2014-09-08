@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="SimpleAdder - RCP" uid="org.eclipse.jubula.product.examples.aut.adder.rcp" id="org.eclipse.jubula.examples.aut.adder.rcp.product" application="org.eclipse.jubula.examples.app.adder.rcp" version="2.4.0.qualifier" useFeatures="false" includeLaunchers="true">
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>-consolelog
+--launcher.suppressErrors</programArgs>
+      <programArgsLin>-vm
+../jre/bin/java</programArgsLin>
+      <programArgsMac>--launcher.secondThread</programArgsMac>
+      <programArgsWin>-vm
+../jre/bin/javaw.exe</programArgsWin>
+      <vmArgs>-client
+-Xms128m
+-Xmx1024m
+-XX:MaxPermSize=256m</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread
+-Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <windowImages/>
+
+   <launcher name="SimpleAdder"/>
+
+   <vm/>
+
+   <plugins>
+      <plugin id="org.eclipse.osgi"/>
+   </plugins>
+
+
+</product>

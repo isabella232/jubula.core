@@ -1,12 +1,3 @@
-package org.eclipse.jubula.examples.aut.adder.swt;
-
-import org.eclipse.jubula.examples.aut.adder.swt.businessprocess.AutShellBP;
-import org.eclipse.jubula.examples.aut.adder.swt.gui.AutShell;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Monitor;
-
-
 /*******************************************************************************
  * Copyright (c) 2006, 2010 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
@@ -17,6 +8,15 @@ import org.eclipse.swt.widgets.Monitor;
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
+package org.eclipse.jubula.examples.aut.adder.swt;
+
+import org.eclipse.jubula.examples.aut.adder.swt.businessprocess.AutShellBP;
+import org.eclipse.jubula.examples.aut.adder.swt.gui.AutShell;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Monitor;
+
+
 /**
  * Starter for the Application Under Test (SWT-Version). It contains the main() - method.
  * 

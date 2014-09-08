@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * This class handles the business process for the AutFrame, concerning the
- * initialisation and the window handling.
+ * Initialization and the window handling.
  * 
  * @author BREDEX GmbH
  * @created 23.02.2006
