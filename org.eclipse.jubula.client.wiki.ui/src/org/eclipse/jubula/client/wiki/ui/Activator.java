@@ -30,12 +30,14 @@ public class Activator extends AbstractUIPlugin {
 
     /** {@inheritDoc} */
     public void start(BundleContext bundleContext) throws Exception {
+        super.start(bundleContext);
         Activator.context = bundleContext;
         activator = this;
     }
 
     /** {@inheritDoc} */
     public void stop(BundleContext bundleContext) throws Exception {
+        super.stop(bundleContext);
         Activator.context = null;
     }
     /**

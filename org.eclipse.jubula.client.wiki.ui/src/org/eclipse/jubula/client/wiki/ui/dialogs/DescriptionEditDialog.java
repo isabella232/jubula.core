@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.wiki.ui.dialogs;
 
+
+import org.eclipse.jface.dialogs.DialogSettings;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.text.Document;
@@ -41,6 +43,9 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class DescriptionEditDialog extends TitleAreaDialog {
 
+    /** key for dialog settings */
+    private static final String SASH_WEIGHTS = "sashWeights"; //$NON-NLS-1$
+
     /** the wait time(ms) before the preview is updated */
     private static final int WAIT_BEFORE_UPDATE = 400;
 
@@ -49,6 +54,9 @@ public class DescriptionEditDialog extends TitleAreaDialog {
 
     /** the description text as document */
     private IDocument m_description;
+    
+    /** the sash which is used as main container*/
+    private SashForm m_sash;
     
     /**
      * 
@@ -71,12 +79,28 @@ public class DescriptionEditDialog extends TitleAreaDialog {
         setMessage(Messages.EditDescriptionDialogDescription);
         getShell().setText(dialogTitle);
         
-        SashForm sashForm = new SashForm(parent, SWT.VERTICAL);
-        final GridData sashGridData = createGridData();
-        sashForm.setLayoutData(sashGridData);
+        m_sash = new SashForm(parent, SWT.VERTICAL);
+        createDialogComponents(m_sash);
+        IDialogSettings settings = getDialogBoundsSettings();
+        String[] weights = settings.getArray(SASH_WEIGHTS);
+        try {
+            if (weights != null) {
+                int[] sashWeigths = new int[weights.length];
+                for (int i = 0; i < weights.length; i++) {
+                    sashWeigths[i] = Integer.parseInt(weights[i]);
+                }
+                m_sash.setWeights(sashWeigths);
+            }
+        } catch (NumberFormatException nfe) {
+            // ignore
+        }
 
-        createDialogComponents(sashForm);
-        return sashForm;
+        final GridData sashGridData = createGridData();
+        sashGridData.widthHint = 500;
+        sashGridData.heightHint = 500;
+        m_sash.setLayoutData(sashGridData);
+
+        return m_sash;
     }
     
     /**
@@ -115,8 +139,10 @@ public class DescriptionEditDialog extends TitleAreaDialog {
                     public void run() {
                         Display.getDefault().syncExec(new Runnable() {
                             public void run() {
+                                int test = viewer.getTopIndex();
                                 viewer.setDocument(new Document(m_description
                                         .get()));
+                                viewer.setTopIndex(test);
                             }
                         });
                     }
@@ -194,7 +220,22 @@ public class DescriptionEditDialog extends TitleAreaDialog {
     
     /** {@inheritDoc} */
     protected IDialogSettings getDialogBoundsSettings() {
-        return Activator.getActivator().getDialogSettings();
+        IDialogSettings bundleDialogSettings = Activator.getActivator()
+                .getDialogSettings();
+        return DialogSettings.getOrCreateSection(bundleDialogSettings,
+                this.getClass().getName());
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    public boolean close() {
+        int[] sashWeights = (m_sash.getWeights());
+        String[] weights = new String[sashWeights.length];
+        for (int i = 0; i < sashWeights.length; i++) {
+            weights[i] = Integer.toString(sashWeights[i]);
+        }
+        getDialogBoundsSettings().put(SASH_WEIGHTS, weights);
+        return super.close();
+    }
 }
