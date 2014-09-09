@@ -14,7 +14,6 @@ import junit.framework.Assert;
 
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.MakeR;
-import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.junit.Test;
 
 /** @author BREDEX GmbH */
@@ -27,26 +26,22 @@ public class TestAUTAgentConnection {
     /** the actual test method */
     @Test
     public void testConnectingAndDisconnecting() throws Exception {
-        try {
-            final String stillConnectedMessage = "Still connected to AUT-Agent via API"; //$NON-NLS-1$
-            final String noConnectionMessage = "No connection to AUT-Agent via API"; //$NON-NLS-1$
+        final String stillConnectedMessage = "Still connected to AUT-Agent via API"; //$NON-NLS-1$
+        final String noConnectionMessage = "No connection to AUT-Agent via API"; //$NON-NLS-1$
 
-            AUTAgent agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
-            Assert.assertNotNull(agent);
-            
-            agent.connect();
-            Assert.assertTrue(noConnectionMessage, agent.isConnected());
+        AUTAgent agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
+        Assert.assertNotNull(agent);
+        
+        agent.connect();
+        Assert.assertTrue(noConnectionMessage, agent.isConnected());
 
-            agent.disconnect();
-            Assert.assertFalse(stillConnectedMessage, agent.isConnected());
+        agent.disconnect();
+        Assert.assertFalse(stillConnectedMessage, agent.isConnected());
 
-            agent.connect();
-            Assert.assertTrue(noConnectionMessage, agent.isConnected());
+        agent.connect();
+        Assert.assertTrue(noConnectionMessage, agent.isConnected());
 
-            agent.disconnect();
-            Assert.assertFalse(stillConnectedMessage, agent.isConnected());
-        } catch (ConnectionException e) {
-            throw new Exception(e);
-        }
+        agent.disconnect();
+        Assert.assertFalse(stillConnectedMessage, agent.isConnected());
     }
 }
