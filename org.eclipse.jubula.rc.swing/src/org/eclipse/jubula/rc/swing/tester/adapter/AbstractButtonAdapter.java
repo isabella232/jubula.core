@@ -62,7 +62,7 @@ public class AbstractButtonAdapter extends JComponentAdapter
                                 ? Boolean.TRUE : Boolean.FALSE;
                     }
                 });
-        return (boolean) returnvalue.booleanValue();
+        return returnvalue.booleanValue();
     }
 
     /**
@@ -76,6 +76,6 @@ public class AbstractButtonAdapter extends JComponentAdapter
                                 ? Boolean.TRUE : Boolean.FALSE;
                     }
                 });
-        return (boolean) returnvalue.booleanValue();
+        return returnvalue.booleanValue();
     }
 }

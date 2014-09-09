@@ -385,7 +385,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
         IMenuItemComponent [] subElements = menu.getItems();
         int ignoreElementCount = 0;
         for (int j = 0; j < subElements.length; j++) {               
-            IMenuItemComponent tempMenu = (IMenuItemComponent)subElements[j];
+            IMenuItemComponent tempMenu = subElements[j];
             if (!tempMenu.isShowing() 
                     || (tempMenu.isSeparator() && tempMenu.isShowing())) {
                 ignoreElementCount++;

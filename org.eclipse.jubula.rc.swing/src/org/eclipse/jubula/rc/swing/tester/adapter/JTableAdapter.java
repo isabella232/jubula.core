@@ -292,7 +292,7 @@ public class JTableAdapter extends JComponentAdapter
                         return Boolean.FALSE;
                     }
                 });
-        return (boolean) returnvalue.booleanValue();
+        return returnvalue.booleanValue();
     }
 
     /**

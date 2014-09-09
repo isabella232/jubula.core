@@ -68,7 +68,7 @@ public class JMenuAdapter extends AbstractComponentAdapter
             allitems = new IMenuItemComponent[adapters.size()];
             int i = 0;
             for (Iterator iterator = adapters.iterator(); iterator.hasNext();) {
-                Object object = (Object) iterator.next();
+                Object object = iterator.next();
                 
                 allitems[i] = (IMenuItemComponent) object;
                 i++;
