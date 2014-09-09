@@ -56,7 +56,7 @@ public class JMenuAdapter extends AbstractComponentAdapter
         
         for (int i = 0; i < m_menu.getItemCount(); i++) {
             JMenuItem getted = m_menu.getItem(i);
-            if (getted instanceof JMenuItem) {
+            if (getted != null) {
                 adapters.add(new JMenuItemAdapter(getted));
             }
             

@@ -89,7 +89,6 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
                     public Object run() {
                         // see findBugs
                         return ((m_menuItem != null)
-                                && (m_menuItem instanceof JMenuItem)
                                 && m_menuItem.isEnabled()) 
                                 ? Boolean.TRUE : Boolean.FALSE;
                     }
@@ -117,7 +116,6 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
                     public Object run() {
                         // see findBugs
                         return ((m_menuItem != null)
-                                && (m_menuItem instanceof JMenuItem)
                                 && m_menuItem.isShowing()) 
                                 ? Boolean.TRUE : Boolean.FALSE;
                     }
@@ -143,7 +141,6 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
                 "isSelected", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
                         return ((m_menuItem != null)
-                                && (m_menuItem instanceof JMenuItem)
                                 && m_menuItem.isSelected()) 
                                 ? Boolean.TRUE : Boolean.FALSE;
                     }
