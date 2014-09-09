@@ -104,7 +104,8 @@
                         <phase>verify</phase>
                         <configuration>
                             <target>
-                                <ant antfile="generateClasses.xml" />
+                                <ant dir="${project.build.directory}/.." 
+                                     antfile="generateClasses.xml" />
                             </target>
                         </configuration>
                         <goals>
