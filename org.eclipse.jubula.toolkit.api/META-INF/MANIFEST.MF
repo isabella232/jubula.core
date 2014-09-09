@@ -7,4 +7,5 @@ Bundle-Vendor: Eclipse Jubula
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
-Export-Package: org.eclipse.jubula.toolkit.enums
+Export-Package: org.eclipse.jubula.toolkit.api.datatype,
+ org.eclipse.jubula.toolkit.enums

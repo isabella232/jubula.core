@@ -7,7 +7,7 @@
  -->
 <project name="org.eclipse.jubula.toolkit.base.provider" default="gen">
     <target name="gen">
-        <emf.JETCompiler templateFile="./templates/compGen.javajet" 
+        <emf.JETCompiler templateFile="./templates/componentGenerator.javajet" 
           sourceDirectory="src-gen"/>
     </target>
 </project>

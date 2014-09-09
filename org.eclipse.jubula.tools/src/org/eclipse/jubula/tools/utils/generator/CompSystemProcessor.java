@@ -89,19 +89,22 @@ public class CompSystemProcessor implements IProcessor {
     }
 
     /**
+     * @param showOnlyVisible if true, then only visible components will be returned;
+     *                        if false, then all components will be returned
      * @return A list of all components encapsulated in infos
      */
-    public List<ComponentInfo> getCompInfos() {
+    public List<ComponentInfo> getCompInfos(boolean showOnlyVisible) {
         List<ComponentInfo> infos = new ArrayList<ComponentInfo>();
 
         for (Iterator it = m_compSystem.getComponents().iterator(); it
                 .hasNext();) {
             Component component = (Component)it.next();
-            if (component.isVisible()) {
-                ToolkitInfo tkInfo = getToolkitInfo(component
-                        .getToolkitDesriptor());
-                infos.add(new ComponentInfo(component, tkInfo));
+            if (showOnlyVisible && !component.isVisible()) {
+                continue;
             }
+            ToolkitInfo tkInfo = getToolkitInfo(component
+                    .getToolkitDesriptor());
+            infos.add(new ComponentInfo(component, tkInfo));
         }
         return infos;
     }

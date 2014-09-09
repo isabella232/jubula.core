@@ -1,0 +1,15 @@
+<project name="generateClasses" default="execute">
+    <property name="lib.dir" value="target" />
+
+    <target name="execute">
+        <java classname="org.eclipse.jubula.toolkit.api.gen.internal.ClassGenerator" failonerror="true"> 
+            <classpath>
+                <fileset dir="${lib.dir}">
+                    <include name="org.eclipse.jubula.toolkit.api*.jar" />
+                    <include name="dependent-libs/**/*.jar" />
+                </fileset>
+            </classpath>
+        </java>
+    </target>
+
+</project>
