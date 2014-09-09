@@ -127,7 +127,7 @@
     <module>../org.eclipse.jubula.releng.server</module>
     <module>../org.eclipse.jubula.releng.client</module>
     
-    <module>../org.eclipse.jubula.qa.api</module>
+    <!-- <module>../org.eclipse.jubula.qa.api</module>  -->
   </modules>
   
   <url>http://www.eclipse.org/jubula</url>
