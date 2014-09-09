@@ -75,6 +75,7 @@ public class ClassGenerator {
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
+                System.exit(1);
             }
         }
         try {
@@ -85,6 +86,7 @@ public class ClassGenerator {
             fop.close();
         } catch (IOException e) {
             e.printStackTrace();
+            System.exit(1);
         }
     }
     
