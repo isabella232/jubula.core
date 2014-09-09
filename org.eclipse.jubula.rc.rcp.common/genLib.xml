@@ -61,8 +61,7 @@
     -->
 	<copy todir="lib">
           <fileset dir="../org.eclipse.jubula.tools/lib">
-            <include name="xpp3*.jar" />
-            <include name="xstream*.jar" />
+            <include name="*.jar" />
           </fileset>
 	</copy>
   </target>
