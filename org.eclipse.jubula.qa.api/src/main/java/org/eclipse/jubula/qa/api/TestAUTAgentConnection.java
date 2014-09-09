@@ -20,28 +20,31 @@ import org.junit.Test;
 /** @author BREDEX GmbH */
 public class TestAUTAgentConnection {
     /** AUT-Agent host name to use */
-    public static final String AUT_AGENT_HOST = "g8.dev.bredex.local"; //$NON-NLS-1$
+    public static final String AGENT_HOST = "g8.dev.bredex.local"; //$NON-NLS-1$
     /** AUT-Agent port to use */
-    public static final int AUT_AGENT_PORT = 11022;
+    public static final int AGENT_PORT = 11022;
 
     /** the actual test method */
     @Test
-    public void test() throws Exception {
+    public void testConnectingAndDisconnecting() throws Exception {
         try {
-            AUTAgent agent = MakeR.createAUTAgent(
-                AUT_AGENT_HOST,
-                AUT_AGENT_PORT);
+            final String stillConnectedMessage = "Still connected to AUT-Agent via API"; //$NON-NLS-1$
+            final String noConnectionMessage = "No connection to AUT-Agent via API"; //$NON-NLS-1$
+
+            AUTAgent agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
             Assert.assertNotNull(agent);
             
             agent.connect();
-            Assert.assertTrue(agent.isConnected());
+            Assert.assertTrue(noConnectionMessage, agent.isConnected());
+
             agent.disconnect();
-            Assert.assertFalse(agent.isConnected());
-            
+            Assert.assertFalse(stillConnectedMessage, agent.isConnected());
+
             agent.connect();
-            Assert.assertTrue(agent.isConnected());
+            Assert.assertTrue(noConnectionMessage, agent.isConnected());
+
             agent.disconnect();
-            Assert.assertFalse(agent.isConnected());
+            Assert.assertFalse(stillConnectedMessage, agent.isConnected());
         } catch (ConnectionException e) {
             throw new Exception(e);
         }
