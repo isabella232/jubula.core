@@ -7,8 +7,9 @@
  -->
 <project name="generateClasses" default="execute">
     <target name="execute">
-        <echoproperties />
         
+        <!--        
+        <echoproperties />
         <java classname="org.eclipse.jubula.toolkit.api.gen.internal.ClassGenerator" failonerror="true"> 
             <classpath>
                 <fileset dir="target">
@@ -17,5 +18,6 @@
                 </fileset>
             </classpath>
         </java>
+        -->
     </target>
 </project>
