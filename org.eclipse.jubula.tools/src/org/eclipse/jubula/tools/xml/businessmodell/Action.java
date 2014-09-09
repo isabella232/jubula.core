@@ -207,7 +207,7 @@ public class Action {
     }
 
     /**
-     * @return wether this Action is deprecated or not
+     * @return whether this Action is deprecated or not
      */
     public boolean isDeprecated() {
         return m_deprecated;

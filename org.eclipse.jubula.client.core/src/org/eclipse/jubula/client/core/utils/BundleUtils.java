@@ -47,7 +47,7 @@ public class BundleUtils {
      * @param bundle
      *            the bundle to resolve the file URL from
      * @param resouceName
-     *            the relative resource name e.g. resouces/plugin.properties
+     *            the relative resource name e.g. resources/plugin.properties
      * @return the URL for the resource
      */
     public static URL getFileURL(Bundle bundle, String resouceName) {
