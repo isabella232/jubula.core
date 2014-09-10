@@ -20,11 +20,10 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
-import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.wiki.ui.i18n.Messages;
+import org.eclipse.jubula.client.wiki.ui.utils.DescriptionUtil;
 import org.eclipse.jubula.client.wiki.ui.utils.ProjectMarkupUtil;
 import org.eclipse.mylyn.wikitext.core.parser.MarkupParser;
 import org.eclipse.swt.SWT;
@@ -158,26 +157,7 @@ public class DescriptionView extends ViewPart implements IDataChangedListener {
             setDescriptionForBrowser(m_selectedNode);
         }
     }
-    
-    /**
-     * gets the description of the referenced {@link ISpecTestCasePO} or {@link ITestSuitePO} 
-     * @param node the {@link IExecTestCasePO} or {@link IRefTestSuitePO}
-     * @return the description of the corresponding {@link ISpecTestCasePO} or {@link ITestSuitePO}, 
-     *         may be null
-     */
-    private String getReferenceDescription(INodePO node) {
-        String description = null;
-        if (node instanceof IExecTestCasePO) {
-            IExecTestCasePO exec = (IExecTestCasePO) node;
-            description = exec.getSpecTestCase().getDescription();
-        }
-        if (node instanceof IRefTestSuitePO) {
-            IRefTestSuitePO refTestSuite = (IRefTestSuitePO) node;
-            description = refTestSuite.getTestSuite().getDescription();
-        }
-        return description;
-    }
-    
+       
     /**
      * 
      * @param element the object to check if there is a description
@@ -185,7 +165,8 @@ public class DescriptionView extends ViewPart implements IDataChangedListener {
     private void setDescriptionForBrowser(INodePO element) {
         String description = m_selectedNode.getDescription();
         if (StringUtils.isBlank(description)) {
-            description = getReferenceDescription(m_selectedNode);
+            description = DescriptionUtil
+                    .getReferenceDescription(m_selectedNode);
         }
         if (StringUtils.isNotBlank(description)) {
             m_browser.setText(m_markupParser.parseToHtml(description));

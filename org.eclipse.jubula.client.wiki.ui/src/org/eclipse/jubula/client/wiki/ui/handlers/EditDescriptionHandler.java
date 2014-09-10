@@ -24,6 +24,7 @@ import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.wiki.ui.dialogs.DescriptionEditDialog;
+import org.eclipse.jubula.client.wiki.ui.utils.DescriptionUtil;
 import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * 
@@ -73,7 +74,9 @@ public class EditDescriptionHandler extends AbstractSelectionBasedHandler {
             return;
         }
         if (StringUtils.equals(workNode.getDescription(),
-                dialog.getDescription())) {
+                dialog.getDescription())
+                || StringUtils.equals(dialog.getDescription(), 
+                        DescriptionUtil.getReferenceDescription(workNode))) {
             return;
         }
         workNode.setDescription(dialog.getDescription());

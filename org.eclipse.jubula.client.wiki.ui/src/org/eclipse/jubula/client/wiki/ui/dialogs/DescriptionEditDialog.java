@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.wiki.ui.dialogs;
 
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.dialogs.DialogSettings;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -21,6 +22,7 @@ import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.utils.DelayableTimer;
 import org.eclipse.jubula.client.wiki.ui.i18n.Messages;
+import org.eclipse.jubula.client.wiki.ui.utils.DescriptionUtil;
 import org.eclipse.jubula.client.wiki.ui.utils.ProjectMarkupUtil;
 import org.eclipse.jubula.client.wiki.ui.Activator;
 import org.eclipse.mylyn.wikitext.ui.editor.MarkupSourceViewer;
@@ -67,7 +69,11 @@ public class DescriptionEditDialog extends TitleAreaDialog {
         super(parentShell);
         setShellStyle(getShellStyle() | SWT.RESIZE);
         m_workNode = workNode;
-        m_description = new Document(workNode.getDescription());
+        String description = workNode.getDescription();
+        if (StringUtils.isBlank(description)) {
+            description = DescriptionUtil.getReferenceDescription(workNode);
+        }
+        m_description = new Document(description);
     }
     
     /**
