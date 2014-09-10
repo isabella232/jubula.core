@@ -114,9 +114,7 @@ public class AbstractComponentBuilder {
             String configName = (String)i.next();
             try {
                 String xmlPath = config.getXMLPath(configName);
-                System.out.println("PATH: " + xmlPath);
                 URL xmlURL = new File(xmlPath).toURL();
-                System.out.println("URL: " + xmlURL);
                 InputStream inputStream = getInputStream(xmlURL);
                 CompSystem compSystem = createCompSystem(inputStream);
                 String xmlPluginPath = config.getPluginXMLPath(configName);

@@ -1,0 +1,71 @@
+<%@ jet 
+package="org.eclipse.jubula.toolkit.api.gen" 
+imports="java.util.*
+			org.eclipse.jubula.toolkit.api.gen.internal.APIGenerator
+			org.eclipse.jubula.toolkit.api.gen.internal.NameMappingLoader 
+         org.eclipse.jubula.tools.xml.businessmodell.*" 
+class="ClassGenerator"%>
+<%
+	Component component = (Component)argument;
+	NameMappingLoader nameLoader = NameMappingLoader.getInstance();
+	List<Action> actions = component.getActions();
+	String[] splitName = APIGenerator.splitName(component.getType());
+	String path = nameLoader.getDesiredName(splitName[0]);
+	String name = nameLoader.getDesiredName(splitName[1]);
+	List<String> realizedTypes = component.getRealizedTypes();
+	String realizedType = realizedTypes.size() > 0 ? realizedTypes.get(0) : null;
+	String testerClass = "";
+	if (component instanceof ConcreteComponent) {
+	    testerClass = ((ConcreteComponent)component).getTesterClass();
+	}
+	%>
+/*******************************************************************************
+ * Copyright (c) 2014 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+package <%="org.eclipse.jubula.toolkit.base.internal." + path%>;
+
+import org.eclipse.jubula.toolkit.base.api.internal.annotations.RealizedType;
+import org.eclipse.jubula.toolkit.base.api.internal.annotations.TesterClass;
+
+@RealizedType(realizedType="<%=realizedType%>")
+@TesterClass(testerClass="<%=testerClass%>")
+public class <%=name%> {
+	Object m_component;
+
+	public <%=name%>(Object component) {
+		m_component = component;
+	}
+	<%
+	Iterator<Action> actionsIterator = actions.iterator();
+	while (actionsIterator.hasNext()) {	
+		Action action = actionsIterator.next();
+		String actionName = nameLoader.getDesiredName(action.getMethod());
+		List<Param> params = action.getParams();
+	%>
+	<%if (action.isDeprecated()) {%>@Deprecated<%}%>
+	public void <%=actionName%>(
+	<%	
+	Iterator<Param> paramIterator = params.iterator();
+	while (paramIterator.hasNext()) {
+	Param param = paramIterator.next();
+	String paramType = nameLoader.getDesiredName(param.getType());
+	String paramName = nameLoader.getDesiredName(param.getName().replace(".",""));
+	%>
+	<%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
+	<%
+	}
+	%> 
+	) {
+		
+	}
+	<%
+	}
+	%> 
+}

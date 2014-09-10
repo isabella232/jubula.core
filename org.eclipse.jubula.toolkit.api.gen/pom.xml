@@ -26,7 +26,7 @@
 				<artifactId>tycho-eclipserun-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-					<appArgLine>-application org.eclipse.ant.core.antRunner -buildfile gen.api.xml</appArgLine>
+					<appArgLine>-application org.eclipse.ant.core.antRunner -buildfile generateGenerator.xml</appArgLine>
 					<dependencies>
 						<!-- list of bundles that we need -->
 						<dependency>
@@ -95,17 +95,17 @@
                     </execution>
                 </executions>
             </plugin>
-             <plugin>
+            <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.6</version>
                 <executions>
                     <execution>
-                        <id>gen-classes</id>
+                        <id>generateAPI</id>
                         <phase>verify</phase>
                         <configuration>
                             <target>
                                 <ant dir="${project.build.directory}/.." 
-                                     antfile="generateClasses.xml" />
+                                     antfile="generateAPI.xml" />
                             </target>
                         </configuration>
                         <goals>
