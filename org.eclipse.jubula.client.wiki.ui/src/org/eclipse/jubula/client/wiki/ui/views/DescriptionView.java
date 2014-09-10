@@ -40,6 +40,9 @@ import org.eclipse.ui.part.ViewPart;
  * @author BREDEX GmbH
  */
 public class DescriptionView extends ViewPart implements IDataChangedListener {
+    /** the view id (should be same as in plugin.xml) */
+    public static final String VIEW_ID = "org.eclipse.jubula.client.wiki.ui.views.DescriptionView"; //$NON-NLS-1$
+    
     /** the viewer to display the documentation */
     private Browser m_browser;
     /** the markup parser to use */ 

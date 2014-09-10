@@ -505,6 +505,13 @@ public interface Constants {
     /** ask before test execution = prompt */
     public static final int TEST_EXECUTION_RELEVANT_PROMPT = 2;
     
+    /** test execution is always relevant = yes */
+    public static final int OPEN_DESCRIPTION_VIEW_YES = 1;
+    /** test execution is never relevant = no */
+    public static final int OPEN_DESCRIPTION_VIEW_NO = 2;
+    /** ask before test execution = prompt */
+    public static final int OPEN_DESCRIPTION_VIEW_PROMPT = 0;
+    
     // -------------------------------------------------------------
     // Marker for Problem/Task view
     //  -------------------------------------------------------------

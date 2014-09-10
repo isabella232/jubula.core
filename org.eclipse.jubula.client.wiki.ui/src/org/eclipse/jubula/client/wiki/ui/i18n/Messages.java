@@ -23,6 +23,8 @@ public class Messages extends NLS {
     public static String EditDescriptionDialogSourceViewer;
     public static String EditDescriptionDialogTitle;
     public static String NoDescriptionAvailable;
+    public static String OpenDescriptionViewTitle;
+    public static String OpenDescriptionViewQuestion;
 
     static {
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
