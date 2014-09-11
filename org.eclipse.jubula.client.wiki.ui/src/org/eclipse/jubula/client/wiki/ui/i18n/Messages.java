@@ -22,6 +22,7 @@ public class Messages extends NLS {
     public static String EditDescriptionDialogPreview;
     public static String EditDescriptionDialogSourceViewer;
     public static String EditDescriptionDialogTitle;
+    public static String EditDescriptionDialogHeader;
     public static String NoDescriptionAvailable;
     public static String OpenDescriptionViewTitle;
     public static String OpenDescriptionViewQuestion;

@@ -29,6 +29,7 @@ import org.eclipse.mylyn.wikitext.ui.editor.MarkupSourceViewer;
 import org.eclipse.mylyn.wikitext.ui.editor.MarkupSourceViewerConfiguration;
 import org.eclipse.mylyn.wikitext.ui.viewer.MarkupViewer;
 import org.eclipse.mylyn.wikitext.ui.viewer.MarkupViewerConfiguration;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.GridData;
@@ -80,11 +81,14 @@ public class DescriptionEditDialog extends TitleAreaDialog {
      * {@inheritDoc}
      */
     protected Control createDialogArea(Composite parent) {
-        final String dialogTitle = Messages.EditDescriptionDialogTitle;
-        setTitle(dialogTitle);
-        setMessage(Messages.EditDescriptionDialogDescription);
-        getShell().setText(dialogTitle);
-        
+        String markupLanguage = ProjectMarkupUtil.getProjectMarkupLanguage()
+                .getName();
+        setTitle(Messages.EditDescriptionDialogHeader);
+        setMessage(NLS.bind(Messages.EditDescriptionDialogDescription,
+                markupLanguage));
+        getShell().setText(
+                NLS.bind(Messages.EditDescriptionDialogTitle, markupLanguage));
+
         m_sash = new SashForm(parent, SWT.VERTICAL);
         createDialogComponents(m_sash);
         IDialogSettings settings = getDialogBoundsSettings();
