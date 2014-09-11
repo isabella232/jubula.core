@@ -44,6 +44,7 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.factory.ControlFactory;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedURLText;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -319,6 +320,8 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         leftPart.setParent(group);
         report.setText(Messages
                 .ProjectPropertyPageReportWriteCommentLabel);
+        ControlDecorator.createInfo(report, Messages
+                .ProjectPropertyPageReportWriteCommentTooltip, false);
         GridData labelGridData = new GridData(GridData.FILL_VERTICAL);
         labelGridData.grabExcessHorizontalSpace = false;
         report.setLayoutData(labelGridData);
@@ -333,6 +336,11 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         });
         rulesLabel.setText(Messages
                 .ProjectPropertyPageReportRulesLabel);
+        ControlDecorator.createInfo(rulesLabel, Messages
+                .ProjectPropertyPageReportRulesTooltip, false);
+        GridData rulesLabelGridData = new GridData(GridData.FILL_VERTICAL);
+        rulesLabelGridData.verticalIndent = 15;
+        rulesLabel.setLayoutData(rulesLabelGridData);
         ArrayContentProvider provider = new ArrayContentProvider();
         tableViewer.setContentProvider(provider);
         m_reportingRules = getProject().getProjectProperties()

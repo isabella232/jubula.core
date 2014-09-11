@@ -255,13 +255,13 @@ public class CommentReporter implements ITestresultSummaryEventListener {
         Set<String> taskIds = taskIdToALMChange.keySet();
         int taskAmount = taskIds.size();
         IProgressConsole c = getConsole();
+        int successCount = 0;
         if (taskAmount > 0) {
             String out = NLS.bind(Messages.ReportToALMJob, taskAmount,
                 repoLabel);
             monitor.beginTask(out, taskAmount);
             
             c.writeLine(out);
-            int successCount = 0;
             int overallCommentCount = 0;
             int overallFieldUpdateCount = 0;
             for (String taskId : taskIds) {
@@ -314,7 +314,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
         } else {
             c.writeLine(Messages.NothingToReport);
         }
-        if (!failed) {
+        if (!failed || successCount > 0) {
             return Status.OK_STATUS;
         }
         return new Status(IStatus.ERROR, Activator.ID,

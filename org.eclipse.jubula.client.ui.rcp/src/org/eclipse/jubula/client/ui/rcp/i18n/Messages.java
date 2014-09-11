@@ -566,7 +566,9 @@ public class Messages extends NLS {
     public static String ProjectPropertyPageReportOnSuccessLabel;
     public static String ProjectPropertyPageReportOnFailureLabel;
     public static String ProjectPropertyPageReportRulesLabel;
+    public static String ProjectPropertyPageReportRulesTooltip;
     public static String ProjectPropertyPageReportWriteCommentLabel;
+    public static String ProjectPropertyPageReportWriteCommentTooltip;
     public static String ProjectPropertyPageAutToolKitLabel;
     public static String ProjectPropertyPageDownToolTip;
     public static String ProjectPropertyPageIsProtected;
