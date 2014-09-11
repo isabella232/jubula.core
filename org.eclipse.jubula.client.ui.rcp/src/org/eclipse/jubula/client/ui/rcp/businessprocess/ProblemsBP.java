@@ -414,16 +414,16 @@ public class ProblemsBP implements ICompletenessCheckListener,
     }
     
     /**
-     * If connected to a server, checks that each AUT has at least one config 
-     * for the server.
+     * If connected to an AUT-Agent, checks that each AUT has at least one
+     * config for this agent.
      */
     private void checkAutConfigs() {
-        InetAddress connectedServer = null;
+        InetAddress connectedAUTAgent = null;
         try {
             if (!AutAgentConnection.getInstance().isConnected()) {
                 return;
             }
-            connectedServer = InetAddress.getByName(
+            connectedAUTAgent = InetAddress.getByName(
                 AutAgentConnection.getInstance()
                     .getCommunicator().getHostName());
         } catch (UnknownHostException e) {
@@ -436,19 +436,20 @@ public class ProblemsBP implements ICompletenessCheckListener,
         for (IAUTMainPO aut 
             : GeneralStorage.getInstance().getProject().getAutMainList()) {
             
-            boolean isMatchingServer = false;
-            InetAddress configServer = null;
+            boolean isMatchingAUTAgent = false;
+            InetAddress configAUTAgent = null;
             for (IAUTConfigPO config : aut.getAutConfigSet()) {
                 try {
-                    configServer = InetAddress.getByName(config.getServer());
-                    if ((configServer.equals(connectedServer))
-                        || (configServer != null
+                    configAUTAgent = InetAddress.getByName(
+                        config.getConfiguredAUTAgentHostName());
+                    if ((configAUTAgent.equals(connectedAUTAgent))
+                        || (configAUTAgent != null
                             && EnvConstants.LOCALHOST_IP_ALIAS
-                                .equals(configServer.getHostAddress())
-                        && connectedServer.getCanonicalHostName().equals(
+                                .equals(configAUTAgent.getHostAddress())
+                        && connectedAUTAgent.getCanonicalHostName().equals(
                             EnvConstants.LOCALHOST_FQDN))) {
 
-                        isMatchingServer = true;
+                        isMatchingAUTAgent = true;
                         break;
                     }
                 } catch (UnknownHostException e) {
@@ -457,7 +458,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
                     // do nothing
                 }
             }
-            if (!isMatchingServer) {
+            if (!isMatchingAUTAgent) {
                 problemNoAutConfigForServerExists(aut);
             }
         }
@@ -486,7 +487,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
 
                     problemNoJarOrClassPathForAutConfigExists(config, mainPO);
                 }
-                if (emtyString.equals(config.getServer())) {
+                if (emtyString.equals(config.getConfiguredAUTAgentHostName())) {
                     
                     problemNoServerForAutConfigExists(config, mainPO);
                 }

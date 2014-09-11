@@ -13,7 +13,6 @@ package org.eclipse.jubula.communication.message;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 
 /**
@@ -29,15 +28,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 04.08.2004
  */
 public class StartAUTServerMessage extends Message {
-    /** where to find the JubulaClient, inetAdress conform */
-    private String m_client;
-
-    /** port the ITE listens to */
-    private int m_port;
-
-    /** Timeout for the AUTServer to wait for a confirmation for a sent event */
-    private long m_eventConfirmTimeOut;
-
     /** Language to start AUT with */
     private Locale m_locale;
 
@@ -61,11 +51,6 @@ public class StartAUTServerMessage extends Message {
     /**
      * Constructs a complete message. No null values are allowed as parameters.
      * 
-     * @param host
-     *            Own host address, i.e. the address the AUT server should
-     *            connect to.
-     * @param port
-     *            Own port, i.e.the port the AUT server should connect to.
      * @param autConfig
      *            a Map<String, String> with the AutConfiguration
      * @param autToolKit
@@ -73,16 +58,11 @@ public class StartAUTServerMessage extends Message {
      * @param generateNames
      *            set to true to enable name generation in server
      */
-    public StartAUTServerMessage(String host, int port, Map autConfig,
-            String autToolKit, boolean generateNames) {
-
+    public StartAUTServerMessage(Map autConfig, String autToolKit,
+        boolean generateNames) {
         super();
-        Validate.notEmpty(host);
-        Validate.isTrue(port > 0);
 
         setAutConfiguration(autConfig);
-        setClient(host);
-        setPort(port);
         setAutToolKit(autToolKit);
         setGenerateNames(generateNames);
     }
@@ -104,34 +84,6 @@ public class StartAUTServerMessage extends Message {
         return CommandConstants.START_AUT_SERVER_COMMAND;
     }
 
-    /** @return Returns the client. */
-    public String getClient() {
-        return m_client;
-    }
-
-    /**
-     * @param client
-     *            The client to set.
-     */
-    public void setClient(String client) {
-        Validate.notEmpty(client);
-        m_client = client;
-    }
-
-    /** @return Returns the port. */
-    public int getPort() {
-        return m_port;
-    }
-
-    /**
-     * @param port
-     *            The port to set.
-     */
-    public void setPort(int port) {
-        Validate.isTrue(port > 0);
-        m_port = port;
-    }
-
     /** @return Locale */
     public Locale getLocale() {
         return m_locale;
@@ -140,27 +92,6 @@ public class StartAUTServerMessage extends Message {
     /** @param locale */
     public void setLocale(Locale locale) {
         m_locale = locale;
-    }
-
-    /**
-     * Gets the timeout for the AUTServer to wait for a confirmation for a
-     * sended event
-     * 
-     * @return Returns the eventConfirmTimeOut.
-     */
-    public long getEventConfirmTimeOut() {
-        return m_eventConfirmTimeOut;
-    }
-
-    /**
-     * Sets the timeout for the AUTServer to wait for a confirmation for a
-     * sended event
-     * 
-     * @param eventConfirmTimeOut
-     *            The eventConfirmTimeOut to set.
-     */
-    public void setEventConfirmTimeOut(long eventConfirmTimeOut) {
-        m_eventConfirmTimeOut = eventConfirmTimeOut;
     }
 
     /** @return the actual autToolKit of the project as String */

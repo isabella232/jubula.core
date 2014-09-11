@@ -55,9 +55,6 @@ public class RcpAutLaunchConfigurationDelegate
         environmentVariables.put(
                 AutConfigConstants.AUT_AGENT_HOST, agentAddress.getHostName());
         environmentVariables.put(
-                RcpAccessorConstants.SERVER_PORT, 
-                Integer.toString(agentAddress.getPort()));
-        environmentVariables.put(
                 AutConfigConstants.AUT_AGENT_PORT, 
                 Integer.toString(agentAddress.getPort()));
         environmentVariables.put(

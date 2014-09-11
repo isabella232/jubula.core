@@ -61,7 +61,7 @@ public class AutRunner {
      * 
      * @param autToolkit Toolkit for the AUT managed by this instance.
      * @param autIdentifier Identifier for the AUT managed by this instance.
-     * @param agentAddr Address of the Aut Agent with which the AUT should be
+     * @param agentAddr Address of the AUT-Agent with which the AUT should be
      *                  registered.
      * @param autConfiguration Properties required for starting the AUT.
      * 

@@ -175,7 +175,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         WidgetModifyListener modifyListener = getModifyListener();
         WidgetSelectionListener selectionListener = getSelectionListener();
         
-        getServerCombo().addModifyListener(modifyListener);
+        getAUTAgentHostNameCombo().addModifyListener(modifyListener);
         m_autUrlTextField.addModifyListener(modifyListener);
         m_autIdAttibuteTextField.addModifyListener(modifyListener);
         m_browserTextField.addModifyListener(modifyListener);
@@ -194,7 +194,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         WidgetModifyListener modifyListener = getModifyListener();
         WidgetSelectionListener selectionListener = getSelectionListener();
         
-        getServerCombo().removeModifyListener(modifyListener);
+        getAUTAgentHostNameCombo().removeModifyListener(modifyListener);
         m_autUrlTextField.removeModifyListener(modifyListener);
         m_autIdAttibuteTextField.removeModifyListener(modifyListener);
         m_browserTextField.removeModifyListener(modifyListener);
@@ -325,7 +325,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
                 checked = true;
             } else if (source.equals(m_autIdAttibuteTextField)) {
                 checked = true;
-            } else if (source.equals(getServerCombo())) {
+            } else if (source.equals(getAUTAgentHostNameCombo())) {
                 checkLocalhostServer();
                 checked = true;
             } else if (source.equals(m_browserCombo)) {

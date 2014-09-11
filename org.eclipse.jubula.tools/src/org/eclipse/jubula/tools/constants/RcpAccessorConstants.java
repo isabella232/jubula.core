@@ -16,8 +16,6 @@ package org.eclipse.jubula.tools.constants;
  * @created 19.12.2006
  */
 public abstract class RcpAccessorConstants {
-    /** constant to set/get system property "gdlocalport" */
-    public static final String SERVER_PORT = "gdlocalport"; //$NON-NLS-1$
     /** constant to set/get system property "GD_KEYBOARD_LAYOUT" */
     public static final String KEYBOARD_LAYOUT = "GD_KEYBOARD_LAYOUT";  //$NON-NLS-1$
     

@@ -71,7 +71,7 @@ public class MobileAutConfigComponent extends AutConfigComponent {
                 checked = true;
             } else if (source.equals(m_autPortTextField)) {
                 checked = true;
-            } else if (source.equals(getServerCombo())) {
+            } else if (source.equals(getAUTAgentHostNameCombo())) {
                 checkLocalhostServer();
                 checked = true;
             }
@@ -114,7 +114,7 @@ public class MobileAutConfigComponent extends AutConfigComponent {
         super.installListeners();
         WidgetModifyListener modifyListener = getModifyListener();
 
-        getServerCombo().addModifyListener(modifyListener);
+        getAUTAgentHostNameCombo().addModifyListener(modifyListener);
         m_autHostTextField.addModifyListener(modifyListener);
         m_autPortTextField.addModifyListener(modifyListener);
     }
@@ -124,7 +124,7 @@ public class MobileAutConfigComponent extends AutConfigComponent {
         super.deinstallListeners();
         WidgetModifyListener modifyListener = getModifyListener();
 
-        getServerCombo().removeModifyListener(modifyListener);
+        getAUTAgentHostNameCombo().removeModifyListener(modifyListener);
         m_autHostTextField.removeModifyListener(modifyListener);
         m_autPortTextField.removeModifyListener(modifyListener);
     }

@@ -149,7 +149,8 @@ public final class ConnectAutAgentBP {
                 }
             }
             for (IAUTConfigPO conf : confs) {
-                if (isUnconfiguredAutAgent(conf.getServer())) {
+                if (isUnconfiguredAutAgent(conf
+                        .getConfiguredAUTAgentHostName())) {
                     unconfAutAgents.add(conf);
                 }                
             }

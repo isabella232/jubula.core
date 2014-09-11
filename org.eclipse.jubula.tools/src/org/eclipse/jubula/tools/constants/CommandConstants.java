@@ -174,9 +174,9 @@ public abstract class CommandConstants {
     public static final String ACTIVATE_INSPECTOR_RESPONSE_COMMAND = "org.eclipse.jubula.client.inspector.ui.commands.ActivateInspectorResponseCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.InitTestExecutionCommand" */
     public static final String INIT_TEST_EXECUTION_COMMAND = "org.eclipse.jubula.rc.common.commands.InitTestExecutionCommand"; //$NON-NLS-1$
-    /** package for swing implclasses: "org.eclipse.jubula.rc.swing.tester" */
+    /** package for swing tester classes: "org.eclipse.jubula.rc.swing.tester" */
     public static final String SWING_IMPLCLASS_PACKAGE = "org.eclipse.jubula.rc.swing.tester"; //$NON-NLS-1$
-    /** package for swt implclasses: "org.eclipse.jubula.rc.swt.tester"  */
+    /** package for SWT tester classes: "org.eclipse.jubula.rc.swt.tester"  */
     public static final String SWT_IMPLCLASSES_PACKAGE = "org.eclipse.jubula.rc.swt.tester"; //$NON-NLS-1$
     /** package name for Jubula extension ImplClasses (".jubulaextension.") */
     public static final String JUBULA_EXTENSION_PACKAGE = ".jubulaextension."; //$NON-NLS-1$
@@ -243,7 +243,7 @@ public abstract class CommandConstants {
     public static final String GET_MONITORING_REPORT_COMMAND = "org.eclipse.jubula.client.core.commands.GetMonitoringReportCommand"; //$NON-NLS-1$
     /** forces the profiling agent to send his execution data  */  
     public static final String GET_MONITORING_DATA_COMMAND = "org.eclipse.jubula.autagent.monitoring.GetMonitoringDataCommand"; ////$NON-NLS-1$
-    /** this command will build the (html) report*/
+    /** this command will build the (HTML) report*/
     public static final String BUILD_MONITORING_REPORT_COMMAND = "org.eclipse.jubula.autagent.monitoring.BuildMonitoringReportCommand"; //$NON-NLS-1$
     /** forces the profiling agent to reset the collected execution data */
     public static final String RESET_MONITORING_DATA_COMMAND = "org.eclipse.jubula.autagent.monitoring.ResetMonitoringDataCommand"; //$NON-NLS-1$

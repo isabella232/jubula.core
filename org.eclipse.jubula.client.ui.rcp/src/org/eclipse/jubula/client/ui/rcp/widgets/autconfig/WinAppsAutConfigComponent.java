@@ -142,7 +142,7 @@ public class WinAppsAutConfigComponent extends AutConfigComponent {
     protected void installListeners() {
         super.installListeners();
         WidgetModifyListener modifyListener = getModifyListener();
-        getServerCombo().addModifyListener(modifyListener);
+        getAUTAgentHostNameCombo().addModifyListener(modifyListener);
         m_modernUiAppName.addModifyListener(modifyListener);
         m_autArgsTextField.addModifyListener(modifyListener);
     }
@@ -154,7 +154,7 @@ public class WinAppsAutConfigComponent extends AutConfigComponent {
         super.deinstallListeners();
         WidgetModifyListener modifyListener = getModifyListener();
 
-        getServerCombo().removeModifyListener(modifyListener);
+        getAUTAgentHostNameCombo().removeModifyListener(modifyListener);
         m_modernUiAppName.removeModifyListener(modifyListener);
         m_autArgsTextField.removeModifyListener(modifyListener);
     }
@@ -184,7 +184,7 @@ public class WinAppsAutConfigComponent extends AutConfigComponent {
             if (source.equals(m_modernUiAppName)
                     || source.equals(m_autArgsTextField)) {
                 checkAll();
-            } else if (source.equals(getServerCombo())) {
+            } else if (source.equals(getAUTAgentHostNameCombo())) {
                 checkLocalhostServer();
                 checkAll();
             }

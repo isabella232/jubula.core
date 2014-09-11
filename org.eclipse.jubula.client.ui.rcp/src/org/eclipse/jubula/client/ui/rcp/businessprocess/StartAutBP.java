@@ -314,7 +314,8 @@ public class StartAutBP {
                 SortedSet<IAUTConfigPO> validConfs = 
                     new TreeSet<IAUTConfigPO>();
                 for (IAUTConfigPO conf : confs) {
-                    String confAgentName = conf.getServer().toLowerCase();
+                    String confAgentName = conf.getConfiguredAUTAgentHostName()
+                        .toLowerCase();
                     String confAgentIp = resolveIpUsingCache(confAgentName);
                     if (validHosts.contains(confAgentIp)
                             || validHosts.contains(confAgentName)) {

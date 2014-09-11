@@ -493,7 +493,7 @@ public class TestExecution {
             getConnectedAUTsConfigMap();
         if (autConfigMap != null) {
             varStore.store(TDVariableStore.VAR_AUTCONFIG, MapUtils.getString(
-                    autConfigMap, AutConfigConstants.CONFIG_NAME, 
+                    autConfigMap, AutConfigConstants.AUT_CONFIG_NAME, 
                     TestresultSummaryBP.AUTRUN));
         } else {
             // write constant for AUTs which has been started via autrun
@@ -1359,16 +1359,6 @@ public class TestExecution {
                 } else {
                     if (LOG.isInfoEnabled()) {
                         LOG.info(Messages.TestexecutionHasResumed);
-                    }
-                    Map<String, String> autConfigMap = 
-                        getConnectedAUTsConfigMap();
-                    if (autConfigMap != null) {
-                        String activateAUT = autConfigMap
-                                .get(AutConfigConstants.ACTIVATE_APPLICATION);
-                        if (activateAUT != null 
-                                && Boolean.valueOf(activateAUT)) {
-                            sendActivateAUTMessage();
-                        }
                     }
                     ClientTest.instance().fireTestExecutionChanged(
                             new TestExecutionEvent(

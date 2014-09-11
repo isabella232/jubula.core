@@ -123,7 +123,7 @@ class AUTConfigPO implements IAUTConfigPO {
      */
     @Transient
     public String getName() {
-        return getHbmConfigMap().get(AutConfigConstants.CONFIG_NAME);
+        return getHbmConfigMap().get(AutConfigConstants.AUT_CONFIG_NAME);
     }
    
     /**
@@ -282,8 +282,9 @@ class AUTConfigPO implements IAUTConfigPO {
      * {@inheritDoc}
      */
     @Transient
-    public String getServer() {
-        return getValue(AutConfigConstants.SERVER, StringConstants.EMPTY);
+    public String getConfiguredAUTAgentHostName() {
+        return getValue(AutConfigConstants.AUT_CONFIG_AUT_HOST_NAME, 
+            StringConstants.EMPTY);
     }
 
     /**

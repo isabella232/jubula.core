@@ -71,7 +71,8 @@ public class TestResult extends AbstractTestResult {
      */
     public String getAutAgentHostName() {
         return MapUtils.getString(getAutConfigMap(),
-                AutConfigConstants.SERVER, StringConstants.EMPTY);
+                AutConfigConstants.AUT_CONFIG_AUT_HOST_NAME, 
+                StringConstants.EMPTY);
     }
 
     /**
@@ -87,7 +88,7 @@ public class TestResult extends AbstractTestResult {
      */
     public String getAutConfigName() {
         return MapUtils.getString(getAutConfigMap(),
-                AutConfigConstants.CONFIG_NAME, TestresultSummaryBP.AUTRUN);
+                AutConfigConstants.AUT_CONFIG_NAME, TestresultSummaryBP.AUTRUN);
     }
     
     /**

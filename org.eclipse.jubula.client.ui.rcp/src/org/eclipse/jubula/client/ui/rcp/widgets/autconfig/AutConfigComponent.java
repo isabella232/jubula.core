@@ -264,11 +264,12 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         m_autConfig = autConfig;
         m_autName = autName;
         m_nameModified = !isDataNew(autConfig) 
-            && autConfig.get(AutConfigConstants.CONFIG_NAME).equals(
+            && autConfig.get(AutConfigConstants.AUT_CONFIG_NAME).equals(
                 NLS.bind(Messages.AUTConfigComponentDefaultAUTConfigName, 
                         new String [] {
                             autName, 
-                            autConfig.get(AutConfigConstants.SERVER)
+                            autConfig.get(AutConfigConstants.
+                                AUT_CONFIG_AUT_HOST_NAME)
                         }));
         m_isMultiMode = isMultiMode;
         if (m_isMultiMode) {
@@ -448,9 +449,10 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         fillServerCombo();
         if (!isDataNew(data)) {
             m_serverCombo.select(m_serverCombo.indexOf(StringUtils
-                    .defaultString(data.get(AutConfigConstants.SERVER))));
+                    .defaultString(data.get(AutConfigConstants.
+                        AUT_CONFIG_AUT_HOST_NAME))));
             m_autConfigNameTextField.setText(StringUtils.defaultString(
-                data.get(AutConfigConstants.CONFIG_NAME),
+                data.get(AutConfigConstants.AUT_CONFIG_NAME),
                     NLS.bind(Messages.AUTConfigComponentDefaultAUTConfigName, 
                         new String [] {
                             m_autName, 
@@ -680,7 +682,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         
         m_serverCombo.removeAll();
         String currentlySelectedServer = 
-            getConfigValue(AutConfigConstants.SERVER);
+            getConfigValue(AutConfigConstants.AUT_CONFIG_AUT_HOST_NAME);
         if (currentlySelectedServer != null 
             && currentlySelectedServer.trim().length() != 0
             && !m_listOfServers.getAutAgentNames().contains(
@@ -739,7 +741,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * installs all listeners to the gui components. All components visualizing
      * a property do have some sort of modification listeners which store
      * edited data in the edited instance. Some gui components have additional
-     * listeners for data validatuion or permission reevaluation.
+     * listeners for data validation or permission reevaluation.
      */
     protected void installListeners() {
         WidgetSelectionListener selectionListener = getSelectionListener();
@@ -762,7 +764,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * deinstalls all listeners to the gui components. All components visualizing
      * a property do have some sort of modification listeners which store
      * edited data in the edited instance. Some gui components have additional
-     * listeners for data validatuion or permission reevaluation.
+     * listeners for data validation or permission reevaluation.
      */
     protected void deinstallListeners() {
         WidgetSelectionListener selectionListener = getSelectionListener();
@@ -855,7 +857,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         if (localHost == null) {
             return false;
         }
-        final String autAgentHostName = getServerCombo().getText();
+        final String autAgentHostName = getAUTAgentHostNameCombo().getText();
         final String canonicalHostName = localHost.getCanonicalHostName();
         return (EnvConstants.LOCALHOST_ALIAS.equals(
                 autAgentHostName.toLowerCase())
@@ -887,7 +889,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 }));
         DialogStatusParameter error = null;
         
-        putConfigValue(AutConfigConstants.CONFIG_NAME, 
+        putConfigValue(AutConfigConstants.AUT_CONFIG_NAME, 
                 m_autConfigNameTextField.getText());
 
         if (!isValid(m_autConfigNameTextField, false)) {
@@ -950,7 +952,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * 
      * @return The server selection combo box.
      */
-    protected Combo getServerCombo() {
+    protected Combo getAUTAgentHostNameCombo() {
         return m_serverCombo;
     }
 
@@ -984,37 +986,42 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     }
 
     /**
-     * @return true if the aut config is for the currently connected AUT starter
+     * @return true if the AUT config is for the currently connected AUT-Agent
      */
     protected boolean isRemoteRequest() {        
         boolean enable;
         try {
-            final AutAgent currentServer = 
+            final AutAgent currentAUTAgent = 
                 ConnectAutAgentBP.getInstance().getCurrentAutAgent();
-            if (currentServer == null) {
+            if (currentAUTAgent == null) {
                 return false;
             }
             if (isLocalhost()) {
                 return false;
             }
 
-            final String serverName = getServerCombo().getText().toLowerCase();
-            final InetAddress serverAddress = InetAddress.getByName(serverName);
-            final String canonicalServerName = 
-                serverAddress.getCanonicalHostName().toLowerCase();
+            final String autAgentHostName = getAUTAgentHostNameCombo()
+                .getText().toLowerCase();
+            final InetAddress autAgentHostAddress = InetAddress
+                .getByName(autAgentHostName);
+            final String canonicalAUTAgentName = 
+                autAgentHostAddress.getCanonicalHostName().toLowerCase();
             
-            final String currentServerName = 
-                currentServer.getName().toLowerCase();
-            final InetAddress currentServerAddress = 
-                InetAddress.getByName(currentServerName);
-            final String canonicalCurrentServerName = 
-                currentServerAddress.getCanonicalHostName().toLowerCase();
+            final String currentAUTAgentHostName = 
+                currentAUTAgent.getName().toLowerCase();
+            final InetAddress currentAUTAgentHostAddress = 
+                InetAddress.getByName(currentAUTAgentHostName);
+            final String canonicalCurrentAUTAgentName = 
+                currentAUTAgentHostAddress.getCanonicalHostName().toLowerCase();
             
             
             
-            enable = currentServerName.equals(serverName)
-                    || currentServerAddress.equals(serverAddress)
-                    || canonicalCurrentServerName.equals(canonicalServerName);
+            enable = currentAUTAgentHostName
+                        .equals(autAgentHostName)
+                    || currentAUTAgentHostAddress
+                        .equals(autAgentHostAddress)
+                    || canonicalCurrentAUTAgentName
+                        .equals(canonicalAUTAgentName);
         } catch (UnknownHostException e) {
             enable = false;
         }
@@ -1193,8 +1200,9 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     public DialogStatusParameter modifyServerComboAction() {
         boolean isValid = false;
         if (m_serverCombo.getSelectionIndex() != -1) {
-            putConfigValue(AutConfigConstants.SERVER, m_serverCombo.getItem(
-                m_serverCombo.getSelectionIndex()));
+            putConfigValue(AutConfigConstants.AUT_CONFIG_AUT_HOST_NAME, 
+                m_serverCombo.getItem(
+                    m_serverCombo.getSelectionIndex()));
             isValid = true;
         }
         if (isValid) {

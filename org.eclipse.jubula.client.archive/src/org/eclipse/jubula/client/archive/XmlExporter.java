@@ -29,7 +29,6 @@ import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.archive.i18n.Messages;
-import org.eclipse.jubula.client.archive.schema.ActivationMethodEnum;
 import org.eclipse.jubula.client.archive.schema.Aut;
 import org.eclipse.jubula.client.archive.schema.AutConfig;
 import org.eclipse.jubula.client.archive.schema.Cap;
@@ -175,20 +174,6 @@ class XmlExporter {
         xml.setId(i2id(TABLE_AUT_CONFIG, po.getId()));
         xml.setName(po.getName());
 
-        // FIXME BEGIN : only for compatibility reasons. Remove in version > 2.0
-        xml.setClassname(StringConstants.EMPTY);
-        xml.setClasspath(StringConstants.EMPTY);
-        xml.setJarfile(StringConstants.EMPTY);
-        xml.setParameter(StringConstants.EMPTY);
-        xml.setWorkingDir(StringConstants.EMPTY);
-        xml.setJreDir(StringConstants.EMPTY);
-        xml.setJreParameter(StringConstants.EMPTY);
-        xml.setServer(StringConstants.EMPTY);
-        xml.setEnvironment(StringConstants.EMPTY);
-        xml.setActivateApp(false);
-        xml.setActivationMethod(ActivationMethodEnum.NONE);
-        // FIXME END
-        
         // Sort the list of configuration entries by key
         final List<String> sortedConfigKeys = 
             new ArrayList<String>(po.getAutConfigKeys());

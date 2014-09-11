@@ -98,7 +98,7 @@ public class TestresultSummaryBP {
         if (result.getAutConfigMap() != null && startedAut != null) {
             String autConfigName = result.getAutConfigName();
             for (IAUTConfigPO conf : startedAut.getAutConfigSet()) {
-                if (conf.getValue(AutConfigConstants.CONFIG_NAME, "invalid") //$NON-NLS-1$
+                if (conf.getValue(AutConfigConstants.AUT_CONFIG_NAME, "invalid") //$NON-NLS-1$
                         .equals(autConfigName)) {
                     summary.setInternalAutConfigGuid(conf.getGuid());
                     break;

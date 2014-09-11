@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.RcpAccessorConstants;
@@ -228,15 +227,6 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
         
         List<String> props = new ArrayList<String>();
         StringBuffer sb = new StringBuffer();
-
-        if (AutStarter.getInstance().getAutCommunicator() != null) {
-            sb = new StringBuffer();
-            sb.append(propPrefix).append(RcpAccessorConstants.SERVER_PORT)
-            .append(valueSeparator)
-            .append(String.valueOf(
-                AutStarter.getInstance().getAutCommunicator().getLocalPort()));
-            props.add(sb.toString());
-        }
 
         sb = new StringBuffer();
         sb.append(propPrefix).append(RcpAccessorConstants.KEYBOARD_LAYOUT)

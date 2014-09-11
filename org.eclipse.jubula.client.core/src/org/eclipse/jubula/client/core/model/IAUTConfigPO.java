@@ -116,10 +116,9 @@ public interface IAUTConfigPO extends IPersistentObject, Comparable {
     public abstract String getGuid();
 
     /**
-     * Convenience method for getValue(IAutConfigPO.SERVER_KEY, "")
-     * @return The server
+     * @return the AUT-Agent host name
      */
-    public abstract String getServer();
+    public abstract String getConfiguredAUTAgentHostName();
 
     /**
      * @return a Set of all keys of the AutConfig.
@@ -127,12 +126,12 @@ public interface IAUTConfigPO extends IPersistentObject, Comparable {
     public Set<String> getAutConfigKeys();
     
     /**
-     * @return the Map<String, String> of the aut configuration
+     * @return the Map<String, String> of the AUT configuration
      */
     public Map<String, String> getConfigMap();
    
     /**
-     * @param config the Map<String, String> of the aut configuration
+     * @param config the Map<String, String> of the AUT configuration
      */
     public void setConfigMap(Map<String, String> config);
 }

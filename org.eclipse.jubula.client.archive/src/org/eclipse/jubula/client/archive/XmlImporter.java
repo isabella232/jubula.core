@@ -88,7 +88,6 @@ import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPlugi
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPluginError.ERROR;
 import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
-import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -139,7 +138,6 @@ import org.eclipse.jubula.client.core.utils.ReportRuleType;
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
-import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.Assert;
 import org.eclipse.jubula.tools.exception.InvalidDataException;
@@ -1143,7 +1141,7 @@ class XmlImporter {
     }
     /**
      * Creates the instance of the persistent object which is defined by the
-     * XML element used as prameter. The method generates all dependend objects
+     * XML element used as parameter. The method generates all depended objects
      * as well.
      * @param xml Abstraction of the XML element (see Apache XML Beans)
      * @param assignNewGuid <code>true</code> if the AUT Config
@@ -1161,23 +1159,6 @@ class XmlImporter {
             conf = PoMaker.createAUTConfigPO();
         }
         m_autConfRef.put(xml.getId(), conf);
-        // FIXME BEGIN : only for compatibility reasons. Remove in version > 2.0
-        conf.setValue(AutConfigConstants.CLASSNAME, xml.getClassname());
-        conf.setValue(AutConfigConstants.CLASSPATH, xml.getClasspath());
-        conf.setValue(AutConfigConstants.JAR_FILE, xml.getJarfile());
-        conf.setValue(AutConfigConstants.AUT_ARGUMENTS, xml.getParameter());
-        conf.setValue(AutConfigConstants.WORKING_DIR, xml.getWorkingDir());
-        conf.setValue(AutConfigConstants.JRE_BINARY, xml.getJreDir());
-        conf.setValue(AutConfigConstants.JRE_PARAMETER, xml.getJreParameter());
-        conf.setValue(AutConfigConstants.SERVER, xml.getServer());
-        conf.setValue(AutConfigConstants.ENVIRONMENT, xml.getEnvironment());
-        conf.setValue(AutConfigConstants.ACTIVATE_APPLICATION, 
-            String.valueOf(xml.getActivateApp()));
-        conf.setValue(AutConfigConstants.CONFIG_NAME, 
-                String.valueOf(xml.getName()));
-        conf.setValue(AutConfigConstants.ACTIVATION_METHOD, ActivationMethod
-                .getRCString(xml.getActivationMethod().toString()));
-        // FIXME END
         
         final List<MapEntry> confAttrMapList = xml.getConfAttrMapEntryList();
         for (MapEntry entry : confAttrMapList) {
@@ -1189,7 +1170,7 @@ class XmlImporter {
     }
     /**
      * Creates the instance of the persistent object which is defined by the
-     * XML element used as prameter. The method generates all dependend objects
+     * XML element used as parameter. The method generates all depended objects
      * as well.
      * @param xml Abstraction of the XML element (see Apache XML Beans)
      * @param assignNewGuid <code>true</code> if the AUT and all corresponding 

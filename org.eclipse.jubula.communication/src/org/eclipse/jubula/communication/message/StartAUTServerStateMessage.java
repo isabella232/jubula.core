@@ -22,7 +22,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  * @created 04.08.2004
  */
 public class StartAUTServerStateMessage extends Message {
-    /** server start succesfull */
+    /** server start successful */
     public static final int OK = 0;
 
     /** reasons why an AUTServer could not started - general error */
@@ -63,7 +63,7 @@ public class StartAUTServerStateMessage extends Message {
         SCANNING_JAR_FAILED + 1;
 
     /**
-     * invalid or unsufficient arguments (AUTServer exit codes INVALID_ARG,
+     * invalid or insufficient arguments (AUTServer exit codes INVALID_ARG,
      * INVALID_NUMBER_OF_ARGS)
      */
     public static final int INVALID_ARGUMENTS = // 11

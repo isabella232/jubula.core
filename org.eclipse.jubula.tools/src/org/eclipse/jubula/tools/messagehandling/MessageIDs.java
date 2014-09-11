@@ -336,7 +336,7 @@ public class MessageIDs {
      * AUT Server, but no such connection is established 
      */
     public static final Integer E_NO_AUT_CONNECTION_ERROR = new Integer(5011);
-    // -- SERVER ERROR IDs -------------------------------------------------
+    // -- AUT_CONFIG_AUT_HOST_NAME ERROR IDs -------------------------------------------------
     /** if message header is invalid */
     public static final Integer E_INVALID_HEADER = new Integer(6000);
     /** if component is not supported */
@@ -407,7 +407,7 @@ public class MessageIDs {
     public static final Integer E_TEST_STEP_NOT_CREATED = new Integer(7012);
     /** error occurred while evaluating a Function */
     public static final Integer E_FUNCTION_EVAL_ERROR = new Integer(7013);
-    // -- general RUNTIME ERROR IDs (SERVER !!!) ----------------------------
+    // -- general RUNTIME ERROR IDs (AUT_CONFIG_AUT_HOST_NAME !!!) ----------------------------
     /** if an opened session failed */
     public static final Integer E_EVENT_SUPPORT = new Integer(8000);
     /** if an opened session failed */

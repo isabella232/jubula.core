@@ -64,7 +64,7 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
         }
         env += setJavaOptions(parameters);
         if (isRunningFromExecutable(parameters)) {
-        // agent arguments
+            // agent arguments
             String serverPort = "null"; //$NON-NLS-1$
             final Communicator autCommunicator = AutStarter.getInstance()
                 .getAutCommunicator();
@@ -76,7 +76,7 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
             env += ENV_SEPARATOR + "AUT_SERVER_CLASSPATH=" + autServerClasspath; //$NON-NLS-1$
             env += ENV_SEPARATOR + "AUT_SERVER_NAME=" + getServerClassName(); //$NON-NLS-1$
         
-            // Aut Agent variables
+            // AUT-Agent variables
             env += ENV_SEPARATOR + AutConfigConstants.AUT_AGENT_HOST + "=" + parameters.get(AutConfigConstants.AUT_AGENT_HOST); //$NON-NLS-1$
             env += ENV_SEPARATOR + AutConfigConstants.AUT_AGENT_PORT + "=" + parameters.get(AutConfigConstants.AUT_AGENT_PORT); //$NON-NLS-1$
             env += ENV_SEPARATOR + AutConfigConstants.AUT_NAME + "=" + parameters.get(AutConfigConstants.AUT_NAME); //$NON-NLS-1$

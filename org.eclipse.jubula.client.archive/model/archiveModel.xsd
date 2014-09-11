@@ -144,19 +144,19 @@
     <!--checked-->
     <xs:sequence>
       <xs:element name="name" type="xs:string" />
-      <xs:element name="classname" type="xs:string" default="" />
-      <xs:element name="classpath" type="xs:string" default="" />
-      <xs:element name="jarfile" type="xs:string" default="" />
-      <xs:element name="parameter" type="xs:string" default="" />
-      <xs:element name="workingDir" type="xs:string" default="" />
-      <xs:element name="jreDir" type="xs:string" default="" />
-      <xs:element name="jreParameter" type="xs:string" default="" />
-      <xs:element name="server" type="xs:string" default="" />
-      <xs:element name="environment" type="xs:string" default="" />
-      <xs:element name="activateApp" type="xs:boolean" minOccurs="0"
-          default="false" />
-      <xs:element name="activationMethod"
-          type="gd:activationMethodEnum" minOccurs="0" default="none" />
+      <!--CLEANME BEGIN : only for compatibility reasons. Remove in version > 9.0 -->
+      <xs:element name="classname" type="xs:string" minOccurs="0" nillable="true" maxOccurs="1" default="" />
+      <xs:element name="classpath" type="xs:string" minOccurs="0" nillable="true" maxOccurs="1" default="" />
+      <xs:element name="jarfile" type="xs:string" minOccurs="0" nillable="true" maxOccurs="1" default="" />
+      <xs:element name="parameter" type="xs:string" minOccurs="0" nillable="true" maxOccurs="1" default="" />
+      <xs:element name="workingDir" type="xs:string" minOccurs="0" nillable="true" maxOccurs="1" default="" />
+      <xs:element name="jreDir" type="xs:string" minOccurs="0" nillable="true" maxOccurs="1" default="" />
+      <xs:element name="jreParameter" type="xs:string" minOccurs="0" nillable="true" maxOccurs="1" default="" />
+      <xs:element name="server" type="xs:string" minOccurs="0" nillable="true" maxOccurs="1" default="" />
+      <xs:element name="environment" type="xs:string" minOccurs="0" nillable="true" maxOccurs="1" default="" />
+      <xs:element name="activateApp" type="xs:boolean" minOccurs="0" nillable="true" maxOccurs="1" default="false" />
+      <xs:element name="activationMethod" minOccurs="0" nillable="true" maxOccurs="1" type="gd:activationMethodEnum" default="none" />
+      <!--CLEANME END : only for compatibility reasons. Remove in version > 9.0 -->
       <xs:element name="confAttrMapEntry" type="gd:mapEntry" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="GUID" type="xs:string" minOccurs="0" maxOccurs="1" 
       	  nillable="true" />

@@ -544,7 +544,7 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         m_jarButton.addSelectionListener(selectionListener);
         m_jarTextField.addModifyListener(modifyListener);
         m_classNameTextField.addModifyListener(modifyListener);
-        getServerCombo().addModifyListener(modifyListener);
+        getAUTAgentHostNameCombo().addModifyListener(modifyListener);
         m_autJreButton.addSelectionListener(selectionListener);
         m_autJreTextField.addModifyListener(modifyListener);
         m_autArgsTextField.addModifyListener(modifyListener);
@@ -582,7 +582,7 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         m_jarTextField.removeModifyListener(modifyListener);
         m_autArgsTextField.removeModifyListener(modifyListener);
         m_removeElementButton.removeSelectionListener(selectionListener);
-        getServerCombo().removeModifyListener(modifyListener);
+        getAUTAgentHostNameCombo().removeModifyListener(modifyListener);
         m_execTextField.removeFocusListener(getFocusListener());
         m_execTextField.removeModifyListener(modifyListener);
         m_execButton.removeSelectionListener(selectionListener);
@@ -968,8 +968,10 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         super.populateBasicArea(data);
         
         if (!isDataNew(data)) {
-            getServerCombo().select(getServerCombo().indexOf(StringUtils
-                    .defaultString(data.get(AutConfigConstants.SERVER))));
+            getAUTAgentHostNameCombo().select(
+                getAUTAgentHostNameCombo().indexOf(
+                    StringUtils.defaultString(data
+                        .get(AutConfigConstants.AUT_CONFIG_AUT_HOST_NAME))));
             m_jarTextField.setText(StringUtils.defaultString(data
                 .get(AutConfigConstants.JAR_FILE)));
             m_execTextField.setText(StringUtils.defaultString(data
@@ -1445,7 +1447,7 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         @SuppressWarnings("synthetic-access")
         public void modifyText(ModifyEvent e) {
             Object source = e.getSource();
-            if (source.equals(getServerCombo())) {
+            if (source.equals(getAUTAgentHostNameCombo())) {
                 checkLocalhostServer();
                 boolean checkListeners = m_selectionListener != null;
                 if (checkListeners) {

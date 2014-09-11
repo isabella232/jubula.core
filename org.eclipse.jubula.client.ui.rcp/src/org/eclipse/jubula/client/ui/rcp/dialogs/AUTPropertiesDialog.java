@@ -934,7 +934,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         if (cfg != null) {
             final IAUTConfigPO newConfig = PoMaker.createAUTConfigPO(cfg);
             String name = newConfig.getName();
-            newConfig.setValue(AutConfigConstants.CONFIG_NAME,
+            newConfig.setValue(AutConfigConstants.AUT_CONFIG_NAME,
                     Messages.AUTPropertyPageDupPrefix + name); 
             String autId = newConfig.getValue(AutConfigConstants.AUT_ID, null);
             if (autId != null && autId.length() > 0) {

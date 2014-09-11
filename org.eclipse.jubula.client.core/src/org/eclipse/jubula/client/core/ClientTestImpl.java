@@ -59,11 +59,11 @@ import org.eclipse.jubula.client.core.events.AUTEvent;
 import org.eclipse.jubula.client.core.events.AUTServerEvent;
 import org.eclipse.jubula.client.core.events.AutAgentEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.ServerEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.IAUTEventListener;
 import org.eclipse.jubula.client.core.events.IAUTServerEventListener;
 import org.eclipse.jubula.client.core.events.IServerEventListener;
+import org.eclipse.jubula.client.core.events.ServerEvent;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -85,6 +85,7 @@ import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.BaseConnection;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
+import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.message.BuildMonitoringReportMessage;
@@ -101,7 +102,6 @@ import org.eclipse.jubula.toolkit.common.monitoring.MonitoringAttribute;
 import org.eclipse.jubula.toolkit.common.monitoring.MonitoringRegistry;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.EnvConstants;
 import org.eclipse.jubula.tools.constants.InputConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -271,10 +271,7 @@ public class ClientTestImpl implements IClientTest {
             // start the AUTServer
             Map<String, String> autConfigMap = createAutConfigMap(conf);
             StartAUTServerMessage startAUTServerMessage = 
-                new StartAUTServerMessage(
-                    EnvConstants.LOCALHOST_FQDN, 
-                    AUTConnection.getInstance().getCommunicator()
-                        .getLocalPort(), autConfigMap, autToolkit, 
+                new StartAUTServerMessage(autConfigMap, autToolkit, 
                         aut.isGenerateNames());
             startAUTServerMessage.setLocale(locale);
             AutAgentConnection.getInstance().send(startAUTServerMessage);
@@ -339,14 +336,14 @@ public class ClientTestImpl implements IClientTest {
         }
         
         try {
-            mapToSend.put(AutConfigConstants.AUT_AGENT_PORT, 
-                String.valueOf(AutAgentConnection.getInstance()
-                        .getCommunicator().getPort()));
-            mapToSend.put(AutConfigConstants.AUT_AGENT_HOST, 
-                    AutAgentConnection.getInstance()
-                        .getCommunicator().getHostName());
-            mapToSend.put(AutConfigConstants.AUT_NAME, 
-                    mapToSend.get(AutConfigConstants.AUT_ID));
+            final Communicator communicator = AutAgentConnection.getInstance()
+                .getCommunicator();
+            mapToSend.put(AutConfigConstants.AUT_AGENT_PORT,
+                String.valueOf(communicator.getPort()));
+            mapToSend.put(AutConfigConstants.AUT_AGENT_HOST,
+                communicator.getHostName());
+            mapToSend.put(AutConfigConstants.AUT_NAME,
+                mapToSend.get(AutConfigConstants.AUT_ID));
         } catch (ConnectionException e) {
             log.error(Messages.UnableToAppendAUTAgent);
         }
