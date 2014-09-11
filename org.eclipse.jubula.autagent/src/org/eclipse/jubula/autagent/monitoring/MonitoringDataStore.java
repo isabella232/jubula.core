@@ -26,8 +26,8 @@ public class MonitoringDataStore {
     private static MonitoringDataStore instance;
 
     /** The list for data storage */
-    private Map<String, Map<String, Object>> m_dataStoreMap = 
-        new HashMap<String, Map<String, Object>>();   
+    private Map<String, Map<String, String>> m_dataStoreMap = 
+        new HashMap<String, Map<String, String>>();   
     
     /** The list off current monitoring agents */
     private Map<String, IMonitoring> m_monitoringAgentMap = 
@@ -56,7 +56,7 @@ public class MonitoringDataStore {
      * @param map The AutConfigMap for the given AutID
      */
     public synchronized void putConfigMap(
-            String autId, Map<String, Object> map) {   
+            String autId, Map<String, String> map) {   
         m_dataStoreMap.put(autId, map); 
     }
     /**
@@ -64,7 +64,7 @@ public class MonitoringDataStore {
      * @param autId The autId 
      * @return The config map for the given autId
      */
-    public Map<String, Object> getConfigMap(String autId) {
+    public Map<String, String> getConfigMap(String autId) {
         
         return m_dataStoreMap.get(autId);
     }    

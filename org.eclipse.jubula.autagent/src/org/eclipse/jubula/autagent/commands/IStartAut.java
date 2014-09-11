@@ -58,6 +58,6 @@ public interface IStartAut {
      * condition or just tells the originator that the AUT was started correctly.
      * @throws IOException if an I/O error occurs.
      */
-    public StartAUTServerStateMessage startAut(Map<String, Object> parameters) 
+    public StartAUTServerStateMessage startAut(Map<String, String> parameters) 
         throws IOException;
 }

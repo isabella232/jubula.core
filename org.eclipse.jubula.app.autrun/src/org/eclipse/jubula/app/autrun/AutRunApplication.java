@@ -25,7 +25,7 @@ import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.Parser;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jubula.app.autrun.i18n.Messages;
@@ -189,8 +189,8 @@ public class AutRunApplication implements IApplication {
      * @param cmdLine Provides the settings for the AUT configuration.
      * @return new settings for starting an AUT.
      */
-    private static Map<String, Object> createAutConfig(CommandLine cmdLine) {
-        Map<String, Object> autConfig = new HashMap<String, Object>();
+    private static Map<String, String> createAutConfig(CommandLine cmdLine) {
+        Map<String, String> autConfig = new HashMap<String, String>();
         if (cmdLine.hasOption(OPT_WORKING_DIR)) {
             autConfig.put(AutConfigConstants.WORKING_DIR, cmdLine
                     .getOptionValue(OPT_WORKING_DIR));
@@ -200,12 +200,12 @@ public class AutRunApplication implements IApplication {
         }
         
         if (cmdLine.hasOption(OPT_NAME_TECHNICAL_COMPONENTS)) {
-            autConfig.put(AutConfigConstants.NAME_TECHNICAL_COMPONENTS, Boolean
-                    .valueOf(cmdLine
-                            .getOptionValue(OPT_NAME_TECHNICAL_COMPONENTS)));
+            autConfig.put(AutConfigConstants.NAME_TECHNICAL_COMPONENTS, String
+                    .valueOf(cmdLine.getOptionValue(
+                        OPT_NAME_TECHNICAL_COMPONENTS)));
         } else {
             autConfig.put(AutConfigConstants.NAME_TECHNICAL_COMPONENTS,
-                    DEFAULT_NAME_TECHNICAL_COMPONENTS);
+                String.valueOf(DEFAULT_NAME_TECHNICAL_COMPONENTS));
         }
         autConfig.put(AutConfigConstants.EXECUTABLE, cmdLine
                 .getOptionValue(OPT_EXECUTABLE));
@@ -217,8 +217,10 @@ public class AutRunApplication implements IApplication {
         
         String[] autArguments = cmdLine.getOptionValues(OPT_EXECUTABLE);
         if (autArguments.length > 1) {
-            autConfig.put(AutConfigConstants.AUT_RUN_AUT_ARGUMENTS, 
-                    ArrayUtils.subarray(autArguments, 1, autArguments.length));
+            autConfig.put(AutConfigConstants.AUT_RUN_AUT_ARGUMENTS, StringUtils
+                .join(autArguments,
+                    AutConfigConstants.AUT_RUN_AUT_ARGUMENTS_SEPARATOR_CHAR, 1,
+                    autArguments.length));
         }
         
         return autConfig;
@@ -362,7 +364,7 @@ public class AutRunApplication implements IApplication {
             AutIdentifier autId = new AutIdentifier(cmdLine
                     .getOptionValue(OPT_AUT_ID));
             
-            Map<String, Object> autConfiguration = createAutConfig(cmdLine);
+            Map<String, String> autConfiguration = createAutConfig(cmdLine);
             
             AutRunner runner = new AutRunner(
                     toolkit, autId, agentAddr, autConfiguration);

@@ -32,7 +32,7 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAutServer {
      * {@inheritDoc}
      */
     protected String[] createCmdArray(String baseCmd,
-        Map<String, Object> parameters) {
+        Map<String, String> parameters) {
         List<String> cmds = new Vector<String>();
         cmds.add(baseCmd);
         
@@ -67,7 +67,7 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAutServer {
     }
 
     @Override
-    protected String[] createEnvArray(Map<String, Object> parameters, 
+    protected String[] createEnvArray(Map<String, String> parameters, 
         boolean isAgentSet) {
         
         if (isRunningFromExecutable(parameters) 

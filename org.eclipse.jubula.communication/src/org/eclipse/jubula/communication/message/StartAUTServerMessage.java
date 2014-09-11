@@ -35,7 +35,7 @@ public class StartAUTServerMessage extends Message {
     private String m_autToolKit;
 
     /** The Map with the AUT configuration */
-    private Map m_autConfiguration = null;
+    private Map<String, String> m_autConfiguration = null;
 
     /**
      * @deprecated Default constructor for transportation layer. Don't use for
@@ -53,7 +53,8 @@ public class StartAUTServerMessage extends Message {
      * @param autToolKit
      *            the autToolKit of the actual project as string
      */
-    public StartAUTServerMessage(Map autConfig, String autToolKit) {
+    public StartAUTServerMessage(Map<String, String> autConfig,
+        String autToolKit) {
         super();
 
         setAutConfiguration(autConfig);
@@ -93,7 +94,7 @@ public class StartAUTServerMessage extends Message {
     }
 
     /** @return the autConfiguration */
-    public Map getAutConfiguration() {
+    public Map<String, String> getAutConfiguration() {
         return m_autConfiguration;
     }
 
@@ -101,7 +102,7 @@ public class StartAUTServerMessage extends Message {
      * @param autConfiguration
      *            the autConfiguration to set
      */
-    public void setAutConfiguration(Map autConfiguration) {
+    public void setAutConfiguration(Map<String, String> autConfiguration) {
         m_autConfiguration = autConfiguration;
     }
 }

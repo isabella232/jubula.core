@@ -66,7 +66,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     /**
      * {@inheritDoc}
      */
-    protected String createBaseCmd(Map<String, Object> parameters) 
+    protected String createBaseCmd(Map<String, String> parameters) 
         throws IOException {
         String executableFileName = (String)parameters.get(
                 AutConfigConstants.EXECUTABLE);
@@ -309,11 +309,11 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * @return the _JAVA_OPTIONS environment variable including -javaagent
      * and jre arguments
      */
-    protected String setJavaOptions(Map<String, Object> parameters) {
+    protected String setJavaOptions(Map<String, String> parameters) {
         StringBuffer sb = new StringBuffer();
         if (isRunningFromExecutable(parameters)) {
-            Locale locale = (Locale)parameters.get(
-                AutConfigConstants.AUT_LOCALE);
+            Locale locale = new Locale(parameters.get(
+                AutConfigConstants.AUT_LOCALE));
             // set agent and locals
             
             sb.append(JAVA_OPTIONS_INTRO);
@@ -375,7 +375,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * @return agentString The agent String like -javaagent:myagent.jar
      * or null if the monitoring agent String couldn't be generated
      */        
-    protected String getMonitoringAgent(Map<String, Object> parameters) {
+    protected String getMonitoringAgent(Map<String, String> parameters) {
         String autId = (String)parameters.get(
                 AutConfigConstants.AUT_ID);
         MonitoringDataStore mds = MonitoringDataStore.getInstance();

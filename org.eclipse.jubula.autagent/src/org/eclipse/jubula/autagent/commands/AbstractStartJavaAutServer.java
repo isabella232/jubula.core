@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
@@ -54,7 +55,7 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
      * @param parameters The parameters for starting the AUT
      * @param autServerClasspath The classpath of the AUT Server
      */
-    protected void setEnv(Map<String, Object> parameters, 
+    protected void setEnv(Map<String, String> parameters, 
         String autServerClasspath) {
         String env = (String)parameters.get(AutConfigConstants.ENVIRONMENT);
         if (env == null) {
@@ -200,13 +201,13 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
      * @return The arguments for the AUT that were found in the given
      *         parameters.
      */
-    protected List<String> createAutArguments(Map<String, Object> parameters) {
+    protected List<String> createAutArguments(Map<String, String> parameters) {
         List<String> argsList = new Vector<String>();
-        final Object autRunArgs = parameters.get(
+        final String joinedAutRunArgs = parameters.get(
             AutConfigConstants.AUT_RUN_AUT_ARGUMENTS);
-        if (autRunArgs instanceof String[]) {
-            String[] autArgs = (String[]) autRunArgs;
-            return Arrays.asList(autArgs);
+        if (joinedAutRunArgs != null) {
+            return Arrays.asList(StringUtils.split(joinedAutRunArgs,
+                AutConfigConstants.AUT_RUN_AUT_ARGUMENTS_SEPARATOR_CHAR));
         }
         String autArguments = (String) parameters
             .get(AutConfigConstants.AUT_ARGUMENTS);

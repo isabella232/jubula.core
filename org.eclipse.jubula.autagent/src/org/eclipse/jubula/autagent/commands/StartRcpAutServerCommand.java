@@ -140,7 +140,7 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
      * {@inheritDoc}
      */
     protected String[] createCmdArray(String baseCmd, 
-        Map<String, Object> parameters) {
+        Map<String, String> parameters) {
         
         List<String> cmds;
         
@@ -150,8 +150,8 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
             cmds.add(0, baseCmd);
                     
             createDirectAutJavaCallParameter(PATH_SEPARATOR, cmds, parameters);
-            addLocale(cmds, (Locale)parameters.get(
-                AutConfigConstants.AUT_LOCALE));
+            addLocale(cmds, new Locale(parameters.get(
+                AutConfigConstants.AUT_LOCALE)));
         } else {
             // Start using executable file
             cmds = new Vector<String>();
@@ -163,8 +163,8 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
             // Note: This overrides the -nl defined in the <app>.ini file, if
             // any. It will not override a -nl from the command line.
             if (!cmds.contains(NL)) {
-                Locale locale = (Locale)parameters.get(
-                    AutConfigConstants.AUT_LOCALE);
+                Locale locale = new Locale(parameters.get(
+                    AutConfigConstants.AUT_LOCALE));
                 if (locale != null) {
                     if ((locale.getCountry() != null 
                         && locale.getCountry().length() > 0)
@@ -188,7 +188,7 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
     /**
      * {@inheritDoc}
      */
-    protected String[] createEnvArray(Map<String, Object> parameters, 
+    protected String[] createEnvArray(Map<String, String> parameters, 
         boolean isAgentSet) {
         
         String [] envArray = super.createEnvArray(parameters, isAgentSet);

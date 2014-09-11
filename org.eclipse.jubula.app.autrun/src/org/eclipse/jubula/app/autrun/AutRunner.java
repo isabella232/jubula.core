@@ -118,7 +118,7 @@ public class AutRunner {
         LoggerFactory.getLogger(AutRunner.class);
 
     /** settings used to start the AUT */
-    private Map<String, Object> m_autConfiguration;
+    private Map<String, String> m_autConfiguration;
     
     /** the object responsible for actually starting the AUT */
     private IStartAut m_startAut;
@@ -142,14 +142,14 @@ public class AutRunner {
      * @throws IllegalAccessException
      */
     public AutRunner(String autToolkit, AutIdentifier autIdentifier, 
-            InetSocketAddress agentAddr, Map<String, Object> autConfiguration) 
+            InetSocketAddress agentAddr, Map<String, String> autConfiguration) 
         throws ClassNotFoundException, InstantiationException, 
                IllegalAccessException {
         String className = "org.eclipse.jubula.autagent.commands.Start" //$NON-NLS-1$
             + autToolkit + "AutServerCommand"; //$NON-NLS-1$
         Class< ? > autServerClass = Class.forName(className);
         m_agentAddr = agentAddr;
-        m_autConfiguration = new HashMap<String, Object>(autConfiguration);
+        m_autConfiguration = new HashMap<String, String>(autConfiguration);
         m_autConfiguration.put(AutConfigConstants.AUT_AGENT_HOST, 
                 agentAddr.getHostName());
         m_autConfiguration.put(AutConfigConstants.AUT_AGENT_PORT, 

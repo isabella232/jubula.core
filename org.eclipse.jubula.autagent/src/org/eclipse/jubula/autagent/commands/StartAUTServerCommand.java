@@ -94,8 +94,8 @@ public class StartAUTServerCommand implements ICommand {
         try {
             // Prepare additional parameters
             // For example, add locale to map
-            m_message.getAutConfiguration().put(
-                AutConfigConstants.AUT_LOCALE, m_message.getLocale());
+            m_message.getAutConfiguration().put(AutConfigConstants.AUT_LOCALE,
+                m_message.getLocale().toString());
             
             AutStarter.getInstance().getAgent().setStartAutMessage(m_message);
             

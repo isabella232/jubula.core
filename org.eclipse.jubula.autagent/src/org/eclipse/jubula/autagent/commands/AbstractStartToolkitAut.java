@@ -69,7 +69,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      *
      * {@inheritDoc}
      */
-    public StartAUTServerStateMessage startAut(Map<String, Object> parameters)
+    public StartAUTServerStateMessage startAut(Map<String, String> parameters)
         throws IOException {
         StartAUTServerStateMessage envCheckMsg = validateEnvironment();
         if (envCheckMsg == null) {
@@ -140,13 +140,14 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      * @param isAgentSet true if executable file and agent are set.
      * @return the environment settings as array.
      */
-    protected String[] createEnvArray(Map<String, Object> parameters,
+    protected String[] createEnvArray(Map<String, String> parameters,
         boolean isAgentSet) {
         m_isAgentSet = isAgentSet;
         final String environment =
             (String)parameters.get(AutConfigConstants.ENVIRONMENT);
-        final boolean generate = ((Boolean)parameters.get(
-                AutConfigConstants.NAME_TECHNICAL_COMPONENTS)).booleanValue();
+        
+        final boolean generate = Boolean.valueOf(parameters.get(
+                AutConfigConstants.NAME_TECHNICAL_COMPONENTS));
         
         Properties oldProp = EnvironmentUtils.getProcessEnvironment();
         String[] newEnvArray = null;
@@ -180,7 +181,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      * @return a <code>String</code> that represents a
      * call to an executable. Ex. "java" or "/opt/java1.6/java".
      */
-    protected abstract String createBaseCmd(Map<String, Object> parameters) 
+    protected abstract String createBaseCmd(Map<String, String> parameters) 
         throws IOException;
 
     /**
@@ -191,7 +192,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      *         a command line.
      */
     protected abstract String[] createCmdArray(String baseCmd,
-        Map<String, Object> parameters);
+        Map<String, String> parameters);
 
     /**
      * Executes the given command in the given environment with the
