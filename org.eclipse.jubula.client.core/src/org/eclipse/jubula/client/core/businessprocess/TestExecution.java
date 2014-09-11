@@ -78,7 +78,6 @@ import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.ActivateApplicationMessage;
 import org.eclipse.jubula.communication.message.CAPTestMessage;
 import org.eclipse.jubula.communication.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.message.DisplayManualTestStepMessage;
@@ -1189,20 +1188,6 @@ public class TestExecution {
                                 .get(AutConfigConstants.ACTIVATION_METHOD)));
                 AUTConnection.getInstance().send(msg);
             }
-        } catch (CommunicationException exc) {
-            fireError(exc);
-        }
-    }
-    
-    /**
-     * Sends an activate message to the AUT
-     * 
-     */
-    private void sendActivateAUTMessage() {
-        try {
-            ActivateApplicationMessage msg = MessageFactory
-                .getActivateApplicationMessage();
-            AUTConnection.getInstance().send(msg);
         } catch (CommunicationException exc) {
             fireError(exc);
         }
