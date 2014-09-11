@@ -312,7 +312,8 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     protected String setJavaOptions(Map<String, Object> parameters) {
         StringBuffer sb = new StringBuffer();
         if (isRunningFromExecutable(parameters)) {
-            Locale locale = (Locale)parameters.get(IStartAut.LOCALE);
+            Locale locale = (Locale)parameters.get(
+                AutConfigConstants.AUT_LOCALE);
             // set agent and locals
             
             sb.append(JAVA_OPTIONS_INTRO);

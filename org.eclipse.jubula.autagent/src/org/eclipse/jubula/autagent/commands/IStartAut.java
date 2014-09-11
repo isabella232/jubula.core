@@ -26,10 +26,6 @@ import org.eclipse.jubula.tools.constants.StringConstants;
  * 
  */
 public interface IStartAut {
-
-    /** The locale of the AUT */
-    public static final String LOCALE = "LOCALE"; //$NON-NLS-1$
-    
     /** Default error message when the AUT cannot be started */
     public static final Message ERROR_MESSAGE = new StartAUTServerStateMessage(
         StartAUTServerStateMessage.ERROR, "Unexpected error, no detail available."); //$NON-NLS-1$

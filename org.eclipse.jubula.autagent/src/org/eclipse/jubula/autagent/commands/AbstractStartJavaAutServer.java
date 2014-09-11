@@ -252,7 +252,8 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
      */
     protected void addBaseSettings(List<String> cmds, Map parameters) {
         // add locale
-        addLocale(cmds, (Locale)parameters.get(IStartAut.LOCALE)); 
+        addLocale(cmds, (Locale)parameters.get(
+            AutConfigConstants.AUT_LOCALE)); 
         
         // add JRE params
         final String jreParams = (String)parameters.get(

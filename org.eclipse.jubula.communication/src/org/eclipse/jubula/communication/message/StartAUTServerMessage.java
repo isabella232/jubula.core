@@ -37,9 +37,6 @@ public class StartAUTServerMessage extends Message {
     /** The Map with the AUT configuration */
     private Map m_autConfiguration = null;
 
-    /** flag to indicate whether technical names should be generated */
-    private boolean m_generateNames;
-
     /**
      * @deprecated Default constructor for transportation layer. Don't use for
      *             normal programming.
@@ -55,16 +52,12 @@ public class StartAUTServerMessage extends Message {
      *            a Map<String, String> with the AutConfiguration
      * @param autToolKit
      *            the autToolKit of the actual project as string
-     * @param generateNames
-     *            set to true to enable name generation in server
      */
-    public StartAUTServerMessage(Map autConfig, String autToolKit,
-        boolean generateNames) {
+    public StartAUTServerMessage(Map autConfig, String autToolKit) {
         super();
 
         setAutConfiguration(autConfig);
         setAutToolKit(autToolKit);
-        setGenerateNames(generateNames);
     }
 
     /**
@@ -110,18 +103,5 @@ public class StartAUTServerMessage extends Message {
      */
     public void setAutConfiguration(Map autConfiguration) {
         m_autConfiguration = autConfiguration;
-    }
-
-    /**
-     * @param generateNames
-     *            the generateNames to set
-     */
-    public void setGenerateNames(boolean generateNames) {
-        m_generateNames = generateNames;
-    }
-
-    /** @return the generateNames */
-    public boolean isGenerateNames() {
-        return m_generateNames;
     }
 }

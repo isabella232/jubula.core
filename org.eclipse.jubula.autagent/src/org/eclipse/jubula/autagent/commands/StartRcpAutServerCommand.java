@@ -112,7 +112,8 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
         // create exec string array
         List<String> cmds = new Vector<String>();
         // add locale
-        addLocale(cmds, (Locale)parameters.get(IStartAut.LOCALE));
+        addLocale(cmds, (Locale)parameters.get(
+            AutConfigConstants.AUT_LOCALE));
         // add JRE parameter
         final String jreParams = (String)parameters.get(
                 AutConfigConstants.JRE_PARAMETER);
@@ -149,7 +150,8 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
             cmds.add(0, baseCmd);
                     
             createDirectAutJavaCallParameter(PATH_SEPARATOR, cmds, parameters);
-            addLocale(cmds, (Locale)parameters.get(IStartAut.LOCALE));
+            addLocale(cmds, (Locale)parameters.get(
+                AutConfigConstants.AUT_LOCALE));
         } else {
             // Start using executable file
             cmds = new Vector<String>();
@@ -161,7 +163,8 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
             // Note: This overrides the -nl defined in the <app>.ini file, if
             // any. It will not override a -nl from the command line.
             if (!cmds.contains(NL)) {
-                Locale locale = (Locale)parameters.get(IStartAut.LOCALE);
+                Locale locale = (Locale)parameters.get(
+                    AutConfigConstants.AUT_LOCALE);
                 if (locale != null) {
                     if ((locale.getCountry() != null 
                         && locale.getCountry().length() > 0)

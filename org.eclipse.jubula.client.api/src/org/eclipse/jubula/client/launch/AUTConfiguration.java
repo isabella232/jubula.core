@@ -10,6 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.launch;
 
+import java.util.Map;
+
 /** @author BREDEX GmbH */
 public interface AUTConfiguration {
+    /**
+     * @return a map of launch information
+     */
+    Map<String, String> getLaunchInformation();
 }

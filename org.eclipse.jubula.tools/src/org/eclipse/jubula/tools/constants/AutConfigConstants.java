@@ -37,6 +37,8 @@ public class AutConfigConstants {
     public static final String AUT_AGENT_PORT = "com.bredexsw.guidancer.aut.register.autAgentPort"; //$NON-NLS-1$
     /** The AUT hostname set in the AUT config */
     public static final String AUT_CONFIG_AUT_HOST_NAME = "SERVER"; //$NON-NLS-1$
+    /** The locale of the AUT */
+    public static final String AUT_LOCALE = "AUT_LOCALE"; //$NON-NLS-1$
     /** The method for activation on test start (enum ActivationMethod) */
     public static final String ACTIVATION_METHOD = "ACTIVATION_METHOD"; //$NON-NLS-1$
     /** The MonitoringAgent ID*/
