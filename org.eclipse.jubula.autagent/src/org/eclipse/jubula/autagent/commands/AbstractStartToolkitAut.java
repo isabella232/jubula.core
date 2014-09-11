@@ -76,7 +76,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
             if (!MonitoringUtil.checkForDuplicateAutID(String.valueOf(
                     parameters.get(AutConfigConstants.AUT_ID)))) {
                 MonitoringDataStore cm = MonitoringDataStore.getInstance();
-                cm.putConfigMap((String)parameters.get(
+                cm.putConfigMap(parameters.get(
                       AutConfigConstants.AUT_ID), parameters);
             }
             File workingDir = getWorkingDir(parameters);
@@ -144,7 +144,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
         boolean isAgentSet) {
         m_isAgentSet = isAgentSet;
         final String environment =
-            (String)parameters.get(AutConfigConstants.ENVIRONMENT);
+            parameters.get(AutConfigConstants.ENVIRONMENT);
         
         final boolean generate = Boolean.valueOf(parameters.get(
                 AutConfigConstants.NAME_TECHNICAL_COMPONENTS));

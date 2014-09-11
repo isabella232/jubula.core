@@ -62,7 +62,7 @@ public class StartJavaFXAutServerCommand extends AbstractStartJavaAutServer {
 
         }
         cmds.addAll(createAutArguments(parameters));
-        return (String[]) cmds.toArray(new String[cmds.size()]);
+        return cmds.toArray(new String[cmds.size()]);
     }
 
     /**

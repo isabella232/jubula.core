@@ -57,7 +57,7 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
      */
     protected void setEnv(Map<String, String> parameters, 
         String autServerClasspath) {
-        String env = (String)parameters.get(AutConfigConstants.ENVIRONMENT);
+        String env = parameters.get(AutConfigConstants.ENVIRONMENT);
         if (env == null) {
             env = StringConstants.EMPTY;
         } else {
@@ -209,8 +209,7 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
             return Arrays.asList(StringUtils.split(joinedAutRunArgs,
                 AutConfigConstants.AUT_RUN_AUT_ARGUMENTS_SEPARATOR_CHAR));
         }
-        String autArguments = (String) parameters
-            .get(AutConfigConstants.AUT_ARGUMENTS);
+        String autArguments = parameters.get(AutConfigConstants.AUT_ARGUMENTS);
 
         if (autArguments == null) {
             autArguments = StringConstants.EMPTY;

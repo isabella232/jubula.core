@@ -68,7 +68,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      */
     protected String createBaseCmd(Map<String, String> parameters) 
         throws IOException {
-        String executableFileName = (String)parameters.get(
+        String executableFileName = parameters.get(
                 AutConfigConstants.EXECUTABLE);
         if (executableFileName != null && executableFileName.length() > 0) {
             // Use the given executable, prepending the working directory if
@@ -76,7 +76,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
             File exe = new File(executableFileName);
             if (!exe.isAbsolute()) {
                 exe = new File(
-                    (String)parameters.get(AutConfigConstants.WORKING_DIR), 
+                    parameters.get(AutConfigConstants.WORKING_DIR), 
                     executableFileName);
             }
             if (exe.isFile() && exe.exists()) {
@@ -92,7 +92,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     
         // Use java if no executable file is defined
         String java = StringConstants.EMPTY;
-        String jre = (String)parameters.get(AutConfigConstants.JRE_BINARY);
+        String jre = parameters.get(AutConfigConstants.JRE_BINARY);
         if (jre == null) {
             jre = StringConstants.EMPTY;
         }
@@ -376,7 +376,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      * or null if the monitoring agent String couldn't be generated
      */        
     protected String getMonitoringAgent(Map<String, String> parameters) {
-        String autId = (String)parameters.get(
+        String autId = parameters.get(
                 AutConfigConstants.AUT_ID);
         MonitoringDataStore mds = MonitoringDataStore.getInstance();
         boolean duplicate = MonitoringUtil.checkForDuplicateAutID(autId);
@@ -384,9 +384,9 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
             mds.putConfigMap(autId, parameters); 
         }
         String agentString = null;
-        String monitoringImplClass = (String)parameters.get(
+        String monitoringImplClass = parameters.get(
                 MonitoringConstants.AGENT_CLASS); 
-        String bundleId = (String)parameters.get(
+        String bundleId = parameters.get(
                 MonitoringConstants.BUNDLE_ID);
         try {  
             Bundle bundle = Platform.getBundle(bundleId);

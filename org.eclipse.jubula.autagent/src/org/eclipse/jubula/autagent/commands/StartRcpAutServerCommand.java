@@ -181,7 +181,7 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
             addDebugParams(cmds, true);
         }
 
-        String[] cmdArray = (String[])cmds.toArray(new String[cmds.size()]);
+        String[] cmdArray = cmds.toArray(new String[cmds.size()]);
         return cmdArray;
     }
 

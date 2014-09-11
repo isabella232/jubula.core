@@ -145,7 +145,7 @@ public class MonitoringDataStore {
     public synchronized String getConfigValue(String autID, String key) {    
         
         if (m_dataStoreMap.containsKey(autID)) {
-            return (String)m_dataStoreMap.get(autID).get(key);
+            return m_dataStoreMap.get(autID).get(key);
         }
         return null;
                 

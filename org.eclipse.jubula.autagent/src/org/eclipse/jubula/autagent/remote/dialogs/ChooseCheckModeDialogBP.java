@@ -112,7 +112,7 @@ public class ChooseCheckModeDialogBP {
                 dialog.setCheckValues(checkValues);
                 initValues(component);
                 initialize();
-                dialog.createParameterPanel(((Action) m_actionsObj.get(
+                dialog.createParameterPanel((m_actionsObj.get(
                         m_actionsNames.get(dialog.getAction()))));
 
                 addListener();
@@ -169,7 +169,7 @@ public class ChooseCheckModeDialogBP {
         });
         dialog.getActionCombo().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                dialog.createParameterPanel(((Action) m_actionsObj.get(
+                dialog.createParameterPanel((m_actionsObj.get(
                     m_actionsNames.get(dialog.getAction()))));
                 for (int i = 0; i < dialog.getTextFields().size(); i++) {
                     JTextField field = (JTextField)dialog.getTextFields()
@@ -240,7 +240,7 @@ public class ChooseCheckModeDialogBP {
         MessageCap messageCap = new MessageCap();
         
         // setup Action in MessageCap
-        Action action = (Action) m_actionsObj.get(m_actionsNames.
+        Action action = m_actionsObj.get(m_actionsNames.
                 get(dialog.getAction()));
         messageCap.setMethod(action.getMethod());
         
@@ -253,8 +253,8 @@ public class ChooseCheckModeDialogBP {
         
         // setup parameters in MessageCap
         List parameterValues = dialog.getParameter();
-        List params = ((Action) m_actionsObj.get(m_actionsNames.get(dialog.
-                getAction()))).getParams();
+        List params = m_actionsObj.get(m_actionsNames.get(dialog.
+                getAction())).getParams();
 
         for (int i = 0; i < params.size(); i++) {
             Param param = (Param) params.get(i);
