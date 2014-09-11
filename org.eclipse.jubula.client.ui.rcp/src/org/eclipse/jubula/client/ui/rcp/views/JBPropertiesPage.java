@@ -520,7 +520,7 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
             switch (dataState) {
                 case Added:
                 case StructureModified:
-                    if (po instanceof IPersistentObject) {
+                    if (po != null) {
                         m_treeViewer.refresh();
                         expandTrackedChanges();
                     }

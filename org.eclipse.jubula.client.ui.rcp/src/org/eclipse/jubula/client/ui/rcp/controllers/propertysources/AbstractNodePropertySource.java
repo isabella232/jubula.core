@@ -537,7 +537,7 @@ public abstract class AbstractNodePropertySource
      */
     protected void initTrackedChangesPropDescriptor() {
         SortedMap<Long, String> changes =
-                ((INodePO)getPoNode()).getTrackedChanges();
+                getPoNode().getTrackedChanges();
         int i = 0;
         for (Object o : changes.keySet()) {
             if (o instanceof Long) {
@@ -599,9 +599,9 @@ public abstract class AbstractNodePropertySource
          * {@inheritDoc}
          */
         public Object getProperty() {
-            INodePO poNode = ((INodePO)getPoNode());
+            INodePO poNode = (getPoNode());
             if (poNode != null) {
-                SortedMap<Long, String> changes = ((INodePO)getPoNode())
+                SortedMap<Long, String> changes = getPoNode()
                         .getTrackedChanges();
                 if (changes != null) {
                     List values =

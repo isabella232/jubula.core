@@ -57,7 +57,7 @@ public class SearchReplaceTestCaseHandler extends
         }
         IStructuredSelection selectedObject = getSelection();
         List<SearchResultElement<Long>> selectionList =
-                (List<SearchResultElement<Long>>) selectedObject.toList();
+                selectedObject.toList();
         Set<IExecTestCasePO> execList = new LinkedHashSet<IExecTestCasePO>();
         EntityManager session = GeneralStorage.getInstance().getMasterSession();
         ISpecTestCasePO firstSpec = null;
@@ -68,7 +68,7 @@ public class SearchReplaceTestCaseHandler extends
 
             for (Iterator iterator = selectionList.iterator(); iterator
                     .hasNext();) {
-                Object object = (Object) iterator.next();
+                Object object = iterator.next();
                 SearchResultElement<Long> searchResult = 
                         (SearchResultElement<Long>) object;
                 INodePO nodePO = session.find(NodeMaker.getNodePOClass(),

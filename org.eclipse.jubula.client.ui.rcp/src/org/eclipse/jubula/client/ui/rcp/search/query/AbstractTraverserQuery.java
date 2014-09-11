@@ -147,7 +147,7 @@ public abstract class AbstractTraverserQuery
      */
     private void traverseNodePO(INodePO node) {
         TreeTraverser tt = new TreeTraverser(
-                (INodePO) node, this);
+                node, this);
         tt.traverse(true);
     }
 
