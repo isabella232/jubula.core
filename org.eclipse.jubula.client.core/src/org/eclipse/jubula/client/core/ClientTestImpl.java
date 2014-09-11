@@ -270,12 +270,11 @@ public class ClientTestImpl implements IClientTest {
         try {
             // start the AUTServer
             Map<String, String> autConfigMap = createAutConfigMap(conf);
-            autConfigMap.put(AutConfigConstants.NAME_TECHNICAL_COMPONENTS, 
+            autConfigMap.put(AutConfigConstants.NAME_TECHNICAL_COMPONENTS,
                 String.valueOf(aut.isGenerateNames()));
-            
+            autConfigMap.put(AutConfigConstants.AUT_LOCALE, locale.toString());
             StartAUTServerMessage startAUTServerMessage = 
                 new StartAUTServerMessage(autConfigMap, autToolkit);
-            startAUTServerMessage.setLocale(locale);
             AutAgentConnection.getInstance().send(startAUTServerMessage);
             if (log.isDebugEnabled()) {
                 log.debug(Messages.StartAUTServerMessageSend);

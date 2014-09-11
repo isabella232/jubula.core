@@ -17,7 +17,6 @@ import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
-import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,11 +91,6 @@ public class StartAUTServerCommand implements ICommand {
     public Message execute() {
         log.debug("execute() called"); //$NON-NLS-1$
         try {
-            // Prepare additional parameters
-            // For example, add locale to map
-            m_message.getAutConfiguration().put(AutConfigConstants.AUT_LOCALE,
-                m_message.getLocale().toString());
-            
             AutStarter.getInstance().getAgent().setStartAutMessage(m_message);
             
             // Load class

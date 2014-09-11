@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.message;
 
-import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.jubula.tools.constants.CommandConstants;
@@ -28,9 +27,6 @@ import org.eclipse.jubula.tools.constants.CommandConstants;
  * @created 04.08.2004
  */
 public class StartAUTServerMessage extends Message {
-    /** Language to start AUT with */
-    private Locale m_locale;
-
     /** the actual autToolKit of the project as String */
     private String m_autToolKit;
 
@@ -76,16 +72,6 @@ public class StartAUTServerMessage extends Message {
      */
     public String getCommandClass() {
         return CommandConstants.START_AUT_SERVER_COMMAND;
-    }
-
-    /** @return Locale */
-    public Locale getLocale() {
-        return m_locale;
-    }
-
-    /** @param locale */
-    public void setLocale(Locale locale) {
-        m_locale = locale;
     }
 
     /** @return the actual autToolKit of the project as String */

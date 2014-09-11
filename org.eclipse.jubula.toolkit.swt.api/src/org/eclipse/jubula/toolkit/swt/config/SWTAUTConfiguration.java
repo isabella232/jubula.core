@@ -16,8 +16,8 @@ import org.eclipse.jubula.toolkit.base.config.AbstractOSProcessAUTConfiguration;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 
 /** @author BREDEX GmbH */
-public abstract class SWTAUTConfiguration 
-    extends AbstractOSProcessAUTConfiguration {
+public abstract class SWTAUTConfiguration extends
+    AbstractOSProcessAUTConfiguration {
     /** the keyboardLayout */
     private Locale m_keyboardLayout;
 
@@ -36,10 +36,13 @@ public abstract class SWTAUTConfiguration
      *            the arguments
      * @param keyboardLayout
      *            the keyboard layout to use
+     * @param locale
+     *            the AUT locale to use
      */
     public SWTAUTConfiguration(String name, AutIdentifier autID,
-        String command, String wd, String[] args, Locale keyboardLayout) {
-        super(name, autID, command, wd, args);
+        String command, String wd, String[] args, Locale keyboardLayout,
+        Locale locale) {
+        super(name, autID, command, wd, args, locale);
         setKeyboardLayout(keyboardLayout);
     }
 
@@ -51,7 +54,8 @@ public abstract class SWTAUTConfiguration
     }
 
     /**
-     * @param keyboardLayout the keyboardLayout to set
+     * @param keyboardLayout
+     *            the keyboardLayout to set
      */
     private void setKeyboardLayout(Locale keyboardLayout) {
         m_keyboardLayout = keyboardLayout;

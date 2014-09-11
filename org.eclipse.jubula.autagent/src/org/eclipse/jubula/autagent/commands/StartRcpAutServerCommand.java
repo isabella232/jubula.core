@@ -45,10 +45,10 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
      * @param parameters The startup parameters for the AUT.
      */
     private void createDirectAutJavaCallParameter(final String pathSeparator, 
-        List<String> cmds, Map parameters) { 
+        List<String> cmds, Map<String, String> parameters) { 
         
         StringBuffer autClassPath = new StringBuffer();
-        String autClassPathValue = (String)parameters.get(
+        String autClassPathValue = parameters.get(
                 AutConfigConstants.CLASSPATH);
         if (autClassPathValue != null && !StringConstants.EMPTY
                 .equals(autClassPathValue)) {
@@ -58,7 +58,7 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
         if (autClassPath.length() > 0) {
             autClassPath.append(pathSeparator);
         }
-        final String autJar = (String)parameters.get(
+        final String autJar = parameters.get(
                 AutConfigConstants.JAR_FILE);
         String manifestClassPath = getClassPathFromManifest(parameters);
         if (manifestClassPath.length() > 0) {
@@ -72,7 +72,7 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
         cmds.add("-jar"); //$NON-NLS-1$
         cmds.add(autJar);
         final String autArgs = 
-            (String)parameters.get(AutConfigConstants.AUT_ARGUMENTS);
+            parameters.get(AutConfigConstants.AUT_ARGUMENTS);
         if (autArgs != null) {
             StringTokenizer args = new StringTokenizer(autArgs, 
                 WHITESPACE_DELIMITER);
@@ -103,22 +103,23 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
 
     /**
      * 
-     * @param parameters The parameters for starting the AUT.
+     * @param parameters
+     *            The parameters for starting the AUT.
      * @return a command line array as list with locale, JRE-parameters and
-     * optional debug parameters
+     *         optional debug parameters
      */
-    private List<String> createDirectAutJavaCall(final Map parameters) {
-        
+    private List<String> createDirectAutJavaCall(
+        final Map<String, String> parameters) {
         // create exec string array
         List<String> cmds = new Vector<String>();
         // add locale
-        addLocale(cmds, (Locale)parameters.get(
-            AutConfigConstants.AUT_LOCALE));
+        addLocale(cmds,
+            new Locale(parameters.get(AutConfigConstants.AUT_LOCALE)));
         // add JRE parameter
-        final String jreParams = (String)parameters.get(
-                AutConfigConstants.JRE_PARAMETER);
+        final String jreParams = parameters
+            .get(AutConfigConstants.JRE_PARAMETER);
         if (jreParams != null && jreParams.length() > 0) {
-            StringTokenizer tok = new StringTokenizer(jreParams, 
+            StringTokenizer tok = new StringTokenizer(jreParams,
                 WHITESPACE_DELIMITER);
             while (tok.hasMoreTokens()) {
                 cmds.add(tok.nextToken());
@@ -219,40 +220,44 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
 
     /**
      * 
-     * @param parameters The AUT Configuration parameters.
-     * @param propPrefix The string to prepend to all generated property names.
-     * @param valueSeparator The string to use to separate property names from
-     *                       property values.
+     * @param parameters
+     *            The AUT Configuration parameters.
+     * @param propPrefix
+     *            The string to prepend to all generated property names.
+     * @param valueSeparator
+     *            The string to use to separate property names from property
+     *            values.
      * @return the list of properties.
      */
-    private List<String> getConnectionProperties(Map parameters, 
-            String propPrefix, String valueSeparator) {
-        
+    private List<String> getConnectionProperties(
+        Map<String, String> parameters, String propPrefix, 
+        String valueSeparator) {
+
         List<String> props = new ArrayList<String>();
         StringBuffer sb = new StringBuffer();
 
         sb = new StringBuffer();
         sb.append(propPrefix).append(RcpAccessorConstants.KEYBOARD_LAYOUT)
             .append(valueSeparator)
-            .append((String)parameters.get(AutConfigConstants.KEYBOARD_LAYOUT));
+            .append(parameters.get(AutConfigConstants.KEYBOARD_LAYOUT));
         props.add(sb.toString());
         
         sb = new StringBuffer();
         sb.append(propPrefix).append(AutConfigConstants.AUT_AGENT_HOST)
             .append(valueSeparator)
-            .append((String)parameters.get(AutConfigConstants.AUT_AGENT_HOST));
+            .append(parameters.get(AutConfigConstants.AUT_AGENT_HOST));
         props.add(sb.toString());
 
         sb = new StringBuffer();
         sb.append(propPrefix).append(AutConfigConstants.AUT_AGENT_PORT)
             .append(valueSeparator)
-            .append((String)parameters.get(AutConfigConstants.AUT_AGENT_PORT));
+            .append(parameters.get(AutConfigConstants.AUT_AGENT_PORT));
         props.add(sb.toString());
 
         sb = new StringBuffer();
         sb.append(propPrefix).append(AutConfigConstants.AUT_NAME)
             .append(valueSeparator)
-            .append((String)parameters.get(AutConfigConstants.AUT_NAME));
+            .append(parameters.get(AutConfigConstants.AUT_NAME));
         props.add(sb.toString());
 
         return props;

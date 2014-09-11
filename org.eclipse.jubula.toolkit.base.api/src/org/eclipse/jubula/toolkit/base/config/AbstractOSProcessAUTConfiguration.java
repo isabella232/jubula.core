@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.toolkit.base.config;
 
+import java.util.Locale;
+
 import org.eclipse.jubula.tools.registration.AutIdentifier;
 
 /** @author BREDEX GmbH */
@@ -21,6 +23,8 @@ public abstract class AbstractOSProcessAUTConfiguration extends
     private String m_workingDir;
     /** the args */
     private String[] m_args;
+    /** the locale */
+    private Locale m_locale;
 
     /**
      * Constructor
@@ -35,10 +39,13 @@ public abstract class AbstractOSProcessAUTConfiguration extends
      *            the working directory
      * @param args
      *            the commands arguments
+     * @param locale
+     *            the AUT locale to use
      */
     public AbstractOSProcessAUTConfiguration(String name, AutIdentifier autID,
-        String command, String wd, String[] args) {
+        String command, String wd, String[] args, Locale locale) {
         super(name, autID);
+        setLocale(locale);
         setCommand(command);
         setWorkingDir(wd);
         setArgs(args);
@@ -84,5 +91,19 @@ public abstract class AbstractOSProcessAUTConfiguration extends
      */
     private void setArgs(String[] args) {
         m_args = args;
+    }
+
+    /**
+     * @return the locale
+     */
+    public Locale getLocale() {
+        return m_locale;
+    }
+
+    /**
+     * @param locale the locale to set
+     */
+    private void setLocale(Locale locale) {
+        m_locale = locale;
     }
 }
