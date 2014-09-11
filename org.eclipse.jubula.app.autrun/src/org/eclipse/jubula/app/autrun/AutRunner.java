@@ -30,11 +30,82 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 
  * @author BREDEX GmbH
  * @created Sept 07, 2011
  */
 public class AutRunner {
+
+    /**
+     * @author BREDEX GmbH
+     */
+    private final class AgentConnectionWatcher extends Thread {
+        /** the writer */
+        private final PrintWriter m_writer;
+        /** the socket */
+        private final Socket m_agentSocket;
+        /** the buffered reader */
+        private final BufferedReader m_reader;
+
+        /**
+         * @param name
+         *            the name
+         * @param writer
+         *            the writer
+         * @param agentSocket
+         *            the agent socket
+         * @param reader
+         *            the reader
+         */
+        private AgentConnectionWatcher(String name, PrintWriter writer,
+            Socket agentSocket, BufferedReader reader) {
+            super(name);
+            m_writer = writer;
+            m_agentSocket = agentSocket;
+            m_reader = reader;
+        }
+
+        /** {@inheritDoc} */
+        public void run() {
+            try {
+                String line = m_reader.readLine();
+                if (line != null) {
+                    if (line.equals(
+                            RestartAutProtocol.REQ_PREPARE_FOR_RESTART)) {
+                        
+                        // make sure that we have a system thread running so
+                        // the JVM won't shut down during AUT restart
+                        Thread restartThread = new Thread() {
+                            public void run() {
+                                m_writer.println(RESPONSE_OK);
+                                
+                                try {
+                                    String restartReq = m_reader.readLine();
+                                    if (RestartAutProtocol.REQ_RESTART
+                                        .equals(restartReq)) {
+                                        
+                                        AutRunner.this.run();
+                                    }
+                                } catch (IOException e) {
+                                    LOG.error(Messages.restartAutFailed, e);
+                                } finally {
+                                    try {
+                                        m_agentSocket.close();
+                                    } catch (IOException e) {
+                                        // Error while closing socket. Ignore.
+                                    }
+                                }
+                            }
+                        };
+
+                        restartThread.setDaemon(false);
+                        restartThread.start();
+                    }
+                }
+            } catch (IOException e) {
+                LOG.error(Messages.restartAutFailed, e);
+            }
+        }
+    }
 
     /** response OK when thread was started */
     private static final String RESPONSE_OK = "Response.OK"; //$NON-NLS-1$
@@ -117,49 +188,8 @@ public class AutRunner {
         writer.println(
                 m_autConfiguration.get(AutConfigConstants.AUT_NAME));
         
-        Thread agentConnectionThread = new Thread
-        (AGENT_CONNECTION_THREAD_NAME) {
-            public void run() {
-                try {
-                    String line = reader.readLine();
-                    if (line != null) {
-                        if (line.equals(
-                                RestartAutProtocol.REQ_PREPARE_FOR_RESTART)) {
-                            
-                            // make sure that we have a system thread running so
-                            // the JVM won't shut down during AUT restart
-                            Thread restartThread = new Thread() {
-                                public void run() {
-                                    writer.println(RESPONSE_OK);
-                                    
-                                    try {
-                                        String restartReq = reader.readLine();
-                                        if (RestartAutProtocol.REQ_RESTART
-                                            .equals(restartReq)) {
-                                            
-                                            AutRunner.this.run();
-                                        }
-                                    } catch (IOException e) {
-                                        LOG.error(Messages.restartAutFailed, e);
-                                    } finally {
-                                        try {
-                                            agentSocket.close();
-                                        } catch (IOException e) {
-                                            // Error while closing socket. Ignore.
-                                        }
-                                    }
-                                }
-                            };
-
-                            restartThread.setDaemon(false);
-                            restartThread.start();
-                        }
-                    }
-                } catch (IOException e) {
-                    LOG.error(Messages.restartAutFailed, e);
-                }
-            }
-        };
+        Thread agentConnectionThread = new AgentConnectionWatcher(
+            AGENT_CONNECTION_THREAD_NAME, writer, agentSocket, reader);
 
         agentConnectionThread.setDaemon(true);
         agentConnectionThread.start();
