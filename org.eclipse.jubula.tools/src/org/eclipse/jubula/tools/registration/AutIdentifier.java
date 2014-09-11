@@ -35,6 +35,7 @@ public final class AutIdentifier {
      * Default constructor.
      * Do nothing (required by XStream).
      */
+    @SuppressWarnings("unused")
     private AutIdentifier() {
         // Nothing to initialize
     }
