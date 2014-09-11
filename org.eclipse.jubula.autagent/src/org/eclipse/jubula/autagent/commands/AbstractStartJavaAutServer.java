@@ -165,7 +165,7 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
      * @param parameters The parameters for starting the AUT.
      */
     protected void createAutServerClasspath(StringBuffer autServerClasspath, 
-        List<String> cmds, Map parameters) {
+        List<String> cmds, Map<String, String> parameters) {
         
         final Communicator autCommunicator = AutStarter.getInstance()
             .getAutCommunicator();
@@ -231,7 +231,7 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
      * @param parameters The parameters for starting the AUT.
      */
     protected void createAutServerLauncherClasspath(List<String> cmds, 
-            StringBuffer autServerClasspath, Map parameters) {
+            StringBuffer autServerClasspath, Map<String, String> parameters) {
         
         addBaseSettings(cmds, parameters);
         cmds.add("-classpath"); //$NON-NLS-1$
@@ -246,26 +246,31 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
     }
     
     
-    /**     * Creates the AUT settings.
-     * @param cmds the commands list
-     * @param parameters The parameters for starting the AUT.
+    /**
+     * * Creates the AUT settings.
+     * 
+     * @param cmds
+     *            the commands list
+     * @param parameters
+     *            The parameters for starting the AUT.
      */
-    protected void addBaseSettings(List<String> cmds, Map parameters) {
+    protected void addBaseSettings(List<String> cmds,
+        Map<String, String> parameters) {
         // add locale
-        addLocale(cmds, (Locale)parameters.get(
-            AutConfigConstants.AUT_LOCALE)); 
-        
+        addLocale(cmds, new Locale(parameters.get(
+            AutConfigConstants.AUT_LOCALE)));
+
         // add JRE params
-        final String jreParams = (String)parameters.get(
-                AutConfigConstants.JRE_PARAMETER);
+        final String jreParams = parameters
+            .get(AutConfigConstants.JRE_PARAMETER);
         if (jreParams != null && jreParams.length() > 0) {
-            StringTokenizer tok = new StringTokenizer(jreParams, 
+            StringTokenizer tok = new StringTokenizer(jreParams,
                 WHITESPACE_DELIMITER);
             while (tok.hasMoreTokens()) {
                 cmds.add(tok.nextToken());
             }
         }
-                
+
         // add debug options (if necessary)
         addDebugParams(cmds, false);
         // add -Duser.dir and workingDir here
