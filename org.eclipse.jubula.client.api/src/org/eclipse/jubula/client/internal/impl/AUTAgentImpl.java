@@ -10,10 +10,16 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.internal.impl;
 
+import java.util.Map;
+
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
+import org.eclipse.jubula.communication.Communicator;
+import org.eclipse.jubula.communication.message.StartAUTServerMessage;
+import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.constants.ToolkitConstants;
 
 /** @author BREDEX GmbH */
 public class AUTAgentImpl implements AUTAgent {
@@ -56,7 +62,21 @@ public class AUTAgentImpl implements AUTAgent {
 
     /** {@inheritDoc} */
     public AUT startAUT(AUTConfiguration configuration) throws Exception {
-        // currently empty
+        Map<String, String> autConfigMap = configuration.getLaunchInformation();
+        
+        // add relevant information for the AUT-Agent
+        final Communicator communicator = m_agent.getCommunicator();
+        autConfigMap.put(AutConfigConstants.AUT_AGENT_PORT,
+            String.valueOf(communicator.getPort()));
+        autConfigMap.put(AutConfigConstants.AUT_AGENT_HOST,
+            communicator.getHostName());
+        autConfigMap.put(AutConfigConstants.AUT_NAME,
+            autConfigMap.get(AutConfigConstants.AUT_ID));
+        
+        String toolkitID = autConfigMap.get(ToolkitConstants.ATTR_TOOLKITID);
+        StartAUTServerMessage startAUTServerMessage = new StartAUTServerMessage(
+            autConfigMap, toolkitID);
+        m_agent.send(startAUTServerMessage);
         return null;
     }
 

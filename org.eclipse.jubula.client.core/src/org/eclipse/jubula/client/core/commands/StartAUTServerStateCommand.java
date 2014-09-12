@@ -14,7 +14,7 @@ import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.events.AUTServerEvent;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.communication.ICommand;
+import org.eclipse.jubula.communication.APICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @created 06.08.2004
  *
  */
-public class StartAUTServerStateCommand implements ICommand {
+public class StartAUTServerStateCommand implements APICommand {
     /** the logger */
     private static Logger log = LoggerFactory
         .getLogger(StartAUTServerStateCommand.class);

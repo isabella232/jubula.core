@@ -21,6 +21,7 @@
         <module>../org.eclipse.jubula.feature.source</module>
         <module>../org.eclipse.jubula.feature.api</module>
 		<module>../org.eclipse.jubula.client.api</module>
+		<module>../org.eclipse.jubula.client.api.commands</module>
 		<module>../org.eclipse.jubula.client.core</module>
         <module>../org.eclipse.jubula.client.ui</module>
         <module>../org.eclipse.jubula.client.alm.mylyn.core</module>

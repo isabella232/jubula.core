@@ -52,9 +52,6 @@ public class RCPAUTConfiguration extends SWTAUTConfiguration {
     public Map<String, String> getLaunchInformation() {
         Map<String, String> launchInformation = new HashMap<String, String>();
 
-        launchInformation.put(ToolkitConstants.ATTR_TOOLKITID,
-            CommandConstants.RCP_TOOLKIT);
-
         launchInformation.put(AutConfigConstants.AUT_ID, getAutID()
             .getExecutableName());
         launchInformation.put(AutConfigConstants.EXECUTABLE, getCommand());
@@ -67,6 +64,9 @@ public class RCPAUTConfiguration extends SWTAUTConfiguration {
         launchInformation.put(AutConfigConstants.AUT_LOCALE,
             getLocale().toString());
         
+        // Toolkit specific information
+        launchInformation.put(ToolkitConstants.ATTR_TOOLKITID,
+            CommandConstants.RCP_TOOLKIT);
         launchInformation.put(AutConfigConstants.NAME_TECHNICAL_COMPONENTS,
             Boolean.TRUE.toString());
 

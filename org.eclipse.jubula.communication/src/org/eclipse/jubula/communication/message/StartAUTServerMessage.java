@@ -65,11 +65,7 @@ public class StartAUTServerMessage extends Message {
         m_autToolKit = autToolKit;
     }
 
-    /**
-     * Returns the name of the AUTStartMessage
-     * 
-     * @return a <code>String</code> value {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCommandClass() {
         return CommandConstants.START_AUT_SERVER_COMMAND;
     }
@@ -88,7 +84,7 @@ public class StartAUTServerMessage extends Message {
      * @param autConfiguration
      *            the autConfiguration to set
      */
-    public void setAutConfiguration(Map<String, String> autConfiguration) {
+    private void setAutConfiguration(Map<String, String> autConfiguration) {
         m_autConfiguration = autConfiguration;
     }
 }
