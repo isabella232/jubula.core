@@ -8,11 +8,22 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.api.datatype;
+package org.eclipse.jubula.toolkit.base.internal.annotations;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author BREDEX GmbH
  */
-public class Variable {
-
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface RealizedType {
+    
+    /**
+     * returns the realized type of a component
+     */
+    String realizedType();
 }

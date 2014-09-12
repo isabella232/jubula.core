@@ -8,22 +8,11 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.base.api.internal.annotations;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package org.eclipse.jubula.toolkit.datatype;
 
 /**
  * @author BREDEX GmbH
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface TesterClass {
-    
-    /**
-     * returns the realized type of a component
-     */
-    String testerClass();
+public class Variable {
+
 }

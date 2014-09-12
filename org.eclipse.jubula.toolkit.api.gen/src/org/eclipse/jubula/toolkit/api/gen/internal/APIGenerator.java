@@ -13,10 +13,10 @@ package org.eclipse.jubula.toolkit.api.gen.internal;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
 
 import org.eclipse.jubula.toolkit.api.gen.ClassGenerator;
-import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.utils.generator.CompSystemProcessor;
 import org.eclipse.jubula.tools.utils.generator.ComponentInfo;
 import org.eclipse.jubula.tools.utils.generator.ToolkitConfig;
@@ -35,7 +35,7 @@ public class APIGenerator {
      * Constructor
      */
     private APIGenerator() {
-        
+        // hidden
     }
 
     /** 
@@ -44,30 +44,33 @@ public class APIGenerator {
      */
     public static void main(String[] args) {
         ConfigLoader loader = ConfigLoader.getInstance();
-        String generationDir = loader.getGenerationDir();
+        String generationBaseDir = loader.getGenerationDir();
         ToolkitConfig config = loader.getToolkitConfig();
         CompSystemProcessor processor = new CompSystemProcessor(config);
         
         List<ComponentInfo> compInfos = processor.getCompInfos(false);
         for (ComponentInfo compInfo : compInfos) {
-            createClass(compInfo.getComponent(), generationDir);
+            Component component = compInfo.getComponent();
+            createClass(component, generationBaseDir);
         }
     }
 
     /** 
      * creates class for component
      * @param component the component
-     * @param generationDir directory for generation
+     * @param generationBaseDirTemplate directory for generation
      */
-    private static void createClass(Component component, String generationDir) {
-        NameMappingLoader nameLoader = NameMappingLoader.getInstance();
-        String[] splitName = splitName(component.getType());
-        String path = nameLoader.getDesiredName(splitName[0]
-                .replace(StringConstants.DOT, StringConstants.SLASH));
-        String className = nameLoader.getDesiredName(splitName[1]);
-        File dir = new File(generationDir + path);
+    private static void createClass(Component component,
+            String generationBaseDirTemplate) {
+        GenerationInfo genInfo = new GenerationInfo(component);
+        String path = genInfo.getDirectoryPathExtension();
+        String className = genInfo.getClassName();
+        String generationBaseDir = MessageFormat.format(
+                generationBaseDirTemplate,
+                new Object[] {genInfo.getToolkitName()});
+        File dir = new File(generationBaseDir + path);
         File file = new File(dir, className + ".java"); //$NON-NLS-1$
-        String content = classGenerator.generate(component);
+        String content = classGenerator.generate(genInfo);
 
         if (!file.exists()) {
             try {
@@ -88,14 +91,5 @@ public class APIGenerator {
             e.printStackTrace();
             System.exit(1);
         }
-    }
-    
-    /**
-     * splits the class name of the full qualified name
-     * @param fullQualifiedName the full qualified name
-     * @return the class name
-     */
-    public static String[] splitName(String fullQualifiedName) {
-        return fullQualifiedName.split("\\.(?=[^\\.]+$)"); //$NON-NLS-1$
     }
 }

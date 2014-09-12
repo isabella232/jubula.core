@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.base.api.internal.annotations;
+package org.eclipse.jubula.toolkit.base.internal.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -20,10 +20,10 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface RealizedType {
+public @interface TesterClass {
     
     /**
      * returns the realized type of a component
      */
-    String realizedType();
+    String testerClass();
 }
