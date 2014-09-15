@@ -35,19 +35,19 @@ public abstract class AbstractOSProcessAUTConfiguration extends
      *            the AUT ID
      * @param command
      *            the command
-     * @param wd
+     * @param workingDir
      *            the working directory
      * @param args
      *            the commands arguments
      * @param locale
-     *            the AUT locale to use
+     *            the locale to use for the AUT process
      */
     public AbstractOSProcessAUTConfiguration(String name, AutIdentifier autID,
-        String command, String wd, String[] args, Locale locale) {
+        String command, String workingDir, String[] args, Locale locale) {
         super(name, autID);
         setLocale(locale);
         setCommand(command);
-        setWorkingDir(wd);
+        setWorkingDir(workingDir);
         setArgs(args);
     }
 
