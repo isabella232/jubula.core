@@ -23,10 +23,8 @@ import org.slf4j.LoggerFactory;
 /**
  * @author BREDEX GmbH
  * @created 07.02.2006
- * 
  */
 public class InitTestExecutionCommand implements ICommand {
-    
     /** Logger */
     private static final Logger LOG =
         LoggerFactory.getLogger(InitTestExecutionCommand.class);
@@ -34,45 +32,33 @@ public class InitTestExecutionCommand implements ICommand {
     /** message */
     private InitTestExecutionMessage m_message;
     
-    /**
-     * {@inheritDoc}
-     * @return
-     */
+    /** {@inheritDoc} */
     public Message execute() {
-        RobotConfiguration.getInstance().setDefaultActivationMethod(
-            m_message.getDefaultActivationMethod());
-        
+        final RobotConfiguration robotConfig = RobotConfiguration.getInstance();
+        robotConfig.setDefaultActivationMethod(m_message
+            .getDefaultActivationMethod());
+
         try {
             IRobot robot = AUTServer.getInstance().getRobot();
-            robot.activateApplication(RobotConfiguration.getInstance()
-                .getDefaultActivationMethod());
+            robot.activateApplication(robotConfig.getDefaultActivationMethod());
         } catch (Exception exc) {
             LOG.error("error in activation of the AUT", exc); //$NON-NLS-1$
         }
         return null;
     }
     
-    /**
-     * {@inheritDoc}
-     * @return
-     */
+    /** {@inheritDoc} */
     public Message getMessage() {
         return m_message;
     }
     
-    /**
-     * {@inheritDoc}
-     * @param message
-     */
+    /** {@inheritDoc} */
     public void setMessage(Message message) {
         m_message = (InitTestExecutionMessage)message;
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void timeout() {
         LOG.error(this.getClass().getName() + ".timeout() called"); //$NON-NLS-1$
     }
-
 }

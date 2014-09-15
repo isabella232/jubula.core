@@ -120,5 +120,4 @@ public class JavaFXAUTServer extends AUTServer {
     public IRobot getRobot() {
         return RobotFactoryJavaFXImpl.INSTANCE.getRobot();
     }
-
 }

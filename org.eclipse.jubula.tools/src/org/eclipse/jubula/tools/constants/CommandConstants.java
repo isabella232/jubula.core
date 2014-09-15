@@ -100,14 +100,6 @@ public abstract class CommandConstants {
     public static final String EXT_IMPLCLASSES_PATH = "./lib/extImplClasses"; //$NON-NLS-1$
     /** constant: "./lib/ext" - path name for extension jars like monitoring */
     public static final String EXT_JARS_PATH = "./lib/ext/"; ////$NON-NLS-1$    
-    /** constant: "org.eclipse.jubula.rc.swing.commands.ActivateApplicationCommand" */
-    public static final String ACTIVATE_SWING_APPLICATION_COMMAND = "org.eclipse.jubula.rc.swing.commands.ActivateApplicationCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.rc.swt.commands.ActivateApplicationCommand" */
-    public static final String ACTIVATE_SWT_APPLICATION_COMMAND = "org.eclipse.jubula.rc.swt.commands.ActivateApplicationCommand"; //$NON-NLS-1$
-    /** constant: "com.bredexsw.guidancer.rc.win.commands.ActivateApplicationCommand" */
-    public static final String ACTIVATE_WIN_APPLICATION_COMMAND = "com.bredexsw.guidancer.rc.win.commands.ActivateApplicationCommand"; //$NON-NLS-1$
-    /** constant: "com.bredexsw.guidancer.rc.win.apps.commands.ActivateApplicationCommand" */
-    public static final String ACTIVATE_WIN_APPS_APPLICATION_COMMAND = "com.bredexsw.guidancer.rc.win.apps.commands.ActivateApplicationCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.AUTHighlightComponentCommand" */
     public static final String AUT_HIGHLIGHT_COMMAND = "org.eclipse.jubula.rc.common.commands.AUTHighlightComponentCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.AUTStartCommand" */
@@ -267,8 +259,6 @@ public abstract class CommandConstants {
     public static final String RC_JAVAFX_BUNDLE_ID = "org.eclipse.jubula.rc.javafx"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swt.commands.CAPTestCommand" */
     public static final String JAVAFX_CAP_TEST_COMMAND = "org.eclipse.jubula.rc.javafx.commands.CAPTestCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.rc.swing.commands.ActivateApplicationCommand" */
-    public static final String ACTIVATE_JAVAFX_APPLICATION_COMMAND = "org.eclipse.jubula.rc.javafx.commands.ActivateApplicationCommand"; //$NON-NLS-1$
     /** constant: "JavaFX" */
     public static final String JAVAFX_TOOLKIT = "org.eclipse.jubula.JavaFXToolkitPlugin"; //$NON-NLS-1$
    

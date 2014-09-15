@@ -17,7 +17,6 @@ import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
-import org.eclipse.jubula.communication.message.ActivateApplicationMessage;
 import org.eclipse.jubula.communication.message.CAPTestMessage;
 import org.eclipse.jubula.communication.message.MessageCap;
 import org.eclipse.jubula.communication.message.SendAUTListOfSupportedComponentsMessage;
@@ -38,33 +37,6 @@ public class MessageFactory {
     private static final Logger LOG = 
         LoggerFactory.getLogger(MessageFactory.class);
 
-    /** 
-     * mapping from toolkit name (short form) to corresponding Activate AUT 
-     * Message class name (FQN) 
-     */
-    private static Map<String, String> toolkitToActivationMessageClassName = 
-        new HashMap<String, String>();
-    
-    static {
-        toolkitToActivationMessageClassName.put(CommandConstants.SWT_TOOLKIT, 
-            "org.eclipse.jubula.communication.message.swt.ActivateSwtApplicationMessage"); //$NON-NLS-1$
-        toolkitToActivationMessageClassName.put(CommandConstants.RCP_TOOLKIT, 
-            toolkitToActivationMessageClassName.get(
-                    CommandConstants.SWT_TOOLKIT));
-        toolkitToActivationMessageClassName.put(CommandConstants.SWING_TOOLKIT, 
-            "org.eclipse.jubula.communication.message.swing.ActivateSwingApplicationMessage"); //$NON-NLS-1$
-        toolkitToActivationMessageClassName.put(CommandConstants.WIN_TOOLKIT,
-                "org.eclipse.jubula.communication.message.win.ActivateWinApplicationMessage"); //$NON-NLS-1$
-        toolkitToActivationMessageClassName.put(
-                CommandConstants.WIN__APPS_TOOLKIT,
-                "org.eclipse.jubula.communication.message.win.ActivateWinApplicationMessage"); //$NON-NLS-1$
-        toolkitToActivationMessageClassName.put(CommandConstants.IOS_TOOLKIT,
-                "org.eclipse.jubula.communication.message.ios.IOSActivateApplicationMessage"); //$NON-NLS-1$
-        toolkitToActivationMessageClassName.put(CommandConstants.
-                JAVAFX_TOOLKIT, 
-                "org.eclipse.jubula.communication.message.javafx.ActivateJavaFXApplicationMessage"); //$NON-NLS-1$
-    }
-    
     /** 
      * mapping from toolkit name (short form) to corresponding CAP Test  
      * Message class name (FQN) 
@@ -96,86 +68,6 @@ public class MessageFactory {
      */
     private MessageFactory() {
         // do nothing
-    }
-
-    /**
-     * @throws UnknownMessageException the exception thrown if the instantiation of message failed.
-     * @return the created Message
-     */
-    public static ActivateApplicationMessage getActivateApplicationMessage() 
-        throws UnknownMessageException {
-        final String autToolKit = getAutToolkit();
-        String messageClassName = StringConstants.EMPTY;
-        try {
-            messageClassName = 
-                toolkitToActivationMessageClassName.get(autToolKit);
-            if (messageClassName != null) {
-                Class messageClass = Class.forName(messageClassName, false, 
-                        ActivateApplicationMessage.class.getClassLoader());
-                if (!ActivateApplicationMessage.class.isAssignableFrom(
-                        messageClass)) {
-                    
-                    throw new UnknownMessageException(messageClass.getName()
-                            + Messages.IsNotAssignableTo + StringConstants.SPACE
-                            + ActivateApplicationMessage.class.getName(),
-                            MessageIDs.E_MESSAGE_NOT_ASSIGNABLE);
-                }
-                // create a sharedInstance and set the message
-                ActivateApplicationMessage result = 
-                    (ActivateApplicationMessage)messageClass.newInstance();
-                return result;
-            }
-            
-            throw new UnknownMessageException(
-                    Messages.CreatingAnMessageSharedInstanceFor 
-                        + StringConstants.SPACE + messageClassName 
-                        + Messages.Failed + StringConstants.COLON 
-                        + StringConstants.SPACE
-                        + Messages.NoAUTActivationMessageClassFoundForToolkit
-                        + StringConstants.SPACE + autToolKit,
-                            MessageIDs.E_MESSAGE_NOT_CREATED);
-            
-        } catch (ExceptionInInitializerError eiie) {
-            LOG.error(eiie.getLocalizedMessage(), eiie);
-            throw new UnknownMessageException(
-                    Messages.CreatingAnMessageSharedInstanceFor
-                        + StringConstants.SPACE + messageClassName 
-                        + Messages.Failed + StringConstants.COLON 
-                        + StringConstants.SPACE + eiie.getMessage(), 
-                            MessageIDs.E_MESSAGE_NOT_CREATED);
-        } catch (LinkageError le) {
-            LOG.error(le.getLocalizedMessage(), le);
-            throw new UnknownMessageException(
-                    Messages.CreatingAnMessageSharedInstanceFor
-                    + StringConstants.SPACE + messageClassName 
-                    + Messages.Failed + StringConstants.COLON 
-                    + StringConstants.SPACE + le.getMessage(), 
-                        MessageIDs.E_MESSAGE_NOT_CREATED);
-        } catch (ClassNotFoundException cnfe) {
-            LOG.error(cnfe.getLocalizedMessage(), cnfe);
-            throw new UnknownMessageException(
-                    Messages.CreatingAnMessageSharedInstanceFor
-                    + StringConstants.SPACE + messageClassName 
-                    + Messages.Failed + StringConstants.COLON 
-                    + StringConstants.SPACE + cnfe.getMessage(), 
-                        MessageIDs.E_MESSAGE_NOT_CREATED);
-        } catch (InstantiationException ie) {
-            LOG.error(ie.getLocalizedMessage(), ie);
-            throw new UnknownMessageException(
-                    Messages.CreatingAnMessageSharedInstanceFor
-                    + StringConstants.SPACE + messageClassName 
-                    + Messages.Failed + StringConstants.COLON 
-                    + StringConstants.SPACE + ie.getMessage(), 
-                        MessageIDs.E_MESSAGE_NOT_CREATED);
-        } catch (IllegalAccessException iae) {
-            LOG.error(iae.getLocalizedMessage(), iae);
-            throw new UnknownMessageException(
-                    Messages.CreatingAnMessageSharedInstanceFor
-                    + StringConstants.SPACE + messageClassName 
-                    + Messages.Failed + StringConstants.COLON 
-                    + StringConstants.SPACE + iae.getMessage(), 
-                        MessageIDs.E_MESSAGE_NOT_CREATED);
-        }
     }
 
     /**
