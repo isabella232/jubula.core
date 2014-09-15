@@ -56,7 +56,12 @@ public class TestAUTStartAndStop {
             new AutIdentifier(autID),
             "SimpleAdder.exe", //$NON-NLS-1$
             "k:\\guidancer\\Workspace\\hu_snapshot\\current\\platforms\\win32.win32.x86\\examples\\AUTs\\SimpleAdder\\rcp\\win32\\win32\\x86\\", //$NON-NLS-1$ 
-            new String[]{"-clean"}, //$NON-NLS-1$
+            new String[]{
+                "-clean" , //$NON-NLS-1$
+                "-configuration", //$NON-NLS-1$
+                "@none", //$NON-NLS-1$
+                "-data", //$NON-NLS-1$
+                "@non"}, //$NON-NLS-1$
             Locale.getDefault(), 
             Locale.getDefault());
         
