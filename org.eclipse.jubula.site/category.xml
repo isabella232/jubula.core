@@ -9,9 +9,6 @@
    <feature url="features/org.eclipse.jubula.feature_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature" version="2.4.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.source_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature.source" version="2.4.0.qualifier">
-      <category name="org.eclipse.test"/>
-   </feature>
    <feature url="features/org.eclipse.jubula.feature.launch.java_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.java" version="2.4.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
@@ -19,6 +16,9 @@
       <category name="org.eclipse.test"/>
    </feature>
    <feature url="features/org.eclipse.jubula.feature.api_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature.api" version="2.4.0.qualifier">
+      <category name="org.eclipse.test"/>
+   </feature>
+   <feature url="features/org.eclipse.jubula.feature.api.source_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature.api.source" version="2.4.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
 </site>
