@@ -49,16 +49,22 @@ public class TestAUTStart {
     /** the actual test method */
     @Test
     public void testStartAUT() throws Exception {
+        final String autID = "SimpleAdder";  //$NON-NLS-1$
         AUTConfiguration config = new RCPAUTConfiguration(
             "api.aut.conf.simple.adder.rcp",  //$NON-NLS-1$
-            new AutIdentifier("SimpleAdder"),  //$NON-NLS-1$
+            new AutIdentifier(autID),
             "SimpleAdder.exe", //$NON-NLS-1$
             "k:\\guidancer\\Workspace\\hu_snapshot\\current\\platforms\\win32.win32.x86\\examples\\AUTs\\SimpleAdder\\rcp\\win32\\win32\\x86\\", //$NON-NLS-1$ 
             new String[]{"-clean"}, //$NON-NLS-1$
             Locale.getDefault(), 
             Locale.getDefault());
         
-        m_agent.startAUT(config);
+        AutIdentifier id = m_agent.startAUT(config);
+        
+        // this e.g. might not be the case if AUT-Agent is running in
+        // non-lenient mode and multiple AUTs with the same ID are supposed to
+        // start
+        Assert.assertEquals(id.getExecutableName(), autID);
     }
 
     /** cleanup */

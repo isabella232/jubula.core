@@ -36,6 +36,7 @@ import org.eclipse.jubula.communication.message.AutRegisteredMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
+import org.eclipse.jubula.tools.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.exception.CommunicationException;
 import org.eclipse.jubula.tools.exception.JBVersionException;
@@ -492,33 +493,33 @@ public class AutStarter {
                     break;
                 case AUTServerExitConstants.AUT_START_ERROR:
                     message = new StartAUTServerStateMessage(
-                        StartAUTServerStateMessage.ERROR, "Error while starting AUT!"); //$NON-NLS-1$
+                        AUTStartResponse.ERROR, "Error while starting AUT!"); //$NON-NLS-1$
                     break;
                 case AUTServerExitConstants.EXIT_INVALID_ARGS:
                     if (m_isAgentSet && (m_errorStream != null)) {
                         message = new StartAUTServerStateMessage(
-                                StartAUTServerStateMessage.JDK_INVALID,
+                            AUTStartResponse.JDK_INVALID,
                                 "JDK 1.5 or higher is required to start your AUT" + //$NON-NLS-1$
                                 " via executable file."); //$NON-NLS-1$
                     } else {
                         message = new StartAUTServerStateMessage(
-                                StartAUTServerStateMessage.INVALID_ARGUMENTS,
+                            AUTStartResponse.INVALID_ARGUMENTS,
                                 "invalid arguments"); //$NON-NLS-1$
                     }
                     break;
                 case AUTServerExitConstants.EXIT_INVALID_NUMBER_OF_ARGS:
                     message = new StartAUTServerStateMessage(
-                            StartAUTServerStateMessage.INVALID_ARGUMENTS,
+                        AUTStartResponse.INVALID_ARGUMENTS,
                             "invalid number of arguments"); //$NON-NLS-1$
                     break;
                 case AUTServerExitConstants.EXIT_UNKNOWN_ITE_CLIENT:
                     message = new StartAUTServerStateMessage(
-                            StartAUTServerStateMessage.COMMUNICATION,
+                        AUTStartResponse.COMMUNICATION,
                             "establishing communication failed: invalid client"); //$NON-NLS-1$
                     break;
                 case AUTServerExitConstants.EXIT_COMMUNICATION_ERROR:
                     message = new StartAUTServerStateMessage(
-                            StartAUTServerStateMessage.COMMUNICATION,
+                        AUTStartResponse.COMMUNICATION,
                             "establishing communication failed"); //$NON-NLS-1$
                     break;
                 case AUTServerExitConstants
@@ -528,7 +529,7 @@ public class AutStarter {
                 case AUTServerExitConstants.EXIT_SECURITY_VIOLATION_REFLECTION:
                 case AUTServerExitConstants.EXIT_SECURITY_VIOLATION_SHUTDOWN:
                     message = new StartAUTServerStateMessage(
-                            StartAUTServerStateMessage.SECURITY,
+                        AUTStartResponse.SECURITY,
                             "security violation"); //$NON-NLS-1$
                     break;
                 case AUTServerExitConstants.EXIT_AUT_NOT_FOUND:
@@ -543,7 +544,7 @@ public class AutStarter {
                     log.error("unknown AUTServer exit code: " //$NON-NLS-1$
                             + m_autExitValue + "'"); //$NON-NLS-1$
                     message = new StartAUTServerStateMessage(
-                        StartAUTServerStateMessage.ERROR,
+                        AUTStartResponse.ERROR,
                         "unknown AUTServer exit code: '" //$NON-NLS-1$
                         + m_autExitValue + "'"); //$NON-NLS-1$
             }
@@ -629,11 +630,11 @@ public class AutStarter {
                 initAutConnectionSocket();
             } catch (JBVersionException e) {
                 message = new StartAUTServerStateMessage(
-                    StartAUTServerStateMessage.COMMUNICATION,
+                    AUTStartResponse.COMMUNICATION,
                     "version exception while restart AUT"); //$NON-NLS-1$
             } catch (IOException e) {
                 message = new StartAUTServerStateMessage(
-                    StartAUTServerStateMessage.COMMUNICATION,
+                    AUTStartResponse.COMMUNICATION,
                     "io exception while restart AUT"); //$NON-NLS-1$
             }
             return message;

@@ -17,6 +17,7 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.APICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
+import org.eclipse.jubula.tools.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,13 +54,13 @@ public class StartAUTServerStateCommand implements APICommand {
      * {@inheritDoc}
      */
     public Message execute() {
-        int state = m_message.getReason();
+        final int state = m_message.getReason();
         IClientTest clientTest = ClientTest.instance();
         switch (state) {
-            case StartAUTServerStateMessage.OK: 
+            case AUTStartResponse.OK: 
                 log.info(Messages.AUTServerIsStarting);
                 break;
-            case StartAUTServerStateMessage.IO:
+            case AUTStartResponse.IO:
                 // HERE notify error listener -> closing system
                 log.error(Messages.NoJavaFound + StringConstants.COLON
                     + StringConstants.SPACE
@@ -67,49 +68,49 @@ public class StartAUTServerStateCommand implements APICommand {
                 clientTest.fireAUTServerStateChanged(
                     new AUTServerEvent(AUTServerEvent.INVALID_JAVA));
                 break;
-            case StartAUTServerStateMessage.DATA:
-            case StartAUTServerStateMessage.EXECUTION:
-            case StartAUTServerStateMessage.SECURITY:
-            case StartAUTServerStateMessage.INVALID_ARGUMENTS:
-            case StartAUTServerStateMessage.ERROR:
-            case StartAUTServerStateMessage.COMMUNICATION:
+            case AUTStartResponse.DATA:
+            case AUTStartResponse.EXECUTION:
+            case AUTStartResponse.SECURITY:
+            case AUTStartResponse.INVALID_ARGUMENTS:
+            case AUTStartResponse.ERROR:
+            case AUTStartResponse.COMMUNICATION:
                 log.error(Messages.AUTServerCouldNotStart 
                         + StringConstants.COLON + StringConstants.SPACE
                         + m_message.getDescription());
                 clientTest.fireAUTServerStateChanged(
                         new AUTServerEvent(AUTServerEvent.COMMUNICATION));
                 break;
-            case StartAUTServerStateMessage.AUT_MAIN_NOT_DISTINCT_IN_JAR:
-            case StartAUTServerStateMessage.AUT_MAIN_NOT_FOUND_IN_JAR:
+            case AUTStartResponse.AUT_MAIN_NOT_DISTINCT_IN_JAR:
+            case AUTStartResponse.AUT_MAIN_NOT_FOUND_IN_JAR:
                 log.info(Messages.AUTServerCouldNotStart 
                         + StringConstants.COLON + StringConstants.SPACE
                         + m_message.getDescription());
                 clientTest.fireAUTServerStateChanged(
                         new AUTServerEvent(AUTServerEvent.NO_MAIN_IN_JAR));
                 break;
-            case StartAUTServerStateMessage.NO_JAR_AS_CLASSPATH:
-            case StartAUTServerStateMessage.SCANNING_JAR_FAILED:
+            case AUTStartResponse.NO_JAR_AS_CLASSPATH:
+            case AUTStartResponse.SCANNING_JAR_FAILED:
                 log.info(Messages.AUTServerCouldNotStart 
                         + StringConstants.COLON + StringConstants.SPACE
                     + m_message.getDescription());
                 clientTest.fireAUTServerStateChanged(
                         new AUTServerEvent(AUTServerEvent.INVALID_JAR));
                 break;
-            case StartAUTServerStateMessage.NO_SERVER_CLASS:
+            case AUTStartResponse.NO_SERVER_CLASS:
                 log.error(Messages.AUTServerCouldNotStart 
                         + StringConstants.COLON + StringConstants.SPACE
                         + m_message.getDescription());
                 clientTest.fireAUTServerStateChanged(
                     new AUTServerEvent(AUTServerEvent.SERVER_NOT_INSTANTIATED));
                 break;
-            case StartAUTServerStateMessage.DOTNET_INSTALL_INVALID:
+            case AUTStartResponse.DOTNET_INSTALL_INVALID:
                 log.error(Messages.AUTServerCouldNotStart 
                         + StringConstants.COLON + StringConstants.SPACE
                     + m_message.getDescription());
                 clientTest.fireAUTServerStateChanged(
                     new AUTServerEvent(AUTServerEvent.DOTNET_INSTALL_INVALID));
                 break;
-            case StartAUTServerStateMessage.JDK_INVALID:
+            case AUTStartResponse.JDK_INVALID:
                 log.error(Messages.AUTServerCouldNotStart 
                         + StringConstants.COLON + StringConstants.SPACE
                     + m_message.getDescription());

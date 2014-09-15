@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2014 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -15,7 +15,7 @@ package org.eclipse.jubula.communication;
  * Marker interface for all public API related commands
  * 
  * @author BREDEX GmbH
- * @created 06.07.2004
+ * @created 12.09.2014
  * 
  */
 public interface APICommand extends ICommand {

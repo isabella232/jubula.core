@@ -17,6 +17,7 @@ import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
+import org.eclipse.jubula.tools.constants.AUTStartResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,9 +93,6 @@ public class StartAUTServerCommand implements ICommand {
         log.debug("execute() called"); //$NON-NLS-1$
         try {
             AutStarter.getInstance().getAgent().setStartAutMessage(m_message);
-            
-            // Load class
-            // FIXME RCP
             String autToolkit = m_message.getAutToolKit();
             String toolkitName = autToolkit.substring(
                 autToolkit.lastIndexOf('.') + 1, 
@@ -108,37 +106,37 @@ public class StartAUTServerCommand implements ICommand {
         } catch (IllegalArgumentException iae) {
             log.error(iae.getLocalizedMessage(), iae);
             return new StartAUTServerStateMessage(
-                StartAUTServerStateMessage.EXECUTION,
+                AUTStartResponse.EXECUTION,
                 iae.getMessage());
         } catch (NullPointerException npe) {
             log.error(npe.getLocalizedMessage(), npe);
             return new StartAUTServerStateMessage(
-                StartAUTServerStateMessage.DATA,
+                AUTStartResponse.DATA,
                 npe.getMessage());
         } catch (SecurityException se) {
             log.error(se.getLocalizedMessage(), se);
             return new StartAUTServerStateMessage(
-                StartAUTServerStateMessage.SECURITY,
+                AUTStartResponse.SECURITY,
                 "security violation:" + se.getMessage()); //$NON-NLS-1$
         } catch (IOException ioe) {
             log.error("Could not start AUTServer", ioe); //$NON-NLS-1$
             return new StartAUTServerStateMessage(
-                StartAUTServerStateMessage.IO,
+                AUTStartResponse.IO,
                 ioe.getMessage());
         } catch (ClassNotFoundException cnfe) {
             log.error("Could not find class for AUTServer", cnfe); //$NON-NLS-1$
             return new StartAUTServerStateMessage(
-                StartAUTServerStateMessage.NO_SERVER_CLASS,
+                AUTStartResponse.NO_SERVER_CLASS,
                 cnfe.getMessage());
         } catch (InstantiationException ie) {
             log.error("could not instantiate class for AUTServer", ie); //$NON-NLS-1$
             return new StartAUTServerStateMessage(
-                StartAUTServerStateMessage.NO_SERVER_CLASS,
+                AUTStartResponse.NO_SERVER_CLASS,
                 ie.getMessage());
         } catch (IllegalAccessException iae) {
             log.error("could not instantiate class for AUTServer", iae); //$NON-NLS-1$
             return new StartAUTServerStateMessage(
-                StartAUTServerStateMessage.NO_SERVER_CLASS,
+                AUTStartResponse.NO_SERVER_CLASS,
                 iae.getMessage());
         }
     }

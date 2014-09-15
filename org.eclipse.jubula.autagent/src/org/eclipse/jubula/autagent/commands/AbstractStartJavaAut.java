@@ -27,6 +27,7 @@ import org.eclipse.jubula.autagent.monitoring.IMonitoring;
 import org.eclipse.jubula.autagent.monitoring.MonitoringDataStore;
 import org.eclipse.jubula.autagent.monitoring.MonitoringUtil;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
+import org.eclipse.jubula.tools.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.CommandConstants;
 import org.eclipse.jubula.tools.constants.MonitoringConstants;
@@ -149,7 +150,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                             + jarFile + "'"; //$NON-NLS-1$
                     LOG.error(message);
                     setErrorMessage(new StartAUTServerStateMessage(
-                        StartAUTServerStateMessage.AUT_MAIN_NOT_FOUND_IN_JAR,
+                        AUTStartResponse.AUT_MAIN_NOT_FOUND_IN_JAR,
                         message));
                     return null;
                 }
@@ -160,7 +161,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                     LOG.error(message);
 
                     setErrorMessage(new StartAUTServerStateMessage(
-                        StartAUTServerStateMessage.AUT_MAIN_NOT_DISTINCT_IN_JAR,
+                        AUTStartResponse.AUT_MAIN_NOT_DISTINCT_IN_JAR,
                         message));
                     return null;
                 }
@@ -170,7 +171,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                 String message = "no jar given as classpath"; //$NON-NLS-1$ 
                 LOG.error(message, npe);
                 setErrorMessage(new StartAUTServerStateMessage(
-                    StartAUTServerStateMessage.NO_JAR_AS_CLASSPATH, message));
+                    AUTStartResponse.NO_JAR_AS_CLASSPATH, message));
                 return null;
             } catch (IOException ioe) {
                 String message = "scanning '" //$NON-NLS-1$
@@ -178,7 +179,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                 LOG.error(message, ioe);
 
                 setErrorMessage(new StartAUTServerStateMessage(
-                    StartAUTServerStateMessage.SCANNING_JAR_FAILED, message));
+                    AUTStartResponse.SCANNING_JAR_FAILED, message));
                 return null;
             }
         }

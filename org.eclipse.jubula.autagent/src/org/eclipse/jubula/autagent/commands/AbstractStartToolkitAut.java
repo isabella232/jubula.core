@@ -28,6 +28,7 @@ import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.monitoring.MonitoringDataStore;
 import org.eclipse.jubula.autagent.monitoring.MonitoringUtil;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
+import org.eclipse.jubula.tools.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.AutEnvironmentConstants;
 import org.eclipse.jubula.tools.constants.StringConstants;
@@ -220,7 +221,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
             process.destroy(); // new AUTServer could not be watched
             return createBusyMessage();
         }
-        return new StartAUTServerStateMessage(StartAUTServerStateMessage.OK);
+        return new StartAUTServerStateMessage(AUTStartResponse.OK);
     }
 
     /**
@@ -242,7 +243,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
     protected StartAUTServerStateMessage getErrorMessage() {
         if (m_errorMessage == null) {
             m_errorMessage = new StartAUTServerStateMessage(
-                    StartAUTServerStateMessage.ERROR, "Unexpected error, no detail available."); //$NON-NLS-1$
+                AUTStartResponse.ERROR, "Unexpected error, no detail available."); //$NON-NLS-1$
         }
         return m_errorMessage;
     }
@@ -265,7 +266,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      * @return a new <code>StartAUTServerStateMessage</code>
      */
     protected StartAUTServerStateMessage createBusyMessage() {
-        return new StartAUTServerStateMessage(StartAUTServerStateMessage.ERROR,
+        return new StartAUTServerStateMessage(AUTStartResponse.ERROR,
             "AUTServer is already running"); //$NON-NLS-1$
     }
 

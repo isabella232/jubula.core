@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.commands;
 
+import java.util.concurrent.Exchanger;
+
+import org.eclipse.jubula.client.internal.Synchronizer;
 import org.eclipse.jubula.communication.APICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
@@ -37,7 +40,13 @@ public class StartAUTServerStateCommand implements APICommand {
 
     /** {@inheritDoc} */
     public Message execute() {
-        // FIXME MT: currently empty
+        Exchanger<Object> exchanger = Synchronizer.instance();
+        Integer state = new Integer(m_message.getReason());
+        try {
+            exchanger.exchange(state);
+        } catch (InterruptedException e) {
+            log.error(e.getLocalizedMessage(), e);
+        }
         return null;
     }
 

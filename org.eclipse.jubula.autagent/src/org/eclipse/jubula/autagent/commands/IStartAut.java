@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
+import org.eclipse.jubula.tools.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.constants.StringConstants;
 
 
@@ -28,7 +29,7 @@ import org.eclipse.jubula.tools.constants.StringConstants;
 public interface IStartAut {
     /** Default error message when the AUT cannot be started */
     public static final Message ERROR_MESSAGE = new StartAUTServerStateMessage(
-        StartAUTServerStateMessage.ERROR, "Unexpected error, no detail available."); //$NON-NLS-1$
+        AUTStartResponse.ERROR, "Unexpected error, no detail available."); //$NON-NLS-1$
     
     /** <code>RC_DEBUG</code> */
     public static final String RC_DEBUG = System.getProperty("RC_DEBUG"); //$NON-NLS-1$
