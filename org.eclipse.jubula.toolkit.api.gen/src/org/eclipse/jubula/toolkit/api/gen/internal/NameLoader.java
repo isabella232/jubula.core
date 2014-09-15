@@ -35,14 +35,19 @@ public class NameLoader {
      */
     private static final String RESOURCES_NAMEMAPPINGS_PROPERTIES =
         "resources/nameMappings.properties"; //$NON-NLS-1$
+    
+    /** package base path */
+    private static final String PACKAGE_BASE_PATH =
+        "org.eclipse.jubula.toolkit."; //$NON-NLS-1$
+    
     /**
      * <code>instance</code> the singleton instance
      */
     private static NameLoader instance = null;
-    /**
-     * the mapping properties
-     */
+    
+    /** the mapping properties */
     private Properties m_mappingProperties;
+    
 
     /**
      * The constructor.
@@ -114,13 +119,13 @@ public class NameLoader {
      * @param toolkitName the toolkit name
      * @return the name extension of the api package name for the component
      */
-    public String getPackageNameExtension(Component component,
+    public String getPackageName(Component component,
             String toolkitName) {
         String extension = StringUtils.substringAfter(
                 component.getType(), toolkitName);
         extension = StringUtils.substringBeforeLast(
                 extension, StringConstants.DOT);
-        return extension;
+        return PACKAGE_BASE_PATH + toolkitName + extension;
     }
     
     /**

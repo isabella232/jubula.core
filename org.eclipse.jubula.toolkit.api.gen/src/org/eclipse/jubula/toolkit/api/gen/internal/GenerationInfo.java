@@ -16,10 +16,10 @@ public class GenerationInfo {
     private String m_className;
     
     /** the package name */
-    private String m_packageNameExtension;
+    private String m_packageName;
 
     /** the directory path extension */
-    private String m_directoryPathExtension;
+    private String m_directoryPath;
 
     /** the toolkit name */
     private String m_toolkitName;
@@ -33,12 +33,12 @@ public class GenerationInfo {
         m_toolkitName = component.getToolkitDesriptor().getName().toLowerCase();
         NameLoader nameLoader = NameLoader.getInstance();
         m_className = nameLoader.getClassName(m_component.getType());
-        m_packageNameExtension = nameLoader.getPackageNameExtension(
+        m_packageName = nameLoader.getPackageName(
                 component, m_toolkitName);
-        m_directoryPathExtension = m_packageNameExtension;
-        m_packageNameExtension = executeExceptions(m_packageNameExtension);
-        m_directoryPathExtension = executeExceptions(m_directoryPathExtension)
-                .replace(StringConstants.DOT, StringConstants.SLASH);
+        m_directoryPath = m_packageName;
+        m_packageName = executeExceptions(m_packageName);
+        m_directoryPath = executeExceptions(m_directoryPath
+                .replace(StringConstants.DOT, StringConstants.SLASH));
         m_toolkitName = executeExceptions(m_toolkitName);
     }
     
@@ -71,16 +71,16 @@ public class GenerationInfo {
      * Returns the package name
      * @return the package name
      */
-    public String getPackageNameExtension() {
-        return m_packageNameExtension;
+    public String getPackageName() {
+        return m_packageName;
     }
     
     /**
      * Returns the directory path extension
      * @return the directory path extension
      */
-    public String getDirectoryPathExtension() {
-        return m_directoryPathExtension;
+    public String getDirectoryPath() {
+        return m_directoryPath;
     }
 
     /**

@@ -9,7 +9,7 @@ class="ClassGenerator"%>
 	GenerationInfo genInfo = (GenerationInfo)argument;
 	Component component = genInfo.getComponent();
 	String toolkitName = genInfo.getToolkitName();
-	String packageNameExtension = genInfo.getPackageNameExtension();
+	String packageName = genInfo.getPackageName();
 	String className = genInfo.getClassName();
 	NameLoader nameLoader = NameLoader.getInstance();
 	List<Action> actions = component.getActions();
@@ -30,7 +30,7 @@ class="ClassGenerator"%>
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package <%="org.eclipse.jubula.toolkit." + toolkitName + ".internal" + packageNameExtension%>;
+package <%=packageName%>;
 
 import org.eclipse.jubula.toolkit.base.internal.annotations.RealizedType;
 import org.eclipse.jubula.toolkit.base.internal.annotations.TesterClass;

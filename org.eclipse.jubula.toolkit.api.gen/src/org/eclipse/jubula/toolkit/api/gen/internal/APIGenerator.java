@@ -20,6 +20,7 @@ import org.eclipse.jubula.toolkit.api.gen.ClassGenerator;
 import org.eclipse.jubula.tools.utils.generator.CompSystemProcessor;
 import org.eclipse.jubula.tools.utils.generator.ComponentInfo;
 import org.eclipse.jubula.tools.utils.generator.ToolkitConfig;
+import org.eclipse.jubula.tools.utils.generator.ToolkitInfo;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
 
 /**
@@ -48,10 +49,53 @@ public class APIGenerator {
         ToolkitConfig config = loader.getToolkitConfig();
         CompSystemProcessor processor = new CompSystemProcessor(config);
         
+        // Clean up
+        for (ToolkitInfo tkInfo : processor.getToolkitInfos()) {
+            cleanUp(tkInfo, generationBaseDir);
+        }
+        
+        // Generate classes
         List<ComponentInfo> compInfos = processor.getCompInfos(false);
         for (ComponentInfo compInfo : compInfos) {
             Component component = compInfo.getComponent();
             createClass(component, generationBaseDir);
+        }
+    }
+
+    /**
+     * Deletes all generated content of a given toolkit
+     * @param tkInfo the toolkit
+     * @param generationBaseDirTemplate location of generated content
+     */
+    private static void cleanUp(ToolkitInfo tkInfo,
+            String generationBaseDirTemplate) {
+        String name = tkInfo.getShortType().toLowerCase();
+        String generationBaseDir = MessageFormat.format(
+                generationBaseDirTemplate,
+                new Object[] {name});
+        File dir = new File(generationBaseDir);
+        emptyDirectory(dir);
+    }
+
+    /**
+     * Empties a directory recursively
+     * @param dir the directory
+     */
+    private static void emptyDirectory(File dir) {
+        if (dir.exists()) {
+            for (File file : dir.listFiles()) {
+                if (file.isDirectory()) {
+                    emptyDirectory(file);
+                }
+                try {
+                    if (!file.getName().endsWith(".keep")) { //$NON-NLS-1$
+                        file.delete();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+            }
         }
     }
 
@@ -63,7 +107,7 @@ public class APIGenerator {
     private static void createClass(Component component,
             String generationBaseDirTemplate) {
         GenerationInfo genInfo = new GenerationInfo(component);
-        String path = genInfo.getDirectoryPathExtension();
+        String path = genInfo.getDirectoryPath();
         String className = genInfo.getClassName();
         String generationBaseDir = MessageFormat.format(
                 generationBaseDirTemplate,
