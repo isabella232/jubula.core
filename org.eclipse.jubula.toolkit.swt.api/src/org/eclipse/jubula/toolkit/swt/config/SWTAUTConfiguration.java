@@ -30,7 +30,7 @@ public abstract class SWTAUTConfiguration extends
      *            the AUT ID
      * @param command
      *            the command
-     * @param wd
+     * @param workingDir
      *            the working directory
      * @param args
      *            the arguments
@@ -40,9 +40,9 @@ public abstract class SWTAUTConfiguration extends
      *            the AUT locale to use
      */
     public SWTAUTConfiguration(String name, AutIdentifier autID,
-        String command, String wd, String[] args, Locale keyboardLayout,
+        String command, String workingDir, String[] args, Locale keyboardLayout,
         Locale locale) {
-        super(name, autID, command, wd, args, locale);
+        super(name, autID, command, workingDir, args, locale);
         setKeyboardLayout(keyboardLayout);
     }
 

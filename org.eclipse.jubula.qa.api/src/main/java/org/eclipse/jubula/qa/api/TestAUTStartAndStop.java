@@ -25,7 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /** @author BREDEX GmbH */
-public class TestAUTStart {
+public class TestAUTStartAndStop {
     /** AUT-Agent host name to use */
     public static final String AGENT_HOST = "g8.dev.bredex.local"; //$NON-NLS-1$
     /** AUT-Agent port to use */
@@ -67,7 +67,7 @@ public class TestAUTStart {
         // start
         Assert.assertEquals(id.getExecutableName(), autID);
         
-        TimeUtil.delay(5000);
+        TimeUtil.delay(2000);
         
         m_agent.stopAUT(id);
     }
