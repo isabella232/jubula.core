@@ -19,6 +19,7 @@ import org.apache.commons.lang.WordUtils;
 import org.eclipse.jubula.tools.constants.StringConstants;
 import org.eclipse.jubula.tools.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.xml.businessmodell.ToolkitDescriptor;
 
 
 /**
@@ -152,5 +153,24 @@ public class NameLoader {
         desiredName = WordUtils.capitalizeFully(desiredName);
         desiredName = StringUtils.deleteWhitespace(desiredName);
         return desiredName;
+    }
+
+    /**
+     * Returns the toolkit name
+     * @param toolkitDesriptor toolkit descriptor
+     * @return the toolkit name
+     */
+    public String getToolkitName(ToolkitDescriptor toolkitDesriptor) {
+        return toolkitDesriptor.getName().toLowerCase();
+    }
+    
+    /**
+     * modifies a string such that it fits into api naming patterns
+     * @param string the string
+     * @return the adjusted string
+     */
+    public String executeExceptions(String string) {
+        return string.replace("abstract", "base").replace("gef", "rcp.gef") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                .replace("ios", "mobile.ios").replace("winApps", "win.apps"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
 }

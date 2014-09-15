@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.eclipse.jubula.toolkit.api.gen.ClassGenerator;
 import org.eclipse.jubula.tools.utils.generator.CompSystemProcessor;
 import org.eclipse.jubula.tools.utils.generator.ComponentInfo;
@@ -69,7 +71,9 @@ public class APIGenerator {
      */
     private static void cleanUp(ToolkitInfo tkInfo,
             String generationBaseDirTemplate) {
-        String name = tkInfo.getShortType().toLowerCase();
+        
+        String name = tkInfo.getShortType().toLowerCase()
+                .replace("abstract", "base"); //$NON-NLS-1$ //$NON-NLS-2$
         String generationBaseDir = MessageFormat.format(
                 generationBaseDirTemplate,
                 new Object[] {name});
@@ -85,15 +89,12 @@ public class APIGenerator {
         if (dir.exists()) {
             for (File file : dir.listFiles()) {
                 if (file.isDirectory()) {
-                    emptyDirectory(file);
-                }
-                try {
-                    if (!file.getName().endsWith(".keep")) { //$NON-NLS-1$
-                        file.delete();
+                    try {
+                        FileUtils.deleteDirectory(file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        System.exit(1);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.exit(1);
                 }
             }
         }
@@ -124,16 +125,16 @@ public class APIGenerator {
                 e.printStackTrace();
                 System.exit(1);
             }
-        }
-        try {
-            FileOutputStream fop = new FileOutputStream(file);
-            byte[] contentInBytes = content.getBytes();
-            fop.write(contentInBytes);
-            fop.flush();
-            fop.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            try (FileOutputStream fop = new FileOutputStream(file)) {
+                byte[] contentInBytes = content.getBytes();
+                IOUtils.write(contentInBytes, fop);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
+        } else {
+            System.out.println("ERROR: " + file.getName() + " already exists!"); //$NON-NLS-1$ //$NON-NLS-2$
             System.exit(1);
-        }
+        } 
     }
 }

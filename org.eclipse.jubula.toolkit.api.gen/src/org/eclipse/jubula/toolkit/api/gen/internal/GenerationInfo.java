@@ -30,25 +30,17 @@ public class GenerationInfo {
      */
     public GenerationInfo(Component component) {
         m_component = component;
-        m_toolkitName = component.getToolkitDesriptor().getName().toLowerCase();
         NameLoader nameLoader = NameLoader.getInstance();
+        m_toolkitName = nameLoader.getToolkitName(
+                component.getToolkitDesriptor());
         m_className = nameLoader.getClassName(m_component.getType());
         m_packageName = nameLoader.getPackageName(
                 component, m_toolkitName);
         m_directoryPath = m_packageName;
-        m_packageName = executeExceptions(m_packageName);
-        m_directoryPath = executeExceptions(m_directoryPath
+        m_packageName = nameLoader.executeExceptions(m_packageName);
+        m_directoryPath = nameLoader.executeExceptions(m_directoryPath
                 .replace(StringConstants.DOT, StringConstants.SLASH));
-        m_toolkitName = executeExceptions(m_toolkitName);
-    }
-    
-    /**
-     * modifies a string such that it fits into api naming patterns
-     * @param string the string
-     * @return the adjusted string
-     */
-    private String executeExceptions(String string) {
-        return string.replace("abstract", "base").replace("gef", "rcp.gef"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        m_toolkitName = nameLoader.executeExceptions(m_toolkitName);
     }
 
     /**
