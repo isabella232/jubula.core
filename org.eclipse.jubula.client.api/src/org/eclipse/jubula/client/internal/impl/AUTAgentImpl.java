@@ -18,6 +18,7 @@ import org.eclipse.jubula.client.internal.Synchronizer;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.message.StartAUTServerMessage;
+import org.eclipse.jubula.communication.message.StopAUTServerMessage;
 import org.eclipse.jubula.tools.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.constants.ToolkitConstants;
@@ -82,8 +83,7 @@ public class AUTAgentImpl implements AUTAgent {
 
         m_agent.send(startAUTMessage);
 
-        int startResponse = new Integer((Integer)Synchronizer
-            .instance().exchange(null));
+        int startResponse = (Integer) Synchronizer.instance().exchange(null);
         return handleResponse(startResponse);
     }
 
@@ -103,7 +103,7 @@ public class AUTAgentImpl implements AUTAgent {
     
 
     /** {@inheritDoc} */
-    public void stopAUT(AutIdentifier aut) throws Exception {
-        // currently empty
+    public void stopAUT(final AutIdentifier aut) throws Exception {
+        m_agent.send(new StopAUTServerMessage(aut));
     }
 }

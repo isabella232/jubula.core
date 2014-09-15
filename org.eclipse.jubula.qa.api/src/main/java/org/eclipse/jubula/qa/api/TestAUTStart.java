@@ -19,6 +19,7 @@ import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
 import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.utils.TimeUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,6 +66,10 @@ public class TestAUTStart {
         // non-lenient mode and multiple AUTs with the same ID are supposed to
         // start
         Assert.assertEquals(id.getExecutableName(), autID);
+        
+        TimeUtil.delay(5000);
+        
+        m_agent.stopAUT(id);
     }
 
     /** cleanup */
