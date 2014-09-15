@@ -60,6 +60,9 @@ public class EventThreadQueuerJavaFXImpl implements IEventThreadQueuer {
                 // -> log on info
                 // -> throw a StepExecutionException
                 Throwable thrown = e.getCause();
+                if (thrown == null) {
+                    thrown = e;
+                }
                 if (thrown instanceof StepExecutionException) {
                     if (log.isInfoEnabled()) {
                         log.info(e);

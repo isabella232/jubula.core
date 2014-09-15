@@ -145,7 +145,12 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                     @Override
                     public String call() throws Exception {
                         TableView<?> table = getRealComponent();
-                        TableColumn col = table.getVisibleLeafColumn(column);
+                        TableColumn col = null;
+                        if (m_columns.size() == 0) {
+                            col = table.getVisibleLeafColumn(column);
+                        } else {
+                            col = m_columns.get(column);
+                        }
                         table.scrollTo(row);
                         table.scrollToColumn(col);
                         table.layout();
@@ -208,8 +213,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                                 TestDataConstants.PATH_CHAR_DEFAULT,
                                 TestDataConstants.ESCAPE_CHAR_DEFAULT, false);
                         ObservableList<TableColumn> columns;
-                        if (colPath.contains("" + TestDataConstants.
-                                PATH_CHAR_DEFAULT)) {
+                        if (colPath.contains("" + TestDataConstants.PATH_CHAR_DEFAULT)) { //$NON-NLS-1$
                             columns = table.getColumns();
                         } else {
                             columns = table.getVisibleLeafColumns();
@@ -232,33 +236,36 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                                 }
                             } catch (NumberFormatException nfe) {
                                 try {
-                                    columns = table.getColumns();
+                                    if (path.size() <= 1) {
+                                        columns = table.getColumns();
+                                    }
                                     if (columns.size() <= 0) {
                                         throw new StepExecutionException(
-                                                "No Columns", //$NON-NLS-1$
-                                                EventFactory
-                                                        .createActionError(
+                                                "No Columns", EventFactory.createActionError(//$NON-NLS-1$
                                                                 TestErrorEvent.
                                                                 NO_HEADER));
                                     }
-                                    for (int i = 0; i < columns.size(); i++) {
-                                        TableColumn c = columns.get(i);
+                                    for (TableColumn c: columns) {
                                         String header = c.getText();
                                         if (MatchUtil.getInstance().match(
                                                 header, currCol, op)) {
+                                            column = c;
                                             if (pathIterator.hasNext()) {
-                                                columns = columns.get(i)
-                                                        .getColumns();
-                                            } else {
-                                                column = columns.get(i);
+                                                columns = c.getColumns();
                                             }
+                                            break;
                                         }
                                     }
                                 } catch (IllegalArgumentException iae) {
                                     // do nothing here
                                 }
                             }
-                        }                      
+                        } 
+                        if (column == null) {
+                            throw new StepExecutionException("Column not found", //$NON-NLS-1$
+                                    EventFactory.createActionError(
+                                                    TestErrorEvent.NOT_FOUND));
+                        }
                         if (table.getVisibleLeafColumns().contains(column)) {
                             return table.getVisibleLeafColumns().
                                     indexOf(column);
@@ -324,9 +331,10 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                         TableColumn col;
                         if (m_columns.size() > 0) {
                             col = m_columns.get(column);
-                        }
-                        col = getRealComponent().
+                        } else {
+                            col = getRealComponent().
                                 getVisibleLeafColumn(column);
+                        }
                         table.scrollToColumn(col);
                         // Update the layout coordinates otherwise
                         // we would get old position values
@@ -364,10 +372,11 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                 "getSelectedCell", new Callable<Cell>() { //$NON-NLS-1$
 
                     @Override
-                    public Cell call() throws Exception {
-                        ObservableList list = getRealComponent()
-                                .getSelectionModel().getSelectedCells();
+                    public Cell call() throws StepExecutionException {
                         TableView table = getRealComponent();
+                        ObservableList list = table
+                                .getSelectionModel().getSelectedCells();
+
                         if (list.size() > 0) {
                             TablePosition pos = null;
                             for (Object object : list) {
@@ -384,8 +393,8 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                         }
                         throw new StepExecutionException("No selection found", //$NON-NLS-1$
                                 EventFactory
-                                        .createActionError(TestErrorEvent.
-                                                NO_SELECTION));
+                                .createActionError(TestErrorEvent.
+                                        NO_SELECTION));
                     }
                 });
         return result;
@@ -418,8 +427,12 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                     public Boolean call() throws Exception {
                         TableView<?> table = getRealComponent();
                         if (table.isEditable()) {
-                            TableColumn col = table.
-                                    getVisibleLeafColumn(column);
+                            TableColumn col = null;
+                            if (m_columns.size() == 0) {
+                                col = table.getVisibleLeafColumn(column);
+                            } else {
+                                col = m_columns.get(column);
+                            }
                             if (col.isEditable()) {
                                 table.scrollTo(row);
                                 table.scrollToColumn(col);
@@ -467,7 +480,12 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                     @Override
                     public Rectangle call() throws Exception {
                         TableView<?> table = getRealComponent();
-                        TableColumn col = table.getVisibleLeafColumn(column);
+                        TableColumn col = null;
+                        if (m_columns.size() == 0) {
+                            col = table.getVisibleLeafColumn(column);
+                        } else {
+                            col = m_columns.get(column);
+                        }
 
                         table.scrollTo(row);
                         table.scrollToColumn(col);

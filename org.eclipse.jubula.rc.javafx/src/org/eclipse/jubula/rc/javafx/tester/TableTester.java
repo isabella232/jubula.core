@@ -167,13 +167,11 @@ public class TableTester extends AbstractTableTester {
         String colPath = "";
         TableColumnBase nxtColumn = column;
         while (nxtColumn.getParentColumn() != null) {
-            colPath = TestDataConstants.
-                    PATH_CHAR_DEFAULT
-                    + (nxtColumn.getParentColumn()
+            colPath = String.valueOf(TestDataConstants.
+                    PATH_CHAR_DEFAULT).concat(String.
+                            valueOf((nxtColumn.getParentColumn()
                             .getColumns()
-                            .indexOf(nxtColumn) + 1)
-                    + colPath;
-
+                            .indexOf(nxtColumn) + 1) + colPath));
             nxtColumn = nxtColumn.getParentColumn();
         }
         colPath = (table.getColumns()
@@ -509,10 +507,11 @@ public class TableTester extends AbstractTableTester {
                 "getColumnByValue", new Callable<String>() {
 
                     @Override
-                    public String call() throws Exception {
+                    public String call() {
                         final int columnCount = adapter.getColumnCount();
                         if (columnCount > 0) {
-                            int startIndex = getStartingColIndex(searchType);
+                            int startIndex = getStartingColIndex(searchType) 
+                                    - 1;
                             List<TableColumn> columns = 
                                     ((TableView) getRealComponent())
                                     .getVisibleLeafColumns();
@@ -579,8 +578,15 @@ public class TableTester extends AbstractTableTester {
         int startingIndex = 0;
         if (searchType.equalsIgnoreCase(
                 CompSystemConstants.SEARCH_TYPE_RELATIVE)) {
-            startingIndex = ((ITableComponent)getComponent())
-                    .getSelectedCell().getCol() + 1;
+            Cell c = ((ITableComponent)getComponent())
+            .getSelectedCell();
+            if (c == null) {
+                throw new StepExecutionException("No selection found", //$NON-NLS-1$
+                        EventFactory
+                                .createActionError(TestErrorEvent.
+                                        NO_SELECTION));
+            }
+            startingIndex = c.getCol() + 1;
         }
         return startingIndex;
     } 
