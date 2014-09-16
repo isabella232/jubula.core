@@ -34,14 +34,14 @@ public abstract class SWTAUTConfiguration extends
      *            the working directory
      * @param args
      *            the arguments
-     * @param keyboardLayout
-     *            the keyboard layout to use
      * @param locale
      *            the AUT locale to use
+     * @param keyboardLayout
+     *            the keyboard layout to use
      */
     public SWTAUTConfiguration(String name, AutIdentifier autID,
-        String command, String workingDir, String[] args, Locale keyboardLayout,
-        Locale locale) {
+        String command, String workingDir, String[] args, Locale locale,
+        Locale keyboardLayout) {
         super(name, autID, command, workingDir, args, locale);
         setKeyboardLayout(keyboardLayout);
     }

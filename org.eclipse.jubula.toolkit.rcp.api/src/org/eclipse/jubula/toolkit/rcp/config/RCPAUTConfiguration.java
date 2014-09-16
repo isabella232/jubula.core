@@ -37,15 +37,15 @@ public class RCPAUTConfiguration extends SWTAUTConfiguration {
      *            the working directory
      * @param args
      *            the arguments
-     * @param keyboardLayout
-     *            the keyboard layout to use
      * @param locale
      *            the AUT locale to use
+     * @param keyboardLayout
+     *            the keyboard layout to use
      */
     public RCPAUTConfiguration(String name, AutIdentifier autID,
         String command, String workingDir, String[] args,
-        Locale keyboardLayout, Locale locale) {
-        super(name, autID, command, workingDir, args, keyboardLayout, locale);
+        Locale locale, Locale keyboardLayout) {
+        super(name, autID, command, workingDir, args, locale, keyboardLayout);
     }
 
     /** {@inheritDoc} */
