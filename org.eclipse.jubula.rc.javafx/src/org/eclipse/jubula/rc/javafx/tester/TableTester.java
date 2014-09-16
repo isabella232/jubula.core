@@ -586,8 +586,8 @@ public class TableTester extends AbstractTableTester {
                                 .createActionError(TestErrorEvent.
                                         NO_SELECTION));
             }
-            startingIndex = c.getCol() + 1;
+            startingIndex = c.getCol();
         }
-        return startingIndex;
+        return startingIndex + 1;
     } 
 }
