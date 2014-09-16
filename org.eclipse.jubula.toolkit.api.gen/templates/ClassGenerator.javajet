@@ -13,11 +13,23 @@ class="ClassGenerator"%>
 	String className = genInfo.getClassName();
 	NameLoader nameLoader = NameLoader.getInstance();
 	List<Action> actions = component.getActions();
-	List<String> realizedTypes = component.getRealizedTypes();
-	String realizedType = realizedTypes.size() > 0 ? realizedTypes.get(0) : null;
+	List<Component> realized = component.getRealized();
+	Component realizedComponent = realized.size() > 0 ? realized.get(0) : null;
+	Boolean hasRealizedType = (realizedComponent != null);
+	String realizedType = null;
+	GenerationInfo superInfo = null;
+	String realizedTypeFqn = null;
+	if (hasRealizedType) {
+		realizedType = realizedComponent.getType();
+		superInfo = new GenerationInfo(realizedComponent, false);
+		realizedTypeFqn = superInfo.getFqn();
+	}
 	String testerClass = "";
+	Boolean hasDefaultMapping = false;
 	if (component instanceof ConcreteComponent) {
-	    testerClass = ((ConcreteComponent)component).getTesterClass();
+		ConcreteComponent concreteComponent = (ConcreteComponent)component;
+		testerClass = concreteComponent.getTesterClass();
+		hasDefaultMapping = concreteComponent.hasDefaultMapping();
 	}
 	%>
 /*******************************************************************************
@@ -37,12 +49,28 @@ import org.eclipse.jubula.toolkit.base.internal.annotations.TesterClass;
 
 @RealizedType(realizedType="<%=realizedType%>")
 @TesterClass(testerClass="<%=testerClass%>")
-public class <%=className%> {
-	Object m_component;
-
-	public <%=className%>(Object component) {
-		m_component = component;
-	}
+public class <%=className%>
+	<%if (hasRealizedType) {%>extends <%=realizedTypeFqn%><%}%> {
+	<%if (hasRealizedType) {%>
+		<%if (hasDefaultMapping) {%>
+		public <%=className%>() {
+			super();
+		}<%} else {%>
+		Object m_component;
+		public <%=className%>(Object component) {
+			super(component);
+		}<%}%>
+	<%} else {%>
+		<%if (hasDefaultMapping) {%>
+		public <%=className%>() {
+			super();
+		}<%} else {%>
+		Object m_component;
+		public <%=className%>(Object component) {
+			super();
+			m_component = component;
+		}<%}%>
+	<%}%>
 	<%
 	Iterator<Action> actionsIterator = actions.iterator();
 	while (actionsIterator.hasNext()) {	

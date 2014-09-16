@@ -122,11 +122,7 @@ public class NameLoader {
      */
     public String getPackageName(Component component,
             String toolkitName) {
-        String extension = StringUtils.substringAfter(
-                component.getType(), toolkitName);
-        extension = StringUtils.substringBeforeLast(
-                extension, StringConstants.DOT);
-        return PACKAGE_BASE_PATH + toolkitName + extension;
+        return PACKAGE_BASE_PATH + toolkitName;
     }
     
     /**

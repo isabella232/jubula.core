@@ -23,13 +23,19 @@ public class GenerationInfo {
 
     /** the toolkit name */
     private String m_toolkitName;
+
+    /** Whether an interface should be generated */
+    private Boolean m_genInterface;
     
     /**
      * Contains all necessary information for API generation of a component
      * @param component the component
+     * @param generateInterface whether an interface should be generated
+     *          (else an impl class)
      */
-    public GenerationInfo(Component component) {
+    public GenerationInfo(Component component, boolean generateInterface) {
         m_component = component;
+        m_genInterface = generateInterface;
         NameLoader nameLoader = NameLoader.getInstance();
         m_toolkitName = nameLoader.getToolkitName(
                 component.getToolkitDesriptor());
@@ -81,6 +87,23 @@ public class GenerationInfo {
      */
     public String getToolkitName() {
         return m_toolkitName;
+    }
+    
+    /**
+     * Returns true if and only if an interface should be generated
+     * and false if and only if a implementation class should be generated
+     * @return the toolkit name
+     */
+    public Boolean generatesInterface() {
+        return m_genInterface;
+    }
+    
+    /**
+     * Returns the fully qualified name
+     * @return the fully qualified name
+     */
+    public String getFqn() {
+        return getPackageName() + StringConstants.DOT + getClassName();
     }
 
 }

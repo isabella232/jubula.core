@@ -107,7 +107,7 @@ public class APIGenerator {
      */
     private static void createClass(Component component,
             String generationBaseDirTemplate) {
-        GenerationInfo genInfo = new GenerationInfo(component);
+        GenerationInfo genInfo = new GenerationInfo(component, false);
         String path = genInfo.getDirectoryPath();
         String className = genInfo.getClassName();
         String generationBaseDir = MessageFormat.format(
