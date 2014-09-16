@@ -28,9 +28,9 @@ import org.eclipse.jubula.rc.swt.tester.adapter.ControlAdapter.PopupShownConditi
 import org.eclipse.jubula.rc.swt.tester.util.EventListener;
 import org.eclipse.jubula.rc.swt.tester.util.SimulatedTooltip;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
-import org.eclipse.jubula.tools.constants.TimeoutConstants;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;

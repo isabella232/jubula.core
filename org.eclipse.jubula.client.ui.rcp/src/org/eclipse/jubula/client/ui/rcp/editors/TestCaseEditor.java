@@ -79,11 +79,11 @@ import org.eclipse.jubula.client.ui.rcp.provider.selectionprovider.SelectionProv
 import org.eclipse.jubula.client.ui.rcp.utils.UIIdentitiyElementComparer;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
-import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;

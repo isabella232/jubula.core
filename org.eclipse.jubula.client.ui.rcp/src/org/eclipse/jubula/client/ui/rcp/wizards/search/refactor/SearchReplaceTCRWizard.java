@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import javax.persistence.EntityManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -48,9 +49,9 @@ import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages.ComponentN
 import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages.ParameterNamesMatchingWizardPage;
 import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages.ReplaceExecTestCaseData;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
-import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.exception.JBRuntimeException;
-import org.eclipse.jubula.tools.messagehandling.MessageInfo;
+import org.eclipse.jubula.tools.internal.exception.JBException;
+import org.eclipse.jubula.tools.internal.exception.JBRuntimeException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageInfo;
 import org.eclipse.ui.PlatformUI;
 
 /**

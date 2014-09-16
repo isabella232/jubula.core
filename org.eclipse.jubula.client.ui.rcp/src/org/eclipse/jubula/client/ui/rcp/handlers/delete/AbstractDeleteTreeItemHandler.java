@@ -23,7 +23,7 @@ import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IEditorPart;
 

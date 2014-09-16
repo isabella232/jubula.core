@@ -31,8 +31,8 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboComponent;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 /**
  * Implementation of the Interface <code>IComboBoxAdapter</code> as a
  * adapter for the <code>JComboBox</code> component.

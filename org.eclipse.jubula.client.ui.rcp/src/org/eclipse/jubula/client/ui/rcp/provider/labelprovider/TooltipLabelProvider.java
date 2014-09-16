@@ -15,7 +15,7 @@ import java.util.Set;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 /**
  * A label provider implementation which, by default, 

@@ -30,8 +30,8 @@ import javax.persistence.Version;
 
 import org.apache.commons.collections.MapUtils;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
-import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 
 

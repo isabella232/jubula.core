@@ -28,9 +28,9 @@ import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.JBFatalAbortException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.JBFatalAbortException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

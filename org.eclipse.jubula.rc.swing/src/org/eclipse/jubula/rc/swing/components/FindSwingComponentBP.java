@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.swing.components;
 import java.awt.Component;
 
 import org.eclipse.jubula.rc.common.components.FindComponentBP;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 
 /**

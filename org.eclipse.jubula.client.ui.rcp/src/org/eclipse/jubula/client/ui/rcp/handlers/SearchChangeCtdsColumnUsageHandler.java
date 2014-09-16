@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -31,7 +32,7 @@ import org.eclipse.jubula.client.ui.rcp.wizards.refactor.param.ChangeCtdsColumnU
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.param.ExistingAndNewParameterData;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.param.TestCasesValidator;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 /**
  * Handler for context menu in a search result list to change CTDS column usage.

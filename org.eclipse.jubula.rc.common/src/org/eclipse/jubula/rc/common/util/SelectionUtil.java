@@ -12,8 +12,8 @@ package org.eclipse.jubula.rc.common.util;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
 /**
  * Utility methods to check whether a given selection is valid or not.

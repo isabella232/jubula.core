@@ -19,10 +19,10 @@ import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.message.StopAUTServerMessage;
-import org.eclipse.jubula.tools.constants.AUTStartResponse;
-import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.ToolkitConstants;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /** @author BREDEX GmbH */
 public class AUTAgentImpl implements AUTAgent {

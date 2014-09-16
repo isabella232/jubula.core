@@ -14,7 +14,7 @@ import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jubula.client.core.model.IComponentNameData;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.rcp.utils.ComponentNameVisibility;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 
 /**

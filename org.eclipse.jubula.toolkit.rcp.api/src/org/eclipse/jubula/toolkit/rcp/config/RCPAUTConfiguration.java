@@ -16,11 +16,11 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.toolkit.swt.config.SWTAUTConfiguration;
-import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.constants.RcpAccessorConstants;
-import org.eclipse.jubula.tools.constants.ToolkitConstants;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.RcpAccessorConstants;
+import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /** @author BREDEX GmbH */
 public class RCPAUTConfiguration extends SWTAUTConfiguration {

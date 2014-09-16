@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.common.util;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
-import org.eclipse.jubula.tools.constants.TestDataConstants;
+import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 
 
 /**

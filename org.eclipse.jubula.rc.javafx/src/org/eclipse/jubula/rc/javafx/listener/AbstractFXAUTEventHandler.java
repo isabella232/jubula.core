@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 import org.eclipse.jubula.rc.common.listener.AUTEventListener;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.util.HighlightNode;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 /**
  * @author BREDEX GmbH

@@ -30,11 +30,11 @@ import org.eclipse.jubula.client.core.model.ITestResult;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.model.TestResultParameter;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
-import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

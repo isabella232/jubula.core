@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.common.registration;
 
 import java.io.IOException;
 
-import org.eclipse.jubula.tools.exception.JBVersionException;
+import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 
 /**
  * Interface for objects capable of registering an AUT.

@@ -14,7 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
 
 /**

@@ -18,7 +18,7 @@ import org.eclipse.jubula.communication.message.ServerShowDialogMessage;
 import org.eclipse.jubula.communication.message.ServerShowObservConsoleMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
-import org.eclipse.jubula.tools.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

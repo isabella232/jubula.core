@@ -36,10 +36,10 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.NodePM.AbstractCmdHandleChild;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.RefToken;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
+import org.eclipse.jubula.tools.internal.exception.JBException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 
 /**

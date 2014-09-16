@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
-import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 
 /**
  * The exception thrown if the object map was querried for a component

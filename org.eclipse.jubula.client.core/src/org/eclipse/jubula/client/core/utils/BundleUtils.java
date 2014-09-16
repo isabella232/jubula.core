@@ -18,9 +18,9 @@ import java.util.Properties;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.JBFatalException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.JBFatalException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.osgi.framework.Bundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

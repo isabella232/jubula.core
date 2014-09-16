@@ -14,7 +14,7 @@ import java.io.File;
 import java.util.Iterator;
 
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.Logger;

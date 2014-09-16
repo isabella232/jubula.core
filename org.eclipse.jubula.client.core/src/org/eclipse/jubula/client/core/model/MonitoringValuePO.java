@@ -14,7 +14,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import org.eclipse.jubula.tools.objects.MonitoringValue;
+import org.eclipse.jubula.tools.internal.objects.MonitoringValue;
 
 /**
  * This class represent a monitoring value

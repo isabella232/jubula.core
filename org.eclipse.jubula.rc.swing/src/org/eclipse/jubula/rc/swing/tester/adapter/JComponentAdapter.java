@@ -33,10 +33,10 @@ import org.eclipse.jubula.rc.swing.tester.JMenuBarTester;
 import org.eclipse.jubula.rc.swing.tester.util.EventListener;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil.PopupShownCondition;
-import org.eclipse.jubula.tools.constants.TimeoutConstants;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
-import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 /**
  * Implements the interface for widgets and supports basic methods
  * which are needed for nearly all Swing UI components.

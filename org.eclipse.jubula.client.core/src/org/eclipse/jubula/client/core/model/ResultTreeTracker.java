@@ -20,11 +20,11 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.utils.ExecObject;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.exception.JBException;
+import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

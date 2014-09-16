@@ -35,9 +35,9 @@ import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOper
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
-import org.eclipse.jubula.tools.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 
 /**
  * @author BREDEX GmbH

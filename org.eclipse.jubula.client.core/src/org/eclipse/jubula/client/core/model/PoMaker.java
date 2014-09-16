@@ -19,9 +19,9 @@ import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.utils.ReportRuleType;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
-import org.eclipse.jubula.tools.xml.businessmodell.Profile;
-import org.eclipse.jubula.tools.xml.businessprocess.ProfileBuilder;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Profile;
+import org.eclipse.jubula.tools.internal.xml.businessprocess.ProfileBuilder;
 
 
 /**

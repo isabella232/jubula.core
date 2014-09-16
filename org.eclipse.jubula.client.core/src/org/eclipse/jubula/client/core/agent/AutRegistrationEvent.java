@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.agent;
 
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /**
  * An event representing a change in the registration status of an AUT with

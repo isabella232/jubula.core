@@ -39,7 +39,7 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager;
 import org.eclipse.jubula.client.ui.validator.cell.PortCellEditorValidator;
-import org.eclipse.jubula.tools.constants.EnvConstants;
+import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;

@@ -32,11 +32,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.jubula.tools.xml.businessmodell.Action;
-import org.eclipse.jubula.tools.xml.businessmodell.Param;
-import org.eclipse.jubula.tools.xml.businessmodell.ValueSetElement;
+import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ValueSetElement;
 
 
 /**

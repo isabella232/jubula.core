@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.swing.commands;
 import org.eclipse.jubula.rc.common.commands.AbstractCapTestCommand;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 
 /**

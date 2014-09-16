@@ -16,8 +16,8 @@ import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.tools.constants.EnvConstants;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.EnvConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 /**
  * 

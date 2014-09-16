@@ -11,10 +11,10 @@
 package org.eclipse.jubula.rc.common.exception;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
-import org.eclipse.jubula.tools.exception.JBRuntimeException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.exception.JBRuntimeException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
 /**
  * This exception supports notification and processing of test error events by

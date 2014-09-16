@@ -5,7 +5,7 @@ import java.util.Date;
 import org.eclipse.jubula.client.alm.mylyn.core.i18n.Messages;
 import org.eclipse.jubula.client.core.constants.Constants;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 /**
  * Class which represents a change, e.g. a comment or a field update,

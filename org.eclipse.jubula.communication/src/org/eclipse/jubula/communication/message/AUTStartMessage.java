@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.message;
 
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 /**
  * This message is send from the JubulaClient to the AUTserver to start the AUT

@@ -20,15 +20,15 @@ import java.util.Set;
 
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.jubula.tools.xml.businessmodell.Action;
-import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
-import org.eclipse.jubula.tools.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.xml.businessmodell.Param;
-import org.eclipse.jubula.tools.xml.businessmodell.ValueSetElement;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ValueSetElement;
 
 
 /**

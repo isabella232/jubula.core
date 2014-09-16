@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 /**
  * The message to send all supported and currently instantiated components of

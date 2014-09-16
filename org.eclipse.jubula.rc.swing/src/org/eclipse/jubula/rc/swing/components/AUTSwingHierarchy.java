@@ -47,12 +47,12 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swing.SwingAUTServer;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swing.utils.WorkerRunnable;
-import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.objects.ComponentIdentifier;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
-import org.eclipse.jubula.tools.objects.MappingConstants;
-import org.eclipse.jubula.tools.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.MappingConstants;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 
 
 

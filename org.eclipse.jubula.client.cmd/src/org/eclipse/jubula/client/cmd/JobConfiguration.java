@@ -46,9 +46,9 @@ import org.eclipse.jubula.client.core.preferences.database.OracleConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionInfo;
 import org.eclipse.jubula.client.core.utils.FileUtils;
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
-import org.eclipse.jubula.tools.constants.EnvConstants;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
-import org.eclipse.jubula.tools.utils.NetUtil;
+import org.eclipse.jubula.tools.internal.constants.EnvConstants;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.utils.NetUtil;
 import org.eclipse.osgi.util.NLS;
 
 import com.thoughtworks.xstream.XStream;

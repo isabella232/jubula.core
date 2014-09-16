@@ -13,8 +13,8 @@ package org.eclipse.jubula.communication.message;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
-import org.eclipse.jubula.tools.xml.businessmodell.Action;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
 
 /**
  * @author BREDEX GmbH

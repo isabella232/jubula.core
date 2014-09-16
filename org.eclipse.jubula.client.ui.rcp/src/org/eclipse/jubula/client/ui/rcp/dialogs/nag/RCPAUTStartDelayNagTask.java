@@ -23,7 +23,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IAutStateListen
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.NagDialog;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 
 /**

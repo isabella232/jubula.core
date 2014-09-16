@@ -24,8 +24,8 @@ import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
-import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.osgi.util.NLS;
 
 

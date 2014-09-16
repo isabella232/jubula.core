@@ -19,7 +19,7 @@ import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.ui.rcp.utils.HTMLAutWindowManager;
 import org.eclipse.jubula.communication.message.html.OMSelectWindowMessage;
-import org.eclipse.jubula.tools.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.menus.UIElement;
 import org.slf4j.Logger;

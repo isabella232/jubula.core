@@ -17,7 +17,7 @@ import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
-import org.eclipse.jubula.tools.constants.AUTStartResponse;
+import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -21,7 +21,7 @@ import org.eclipse.jubula.client.inspector.ui.constants.InspectorCommandConstant
 import org.eclipse.jubula.client.inspector.ui.handlers.ActivateInspectorHandler;
 import org.eclipse.jubula.client.inspector.ui.provider.sourceprovider.InspectableAutSourceProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.ui.ISourceProvider;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.CompoundContributionItem;

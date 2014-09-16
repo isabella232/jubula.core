@@ -27,10 +27,10 @@ import org.eclipse.jubula.rc.common.components.AUTHierarchy;
 import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
-import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.objects.ComponentIdentifier;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 /**
  * This class holds a hierarchy of the components of the AUT. <br>

@@ -12,7 +12,7 @@ package org.eclipse.jubula.communication.message;
 
 import java.util.Map;
 
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 /**
  * The class <code>StartAutServerCommand</code> and the associated

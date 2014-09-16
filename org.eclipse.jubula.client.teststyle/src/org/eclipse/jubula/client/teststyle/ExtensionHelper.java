@@ -40,7 +40,7 @@ import org.eclipse.jubula.client.teststyle.checks.DecoratingCheck;
 import org.eclipse.jubula.client.teststyle.checks.Severity;
 import org.eclipse.jubula.client.teststyle.checks.contexts.BaseContext;
 import org.eclipse.jubula.client.teststyle.constants.Ext;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

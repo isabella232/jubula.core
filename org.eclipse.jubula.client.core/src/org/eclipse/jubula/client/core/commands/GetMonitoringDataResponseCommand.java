@@ -18,9 +18,9 @@ import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.GetMonitoringDataResponseMessage;
 import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.tools.constants.MonitoringConstants;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.objects.MonitoringValue;
+import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.objects.MonitoringValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

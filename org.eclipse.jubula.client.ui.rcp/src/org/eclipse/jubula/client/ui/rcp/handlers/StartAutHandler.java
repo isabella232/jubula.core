@@ -24,7 +24,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.StartAutBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionGUIController;
 import org.eclipse.jubula.client.ui.rcp.dialogs.NagDialog;
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.menus.UIElement;
 

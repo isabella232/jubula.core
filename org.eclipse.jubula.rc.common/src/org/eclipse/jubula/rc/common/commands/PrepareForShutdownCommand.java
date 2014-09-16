@@ -20,12 +20,12 @@ import org.eclipse.jubula.communication.message.MessageCap;
 import org.eclipse.jubula.communication.message.MessageHeader;
 import org.eclipse.jubula.communication.message.PrepareForShutdownMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
-import org.eclipse.jubula.tools.constants.TimeoutConstants;
-import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.objects.ComponentIdentifier;
-import org.eclipse.jubula.tools.utils.EnvironmentUtils;
-import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
+import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

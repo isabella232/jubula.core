@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.Set;
 
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 
 /**

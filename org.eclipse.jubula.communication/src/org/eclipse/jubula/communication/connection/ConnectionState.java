@@ -16,12 +16,12 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.StringTokenizer;
 
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.constants.TimingConstantsServer;
-import org.eclipse.jubula.tools.exception.JBVersionException;
-import org.eclipse.jubula.tools.jarutils.IVersion;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
+import org.eclipse.jubula.tools.internal.exception.JBVersionException;
+import org.eclipse.jubula.tools.internal.jarutils.IVersion;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

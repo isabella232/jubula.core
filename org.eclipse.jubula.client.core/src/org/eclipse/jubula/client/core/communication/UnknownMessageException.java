@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.communication;
 
-import org.eclipse.jubula.tools.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 
 /**
  * Exception to throw if an appropriate message could not created. 

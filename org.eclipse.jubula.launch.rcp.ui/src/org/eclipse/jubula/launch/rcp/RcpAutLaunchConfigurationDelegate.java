@@ -22,9 +22,9 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.jubula.launch.AutLaunchUtils;
-import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.AutEnvironmentConstants;
-import org.eclipse.jubula.tools.constants.RcpAccessorConstants;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.AutEnvironmentConstants;
+import org.eclipse.jubula.tools.internal.constants.RcpAccessorConstants;
 import org.eclipse.pde.launching.EclipseApplicationLaunchConfiguration;
 
 /**

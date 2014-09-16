@@ -24,7 +24,7 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.dialogs.NagDialog;
 import org.eclipse.jubula.client.ui.rcp.widgets.autconfig.JavaAutConfigComponent;
 import org.eclipse.jubula.client.ui.rcp.wizards.ProjectWizard;
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 

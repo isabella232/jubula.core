@@ -21,7 +21,7 @@ import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.tools.constants.TestDataConstants;
+import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 
 
 /**

@@ -36,7 +36,7 @@ import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchRe
 import org.eclipse.jubula.client.ui.rcp.utils.SearchPageUtils;
 import org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.SearchReplaceTCRWizard;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.swt.widgets.Shell;
 
 /**

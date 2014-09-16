@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.persistence;
 
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.internal.exception.JBException;
 
 
 /**

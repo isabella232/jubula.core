@@ -31,7 +31,7 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.tester.MenuTester;
-import org.eclipse.jubula.tools.constants.TimeoutConstants;
+import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
 
 /**
  * Adapter for a ChoiceBox. This Control is like a ComboBox, but is not

@@ -16,7 +16,7 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.eclipse.jubula.tools.utils.generator.ToolkitConfig;
+import org.eclipse.jubula.tools.internal.utils.generator.ToolkitConfig;
 
 
 /**

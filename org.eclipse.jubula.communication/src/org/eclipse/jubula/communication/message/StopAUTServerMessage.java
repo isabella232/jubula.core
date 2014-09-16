@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.message;
 
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /**
  * The message send from the client to the server to stop the AUTServer. <br>

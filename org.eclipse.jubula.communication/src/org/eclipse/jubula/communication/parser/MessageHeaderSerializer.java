@@ -12,14 +12,14 @@ package org.eclipse.jubula.communication.parser;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.communication.message.MessageHeader;
-import org.eclipse.jubula.tools.exception.SerialisationException;
-import org.eclipse.jubula.tools.serialisation.IXmlSerializer;
+import org.eclipse.jubula.tools.internal.exception.SerialisationException;
+import org.eclipse.jubula.tools.internal.serialisation.IXmlSerializer;
 
 
 /**
  * This class (de)serializes a message header by delegating to the serializer
  * which is created by the
- * {@link org.eclipse.jubula.tools.serialisation.IXmlSerializer.Factory}.
+ * {@link org.eclipse.jubula.tools.internal.serialisation.IXmlSerializer.Factory}.
  * 
  * {@inheritDoc}
  * 

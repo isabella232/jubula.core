@@ -13,13 +13,13 @@ package org.eclipse.jubula.communication.message;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.xml.businessmodell.Profile;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Profile;
 
 /**
  * This message transfers all Jubula components of type
- * {@link org.eclipse.jubula.tools.xml.businessmodell.Component} and subclasses.
+ * {@link org.eclipse.jubula.tools.internal.xml.businessmodell.Component} and subclasses.
  * the components will be registered in the AUT server by executing
  * <code>SendAUTListOfSupportedComponentsCommand</code>.
  * 

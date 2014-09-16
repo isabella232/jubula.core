@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.tools.utils.generator.ToolkitConfig;
+import org.eclipse.jubula.tools.internal.utils.generator.ToolkitConfig;
 
 
 /**

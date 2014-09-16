@@ -12,8 +12,8 @@ package org.eclipse.jubula.documentation.gen;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.jubula.tools.utils.generator.IProcessor;
-import org.eclipse.jubula.tools.utils.generator.Info;
+import org.eclipse.jubula.tools.internal.utils.generator.IProcessor;
+import org.eclipse.jubula.tools.internal.utils.generator.Info;
 
 
 /**

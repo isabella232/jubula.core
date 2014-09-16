@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.driver;
 
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 /**
  * @author BREDEX GmbH

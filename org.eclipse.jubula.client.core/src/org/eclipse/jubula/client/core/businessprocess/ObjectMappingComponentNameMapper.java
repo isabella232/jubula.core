@@ -20,7 +20,7 @@ import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
-import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 
 
 /**

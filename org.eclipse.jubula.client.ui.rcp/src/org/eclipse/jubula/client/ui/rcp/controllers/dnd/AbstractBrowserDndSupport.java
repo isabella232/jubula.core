@@ -23,7 +23,7 @@ import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.MoveNodeHandle;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
 
 /**

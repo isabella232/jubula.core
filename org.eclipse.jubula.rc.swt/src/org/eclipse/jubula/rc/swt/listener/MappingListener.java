@@ -11,14 +11,15 @@
 package org.eclipse.jubula.rc.swt.listener;
 
 import java.util.Map;
+
 import org.eclipse.jubula.communication.message.ObjectMappedMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.util.PropertyUtil;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
-import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;

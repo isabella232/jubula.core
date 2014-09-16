@@ -118,7 +118,7 @@
       id="org.eclipse.jubula.client.ui.rcp.propertytester.RunningAut"
       namespace="org.eclipse.jubula.client.ui.rcp.propertytester.RunningAut"
       properties="isDefined"
-      type="org.eclipse.jubula.tools.registration.AutIdentifier" />
+      type="org.eclipse.jubula.tools.internal.registration.AutIdentifier" />
     <propertyTester
       class="org.eclipse.jubula.client.ui.rcp.propertytester.SearchTestCasePropertyTester"
       id="org.eclipse.jubula.client.ui.rcp.propertytester.SearchTestCaseTester"
@@ -218,7 +218,7 @@
       <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
     </factory>
     <factory
-      adaptableType="org.eclipse.jubula.tools.registration.AutIdentifier"
+      adaptableType="org.eclipse.jubula.tools.internal.registration.AutIdentifier"
       class="org.eclipse.jubula.client.ui.rcp.adapter.PropertySourceAdapterFactory">
       <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
     </factory>
@@ -807,7 +807,7 @@
     <commandParameterType
       converter="org.eclipse.jubula.client.ui.rcp.command.parameters.AutIdentifierParameterValueConverter"
       id="org.eclipse.jubula.client.ui.rcp.commands.parametertypes.autId"
-      type="org.eclipse.jubula.tools.registration.AutIdentifier" />
+      type="org.eclipse.jubula.tools.internal.registration.AutIdentifier" />
     <commandParameterType
       converter="org.eclipse.jubula.client.ui.rcp.command.parameters.TestJobParameterValueConverter"
       id="org.eclipse.jubula.client.ui.rcp.commands.parametertypes.testJob"
@@ -2561,7 +2561,7 @@
         <iterate
           ifEmpty="false"
           operator="and">
-          <instanceof value="org.eclipse.jubula.tools.registration.AutIdentifier" />
+          <instanceof value="org.eclipse.jubula.tools.internal.registration.AutIdentifier" />
         </iterate>
       </enabledWhen>
     </handler>

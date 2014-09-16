@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.errorhandling;
 
-import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.internal.exception.JBException;
 
 /**
  * Presents an error message to the user.

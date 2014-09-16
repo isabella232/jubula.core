@@ -25,7 +25,7 @@ import org.dom4j.io.DocumentSource;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

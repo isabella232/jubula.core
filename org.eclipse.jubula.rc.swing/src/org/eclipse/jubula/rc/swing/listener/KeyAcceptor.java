@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.SortedSet;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
-import org.eclipse.jubula.tools.constants.InputConstants;
+import org.eclipse.jubula.tools.internal.constants.InputConstants;
 
 
 /**

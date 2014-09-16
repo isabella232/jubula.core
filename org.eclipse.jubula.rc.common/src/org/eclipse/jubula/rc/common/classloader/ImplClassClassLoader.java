@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.common.classloader;
 
 import java.net.URLClassLoader;
 
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 /**
  * This Classloader tries to load the classes with the given ClassLoaders.

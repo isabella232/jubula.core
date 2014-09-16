@@ -13,7 +13,7 @@ package org.eclipse.jubula.toolkit.swt.config;
 import java.util.Locale;
 
 import org.eclipse.jubula.toolkit.base.config.AbstractOSProcessAUTConfiguration;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /** @author BREDEX GmbH */
 public abstract class SWTAUTConfiguration extends

@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.core.utils;
 import java.util.List;
 
 import org.eclipse.jubula.client.core.utils.ParamValueConverter.ConvValidationState;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 
 /**

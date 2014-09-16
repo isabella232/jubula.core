@@ -13,7 +13,7 @@ package org.eclipse.jubula.communication.commands;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendCompSystemI18nMessage;
-import org.eclipse.jubula.tools.i18n.CompSystemI18n;
+import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

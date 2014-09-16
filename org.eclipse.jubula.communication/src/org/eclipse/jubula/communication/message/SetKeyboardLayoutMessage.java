@@ -12,7 +12,7 @@ package org.eclipse.jubula.communication.message;
 
 import java.util.Properties;
 
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 /**
  * Message sent to AUT Server to set the keyboard layout.

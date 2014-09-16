@@ -21,7 +21,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IRecordModeStat
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.OMState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.RecordModeState;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.tools.exception.Assert;
+import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.ui.ISources;
 
 /**

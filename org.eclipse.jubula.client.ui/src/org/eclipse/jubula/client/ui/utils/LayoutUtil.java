@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.ui.utils;
 
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;

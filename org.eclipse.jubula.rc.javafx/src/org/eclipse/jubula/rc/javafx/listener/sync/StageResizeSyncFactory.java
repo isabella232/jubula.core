@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.listener.sync;
 
-import org.eclipse.jubula.tools.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 
 /**
  * Provides instances of {@link IStageResizeSync}.

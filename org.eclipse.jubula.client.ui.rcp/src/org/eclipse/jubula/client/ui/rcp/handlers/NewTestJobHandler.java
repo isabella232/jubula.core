@@ -32,8 +32,8 @@ import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
 
 /**

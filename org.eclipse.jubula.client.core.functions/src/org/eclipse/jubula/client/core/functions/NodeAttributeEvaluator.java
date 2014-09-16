@@ -12,8 +12,8 @@ package org.eclipse.jubula.client.core.functions;
 
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.propertytester.NodePropertyTester;
-import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 /**
  * @author BREDEX GmbH

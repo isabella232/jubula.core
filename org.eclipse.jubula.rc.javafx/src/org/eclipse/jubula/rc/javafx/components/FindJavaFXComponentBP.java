@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import org.eclipse.jubula.rc.common.components.FindComponentBP;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 /**
  * @author BREDEX GmbH

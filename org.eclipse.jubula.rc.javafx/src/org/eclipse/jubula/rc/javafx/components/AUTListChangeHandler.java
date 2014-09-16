@@ -12,9 +12,9 @@ package org.eclipse.jubula.rc.javafx.components;
 
 import java.util.List;
 
-import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
-
 import javafx.collections.ListChangeListener;
+
+import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 
 /**
  * Handles List Changes in the AUT

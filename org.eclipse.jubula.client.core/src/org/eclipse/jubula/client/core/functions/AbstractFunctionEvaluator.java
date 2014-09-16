@@ -1,8 +1,8 @@
 package org.eclipse.jubula.client.core.functions;
 
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 
 /**

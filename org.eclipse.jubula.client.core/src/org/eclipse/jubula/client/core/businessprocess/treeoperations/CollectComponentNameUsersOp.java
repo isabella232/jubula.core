@@ -19,7 +19,7 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
-import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.internal.exception.JBException;
 
 
 /**

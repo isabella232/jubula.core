@@ -18,7 +18,7 @@ import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.GetRegisteredAutListMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.RegisteredAutListMessage;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

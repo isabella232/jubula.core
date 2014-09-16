@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication;
 
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 
 /**

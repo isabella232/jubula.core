@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.validator.cell;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jface.viewers.ICellEditorValidator;
-import org.eclipse.jubula.tools.utils.NetUtil;
+import org.eclipse.jubula.tools.internal.utils.NetUtil;
 
 /**
  * @author BREDEX GmbH

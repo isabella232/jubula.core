@@ -18,7 +18,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.StringTokenizer;
 
-import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
+import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
 
 
 /**

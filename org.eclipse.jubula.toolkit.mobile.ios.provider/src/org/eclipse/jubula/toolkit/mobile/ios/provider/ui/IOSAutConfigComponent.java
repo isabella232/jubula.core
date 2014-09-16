@@ -15,7 +15,7 @@ import java.util.Map;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.toolkit.mobile.provider.i18n.Messages;
 import org.eclipse.jubula.toolkit.mobile.provider.ui.MobileAutConfigComponent;
-import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;

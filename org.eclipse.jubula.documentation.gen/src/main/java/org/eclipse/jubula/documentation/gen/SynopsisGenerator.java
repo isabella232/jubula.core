@@ -13,10 +13,10 @@ package org.eclipse.jubula.documentation.gen;
 import java.text.MessageFormat;
 import java.util.List;
 
-import org.eclipse.jubula.tools.utils.generator.CompSystemProcessor;
-import org.eclipse.jubula.tools.utils.generator.ComponentInfo;
-import org.eclipse.jubula.tools.utils.generator.IProcessor;
-import org.eclipse.jubula.tools.utils.generator.Info;
+import org.eclipse.jubula.tools.internal.utils.generator.CompSystemProcessor;
+import org.eclipse.jubula.tools.internal.utils.generator.ComponentInfo;
+import org.eclipse.jubula.tools.internal.utils.generator.IProcessor;
+import org.eclipse.jubula.tools.internal.utils.generator.Info;
 
 
 /**

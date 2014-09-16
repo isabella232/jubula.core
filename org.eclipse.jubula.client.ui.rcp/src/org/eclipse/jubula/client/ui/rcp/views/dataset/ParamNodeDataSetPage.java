@@ -22,7 +22,7 @@ import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.editors.NodeEditorInput;
-import org.eclipse.jubula.tools.exception.Assert;
+import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PartInitException;
 

@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.search.data;
 
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
 
 /**
  * @author BREDEX GmbH

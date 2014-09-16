@@ -28,8 +28,8 @@ import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swing.listener.FocusTracker;
 import org.eclipse.jubula.rc.swing.listener.MappingListener;
 import org.eclipse.jubula.rc.swing.listener.RecordListener;
-import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
-import org.eclipse.jubula.tools.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

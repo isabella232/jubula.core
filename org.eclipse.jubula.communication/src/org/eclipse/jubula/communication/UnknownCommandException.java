@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication;
 
-import org.eclipse.jubula.tools.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 
 /**
  * Exception to throw if an appropriate command could not created for a message. 

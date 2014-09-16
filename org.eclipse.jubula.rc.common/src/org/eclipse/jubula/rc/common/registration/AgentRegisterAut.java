@@ -23,10 +23,10 @@ import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.connection.ConnectionState;
 import org.eclipse.jubula.communication.connection.DefaultSocket;
 import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.tools.constants.TimingConstantsServer;
-import org.eclipse.jubula.tools.exception.JBVersionException;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
-import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
+import org.eclipse.jubula.tools.internal.exception.JBVersionException;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

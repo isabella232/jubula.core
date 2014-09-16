@@ -26,14 +26,14 @@ import org.eclipse.jubula.rc.common.businessprocess.ReflectionBP;
 import org.eclipse.jubula.rc.common.classloader.ImplClassClassLoader;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.tools.exception.ConfigXmlException;
-import org.eclipse.jubula.tools.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.objects.MappingConstants;
-import org.eclipse.jubula.tools.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.xml.businessmodell.ComponentClass;
-import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
-import org.eclipse.jubula.tools.xml.businessmodell.Profile;
+import org.eclipse.jubula.tools.internal.exception.ConfigXmlException;
+import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.objects.MappingConstants;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Profile;
 
 
 /**

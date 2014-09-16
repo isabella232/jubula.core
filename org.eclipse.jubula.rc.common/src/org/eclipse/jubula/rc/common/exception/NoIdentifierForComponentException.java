@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.exception;
 
-import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 
 /**
  * The exception thrown if an identifier could not created for a component. 

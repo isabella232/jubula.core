@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jubula.autagent.agent.AutAgent;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
-import org.eclipse.jubula.tools.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

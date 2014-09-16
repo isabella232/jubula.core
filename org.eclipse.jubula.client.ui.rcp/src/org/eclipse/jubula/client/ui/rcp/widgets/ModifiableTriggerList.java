@@ -26,8 +26,8 @@ import org.eclipse.jubula.client.ui.rcp.widgets.ModifiableListObservable.IConten
 import org.eclipse.jubula.client.ui.rcp.widgets.ModifiableListObservable.IOptionalButtonSelectedListener;
 import org.eclipse.jubula.client.ui.rcp.widgets.ModifiableListObservable.ISelectionChangedListener;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;

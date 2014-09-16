@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
-import org.eclipse.jubula.tools.xml.businessmodell.Profile;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Profile;
 
 /**
  * Encapsulates the parameters used in finding GUI components during tests.

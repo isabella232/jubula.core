@@ -15,8 +15,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.commons.codec.binary.Base64;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.JBException;
 
 
 /**

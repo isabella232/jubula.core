@@ -20,8 +20,8 @@ import org.eclipse.jubula.communication.message.AUTStartStateMessage;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.SendAUTListOfSupportedComponentsMessage;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
-import org.eclipse.jubula.tools.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -37,12 +37,12 @@ import org.eclipse.jubula.client.ui.rcp.utils.KeyConverter;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.exception.JBException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.ui.IEditorPart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,7 +93,7 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
         /** 
          * the type of input action that will collect a UI Element
          * 
-         * @see {@link org.eclipse.jubula.tools.constants.InputConstants}
+         * @see {@link org.eclipse.jubula.tools.internal.constants.InputConstants}
          */
         private int m_type;
 
@@ -110,7 +110,7 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
          * @param category  The category into which collected UI Elements will 
          *                  be collected.
          * @param type  The type of input action that will collect a UI Element.
-         * @see {@link org.eclipse.jubula.tools.constants.InputConstants}
+         * @see {@link org.eclipse.jubula.tools.internal.constants.InputConstants}
          */
         public StartObjectMappingModeJob(ObjectMappingMultiPageEditor editor, 
                 AutIdentifier autId, int modifier, int key, 

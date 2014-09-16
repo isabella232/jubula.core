@@ -14,7 +14,7 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.core.commands.ParameterValueConversionException;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 
 /**

@@ -17,7 +17,7 @@ import javax.persistence.EntityManager;
 
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
-import org.eclipse.jubula.tools.objects.IMonitoringValue;
+import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
 
 /**
  * Loads monitoring values from the database

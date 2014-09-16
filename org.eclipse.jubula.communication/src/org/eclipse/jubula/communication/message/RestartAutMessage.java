@@ -11,8 +11,8 @@
 package org.eclipse.jubula.communication.message;
 
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /**
  * @author BREDEX GmbH

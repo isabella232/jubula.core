@@ -62,8 +62,8 @@ import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TooltipLabelProvi
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
-import org.eclipse.jubula.tools.exception.JBFatalException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.exception.JBFatalException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;

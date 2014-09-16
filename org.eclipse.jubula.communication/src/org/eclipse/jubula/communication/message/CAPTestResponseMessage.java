@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.message;
 
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
 /**
  * The response message for CAPTestMessage. This message is sent by

@@ -3,7 +3,7 @@ package="org.eclipse.jubula.toolkit.api.gen"
 imports="java.util.*
 			org.eclipse.jubula.toolkit.api.gen.internal.GenerationInfo 
 			org.eclipse.jubula.toolkit.api.gen.internal.NameLoader 
-         org.eclipse.jubula.tools.xml.businessmodell.*" 
+         org.eclipse.jubula.tools.internal.xml.businessmodell.*" 
 class="ClassGenerator"%>
 <%
 	GenerationInfo genInfo = (GenerationInfo)argument;

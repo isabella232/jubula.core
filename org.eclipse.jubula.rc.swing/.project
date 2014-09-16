@@ -31,6 +31,13 @@
 		<nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
 		<nature>org.eclipse.pde.PluginNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>.settings</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/org.eclipse.jubula.project.configuration/settings/1.5</locationURI>
+		</link>
+	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1409218333740</id>
@@ -42,11 +49,4 @@
 			</matcher>
 		</filter>
 	</filteredResources>
-	<linkedResources>
-		<link>
-			<name>.settings</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/org.eclipse.jubula.project.configuration/settings/1.5</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

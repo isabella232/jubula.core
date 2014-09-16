@@ -42,7 +42,7 @@ import org.eclipse.jubula.client.ui.rcp.handlers.project.OpenProjectHandler;
 import org.eclipse.jubula.client.ui.rcp.handlers.project.OpenProjectHandler.OpenProjectOperation;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Bundle;

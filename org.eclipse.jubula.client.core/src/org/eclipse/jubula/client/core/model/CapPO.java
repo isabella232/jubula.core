@@ -26,12 +26,12 @@ import org.eclipse.jubula.client.core.businessprocess.CapBP;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
-import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.xml.businessmodell.Action;
-import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
-import org.eclipse.jubula.tools.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
-import org.eclipse.jubula.tools.xml.businessmodell.Param;
+import org.eclipse.jubula.tools.internal.exception.Assert;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
 
 
 /**

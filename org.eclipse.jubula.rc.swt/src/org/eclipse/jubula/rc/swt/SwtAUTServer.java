@@ -25,7 +25,7 @@ import org.eclipse.jubula.rc.swt.listener.FocusTracker;
 import org.eclipse.jubula.rc.swt.listener.MappingListener;
 import org.eclipse.jubula.rc.swt.listener.RecordListener;
 import org.eclipse.jubula.rc.swt.listener.TableSelectionTracker;
-import org.eclipse.jubula.tools.constants.AUTServerExitConstants;
+import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
 import org.slf4j.Logger;

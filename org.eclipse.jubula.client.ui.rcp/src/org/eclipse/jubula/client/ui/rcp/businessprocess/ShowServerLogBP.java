@@ -20,9 +20,9 @@ import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.communication.message.SendServerLogMessage;
 import org.eclipse.jubula.communication.message.ServerLogResponseMessage;
-import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 
 
 /**

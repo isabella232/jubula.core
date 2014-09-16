@@ -14,7 +14,7 @@ import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.jubula.client.autagent.Activator;
-import org.eclipse.jubula.tools.constants.EnvConstants;
+import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 
 /**
  * 

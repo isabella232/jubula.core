@@ -64,7 +64,7 @@ import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.CentralTestData
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.CentralTestDataLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.wizards.ImportTestDataSetsWizard;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;

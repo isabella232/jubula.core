@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.functions;
 
 import org.apache.commons.lang.math.RandomUtils;
-import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 
 /**
  * Function that generates a random integer

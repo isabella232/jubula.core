@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.util;
 
-import org.eclipse.jubula.tools.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 
 /**
  * This class contains utility methods for workarounds within the 

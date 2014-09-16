@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.message;
 
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 /**
  * Null Message to check e.g. the Server connection.

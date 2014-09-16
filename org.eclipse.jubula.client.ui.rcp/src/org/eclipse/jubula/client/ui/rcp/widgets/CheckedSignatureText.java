@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.widgets;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.tools.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;

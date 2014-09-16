@@ -12,7 +12,7 @@ package org.eclipse.jubula.communication.message.javafx;
 
 import org.eclipse.jubula.communication.message.CAPTestMessage;
 import org.eclipse.jubula.communication.message.MessageCap;
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 /**
  * This class sends a component-action-param-triple to the AutJavaFXServer.

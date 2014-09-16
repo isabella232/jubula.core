@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.exception;
 
-import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.internal.exception.JBException;
 
 /**
  * Exception thrown when an implementation class is requested, which was not

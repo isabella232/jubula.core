@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication;
 
-import org.eclipse.jubula.tools.exception.Assert;
+import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 

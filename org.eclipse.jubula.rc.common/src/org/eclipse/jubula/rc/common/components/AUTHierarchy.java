@@ -20,8 +20,8 @@ import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.interfaces.ITester;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 
 /**

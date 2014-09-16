@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.Map;
 
-import org.eclipse.jubula.tools.objects.IMonitoringValue;
+import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
 
 /**
  * @author BREDEX GmbH

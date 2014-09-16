@@ -14,8 +14,8 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import org.eclipse.jubula.client.ui.preferences.utils.Utils;
-import org.eclipse.jubula.tools.constants.InputConstants;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.InputConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.ui.IPageLayout;
 
 
@@ -310,7 +310,7 @@ public interface Constants {
     // -------------------------------------------------------------
     // preference default values
     // some key, useful for ClientTestImpl has been moved to
-    // org.eclipse.jubula.tools.constants.TestDataConstants
+    // org.eclipse.jubula.tools.internal.constants.TestDataConstants
     // -------------------------------------------------------------
         
     /** the default markup language for descriptions */

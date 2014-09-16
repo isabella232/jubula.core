@@ -33,11 +33,11 @@ import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
-import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.xml.businessmodell.Action;
-import org.eclipse.jubula.tools.xml.businessmodell.CompSystem;
-import org.eclipse.jubula.tools.xml.businessmodell.ConcreteComponent;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 
 /**
  * @author BREDEX GmbH

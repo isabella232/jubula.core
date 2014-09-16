@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.message;
 
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 /**
  * message to send recorded Action name and information if CAP is recorded.

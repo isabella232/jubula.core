@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.core.utils;
 
 import java.util.Locale;
 
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 /**
  * @author BREDEX GmbH

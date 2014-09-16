@@ -14,8 +14,8 @@ import org.eclipse.jubula.rc.common.components.FindComponentBP;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
-import org.eclipse.jubula.tools.constants.SwtAUTHierarchyConstants;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Widget;
 

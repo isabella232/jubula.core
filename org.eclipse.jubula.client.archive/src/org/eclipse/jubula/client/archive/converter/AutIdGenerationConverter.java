@@ -15,7 +15,7 @@ import org.eclipse.jubula.client.archive.schema.Aut;
 import org.eclipse.jubula.client.archive.schema.AutConfig;
 import org.eclipse.jubula.client.archive.schema.MapEntry;
 import org.eclipse.jubula.client.archive.schema.Project;
-import org.eclipse.jubula.tools.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 
 /**
  * Generates unique (in the context of the Project) AUT IDs for all 

@@ -11,9 +11,9 @@
 package org.eclipse.jubula.rc.common.util;
 
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
 
 /**

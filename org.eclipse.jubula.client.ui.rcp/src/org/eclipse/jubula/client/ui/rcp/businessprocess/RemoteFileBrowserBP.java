@@ -20,8 +20,8 @@ import org.eclipse.jubula.communication.Communicator;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.SendDirectoryMessage;
 import org.eclipse.jubula.communication.message.SendDirectoryResponseMessage;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 
 
 /**

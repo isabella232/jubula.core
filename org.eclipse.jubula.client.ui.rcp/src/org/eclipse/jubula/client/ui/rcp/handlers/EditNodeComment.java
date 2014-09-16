@@ -15,7 +15,7 @@ import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.validator.MaxStringLengthValidator;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.ui.PlatformUI;
 
 /**

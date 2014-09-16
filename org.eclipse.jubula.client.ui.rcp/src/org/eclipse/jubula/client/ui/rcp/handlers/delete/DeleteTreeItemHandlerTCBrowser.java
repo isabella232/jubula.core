@@ -31,8 +31,8 @@ import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteTCHandle;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 
 /**

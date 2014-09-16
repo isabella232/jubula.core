@@ -14,8 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.jubula.client.core.utils.ParamValueConverter.ConvValidationState;
-import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 
 /**

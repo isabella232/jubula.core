@@ -19,7 +19,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.tools.constants.InputConstants;
+import org.eclipse.jubula.tools.internal.constants.InputConstants;
 
 
 /**

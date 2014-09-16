@@ -11,7 +11,7 @@
 package org.eclipse.jubula.toolkit.base.config;
 
 import org.eclipse.jubula.client.launch.AUTConfiguration;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /** @author BREDEX GmbH */
 public abstract class AbstractAUTConfiguration implements AUTConfiguration {

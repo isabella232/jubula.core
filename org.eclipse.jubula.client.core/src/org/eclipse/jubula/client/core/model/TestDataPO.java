@@ -34,7 +34,7 @@ import javax.persistence.Version;
 
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.persistence.annotations.BatchFetch;
 import org.eclipse.persistence.annotations.BatchFetchType;
 

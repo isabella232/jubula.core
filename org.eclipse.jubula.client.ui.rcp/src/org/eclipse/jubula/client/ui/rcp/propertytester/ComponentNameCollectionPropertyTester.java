@@ -25,7 +25,7 @@ import org.eclipse.jubula.client.core.propertytester.AbstractBooleanPropertyTest
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.IWorkbenchPart;
 import org.slf4j.Logger;

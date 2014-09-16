@@ -25,9 +25,9 @@ import org.eclipse.jubula.client.ui.rcp.controllers.ContentAssistCellEditor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNodePropertySource.AbstractParamValueController;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.rcp.widgets.ParamProposalProvider;
-import org.eclipse.jubula.tools.xml.businessmodell.Param;
-import org.eclipse.jubula.tools.xml.businessmodell.ParamValueSet;
-import org.eclipse.jubula.tools.xml.businessmodell.ValueSetElement;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ParamValueSet;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ValueSetElement;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 

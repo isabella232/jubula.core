@@ -6,8 +6,8 @@ package org.eclipse.jubula.client.core.functions;
 import java.util.Date;
 
 import org.apache.commons.lang.time.DateUtils;
-import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 /**
  * @author BREDEX GmbH

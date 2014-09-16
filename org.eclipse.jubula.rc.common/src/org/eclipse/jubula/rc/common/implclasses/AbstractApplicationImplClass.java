@@ -33,12 +33,12 @@ import org.eclipse.jubula.rc.common.tester.interfaces.ITester;
 import org.eclipse.jubula.rc.common.util.Comparer;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
-import org.eclipse.jubula.tools.utils.ExternalCommandExecutor;
-import org.eclipse.jubula.tools.utils.ExternalCommandExecutor.MonitorTask;
-import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.utils.ExternalCommandExecutor;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.utils.ExternalCommandExecutor.MonitorTask;
 
 
 /**

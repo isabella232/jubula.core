@@ -16,11 +16,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.constants.RcpAccessorConstants;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.RcpAccessorConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 
 
 /**

@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.core.functions;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 
 
 /**

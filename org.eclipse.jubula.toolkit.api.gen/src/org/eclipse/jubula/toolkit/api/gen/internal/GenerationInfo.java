@@ -1,7 +1,7 @@
 package org.eclipse.jubula.toolkit.api.gen.internal;
 
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 
 /**
  * Contains all necessary information for API generation of a component

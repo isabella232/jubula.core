@@ -16,7 +16,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jubula.client.ui.rcp.constants.InputCodeHelper;
 import org.eclipse.jubula.client.ui.rcp.constants.InputCodeHelper.UserInput;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.tools.constants.InputConstants;
+import org.eclipse.jubula.tools.internal.constants.InputConstants;
 import org.eclipse.swt.widgets.Composite;
 
 

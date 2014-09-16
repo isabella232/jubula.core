@@ -19,8 +19,8 @@ import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.listener.AUTEventListener;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
-import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Rectangle;
@@ -256,7 +256,7 @@ public abstract class AbstractAutSwtEventListener extends BaseSwtEventListener
             AUTServer.getInstance().getCommunicator().send(
                     cmd.execute());
         } catch (CommunicationException e) {
-            e.printStackTrace();
+            LOG.error(e.getLocalizedMessage(), e);
         }
     }
 

@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.javafx.commands;
 import org.eclipse.jubula.rc.common.commands.AbstractCapTestCommand;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 /**
  * This class gets an message with ICommand action parameter triples. It invokes

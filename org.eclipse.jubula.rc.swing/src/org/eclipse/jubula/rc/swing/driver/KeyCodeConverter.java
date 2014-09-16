@@ -17,7 +17,7 @@ import java.util.Map;
 import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.swing.utils.SwingUtils;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 
 
 /**

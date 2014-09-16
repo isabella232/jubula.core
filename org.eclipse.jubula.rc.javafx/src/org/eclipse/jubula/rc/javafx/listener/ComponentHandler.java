@@ -45,11 +45,11 @@ import org.eclipse.jubula.rc.javafx.listener.sync.StageResizeSyncFactory;
 import org.eclipse.jubula.rc.javafx.tester.adapter.IContainerAdapter;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
-import org.eclipse.jubula.tools.constants.TimingConstantsServer;
-import org.eclipse.jubula.tools.exception.InvalidDataException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
-import org.eclipse.jubula.tools.xml.businessmodell.ComponentClass;
+import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 
 /**
  * This class is responsible for handling the components of the AUT. <br>

@@ -24,7 +24,7 @@ import org.eclipse.jubula.client.teststyle.checks.contexts.BaseContext;
 import org.eclipse.jubula.client.teststyle.exceptions.AttributeNotFoundException;
 import org.eclipse.jubula.client.teststyle.quickfix.Quickfix;
 import org.eclipse.jubula.client.teststyle.quickfix.QuickfixFactory;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 
 /**

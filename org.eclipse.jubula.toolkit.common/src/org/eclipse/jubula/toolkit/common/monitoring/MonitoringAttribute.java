@@ -11,7 +11,7 @@
 package org.eclipse.jubula.toolkit.common.monitoring;
 
 import org.eclipse.core.databinding.validation.IValidator;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 
 /**

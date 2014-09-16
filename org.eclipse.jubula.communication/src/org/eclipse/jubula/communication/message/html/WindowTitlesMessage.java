@@ -11,7 +11,7 @@
 package org.eclipse.jubula.communication.message.html;
 
 import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 /**
  * This class sends the window titles of the HTML browser to the client.

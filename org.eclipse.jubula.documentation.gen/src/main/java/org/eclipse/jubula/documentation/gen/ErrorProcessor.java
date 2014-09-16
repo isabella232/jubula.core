@@ -15,9 +15,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jubula.tools.messagehandling.Message;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.utils.generator.IProcessor;
+import org.eclipse.jubula.tools.internal.messagehandling.Message;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.utils.generator.IProcessor;
 
 
 /**

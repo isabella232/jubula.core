@@ -16,7 +16,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
-import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 
 
 /**

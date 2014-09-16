@@ -33,9 +33,9 @@ import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.tester.adapter.MenuAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.MenuItemAdapter;
-import org.eclipse.jubula.tools.constants.TimeoutConstants;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
-import org.eclipse.jubula.tools.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
 /**
  * Toolkit specific commands for the <code>Menu</code> and <code>MenuBar</code>.

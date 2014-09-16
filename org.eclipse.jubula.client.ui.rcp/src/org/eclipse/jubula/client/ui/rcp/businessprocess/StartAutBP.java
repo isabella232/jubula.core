@@ -48,8 +48,8 @@ import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
-import org.eclipse.jubula.tools.constants.EnvConstants;
-import org.eclipse.jubula.tools.exception.Assert;
+import org.eclipse.jubula.tools.internal.constants.EnvConstants;
+import org.eclipse.jubula.tools.internal.exception.Assert;
 
 
 /**

@@ -24,7 +24,7 @@ import org.eclipse.jdt.launching.JavaLaunchDelegate;
 import org.eclipse.jubula.autagent.commands.IStartAut;
 import org.eclipse.jubula.autagent.commands.StartSwingAutServerCommand;
 import org.eclipse.jubula.launch.AutLaunchUtils;
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 /**
  * Launch delegate for starting Java / Swing AUTs.

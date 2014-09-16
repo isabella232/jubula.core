@@ -27,12 +27,12 @@ import org.eclipse.jubula.autagent.monitoring.IMonitoring;
 import org.eclipse.jubula.autagent.monitoring.MonitoringDataStore;
 import org.eclipse.jubula.autagent.monitoring.MonitoringUtil;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
-import org.eclipse.jubula.tools.constants.AUTStartResponse;
-import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.constants.MonitoringConstants;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.jarutils.MainClassLocator;
+import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.jarutils.MainClassLocator;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.osgi.framework.Bundle;
 import org.slf4j.Logger;
@@ -318,7 +318,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
             // set agent and locals
             
             sb.append(JAVA_OPTIONS_INTRO);
-            if (org.eclipse.jubula.tools.utils.MonitoringUtil
+            if (org.eclipse.jubula.tools.internal.utils.MonitoringUtil
                     .shouldAndCanRunWithMonitoring(parameters)) {
                 String monAgent = getMonitoringAgent(parameters);
                 if (monAgent != null) {
@@ -339,7 +339,7 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
                     .append(locale.getLanguage());
             }
         } else {
-            if (org.eclipse.jubula.tools.utils.MonitoringUtil
+            if (org.eclipse.jubula.tools.internal.utils.MonitoringUtil
                     .shouldAndCanRunWithMonitoring(parameters)) {
                 String monAgent = getMonitoringAgent(parameters);
                 if (monAgent != null) {

@@ -25,8 +25,8 @@ import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.FindNodeParentOperation;
 import org.eclipse.jubula.client.core.utils.SpecTreeTraverser;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.JBException;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

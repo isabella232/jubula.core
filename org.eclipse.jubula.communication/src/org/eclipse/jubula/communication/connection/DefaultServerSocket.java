@@ -17,9 +17,9 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.eclipse.jubula.tools.constants.TimingConstantsServer;
-import org.eclipse.jubula.tools.jarutils.IVersion;
-import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
+import org.eclipse.jubula.tools.internal.jarutils.IVersion;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jubula.tools.constants.MonitoringConstants;
+import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
 
 
 

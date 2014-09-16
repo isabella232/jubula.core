@@ -13,9 +13,9 @@ package org.eclipse.jubula.communication.message;
 import java.awt.Point;
 import java.util.Map;
 
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
-import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 
 /**
  * The message to send all supported and currently instantiated components of

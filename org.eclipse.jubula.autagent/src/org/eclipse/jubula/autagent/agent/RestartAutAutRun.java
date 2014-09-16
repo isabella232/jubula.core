@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import org.eclipse.jubula.communication.connection.RestartAutProtocol;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

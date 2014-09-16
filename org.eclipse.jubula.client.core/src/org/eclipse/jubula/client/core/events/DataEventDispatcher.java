@@ -31,8 +31,8 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage.IDataModifiedLi
 import org.eclipse.jubula.client.core.persistence.GeneralStorage.IReloadedSessionListener;
 import org.eclipse.jubula.client.core.utils.IGenericListener;
 import org.eclipse.jubula.client.core.utils.ListenerManager;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.ui.IWorkbenchPart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

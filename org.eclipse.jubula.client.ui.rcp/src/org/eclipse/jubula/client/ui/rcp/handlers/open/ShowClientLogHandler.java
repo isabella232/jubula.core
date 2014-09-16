@@ -19,7 +19,7 @@ import org.eclipse.jubula.client.ui.rcp.businessprocess.ShowClientLogBP;
 import org.eclipse.jubula.client.ui.rcp.editors.ClientLogInput;
 import org.eclipse.jubula.client.ui.rcp.editors.LogViewer;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;

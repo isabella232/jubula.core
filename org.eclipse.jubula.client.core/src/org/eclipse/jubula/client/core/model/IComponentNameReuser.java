@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.core.model;
 import java.util.Collection;
 
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
-import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 
 
 /**

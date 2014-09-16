@@ -25,9 +25,9 @@ import org.eclipse.jubula.client.ui.rcp.dialogs.NagDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.wizards.pages.DatabaseMigrationAssistantIntroPage;
 import org.eclipse.jubula.client.ui.rcp.wizards.pages.ImportProjectsWizardPage;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.JBException;
-import org.eclipse.jubula.tools.exception.JBFatalException;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.JBException;
+import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

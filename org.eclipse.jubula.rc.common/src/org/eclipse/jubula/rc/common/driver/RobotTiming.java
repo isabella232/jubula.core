@@ -11,10 +11,10 @@
 package org.eclipse.jubula.rc.common.driver;
 
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.tools.constants.TimeoutConstants;
-import org.eclipse.jubula.tools.constants.TimingConstantsServer;
-import org.eclipse.jubula.tools.utils.EnvironmentUtils;
-import org.eclipse.jubula.tools.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
+import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 
 
 /**

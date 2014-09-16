@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.preferences.database;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.persistence.config.BatchWriting;
 
 /**

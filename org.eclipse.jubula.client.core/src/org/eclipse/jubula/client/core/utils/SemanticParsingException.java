@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
-import org.eclipse.jubula.tools.exception.JBRuntimeException;
+import org.eclipse.jubula.tools.internal.exception.JBRuntimeException;
 
 /**
  * Indicates that a semantic error was encountered during parsing.

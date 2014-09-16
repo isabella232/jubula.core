@@ -15,8 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.tools.constants.TestDataConstants;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 
 
 /**

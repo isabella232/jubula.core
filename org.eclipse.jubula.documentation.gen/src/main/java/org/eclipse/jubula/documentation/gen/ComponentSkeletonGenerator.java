@@ -16,14 +16,14 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.jubula.tools.utils.generator.ActionInfo;
-import org.eclipse.jubula.tools.utils.generator.CompSystemProcessor;
-import org.eclipse.jubula.tools.utils.generator.ComponentInfo;
-import org.eclipse.jubula.tools.utils.generator.IProcessor;
-import org.eclipse.jubula.tools.utils.generator.Info;
-import org.eclipse.jubula.tools.utils.generator.ParamInfo;
-import org.eclipse.jubula.tools.xml.businessmodell.Param;
-import org.eclipse.jubula.tools.xml.businessmodell.ValueSetElement;
+import org.eclipse.jubula.tools.internal.utils.generator.ActionInfo;
+import org.eclipse.jubula.tools.internal.utils.generator.CompSystemProcessor;
+import org.eclipse.jubula.tools.internal.utils.generator.ComponentInfo;
+import org.eclipse.jubula.tools.internal.utils.generator.IProcessor;
+import org.eclipse.jubula.tools.internal.utils.generator.Info;
+import org.eclipse.jubula.tools.internal.utils.generator.ParamInfo;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ValueSetElement;
 
 
 /**

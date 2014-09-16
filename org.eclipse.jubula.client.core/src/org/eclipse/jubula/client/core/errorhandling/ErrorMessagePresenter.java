@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.core.errorhandling;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

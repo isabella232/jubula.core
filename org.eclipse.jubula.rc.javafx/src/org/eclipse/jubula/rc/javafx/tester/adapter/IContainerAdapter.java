@@ -12,9 +12,9 @@ package org.eclipse.jubula.rc.javafx.tester.adapter;
 
 import java.util.List;
 
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
-
 import javafx.scene.Node;
+
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 
 /**
  * This Interface should be implemented by adapter classes for container

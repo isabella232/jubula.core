@@ -37,12 +37,12 @@ import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.MessageHeader;
 import org.eclipse.jubula.communication.message.MessageIdentifier;
 import org.eclipse.jubula.communication.parser.MessageSerializer;
-import org.eclipse.jubula.tools.exception.Assert;
-import org.eclipse.jubula.tools.exception.AssertException;
-import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.exception.JBVersionException;
-import org.eclipse.jubula.tools.exception.SerialisationException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.exception.Assert;
+import org.eclipse.jubula.tools.internal.exception.AssertException;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.exception.JBVersionException;
+import org.eclipse.jubula.tools.internal.exception.SerialisationException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.slf4j.LoggerFactory;
 
 

@@ -17,7 +17,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
-import org.eclipse.jubula.tools.constants.InputConstants;
+import org.eclipse.jubula.tools.internal.constants.InputConstants;
 
 /**
  * This class is responsible for accepting an InputEvent as the (combination of

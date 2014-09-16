@@ -22,9 +22,9 @@ import java.util.Vector;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.communication.Communicator;
-import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

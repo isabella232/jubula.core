@@ -36,7 +36,7 @@ import org.eclipse.jubula.client.ui.dialogs.DBLoginDialog;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.ui.PlatformUI;
 import org.slf4j.Logger;

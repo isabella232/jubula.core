@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.core.model;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.utils.Traverser;
-import org.eclipse.jubula.tools.i18n.CompSystemI18n;
+import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 
 
 /**

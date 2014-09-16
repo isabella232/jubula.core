@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.core.utils;
 
 import java.util.List;
 
-import org.eclipse.jubula.tools.exception.UnexpectedGenericTypeException;
+import org.eclipse.jubula.tools.internal.exception.UnexpectedGenericTypeException;
 
 
 /**

@@ -52,12 +52,12 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.NameValidator;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.objects.ComponentIdentifier;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
-import org.eclipse.jubula.tools.objects.MappingConstants;
-import org.eclipse.jubula.tools.utils.StringParsing;
-import org.eclipse.jubula.tools.xml.businessmodell.Action;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.MappingConstants;
+import org.eclipse.jubula.tools.internal.utils.StringParsing;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
 
 
 /**
@@ -277,7 +277,7 @@ public class RecordHelper {
             String actionStr) {
         Action a = null;
         List compsList = new LinkedList();
-        org.eclipse.jubula.tools.xml.businessmodell.Component comp;
+        org.eclipse.jubula.tools.internal.xml.businessmodell.Component comp;
         if (id.getSupportedClassName().equals(MappingConstants
                 .SWING_APPLICATION_CLASSNAME) 
                 || id.getSupportedClassName().equals(MappingConstants
@@ -296,7 +296,7 @@ public class RecordHelper {
         }
         Iterator compsIt = compsList.iterator();
         while (compsIt.hasNext()) {
-            comp = (org.eclipse.jubula.tools
+            comp = (org.eclipse.jubula.tools.internal
                     .xml.businessmodell.Component)compsIt.next();
             java.util.List actionList = comp.getActions();
             Iterator it = actionList.iterator();

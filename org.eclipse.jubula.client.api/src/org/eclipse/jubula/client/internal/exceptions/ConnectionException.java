@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.internal.exceptions;
 
-import org.eclipse.jubula.tools.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 
 /**
  * An exception thrown if a connection to the AUT-Agent or to the AUTServer

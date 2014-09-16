@@ -36,7 +36,7 @@ import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.RefTestSuite
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.SpecTestCaseGUIPropertySource;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.TestJobGUIPropertySource;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.TestSuiteGUIPropertySource;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 

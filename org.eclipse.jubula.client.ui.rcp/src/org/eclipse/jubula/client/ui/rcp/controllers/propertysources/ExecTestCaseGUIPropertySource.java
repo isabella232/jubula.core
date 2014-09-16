@@ -36,9 +36,9 @@ import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.DisabledLabelProv
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.ParameterValueLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.validator.TestDataCubeReferenceValidator;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText.IValidator;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.jubula.tools.xml.businessmodell.ParamValueSet;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ParamValueSet;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;

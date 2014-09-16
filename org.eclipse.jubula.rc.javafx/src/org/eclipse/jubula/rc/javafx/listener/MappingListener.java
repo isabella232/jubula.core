@@ -27,8 +27,8 @@ import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.PropertyUtil;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 /**
  * Realizes Object-Mapping.

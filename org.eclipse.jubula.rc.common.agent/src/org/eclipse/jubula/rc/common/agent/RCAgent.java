@@ -19,8 +19,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import org.eclipse.jubula.rc.common.Constants;
-import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 
 /**

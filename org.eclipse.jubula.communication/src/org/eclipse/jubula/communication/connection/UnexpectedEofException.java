@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.connection;
 
-import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 /**
  * Exception to be thrown if the number of bytes announced for instance

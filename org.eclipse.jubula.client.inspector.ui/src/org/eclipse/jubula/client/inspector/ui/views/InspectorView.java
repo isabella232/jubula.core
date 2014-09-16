@@ -21,7 +21,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.inspector.ui.model.InspectedComponent;
 import org.eclipse.jubula.client.inspector.ui.provider.labelprovider.InspectorLabelProvider;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.PlatformUI;

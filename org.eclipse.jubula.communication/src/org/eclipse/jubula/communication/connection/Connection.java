@@ -32,8 +32,8 @@ import org.eclipse.jubula.communication.message.MessageHeader;
 import org.eclipse.jubula.communication.message.MessageHeader.InvalidHeaderVersionException;
 import org.eclipse.jubula.communication.parser.MessageHeaderSerializer;
 import org.eclipse.jubula.communication.writer.MessageWriter;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.exception.SerialisationException;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.SerialisationException;
 import org.slf4j.LoggerFactory;
 
 

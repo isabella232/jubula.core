@@ -15,7 +15,7 @@ import java.util.Date;
 import org.eclipse.jubula.client.alm.mylyn.ui.i18n.Messages;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.ui.controllers.propertysources.TestResultNodePropertySource;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.mylyn.tasks.core.TaskMapping;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;

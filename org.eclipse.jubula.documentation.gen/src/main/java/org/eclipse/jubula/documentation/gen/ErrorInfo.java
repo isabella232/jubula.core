@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.documentation.gen;
 
-import org.eclipse.jubula.tools.utils.generator.Info;
+import org.eclipse.jubula.tools.internal.utils.generator.Info;
 
 /**
  * @author BREDEX GmbH

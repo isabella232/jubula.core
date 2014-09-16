@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.preferences.database;
 
 import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
-import org.eclipse.jubula.tools.constants.EnvConstants;
+import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 
 /**
  * Base class for Connection Info that uses a hostname, port, and some kind of

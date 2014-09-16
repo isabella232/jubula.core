@@ -11,7 +11,7 @@
 package org.eclipse.jubula.rc.javafx.listener;
 
 import org.eclipse.jubula.rc.common.listener.AUTEventListener;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 /**
  * Not implemented!

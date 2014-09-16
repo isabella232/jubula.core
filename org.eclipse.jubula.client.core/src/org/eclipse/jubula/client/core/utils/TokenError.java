@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.utils;
 
 import org.eclipse.jubula.client.core.utils.ParamValueConverter.ConvValidationState;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 /**
  * class to describe errors results from syntactical or semantical validation of

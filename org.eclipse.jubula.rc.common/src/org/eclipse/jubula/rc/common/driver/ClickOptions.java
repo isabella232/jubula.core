@@ -11,7 +11,7 @@
 package org.eclipse.jubula.rc.common.driver;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.eclipse.jubula.tools.constants.InputConstants;
+import org.eclipse.jubula.tools.internal.constants.InputConstants;
 
 
 /**

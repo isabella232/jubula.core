@@ -21,7 +21,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.URIUtil;
 import org.eclipse.jubula.client.core.Activator;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

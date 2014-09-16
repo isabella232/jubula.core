@@ -14,7 +14,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
-import org.eclipse.jubula.tools.i18n.CompSystemI18n;
+import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 
 /**
  * @author BREDEX GmbH

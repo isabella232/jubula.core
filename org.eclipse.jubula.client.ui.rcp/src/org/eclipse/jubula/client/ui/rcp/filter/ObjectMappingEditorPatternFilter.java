@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.filter;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 
 /**

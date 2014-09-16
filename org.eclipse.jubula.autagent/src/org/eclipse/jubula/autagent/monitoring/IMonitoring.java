@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.OutputStream;
 import java.util.Map;
 
-import org.eclipse.jubula.tools.objects.IMonitoringValue;
+import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
 
 /**
  * This interface contains all methods which will be called during monitoring execution.

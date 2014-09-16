@@ -18,7 +18,7 @@ import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.interfaces.ITester;
-import org.eclipse.jubula.tools.constants.TestDataConstants;
+import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 /**
  * Implementation of basic functions for all tester classes. This class
  * gives the basic functions which are needed for testing.

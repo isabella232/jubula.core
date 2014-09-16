@@ -16,7 +16,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.AbstractTextComponentTester;
 import org.eclipse.jubula.rc.common.util.Verifier;
-import org.eclipse.jubula.tools.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 
 /**
  * Tester class: this class is extending an existing component with an

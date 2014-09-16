@@ -17,7 +17,7 @@ import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.TakeScreenshotMessage;
 import org.eclipse.jubula.communication.message.TakeScreenshotResponseMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.tools.serialisation.SerializedImage;
+import org.eclipse.jubula.tools.internal.serialisation.SerializedImage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

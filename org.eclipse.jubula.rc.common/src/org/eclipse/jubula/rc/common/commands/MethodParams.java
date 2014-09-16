@@ -16,7 +16,7 @@ import java.util.List;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.eclipse.jubula.communication.message.MessageParam;
 import org.eclipse.jubula.rc.common.exception.MethodParamException;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 
 /**

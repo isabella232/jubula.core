@@ -28,7 +28,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.eclipse.jubula.tools.exception.Assert;
+import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.persistence.annotations.Index;
 
 /**

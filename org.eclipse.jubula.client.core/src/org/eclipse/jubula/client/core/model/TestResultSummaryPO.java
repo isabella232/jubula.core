@@ -40,9 +40,9 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.objects.IMonitoringValue;
-import org.eclipse.jubula.tools.objects.MonitoringValue;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
+import org.eclipse.jubula.tools.internal.objects.MonitoringValue;
 
 
 

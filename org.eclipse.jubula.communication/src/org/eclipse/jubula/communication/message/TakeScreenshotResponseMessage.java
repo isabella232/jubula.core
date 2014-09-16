@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.message;
 
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.serialisation.SerializedImage;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.serialisation.SerializedImage;
 
 /**
  * @author BREDEX GmbH

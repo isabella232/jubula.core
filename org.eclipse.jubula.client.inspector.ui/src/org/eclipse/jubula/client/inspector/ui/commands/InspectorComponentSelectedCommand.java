@@ -18,7 +18,7 @@ import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.InspectorComponentSelectedMessage;
 import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;

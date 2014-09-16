@@ -15,7 +15,7 @@ import java.util.SortedSet;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.swt.utils.SwtKeyCodeConverter;
-import org.eclipse.jubula.tools.constants.InputConstants;
+import org.eclipse.jubula.tools.internal.constants.InputConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 

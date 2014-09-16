@@ -12,9 +12,9 @@ package org.eclipse.jubula.documentation.gen;
 
 import java.util.Comparator;
 
-import org.eclipse.jubula.tools.utils.generator.ActionInfo;
-import org.eclipse.jubula.tools.utils.generator.ComponentInfo;
-import org.eclipse.jubula.tools.utils.generator.ToolkitInfo;
+import org.eclipse.jubula.tools.internal.utils.generator.ActionInfo;
+import org.eclipse.jubula.tools.internal.utils.generator.ComponentInfo;
+import org.eclipse.jubula.tools.internal.utils.generator.ToolkitInfo;
 
 
 /**

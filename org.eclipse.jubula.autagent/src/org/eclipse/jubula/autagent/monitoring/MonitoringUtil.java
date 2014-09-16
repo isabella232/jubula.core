@@ -15,7 +15,7 @@ import java.util.Set;
 
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.agent.AutAgent;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /**
  * This class contains monitoring utility methods

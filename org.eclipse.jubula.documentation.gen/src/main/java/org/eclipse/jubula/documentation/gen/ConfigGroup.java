@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.configuration.Configuration;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 /**
  * Represents a configuration group of the Tex generation. A group contains the

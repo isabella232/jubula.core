@@ -15,8 +15,8 @@ import java.util.Map;
 import java.util.Vector;
 
 import org.eclipse.jubula.autagent.AutStarter;
-import org.eclipse.jubula.tools.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 
 /**

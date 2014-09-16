@@ -19,11 +19,11 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jubula.toolkit.api.gen.ClassGenerator;
-import org.eclipse.jubula.tools.utils.generator.CompSystemProcessor;
-import org.eclipse.jubula.tools.utils.generator.ComponentInfo;
-import org.eclipse.jubula.tools.utils.generator.ToolkitConfig;
-import org.eclipse.jubula.tools.utils.generator.ToolkitInfo;
-import org.eclipse.jubula.tools.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.utils.generator.CompSystemProcessor;
+import org.eclipse.jubula.tools.internal.utils.generator.ComponentInfo;
+import org.eclipse.jubula.tools.internal.utils.generator.ToolkitConfig;
+import org.eclipse.jubula.tools.internal.utils.generator.ToolkitInfo;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 
 /**
  * Generates classes for components from comp system

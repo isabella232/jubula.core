@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.widgets;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.ui.widgets.JBText;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;

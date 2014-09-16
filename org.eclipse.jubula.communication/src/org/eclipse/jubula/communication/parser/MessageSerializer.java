@@ -13,14 +13,14 @@ package org.eclipse.jubula.communication.parser;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.MessageHeader;
-import org.eclipse.jubula.tools.exception.SerialisationException;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.serialisation.IXmlSerializer;
+import org.eclipse.jubula.tools.internal.exception.SerialisationException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.serialisation.IXmlSerializer;
 
 
 /**
  * (De)serializes a message by delegating to the serializer which is created by
- * the {@link org.eclipse.jubula.tools.serialisation.IXmlSerializer.Factory}.
+ * the {@link org.eclipse.jubula.tools.internal.serialisation.IXmlSerializer.Factory}.
  * 
  * {@inheritDoc}
  * 

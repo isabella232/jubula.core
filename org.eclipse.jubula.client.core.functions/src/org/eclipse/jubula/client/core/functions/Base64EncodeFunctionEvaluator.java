@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.functions;
 
 import org.apache.commons.codec.binary.Base64;
-import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 
 /**
  * Function that encodes a given string into a base 64 string

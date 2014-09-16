@@ -12,7 +12,7 @@ package org.eclipse.jubula.communication.message.html;
 
 import org.eclipse.jubula.communication.message.CAPTestMessage;
 import org.eclipse.jubula.communication.message.MessageCap;
-import org.eclipse.jubula.tools.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 /**
  * @author BREDEX GmbH

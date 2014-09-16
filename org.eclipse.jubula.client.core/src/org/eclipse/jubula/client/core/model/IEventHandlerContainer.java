@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.Collection;
 
-import org.eclipse.jubula.tools.exception.InvalidDataException;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 
 
 /**

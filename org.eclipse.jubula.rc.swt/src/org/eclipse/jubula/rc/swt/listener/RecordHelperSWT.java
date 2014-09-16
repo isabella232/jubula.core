@@ -18,12 +18,12 @@ import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.NameValidator;
 import org.eclipse.jubula.rc.swt.components.FindSWTComponentBP;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.objects.ComponentIdentifier;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
-import org.eclipse.jubula.tools.objects.MappingConstants;
-import org.eclipse.jubula.tools.utils.StringParsing;
-import org.eclipse.jubula.tools.xml.businessmodell.Action;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.MappingConstants;
+import org.eclipse.jubula.tools.internal.utils.StringParsing;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
@@ -223,7 +223,7 @@ public class RecordHelperSWT {
      */
     public Action compSysToAction(IComponentIdentifier id, String actionStr) {
         Action a = null;
-        org.eclipse.jubula.tools.xml.businessmodell.Component comp;
+        org.eclipse.jubula.tools.internal.xml.businessmodell.Component comp;
         java.util.List compsList = new LinkedList();
         if (id.getSupportedClassName().equals(MappingConstants
                 .SWT_MENU_CLASSNAME)) {
@@ -240,16 +240,16 @@ public class RecordHelperSWT {
         }
         Iterator compsIt = compsList.iterator();
         while (compsIt.hasNext()) {
-            comp = (org.eclipse.jubula.tools.xml.businessmodell.Component)
-                compsIt.next();
+            comp = (org.eclipse.jubula.tools.internal.xml.
+                businessmodell.Component) compsIt.next();
             java.util.List actionList = comp.getActions();
             Iterator it = actionList.iterator();
             while (it.hasNext()) {
-                Action action = (Action)it.next();
+                Action action = (Action) it.next();
                 if (action.getName().equals(actionStr)) {
                     a = action;
                 }
-            }            
+            }
         }
         return a;
     }

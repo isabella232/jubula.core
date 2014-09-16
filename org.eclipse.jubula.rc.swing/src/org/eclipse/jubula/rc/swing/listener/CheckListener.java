@@ -44,11 +44,11 @@ import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.constants.TimeoutConstants;
-import org.eclipse.jubula.tools.exception.CommunicationException;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
-import org.eclipse.jubula.tools.utils.StringParsing;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.utils.StringParsing;
 
 
 
@@ -185,7 +185,7 @@ public class CheckListener extends AbstractAutSwingEventListener {
             // set always to true, before showing observing
             // dialog. Changing AUTServer mode sets it to false
             m_active = true;
-            org.eclipse.jubula.tools.xml.businessmodell.Component comp;
+            org.eclipse.jubula.tools.internal.xml.businessmodell.Component comp;
 
             comp = AUTServerConfiguration.getInstance()
                 .findComponent(id.getSupportedClassName());
@@ -506,7 +506,7 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @throws CommunicationException in case of communication error
      */
     private void sendMessage(IComponentIdentifier id, 
-        org.eclipse.jubula.tools.xml.businessmodell.Component comp,
+        org.eclipse.jubula.tools.internal.xml.businessmodell.Component comp,
             Map<String, String> checkValues, String logName) 
         throws CommunicationException {
         ServerShowDialogMessage message =

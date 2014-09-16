@@ -14,8 +14,8 @@ import org.eclipse.jubula.communication.ICommand;
 import org.eclipse.jubula.communication.message.GetKeyboardLayoutNameMessage;
 import org.eclipse.jubula.communication.message.GetKeyboardLayoutNameResponseMessage;
 import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.tools.constants.RcpAccessorConstants;
-import org.eclipse.jubula.tools.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.constants.RcpAccessorConstants;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

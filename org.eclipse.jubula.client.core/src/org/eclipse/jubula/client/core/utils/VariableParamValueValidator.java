@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.eclipse.jubula.client.core.utils.ParamValueConverter.ConvValidationState;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 
 /**

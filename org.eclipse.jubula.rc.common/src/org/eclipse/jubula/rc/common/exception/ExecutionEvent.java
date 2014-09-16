@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.exception;
 
-import org.eclipse.jubula.tools.exception.JBRuntimeException;
+import org.eclipse.jubula.tools.internal.exception.JBRuntimeException;
 
 /**
  * This exception supports notification and processing of test execution

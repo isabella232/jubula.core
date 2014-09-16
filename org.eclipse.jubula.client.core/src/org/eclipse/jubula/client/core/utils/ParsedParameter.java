@@ -28,8 +28,8 @@ import org.eclipse.jubula.client.core.gen.parser.parameter.node.PFunctionArgList
 import org.eclipse.jubula.client.core.gen.parser.parameter.node.TComma;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.tools.i18n.I18n;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 /**
  * Contains information gathered from parsing a Parameter string. The class

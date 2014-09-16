@@ -12,7 +12,7 @@ package org.eclipse.jubula.autagent.agent;
 
 import org.eclipse.jubula.autagent.commands.StartAUTServerCommand;
 import org.eclipse.jubula.communication.message.StartAUTServerMessage;
-import org.eclipse.jubula.tools.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /**
  * Restarts an AUT that was started via an AUT Configuration.

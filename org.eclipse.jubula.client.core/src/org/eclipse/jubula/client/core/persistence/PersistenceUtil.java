@@ -24,8 +24,8 @@ import javax.persistence.criteria.Predicate;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
-import org.eclipse.jubula.tools.constants.StringConstants;
-import org.eclipse.jubula.tools.utils.ValueListIterator;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.utils.ValueListIterator;
 
 
 /**

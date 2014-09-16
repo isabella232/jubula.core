@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.core.events;
 import java.util.EventListener;
 
 import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 
 /**

@@ -15,8 +15,8 @@ import java.util.Map;
 
 import org.eclipse.jubula.communication.message.Message;
 import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
-import org.eclipse.jubula.tools.constants.AUTStartResponse;
-import org.eclipse.jubula.tools.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 
 /**

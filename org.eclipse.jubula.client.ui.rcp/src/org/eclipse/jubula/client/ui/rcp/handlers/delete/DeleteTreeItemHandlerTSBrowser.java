@@ -24,7 +24,7 @@ import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteCatHandle
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM.DeleteExecHandle;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
-import org.eclipse.jubula.tools.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 /**
  * @author BREDEX GmbH

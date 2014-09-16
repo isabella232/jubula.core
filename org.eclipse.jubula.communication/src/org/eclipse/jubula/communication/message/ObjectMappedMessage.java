@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.message;
 
-import org.eclipse.jubula.tools.constants.CommandConstants;
-import org.eclipse.jubula.tools.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 /**
  * This message is send from the AUTServer to the JubulaClient in OBJECT_MAPPING
