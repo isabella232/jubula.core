@@ -2,8 +2,11 @@
 package="org.eclipse.jubula.toolkit.api.gen" 
 imports="java.util.*
 			org.eclipse.jubula.toolkit.api.gen.internal.GenerationInfo 
-			org.eclipse.jubula.toolkit.api.gen.internal.NameLoader 
-         org.eclipse.jubula.tools.internal.xml.businessmodell.*" 
+			org.eclipse.jubula.toolkit.api.gen.internal.NameLoader
+		   org.eclipse.jubula.tools.internal.xml.businessmodell.Action
+		   org.eclipse.jubula.tools.internal.xml.businessmodell.Component
+		   org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
+		   org.eclipse.jubula.tools.internal.xml.businessmodell.Param" 
 class="ClassGenerator"%>
 <%
 	GenerationInfo genInfo = (GenerationInfo)argument;
