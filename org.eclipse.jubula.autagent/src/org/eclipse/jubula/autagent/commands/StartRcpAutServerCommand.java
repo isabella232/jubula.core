@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import org.apache.commons.lang.LocaleUtils;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.RcpAccessorConstants;
@@ -113,8 +114,8 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
         // create exec string array
         List<String> cmds = new Vector<String>();
         // add locale
-        addLocale(cmds,
-            new Locale(parameters.get(AutConfigConstants.AUT_LOCALE)));
+        addLocale(cmds, LocaleUtils.toLocale(
+            parameters.get(AutConfigConstants.AUT_LOCALE)));
         // add JRE parameter
         final String jreParams = parameters
             .get(AutConfigConstants.JRE_PARAMETER);
@@ -151,8 +152,8 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
             cmds.add(0, baseCmd);
                     
             createDirectAutJavaCallParameter(PATH_SEPARATOR, cmds, parameters);
-            addLocale(cmds, new Locale(parameters.get(
-                AutConfigConstants.AUT_LOCALE)));
+            addLocale(cmds, LocaleUtils.toLocale(parameters
+                .get(AutConfigConstants.AUT_LOCALE)));
         } else {
             // Start using executable file
             cmds = new Vector<String>();
@@ -164,8 +165,8 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
             // Note: This overrides the -nl defined in the <app>.ini file, if
             // any. It will not override a -nl from the command line.
             if (!cmds.contains(NL)) {
-                Locale locale = new Locale(parameters.get(
-                    AutConfigConstants.AUT_LOCALE));
+                Locale locale = LocaleUtils.toLocale(parameters
+                    .get(AutConfigConstants.AUT_LOCALE));
                 if (locale != null) {
                     if ((locale.getCountry() != null 
                         && locale.getCountry().length() > 0)

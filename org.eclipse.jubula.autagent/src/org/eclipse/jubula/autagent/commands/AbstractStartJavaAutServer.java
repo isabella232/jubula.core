@@ -14,11 +14,11 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.communication.Communicator;
@@ -257,8 +257,8 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
     protected void addBaseSettings(List<String> cmds,
         Map<String, String> parameters) {
         // add locale
-        addLocale(cmds, new Locale(parameters.get(
-            AutConfigConstants.AUT_LOCALE)));
+        addLocale(cmds, LocaleUtils.toLocale(parameters
+            .get(AutConfigConstants.AUT_LOCALE)));
 
         // add JRE params
         final String jreParams = parameters

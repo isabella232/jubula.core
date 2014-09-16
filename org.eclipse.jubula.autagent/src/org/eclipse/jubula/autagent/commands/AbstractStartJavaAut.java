@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
+import org.apache.commons.lang.LocaleUtils;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.autagent.monitoring.IMonitoring;
@@ -313,10 +314,10 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
     protected String setJavaOptions(Map<String, String> parameters) {
         StringBuffer sb = new StringBuffer();
         if (isRunningFromExecutable(parameters)) {
-            Locale locale = new Locale(parameters.get(
-                AutConfigConstants.AUT_LOCALE));
-            // set agent and locals
+            Locale locale = LocaleUtils.toLocale(parameters
+                .get(AutConfigConstants.AUT_LOCALE));
             
+            // set agent and locals
             sb.append(JAVA_OPTIONS_INTRO);
             if (org.eclipse.jubula.tools.internal.utils.MonitoringUtil
                     .shouldAndCanRunWithMonitoring(parameters)) {
