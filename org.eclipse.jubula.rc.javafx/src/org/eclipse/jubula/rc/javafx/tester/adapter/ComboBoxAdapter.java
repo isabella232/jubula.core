@@ -13,7 +13,10 @@ package org.eclipse.jubula.rc.javafx.tester.adapter;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
@@ -51,11 +54,18 @@ public class ComboBoxAdapter<T extends ComboBox<?>> extends
 
                     @Override
                     public String call() throws Exception {
-                        Object value = getRealComponent().getValue();
-                        if (value == null) {
-                            return null;
+                        ObservableList<Node> children = getRealComponent()
+                                .getChildrenUnmodifiable();
+                        ListCell text = null;
+                        for (Node node : children) {
+                            if (node instanceof ListCell) {
+                                text = (ListCell) node;
+                            }
                         }
-                        return value.toString();
+                        if (text != null) {
+                            return text.getText();
+                        }
+                        return null;
                     }
                 });
     }
