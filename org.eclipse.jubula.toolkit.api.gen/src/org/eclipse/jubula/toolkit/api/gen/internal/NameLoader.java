@@ -47,7 +47,7 @@ public class NameLoader {
     
     /** specific path for implementation classes */
     private static final String PACKAGE_SPECIFIC_IMPLCLASS =
-        ".internal.api"; //$NON-NLS-1$
+        ".internal.impl"; //$NON-NLS-1$
     
     /**
      * <code>instance</code> the singleton instance

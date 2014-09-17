@@ -56,8 +56,8 @@ class="ClassGenerator"%>
  *******************************************************************************/
 package <%=packageName%>;
 
-import org.eclipse.jubula.toolkit.base.internal.annotations.RealizedType;
-import org.eclipse.jubula.toolkit.base.internal.annotations.TesterClass;
+import org.eclipse.jubula.toolkit.internal.annotations.RealizedType;
+import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
 
 @RealizedType(realizedType="<%=realizedType%>")
 @TesterClass(testerClass="<%=testerClass%>")
@@ -92,22 +92,18 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 		Action action = actionsIterator.next();
 		String actionName = nameLoader.translateFromCompSystem(action.getName());
 		List<Param> params = action.getParams();
-	%>
-	<%if (action.isDeprecated()) {%>@Deprecated<%}%>
-	public void <%=actionName%>(
-	<%	
-	Iterator<Param> paramIterator = params.iterator();
-	while (paramIterator.hasNext()) {
-	Param param = paramIterator.next();
-	String paramType = nameLoader.getFromNameMappings(param.getType());
-	String paramName = nameLoader.translateFromCompSystem(param.getName());
-	%>
-	<%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
-	<%
-	}
-	%> 
-	) <%if (genInterface) {%>;<%} else {%>{}<%}%>
-	<%
-	}
-	%> 
+		%>
+		<%if (action.isDeprecated()) {%>@Deprecated<%}%>
+		public void <%=actionName%>(
+		<%	
+		Iterator<Param> paramIterator = params.iterator();
+		while (paramIterator.hasNext()) {
+			Param param = paramIterator.next();
+			String paramType = nameLoader.getFromNameMappings(param.getType());
+			String paramName = nameLoader.translateFromCompSystem(param.getName());
+			%>
+			<%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
+		<%}%>
+		) <%if (genInterface) {%>;<%} else {%>{}<%}%>
+	<%}%> 
 }
