@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.SystemUtils;
-import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
+import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;

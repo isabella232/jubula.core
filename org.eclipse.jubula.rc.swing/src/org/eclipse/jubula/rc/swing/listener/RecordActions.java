@@ -41,11 +41,11 @@ import javax.swing.text.JTextComponent;
 import javax.swing.tree.TreePath;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.communication.message.CAPRecordedMessage;
-import org.eclipse.jubula.communication.message.MessageCap;
-import org.eclipse.jubula.communication.message.MessageParam;
-import org.eclipse.jubula.communication.message.RecordActionMessage;
-import org.eclipse.jubula.communication.message.ShowObservInfoMessage;
+import org.eclipse.jubula.communication.internal.message.CAPRecordedMessage;
+import org.eclipse.jubula.communication.internal.message.MessageCap;
+import org.eclipse.jubula.communication.internal.message.MessageParam;
+import org.eclipse.jubula.communication.internal.message.RecordActionMessage;
+import org.eclipse.jubula.communication.internal.message.ShowObservInfoMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;

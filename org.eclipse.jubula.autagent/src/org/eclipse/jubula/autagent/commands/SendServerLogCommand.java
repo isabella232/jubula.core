@@ -17,10 +17,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
 
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.SendServerLogMessage;
-import org.eclipse.jubula.communication.message.ServerLogResponseMessage;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.SendServerLogMessage;
+import org.eclipse.jubula.communication.internal.message.ServerLogResponseMessage;
 import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.Logger;

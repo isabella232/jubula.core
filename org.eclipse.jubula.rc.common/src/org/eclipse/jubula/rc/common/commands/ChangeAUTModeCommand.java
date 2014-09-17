@@ -10,12 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.commands;
 
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.AUTModeChangedMessage;
-import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.ServerShowDialogMessage;
-import org.eclipse.jubula.communication.message.ServerShowObservConsoleMessage;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.AUTModeChangedMessage;
+import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.ServerShowDialogMessage;
+import org.eclipse.jubula.communication.internal.message.ServerShowObservConsoleMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;

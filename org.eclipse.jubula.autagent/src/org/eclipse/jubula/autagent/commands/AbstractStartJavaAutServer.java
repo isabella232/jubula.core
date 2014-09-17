@@ -21,7 +21,7 @@ import java.util.Vector;
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.autagent.AutStarter;
-import org.eclipse.jubula.communication.Communicator;
+import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;

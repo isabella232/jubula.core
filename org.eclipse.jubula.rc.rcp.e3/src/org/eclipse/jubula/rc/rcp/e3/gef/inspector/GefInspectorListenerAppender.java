@@ -30,7 +30,7 @@ import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.ui.palette.PaletteViewer;
-import org.eclipse.jubula.communication.message.InspectorComponentSelectedMessage;
+import org.eclipse.jubula.communication.internal.message.InspectorComponentSelectedMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.listener.IAutListenerAppender;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;

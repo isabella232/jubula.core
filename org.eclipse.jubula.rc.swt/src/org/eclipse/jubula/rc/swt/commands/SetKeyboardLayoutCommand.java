@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.commands;
 
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.SetKeyboardLayoutMessage;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.SetKeyboardLayoutMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.swt.driver.RobotSwtImpl;
 import org.slf4j.Logger;

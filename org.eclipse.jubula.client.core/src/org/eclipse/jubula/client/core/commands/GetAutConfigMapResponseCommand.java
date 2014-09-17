@@ -13,9 +13,9 @@ package org.eclipse.jubula.client.core.commands;
 import java.util.Map;
 
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.GetAutConfigMapResponseMessage;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.GetAutConfigMapResponseMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

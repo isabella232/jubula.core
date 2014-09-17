@@ -17,10 +17,10 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 import org.eclipse.jubula.autagent.AutStarter;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.BuildMonitoringReportMessage;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.SendMonitoringReportMessage;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.BuildMonitoringReportMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.SendMonitoringReportMessage;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

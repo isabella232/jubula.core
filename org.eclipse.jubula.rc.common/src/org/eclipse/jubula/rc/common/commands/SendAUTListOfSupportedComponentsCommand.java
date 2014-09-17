@@ -15,10 +15,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.AUTStartStateMessage;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.SendAUTListOfSupportedComponentsMessage;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.AUTStartStateMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.SendAUTListOfSupportedComponentsMessage;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;

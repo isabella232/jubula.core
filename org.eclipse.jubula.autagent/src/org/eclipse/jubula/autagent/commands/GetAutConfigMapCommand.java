@@ -13,10 +13,10 @@ package org.eclipse.jubula.autagent.commands;
 import java.util.Map;
 
 import org.eclipse.jubula.autagent.monitoring.MonitoringDataStore;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.GetAutConfigMapMessage;
-import org.eclipse.jubula.communication.message.GetAutConfigMapResponseMessage;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.GetAutConfigMapMessage;
+import org.eclipse.jubula.communication.internal.message.GetAutConfigMapResponseMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

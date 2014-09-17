@@ -13,10 +13,10 @@ package org.eclipse.jubula.autagent.commands;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.agent.AutAgent;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.ConnectToAutMessage;
-import org.eclipse.jubula.communication.message.ConnectToAutResponseMessage;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.ConnectToAutMessage;
+import org.eclipse.jubula.communication.internal.message.ConnectToAutResponseMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

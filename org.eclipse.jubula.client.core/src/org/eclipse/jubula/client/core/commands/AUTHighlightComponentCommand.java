@@ -11,9 +11,9 @@
 package org.eclipse.jubula.client.core.commands;
 
 import org.eclipse.jubula.client.core.events.IAUTEventListener;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.AUTHighlightComponentResponseMessage;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.AUTHighlightComponentResponseMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.listener;
 
-import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
+import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;

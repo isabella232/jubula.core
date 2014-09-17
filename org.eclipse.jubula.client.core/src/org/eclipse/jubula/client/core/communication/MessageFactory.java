@@ -17,9 +17,9 @@ import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
-import org.eclipse.jubula.communication.message.CAPTestMessage;
-import org.eclipse.jubula.communication.message.MessageCap;
-import org.eclipse.jubula.communication.message.SendAUTListOfSupportedComponentsMessage;
+import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
+import org.eclipse.jubula.communication.internal.message.MessageCap;
+import org.eclipse.jubula.communication.internal.message.SendAUTListOfSupportedComponentsMessage;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
@@ -46,21 +46,21 @@ public class MessageFactory {
 
     static {
         toolkitToTestMessageClassName.put(CommandConstants.SWT_TOOLKIT, 
-            "org.eclipse.jubula.communication.message.swt.CAPSwtTestMessage"); //$NON-NLS-1$
+            "org.eclipse.jubula.communication.internal.message.swt.CAPSwtTestMessage"); //$NON-NLS-1$
         toolkitToTestMessageClassName.put(CommandConstants.RCP_TOOLKIT, 
             toolkitToTestMessageClassName.get(CommandConstants.SWT_TOOLKIT));
         toolkitToTestMessageClassName.put(CommandConstants.SWING_TOOLKIT, 
-            "org.eclipse.jubula.communication.message.swing.CAPSwingTestMessage"); //$NON-NLS-1$
+            "org.eclipse.jubula.communication.internal.message.swing.CAPSwingTestMessage"); //$NON-NLS-1$
         toolkitToTestMessageClassName.put(CommandConstants.HTML_TOOLKIT, 
-            "org.eclipse.jubula.communication.message.html.CAPHtmlTestMessage"); //$NON-NLS-1$
+            "org.eclipse.jubula.communication.internal.message.html.CAPHtmlTestMessage"); //$NON-NLS-1$
         toolkitToTestMessageClassName.put(CommandConstants.WIN_TOOLKIT,
-                "org.eclipse.jubula.communication.message.win.CAPWinTestMessage"); //$NON-NLS-1$
+            "org.eclipse.jubula.communication.internal.message.win.CAPWinTestMessage"); //$NON-NLS-1$
         toolkitToTestMessageClassName.put(CommandConstants.WIN__APPS_TOOLKIT,
-                "org.eclipse.jubula.communication.message.win.CAPWinTestMessage"); //$NON-NLS-1$
+            "org.eclipse.jubula.communication.internal.message.win.CAPWinTestMessage"); //$NON-NLS-1$
         toolkitToTestMessageClassName.put(CommandConstants.IOS_TOOLKIT, 
-                "org.eclipse.jubula.communication.message.ios.IOSCAPTestMessage"); //$NON-NLS-1$
+            "org.eclipse.jubula.communication.internal.message.ios.IOSCAPTestMessage"); //$NON-NLS-1$
         toolkitToTestMessageClassName.put(CommandConstants.JAVAFX_TOOLKIT, 
-                "org.eclipse.jubula.communication.message.javafx.CAPJavaFXTestMessage"); //$NON-NLS-1$
+            "org.eclipse.jubula.communication.internal.message.javafx.CAPJavaFXTestMessage"); //$NON-NLS-1$
     }
     
     /**
@@ -174,7 +174,7 @@ public class MessageFactory {
         throws UnknownMessageException {
         String messageClassName = "null"; //$NON-NLS-1$
         try {
-            messageClassName = "org.eclipse.jubula.communication.message.SendAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$                           
+            messageClassName = "org.eclipse.jubula.communication.internal.message.SendAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$                           
             Class messageClass = Class.forName(messageClassName, false, 
                     SendAUTListOfSupportedComponentsMessage.class
                     .getClassLoader());

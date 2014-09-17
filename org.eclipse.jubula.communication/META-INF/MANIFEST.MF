@@ -6,16 +6,16 @@ Bundle-Version: 2.4.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
-Export-Package: org.eclipse.jubula.communication,
- org.eclipse.jubula.communication.commands,
- org.eclipse.jubula.communication.connection,
- org.eclipse.jubula.communication.listener,
- org.eclipse.jubula.communication.message,
- org.eclipse.jubula.communication.message.html,
- org.eclipse.jubula.communication.message.swing,
- org.eclipse.jubula.communication.message.swt,
- org.eclipse.jubula.communication.parser,
- org.eclipse.jubula.communication.writer
+Export-Package: org.eclipse.jubula.communication.internal,
+ org.eclipse.jubula.communication.internal.commands,
+ org.eclipse.jubula.communication.internal.connection,
+ org.eclipse.jubula.communication.internal.listener,
+ org.eclipse.jubula.communication.internal.message,
+ org.eclipse.jubula.communication.internal.message.html,
+ org.eclipse.jubula.communication.internal.message.swing,
+ org.eclipse.jubula.communication.internal.message.swt,
+ org.eclipse.jubula.communication.internal.parser,
+ org.eclipse.jubula.communication.internal.writer
 Require-Bundle: org.eclipse.jubula.tools;bundle-version="[2.4.0,2.5.0)",
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)"

@@ -11,7 +11,7 @@
 package org.eclipse.jubula.autagent.agent;
 
 import org.eclipse.jubula.autagent.commands.StartAUTServerCommand;
-import org.eclipse.jubula.communication.message.StartAUTServerMessage;
+import org.eclipse.jubula.communication.internal.message.StartAUTServerMessage;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /**

@@ -10,10 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.commands;
 
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.AUTHighlightComponentMessage;
-import org.eclipse.jubula.communication.message.AUTHighlightComponentResponseMessage;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.AUTHighlightComponentMessage;
+import org.eclipse.jubula.communication.internal.message.AUTHighlightComponentResponseMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

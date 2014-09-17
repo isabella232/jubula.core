@@ -10,10 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.autagent.commands;
 
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.DisconnectFromAutAgentMessage;
-import org.eclipse.jubula.communication.message.DisconnectFromAutAgentResponseMessage;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.DisconnectFromAutAgentMessage;
+import org.eclipse.jubula.communication.internal.message.DisconnectFromAutAgentResponseMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

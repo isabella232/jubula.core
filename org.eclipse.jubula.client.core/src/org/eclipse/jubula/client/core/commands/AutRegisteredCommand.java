@@ -13,9 +13,9 @@ package org.eclipse.jubula.client.core.commands;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent.RegistrationStatus;
-import org.eclipse.jubula.communication.APICommand;
-import org.eclipse.jubula.communication.message.AutRegisteredMessage;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.APICommand;
+import org.eclipse.jubula.communication.internal.message.AutRegisteredMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

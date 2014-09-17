@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.businessprocess;
 
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.SendDirectoryResponseMessage;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.SendDirectoryResponseMessage;
 
 /**
  * Handle the answer to the browsing request

@@ -20,12 +20,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.jubula.communication.Communicator;
-import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
-import org.eclipse.jubula.communication.message.AUTServerStateMessage;
-import org.eclipse.jubula.communication.message.AUTStartMessage;
-import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.Communicator;
+import org.eclipse.jubula.communication.internal.listener.ICommunicationErrorListener;
+import org.eclipse.jubula.communication.internal.message.AUTServerStateMessage;
+import org.eclipse.jubula.communication.internal.message.AUTStartMessage;
+import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.commands.AUTStartCommand;
 import org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand;

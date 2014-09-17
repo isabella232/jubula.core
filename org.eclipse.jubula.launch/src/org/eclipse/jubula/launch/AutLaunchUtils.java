@@ -22,7 +22,7 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.jubula.client.autagent.handlers.ConnectToEmbeddedAutAgentHandler;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
-import org.eclipse.jubula.communication.Communicator;
+import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.launch.i18n.Messages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.IHandlerService;

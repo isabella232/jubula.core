@@ -34,8 +34,8 @@ import javax.swing.JTree;
 import javax.swing.text.JTextComponent;
 import javax.swing.tree.TreePath;
 
-import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
-import org.eclipse.jubula.communication.message.ServerShowDialogMessage;
+import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
+import org.eclipse.jubula.communication.internal.message.ServerShowDialogMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.Constants;

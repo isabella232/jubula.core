@@ -31,7 +31,7 @@ import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
-import org.eclipse.jubula.communication.message.GetRegisteredAutListMessage;
+import org.eclipse.jubula.communication.internal.message.GetRegisteredAutListMessage;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;

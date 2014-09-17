@@ -13,9 +13,9 @@ package org.eclipse.jubula.client.core.commands;
 import java.util.concurrent.Exchanger;
 
 import org.eclipse.jubula.client.internal.Synchronizer;
-import org.eclipse.jubula.communication.APICommand;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
+import org.eclipse.jubula.communication.internal.APICommand;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.StartAUTServerStateMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

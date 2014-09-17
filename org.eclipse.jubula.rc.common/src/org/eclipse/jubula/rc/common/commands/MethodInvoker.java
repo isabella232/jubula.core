@@ -15,8 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.beanutils.MethodUtils;
-import org.eclipse.jubula.communication.message.MessageCap;
-import org.eclipse.jubula.communication.message.MessageParam;
+import org.eclipse.jubula.communication.internal.message.MessageCap;
+import org.eclipse.jubula.communication.internal.message.MessageParam;
 import org.eclipse.jubula.rc.common.exception.MethodParamException;
 
 

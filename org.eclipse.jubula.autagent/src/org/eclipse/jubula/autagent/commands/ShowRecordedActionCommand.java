@@ -12,9 +12,9 @@ package org.eclipse.jubula.autagent.commands;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.autagent.remote.dialogs.ObservationConsoleBP;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.ShowRecordedActionMessage;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.ShowRecordedActionMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

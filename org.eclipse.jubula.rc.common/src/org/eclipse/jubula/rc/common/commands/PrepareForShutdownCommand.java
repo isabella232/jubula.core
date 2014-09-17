@@ -10,15 +10,15 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.commands;
 
-import org.eclipse.jubula.communication.Communicator;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.connection.Connection;
-import org.eclipse.jubula.communication.listener.IErrorHandler;
-import org.eclipse.jubula.communication.message.CAPTestResponseMessage;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.MessageCap;
-import org.eclipse.jubula.communication.message.MessageHeader;
-import org.eclipse.jubula.communication.message.PrepareForShutdownMessage;
+import org.eclipse.jubula.communication.internal.Communicator;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.connection.Connection;
+import org.eclipse.jubula.communication.internal.listener.IErrorHandler;
+import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.MessageCap;
+import org.eclipse.jubula.communication.internal.message.MessageHeader;
+import org.eclipse.jubula.communication.internal.message.PrepareForShutdownMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
 import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;

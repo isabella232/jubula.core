@@ -12,10 +12,10 @@ package org.eclipse.jubula.rc.common.commands;
 
 import java.awt.image.BufferedImage;
 
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.TakeScreenshotMessage;
-import org.eclipse.jubula.communication.message.TakeScreenshotResponseMessage;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.TakeScreenshotMessage;
+import org.eclipse.jubula.communication.internal.message.TakeScreenshotResponseMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.tools.internal.serialisation.SerializedImage;
 import org.slf4j.Logger;

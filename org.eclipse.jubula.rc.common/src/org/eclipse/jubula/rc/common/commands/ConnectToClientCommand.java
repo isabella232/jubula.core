@@ -12,9 +12,9 @@ package org.eclipse.jubula.rc.common.commands;
 
 import java.net.UnknownHostException;
 
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.ConnectToClientMessage;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.ConnectToClientMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

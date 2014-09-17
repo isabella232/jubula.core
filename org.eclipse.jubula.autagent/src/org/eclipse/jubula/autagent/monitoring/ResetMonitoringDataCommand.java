@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.autagent.monitoring;
 
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.ResetMonitoringDataMessage;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.ResetMonitoringDataMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

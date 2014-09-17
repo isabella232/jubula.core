@@ -24,7 +24,7 @@ import java.util.Map;
 import javax.swing.JList;
 import javax.swing.plaf.basic.ComboPopup;
 
-import org.eclipse.jubula.communication.message.ObjectMappedMessage;
+import org.eclipse.jubula.communication.internal.message.ObjectMappedMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;

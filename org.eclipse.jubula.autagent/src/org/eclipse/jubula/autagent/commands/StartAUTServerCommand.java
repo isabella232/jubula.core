@@ -13,10 +13,10 @@ package org.eclipse.jubula.autagent.commands;
 import java.io.IOException;
 
 import org.eclipse.jubula.autagent.AutStarter;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.StartAUTServerMessage;
-import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.StartAUTServerMessage;
+import org.eclipse.jubula.communication.internal.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

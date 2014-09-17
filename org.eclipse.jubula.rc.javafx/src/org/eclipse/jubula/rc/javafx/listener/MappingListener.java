@@ -21,7 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import org.eclipse.jubula.communication.message.ObjectMappedMessage;
+import org.eclipse.jubula.communication.internal.message.ObjectMappedMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;

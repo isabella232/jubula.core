@@ -19,9 +19,9 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import org.eclipse.jubula.communication.Communicator;
-import org.eclipse.jubula.communication.connection.ConnectionState;
-import org.eclipse.jubula.communication.connection.DefaultSocket;
+import org.eclipse.jubula.communication.internal.Communicator;
+import org.eclipse.jubula.communication.internal.connection.ConnectionState;
+import org.eclipse.jubula.communication.internal.connection.DefaultSocket;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;

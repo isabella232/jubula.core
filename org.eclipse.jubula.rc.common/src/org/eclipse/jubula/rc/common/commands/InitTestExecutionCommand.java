@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.commands;
 
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.InitTestExecutionMessage;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.InitTestExecutionMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.RobotConfiguration;

@@ -28,12 +28,12 @@ import java.util.Map;
 import javax.swing.JTextField;
 
 import org.eclipse.jubula.autagent.AutStarter;
-import org.eclipse.jubula.communication.Communicator;
-import org.eclipse.jubula.communication.message.CAPRecordedMessage;
-import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
-import org.eclipse.jubula.communication.message.MessageCap;
-import org.eclipse.jubula.communication.message.MessageParam;
-import org.eclipse.jubula.communication.message.ServerShowDialogResponseMessage;
+import org.eclipse.jubula.communication.internal.Communicator;
+import org.eclipse.jubula.communication.internal.message.CAPRecordedMessage;
+import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
+import org.eclipse.jubula.communication.internal.message.MessageCap;
+import org.eclipse.jubula.communication.internal.message.MessageParam;
+import org.eclipse.jubula.communication.internal.message.ServerShowDialogResponseMessage;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;

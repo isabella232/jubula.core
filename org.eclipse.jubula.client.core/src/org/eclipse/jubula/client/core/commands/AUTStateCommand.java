@@ -12,9 +12,9 @@ package org.eclipse.jubula.client.core.commands;
 
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.AUTStateMessage;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.AUTStateMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

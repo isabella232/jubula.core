@@ -38,7 +38,7 @@ import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.AutStarter.Verbosity;
 import org.eclipse.jubula.autagent.agent.AutAgent;
 import org.eclipse.jubula.autagent.desktop.DesktopIntegration;
-import org.eclipse.jubula.communication.connection.ConnectionState;
+import org.eclipse.jubula.communication.internal.connection.ConnectionState;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;

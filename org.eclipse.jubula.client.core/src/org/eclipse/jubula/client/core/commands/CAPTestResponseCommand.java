@@ -12,10 +12,10 @@ package org.eclipse.jubula.client.core.commands;
 
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.CAPTestResponseMessage;
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.MessageCap;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;

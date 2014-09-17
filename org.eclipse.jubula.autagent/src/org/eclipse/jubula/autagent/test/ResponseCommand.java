@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.autagent.test;
 
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.Message;
 
 /**
  * @author BREDEX GmbH

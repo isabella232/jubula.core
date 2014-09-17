@@ -20,8 +20,8 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import org.eclipse.jubula.communication.Communicator;
-import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
+import org.eclipse.jubula.communication.internal.Communicator;
+import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand;

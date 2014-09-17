@@ -12,10 +12,10 @@ package org.eclipse.jubula.client.internal;
 
 import java.net.InetAddress;
 
-import org.eclipse.jubula.communication.Communicator;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.listener.ICommunicationErrorListener;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.Communicator;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.listener.ICommunicationErrorListener;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;

@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.events;
 
-import org.eclipse.jubula.communication.message.ServerLogResponseMessage;
+import org.eclipse.jubula.communication.internal.message.ServerLogResponseMessage;
 
 /**
  * @author BREDEX GmbH

@@ -25,7 +25,7 @@ import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
-import org.eclipse.jubula.communication.message.ActivateInspectorMessage;
+import org.eclipse.jubula.communication.internal.message.ActivateInspectorMessage;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;

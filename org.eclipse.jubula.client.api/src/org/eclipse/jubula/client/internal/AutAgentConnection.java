@@ -14,7 +14,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
-import org.eclipse.jubula.communication.Communicator;
+import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

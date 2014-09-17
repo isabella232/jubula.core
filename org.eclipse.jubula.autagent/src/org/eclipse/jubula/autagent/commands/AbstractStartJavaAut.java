@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.autagent.monitoring.IMonitoring;
 import org.eclipse.jubula.autagent.monitoring.MonitoringDataStore;
 import org.eclipse.jubula.autagent.monitoring.MonitoringUtil;
-import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
+import org.eclipse.jubula.communication.internal.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;

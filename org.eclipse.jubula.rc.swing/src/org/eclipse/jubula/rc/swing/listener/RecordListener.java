@@ -46,7 +46,7 @@ import javax.swing.plaf.basic.ComboPopup;
 import javax.swing.text.JTextComponent;
 import javax.swing.tree.TreePath;
 
-import org.eclipse.jubula.communication.message.ChangeAUTModeMessage;
+import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;

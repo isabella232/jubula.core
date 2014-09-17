@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.swt.listener;
 
 import java.util.Map;
 
-import org.eclipse.jubula.communication.message.ObjectMappedMessage;
+import org.eclipse.jubula.communication.internal.message.ObjectMappedMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;

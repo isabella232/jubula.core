@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.exception;
 
-import org.eclipse.jubula.communication.message.MessageParam;
+import org.eclipse.jubula.communication.internal.message.MessageParam;
 
 /**
  * Represents an exception during the method parameter evaluation.

@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.jubula.communication.Communicator;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.SendDirectoryMessage;
-import org.eclipse.jubula.communication.message.SendDirectoryResponseMessage;
+import org.eclipse.jubula.communication.internal.Communicator;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.SendDirectoryMessage;
+import org.eclipse.jubula.communication.internal.message.SendDirectoryResponseMessage;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 

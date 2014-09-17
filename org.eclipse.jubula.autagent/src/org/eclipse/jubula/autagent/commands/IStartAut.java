@@ -13,8 +13,8 @@ package org.eclipse.jubula.autagent.commands;
 import java.io.IOException;
 import java.util.Map;
 
-import org.eclipse.jubula.communication.message.Message;
-import org.eclipse.jubula.communication.message.StartAUTServerStateMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
+import org.eclipse.jubula.communication.internal.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 

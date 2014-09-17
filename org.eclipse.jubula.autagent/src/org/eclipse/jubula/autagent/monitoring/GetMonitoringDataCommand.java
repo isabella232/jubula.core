@@ -13,11 +13,11 @@ package org.eclipse.jubula.autagent.monitoring;
 import java.util.Map;
 
 import org.eclipse.jubula.autagent.AutStarter;
-import org.eclipse.jubula.communication.Communicator;
-import org.eclipse.jubula.communication.ICommand;
-import org.eclipse.jubula.communication.message.GetMonitoringDataMessage;
-import org.eclipse.jubula.communication.message.GetMonitoringDataResponseMessage;
-import org.eclipse.jubula.communication.message.Message;
+import org.eclipse.jubula.communication.internal.Communicator;
+import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.message.GetMonitoringDataMessage;
+import org.eclipse.jubula.communication.internal.message.GetMonitoringDataResponseMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
