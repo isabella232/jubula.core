@@ -1,4 +1,4 @@
-You can automatically report the status of an automated test to an external system. The reporting is achieved by writing a comment on a task in the external repository. The comment includes a link to the test result in the dasboard. 
+You can automatically update tasks in an external repository when a test has run. You can report the test results by writing a comment on a task in the external repository with a link to the test result in the dasboard. You can also update fields / attributes on tasks based on information you specify in your \gdproject{}. 
 
 \subsubsection{Configuring a task repository for your \gdproject{}}
 \label{TasksALMConfigureProject}
@@ -16,7 +16,6 @@ This will let you:
 \begin{enumerate}
 \item In the \gdproject{} Properties, select \bxname{Mylyn ALM} from the tree on the left \bxfigref{TasksALMProjectProperties}.
 \item In the page that appears, you can select a repository from the combo-box. You can validate the repository settings using the button.
-\item You can then choose whether to only report failed tests, only report successful tests, or both.
 \item Enter the URL of the \dash{} that is configured to use the correct \gddb{} for your test results. This is the \dash{} that will be opened when you click on a test result link from the task repository. For more information on configuring and starting the \dash{}, see the documentation \bxpref{TasksDashboard}.
 \end{enumerate}
 
@@ -28,6 +27,27 @@ This will let you:
 \end{center}
 \end{figure}
 
+\subsubsection{Configuring reporting to tasks}
+\label{TasksALMConfigureProject}
+When a test has run, you can update relevant tasks in your repository with information:\\
+\begin{itemize}
+\item A comment that contains the status of the test run, and a link to the results for that test.
+\item You can update fields / atrributes for a task based on whether the test succeeded or failed. 
+\bxtipp{Tests that have a status other than \bxname{passed} (e.g. failed, stopped, still testing) are considered as \bxname{failed}.}
+\end{itemize}
+For each item (\gdcase{}, \gdsuite{}) in your test run that is linked to a task \bxpref{TasksALMAddTask}, the rules you specify in the \gdproject{} properties will be carried out to report test results to that task. 
+
+
+\begin{enumerate}
+\item In the \gdproject{} Properties, select \bxname{Mylyn ALM} from the tree on the left \bxfigref{TasksALMProjectProperties}.
+\item In the page that appears, you can configure how to report results.
+\item You have the same options for what to do on success and on failure.
+\begin{itemize}
+\item You can activate the checkbox to add a comment to each linked task. The comment contains information about the test run (date, status) and also a link to the test results. The test results can be seen in the specified dashboard \bxpref{TasksALMConfigureProject}.
+\item You can add rules in the table to update fields in the task. Enter a descriptive name (this is only used for display purposes in the Properties), the ID for the field you want to update and the value that the field should be updated with. 
+\end{itemize}
+
+\end{enumerate}
 
 
 \subsubsection{Adding task IDs to \gdsuites{} and \gdcases{}}
@@ -35,7 +55,7 @@ This will let you:
 
 You can add a task ID to \gdcases{} and \gdsuites{} in your \gdproject{}. 
 
-The task ID should be a valid ID in the repository that you have specified as the repository for this \gdproject{} \bxpref{TasksALMConfigureProject}. Adding the task ID to an item in your \gdproject{} means that this item is the relevant test for that task in your repository. You will be able to report test results for this item as a comment to the task in the repository. The comment will include a link to the dashboard, in which the test result report can be viewed.
+The task ID should be a valid ID in the repository that you have specified as the repository for this \gdproject{} \bxpref{TasksALMConfigureProject}. Adding the task ID to an item in your \gdproject{} means that this item is the relevant test for that task in your repository. You will be able to report test results for this item. 
 
 To add a task ID to a \gdcase{} or \gdsuite{}:
 \begin{enumerate}
@@ -56,11 +76,11 @@ If your \gdproject{} is joined to an external repository \bxpref{TasksALMConfigu
 When reporting is triggered, the following happens:
 \begin{itemize}
 \item A connection is made to ALM system configured in the \gdproject{} properties. 
-\item The test results are then analyzed to see if any comments need to be added in the external repository (commenting can be (de)activated for failed nodes or successful nodes in the \gdproject{} properties, for example). 
-\item If there are comments to be added, the \ite{} writes one comment per task, as defined in the \gdproject{} properties. If multiple items in one test run reference the same task ID, or if an item with a task ID is executed multiple times in the same test run,  then each test status and result link is written, but all in one comment. In this case, you will see a warning in the console that you have multiple items in one test that are joined to one single task ID.
+\item The test results are then analyzed to see if any reporting needs to be done to the external repository.
+\item If there is reporting to be done, the \ite{} reports to each necessary task as a batch job. The batch job contains any field updates and any comments. If multiple items in one test run reference the same task ID, or if an item with a task ID is executed multiple times in the same test run, then only one comment will be written. However, field updates will occur for each item linked to the task ID. In this case, you will see a warning in the console that you have multiple items in one test that are joined to one single task ID.
 \bxtipp{Tests that have a status other than \bxname{passed} (e.g. failed, stopped, still testing) are considered as \bxname{failed}.}
 \item You can see the status of the ALM reporting in the console view. 
-\item Once a comment has been written, you can see the comment in the external repository. From there, you can click on the link provided to open the test result report in the \dash{} that you specified for your \gdproject{}. The \dash{} must be already running for this action to succeed. The test results must also still be present in the \gddb{} \bxpref{TasksReopenTestResult}.
+\item Once reporting has been done, you can see the changes in the external repository. If you added a comment, you can click on the link provided to open the test result report in the \dash{} that you specified for your \gdproject{}. The \dash{} must be already running for this action to succeed. The test results must also still be present in the \gddb{} \bxpref{TasksReopenTestResult}.
 \item The test result report is opened at the node which referenced the current task ID. 
 \item You can see the status of the reporting in the \gdtestsummaryview{} \bxpref{TasksALMReportTestExec}.
 \bxtipp{The integration for writing to external repositories can be used with Bugzilla 3.6+, JIRA 5.0+ and HP ALM 11+. Other repositories for which there are Mylyn connectors may also work, but these have not been tested.}
@@ -77,7 +97,7 @@ For tests started via testexec, the reporting does not happen automatically. Ins
 \begin{description}
 \item [Not configured:]{if you have not configured ALM reporting for the \gdproject{}, or if the relevance of the \gdsuite{} was set to false when the test was started.}
 \item [Not yet reported:]{if reporting was configured for the \gdproject{}, and there is information available to be reported that has not yet been reported, e.g. from a test run via testexec. You will also see this status if you have run a test via the \ite{} that could not report to the ALM system due to e.g. a connection problem. This allows you to report test results later, once the problem has been resolved.}
-\item [Reported:]{this status will be shown if you have run a test with reporting configured via the \ite{}, which reports automatically. It will also be shown if you have chosen to report to the ALM system after running a test via testexec. This status will also be shown even if the test run was not linked to any tasks, but reporting is configured for the \gdproject{}. It can be understood as \bxname{any reporting that was necessary has been carried out}.}
+\item [Reported:]{this status will be shown if you have run a test with reporting configured via the \ite{}, which reports automatically. It will also be shown if you have chosen to report to the ALM system after running a test via testexec. This status will also be shown even if the test run was not linked to any tasks, but reporting is configured for the \gdproject{}. It can be understood as \bxname{any reporting that was necessary has been carried out}. If an error occurs while reporting to one of the tasks, the status will still show \bxname{reported} even though not all tasks were correctly updated.}
 \item [Report discarded:]{if reporting information was available, but the information was discarded and therefore not reported. You can do this by selecting the option to discard a pending report from the context menu. This status will also be shown for any test runs in a \gdproject{} that you import that had the status \bxname{Not yet reported} when the \gdproject{} was exported.}
 \item [Marked as non-relevant:]{you will see this status for any test runs that were marked as relevant when the test was started and which have information to report (status: \bxname{Not yet reported}),but which you then mark as non-relevant by toggling the relevance in the \gdtestsummaryview{}. This status means that you could report or discard the information, but only if you re-toggle the test run to be relevant.}
 \end{description}
