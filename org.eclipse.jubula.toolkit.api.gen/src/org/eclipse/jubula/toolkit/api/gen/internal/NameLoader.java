@@ -143,10 +143,9 @@ public class NameLoader {
     
     /**
      * @param name the class name in comp system
-     * @param generateInterface whether an interface should be generated 
      * @return the name of the class in the api
      */
-    public String getClassName(String name, Boolean generateInterface) {
+    public String getClassName(String name) {
         String mapEntry = m_mappingProperties.getProperty(name);
         if (mapEntry != null) {
             return mapEntry;
@@ -165,9 +164,6 @@ public class NameLoader {
                         StringConstants.SPACE);
         desiredName = WordUtils.capitalizeFully(desiredName);
         desiredName = StringUtils.deleteWhitespace(desiredName);
-        if (generateInterface) {
-            desiredName = "I" + desiredName; //$NON-NLS-1$
-        }
         return desiredName;
     }
 
