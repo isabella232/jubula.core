@@ -41,6 +41,14 @@ public class NameLoader {
     private static final String PACKAGE_BASE_PATH =
         "org.eclipse.jubula.toolkit."; //$NON-NLS-1$
     
+    /** specific path for interfaces */
+    private static final String PACKAGE_SPECIFIC_INTERFACE =
+        ".widget"; //$NON-NLS-1$
+    
+    /** specific path for implementation classes */
+    private static final String PACKAGE_SPECIFIC_IMPLCLASS =
+        ".internal.api"; //$NON-NLS-1$
+    
     /**
      * <code>instance</code> the singleton instance
      */
@@ -118,18 +126,27 @@ public class NameLoader {
     /**
      * @param component the component
      * @param toolkitName the toolkit name
+     * @param generateInterface whether an interface should be generated
      * @return the name extension of the api package name for the component
      */
     public String getPackageName(Component component,
-            String toolkitName) {
-        return PACKAGE_BASE_PATH + toolkitName;
+            String toolkitName, boolean generateInterface) {
+        StringBuilder packageName = new StringBuilder(
+                PACKAGE_BASE_PATH + toolkitName);
+        if (generateInterface) {
+            packageName.append(PACKAGE_SPECIFIC_INTERFACE);
+        } else {
+            packageName.append(PACKAGE_SPECIFIC_IMPLCLASS);
+        }
+        return packageName.toString();
     }
     
     /**
      * @param name the class name in comp system
+     * @param generateInterface whether an interface should be generated 
      * @return the name of the class in the api
      */
-    public String getClassName(String name) {
+    public String getClassName(String name, Boolean generateInterface) {
         String mapEntry = m_mappingProperties.getProperty(name);
         if (mapEntry != null) {
             return mapEntry;
@@ -148,6 +165,9 @@ public class NameLoader {
                         StringConstants.SPACE);
         desiredName = WordUtils.capitalizeFully(desiredName);
         desiredName = StringUtils.deleteWhitespace(desiredName);
+        if (generateInterface) {
+            desiredName = "I" + desiredName; //$NON-NLS-1$
+        }
         return desiredName;
     }
 

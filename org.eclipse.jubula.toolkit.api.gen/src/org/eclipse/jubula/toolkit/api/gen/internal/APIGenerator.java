@@ -60,7 +60,8 @@ public class APIGenerator {
         List<ComponentInfo> compInfos = processor.getCompInfos(false);
         for (ComponentInfo compInfo : compInfos) {
             Component component = compInfo.getComponent();
-            createClass(component, generationBaseDir);
+            createClass(component, generationBaseDir, true);
+            createClass(component, generationBaseDir, false);
         }
     }
 
@@ -104,10 +105,12 @@ public class APIGenerator {
      * creates class for component
      * @param component the component
      * @param generationBaseDirTemplate directory for generation
+     * @param generateInterface whether an interface should be generated
      */
     private static void createClass(Component component,
-            String generationBaseDirTemplate) {
-        GenerationInfo genInfo = new GenerationInfo(component, false);
+            String generationBaseDirTemplate, Boolean generateInterface) {
+        GenerationInfo genInfo = new GenerationInfo(component,
+                generateInterface);
         String path = genInfo.getDirectoryPath();
         String className = genInfo.getClassName();
         String generationBaseDir = MessageFormat.format(

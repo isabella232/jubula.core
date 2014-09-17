@@ -39,9 +39,10 @@ public class GenerationInfo {
         NameLoader nameLoader = NameLoader.getInstance();
         m_toolkitName = nameLoader.getToolkitName(
                 component.getToolkitDesriptor());
-        m_className = nameLoader.getClassName(m_component.getType());
+        m_className = nameLoader.getClassName(m_component.getType(),
+                m_genInterface);
         m_packageName = nameLoader.getPackageName(
-                component, m_toolkitName);
+                component, m_toolkitName, m_genInterface);
         m_directoryPath = m_packageName;
         m_packageName = nameLoader.executeExceptions(m_packageName);
         m_directoryPath = nameLoader.executeExceptions(m_directoryPath

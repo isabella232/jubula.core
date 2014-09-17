@@ -14,6 +14,15 @@ class="ClassGenerator"%>
 	String toolkitName = genInfo.getToolkitName();
 	String packageName = genInfo.getPackageName();
 	String className = genInfo.getClassName();
+	Boolean genInterface = genInfo.generatesInterface();
+	
+	GenerationInfo implementsInfo = null;
+	String implementedTypeFqn = null;
+	if (!genInterface) {
+		implementsInfo = new GenerationInfo(component, true);
+		implementedTypeFqn = implementsInfo.getFqn();
+	}
+	
 	NameLoader nameLoader = NameLoader.getInstance();
 	List<Action> actions = component.getActions();
 	List<Component> realized = component.getRealized();
@@ -24,7 +33,7 @@ class="ClassGenerator"%>
 	String realizedTypeFqn = null;
 	if (hasRealizedType) {
 		realizedType = realizedComponent.getType();
-		superInfo = new GenerationInfo(realizedComponent, false);
+		superInfo = new GenerationInfo(realizedComponent, genInterface);
 		realizedTypeFqn = superInfo.getFqn();
 	}
 	String testerClass = "";
@@ -52,27 +61,30 @@ import org.eclipse.jubula.toolkit.base.internal.annotations.TesterClass;
 
 @RealizedType(realizedType="<%=realizedType%>")
 @TesterClass(testerClass="<%=testerClass%>")
-public class <%=className%>
-	<%if (hasRealizedType) {%>extends <%=realizedTypeFqn%><%}%> {
-	<%if (hasRealizedType) {%>
-		<%if (hasDefaultMapping) {%>
-		public <%=className%>() {
-			super();
-		}<%} else {%>
-		Object m_component;
-		public <%=className%>(Object component) {
-			super(component);
-		}<%}%>
-	<%} else {%>
-		<%if (hasDefaultMapping) {%>
-		public <%=className%>() {
-			super();
-		}<%} else {%>
-		Object m_component;
-		public <%=className%>(Object component) {
-			super();
-			m_component = component;
-		}<%}%>
+public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
+	<%if (hasRealizedType) {%>extends <%=realizedTypeFqn%><%}%>
+	<%if (!genInterface) {%>implements <%=implementedTypeFqn%><%}%> {
+	<%if (!genInterface) {%>
+		<%if (hasRealizedType) {%>
+			<%if (hasDefaultMapping) {%>
+			public <%=className%>() {
+				super();
+			}<%} else {%>
+			Object m_component;
+			public <%=className%>(Object component) {
+				super(component);
+			}<%}%>
+		<%} else {%>
+			<%if (hasDefaultMapping) {%>
+			public <%=className%>() {
+				super();
+			}<%} else {%>
+			Object m_component;
+			public <%=className%>(Object component) {
+				super();
+				m_component = component;
+			}<%}%>
+		<%}%>
 	<%}%>
 	<%
 	Iterator<Action> actionsIterator = actions.iterator();
@@ -94,9 +106,7 @@ public class <%=className%>
 	<%
 	}
 	%> 
-	) {
-		
-	}
+	) <%if (genInterface) {%>;<%} else {%>{}<%}%>
 	<%
 	}
 	%> 
