@@ -8,18 +8,12 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.qa.api;
-
-import junit.framework.Assert;
-
-import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
-import org.junit.Test;
+package org.eclipse.jubula.toolkit.enums;
 
 /** @author BREDEX GmbH */
-public class TestValueSets {
-    /** the actual test method */
-    @Test
-    public void test() {
-        Assert.assertEquals(Operator.equals.rcValue(), "equals"); //$NON-NLS-1$
-    }
+public interface LiteralProvider {
+    /**
+     * @return the value to use at the remote controlling side
+     */
+    String rcValue();
 }

@@ -109,22 +109,22 @@ public class MatchUtil {
     /**
      * match if text equals pattern
      */
-    public static final String EQUALS = Operator.equals.getValue();
+    public static final String EQUALS = Operator.equals.rcValue();
 
     /**
      * match if text and pattern are not equal
      */
-    public static final String NOT_EQUALS = Operator.notEquals.getValue();
+    public static final String NOT_EQUALS = Operator.notEquals.rcValue();
     
     /**
      * match if text matches a regexp pattern 
      */
-    public static final String MATCHES_REGEXP = Operator.matches.getValue();
+    public static final String MATCHES_REGEXP = Operator.matches.rcValue();
     
     /**
      * match if text matches a Unix-style glob pattern 
      */
-    public static final String MATCHES_GLOB = Operator.simpleMatch.getValue();
+    public static final String MATCHES_GLOB = Operator.simpleMatch.rcValue();
     
     /**
      * default operator
