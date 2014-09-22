@@ -20,6 +20,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
+import javafx.stage.Stage;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
@@ -411,7 +412,29 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
             compName = null;
             component = realComponent;
         }
-        JavaFXHierarchyContainer hierParent = (JavaFXHierarchyContainer)
+        // Because stages don't have a list of children we can't include the
+        // relationship between stages in the hierarchy. Therefore this
+        // workaround is necessary to create a unique name for a stage container.
+        if (realComponent instanceof Stage) {
+            List<Stage> stages = CurrentStages.getStageList();
+            ArrayList<String> names = new ArrayList<>();
+            for (Stage stage : stages) {
+                JavaFXHierarchyContainer c = getHierarchyContainer(stage);
+                if (c != null && c != hierarchyContainer) {
+                    names.add(c.getName());
+                }
+            }
+            String name = null;
+            int count = 0;
+            while (!isUniqueName(name, names)) {
+                count++;
+                name = createName(realComponent, count);
+            }
+            comp.setName(name);
+            hierarchyContainer.setName(name, true);
+            return;
+        }
+        JavaFXHierarchyContainer hierParent = (JavaFXHierarchyContainer) 
                 hierarchyContainer.getPrnt();
 
         if (hierarchyContainer.getName() != null
@@ -426,7 +449,6 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
                         + "even though there was already a name!"); //$NON-NLS-1$
             }
         }
-
         // isUniqueName is null safe, see description there
         int count = 0;
         String originalName = null;
@@ -484,6 +506,22 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
             }
         }
         return true;
+    }
+    
+    /**
+     * Checks for uniqueness of given name using the given list
+     * 
+     * @param name the name to check
+     * @param otherNames the list with the names
+     * @return true or false
+     */
+    protected boolean isUniqueName(String name, List<String> otherNames) {
+        if (name == null || otherNames == null) {
+            return false;
+        } else if (otherNames.isEmpty()) {
+            return true;
+        }
+        return !otherNames.contains(name);
     }
 
     /**

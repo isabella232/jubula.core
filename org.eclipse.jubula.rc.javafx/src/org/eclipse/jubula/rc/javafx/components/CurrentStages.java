@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.javafx.components;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -70,6 +71,14 @@ public class CurrentStages {
      */
     public static Stage getfirstStage() {
         return stages.get(0);
+    }
+    
+    /**
+     * Returns the complete list of stages
+     * @return the stage list
+     */
+    public static List<Stage> getStageList() {
+        return stages;
     }
 
     /**
