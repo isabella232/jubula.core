@@ -74,7 +74,8 @@ public class ShowWhereUsedSpecTcQuery
         for (IReusedProjectPO rp : currentProject.getUsedProjects()) {
             try {
                 Long projID = ProjectPM.findProjectId(rp.getProjectGuid(), rp
-                        .getMajorNumber(), rp.getMinorNumber());
+                        .getMajorNumber(), rp.getMinorNumber(),
+                        rp.getMicroNumber(), rp.getVersionQualifier());
                 if (projID != null) {
                     parentProjectIDs.add(projID);
                 }

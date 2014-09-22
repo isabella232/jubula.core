@@ -34,6 +34,18 @@ public interface IReusedProjectPO
     public Integer getMinorNumber();
     
     /**
+     * 
+     * @return Returns the major version number.
+     */
+    public Integer getMicroNumber();
+
+    /**
+     * 
+     * @return Returns the minor version number.
+     */
+    public String getVersionQualifier();
+    
+    /**
      * @return The name of the referenced project, if it is available. 
      *         Otherwise, <code>null</code>.
      */
@@ -44,4 +56,8 @@ public interface IReusedProjectPO
      */
     public abstract String getVersionString();
 
+    /**
+     * @return a {@link ProjectVersion} representing the version of the reused project
+     */
+    public ProjectVersion getProjectVersion();
 }

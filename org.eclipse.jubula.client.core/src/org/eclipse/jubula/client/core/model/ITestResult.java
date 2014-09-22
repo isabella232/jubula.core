@@ -36,14 +36,26 @@ public interface ITestResult {
      * @return the major version number of the project within which the test 
      *         was executed.
      */
-    public int getProjectMajorVersion();
+    public Integer getProjectMajorVersion();
     
     /**
      * 
      * @return the minor version number of the project within which the test 
      *         was executed.
      */
-    public int getProjectMinorVersion();
+    public Integer getProjectMinorVersion();
+    
+    /**
+    * @return the micro version number of the project within which the test
+    *         was executed.
+    */
+    public Integer getProjectMicroVersion();
+   
+   /**
+    * @return the version qualifier of the project within which the test
+    *         was executed.
+    */
+    public String getProjectVersionQualifier();
     
     /**
      * 

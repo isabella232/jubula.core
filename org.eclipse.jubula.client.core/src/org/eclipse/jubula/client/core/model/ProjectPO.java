@@ -31,6 +31,8 @@ import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
+import org.eclipse.jubula.tools.exception.JBFatalException;
+import org.eclipse.jubula.tools.messagehandling.MessageIDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,8 +89,8 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      * @param metadataVersion metadata version
      * @param isGenerated indicates whether this node has been generated
      */
-    ProjectPO(String name, Integer metadataVersion, boolean isGenerated) {
-        this(metadataVersion, 1, 0, 
+    ProjectPO(String name, Integer metadataVersion, boolean isGenerated) { 
+        this(metadataVersion, 1, 0, 0, null,
                 PersistenceUtil.generateGuid(), isGenerated);
         ProjectNameBP.getInstance().setName(this.getGuid(), name, false);
     }
@@ -98,27 +100,39 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      * @param metadataVersion metadataVersion
      * @param majorNumber The major version number for this project
      * @param minorNumber The minor version number for this project
+     * @param microNumber The micro version number for this project
+     * @param versionQualifier The version qualifier for this project
      * @param guid The GUID of the project.
      * @param isGenerated indicates whether this node has been generated
      */
     ProjectPO(Integer metadataVersion, Integer majorNumber,
-            Integer minorNumber, String guid, boolean isGenerated) {
-        
+            Integer minorNumber, Integer microNumber, String versionQualifier,
+            String guid, boolean isGenerated) {
+
         super("dummy", guid, isGenerated); //$NON-NLS-1$
-        init(metadataVersion, majorNumber, minorNumber);
+        if (majorNumber == null && versionQualifier == null) {
+            throw new JBFatalException(
+                    "Project with empty qualifier and version number are not allowed", //$NON-NLS-1$
+                    MessageIDs.E_DELETE_TESTRESULT);
+        }
+        init(metadataVersion, majorNumber, minorNumber, microNumber,
+                versionQualifier);
     }
 
     /**
      * @param metadataVersion metadataVersion
      * @param majorNumber The major version number of the project.
      * @param minorNumber The minor version number of the project.
+     * @param microNumber The micro version number for this project
+     * @param versionQualifier The version qualifier for this project
      */
     private void init(Integer metadataVersion, 
-            Integer majorNumber, Integer minorNumber) {
+            Integer majorNumber, Integer minorNumber, 
+            Integer microNumber, String versionQualifier) {
         
         setProjectProperties(
                 PoMaker.createProjectPropertiesPO(
-                    majorNumber, minorNumber));
+                    majorNumber, minorNumber, microNumber, versionQualifier));
         setAutCont(PoMaker.createAUTContPO());
         setTestDataCubeContPO(PoMaker.createTestDataCategoryPO());
         setExecObjCont(PoMaker.createExecObjContPO());
@@ -341,6 +355,22 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     public Integer getMinorProjectVersion() {
         return getProjectProperties().getMinorNumber();
     }
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    @Transient
+    public Integer getMicroProjectVersion() {
+        return getProjectProperties().getMicroNumber();
+    }
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    @Transient
+    public String getProjectVersionQualifier() {
+        return getProjectProperties().getVersionQualifier();
+    }
 
     /**
      * 
@@ -443,6 +473,9 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
                 .append(getGuid(), proj.getGuid())
                 .append(getMajorProjectVersion(), proj.getMajorProjectVersion())
                 .append(getMinorProjectVersion(), proj.getMinorProjectVersion())
+                .append(getMicroProjectVersion(), proj.getMicroProjectVersion())
+                .append(getProjectVersionQualifier(), 
+                        proj.getProjectVersionQualifier())
                 .isEquals();
         }
         
@@ -457,6 +490,8 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
             .append(getGuid())
             .append(getMajorProjectVersion())
             .append(getMinorProjectVersion())
+            .append(getMicroProjectVersion())
+            .append(getProjectVersionQualifier())
             .toHashCode();
     }
 
@@ -590,11 +625,7 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      */
     @Transient
     public String getVersionString() {
-        StringBuffer sb = new StringBuffer(
-            String.valueOf(getMajorProjectVersion()));
-        sb.append(IProjectPO.VERSION_SEPARATOR)
-            .append(getMinorProjectVersion());
-        return sb.toString();
+        return getProjectVersion().toString();
     }
     
     /** {@inheritDoc}
@@ -647,6 +678,16 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     @Transient
     public Integer getTestResultCleanupInterval() {
         return getProjectProperties().getTestResultCleanupInterval();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Transient
+    public ProjectVersion getProjectVersion() {
+        return new ProjectVersion(getMajorProjectVersion(),
+                getMinorProjectVersion(), getMicroProjectVersion(),
+                getProjectVersionQualifier());
     }
     
 }

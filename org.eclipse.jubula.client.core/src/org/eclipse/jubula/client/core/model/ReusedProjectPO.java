@@ -23,8 +23,6 @@ import javax.persistence.Version;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
-import org.eclipse.jubula.tools.internal.constants.StringConstants;
-
 
 
 /**
@@ -45,6 +43,12 @@ class ReusedProjectPO implements IReusedProjectPO {
 
     /** Minor version number of the reused project */
     private Integer m_minorNumber = null;
+    
+    /** The micro version number for this project */
+    private Integer m_microNumber = null;
+    
+    /** The qualifier version for this project */
+    private String m_versionQualifier = null;
 
     /** Persistence (JPA / EclipseLink) version id */
     private Integer m_version = null;
@@ -70,13 +74,18 @@ class ReusedProjectPO implements IReusedProjectPO {
      * @param projectGuid The GUID of the reused project.
      * @param majorNumber The major version number.
      * @param minorNumber The minor version number.
+     * @param microNumber The micro version number for this project
+     * @param versionQualifier The version qualifier for this project
      */
     ReusedProjectPO(String projectGuid, 
-            Integer majorNumber, Integer minorNumber) {
+            Integer majorNumber, Integer minorNumber,
+            Integer microNumber, String versionQualifier) {
         
         setProjectGuid(projectGuid);
         setMajorNumber(majorNumber);
         setMinorNumber(minorNumber);
+        setMicroNumber(microNumber);
+        setVersionQualifier(versionQualifier);
     }
 
     /**
@@ -124,7 +133,41 @@ class ReusedProjectPO implements IReusedProjectPO {
     private void setMinorNumber(Integer minorNumber) {
         m_minorNumber = minorNumber;
     }
+    
+    /**
+     * 
+     * @return Returns the micro version number.
+     */
+    @Basic
+    @Column(name = "MICRO_VERS_NUMBER")
+    public Integer getMicroNumber() {
+        return m_microNumber;
+    }
 
+    /**
+     * @param microNumber The micro Number to set.
+     */
+    private void setMicroNumber(Integer microNumber) {
+        m_microNumber = microNumber;
+    }
+
+    /**
+     * 
+     * @return Returns the qualifier version number.
+     */
+    @Basic
+    @Column(name = "VERSION_QUALIFIER")
+    public String getVersionQualifier() {
+        return m_versionQualifier;
+    }
+
+    /**
+     * @param versionQualifier The qualifier to set.
+     */
+    private void setVersionQualifier(String versionQualifier) {
+        m_versionQualifier = versionQualifier;
+    }
+    
     /**
      * only for Persistence (JPA / EclipseLink)
      * 
@@ -231,6 +274,8 @@ class ReusedProjectPO implements IReusedProjectPO {
             return new EqualsBuilder()
                 .append(getMajorNumber(), reused.getMajorNumber())
                 .append(getMinorNumber(), reused.getMinorNumber())
+                .append(getMicroNumber(), reused.getMicroNumber())
+                .append(getVersionQualifier(), reused.getVersionQualifier())
                 .append(getParentProjectId(), reused.getParentProjectId())
                 .append(getProjectGuid(), reused.getProjectGuid())
                 .isEquals();
@@ -246,6 +291,8 @@ class ReusedProjectPO implements IReusedProjectPO {
         return new HashCodeBuilder()
             .append(getMajorNumber())
             .append(getMinorNumber())
+            .append(getMicroNumber())
+            .append(getVersionQualifier())
             .append(getParentProjectId())
             .append(getProjectGuid())
             .toHashCode();
@@ -259,28 +306,30 @@ class ReusedProjectPO implements IReusedProjectPO {
         int retVal = getName().compareTo(otherReused.getName());
         
         if (retVal == 0) {
-            retVal = getMajorNumber().compareTo(otherReused.getMajorNumber());
-        }
-
-        if (retVal == 0) {
-            retVal = getMinorNumber().compareTo(otherReused.getMinorNumber());
+            retVal = getVersionString().compareTo(
+                    otherReused.getVersionString());
         }
 
         return retVal;
     }
     
     /**
-     * {@inheritDoc}
+     * Gets the Version String in the following format:
+     * [majNum].[minNum].[micNum]_[qualifier]
+     * @return a String generated from the version
      */
     @Transient
     public String getVersionString() {
-        StringBuilder sb = new StringBuilder(StringConstants.UNDERSCORE);
-        sb.append(StringConstants.LEFT_BRACKET);
-        sb.append(getMajorNumber());
-        sb.append(StringConstants.DOT);
-        sb.append(getMinorNumber());
-        sb.append(StringConstants.RIGHT_BRACKET);
-        return sb.toString();
+        return getProjectVersion().toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Transient
+    public ProjectVersion getProjectVersion() {
+        return new ProjectVersion(getMajorNumber(),
+                getMinorNumber(), getMicroNumber(),
+                getVersionQualifier());
+    }
 }

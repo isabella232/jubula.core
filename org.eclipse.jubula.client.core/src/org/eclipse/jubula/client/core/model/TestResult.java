@@ -152,14 +152,14 @@ public class TestResult extends AbstractTestResult {
     /**
      * {@inheritDoc}
      */
-    public int getProjectMajorVersion() {
+    public Integer getProjectMajorVersion() {
         return getProject().getMajorProjectVersion();
     }
 
     /**
      * {@inheritDoc}
      */
-    public int getProjectMinorVersion() {
+    public Integer getProjectMinorVersion() {
         return getProject().getMinorProjectVersion();
     }
 
@@ -269,5 +269,19 @@ public class TestResult extends AbstractTestResult {
      */
     private void setProject(IProjectPO project) {
         m_project = project;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Integer getProjectMicroVersion() {
+        return m_project.getMicroProjectVersion();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getProjectVersionQualifier() {
+        return m_project.getProjectVersionQualifier();
     }
 }

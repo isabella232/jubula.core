@@ -105,10 +105,16 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     private String m_projectName;
     
     /** project Major Version */
-    private int m_projectMajorVersion;
+    private Integer m_projectMajorVersion;
     
     /** project Minor Version */
-    private int m_projectMinorVersion;
+    private Integer m_projectMinorVersion;
+    
+    /** project Micro Version */
+    private Integer m_projectMicroVersion;
+    
+    /** project Version Qualifier */
+    private String m_projectVersionQualifier;
     
     /** expected caps */
     private int m_testsuiteExpectedTeststeps;
@@ -335,15 +341,15 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return projectMajorVersion
      */
     @Basic
-    @Column(name = "PROJECT_MAJOR_VERSION", nullable = false)
-    public int getProjectMajorVersion() {
+    @Column(name = "PROJECT_MAJOR_VERSION")
+    public Integer getProjectMajorVersion() {
         return m_projectMajorVersion;
     }
 
     /**
      * @param projectMajorVersion the projectMajorVersion to set
      */
-    public void setProjectMajorVersion(int projectMajorVersion) {
+    public void setProjectMajorVersion(Integer projectMajorVersion) {
         m_projectMajorVersion = projectMajorVersion;
     }
     
@@ -352,16 +358,48 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      * @return the ProjectMinorVersion
      */
     @Basic
-    @Column(name = "PROJECT_MINOR_VERSION", nullable = false)
-    public int getProjectMinorVersion() {
+    @Column(name = "PROJECT_MINOR_VERSION")
+    public Integer getProjectMinorVersion() {
         return m_projectMinorVersion;
     }
 
     /**
      * @param projectMinorVersion the projectMinorVersion to set
      */
-    public void setProjectMinorVersion(int projectMinorVersion) {
+    public void setProjectMinorVersion(Integer projectMinorVersion) {
         m_projectMinorVersion = projectMinorVersion;
+    }
+    
+    /**
+     * @return the ProjectMicroVersion
+     */
+    @Basic
+    @Column(name = "PROJECT_MICRO")
+    public Integer getProjectMicroVersion() {
+        return m_projectMicroVersion;
+    }
+
+    /**
+     * @param projectMicroVersion the projectMicroVersion to set
+     */
+    public void setProjectMicroVersion(Integer projectMicroVersion) {
+        m_projectMicroVersion = projectMicroVersion;
+    }
+    
+    /**
+     * @return the ProjectQualifier
+     */
+    @Basic
+    @Column(name = "PROJECT_QUALIFIER")
+    public String getProjectVersionQualifier() {
+        return m_projectVersionQualifier;
+    }
+
+    /**
+     * @param projectVersionQualifier the projectMinorVersion to set
+     */
+    public void setProjectVersionQualifier(String projectVersionQualifier) {
+        m_projectVersionQualifier = projectVersionQualifier;
     }
 
     /**

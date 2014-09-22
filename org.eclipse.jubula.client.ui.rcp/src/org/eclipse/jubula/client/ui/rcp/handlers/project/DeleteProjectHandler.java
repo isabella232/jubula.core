@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -104,17 +105,14 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
          * {@inheritDoc}
          */
         public void run(IProgressMonitor monitor) throws InterruptedException {
-            final Integer majorVersion = m_project.getMajorProjectVersion();
-            final Integer minorVersion = m_project.getMinorProjectVersion();
+            final ProjectVersion version = m_project.getProjectVersion();
             monitor.beginTask(NLS.bind(Messages.DeleteProjectActionDeleting, 
-                new Object[] { m_project.getName(), majorVersion, 
-                    minorVersion }), getTotalWork());
+                new Object[] { m_project.getName(), version}), getTotalWork());
             try {
                 boolean isRefreshRequired = false;
                 final String guid = m_project.getGuid();
                 if (!m_deleteCurrentProject) {
-                    isRefreshRequired = isRefreshRequired(guid, majorVersion,
-                        minorVersion);
+                    isRefreshRequired = isRefreshRequired(guid, version);
                 }
                 if (m_deleteCurrentProject) {
                     Plugin.getDisplay().syncExec(new Runnable() {
@@ -136,10 +134,10 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                         mon.beginTask(jobName, IProgressMonitor.UNKNOWN);
                         if (m_keepTestresultSummary) {
                             TestResultSummaryPM.deleteTestrunsByProject(guid,
-                                majorVersion, minorVersion, true);
+                                    version, true);
                         } else {
                             TestResultSummaryPM.deleteTestrunsByProject(guid,
-                                majorVersion, minorVersion, false);
+                                    version, false);
                         }
                         mon.done();
                         ded.fireTestresultChanged(TestresultState.Refresh);
@@ -270,14 +268,13 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
      * see changes in the reused project set.
      * 
      * @param deletedGuid The GUID of the deleted project.
-     * @param deletedMajor The major version number of the deleted project.
-     * @param deletedMinor The minor version number of the deleted project.
+     * @param version the {@link ProjectVersion}  of the deleted project.
      * @return <code>true</code> if the deleted GUID and major and minor version
      *         numbers are present in the current project's set of reused
      *         projects. Otherwise <code>false</code>.
      */
-    private boolean isRefreshRequired(String deletedGuid, Integer deletedMajor, 
-        Integer deletedMinor) {
+    private boolean isRefreshRequired(String deletedGuid,
+            ProjectVersion version) {
         
         IProjectPO currentProject = GeneralStorage.getInstance().getProject();
         
@@ -288,12 +285,9 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
         for (IReusedProjectPO reused : currentProject.getUsedProjects()) {
             
             String guid = reused.getProjectGuid();
-            Integer majorVersion = reused.getMajorNumber();
-            Integer minorVersion = reused.getMinorNumber();
+            ProjectVersion reusedVersion = reused.getProjectVersion();
             if (deletedGuid.equals(guid) 
-                && deletedMajor.equals(majorVersion) 
-                && deletedMinor.equals(minorVersion)) {
-                    
+                && version.equals(reusedVersion)) {                    
                 return true;
             }
         }

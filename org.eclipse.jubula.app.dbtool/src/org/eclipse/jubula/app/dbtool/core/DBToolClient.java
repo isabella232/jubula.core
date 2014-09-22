@@ -31,7 +31,10 @@ import org.eclipse.jubula.client.archive.businessprocess.FileStorageBP;
 import org.eclipse.jubula.client.archive.businessprocess.ProjectBP.NewVersionOperation;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.JobConfiguration;
+import org.eclipse.jubula.client.cmd.utils.VersionStringUtils;
+import org.eclipse.jubula.client.cmd.utils.VersionStringUtils.MalformedVersionException;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
@@ -267,8 +270,8 @@ public class DBToolClient extends AbstractCmdlineClient {
      */
     private void exportProject(String name, String version, String exportDir,
             IProgressMonitor monitor) {
-        int versionNrs[] = buildVersionNrs(name, version);
-        if (versionNrs != null) {
+        ProjectVersion projectVersion = buildVersionNrs(name, version);
+        if (projectVersion != null) {
             File export = new File(exportDir);
             if (!export.isDirectory() || !export.canWrite()) {
                 reportBadDirectory(exportDir);
@@ -281,10 +284,8 @@ public class DBToolClient extends AbstractCmdlineClient {
                 List<IProjectPO> exportProjects = new ArrayList<IProjectPO>(1);
                 for (IProjectPO project : projects) {
                     if (project.getName().equals(name)
-                            && project.getMajorProjectVersion().equals(
-                                    new Integer(versionNrs[0]))
-                            && project.getMinorProjectVersion().equals(
-                                    new Integer(versionNrs[1]))) {
+                            && project.getProjectVersion().equals(
+                                    projectVersion)) {
                         exportProjects.add(project);
                     }
                 }
@@ -351,14 +352,14 @@ public class DBToolClient extends AbstractCmdlineClient {
      */
     private void createVersion(String name, String oldVersion, 
             String newVersion, IProgressMonitor monitor) {
-        int[] oldVersionNr = buildVersionNrs(name, oldVersion);
-        int[] newVersionNr = buildVersionNrs(name, newVersion);
+        ProjectVersion oldVersionNr = buildVersionNrs(name, oldVersion);
+        ProjectVersion newVersionNr = buildVersionNrs(name, newVersion);
         if (oldVersionNr != null && newVersionNr != null) {
             
             IProjectPO projectOldVersion;
             try {
                 projectOldVersion = ProjectPM.loadProjectByNameAndVersion(name,
-                        oldVersionNr[0], oldVersionNr[1]);
+                        oldVersionNr);
             } catch (JBException e) {
                 reportMissingProject(name, oldVersion);
                 return;
@@ -370,13 +371,12 @@ public class DBToolClient extends AbstractCmdlineClient {
                 String guid = projectOldVersion.getGuid();
                 boolean newVersionAlreadyExists = 
                         ProjectPM.doesProjectVersionExist(
-                                guid, newVersionNr[0], newVersionNr[1]);
+                                guid, newVersionNr);
                 if (newVersionAlreadyExists) {
                     reportExistingProject(name, newVersion);
                 } else {
                     NewVersionOperation op = new NewVersionOperation(
-                            projectOldVersion, newVersionNr[0], 
-                            newVersionNr[1]);
+                            projectOldVersion, newVersionNr);
                     try {
                         op.run(monitor);
                     } catch (InvocationTargetException e) {
@@ -398,12 +398,12 @@ public class DBToolClient extends AbstractCmdlineClient {
      */
     private void deleteProject(String name, String version,
             boolean keepSummaryOnDelete, IProgressMonitor monitor) {
-        int[] versionNr = buildVersionNrs(name, version);
+        ProjectVersion versionNr = buildVersionNrs(name, version);
         if (versionNr != null) {
             IProjectPO project;
             try {
                 project = ProjectPM.loadProjectByNameAndVersion(name,
-                        versionNr[0], versionNr[1]);
+                        versionNr);
             } catch (JBException e) {
                 reportMissingProject(name, version);
                 return;
@@ -413,20 +413,19 @@ public class DBToolClient extends AbstractCmdlineClient {
             } else {
                 try {
                     String pName = project.getName();
-                    int pMajVer = project.getMajorProjectVersion();
-                    int pMinVer = project.getMinorProjectVersion();
+                    ProjectVersion pVersion = project.getProjectVersion();
                     monitor.subTask(NLS.bind(Messages.DBToolDeletingProject,
-                            new Object[] { pName, pMajVer, pMinVer }));
+                            new Object[] { pName, pVersion}));
                     ProjectPM.deleteProject(project, false);
                     monitor.subTask((NLS.bind(Messages.DBToolDeleteFinished,
                             pName)));
                     monitor.subTask(Messages.DBToolDeletingTestResultDetails);
                     if (keepSummaryOnDelete) {
                         TestResultSummaryPM.deleteTestrunsByProject(
-                                project.getGuid(), pMajVer, pMinVer, true);
+                                project.getGuid(), pVersion, true);
                     } else {
                         TestResultSummaryPM.deleteTestrunsByProject(
-                                project.getGuid(), pMajVer, pMinVer, false);
+                                project.getGuid(), pVersion, false);
                     }
                     monitor.subTask(
                             Messages.DBToolDeletingTestResultDetailsFinished);
@@ -458,8 +457,7 @@ public class DBToolClient extends AbstractCmdlineClient {
                 monitor.subTask(NLS.bind(
                         Messages.DBToolDeletingProject,
                         new Object[] { pName,
-                                proj.getMajorProjectVersion(),
-                                proj.getMinorProjectVersion() }));
+                                proj.getProjectVersion()}));
                 ProjectPM.deleteProject(proj, false);
                 monitor.subTask((NLS.bind(
                         Messages.DBToolDeleteFinished, pName)));
@@ -488,24 +486,15 @@ public class DBToolClient extends AbstractCmdlineClient {
      * @return an array with 2 ints, idex 0 = major, index 1 = minor
      * or null if the input isn't a valid version
      */
-    private int[] buildVersionNrs(String name, String version) {
-        int sepPos = version.indexOf('.');
-        if ((sepPos == -1) || (sepPos == 0)) {
-            reportBadVersion(name, version);
-            return null;
-        }
+    private ProjectVersion buildVersionNrs(String name, String version) {
         
-        String majorStr = version.substring(0, sepPos);
-        String minorStr = version.substring(sepPos + 1);
-        int versionNr[] = new int[2];
         try {
-            versionNr[0] = Integer.parseInt(majorStr);
-            versionNr[1] = Integer.parseInt(minorStr);                        
-        } catch (NumberFormatException e) {
+            return VersionStringUtils.createProjectVersion(version);
+        } catch (MalformedVersionException e) {
             reportBadVersion(name, version);
             return null;
         }
-        return versionNr;
+
     }
 
     /**

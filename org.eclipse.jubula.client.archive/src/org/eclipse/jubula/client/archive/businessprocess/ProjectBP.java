@@ -32,6 +32,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -81,25 +82,20 @@ public class ProjectBP {
         
         /** The project from which to create a new version */
         private IProjectPO m_project;
-
-        /** The new major version number */
-        private Integer m_majorVersionNumber;
-
-        /** The new minor version number */
-        private Integer m_minorVersionNumber;
+        
+        /** The new version */
+        private ProjectVersion m_projectVersion;
 
         /**
          * Constructor
          * 
          * @param project The project from which to create a new version
-         * @param majorVersionNumber The new major version number
-         * @param minorVersionNumber The new minor version number
+         * @param newVersionNumbers the new version numbers and qualifier
          */
         public NewVersionOperation(IProjectPO project,
-                Integer majorVersionNumber, Integer minorVersionNumber) {
+                ProjectVersion newVersionNumbers) {
             m_project = project;
-            m_majorVersionNumber = majorVersionNumber;
-            m_minorVersionNumber = minorVersionNumber;
+            m_projectVersion = newVersionNumbers;
         }
         
         /** {@inheritDoc} */
@@ -109,8 +105,7 @@ public class ProjectBP {
             final SubMonitor subMonitor = SubMonitor.convert(
                     monitor, NLS.bind(Messages.
                         CreateNewProjectVersionOperationCreatingNewVersion,
-                                    new Object[] { m_majorVersionNumber,
-                                        m_minorVersionNumber, pName }),
+                                    new Object[] { m_projectVersion, pName }),
                             TOTAL_WORK);
             final ParamNameBPDecorator paramNameMapper = 
                 new ParamNameBPDecorator(ParamNameBP.getInstance());
@@ -126,10 +121,14 @@ public class ProjectBP {
                     throw new InterruptedException();
                 }
                 final IProjectPO duplicatedProject = XmlStorage.load(
-                    xmlProjectInputStream, false, m_majorVersionNumber, 
-                    m_minorVersionNumber, paramNameMapper, compNameCache,
-                    subMonitor.newChild(WORK_PROJECT_CREATION),
-                    new NullImportOutput(), true);
+                        xmlProjectInputStream, false,
+                        m_projectVersion.getMajorNumber(),
+                        m_projectVersion.getMinorNumber(),
+                        m_projectVersion.getMicroNumber(),
+                        m_projectVersion.getVersionQualifier(),
+                        paramNameMapper, compNameCache,
+                        subMonitor.newChild(WORK_PROJECT_CREATION),
+                        new NullImportOutput(), true);
                 if (monitor.isCanceled()) {
                     throw new InterruptedException();
                 }

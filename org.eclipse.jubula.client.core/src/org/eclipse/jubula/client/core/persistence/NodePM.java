@@ -47,6 +47,7 @@ import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
@@ -828,23 +829,22 @@ public class NodePM extends PersistenceManager {
         Set<IReusedProjectPO> reusedProjects, String projectGuid, 
         String specTcGuid) {
        
-        Integer majorNumber = null;
-        Integer minorNumber = null;
+        ProjectVersion version = null;
         for (IReusedProjectPO reusedProj : reusedProjects) {
             if (reusedProj.getProjectGuid().equals(projectGuid)) {
-                majorNumber = reusedProj.getMajorNumber();
-                minorNumber = reusedProj.getMinorNumber();
+                version = reusedProj.getProjectVersion();
                 break;
             }
         }
 
-        if (majorNumber == null) {
+        if (version == null || (version.getMajorNumber() == null 
+                && version.getVersionQualifier() == null)) {
             return null;
         }
 
         EntityManager s = GeneralStorage.getInstance().getMasterSession();
         Long projectId = NodePM.getInstance().findProjectID(s, projectGuid,
-                majorNumber, minorNumber);
+                version);
         if (projectId == null) {
             return null;
         }
@@ -911,16 +911,17 @@ public class NodePM extends PersistenceManager {
      * find and cache a reused projects OID
      * @param s Session
      * @param projectGuid GUID of project
-     * @param majorNumber version number
-     * @param minorNumber version number
+     * @param projVersion the version of project
      * @return the OID of the project or null if the project cannot be found
      */
     private Long findProjectID(EntityManager s, String projectGuid,
-            Integer majorNumber, Integer minorNumber) {
+            ProjectVersion projVersion) {
         validateSession(s);
 
-        String key = buildProjectKey(projectGuid, majorNumber, minorNumber);
-        
+        String key = buildProjectKey(projectGuid, projVersion.getMajorNumber(),
+                projVersion.getMinorNumber(), projVersion.getMicroNumber(),
+                projVersion.getVersionQualifier());
+
         if (m_useCache) {
             Long id = m_projectIDCache.get(key);
             if (id != null) {
@@ -931,26 +932,26 @@ public class NodePM extends PersistenceManager {
                 return null;
             }
         }
-        Query projIdQuery = s.createQuery(
-                    "select project from ProjectPO as project" //$NON-NLS-1$
-                        + " inner join fetch project.properties where project.guid = :guid" //$NON-NLS-1$
-                        + " and project.properties.majorNumber = :majorNumber and project.properties.minorNumber = :minorNumber"); //$NON-NLS-1$           
-        projIdQuery.setParameter("guid", projectGuid); //$NON-NLS-1$
-        projIdQuery.setParameter("majorNumber", majorNumber); //$NON-NLS-1$
-        projIdQuery.setParameter("minorNumber", minorNumber); //$NON-NLS-1$
+        Long projectId = null;
         try {
-            final Object uniqueResult = projIdQuery.getSingleResult();
-            Long projectId = ((IProjectPO)uniqueResult).getId();
+            projectId = ProjectPM.findProjectId(projectGuid,
+                    projVersion.getMajorNumber(), projVersion.getMinorNumber(),
+                    projVersion.getMicroNumber(),
+                    projVersion.getVersionQualifier());
+        } catch (JBException e) {
+            // ignored - id is therefore null
+        }
+        if (projectId != null) {
             if (m_useCache) {
                 m_projectIDCache.put(key, projectId);
             }
             return projectId;
-        } catch (NoResultException nre) {
-            if (m_useCache) {
-                m_projectIDCache.put(key, new Long(-1));
-            }
-            return null;
         }
+        if (m_useCache) {
+            m_projectIDCache.put(key, new Long(-1));
+        }
+        return null;
+
     }
 
     /**
@@ -992,16 +993,25 @@ public class NodePM extends PersistenceManager {
      *            part
      * @param minorNumber
      *            part
+     * @param microNumber
+     *            part
+     * @param versionQualifier
+     *            part
      * @return a key combined from the parts
      */
     private static String buildProjectKey(String projectGuid,
-            Integer majorNumber, Integer minorNumber) {
+            Integer majorNumber, Integer minorNumber,
+            Integer microNumber, String versionQualifier) {
         StringBuilder idBuilder = new StringBuilder(200);
         idBuilder.append(projectGuid);
         idBuilder.append(StringConstants.COLON);
         idBuilder.append(majorNumber);
         idBuilder.append(StringConstants.COLON);
         idBuilder.append(minorNumber);
+        idBuilder.append(StringConstants.COLON);
+        idBuilder.append(microNumber);
+        idBuilder.append(StringConstants.COLON);
+        idBuilder.append(versionQualifier);
         return idBuilder.toString();
     }
 

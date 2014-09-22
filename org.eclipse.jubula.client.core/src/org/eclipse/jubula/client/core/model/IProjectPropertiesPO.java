@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.core.model;
 import java.util.Locale;
 import java.util.Set;
 
+
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
 
 /**
@@ -103,6 +104,18 @@ public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport,
      */
     public abstract Integer getMinorNumber();
 
+    /**
+     * 
+     * @return Returns the micro version number.
+     */
+    public Integer getMicroNumber();
+
+    /**
+     * 
+     * @return Returns the qualifier version number.
+     */
+    public String getVersionQualifier();
+    
     /**
      * @return Returns the langHelper.
      */

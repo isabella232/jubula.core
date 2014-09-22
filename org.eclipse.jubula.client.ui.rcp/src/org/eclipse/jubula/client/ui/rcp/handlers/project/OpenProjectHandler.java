@@ -108,8 +108,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
             monitor.beginTask(NLS.bind(
                     Messages.OpenProjectOperationOpeningProject,
                     new Object[] { m_selectedProject.getName(),
-                            m_selectedProject.getMajorProjectVersion(),
-                            m_selectedProject.getMinorProjectVersion() }),
+                            m_selectedProject.getProjectVersion() }),
                     totalWork);
             DataEventDispatcher ded = DataEventDispatcher.getInstance();
             try {
@@ -159,15 +158,18 @@ public class OpenProjectHandler extends AbstractProjectHandler {
         public static void startCleanTestresultsJob(final IProjectPO project) {
             final int cleanupInterval = project.getTestResultCleanupInterval();
             final String projGUID = String.valueOf(project.getGuid());
-            final int projMajVer = project.getMajorProjectVersion().intValue();
-            final int projMinVer = project.getMinorProjectVersion().intValue();
+            final Integer projMajVer = project.getMajorProjectVersion();
+            final Integer projMinVer = project.getMinorProjectVersion();
+            final Integer projMicVer = project.getMicroProjectVersion();
+            final String projVerQual = project.getProjectVersionQualifier(); 
             if (cleanupInterval > 0) {
                 Job job = new Job(NLS.bind(
                         Messages.UIJobCleaningTestResultFromDB,
                         project.getName())) {
                     public IStatus run(IProgressMonitor monitor) {
                         TestResultPM.cleanTestresultDetails(cleanupInterval,
-                                projGUID, projMajVer, projMinVer);
+                                projGUID, projMajVer, projMinVer, projMicVer,
+                                projVerQual);
                         monitor.done();
                         return Status.OK_STATUS;
                     }
@@ -481,7 +483,9 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                     if (!ProjectPM.doesProjectVersionExist(
                             rProjects.getProjectGuid(),
                             rProjects.getMajorNumber(),
-                            rProjects.getMinorNumber())) {
+                            rProjects.getMinorNumber(),
+                            rProjects.getMicroNumber(),
+                            rProjects.getVersionQualifier())) {
                         missingProjects.add(rProjects.getProjectGuid());
                     }
                 }

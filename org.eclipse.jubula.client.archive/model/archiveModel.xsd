@@ -60,11 +60,11 @@
         	<xs:element name="majorNumber" type="xs:int" minOccurs="0"
         		maxOccurs="1" default="1" />
         	<xs:element name="majorProjectVersion" type="xs:int"
-        		minOccurs="0" maxOccurs="1" default="1" />
+        		minOccurs="0" maxOccurs="1" nillable="true" />
         	<xs:element name="minorNumber" type="xs:int" minOccurs="0"
         		maxOccurs="1" default="0" />
         	<xs:element name="minorProjectVersion" type="xs:int"
-        		minOccurs="0" maxOccurs="1" default="0" />
+        		minOccurs="0" maxOccurs="1" nillable="true" />
        		<xs:element name="testResultDetailsCleanupInterval" type="xs:int"
        			minOccurs="0" maxOccurs="1" default="-1" />
         	<xs:element name="isReusable" type="xs:boolean"
@@ -105,6 +105,10 @@
         		maxOccurs="1" nillable="true" />
             <xs:element name="markupLanguage" type="xs:string" minOccurs="0" 
                 nillable="true" maxOccurs="1" />
+            <xs:element name="microProjectVersion" type="xs:int"
+                minOccurs="0" maxOccurs="1" nillable="true" />
+            <xs:element name="projectVersionQualifier" type="xs:string"
+                minOccurs="0" maxOccurs="1" nillable="true" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -445,9 +449,13 @@
   		<xs:element name="majorProjectVersion" type="xs:int" minOccurs="0"
         		maxOccurs="1"></xs:element>
   		<xs:element name="minorNumber" type="xs:int" minOccurs="0"
-        		maxOccurs="1"></xs:element>
+        		maxOccurs="1" nillable="true"></xs:element>
         <xs:element name="minorProjectVersion" type="xs:int" minOccurs="0"
-        		maxOccurs="1"></xs:element>
+        		maxOccurs="1" nillable="true"></xs:element>
+        <xs:element name="microProjectVersion" type="xs:int"
+                minOccurs="0" maxOccurs="1" nillable="true" />
+        <xs:element name="projectVersionQualifier" type="xs:string"
+                minOccurs="0" maxOccurs="1" nillable="true" />
   	</xs:sequence>
   </xs:complexType>
   <xs:complexType name="usedToolkit">

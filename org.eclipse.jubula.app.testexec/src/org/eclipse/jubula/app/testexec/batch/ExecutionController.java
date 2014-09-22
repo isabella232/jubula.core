@@ -844,12 +844,11 @@ public class ExecutionController implements IAUTServerEventListener,
         sysOut(Messages.ExecutionControllerDatabase
                 + NLS.bind(Messages.ExecutionControllerLoadingProject,
                     new Object[] { m_job.getProjectName(),
-                                   m_job.getProjectMajor(),
-                                   m_job.getProjectMinor() }));
+                                  m_job.getProjectVersion() }));
         try {
             IProjectPO actualProject = 
                 ProjectPM.loadProjectByNameAndVersion(m_job.getProjectName(), 
-                    m_job.getProjectMajor(), m_job.getProjectMinor());
+                    m_job.getProjectVersion());
             if (actualProject != null) {
                 ProjectPM.loadProjectInROSession(actualProject);
                 final IProjectPO currentProject = GeneralStorage.getInstance()

@@ -397,9 +397,7 @@ class XmlExporter {
             fillTestResultSummary(xml, po);
         }
         checkForCancel();
-        xml.setMetaDataVersion(po.getClientMetaDataVersion());
-        xml.setMajorProjectVersion(po.getMajorProjectVersion());
-        xml.setMinorProjectVersion(po.getMinorProjectVersion());
+        setProjectVersions(xml, po);
         xml.setIsReusable(po.getIsReusable());
         xml.setIsProtected(po.getIsProtected());
         xml.setTeststyleEnabled(
@@ -414,6 +412,25 @@ class XmlExporter {
         fillTrackingConfig(xml, projectProperties);
         
         m_monitor.worked(1);
+    }
+
+    /**
+     * Writes the project versions into the xml
+     * @param xml project xml
+     * @param po project 
+     */
+    private void setProjectVersions(Project xml, IProjectPO po) {
+        xml.setMetaDataVersion(po.getClientMetaDataVersion());
+        if (po.getMajorProjectVersion() != null) {
+            xml.setMajorProjectVersion(po.getMajorProjectVersion());
+        }
+        if (po.getMinorProjectVersion() != null) {
+            xml.setMinorProjectVersion(po.getMinorProjectVersion());
+        }
+        if (po.getMicroProjectVersion() != null) {
+            xml.setMicroProjectVersion(po.getMicroProjectVersion());
+        }
+        xml.setProjectVersionQualifier(po.getProjectVersionQualifier());
     }
 
     /**
@@ -753,8 +770,16 @@ class XmlExporter {
         xml.setProjectName(ProjectNameBP.getInstance().getName(
                 po.getProjectGuid()));
         xml.setProjectGUID(po.getProjectGuid());
-        xml.setMajorProjectVersion(po.getMajorNumber());
-        xml.setMinorProjectVersion(po.getMinorNumber());
+        if (po.getMajorNumber() != null) {
+            xml.setMajorProjectVersion(po.getMajorNumber());
+        }
+        if (po.getMinorNumber() != null) {
+            xml.setMinorProjectVersion(po.getMinorNumber());
+        }
+        if (po.getMicroNumber() != null) {
+            xml.setMicroProjectVersion(po.getMicroNumber());
+        }
+        xml.setProjectVersionQualifier(po.getVersionQualifier());
     }
     
     /**

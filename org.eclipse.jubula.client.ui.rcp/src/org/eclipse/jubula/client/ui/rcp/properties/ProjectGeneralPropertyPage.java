@@ -255,8 +255,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         
         createLabel(leftComposite, 
             Messages.ProjectPropertyPageProjectVersion);
-        createLabel(rightComposite, m_origProjectProps.getMajorNumber() 
-                + StringConstants.DOT + m_origProjectProps.getMinorNumber());
+        createLabel(rightComposite, getProject().getVersionString()); //$NON-NLS-1$
         Label l = createLabel(rightComposite, StringConstants.EMPTY);
         GridData layoutData = new GridData();
         layoutData.grabExcessHorizontalSpace = true;
@@ -780,7 +779,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             //           EditSupports for each property page, then we can use 
             //           "real" ReusedProjectPOs instead of a placeholder.
             ded.fireDataChangedListener(
-                    PoMaker.createReusedProjectPO("1", 1, 1), //$NON-NLS-1$
+                    PoMaker.createReusedProjectPO("1", 1, 1, null, null), //$NON-NLS-1$
                     DataState.ReuseChanged, UpdateState.notInEditor);
             ded.fireDataChangedListener(GeneralStorage.getInstance()
                     .getProject(), DataState.Renamed, UpdateState.notInEditor);

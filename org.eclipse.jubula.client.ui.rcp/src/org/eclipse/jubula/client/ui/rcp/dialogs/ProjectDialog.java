@@ -371,10 +371,7 @@ public class ProjectDialog extends TitleAreaDialog {
                 new Comparator<String>() {
 
                     public int compare(String s1, String s2) {
-                        Float f1 = Float.parseFloat(s1);
-                        Float f2 = Float.parseFloat(s2);
-                        
-                        return f1.compareTo(f2);
+                        return s1.compareTo(s2);
                     }
                 
                 });

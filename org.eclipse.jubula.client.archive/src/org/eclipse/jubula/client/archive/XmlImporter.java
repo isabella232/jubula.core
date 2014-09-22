@@ -334,6 +334,10 @@ class XmlImporter {
      *            Major version number for the created object.
      * @param minorVersion
      *            Minor version number for the created object.
+     * @param microVersion
+     *            Micro version number for the created object.
+     * @param versionQualifier
+     *            Version qualifier number for the created object.
      * @param paramNameMapper
      *            mapper to resolve param names
      * @param compNameCache
@@ -352,13 +356,28 @@ class XmlImporter {
      *             if the operation was canceled.
      */
     public IProjectPO createProject(Project xml, 
-        Integer majorVersion, Integer minorVersion, 
+        Integer majorVersion, Integer minorVersion,
+        Integer microVersion, String versionQualifier,
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache) 
         throws InvalidDataException, JBVersionException, InterruptedException {
         
-        xml.setMajorProjectVersion(majorVersion);
-        xml.setMinorProjectVersion(minorVersion);
+        if (majorVersion != null) {
+            xml.setMajorProjectVersion(majorVersion);
+        } else {
+            xml.setNilMajorProjectVersion();
+        }
+        if (minorVersion != null) {
+            xml.setMinorProjectVersion(minorVersion);
+        } else {
+            xml.setNilMinorProjectVersion();
+        }
+        if (microVersion != null) {
+            xml.setMicroProjectVersion(microVersion);
+        } else {
+            xml.setNilMicroProjectVersion();
+        }
+        xml.setProjectVersionQualifier(versionQualifier);
         return createProject(xml, false, paramNameMapper, compNameCache);
     }
 
@@ -483,17 +502,23 @@ class XmlImporter {
             m_io.writeLine(NLS.bind(Messages.XmlImporterProjectDependency,
                     new Object[] { xml.getName(),
                         xml.getMajorProjectVersion(),
-                        xml.getMinorProjectVersion() }));
+                        xml.getMinorProjectVersion(),
+                        xml.getMicroProjectVersion(),
+                        xml.getProjectVersionQualifier() }));
             for (ReusedProject rp : xml.getReusedProjectsList()) {
                 String requiredProjectString = rp.getProjectName() != null 
                     ? NLS.bind(Messages.XmlImporterRequiredProject,
                             new Object[] { rp.getProjectName(),
                                 rp.getMajorProjectVersion(),
-                                rp.getMinorProjectVersion() }) 
+                                rp.getMinorProjectVersion(),
+                                rp.getMicroProjectVersion(),
+                                rp.getProjectVersionQualifier()}) 
                     : NLS.bind(Messages.XmlImporterRequiredProjectWithoutName,
                             new Object[] { rp.getProjectGUID(),
                                 rp.getMajorProjectVersion(),
-                                rp.getMinorProjectVersion() });
+                                rp.getMinorProjectVersion(),
+                                rp.getMicroProjectVersion(),
+                                rp.getProjectVersionQualifier()});
                 m_io.writeLine(requiredProjectString);
             }
         }
@@ -971,13 +996,30 @@ class XmlImporter {
     private IProjectPO initProject(Project xml, boolean assignNewGuid) {
         IProjectPO proj = null;
         if (xml.getGUID() != null && !assignNewGuid) {
-            Integer majorProjVersion = xml.isSetMajorProjectVersion() 
-                ? xml.getMajorProjectVersion() : xml.getMajorNumber();
-            Integer minorProjVersion = xml.isSetMinorProjectVersion()
-                ? xml.getMinorProjectVersion() : xml.getMinorNumber();
+            Integer majorProjVersion = null;
+            if (!xml.isNilMajorProjectVersion()
+                    && xml.isSetMajorProjectVersion()
+                    || xml.isSetMajorNumber()) {
+                majorProjVersion = xml.isSetMajorNumber()
+                        ? xml.getMajorNumber() : xml.getMajorProjectVersion();
+            }
+            Integer minorProjVersion = null;
+            if (!xml.isNilMajorProjectVersion()
+                    && xml.isSetMajorProjectVersion()
+                    || xml.isSetMajorNumber()) {
+                minorProjVersion = xml.isSetMinorNumber()
+                        ? xml.getMinorNumber() : xml.getMinorProjectVersion();
+            }
+            Integer microProjVersion = !xml.isSetMicroProjectVersion()
+                    || xml.isNilMicroProjectVersion() ? null : xml
+                    .getMicroProjectVersion();
+            String postFixProjVersion = !xml.isSetProjectVersionQualifier()
+                    || xml.isNilProjectVersionQualifier() ? null : xml
+                    .getProjectVersionQualifier();
             proj = NodeMaker.createProjectPO(
-                IVersion.JB_CLIENT_METADATA_VERSION, 
-                majorProjVersion, minorProjVersion, xml.getGUID());
+                    IVersion.JB_CLIENT_METADATA_VERSION, majorProjVersion,
+                    minorProjVersion, microProjVersion, postFixProjVersion,
+                    xml.getGUID());
             ProjectNameBP.getInstance().setName(xml.getGUID(), xml.getName(),
                     false);
         } else {
@@ -1214,12 +1256,20 @@ class XmlImporter {
      * element
      */
     private IReusedProjectPO createReusedProject(ReusedProject xml) {
-        Integer majorProjVersion = xml.isSetMajorProjectVersion() 
-            ? xml.getMajorProjectVersion() : xml.getMajorNumber();
-        Integer minorProjVersion = xml.isSetMinorProjectVersion()
-            ? xml.getMinorProjectVersion() : xml.getMinorNumber();
+        Integer majorProjVersion = xml.isSetMajorProjectVersion() ? xml
+                .getMajorProjectVersion() : xml.isSetMajorNumber() ? xml
+                .getMajorNumber() : null;
+        Integer minorProjVersion = xml.isSetMinorProjectVersion() ? xml
+                .getMinorProjectVersion() : xml.isSetMinorNumber() ? xml
+                .getMinorNumber() : null;
+        Integer microProjVersion = xml.isSetMicroProjectVersion() ? xml
+                .getMicroProjectVersion() : null;
+        String postFixProjVersion = xml.isSetProjectVersionQualifier() ? xml
+                .getProjectVersionQualifier() : null;
+
         IReusedProjectPO reusedProject = PoMaker.createReusedProjectPO(
-            xml.getProjectGUID(), majorProjVersion, minorProjVersion);
+                xml.getProjectGUID(), majorProjVersion, minorProjVersion,
+                microProjVersion, postFixProjVersion);
         return reusedProject;
     }
     /**

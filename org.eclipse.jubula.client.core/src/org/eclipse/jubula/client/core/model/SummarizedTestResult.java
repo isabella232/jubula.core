@@ -113,15 +113,29 @@ public class SummarizedTestResult extends AbstractTestResult {
     /**
      * {@inheritDoc}
      */
-    public int getProjectMajorVersion() {
+    public Integer getProjectMajorVersion() {
         return m_summary.getProjectMajorVersion();
     }
 
     /**
      * {@inheritDoc}
      */
-    public int getProjectMinorVersion() {
+    public Integer getProjectMinorVersion() {
         return m_summary.getProjectMinorVersion();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public Integer getProjectMicroVersion() {
+        return m_summary.getProjectMicroVersion();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getProjectVersionQualifier() {
+        return m_summary.getProjectVersionQualifier();
     }
 
     /**

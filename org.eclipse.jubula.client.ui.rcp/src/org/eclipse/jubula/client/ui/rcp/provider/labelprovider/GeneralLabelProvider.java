@@ -243,7 +243,10 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             if (projectName == null) {
                 projectName = reusedProject.getProjectGuid();
             }
-            return projectName + reusedProject.getVersionString();
+            return projectName + StringConstants.UNDERSCORE
+                    + StringConstants.LEFT_BRACKET
+                    + reusedProject.getVersionString()
+                    + StringConstants.RIGHT_BRACKET;
         }
         if (element instanceof ISpecObjContPO) {
             return Messages.TreeBuilderTestCases;

@@ -244,6 +244,14 @@ public class XmlStorage {
      *            Minor version number for the created object, or
      *            <code>null</code> if the version from the imported XML should
      *            be used.
+     * @param microVersion
+     *            Micro version number for the created object, or
+     *            <code>null</code> if the version from the imported XML should
+     *            be used.
+     * @param versionQualifier
+     *            Version Qualifier number for the created object, or
+     *            <code>null</code> if the version from the imported XML should
+     *            be used.
      * @param paramNameMapper
      *            mapper to resolve param names
      * @param compNameCache
@@ -266,11 +274,11 @@ public class XmlStorage {
      */
     public static IProjectPO load(InputStream projectXmlStream,
         boolean assignNewGuid, Integer majorVersion, Integer minorVersion,
+        Integer microVersion, String versionQualifier,
         IParamNameMapper paramNameMapper,
         IWritableComponentNameCache compNameCache, IProgressMonitor monitor,
         IProgressConsole io, boolean skipTrackingInformation)
         throws PMReadException, JBVersionException, InterruptedException {
-        
         ContentDocument contentDoc;
         try {
             contentDoc = getContent(projectXmlStream);
@@ -286,9 +294,10 @@ public class XmlStorage {
             if (assignNewGuid) {
                 return xmlImporter.createProject(
                     projectXml, assignNewGuid, paramNameMapper, compNameCache);
-            } else if (majorVersion != null && minorVersion != null) {
+            } else if (majorVersion != null || versionQualifier != null) {
                 return xmlImporter.createProject(
-                    projectXml, majorVersion, minorVersion, paramNameMapper, 
+                    projectXml, majorVersion, minorVersion,
+                    microVersion, versionQualifier, paramNameMapper, 
                     compNameCache);
             }
             return xmlImporter.createProject(projectXml, 
@@ -546,9 +555,9 @@ public class XmlStorage {
         IWritableComponentNameCache compNameCache, boolean assignNewGuids, 
         IProgressMonitor monitor, IProgressConsole io) throws PMReadException, 
         JBVersionException, InterruptedException {
-
-        return load(openStreamToProjectURL(fileURL), assignNewGuids, null, null,
-                paramNameMapper, compNameCache, monitor, io, false);
+        return load(openStreamToProjectURL(fileURL), assignNewGuids, null,
+                null, null, null, paramNameMapper, compNameCache, monitor, io,
+                false);
     }
 
     /**

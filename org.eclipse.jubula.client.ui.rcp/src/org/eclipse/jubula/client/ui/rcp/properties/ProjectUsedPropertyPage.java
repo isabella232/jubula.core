@@ -143,6 +143,8 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
                     getProject().getGuid(), 
                     getProject().getMajorProjectVersion(),
                     getProject().getMinorProjectVersion(),
+                    getProject().getMicroProjectVersion(),
+                    getProject().getProjectVersionQualifier(),
                     projectToolkit, 
                     ToolkitSupportBP.getToolkitLevel(projectToolkit));
             for (IProjectPO proj : reusableProjects) {
@@ -304,9 +306,7 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
             }
             StringBuffer sb = new StringBuffer(projectName);
             sb.append(BEGIN_VER);
-            sb.append(m_modelObject.getMajorNumber());
-            sb.append(VER_SEP);
-            sb.append(m_modelObject.getMinorNumber());
+            sb.append(m_modelObject.getVersionString());
             sb.append(END_VER);
             return sb.toString();
         }
@@ -330,9 +330,7 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
          */
         public String getTitle() {
             StringBuffer sb = new StringBuffer();
-            sb.append(m_modelObject.getMajorNumber());
-            sb.append(VER_SEP);
-            sb.append(m_modelObject.getMinorNumber());
+            sb.append(m_modelObject.getVersionString());
             return sb.toString();
         }
         

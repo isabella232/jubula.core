@@ -61,6 +61,7 @@ import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
@@ -401,10 +402,8 @@ public class FileStorageBP {
                         
                         if (reused.getProjectGuid().equals(
                                 importedProject.getGuid()) 
-                            && reused.getMajorNumber().equals(
-                                importedProject.getMajorProjectVersion()) 
-                            && reused.getMinorNumber().equals(
-                                importedProject.getMinorProjectVersion())) {
+                            && reused.getProjectVersion().equals(
+                                importedProject.getProjectVersion())) {
                             
                             reusedProject = importedProject;
                             break;
@@ -479,14 +478,14 @@ public class FileStorageBP {
             // if (import.guid exists and guid->version == import.version)
             // then show error message and cancel
             if (projectExists(proj.getGuid(), proj.getMajorProjectVersion(),
-                proj.getMinorProjectVersion())) {
+                proj.getMinorProjectVersion(), proj.getMicroProjectVersion(),
+                proj.getProjectVersionQualifier())) {
                 String projectNameToImport = proj.getName();
                 handleProjectExists(
                     m_console,
                     ProjectNameBP.getInstance().getName(proj.getGuid(), false),
                     projectNameToImport,
-                    proj.getMajorProjectVersion(),
-                    proj.getMinorProjectVersion());
+                    proj.getProjectVersion());
                 return false;
             }
             String selectedProjectName = 
@@ -506,13 +505,9 @@ public class FileStorageBP {
                             break;
                         }
                         String guid = reused.getProjectGuid();
-                        Integer majorVersion = reused.getMajorNumber();
-                        Integer minorVersion = reused.getMinorNumber();
                         willRequireRefresh = proj.getGuid().equals(guid) 
-                            && proj.getMajorProjectVersion().equals(
-                                majorVersion) 
-                            && proj.getMinorProjectVersion().equals(
-                                minorVersion);
+                            && proj.getProjectVersion().equals(
+                                reused.getProjectVersion());
     
                     }
                     m_isRefreshRequired = willRequireRefresh 
@@ -803,15 +798,18 @@ public class FileStorageBP {
          *            Major version number to check
          * @param minorNumber
          *            Minor version number to check
+         * @param microNumber The micro version number to check
+         * @param versionQualifier The version qualifier to check
          * @return <code>true</code> if another project with the same GUID and
          *         version number as the currently imported project already 
          *         exists in the database. Otherwise <code>false</code>.
          */
         private boolean projectExists(String guid, Integer majorNumber, 
-            Integer minorNumber) {
+            Integer minorNumber, Integer microNumber,
+            String versionQualifier) {
             
             return ProjectPM.doesProjectVersionExist(guid, majorNumber, 
-                minorNumber);
+                minorNumber, microNumber, versionQualifier);
         }
     
         /**
@@ -824,20 +822,18 @@ public class FileStorageBP {
          *      Name of the project that already exists in the database
          * @param importName 
          *      Name of the project that is being imported
-         * @param majNum Project major number
-         * @param minNum Project minor number
+         * @param version the project version
          */
         private void handleProjectExists(IProgressConsole console, 
                 String existingName, String importName,
-                Integer majNum, Integer minNum) {
+                ProjectVersion version) {
             
             console.writeErrorLine(
                     NLS.bind(Messages.ErrorMessageIMPORT_PROJECT_XML_FAILED,
                             new String [] {importName}));
             console.writeErrorLine(NLS.bind(
                     Messages.ErrorMessageIMPORT_PROJECT_XML_FAILED_EXISTING,
-                    new String[] { existingName, String.valueOf(majNum),
-                            String.valueOf(minNum) }));
+                    new String[] { existingName, version.toString() }));
         }
     
     }

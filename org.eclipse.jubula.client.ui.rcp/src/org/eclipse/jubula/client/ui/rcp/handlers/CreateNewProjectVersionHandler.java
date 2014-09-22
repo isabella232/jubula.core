@@ -19,6 +19,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.archive.businessprocess.ProjectBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
@@ -56,17 +57,15 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
     }
 
     /**
-     * @param majorVersionNumber major version of new created project
-     * @param minorVersionNumber minor version of new created project
+     * @param projectVersion the new version 
      * @return new WorkerThread
      */
     private IRunnableWithProgress createOperation(
-        final Integer majorVersionNumber, 
-        final Integer minorVersionNumber) {
+        ProjectVersion projectVersion) {
         
         return new ProjectBP.NewVersionOperation(
             GeneralStorage.getInstance().getProject(),
-            majorVersionNumber, minorVersionNumber);
+            projectVersion);
     }
 
     /**
@@ -75,7 +74,7 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
      *         from opening
      */
     private VersionDialog openVersionDialog() {
-        String highestVersionString = "1.0"; //$NON-NLS-1$
+        ProjectVersion highestVersionString = new ProjectVersion(1, 0, null);
         try {
             GeneralStorage.getInstance().validateProjectExists(
                     GeneralStorage.getInstance().getProject());
@@ -90,14 +89,10 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
             return null;
         }
 
-        String [] versionNumbers = highestVersionString.split("\\."); //$NON-NLS-1$
-        Integer majNum = Integer.parseInt(versionNumbers[0]);
-        Integer minNum = Integer.parseInt(versionNumbers[1]);
         VersionDialog dialog = new VersionDialog(
             getActiveShell(),
             Messages.CreateNewProjectVersionActionTitle,
-            majNum,
-            minNum,
+            highestVersionString,
             Messages.CreateNewProjectVersionActionMessage,
             Messages.CreateNewProjectVersionActionMajorLabel,
             Messages.CreateNewProjectVersionActionMinorLabel,
@@ -113,7 +108,9 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
                 return !ProjectPM.doesProjectVersionExist(
                     GeneralStorage.getInstance().getProject().getGuid(),
                     getMajorFieldValue(), 
-                    getMinorFieldValue());
+                    getMinorFieldValue(),
+                    getMicroFieldValue(),
+                    getQualifierFieldValue());
             }
 
             /**
@@ -123,13 +120,14 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
                 if (ProjectPM.doesProjectVersionExist(
                     GeneralStorage.getInstance().getProject().getGuid(),
                     getMajorFieldValue(), 
-                    getMinorFieldValue())) {
+                    getMinorFieldValue(),
+                    getMicroFieldValue(),
+                    getQualifierFieldValue())) {
                     
                     ErrorHandlingUtil.createMessageDialog(
                         MessageIDs.E_PROJECTVERSION_ALREADY_EXISTS, 
                         new Object[]{
-                            getMajorFieldValue(), 
-                            getMinorFieldValue()}, 
+                            getProjectVersion()}, 
                         null);
                     return;
                 }
@@ -153,10 +151,8 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
         Plugin.startLongRunning(Messages.SaveProjectAsActionWaitWhileSaving);
         VersionDialog dialog = openVersionDialog();
         if (dialog != null && dialog.getReturnCode() == Window.OK) {
-            final Integer majorVersionNumber = dialog.getMajorVersionNumber();
-            final Integer minorVersionNumber = dialog.getMinorVersionNumber();
-            IRunnableWithProgress op = createOperation(majorVersionNumber, 
-                minorVersionNumber);
+            ProjectVersion version = dialog.getProjectVersion();
+            IRunnableWithProgress op = createOperation(version);
             try {
                 IProgressService progressService = 
                     PlatformUI.getWorkbench().getProgressService();

@@ -270,11 +270,15 @@ public abstract class PoMaker {
      * @param projectGuid projectGuid
      * @param majorNumber majorNumber
      * @param minorNumber minorNumber
+     * @param microNumber The micro version number for this project
+     * @param versionQualifier The version qualifier for this project
      * @return ReusedProjectPO
      */
     public static IReusedProjectPO createReusedProjectPO(String projectGuid,
-            Integer majorNumber, Integer minorNumber) {
-        return new ReusedProjectPO(projectGuid, majorNumber, minorNumber);
+            Integer majorNumber, Integer minorNumber, Integer microNumber,
+            String versionQualifier) {
+        return new ReusedProjectPO(projectGuid, majorNumber, minorNumber,
+                microNumber, versionQualifier);
     }
 
     /**
@@ -340,12 +344,15 @@ public abstract class PoMaker {
      * factory method to replace constructor
      * @param majorNumber majorNumber
      * @param minorNumber minorNumber
+     * @param microNumber The micro version number for this project
+     * @param versionQualifier The version qualifier for this project
      * @return ProjectPropertiesPO
      */
     public static IProjectPropertiesPO createProjectPropertiesPO(
-            Integer majorNumber, Integer minorNumber) {
-        ProjectPropertiesPO projProp = 
-            new ProjectPropertiesPO(majorNumber, minorNumber);
+            Integer majorNumber, Integer minorNumber, Integer microNumber,
+            String versionQualifier) {
+        ProjectPropertiesPO projProp = new ProjectPropertiesPO(majorNumber,
+                minorNumber, microNumber, versionQualifier);
         projProp.setCheckConfCont(createCheckConfContPO());
         return projProp;
     }
@@ -369,7 +376,8 @@ public abstract class PoMaker {
      */
     public static IReusedProjectPO createReusedProjectPO(IProjectPO proj) {
         return createReusedProjectPO(proj.getGuid(), 
-            proj.getMajorProjectVersion(), proj.getMinorProjectVersion());
+            proj.getMajorProjectVersion(), proj.getMinorProjectVersion(),
+            proj.getMicroProjectVersion(), proj.getProjectVersionQualifier());
     }
 
     /**

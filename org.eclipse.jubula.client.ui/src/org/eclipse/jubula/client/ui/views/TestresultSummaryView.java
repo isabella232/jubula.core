@@ -1169,7 +1169,11 @@ public class TestresultSummaryView extends ViewPart implements
         return StringUtils.defaultString(
             String.valueOf(element.getProjectMajorVersion())
             + StringConstants.DOT
-            + String.valueOf(element.getProjectMinorVersion()));
+            + String.valueOf(element.getProjectMinorVersion())
+            + StringConstants.DOT
+            + String.valueOf(element.getProjectMicroVersion())
+            + StringConstants.DOT
+            + String.valueOf(element.getProjectVersionQualifier()));
     }
     
     /**

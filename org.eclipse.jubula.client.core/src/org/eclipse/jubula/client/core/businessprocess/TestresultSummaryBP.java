@@ -126,6 +126,8 @@ public class TestresultSummaryBP {
         summary.setProjectName(result.getProjectName());
         summary.setProjectMajorVersion(result.getProjectMajorVersion());
         summary.setProjectMinorVersion(result.getProjectMinorVersion());
+        summary.setProjectMicroVersion(result.getProjectMicroVersion());
+        summary.setProjectVersionQualifier(result.getProjectVersionQualifier());
         IClientTest clientTest = ClientTest.instance();
         Date startTime = clientTest.getTestsuiteStartTime();
         summary.setTestsuiteStartTime(startTime);

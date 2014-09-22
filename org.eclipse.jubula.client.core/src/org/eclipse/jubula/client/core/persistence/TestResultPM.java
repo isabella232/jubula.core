@@ -226,14 +226,18 @@ public class TestResultPM {
      * @param projGUID the project guid
      * @param majorVersion the project major version number
      * @param minorVersion the project minor version number
+     * @param microVersion the project major version number
+     * @param versionQualifier the project version qualifier
      */
     public static final void cleanTestresultDetails(int days, String projGUID,
-        int majorVersion, int minorVersion) {
+        Integer majorVersion, Integer minorVersion,
+        Integer microVersion, String versionQualifier) {
         Date cleanDate = DateUtils.addDays(new Date(), days * -1);
         try {
             Set<Long> summaries = TestResultSummaryPM
                     .findTestResultSummariesByDate(cleanDate, projGUID,
-                            majorVersion, minorVersion);
+                            majorVersion, minorVersion, microVersion,
+                            versionQualifier);
             for (Long summaryId : summaries) {
                 deleteTestresultOfSummary(summaryId);
             }

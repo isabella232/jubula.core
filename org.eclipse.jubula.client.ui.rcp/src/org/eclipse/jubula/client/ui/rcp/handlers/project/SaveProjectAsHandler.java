@@ -128,8 +128,8 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 }
                 if (contentStream != null) {
                     final IProjectPO duplicatedProject = XmlStorage.load(
-                        contentStream, true, null, null, paramNameMapper,
-                        compNameCache, 
+                        contentStream, true, null, null, null, null,
+                        paramNameMapper, compNameCache, 
                         subMonitor.newChild(WORK_PROJECT_CREATION),
                         new NullImportOutput(), true);
                     IWritableComponentNameMapper compNameMapper =

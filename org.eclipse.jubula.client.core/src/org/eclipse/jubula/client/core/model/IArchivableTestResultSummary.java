@@ -172,22 +172,45 @@ public interface IArchivableTestResultSummary {
     /**
      * @param projectMajorVersion the projectMajorVersion to set
      */
-    public abstract void setProjectMajorVersion(int projectMajorVersion);
+    public abstract void setProjectMajorVersion(Integer projectMajorVersion);
 
     /**
      * @return the projectMajorVersion
      */
-    public abstract int getProjectMajorVersion();
+    public abstract Integer getProjectMajorVersion();
     
     /**
      * @param projectMinorVersion the ProjectMinorVersion to set
      */
-    public abstract void setProjectMinorVersion(int projectMinorVersion);
+    public abstract void setProjectMinorVersion(Integer projectMinorVersion);
 
     /**
      * @return the ProjectMinorVersion
      */
-    public abstract int getProjectMinorVersion();
+    public abstract Integer getProjectMinorVersion();
+    
+    /**
+     * @param projectMicrorVersion the ProjectMicroVersion to set
+     */
+    public abstract void setProjectMicroVersion(Integer projectMicrorVersion);
+
+    /**
+     * @return the ProjectMicroVersion
+     */
+    public abstract Integer getProjectMicroVersion();
+    
+    /**
+     * @param projectVersionQualifier the ProjectVersionQualifier to set
+     */
+    public abstract void setProjectVersionQualifier(
+            String projectVersionQualifier);
+
+    /**
+     * @return the ProjectVersionQualifier
+     */
+    public abstract String getProjectVersionQualifier();
+
+
 
     /**
      * @param expecCaps the expected caps to set

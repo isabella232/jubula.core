@@ -152,11 +152,12 @@ public class DescriptionView extends ViewPart implements IDataChangedListener {
                         .getProjectMarkupLanguage());
                 isRefreshNecessary = true;
             }
-            if (m_selectedNode.equals(dataChangedEvent.getPo())) {
+            if (m_selectedNode != null
+                    && m_selectedNode.equals(dataChangedEvent.getPo())) {
                 isRefreshNecessary = true;
             }
         }
-        if (isRefreshNecessary) {
+        if (m_selectedNode != null && isRefreshNecessary) {
             setDescriptionForBrowser(m_selectedNode);
         }
     }

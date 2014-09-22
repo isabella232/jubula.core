@@ -216,7 +216,9 @@ public class ComponentNamesBP
             try {
                 namePO = getCompNamePoImpl(currProj.getGuid(), guid, null, 
                     currProj.getMajorProjectVersion(), 
-                    currProj.getMinorProjectVersion());
+                    currProj.getMinorProjectVersion(),
+                    currProj.getMicroProjectVersion(),
+                    currProj.getProjectVersionQualifier());
                 addComponentNamePO(namePO);
             } catch (JBException e) {
                 throw new JBFatalException(e, MessageIDs.E_DATABASE_GENERAL);
@@ -270,12 +272,14 @@ public class ComponentNamesBP
         for (IReusedProjectPO usedProj : ProjectPM
                 .getReusedProjectsForProject(projectID)) {
             final String reusedGuid = usedProj.getProjectGuid();
-            final int reuseMajVers = usedProj.getMajorNumber();
-            final int reuseMinVers = usedProj.getMinorNumber();
+            final Integer reuseMajVers = usedProj.getMajorNumber();
+            final Integer reuseMinVers = usedProj.getMinorNumber();
+            final Integer reuseMicVers = usedProj.getMicroNumber();
+            final String reuseQualVers = usedProj.getVersionQualifier();
             try {
                 final Long usedProjPo = ProjectPM
                     .findProjectIDByGuidAndVersion(reusedGuid, reuseMajVers, 
-                        reuseMinVers);
+                        reuseMinVers, reuseMicVers, reuseQualVers);
                 if (usedProjPo != null 
                         && loadedProjectIds.add(usedProjPo)) {
                     initCompNamesTransitive(usedProjPo,
@@ -397,13 +401,17 @@ public class ComponentNamesBP
         if (currGuid.equals(compNameParentProjGuid)) {
             return loadCompNamePoImpl(compNameGuid, currGuid, 
                 currProject.getMajorProjectVersion(), 
-                currProject.getMinorProjectVersion());
+                currProject.getMinorProjectVersion(),
+                currProject.getMicroProjectVersion(),
+                currProject.getProjectVersionQualifier());
         }
         
         return getCompNamePoImpl(currProject.getGuid(), compNameGuid, 
                 compNameParentProjGuid,
                 currProject.getMajorProjectVersion(), 
-                currProject.getMinorProjectVersion());
+                currProject.getMinorProjectVersion(),
+                currProject.getMicroProjectVersion(),
+                currProject.getProjectVersionQualifier());
     }
     
     
@@ -422,37 +430,48 @@ public class ComponentNamesBP
      * IComponentNamePO.
      * @param projMinVers the Minor Version of the ParentProject of the wanted 
      * IComponentNamePO.
+     * @param projMicVers the Micro Version of the ParentProject of the wanted 
+     * IComponentNamePO.
+     * @param projVersQual the Version qualifier of the ParentProject of the wanted 
+     * IComponentNamePO.
      * @return an IComponentNamePO or null if not found.
      * @throws JBException in case of any db problem.
      */
     private IComponentNamePO getCompNamePoImpl(String projToSearchGuid, 
         String compNameGuid, String compNameParentProjGuid, 
-        Integer projMajVers, Integer projMinVers) throws JBException {
+        Integer projMajVers, Integer projMinVers, Integer projMicVers,
+        String projVersQual) throws JBException {
         
         if (compNameParentProjGuid != null) {
             IComponentNamePO compNamePo = loadCompNamePoImpl(compNameGuid, 
-                compNameParentProjGuid, projMajVers, projMinVers);
+                compNameParentProjGuid, projMajVers, projMinVers, 
+                projMicVers , projVersQual);
             if (compNamePo != null) {
                 return compNamePo;
             }
         }
         
         List<IReusedProjectPO> reusedProjList = ProjectPM.loadReusedProjectsRO(
-                projToSearchGuid, projMajVers, projMinVers);
+                projToSearchGuid, projMajVers, projMinVers, projMicVers,
+                projVersQual);
         for (IReusedProjectPO reusedProj : reusedProjList) {
             final Integer reusedMajVers = reusedProj.getMajorNumber();
             final Integer reusedMinVers = reusedProj.getMinorNumber();
+            final Integer reusedMicVers = reusedProj.getMicroNumber();
+            final String reusedQualVers = reusedProj.getVersionQualifier();
             final String reusedGuid = reusedProj.getProjectGuid();
             IComponentNamePO compNamePo = null;
             if (StringUtils.equals(compNameParentProjGuid, reusedGuid)) {
                 compNamePo = loadCompNamePoImpl(compNameGuid, reusedGuid, 
-                    reusedMajVers, reusedMinVers);
+                    reusedMajVers, reusedMinVers, reusedMicVers,
+                    reusedQualVers);
                 if (compNamePo != null) {
                     return compNamePo;
                 } 
             }
             compNamePo = getCompNamePoImpl(reusedGuid, compNameGuid, 
-                reusedGuid, reusedMajVers, reusedMinVers);
+                reusedGuid, reusedMajVers, reusedMinVers, reusedMicVers,
+                reusedQualVers);
             if (compNamePo != null) {
                 return compNamePo;
             }
@@ -469,16 +488,21 @@ public class ComponentNamesBP
      * IComponentNamePO.
      * @param projMinVers the Minor Version of the ParentProject of the wanted 
      * IComponentNamePO.
+     * @param projMicVers the Mic Version of the ParentProject of the wanted 
+     * IComponentNamePO.
+     * @param projVersQual the Version Qualifier of the ParentProject of the wanted 
+     * IComponentNamePO.
      * @return an IComponentNamePO or null if not found.
      * @throws JBException in case of any db problem.
      */
     private IComponentNamePO loadCompNamePoImpl(String compNameGuid, 
-        String compNameParentProjGuid, Integer projMajVers, Integer projMinVers)
+        String compNameParentProjGuid, Integer projMajVers, Integer projMinVers,
+        Integer projMicVers, String projVersQual)
         throws JBException {
 
         IComponentNamePO compNamePO = null;
         final Long projId = ProjectPM.findProjectId(compNameParentProjGuid, 
-                projMajVers, projMinVers);
+                projMajVers, projMinVers, projMicVers, projVersQual);
         if (projId != null) {
             compNamePO = CompNamePM.loadCompName(compNameGuid, 
                     projId);

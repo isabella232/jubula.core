@@ -90,6 +90,12 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     /** The minor version number for this project */
     private Integer m_minorNumber = null;
     
+    /** The micro version number for this project */
+    private Integer m_microNumber = null;
+    
+    /** The version for this project */
+    private String m_versionQualifier = null;
+    
     /** Indicates whether this project can be reused in other projects */
     private boolean m_isReusable = false;
 
@@ -143,7 +149,7 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
      * For Persistence (JPA / EclipseLink)
      */
     ProjectPropertiesPO() {
-        this(1, 0);
+        this(1, 0, 0, null);
     }
     
     /**
@@ -151,11 +157,16 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
      * 
      * @param majorNumber The major number for the corresponding project.
      * @param minorNumber The minor number for the corresponding project.
+     * @param microNumber The micro number for the corresponding project.
+     * @param version The version string for the corresponding project.
      */
-    ProjectPropertiesPO(Integer majorNumber, Integer minorNumber) {
+    ProjectPropertiesPO(Integer majorNumber, Integer minorNumber,
+            Integer microNumber, String version) {
         m_langHelper = new LanguageHelper(this);
         setMajorNumber(majorNumber);
         setMinorNumber(minorNumber);
+        setMicroNumber(microNumber);
+        setVersionQualifier(version);
     }
 
     /**
@@ -520,6 +531,26 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     public Integer getMinorNumber() {
         return m_minorNumber;
     }
+    
+    /**
+     * 
+     * @return Returns the major version number.
+     */
+    @Basic
+    @Column(name = "MICRO_NUMBER")
+    public Integer getMicroNumber() {
+        return m_microNumber;
+    }
+
+    /**
+     * 
+     * @return Returns the minor version number.
+     */
+    @Basic
+    @Column(name = "VERSION_QUALIFIER")
+    public String getVersionQualifier() {
+        return m_versionQualifier;
+    }
 
     /**
      * @param majorNumber The majorNumber to set.
@@ -533,6 +564,20 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
      */
     private void setMinorNumber(Integer minorNumber) {
         m_minorNumber = minorNumber;
+    }
+    
+    /**
+     * @param microNumber The majorNumber to set.
+     */
+    private void setMicroNumber(Integer microNumber) {
+        m_microNumber = microNumber;
+    }
+
+    /**
+     * @param versionQualifier The minorNumber to set.
+     */
+    private void setVersionQualifier(String versionQualifier) {
+        m_versionQualifier = versionQualifier;
     }
 
     /**

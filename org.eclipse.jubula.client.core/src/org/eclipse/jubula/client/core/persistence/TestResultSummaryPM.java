@@ -29,6 +29,7 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
@@ -60,6 +61,12 @@ public class TestResultSummaryPM {
 
     /** name of Test Result Summary's "Project Minor Version" property */
     private static final String PROPNAME_PROJECT_MINOR_VERSION = "projectMinorVersion"; //$NON-NLS-1$
+    
+    /** name of Test Result Summary's "Project Micro Version" property */
+    private static final String PROPNAME_PROJECT_MICRO_VERSION = "projectMicroVersion"; //$NON-NLS-1$
+    
+    /** name of Test Result Summary's "Project VersionQualifier" property */
+    private static final String PROPNAME_PROJECT_VERSION_QUALIFIER = "projectVersionQualifier"; //$NON-NLS-1$
 
     /** name of Test Result Summary's "AUT Agent Name" property */
     private static final String PROPNAME_AUT_AGENT_NAME = "autAgentName"; //$NON-NLS-1$
@@ -261,33 +268,63 @@ public class TestResultSummaryPM {
     
     /**
      * get set of test result summary ids older than amount of days
-     * @param cleanDate Date
-     * @param projGUID the project guid
-     * @param majorVersion the project major version
-     * @param minorVersion the project minor version
+     * 
+     * @param cleanDate
+     *            Date
+     * @param projGUID
+     *            the project guid
+     * @param majorVersion
+     *            the project major version
+     * @param minorVersion
+     *            the project minor version
+     * @param microVersion
+     *            the project major version number
+     * @param versionQualifier
+     *            the project version qualifier
      * @return set of test result summary ids
      */
     @SuppressWarnings("unchecked")
     public static final Set<Long> findTestResultSummariesByDate(Date cleanDate,
-            String projGUID, int majorVersion, int minorVersion)
-        throws JBException {
+            String projGUID, Integer majorVersion, Integer minorVersion,
+            Integer microVersion, String versionQualifier) throws JBException {
         EntityManager session = null;
         if (Persistor.instance() == null) {
             return null;
         }
         try {
             session = Persistor.instance().openSession();
-            Query query = session.createQuery("select r.internalTestResultSummaryID from TestResultPO as r " + //$NON-NLS-1$
+
+            StringBuilder queryString = new StringBuilder(
+                    "select r.internalTestResultSummaryID from TestResultPO as r " + //$NON-NLS-1$
                             "where r.internalTestResultSummaryID in " + //$NON-NLS-1$
                             "(select s.id from TestResultSummaryPO as s " + //$NON-NLS-1$
                             "where s.testsuiteDate < :cleanDate " + //$NON-NLS-1$
-                            "and s.internalProjectGuid = :projGUID " + //$NON-NLS-1$
-                            "and s.projectMajorVersion = :majorVersion " + //$NON-NLS-1$
-                            "and s.projectMinorVersion = :minorVersion)"); //$NON-NLS-1$
+                            "and s.internalProjectGuid = :projGUID " //$NON-NLS-1$
+            );
+            addVersionsToQuery(majorVersion, minorVersion, microVersion,
+                    versionQualifier, queryString);
+            addVersionQueryString(PROPNAME_PROJECT_MAJOR_VERSION,
+                    majorVersion, queryString);
+            addVersionQueryString(PROPNAME_PROJECT_MINOR_VERSION,
+                    minorVersion, queryString);
+            addVersionQueryString(PROPNAME_PROJECT_MICRO_VERSION,
+                    microVersion, queryString);
+            addVersionQueryString(PROPNAME_PROJECT_VERSION_QUALIFIER,
+                    versionQualifier, queryString);
+
+            Query query = session.createQuery(queryString.toString());
             query.setParameter("cleanDate", cleanDate); //$NON-NLS-1$
             query.setParameter("projGUID", projGUID); //$NON-NLS-1$
-            query.setParameter("majorVersion", majorVersion); //$NON-NLS-1$
-            query.setParameter("minorVersion", minorVersion); //$NON-NLS-1$
+            checkAndBindValue(PROPNAME_PROJECT_MAJOR_VERSION,
+                    majorVersion, query);
+            checkAndBindValue(PROPNAME_PROJECT_MINOR_VERSION,
+                    minorVersion, query);
+            checkAndBindValue(PROPNAME_PROJECT_MICRO_VERSION,
+                    microVersion, query);
+            checkAndBindValue(PROPNAME_PROJECT_VERSION_QUALIFIER,
+                    versionQualifier, query);
+            ProjectPM.attachParameterToVersion(query, majorVersion,
+                    minorVersion, microVersion, versionQualifier);
             List<Long> metaList = query.getResultList();
             Set<Long> idSet = new HashSet<Long>(metaList);
             return idSet;
@@ -297,6 +334,44 @@ public class TestResultSummaryPM {
                     MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         } finally {
             Persistor.instance().dropSessionWithoutLockRelease(session);
+        }
+    }
+
+    /**
+     * this is only for testresultsummarys
+     * 
+     * @param majorVersion the major version
+     * @param minorVersion the minor version
+     * @param microVersion the micro version
+     * @param versionQualifier the qualifier version
+     * @param queryString the StringBuilder query
+     */
+    private static void addVersionsToQuery(Integer majorVersion,
+            Integer minorVersion, Integer microVersion,
+            String versionQualifier, StringBuilder queryString) {
+        if (majorVersion != null) {
+            queryString
+                .append(" and s.projectMajorVersion = :majorVersion"); //$NON-NLS-1$
+        } else {
+            queryString.append(" and s.projectMajorVersion IS NULL"); //$NON-NLS-1$
+        }
+        if (minorVersion != null) {
+            queryString
+                .append(" and s.projectMinorVersion = :minorVersion"); //$NON-NLS-1$
+        } else {
+            queryString.append(" and s.projectMinorVersion IS NULL"); //$NON-NLS-1$
+        }
+        if (microVersion != null) {
+            queryString
+                .append(" and s.projectMicroVersion = :microVersion"); //$NON-NLS-1$
+        } else {
+            queryString.append(" and s.projectMicroVersion IS NULL"); //$NON-NLS-1$
+        }
+        if (versionQualifier != null) {
+            queryString
+                .append(" and s.projectVersionQualifier = :versionQualifier)"); //$NON-NLS-1$
+        } else {
+            queryString.append(" and s.projectVersionQualifier IS NULL)"); //$NON-NLS-1$
         }
     }
     
@@ -357,14 +432,13 @@ public class TestResultSummaryPM {
     /**
      * delete testruns by project guid, minor, major version
      * @param guid project guid
-     * @param major major project version
-     * @param minor minor project version
+     * @param version the project version which testruns should be deleted
      * @param deleteOnlyDetails true, if only testrun details will
      *          be deleted, summaries will not be deleted
      */
     @SuppressWarnings("unchecked")
     public static final void deleteTestrunsByProject(String guid,
-            int major, int minor, boolean deleteOnlyDetails) {
+            ProjectVersion version, boolean deleteOnlyDetails) {
         if (Persistor.instance() == null) {
             return;
         }
@@ -375,14 +449,26 @@ public class TestResultSummaryPM {
             
             StringBuilder queryBuilder = new StringBuilder();
             queryBuilder.append("select s from TestResultSummaryPO as s where s.") //$NON-NLS-1$
-                .append(PROPNAME_PROJECT_GUID).append(" = :guid and s.") //$NON-NLS-1$
-                .append(PROPNAME_PROJECT_MAJOR_VERSION).append(" = :major and s.") //$NON-NLS-1$
-                .append(PROPNAME_PROJECT_MINOR_VERSION).append(" = :minor"); //$NON-NLS-1$
-            
+                .append(PROPNAME_PROJECT_GUID).append(" = :guid"); //$NON-NLS-1$
+            addVersionQueryString(PROPNAME_PROJECT_MAJOR_VERSION,
+                    version.getMajorNumber(), queryBuilder);
+            addVersionQueryString(PROPNAME_PROJECT_MINOR_VERSION,
+                    version.getMinorNumber(), queryBuilder);
+            addVersionQueryString(PROPNAME_PROJECT_MICRO_VERSION,
+                    version.getMicroNumber(), queryBuilder);
+            addVersionQueryString(PROPNAME_PROJECT_VERSION_QUALIFIER,
+                    version.getVersionQualifier(), queryBuilder);
+
             Query querySummary = session.createQuery(queryBuilder.toString());
             querySummary.setParameter("guid", guid); //$NON-NLS-1$
-            querySummary.setParameter("major", major); //$NON-NLS-1$
-            querySummary.setParameter("minor", minor); //$NON-NLS-1$
+            checkAndBindValue(PROPNAME_PROJECT_MAJOR_VERSION,
+                    version.getMajorNumber(), querySummary);
+            checkAndBindValue(PROPNAME_PROJECT_MINOR_VERSION,
+                    version.getMinorNumber(), querySummary);
+            checkAndBindValue(PROPNAME_PROJECT_MICRO_VERSION,
+                    version.getMicroNumber(), querySummary);
+            checkAndBindValue(PROPNAME_PROJECT_VERSION_QUALIFIER,
+                    version.getVersionQualifier(), querySummary);
             List <ITestResultSummaryPO> summaryList = 
                 querySummary.getResultList();
             
@@ -402,6 +488,37 @@ public class TestResultSummaryPM {
                     MessageIDs.E_PROJECT_NOT_FOUND);
         } finally {
             Persistor.instance().dropSession(session);
+        }
+    }
+
+    /**
+     * Cheks if the property has a value and binds the the 
+     * specified propertyname the value if its not null
+     * @param propertyname name of the property
+     * @param propertyvalue the property object
+     * @param query the query
+     */
+    private static void checkAndBindValue(String propertyname,
+            Object propertyvalue, Query query) {
+        if (propertyvalue != null) {
+            query.setParameter(propertyname, propertyvalue);
+        }
+    }
+
+    /**
+     * Adds the version selection part to the query string
+     * @param propertyname the name of the property
+     * @param propertyvalue the value of the property, only to check if it should be a null check
+     * @param queryBuilder the query string
+     */
+    private static void addVersionQueryString(String propertyname,
+            Object propertyvalue, StringBuilder queryBuilder) {
+        queryBuilder.append(" and s."); //$NON-NLS-1$
+        if (propertyvalue != null) {
+            queryBuilder.append(propertyname).append(" = :")//$NON-NLS-1$ 
+                .append(propertyname);     
+        } else {
+            queryBuilder.append(propertyname).append(" IS NULL"); //$NON-NLS-1$
         }
     }
     

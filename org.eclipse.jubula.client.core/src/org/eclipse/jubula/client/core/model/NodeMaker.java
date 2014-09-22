@@ -225,14 +225,17 @@ public abstract class NodeMaker {
      * @param metadataVersion metadataVersion
      * @param majorNumber majorNumber
      * @param minorNumber minorNumber
+     * @param microNumber The micro version number for this project
+     * @param versionQualifier The version qualifier for this project
      * @param guid guid
      * @return IProjectPO
      */
     public static IProjectPO createProjectPO(Integer metadataVersion,
-            Integer majorNumber, Integer minorNumber, String guid) {
+            Integer majorNumber, Integer minorNumber, Integer microNumber,
+            String versionQualifier, String guid) {
 
-        return new ProjectPO(metadataVersion, majorNumber, minorNumber, guid, 
-                false);
+        return new ProjectPO(metadataVersion, majorNumber, minorNumber,
+                microNumber, versionQualifier, guid, false);
     }
 
     /**

@@ -434,6 +434,8 @@ public class MessageIDs {
         new Integer(9006);
     /** IO Exception */
     public static final Integer E_IO_EXCEPTION = new Integer(9007);
+    /** created a project with an empty version */
+    public static final Integer E_PROJECT_EMPTY_VERSION = new Integer(9008);
     // -- SYNTAX-, SEMANTICAL-ERRORS IN PARAMETER VALUES --------------------
     /** general error in parsing of parameter value */
     public static final Integer E_GENERAL_PARSE_ERROR = new Integer(9501);
@@ -934,6 +936,8 @@ public class MessageIDs {
         messageMap.put(E_AUTHENTICATION_FAILED, e, "ErrorMessage.AUTHENTICATION_FAILED", null); //$NON-NLS-1$
         messageMap.put(E_WORKING_DIRECTORY_NOT_FOUND, e, "ErrorMessage.WORKING_DIRECTORY_NOT_FOUND", null); //$NON-NLS-1$
         messageMap.put(E_IO_EXCEPTION, e, "ErrorMessage.IO_EXCEPTION", null); //$NON-NLS-1$
+        messageMap.put(E_PROJECT_EMPTY_VERSION, e, "ErrorMessage.E_PROJECT_EMPTY_VERSION", null); //$NON-NLS-1$
+
     }
     
     /**

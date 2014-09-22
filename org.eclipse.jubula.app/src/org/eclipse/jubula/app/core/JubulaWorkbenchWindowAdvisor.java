@@ -141,9 +141,7 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                             .append(StringConstants.SPACE)
                             .append(currentProject.getName())
                             .append(StringConstants.SPACE)
-                            .append(currentProject.getMajorProjectVersion())
-                            .append(StringConstants.DOT)
-                            .append(currentProject.getMinorProjectVersion());
+                            .append(currentProject.getVersionString());
                     }
                     Plugin.getActiveWorkbenchWindowShell().setText(
                             sb.toString());

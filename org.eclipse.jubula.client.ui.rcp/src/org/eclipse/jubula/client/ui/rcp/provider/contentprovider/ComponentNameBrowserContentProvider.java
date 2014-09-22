@@ -169,7 +169,8 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
             try {
                 parentProjectID = ProjectPM.findProjectId(rp
                         .getProjectGuid(), rp.getMajorNumber(), rp
-                        .getMinorNumber());
+                        .getMinorNumber(), rp.getMicroNumber(), rp
+                        .getVersionQualifier());
             } catch (JBException e) {
                 // do nothing
             }

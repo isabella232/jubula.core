@@ -26,6 +26,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.client.cmd.constants.ClientStrings;
+import org.eclipse.jubula.client.cmd.utils.VersionStringUtils;
+import org.eclipse.jubula.client.cmd.utils.VersionStringUtils.MalformedVersionException;
 import org.eclipse.jubula.client.core.businessprocess.ClientTestStrings;
 import org.eclipse.jubula.client.core.businessprocess.db.TestJobBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
@@ -37,6 +39,7 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.persistence.DatabaseConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
@@ -65,17 +68,13 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
  */
 @SuppressWarnings("synthetic-access")
 public class JobConfiguration {
-    /** Separator between major and minor version numbers */
-    public static final char VERSION_SEPARATOR = '.';
     /** String */
     private static final String CONFIGURATION = "configuration";  //$NON-NLS-1$
     
     /** configuration detail */
     private String m_projectName;
     /** configuration detail */
-    private Integer m_projectMajor;
-    /** configuration detail */
-    private Integer m_projectMinor;
+    private ProjectVersion m_projectVersion;
     /** configuration detail */
     private String m_db;
     /** configuration detail */
@@ -354,8 +353,7 @@ public class JobConfiguration {
         Validate.notNull(m_project, NLS.bind(
                 Messages.JobConfigurationValidateProjectExist,
                 new Object[] {String.valueOf(m_projectName),
-                    String.valueOf(m_projectMajor),
-                    String.valueOf(m_projectMinor)}));
+                    getProjectVersion()}));
     }
 
     /**
@@ -421,16 +419,14 @@ public class JobConfiguration {
             setProjectName(cmd.getOptionValue(ClientTestStrings.PROJECT)); 
         }
         if (cmd.hasOption(ClientTestStrings.PROJECT_VERSION)) { 
-            // The format must be [majNum].[minNum]
-            String [] numbers = 
-                cmd.getOptionValue(ClientTestStrings.PROJECT_VERSION).split("\\."); //$NON-NLS-1$
-            if (numbers.length == 2) {
-                try {
-                    setProjectMajor(Integer.parseInt(numbers[0]));
-                    setProjectMinor(Integer.parseInt(numbers[1])); 
-                } catch (NumberFormatException nfe) {
-                    // Do nothing. The version values will not be set and this will be noticed during pre-validation.
-                } 
+            try {
+                ProjectVersion version = VersionStringUtils
+                        .createProjectVersion(cmd.getOptionValue(
+                                ClientTestStrings.PROJECT_VERSION));
+                m_projectVersion = version;
+  
+            } catch (VersionStringUtils.MalformedVersionException e) {
+             // Do nothing. The version values will not be set and this will be noticed during pre-validation.
             }
         }
         if (cmd.hasOption(ClientTestStrings.SERVER)) { 
@@ -522,12 +518,14 @@ public class JobConfiguration {
                 cmd.getOptionValue(ClientTestStrings.PROJECT_VERSION).split("\\."); //$NON-NLS-1$
             if (numbers.length == 2) {
                 try {
-                    setProjectMajor(Integer.parseInt(numbers[0]));
-                    setProjectMinor(Integer.parseInt(numbers[1])); 
-                } catch (NumberFormatException nfe) {
-                    // Do nothing. The version values will not be set and 
-                    // this will be noticed during pre-validation.
-                } 
+                    ProjectVersion version = VersionStringUtils
+                            .createProjectVersion(cmd.getOptionValue(
+                                    ClientTestStrings.PROJECT_VERSION));
+                    m_projectVersion = version;
+      
+                } catch (VersionStringUtils.MalformedVersionException e) {
+                 // Do nothing. The version values will not be set and this will be noticed during pre-validation.
+                }
             }
         }
         if (cmd.hasOption(ClientTestStrings.SERVER)) { 
@@ -867,7 +865,7 @@ public class JobConfiguration {
             arg1.endNode();
         
             arg1.startNode(ClientTestStrings.PROJECT_VERSION);
-            arg1.setValue(job.getProjectVersion());
+            arg1.setValue(job.getProjectVersion().toString());
             arg1.endNode();
 
             arg1.startNode(ClientTestStrings.SERVER);
@@ -998,22 +996,23 @@ public class JobConfiguration {
 
     /**
      * Sets the project version for this job.
-     * @param version Version number in the format 
-     *              [majorNumber][<code>VERSION_SEPARATOR</code>][minorNumber].
+     * @param version Version number {@link VersionStringUtils}.
      */
     private void setProjectVersion(String version) {
-        String [] tokens = StringUtils.split(version, VERSION_SEPARATOR);
-        if (tokens.length == 2) {
-            try {
-                int majorVersion = Integer.parseInt(tokens[0]); 
-                int minorVersion = Integer.parseInt(tokens[1]);
-                setProjectMajor(majorVersion);
-                setProjectMinor(minorVersion);
-            } catch (NumberFormatException nfe) {
-                // Do nothing. The version values will not be set and 
-                // this will be noticed during pre-validation.
-            }
+        try {
+            ProjectVersion projVers = VersionStringUtils
+                    .createProjectVersion(version);  
+            setProjectVersion(projVers);
+        } catch (MalformedVersionException e) {
+            return;
         }
+    }
+    /**
+     * Setter for project version
+     * @param projVers the project version
+     */
+    private void setProjectVersion(ProjectVersion projVers) {
+        m_projectVersion = projVers;
     }
 
     /**
@@ -1021,39 +1020,8 @@ public class JobConfiguration {
      * @return a <code>String</code> representing the project version number
      *         for this job.
      */
-    public String getProjectVersion() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getProjectMajor()).append(VERSION_SEPARATOR)
-            .append(getProjectMinor());
-        return sb.toString();
-    }
-    
-    /**
-     * @return the projectMinor
-     */
-    public Integer getProjectMinor() {
-        return m_projectMinor;
-    }
-
-    /**
-     * @param projectMinor the projectMinor to set
-     */
-    public void setProjectMinor(Integer projectMinor) {
-        m_projectMinor = projectMinor;
-    }
-
-    /**
-     * @return the projectMajor
-     */
-    public Integer getProjectMajor() {
-        return m_projectMajor;
-    }
-
-    /**
-     * @param projectMajor the projectMajor to set
-     */
-    public void setProjectMajor(Integer projectMajor) {
-        m_projectMajor = projectMajor;
+    public ProjectVersion getProjectVersion() {
+        return m_projectVersion;
     }
 
     /**

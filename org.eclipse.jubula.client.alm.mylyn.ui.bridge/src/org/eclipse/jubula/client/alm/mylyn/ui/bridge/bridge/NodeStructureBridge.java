@@ -202,7 +202,9 @@ public class NodeStructureBridge extends AbstractContextStructureBridge {
                             Long rProjId = ProjectPM.findProjectId(
                                     rProj.getProjectGuid(), 
                                     rProj.getMajorNumber(), 
-                                    rProj.getMinorNumber());
+                                    rProj.getMinorNumber(),
+                                    rProj.getMicroNumber(),
+                                    rProj.getVersionQualifier());
                             if (rProjId != null) {
                                 obj = NodePM.getNode(rProjId, handle);
                                 if (obj != null) {

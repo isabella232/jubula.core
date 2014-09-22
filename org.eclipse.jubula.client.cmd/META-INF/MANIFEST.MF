@@ -18,5 +18,6 @@ Export-Package: org.eclipse.jubula.client.cmd,
  org.eclipse.jubula.client.cmd.constants,
  org.eclipse.jubula.client.cmd.exceptions,
  org.eclipse.jubula.client.cmd.i18n,
- org.eclipse.jubula.client.cmd.progess
+ org.eclipse.jubula.client.cmd.progess,
+ org.eclipse.jubula.client.cmd.utils
 Bundle-ClassPath: .

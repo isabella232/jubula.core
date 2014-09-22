@@ -140,11 +140,26 @@ public interface IProjectPO extends IParamNodePO {
      * @return the minor version number of this project
      */
     public abstract Integer getMinorProjectVersion();
+    
+    /**
+     * @return the micro version number of this project
+     */
+    public abstract Integer getMicroProjectVersion();
+    
+    /**
+     * @return the qualifier version of this project
+     */
+    public abstract String getProjectVersionQualifier();
 
     /**
      * @return a String representing the version number of this project
      */
     public abstract String getVersionString();
+    
+    /**
+     * @return a {@link ProjectVersion} representing the version of the project
+     */
+    public abstract ProjectVersion getProjectVersion();
 
     /**
      * 

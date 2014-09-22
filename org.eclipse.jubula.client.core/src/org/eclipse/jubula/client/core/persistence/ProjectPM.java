@@ -46,6 +46,7 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
@@ -162,6 +163,10 @@ public class ProjectPM extends PersistenceManager
      *            Major version number of the project to load
      * @param minorVersion
      *            Minor version number of the project to load
+     * @param microVersion
+     *            Micro version number of the project to load
+     * @param versionQualifier
+     *            Version qualifier of the project to load
      * @return the Project with the given attributes, or <code>null</code> if  
      *         no such Project could be found. The returned Project is not 
      *         associated with an Entity Manager.
@@ -169,17 +174,21 @@ public class ProjectPM extends PersistenceManager
      *             ...
      */
     public static synchronized IProjectPO loadProjectByGuidAndVersion(
-        String guid, int majorVersion, int minorVersion) throws JBException {
+        String guid, Integer majorVersion, Integer minorVersion,
+        Integer microVersion, String versionQualifier) throws JBException {
 
         EntityManager session = null;
         try {
             session = Persistor.instance().openSession();
-            Query query = session.createQuery("select project from ProjectPO as project" //$NON-NLS-1$
-                    + " inner join fetch project.properties where project.guid = :guid" //$NON-NLS-1$
-                    + " and project.properties.majorNumber = :majorNumber and project.properties.minorNumber = :minorNumber"); //$NON-NLS-1$           
+            StringBuilder sb = new StringBuilder("select project from ProjectPO as project" //$NON-NLS-1$
+                    + " inner join fetch project.properties where project.guid = :guid"); //$NON-NLS-1$
+            addCompleteVersionString(sb, majorVersion, minorVersion,
+                    microVersion, versionQualifier);
+            Query query = session.createQuery(sb.toString());
+
             query.setParameter("guid", guid); //$NON-NLS-1$
-            query.setParameter("majorNumber", majorVersion); //$NON-NLS-1$
-            query.setParameter("minorNumber", minorVersion); //$NON-NLS-1$
+            attachParameterToVersion(query, majorVersion, minorVersion,
+                    microVersion, versionQualifier);
             
             try {
                 IProjectPO project = (IProjectPO)query.getSingleResult();
@@ -209,6 +218,10 @@ public class ProjectPM extends PersistenceManager
      *            Major version number of the project to load
      * @param minorVersion
      *            Minor version number of the project to load
+     * @param microVersion
+     *            Micro version number of the project to load
+     * @param versionQualifier
+     *            Version qualifier of the project to load
      * @return the Project with the given attributes, or <code>null</code> if  
      *         no such Project could be found. The returned Project is not 
      *         associated with an Entity Manager.
@@ -216,17 +229,14 @@ public class ProjectPM extends PersistenceManager
      *             ...
      */
     public static synchronized Long findProjectIDByGuidAndVersion(
-        String guid, int majorVersion, int minorVersion) throws JBException {
+        String guid, Integer majorVersion, Integer minorVersion,
+        Integer microVersion, String versionQualifier) throws JBException {
 
         EntityManager session = null;
         try {
             session = Persistor.instance().openSession();
-            Query query = session.createQuery("select project.id from ProjectPO as project" //$NON-NLS-1$
-                    + " inner join fetch project.properties where project.guid = :guid" //$NON-NLS-1$
-                    + " and project.properties.majorNumber = :majorNumber and project.properties.minorNumber = :minorNumber"); //$NON-NLS-1$           
-            query.setParameter("guid", guid); //$NON-NLS-1$
-            query.setParameter("majorNumber", majorVersion); //$NON-NLS-1$
-            query.setParameter("minorNumber", minorVersion); //$NON-NLS-1$
+            Query query = createProjectQuery(guid, majorVersion, minorVersion,
+                    microVersion, versionQualifier, session, true);
             
             try {
                 Long projectID = (Long)query.getSingleResult();
@@ -248,12 +258,35 @@ public class ProjectPM extends PersistenceManager
         }
     }
     /**
+    * @param name
+    *            name of the project to load
+    * @param projectVersion
+    *            Version  of the project to load
+    * @return the Project with the given attributes, or <code>null</code> if  
+    *         no such Project could be found. The returned Project is not 
+    *         associated with an Entity Manager.
+    * @throws JBException
+    *             ...
+    */
+    public static synchronized IProjectPO loadProjectByNameAndVersion(
+            String name, ProjectVersion projectVersion) throws JBException {
+        return loadProjectByNameAndVersion(name,
+                projectVersion.getMajorNumber(),
+                projectVersion.getMinorNumber(),
+                projectVersion.getMicroNumber(),
+                projectVersion.getVersionQualifier());
+    }
+    /**
      * @param name
      *            Name of the project to load
      * @param majorVersion
      *            Major version number of the project to load
      * @param minorVersion
      *            Minor version number of the project to load
+     * @param microVersion
+     *            Micro version number of the project to load
+     * @param versionQualifier
+     *            Version qualifier of the project to load
      * @return the Project with the given attributes, or <code>null</code> if  
      *         no such Project could be found. The returned Project is not 
      *         associated with an Entity Manager.
@@ -261,7 +294,8 @@ public class ProjectPM extends PersistenceManager
      *             ...
      */
     public static synchronized IProjectPO loadProjectByNameAndVersion(
-        String name, int majorVersion, int minorVersion) throws JBException {
+        String name, Integer majorVersion, Integer minorVersion,
+        Integer microVersion, String versionQualifier) throws JBException {
 
         EntityManager session = null;
         String guid = StringConstants.EMPTY;
@@ -284,7 +318,8 @@ public class ProjectPM extends PersistenceManager
         } finally {
             Persistor.instance().dropSessionWithoutLockRelease(session);
         }
-        return loadProjectByGuidAndVersion(guid, majorVersion, minorVersion);
+        return loadProjectByGuidAndVersion(guid, majorVersion, minorVersion,
+                microVersion, versionQualifier);
     }
 
     /**
@@ -301,8 +336,10 @@ public class ProjectPM extends PersistenceManager
 
         EntityManager session = null;
         String guid = StringConstants.EMPTY;
-        int majorVersion = 0;
-        int minorVersion = 0;
+        Integer majorVersion = null;
+        Integer minorVersion = null;
+        Integer microVersion = null;
+        String versionQualifier = null;
         try {
             session = Persistor.instance().openSession();
             Query query = session.createQuery("select project.hbmGuid " //$NON-NLS-1$
@@ -316,10 +353,11 @@ public class ProjectPM extends PersistenceManager
                 return null;
             }
 
-            String versionNumber = findHighestVersionNumber(guid);
-            int index = versionNumber.indexOf('.');
-            majorVersion = Integer.parseInt(versionNumber.substring(0, index));
-            minorVersion = Integer.parseInt(versionNumber.substring(index + 1));
+            ProjectVersion versionNumber = findHighestVersionNumber(guid);
+            majorVersion = versionNumber.getMajorNumber();
+            minorVersion = versionNumber.getMinorNumber();
+            microVersion = versionNumber.getMicroNumber();
+            versionQualifier = versionNumber.getVersionQualifier();
         } catch (NumberFormatException nfe) {
             log.error(Messages.InvalidProjectVersionNumber, nfe);
             throw new JBException(nfe.getMessage(),
@@ -331,7 +369,8 @@ public class ProjectPM extends PersistenceManager
         } finally {
             Persistor.instance().dropSessionWithoutLockRelease(session);
         }
-        return loadProjectByGuidAndVersion(guid, majorVersion, minorVersion);
+        return loadProjectByGuidAndVersion(guid, majorVersion, minorVersion,
+                microVersion, versionQualifier);
     }
 
     /**
@@ -384,13 +423,11 @@ public class ProjectPM extends PersistenceManager
             EntityManager session) throws JBFatalAbortException,
             OperationCanceledException, JBException {
         try {
-            Query query = session.createQuery("select project from ProjectPO as project" //$NON-NLS-1$
-                    + " inner join fetch project.properties where project.guid = :guid" //$NON-NLS-1$
-                    + " and project.properties.majorNumber = :majorNumber and project.properties.minorNumber = :minorNumber"); //$NON-NLS-1$           
-            query.setParameter("guid", reused.getProjectGuid()); //$NON-NLS-1$
-            query.setParameter("majorNumber", reused.getMajorNumber()); //$NON-NLS-1$
-            query.setParameter("minorNumber", reused.getMinorNumber()); //$NON-NLS-1$
-            
+            Query query = createProjectQuery(reused.getProjectGuid(),
+                    reused.getMajorNumber(), reused.getMinorNumber(),
+                    reused.getMicroNumber(), reused.getVersionQualifier(),
+                    session, false);
+    
             try {
                 return (IProjectPO)query.getSingleResult();
             } catch (NoResultException nre) {
@@ -419,13 +456,21 @@ public class ProjectPM extends PersistenceManager
             GeneralStorage.getInstance().getMasterSession();
         
         try {
-            Query query = masterSession.createQuery("select project from ProjectPO project" //$NON-NLS-1$
-                        + " inner join fetch project.properties where project.guid = :guid" //$NON-NLS-1$
-                        + " and project.properties.majorNumber = :majorNumber and project.properties.minorNumber = :minorNumber"); //$NON-NLS-1$           
-            query.setParameter("guid", reused.getProjectGuid()); //$NON-NLS-1$
-            query.setParameter("majorNumber", reused.getMajorNumber()); //$NON-NLS-1$
-            query.setParameter("minorNumber", reused.getMinorNumber()); //$NON-NLS-1$
+            Integer major = reused.getMajorNumber();
+            Integer minor = reused.getMinorNumber();
+            Integer micro = reused.getMicroNumber();
+            String qualifier = reused.getVersionQualifier();
+            StringBuilder sb = new StringBuilder("select project from ProjectPO project" //$NON-NLS-1$
+                    + " inner join fetch project.properties where project.guid = :guid"); //$NON-NLS-1$
+            addCompleteVersionString(sb, major, minor,
+                    micro, qualifier);
+            Query query = masterSession.createQuery(sb.toString());
 
+            query.setParameter("guid", reused.getProjectGuid()); //$NON-NLS-1$
+            attachParameterToVersion(query, major, minor,
+                    micro, qualifier);
+            
+            
             IProjectPO project = null;
             try {
                 project = (IProjectPO)query.getSingleResult();
@@ -486,13 +531,13 @@ public class ProjectPM extends PersistenceManager
         throws JBException {
 
         try {
-            Query query = session.createQuery("select project from ProjectPO project" //$NON-NLS-1$
-                    + " inner join fetch project.properties where project.guid = :guid and project.properties.majorNumber = :major " //$NON-NLS-1$
-                    + "and project.properties.minorNumber = :minor"); //$NON-NLS-1$
-            query.setParameter("guid", reusedProjectInfo.getProjectGuid()); //$NON-NLS-1$
-            query.setParameter("major", reusedProjectInfo.getMajorNumber()); //$NON-NLS-1$
-            query.setParameter("minor", reusedProjectInfo.getMinorNumber()); //$NON-NLS-1$
-            
+
+            Query query = createProjectQuery(
+                    reusedProjectInfo.getProjectGuid(),
+                    reusedProjectInfo.getMajorNumber(),
+                    reusedProjectInfo.getMinorNumber(),
+                    reusedProjectInfo.getMicroNumber(),
+                    reusedProjectInfo.getVersionQualifier(), session, false);
             try {
                 return (IProjectPO)query.getSingleResult();
             } catch (NoResultException nre) {
@@ -511,22 +556,21 @@ public class ProjectPM extends PersistenceManager
      * @param projGuid the GUID
      * @param projMajVers the Major Version
      * @param projMinVers the Minor Version
+     * @param projMicVers the Micro Version
+     * @param projVersQual the Version Qualifier
      * @return an ID or null if not found
      * @throws JBException ...
      */
     public static final synchronized Long findProjectId(String projGuid,
-            Integer projMajVers, Integer projMinVers) throws JBException {
+            Integer projMajVers, Integer projMinVers,
+            Integer projMicVers, String projVersQual) throws JBException { 
 
         EntityManager session = null;
         try {
             session = Persistor.instance().openSession();
-
-            Query query = session.createQuery("select project.id from ProjectPO project" //$NON-NLS-1$
-                    + " inner join fetch project.properties where project.guid = :guid and project.properties.majorNumber = :major " //$NON-NLS-1$
-                    + "and project.properties.minorNumber = :minor"); //$NON-NLS-1$
-            query.setParameter("guid", projGuid); //$NON-NLS-1$
-            query.setParameter("major", projMajVers); //$NON-NLS-1$
-            query.setParameter("minor", projMinVers); //$NON-NLS-1$
+            
+            Query query = createProjectQuery(projGuid, projMajVers,
+                    projMinVers, projMicVers, projVersQual, session, true);
 
             try {
                 return (Long)query.getSingleResult();
@@ -548,16 +592,20 @@ public class ProjectPM extends PersistenceManager
      * @param projGuid the GUID of the Project which IReusedProjectPOs are wanted.
      * @param projMajVers the Major Version of the Project which IReusedProjectPOs are wanted.
      * @param projMinVers the Minor Version of the Project which IReusedProjectPOs are wanted.
+     * @param projMicVers the Micro Version of the Project which IReusedProjectPOs are wanted.
+     * @param projQualVers the Version Qualifier of the Project which IReusedProjectPOs are wanted.
      * @return a List of IReusedProjectPO or an empty List of nothing found. 
      * @throws JBException ...
      */
     public static final synchronized List<IReusedProjectPO> 
     loadReusedProjectsRO(
-        String projGuid, Integer projMajVers, Integer projMinVers) 
+        String projGuid, Integer projMajVers, Integer projMinVers,
+        Integer projMicVers, String projQualVers) 
         throws JBException {
         
         return loadReusedProjectsRO(
-                findProjectId(projGuid, projMajVers, projMinVers));
+                findProjectId(projGuid, projMajVers, projMinVers, projMicVers,
+                        projQualVers));
     }
     
     /**
@@ -1185,38 +1233,148 @@ public class ProjectPM extends PersistenceManager
      * Check if there is a ProjectPO with the supplied guid and version in the
      * DB.
      * 
+     * @param guid GUID to check
+     * @param projectVersion to check
+     * @return wether the ProjectPO currently exists in the DB
+     */
+    public static synchronized boolean doesProjectVersionExist(String guid,
+            ProjectVersion projectVersion) {
+        return doesProjectVersionExist(guid, projectVersion.getMajorNumber(),
+                projectVersion.getMinorNumber(),
+                projectVersion.getMicroNumber(),
+                projectVersion.getVersionQualifier());
+    }
+    /**
+     * Check if there is a ProjectPO with the supplied guid and version in the
+     * DB.
+     * 
      * @param guid
      *            GUID to check
      * @param majorNumber
      *            Major version number to check
      * @param minorNumber
      *            Minor version number to check
+     * @param microNumber
+     *            Micro version number of check
+     * @param versionQualifier
+     *            Version qualifier of the project to check
      * @return wether the ProjectPO currently exists in the DB
      */
     public static synchronized boolean doesProjectVersionExist(String guid,
-        Integer majorNumber, Integer minorNumber) {
+            Integer majorNumber, Integer minorNumber, Integer microNumber,
+            String versionQualifier) {
 
         EntityManager session = null;
         Long hits = null;
         try {
             session = Persistor.instance().openSession();
-            Query q = session.createQuery("select count(project) from ProjectPO as project" //$NON-NLS-1$
-                    + " inner join project.properties properties where project.guid = :guid" //$NON-NLS-1$
-                    + " and properties.majorNumber = :majorNumber and properties.minorNumber = :minorNumber"); //$NON-NLS-1$           
+            StringBuilder sb = new StringBuilder(
+                    "select count(project) from ProjectPO as project" //$NON-NLS-1$
+                            + " inner join project.properties properties where project.guid = :guid"); //$NON-NLS-1$
+            addCompleteVersionString(sb, majorNumber, minorNumber, microNumber,
+                    versionQualifier);
+            Query q = session.createQuery(sb.toString());
 
             q.setParameter("guid", guid); //$NON-NLS-1$
-            q.setParameter("majorNumber", majorNumber); //$NON-NLS-1$
-            q.setParameter("minorNumber", minorNumber); //$NON-NLS-1$
-            hits = (Long)q.getSingleResult();
+            attachParameterToVersion(q, majorNumber, minorNumber, microNumber,
+                    versionQualifier);
+            hits = (Long) q.getSingleResult();
         } catch (PersistenceException e) {
             log.error(Messages.PersistenceLoadFailed, e);
         } finally {
-            Persistor.instance().
-                dropSessionWithoutLockRelease(session);            
+            Persistor.instance().dropSessionWithoutLockRelease(session);
         }
         return (hits != null && hits.intValue() > 0);
     }
 
+    /**
+     * 
+     * @param sb the string build with the select statement
+     * @param majorNumber the major version
+     * @param minorNumber the minor version
+     * @param microNumber the micro version
+     * @param versionQualifier the qualifier version
+     */
+    public static void addCompleteVersionString(StringBuilder sb,
+            Integer majorNumber, Integer minorNumber, Integer microNumber,
+            String versionQualifier) {
+        addVersionString(majorNumber, sb, "majorNumber"); //$NON-NLS-1$
+        addVersionString(minorNumber, sb, "minorNumber"); //$NON-NLS-1$
+        addVersionString(microNumber, sb, "microNumber"); //$NON-NLS-1$
+        addVersionString(versionQualifier, sb, "versionQualifier"); //$NON-NLS-1$
+    }
+
+    /**
+     * 
+     * @param q the select query
+     * @param majorNumber the major version
+     * @param minorNumber the minor version
+     * @param microNumber the micro version
+     * @param versionQualifier the qualifier version
+     */
+    public static void attachParameterToVersion(Query q, Integer majorNumber,
+            Integer minorNumber, Integer microNumber, String versionQualifier) {
+        if (majorNumber != null) {
+            q.setParameter("majorNumber", majorNumber); //$NON-NLS-1$
+        }
+        if (minorNumber != null) {
+            q.setParameter("minorNumber", minorNumber); //$NON-NLS-1$
+        }
+        if (microNumber != null) {
+            q.setParameter("microNumber", microNumber); //$NON-NLS-1$
+        }
+        if (versionQualifier != null) {
+            q.setParameter("versionQualifier", versionQualifier); //$NON-NLS-1$
+        }
+    }
+
+    /**
+     * 
+     * @param version the version (only checked if it is null)
+     * @param sb the StringBuilder which should be extended um further options
+     * @param versionText the text which should be the same as the property 
+     *        in the project properties
+     */
+    private static void addVersionString(Object version, StringBuilder sb,
+            String versionText) {
+        if (version == null) {
+            sb.append(" and project.properties." + versionText + " is NULL"); //$NON-NLS-1$ //$NON-NLS-2$
+        } else {
+            sb.append(" and project.properties." + versionText + " = :" //$NON-NLS-1$ //$NON-NLS-2$
+                    + versionText);
+        }
+    }
+
+    /**
+     * 
+     * @param guid the guid which should be bind to the select query
+     * @param majorVersion the major version which should be bind the the query
+     * @param minorVersion the minor version which should be bind the the query
+     * @param microVersion the micro version which should be bind the the query
+     * @param versionQualifier the qualifier version which should be bind the the query
+     * @param session the session for the id
+     * @param selectID do we want only the id or the whole project
+     * @return returns a select project or select project.id 
+     *                 which is searching for a specific project
+     */
+    private static Query createProjectQuery(String guid, Integer majorVersion,
+            Integer minorVersion, Integer microVersion,
+            String versionQualifier, EntityManager session, boolean selectID) {
+        StringBuilder sb = new StringBuilder("select project"); //$NON-NLS-1$
+        if (selectID) {
+            sb.append(".id"); //$NON-NLS-1$
+        }
+        sb.append(" from ProjectPO project" //$NON-NLS-1$
+                + " inner join fetch project.properties where project.guid = :guid"); //$NON-NLS-1$
+        addCompleteVersionString(sb, majorVersion, minorVersion,
+                microVersion, versionQualifier);
+        Query query = session.createQuery(sb.toString());
+
+        query.setParameter("guid", guid); //$NON-NLS-1$
+        attachParameterToVersion(query, majorVersion, minorVersion,
+                microVersion, versionQualifier);
+        return query;
+    }
     /**
      * Check if there is a TestSuite whith the supplied name in the DB.
      * 
@@ -1252,7 +1410,7 @@ public class ProjectPM extends PersistenceManager
      *            Name to check
      * @param projectId
      *            Long
-     * @return wether the name denotes a ProjectPO in the DB
+     * @return whether the name denotes a ProjectPO in the DB
      */
     public static synchronized boolean doesTestJobExists(
         Long projectId, String name) {
@@ -1449,24 +1607,28 @@ public class ProjectPM extends PersistenceManager
      * @return a String representing the highest version number for this project
      *         GUID
      */
-    public static synchronized String findHighestVersionNumber(String guid)
-        throws JBException {
+    public static synchronized ProjectVersion findHighestVersionNumber(
+            String guid) throws JBException {
 
         EntityManager session = null;
         try {
             session = Persistor.instance().openSession();
             Query query = session.createQuery("select project from ProjectPO project" //$NON-NLS-1$
                     + " inner join fetch project.properties where project.guid = :guid " //$NON-NLS-1$
-                    + "order by project.properties.majorNumber desc, project.properties.minorNumber desc"); //$NON-NLS-1$
+                    + " order by project.properties.majorNumber desc, project.properties.minorNumber desc," //$NON-NLS-1$
+                    + " project.properties.microNumber desc, project.properties.versionQualifier desc"); //$NON-NLS-1$
+
             query.setParameter("guid", guid); //$NON-NLS-1$
             query.setMaxResults(1);
             final List projList = query.getResultList();
             if (projList.isEmpty()) {
-                return StringConstants.EMPTY;
+                return null;
             }
             IProjectPO project = (IProjectPO)projList.get(0);
-            return project.getMajorProjectVersion() + StringConstants.DOT
-                + project.getMinorProjectVersion(); 
+            return new ProjectVersion(project.getMajorProjectVersion(),
+                    project.getMinorProjectVersion(),
+                    project.getMicroProjectVersion(),
+                    project.getProjectVersionQualifier());
         } catch (PersistenceException e) {
             log.error(Messages.PersistenceLoadFailed, e);
             throw new JBException(e.getMessage(),
@@ -1486,6 +1648,10 @@ public class ProjectPM extends PersistenceManager
      *                           wishing to reuse.
      * @param minorVersionNumber The minor version number of the project 
      *                           wishing to reuse.
+     * @param microVersionNumber The micro version number of the project 
+     *                           wishing to reuse.
+     * @param versionQualifier The version qualifier of the project 
+     *                           wishing to reuse.
      * @param toolkit The toolkit of the project that may use projects from the 
      *             returned list.
      * @param toolkitLevel The toolkit level of the project that may use 
@@ -1495,7 +1661,8 @@ public class ProjectPM extends PersistenceManager
      */
     @SuppressWarnings("unchecked")
     public static synchronized List<IProjectPO> findReusableProjects(
-        String guid, int majorVersionNumber, int minorVersionNumber, 
+        String guid, Integer majorVersionNumber, Integer minorVersionNumber,
+        Integer microVersionNumber, String versionQualifier,
         String toolkit, String toolkitLevel) 
         throws JBException {
         EntityManager session = null;
@@ -1544,7 +1711,8 @@ public class ProjectPM extends PersistenceManager
             Set<IProjectPO> illegalProjects = new HashSet<IProjectPO>();
 
             IProjectPO givenProject = loadProjectByGuidAndVersion(
-                    guid, majorVersionNumber, minorVersionNumber);
+                    guid, majorVersionNumber, minorVersionNumber,
+                    microVersionNumber, versionQualifier);
             
             if (givenProject == null) {
                 log.debug(Messages.TriedFindProjectsForNonExistantProject);
@@ -1606,18 +1774,14 @@ public class ProjectPM extends PersistenceManager
 
                 try {
                     String reusedGuid = reused.getProjectGuid();
-                    Integer reusedMajorVersion = reused.getMajorNumber();
-                    Integer reusedMinorVersion = reused.getMinorNumber();
                     IProjectPO reusedProject = null;
                     if (projectsToImport != null) {
                         for (IProjectPO importedProject : projectsToImport) {
                             // First, try to find the project among the imported 
                             // projects.
                             if (reusedGuid.equals(importedProject.getGuid()) 
-                                && reusedMajorVersion.equals(
-                                    importedProject.getMajorProjectVersion()) 
-                                && reusedMinorVersion.equals(
-                                    importedProject.getMinorProjectVersion())) {
+                                && reused.getProjectVersion().equals(
+                                    importedProject.getProjectVersion())) {
                                 
                                 reusedProject = importedProject;
                                 break;
@@ -1630,7 +1794,9 @@ public class ProjectPM extends PersistenceManager
                         reusedProject = loadProjectByGuidAndVersion(
                             reused.getProjectGuid(), 
                             reused.getMajorNumber(), 
-                            reused.getMinorNumber());
+                            reused.getMinorNumber(),
+                            reused.getMicroNumber(),
+                            reused.getVersionQualifier());
                     }
 
                     if (reusedProject != null) {

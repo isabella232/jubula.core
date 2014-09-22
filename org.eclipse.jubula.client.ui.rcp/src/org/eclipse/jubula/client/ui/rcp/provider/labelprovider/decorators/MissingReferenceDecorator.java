@@ -32,7 +32,8 @@ public class MissingReferenceDecorator extends
             IReusedProjectPO rProj = (IReusedProjectPO)element;
             try {
                 projID = ProjectPM.findProjectId(rProj.getProjectGuid(),
-                        rProj.getMajorNumber(), rProj.getMinorNumber());
+                        rProj.getMajorNumber(), rProj.getMinorNumber(),
+                        rProj.getMicroNumber(), rProj.getVersionQualifier());
             } catch (JBException e) {
                 projID = null;
             }
