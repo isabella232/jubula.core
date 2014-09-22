@@ -43,7 +43,7 @@ public class NameLoader {
     
     /** specific path for interfaces */
     private static final String PACKAGE_SPECIFIC_INTERFACE =
-        ".widget"; //$NON-NLS-1$
+        ".widgets"; //$NON-NLS-1$
     
     /** specific path for implementation classes */
     private static final String PACKAGE_SPECIFIC_IMPLCLASS =

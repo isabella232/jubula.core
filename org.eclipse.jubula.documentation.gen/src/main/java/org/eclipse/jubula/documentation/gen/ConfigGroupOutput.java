@@ -154,7 +154,8 @@ public class ConfigGroupOutput {
                 String outputFile = m_group.getOutput();
                 StringBuilder sb = new StringBuilder();
                 List<ComponentInfo> comps = ((CompSystemProcessor)m_processor)
-                        .getCompInfos(toolkit.getType(), toolkit.getI18nName());
+                        .getCompInfos(toolkit.getType(), toolkit.getI18nName(),
+                                true);
                 Collections.sort(comps);
                 for (ComponentInfo info : comps) {
                     Generator generator = GeneratorFactory.create(m_group
@@ -321,7 +322,7 @@ public class ConfigGroupOutput {
         List<ToolkitInfo> toolkits = processor.getToolkitInfos();
         for (ToolkitInfo toolkit : toolkits) {
             List<ComponentInfo> comps = processor.getCompInfos(toolkit
-                    .getType(), toolkit.getI18nName());
+                    .getType(), toolkit.getI18nName(), true);
             for (ComponentInfo info : comps) {
                 Generator generator = GeneratorFactory.create(m_group
                         .getGeneratorClass(), processor, info, m_group);
@@ -378,7 +379,7 @@ public class ConfigGroupOutput {
             
             capOutput(tkDir, tkFilePart, tkTemplParam);
             List<ComponentInfo> cInfos = processor
-                .getCompInfos(tInfo.getType(), tInfo.getI18nName());
+                .getCompInfos(tInfo.getType(), tInfo.getI18nName(), true);
             for (ComponentInfo compInf : cInfos) {
                 String filenamePart = "comp-" + compInf.getShortType(); //$NON-NLS-1$
                 String compTemplParam = compInf.getI18nName();

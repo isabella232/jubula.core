@@ -51,17 +51,22 @@ public class APIGenerator {
         ToolkitConfig config = loader.getToolkitConfig();
         CompSystemProcessor processor = new CompSystemProcessor(config);
         
+        List<ToolkitInfo> toolkitInfos = processor.getToolkitInfos();
+
         // Clean up
-        for (ToolkitInfo tkInfo : processor.getToolkitInfos()) {
+        for (ToolkitInfo tkInfo : toolkitInfos) {
             cleanUp(tkInfo, generationBaseDir);
         }
         
-        // Generate classes
-        List<ComponentInfo> compInfos = processor.getCompInfos(false);
-        for (ComponentInfo compInfo : compInfos) {
-            Component component = compInfo.getComponent();
-            createClass(component, generationBaseDir, true);
-            createClass(component, generationBaseDir, false);
+        // Generate classes toolkit by toolkit
+        for (ToolkitInfo tkInfo : toolkitInfos) {
+            List<ComponentInfo> compInfos = processor.getCompInfos(
+                    tkInfo.getType(), tkInfo.getShortType(), false);
+            for (ComponentInfo compInfo : compInfos) {
+                Component component = compInfo.getComponent();
+                createClass(component, generationBaseDir, true);
+                createClass(component, generationBaseDir, false);
+            }
         }
     }
 
