@@ -139,7 +139,9 @@ public class ProjectVersion {
             sb.append(getMicroNumber());            
         }
         if (getVersionQualifier() != null) {
-            sb.append(IProjectPO.NAME_SEPARATOR);
+            if (getMajorNumber() != null) {
+                sb.append(IProjectPO.NAME_SEPARATOR);
+            }
             sb.append(getVersionQualifier());            
         }
         return sb.toString();

@@ -52,6 +52,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultSumm
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Persistor;
@@ -1166,14 +1167,12 @@ public class TestresultSummaryView extends ViewPart implements
      * @return the project version
      */
     private String getProjectVersion(ITestResultSummaryPO element) {
-        return StringUtils.defaultString(
-            String.valueOf(element.getProjectMajorVersion())
-            + StringConstants.DOT
-            + String.valueOf(element.getProjectMinorVersion())
-            + StringConstants.DOT
-            + String.valueOf(element.getProjectMicroVersion())
-            + StringConstants.DOT
-            + String.valueOf(element.getProjectVersionQualifier()));
+        ProjectVersion version = new ProjectVersion(
+                element.getProjectMajorVersion(),
+                element.getProjectMinorVersion(),
+                element.getProjectMicroVersion(),
+                element.getProjectVersionQualifier());
+        return StringUtils.defaultString(version.toString());
     }
     
     /**

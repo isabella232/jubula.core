@@ -90,7 +90,7 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      * @param isGenerated indicates whether this node has been generated
      */
     ProjectPO(String name, Integer metadataVersion, boolean isGenerated) { 
-        this(metadataVersion, 1, 0, 0, null,
+        this(metadataVersion, 1, 0, null, null,
                 PersistenceUtil.generateGuid(), isGenerated);
         ProjectNameBP.getInstance().setName(this.getGuid(), name, false);
     }

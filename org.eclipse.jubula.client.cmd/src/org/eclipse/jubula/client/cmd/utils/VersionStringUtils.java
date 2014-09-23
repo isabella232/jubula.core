@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.cmd.utils;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.ProjectVersion;
 /**
  * This is a Util class which is used to create a {@link ProjectVersion} from a version string.
@@ -64,7 +65,8 @@ public class VersionStringUtils {
      */
     public static ProjectVersion createProjectVersion(String version)
         throws MalformedVersionException {
-        String[] tokens = version.split("\\_"); //$NON-NLS-1$
+        String[] tokens =  StringUtils
+                .splitByWholeSeparatorPreserveAllTokens(version, "_", 2); //$NON-NLS-1$
         if (tokens.length == 1) {
             try {
                 return createVersionsNumbers(tokens[0]);
@@ -76,7 +78,10 @@ public class VersionStringUtils {
                 return new ProjectVersion(tokens[0]);
             }
         } else if (tokens.length == 2) {
-            ProjectVersion projectNumbers = createVersionsNumbers(tokens[0]);
+            ProjectVersion projectNumbers = new ProjectVersion(null);
+            if (StringUtils.isNotBlank(tokens[0])) {
+                projectNumbers = createVersionsNumbers(tokens[0]);
+            }
             String qualifier = tokens[1];
             return new ProjectVersion(projectNumbers.getMajorNumber(),
                     projectNumbers.getMinorNumber(),

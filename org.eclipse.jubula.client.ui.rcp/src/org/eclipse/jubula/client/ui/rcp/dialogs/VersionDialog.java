@@ -44,7 +44,7 @@ public class VersionDialog extends TitleAreaDialog {
     /** number of columns = 1 */
     private static final int NUM_COLUMNS_1 = 1;
     /** number of columns = 4 */
-    private static final int NUM_COLUMNS_4 = 4;
+    private static final int NUM_COLUMNS_4 = 10;
     /** vertical spacing = 2 */
     private static final int VERTICAL_SPACING = 2;
     /** margin width = 0 */
@@ -98,30 +98,6 @@ public class VersionDialog extends TitleAreaDialog {
     /** maximum length of input */
     private int m_length = 255;
 
-
-    /**
-     * @param parentShell The parent shell.
-     * @param title The name of the title.
-     * @param greatestMajor The major number of the highest version for the current project.
-     * @param greatestMinor The minor number of the highest version for the current project.
-     * @param message The message.
-     * @param majorLabel The label of the major version number textfield.
-     * @param minorLabel The label of the minor version number textfield.
-     * @param wrongVersionError The wrongNameError message.
-     * @param doubleVersionError The doubleNameError message.
-     * @param image The image of the dialog.
-     * @param shell The name of the shell.
-     */
-    public VersionDialog(Shell parentShell, String title,
-            Integer greatestMajor, Integer greatestMinor, String message, 
-            String majorLabel, String minorLabel, String wrongVersionError, 
-            String doubleVersionError, String image, String shell) {
-
-        this(parentShell, title, greatestMajor, greatestMinor, message, 
-            majorLabel, minorLabel, wrongVersionError, doubleVersionError, 
-            image, shell, 255);
-    }
-
     /**
      * @param parentShell The parent shell.
      * @param title The name of the title.
@@ -151,39 +127,6 @@ public class VersionDialog extends TitleAreaDialog {
         m_title = title;
         m_length = 255;
     }
-
-    /**
-     * @param parentShell The parent shell.
-     * @param title The name of the title.
-     * @param greatestMajor The major number of the highest version for the current project.
-     * @param greatestMinor The minor number of the highest version for the current project.
-     * @param message The message.
-     * @param majorLabel The label of the major version number textfield.
-     * @param minorLabel The label of the minor version number textfield.
-     * @param wrongNameError The wrongNameError message.
-     * @param doubleNameError The doubleNameError message.
-     * @param image The image of the dialog.
-     * @param shell The name of the shell.
-     * @param maxLength Maximum Length of input
-     */
-    private VersionDialog(Shell parentShell, String title,
-            Integer greatestMajor, Integer greatestMinor, String message, 
-            String majorLabel, String minorLabel, String wrongNameError, 
-            String doubleNameError, String image, String shell, int maxLength) {
-
-        super(parentShell);
-        m_greatestMajor = greatestMajor;
-        m_greatestMinor = greatestMinor + 1;
-        m_message = message;
-        m_majorLabel = majorLabel;
-        m_minorLabel = minorLabel;
-        m_wrongVersionError = wrongNameError;
-        m_doubleVersionError = doubleNameError;
-        m_image = image;
-        m_shell = shell;
-        m_title = title;
-        m_length = maxLength;
-    }
     
     /**
      * 
@@ -194,6 +137,15 @@ public class VersionDialog extends TitleAreaDialog {
         m_greatestMinor = greatestVersion.getMinorNumber();
         m_greatestMicro = greatestVersion.getMicroNumber();
         m_greatestQualifier = greatestVersion.getVersionQualifier();
+        if (m_greatestMajor != null && m_greatestMinor == null) {
+            m_greatestMajor += 1;
+        }
+        if (m_greatestMinor != null && m_greatestMicro == null) {
+            m_greatestMinor += 1;
+        }
+        if (m_greatestMicro != null) {
+            m_greatestMicro += 1;
+        }
     }
 
     /**
@@ -254,7 +206,7 @@ public class VersionDialog extends TitleAreaDialog {
      * @param area The composite. creates the text field to edit the TestSuite name.
      */
     private void createVersionFields(Composite area) {
-        new Label(area, SWT.NONE).setText(m_majorLabel);
+        new Label(area, SWT.NONE).setText(Messages.CreateNewProjectVersionActionVersionNumbers);
         m_majorVersionField = new CheckedIntText(area, SWT.SINGLE | SWT.BORDER, 
             true, 0, Integer.MAX_VALUE);
         GridData gridData = newGridData();
@@ -271,7 +223,7 @@ public class VersionDialog extends TitleAreaDialog {
             }
         });
         
-        new Label(area, SWT.NONE).setText(m_minorLabel);
+//        new Label(area, SWT.NONE).setText(m_minorLabel);
         m_minorVersionField = new CheckedIntText(area, SWT.SINGLE | SWT.BORDER, 
             true, 0, Integer.MAX_VALUE);
         gridData = newGridData();
@@ -288,8 +240,8 @@ public class VersionDialog extends TitleAreaDialog {
             }
         });
         
-        new Label(area, SWT.NONE).setText(
-                Messages.CreateNewProjectVersionActionMicroLabel);
+//        new Label(area, SWT.NONE).setText(
+//                Messages.CreateNewProjectVersionActionMicroLabel);
         m_microVersionField = new CheckedIntText(area, SWT.SINGLE | SWT.BORDER, 
             true, 0, Integer.MAX_VALUE);
         gridData = newGridData();
@@ -346,16 +298,9 @@ public class VersionDialog extends TitleAreaDialog {
      * the action of a version field
      * @return false, if one of the fields contains an error
      */
-    boolean modifyVersionFieldAction() {
-        boolean isCorrect = false;
-        
-        try {
-            isCorrect = (!StringUtils.isBlank(m_majorVersionField.getText())
-                    || !StringUtils.isBlank(m_versionQualifierField.getText()));
-        } catch (NumberFormatException nfe) {
-            // Do nothing, the input is not correct and isCorrect remains false
-        }
-
+    boolean modifyVersionFieldAction() {        
+        boolean isCorrect = checkIfVersionsAreCorrect();
+        checkAndModifyEnablementOfFields();
         if (isCorrect) {
             enableOKButton();
             if (!isInputAllowed()) {
@@ -367,6 +312,52 @@ public class VersionDialog extends TitleAreaDialog {
             
             getButton(IDialogConstants.OK_ID).setEnabled(false);
             setErrorMessage(m_wrongVersionError);
+        }
+        return isCorrect;
+    }
+    /**
+     * Enables and disables version number fields so that the number sequence is correct
+     */
+    private void checkAndModifyEnablementOfFields() {
+        if (StringUtils.isBlank(m_majorVersionField.getText())) {
+            m_minorVersionField.setEnabled(false);
+            m_microVersionField.setEnabled(false);
+        } else {
+            m_minorVersionField.setEnabled(true);
+        }
+        if (StringUtils.isBlank(m_minorVersionField.getText())
+                || !m_minorVersionField.isEnabled()) {
+            m_microVersionField.setEnabled(false);
+        } else {
+            m_microVersionField.setEnabled(true);
+        }
+
+    }
+
+    /**
+     * Checks for some conditions which are not correct
+     * @return true if everything is okay
+     */
+    private boolean checkIfVersionsAreCorrect() {
+        boolean isCorrect = false;
+        try {
+            isCorrect = (StringUtils.isNotBlank(m_majorVersionField.getText())
+            || StringUtils.isNotBlank(m_versionQualifierField.getText()));
+            if (isCorrect && StringUtils.isNotBlank(
+                    m_minorVersionField.getText())) {
+                isCorrect = StringUtils.isNotBlank(
+                        m_majorVersionField.getText());
+            }
+            if (isCorrect && StringUtils.isNotBlank(
+                    m_microVersionField.getText())) {
+                isCorrect = StringUtils.isNotBlank(
+                        m_minorVersionField.getText())
+                        && StringUtils.isNotBlank(
+                                m_majorVersionField.getText());
+            }
+
+        } catch (NumberFormatException nfe) {
+            // Do nothing, the input is not correct and isCorrect remains false
         }
         return isCorrect;
     }
@@ -437,33 +428,6 @@ public class VersionDialog extends TitleAreaDialog {
         return new ProjectVersion(m_majorVersionNumber, m_minorVersionNumber,
                 m_microVersionNumber, m_versionQualifier);
     }
-    /**
-     * @return Returns the major version number.
-     */
-    public Integer getMajorVersionNumber() {
-        return m_majorVersionNumber;
-    }
-
-    /**
-     * @return Returns the minor version number.
-     */
-    public Integer getMinorVersionNumber() {
-        return m_minorVersionNumber;
-    }
-    
-    /**
-     * @return Returns the micro version number.
-     */
-    public Integer getMicroVersionNumber() {
-        return m_microVersionNumber;
-    }
-
-    /**
-     * @return Returns the version qualifier.
-     */
-    public String getversionQualifier() {
-        return m_versionQualifier;
-    }
 
     /**
      * @return Returns the text of the input field.
@@ -484,7 +448,9 @@ public class VersionDialog extends TitleAreaDialog {
     public Integer getMinorFieldValue() {
         Integer value = null;
         try {
-            value = Integer.parseInt(m_minorVersionField.getText());
+            if (m_minorVersionField.isEnabled()) {
+                value = Integer.parseInt(m_minorVersionField.getText());
+            }
         } catch (NumberFormatException nfe) {
             // FIXME zeb Handle error
         }
@@ -497,7 +463,9 @@ public class VersionDialog extends TitleAreaDialog {
     public Integer getMicroFieldValue() {
         Integer value = null;
         try {
-            value = Integer.parseInt(m_microVersionField.getText());
+            if (m_microVersionField.isEnabled()) {                
+                value = Integer.parseInt(m_microVersionField.getText());
+            }
         } catch (NumberFormatException nfe) {
             // Nothing to handle
         }

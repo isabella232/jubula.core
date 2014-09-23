@@ -1004,9 +1004,9 @@ class XmlImporter {
                         ? xml.getMajorNumber() : xml.getMajorProjectVersion();
             }
             Integer minorProjVersion = null;
-            if (!xml.isNilMajorProjectVersion()
-                    && xml.isSetMajorProjectVersion()
-                    || xml.isSetMajorNumber()) {
+            if (!xml.isNilMinorProjectVersion()
+                    && xml.isSetMinorProjectVersion()
+                    || xml.isSetMinorNumber()) {
                 minorProjVersion = xml.isSetMinorNumber()
                         ? xml.getMinorNumber() : xml.getMinorProjectVersion();
             }

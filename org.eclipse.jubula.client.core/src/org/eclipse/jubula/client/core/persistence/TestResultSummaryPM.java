@@ -301,8 +301,6 @@ public class TestResultSummaryPM {
                             "where s.testsuiteDate < :cleanDate " + //$NON-NLS-1$
                             "and s.internalProjectGuid = :projGUID " //$NON-NLS-1$
             );
-            addVersionsToQuery(majorVersion, minorVersion, microVersion,
-                    versionQualifier, queryString);
             addVersionQueryString(PROPNAME_PROJECT_MAJOR_VERSION,
                     majorVersion, queryString);
             addVersionQueryString(PROPNAME_PROJECT_MINOR_VERSION,
@@ -311,6 +309,7 @@ public class TestResultSummaryPM {
                     microVersion, queryString);
             addVersionQueryString(PROPNAME_PROJECT_VERSION_QUALIFIER,
                     versionQualifier, queryString);
+            queryString.append(")"); //$NON-NLS-1$
 
             Query query = session.createQuery(queryString.toString());
             query.setParameter("cleanDate", cleanDate); //$NON-NLS-1$
@@ -323,8 +322,6 @@ public class TestResultSummaryPM {
                     microVersion, query);
             checkAndBindValue(PROPNAME_PROJECT_VERSION_QUALIFIER,
                     versionQualifier, query);
-            ProjectPM.attachParameterToVersion(query, majorVersion,
-                    minorVersion, microVersion, versionQualifier);
             List<Long> metaList = query.getResultList();
             Set<Long> idSet = new HashSet<Long>(metaList);
             return idSet;
