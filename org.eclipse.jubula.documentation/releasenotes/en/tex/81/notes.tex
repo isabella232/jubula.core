@@ -83,6 +83,11 @@ http://HOSTNAME:SERVERPORT/testresults/dashboard
 \end{itemize}
 
 \subsection{Known issues and other information}
+\textbf{Support for Java 8 as a runtime environment}
+\begin{itemize}
+\item We now run our regression tests for RCP \gdauts{} on all platforms with Java 8 as a runtime environment.
+\item Our tests for Swing with Java 8 as a runtime environment have shown that Linux and Windows 8 appear to function correctly -- there are still problems with Mac and Windows 7 when testing Swing \gdauts{} with Java 8 as a JRE.
+\end{itemize}
 \textbf{Support for iOS 6 dropped}
 \begin{itemize}
 \item We no longer support iOS 6 for testing. The iOS support is now for 7 applications. 
