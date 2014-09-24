@@ -291,12 +291,19 @@ public class XmlStorage {
             
             XmlImporter xmlImporter = new XmlImporter(monitor, io,
                     skipTrackingInformation);
+            if (assignNewGuid 
+                    && (majorVersion != null || versionQualifier != null)) {
+                return xmlImporter.createProject(
+                        projectXml, assignNewGuid, majorVersion, minorVersion,
+                        microVersion, versionQualifier, paramNameMapper, 
+                        compNameCache);
+            }
             if (assignNewGuid) {
                 return xmlImporter.createProject(
                     projectXml, assignNewGuid, paramNameMapper, compNameCache);
             } else if (majorVersion != null || versionQualifier != null) {
                 return xmlImporter.createProject(
-                    projectXml, majorVersion, minorVersion,
+                    projectXml, false,  majorVersion, minorVersion,
                     microVersion, versionQualifier, paramNameMapper, 
                     compNameCache);
             }

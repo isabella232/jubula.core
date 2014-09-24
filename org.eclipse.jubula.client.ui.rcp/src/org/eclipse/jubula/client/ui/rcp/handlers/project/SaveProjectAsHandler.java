@@ -36,6 +36,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -46,7 +47,7 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.handlers.project.AbstractProjectHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
+import org.eclipse.jubula.client.ui.rcp.dialogs.VersionDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -95,13 +96,18 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
         /** The name for the new project */
         private String m_newProjectName;
         
+        /** The version for the new project */
+        private ProjectVersion m_newProjectVersion;
+        
         /**
          * Constructor
          * 
          * @param newProjectName name of new project
+         * @param version version of the new project
          */
-        public SaveAsOperation(String newProjectName) {
+        public SaveAsOperation(String newProjectName, ProjectVersion version) {
             m_newProjectName = newProjectName;
+            m_newProjectVersion = version;
         }
         
         /**
@@ -128,8 +134,12 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 }
                 if (contentStream != null) {
                     final IProjectPO duplicatedProject = XmlStorage.load(
-                        contentStream, true, null, null, null, null,
-                        paramNameMapper, compNameCache, 
+                        contentStream, true,
+                        m_newProjectVersion.getMajorNumber(),
+                        m_newProjectVersion.getMinorNumber(),
+                        m_newProjectVersion.getMicroNumber(),
+                        m_newProjectVersion.getVersionQualifier(),
+                        paramNameMapper, compNameCache,
                         subMonitor.newChild(WORK_PROJECT_CREATION),
                         new NullImportOutput(), true);
                     IWritableComponentNameMapper compNameMapper =
@@ -235,35 +245,35 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
 
     /**
      * @param newProjectName name of new project
+     * @param version version of the new projct
      * @return a new operation for project import
      */
-    private IRunnableWithProgress createOperation(final String newProjectName) {
-        return new SaveAsOperation(newProjectName);
+    private IRunnableWithProgress createOperation(final String newProjectName,
+            ProjectVersion version) {
+        return new SaveAsOperation(newProjectName, version);
     }
     
 
     /**
      * Opens the dialog to change the project name
+     * 
      * @return the dialog
      */
-    private InputDialog openInputDialog() {
-        InputDialog dialog = new InputDialog(
-            getActiveShell(),
-            Messages.SaveProjectAsActionTitle,
-            GeneralStorage.getInstance().getProject().getName(),
-            Messages.SaveProjectAsActionMessage,
-            Messages.SaveProjectAsActionLabel,
-            Messages.SaveProjectAsActionInvalidName,
-            Messages.SaveProjectAsActionDoubleOrInvalidName,
-            IconConstants.BIG_PROJECT_STRING, 
-            Messages.SaveProjectAsActionShellTitle,
-            false) {
+    private VersionDialog openInputDialog() {
+        VersionDialog dialog = new VersionDialog(getActiveShell(),
+                Messages.SaveProjectAsActionTitle,
+                Messages.SaveProjectAsActionMessage,
+                Messages.SaveProjectAsActionInvalidName,
+                Messages.SaveProjectAsActionDoubleOrInvalidName,
+                IconConstants.BIG_PROJECT_STRING,
+                Messages.SaveProjectAsActionShellTitle,
+                true) {
 
             /**
              * {@inheritDoc}
              */
             protected boolean isInputAllowed() {
-                final String newProjectName = getInputFieldText();
+                final String newProjectName = getProjectNameFieldValue();
                 return ProjectNameBP.isValidProjectName(newProjectName, true)
                         && !ProjectPM.doesProjectNameExist(newProjectName);
             }
@@ -272,10 +282,11 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
              * {@inheritDoc}
              */
             protected void okPressed() {
-                if (ProjectPM.doesProjectNameExist(getInputFieldText())) {
+                if (ProjectPM.doesProjectNameExist(
+                        getProjectNameFieldValue())) {
                     ErrorHandlingUtil.createMessageDialog(
-                        MessageIDs.E_PROJECTNAME_ALREADY_EXISTS, 
-                        new Object[]{getInputFieldText()}, null);
+                            MessageIDs.E_PROJECTNAME_ALREADY_EXISTS,
+                            new Object[] { getProjectNameFieldValue() }, null);
                     return;
                 }
                 super.okPressed();
@@ -333,10 +344,11 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        InputDialog dialog = openInputDialog();
+        VersionDialog dialog = openInputDialog();
         if (dialog.getReturnCode() == Window.OK) {
-            final String newProjectName = dialog.getName();
-            IRunnableWithProgress op = createOperation(newProjectName);
+            final String newProjectName = dialog.getProjectName();
+            IRunnableWithProgress op = createOperation(newProjectName,
+                    dialog.getProjectVersion());
             try {
                 PlatformUI.getWorkbench().getProgressService()
                         .busyCursorWhile(op);

@@ -74,28 +74,23 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
      *         from opening
      */
     private VersionDialog openVersionDialog() {
-        ProjectVersion highestVersionString = new ProjectVersion(1, 0, null);
+        ProjectVersion actualVersion = new ProjectVersion(1, 0, null);
         try {
             GeneralStorage.getInstance().validateProjectExists(
                     GeneralStorage.getInstance().getProject());
-            highestVersionString = ProjectPM.findHighestVersionNumber(
-                GeneralStorage.getInstance().getProject().getGuid());
+            actualVersion = GeneralStorage.getInstance()
+                    .getProject().getProjectVersion();
         } catch (ProjectDeletedException e) {
             PMExceptionHandler
                 .handleProjectDeletedException();
-            return null;
-        } catch (JBException e) {
-            ErrorHandlingUtil.createMessageDialog(e, null, null);
             return null;
         }
 
         VersionDialog dialog = new VersionDialog(
             getActiveShell(),
             Messages.CreateNewProjectVersionActionTitle,
-            highestVersionString,
+            actualVersion,
             Messages.CreateNewProjectVersionActionMessage,
-            null,
-            null,
             Messages.CreateNewProjectVersionActionInvalidVersion,
             Messages.CreateNewProjectVersionActionDoubleVersion,
             IconConstants.BIG_PROJECT_STRING, 
@@ -105,24 +100,26 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
              * {@inheritDoc}
              */
             protected boolean isInputAllowed() {
+                ProjectVersion version = getFieldVersion();
                 return !ProjectPM.doesProjectVersionExist(
                     GeneralStorage.getInstance().getProject().getGuid(),
-                    getMajorFieldValue(), 
-                    getMinorFieldValue(),
-                    getMicroFieldValue(),
-                    getQualifierFieldValue());
+                    version.getMajorNumber(), 
+                    version.getMinorNumber(),
+                    version.getMicroNumber(),
+                    version.getVersionQualifier());
             }
 
             /**
              * {@inheritDoc}
              */
             protected void okPressed() {
+                ProjectVersion version = getFieldVersion();
                 if (ProjectPM.doesProjectVersionExist(
                     GeneralStorage.getInstance().getProject().getGuid(),
-                    getMajorFieldValue(), 
-                    getMinorFieldValue(),
-                    getMicroFieldValue(),
-                    getQualifierFieldValue())) {
+                    version.getMajorNumber(), 
+                    version.getMinorNumber(),
+                    version.getMicroNumber(),
+                    version.getVersionQualifier())) {
                     
                     ErrorHandlingUtil.createMessageDialog(
                         MessageIDs.E_PROJECTVERSION_ALREADY_EXISTS, 

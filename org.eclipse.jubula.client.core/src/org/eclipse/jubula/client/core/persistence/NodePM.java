@@ -722,6 +722,7 @@ public class NodePM extends PersistenceManager {
      *         given information, regardless of which project they are in.
      * @see getInternalExecTestCases
      * @see getExternalExecTestCases
+     * @deprecated
      */
     public static List<IExecTestCasePO> getAllExecTestCases(
         String specTcGuid, long parentProjectId) throws JBException {
