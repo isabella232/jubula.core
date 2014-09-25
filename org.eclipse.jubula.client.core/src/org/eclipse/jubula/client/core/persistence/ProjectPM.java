@@ -1887,45 +1887,6 @@ public class ProjectPM extends PersistenceManager
             Persistor.instance().dropSessionWithoutLockRelease(session);
         }
     }
-
-    /**
-     * Returns a list of project IDs, each ID represents a project currently in 
-     * the database that reuses the project with the given information.
-     * 
-     * @param guid GUID of the reused project.
-     * @param majorVersion Major version number of the reused project.
-     * @param minorVersion Minor version number of the reused project.
-     * @return the IDs of all projects that reuse the project with the given
-     *         information.
-     */
-    @SuppressWarnings("unchecked")
-    public static synchronized List<Long> findIdsThatReuse(
-        String guid, int majorVersion, int minorVersion) throws JBException {
-
-        EntityManager session = null;
-        List<Long> hits;
-        try {
-            session = Persistor.instance().openSession();
-            Query query = session.createQuery("select reusedProject.hbmParentProjectId from ReusedProjectPO" //$NON-NLS-1$
-                    + " as reusedProject where reusedProject.projectGuid = :projectGuid and reusedProject.majorNumber = :majorNumber" //$NON-NLS-1$
-                    + " and reusedProject.minorNumber = :minorNumber"); //$NON-NLS-1$
-            query.setParameter(
-                "projectGuid", guid); //$NON-NLS-1$
-            query.setParameter(
-                "majorNumber", majorVersion); //$NON-NLS-1$
-            query.setParameter(
-                "minorNumber", minorVersion); //$NON-NLS-1$
-            hits = query.getResultList();
-        } catch (PersistenceException e) {
-            log.error(Messages.PersistenceLoadFailed, e);
-            throw new JBException(e.getMessage(),
-                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
-        } finally {
-            Persistor.instance().dropSessionWithoutLockRelease(session);
-        }
-        return hits;
-
-    }
     
     /**
      * Gets the GUID of the project with the given ID.

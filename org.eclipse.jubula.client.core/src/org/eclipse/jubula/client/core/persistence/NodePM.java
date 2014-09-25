@@ -622,68 +622,6 @@ public class NodePM extends PersistenceManager {
     }
     
     /**
-     * Returns test cases that reference the test case given information. 
-     * Only returns test cases that are <em>NOT</em> in the same project 
-     * as the given test case.
-     * This method opens a new session to gather the test cases and then closes
-     * the session in order to prevent accidental DB commits for test cases
-     * external to the current project.
-     * Warning: the fetched ExecTestCases have no parent, because the database
-     * doesn't know the parent.
-     * 
-     * @param specTcGuid GUID of the test case being reused.
-     * @param parentProjectId ID of the parent project of the test case being
-     *                        reused.
-     * @return all test cases that reference the test case with the given
-     *         information, provided that the cases are <em>NOT</em> in the 
-     *         same project.
-     * @see getInternalExecTestCases
-     * @see getAllExecTestCases
-     */
-    public static List<IExecTestCasePO> getExternalExecTestCases(
-        String specTcGuid, long parentProjectId) throws JBException {
-        
-        // a SpecTC with guid == null can't be reused
-        if (specTcGuid == null) {
-            return new ArrayList<IExecTestCasePO>(0);
-        }
-        
-        EntityManager s = Persistor.instance().openSession();
-        
-        try {
-            EntityTransaction tx = 
-                Persistor.instance().getTransaction(s);
-
-            IProjectPO parentProject = s.find(NodeMaker.getProjectPOClass(),
-                    parentProjectId);
-
-            if (parentProject == null) {
-                String error = 
-                    Messages.ParentProjectDoesNotExistWithID 
-                    + StringConstants.COLON + StringConstants.SPACE
-                    + parentProjectId;
-                log.error(error);
-                throw new JBException(error, MessageIDs.E_DATABASE_GENERAL);
-            }
-
-            List<Long> projectsThatReuse = 
-                ProjectPM.findIdsThatReuse(parentProject.getGuid(), 
-                    parentProject.getMajorProjectVersion(), 
-                    parentProject.getMinorProjectVersion());
-
-            List<IExecTestCasePO> tcList = 
-                getExecTestCasesFor(specTcGuid, projectsThatReuse, s);
-
-            Persistor.instance().commitTransaction(s, tx);
-
-            return tcList;
-
-        } finally {
-            Persistor.instance().dropSessionWithoutLockRelease(s);
-        }        
-    }
-
-    /**
      * 
      * @param specTcGuid The GUID of the reused test case.
      * @param parentProjectIds All returned test cases will have one of these as
@@ -706,66 +644,6 @@ public class NodePM extends PersistenceManager {
 
         return execTcList;
 
-    }
-    
-    /**
-     * Returns all test cases that reference the test case given information. 
-     * This method opens a new session to gather the test cases and then closes
-     * the session in order to prevent accidental DB commits for test cases
-     * external to the current project.
-     * Warning: the fetched ExecTestCases have no parent, because the database
-     * doesn't know the parent.
-     * @param specTcGuid GUID of the test case being reused.
-     * @param parentProjectId ID of the parent project of the test case being
-     *                        reused.
-     * @return <em>all</em> test cases that reference the test case with the 
-     *         given information, regardless of which project they are in.
-     * @see getInternalExecTestCases
-     * @see getExternalExecTestCases
-     * @deprecated
-     */
-    public static List<IExecTestCasePO> getAllExecTestCases(
-        String specTcGuid, long parentProjectId) throws JBException {
-        // a SpecTC with guid == null can't be reused
-        if (specTcGuid == null) {
-            return new ArrayList<IExecTestCasePO>(0);
-        }
-        
-        EntityManager s = Persistor.instance().openSession();
-
-        try {
-            EntityTransaction tx = 
-                Persistor.instance().getTransaction(s);
-
-            IProjectPO parentProject = s.find(
-                    NodeMaker.getProjectPOClass(), parentProjectId);
-
-            if (parentProject == null) {
-                String error = 
-                    Messages.ParentProjectDoesNotExistWithID 
-                    + StringConstants.COLON + StringConstants.SPACE
-                    + parentProjectId;
-                log.error(error);
-                throw new JBException(error, MessageIDs.E_DATABASE_GENERAL);
-            }
-
-            List<Long> projectsThatReuse = 
-                ProjectPM.findIdsThatReuse(parentProject.getGuid(), 
-                    parentProject.getMajorProjectVersion(), 
-                    parentProject.getMinorProjectVersion());
-            // Project technically "reuses" itself
-            projectsThatReuse.add(parentProjectId);
-
-            List<IExecTestCasePO> tcList = 
-                getExecTestCasesFor(specTcGuid, projectsThatReuse, s);
-
-            Persistor.instance().commitTransaction(
-                s, tx);
-
-            return tcList;
-        } finally {
-            Persistor.instance().dropSessionWithoutLockRelease(s);
-        }        
     }
 
     /**
