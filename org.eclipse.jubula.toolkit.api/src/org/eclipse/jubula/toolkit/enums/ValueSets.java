@@ -12,6 +12,39 @@ package org.eclipse.jubula.toolkit.enums;
 
 /** @author BREDEX GmbH */
 public final class ValueSets {
+
+    /** @author BREDEX GmbH */
+    public enum Direction implements LiteralProvider {
+        /** value comparison operator */
+        up("up"), //$NON-NLS-1$
+        /** value comparison operator */
+        down("down"), //$NON-NLS-1$
+        /** value comparison operator */
+        left("left"), //$NON-NLS-1$
+        /** value comparison operator */
+        right("right"); //$NON-NLS-1$
+
+        /** holds the value necessary for the RC side */
+        private final String m_rcValue;
+
+        /**
+         * Constructor
+         * 
+         * @param rcValue
+         *            the remote control side value
+         */
+        private Direction(String rcValue) {
+            this.m_rcValue = rcValue;
+        }
+
+        /**
+         * @return the value
+         */
+        public String rcValue() {
+            return m_rcValue;
+        }
+    }
+    
     /** @author BREDEX GmbH */
     public enum Operator implements LiteralProvider {
         /** value comparison operator */

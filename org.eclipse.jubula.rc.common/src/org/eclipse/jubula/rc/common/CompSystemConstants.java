@@ -23,24 +23,10 @@ public interface CompSystemConstants {
     /** Constant for parameter to begin a new selection */
     public static final String EXTEND_SELECTION_NO = "no"; //$NON-NLS-1$
 
-    /** Constant for UP */
-    public static final String DIRECTION_UP = "up"; //$NON-NLS-1$
-    /** Constant for DOWN */
-    public static final String DIRECTION_DOWN = "down"; //$NON-NLS-1$
-    /** Constant for LEFT */
-    public static final String DIRECTION_LEFT = "left"; //$NON-NLS-1$
-    /** Constant for RIGHT */
-    public static final String DIRECTION_RIGHT = "right"; //$NON-NLS-1$
-
     /** constants for communication */
     public static final String POS_UNIT_PIXEL = "Pixel"; //$NON-NLS-1$
     /** constants for communication */
     public static final String POS_UNIT_PERCENT = "Percent"; //$NON-NLS-1$
-    
-    /** Constant for relative path type */
-    public static final String TREE_PATH_TYPE_RELATIVE = "relative"; //$NON-NLS-1$
-    /** Constant for absolute path type */
-    public static final String TREE_PATH_TYPE_ABSOLUTE = "absolute"; //$NON-NLS-1$
 
     /** Constant for UP */
     public static final String TREE_MOVE_UP = "up"; //$NON-NLS-1$

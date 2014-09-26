@@ -22,6 +22,7 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.constants.InputConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
@@ -657,16 +658,15 @@ public abstract class AbstractTableTester
         }
         int newCol = currCell.getCol();
         int newRow = currCell.getRow();
-        if (CompSystemConstants.DIRECTION_UP
-                .equalsIgnoreCase(direction)) {
+        if (ValueSets.Direction.up.rcValue().equalsIgnoreCase(direction)) {
             newRow -= cellCount;
-        } else if (CompSystemConstants.DIRECTION_DOWN
+        } else if (ValueSets.Direction.down.rcValue()
                 .equalsIgnoreCase(direction)) {
             newRow += cellCount;
-        } else if (CompSystemConstants.DIRECTION_LEFT
+        } else if (ValueSets.Direction.left.rcValue()
                 .equalsIgnoreCase(direction)) {
             newCol -= cellCount;
-        } else if (CompSystemConstants.DIRECTION_RIGHT
+        } else if (ValueSets.Direction.right.rcValue()
                 .equalsIgnoreCase(direction)) {
             newCol += cellCount;
         }

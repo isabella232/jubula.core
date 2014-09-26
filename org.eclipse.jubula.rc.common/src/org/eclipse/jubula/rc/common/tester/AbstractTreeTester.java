@@ -36,6 +36,7 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
@@ -656,7 +657,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
         Object startNode;
         ITreeComponent tree = getTreeAdapter();
         if (pathType.equals(
-                CompSystemConstants.TREE_PATH_TYPE_RELATIVE)) {
+                ValueSets.SearchType.relative.rcValue())) {
             startNode = getSelectedNode(context);
             Object child = startNode;
             for (int i = 0; i < preAscend; ++i) {
@@ -678,7 +679,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
                 startNode = null;
             }
         } else if (pathType.equals(
-                CompSystemConstants.TREE_PATH_TYPE_ABSOLUTE)) {
+                ValueSets.SearchType.absolute.rcValue())) {
             startNode = null;
         } else {
             throw new StepExecutionException(
