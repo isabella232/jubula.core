@@ -11,12 +11,12 @@
 package org.eclipse.jubula.rc.common.tester;
 
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
+import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
@@ -184,8 +184,7 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      */
     private int getStartingIndex(final String searchType) {
         int startingIndex = 0;
-        if (searchType.equalsIgnoreCase(
-                CompSystemConstants.SEARCH_TYPE_RELATIVE)) {
+        if (searchType.equalsIgnoreCase(SearchType.relative.rcValue())) {
             startingIndex = getCBAdapter().getSelectedIndex();
         }
         return startingIndex;

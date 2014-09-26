@@ -18,11 +18,6 @@ public interface CompSystemConstants {
     // ----------------------------------------------------
     // ---------  ImplClass Parameters  -------------------
     // ----------------------------------------------------
-    /** Constant for relative search type */
-    public static final String SEARCH_TYPE_RELATIVE = "relative"; //$NON-NLS-1$
-    /** Constant for absolute search type */
-    public static final String SEARCH_TYPE_ABSOLUTE = "absolute"; //$NON-NLS-1$
-
     /** Constant for parameter to extend current selection */
     public static final String EXTEND_SELECTION_YES = "yes"; //$NON-NLS-1$
     /** Constant for parameter to begin a new selection */

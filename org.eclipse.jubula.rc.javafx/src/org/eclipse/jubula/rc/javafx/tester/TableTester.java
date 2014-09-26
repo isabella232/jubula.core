@@ -44,6 +44,7 @@ import org.eclipse.jubula.rc.javafx.util.AbstractTraverser;
 import org.eclipse.jubula.rc.javafx.util.GenericTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -447,7 +448,7 @@ public class TableTester extends AbstractTableTester {
             final ITableComponent adapter) {
         ArrayList<TableColumn> columns = new ArrayList<>();
         if (searchType
-                .equalsIgnoreCase(CompSystemConstants.SEARCH_TYPE_RELATIVE)) {
+                .equalsIgnoreCase(SearchType.relative.rcValue())) {
             TableView table = (TableView) adapter.getRealComponent();
             TableColumn selColumn = ((TablePosition) table.getSelectionModel()
                     .getSelectedCells().get(0)).getTableColumn();
@@ -576,8 +577,7 @@ public class TableTester extends AbstractTableTester {
      */
     private int getStartingColIndex(String searchType) {
         int startingIndex = 0;
-        if (searchType.equalsIgnoreCase(
-                CompSystemConstants.SEARCH_TYPE_RELATIVE)) {
+        if (searchType.equalsIgnoreCase(SearchType.relative.rcValue())) {
             Cell c = ((ITableComponent)getComponent())
             .getSelectedCell();
             if (c == null) {

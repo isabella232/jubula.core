@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.common;
 
 import org.eclipse.jubula.rc.common.util.MatchUtil;
+import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 
 /**
  * Constants for all toolkit server
@@ -72,7 +73,7 @@ public class Constants implements CompSystemConstants {
     // ---------  Observation Parameters  -------------------
     // ----------------------------------------------------
     /** Constant for absolute search type in observation mode */
-    public static final String REC_SEARCH_MODE = SEARCH_TYPE_ABSOLUTE;
+    public static final String REC_SEARCH_MODE = SearchType.absolute.rcValue();
     /** Constant for operator type in observ mode*/
     public static final String REC_OPERATOR = MatchUtil.EQUALS;
     /** Constant for ExtendSelection (Lists) in observ mode*/

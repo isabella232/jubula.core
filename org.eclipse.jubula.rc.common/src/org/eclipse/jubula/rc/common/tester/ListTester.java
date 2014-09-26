@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
@@ -27,6 +26,7 @@ import org.eclipse.jubula.rc.common.util.ListSelectionVerifier;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
+import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
@@ -312,7 +312,7 @@ public class ListTester extends AbstractTextVerifiableTester {
     public boolean containsValue(String value) {
         Integer[] indices = findIndicesOfValues(
                 new String[] { value },
-                MatchUtil.EQUALS, CompSystemConstants.SEARCH_TYPE_ABSOLUTE);
+                MatchUtil.EQUALS, SearchType.absolute.rcValue());
         return indices.length > 0;
     }
     
@@ -326,11 +326,11 @@ public class ListTester extends AbstractTextVerifiableTester {
         if (operator.equals(MatchUtil.NOT_EQUALS)) {
             indices = findIndicesOfValues(
                     new String[] { value },
-                MatchUtil.EQUALS, CompSystemConstants.SEARCH_TYPE_ABSOLUTE);
+                MatchUtil.EQUALS, SearchType.absolute.rcValue());
             return indices.length == 0;
         } 
         indices = findIndicesOfValues(new String[] { value },
-            operator, CompSystemConstants.SEARCH_TYPE_ABSOLUTE);
+            operator, SearchType.absolute.rcValue());
         return indices.length > 0;
     }
     
@@ -461,8 +461,7 @@ public class ListTester extends AbstractTextVerifiableTester {
      */
     private int getStartingIndex(final String searchType) {
         int startingIndex = 0;
-        if (searchType.equalsIgnoreCase(
-                CompSystemConstants.SEARCH_TYPE_RELATIVE)) {
+        if (searchType.equalsIgnoreCase(SearchType.relative.rcValue())) {
             int [] selectedIndices = getListAdapter().getSelectedIndices();
             // Start from the last selected item, if any item(s) are selected
             if (selectedIndices.length > 0) {

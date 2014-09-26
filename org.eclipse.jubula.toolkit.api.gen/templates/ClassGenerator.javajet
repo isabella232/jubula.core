@@ -30,10 +30,12 @@ class="ClassGenerator"%>
 	Boolean hasRealizedType = (realizedComponent != null);
 	String realizedType = null;
 	GenerationInfo superInfo = null;
+	List<Action> superActions = null;
 	String realizedTypeFqn = null;
 	if (hasRealizedType) {
 		realizedType = realizedComponent.getType();
 		superInfo = new GenerationInfo(realizedComponent, genInterface);
+		superActions = realizedComponent.getActions();
 		realizedTypeFqn = superInfo.getFqn();
 	}
 	String testerClass = "";
@@ -64,7 +66,10 @@ import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
 public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 	<%if (hasRealizedType) {%>extends <%=realizedTypeFqn%><%}%>
 	<%if (!genInterface) {%>implements <%=implementedTypeFqn%><%}%> {
+	<%// generate constructor only for implementation classes%>
 	<%if (!genInterface) {%>
+		<%/* check whether constructor should call super
+		and whether contsructor needs an object mapping */%>
 		<%if (hasRealizedType) {%>
 			<%if (hasDefaultMapping) {%>
 			public <%=className%>() {
@@ -87,6 +92,11 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 		<%}%>
 	<%}%>
 	<%
+	if (superActions != null) {
+		// generate only methods for non-inherited actions
+		actions.removeAll(superActions);
+	}
+	// generate method for each action
 	Iterator<Action> actionsIterator = actions.iterator();
 	while (actionsIterator.hasNext()) {	
 		Action action = actionsIterator.next();
@@ -96,11 +106,14 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 		<%if (action.isDeprecated()) {%>@Deprecated<%}%>
 		public void <%=actionName%>(
 		<%	
+		// add parameters to method
 		Iterator<Param> paramIterator = params.iterator();
 		while (paramIterator.hasNext()) {
 			Param param = paramIterator.next();
-			String paramType = nameLoader.getFromNameMappings(param.getType());
-			String paramName = nameLoader.translateFromCompSystem(param.getName());
+			String type = param.getType();
+			String name = param.getName();
+			String paramType = nameLoader.findEnumForParameter(type, name);
+			String paramName = nameLoader.translateFromCompSystem(name);
 			%>
 			<%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
 		<%}%>

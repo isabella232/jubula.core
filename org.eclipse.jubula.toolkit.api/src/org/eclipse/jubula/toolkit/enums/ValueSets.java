@@ -43,7 +43,35 @@ public final class ValueSets {
             return m_rcValue;
         }
     }
+    
+    /** @author BREDEX GmbH */
+    public enum SearchType implements LiteralProvider {
+        /** value comparison operator */
+        relative("relative"), //$NON-NLS-1$
+        /** value comparison operator */
+        absolute("absolute"); //$NON-NLS-1$
 
+        /** holds the value necessary for the RC side */
+        private final String m_rcValue;
+
+        /**
+         * Constructor
+         * 
+         * @param rcValue
+         *            the remote control side value
+         */
+        private SearchType(String rcValue) {
+            this.m_rcValue = rcValue;
+        }
+
+        /**
+         * @return the value
+         */
+        public String rcValue() {
+            return m_rcValue;
+        }
+    }
+    
     /** Constructor */
     private ValueSets() {
         // hide

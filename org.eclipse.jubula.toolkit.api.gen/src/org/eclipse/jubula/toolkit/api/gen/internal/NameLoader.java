@@ -90,10 +90,6 @@ public class NameLoader {
      * @return the name which should be used in api
      */
     public String translateFromCompSystem(String name) {
-        String mapEntry = m_mappingProperties.getProperty(name);
-        if (mapEntry != null) {
-            return mapEntry;
-        }
         String desiredName = CompSystemI18n.getString(name);
         desiredName = desiredName.replace(
                 StringConstants.MINUS, StringConstants.SPACE)
@@ -111,16 +107,21 @@ public class NameLoader {
     
     /**
      * Checks in the name mappings property file whether there is a mapping for a
-     * given string and returns it and if not, returns the original string
-     * @param name original name
+     * given parameter name and returns it and if not, returns the original type
+     * @param type the type of the parameter
+     * @param name the name of the parameter
      * @return the name which should be used in api
      */
-    public String getFromNameMappings(String name) {
+    public String findEnumForParameter(String type, String name) {
         String mapEntry = m_mappingProperties.getProperty(name);
         if (mapEntry != null) {
             return mapEntry;
         }
-        return name;
+        mapEntry = m_mappingProperties.getProperty(type);
+        if (mapEntry != null) {
+            return mapEntry;
+        }
+        return type;
     }
     
     /**
@@ -146,10 +147,6 @@ public class NameLoader {
      * @return the name of the class in the api
      */
     public String getClassName(String name) {
-        String mapEntry = m_mappingProperties.getProperty(name);
-        if (mapEntry != null) {
-            return mapEntry;
-        }
         String desiredName = CompSystemI18n.getString(name);
         desiredName = desiredName
                 .replace(StringConstants.SLASH, StringConstants.SPACE);

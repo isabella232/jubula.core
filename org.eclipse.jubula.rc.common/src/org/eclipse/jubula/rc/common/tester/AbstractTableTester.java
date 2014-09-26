@@ -22,6 +22,7 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
+import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.constants.InputConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -984,8 +985,7 @@ public abstract class AbstractTableTester
      */
     private int getStartingColIndex(String searchType) {
         int startingIndex = 0;
-        if (searchType.equalsIgnoreCase(
-                CompSystemConstants.SEARCH_TYPE_RELATIVE)) {
+        if (searchType.equalsIgnoreCase(SearchType.relative.rcValue())) {
             startingIndex = getTableAdapter().getSelectedCell().getCol() + 1;
         }
         return startingIndex;
@@ -998,8 +998,7 @@ public abstract class AbstractTableTester
      */
     private int getStartingRowIndex(String searchType) {
         int startingIndex = 0;
-        if (searchType.equalsIgnoreCase(
-                CompSystemConstants.SEARCH_TYPE_RELATIVE)) {
+        if (searchType.equalsIgnoreCase(SearchType.relative.rcValue())) {
             startingIndex = getTableAdapter().getSelectedCell().getRow() + 1;
         }
         return startingIndex;
