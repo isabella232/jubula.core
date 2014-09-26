@@ -2,6 +2,7 @@ package org.eclipse.jubula.toolkit.api.gen.internal;
 
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 
 /**
  * Contains all necessary information for API generation of a component
@@ -39,9 +40,27 @@ public class GenerationInfo {
         NameLoader nameLoader = NameLoader.getInstance();
         m_toolkitName = nameLoader.getToolkitName(
                 component.getToolkitDesriptor());
-        m_className = nameLoader.getClassName(m_component.getType());
-        m_packageName = nameLoader.getPackageName(
-                component, m_toolkitName, m_genInterface);
+        m_className = nameLoader.getClassName(component.getType());
+        m_packageName = nameLoader.getPackageName(m_toolkitName,
+                m_genInterface);
+        m_directoryPath = m_packageName;
+        m_packageName = nameLoader.executeExceptions(m_packageName);
+        m_directoryPath = nameLoader.executeExceptions(m_directoryPath
+                .replace(StringConstants.DOT, StringConstants.SLASH));
+        m_toolkitName = nameLoader.executeExceptions(m_toolkitName);
+    }
+    
+    /**
+     * Contains all necessary information for API generation for a toolkit
+     * @param tkDescriptor the toolkit descriptor
+     */
+    public GenerationInfo(ToolkitDescriptor tkDescriptor) {
+        m_component = null;
+        m_genInterface = false;
+        NameLoader nameLoader = NameLoader.getInstance();
+        m_toolkitName = nameLoader.getToolkitName(tkDescriptor);
+        m_className = nameLoader.getFactoryName(m_toolkitName);
+        m_packageName = nameLoader.getToolkitPackageName(m_toolkitName);
         m_directoryPath = m_packageName;
         m_packageName = nameLoader.executeExceptions(m_packageName);
         m_directoryPath = nameLoader.executeExceptions(m_directoryPath

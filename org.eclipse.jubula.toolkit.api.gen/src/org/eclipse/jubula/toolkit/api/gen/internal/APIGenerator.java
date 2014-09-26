@@ -19,20 +19,26 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jubula.toolkit.api.gen.ClassGenerator;
+import org.eclipse.jubula.toolkit.api.gen.FactoryGenerator;
 import org.eclipse.jubula.tools.internal.utils.generator.CompSystemProcessor;
 import org.eclipse.jubula.tools.internal.utils.generator.ComponentInfo;
 import org.eclipse.jubula.tools.internal.utils.generator.ToolkitConfig;
 import org.eclipse.jubula.tools.internal.utils.generator.ToolkitInfo;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 
 /**
  * Generates classes for components from comp system
  */
 public class APIGenerator {
     
-    /** component generator */
+    /** class generator */
     private static ClassGenerator classGenerator =
             new ClassGenerator();
+    
+    /** factory generator */
+    private static FactoryGenerator factoryGenerator =
+            new FactoryGenerator();
     
     /**
      * Constructor
@@ -66,6 +72,13 @@ public class APIGenerator {
                 Component component = compInfo.getComponent();
                 createClass(component, generationBaseDir, true);
                 createClass(component, generationBaseDir, false);
+            }
+            // Generate factory for each non-empty toolkit
+            if (!compInfos.isEmpty()) {
+                ToolkitDescriptor toolkitDesriptor =
+                        compInfos.get(0).getComponent().getToolkitDesriptor();
+                GenerationInfo tkGenInfo = new GenerationInfo(toolkitDesriptor);
+                createFactory(tkGenInfo, generationBaseDir);
             }
         }
     }
@@ -125,6 +138,34 @@ public class APIGenerator {
         File file = new File(dir, className + ".java"); //$NON-NLS-1$
         String content = classGenerator.generate(genInfo);
 
+        createFile(dir, file, content); 
+    }
+
+    /** 
+     * creates factory for toolkit
+     * @param tkGenInfo the generation information for the toolkit
+     * @param generationBaseDirTemplate directory for generation
+     */
+    private static void createFactory(GenerationInfo tkGenInfo,
+            String generationBaseDirTemplate) {
+        String path = tkGenInfo.getDirectoryPath();
+        String className = tkGenInfo.getClassName();
+        String generationBaseDir = MessageFormat.format(
+                generationBaseDirTemplate,
+                new Object[] {tkGenInfo.getToolkitName()});
+        File dir = new File(generationBaseDir + path);
+        File file = new File(dir, className + ".java"); //$NON-NLS-1$
+        String content = factoryGenerator.generate(tkGenInfo);
+
+        createFile(dir, file, content); 
+    }
+
+    /** creates a file with given content in a given directory
+     * @param dir the directory
+     * @param file the file
+     * @param content the content
+     */
+    private static void createFile(File dir, File file, String content) {
         if (!file.exists()) {
             try {
                 dir.mkdirs();
@@ -143,6 +184,6 @@ public class APIGenerator {
         } else {
             System.out.println("ERROR: " + file.getName() + " already exists!"); //$NON-NLS-1$ //$NON-NLS-2$
             System.exit(1);
-        } 
+        }
     }
 }

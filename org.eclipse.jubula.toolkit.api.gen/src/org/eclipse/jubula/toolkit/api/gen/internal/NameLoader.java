@@ -18,7 +18,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
-import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 
 
@@ -48,6 +47,10 @@ public class NameLoader {
     /** specific path for implementation classes */
     private static final String PACKAGE_SPECIFIC_IMPLCLASS =
         ".internal.impl"; //$NON-NLS-1$
+
+    /** specific path for implementation classes */
+    private static final String FACTORY_NAME_EXTENSION =
+        "ComponentFactory"; //$NON-NLS-1$
     
     /**
      * <code>instance</code> the singleton instance
@@ -125,21 +128,28 @@ public class NameLoader {
     }
     
     /**
-     * @param component the component
      * @param toolkitName the toolkit name
      * @param generateInterface whether an interface should be generated
      * @return the name extension of the api package name for the component
      */
-    public String getPackageName(Component component,
-            String toolkitName, boolean generateInterface) {
+    public String getPackageName(String toolkitName,
+            boolean generateInterface) {
         StringBuilder packageName = new StringBuilder(
-                PACKAGE_BASE_PATH + toolkitName);
+                getToolkitPackageName(toolkitName));
         if (generateInterface) {
             packageName.append(PACKAGE_SPECIFIC_INTERFACE);
         } else {
             packageName.append(PACKAGE_SPECIFIC_IMPLCLASS);
         }
         return packageName.toString();
+    }
+    
+    /**
+     * @param toolkitName the toolkit name
+     * @return the toolkit package base name
+     */
+    public String getToolkitPackageName(String toolkitName) {
+        return PACKAGE_BASE_PATH + toolkitName;
     }
     
     /**
@@ -181,5 +191,15 @@ public class NameLoader {
     public String executeExceptions(String string) {
         return string.replace("abstract", "base").replace("gef", "rcp.gef") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 .replace("ios", "mobile.ios").replace("winApps", "win.apps"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    }
+
+    /**
+     * Returns the name for a component factory for a toolkit
+     * @param toolkitName the toolkit name
+     * @return the name for a component factory for a toolkit
+     */
+    public String getFactoryName(String toolkitName) {
+        String tkName = WordUtils.capitalizeFully(toolkitName);
+        return tkName + FACTORY_NAME_EXTENSION;
     }
 }

@@ -5,9 +5,11 @@
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
  -->
-<project name="org.eclipse.jubula.toolkit.api.gen" default="generateGenerator">
-    <target name="generateGenerator">
+<project name="org.eclipse.jubula.toolkit.api.gen" default="generateGenerators">
+    <target name="generateGenerators">
         <emf.JETCompiler templateFile="./templates/ClassGenerator.javajet"
+          sourceDirectory="src-gen"/>
+        <emf.JETCompiler templateFile="./templates/FactoryGenerator.javajet"
           sourceDirectory="src-gen"/>
     </target>
 </project>
