@@ -12,14 +12,14 @@ package org.eclipse.jubula.rc.common.tester;
 
 import java.util.StringTokenizer;
 
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
-import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
+import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IWidgetComponent;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 /**
  * Implementation of basic functions for a lot of graphics components
@@ -130,9 +130,9 @@ public class WidgetTester extends AbstractUITester {
                     .setClickCount(count)
                     .setMouseButton(button),
                 xPos, xUnits.equalsIgnoreCase(
-                        CompSystemConstants.POS_UNIT_PIXEL),
+                        ValueSets.Unit.pixel.rcValue()),
                 yPos, yUnits.equalsIgnoreCase(
-                        CompSystemConstants.POS_UNIT_PIXEL));
+                        ValueSets.Unit.pixel.rcValue()));
     }
     
     /**
@@ -477,7 +477,7 @@ public class WidgetTester extends AbstractUITester {
      */
     protected ClickModifier getClickModifier(String extendSelection) {        
         ClickModifier cm = ClickModifier.create();
-        if (CompSystemConstants.EXTEND_SELECTION_YES
+        if (ValueSets.BinaryChoice.yes.rcValue()
                 .equalsIgnoreCase(extendSelection)) {
             cm.add(ClickModifier.M1);
         }

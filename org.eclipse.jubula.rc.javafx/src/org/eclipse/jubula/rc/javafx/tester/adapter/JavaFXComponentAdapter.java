@@ -26,7 +26,6 @@ import javafx.scene.control.Control;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.driver.IRobot;
@@ -38,6 +37,7 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IWidgetComponent;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.tester.MenuTester;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -63,18 +63,18 @@ public class JavaFXComponentAdapter<T extends Node> extends
 
     static {
         converterTable = new HashMap<String, Integer>();
-        converterTable.put(CompSystemConstants.MODIFIER_NONE, new Integer(-1));
-        converterTable.put(CompSystemConstants.MODIFIER_SHIFT, new Integer(
+        converterTable.put(ValueSets.Modifier.none.rcValue(), new Integer(-1));
+        converterTable.put(ValueSets.Modifier.shift.rcValue(), new Integer(
                 KeyEvent.VK_SHIFT));
-        converterTable.put(CompSystemConstants.MODIFIER_CONTROL, new Integer(
+        converterTable.put(ValueSets.Modifier.control.rcValue(), new Integer(
                 KeyEvent.VK_CONTROL));
-        converterTable.put(CompSystemConstants.MODIFIER_ALT, new Integer(
+        converterTable.put(ValueSets.Modifier.alt.rcValue(), new Integer(
                 KeyEvent.VK_ALT));
-        converterTable.put(CompSystemConstants.MODIFIER_META, new Integer(
+        converterTable.put(ValueSets.Modifier.meta.rcValue(), new Integer(
                 KeyEvent.VK_META));
-        converterTable.put(CompSystemConstants.MODIFIER_CMD, new Integer(
+        converterTable.put(ValueSets.Modifier.cmd.rcValue(), new Integer(
                 KeyEvent.VK_META));
-        converterTable.put(CompSystemConstants.MODIFIER_MOD, new Integer(
+        converterTable.put(ValueSets.Modifier.mod.rcValue(), new Integer(
                 KeyEvent.VK_CONTROL));
     }
 
@@ -185,9 +185,9 @@ public class JavaFXComponentAdapter<T extends Node> extends
      */
     private AbstractMenuTester openContextMenu(int xPos, String xUnits,
             int yPos, String yUnits, int button, Node n) {
-        boolean isAbsoluteUnitsX = CompSystemConstants.POS_UNIT_PIXEL
+        boolean isAbsoluteUnitsX = ValueSets.Unit.pixel.rcValue()
                 .equalsIgnoreCase(xUnits);
-        boolean isAbsoluteUnitsY = CompSystemConstants.POS_UNIT_PIXEL
+        boolean isAbsoluteUnitsY = ValueSets.Unit.pixel.rcValue()
                 .equalsIgnoreCase(yUnits);
         getRobot().click(
                 n,
@@ -276,9 +276,9 @@ public class JavaFXComponentAdapter<T extends Node> extends
         };
         cotxMenu.addEventFilter(WindowEvent.WINDOW_SHOWN, filter);
         // RobotTiming.sleepPreShowPopupDelay();
-        boolean isAbsoluteUnitsX = CompSystemConstants.POS_UNIT_PIXEL
+        boolean isAbsoluteUnitsX = ValueSets.Unit.pixel.rcValue()
                 .equalsIgnoreCase(xUnits);
-        boolean isAbsoluteUnitsY = CompSystemConstants.POS_UNIT_PIXEL
+        boolean isAbsoluteUnitsY = ValueSets.Unit.pixel.rcValue()
                 .equalsIgnoreCase(yUnits);
         getRobot().click(
                 comp,
@@ -313,8 +313,8 @@ public class JavaFXComponentAdapter<T extends Node> extends
 
     @Override
     public AbstractMenuTester showPopup(int button) {
-        return showPopup(50, CompSystemConstants.POS_UNIT_PERCENT, 50,
-                CompSystemConstants.POS_UNIT_PERCENT, button);
+        return showPopup(50, ValueSets.Unit.percent.rcValue(), 50,
+                ValueSets.Unit.percent.rcValue(), button);
     }
 
     @Override
@@ -400,9 +400,9 @@ public class JavaFXComponentAdapter<T extends Node> extends
                 null,
                 ClickOptions.create().setClickCount(count)
                         .setMouseButton(button), xPos,
-                xUnits.equalsIgnoreCase(CompSystemConstants.POS_UNIT_PIXEL),
+                xUnits.equalsIgnoreCase(ValueSets.Unit.pixel.rcValue()),
                 yPos,
-                yUnits.equalsIgnoreCase(CompSystemConstants.POS_UNIT_PIXEL));
+                yUnits.equalsIgnoreCase(ValueSets.Unit.pixel.rcValue()));
     }
 
     @Override

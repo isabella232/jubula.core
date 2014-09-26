@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.common.util;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.rc.common.CompSystemConstants;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 
 
@@ -50,11 +50,11 @@ public class KeyStrokeUtil {
         StringBuffer mod = new StringBuffer();
         for (int i = 0; i < modArray.length; i++) {
             String modElement = modArray[i];
-            if (modElement.equals(CompSystemConstants.MODIFIER_NONE)) {
+            if (modElement.equals(ValueSets.Modifier.none.rcValue())) {
                 modElement = StringUtils.EMPTY;
-            } else if (modElement.equals(CompSystemConstants.MODIFIER_CMD)) {
-                modElement = CompSystemConstants.MODIFIER_META;
-            } else if (modElement.equals(CompSystemConstants.MODIFIER_MOD)) {
+            } else if (modElement.equals(ValueSets.Modifier.cmd.rcValue())) {
+                modElement = ValueSets.Modifier.meta.rcValue();
+            } else if (modElement.equals(ValueSets.Modifier.mod.rcValue())) {
                 modElement = 
                     AUTServer.getInstance().getRobot().getSystemModifierSpec();
             }

@@ -18,7 +18,7 @@ import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
  * @author BREDEX GmbH
  * @created 07.07.2006
  */
-public class Constants implements CompSystemConstants {
+public class Constants {
     //  ----------------------------------------------------
     // --------- COLORS ------------------------------------
     //  ----------------------------------------------------

@@ -18,13 +18,13 @@ import javafx.geometry.Point2D;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
 
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.AbstractTreeTester;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
@@ -81,7 +81,7 @@ public class TreeViewTester extends AbstractTreeTester {
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
         rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
-                CompSystemConstants.EXTEND_SELECTION_NO);
+                ValueSets.BinaryChoice.no.rcValue());
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
 
@@ -93,7 +93,7 @@ public class TreeViewTester extends AbstractTreeTester {
 
         try {
             rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
-                    CompSystemConstants.EXTEND_SELECTION_NO);
+                    ValueSets.BinaryChoice.no.rcValue());
             waitBeforeDrop(delayBeforeDrop);
         } finally {
             final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
@@ -110,7 +110,7 @@ public class TreeViewTester extends AbstractTreeTester {
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
         rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
-                CompSystemConstants.EXTEND_SELECTION_NO);
+                ValueSets.BinaryChoice.no.rcValue());
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
     }
@@ -120,7 +120,7 @@ public class TreeViewTester extends AbstractTreeTester {
             String treeIndexPath, int delayBeforeDrop) {
         try {
             rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
-                    CompSystemConstants.EXTEND_SELECTION_NO);
+                    ValueSets.BinaryChoice.no.rcValue());
             waitBeforeDrop(delayBeforeDrop);
         } finally {
             final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();

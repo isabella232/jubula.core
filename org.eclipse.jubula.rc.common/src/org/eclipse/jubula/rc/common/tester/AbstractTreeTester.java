@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
@@ -397,12 +396,12 @@ public abstract class AbstractTreeTester extends WidgetTester {
         TreeNodeOperationConstraint constraint = 
             new TreeNodeOperationConstraint();
 
-        if (CompSystemConstants.TREE_MOVE_UP.equalsIgnoreCase(direction)) {
+        if (ValueSets.TreeDirection.up.rcValue().equalsIgnoreCase(direction)) {
             AbstractTreeNodeTraverser traverser = 
                 new ParentTraverser(context, distance, constraint);
             traverser.traversePath(selectOp, selectedNode);
-        } else if (CompSystemConstants
-                .TREE_MOVE_DOWN.equalsIgnoreCase(direction)) {
+        } else if (ValueSets.TreeDirection.down.rcValue()
+                .equalsIgnoreCase(direction)) {
             TreeNodeOperation expandOp = 
                 new ExpandCollapseTreeNodeOperation(false);
             AbstractTreeNodeTraverser expandTraverser = 
@@ -413,15 +412,15 @@ public abstract class AbstractTreeTester extends WidgetTester {
                 new ChildTraverser(context, distance, constraint);
             selectTraverser.traversePath(selectOp, selectedNode);
             
-        } else if (CompSystemConstants
-                .TREE_MOVE_NEXT.equalsIgnoreCase(direction)) {
+        } else if (ValueSets.TreeDirection.next.rcValue()
+                .equalsIgnoreCase(direction)) {
             // Look through siblings
             AbstractTreeNodeTraverser traverser = 
                 new SiblingTraverser(context, distance, true, constraint);
             traverser.traversePath(selectOp, selectedNode);
             
-        } else if (CompSystemConstants
-                .TREE_MOVE_PREVIOUS.equalsIgnoreCase(direction)) {
+        } else if (ValueSets.TreeDirection.previous.rcValue()
+                .equalsIgnoreCase(direction)) {
             // Look through siblings
             AbstractTreeNodeTraverser traverser = 
                 new SiblingTraverser(context, distance, false, constraint);

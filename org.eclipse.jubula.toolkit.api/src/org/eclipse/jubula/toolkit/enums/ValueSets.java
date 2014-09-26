@@ -14,14 +14,82 @@ package org.eclipse.jubula.toolkit.enums;
 public final class ValueSets {
 
     /** @author BREDEX GmbH */
+    public enum AUTActivationMethod implements LiteralProvider {
+        /** aut activation method */
+        autDefault("AUT_DEFAULT"), //$NON-NLS-1$
+        /** aut activation method */
+        none("NONE"), //$NON-NLS-1$
+        /** aut activation method */
+        titlebar("TITLEBAR"), //$NON-NLS-1$
+        /** aut activation method */
+        northwest("NW"), //$NON-NLS-1$
+        /** aut activation method */
+        northeast("NE"), //$NON-NLS-1$
+        /** aut activation method */
+        southwest("SW"), //$NON-NLS-1$
+        /** aut activation method */
+        southeast("SE"), //$NON-NLS-1$
+        /** aut activation method */
+        center("CENTER"); //$NON-NLS-1$
+
+        /** holds the value necessary for the RC side */
+        private final String m_rcValue;
+
+        /**
+         * Constructor
+         * 
+         * @param rcValue
+         *            the remote control side value
+         */
+        private AUTActivationMethod(String rcValue) {
+            this.m_rcValue = rcValue;
+        }
+
+        /**
+         * @return the value
+         */
+        public String rcValue() {
+            return m_rcValue;
+        }
+    }
+    
+    /** @author BREDEX GmbH */
+    public enum BinaryChoice implements LiteralProvider {
+        /** binary choice option */
+        yes("yes"), //$NON-NLS-1$
+        /** binary choice option */
+        no("no"); //$NON-NLS-1$
+
+        /** holds the value necessary for the RC side */
+        private final String m_rcValue;
+
+        /**
+         * Constructor
+         * 
+         * @param rcValue
+         *            the remote control side value
+         */
+        private BinaryChoice(String rcValue) {
+            this.m_rcValue = rcValue;
+        }
+
+        /**
+         * @return the value
+         */
+        public String rcValue() {
+            return m_rcValue;
+        }
+    }
+    
+    /** @author BREDEX GmbH */
     public enum Direction implements LiteralProvider {
-        /** value comparison operator */
+        /** direction value */
         up("up"), //$NON-NLS-1$
-        /** value comparison operator */
+        /** direction value */
         down("down"), //$NON-NLS-1$
-        /** value comparison operator */
+        /** direction value */
         left("left"), //$NON-NLS-1$
-        /** value comparison operator */
+        /** direction value */
         right("right"); //$NON-NLS-1$
 
         /** holds the value necessary for the RC side */
@@ -34,6 +102,70 @@ public final class ValueSets {
          *            the remote control side value
          */
         private Direction(String rcValue) {
+            this.m_rcValue = rcValue;
+        }
+
+        /**
+         * @return the value
+         */
+        public String rcValue() {
+            return m_rcValue;
+        }
+    }
+    
+    /** @author BREDEX GmbH */
+    public enum KeyStroke implements LiteralProvider {
+        /** key stroke */
+        delete("DELETE"); //$NON-NLS-1$
+
+        /** holds the value necessary for the RC side */
+        private final String m_rcValue;
+
+        /**
+         * Constructor
+         * 
+         * @param rcValue
+         *            the remote control side value
+         */
+        private KeyStroke(String rcValue) {
+            this.m_rcValue = rcValue;
+        }
+
+        /**
+         * @return the value
+         */
+        public String rcValue() {
+            return m_rcValue;
+        }
+    }
+    
+    /** @author BREDEX GmbH */
+    public enum Modifier implements LiteralProvider {
+        /** modifier value */
+        none("none"), //$NON-NLS-1$
+        /** modifier value */
+        shift("shift"), //$NON-NLS-1$
+        /** modifier value */
+        control("control"), //$NON-NLS-1$
+        /** modifier value */
+        alt("alt"), //$NON-NLS-1$
+        /** modifier value */
+        meta("meta"), //$NON-NLS-1$
+        /** modifier value */
+        cmd("cmd"), //$NON-NLS-1$
+        /** modifier value */
+        mod("mod"); //$NON-NLS-1$
+
+        /** holds the value necessary for the RC side */
+        private final String m_rcValue;
+
+        /**
+         * Constructor
+         * 
+         * @param rcValue
+         *            the remote control side value
+         */
+        private Modifier(String rcValue) {
             this.m_rcValue = rcValue;
         }
 
@@ -79,9 +211,9 @@ public final class ValueSets {
     
     /** @author BREDEX GmbH */
     public enum SearchType implements LiteralProvider {
-        /** value comparison operator */
+        /** search type value */
         relative("relative"), //$NON-NLS-1$
-        /** value comparison operator */
+        /** search type value */
         absolute("absolute"); //$NON-NLS-1$
 
         /** holds the value necessary for the RC side */
@@ -94,6 +226,66 @@ public final class ValueSets {
          *            the remote control side value
          */
         private SearchType(String rcValue) {
+            this.m_rcValue = rcValue;
+        }
+
+        /**
+         * @return the value
+         */
+        public String rcValue() {
+            return m_rcValue;
+        }
+    }
+    
+    /** @author BREDEX GmbH */
+    public enum TreeDirection implements LiteralProvider {
+        /** direction value */
+        up("up"), //$NON-NLS-1$
+        /** direction value */
+        down("down"), //$NON-NLS-1$
+        /** direction value */
+        next("next"), //$NON-NLS-1$
+        /** direction value */
+        previous("previous"); //$NON-NLS-1$
+
+        /** holds the value necessary for the RC side */
+        private final String m_rcValue;
+
+        /**
+         * Constructor
+         * 
+         * @param rcValue
+         *            the remote control side value
+         */
+        private TreeDirection(String rcValue) {
+            this.m_rcValue = rcValue;
+        }
+
+        /**
+         * @return the value
+         */
+        public String rcValue() {
+            return m_rcValue;
+        }
+    }
+    
+    /** @author BREDEX GmbH */
+    public enum Unit implements LiteralProvider {
+        /** unit value */
+        pixel("Pixel"), //$NON-NLS-1$
+        /** unit value */
+        percent("Percent"); //$NON-NLS-1$
+
+        /** holds the value necessary for the RC side */
+        private final String m_rcValue;
+
+        /**
+         * Constructor
+         * 
+         * @param rcValue
+         *            the remote control side value
+         */
+        private Unit(String rcValue) {
             this.m_rcValue = rcValue;
         }
 

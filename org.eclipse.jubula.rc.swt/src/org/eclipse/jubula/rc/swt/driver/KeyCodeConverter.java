@@ -13,8 +13,8 @@ package org.eclipse.jubula.rc.swt.driver;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.exception.RobotException;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.swt.SWT;
 
@@ -34,19 +34,19 @@ public class KeyCodeConverter {
     
     static {
         converterTable = new HashMap<String, Integer>();
-        converterTable.put(CompSystemConstants.MODIFIER_NONE, 
+        converterTable.put(ValueSets.Modifier.none.rcValue(), 
                 new Integer(-1));
-        converterTable.put(CompSystemConstants.MODIFIER_SHIFT, 
+        converterTable.put(ValueSets.Modifier.shift.rcValue(), 
                 new Integer(SWT.SHIFT));
-        converterTable.put(CompSystemConstants.MODIFIER_CONTROL, 
+        converterTable.put(ValueSets.Modifier.control.rcValue(), 
                 new Integer(SWT.CONTROL));
-        converterTable.put(CompSystemConstants.MODIFIER_ALT, 
+        converterTable.put(ValueSets.Modifier.alt.rcValue(), 
                 new Integer(SWT.ALT));
-        converterTable.put(CompSystemConstants.MODIFIER_META, 
+        converterTable.put(ValueSets.Modifier.meta.rcValue(), 
                 new Integer(SWT.COMMAND));
-        converterTable.put(CompSystemConstants.MODIFIER_CMD, 
+        converterTable.put(ValueSets.Modifier.cmd.rcValue(), 
                 new Integer(SWT.COMMAND));
-        converterTable.put(CompSystemConstants.MODIFIER_MOD, 
+        converterTable.put(ValueSets.Modifier.mod.rcValue(), 
                 new Integer(SWT.MOD1));        
     }
     

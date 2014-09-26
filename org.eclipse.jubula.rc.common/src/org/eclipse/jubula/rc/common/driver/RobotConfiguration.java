@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.driver;
 
-import org.eclipse.jubula.rc.common.CompSystemConstants;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 
 /**
  * Configuration of the robot 
@@ -22,7 +22,8 @@ public class RobotConfiguration {
     /** instance */
     private static RobotConfiguration instance = new RobotConfiguration();
     /** window activation method */
-    private String m_activationMethod = CompSystemConstants.AAM_NONE;
+    private String m_activationMethod =
+            ValueSets.AUTActivationMethod.none.rcValue();
     
     /**
      * @return instance

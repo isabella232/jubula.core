@@ -18,13 +18,13 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.rc.swt.driver.KeyCodeConverter;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
@@ -1306,24 +1306,24 @@ public class SwtUtils {
     public static int getSystemDefaultModifier() {
         if (EnvironmentUtils.isMacOS()) {
             return KeyCodeConverter
-                    .getKeyCode(CompSystemConstants.MODIFIER_CMD);
+                    .getKeyCode(ValueSets.Modifier.cmd.rcValue());
         }
         return KeyCodeConverter
-                .getKeyCode(CompSystemConstants.MODIFIER_CONTROL);
+                .getKeyCode(ValueSets.Modifier.control.rcValue());
     }
     
     /**
      * @return the second system modifier
      */
     public static int getSystemModifier2() {
-        return KeyCodeConverter.getKeyCode(CompSystemConstants.MODIFIER_SHIFT);
+        return KeyCodeConverter.getKeyCode(ValueSets.Modifier.shift.rcValue());
     }
 
     /**
      * @return the third system modifier
      */
     public static int getSystemModifier3() {
-        return KeyCodeConverter.getKeyCode(CompSystemConstants.MODIFIER_ALT);
+        return KeyCodeConverter.getKeyCode(ValueSets.Modifier.alt.rcValue());
     }
 
     /**
@@ -1331,7 +1331,7 @@ public class SwtUtils {
      */
     public static int getSystemModifier4() {
         return KeyCodeConverter
-                .getKeyCode(CompSystemConstants.MODIFIER_CONTROL);
+                .getKeyCode(ValueSets.Modifier.control.rcValue());
     }
     
     /**

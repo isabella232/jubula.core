@@ -15,11 +15,11 @@ import java.awt.Point;
 import javax.swing.JTree;
 import javax.swing.tree.TreePath;
 
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.AbstractTreeTester;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 /**
@@ -40,7 +40,7 @@ public class JTreeTester extends AbstractTreeTester {
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
         rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1, 
-                CompSystemConstants.EXTEND_SELECTION_NO);
+                ValueSets.BinaryChoice.no.rcValue());
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
 
@@ -53,7 +53,7 @@ public class JTreeTester extends AbstractTreeTester {
             String treeTextPath, String operator, int delayBeforeDrop) {
         try {
             rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
-                    CompSystemConstants.EXTEND_SELECTION_NO);
+                    ValueSets.BinaryChoice.no.rcValue());
             waitBeforeDrop(delayBeforeDrop);
         } finally {
             final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
@@ -73,7 +73,7 @@ public class JTreeTester extends AbstractTreeTester {
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
         rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
-                CompSystemConstants.EXTEND_SELECTION_NO);
+                ValueSets.BinaryChoice.no.rcValue());
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
 
@@ -86,7 +86,7 @@ public class JTreeTester extends AbstractTreeTester {
             String treeIndexPath, int delayBeforeDrop) {
         try {
             rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
-                    CompSystemConstants.EXTEND_SELECTION_NO);
+                    ValueSets.BinaryChoice.no.rcValue());
             waitBeforeDrop(delayBeforeDrop);
         } finally {
             final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();

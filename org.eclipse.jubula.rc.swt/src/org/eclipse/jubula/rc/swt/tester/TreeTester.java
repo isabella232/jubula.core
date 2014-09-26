@@ -13,7 +13,6 @@ package org.eclipse.jubula.rc.swt.tester;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
@@ -44,6 +43,7 @@ import org.eclipse.jubula.rc.swt.tester.tree.ToggleCheckboxOperation;
 import org.eclipse.jubula.rc.swt.tester.tree.TreeOperationContext;
 import org.eclipse.jubula.rc.swt.tester.tree.VerifyCheckboxOperation;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.swt.SWT;
@@ -177,7 +177,7 @@ public class TreeTester extends AbstractTreeTester {
         SwtUtils.waitForDisplayIdle(getTree().getDisplay());
 
         rcSelect(pathType, preAscend, treePath, operator, 0, 1, 
-                CompSystemConstants.EXTEND_SELECTION_NO);
+                ValueSets.BinaryChoice.no.rcValue());
 
         SwtUtils.waitForDisplayIdle(getTree().getDisplay());
     }
@@ -220,7 +220,7 @@ public class TreeTester extends AbstractTreeTester {
 
             // drop
             rcSelect(pathType, preAscend, treePath, operator, 0, 1,
-                    CompSystemConstants.EXTEND_SELECTION_NO);
+                    ValueSets.BinaryChoice.no.rcValue());
 
             SwtUtils.waitForDisplayIdle(getTree().getDisplay());
             waitBeforeDrop(delayBeforeDrop);
@@ -249,7 +249,7 @@ public class TreeTester extends AbstractTreeTester {
         SwtUtils.waitForDisplayIdle(getTree().getDisplay());
 
         rcSelectByIndices(pathType, preAscend, indexPath, 0, 1, 
-                CompSystemConstants.EXTEND_SELECTION_NO);
+                ValueSets.BinaryChoice.no.rcValue());
         
         SwtUtils.waitForDisplayIdle(getTree().getDisplay());
     }
@@ -291,7 +291,7 @@ public class TreeTester extends AbstractTreeTester {
 
             // drop
             rcSelectByIndices(pathType, preAscend, indexPath, 0, 1, 
-                    CompSystemConstants.EXTEND_SELECTION_NO);
+                    ValueSets.BinaryChoice.no.rcValue());
 
             SwtUtils.waitForDisplayIdle(getTree().getDisplay());
             waitBeforeDrop(delayBeforeDrop);
@@ -433,13 +433,13 @@ public class TreeTester extends AbstractTreeTester {
             TreeNodeOperationConstraint constraint = 
                 new TreeNodeOperationConstraint();
             
-            if (CompSystemConstants
-                    .TREE_MOVE_UP.equalsIgnoreCase(direction)) {
+            if (ValueSets.TreeDirection.up.rcValue()
+                    .equalsIgnoreCase(direction)) {
                 AbstractTreeNodeTraverser traverser = 
                     new ParentTraverser(context, distance, constraint);
                 traverser.traversePath(selectOp, selectedNode);
-            } else if (CompSystemConstants
-                    .TREE_MOVE_DOWN.equalsIgnoreCase(direction)) {
+            } else if (ValueSets.TreeDirection.down.rcValue()
+                    .equalsIgnoreCase(direction)) {
                 TreeNodeOperation expandOp = 
                     new ExpandCollapseTreeNodeOperation(false);
                 AbstractTreeNodeTraverser expandTraverser = 
@@ -450,15 +450,15 @@ public class TreeTester extends AbstractTreeTester {
                     new ChildTraverser(context, distance, constraint);
                 selectTraverser.traversePath(selectOp, selectedNode);
                 
-            } else if (CompSystemConstants
-                    .TREE_MOVE_NEXT.equalsIgnoreCase(direction)) {
+            } else if (ValueSets.TreeDirection.next.rcValue()
+                    .equalsIgnoreCase(direction)) {
                 // Look through siblings
                 AbstractTreeNodeTraverser traverser = 
                     new SiblingTraverser(context, distance, true, constraint);
                 traverser.traversePath(selectOp, selectedNode);
                 
-            } else if (CompSystemConstants
-                    .TREE_MOVE_PREVIOUS.equalsIgnoreCase(direction)) {
+            } else if (ValueSets.TreeDirection.previous.rcValue()
+                    .equalsIgnoreCase(direction)) {
                 // Look through siblings
                 AbstractTreeNodeTraverser traverser = 
                     new SiblingTraverser(context, distance, false, constraint);

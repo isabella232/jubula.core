@@ -51,7 +51,6 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
@@ -73,6 +72,7 @@ import org.eclipse.jubula.rc.javafx.components.CurrentStages;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.InputConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
@@ -810,14 +810,14 @@ public class RobotJavaFXImpl implements IRobot {
      * {@inheritDoc}
      */
     public String getSystemModifierSpec() {
-        String keyStrokeSpec = CompSystemConstants.MODIFIER_CONTROL;
+        String keyStrokeSpec = ValueSets.Modifier.control.rcValue();
         if (!(UIManager.getLookAndFeel().getID().equals(METAL_LAF_ID))) {
             if (Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()
                     == java.awt.Event.META_MASK) {
-                keyStrokeSpec = CompSystemConstants.MODIFIER_META;
+                keyStrokeSpec = ValueSets.Modifier.meta.rcValue();
             } else if (Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()
                     == java.awt.Event.ALT_MASK) {
-                keyStrokeSpec = CompSystemConstants.MODIFIER_ALT;
+                keyStrokeSpec = ValueSets.Modifier.alt.rcValue();
             }
         }
         return keyStrokeSpec;

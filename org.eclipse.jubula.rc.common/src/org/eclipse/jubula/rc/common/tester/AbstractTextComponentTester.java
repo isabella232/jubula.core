@@ -11,11 +11,11 @@
 package org.eclipse.jubula.rc.common.tester;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextInputComponent;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
@@ -71,8 +71,7 @@ public class AbstractTextComponentTester
     public void rcReplaceText(String text) {
         rcSelect();
         if (StringUtils.EMPTY.equals(text)) {
-            getRobot().keyStroke(
-                    CompSystemConstants.KEY_STROKE_DELETE);
+            getRobot().keyStroke(ValueSets.KeyStroke.delete.rcValue());
         }
         insertText(text);
     }

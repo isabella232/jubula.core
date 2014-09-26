@@ -16,13 +16,13 @@ import java.awt.event.InputEvent;
 
 import javafx.stage.Window;
 
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.driver.RobotConfiguration;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 
 /**
  * @author BREDEX GmbH
@@ -274,22 +274,29 @@ public abstract class WindowActivationMethod {
     public static WindowActivationMethod createWindowActivationMethod(
             String method, Robot robot, IEventThreadQueuer queuer) {
 
-        if (CompSystemConstants.AAM_AUT_DEFAULT.equals(method)) {
+        if (ValueSets.AUTActivationMethod.autDefault.rcValue().equals(method)) {
             return createWindowActivationMethod(RobotConfiguration
                     .getInstance().getDefaultActivationMethod(), robot, queuer);
-        } else if (CompSystemConstants.AAM_NONE.equals(method)) {
+        } else if (ValueSets.AUTActivationMethod.none.rcValue()
+                .equals(method)) {
             return new NoneMethod(robot, queuer);
-        } else if (CompSystemConstants.AAM_TITLE.equals(method)) {
+        } else if (ValueSets.AUTActivationMethod.titlebar.rcValue()
+                .equals(method)) {
             return new TitleMethod(robot, queuer);
-        } else if (CompSystemConstants.AAM_NORTHWEST.equals(method)) {
+        } else if (ValueSets.AUTActivationMethod.northwest.rcValue()
+                .equals(method)) {
             return new NorthWestMethod(robot, queuer);
-        } else if (CompSystemConstants.AAM_NORTHEAST.equals(method)) {
+        } else if (ValueSets.AUTActivationMethod.northeast.rcValue()
+                .equals(method)) {
             return new NorthEastMethod(robot, queuer);
-        } else if (CompSystemConstants.AAM_SOUTHWEST.equals(method)) {
+        } else if (ValueSets.AUTActivationMethod.southwest.rcValue()
+                .equals(method)) {
             return new SouthWestMethod(robot, queuer);
-        } else if (CompSystemConstants.AAM_SOUTHEAST.equals(method)) {
+        } else if (ValueSets.AUTActivationMethod.southeast.rcValue()
+                .equals(method)) {
             return new SouthEastMethod(robot, queuer);
-        } else if (CompSystemConstants.AAM_CENTER.equals(method)) {
+        } else if (ValueSets.AUTActivationMethod.center.rcValue()
+                .equals(method)) {
             return new CenterMethod(robot, queuer);
         } else {
             return new NoneMethod(robot, queuer);

@@ -24,7 +24,7 @@ class="ClassGenerator"%>
 	}
 	
 	NameLoader nameLoader = NameLoader.getInstance();
-	List<Action> actions = component.getActions();
+	List<Action> actions = new ArrayList<>(component.getActions());
 	List<Component> realized = component.getRealized();
 	Component realizedComponent = realized.size() > 0 ? realized.get(0) : null;
 	Boolean hasRealizedType = (realizedComponent != null);
@@ -69,7 +69,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 	<%// generate constructor only for implementation classes%>
 	<%if (!genInterface) {%>
 		<%/* check whether constructor should call super
-		and whether contsructor needs an object mapping */%>
+		and whether constructor needs an object mapping */%>
 		<%if (hasRealizedType) {%>
 			<%if (hasDefaultMapping) {%>
 			public <%=className%>() {

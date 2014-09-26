@@ -47,7 +47,6 @@ import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.NameValidator;
@@ -87,8 +86,7 @@ public class RecordHelper {
         KEYCODE_MAP.put(new Integer(KeyEvent.VK_END), new String("END"));  //$NON-NLS-1$
         KEYCODE_MAP.put(new Integer(KeyEvent.VK_HOME), new String("HOME"));  //$NON-NLS-1$
         KEYCODE_MAP.put(new Integer(KeyEvent.VK_INSERT), new String("INSERT"));  //$NON-NLS-1$
-        KEYCODE_MAP.put(new Integer(KeyEvent.VK_DELETE), new String(
-                CompSystemConstants.KEY_STROKE_DELETE));
+        KEYCODE_MAP.put(new Integer(KeyEvent.VK_DELETE), new String("DELETE")); //$NON-NLS-1$
         KEYCODE_MAP.put(new Integer(KeyEvent.VK_UP), new String("UP"));  //$NON-NLS-1$
         KEYCODE_MAP.put(new Integer(KeyEvent.VK_DOWN), new String("DOWN"));  //$NON-NLS-1$
         KEYCODE_MAP.put(new Integer(KeyEvent.VK_LEFT), new String("LEFT"));  //$NON-NLS-1$

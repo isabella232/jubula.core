@@ -12,7 +12,6 @@ package org.eclipse.jubula.rc.common.tester;
 
 import java.awt.Rectangle;
 
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -150,7 +149,7 @@ public abstract class AbstractTableTester
         final int implRow = adapter.getRowFromString(row, rowOperator);
         final int implCol = adapter.getColumnFromString(col, colOperator);
         final boolean isExtendSelection = extendSelection.equals(
-                CompSystemConstants.EXTEND_SELECTION_YES); 
+                ValueSets.BinaryChoice.yes.rcValue()); 
         if (log.isDebugEnabled()) {
             log.debug("Selecting row, col: " + row + ", " + col); //$NON-NLS-1$//$NON-NLS-2$
         }
@@ -175,9 +174,9 @@ public abstract class AbstractTableTester
             }
             getRobot().click(source, o, clickOptions, 
                     xPos, xUnits.equalsIgnoreCase(
-                            CompSystemConstants.POS_UNIT_PIXEL), 
+                            ValueSets.Unit.pixel.rcValue()), 
                     yPos, yUnits.equalsIgnoreCase(
-                            CompSystemConstants.POS_UNIT_PIXEL));
+                            ValueSets.Unit.pixel.rcValue()));
         } finally {
             if (isExtendSelection) {
                 getRobot().keyRelease(getRealTable(),
@@ -334,7 +333,7 @@ public abstract class AbstractTableTester
                             TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
         }        
         selectCell(row, rowOperator, col, colOperator, ClickOptions.create(),
-                CompSystemConstants.EXTEND_SELECTION_NO);
+                ValueSets.BinaryChoice.no.rcValue());
         rcVerifyEditable(editable);
     }
     
@@ -353,8 +352,8 @@ public abstract class AbstractTableTester
             final ClickOptions co, final String extendSelection) {
             
         rcSelectCell(row, rowOperator, col, colOperator, co.getClickCount(),
-                50, CompSystemConstants.POS_UNIT_PERCENT, 50,
-                CompSystemConstants.POS_UNIT_PERCENT, extendSelection,
+                50, ValueSets.Unit.percent.rcValue(), 50,
+                ValueSets.Unit.percent.rcValue(), extendSelection,
                 co.getMouseButton());
     }
     
@@ -713,7 +712,7 @@ public abstract class AbstractTableTester
         }
         selectCell(row, rowOperator, col, colOperator, 
                 ClickOptions.create().setClickCount(1), 
-                CompSystemConstants.EXTEND_SELECTION_NO);
+                ValueSets.BinaryChoice.no.rcValue());
         rcInputText(text);
     }
     
@@ -748,7 +747,7 @@ public abstract class AbstractTableTester
         }
         selectCell(row, rowOperator, col, colOperator, 
                 ClickOptions.create().setClickCount(1), 
-                CompSystemConstants.EXTEND_SELECTION_NO);
+                ValueSets.BinaryChoice.no.rcValue());
         inputText(text, true);
     }
     
@@ -781,7 +780,7 @@ public abstract class AbstractTableTester
         dndHelper.setMouseButton(mouseButton);
         dndHelper.setDragComponent(null);
         rcSelectCell(row, rowOperator, col, colOperator, 0, xPos, xUnits, yPos,
-                yUnits, CompSystemConstants.EXTEND_SELECTION_NO, 1);
+                yUnits, ValueSets.BinaryChoice.no.rcValue(), 1);
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
     }
@@ -813,7 +812,7 @@ public abstract class AbstractTableTester
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         try {
             rcSelectCell(row, rowOperator, col, colOperator, 0, xPos, xUnits,
-                    yPos, yUnits, CompSystemConstants.EXTEND_SELECTION_NO, 1);
+                    yPos, yUnits, ValueSets.BinaryChoice.no.rcValue(), 1);
             waitBeforeDrop(delayBeforeDrop);
         } finally {
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
@@ -841,7 +840,7 @@ public abstract class AbstractTableTester
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
         rcSelectRowByValue(col, colOperator, value, regexOp, 1,
-                CompSystemConstants.EXTEND_SELECTION_NO, searchType, 1);
+                ValueSets.BinaryChoice.no.rcValue(), searchType, 1);
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
     }
@@ -866,7 +865,7 @@ public abstract class AbstractTableTester
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         try {
             selectRowByValue(col, colOperator, value, regexOp,
-                    CompSystemConstants.EXTEND_SELECTION_NO, 
+                    ValueSets.BinaryChoice.no.rcValue(), 
                     searchType, ClickOptions
                     .create().setClickCount(0));
             waitBeforeDrop(delayBeforeDrop);
@@ -897,7 +896,7 @@ public abstract class AbstractTableTester
         dndHelper.setMouseButton(mouseButton);
 
         selectCellByColValue(row, rowOperator, value, regex,
-                CompSystemConstants.EXTEND_SELECTION_NO, searchType, 
+                ValueSets.BinaryChoice.no.rcValue(), searchType, 
                 ClickOptions.create().setClickCount(0));
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
@@ -923,7 +922,7 @@ public abstract class AbstractTableTester
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         try {
             selectCellByColValue(row, rowOperator, value, regex, 
-                    CompSystemConstants.EXTEND_SELECTION_NO, searchType, 
+                    ValueSets.BinaryChoice.no.rcValue(), searchType, 
                     ClickOptions.create().setClickCount(0));
             waitBeforeDrop(delayBeforeDrop);
         } finally {

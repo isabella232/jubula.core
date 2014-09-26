@@ -13,7 +13,6 @@ package org.eclipse.jubula.rc.swt.tester;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
@@ -29,6 +28,7 @@ import org.eclipse.jubula.rc.swt.tester.adapter.StyledTextAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TableAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TextComponentAdapter;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.InputConstants;
 import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
@@ -389,7 +389,7 @@ public class TableTester extends AbstractTableTester {
             
                 })).intValue();
 
-        if (CompSystemConstants.POS_UNIT_PIXEL.equalsIgnoreCase(units)) {
+        if (ValueSets.Unit.pixel.rcValue().equalsIgnoreCase(units)) {
             // Pixel units
             correctedPos += headerHeight;
         } else {
@@ -451,7 +451,7 @@ public class TableTester extends AbstractTableTester {
         
         rcSelectCell(row, rowOperator, col, colOperator, 0, xPos,
                 xUnits, yPos, yUnits, 
-                CompSystemConstants.EXTEND_SELECTION_NO, 1);
+                ValueSets.BinaryChoice.no.rcValue(), 1);
     }
     
     /**
@@ -496,7 +496,7 @@ public class TableTester extends AbstractTableTester {
                     // drop
                     rcSelectCell(row, rowOperator, col, colOperator, 0, xPos,
                             xUnits, yPos, yUnits, 
-                            CompSystemConstants.EXTEND_SELECTION_NO, 1);
+                            ValueSets.BinaryChoice.no.rcValue(), 1);
                     return null;
                 }            
             });
@@ -533,7 +533,7 @@ public class TableTester extends AbstractTableTester {
         dndHelper.setDragComponent(null);
         
         rcSelectRowByValue(col, colOperator, value, regexOp, 1, 
-                CompSystemConstants.EXTEND_SELECTION_NO,
+                ValueSets.BinaryChoice.no.rcValue(),
                 searchType, 1);
     }
     
@@ -571,7 +571,7 @@ public class TableTester extends AbstractTableTester {
 
                     // drop
                     selectRowByValue(col, colOperator, value, regexOp,
-                            CompSystemConstants.EXTEND_SELECTION_NO, 
+                            ValueSets.BinaryChoice.no.rcValue(), 
                             searchType, 
                             ClickOptions.create().setClickCount(0));
                     return null;
@@ -609,7 +609,7 @@ public class TableTester extends AbstractTableTester {
         dndHelper.setModifier(modifier);
         dndHelper.setDragComponent(null);
         selectCellByColValue(row, rowOperator, value, regex, 
-                CompSystemConstants.EXTEND_SELECTION_NO,
+                ValueSets.BinaryChoice.no.rcValue(),
                 searchType, ClickOptions.create().setClickCount(0));
     }
     
@@ -647,7 +647,7 @@ public class TableTester extends AbstractTableTester {
 
                     // drop
                     selectCellByColValue(row, rowOperator, value, regex,
-                            CompSystemConstants.EXTEND_SELECTION_NO, 
+                            ValueSets.BinaryChoice.no.rcValue(), 
                             searchType, 
                             ClickOptions.create().setClickCount(0));
                     return null;

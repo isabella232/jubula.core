@@ -30,7 +30,6 @@ import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.ui.palette.PaletteViewer;
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
@@ -46,6 +45,7 @@ import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.tester.adapter.ControlAdapter;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.swt.graphics.Rectangle;
@@ -387,9 +387,9 @@ public class FigureCanvasTester extends WidgetTester {
                 ClickOptions.create().setScrollToVisible(false)
                     .setClickCount(count).setMouseButton(button),
                 xPos, xUnits.equalsIgnoreCase(
-                        CompSystemConstants.POS_UNIT_PIXEL),
+                        ValueSets.Unit.pixel.rcValue()),
                 yPos, yUnits.equalsIgnoreCase(
-                        CompSystemConstants.POS_UNIT_PIXEL));
+                        ValueSets.Unit.pixel.rcValue()));
     }
 
     /**

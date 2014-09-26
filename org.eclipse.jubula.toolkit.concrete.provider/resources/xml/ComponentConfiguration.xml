@@ -2223,7 +2223,7 @@
 		</action>
 		<action name="CompSystem.Move" changed="1.10">
 			<method>rcMove</method>
-			<param name="CompSystem.Direction">
+			<param name="CompSystem.TreeDirection">
 				<type>java.lang.String</type>
 				<defaultValue>up</defaultValue>
 				<valueSet>

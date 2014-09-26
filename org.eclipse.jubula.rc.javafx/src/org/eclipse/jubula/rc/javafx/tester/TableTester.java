@@ -29,7 +29,6 @@ import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
@@ -44,6 +43,7 @@ import org.eclipse.jubula.rc.javafx.util.AbstractTraverser;
 import org.eclipse.jubula.rc.javafx.util.GenericTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
@@ -566,8 +566,8 @@ public class TableTester extends AbstractTableTester {
                     .createActionError(TestErrorEvent.NOT_FOUND));
         }
         rcSelectCell(row, rowOperator, result, operator, clickCount, 50,
-                CompSystemConstants.POS_UNIT_PERCENT, 50,
-                CompSystemConstants.POS_UNIT_PERCENT, extendSelection, button);
+                ValueSets.Unit.percent.rcValue(), 50,
+                ValueSets.Unit.percent.rcValue(), extendSelection, button);
     }
     
     /**

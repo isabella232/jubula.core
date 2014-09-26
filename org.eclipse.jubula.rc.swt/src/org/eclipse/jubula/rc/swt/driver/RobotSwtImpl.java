@@ -27,7 +27,6 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
 import org.eclipse.jubula.rc.common.driver.IEventMatcher;
@@ -51,6 +50,7 @@ import org.eclipse.jubula.rc.swt.tester.SwtApplicationTester;
 import org.eclipse.jubula.rc.swt.utils.SwtKeyCodeConverter;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.InputConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
@@ -1429,11 +1429,11 @@ public class RobotSwtImpl implements IRobot {
      * {@inheritDoc}
      */
     public String getSystemModifierSpec() {
-        String keyStrokeSpec = CompSystemConstants.MODIFIER_CONTROL;
+        String keyStrokeSpec = ValueSets.Modifier.control.rcValue();
         if (SWT.MOD1 == SWT.COMMAND) {
-            keyStrokeSpec = CompSystemConstants.MODIFIER_META;
+            keyStrokeSpec = ValueSets.Modifier.meta.rcValue();
         } else if (SWT.MOD1 == SWT.ALT) {
-            keyStrokeSpec = CompSystemConstants.MODIFIER_ALT;
+            keyStrokeSpec = ValueSets.Modifier.alt.rcValue();
         }
         return keyStrokeSpec; 
     }

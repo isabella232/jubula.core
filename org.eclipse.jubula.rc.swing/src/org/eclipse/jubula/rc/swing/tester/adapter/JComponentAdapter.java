@@ -16,7 +16,6 @@ import java.awt.Toolkit;
 
 import javax.swing.JComponent;
 
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
@@ -33,6 +32,7 @@ import org.eclipse.jubula.rc.swing.tester.JMenuBarTester;
 import org.eclipse.jubula.rc.swing.tester.util.EventListener;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil;
 import org.eclipse.jubula.rc.swing.tester.util.TesterUtil.PopupShownCondition;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -187,10 +187,10 @@ public class JComponentAdapter extends AbstractComponentAdapter
                 RobotTiming.sleepPreShowPopupDelay();
                 boolean isAbsoluteCoordinatesX = 
                     xUnits.equalsIgnoreCase(
-                        CompSystemConstants.POS_UNIT_PIXEL); 
+                            ValueSets.Unit.pixel.rcValue()); 
                 boolean isAbsoluteCoordinatesY = 
                     yUnits.equalsIgnoreCase(
-                        CompSystemConstants.POS_UNIT_PIXEL); 
+                            ValueSets.Unit.pixel.rcValue()); 
                 getRobot().click(component, null, 
                     ClickOptions.create().setMouseButton(button),
                     xPos, isAbsoluteCoordinatesX, 
@@ -308,9 +308,9 @@ public class JComponentAdapter extends AbstractComponentAdapter
                     .setClickCount(count)
                     .setMouseButton(button),
                 xPos, xUnits.equalsIgnoreCase(
-                    CompSystemConstants.POS_UNIT_PIXEL),
+                    ValueSets.Unit.pixel.rcValue()),
                 yPos, yUnits.equalsIgnoreCase(
-                    CompSystemConstants.POS_UNIT_PIXEL));
+                    ValueSets.Unit.pixel.rcValue()));
     }
     
     /**

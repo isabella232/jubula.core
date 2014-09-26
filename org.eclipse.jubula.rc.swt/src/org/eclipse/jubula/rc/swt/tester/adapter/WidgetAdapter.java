@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.tester.adapter;
 
-import org.eclipse.jubula.rc.common.CompSystemConstants;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
@@ -28,6 +27,7 @@ import org.eclipse.jubula.rc.swt.tester.adapter.ControlAdapter.PopupShownConditi
 import org.eclipse.jubula.rc.swt.tester.util.EventListener;
 import org.eclipse.jubula.rc.swt.tester.util.SimulatedTooltip;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -128,9 +128,9 @@ public class WidgetAdapter extends AbstractComponentAdapter {
                 null,
                 ClickOptions.create().setClickCount(count).setMouseButton(
                         button), xPos, xUnits.equalsIgnoreCase(
-                                CompSystemConstants.POS_UNIT_PIXEL),
+                            ValueSets.Unit.pixel.rcValue()),
                 yPos, yUnits.equalsIgnoreCase(
-                        CompSystemConstants.POS_UNIT_PIXEL));
+                        ValueSets.Unit.pixel.rcValue()));
     }
 
 
@@ -152,8 +152,8 @@ public class WidgetAdapter extends AbstractComponentAdapter {
                 }
             });
         }
-        return showPopup(50, CompSystemConstants.POS_UNIT_PERCENT, 50, 
-                CompSystemConstants.POS_UNIT_PERCENT, button);
+        return showPopup(50, ValueSets.Unit.percent.rcValue(), 50, 
+                ValueSets.Unit.percent.rcValue(), button);
     }
 
     /**
@@ -176,10 +176,10 @@ public class WidgetAdapter extends AbstractComponentAdapter {
             public void run() {
                 RobotTiming.sleepPreShowPopupDelay();
                 boolean isAbsoluteUnitsX = 
-                    CompSystemConstants.POS_UNIT_PIXEL.equalsIgnoreCase(
+                        ValueSets.Unit.pixel.rcValue().equalsIgnoreCase(
                             xUnits);
                 boolean isAbsoluteUnitsY = 
-                    CompSystemConstants.POS_UNIT_PIXEL.equalsIgnoreCase(
+                        ValueSets.Unit.pixel.rcValue().equalsIgnoreCase(
                             yUnits);
                 getRobot().click(component, null, 
                     ClickOptions.create().setClickCount(1)
