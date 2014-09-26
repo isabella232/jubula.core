@@ -1019,10 +1019,16 @@ class XmlImporter {
             String postFixProjVersion = !xml.isSetProjectVersionQualifier()
                     || xml.isNilProjectVersionQualifier() ? null : xml
                     .getProjectVersionQualifier();
-            proj = NodeMaker.createProjectPO(
-                    IVersion.JB_CLIENT_METADATA_VERSION, majorProjVersion,
-                    minorProjVersion, microProjVersion, postFixProjVersion,
-                    xml.getGUID());
+            if (!assignNewGuid) {
+                proj = NodeMaker.createProjectPO(
+                        IVersion.JB_CLIENT_METADATA_VERSION, majorProjVersion,
+                        minorProjVersion, microProjVersion, postFixProjVersion,
+                        xml.getGUID());
+            } else {
+                proj = NodeMaker.createProjectPO(
+                        IVersion.JB_CLIENT_METADATA_VERSION, majorProjVersion,
+                        minorProjVersion, microProjVersion, postFixProjVersion);
+            }
             ProjectNameBP.getInstance().setName(xml.getGUID(), xml.getName(),
                     false);
         } else {

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
+import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
+
 
 /**
  * @author BREDEX GmbH
@@ -220,6 +222,23 @@ public abstract class NodeMaker {
         return new ProjectPO(name, metadataVersion, false);
     }
 
+    /**
+     * factory method to replace constructor, This will generate a new GUID
+     * @param metadataVersion metadataVersion
+     * @param majorNumber majorNumber
+     * @param minorNumber minorNumber
+     * @param microNumber The micro version number for this project
+     * @param versionQualifier The version qualifier for this project
+     * @return IProjectPO
+     */
+    public static IProjectPO createProjectPO(Integer metadataVersion,
+            Integer majorNumber, Integer minorNumber, Integer microNumber,
+            String versionQualifier) {
+
+        return new ProjectPO(metadataVersion, majorNumber, minorNumber,
+                microNumber, versionQualifier, 
+                PersistenceUtil.generateGuid(), false);
+    }
     /**
      * factory method to replace constructor
      * @param metadataVersion metadataVersion

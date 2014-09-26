@@ -297,15 +297,9 @@ public class XmlStorage {
                         projectXml, assignNewGuid, majorVersion, minorVersion,
                         microVersion, versionQualifier, paramNameMapper, 
                         compNameCache);
-            }
-            if (assignNewGuid) {
+            } else if (assignNewGuid) {
                 return xmlImporter.createProject(
                     projectXml, assignNewGuid, paramNameMapper, compNameCache);
-            } else if (majorVersion != null || versionQualifier != null) {
-                return xmlImporter.createProject(
-                    projectXml, false,  majorVersion, minorVersion,
-                    microVersion, versionQualifier, paramNameMapper, 
-                    compNameCache);
             }
             return xmlImporter.createProject(projectXml, 
                     paramNameMapper, compNameCache);
