@@ -291,8 +291,7 @@ public class XmlStorage {
             
             XmlImporter xmlImporter = new XmlImporter(monitor, io,
                     skipTrackingInformation);
-            if (assignNewGuid 
-                    && (majorVersion != null || versionQualifier != null)) {
+            if ((majorVersion != null || versionQualifier != null)) {
                 return xmlImporter.createProject(
                         projectXml, assignNewGuid, majorVersion, minorVersion,
                         microVersion, versionQualifier, paramNameMapper, 
