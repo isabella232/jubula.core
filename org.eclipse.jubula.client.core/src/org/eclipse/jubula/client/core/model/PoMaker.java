@@ -342,17 +342,18 @@ public abstract class PoMaker {
 
     /**
      * factory method to replace constructor
+     * @param guid for the corresponding project.
      * @param majorNumber majorNumber
      * @param minorNumber minorNumber
      * @param microNumber The micro version number for this project
      * @param versionQualifier The version qualifier for this project
      * @return ProjectPropertiesPO
      */
-    public static IProjectPropertiesPO createProjectPropertiesPO(
+    public static IProjectPropertiesPO createProjectPropertiesPO(String guid,
             Integer majorNumber, Integer minorNumber, Integer microNumber,
             String versionQualifier) {
-        ProjectPropertiesPO projProp = new ProjectPropertiesPO(majorNumber,
-                minorNumber, microNumber, versionQualifier);
+        ProjectPropertiesPO projProp = new ProjectPropertiesPO(guid,
+                majorNumber, minorNumber, microNumber, versionQualifier);
         projProp.setCheckConfCont(createCheckConfContPO());
         return projProp;
     }

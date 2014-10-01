@@ -34,18 +34,23 @@ import javax.persistence.OrderBy;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
+import org.eclipse.persistence.annotations.Index;
 
 /**
  * @author BREDEX GmbH
  * @created Jun 11, 2007
  */
 @Entity
-@Table(name = "PROJECT_PROPERTIES")
+@Table(name = "PROJECT_PROPERTIES", 
+        uniqueConstraints = @UniqueConstraint(columnNames = 
+                { "GUID", "MAJOR_NUMBER", "MINOR_NUMBER",
+                "MICRO_NUMBER", "VERSION_QUALIFIER" }))
 class ProjectPropertiesPO implements IProjectPropertiesPO {
        
     /** Persistence (JPA / EclipseLink) OID */
@@ -144,24 +149,29 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
      */
     private List<IALMReportingRulePO> m_reportingRules =
             new ArrayList<IALMReportingRulePO>();
+
+    /** guid of the corresponding project*/
+    private String m_guid;
     
     /**
      * For Persistence (JPA / EclipseLink)
      */
     ProjectPropertiesPO() {
-        this(1, 0, 0, null);
+        this(null, 1, 0, 0, null);
     }
     
     /**
      * Constructor for when major/minor number are known
      * 
+     * @param guid for the corresponding project.
      * @param majorNumber The major number for the corresponding project.
      * @param minorNumber The minor number for the corresponding project.
      * @param microNumber The micro number for the corresponding project.
      * @param version The version string for the corresponding project.
      */
-    ProjectPropertiesPO(Integer majorNumber, Integer minorNumber,
+    ProjectPropertiesPO(String guid, Integer majorNumber, Integer minorNumber,
             Integer microNumber, String version) {
+        setGuid(guid);
         m_langHelper = new LanguageHelper(this);
         setMajorNumber(majorNumber);
         setMinorNumber(minorNumber);
@@ -232,6 +242,23 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
         }
     }
 
+    /**
+     *    
+     * @return the GUID.
+     */
+    @Basic
+    @Column(name = "GUID")
+    @Index(name = "PI_NODE_GUID")
+    public String getGuid() {
+        return m_guid;
+    }
+    /**
+     * @param guid The GUID to set.
+     */
+    private void setGuid(String guid) {
+        m_guid = guid;
+    }
+    
     /**
      * @deprecated
      * only to use by LanguageHelper

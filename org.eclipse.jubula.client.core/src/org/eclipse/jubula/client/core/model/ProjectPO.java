@@ -131,7 +131,7 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
             Integer microNumber, String versionQualifier) {
         
         setProjectProperties(
-                PoMaker.createProjectPropertiesPO(
+                PoMaker.createProjectPropertiesPO(getGuid(),
                     majorNumber, minorNumber, microNumber, versionQualifier));
         setAutCont(PoMaker.createAUTContPO());
         setTestDataCubeContPO(PoMaker.createTestDataCategoryPO());
