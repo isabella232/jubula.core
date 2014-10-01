@@ -70,6 +70,7 @@ public class TreeDirectionConverter extends AbstractXmlConverter {
                             .getParameterDescriptionList()) {
                         if (p.getName().equals(OLD_DIRECTION_NAME)) {
                             p.setName(NEW_DIRECTION_NAME);
+                            p.setUniqueId(NEW_DIRECTION_NAME);
                         }
                     }
                 }
