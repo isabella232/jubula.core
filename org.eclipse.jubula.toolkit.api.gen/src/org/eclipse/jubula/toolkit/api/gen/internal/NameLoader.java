@@ -18,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 
 
@@ -87,8 +88,8 @@ public class NameLoader {
     }
     
     /**
-     * Checks in the name mappings property file whether there is a mapping for a
-     * given string and returns it and if not, returns the original string
+     * Translates a comp system name (from e.g. an action or a parameter) 
+     * to how it shall be used in api
      * @param name original name
      * @return the name which should be used in api
      */
@@ -129,19 +130,18 @@ public class NameLoader {
     
     /**
      * @param toolkitName the toolkit name
-     * @param generateInterface whether an interface should be generated
      * @return the name extension of the api package name for the component
      */
-    public String getPackageName(String toolkitName,
-            boolean generateInterface) {
-        StringBuilder packageName = new StringBuilder(
-                getToolkitPackageName(toolkitName));
-        if (generateInterface) {
-            packageName.append(PACKAGE_SPECIFIC_INTERFACE);
-        } else {
-            packageName.append(PACKAGE_SPECIFIC_IMPLCLASS);
-        }
-        return packageName.toString();
+    public String getClassPackageName(String toolkitName) {
+        return getToolkitPackageName(toolkitName) + PACKAGE_SPECIFIC_IMPLCLASS;
+    }
+    
+    /**
+     * @param toolkitName the toolkit name
+     * @return the name extension of the api package name for the component
+     */
+    public String getInterfacePackageName(String toolkitName) {
+        return getToolkitPackageName(toolkitName) + PACKAGE_SPECIFIC_INTERFACE;
     }
     
     /**
@@ -153,6 +153,7 @@ public class NameLoader {
     }
     
     /**
+     * Translates a component name from the comp system to how it shall be used in the api
      * @param name the class name in comp system
      * @return the name of the class in the api
      */
@@ -201,5 +202,26 @@ public class NameLoader {
     public String getFactoryName(String toolkitName) {
         String tkName = WordUtils.capitalizeFully(toolkitName);
         return tkName + FACTORY_NAME_EXTENSION;
+    }
+    
+    /**
+     * Returns the name of factory of the toolkit above in toolkit hierarchy
+     * <code>null</code> if there is no toolkit above in toolkit hierarchy
+     * @param tkDescriptor toolkit descriptor
+     * @param compsystem the comp system
+     * @return the name of factory of the toolkit above in toolkit hierarchy
+     */
+    public String getSuperFactoryName(ToolkitDescriptor tkDescriptor,
+            CompSystem compsystem) {
+        String name = null;
+        String superToolkit = tkDescriptor.getDepends();
+        if (!"null".equals(superToolkit)) { //$NON-NLS-1$
+            superToolkit = compsystem.getToolkitDescriptor(superToolkit)
+                    .getName();            
+            name = getToolkitPackageName(superToolkit) + StringConstants.DOT
+                    + getFactoryName(superToolkit);
+            name = executeExceptions(name);
+        }
+        return name;
     }
 }

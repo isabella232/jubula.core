@@ -12,16 +12,16 @@ class="ClassGenerator"%>
 	GenerationInfo genInfo = (GenerationInfo)argument;
 	Component component = genInfo.getComponent();
 	String toolkitName = genInfo.getToolkitName();
-	String packageName = genInfo.getPackageName();
 	String className = genInfo.getClassName();
 	Boolean genInterface = genInfo.generatesInterface();
-	
-	GenerationInfo implementsInfo = null;
-	String implementedTypeFqn = null;
-	if (!genInterface) {
-		implementsInfo = new GenerationInfo(component, true);
-		implementedTypeFqn = implementsInfo.getFqn();
+	Boolean hasDefaultMapping = genInfo.hasDefaultMapping();
+	String packageName = null;
+	if (genInterface) {
+		packageName = genInfo.getInterfacePackageName();
+	} else {
+		packageName = genInfo.getClassPackageName();
 	}
+	String implementedTypeFqn = genInfo.getFqInterfaceName();
 	
 	NameLoader nameLoader = NameLoader.getInstance();
 	List<Action> actions = new ArrayList<>(component.getActions());
@@ -36,14 +36,16 @@ class="ClassGenerator"%>
 		realizedType = realizedComponent.getType();
 		superInfo = new GenerationInfo(realizedComponent, genInterface);
 		superActions = realizedComponent.getActions();
-		realizedTypeFqn = superInfo.getFqn();
+		if (genInterface) {
+			realizedTypeFqn = superInfo.getFqInterfaceName();
+		} else {
+			realizedTypeFqn = superInfo.getFqClassName();
+		}
 	}
 	String testerClass = "";
-	Boolean hasDefaultMapping = false;
 	if (component instanceof ConcreteComponent) {
 		ConcreteComponent concreteComponent = (ConcreteComponent)component;
 		testerClass = concreteComponent.getTesterClass();
-		hasDefaultMapping = concreteComponent.hasDefaultMapping();
 	}
 	%>
 /*******************************************************************************
@@ -100,11 +102,11 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 	Iterator<Action> actionsIterator = actions.iterator();
 	while (actionsIterator.hasNext()) {	
 		Action action = actionsIterator.next();
-		String actionName = nameLoader.translateFromCompSystem(action.getName());
+		String methodName = nameLoader.translateFromCompSystem(action.getName());
 		List<Param> params = action.getParams();
 		%>
 		<%if (action.isDeprecated()) {%>@Deprecated<%}%>
-		public void <%=actionName%>(
+		public void <%=methodName%>(
 		<%	
 		// add parameters to method
 		Iterator<Param> paramIterator = params.iterator();

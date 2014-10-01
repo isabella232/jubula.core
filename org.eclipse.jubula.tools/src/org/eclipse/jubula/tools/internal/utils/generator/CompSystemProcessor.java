@@ -300,4 +300,12 @@ public class CompSystemProcessor implements IProcessor {
 
         return deprecated;
     }
+
+    /**
+     * Returns the comp system
+     * @return the comp system
+     */
+    public CompSystem getCompSystem() {
+        return m_compSystem;
+    }
 }

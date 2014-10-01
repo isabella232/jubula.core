@@ -1,12 +1,14 @@
 <%@ jet 
 package="org.eclipse.jubula.toolkit.api.gen" 
 imports="java.util.*
+			org.eclipse.jubula.toolkit.api.gen.internal.FactoryInfo
 			org.eclipse.jubula.toolkit.api.gen.internal.GenerationInfo" 
 class="FactoryGenerator"%>
 <%
 	GenerationInfo genInfo = (GenerationInfo)argument;
-	String className = genInfo.getClassName();
-	String packageName = genInfo.getPackageName();
+	String factoryName = genInfo.getClassName();
+	String packageName = genInfo.getClassPackageName();
+	String superFactory = genInfo.getSuperFactoryName();
 %>
 /*******************************************************************************
  * Copyright (c) 2014 BREDEX GmbH.
@@ -20,6 +22,19 @@ class="FactoryGenerator"%>
  *******************************************************************************/
 package <%=packageName%>;
 
-public class <%=className%> {
+public abstract class <%=factoryName%> <%if (superFactory != null) {%>extends <%=superFactory%> <%}%> {
 
+<%for (FactoryInfo factoryInfo : genInfo.getComponentList()) {
+	String componentName = factoryInfo.getComponentName();
+	String className = factoryInfo.getClassName();
+	String interfaceName = factoryInfo.getInterfaceName();
+	Boolean hasDefaultMapping = factoryInfo.hasDefaultMapping();%>
+	<%if (hasDefaultMapping) {%>
+	public static <%=interfaceName%> create<%=componentName%> () {
+		return new <%=className%>();
+	}<%} else {%>
+	public static <%=interfaceName%> create<%=componentName%> (Object identifier) {
+		return new <%=className%>(identifier);
+	}<%}%>
+<%}%>
 }

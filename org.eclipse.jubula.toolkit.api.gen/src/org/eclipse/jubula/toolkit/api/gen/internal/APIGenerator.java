@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -40,6 +41,11 @@ public class APIGenerator {
     private static FactoryGenerator factoryGenerator =
             new FactoryGenerator();
     
+    /** list containing all components with information for factory generation.
+     *  will be reseted for each toolkit */
+    private static List<FactoryInfo> componentList =
+            new ArrayList<FactoryInfo>();
+    
     /**
      * Constructor
      */
@@ -56,7 +62,7 @@ public class APIGenerator {
         String generationBaseDir = loader.getGenerationDir();
         ToolkitConfig config = loader.getToolkitConfig();
         CompSystemProcessor processor = new CompSystemProcessor(config);
-        
+                
         List<ToolkitInfo> toolkitInfos = processor.getToolkitInfos();
 
         // Clean up
@@ -66,6 +72,7 @@ public class APIGenerator {
         
         // Generate classes toolkit by toolkit
         for (ToolkitInfo tkInfo : toolkitInfos) {
+            componentList.clear();
             List<ComponentInfo> compInfos = processor.getCompInfos(
                     tkInfo.getType(), tkInfo.getShortType(), false);
             for (ComponentInfo compInfo : compInfos) {
@@ -77,7 +84,8 @@ public class APIGenerator {
             if (!compInfos.isEmpty()) {
                 ToolkitDescriptor toolkitDesriptor =
                         compInfos.get(0).getComponent().getToolkitDesriptor();
-                GenerationInfo tkGenInfo = new GenerationInfo(toolkitDesriptor);
+                GenerationInfo tkGenInfo = new GenerationInfo(toolkitDesriptor,
+                        componentList, processor.getCompSystem());
                 createFactory(tkGenInfo, generationBaseDir);
             }
         }
@@ -138,7 +146,15 @@ public class APIGenerator {
         File file = new File(dir, className + ".java"); //$NON-NLS-1$
         String content = classGenerator.generate(genInfo);
 
-        createFile(dir, file, content); 
+        createFile(dir, file, content);
+        
+        if (!generateInterface && component.isVisible()) {
+            componentList.add(new FactoryInfo(
+                    genInfo.getClassName(),
+                    genInfo.getFqClassName(),
+                    genInfo.getFqInterfaceName(),
+                    genInfo.hasDefaultMapping()));
+        }
     }
 
     /** 
