@@ -93,7 +93,7 @@ public class ToolkitPluginParser {
         final String includes = toolkitElement
                 .getAttribute(ToolkitConstants.ATTR_INCLUDES);
         final String depends = toolkitElement
-            .getAttribute(ToolkitConstants.ATTR_INCLUDES);
+            .getAttribute(ToolkitConstants.ATTR_DEPENDS);
         final int order = Integer.parseInt(toolkitElement
                 .getAttribute(ToolkitConstants.ATTR_ORDER));
         final ConfigVersion configVersion = m_compSystem.getConfigVersion();
