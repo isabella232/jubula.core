@@ -757,7 +757,7 @@ public class SwtUtils {
         }
         int [] rect = new int [4];
         try {
-            sendMessage(parent.handle, /*TCM_GETITEMRECT*/ 0x130a, index, rect);
+            sendMessage((int) parent.handle, /*TCM_GETITEMRECT*/ 0x130a, index, rect);
             int width = rect [2] - rect[0];
             int height = rect [3] - rect [1];
             Rectangle bounds = new Rectangle(rect [0], rect [1], width, height);
@@ -780,7 +780,7 @@ public class SwtUtils {
             return new Rectangle(0, 0, 0, 0); 
         }
         try {
-            int hwndHeader = sendMessage(parent.handle, 
+            int hwndHeader = sendMessage((int)parent.handle, 
                 /*LVM_GETHEADER*/ 0x101f, 
                 0, new int [0]);
             int [] rect = new int [4];
@@ -790,7 +790,7 @@ public class SwtUtils {
             int height = rect [3] - rect [1];
             Rectangle bounds = new Rectangle(rect [0], rect [1], width, height);
             // FIXME zeb: coordinate system may change when the API is added to SWT
-            int hwndTable = parent.handle;
+            int hwndTable = (int)parent.handle;
             try {
                 parent.handle = hwndHeader;
                 return tableColumn.getDisplay().map(parent, null, bounds);
