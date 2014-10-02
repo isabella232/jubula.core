@@ -12,11 +12,11 @@
    <extension
          point="org.eclipse.jubula.toolkit.common.toolkitsupport">
       <toolkit
-            IToolkitProvider="org.eclipse.jubula.toolkit.win.apps.provider.WinAppsToolkitProvider"
+            IToolkitProvider="org.eclipse.jubula.toolkit.winapps.provider.WinAppsToolkitProvider"
             includes="ui.toolkit.WinToolkitPlugin"
             isUserToolkit="false"
             level="toolkit"
-            name="winApps"
+            name="winapps"
             order="7"
             toolkitID="ui.toolkit.WinAppsToolkitPlugin"/>
    </extension>

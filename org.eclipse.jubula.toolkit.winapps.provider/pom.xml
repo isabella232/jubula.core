@@ -8,7 +8,7 @@
     <version>2.4.0-SNAPSHOT</version>
     <relativePath>../org.eclipse.jubula.releng.client</relativePath>
   </parent>
-  <artifactId>org.eclipse.jubula.toolkit.win.apps.provider</artifactId>
+  <artifactId>org.eclipse.jubula.toolkit.winapps.provider</artifactId>
   <packaging>eclipse-plugin</packaging>
 
  <build>

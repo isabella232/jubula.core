@@ -125,7 +125,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.win.apps.api"
+         id="org.eclipse.jubula.toolkit.winapps.api"
          download-size="0"
          install-size="0"
          version="0.0.0"

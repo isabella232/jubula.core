@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.win.apps.provider;
+package org.eclipse.jubula.toolkit.winapps.provider;
 
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;

@@ -22,5 +22,5 @@ Require-Bundle: org.apache.commons.logging;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.jubula.toolkit.rcp.provider;bundle-version="[2.4.0,2.5.0)",
  org.eclipse.jubula.toolkit.swing.provider;bundle-version="[2.4.0,2.5.0)",
  org.eclipse.jubula.toolkit.swt.provider;bundle-version="[2.4.0,2.5.0)",
- org.eclipse.jubula.toolkit.win.apps.provider;bundle-version="[2.4.0,2.5.0)",
+ org.eclipse.jubula.toolkit.winapps.provider;bundle-version="[2.4.0,2.5.0)",
  org.eclipse.jubula.toolkit.win.provider;bundle-version="[2.4.0,2.5.0)"

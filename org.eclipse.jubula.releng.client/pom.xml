@@ -55,8 +55,8 @@
 		<module>../org.eclipse.jubula.toolkit.swt.provider</module>
         <module>../org.eclipse.jubula.toolkit.win.api</module>
         <module>../org.eclipse.jubula.toolkit.win.provider</module>
-        <module>../org.eclipse.jubula.toolkit.win.apps.api</module>
-        <module>../org.eclipse.jubula.toolkit.win.apps.provider</module>
+        <module>../org.eclipse.jubula.toolkit.winapps.api</module>
+        <module>../org.eclipse.jubula.toolkit.winapps.provider</module>
 		<module>../org.eclipse.jubula.toolkit.common</module>
 		<module>../org.eclipse.jubula.client.ua.cheatsheets</module>
 		<module>../org.eclipse.jubula.client.ua.welcome</module>

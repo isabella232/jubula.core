@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.win.apps.provider;
+package org.eclipse.jubula.toolkit.winapps.provider;
 
 import java.net.URL;
 import java.util.Map;
@@ -26,7 +26,7 @@ public class WinAppsToolkitProvider extends ToolKitProvider {
     
     /** <code>I18N_PROPERTIES</code> */
     private static final String I18N_PROPERTIES = 
-        "org.eclipse.jubula.toolkit.win.apps.provider.I18nStrings"; //$NON-NLS-1$
+        "org.eclipse.jubula.toolkit.winapps.provider.I18nStrings"; //$NON-NLS-1$
 
     /** {@inheritDoc} */
     public Composite getAutConfigDialog(Composite parent, int style,

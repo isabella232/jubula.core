@@ -191,7 +191,7 @@ public class NameLoader {
      */
     public String executeExceptions(String string) {
         return string.replace("abstract", "base").replace("gef", "rcp.gef") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                .replace("ios", "mobile.ios").replace("winApps", "win.apps"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                .replace("ios", "mobile.ios"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
