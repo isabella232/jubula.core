@@ -445,9 +445,9 @@
   		<xs:element name="projectName" type="xs:string" nillable="true"></xs:element>
   		<xs:element name="projectGUID" type="xs:string"></xs:element>
   		<xs:element name="majorNumber" type="xs:int" minOccurs="0"
-        		maxOccurs="1"></xs:element>
+        		maxOccurs="1" nillable="true"></xs:element>
   		<xs:element name="majorProjectVersion" type="xs:int" minOccurs="0"
-        		maxOccurs="1"></xs:element>
+        		maxOccurs="1" nillable="true"></xs:element>
   		<xs:element name="minorNumber" type="xs:int" minOccurs="0"
         		maxOccurs="1" nillable="true"></xs:element>
         <xs:element name="minorProjectVersion" type="xs:int" minOccurs="0"

@@ -508,24 +508,33 @@ class XmlImporter {
             m_io.writeLine(NLS.bind(Messages.XmlImporterProjectDependency,
                     new Object[] { xml.getName(),
                         getProjectVersion(
-                            xml.getMajorProjectVersion(),
-                            xml.getMinorProjectVersion(),
-                            xml.getMicroProjectVersion(),
+                                xml.isNilMajorProjectVersion()
+                                || !xml.isSetMajorProjectVersion() ? null
+                                        : xml.getMajorProjectVersion(),
+                                xml.isNilMinorProjectVersion()
+                                || !xml.isSetMinorProjectVersion() ? null
+                                        : xml.getMinorProjectVersion(),
+                                xml.isNilMicroProjectVersion()
+                                || !xml.isSetMicroProjectVersion() ? null
+                                        : xml.getMicroProjectVersion(),
                             xml.getProjectVersionQualifier())}));
             for (ReusedProject rp : xml.getReusedProjectsList()) {
+                ProjectVersion version = getProjectVersion(
+                        xml.isNilMajorProjectVersion()
+                        || !xml.isSetMajorProjectVersion() ? null
+                                : xml.getMajorProjectVersion(),
+                        xml.isNilMinorProjectVersion()
+                        || !xml.isSetMinorProjectVersion() ? null
+                                : xml.getMinorProjectVersion(),
+                        xml.isNilMicroProjectVersion()
+                        || !xml.isSetMicroProjectVersion() ? null
+                                : xml.getMicroProjectVersion(),
+                        rp.getProjectVersionQualifier());
                 String requiredProjectString = rp.getProjectName() != null 
                     ? NLS.bind(Messages.XmlImporterRequiredProject,
-                            new Object[] { rp.getProjectName(),
-                                getProjectVersion(rp.getMajorProjectVersion(),
-                                    rp.getMinorProjectVersion(),
-                                    rp.getMicroProjectVersion(),
-                                    rp.getProjectVersionQualifier())}) 
+                            new Object[] { rp.getProjectName(), version})
                     : NLS.bind(Messages.XmlImporterRequiredProjectWithoutName,
-                            new Object[] { rp.getProjectGUID(),
-                                getProjectVersion(rp.getMajorProjectVersion(),
-                                    rp.getMinorProjectVersion(),
-                                    rp.getMicroProjectVersion(),
-                                    rp.getProjectVersionQualifier())});
+                            new Object[] { rp.getProjectGUID(), version});
                 m_io.writeLine(requiredProjectString);
             }
         }
