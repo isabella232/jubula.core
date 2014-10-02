@@ -118,6 +118,7 @@ import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.IArchivableTestResultSummary;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
@@ -506,27 +507,42 @@ class XmlImporter {
         if (xml.getReusedProjectsList().size() > 0) {
             m_io.writeLine(NLS.bind(Messages.XmlImporterProjectDependency,
                     new Object[] { xml.getName(),
-                        xml.getMajorProjectVersion(),
-                        xml.getMinorProjectVersion(),
-                        xml.getMicroProjectVersion(),
-                        xml.getProjectVersionQualifier() }));
+                        getProjectVersion(
+                            xml.getMajorProjectVersion(),
+                            xml.getMinorProjectVersion(),
+                            xml.getMicroProjectVersion(),
+                            xml.getProjectVersionQualifier())}));
             for (ReusedProject rp : xml.getReusedProjectsList()) {
                 String requiredProjectString = rp.getProjectName() != null 
                     ? NLS.bind(Messages.XmlImporterRequiredProject,
                             new Object[] { rp.getProjectName(),
-                                rp.getMajorProjectVersion(),
-                                rp.getMinorProjectVersion(),
-                                rp.getMicroProjectVersion(),
-                                rp.getProjectVersionQualifier()}) 
+                                getProjectVersion(rp.getMajorProjectVersion(),
+                                    rp.getMinorProjectVersion(),
+                                    rp.getMicroProjectVersion(),
+                                    rp.getProjectVersionQualifier())}) 
                     : NLS.bind(Messages.XmlImporterRequiredProjectWithoutName,
                             new Object[] { rp.getProjectGUID(),
-                                rp.getMajorProjectVersion(),
-                                rp.getMinorProjectVersion(),
-                                rp.getMicroProjectVersion(),
-                                rp.getProjectVersionQualifier()});
+                                getProjectVersion(rp.getMajorProjectVersion(),
+                                    rp.getMinorProjectVersion(),
+                                    rp.getMicroProjectVersion(),
+                                    rp.getProjectVersionQualifier())});
                 m_io.writeLine(requiredProjectString);
             }
         }
+        
+    }
+    
+    /**
+     * Gets the {@link ProjectVersion} for the specified version numbers
+     * @param major number
+     * @param minor number
+     * @param micro number
+     * @param versionQualifier string version
+     * @return the projectVersion
+     */
+    private ProjectVersion getProjectVersion(Integer major, Integer minor,
+            Integer micro, String versionQualifier) {
+        return new ProjectVersion(major, minor, micro, versionQualifier);
     }
 
     /**
