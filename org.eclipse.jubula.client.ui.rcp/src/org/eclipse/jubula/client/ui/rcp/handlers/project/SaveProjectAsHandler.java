@@ -263,8 +263,6 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
         VersionDialog dialog = new VersionDialog(getActiveShell(),
                 Messages.SaveProjectAsActionTitle,
                 Messages.SaveProjectAsActionMessage,
-                Messages.SaveProjectAsActionInvalidName,
-                Messages.SaveProjectAsActionDoubleOrInvalidName,
                 IconConstants.BIG_PROJECT_STRING,
                 Messages.SaveProjectAsActionShellTitle,
                 true) {
@@ -274,8 +272,17 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
              */
             protected boolean isInputAllowed() {
                 final String newProjectName = getProjectNameFieldValue();
-                return ProjectNameBP.isValidProjectName(newProjectName, true)
-                        && !ProjectPM.doesProjectNameExist(newProjectName);
+                boolean isInputAllowed = true;
+                if (!ProjectNameBP.isValidProjectName(newProjectName, true)) {
+                    setErrorMessage(Messages.SaveProjectAsActionInvalidName);
+                    isInputAllowed = false;
+                }
+                if (ProjectPM.doesProjectNameExist(newProjectName)) {
+                    setErrorMessage(
+                            Messages.SaveProjectAsActionDoubleOrInvalidName);
+                    isInputAllowed = false;
+                }
+                return isInputAllowed;
             }
 
             /**

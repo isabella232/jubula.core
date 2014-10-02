@@ -95,7 +95,7 @@ public abstract class VersionComposite extends Composite {
         }
         GridData gridData = newGridData();
         new Label(composite, SWT.NONE).setText(
-                "Project Name");
+                Messages.SaveProjectAsActionLabel);
         m_projectNameField = new Text(composite, SWT.SINGLE | SWT.BORDER);
         gridData = newGridData();
         LayoutUtil.addToolTipAndMaxWidth(gridData, m_projectNameField);
@@ -185,8 +185,6 @@ public abstract class VersionComposite extends Composite {
                 modifyVersionFieldAction();           
             }
         });
-        
-        
 
     }
     
@@ -203,7 +201,8 @@ public abstract class VersionComposite extends Composite {
     }
     
     /**
-     * Ask if this version is allowed as a change
+     * Ask if this version is allowed as a change.
+     * This method is also used to set the error message of the dialog
      * @return true if the chosen version can be created
      */
     public abstract Boolean isChangeAllowed();
@@ -231,12 +230,10 @@ public abstract class VersionComposite extends Composite {
             m_okAllowed = true;
             if (!isChangeAllowed()) {
                 m_okAllowed = false;
-                setMessage(Messages.CreateNewProjectVersionActionDoubleVersion);
                 isCorrect = false;
             }
         } else {
             m_okAllowed = false;
-            setMessage(Messages.CreateNewProjectVersionActionInvalidVersion);
         }
         modifiedAction();
         return isCorrect;
@@ -285,6 +282,9 @@ public abstract class VersionComposite extends Composite {
         } catch (NumberFormatException nfe) {
             // Do nothing, the input is not correct and isCorrect remains false
         }
+        if (!isCorrect) {
+            setMessage(Messages.CreateNewProjectVersionActionInvalidVersion);
+        }
         return isCorrect;
     }
     
@@ -296,7 +296,7 @@ public abstract class VersionComposite extends Composite {
         try {
             value = Integer.parseInt(m_majorVersionField.getText());
         } catch (NumberFormatException nfe) {
-            // FIXME zeb Handle error
+            // This must not be handled
         }
         return value;
     }
@@ -311,7 +311,7 @@ public abstract class VersionComposite extends Composite {
                 value = Integer.parseInt(m_minorVersionField.getText());
             }
         } catch (NumberFormatException nfe) {
-            // FIXME zeb Handle error
+            // This must not be handled
         }
         return value;
     }
@@ -326,7 +326,7 @@ public abstract class VersionComposite extends Composite {
                 value = Integer.parseInt(m_microVersionField.getText());
             }
         } catch (NumberFormatException nfe) {
-            // Nothing to handle
+            // This must not be handled
         }
         return value;
     }

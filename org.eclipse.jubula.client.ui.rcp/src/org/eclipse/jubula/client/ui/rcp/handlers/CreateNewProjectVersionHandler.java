@@ -90,8 +90,6 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
             Messages.CreateNewProjectVersionActionTitle,
             actualVersion,
             Messages.CreateNewProjectVersionActionMessage,
-            Messages.CreateNewProjectVersionActionInvalidVersion,
-            Messages.CreateNewProjectVersionActionDoubleVersion,
             IconConstants.BIG_PROJECT_STRING, 
             Messages.CreateNewProjectVersionActionShellTitle) { 
 
@@ -100,12 +98,17 @@ public class CreateNewProjectVersionHandler extends AbstractHandler {
              */
             protected boolean isInputAllowed() {
                 ProjectVersion version = getFieldVersion();
-                return !ProjectPM.doesProjectVersionExist(
+                if (ProjectPM.doesProjectVersionExist(
                     GeneralStorage.getInstance().getProject().getGuid(),
                     version.getMajorNumber(), 
                     version.getMinorNumber(),
                     version.getMicroNumber(),
-                    version.getVersionQualifier());
+                    version.getVersionQualifier())) {
+                    setErrorMessage(Messages.
+                            CreateNewProjectVersionActionDoubleVersion);
+                    return false;
+                }
+                return true;
             }
 
             /**

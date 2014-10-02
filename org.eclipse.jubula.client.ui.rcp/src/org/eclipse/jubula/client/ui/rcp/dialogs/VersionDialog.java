@@ -79,15 +79,12 @@ public class VersionDialog extends TitleAreaDialog {
      * @param title The name of the title.
      * @param version is the version you want as base version
      * @param message The message.
-     * @param wrongNameError The wrongNameError message.
-     * @param doubleNameError The doubleNameError message.
      * @param image The image of the dialog.
      * @param shell The name of the shell.
      */
     public VersionDialog(Shell parentShell, String title,
-            ProjectVersion version, String message, 
-            String wrongNameError, 
-            String doubleNameError, String image, String shell) {
+            ProjectVersion version, String message,
+            String image, String shell) {
 
         super(parentShell);
         setNewVersion(version);
@@ -100,16 +97,12 @@ public class VersionDialog extends TitleAreaDialog {
      * @param parentShell The parent shell.
      * @param title The name of the title.
      * @param message The message.
-     * @param wrongNameError The wrongNameError message.
-     * @param doubleNameError The doubleNameError message.
      * @param image The image of the dialog.
      * @param shell The name of the shell.
      * @param withProjectNameLabel Should there be a field for project name?
      */
     public VersionDialog(Shell parentShell, String title,
-            String message, 
-            String wrongNameError, 
-            String doubleNameError, String image, String shell,
+            String message, String image, String shell,
             boolean withProjectNameLabel) {
 
         super(parentShell);
@@ -231,6 +224,8 @@ public class VersionDialog extends TitleAreaDialog {
     }
 
     /**
+     * This method is also used to set the error message of the dialog.
+     * So if This is returning <code>false</code> please set the error message of the dialog
      * @return False, if the input name already exists.
      */
     protected boolean isInputAllowed() {
