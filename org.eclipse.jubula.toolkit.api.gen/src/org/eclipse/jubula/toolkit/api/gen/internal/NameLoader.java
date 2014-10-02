@@ -190,8 +190,7 @@ public class NameLoader {
      * @return the adjusted string
      */
     public String executeExceptions(String string) {
-        return string.replace("abstract", "base") //$NON-NLS-1$ //$NON-NLS-2$
-                .replace("ios", "mobile.ios"); //$NON-NLS-1$ //$NON-NLS-2$
+        return string.replace("abstract", "base"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

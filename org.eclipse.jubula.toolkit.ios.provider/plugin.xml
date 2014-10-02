@@ -10,7 +10,7 @@
    <extension
          point="org.eclipse.jubula.toolkit.common.toolkitsupport">
       <toolkit
-            IToolkitProvider="org.eclipse.jubula.toolkit.mobile.ios.provider.ToolkitProvider"
+            IToolkitProvider="org.eclipse.jubula.toolkit.ios.provider.ToolkitProvider"
             includes="ui.toolkit.MobileToolkitPlugin"
             isUserToolkit="false"
             level="toolkit"

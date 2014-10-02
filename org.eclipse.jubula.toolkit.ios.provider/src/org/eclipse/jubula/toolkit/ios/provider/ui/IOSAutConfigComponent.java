@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.mobile.ios.provider.ui;
+package org.eclipse.jubula.toolkit.ios.provider.ui;
 
 import java.util.Map;
 

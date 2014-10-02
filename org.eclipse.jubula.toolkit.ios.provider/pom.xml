@@ -17,7 +17,7 @@
 		<relativePath>../org.eclipse.jubula.releng.client</relativePath>
 	</parent>
 
-	<artifactId>org.eclipse.jubula.toolkit.mobile.ios.provider</artifactId>
+	<artifactId>org.eclipse.jubula.toolkit.ios.provider</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
 	<build>

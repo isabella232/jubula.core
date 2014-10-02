@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.mobile.ios.provider;
+package org.eclipse.jubula.toolkit.ios.provider;
 
 import java.net.URL;
 import java.util.Map;
@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 public class ToolkitProvider implements IToolKitProvider {
     /** <code>I18N_PROPERTIES</code> */
     private static final String I18N_PROPERTIES = 
-        "org.eclipse.jubula.toolkit.mobile.ios.provider.I18nStrings"; //$NON-NLS-1$
+        "org.eclipse.jubula.toolkit.ios.provider.I18nStrings"; //$NON-NLS-1$
 
     /**{@inheritDoc} */
     public Composite getAutConfigDialog(Composite parent, int style,

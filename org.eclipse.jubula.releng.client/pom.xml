@@ -41,16 +41,16 @@
 		<module>../org.eclipse.jubula.toolkit.gef.provider</module>
 		<module>../org.eclipse.jubula.toolkit.html.api</module>
 		<module>../org.eclipse.jubula.toolkit.html.provider</module>
-		<module>../org.eclipse.jubula.toolkit.rcp.api</module>
-		<module>../org.eclipse.jubula.toolkit.rcp.provider</module>
-		<module>../org.eclipse.jubula.toolkit.swing.api</module>
-		<module>../org.eclipse.jubula.toolkit.swing.provider</module>
+		<module>../org.eclipse.jubula.toolkit.ios.api</module>
+		<module>../org.eclipse.jubula.toolkit.ios.provider</module>
 		<module>../org.eclipse.jubula.toolkit.javafx.api</module>
 		<module>../org.eclipse.jubula.toolkit.javafx.provider</module>
 		<module>../org.eclipse.jubula.toolkit.mobile.api</module>
 		<module>../org.eclipse.jubula.toolkit.mobile.provider</module>
-		<module>../org.eclipse.jubula.toolkit.mobile.ios.api</module>
-		<module>../org.eclipse.jubula.toolkit.mobile.ios.provider</module>
+		<module>../org.eclipse.jubula.toolkit.rcp.api</module>
+		<module>../org.eclipse.jubula.toolkit.rcp.provider</module>
+		<module>../org.eclipse.jubula.toolkit.swing.api</module>
+		<module>../org.eclipse.jubula.toolkit.swing.provider</module>
 		<module>../org.eclipse.jubula.toolkit.swt.api</module>
 		<module>../org.eclipse.jubula.toolkit.swt.provider</module>
         <module>../org.eclipse.jubula.toolkit.win.api</module>

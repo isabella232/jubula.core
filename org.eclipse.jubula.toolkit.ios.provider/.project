@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.eclipse.jubula.toolkit.mobile.ios.api</name>
+	<name>org.eclipse.jubula.toolkit.ios.provider</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -35,12 +35,12 @@
 		<link>
 			<name>.settings</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/org.eclipse.jubula.project.configuration/settings/1.6</locationURI>
+			<locationURI>copy_PARENT/org.eclipse.jubula.project.configuration/settings/1.7</locationURI>
 		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1409218333740</id>
+			<id>0</id>
 			<name></name>
 			<type>10</type>
 			<matcher>
@@ -49,4 +49,10 @@
 			</matcher>
 		</filter>
 	</filteredResources>
+	<variableList>
+		<variable>
+			<name>copy_PARENT</name>
+			<value>$%7BPARENT-2-PROJECT_LOC%7D/repos/org.eclipse.jubula.core</value>
+		</variable>
+	</variableList>
 </projectDescription>

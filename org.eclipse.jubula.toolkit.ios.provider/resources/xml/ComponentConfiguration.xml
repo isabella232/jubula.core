@@ -75,7 +75,7 @@
   
   <!-- Label -->
   <concreteComponent type="abstract.ios.TextVerifiable">
-    <realizes>guidancer.abstract.TextVerifiable</realizes>
+    <realizes>guidancer.concrete.Label</realizes>
     <action name="CompSystem.Swipe" changed="1.00">
       <method>rcSwipe</method>
       <param name="CompSystem.Direction">
