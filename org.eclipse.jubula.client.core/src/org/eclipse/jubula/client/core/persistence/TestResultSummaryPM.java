@@ -333,44 +333,6 @@ public class TestResultSummaryPM {
             Persistor.instance().dropSessionWithoutLockRelease(session);
         }
     }
-
-    /**
-     * this is only for testresultsummarys
-     * 
-     * @param majorVersion the major version
-     * @param minorVersion the minor version
-     * @param microVersion the micro version
-     * @param versionQualifier the qualifier version
-     * @param queryString the StringBuilder query
-     */
-    private static void addVersionsToQuery(Integer majorVersion,
-            Integer minorVersion, Integer microVersion,
-            String versionQualifier, StringBuilder queryString) {
-        if (majorVersion != null) {
-            queryString
-                .append(" and s.projectMajorVersion = :majorVersion"); //$NON-NLS-1$
-        } else {
-            queryString.append(" and s.projectMajorVersion IS NULL"); //$NON-NLS-1$
-        }
-        if (minorVersion != null) {
-            queryString
-                .append(" and s.projectMinorVersion = :minorVersion"); //$NON-NLS-1$
-        } else {
-            queryString.append(" and s.projectMinorVersion IS NULL"); //$NON-NLS-1$
-        }
-        if (microVersion != null) {
-            queryString
-                .append(" and s.projectMicroVersion = :microVersion"); //$NON-NLS-1$
-        } else {
-            queryString.append(" and s.projectMicroVersion IS NULL"); //$NON-NLS-1$
-        }
-        if (versionQualifier != null) {
-            queryString
-                .append(" and s.projectVersionQualifier = :versionQualifier)"); //$NON-NLS-1$
-        } else {
-            queryString.append(" and s.projectVersionQualifier IS NULL)"); //$NON-NLS-1$
-        }
-    }
     
     /**
      * delete testruns
