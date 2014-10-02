@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.rcp.gef.provider;
+package org.eclipse.jubula.toolkit.gef.provider;
 
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;

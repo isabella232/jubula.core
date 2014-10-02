@@ -25,6 +25,7 @@ import org.eclipse.jubula.tools.internal.utils.generator.CompSystemProcessor;
 import org.eclipse.jubula.tools.internal.utils.generator.ComponentInfo;
 import org.eclipse.jubula.tools.internal.utils.generator.ToolkitConfig;
 import org.eclipse.jubula.tools.internal.utils.generator.ToolkitInfo;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 
@@ -70,24 +71,25 @@ public class APIGenerator {
             cleanUp(tkInfo, generationBaseDir);
         }
         
-        // Generate classes toolkit by toolkit
+        // Generate classes and interfaces toolkit by toolkit
         for (ToolkitInfo tkInfo : toolkitInfos) {
             componentList.clear();
             List<ComponentInfo> compInfos = processor.getCompInfos(
                     tkInfo.getType(), tkInfo.getShortType(), false);
             for (ComponentInfo compInfo : compInfos) {
                 Component component = compInfo.getComponent();
+                // generate interface
                 createClass(component, generationBaseDir, true);
+                //generate implementation class
                 createClass(component, generationBaseDir, false);
             }
-            // Generate factory for each non-empty toolkit
-            if (!compInfos.isEmpty()) {
-                ToolkitDescriptor toolkitDesriptor =
-                        compInfos.get(0).getComponent().getToolkitDesriptor();
-                GenerationInfo tkGenInfo = new GenerationInfo(toolkitDesriptor,
-                        componentList, processor.getCompSystem());
-                createFactory(tkGenInfo, generationBaseDir);
-            }
+            // Generate a component factory for each toolkit
+            CompSystem compSystem = processor.getCompSystem();
+            ToolkitDescriptor toolkitDesriptor = compSystem
+                    .getToolkitDescriptor(tkInfo.getType());
+            GenerationInfo tkGenInfo = new GenerationInfo(toolkitDesriptor,
+                    componentList, compSystem);
+            createFactory(tkGenInfo, generationBaseDir);
         }
     }
 

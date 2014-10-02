@@ -37,12 +37,12 @@
 		<module>../org.eclipse.jubula.toolkit.base.provider</module>
 		<module>../org.eclipse.jubula.toolkit.concrete.api</module>
 		<module>../org.eclipse.jubula.toolkit.concrete.provider</module>
+		<module>../org.eclipse.jubula.toolkit.gef.api</module>
+		<module>../org.eclipse.jubula.toolkit.gef.provider</module>
 		<module>../org.eclipse.jubula.toolkit.html.api</module>
 		<module>../org.eclipse.jubula.toolkit.html.provider</module>
 		<module>../org.eclipse.jubula.toolkit.rcp.api</module>
 		<module>../org.eclipse.jubula.toolkit.rcp.provider</module>
-		<module>../org.eclipse.jubula.toolkit.rcp.gef.api</module>
-		<module>../org.eclipse.jubula.toolkit.rcp.gef.provider</module>
 		<module>../org.eclipse.jubula.toolkit.swing.api</module>
 		<module>../org.eclipse.jubula.toolkit.swing.provider</module>
 		<module>../org.eclipse.jubula.toolkit.javafx.api</module>

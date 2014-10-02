@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.rcp.gef.provider;
+package org.eclipse.jubula.toolkit.gef.provider;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,7 +23,7 @@ import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 public class ToolkitProvider extends AbstractToolkitProvider {
     /** <code>I18N_PROPERTIES</code> */
     private static final String I18N_PROPERTIES = 
-        "org.eclipse.jubula.toolkit.rcp.gef.provider.I18nStrings"; //$NON-NLS-1$
+        "org.eclipse.jubula.toolkit.gef.provider.I18nStrings"; //$NON-NLS-1$
 
     /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {

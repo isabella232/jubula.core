@@ -190,7 +190,7 @@ public class NameLoader {
      * @return the adjusted string
      */
     public String executeExceptions(String string) {
-        return string.replace("abstract", "base").replace("gef", "rcp.gef") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        return string.replace("abstract", "base") //$NON-NLS-1$ //$NON-NLS-2$
                 .replace("ios", "mobile.ios"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
@@ -214,8 +214,10 @@ public class NameLoader {
     public String getSuperFactoryName(ToolkitDescriptor tkDescriptor,
             CompSystem compsystem) {
         String name = null;
-        String superToolkit = tkDescriptor.getDepends();
-        if (!"null".equals(superToolkit)) { //$NON-NLS-1$
+        String includes = tkDescriptor.getIncludes();
+        String depends = tkDescriptor.getDepends();
+        String superToolkit = !includes.equals("null") ? includes : depends; //$NON-NLS-1$
+        if (!"null".equals(superToolkit) && !StringConstants.EMPTY.equals(superToolkit)) { //$NON-NLS-1$
             superToolkit = compsystem.getToolkitDescriptor(superToolkit)
                     .getName();            
             name = getToolkitPackageName(superToolkit) + StringConstants.DOT
