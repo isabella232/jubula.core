@@ -441,6 +441,7 @@ public class TestResultSummaryPM {
             }
             Persistor.instance().commitTransaction(session, tx);
         } catch (PMException e) {
+            log.error("Database exception while deleting testresults", e); //$NON-NLS-1$
             throw new JBFatalException(Messages.DeleteTestrunFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
         } catch (ProjectDeletedException e) {
