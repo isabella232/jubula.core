@@ -3,6 +3,7 @@ package="org.eclipse.jubula.toolkit.api.gen"
 imports="java.util.*
 			org.eclipse.jubula.toolkit.api.gen.internal.GenerationInfo 
 			org.eclipse.jubula.toolkit.api.gen.internal.NameLoader
+			org.eclipse.jubula.toolkit.enums.LiteralProvider
 		   org.eclipse.jubula.tools.internal.xml.businessmodell.Action
 		   org.eclipse.jubula.tools.internal.xml.businessmodell.Component
 		   org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
@@ -60,8 +61,12 @@ class="ClassGenerator"%>
  *******************************************************************************/
 package <%=packageName%>;
 
+import org.eclipse.jubula.communication.internal.message.MessageCap;
+import org.eclipse.jubula.communication.internal.message.MessageParam;
 import org.eclipse.jubula.toolkit.internal.annotations.RealizedType;
 import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
+import org.eclipse.jubula.tools.internal.exception.Assert;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 @RealizedType(realizedType="<%=realizedType%>")
 @TesterClass(testerClass="<%=testerClass%>")
@@ -77,19 +82,19 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			public <%=className%>() {
 				super();
 			}<%} else {%>
-			Object m_component;
-			public <%=className%>(Object component) {
-				super(component);
+			IComponentIdentifier m_componentIdentifier;
+			public <%=className%>(IComponentIdentifier componentIdentifier) {
+				super(componentIdentifier);
 			}<%}%>
 		<%} else {%>
 			<%if (hasDefaultMapping) {%>
 			public <%=className%>() {
 				super();
 			}<%} else {%>
-			Object m_component;
-			public <%=className%>(Object component) {
+			IComponentIdentifier m_componentIdentifier;
+			public <%=className%>(IComponentIdentifier componentIdentifier) {
 				super();
-				m_component = component;
+				m_componentIdentifier = componentIdentifier;
 			}<%}%>
 		<%}%>
 	<%}%>
@@ -106,19 +111,36 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 		List<Param> params = action.getParams();
 		%>
 		<%if (action.isDeprecated()) {%>@Deprecated<%}%>
-		public void <%=methodName%>(
+		public MessageCap <%=methodName%>(
 		<%	
 		// add parameters to method
+		Map<String, String> paramMap = new HashMap<String, String>();
 		Iterator<Param> paramIterator = params.iterator();
 		while (paramIterator.hasNext()) {
 			Param param = paramIterator.next();
 			String type = param.getType();
 			String name = param.getName();
-			String paramType = nameLoader.findEnumForParameter(type, name);
+			String paramType = nameLoader.findTypeForParameter(type, name);
 			String paramName = nameLoader.translateFromCompSystem(name);
+			paramMap.put(paramName, paramType);
 			%>
 			<%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
 		<%}%>
-		) <%if (genInterface) {%>;<%} else {%>{}<%}%>
+		) <%if (genInterface) {%>;<%} else {%>{
+			MessageCap messageCap = new MessageCap();
+			messageCap.setMethod("<%=action.getMethod()%>");
+			messageCap.sethasDefaultMapping(<%=hasDefaultMapping%>);
+			<%if (!hasDefaultMapping) {%>messageCap.setCi(m_componentIdentifier);<%}%>
+			<%for (String paramName : paramMap.keySet()) {%>
+			Assert.verify(<%=paramName%> != null, "Argument <%=paramName%> must not be null");
+				<%String paramType = paramMap.get(paramName);%>
+				<%if (nameLoader.isInEnumMap(paramType)) {%>
+			messageCap.addMessageParam(new MessageParam(<%=paramName%>.rcValue(), "java.lang.String"));
+				<%} else {%>
+			messageCap.addMessageParam(new MessageParam(<%=paramName%>.toString(), "<%=paramType%>"));
+				<%}%>
+			<%}%>
+			return messageCap;
+		}<%}%>
 	<%}%> 
 }

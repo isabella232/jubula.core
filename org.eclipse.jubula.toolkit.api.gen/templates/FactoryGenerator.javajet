@@ -22,6 +22,8 @@ class="FactoryGenerator"%>
  *******************************************************************************/
 package <%=packageName%>;
 
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+
 public abstract class <%=factoryName%> <%if (superFactory != null) {%>extends <%=superFactory%> <%}%> {
 
 <%for (FactoryInfo factoryInfo : genInfo.getComponentList()) {
@@ -33,8 +35,8 @@ public abstract class <%=factoryName%> <%if (superFactory != null) {%>extends <%
 	public static <%=interfaceName%> create<%=componentName%> () {
 		return new <%=className%>();
 	}<%} else {%>
-	public static <%=interfaceName%> create<%=componentName%> (Object identifier) {
-		return new <%=className%>(identifier);
+	public static <%=interfaceName%> create<%=componentName%> (IComponentIdentifier componentIdentifier) {
+		return new <%=className%>(componentIdentifier);
 	}<%}%>
 <%}%>
 }

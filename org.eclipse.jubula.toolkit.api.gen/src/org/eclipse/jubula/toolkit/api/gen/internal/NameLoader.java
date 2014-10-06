@@ -31,11 +31,13 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
  * @created 11.09.2014
  */
 public class NameLoader {
-    /**
-     * <code>RESOURCES_APIGEN_PROPERTIES</code>
-     */
+    /** <code>RESOURCES_NAMEMAPPINGS_PROPERTIES</code> */
     private static final String RESOURCES_NAMEMAPPINGS_PROPERTIES =
         "resources/nameMappings.properties"; //$NON-NLS-1$
+    
+    /** <code>RESOURCES_ENUMMAPPINGS_PROPERTIES</code> */
+    private static final String RESOURCES_ENUMMAPPINGS_PROPERTIES =
+        "resources/enumMappings.properties"; //$NON-NLS-1$
     
     /** package base path */
     private static final String PACKAGE_BASE_PATH =
@@ -61,17 +63,24 @@ public class NameLoader {
     /** the mapping properties */
     private Properties m_mappingProperties;
     
+    /** the enum mapping properties */
+    private Properties m_enumMappingProperties;
+    
 
     /**
      * The constructor.
      */
     private NameLoader() {
         try {
-            URL resourceURL = NameLoader.class.getClassLoader()
+            URL nameResourceURL = NameLoader.class.getClassLoader()
                 .getResource(RESOURCES_NAMEMAPPINGS_PROPERTIES);
-            
             m_mappingProperties = new Properties();
-            m_mappingProperties.load(resourceURL.openStream());
+            m_mappingProperties.load(nameResourceURL.openStream());
+            
+            URL enumResourceURL = NameLoader.class.getClassLoader()
+                .getResource(RESOURCES_ENUMMAPPINGS_PROPERTIES);
+            m_enumMappingProperties = new Properties();
+            m_enumMappingProperties.load(enumResourceURL.openStream());
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
@@ -110,14 +119,14 @@ public class NameLoader {
     }
     
     /**
-     * Checks in the name mappings property file whether there is a mapping for a
+     * Checks in the name/enum mappings property file whether there is a mapping for a
      * given parameter name and returns it and if not, returns the original type
      * @param type the type of the parameter
      * @param name the name of the parameter
      * @return the name which should be used in api
      */
-    public String findEnumForParameter(String type, String name) {
-        String mapEntry = m_mappingProperties.getProperty(name);
+    public String findTypeForParameter(String type, String name) {
+        String mapEntry = m_enumMappingProperties.getProperty(name);
         if (mapEntry != null) {
             return mapEntry;
         }
@@ -224,5 +233,14 @@ public class NameLoader {
             name = executeExceptions(name);
         }
         return name;
+    }
+    
+    /**
+     * Checks whether the given name is a value in the enum map
+     * @param name the name
+     * @return <code>true</code> if and only if the given name is a value in the enum map
+     */
+    public boolean isInEnumMap(String name) {
+        return m_enumMappingProperties.containsValue(name);
     }
 }
