@@ -150,12 +150,13 @@ public class APIGenerator {
 
         createFile(dir, file, content);
         
-        if (!generateInterface && component.isVisible()) {
+        if (!generateInterface) {
             componentList.add(new FactoryInfo(
                     genInfo.getClassName(),
                     genInfo.getFqClassName(),
                     genInfo.getFqInterfaceName(),
-                    genInfo.hasDefaultMapping()));
+                    genInfo.hasDefaultMapping(),
+                    genInfo.getMostSpecificVisibleSuperTypeName()));
         }
     }
 

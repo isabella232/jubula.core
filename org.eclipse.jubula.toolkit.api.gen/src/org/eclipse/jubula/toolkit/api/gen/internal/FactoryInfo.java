@@ -18,6 +18,9 @@ public class FactoryInfo {
 
     /** name of the component */
     private String m_componentName;
+
+    /** the most specific visible super type of a component */
+    private String m_mostSpecificVisibleSuperTypeName;
     
     /**
      * Contains all necessary information of a component for factory generation
@@ -25,13 +28,16 @@ public class FactoryInfo {
      * @param className the class name
      * @param interfaceName the interface name
      * @param hasDefaultMapping true if and only if component has default mapping
+     * @param mostSpecificVisibleSuperTypeName most specific visible super type of a component
      */
     public FactoryInfo(String componentName, String className,
-            String interfaceName, boolean hasDefaultMapping) {
+            String interfaceName, boolean hasDefaultMapping,
+            String mostSpecificVisibleSuperTypeName) {
         m_componentName = componentName;
         m_className = className;
         m_interfaceName = interfaceName;
         m_hasDefaultMapping = hasDefaultMapping;
+        m_mostSpecificVisibleSuperTypeName = mostSpecificVisibleSuperTypeName;
     }
     
     /**
@@ -65,6 +71,14 @@ public class FactoryInfo {
      */
     public Boolean hasDefaultMapping() {
         return m_hasDefaultMapping;
+    }
+
+    /** 
+     * Returns the most specific visible super type of a component
+     * @return the most specific visible super type of a component
+     */
+    public String getMostSpecificVisibleSuperTypeName() {
+        return m_mostSpecificVisibleSuperTypeName;
     }
 
 }

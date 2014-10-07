@@ -7,7 +7,7 @@ Bundle-Vendor: Eclipse Jubula
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
-Export-Package: org.eclipse.jubula.toolkit.concrete.widgets,
+Export-Package: org.eclipse.jubula.toolkit.concrete.components,
  org.eclipse.jubula.toolkit.concrete.internal.impl,
  org.eclipse.jubula.toolkit.concrete
 Require-Bundle: org.eclipse.jubula.toolkit.api;bundle-version="[2.4.0,2.5.0)",

@@ -8,7 +8,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: org.eclipse.jubula.toolkit.swt.config,
- org.eclipse.jubula.toolkit.swt.widgets,
+ org.eclipse.jubula.toolkit.swt.components,
  org.eclipse.jubula.toolkit.swt.internal.impl,
  org.eclipse.jubula.toolkit.swt
 Require-Bundle: org.eclipse.jubula.toolkit.api;bundle-version="[2.4.0,2.5.0)",

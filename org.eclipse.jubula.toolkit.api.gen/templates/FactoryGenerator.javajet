@@ -8,7 +8,6 @@ class="FactoryGenerator"%>
 	GenerationInfo genInfo = (GenerationInfo)argument;
 	String factoryName = genInfo.getClassName();
 	String packageName = genInfo.getClassPackageName();
-	String superFactory = genInfo.getSuperFactoryName();
 %>
 /*******************************************************************************
  * Copyright (c) 2014 BREDEX GmbH.
@@ -24,12 +23,20 @@ package <%=packageName%>;
 
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
-public abstract class <%=factoryName%> <%if (superFactory != null) {%>extends <%=superFactory%> <%}%> {
+/**
+ * Generated factory for creating components from the <%=genInfo.getToolkitName()%> toolkit.
+ * This class is not intended to be sub-classed.
+ */
+public final class <%=factoryName%> {
+
+	private <%=factoryName%>() {
+		super();
+	}
 
 <%for (FactoryInfo factoryInfo : genInfo.getComponentList()) {
 	String componentName = factoryInfo.getComponentName();
 	String className = factoryInfo.getClassName();
-	String interfaceName = factoryInfo.getInterfaceName();
+	String interfaceName = factoryInfo.getMostSpecificVisibleSuperTypeName();
 	Boolean hasDefaultMapping = factoryInfo.hasDefaultMapping();%>
 	<%if (hasDefaultMapping) {%>
 	public static <%=interfaceName%> create<%=componentName%> () {

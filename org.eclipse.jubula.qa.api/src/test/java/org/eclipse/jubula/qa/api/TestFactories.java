@@ -4,9 +4,9 @@ import junit.framework.Assert;
 
 import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.toolkit.base.AbstractComponentFactory;
-import org.eclipse.jubula.toolkit.base.widgets.GraphicsComponent;
+import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
 import org.eclipse.jubula.toolkit.concrete.ConcreteComponentFactory;
-import org.eclipse.jubula.toolkit.concrete.widgets.TabComponent;
+import org.eclipse.jubula.toolkit.concrete.components.TabComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.junit.Test;

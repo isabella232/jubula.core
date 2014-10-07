@@ -41,10 +41,9 @@ public class GenerationInfo {
     /** only used for generating factories 
      *  list of components which have to be generated in factory */
     private List<FactoryInfo> m_componentList;
-    
-    /** only used for generating factories 
-      * name of factory in the toolkit above in toolkit hierarchy */
-    private String m_superFactoryName;
+
+    /** the most specific visible super type of a component */
+    private String m_mostSpecificVisibleSuperTypeName;
     
     /**
      * Contains all necessary information for API generation of a component
@@ -76,11 +75,15 @@ public class GenerationInfo {
                 .replace(StringConstants.DOT, StringConstants.SLASH));
         m_toolkitName = nameLoader.executeExceptions(m_toolkitName);
         
+        m_mostSpecificVisibleSuperTypeName =
+                findMostSpecificVisibleSuperTypeName(component);
+        
         if (component instanceof ConcreteComponent) {
             m_hasDefaultMapping = 
                     ((ConcreteComponent)component).hasDefaultMapping();
         }
     }
+
     
     /**
      * Contains all necessary information for API generation for a toolkit.
@@ -106,10 +109,6 @@ public class GenerationInfo {
         m_directoryPath = nameLoader.executeExceptions(m_directoryPath
                 .replace(StringConstants.DOT, StringConstants.SLASH));
         m_toolkitName = nameLoader.executeExceptions(m_toolkitName);
-        
-        // For getting factories into a hierarchy
-        m_superFactoryName = nameLoader.getSuperFactoryName(tkDescriptor,
-                compsystem);
     }
 
     /**
@@ -203,15 +202,29 @@ public class GenerationInfo {
         return m_componentList;
     }
     
-
     /**
-     * Returns the name of factory of the toolkit above in toolkit hierarchy.
-     * <code>null</code> if there is no toolkit above in the hierarchy 
-     * or if constructor for classes/interfaces was used.
-     * @return the name of factory of the toolkit above in toolkit hierarchy
+     * Returns the name of the most specific visible super type of a component
+     * @return the name of the most specific visible super type of a component
      */
-    public String getSuperFactoryName() {
-        return m_superFactoryName;
+    public String getMostSpecificVisibleSuperTypeName() {
+        return m_mostSpecificVisibleSuperTypeName;
     }
-
+    
+    /**
+     * Finds the name of the most specific visible super type of a component
+     * @param component the component
+     * @return the name of the most specific visible super type
+     */
+    private String findMostSpecificVisibleSuperTypeName(Component component) {
+        if (component.isVisible()) {
+            return getFqInterfaceName();
+        }
+        // search for the most specific visible super type of the component
+        Component tmp = component;
+        while (tmp != null && !tmp.isVisible()) {
+            tmp = tmp.getRealized().get(0);
+        }
+        GenerationInfo visibleSuperType = new GenerationInfo(tmp, true);
+        return visibleSuperType.getFqInterfaceName();
+    }
 }
