@@ -41,7 +41,7 @@ import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
  * @author BREDEX GmbH
  * @created 24.3.2014
  */
-public class ChoiceBoxAdapter extends JavaFXComponentAdapter<ChoiceBox>
+public class ChoiceBoxAdapter extends JavaFXComponentAdapter<ChoiceBox<?>>
         implements IComboComponent {
 
     /**
@@ -50,7 +50,7 @@ public class ChoiceBoxAdapter extends JavaFXComponentAdapter<ChoiceBox>
      * @param objectToAdapt
      *            this must be an object of the Type <code>ChoiceBox</code>
      */
-    public ChoiceBoxAdapter(ChoiceBox objectToAdapt) {
+    public ChoiceBoxAdapter(ChoiceBox<?> objectToAdapt) {
         super(objectToAdapt);
     }
 

@@ -188,8 +188,8 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
                     @Override
                     public Void call() throws Exception {
-                        int index = ((TreeView<?>) getTree())
-                                .getRow((TreeItem) node);
+                        int index = ((TreeView) getTree())
+                                .getRow((TreeItem<?>) node);
                         ((TreeView<?>) getTree()).scrollTo(index);
                         // Update the layout coordinates otherwise
                         // we would get old position values

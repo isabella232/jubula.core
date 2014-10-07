@@ -39,7 +39,7 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
  * @author BREDEX GmbH
  * @created 14.03.2014
  */
-public class ListViewAdapter<T extends ListView> extends
+public class ListViewAdapter<T extends ListView<?>> extends
     JavaFXComponentAdapter<T> implements IListComponent {
     /**
      * Creates an object with the adapted Label.
@@ -58,7 +58,7 @@ public class ListViewAdapter<T extends ListView> extends
 
                 /** {@inheritDoc} **/
                 public String call() throws Exception {
-                    ObservableList sItems = getRealComponent() 
+                    ObservableList<?> sItems = getRealComponent() 
                             .getSelectionModel().getSelectedItems();
                     if (!sItems.isEmpty()) {
                         return String.valueOf(sItems.get(0));
@@ -77,7 +77,8 @@ public class ListViewAdapter<T extends ListView> extends
             "scrollIndexVisible", //$NON-NLS-1$
             new Callable<Integer>() {
                 public Integer call() throws Exception {
-                    final ObservableList items = getRealComponent().getItems();
+                    final ObservableList<?> items = getRealComponent().
+                            getItems();
                     int itemCount = items != null ? items.size() : -1;
                     return new Integer(itemCount);
                 }
@@ -99,7 +100,7 @@ public class ListViewAdapter<T extends ListView> extends
                             new NodeTraverseHelper<ListCell>();
                     List<ListCell> lCells = 
                             helper.getInstancesOf(listView, ListCell.class);
-                    for (ListCell cell : lCells) {
+                    for (ListCell<?> cell : lCells) {
                         if (cell.getIndex() == index.intValue()
                                 && cell.getListView() == listView) {
     
@@ -156,7 +157,7 @@ public class ListViewAdapter<T extends ListView> extends
                                 new NodeTraverseHelper<ListCell>();
                         List<ListCell> lCells = 
                                 helper.getInstancesOf(listView, ListCell.class);
-                        for (ListCell cell : lCells) {
+                        for (ListCell<?> cell : lCells) {
                             if (cell.getIndex() == index
                                 && cell.getListView() == listView) {
                                 selectedValues.add(cell.getText());
@@ -177,7 +178,7 @@ public class ListViewAdapter<T extends ListView> extends
                 public String[] call() throws Exception {
                     List<String> values = new LinkedList<String>();
                     final T listView = getRealComponent();
-                    ObservableList items = listView.getItems();
+                    ObservableList<?> items = listView.getItems();
                     int itemCount = items != null ? items.size() : -1;
                     for (int i = 0; i < itemCount; i++) {
                         listView.scrollTo(i);
@@ -186,7 +187,7 @@ public class ListViewAdapter<T extends ListView> extends
                                 new NodeTraverseHelper<ListCell>();
                         List<ListCell> lCells = 
                                 helper.getInstancesOf(listView, ListCell.class);
-                        for (ListCell cell : lCells) {
+                        for (ListCell<?> cell : lCells) {
                             if (cell.getIndex() == i
                                 && cell.getListView() == listView) {
                                 values.add(cell.getText());

@@ -52,8 +52,8 @@ public class ContextMenuAdapter extends AbstractComponentAdapter<ContextMenu>
                             IMenuItemComponent[] itemAdapters = 
                                     new IMenuItemComponent[items.size()];
                             for (int i = 0; i < items.size(); i++) {
-                                itemAdapters[i] = new MenuItemAdapter(items
-                                        .get(i));
+                                itemAdapters[i] = new MenuItemAdapter<MenuItem>(
+                                        items.get(i));
                             }
                             return itemAdapters;
                         }

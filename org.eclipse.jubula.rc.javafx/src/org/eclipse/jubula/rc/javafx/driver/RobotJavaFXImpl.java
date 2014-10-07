@@ -166,12 +166,12 @@ public class RobotJavaFXImpl implements IRobot {
                 }
             }
             if (parent instanceof ListView) {
-                ((ListView) parent).scrollTo(scrollNode);
+                ((ListView<Node>) parent).scrollTo(scrollNode);
             } else if (parent instanceof TableView) {
-                ((TableView) parent).scrollTo(scrollNode);
+                ((TableView<Node>) parent).scrollTo(scrollNode);
             } else if (parent instanceof TreeView) {
                 if (scrollNode instanceof TreeCell) {
-                    final TreeView treeView = (TreeView) parent;
+                    final TreeView<?> treeView = (TreeView<?>) parent;
                     treeView.scrollTo(treeView.getRow(
                         ((TreeCell) scrollNode).getTreeItem()));
                 }

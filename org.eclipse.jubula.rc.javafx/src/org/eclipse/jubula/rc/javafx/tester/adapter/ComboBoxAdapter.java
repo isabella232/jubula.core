@@ -56,10 +56,10 @@ public class ComboBoxAdapter<T extends ComboBox<?>> extends
                     public String call() throws Exception {
                         ObservableList<Node> children = getRealComponent()
                                 .getChildrenUnmodifiable();
-                        ListCell text = null;
+                        ListCell<?> text = null;
                         for (Node node : children) {
                             if (node instanceof ListCell) {
-                                text = (ListCell) node;
+                                text = (ListCell<?>) node;
                             }
                         }
                         if (text != null) {

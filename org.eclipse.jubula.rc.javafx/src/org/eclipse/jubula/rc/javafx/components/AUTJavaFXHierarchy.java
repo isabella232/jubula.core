@@ -24,7 +24,9 @@ import javafx.stage.Stage;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
+import org.eclipse.jubula.rc.common.components.AUTComponent;
 import org.eclipse.jubula.rc.common.components.AUTHierarchy;
+import org.eclipse.jubula.rc.common.components.HierarchyContainer;
 import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
@@ -71,7 +73,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     public void createHierarchyFrom(Object o) {
         lock.lock();
         try {
-            Map realMap = getRealMap();
+            Map<Object, AUTComponent> realMap = getRealMap();
             Object parent = ParentGetter.get(o);
 
             Object lastParent = parent;
@@ -174,9 +176,10 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     public void removeContainer(JavaFXHierarchyContainer ctner) {
         lock.lock();
         try {
-            Map contMap = getHierarchyMap();
+            Map<? extends AUTComponent, HierarchyContainer> contMap =
+                    getHierarchyMap();
 
-            Map realMap = getRealMap();
+            Map<Object, AUTComponent> realMap = getRealMap();
             JavaFXComponent fxComp = ctner.getComponent();
 
             fxComp.removeChangeListener();
@@ -201,8 +204,9 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     @Override
     public IComponentIdentifier[] getAllComponentId() {
         List<IComponentIdentifier> result = new Vector<IComponentIdentifier>();
-        Set keys = getHierarchyMap().keySet();
-        for (Iterator itr = keys.iterator(); itr.hasNext();) {
+        Set<? extends AUTComponent> keys = getHierarchyMap().keySet();
+        for (Iterator<? extends AUTComponent> itr = keys.iterator();
+                itr.hasNext();) {
             JavaFXComponent wrapComp = (JavaFXComponent) itr.next();
             Object comp = wrapComp.getRealComponent();
             try {

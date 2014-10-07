@@ -52,7 +52,7 @@ public class TreeViewTester extends AbstractTreeTester {
                     public Object call() throws Exception {
                         // Update the layout coordinates otherwise
                         // we would get old position values
-                        ((TreeView) getRealComponent()).layout();
+                        ((TreeView<?>) getRealComponent()).layout();
 
                         List<? extends TreeCell> tCells = ComponentHandler
                                 .getAssignableFrom(TreeCell.class);

@@ -156,7 +156,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                                     new NodeTraverseHelper<TreeTableCell>()
                                     .getInstancesOf(treeTable,
                                             TreeTableCell.class);
-                            for (TreeTableCell cell : cells) {
+                            for (TreeTableCell<?, ?> cell : cells) {
                                 // Nullchecks because of the virtual flow cells
                                 // are created which might not be associated
                                 // with a row or an item
@@ -241,8 +241,8 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
 
                     @Override
                     public Void call() throws Exception {
-                        int index = ((TreeTableView<?>) getTree())
-                                .getRow((TreeItem) node);
+                        int index = ((TreeTableView) getTree())
+                                .getRow((TreeItem<?>) node);
                         ((TreeTableView<?>) getTree()).scrollTo(index);
                         ((TreeTableView<?>) getTree())
                                 .scrollToColumnIndex(m_column);
@@ -276,7 +276,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                         List<TreeTableCell> cells = 
                                 new NodeTraverseHelper<TreeTableCell>()
                                 .getInstancesOf(treeTable, TreeTableCell.class);
-                        for (TreeTableCell treeTableCell : cells) {
+                        for (TreeTableCell<?, ?> treeTableCell : cells) {
                             // Nullchecks because of the virtual flow cells
                             // are created which might not be associated
                             // with a row or an item
@@ -336,7 +336,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                         List<TreeTableCell> cells = 
                                 new NodeTraverseHelper<TreeTableCell>()
                                 .getInstancesOf(treeTable, TreeTableCell.class);
-                        for (TreeTableCell treeTableCell : cells) {
+                        for (TreeTableCell<?, ?> treeTableCell : cells) {
                             // Nullchecks because of the virtual flow cells
                             // are created which might not be associated
                             // with a row or an item
@@ -525,7 +525,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                         List<TreeTableCell> cells = 
                                 new NodeTraverseHelper<TreeTableCell>()
                                 .getInstancesOf(treeTable, TreeTableCell.class);
-                        for (TreeTableCell cell : cells) {
+                        for (TreeTableCell<?, ?> cell : cells) {
                             // Nullchecks because of the virtual flow cells
                             // are created which might not be associated
                             // with a row or an item

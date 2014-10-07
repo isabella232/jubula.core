@@ -67,7 +67,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
      * @param objectToAdapt
      *            the object which needed to be adapted
      */
-    public TableAdapter(TableView objectToAdapt) {
+    public TableAdapter(TableView<?> objectToAdapt) {
         super(objectToAdapt);
     }
 
@@ -78,10 +78,11 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
 
                     @Override
                     public String call() throws Exception {
-                        ObservableList sCells = getRealComponent()
+                        ObservableList<?> sCells = getRealComponent()
                                 .getSelectionModel().getSelectedCells();
                         if (!sCells.isEmpty()) {
-                            TablePosition pos = (TablePosition) sCells.get(0);
+                            TablePosition<?, ?> pos =
+                                    (TablePosition<?, ?>) sCells.get(0);
                             return getCellText(pos.getRow(), pos.getColumn());
                         }
                         throw new StepExecutionException("No selection found", //$NON-NLS-1$
@@ -101,7 +102,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                     @Override
                     public Integer call() throws Exception {
                         int counter = 0;
-                        for (TableColumn column : getRealComponent()
+                        for (TableColumn<?, ?> column : getRealComponent()
                                 .getColumns()) {
                             counter += new GenericTraverseHelper
                                     <TableColumn, TableColumn>()
@@ -144,8 +145,8 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
 
                     @Override
                     public String call() throws Exception {
-                        TableView<?> table = getRealComponent();
-                        TableColumn col = null;
+                        TableView table = getRealComponent();
+                        TableColumn<?, ?> col = null;
                         if (m_columns.size() == 0) {
                             col = table.getVisibleLeafColumn(column);
                         } else {
@@ -189,10 +190,10 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                     @Override
                     public String call() throws Exception {
                         if (m_columns.size() > 0) {
-                            TableColumn tCol = m_columns.get(column);
+                            TableColumn<?, ?> tCol = m_columns.get(column);
                             return tCol.getText();
                         }
-                        TableColumn tCol = getRealComponent().
+                        TableColumn<?, ?> tCol = getRealComponent().
                                 getVisibleLeafColumn(column);
                         return tCol.getText();
                     }
@@ -208,7 +209,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                     @Override
                     public Integer call() throws Exception {
                         TableView table = getRealComponent();
-                        TableColumn column = null;
+                        TableColumn<?, ?> column = null;
                         List<String> path = StringParsing.splitToList(colPath,
                                 TestDataConstants.PATH_CHAR_DEFAULT,
                                 TestDataConstants.ESCAPE_CHAR_DEFAULT, false);
@@ -230,9 +231,9 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                                 int i = IndexConverter
                                         .toImplementationIndex(usrIdxCol);
                                 if (pathIterator.hasNext()) {
-                                    columns = columns.get(i).getColumns();
+                                    columns = (columns.get(i)).getColumns();
                                 } else {
-                                    column = columns.get(i);
+                                    column = (TableColumn<?, ?>) columns.get(i);
                                 }
                             } catch (NumberFormatException nfe) {
                                 try {
@@ -327,8 +328,8 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
 
                     @Override
                     public Rectangle call() throws Exception {
-                        TableView<?> table = getRealComponent();
-                        TableColumn col;
+                        TableView table = getRealComponent();
+                        TableColumn<?, ?> col;
                         if (m_columns.size() > 0) {
                             col = m_columns.get(column);
                         } else {
@@ -373,14 +374,15 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
 
                     @Override
                     public Cell call() throws StepExecutionException {
-                        TableView table = getRealComponent();
-                        ObservableList list = table
+                        TableView<?> table = getRealComponent();
+                        ObservableList<?> list = table
                                 .getSelectionModel().getSelectedCells();
 
                         if (list.size() > 0) {
-                            TablePosition pos = null;
+                            TablePosition<?, ?> pos = null;
                             for (Object object : list) {
-                                TablePosition curr = (TablePosition) object;
+                                TablePosition<?, ?> curr =
+                                        (TablePosition<?, ?>) object;
                                 if (curr.getRow() == table.getSelectionModel()
                                         .getSelectedIndex()) {
                                     pos = curr;
@@ -425,9 +427,9 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
 
                     @Override
                     public Boolean call() throws Exception {
-                        TableView<?> table = getRealComponent();
+                        TableView table = getRealComponent();
                         if (table.isEditable()) {
-                            TableColumn col = null;
+                            TableColumn<?, ?> col = null;
                             if (m_columns.size() == 0) {
                                 col = table.getVisibleLeafColumn(column);
                             } else {
@@ -479,8 +481,8 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
 
                     @Override
                     public Rectangle call() throws Exception {
-                        TableView<?> table = getRealComponent();
-                        TableColumn col = null;
+                        TableView table = getRealComponent();
+                        TableColumn<?, ?> col = null;
                         if (m_columns.size() == 0) {
                             col = table.getVisibleLeafColumn(column);
                         } else {

@@ -52,7 +52,8 @@ public class MenuBarItemAdapter extends MenuItemAdapter<Menu> {
                         List<? extends MenuBar> bars = ComponentHandler
                                 .getAssignableFrom(MenuBar.class);
                         MenuBar menuBar = bars.get(0);
-                        SkinBase menuBarSkin = (SkinBase) menuBar.getSkin();
+                        SkinBase<?> menuBarSkin = (SkinBase<?>) menuBar.
+                                getSkin();
                         Parent buttonBox = (Parent) menuBarSkin.
                                 getChildren().get(0);
                         return buttonBox.getChildrenUnmodifiable().get(
