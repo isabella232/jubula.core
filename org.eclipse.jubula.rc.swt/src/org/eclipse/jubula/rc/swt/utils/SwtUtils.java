@@ -757,7 +757,8 @@ public class SwtUtils {
         }
         int [] rect = new int [4];
         try {
-            sendMessage((int) parent.handle, /*TCM_GETITEMRECT*/ 0x130a, index, rect);
+            sendMessage((int) parent.handle, /*TCM_GETITEMRECT*/ 0x130a,
+                    index, rect);
             int width = rect [2] - rect[0];
             int height = rect [3] - rect [1];
             Rectangle bounds = new Rectangle(rect [0], rect [1], width, height);
