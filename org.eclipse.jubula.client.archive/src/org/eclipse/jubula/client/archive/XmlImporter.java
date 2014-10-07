@@ -1292,20 +1292,35 @@ class XmlImporter {
      * element
      */
     private IReusedProjectPO createReusedProject(ReusedProject xml) {
-        Integer majorProjVersion = xml.isSetMajorProjectVersion() ? xml
-                .getMajorProjectVersion() : xml.isSetMajorNumber() ? xml
-                .getMajorNumber() : null;
-        Integer minorProjVersion = xml.isSetMinorProjectVersion() ? xml
-                .getMinorProjectVersion() : xml.isSetMinorNumber() ? xml
-                .getMinorNumber() : null;
-        Integer microProjVersion = xml.isSetMicroProjectVersion() ? xml
-                .getMicroProjectVersion() : null;
-        String postFixProjVersion = xml.isSetProjectVersionQualifier() ? xml
-                .getProjectVersionQualifier() : null;
+        Integer majorProjVersion = null;
+        if (xml.isSetMajorProjectVersion()) {
+            majorProjVersion = xml.isNilMajorProjectVersion() ? null : xml
+                    .getMajorProjectVersion();
+
+        } else if (xml.isSetMajorNumber()) {
+            majorProjVersion = xml.isNilMajorNumber() ? null : xml
+                    .getMajorNumber();
+        }
+
+        Integer minorProjVersion = null;
+        if (xml.isSetMinorProjectVersion()) {
+            minorProjVersion = xml.isNilMinorProjectVersion() ? null : xml
+                    .getMinorProjectVersion();
+        } else if (xml.isSetMinorNumber()) {
+            minorProjVersion = xml.isNilMinorNumber() ? null : xml
+                    .getMinorNumber();
+        }
+
+        Integer microProjVersion = !xml.isSetMicroProjectVersion()
+                || xml.isNilMicroProjectVersion() ? null : xml
+                .getMicroProjectVersion();
+        String versionQualifier = !xml.isSetProjectVersionQualifier()
+                || xml.isNilProjectVersionQualifier() ? null : xml
+                .getProjectVersionQualifier();
 
         IReusedProjectPO reusedProject = PoMaker.createReusedProjectPO(
                 xml.getProjectGUID(), majorProjVersion, minorProjVersion,
-                microProjVersion, postFixProjVersion);
+                microProjVersion, versionQualifier);
         return reusedProject;
     }
     /**
