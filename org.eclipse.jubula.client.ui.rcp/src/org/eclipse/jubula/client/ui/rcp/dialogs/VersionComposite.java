@@ -15,6 +15,7 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedIntText;
+import org.eclipse.jubula.client.ui.rcp.widgets.CheckedProjectNameText;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.swt.SWT;
@@ -96,7 +97,8 @@ public abstract class VersionComposite extends Composite {
         GridData gridData = newGridData();
         new Label(composite, SWT.NONE).setText(
                 Messages.SaveProjectAsActionLabel);
-        m_projectNameField = new Text(composite, SWT.SINGLE | SWT.BORDER);
+        m_projectNameField = new CheckedProjectNameText(
+                composite, SWT.SINGLE | SWT.BORDER);
         gridData = newGridData();
         LayoutUtil.addToolTipAndMaxWidth(gridData, m_projectNameField);
         gridData.widthHint = 0;
@@ -346,8 +348,7 @@ public abstract class VersionComposite extends Composite {
      */
     public String getProjectNameFieldValue() {
         if (m_projectNameField != null) {
-            return StringUtils.trimToEmpty(
-                    m_projectNameField.getText());            
+            return m_projectNameField.getText();
         }
         return StringConstants.EMPTY;
     }
