@@ -233,7 +233,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                                 if (pathIterator.hasNext()) {
                                     columns = (columns.get(i)).getColumns();
                                 } else {
-                                    column = (TableColumn<?, ?>) columns.get(i);
+                                    column = columns.get(i);
                                 }
                             } catch (NumberFormatException nfe) {
                                 try {
