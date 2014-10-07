@@ -62,18 +62,22 @@ class="ClassGenerator"%>
 package <%=packageName%>;
 
 import org.eclipse.jubula.communication.internal.message.MessageCap;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+<%if (!genInterface) {%>
 import org.eclipse.jubula.communication.internal.message.MessageParam;
 import org.eclipse.jubula.toolkit.internal.annotations.RealizedType;
 import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
 import org.eclipse.jubula.tools.internal.exception.Assert;
-import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+<%}%>
 
 /**
  * Generated <%if (genInterface) {%>interface<%} else {%>class<%}%> representing the <%=className%> component from the <%=toolkitName%> toolkit.
  * <%if (genInterface) {%>This interface is not intended to be implemented by other any than the automatically generated classes.<%}%>
  */
+<%if (!genInterface) {%>
 @RealizedType(realizedType="<%=realizedType%>")
 @TesterClass(testerClass="<%=testerClass%>")
+<%}%>
 public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 	<%if (hasRealizedType) {%>extends <%=realizedTypeFqn%><%}%>
 	<%if (!genInterface) {%>implements <%=implementedTypeFqn%><%}%> {
