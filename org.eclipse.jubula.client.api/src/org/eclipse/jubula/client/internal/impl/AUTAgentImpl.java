@@ -23,9 +23,14 @@ import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** @author BREDEX GmbH */
 public class AUTAgentImpl implements AUTAgent {
+    /** the logger */
+    private static Logger log = LoggerFactory.getLogger(AUTAgentImpl.class);
+    
     /** the hosts name */
     private String m_hostname;
     /** the port */
@@ -82,9 +87,15 @@ public class AUTAgentImpl implements AUTAgent {
             autConfigMap, toolkitID);
 
         m_agent.send(startAUTMessage);
-
-        int startResponse = (Integer) Synchronizer.instance().exchange(null);
-        return handleResponse(startResponse);
+        
+        Object genericStartResponse = Synchronizer.instance().exchange(null);
+        if (genericStartResponse instanceof Integer) {
+            int startResponse = (Integer) genericStartResponse;
+            return handleResponse(startResponse);
+        }
+        log.error("Unexpected start response code received: " //$NON-NLS-1$
+            + String.valueOf(genericStartResponse));
+        return null;
     }
 
     /**
@@ -94,11 +105,16 @@ public class AUTAgentImpl implements AUTAgent {
      */
     private AutIdentifier handleResponse(int startResponse) 
         throws Exception {
-        if (startResponse != AUTStartResponse.OK) {
-            return null;
+        if (startResponse == AUTStartResponse.OK) {
+            Object autIdentifier = Synchronizer.instance().exchange(null);
+            if (autIdentifier instanceof AutIdentifier) {
+                return (AutIdentifier) autIdentifier;
+            }
+            log.error("Unexpected AUT identifier received: " //$NON-NLS-1$
+                + String.valueOf(autIdentifier));
         }
 
-        return (AutIdentifier) Synchronizer.instance().exchange(null);
+        return null;
     }
     
 
