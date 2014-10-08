@@ -20,6 +20,7 @@ import java.util.TreeMap;
 
 import javax.persistence.EntityManager;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -396,7 +397,8 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                 for (IProjectPO proj : projList) {
                     String projName = proj.getName();
                     String projVersion = proj.getVersionString();
-                    if (!projNameToVersionMap.containsKey(projName)) {
+                    if (!StringUtils.isBlank(projName) 
+                            && !projNameToVersionMap.containsKey(projName)) {
                         projNameToVersionMap.put(projName,
                                 new ArrayList<String>());
                     }

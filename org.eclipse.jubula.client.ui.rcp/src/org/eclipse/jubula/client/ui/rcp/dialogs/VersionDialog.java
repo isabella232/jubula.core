@@ -16,10 +16,10 @@ import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -278,10 +278,23 @@ public class VersionDialog extends TitleAreaDialog {
     public String getProjectNameFieldValue() {
         return m_versionComposite.getProjectNameFieldValue();
     }
+    
     /**
      * @return the project name
      */
     public String getProjectName() {
         return m_projectName;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    protected Button createButton(Composite parent, int id, String label, 
+        boolean defaultButton) {
+        Button button = super.createButton(parent, id, label, defaultButton);
+        if (m_withProjectNameLabel || !isInputAllowed()) {
+            getButton(IDialogConstants.OK_ID).setEnabled(false);          
+        }
+        return button;
     }
 }

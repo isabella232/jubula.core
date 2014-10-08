@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -273,7 +274,9 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
             protected boolean isInputAllowed() {
                 final String newProjectName = getProjectNameFieldValue();
                 boolean isInputAllowed = true;
-                if (!ProjectNameBP.isValidProjectName(newProjectName, true)) {
+                if (StringUtils.isBlank(newProjectName)
+                        || !ProjectNameBP
+                        .isValidProjectName(newProjectName, true)) {
                     setErrorMessage(Messages.SaveProjectAsActionInvalidName);
                     isInputAllowed = false;
                 }
@@ -289,8 +292,9 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
              * {@inheritDoc}
              */
             protected void okPressed() {
-                if (ProjectPM.doesProjectNameExist(
-                        getProjectNameFieldValue())) {
+                String newProjectName = getProjectNameFieldValue();
+                if (ProjectPM.doesProjectNameExist(newProjectName) 
+                        || StringUtils.isBlank(newProjectName)) {
                     ErrorHandlingUtil.createMessageDialog(
                             MessageIDs.E_PROJECTNAME_ALREADY_EXISTS,
                             new Object[] { getProjectNameFieldValue() }, null);
