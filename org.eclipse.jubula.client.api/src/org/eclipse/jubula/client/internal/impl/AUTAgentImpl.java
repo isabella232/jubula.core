@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.internal.impl;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jubula.client.AUTAgent;
@@ -17,6 +20,7 @@ import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.Synchronizer;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.communication.internal.Communicator;
+import org.eclipse.jubula.communication.internal.message.GetRegisteredAutListMessage;
 import org.eclipse.jubula.communication.internal.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.internal.message.StopAUTServerMessage;
 import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
@@ -121,5 +125,21 @@ public class AUTAgentImpl implements AUTAgent {
     /** {@inheritDoc} */
     public void stopAUT(final AutIdentifier aut) throws Exception {
         m_agent.send(new StopAUTServerMessage(aut));
+    }
+
+    /** {@inheritDoc} */
+    public List<AutIdentifier> getAllRegisteredAUTIdentifier() 
+        throws Exception {
+        m_agent.send(new GetRegisteredAutListMessage());
+
+        Object arrayOfAutIdentifier = Synchronizer.instance().exchange(null);
+        if (arrayOfAutIdentifier instanceof AutIdentifier[]) {
+            return Collections.unmodifiableList(Arrays
+                .asList((AutIdentifier[]) arrayOfAutIdentifier));
+        }
+        log.error("Unexpected AUT identifiers received: " //$NON-NLS-1$
+            + String.valueOf(arrayOfAutIdentifier));
+        
+        return null;
     }
 }

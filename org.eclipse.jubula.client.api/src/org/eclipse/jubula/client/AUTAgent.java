@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
+import java.util.List;
+
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
@@ -31,4 +33,11 @@ public interface AUTAgent extends Remote {
      *            a reference to the AUT to stop
      */
     void stopAUT(AutIdentifier aut) throws Exception;
+    
+    /**
+     * @return an unmodifiable list of currently known / registered AUT IDs
+     * @throws Exception
+     *             in case of a communication problem
+     */
+    List<AutIdentifier> getAllRegisteredAUTIdentifier() throws Exception;
 }

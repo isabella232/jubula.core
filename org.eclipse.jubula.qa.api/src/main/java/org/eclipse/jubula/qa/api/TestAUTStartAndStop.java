@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.qa.api;
 
+import java.util.List;
 import java.util.Locale;
 
 import junit.framework.Assert;
@@ -19,7 +20,6 @@ import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
-import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class TestAUTStartAndStop {
     private static final String ERR_STILL_CONNECTED = "Still connected to AUT-Agent via API"; //$NON-NLS-1$
     /** the ERR_NOT_CONNECTED */
     private static final String ERR_NOT_CONNECTED = "No connection to AUT-Agent via API"; //$NON-NLS-1$
-    /** the m_agent */
+    /** the AUT-Agent */
     private AUTAgent m_agent;
 
     /** prepare */
@@ -72,7 +72,11 @@ public class TestAUTStartAndStop {
         // start
         Assert.assertEquals(id.getExecutableName(), autID);
         
-        TimeUtil.delay(2000);
+        List<AutIdentifier> allRegisteredAUTIdentifier = m_agent
+            .getAllRegisteredAUTIdentifier();
+
+        Assert.assertTrue("Expected ID not found", //$NON-NLS-1$
+            allRegisteredAUTIdentifier.contains(id)); 
         
         m_agent.stopAUT(id);
     }
