@@ -72,7 +72,7 @@ import org.eclipse.jubula.tools.internal.exception.Assert;
 
 /**
  * Generated <%if (genInterface) {%>interface<%} else {%>class<%}%> representing the <%=className%> component from the <%=toolkitName%> toolkit.
- * <%if (genInterface) {%>This interface is not intended to be implemented by other any than the automatically generated classes.<%}%>
+ * <%if (genInterface) {%>This interface is not intended to be implemented by any other than the automatically generated classes.<%}%>
  */
 <%if (!genInterface) {%>
 @RealizedType(realizedType="<%=realizedType%>")
@@ -140,7 +140,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			messageCap.sethasDefaultMapping(<%=hasDefaultMapping%>);
 			<%if (!hasDefaultMapping) {%>messageCap.setCi(m_componentIdentifier);<%}%>
 			<%for (String paramName : paramMap.keySet()) {%>
-			Assert.verify(<%=paramName%> != null, "Argument <%=paramName%> must not be null");
+			Assert.verify(<%=paramName%> != null, "Argument '<%=paramName%>' must not be null");
 				<%String paramType = paramMap.get(paramName);%>
 				<%if (nameLoader.isInEnumMap(paramType)) {%>
 			messageCap.addMessageParam(new MessageParam(<%=paramName%>.rcValue(), "java.lang.String"));
