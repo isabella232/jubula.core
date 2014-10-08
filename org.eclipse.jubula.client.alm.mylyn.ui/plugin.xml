@@ -203,5 +203,11 @@
             </description>
       </decorator>
    </extension>
-
+    <extension point="org.eclipse.core.runtime.adapters">
+        <factory
+            adaptableType="org.eclipse.mylyn.tasks.core.ITask"
+            class="org.eclipse.jubula.client.alm.mylyn.ui.adapter.ITaskAdapterFactory">
+           <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+        </factory>
+	</extension>
 </plugin>
