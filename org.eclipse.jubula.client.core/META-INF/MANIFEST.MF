@@ -56,6 +56,7 @@ Export-Package: javax.persistence,
  org.eclipse.jubula.client.core.utils,
  org.eclipse.persistence,
  org.eclipse.persistence.config,
+ org.eclipse.persistence.indirection,
  org.eclipse.persistence.jpa,
  org.eclipse.persistence.sessions
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",

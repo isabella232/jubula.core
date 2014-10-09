@@ -37,6 +37,7 @@ public class MessageIDs {
     public static final Integer E_CONFIG_ERROR = new Integer(1004);
     /** if no write access to given file */
     public static final Integer E_FILE_NO_PERMISSION = new Integer(1005);
+    
 
     // -- DATABASE ERROR IDs -----------------------------------------------
     /** if no or wrong username and password */
@@ -190,6 +191,8 @@ public class MessageIDs {
         new Integer(3016);
     /** if GUIdancer cannot start an AUT because the AUT's toolkit is not available */
     public static final Integer E_AUT_TOOLKIT_NOT_AVAILABLE = new Integer(3017);
+    /** if export of object mapping failed */
+    public static final Integer E_EXPORT_OM_ERROR = new Integer(3018);
     // -- DATAMODEL ERROR IDs ----------------------------------------------   
     /** if a parameter does not exist */
     public static final Integer E_NO_PARAMETER = new Integer(4000);
@@ -740,6 +743,7 @@ public class MessageIDs {
         messageMap.put(E_NO_AUTCONFIG_DIALOG, e, "ErrorMessage.NO_AUTCONFIG_DIALOG", new String [] {"ErrorDetail.MISSING_TOOLKIT"}); //$NON-NLS-1$ //$NON-NLS-2$
         messageMap.put(E_CONVERTER_REUSED_PROJ_NOT_FOUND, e, "ErrorMessage.CONVERTER_REUSED_PROJ_NOT_FOUND", null); //$NON-NLS-1$
         messageMap.put(E_AUT_TOOLKIT_NOT_AVAILABLE, e, "ErrorMessage.AUT_TOOLKIT_NOT_AVAILABLE", new String [] {"ErrorDetail.MISSING_TOOLKIT"}); //$NON-NLS-1$ //$NON-NLS-2$
+        messageMap.put(E_EXPORT_OM_ERROR, e, "ErrorMessage.EXPORT_OM_ERROR", null); //$NON-NLS-1$
     }
     
     /**
