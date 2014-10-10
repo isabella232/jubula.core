@@ -10,3 +10,4 @@ Bundle-ClassPath: .
 Export-Package: org.eclipse.jubula.toolkit.datatype,
  org.eclipse.jubula.toolkit.enums,
  org.eclipse.jubula.toolkit.internal.annotations
+Require-Bundle: org.eclipse.jubula.tools;bundle-version="[2.4.0,2.5.0)"

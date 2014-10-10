@@ -8,6 +8,7 @@ import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
 import org.eclipse.jubula.toolkit.concrete.components.TextComponent;
 import org.eclipse.jubula.toolkit.concrete.components.TextInputComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
+import org.eclipse.jubula.toolkit.utils.ObjectMappingLoader;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.junit.Test;
 
@@ -15,35 +16,52 @@ import org.junit.Test;
  * Class for testing the factories
  */
 public class TestFactories {
-    /** The first text field */
-    private IComponentIdentifier m_identifierTextField1;
-    /** The second text field */
-    private IComponentIdentifier m_identifierTextfield2;
-    /** The equals button */
-    private IComponentIdentifier m_identifierEqualsButton;
-    /** The result text field */
-    private IComponentIdentifier m_identifierResultField;
+    
     
     /**
      * test method
      */
     @Test
     public void testFactories() {
+        /** object mapping loader */
+        ObjectMappingLoader omLoader = new ObjectMappingLoader(
+                "objectMapping_SimpleAdder.properties"); //$NON-NLS-1$
+        Assert.assertNotNull(omLoader);
+        
+        /** The first text field */
+        IComponentIdentifier identifierTextField1 =
+                omLoader.get("bound_SimpleAdder_inputField1_txf"); //$NON-NLS-1$
+        Assert.assertNotNull(identifierTextField1);
+        
+        /** The second text field */
+        IComponentIdentifier identifierTextField2 =
+                omLoader.get("bound_SimpleAdder_inputField2_txf"); //$NON-NLS-1$
+        Assert.assertNotNull(identifierTextField2);
+        
+        /** The equals button */
+        IComponentIdentifier identifierEqualsButton =
+                omLoader.get("bound_SimpleAdder_equals_btn"); //$NON-NLS-1$
+        Assert.assertNotNull(identifierEqualsButton);
+        
+        /** The result text field */
+        IComponentIdentifier identifierResultField =
+                omLoader.get("bound_SimpleAdder_resultField_txf"); //$NON-NLS-1$
+        Assert.assertNotNull(identifierResultField);
         
         TextInputComponent textField1 = ConcreteComponentFactory
-                .createTextInputComponent(m_identifierTextField1);
+                .createTextInputComponent(identifierTextField1);
         Assert.assertNotNull(textField1);
         
         TextInputComponent textField2 = ConcreteComponentFactory
-                .createTextInputComponent(m_identifierTextfield2);
+                .createTextInputComponent(identifierTextField2);
         Assert.assertNotNull(textField2);
         
         ButtonComponent equalsButton = ConcreteComponentFactory
-                .createButtonComponent(m_identifierEqualsButton);
+                .createButtonComponent(identifierEqualsButton);
         Assert.assertNotNull(equalsButton);
         
         TextComponent resultField = ConcreteComponentFactory
-                .createTextComponent(m_identifierResultField);
+                .createTextComponent(identifierResultField);
         Assert.assertNotNull(resultField);
 
         MessageCap mc1 = textField1.replaceText("17"); //$NON-NLS-1$

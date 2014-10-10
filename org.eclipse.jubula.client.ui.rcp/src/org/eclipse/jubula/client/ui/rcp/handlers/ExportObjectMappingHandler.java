@@ -18,12 +18,12 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
-import org.eclipse.jubula.client.core.model.ICompIdentifierPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
-import org.eclipse.jubula.client.core.utils.SerilizationUtils;
+import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
@@ -31,6 +31,8 @@ import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
+import org.eclipse.jubula.tools.internal.utils.SerilizationUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchPart;
@@ -44,6 +46,9 @@ public class ExportObjectMappingHandler extends AbstractHandler {
         
     /** map containing all object mappings */
     private SortedMap<String, String> m_map = new TreeMap<String, String>();
+    
+    /** the component name mapper to use */
+    private IComponentNameMapper m_compMapper;
 
     /**
      * {@inheritDoc}
@@ -54,14 +59,6 @@ public class ExportObjectMappingHandler extends AbstractHandler {
             final ObjectMappingMultiPageEditor omEditor = 
                 (ObjectMappingMultiPageEditor)activePart;
             IAUTMainPO aut = omEditor.getAut();
-            IObjectMappingPO objMap = aut.getObjMap();
-            IObjectMappingCategoryPO mappedCategory =
-                    objMap.getMappedCategory();
-            for (IObjectMappingCategoryPO category
-                    : mappedCategory.getUnmodifiableCategoryList()) {
-                writeAssociationsToMap(category);
-            }
-            // map is filled and can be written to file
             FileDialog saveDialog = new FileDialog(getActiveShell(), SWT.SAVE);
             saveDialog.setFileName("objectMapping" + StringConstants.UNDERSCORE //$NON-NLS-1$
                     + aut.getName() + ".properties"); //$NON-NLS-1$
@@ -72,6 +69,18 @@ public class ExportObjectMappingHandler extends AbstractHandler {
             String path = saveDialog.open();
             if (path != null) {
                 Utils.storeLastDirPath(saveDialog.getFilterPath());
+                IObjectMappingPO objMap = aut.getObjMap();
+                IObjectMappingCategoryPO mappedCategory =
+                        objMap.getMappedCategory();
+                m_compMapper = omEditor.getEditorHelper().getEditSupport()
+                        .getCompMapper();
+                try {
+                    writeAssociationsToMap(objMap, mappedCategory);
+                } catch (LogicComponentNotManagedException | IOException e) {
+                    ErrorHandlingUtil.createMessageDialog(new JBException(e
+                            .getMessage(), e, MessageIDs.E_EXPORT_OM_ERROR));
+                }
+                // map is filled and can be written to file
                 try (BufferedWriter writer = new BufferedWriter(
                         new FileWriter(path))) {
                     for (String key : m_map.keySet()) {
@@ -90,29 +99,34 @@ public class ExportObjectMappingHandler extends AbstractHandler {
     }
 
     /**
-     * Writes all object mapping associations from a given category (and recursively from
-     * all sub-categories) into the map
-     * @param category the category
+     * Writes all object mapping associations from a given category (and
+     * recursively from all sub-categories) into the map
+     * 
+     * @param objMap
+     *            object mapping to retrieve technical names from
+     * @param category
+     *            the category
+     * @throws LogicComponentNotManagedException when there is a problem with
+     *      assigning component identifiers to their logical names
+     * @throws IOException when there is a problem with encoding
      */
-    private void writeAssociationsToMap(IObjectMappingCategoryPO category) {
+    private void writeAssociationsToMap(final IObjectMappingPO objMap,
+            IObjectMappingCategoryPO category)
+        throws LogicComponentNotManagedException, IOException {
         List<IObjectMappingCategoryPO> subcategoryList =
                 category.getUnmodifiableCategoryList();
         if (!subcategoryList.isEmpty()) {
             for (IObjectMappingCategoryPO subcategory : subcategoryList) {
-                writeAssociationsToMap(subcategory);
+                writeAssociationsToMap(objMap, subcategory);
             }
         }
         for (IObjectMappingAssoziationPO assoziation
                 : category.getUnmodifiableAssociationList()) {
-            ICompIdentifierPO compIdentifier = assoziation.getTechnicalName();
-            String compName = compIdentifier.getComponentName();
-            try {
-                m_map.put(compName, SerilizationUtils.encode(compIdentifier));
-            } catch (IOException e) {
-                ErrorHandlingUtil.createMessageDialog(
-                        new JBException(e.getMessage(), e,
-                                MessageIDs.E_EXPORT_OM_ERROR));
-            }
+            String compUUID = assoziation.getLogicalNames().get(0);
+            String compName = m_compMapper.getCompNameCache().getName(compUUID);
+            ComponentIdentifier identifier = (ComponentIdentifier) objMap
+                    .getTechnicalName(compUUID);
+            m_map.put(compName, SerilizationUtils.encode(identifier));
         }
     }
     
