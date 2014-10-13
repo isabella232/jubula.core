@@ -10,6 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+
 /** @author BREDEX GmbH */
 public interface AUT extends Remote {
+    
+    /**
+     * @return the identifier of this AUT
+     */
+    AutIdentifier getID();
 }

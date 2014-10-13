@@ -46,4 +46,10 @@ public class AUTImpl implements AUT {
     public boolean isConnected() {
         return m_instance != null ? m_instance.isConnected() : false;
     }
+
+
+    /** {@inheritDoc} */
+    public AutIdentifier getID() {
+        return m_autID;
+    }
 }
