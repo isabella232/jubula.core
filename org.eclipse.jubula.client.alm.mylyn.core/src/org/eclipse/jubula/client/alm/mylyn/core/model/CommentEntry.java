@@ -5,6 +5,7 @@ import org.eclipse.jubula.client.alm.mylyn.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.osgi.util.NLS;
@@ -21,12 +22,12 @@ public class CommentEntry extends ALMChange {
      * Constructor
      * @param resultNode the node
      * @param dashboardURL the URL
-     * @param summaryId the id
+     * @param summary the summary
      * @param nodeCount the node count
      */
     public CommentEntry(TestResultNode resultNode, String dashboardURL,
-            String summaryId, Long nodeCount) {
-        super(resultNode, dashboardURL, summaryId, nodeCount);
+            ITestResultSummaryPO summary, Long nodeCount) {
+        super(resultNode, dashboardURL, summary, nodeCount);
         
         setNodeNameAndParams(getName(resultNode));
         

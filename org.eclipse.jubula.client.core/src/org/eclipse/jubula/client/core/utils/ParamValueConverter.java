@@ -208,7 +208,7 @@ public abstract class ParamValueConverter {
     /**
      * @return Returns the tokens.
      */
-    protected List<IParamValueToken> getTokens() {
+    public List<IParamValueToken> getTokens() {
         return m_tokens;
     }
     

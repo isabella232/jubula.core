@@ -26,7 +26,7 @@ import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
  * @author BREDEX GmbH
  * @created 14.08.2007
  */
-class VariableToken extends AbstractParamValueToken {
+public class VariableToken extends AbstractParamValueToken {
     
     /**
      * represents the actual name of the variable (without the additional 
@@ -57,7 +57,8 @@ class VariableToken extends AbstractParamValueToken {
      */
     public ConvValidationState validate() {
         ConvValidationState state = ConvValidationState.notSet;
-        if (VARIABLE.equals(getParamDescription().getType())) {
+        if (getParamDescription() == null 
+                || VARIABLE.equals(getParamDescription().getType())) {
             state = ConvValidationState.invalid;
             setErrorKey(MessageIDs.E_INVALID_VAR_NAME);
         }
@@ -93,6 +94,14 @@ class VariableToken extends AbstractParamValueToken {
      */
     public String getModelString() {
         return getValue();
+    }
+    
+    /**
+     * Gets the variable without $ or braces
+     * @return variable name
+     */
+    public String getVariableString() {
+        return m_variableName;
     }
 
 }

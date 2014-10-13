@@ -17,6 +17,7 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.alm.mylyn.core.i18n.messages"; //$NON-NLS-1$
+
     
     public static String TaskAttributeNotFound;
     public static String UnsupportedTaskAttribute;
@@ -43,6 +44,8 @@ public class Messages extends NLS {
     public static String InvalidAttributeID;
     public static String InvalidValue;
     public static String ReadOnlyAttributeID;
+    public static String UnresolvableVariable;
+    public static String ParsingReportingRuledFailed;
     
     static {
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

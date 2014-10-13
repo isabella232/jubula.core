@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 
 /**
@@ -24,14 +25,14 @@ public class FieldUpdate extends ALMChange {
      * Constructor
      * @param resultNode the node
      * @param dashboardURL the dashboardURL
-     * @param summaryId the summary id
+     * @param summary the summary
      * @param nodeNumber the node number
      * @param rules the list of reporting rules
      */
     public FieldUpdate(TestResultNode resultNode, String dashboardURL,
-            String summaryId, Long nodeNumber,
+            ITestResultSummaryPO summary, Long nodeNumber,
             List<IALMReportingRulePO> rules) {
-        super(resultNode, dashboardURL, summaryId, nodeNumber);
+        super(resultNode, dashboardURL, summary, nodeNumber);
         
         for (IALMReportingRulePO rule : rules) {
             m_attributesToChange.put(rule.getAttributeID(), rule.getValue());

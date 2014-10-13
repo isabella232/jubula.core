@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.eclipse.jubula.client.alm.mylyn.core.i18n.Messages;
 import org.eclipse.jubula.client.core.constants.Constants;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
@@ -28,18 +29,24 @@ public class ALMChange {
     private String m_summaryId;
     /** the node count */
     private Long m_nodeNumber;
+    /** the result node*/
+    private TestResultNode m_node;
+    /** the summary */
+    private ITestResultSummaryPO m_summary;
 
     /**
      * Constructor
      * @param resultNode the node
      * @param dashboardURL the URL
-     * @param summaryId the id
+     * @param summary the id
      * @param nodeCount the node count
      */
     public ALMChange(TestResultNode resultNode, String dashboardURL,
-            String summaryId, Long nodeCount) {
+            ITestResultSummaryPO summary, Long nodeCount) {
         setDashboardURL(dashboardURL);
-        setSummaryId(summaryId);
+        setNode(resultNode);
+        setSummary(summary);
+        setSummaryId(summary.getId().toString());
         setNodeNumber(nodeCount);
         
         Date executionTime = resultNode.getTimeStamp();
@@ -86,6 +93,20 @@ public class ALMChange {
     public String getNodeType() {
         return m_nodeType;
     }
+    
+    /**
+     * @return the node
+     */
+    public TestResultNode getNode() {
+        return m_node;
+    }
+    
+    /**
+     * @param node the result node
+     */
+    public void setNode(TestResultNode node) {
+        m_node = node;
+    }
 
     /**
      * @param nodeType the nodeType to set
@@ -127,6 +148,21 @@ public class ALMChange {
      */
     public void setSummaryId(String summaryId) {
         m_summaryId = summaryId;
+    }
+    
+    /**
+     * Sets the summary for this fieldUpdate
+     * @param summary summary for this fieldUpdate
+     */
+    private void setSummary(ITestResultSummaryPO summary) {
+        m_summary = summary;
+    }
+    
+    /**
+     * @return summary for this fieldUpdate
+     */
+    public ITestResultSummaryPO getSummary() {
+        return m_summary;
     }
 
     /**

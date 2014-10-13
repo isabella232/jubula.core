@@ -75,7 +75,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
         /** dashboard URL */
         private String m_dashboardURL;
         /** the summary id */
-        private String m_summaryIdString;
+        private ITestResultSummaryPO m_summary;
         /** test result node counter */
         private long m_nodeCount = 0;
         
@@ -92,19 +92,19 @@ public class CommentReporter implements ITestresultSummaryEventListener {
          *            reportingRules
          * @param dashboardURL
          *            dashboardURL
-         * @param summaryId 
+         * @param summary 
          */
         public ALMChangeCreationOperation(
             Map<String, List<ALMChange>> taskIdToALMChange,
             boolean reportFailure, boolean reportSuccess,
             List<IALMReportingRulePO> reportingRules,
-            String dashboardURL, String summaryId) {
+            String dashboardURL, ITestResultSummaryPO summary) {
             m_taskIdToALMChange = taskIdToALMChange;
             m_reportFailure = reportFailure;
             m_reportSuccess = reportSuccess;
             m_reportingRules = reportingRules;
             m_dashboardURL = dashboardURL;
-            m_summaryIdString = summaryId;
+            m_summary = summary;
         }
 
         /** {@inheritDoc} */
@@ -126,12 +126,12 @@ public class CommentReporter implements ITestresultSummaryEventListener {
 
             if (writeCommentForNode) {
                 CommentEntry c = new CommentEntry(resultNode, m_dashboardURL,
-                        m_summaryIdString, m_nodeCount);
+                        m_summary, m_nodeCount);
                 addALMChangeToNode(taskIdforNode, c);
             }
             if (writeFieldUpdateForNode) {
                 FieldUpdate f = new FieldUpdate(resultNode, m_dashboardURL,
-                        m_summaryIdString, m_nodeCount,
+                        m_summary, m_nodeCount,
                         getApplicableRules(didNodePass));
                 addALMChangeToNode(taskIdforNode, f);
             }
@@ -227,7 +227,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
         ITreeNodeOperation<TestResultNode> operation = 
             new ALMChangeCreationOperation(
                 taskIdToALMChange, reportFailure, reportSuccess, reportingRules,
-                m_reportProps.getDashboardURL(), summary.getId().toString());
+                m_reportProps.getDashboardURL(), summary);
         TestResultNodeTraverser traverser = new TestResultNodeTraverser(
                 rootResultNode, operation);
         traverser.traverse();
@@ -318,7 +318,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
             return Status.OK_STATUS;
         }
         return new Status(IStatus.ERROR, Activator.ID,
-            "Reporting comments performed with errors...");
+            "Reporting comments performed with errors..."); //$NON-NLS-1$
     }
 
     /**
@@ -358,7 +358,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
     /**
      * @return the console
      */
-    private IProgressConsole getConsole() {
+    public IProgressConsole getConsole() {
         return m_console;
     }
 

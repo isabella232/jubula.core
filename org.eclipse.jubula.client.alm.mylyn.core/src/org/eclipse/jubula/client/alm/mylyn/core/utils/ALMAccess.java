@@ -10,23 +10,34 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.alm.mylyn.core.utils;
 
+import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.alm.mylyn.core.Activator;
+import org.eclipse.jubula.client.alm.mylyn.core.bp.CommentReporter;
 import org.eclipse.jubula.client.alm.mylyn.core.exceptions.InvalidALMAttributeException;
 import org.eclipse.jubula.client.alm.mylyn.core.i18n.Messages;
 import org.eclipse.jubula.client.alm.mylyn.core.model.ALMChange;
 import org.eclipse.jubula.client.alm.mylyn.core.model.CommentEntry;
 import org.eclipse.jubula.client.alm.mylyn.core.model.FieldUpdate;
+import org.eclipse.jubula.client.core.utils.SimpleStringConverter;
+import org.eclipse.jubula.client.core.utils.IParamValueToken;
+import org.eclipse.jubula.client.core.utils.ParamValueConverter;
+import org.eclipse.jubula.client.core.utils.VariableToken;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.mylyn.commons.net.AuthenticationType;
 import org.eclipse.mylyn.tasks.core.AbstractRepositoryConnector;
@@ -92,6 +103,15 @@ public final class ALMAccess {
     /** the logger */
     private static final Logger LOG = LoggerFactory.getLogger(ALMAccess.class);
 
+    /** the postfix for a variable to generate the date in a specific format*/
+    private static final String VARIABLE_DATE_POSTFIX = "date"; //$NON-NLS-1$
+    /** the postfix for a variable to generate the url*/
+    private static final String VARIABLE_URL_POSTFIX = "url"; //$NON-NLS-1$
+    /** the prefix for the variable when to use the summary */
+    private static final String VARIABLE_SUMMARY_PREFIX = "summary"; //$NON-NLS-1$
+    /** the prefix for the variable when to use the node */
+    private static final String VARIABLE_NODE_PREFIX = "node"; //$NON-NLS-1$
+    
     /** Constructor */
     private ALMAccess() {
         // hide
@@ -320,7 +340,8 @@ public final class ALMAccess {
                             Messages.ReadOnlyAttributeID, key));
                 }
                 Object value = attributesToChange.get(key);
-                if (value instanceof String) {                    
+                if (value instanceof String) {
+                    value = getVariableValues((String)value, u);
                     Map<String, String> options = fieldUpdate.getOptions();
                     if (options != null && !options.isEmpty()) {
                         if (!options.containsKey(value)) {
@@ -337,6 +358,39 @@ public final class ALMAccess {
         }
 
         return changes;
+    }
+
+    /**
+     * 
+     * @param value the string value which variables of it should be resolved (using our parser)
+     * @param fieldUpdate the {@link FieldUpdate} of the corresponding value
+     * @return a string whith all variables resolved
+     */
+    private static String getVariableValues(String value,
+            FieldUpdate fieldUpdate) {
+        if (StringUtils.isNotBlank(value)) {
+            ParamValueConverter converter = new SimpleStringConverter(value);
+            if (converter.containsErrors()) {
+                CommentReporter.getInstance().getConsole()
+                    .writeWarningLine(NLS.bind(
+                            Messages.ParsingReportingRuledFailed, value));
+                return value;
+            }
+            List<IParamValueToken> liste = converter.getTokens();
+            String result = StringConstants.EMPTY;
+            for (Iterator iterator = liste.iterator(); iterator.hasNext();) {
+                IParamValueToken iParamValueToken = (IParamValueToken) iterator
+                        .next();
+                if (iParamValueToken instanceof VariableToken) {
+                    result += getBeanString(fieldUpdate,
+                            (VariableToken) iParamValueToken);
+                } else {
+                    result += iParamValueToken.getGuiString();
+                }
+            }
+            return result;
+        }
+        return value;
     }
 
     /**
@@ -486,5 +540,68 @@ public final class ALMAccess {
             return repoStatus;
         }
         return Status.OK_STATUS;
+    }
+    
+    
+    /**
+     * gets the variable out of the {@link TestResultNode} or {@link ITestResultSummaryPO}
+     * @param fieldUpdate the FieldUpdate which has all necessary information
+     * @param variable the variable which should be parsed. 
+     *      <code>node.</code> and <code>summary.</code> are allowed with all public 
+     *      getters given. Also <code>node.url</code> and <code>summary.date</code> 
+     *      could be used.
+     * @return the String representation the resolved variable
+     */
+    private static String getBeanString(FieldUpdate fieldUpdate,
+            VariableToken variable) {
+        String returnValue = variable.getVariableString();
+        if (StringUtils.contains(returnValue, '_')) {
+            String[] strings = StringUtils.split(returnValue, "_", 2); //$NON-NLS-1$
+            try {
+                if (strings[0].equalsIgnoreCase(VARIABLE_NODE_PREFIX)) {
+                    if (strings[1].equalsIgnoreCase(VARIABLE_URL_POSTFIX)) {
+                        returnValue = fieldUpdate.getDashboardURL();
+                    } else if (strings[1].equalsIgnoreCase(
+                            VARIABLE_DATE_POSTFIX)) {
+                        returnValue = formatDate(fieldUpdate.getNode()
+                                .getTimeStamp());
+                    } else {
+                       
+                        returnValue = BeanUtils.getProperty(
+                                fieldUpdate.getNode(), strings[1]);
+                    }
+                }
+                if (strings[0].equalsIgnoreCase(VARIABLE_SUMMARY_PREFIX)) {
+                    if (strings[1].equalsIgnoreCase(VARIABLE_DATE_POSTFIX)) {
+                        returnValue = formatDate(fieldUpdate.getSummary()
+                                .getTestsuiteDate());
+                    } else {
+                        returnValue = BeanUtils.getProperty(
+                                fieldUpdate.getSummary(), strings[1]);
+                    }
+                }
+            } catch (IllegalAccessException | InvocationTargetException 
+                    | NoSuchMethodException e) {
+                CommentReporter.getInstance().getConsole()
+                    .writeWarningLine(NLS.bind(Messages.UnresolvableVariable,
+                            variable.getGuiString()));
+                returnValue = variable.getGuiString();
+            }
+        } else {
+            returnValue = variable.getGuiString();
+            CommentReporter.getInstance().getConsole()
+            .writeWarningLine(NLS.bind(Messages.UnresolvableVariable,
+                    variable.getGuiString()));
+        }
+        return returnValue;
+    }
+    /**
+     * 
+     * @param date the date do Format
+     * @return <code>dd.MM.yyyy</code> representation of a {@link Date}
+     */
+    private static String formatDate(Date date) {
+        return new SimpleDateFormat("dd.MM.yyyy") //$NON-NLS-1$
+                .format(date);
     }
 }
