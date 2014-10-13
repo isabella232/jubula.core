@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.tools.internal.utils;
+package org.eclipse.jubula.client.internal.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
