@@ -10,13 +10,18 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.internal;
 
+import java.util.Map;
+
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.internal.message.ConnectToAutMessage;
+import org.eclipse.jubula.communication.internal.message.SendAUTListOfSupportedComponentsMessage;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
+import org.eclipse.jubula.tools.internal.xml.businessprocess.ProfileBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,13 +86,17 @@ public class AUTConnection extends BaseAUTConnection {
     }
 
     /**
-     * Establishes a connection to the Running AUT with the given ID. 
+     * Establishes a connection to the Running AUT with the given ID.
      * 
-     * @param autId The ID of the Running AUT to connect to.
-     * @return <code>true</code> if a connection to the AUT could be 
+     * @param autId
+     *            The ID of the Running AUT to connect to.
+     * @param typeMapping
+     *            the type mapping to use
+     * @return <code>true</code> if a connection to the AUT could be
      *         established. Otherwise <code>false</code>.
      */
-    public boolean connectToAut(AutIdentifier autId) {
+    public boolean connectToAut(AutIdentifier autId, 
+        Map<ComponentClass, String> typeMapping) {
         if (!isConnected()) {
             try {
                 LOGGER.info("Establishing connection to AUT..."); //$NON-NLS-1$
@@ -95,10 +104,9 @@ public class AUTConnection extends BaseAUTConnection {
                 final AutAgentConnection autAgent = AutAgentConnection
                     .getInstance();
                 autAgent.getCommunicator().send(
-                    new ConnectToAutMessage(
-                        EnvConstants.LOCALHOST_FQDN, 
+                    new ConnectToAutMessage(EnvConstants.LOCALHOST_FQDN,
                         getCommunicator().getLocalPort(), autId));
-                
+
                 long startTime = System.currentTimeMillis();
                 while (!isConnected()
                     && autAgent.isConnected()
@@ -109,55 +117,66 @@ public class AUTConnection extends BaseAUTConnection {
                 if (isConnected()) {
                     setConnectedAutId(autId);
                     LOGGER.info("Connection to AUT established."); //$NON-NLS-1$
-//                    AUTStartedCommand response = new AUTStartedCommand();
-//                    response.setStateMessage(new AUTStateMessage(
-//                            AUTStateMessage.RUNNING));
-//                    setup(response);
+                    setup(typeMapping);
                     return true;
                 }
                 LOGGER.error("Connection to AUT could not be established."); //$NON-NLS-1$
             } catch (CommunicationException e) {
-                LOGGER.error("Error occurred while establishing connection to AUT.", e); //$NON-NLS-1$
+                LOGGER.error(
+                    "Error occurred while establishing connection to AUT.", e); //$NON-NLS-1$
             } catch (JBVersionException e) {
-                LOGGER.error("Error occurred while establishing connection to AUT.", e); //$NON-NLS-1$
+                LOGGER
+                    .error(
+                        "Version error occurred while establishing connection to AUT.", e); //$NON-NLS-1$
             }
         } else {
-            LOGGER.warn("Cannot establish new connection to AUT: Connection to AUT already exists."); //$NON-NLS-1$
-        } 
+            LOGGER
+                .warn("Cannot establish new connection to AUT: Connection to AUT already exists."); //$NON-NLS-1$
+        }
         return false;
     }
     
-//    /**
-//     * setup the connection between API and AUT
-//     * 
-//     * @param command
-//     *            the command to execute on callback
-//     * @throws NotConnectedException
-//     *             if there is no connection to an AUT.
-//     * @throws ConnectionException
-//     *             if no connection to an AUT could be initialized.
-//     * @throws CommunicationException
-//     *             if an error occurs while communicating with the AUT.
-//     */
-//    public void setup(AUTStartedCommand command)
-//        throws NotConnectedException, ConnectionException,
-//        CommunicationException {
-//        sendKeyboardLayoutToAUT();
-//        sendResourceBundlesToAUT();
-//        getAllComponentsFromAUT(command);
-//    }
-//
-//    /**
-//     * send the resource bundles to the AUT
-//     */
-//    private void sendResourceBundlesToAUT() {
-//        System.err.println("sendResourceBundlesToAUT()");
-//    }
-//
-//    /**
-//     * send the keyboard layout to the AUT
-//     */
-//    private void sendKeyboardLayoutToAUT() {
-//        System.err.println("sendKeyboardLayoutToAUT()");
-//    }
+    /**
+     * setup the connection between API and AUT
+     * 
+     * @param technicalTypeMapping
+     *            the technical type mapping to use
+     * @throws NotConnectedException
+     *             if there is no connection to an AUT.
+     * @throws ConnectionException
+     *             if no connection to an AUT could be initialized.
+     * @throws CommunicationException
+     *             if an error occurs while communicating with the AUT.
+     */
+    public void setup(Map<ComponentClass, String> technicalTypeMapping)
+        throws NotConnectedException, ConnectionException,
+        CommunicationException {
+        sendKeyboardLayoutToAUT();
+        sendComponentSupportToAUT(technicalTypeMapping);
+    }
+
+    /**
+     * send the list of supported components to the AUT
+     * 
+     * @param technicalTypeMapping
+     *            the technicalTypeMapping to use
+     */
+    private void sendComponentSupportToAUT(
+        Map<ComponentClass, String> technicalTypeMapping)
+        throws CommunicationException {
+        SendAUTListOfSupportedComponentsMessage message = 
+            new SendAUTListOfSupportedComponentsMessage();
+
+        message.setTechTypeToTesterClassMapping(technicalTypeMapping);
+        message.setProfile(ProfileBuilder.getDefaultProfile());
+
+        send(message);
+    }
+
+    /**
+     * send the keyboard layout to the AUT
+     */
+    private void sendKeyboardLayoutToAUT() {
+        System.err.println("sendKeyboardLayoutToAUT()"); //$NON-NLS-1$
+    }
 }

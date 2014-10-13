@@ -10,13 +10,20 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
+import java.util.Map;
+
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /** @author BREDEX GmbH */
 public interface AUT extends Remote {
-    
     /**
      * @return the identifier of this AUT
      */
-    AutIdentifier getID();
+    AutIdentifier getIdentifier();
+
+    /**
+     * @param typeMapping
+     *            the type mapping to set
+     */
+    void setTypeMapping(Map<?, ?> typeMapping);
 }

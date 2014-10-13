@@ -75,7 +75,7 @@ public class ToolkitOverView extends ViewPart {
                     ConcreteComponent concreteComponent = 
                         (ConcreteComponent) component;
                     final String componentClass = 
-                        concreteComponent.getComponentClass();
+                        concreteComponent.getComponentClass().getName();
                     if (!StringUtils.isBlank(componentClass)) {
                         sb.append(" - ");
                         sb.append(componentClass);
@@ -121,7 +121,7 @@ public class ToolkitOverView extends ViewPart {
                     ConcreteComponent concreteComponent = 
                         (ConcreteComponent) element;
                     final String componentClass = 
-                        concreteComponent.getComponentClass();
+                        concreteComponent.getComponentClass().getName();
                     if (!StringUtils.isBlank(componentClass)) {
                         return IconConstants.TECHNICAL_NAME_IMAGE;
                     }

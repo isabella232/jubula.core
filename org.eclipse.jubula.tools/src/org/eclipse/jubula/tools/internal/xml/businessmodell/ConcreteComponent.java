@@ -109,24 +109,25 @@ public class ConcreteComponent extends Component {
      * use the name of the component class instead
      * @return Returns the componentClassName.
      */
-    public String getComponentClass() {
+    public ComponentClass getComponentClass() {
         List<ComponentClass> compClassList = getCompClass();
         if (!compClassList.isEmpty()) {
-            return compClassList.get(0).getName();
+            return compClassList.get(0);
         }
-        return StringConstants.EMPTY;
+        return new ComponentClass(StringConstants.EMPTY);
     }
 
     /** @param componentClass The componentClass to set. */
-    public void setComponentClass(String componentClass) {
-        if (StringUtils.isBlank(componentClass)) {
+    public void setComponentClass(ComponentClass componentClass) {
+        if (StringUtils.isBlank(componentClass.getName())) {
             throw new AssertException("component class must point to a valid identifier"); //$NON-NLS-1$
         }
         List<ComponentClass> compClassList = getCompClass();
         if (!compClassList.isEmpty()) {
-            compClassList.get(0).setName(componentClass);
+            compClassList.clear();
+            compClassList.add(componentClass);
         } else {
-            compClassList.add(new ComponentClass(componentClass));
+            compClassList.add(componentClass);
         }
     }
 }

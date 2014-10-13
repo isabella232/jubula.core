@@ -10,9 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.internal.impl;
 
+import java.util.Map;
+
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.internal.AUTConnection;
+import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 
 /** @author BREDEX GmbH */
 public class AUTImpl implements AUT {
@@ -20,6 +24,8 @@ public class AUTImpl implements AUT {
     private AutIdentifier m_autID;
     /** the instance */
     private AUTConnection m_instance;
+    /** the typeMapping */
+    private Map<ComponentClass, String>  m_typeMapping;
 
     /**
      * Constructor
@@ -33,8 +39,10 @@ public class AUTImpl implements AUT {
 
     /** {@inheritDoc} */
     public void connect() throws Exception {
+        final Map<ComponentClass, String> typeMapping = getTypeMapping();
+        Assert.verify(typeMapping != null);
         m_instance = AUTConnection.getInstance();
-        m_instance.connectToAut(m_autID);
+        m_instance.connectToAut(m_autID, typeMapping);
     }
 
     /** {@inheritDoc} */
@@ -49,7 +57,21 @@ public class AUTImpl implements AUT {
 
 
     /** {@inheritDoc} */
-    public AutIdentifier getID() {
+    public AutIdentifier getIdentifier() {
         return m_autID;
+    }
+
+    /**
+     * @return the typeMapping
+     */
+    public Map<ComponentClass, String>  getTypeMapping() {
+        return m_typeMapping;
+    }
+
+    /**
+     * @param typeMapping the typeMapping to set
+     */
+    public void setTypeMapping(Map<?, ?> typeMapping) {
+        m_typeMapping = (Map<ComponentClass, String>) typeMapping;
     }
 }

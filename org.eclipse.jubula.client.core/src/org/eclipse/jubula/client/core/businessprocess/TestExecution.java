@@ -891,7 +891,8 @@ public class TestExecution {
                                     .getComponentClass() != null) {
                             technicalName = new ComponentIdentifier();
                             technicalName.setComponentClassName(
-                                    concreteComponent.getComponentClass());
+                                concreteComponent
+                                    .getComponentClass().getName());
                             return technicalName;
                         }
                     }

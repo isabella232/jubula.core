@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.qa.api;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import junit.framework.Assert;
 
@@ -21,6 +23,7 @@ import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -80,6 +83,14 @@ public class TestSimpleAdderRCPAUT {
         m_aut = m_agent.getAUT(id);
         
         Assert.assertTrue(!m_aut.isConnected());
+        
+        Map<ComponentClass, String> typeMapping = 
+            new HashMap<ComponentClass, String>();
+        typeMapping.put(
+            new ComponentClass("org.eclipse.swt.widgets.Button"), //$NON-NLS-1$
+                               "org.eclipse.jubula.rc.swt.tester.ButtonTester"); //$NON-NLS-1$ 
+        
+        m_aut.setTypeMapping(typeMapping);
         m_aut.connect();
     }
 
@@ -97,7 +108,7 @@ public class TestSimpleAdderRCPAUT {
         m_aut.disconnect();
         Assert.assertTrue(!m_aut.isConnected());
         
-        m_agent.stopAUT(m_aut.getID());
+        m_agent.stopAUT(m_aut.getIdentifier());
         
         m_agent.disconnect();
         Assert.assertFalse(ERR_STILL_CONNECTED, m_agent.isConnected());

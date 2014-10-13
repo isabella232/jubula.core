@@ -409,34 +409,30 @@ public class AUTServerConfiguration {
         throws IllegalArgumentException {
 
         m_components.add(c);
-        registerImplementationClass(c.getComponentClass(), c.getTesterClass());
+        registerImplementationClass(
+            c.getComponentClass().getName(),
+            c.getTesterClass());
     }
     
     /**
      * Returns the component with the specified typeName.
-     * @param typeName Name of the specified component.
+     * 
+     * @param typeName
+     *            Name of the specified component.
      * @return the specified Component.
      */
     public Component findComponent(String typeName) {
         Validate.notNull(typeName);
         List<ConcreteComponent> list = getComponents();
-        Iterator<ConcreteComponent> it = list.iterator();
-        while (it.hasNext()) {
-            Component comp = it.next();
-            if (comp instanceof ConcreteComponent) {
-                ConcreteComponent ccomp = (ConcreteComponent)comp;
-                if (ccomp.getComponentClass() != null
-                        && ccomp.getComponentClass().equals(typeName)) {
-                    return ccomp;
-                }
-            } else {
-                if (comp.getType().equals(typeName)) {
-                    return comp;
-                }
+        for (ConcreteComponent cc : list) {
+            if (cc.getComponentClass() != null
+                && cc.getComponentClass().getName().equals(typeName)) {
+                return cc;
             }
         }
+
         String message = "Component " + typeName //$NON-NLS-1$
-                + " does not exist"; //$NON-NLS-1$
+            + " does not exist"; //$NON-NLS-1$
         log.error(message);
         throw new ConfigXmlException(message, MessageIDs.E_NO_COMPONENT);
     }
@@ -449,17 +445,13 @@ public class AUTServerConfiguration {
     public List<ConcreteComponent> findComponents(String typeName) {
         Validate.notNull(typeName);
         List<ConcreteComponent> list = getComponents();
-        Iterator<ConcreteComponent> it = list.iterator();
+
         List<ConcreteComponent> comps = new LinkedList<ConcreteComponent>();
-        while (it.hasNext()) {
-            Component comp = it.next();
-            if (comp instanceof ConcreteComponent) {
-                ConcreteComponent ccomp = (ConcreteComponent)comp;
-                if (ccomp.getComponentClass() != null
-                        && ccomp.getComponentClass().equals(typeName)) {
-                    comps.add(ccomp);
-                }
-            }            
+        for (ConcreteComponent cc : list) {
+            if (cc.getComponentClass() != null
+                && cc.getComponentClass().getName().equals(typeName)) {
+                comps.add(cc);
+            }
         }
         if (!(comps.isEmpty())) {
             return comps;

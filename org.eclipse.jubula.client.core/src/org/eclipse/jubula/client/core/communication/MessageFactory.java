@@ -19,7 +19,6 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
-import org.eclipse.jubula.communication.internal.message.SendAUTListOfSupportedComponentsMessage;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
@@ -163,73 +162,5 @@ public class MessageFactory {
                         + Messages.Failed + StringConstants.COLON
                         + StringConstants.SPACE + nestedException.getMessage(),
                 MessageIDs.E_MESSAGE_NOT_CREATED);
-    }
-
-    /**
-     * @throws UnknownMessageException the exception thrown if the instantiation of message failed.
-     * @return the created Message
-     */
-    public static SendAUTListOfSupportedComponentsMessage 
-    getSendAUTListOfSupportedComponentsMessage() 
-        throws UnknownMessageException {
-        String messageClassName = "null"; //$NON-NLS-1$
-        try {
-            messageClassName = "org.eclipse.jubula.communication.internal.message.SendAUTListOfSupportedComponentsMessage"; //$NON-NLS-1$                           
-            Class messageClass = Class.forName(messageClassName, false, 
-                    SendAUTListOfSupportedComponentsMessage.class
-                    .getClassLoader());
-            if (!SendAUTListOfSupportedComponentsMessage.class.isAssignableFrom(
-                    messageClass)) {
-                throw new UnknownMessageException(messageClass.getName()
-                        + Messages.IsNotAssignableTo + StringConstants.SPACE
-                        + SendAUTListOfSupportedComponentsMessage.class
-                        .getName(), MessageIDs.E_MESSAGE_NOT_ASSIGNABLE);
-            }
-            // create a sharedInstance and set the message
-            SendAUTListOfSupportedComponentsMessage result = 
-                (SendAUTListOfSupportedComponentsMessage)messageClass
-                    .newInstance();
-            return result;
-        } catch (ExceptionInInitializerError eiie) {
-            LOG.error(eiie.getLocalizedMessage(), eiie);
-            throw new UnknownMessageException(
-                    Messages.CreatingAnMessageSharedInstanceFor
-                    + StringConstants.SPACE + messageClassName 
-                    + Messages.Failed + StringConstants.COLON 
-                    + StringConstants.SPACE + eiie.getMessage(), 
-                            MessageIDs.E_MESSAGE_NOT_CREATED);
-        } catch (LinkageError le) {
-            LOG.error(le.getLocalizedMessage(), le);
-            throw new UnknownMessageException(
-                    Messages.CreatingAnMessageSharedInstanceFor
-                    + StringConstants.SPACE + messageClassName 
-                    + Messages.Failed + StringConstants.COLON 
-                    + StringConstants.SPACE + le.getMessage(), 
-                        MessageIDs.E_MESSAGE_NOT_CREATED);
-        } catch (ClassNotFoundException cnfe) {
-            LOG.error(cnfe.getLocalizedMessage(), cnfe);
-            throw new UnknownMessageException(
-                    Messages.CreatingAnMessageSharedInstanceFor
-                    + StringConstants.SPACE + messageClassName 
-                    + Messages.Failed + StringConstants.COLON 
-                    + StringConstants.SPACE + cnfe.getMessage(), 
-                            MessageIDs.E_MESSAGE_NOT_CREATED);
-        } catch (InstantiationException ie) {
-            LOG.error(ie.getLocalizedMessage(), ie);
-            throw new UnknownMessageException(
-                    Messages.CreatingAnMessageSharedInstanceFor
-                    + StringConstants.SPACE + messageClassName 
-                    + Messages.Failed + StringConstants.COLON 
-                    + StringConstants.SPACE + ie.getMessage(), 
-                        MessageIDs.E_MESSAGE_NOT_CREATED);
-        } catch (IllegalAccessException iae) {
-            LOG.error(iae.getLocalizedMessage(), iae);
-            throw new UnknownMessageException(
-                    Messages.CreatingAnMessageSharedInstanceFor
-                    + StringConstants.SPACE + messageClassName 
-                    + Messages.Failed + StringConstants.COLON 
-                    + StringConstants.SPACE + iae.getMessage(), 
-                        MessageIDs.E_MESSAGE_NOT_CREATED);
-        }
     }
 }

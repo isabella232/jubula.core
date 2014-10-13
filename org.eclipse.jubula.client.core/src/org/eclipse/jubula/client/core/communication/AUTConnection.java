@@ -310,7 +310,7 @@ public class AUTConnection extends BaseAUTConnection {
 
         try {
             SendAUTListOfSupportedComponentsMessage message = 
-                MessageFactory.getSendAUTListOfSupportedComponentsMessage();
+                new SendAUTListOfSupportedComponentsMessage();
             // Send the supported components and their implementation classes
             // to the AUT server to get registered.
             CompSystem compSystem = ComponentBuilder.getInstance()
@@ -333,7 +333,6 @@ public class AUTConnection extends BaseAUTConnection {
             profile.setPathFactor(profilePo.getPathFactor());
             profile.setContextFactor(profilePo.getContextFactor());
             profile.setThreshold(profilePo.getThreshold());
-
             message.setProfile(profile);
             
             int timeoutToUse = AUTStateCommand.AUT_COMPONENT_RETRIEVAL_TIMEOUT;

@@ -78,7 +78,7 @@ public class GenerateAllHandler extends AbstractHandler {
 
                 String testcaseName = visibleTypeName;
 
-                final String componentClass = c.getComponentClass();
+                final String componentClass = c.getComponentClass().getName();
                 if (StringUtils.isNotBlank(componentClass)) {
                     testcaseName += " - "
                         + StringUtils.substringAfterLast(componentClass, ".");

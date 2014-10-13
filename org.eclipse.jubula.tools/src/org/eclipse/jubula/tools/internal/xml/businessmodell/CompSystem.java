@@ -466,7 +466,7 @@ public class CompSystem {
         for (Component comp : getComponents()) {
             if (comp instanceof ConcreteComponent) {
                 ConcreteComponent ccomp = (ConcreteComponent)comp;
-                if (typeName.equals(ccomp.getComponentClass())) {
+                if (typeName.equals(ccomp.getComponentClass().getName())) {
                     comps.add(ccomp);
                 }
             }            
@@ -584,7 +584,7 @@ public class CompSystem {
         }
         for (ConcreteComponent cc : m_concreteComponents) {
             if (cc.isExtender() && !StringUtils.isBlank(
-                cc.getComponentClass())) {
+                cc.getComponentClass().getName())) {
                 // extender must not have a componentClass!
                 final String msg = "Extending ConcreteComponent '" //$NON-NLS-1$
                     + cc.getType() + "' must not have a componentClass!"; //$NON-NLS-1$
@@ -795,7 +795,7 @@ public class CompSystem {
         for (Component currentComp : availableComponents) {
             if (currentComp instanceof ConcreteComponent
                 && componentClassName.equals(((ConcreteComponent) currentComp)
-                    .getComponentClass())) {
+                    .getComponentClass().getName())) {
 
                 return currentComp.getType();
             }
