@@ -12,20 +12,17 @@ package org.eclipse.jubula.tools.internal.i18n;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -144,40 +141,6 @@ public class CompSystemI18n {
         I18N_MAP.put(key, key);
         throw new MissingResourceException("No entry found for key: " + key, //$NON-NLS-1$
             CompSystemI18n.class.getName(), key);
-    }
-    
-    /**
-     * returns an internationalized string for the given key
-     * @param key the key
-     * @param args the arguments needed to generate the string
-     * @return the internationalized string
-     */
-    public static String getString(String key, Object[] args) {
-        try {
-            MessageFormat formatter =
-                new MessageFormat(getStringInternal(key));
-            return formatter.format(args);
-        } catch (MissingResourceException e) {
-            logError(key, e);
-            StringBuffer buf = new StringBuffer(key);
-            for (int i = 0; i < args.length; i++) {
-                if (args[i] != null) {
-                    buf.append(" "); //$NON-NLS-1$
-                    buf.append(args[i]);
-                }
-            }
-            return buf.toString();
-        }
-    }
-    
-
-    
-    /**
-     * Sets an new language for the I18N.
-     * @param lang a <code>String</code> value. The new language.
-     */
-    public static void setLanguage(String lang) {
-        Locale.setDefault(new Locale(lang, StringConstants.EMPTY));
     }
     
     /**
