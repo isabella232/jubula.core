@@ -40,4 +40,10 @@ public interface AUTAgent extends Remote {
      *             in case of a communication problem
      */
     List<AutIdentifier> getAllRegisteredAUTIdentifier() throws Exception;
+    
+    /**
+     * @param autID the autID to get an AUT for
+     * @return an AUT 
+     */
+    AUT getAUT(AutIdentifier autID);
 }

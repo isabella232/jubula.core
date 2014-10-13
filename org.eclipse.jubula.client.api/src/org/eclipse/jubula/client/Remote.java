@@ -20,7 +20,7 @@ public interface Remote {
     /**
      * disconnect from the remote side
      */
-    void disconnect();
+    void disconnect() throws Exception;
 
     /**
      * @return whether a connection to the remote side is currently established

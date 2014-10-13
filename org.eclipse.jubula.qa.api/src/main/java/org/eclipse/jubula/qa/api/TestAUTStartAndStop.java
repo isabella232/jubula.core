@@ -15,6 +15,7 @@ import java.util.Locale;
 
 import junit.framework.Assert;
 
+import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
@@ -77,6 +78,18 @@ public class TestAUTStartAndStop {
 
         Assert.assertTrue("Expected ID not found", //$NON-NLS-1$
             allRegisteredAUTIdentifier.contains(id)); 
+        
+        AUT aut = m_agent.getAUT(id);
+        
+        Assert.assertTrue(!aut.isConnected());
+        aut.connect();
+        
+        Assert.assertTrue(aut.isConnected());
+
+        
+        
+        aut.disconnect();
+        Assert.assertTrue(!aut.isConnected());
         
         m_agent.stopAUT(id);
     }

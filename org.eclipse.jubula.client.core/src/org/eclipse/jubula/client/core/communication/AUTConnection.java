@@ -29,17 +29,16 @@ import org.eclipse.jubula.client.core.commands.GetKeyboardLayoutNameResponseComm
 import org.eclipse.jubula.client.core.events.AUTEvent;
 import org.eclipse.jubula.client.core.events.AUTServerEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.ServerEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
+import org.eclipse.jubula.client.core.events.ServerEvent;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
-import org.eclipse.jubula.client.internal.BaseConnection;
+import org.eclipse.jubula.client.internal.BaseAUTConnection;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
-import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.communication.internal.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.internal.message.AUTStateMessage;
 import org.eclipse.jubula.communication.internal.message.ConnectToAutMessage;
@@ -75,27 +74,15 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 22.07.2004
  */
-public class AUTConnection extends BaseConnection {
-    /**
-     * the timeout used for establishing a connection to a running AUT
-     */
-    public static final int CONNECT_TO_AUT_TIMEOUT = 10000;
-
+public class AUTConnection extends BaseAUTConnection {
     /** the logger */
-    static final Logger LOG = LoggerFactory
-            .getLogger(AUTConnection.class);
+    static final Logger LOG = LoggerFactory.getLogger(AUTConnection.class);
 
     /** the singleton instance */
     private static AUTConnection instance = null;
-    
+
     /** The m_autConnectionListener */
     private AUTConnectionListener m_autConnectionListener;
-
-    /** 
-     * The ID of the Running AUT with which a connection is currently 
-     * established. 
-     */
-    private AutIdentifier m_connectedAutId;
     
     /**
      * private constructor. creates a communicator
@@ -107,43 +94,8 @@ public class AUTConnection extends BaseConnection {
     private AUTConnection() throws ConnectionException {
         super();
         m_autConnectionListener = new AUTConnectionListener();
-        try {
-            // create a communicator on any free port
-            Communicator communicator = new Communicator(0, this.getClass()
-                    .getClassLoader());
-            communicator.addCommunicationErrorListener(m_autConnectionListener);
-            communicator.setIsServerSocketClosable(false);
-            setCommunicator(communicator);
-        } catch (IOException ioe) {
-            handleInitError(ioe);
-        } catch (SecurityException se) {
-            handleInitError(se);
-        }
-    }
-
-    /**
-     * Disconnects from the currently connected Running AUT. If no connection
-     * currently exists, this method is a no-op.
-     */
-    private void disconnectFromAut() {
-        m_connectedAutId = null;
-    }
-    
-    /**
-     * handles the fatal errors occurs during initialization
-     * 
-     * @param throwable
-     *            the occurred exception
-     * @throws ConnectionException
-     *             a ConnectionException containing a detailed message
-     */
-    private void handleInitError(Throwable throwable)
-        throws ConnectionException {
-        String message = Messages.InitialisationOfAUTConnectionFailed
-            + StringConstants.COLON + StringConstants.SPACE;
-        LOG.error(message, throwable);
-        throw new ConnectionException(message + throwable.getMessage(), 
-            MessageIDs.E_AUT_CONNECTION_INIT);
+        getCommunicator().addCommunicationErrorListener(
+            m_autConnectionListener);
     }
 
     /**
@@ -163,15 +115,6 @@ public class AUTConnection extends BaseConnection {
     }
     
     /**
-     * 
-     * @return the ID of the currently connected AUT, or <code>null</code> if 
-     *         there is currently no connection to an AUT.
-     */
-    public AutIdentifier getConnectedAutId() {
-        return m_connectedAutId;
-    }
-    
-    /**
      * Resets this singleton: Closes the communicator
      * removes the listeners.<br>
      * <b>Note: </b><br>
@@ -181,13 +124,7 @@ public class AUTConnection extends BaseConnection {
      * badly which will be corrected in a future version!
      */
     public synchronized void reset() {
-        Communicator communicator = getCommunicator();
-        if (communicator != null) {
-            communicator.setIsServerSocketClosable(true);
-            communicator.interruptAllTimeouts();
-            communicator.clearListeners();
-            communicator.close();
-        }
+        super.reset();
 
         instance = null;
     }
@@ -235,7 +172,7 @@ public class AUTConnection extends BaseConnection {
                     TimeUtil.delay(200);
                 }
                 if (isConnected()) {
-                    m_connectedAutId = autId;
+                    setConnectedAutId(autId);
                     LOG.info(Messages.ConnectionToAUTEstablished);
                     IAUTMainPO aut = AutAgentRegistration.getAutForId(autId, 
                             GeneralStorage.getInstance().getProject());

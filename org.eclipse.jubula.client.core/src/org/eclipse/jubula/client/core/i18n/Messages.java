@@ -188,7 +188,6 @@ public class Messages extends NLS {
     public static String IncompleteTestdata;
     public static String InDataSource;
     public static String InHierachy;
-    public static String InitialisationOfAUTConnectionFailed;
     public static String InNode;
     public static String InReferenceNoAppropriateParameter;
     public static String InvalidCharacter;

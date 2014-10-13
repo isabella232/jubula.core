@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.Synchronizer;
@@ -141,5 +142,10 @@ public class AUTAgentImpl implements AUTAgent {
             + String.valueOf(arrayOfAutIdentifier));
         
         return null;
+    }
+
+    /** {@inheritDoc} */
+    public AUT getAUT(AutIdentifier autID) {
+        return new AUTImpl(autID);
     }
 }
