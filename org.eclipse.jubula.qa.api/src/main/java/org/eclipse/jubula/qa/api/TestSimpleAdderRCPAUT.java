@@ -21,7 +21,7 @@ import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.OM;
-import org.eclipse.jubula.client.exceptions.CheckException;
+import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
@@ -108,7 +108,7 @@ public class TestSimpleAdderRCPAUT {
     }
 
     /** the actual test method */
-    @Test
+    @Test(expected = CheckFailedException.class)
     public void testAUT() throws Exception {
         Assert.assertTrue(m_aut.isConnected());
         ComponentIdentifier buttonIdentifier = m_om.get("equalsButton"); //$NON-NLS-1$
@@ -123,11 +123,13 @@ public class TestSimpleAdderRCPAUT {
             System.out.println("CAP took: "  //$NON-NLS-1$
                 + (System.currentTimeMillis() - startTime));
         }
-        
+
         try {
+            m_aut.execute(buttonComponent.checkEnablement(true));
             m_aut.execute(buttonComponent.checkText("abc", Operator.equals)); //$NON-NLS-1$
-        } catch (CheckException e) {
+        } catch (CheckFailedException e) {
             System.out.println(e.getActualValue());
+            throw e;
         }
     }
 

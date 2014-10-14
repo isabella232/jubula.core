@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.exceptions;
 
 /** @author BREDEX GmbH */
-public class CheckException extends ExecutionException {
+public class CheckFailedException extends ExecutionException {
 
     /** the actualValue */
     private String m_actualValue;
@@ -22,7 +22,7 @@ public class CheckException extends ExecutionException {
      * @param actualValue
      *            the actual value
      */
-    public CheckException(String actualValue) {
+    public CheckFailedException(String actualValue) {
         setActualValue(actualValue);
     }
 

@@ -14,7 +14,7 @@ import java.util.Map;
 
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.exceptions.ActionException;
-import org.eclipse.jubula.client.exceptions.CheckException;
+import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.exceptions.ComponentNotFoundException;
 import org.eclipse.jubula.client.exceptions.ConfigurationException;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
@@ -143,7 +143,7 @@ public class AUTImpl implements AUT {
                 Object actualValue = event.getProps().get(
                     TestErrorEvent.Property.ACTUAL_VALUE_KEY);
                 
-                throw new CheckException(String.valueOf(actualValue));
+                throw new CheckFailedException(String.valueOf(actualValue));
             }
         }
     }
