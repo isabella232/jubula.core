@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javafx.collections.ListChangeListener;
@@ -40,6 +41,7 @@ import org.eclipse.jubula.rc.javafx.components.AUTJavaFXHierarchy;
 import org.eclipse.jubula.rc.javafx.components.CurrentStages;
 import org.eclipse.jubula.rc.javafx.components.FindJavaFXComponentBP;
 import org.eclipse.jubula.rc.javafx.components.JavaFXComponent;
+import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.sync.IStageResizeSync;
 import org.eclipse.jubula.rc.javafx.listener.sync.StageResizeSyncFactory;
 import org.eclipse.jubula.rc.javafx.tester.adapter.IContainerAdapter;
@@ -121,25 +123,32 @@ public class ComponentHandler implements ListChangeListener<Stage>,
     }
 
     /**
-     * Searches the hierarchy-map for components that are assignable from the
-     * given type
+     * Searches the hierarchy-map (in the JavaFX-Thread) for components that are
+     * assignable from the given type
      *
-     * @param type
-     *            the type to look for
-     *            
+     * @param type the type to look for
      * @param <T> component type
      * @return List
      */
-    public static <T> List<? extends T> getAssignableFrom(Class<T> type) {
-        Set<JavaFXComponent> keys = (Set<JavaFXComponent>) 
-            hierarchy.getHierarchyMap().keySet();
-        List<T> result = new ArrayList<T>();
-        for (JavaFXComponent object : keys) {
-            if (type.isAssignableFrom(object.getRealComponentType())) {
-                result.add(type.cast(object.getRealComponent()));
-            }
-        }
-        return result;
+    public static <T> List<? extends T> getAssignableFrom(final Class<T> type) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getAssignableFrom",
+                new Callable<List<? extends T>>() {
+
+                    @Override
+                    public List<? extends T> call() throws Exception {
+                        Set<JavaFXComponent> keys = (Set<JavaFXComponent>) 
+                                hierarchy.getHierarchyMap().keySet();
+                        List<T> result = new ArrayList<T>();
+                        for (JavaFXComponent object : keys) {
+                            if (type.isAssignableFrom(object
+                                    .getRealComponentType())) {
+                                result.add(type.cast(object.
+                                        getRealComponent()));
+                            }
+                        }
+                        return result;
+                    }
+                });
     }
     
     /**

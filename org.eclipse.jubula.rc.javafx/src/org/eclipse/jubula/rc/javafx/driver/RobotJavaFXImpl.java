@@ -79,6 +79,8 @@ import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
+import com.sun.javafx.scene.input.KeyCodeMap;
+
 /**
  * <p>
  * JavaFX implementation but similar to the AWT/Swing implementation of the
@@ -781,26 +783,37 @@ public class RobotJavaFXImpl implements IRobot {
      * @param keycode The key code.
      * @param isUpperCase Boolean whether character is upper case.
      */
-    public void keyType(Object graphicsComponent, int keycode, 
-            boolean isUpperCase)
+    public void keyType(final Object graphicsComponent, final int keycode, 
+            final boolean isUpperCase)
         throws RobotException {
         try {
             InterceptorOptions options = new InterceptorOptions(
                     new long[] { AWTEvent.KEY_EVENT_MASK });
             IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
-            try {
+            /*try {
                 if (isUpperCase) {
                     m_robot.keyPress(java.awt.event.KeyEvent.VK_SHIFT);
                 }
                 m_robot.keyPress(keycode);
+                confirmer.waitToConfirm(graphicsComponent,
+                        new KeyJavaFXEventMatcher(KeyEvent.KEY_PRESSED));
             } finally {
                 m_robot.keyRelease(keycode);
                 if (isUpperCase) {
                     m_robot.keyRelease(java.awt.event.KeyEvent.VK_SHIFT);
                 }
+            }*/
+            EventTarget target = (EventTarget) graphicsComponent;
+            if (target == null) {
+                target = CurrentStages.getfocusStage();
             }
+            Event.fireEvent(target,
+                    new KeyEvent(KeyEvent.KEY_TYPED,
+                    "", KeyCodeMap.valueOf(keycode).getName(), 
+                    KeyCodeMap.valueOf(keycode) ,
+                    isUpperCase, false, false, false));
             confirmer.waitToConfirm(graphicsComponent,
-                    new KeyJavaFXEventMatcher(KeyEvent.KEY_RELEASED));
+                    new KeyJavaFXEventMatcher(KeyEvent.KEY_TYPED));
         } catch (IllegalArgumentException e) {
             throw new RobotException(e);
         }
