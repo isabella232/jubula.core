@@ -12,6 +12,7 @@ package org.eclipse.jubula.client;
 
 import java.util.Map;
 
+import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.tools.AUTIdentifier;
 
@@ -31,6 +32,8 @@ public interface AUT extends Remote {
     /**
      * @param cap
      *            the CAP to execute on the AUT
+     * @throws ExecutionException
+     *             in case of remote execution problems
      */
-    void execute(CAP cap);
+    void execute(CAP cap) throws ExecutionException;
 }

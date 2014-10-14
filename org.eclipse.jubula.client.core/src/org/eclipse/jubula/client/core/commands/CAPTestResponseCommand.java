@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.core.commands;
 
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.APICommand;
 import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * @created 07.09.2004
  * 
  */
-public class CAPTestResponseCommand implements ICommand {
+public class CAPTestResponseCommand implements APICommand {
     /**
      * The logger
      */

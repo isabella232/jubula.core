@@ -13,16 +13,24 @@ package org.eclipse.jubula.client.internal.impl;
 import java.util.Map;
 
 import org.eclipse.jubula.client.AUT;
+import org.eclipse.jubula.client.exceptions.ActionException;
+import org.eclipse.jubula.client.exceptions.CheckException;
+import org.eclipse.jubula.client.exceptions.ComponentNotFoundException;
+import org.eclipse.jubula.client.exceptions.ConfigurationException;
+import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.client.internal.AUTConnection;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
+import org.eclipse.jubula.client.internal.Synchronizer;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessageFactory;
+import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.communication.internal.message.UnknownMessageException;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 import org.slf4j.Logger;
@@ -32,13 +40,13 @@ import org.slf4j.LoggerFactory;
 public class AUTImpl implements AUT {
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(AUTAgentImpl.class);
-    
+
     /** the AUT identifier */
     private AutIdentifier m_autID;
     /** the instance */
     private AUTConnection m_instance;
     /** the typeMapping */
-    private Map<ComponentClass, String>  m_typeMapping;
+    private Map<ComponentClass, String> m_typeMapping;
 
     /**
      * Constructor
@@ -76,34 +84,70 @@ public class AUTImpl implements AUT {
     /**
      * @return the typeMapping
      */
-    public Map<ComponentClass, String>  getTypeMapping() {
+    public Map<ComponentClass, String> getTypeMapping() {
         return m_typeMapping;
     }
 
     /**
-     * @param typeMapping the typeMapping to set
+     * @param typeMapping
+     *            the typeMapping to set
      */
     public void setTypeMapping(Map<?, ?> typeMapping) {
         m_typeMapping = (Map<ComponentClass, String>) typeMapping;
     }
 
     /** {@inheritDoc} */
-    public void execute(CAP cap) {
+    public void execute(CAP cap) throws ExecutionException {
         try {
             // TODO MT: fixme
             CAPTestMessage capTestMessage = CAPTestMessageFactory
-                .getCAPTestMessage((MessageCap) cap, 
-                "com.bredexsw.guidancer.SwtToolkitPlugin"); //$NON-NLS-1$
-            
+                .getCAPTestMessage((MessageCap)cap,
+                    "com.bredexsw.guidancer.SwtToolkitPlugin"); //$NON-NLS-1$
+
             m_instance.send(capTestMessage);
+
+            Object exchange = Synchronizer.instance().exchange(null);
+            if (exchange instanceof CAPTestResponseMessage) {
+                CAPTestResponseMessage response = 
+                    (CAPTestResponseMessage) exchange;
+                processResponse(response);
+            } else {
+                log.error("Unexpected response received: " //$NON-NLS-1$
+                    + String.valueOf(exchange));
+            }
+
         } catch (UnknownMessageException e) {
             log.error(e.getLocalizedMessage(), e);
         } catch (NotConnectedException e) {
             log.error(e.getLocalizedMessage(), e);
-        } catch (IllegalArgumentException e) {
-            log.error(e.getLocalizedMessage(), e);
         } catch (CommunicationException e) {
             log.error(e.getLocalizedMessage(), e);
+        } catch (InterruptedException e) {
+            log.error(e.getLocalizedMessage(), e);
+        }
+    }
+
+    /**
+     * @param response
+     *            the response to process
+     */
+    private void processResponse(CAPTestResponseMessage response)
+        throws ExecutionException {
+        if (response.hasTestErrorEvent()) {
+            final TestErrorEvent event = response.getTestErrorEvent();
+            final String eventId = event.getId();
+            if (TestErrorEvent.ID.ACTION_ERROR.equals(eventId)) {
+                throw new ActionException();
+            } else if (TestErrorEvent.ID.COMPONENT_NOT_FOUND.equals(eventId)) {
+                throw new ComponentNotFoundException();
+            } else if (TestErrorEvent.ID.CONFIGURATION_ERROR.equals(eventId)) {
+                throw new ConfigurationException();
+            } else if (TestErrorEvent.ID.VERIFY_FAILED.equals(eventId)) {
+                Object actualValue = event.getProps().get(
+                    TestErrorEvent.Property.ACTUAL_VALUE_KEY);
+                
+                throw new CheckException(String.valueOf(actualValue));
+            }
         }
     }
 }

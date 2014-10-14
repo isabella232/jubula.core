@@ -21,8 +21,10 @@ import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.OM;
+import org.eclipse.jubula.client.exceptions.CheckException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
+import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
 import org.eclipse.jubula.toolkit.swt.SwtComponentFactory;
 import org.eclipse.jubula.tools.AUTIdentifier;
@@ -113,8 +115,17 @@ public class TestSimpleAdderRCPAUT {
 
         ButtonComponent buttonComponent = SwtComponentFactory
             .createButton(buttonIdentifier);
-
-        m_aut.execute(buttonComponent.click(1, 1));
+        
+        for (int i = 0; i < 10; i++) {
+            System.out.println(i);
+            m_aut.execute(buttonComponent.click(1, 1));
+        }
+        
+        try {
+            m_aut.execute(buttonComponent.checkText("abc", Operator.equals)); //$NON-NLS-1$
+        } catch (CheckException e) {
+            System.out.println(e.getActualValue());
+        }
     }
 
     /** cleanup */
