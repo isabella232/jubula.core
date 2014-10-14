@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -268,9 +269,17 @@ public class DashboardApp implements IApplication {
             FileInputStream configFileInputStream = null;
             Properties configuration = new Properties();
             try {
-                String home = System.getProperty("user.home");  //$NON-NLS-1$
-                String path = home + File.separator + JUBULA_HOME
-                        + File.separator + PROPERTIES_FILE_NAME;
+                String path = System
+                        .getenv("TEST_DASHBOARD_PROPERTIES"); //$NON-NLS-1$
+                if (StringUtils.isBlank(path)) {
+                    String home = System.getProperty(
+                            "TEST_DASHBOARD_PROPERTIES");  //$NON-NLS-1$
+                }
+                if (StringUtils.isBlank(path)) {
+                    String home = System.getProperty("user.home");  //$NON-NLS-1$
+                    path = home + File.separator + JUBULA_HOME;
+                }
+                path += File.separator + PROPERTIES_FILE_NAME;
                 configFileInputStream = new FileInputStream(path);
                 configuration.load(configFileInputStream);
                 System.getProperties().putAll(configuration);
