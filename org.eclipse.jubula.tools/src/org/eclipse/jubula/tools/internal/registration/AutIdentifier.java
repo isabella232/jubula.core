@@ -12,6 +12,7 @@ package org.eclipse.jubula.tools.internal.registration;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.eclipse.jubula.tools.AUTIdentifier;
 
 /**
  * Exposes information to uniquely identify an AUT. This information can 
@@ -20,7 +21,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * @author BREDEX GmbH
  * @created Dec 7, 2009
  */
-public final class AutIdentifier {
+public final class AutIdentifier implements AUTIdentifier {
 
     /** name of "executableName" property for databinding support */
     public static final String PROP_EXECUTABLE_NAME = "executableName"; //$NON-NLS-1$
@@ -116,5 +117,12 @@ public final class AutIdentifier {
      */
     public int hashCode() {
         return new HashCodeBuilder().append(getExecutableName()).toHashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getID() {
+        return getExecutableName();
     }
 }

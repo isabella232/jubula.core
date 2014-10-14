@@ -11,6 +11,7 @@ Bundle-Localization: plugin
 Export-Package: com.thoughtworks.xstream,
  com.thoughtworks.xstream.converters,
  com.thoughtworks.xstream.io,
+ org.eclipse.jubula.tools,
  org.eclipse.jubula.tools.internal.constants,
  org.eclipse.jubula.tools.internal.exception,
  org.eclipse.jubula.tools.internal.i18n,

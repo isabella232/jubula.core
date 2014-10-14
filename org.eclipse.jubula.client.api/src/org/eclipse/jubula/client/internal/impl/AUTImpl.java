@@ -15,10 +15,12 @@ import java.util.Map;
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.internal.AUTConnection;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
+import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessageFactory;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.communication.internal.message.UnknownMessageException;
+import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
@@ -67,7 +69,7 @@ public class AUTImpl implements AUT {
     }
 
     /** {@inheritDoc} */
-    public AutIdentifier getIdentifier() {
+    public AUTIdentifier getIdentifier() {
         return m_autID;
     }
 
@@ -86,11 +88,11 @@ public class AUTImpl implements AUT {
     }
 
     /** {@inheritDoc} */
-    public void execute(MessageCap cap) {
+    public void execute(CAP cap) {
         try {
             // TODO MT: fixme
             CAPTestMessage capTestMessage = CAPTestMessageFactory
-                .getCAPTestMessage(cap, 
+                .getCAPTestMessage((MessageCap) cap, 
                 "com.bredexsw.guidancer.SwtToolkitPlugin"); //$NON-NLS-1$
             
             m_instance.send(capTestMessage);

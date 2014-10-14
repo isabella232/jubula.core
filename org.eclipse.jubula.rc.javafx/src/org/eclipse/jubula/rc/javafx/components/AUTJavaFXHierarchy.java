@@ -270,13 +270,13 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     }
 
     /**
-     * Searchs for the component in the AUT with the given
+     * Searches for the component in the AUT with the given
      * <code>componentIdentifier</code>.
      *
      * @param componentIdentifier
      *            the identifier created in object mapping mode
      * @throws IllegalArgumentException
-     *             if the given identifer is null or <br>
+     *             if the given identifier is null or <br>
      *             the hierarchy is not valid: empty or containing null elements
      * @throws InvalidDataException
      *             if the hierarchy in the componentIdentifier does not consist

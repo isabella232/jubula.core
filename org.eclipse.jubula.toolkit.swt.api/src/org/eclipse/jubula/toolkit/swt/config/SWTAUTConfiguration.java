@@ -13,7 +13,6 @@ package org.eclipse.jubula.toolkit.swt.config;
 import java.util.Locale;
 
 import org.eclipse.jubula.toolkit.base.config.AbstractOSProcessAUTConfiguration;
-import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /** @author BREDEX GmbH */
 public abstract class SWTAUTConfiguration extends
@@ -39,7 +38,7 @@ public abstract class SWTAUTConfiguration extends
      * @param keyboardLayout
      *            the keyboard layout to use
      */
-    public SWTAUTConfiguration(String name, AutIdentifier autID,
+    public SWTAUTConfiguration(String name, String autID,
         String command, String workingDir, String[] args, Locale locale,
         Locale keyboardLayout) {
         super(name, autID, command, workingDir, args, locale);

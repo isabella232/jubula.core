@@ -28,7 +28,7 @@ public abstract class AbstractAUTConfiguration implements AUTConfiguration {
      * @param autID
      *            the AUT ID
      */
-    public AbstractAUTConfiguration(String name, AutIdentifier autID) {
+    public AbstractAUTConfiguration(String name, String autID) {
         setName(name);
         setAutID(autID);
     }
@@ -59,7 +59,7 @@ public abstract class AbstractAUTConfiguration implements AUTConfiguration {
      * @param autID
      *            the autID to set
      */
-    private void setAutID(AutIdentifier autID) {
-        m_autID = autID;
+    private void setAutID(String autID) {
+        m_autID = new AutIdentifier(autID);
     }
 }

@@ -20,13 +20,13 @@ import junit.framework.Assert;
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.MakeR;
-import org.eclipse.jubula.client.ObjectMappingLoader;
+import org.eclipse.jubula.client.OM;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
 import org.eclipse.jubula.toolkit.swt.SwtComponentFactory;
-import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
-import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.AUTIdentifier;
+import org.eclipse.jubula.tools.ComponentIdentifier;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 import org.junit.After;
 import org.junit.Before;
@@ -47,12 +47,12 @@ public class TestSimpleAdderRCPAUT {
     /** the AUT */
     private AUT m_aut;
     /** the object mapping */
-    private ObjectMappingLoader m_om;
+    private OM m_om;
 
     /** prepare */
     @Before
     public void setUp() throws Exception {
-        m_om = new ObjectMappingLoader();
+        m_om = MakeR.createOM();
         m_om.init(this.getClass().getClassLoader()
             .getResource("objectMapping_SimpleAdderRCP.properties")); //$NON-NLS-1$
 
@@ -66,7 +66,7 @@ public class TestSimpleAdderRCPAUT {
         final String autID = "SimpleAdder";  //$NON-NLS-1$
         AUTConfiguration config = new RCPAUTConfiguration(
             "api.aut.conf.simple.adder.rcp",  //$NON-NLS-1$
-            new AutIdentifier(autID),
+            autID,
             "SimpleAdder.exe", //$NON-NLS-1$
             "k:\\guidancer\\Workspace\\hu_snapshot\\current\\platforms\\win32.win32.x86\\examples\\AUTs\\SimpleAdder\\rcp\\win32\\win32\\x86\\", //$NON-NLS-1$ 
             new String[]{
@@ -78,14 +78,14 @@ public class TestSimpleAdderRCPAUT {
             Locale.getDefault(), 
             Locale.getDefault());
         
-        AutIdentifier id = m_agent.startAUT(config);
+        AUTIdentifier id = m_agent.startAUT(config);
         
         // this e.g. might not be the case if AUT-Agent is running in
         // non-lenient mode and multiple AUTs with the same ID are supposed to
         // start
-        Assert.assertEquals(id.getExecutableName(), autID);
+        Assert.assertEquals(id.getID(), autID);
         
-        List<AutIdentifier> allRegisteredAUTIdentifier = m_agent
+        List<AUTIdentifier> allRegisteredAUTIdentifier = m_agent
             .getAllRegisteredAUTIdentifier();
         
         Assert.assertTrue("Expected ID not found", //$NON-NLS-1$
@@ -109,7 +109,7 @@ public class TestSimpleAdderRCPAUT {
     @Test
     public void testAUT() throws Exception {
         Assert.assertTrue(m_aut.isConnected());
-        IComponentIdentifier buttonIdentifier = m_om.get("equalsButton"); //$NON-NLS-1$
+        ComponentIdentifier buttonIdentifier = m_om.get("equalsButton"); //$NON-NLS-1$
 
         ButtonComponent buttonComponent = SwtComponentFactory
             .createButton(buttonIdentifier);

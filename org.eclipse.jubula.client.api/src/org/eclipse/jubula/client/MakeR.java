@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client;
 
 import org.eclipse.jubula.client.internal.impl.AUTAgentImpl;
+import org.eclipse.jubula.client.internal.impl.ObjectMappingLoader;
 
 /** @author BREDEX GmbH */
 public final class MakeR {
@@ -28,5 +29,12 @@ public final class MakeR {
      */
     public static AUTAgent createAUTAgent(final String hostname, int port) {
         return new AUTAgentImpl(hostname, port);
+    }
+    
+    /**
+     * @return a new Object Mapping instance
+     */
+    public static OM createOM() {
+        return new ObjectMappingLoader();
     }
 }

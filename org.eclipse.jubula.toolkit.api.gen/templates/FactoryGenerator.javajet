@@ -21,7 +21,7 @@ class="FactoryGenerator"%>
  *******************************************************************************/
 package <%=packageName%>;
 
-import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.ComponentIdentifier;
 
 /**
  * Generated factory for creating components from the <%=genInfo.getToolkitName()%> toolkit.
@@ -42,7 +42,7 @@ public final class <%=factoryName%> {
 	public static <%=interfaceName%> create<%=componentName%> () {
 		return new <%=className%>();
 	}<%} else {%>
-	public static <%=interfaceName%> create<%=componentName%> (IComponentIdentifier componentIdentifier) {
+	public static <%=interfaceName%> create<%=componentName%> (ComponentIdentifier componentIdentifier) {
 		return new <%=className%>(componentIdentifier);
 	}<%}%>
 <%}%>

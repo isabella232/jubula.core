@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client;
+package org.eclipse.jubula.client.internal.impl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,9 +16,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
+import org.eclipse.jubula.client.OM;
 import org.eclipse.jubula.client.exceptions.LoadResourceException;
 import org.eclipse.jubula.client.internal.utils.SerilizationUtils;
-import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.ComponentIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created Oct 09, 2014
  */
-public class ObjectMappingLoader {
+public class ObjectMappingLoader implements OM {
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(
             ObjectMappingLoader.class);
@@ -36,8 +37,8 @@ public class ObjectMappingLoader {
     private Properties m_objectMappingAssociations = new Properties();
 
     /** object mapping associations */
-    private Map<String, IComponentIdentifier> m_map =
-            new TreeMap<String, IComponentIdentifier>();
+    private Map<String, ComponentIdentifier> m_map =
+            new TreeMap<String, ComponentIdentifier>();
     
     /**
      * Utility class for loading object mapping association
@@ -46,10 +47,7 @@ public class ObjectMappingLoader {
         super();
     }
     
-    /**
-     * Initializes the object mapping associations
-     * @param resourceURL the URL to the resource properties file
-     */
+    /** {@inheritDoc} */
     public void init (URL resourceURL) {
         try {
             m_objectMappingAssociations.load(resourceURL.openStream());
@@ -73,15 +71,8 @@ public class ObjectMappingLoader {
         }
     }
     
-    /**
-     * Returns the component identifier for a component name from the cache
-     * 
-     * @param compName
-     *            the component name
-     * @return the component identifier or <code>null</code> if no identifier
-     *         was found
-     */
-    public IComponentIdentifier get(String compName) {
+    /** {@inheritDoc} */
+    public ComponentIdentifier get(String compName) {
         return m_map.get(compName);
     }
     
@@ -94,15 +85,15 @@ public class ObjectMappingLoader {
      *         was found
      * @throws LoadResourceException 
      */
-    private IComponentIdentifier getIdentifier(String compName) throws
+    private ComponentIdentifier getIdentifier(String compName) throws
                 LoadResourceException {
         try {
             String encodedString =
                     m_objectMappingAssociations.getProperty(compName);
             if (encodedString != null) {
                 Object decodedObject = SerilizationUtils.decode(encodedString);
-                if (decodedObject instanceof IComponentIdentifier) {
-                    return (IComponentIdentifier) decodedObject;
+                if (decodedObject instanceof ComponentIdentifier) {
+                    return (ComponentIdentifier) decodedObject;
                 }
                 throw new LoadResourceException("The decoded object is " //$NON-NLS-1$
                         + "not of type 'IComponentIdentfier'."); //$NON-NLS-1$

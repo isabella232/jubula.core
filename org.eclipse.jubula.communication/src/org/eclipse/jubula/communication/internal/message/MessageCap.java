@@ -13,6 +13,7 @@ package org.eclipse.jubula.communication.internal.message;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
 
@@ -20,7 +21,7 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
  * @author BREDEX GmbH
  * @created 14.10.2004
  */
-public class MessageCap {
+public class MessageCap implements CAP {
     /** A list of parameters */
     private List m_messageParams;
 

@@ -12,8 +12,6 @@ package org.eclipse.jubula.toolkit.base.config;
 
 import java.util.Locale;
 
-import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
-
 /** @author BREDEX GmbH */
 public abstract class AbstractOSProcessAUTConfiguration extends
     AbstractAUTConfiguration {
@@ -42,7 +40,7 @@ public abstract class AbstractOSProcessAUTConfiguration extends
      * @param locale
      *            the locale to use for the AUT process
      */
-    public AbstractOSProcessAUTConfiguration(String name, AutIdentifier autID,
+    public AbstractOSProcessAUTConfiguration(String name, String autID,
         String command, String workingDir, String[] args, Locale locale) {
         super(name, autID);
         setLocale(locale);

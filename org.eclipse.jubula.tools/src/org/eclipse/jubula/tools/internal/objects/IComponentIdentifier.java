@@ -13,11 +13,13 @@ package org.eclipse.jubula.tools.internal.objects;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jubula.tools.ComponentIdentifier;
+
 /**
  * @author BREDEX GmbH
  * @created 20.12.2005
  */
-public interface IComponentIdentifier {
+public interface IComponentIdentifier extends ComponentIdentifier {
 
     /**
      * @return Returns the componentClassName.

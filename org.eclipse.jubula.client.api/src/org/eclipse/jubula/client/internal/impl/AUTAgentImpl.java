@@ -24,6 +24,7 @@ import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.communication.internal.message.GetRegisteredAutListMessage;
 import org.eclipse.jubula.communication.internal.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.internal.message.StopAUTServerMessage;
+import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
@@ -74,7 +75,7 @@ public class AUTAgentImpl implements AUTAgent {
     }
 
     /** {@inheritDoc} */
-    public AutIdentifier startAUT(AUTConfiguration configuration)
+    public AUTIdentifier startAUT(AUTConfiguration configuration)
         throws Exception {
         Map<String, String> autConfigMap = configuration.getLaunchInformation();
 
@@ -124,19 +125,20 @@ public class AUTAgentImpl implements AUTAgent {
     
 
     /** {@inheritDoc} */
-    public void stopAUT(final AutIdentifier aut) throws Exception {
-        m_agent.send(new StopAUTServerMessage(aut));
+    public void stopAUT(final AUTIdentifier aut) throws Exception {
+        m_agent.send(new StopAUTServerMessage(
+                (AutIdentifier)aut));
     }
 
     /** {@inheritDoc} */
-    public List<AutIdentifier> getAllRegisteredAUTIdentifier() 
+    public List<AUTIdentifier> getAllRegisteredAUTIdentifier() 
         throws Exception {
         m_agent.send(new GetRegisteredAutListMessage());
 
         Object arrayOfAutIdentifier = Synchronizer.instance().exchange(null);
         if (arrayOfAutIdentifier instanceof AutIdentifier[]) {
             return Collections.unmodifiableList(Arrays
-                .asList((AutIdentifier[]) arrayOfAutIdentifier));
+                .asList((AUTIdentifier[]) arrayOfAutIdentifier));
         }
         log.error("Unexpected AUT identifiers received: " //$NON-NLS-1$
             + String.valueOf(arrayOfAutIdentifier));
@@ -145,7 +147,7 @@ public class AUTAgentImpl implements AUTAgent {
     }
 
     /** {@inheritDoc} */
-    public AUT getAUT(AutIdentifier autID) {
-        return new AUTImpl(autID);
+    public AUT getAUT(AUTIdentifier autID) {
+        return new AUTImpl((AutIdentifier) autID);
     }
 }

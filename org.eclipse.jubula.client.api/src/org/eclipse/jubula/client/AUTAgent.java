@@ -13,7 +13,7 @@ package org.eclipse.jubula.client;
 import java.util.List;
 
 import org.eclipse.jubula.client.launch.AUTConfiguration;
-import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.AUTIdentifier;
 
 /** @author BREDEX GmbH */
 public interface AUTAgent extends Remote {
@@ -24,7 +24,7 @@ public interface AUTAgent extends Remote {
      *            an AUT configuration to launch the AUT
      * @return a reference to the running AUT
      */
-    AutIdentifier startAUT(AUTConfiguration configuration) throws Exception;
+    AUTIdentifier startAUT(AUTConfiguration configuration) throws Exception;
 
     /**
      * stop an AUT
@@ -32,18 +32,19 @@ public interface AUTAgent extends Remote {
      * @param aut
      *            a reference to the AUT to stop
      */
-    void stopAUT(AutIdentifier aut) throws Exception;
+    void stopAUT(AUTIdentifier aut) throws Exception;
     
     /**
      * @return an unmodifiable list of currently known / registered AUT IDs
      * @throws Exception
      *             in case of a communication problem
      */
-    List<AutIdentifier> getAllRegisteredAUTIdentifier() throws Exception;
+    List<AUTIdentifier> getAllRegisteredAUTIdentifier() throws Exception;
     
     /**
      * @param autID the autID to get an AUT for
      * @return an AUT 
      */
-    AUT getAUT(AutIdentifier autID);
+    AUT getAUT(AUTIdentifier autID);
+
 }

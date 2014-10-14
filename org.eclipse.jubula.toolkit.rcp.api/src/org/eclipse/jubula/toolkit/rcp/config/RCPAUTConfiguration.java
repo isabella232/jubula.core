@@ -20,7 +20,6 @@ import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.RcpAccessorConstants;
 import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
-import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /** @author BREDEX GmbH */
 public class RCPAUTConfiguration extends SWTAUTConfiguration {
@@ -42,7 +41,7 @@ public class RCPAUTConfiguration extends SWTAUTConfiguration {
      * @param keyboardLayout
      *            the keyboard layout to use
      */
-    public RCPAUTConfiguration(String name, AutIdentifier autID,
+    public RCPAUTConfiguration(String name, String autID,
         String command, String workingDir, String[] args,
         Locale locale, Locale keyboardLayout) {
         super(name, autID, command, workingDir, args, locale, keyboardLayout);

@@ -61,13 +61,15 @@ class="ClassGenerator"%>
  *******************************************************************************/
 package <%=packageName%>;
 
-import org.eclipse.jubula.communication.internal.message.MessageCap;
-import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.communication.CAP;
 <%if (!genInterface) {%>
+import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.communication.internal.message.MessageParam;
+import org.eclipse.jubula.tools.ComponentIdentifier;
+import org.eclipse.jubula.tools.internal.exception.Assert;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.toolkit.internal.annotations.RealizedType;
 import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
-import org.eclipse.jubula.tools.internal.exception.Assert;
 <%}%>
 
 /**
@@ -91,7 +93,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 				super();
 			}<%} else {%>
 			IComponentIdentifier m_componentIdentifier;
-			public <%=className%>(IComponentIdentifier componentIdentifier) {
+			public <%=className%>(ComponentIdentifier componentIdentifier) {
 				super(componentIdentifier);
 			}<%}%>
 		<%} else {%>
@@ -100,9 +102,10 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 				super();
 			}<%} else {%>
 			IComponentIdentifier m_componentIdentifier;
-			public <%=className%>(IComponentIdentifier componentIdentifier) {
+			public <%=className%>(ComponentIdentifier componentIdentifier) {
 				super();
-				m_componentIdentifier = componentIdentifier;
+				Assert.verify(componentIdentifier instanceof IComponentIdentifier);
+				m_componentIdentifier = (IComponentIdentifier) componentIdentifier;
 			}<%}%>
 		<%}%>
 	<%}%>
@@ -119,7 +122,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 		List<Param> params = action.getParams();
 		%>
 		<%if (action.isDeprecated()) {%>@Deprecated<%}%>
-		public MessageCap <%=methodName%>(
+		public CAP <%=methodName%>(
 		<%	
 		// add parameters to method
 		Map<String, String> paramMap = new HashMap<String, String>();
@@ -130,7 +133,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			String name = param.getName();
 			String paramType = nameLoader.findTypeForParameter(type, name);
 			String paramName = nameLoader.translateFromCompSystem(name);
-			paramMap.put(paramName, paramType);
+			paramMap.put(name, paramType);
 			%>
 			<%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
 		<%}%>
@@ -138,15 +141,17 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			MessageCap messageCap = new MessageCap();
 			messageCap.setMethod("<%=action.getMethod()%>");
 			messageCap.sethasDefaultMapping(<%=hasDefaultMapping%>);
-			<%if (!hasDefaultMapping) {%>messageCap.setCi(m_componentIdentifier);<%}%>
-			<%for (Param parameter : params) {%>
-			<%String paramName = nameLoader.translateFromCompSystem(parameter.getName());%>
-			Assert.verify(<%=paramName%> != null, "Argument '<%=paramName%>' must not be null");
+			<%if (!hasDefaultMapping) {%>
+			messageCap.setCi(m_componentIdentifier);<%}%>
+			<%for (Param parameter : params) {
+			String paramName = parameter.getName();%>
+			<%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
+			Assert.verify(<%=translatedParamName%> != null, "Argument '<%=translatedParamName%>' must not be null");
 				<%String paramType = paramMap.get(paramName);%>
 				<%if (nameLoader.isInEnumMap(paramType)) {%>
-			messageCap.addMessageParam(new MessageParam(<%=paramName%>.rcValue(), "java.lang.String"));
+			messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.rcValue(), "java.lang.String"));
 				<%} else {%>
-			messageCap.addMessageParam(new MessageParam(<%=paramName%>.toString(), "<%=paramType%>"));
+			messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.toString(), "<%=paramType%>"));
 				<%}%>
 			<%}%>
 			return messageCap;
