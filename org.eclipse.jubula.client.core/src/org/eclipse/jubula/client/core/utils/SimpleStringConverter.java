@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2014 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
  * <b>This should only be used if you want to work with the tokens!</b>
  * 
  * @author BREDEX GmbH
- * @created 31.10.2007
  */
 public class SimpleStringConverter extends ParamValueConverter {
 
