@@ -12,6 +12,7 @@ package org.eclipse.jubula.client;
 
 import java.util.Map;
 
+import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /** @author BREDEX GmbH */
@@ -26,4 +27,10 @@ public interface AUT extends Remote {
      *            the type mapping to set
      */
     void setTypeMapping(Map<?, ?> typeMapping);
+
+    /**
+     * @param cap
+     *            the CAP to execute on the AUT
+     */
+    void execute(MessageCap cap);
 }

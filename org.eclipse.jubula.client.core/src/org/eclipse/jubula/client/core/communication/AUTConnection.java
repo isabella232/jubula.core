@@ -47,6 +47,7 @@ import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.SendAUTListOfSupportedComponentsMessage;
 import org.eclipse.jubula.communication.internal.message.SendCompSystemI18nMessage;
 import org.eclipse.jubula.communication.internal.message.SetKeyboardLayoutMessage;
+import org.eclipse.jubula.communication.internal.message.UnknownMessageException;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;

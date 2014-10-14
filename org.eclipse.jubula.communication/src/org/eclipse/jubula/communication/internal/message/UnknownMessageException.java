@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core.communication;
+package org.eclipse.jubula.communication.internal.message;
 
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 

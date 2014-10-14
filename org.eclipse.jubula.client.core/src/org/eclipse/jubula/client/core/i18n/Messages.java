@@ -96,8 +96,6 @@ public class Messages extends NLS {
     public static String CouldNotShutDownDatabaseConnectionPool;
     public static String CouldNotShutDownLockManager;
     public static String CouldntDropSsession;
-    public static String CreatingAnMessageSharedInstanceFor;
-    public static String CreatingMessageSharedInstanceFailed;
     public static String CurrenActionNotAvailabelForSelectedToolkit;
     public static String DatabaseConnectionInvalidPreferenceString;
     public static String DatabaseConnectionEstablished;
@@ -169,7 +167,6 @@ public class Messages extends NLS {
     public static String ExecutingClientAction;
     public static String ExecutingDirectoryListCommand;
     public static String ExecutionLog;
-    public static String Failed;
     public static String FailedToUpdateApplicationTimestamp;
     public static String Failure;
     public static String FiringAUTStateChanged;
@@ -196,7 +193,6 @@ public class Messages extends NLS {
     public static String InvalidProjectVersionNumber;
     public static String InvocationOfListenerForReloadingSessionFailed;
     public static String IsBeingReplacedWith;
-    public static String IsNotAssignableTo;
     public static String IsNotAvailable;
     public static String IsNotResolvable;
     public static String ItsNotAllowedToRemoveParametersFromCapPO;
@@ -232,7 +228,6 @@ public class Messages extends NLS {
     public static String MissingPermission;
     public static String NeitherValueNorReferenceForNode;
     public static String Na;
-    public static String NoAUTActivationMessageClassFoundForToolkit;
     public static String Node;
     public static String NoDefaultObjectMappingsCouldBeFoundForTheAUT;
     public static String NodeForGivenParameterValueMustNotBeNull;

@@ -20,8 +20,12 @@ import junit.framework.Assert;
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.MakeR;
+import org.eclipse.jubula.client.ObjectMappingLoader;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
+import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
+import org.eclipse.jubula.toolkit.swt.SwtComponentFactory;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 import org.junit.After;
@@ -42,10 +46,17 @@ public class TestSimpleAdderRCPAUT {
     private AUTAgent m_agent;
     /** the AUT */
     private AUT m_aut;
+    /** the object mapping */
+    private ObjectMappingLoader m_om;
 
     /** prepare */
     @Before
     public void setUp() throws Exception {
+        m_om = new ObjectMappingLoader();
+        m_om.init(this.getClass().getClassLoader()
+            .getResource("objectMapping_SimpleAdderRCP.properties")); //$NON-NLS-1$
+
+        
         m_agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
         Assert.assertNotNull(m_agent);
         
@@ -98,8 +109,12 @@ public class TestSimpleAdderRCPAUT {
     @Test
     public void testAUT() throws Exception {
         Assert.assertTrue(m_aut.isConnected());
-        
-        
+        IComponentIdentifier buttonIdentifier = m_om.get("equalsButton"); //$NON-NLS-1$
+
+        ButtonComponent buttonComponent = SwtComponentFactory
+            .createButton(buttonIdentifier);
+
+        m_aut.execute(buttonComponent.click(1, 1));
     }
 
     /** cleanup */

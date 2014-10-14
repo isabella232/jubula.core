@@ -43,7 +43,6 @@ import org.eclipse.jubula.client.core.commands.DisplayManualTestStepResponseComm
 import org.eclipse.jubula.client.core.commands.EndTestExecutionResponseCommand;
 import org.eclipse.jubula.client.core.commands.TakeScreenshotResponseCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
-import org.eclipse.jubula.client.core.communication.MessageFactory;
 import org.eclipse.jubula.client.core.constants.TestExecutionConstants;
 import org.eclipse.jubula.client.core.events.AUTEvent;
 import org.eclipse.jubula.client.core.i18n.Messages;
@@ -85,6 +84,7 @@ import org.eclipse.jubula.communication.internal.message.EndTestExecutionMessage
 import org.eclipse.jubula.communication.internal.message.InitTestExecutionMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
+import org.eclipse.jubula.communication.internal.message.CAPTestMessageFactory;
 import org.eclipse.jubula.communication.internal.message.MessageParam;
 import org.eclipse.jubula.communication.internal.message.NullMessage;
 import org.eclipse.jubula.communication.internal.message.PrepareForShutdownMessage;
@@ -109,9 +109,9 @@ import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.ExternalCommandExecutor;
+import org.eclipse.jubula.tools.internal.utils.ExternalCommandExecutor.MonitorTask;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
-import org.eclipse.jubula.tools.internal.utils.ExternalCommandExecutor.MonitorTask;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
@@ -605,6 +605,18 @@ public class TestExecution {
     }
 
     /**
+     * @return the toolkit of the AUT
+     */
+    private String getAutToolkit() {
+        String autToolKit = StringConstants.EMPTY;
+        final IAUTMainPO connectedAut =  getConnectedAut();
+        if (connectedAut != null) {
+            autToolKit = connectedAut.getToolkit();            
+        }
+        return autToolKit;
+    }
+    
+    /**
      * Invokes the next step
      * 
      * @param cap cap, which to create the corresponding message for
@@ -626,8 +638,8 @@ public class TestExecution {
             }
             messageCap = buildMessageCap(currCap, false);
             if (!m_stopped) {
-                CAPTestMessage capTestMessage = MessageFactory
-                        .getCAPTestMessage(messageCap);
+                CAPTestMessage capTestMessage = CAPTestMessageFactory
+                        .getCAPTestMessage(messageCap, getAutToolkit());
                 // StepSpeed
                 TimeUtil.delay(m_stepSpeed);
                 while (isPaused()) {
