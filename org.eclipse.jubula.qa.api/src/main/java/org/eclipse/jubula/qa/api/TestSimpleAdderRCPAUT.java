@@ -122,7 +122,7 @@ public class TestSimpleAdderRCPAUT {
     public void tearDown() throws Exception {
         m_aut.disconnect();
         Assert.assertTrue(!m_aut.isConnected());
-        
+       
         m_agent.stopAUT(m_aut.getIdentifier());
         
         m_agent.disconnect();
