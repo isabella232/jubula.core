@@ -408,7 +408,8 @@ public class CommentReporter implements ITestresultSummaryEventListener {
         final String almRepositoryName = properties.getALMRepositoryName();
 
         if (!StringUtils.isBlank(almRepositoryName)
-            && (reportSuccess || reportFailure || !reportingRules.isEmpty())) {
+            && (reportSuccess || reportFailure || !reportingRules.isEmpty())
+                    && summary.isTestsuiteRelevant()) {
             Job reportToALMOperation = new Job(NLS.bind(
                 Messages.ReportToALMJobName, almRepositoryName)) {
                 protected IStatus run(IProgressMonitor monitor) {
