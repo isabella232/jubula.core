@@ -118,7 +118,10 @@ public class TestSimpleAdderRCPAUT {
         
         for (int i = 0; i < 10; i++) {
             System.out.println(i);
+            long startTime = System.currentTimeMillis();
             m_aut.execute(buttonComponent.click(1, 1));
+            System.out.println("CAP took: "  //$NON-NLS-1$
+                + (System.currentTimeMillis() - startTime));
         }
         
         try {

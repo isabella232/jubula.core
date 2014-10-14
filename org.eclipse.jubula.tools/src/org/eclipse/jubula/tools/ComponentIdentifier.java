@@ -1,8 +1,19 @@
+/*******************************************************************************
+ * Copyright (c) 2014 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
 package org.eclipse.jubula.tools;
 
 /**
- * Classes implementing this interface hold the information 
- * for identifying a component in the AUT.
+ * Classes implementing this interface hold the information for identifying a
+ * component in the AUT.
+ * 
  * @author BREDEX GmbH
  * @created 13.10.2014
  */

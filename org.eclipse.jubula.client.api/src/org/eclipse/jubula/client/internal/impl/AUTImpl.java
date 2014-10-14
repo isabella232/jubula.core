@@ -19,7 +19,6 @@ import org.eclipse.jubula.client.exceptions.ComponentNotFoundException;
 import org.eclipse.jubula.client.exceptions.ConfigurationException;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.client.internal.AUTConnection;
-import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.Synchronizer;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
@@ -39,7 +38,7 @@ import org.slf4j.LoggerFactory;
 /** @author BREDEX GmbH */
 public class AUTImpl implements AUT {
     /** the logger */
-    private static Logger log = LoggerFactory.getLogger(AUTAgentImpl.class);
+    private static Logger log = LoggerFactory.getLogger(AUTImpl.class);
 
     /** the AUT identifier */
     private AutIdentifier m_autID;
@@ -117,8 +116,6 @@ public class AUTImpl implements AUT {
             }
 
         } catch (UnknownMessageException e) {
-            log.error(e.getLocalizedMessage(), e);
-        } catch (NotConnectedException e) {
             log.error(e.getLocalizedMessage(), e);
         } catch (CommunicationException e) {
             log.error(e.getLocalizedMessage(), e);
