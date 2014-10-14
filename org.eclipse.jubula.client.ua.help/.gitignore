@@ -1,4 +1,7 @@
 /target
 /tocUserManual.xml
 /contextUserManual.xml
-/html/manual/index.html
+/tocExtensionManual.xml
+/contextExtensionManual.xml
+/html/manual
+/html/extensionapi

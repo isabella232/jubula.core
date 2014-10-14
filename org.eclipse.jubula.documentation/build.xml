@@ -26,7 +26,6 @@
 	</target>
 	
 	<target name="buildDocumentation" depends="
-		buildReferenceManual,
 		buildReleaseNotes">
 		<exec executable="make" failonerror="true" dir="${buildRoot}">
 			<arg line="remove" />
@@ -59,13 +58,6 @@
 		<exec executable="/bin/sh" failonerror="true" dir="${buildRoot}">
 			<arg value="-c" />
 			<arg value="make releaseNotes &gt; ${buildLogDir}/releaseNotes.log 2&gt;&amp;1" />
-		</exec>
-	</target>
-
-	<target name="buildReferenceManual" depends="setupBuildDocumentation">
-		<exec executable="/bin/sh" failonerror="true" dir="${buildRoot}">
-			<arg value="-c" />
-			<arg value="make reference-html &gt; ${buildLogDir}/reference-html.log 2&gt;&amp;1" />
 		</exec>
 	</target>
 </project>
