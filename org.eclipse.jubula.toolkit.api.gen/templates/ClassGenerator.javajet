@@ -139,7 +139,8 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			messageCap.setMethod("<%=action.getMethod()%>");
 			messageCap.sethasDefaultMapping(<%=hasDefaultMapping%>);
 			<%if (!hasDefaultMapping) {%>messageCap.setCi(m_componentIdentifier);<%}%>
-			<%for (String paramName : paramMap.keySet()) {%>
+			<%for (Param parameter : params) {%>
+			<%String paramName = nameLoader.translateFromCompSystem(parameter.getName());%>
 			Assert.verify(<%=paramName%> != null, "Argument '<%=paramName%>' must not be null");
 				<%String paramType = paramMap.get(paramName);%>
 				<%if (nameLoader.isInEnumMap(paramType)) {%>
