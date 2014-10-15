@@ -790,27 +790,20 @@ public class RobotJavaFXImpl implements IRobot {
             InterceptorOptions options = new InterceptorOptions(
                     new long[] { AWTEvent.KEY_EVENT_MASK });
             IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
-            /*try {
-                if (isUpperCase) {
-                    m_robot.keyPress(java.awt.event.KeyEvent.VK_SHIFT);
-                }
-                m_robot.keyPress(keycode);
-                confirmer.waitToConfirm(graphicsComponent,
-                        new KeyJavaFXEventMatcher(KeyEvent.KEY_PRESSED));
-            } finally {
-                m_robot.keyRelease(keycode);
-                if (isUpperCase) {
-                    m_robot.keyRelease(java.awt.event.KeyEvent.VK_SHIFT);
-                }
-            }*/
             EventTarget target = (EventTarget) graphicsComponent;
             if (target == null) {
-                target = CurrentStages.getfocusStage();
+                Stage focusedStage = CurrentStages.getfocusStage();
+                Node focusNode = focusedStage.getScene().getFocusOwner();
+                if (focusNode == null) {
+                    target = focusedStage;
+                } else {
+                    target = focusNode;
+                }
             }
             Event.fireEvent(target,
                     new KeyEvent(KeyEvent.KEY_TYPED,
                     "", KeyCodeMap.valueOf(keycode).getName(), 
-                    KeyCodeMap.valueOf(keycode) ,
+                    KeyCodeMap.valueOf(keycode),
                     isUpperCase, false, false, false));
             confirmer.waitToConfirm(graphicsComponent,
                     new KeyJavaFXEventMatcher(KeyEvent.KEY_TYPED));
