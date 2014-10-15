@@ -10,10 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.qa.api;
 
-import java.util.List;
 import java.util.Locale;
-
-import junit.framework.Assert;
 
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
@@ -21,8 +18,6 @@ import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.OM;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
-import org.eclipse.jubula.toolkit.ToolkitInfo;
-import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
 import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
 import org.eclipse.jubula.toolkit.base.components.TextComponent;
 import org.eclipse.jubula.toolkit.base.components.TextInputComponent;
@@ -42,10 +37,6 @@ public class TestSimpleAdderRCPAUT {
     public static final String AGENT_HOST = "g8.dev.bredex.local"; //$NON-NLS-1$
     /** AUT-Agent port to use */
     public static final int AGENT_PORT = 11022;
-    /** the ERR_STILL_CONNECTED */
-    private static final String ERR_STILL_CONNECTED = "Still connected to AUT-Agent via API"; //$NON-NLS-1$
-    /** the ERR_NOT_CONNECTED */
-    private static final String ERR_NOT_CONNECTED = "No connection to AUT-Agent via API"; //$NON-NLS-1$
     /** the AUT-Agent */
     private AUTAgent m_agent;
     /** the AUT */
@@ -60,12 +51,8 @@ public class TestSimpleAdderRCPAUT {
         m_om.init(this.getClass().getClassLoader()
             .getResource("objectMapping_SimpleAdderRCP.properties")); //$NON-NLS-1$
 
-        
         m_agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
-        Assert.assertNotNull(m_agent);
-        
         m_agent.connect();
-        Assert.assertTrue(ERR_NOT_CONNECTED, m_agent.isConnected());
         
         final String autID = "SimpleAdder";  //$NON-NLS-1$
         AUTConfiguration config = new RCPAUTConfiguration(
@@ -84,31 +71,14 @@ public class TestSimpleAdderRCPAUT {
         
         AUTIdentifier id = m_agent.startAUT(config);
         
-        // this e.g. might not be the case if AUT-Agent is running in
-        // non-lenient mode and multiple AUTs with the same ID are supposed to
-        // start
-        Assert.assertEquals(id.getID(), autID);
-        
-        List<AUTIdentifier> allRegisteredAUTIdentifier = m_agent
-            .getAllRegisteredAUTIdentifier();
-        
-        Assert.assertTrue("Expected ID not found", //$NON-NLS-1$
-            allRegisteredAUTIdentifier.contains(id)); 
-        
         m_aut = m_agent.getAUT(id);
-        
-        Assert.assertTrue(!m_aut.isConnected());
-        
-        ToolkitInfo tkInfo = new SwtToolkitInfo();
-        m_aut.setTypeMapping(tkInfo.getTypeMapping());
-
+        m_aut.setToolkitInformation(new SwtToolkitInfo());
         m_aut.connect();
     }
 
     /** the actual test method */
     @Test(expected = CheckFailedException.class)
     public void testAUT() throws Exception {
-        Assert.assertTrue(m_aut.isConnected());
         ComponentIdentifier val1 = m_om.get("value1"); //$NON-NLS-1$
         ComponentIdentifier val2 = m_om.get("value2"); //$NON-NLS-1$
         ComponentIdentifier button = m_om.get("equalsButton"); //$NON-NLS-1$
@@ -135,11 +105,7 @@ public class TestSimpleAdderRCPAUT {
     @After
     public void tearDown() throws Exception {
         m_aut.disconnect();
-        Assert.assertTrue(!m_aut.isConnected());
-       
         m_agent.stopAUT(m_aut.getIdentifier());
-        
         m_agent.disconnect();
-        Assert.assertFalse(ERR_STILL_CONNECTED, m_agent.isConnected());
     }
 }

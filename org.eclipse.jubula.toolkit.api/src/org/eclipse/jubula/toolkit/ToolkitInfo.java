@@ -12,20 +12,17 @@ package org.eclipse.jubula.toolkit;
 
 import java.util.Map;
 
-import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
-
 /**
  * Contains information about a toolkit and its components
  * @author BREDEX GmbH
  * @created 15.10.2014
  */
 public interface ToolkitInfo {
-    
     /**
-     * @return a map containing the mappings from a component class
-     * to the name of its tester class
+     * @return a map containing the mappings from a component class to the name
+     *         of its tester class
      */
-    public Map<ComponentClass, String> getTypeMapping();
+    public Map<?, ?> getTypeMapping();
     
     /**
      * @return the toolkit id

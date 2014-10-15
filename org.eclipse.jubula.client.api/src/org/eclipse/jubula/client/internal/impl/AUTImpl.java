@@ -26,6 +26,7 @@ import org.eclipse.jubula.communication.internal.message.CAPTestMessageFactory;
 import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.communication.internal.message.UnknownMessageException;
+import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
@@ -40,13 +41,12 @@ import org.slf4j.LoggerFactory;
 public class AUTImpl implements AUT {
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(AUTImpl.class);
-
     /** the AUT identifier */
     private AutIdentifier m_autID;
     /** the instance */
     private AUTConnection m_instance;
-    /** the typeMapping */
-    private Map<ComponentClass, String> m_typeMapping;
+    /** the toolkit specific information */
+    private ToolkitInfo m_information;
 
     /**
      * Constructor
@@ -60,7 +60,8 @@ public class AUTImpl implements AUT {
 
     /** {@inheritDoc} */
     public void connect() throws Exception {
-        final Map<ComponentClass, String> typeMapping = getTypeMapping();
+        final Map<ComponentClass, String> typeMapping = 
+            (Map<ComponentClass, String>) getInformation().getTypeMapping();
         Assert.verify(typeMapping != null);
         m_instance = AUTConnection.getInstance();
         m_instance.connectToAut(m_autID, typeMapping);
@@ -80,29 +81,25 @@ public class AUTImpl implements AUT {
     public AUTIdentifier getIdentifier() {
         return m_autID;
     }
-
-    /**
-     * @return the typeMapping
-     */
-    public Map<ComponentClass, String> getTypeMapping() {
-        return m_typeMapping;
+    
+    /** {@inheritDoc} */
+    public void setToolkitInformation(ToolkitInfo information) {
+        m_information = information;
     }
 
     /**
-     * @param typeMapping
-     *            the typeMapping to set
+     * @return the information
      */
-    public void setTypeMapping(Map<?, ?> typeMapping) {
-        m_typeMapping = (Map<ComponentClass, String>) typeMapping;
+    public ToolkitInfo getInformation() {
+        return m_information;
     }
 
     /** {@inheritDoc} */
     public void execute(CAP cap) throws ExecutionException {
         try {
-            // TODO MT: fixme
             CAPTestMessage capTestMessage = CAPTestMessageFactory
                 .getCAPTestMessage((MessageCap)cap,
-                    "com.bredexsw.guidancer.SwtToolkitPlugin"); //$NON-NLS-1$
+                    getInformation().getToolkitID());
 
             m_instance.send(capTestMessage);
 
