@@ -23,6 +23,9 @@ import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
+import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
+import org.eclipse.jubula.toolkit.base.components.TextComponent;
+import org.eclipse.jubula.toolkit.base.components.TextInputComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
 import org.eclipse.jubula.toolkit.swt.SwtComponentFactory;
@@ -98,6 +101,7 @@ public class TestSimpleAdderRCPAUT {
         
         ToolkitInfo tkInfo = new SwtToolkitInfo();
         m_aut.setTypeMapping(tkInfo.getTypeMapping());
+
         m_aut.connect();
     }
 
@@ -105,25 +109,25 @@ public class TestSimpleAdderRCPAUT {
     @Test(expected = CheckFailedException.class)
     public void testAUT() throws Exception {
         Assert.assertTrue(m_aut.isConnected());
-        ComponentIdentifier buttonIdentifier = m_om.get("equalsButton"); //$NON-NLS-1$
+        ComponentIdentifier val1 = m_om.get("value1"); //$NON-NLS-1$
+        ComponentIdentifier val2 = m_om.get("value2"); //$NON-NLS-1$
+        ComponentIdentifier button = m_om.get("equalsButton"); //$NON-NLS-1$
+        ComponentIdentifier sum = m_om.get("sum"); //$NON-NLS-1$
 
-        ButtonComponent buttonComponent = SwtComponentFactory
-            .createButton(buttonIdentifier);
+        TextInputComponent value1 = SwtComponentFactory.createText(val1);
+        TextInputComponent value2 = SwtComponentFactory.createText(val2);
+        GraphicsComponent equalsButton = SwtComponentFactory
+            .createButton(button);
         
-        for (int i = 0; i < 10; i++) {
-            System.out.println(i);
-            long startTime = System.currentTimeMillis();
-            m_aut.execute(buttonComponent.click(1, 1));
-            System.out.println("CAP took: "  //$NON-NLS-1$
-                + (System.currentTimeMillis() - startTime));
-        }
-
-        try {
-            m_aut.execute(buttonComponent.checkEnablement(true));
-            m_aut.execute(buttonComponent.checkText("abc", Operator.equals)); //$NON-NLS-1$
-        } catch (CheckFailedException e) {
-            System.out.println(e.getActualValue());
-            throw e;
+        TextComponent result = SwtComponentFactory.createTextComponent(sum);
+        
+        final int firstValue = 17;
+        for (int i = 1; i < 5; i++) {
+            m_aut.execute(value1.replaceText(String.valueOf(firstValue)));
+            m_aut.execute(value2.replaceText(String.valueOf(i)));
+            m_aut.execute(equalsButton.click(1, 1));
+            m_aut.execute(result.checkText(String.valueOf(firstValue + i),
+                Operator.equals));
         }
     }
 

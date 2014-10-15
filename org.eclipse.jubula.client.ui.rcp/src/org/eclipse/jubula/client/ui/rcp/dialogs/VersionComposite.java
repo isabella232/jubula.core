@@ -18,7 +18,7 @@ import org.eclipse.jubula.client.ui.rcp.widgets.CheckedIntText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedProjectNameText;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
-import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -107,7 +107,7 @@ public abstract class VersionComposite extends Composite {
         gridData.horizontalAlignment = GridData.FILL;
         m_projectNameField.setLayoutData(gridData);
         m_projectNameField.setText(StringUtils.defaultString(null));
-        m_projectNameField.setData(SwtAUTHierarchyConstants.WIDGET_NAME,
+        m_projectNameField.setData(SwtToolkitConstants.WIDGET_NAME,
                 "VersionComposite.ProjectNameField"); //$NON-NLS-1$
         LayoutUtil.setMaxChar(m_projectNameField, m_length);
         m_projectNameField.addModifyListener(new ModifyListener() {
@@ -140,7 +140,7 @@ public abstract class VersionComposite extends Composite {
                 modifyVersionFieldAction();
             }
         });
-        m_majorVersionField.setData(SwtAUTHierarchyConstants.WIDGET_NAME,
+        m_majorVersionField.setData(SwtToolkitConstants.WIDGET_NAME,
                 "VersionComposite.MajorVersionField"); //$NON-NLS-1$
         
         m_minorVersionField = new CheckedIntText(area, SWT.SINGLE | SWT.BORDER, 
@@ -158,7 +158,7 @@ public abstract class VersionComposite extends Composite {
                 modifyVersionFieldAction();         
             }
         });
-        m_minorVersionField.setData(SwtAUTHierarchyConstants.WIDGET_NAME,
+        m_minorVersionField.setData(SwtToolkitConstants.WIDGET_NAME,
                 "VersionComposite.MinorVersionField"); //$NON-NLS-1$
         m_microVersionField = new CheckedIntText(area, SWT.SINGLE | SWT.BORDER, 
             true, 0, Integer.MAX_VALUE);
@@ -175,7 +175,7 @@ public abstract class VersionComposite extends Composite {
                 modifyVersionFieldAction();        
             }
         });
-        m_microVersionField.setData(SwtAUTHierarchyConstants.WIDGET_NAME,
+        m_microVersionField.setData(SwtToolkitConstants.WIDGET_NAME,
                 "VersionComposite.MicroVersionField"); //$NON-NLS-1$
         new Label(area, SWT.NONE).setText(
                 Messages.CreateNewProjectVersionActionQualifierLabel);
@@ -194,7 +194,7 @@ public abstract class VersionComposite extends Composite {
                 modifyVersionFieldAction();           
             }
         });
-        m_versionQualifierField.setData(SwtAUTHierarchyConstants.WIDGET_NAME,
+        m_versionQualifierField.setData(SwtToolkitConstants.WIDGET_NAME,
                 "VersionComposite.VersionQualifierField"); //$NON-NLS-1$
     }
     

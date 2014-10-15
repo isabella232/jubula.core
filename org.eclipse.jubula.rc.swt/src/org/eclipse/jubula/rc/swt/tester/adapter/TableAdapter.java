@@ -24,7 +24,7 @@ import org.eclipse.jubula.rc.swt.listener.TableSelectionTracker;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.tester.TableTester;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
-import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.swt.SWT;
@@ -85,7 +85,7 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
                     public Object run() {
                         final TableItem item = m_table.getItem(row);
                         String value = CAPUtil.getWidgetText(item,
-                                SwtAUTHierarchyConstants.WIDGET_TEXT_KEY_PREFIX
+                                SwtToolkitConstants.WIDGET_TEXT_KEY_PREFIX
                                         + column, item.getText(column));
                         if (log.isDebugEnabled()) {
                             log.debug("Getting cell text:"); //$NON-NLS-1$

@@ -19,9 +19,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.URIUtil;
-import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,17 +31,8 @@ import org.slf4j.LoggerFactory;
  * @created 14.02.2005
  */
 public class Languages {
-
-    /**
-     * The keyboard mapping file prefix (keyboardmapping_)
-     */
-    public static final String KEYBOARD_MAPPING_FILE_PREFIX = 
-            "resources/keyboard_mapping/"; //$NON-NLS-1$
-    
-    /**
-     * The keyboard mapping file postfix (.properties)
-     */
-    public static final String KEYBOARD_MAPPING_FILE_POSTFIX = ".properties"; //$NON-NLS-1$
+    /** the BUNDLE_ID_CLIENT_API */
+    private static final String BUNDLE_ID_CLIENT_API = "org.eclipse.jubula.client.api"; //$NON-NLS-1$
 
     /** the logger */
     private static final Logger LOG = LoggerFactory.getLogger(Languages.class);
@@ -150,10 +142,10 @@ public class Languages {
      */
     public String[] getKeyboardLayouts() {
         List<String> keyboardLayouts = new ArrayList<String>();
-        Enumeration<URL> layoutUrls =
-            Activator.getDefault().getBundle().findEntries(
-                    KEYBOARD_MAPPING_FILE_PREFIX, 
-                    "*" + KEYBOARD_MAPPING_FILE_POSTFIX, false); //$NON-NLS-1$
+        // TODO fix
+        Enumeration<URL> layoutUrls = Platform.getBundle(BUNDLE_ID_CLIENT_API)
+            .findEntries(SwtToolkitConstants.KEYBOARD_MAPPING_FILE_PREFIX,
+                "*" + SwtToolkitConstants.KEYBOARD_MAPPING_FILE_POSTFIX, true); //$NON-NLS-1$
         while (layoutUrls.hasMoreElements()) {
             URL layoutUrl = layoutUrls.nextElement();
             try {

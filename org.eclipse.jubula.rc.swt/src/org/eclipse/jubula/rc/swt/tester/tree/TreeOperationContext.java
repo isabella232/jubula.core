@@ -26,7 +26,7 @@ import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
-import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -518,7 +518,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                     
                     for (int i = 0; i < colCount; i++) {
                         String textAtColumn = CAPUtil.getWidgetText(item,
-                                SwtAUTHierarchyConstants.WIDGET_TEXT_KEY_PREFIX
+                                SwtToolkitConstants.WIDGET_TEXT_KEY_PREFIX
                                 + i, item.getText(i));
                         if (textAtColumn != null) {
                             res.add(textAtColumn);

@@ -18,7 +18,7 @@ import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.swt.driver.KeyCodeConverter;
 import org.eclipse.jubula.rc.swt.driver.SwtRobot;
-import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Widget;
@@ -123,7 +123,7 @@ public class CAPUtil {
      */
     public static String getWidgetText(final Widget widget,
             final String fallbackText) {
-        return getWidgetText(widget, SwtAUTHierarchyConstants.WIDGET_TEXT_KEY,
+        return getWidgetText(widget, SwtToolkitConstants.WIDGET_TEXT_KEY,
                 fallbackText);
     }
 }

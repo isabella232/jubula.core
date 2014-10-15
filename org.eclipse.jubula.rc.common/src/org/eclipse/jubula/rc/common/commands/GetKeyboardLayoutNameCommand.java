@@ -14,7 +14,7 @@ import org.eclipse.jubula.communication.internal.ICommand;
 import org.eclipse.jubula.communication.internal.message.GetKeyboardLayoutNameMessage;
 import org.eclipse.jubula.communication.internal.message.GetKeyboardLayoutNameResponseMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
-import org.eclipse.jubula.tools.internal.constants.RcpAccessorConstants;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  * @created Aug 2, 2011
  */
 public class GetKeyboardLayoutNameCommand implements ICommand {
-
     /** the logger */
     private static final Logger LOG = 
         LoggerFactory.getLogger(GetKeyboardLayoutNameCommand.class);
@@ -34,38 +33,25 @@ public class GetKeyboardLayoutNameCommand implements ICommand {
     /** the message */
     private GetKeyboardLayoutNameMessage m_message;
     
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Message getMessage() {
         return m_message;
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setMessage(Message message) {
         m_message = (GetKeyboardLayoutNameMessage)message;
     }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    
+    /** {@inheritDoc} */
     public Message execute() {
         return new GetKeyboardLayoutNameResponseMessage(
                 EnvironmentUtils.getProcessEnvironment().getProperty(
-                        RcpAccessorConstants.KEYBOARD_LAYOUT));
+                    AutConfigConstants.KEYBOARD_LAYOUT));
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void timeout() {
         LOG.error(this.getClass().getName() + "timeout() called"); //$NON-NLS-1$
     }
-
 }

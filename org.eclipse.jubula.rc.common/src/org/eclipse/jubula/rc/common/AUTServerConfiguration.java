@@ -127,11 +127,6 @@ public class AUTServerConfiguration {
      */
     private SortedSet m_multiLineTrigger;
     
-    /** which toolkit is selected for this project */
-    private String m_projectToolkit;
-    
-    
-    
     /**
      * the complete list of supported components, what actions are supported etc.
      */
@@ -651,20 +646,6 @@ public class AUTServerConfiguration {
         m_multiLineTrigger = multiLineTrigger;
     }
 
-    /**
-     * @return the projectToolkit
-     */
-    public String getProjectToolkit() {
-        return m_projectToolkit;
-    }
-
-    /**
-     * @param projectToolkit the projectToolkit to set
-     */
-    public void setProjectToolkit(String projectToolkit) {
-        m_projectToolkit = projectToolkit;
-    }
-    
     /**
      * @return a set of supported type identifier
      */

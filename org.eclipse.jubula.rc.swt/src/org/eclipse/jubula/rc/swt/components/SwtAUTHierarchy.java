@@ -32,7 +32,7 @@ import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
-import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
@@ -816,7 +816,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
             String originalName = null;
             String newName = null;
             Object rcpCompId = component
-                .getData(SwtAUTHierarchyConstants.RCP_NAME);
+                .getData(SwtToolkitConstants.RCP_NAME);
             boolean newNameGenerated = false;
             if (compName != null) {
                 newName = compName.toString();

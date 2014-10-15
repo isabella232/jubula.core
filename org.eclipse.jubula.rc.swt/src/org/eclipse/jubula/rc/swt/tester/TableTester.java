@@ -30,7 +30,7 @@ import org.eclipse.jubula.rc.swt.tester.adapter.TextComponentAdapter;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.InputConstants;
-import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
@@ -313,7 +313,7 @@ public class TableTester extends AbstractTableTester {
                         org.eclipse.swt.graphics.Rectangle r = 
                                 ti.getBounds(column);
                         String text = CAPUtil.getWidgetText(ti,
-                                SwtAUTHierarchyConstants.WIDGET_TEXT_KEY_PREFIX
+                                SwtToolkitConstants.WIDGET_TEXT_KEY_PREFIX
                                         + column, ti.getText(column));
                         Image image = ti.getImage(column);
                         if (text != null && text.length() != 0) {

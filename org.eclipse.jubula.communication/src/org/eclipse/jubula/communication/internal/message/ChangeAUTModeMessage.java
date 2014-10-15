@@ -292,19 +292,4 @@ public class ChangeAUTModeMessage extends Message {
     public void setMultiLineTrigger(SortedSet multiLineTrigger) {
         m_multiLineTrigger = multiLineTrigger;
     }
-
-    /**
-     * @return the toolkit
-     */
-    public String getToolkit() {
-        return m_toolkit;
-    }
-
-    /**
-     * @param toolkit
-     *            the toolkit to set
-     */
-    public void setToolkit(String toolkit) {
-        m_toolkit = toolkit;
-    }
 }

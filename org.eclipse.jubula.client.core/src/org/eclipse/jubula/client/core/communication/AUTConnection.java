@@ -10,13 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.communication;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.List;
-import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IClientTest;
@@ -25,7 +21,6 @@ import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.commands.AUTStartedCommand;
 import org.eclipse.jubula.client.core.commands.AUTStateCommand;
 import org.eclipse.jubula.client.core.commands.ConnectToAutResponseCommand;
-import org.eclipse.jubula.client.core.commands.GetKeyboardLayoutNameResponseCommand;
 import org.eclipse.jubula.client.core.events.AUTEvent;
 import org.eclipse.jubula.client.core.events.AUTServerEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -35,18 +30,15 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.BaseAUTConnection;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.internal.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.internal.message.AUTStateMessage;
 import org.eclipse.jubula.communication.internal.message.ConnectToAutMessage;
-import org.eclipse.jubula.communication.internal.message.GetKeyboardLayoutNameMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.SendAUTListOfSupportedComponentsMessage;
 import org.eclipse.jubula.communication.internal.message.SendCompSystemI18nMessage;
-import org.eclipse.jubula.communication.internal.message.SetKeyboardLayoutMessage;
 import org.eclipse.jubula.communication.internal.message.UnknownMessageException;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
@@ -200,64 +192,6 @@ public class AUTConnection extends BaseAUTConnection {
         } 
         ded.fireAutServerConnectionChanged(ServerState.Disconnected);
         return false;
-    }
-    
-    /**
-     * Sets the keyboard layout for the currently connected AUT.
-     * 
-     * @throws NotConnectedException if there is no connection to an AUT.
-     * @throws ConnectionException if no connection to an AUT could be 
-     *                             initialized.
-     * @throws CommunicationException if an error occurs while communicating
-     *                                with the AUT.
-     */
-    private void sendKeyboardLayoutToAut() 
-        throws NotConnectedException, ConnectionException, 
-               CommunicationException {
-
-        final int timeoutToUse = CONNECT_TO_AUT_TIMEOUT; 
-        
-        GetKeyboardLayoutNameMessage request = 
-            new GetKeyboardLayoutNameMessage();
-        GetKeyboardLayoutNameResponseCommand response =
-            new GetKeyboardLayoutNameResponseCommand();
-        request(request, response, timeoutToUse);
-
-        long startTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() <= startTime + timeoutToUse
-                && !response.wasExecuted() && isConnected()) {
-            TimeUtil.delay(500);
-        }
-        
-        String layoutName = response.getKeyboardLayoutName();
-        if (StringUtils.isNotEmpty(layoutName)) {
-            String filename = 
-                Languages.KEYBOARD_MAPPING_FILE_PREFIX + layoutName 
-                + Languages.KEYBOARD_MAPPING_FILE_POSTFIX;
-            final InputStream stream = getClass().getClassLoader()
-                .getResourceAsStream(filename);
-            try {
-                if (stream != null) {
-                    Properties prop = new Properties();
-                    prop.load(stream);
-                    send(new SetKeyboardLayoutMessage(prop));
-                } else {
-                    LOG.error("Mapping for '" + layoutName + "' could not be found.");  //$NON-NLS-1$//$NON-NLS-2$
-                }
-            } catch (IOException ioe) {
-                LOG.error("Error occurred while loading Keyboard Mapping.", ioe); //$NON-NLS-1$
-            } catch (IllegalArgumentException iae) {
-                LOG.error("Error occurred while loading Keybaord Mapping.", iae); //$NON-NLS-1$
-            } finally {
-                if (stream != null) {
-                    try {
-                        stream.close();
-                    } catch (IOException e) {
-                        LOG.warn("Error occurred while closing stream.", e); //$NON-NLS-1$
-                    }
-                }
-            }
-        }
     }
     
     /**

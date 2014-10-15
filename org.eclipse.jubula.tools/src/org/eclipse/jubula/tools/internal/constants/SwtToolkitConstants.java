@@ -14,7 +14,7 @@ package org.eclipse.jubula.tools.internal.constants;
  * @author BREDEX GmbH
  * @created Apr 17, 2008
  */
-public final class SwtAUTHierarchyConstants {
+public final class SwtToolkitConstants {
     /**
      * the key for widget.getData(key); to get the hardcoded widget name (-->
      * convention)
@@ -46,8 +46,19 @@ public final class SwtAUTHierarchyConstants {
      */
     public static final String RCP_NAME = "TEST_RCP_COMP_NAME"; //$NON-NLS-1$
 
+    /**
+     * The keyboard mapping file prefix (keyboardmapping_)
+     */
+    public static final String KEYBOARD_MAPPING_FILE_PREFIX = 
+            "keyboard_mapping/"; //$NON-NLS-1$
+    
+    /**
+     * The keyboard mapping file postfix (.properties)
+     */
+    public static final String KEYBOARD_MAPPING_FILE_POSTFIX = ".properties"; //$NON-NLS-1$
+    
     /** private constructor */
-    private SwtAUTHierarchyConstants() {
+    private SwtToolkitConstants() {
         // constant class
     }
 }

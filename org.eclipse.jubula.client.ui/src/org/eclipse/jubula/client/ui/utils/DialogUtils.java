@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.utils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -88,7 +88,7 @@ public final class DialogUtils {
     public static void setWidgetName(Widget widget, String name) {
         if (widget != null && !widget.isDisposed()) {
             widget.setData(
-                    SwtAUTHierarchyConstants.WIDGET_NAME, name);
+                    SwtToolkitConstants.WIDGET_NAME, name);
         }
     }
 

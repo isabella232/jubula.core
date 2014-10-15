@@ -151,7 +151,9 @@ public class AUTConnection extends BaseAUTConnection {
     public void setup(Map<ComponentClass, String> technicalTypeMapping)
         throws NotConnectedException, ConnectionException,
         CommunicationException {
-        sendKeyboardLayoutToAUT();
+        sendKeyboardLayoutToAut();
+        // TODO workaround for racing condition
+        TimeUtil.delay(1000);
         sendComponentSupportToAUT(technicalTypeMapping);
     }
 
@@ -171,12 +173,5 @@ public class AUTConnection extends BaseAUTConnection {
         message.setProfile(ProfileBuilder.getDefaultProfile());
 
         send(message);
-    }
-
-    /**
-     * send the keyboard layout to the AUT
-     */
-    private void sendKeyboardLayoutToAUT() {
-        System.err.println("sendKeyboardLayoutToAUT()"); //$NON-NLS-1$
     }
 }
