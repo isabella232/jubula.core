@@ -21,8 +21,11 @@ public class CheckFailedException extends ExecutionException {
      * 
      * @param actualValue
      *            the actual value
+     * @param message
+     *            the message
      */
-    public CheckFailedException(String actualValue) {
+    public CheckFailedException(String message, String actualValue) {
+        super(message);
         setActualValue(actualValue);
     }
 
@@ -34,7 +37,8 @@ public class CheckFailedException extends ExecutionException {
     }
 
     /**
-     * @param actualValue the actualValue to set
+     * @param actualValue
+     *            the actualValue to set
      */
     private void setActualValue(String actualValue) {
         m_actualValue = actualValue;

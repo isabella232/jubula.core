@@ -12,5 +12,13 @@ package org.eclipse.jubula.client.exceptions;
 
 /** @author BREDEX GmbH */
 public class ConfigurationException extends ExecutionException {
-
+    /**
+     * Constructor
+     * 
+     * @param message
+     *            the message
+     */
+    public ConfigurationException(String message) {
+        super(message);
+    }
 }

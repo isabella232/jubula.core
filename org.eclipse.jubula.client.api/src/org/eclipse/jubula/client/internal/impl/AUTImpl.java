@@ -148,14 +148,14 @@ public class AUTImpl implements AUT {
             if (TestErrorEvent.ID.ACTION_ERROR.equals(eventId)) {
                 throw new ActionException(description);
             } else if (TestErrorEvent.ID.COMPONENT_NOT_FOUND.equals(eventId)) {
-                throw new ComponentNotFoundException();
+                throw new ComponentNotFoundException(description);
             } else if (TestErrorEvent.ID.CONFIGURATION_ERROR.equals(eventId)) {
-                throw new ConfigurationException();
+                throw new ConfigurationException(description);
             } else if (TestErrorEvent.ID.VERIFY_FAILED.equals(eventId)) {
                 Object actualValue = event.getProps().get(
                     TestErrorEvent.Property.ACTUAL_VALUE_KEY);
-                
-                throw new CheckFailedException(String.valueOf(actualValue));
+                throw new CheckFailedException(description,
+                    String.valueOf(actualValue));
             }
         }
     }
