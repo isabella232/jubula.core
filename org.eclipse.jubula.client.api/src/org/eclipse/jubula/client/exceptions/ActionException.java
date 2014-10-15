@@ -13,4 +13,13 @@ package org.eclipse.jubula.client.exceptions;
 /** @author BREDEX GmbH */
 public class ActionException extends ExecutionException {
 
+    /**
+     * Constructor
+     * 
+     * @param message
+     *            the message
+     */
+    public ActionException(String message) {
+        super(message);
+    }
 }

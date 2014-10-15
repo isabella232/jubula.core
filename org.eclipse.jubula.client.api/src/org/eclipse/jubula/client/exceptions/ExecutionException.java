@@ -12,5 +12,13 @@ package org.eclipse.jubula.client.exceptions;
 
 /** @author BREDEX GmbH */
 public abstract class ExecutionException extends RuntimeException {
-
+    /**
+     * Constructor
+     * 
+     * @param message
+     *            the message
+     */
+    public ExecutionException(String message) {
+        super(message);
+    }
 }

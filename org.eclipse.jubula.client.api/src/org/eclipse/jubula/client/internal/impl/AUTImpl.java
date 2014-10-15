@@ -29,6 +29,7 @@ import org.eclipse.jubula.communication.internal.message.UnknownMessageException
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
@@ -133,8 +134,19 @@ public class AUTImpl implements AUT {
         if (response.hasTestErrorEvent()) {
             final TestErrorEvent event = response.getTestErrorEvent();
             final String eventId = event.getId();
+            Map<Object, Object> eventProps = event.getProps();
+            String description = null;
+            if (eventProps.containsKey(
+                TestErrorEvent.Property.DESCRIPTION_KEY)) {
+                String key = (String) eventProps
+                    .get(TestErrorEvent.Property.DESCRIPTION_KEY);
+                Object[] args = (Object[]) eventProps
+                    .get(TestErrorEvent.Property.PARAMETER_KEY);
+                args = args != null ? args : new Object[0];
+                description = I18n.getString(key, args);
+            }
             if (TestErrorEvent.ID.ACTION_ERROR.equals(eventId)) {
-                throw new ActionException();
+                throw new ActionException(description);
             } else if (TestErrorEvent.ID.COMPONENT_NOT_FOUND.equals(eventId)) {
                 throw new ComponentNotFoundException();
             } else if (TestErrorEvent.ID.CONFIGURATION_ERROR.equals(eventId)) {
