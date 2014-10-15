@@ -29,7 +29,6 @@ import org.eclipse.swt.SWT;
  * @created 12.07.2007
  */
 public class KeyboardHelper {
-    
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
         KeyboardHelper.class);
@@ -59,7 +58,8 @@ public class KeyboardHelper {
      * Key = character
      * Value = KeyStroke
      */
-    private Map m_mapping = new HashMap();
+    private Map<Character, KeyStroke> m_mapping = 
+        new HashMap<Character, KeyStroke>();
 
     /**
      * Constructor
@@ -133,7 +133,7 @@ public class KeyboardHelper {
         if (isSingleKey(character)) {
             return new KeyStroke(character);
         }
-        keyStroke = (KeyStroke)m_mapping.get(new Character(character));
+        keyStroke = m_mapping.get(new Character(character));
         
         // if no KeyStroke was found, return a KeyStroke with the given 
         // character and log in debug.
@@ -171,7 +171,7 @@ public class KeyboardHelper {
         private char m_char = '0';
         
         /** The List of modifiers */
-        private List m_modifiers = new ArrayList(3);
+        private List<Integer> m_modifiers = new ArrayList<Integer>(3);
 
         /**
          * Constructor.
@@ -205,8 +205,5 @@ public class KeyboardHelper {
         public void addModifier(int modifier) {
             m_modifiers.add(new Integer(modifier));
         }
-        
-        
     }
-
 }
