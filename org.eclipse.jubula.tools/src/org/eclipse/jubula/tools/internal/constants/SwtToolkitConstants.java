@@ -50,7 +50,7 @@ public final class SwtToolkitConstants {
      * The keyboard mapping file prefix (keyboardmapping_)
      */
     public static final String KEYBOARD_MAPPING_FILE_PREFIX = 
-            "keyboard_mapping/"; //$NON-NLS-1$
+            "resources/keyboard_mapping/"; //$NON-NLS-1$
     
     /**
      * The keyboard mapping file postfix (.properties)

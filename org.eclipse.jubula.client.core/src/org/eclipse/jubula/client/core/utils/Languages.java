@@ -142,7 +142,6 @@ public class Languages {
      */
     public String[] getKeyboardLayouts() {
         List<String> keyboardLayouts = new ArrayList<String>();
-        // TODO fix
         Enumeration<URL> layoutUrls = Platform.getBundle(BUNDLE_ID_CLIENT_API)
             .findEntries(SwtToolkitConstants.KEYBOARD_MAPPING_FILE_PREFIX,
                 "*" + SwtToolkitConstants.KEYBOARD_MAPPING_FILE_POSTFIX, true); //$NON-NLS-1$
