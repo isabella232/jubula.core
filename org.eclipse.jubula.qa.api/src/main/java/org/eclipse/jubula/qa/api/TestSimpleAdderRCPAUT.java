@@ -10,10 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.qa.api;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import junit.framework.Assert;
 
@@ -23,13 +21,14 @@ import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.OM;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
+import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
 import org.eclipse.jubula.toolkit.swt.SwtComponentFactory;
+import org.eclipse.jubula.toolkit.swt.SwtToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.ComponentIdentifier;
-import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -97,13 +96,8 @@ public class TestSimpleAdderRCPAUT {
         
         Assert.assertTrue(!m_aut.isConnected());
         
-        Map<ComponentClass, String> typeMapping = 
-            new HashMap<ComponentClass, String>();
-        typeMapping.put(
-            new ComponentClass("org.eclipse.swt.widgets.Button"), //$NON-NLS-1$
-                               "org.eclipse.jubula.rc.swt.tester.ButtonTester"); //$NON-NLS-1$ 
-        
-        m_aut.setTypeMapping(typeMapping);
+        ToolkitInfo tkInfo = new SwtToolkitInfo();
+        m_aut.setTypeMapping(tkInfo.getTypeMapping());
         m_aut.connect();
     }
 

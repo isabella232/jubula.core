@@ -1,5 +1,7 @@
 package org.eclipse.jubula.toolkit.api.gen.internal;
 
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
+
 
 /**
  * Contains all necessary information of a component for factory generation
@@ -22,6 +24,12 @@ public class FactoryInfo {
     /** the most specific visible super type of a component */
     private String m_mostSpecificVisibleSuperTypeName;
     
+    /** the most specific visible super type of a component */
+    private ComponentClass m_componentClass;
+
+    /** the most specific visible super type of a component */
+    private String m_testerClass;
+    
     /**
      * Contains all necessary information of a component for factory generation
      * @param componentName the component name
@@ -29,15 +37,20 @@ public class FactoryInfo {
      * @param interfaceName the interface name
      * @param hasDefaultMapping true if and only if component has default mapping
      * @param mostSpecificVisibleSuperTypeName most specific visible super type of a component
+     * @param componentClass the component class
+     * @param testerClass the tester class
      */
     public FactoryInfo(String componentName, String className,
             String interfaceName, boolean hasDefaultMapping,
-            String mostSpecificVisibleSuperTypeName) {
+            String mostSpecificVisibleSuperTypeName,
+            ComponentClass componentClass, String testerClass) {
         m_componentName = componentName;
         m_className = className;
         m_interfaceName = interfaceName;
         m_hasDefaultMapping = hasDefaultMapping;
         m_mostSpecificVisibleSuperTypeName = mostSpecificVisibleSuperTypeName;
+        m_componentClass = componentClass;
+        m_testerClass = testerClass;
     }
     
     /**
@@ -81,4 +94,19 @@ public class FactoryInfo {
         return m_mostSpecificVisibleSuperTypeName;
     }
 
+    /** 
+     * Returns the tester class
+     * @return the tester class
+     */
+    public String getTesterClass() {
+        return m_testerClass;
+    }
+    
+    /** 
+     * Returns the component class
+     * @return the component class
+     */
+    public ComponentClass getComponentClass() {
+        return m_componentClass;
+    }
 }

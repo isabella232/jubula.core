@@ -27,8 +27,7 @@ import org.eclipse.jubula.tools.internal.utils.generator.ToolkitConfig;
  * <code>resources/apigen.properties</code>.
  * 
  * @author BREDEX GmbH
- * @created 16.09.2005
- * @version $Revision: 12986 $
+ * @created 09.09.2014
  */
 public class ConfigLoader {
     /**
