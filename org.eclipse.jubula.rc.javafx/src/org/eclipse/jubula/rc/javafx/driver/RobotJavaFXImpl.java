@@ -79,8 +79,6 @@ import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
-import com.sun.javafx.scene.input.KeyCodeMap;
-
 /**
  * <p>
  * JavaFX implementation but similar to the AWT/Swing implementation of the
@@ -790,23 +788,21 @@ public class RobotJavaFXImpl implements IRobot {
             InterceptorOptions options = new InterceptorOptions(
                     new long[] { AWTEvent.KEY_EVENT_MASK });
             IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
-            EventTarget target = (EventTarget) graphicsComponent;
-            if (target == null) {
-                Stage focusedStage = CurrentStages.getfocusStage();
-                Node focusNode = focusedStage.getScene().getFocusOwner();
-                if (focusNode == null) {
-                    target = focusedStage;
-                } else {
-                    target = focusNode;
+            try {
+                if (isUpperCase) {
+                    m_robot.keyPress(java.awt.event.KeyEvent.VK_SHIFT);
+                }
+                m_robot.keyPress(keycode);
+                confirmer.waitToConfirm(graphicsComponent,
+                        new KeyJavaFXEventMatcher(KeyEvent.KEY_PRESSED));
+            } finally {
+                m_robot.keyRelease(keycode);
+                if (isUpperCase) {
+                    m_robot.keyRelease(java.awt.event.KeyEvent.VK_SHIFT);
                 }
             }
-            Event.fireEvent(target,
-                    new KeyEvent(KeyEvent.KEY_TYPED,
-                    "", KeyCodeMap.valueOf(keycode).getName(), 
-                    KeyCodeMap.valueOf(keycode),
-                    isUpperCase, false, false, false));
             confirmer.waitToConfirm(graphicsComponent,
-                    new KeyJavaFXEventMatcher(KeyEvent.KEY_TYPED));
+                    new KeyJavaFXEventMatcher(KeyEvent.KEY_RELEASED));
         } catch (IllegalArgumentException e) {
             throw new RobotException(e);
         }

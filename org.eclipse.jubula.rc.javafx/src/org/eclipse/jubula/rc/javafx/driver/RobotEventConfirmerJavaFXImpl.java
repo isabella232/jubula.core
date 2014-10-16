@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.driver;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -20,6 +20,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.event.WeakEventHandler;
+import javafx.scene.Scene;
 import javafx.stage.Window;
 
 import org.eclipse.jubula.rc.common.driver.IEventMatcher;
@@ -115,16 +116,17 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
             log.debug("Waiting for EventID: " + String.valueOf(matcher) //$NON-NLS-1$
                     + " on Component: " + String.valueOf(eventTarget)); //$NON-NLS-1$
         }
-
+        ArrayList<Event> history = new ArrayList<>();
         try {
             m_waiting = true;
-
+            
             try {
                 long timeout = pTimeout;
                 long done = System.currentTimeMillis() + timeout;
                 long now;
                 do {
                     Event e = m_eventList.poll(timeout, TimeUnit.MILLISECONDS);
+                    history.add(e);
                     if (isEventMatch(e, matcher, eventTarget)) {
                         return;
                     }
@@ -141,8 +143,7 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
                 // But the event matcher may accept a different event, which has
                 // already dispatched, as a fall back.
                 boolean fallBackMatching = matcher
-                        .isFallBackEventMatching(
-                                Arrays.asList(m_eventList.toArray()),
+                        .isFallBackEventMatching(history,
                                 eventTarget);
 
                 if (!fallBackMatching && !WorkaroundUtil.isIgnoreTimeout()) {
@@ -249,17 +250,22 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
                     EventThreadQueuerJavaFXImpl.invokeAndWait(
                             "Add EventFilter for conforming", //$NON-NLS-1$
                             new Callable<Void>() {
-
                                 @Override
                                 public Void call() throws Exception {
                                     win.addEventFilter(
                                             JavaFXEventConverter.awtToFX(mask),
                                             new WeakEventHandler<>(me));
-                                    
+                                    Scene s = win.getScene();
+                                    if (s != null 
+                                            && s.getFocusOwner() != null) {
+                                        s.getFocusOwner().addEventFilter(
+                                                JavaFXEventConverter
+                                                        .awtToFX(mask),
+                                                new WeakEventHandler<>(me));
+                                    }
                                     return null;
                                 }
                             });
-                    
                 }
             }
         } else {
@@ -279,12 +285,19 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
                     EventThreadQueuerJavaFXImpl.invokeAndWait(
                             "Remove EventFilter for conforming", //$NON-NLS-1$
                             new Callable<Void>() {
-
                                 @Override
                                 public Void call() throws Exception {
                                     win.removeEventFilter(
                                             JavaFXEventConverter.awtToFX(mask),
                                             new WeakEventHandler<>(me));
+                                    Scene s = win.getScene();
+                                    if (s != null 
+                                            && s.getFocusOwner() != null) {
+                                        s.getFocusOwner().removeEventFilter(
+                                                JavaFXEventConverter
+                                                        .awtToFX(mask),
+                                                new WeakEventHandler<>(me));
+                                    }
                                     return null;
                                 }
                             });

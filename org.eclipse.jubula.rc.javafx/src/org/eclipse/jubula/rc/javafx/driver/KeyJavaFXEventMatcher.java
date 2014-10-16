@@ -12,8 +12,11 @@ package org.eclipse.jubula.rc.javafx.driver;
 
 import java.util.List;
 
+import javafx.event.Event;
 import javafx.event.EventType;
 import javafx.scene.input.KeyEvent;
+
+import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 
 /**
  * Event matcher for key events.
@@ -22,7 +25,9 @@ import javafx.scene.input.KeyEvent;
  * @created 1.11.2013
  */
 public class KeyJavaFXEventMatcher extends DefaultJavaFXEventMatcher<KeyEvent> {
-
+    /** the logger */
+    private static AutServerLogger log = new AutServerLogger(
+            KeyJavaFXEventMatcher.class);
     /**
      * Creates a new matcher
      *
@@ -38,6 +43,13 @@ public class KeyJavaFXEventMatcher extends DefaultJavaFXEventMatcher<KeyEvent> {
      */
     public boolean isFallBackEventMatching(List eventObjects,
             Object graphicsComponent) {
+        for (Object object : eventObjects) {
+            Event e = (Event) object;
+            if (e instanceof KeyEvent) {
+                log.warn("Key event matching fallback used.");
+                return true;
+            }
+        }
         return false;
     }
 }
