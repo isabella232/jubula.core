@@ -12,10 +12,11 @@ package org.eclipse.jubula.client;
 
 import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.communication.CAP;
-import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
 
-/** @author BREDEX GmbH */
+/**
+ * @author BREDEX GmbH
+ */
 public interface AUT extends Remote {
     /**
      * @return the identifier of this AUT
@@ -23,16 +24,24 @@ public interface AUT extends Remote {
     AUTIdentifier getIdentifier();
 
     /**
-     * @param information
-     *            the information about the AUTs toolkit
-     */
-    void setToolkitInformation(ToolkitInfo information);
-
-    /**
      * @param cap
      *            the CAP to execute on the AUT
+     * @param <T>
+     *            the payload type
+     * @param payload
+     *            the payload for the execution
+     * @return the result of the execution
      * @throws ExecutionException
      *             in case of remote execution problems
      */
-    void execute(CAP cap) throws ExecutionException;
+    <T> Result<T> execute(CAP cap, T payload) throws ExecutionException;
+    
+    /**
+     * @param cap
+     *            the CAP to execute on the AUT
+     * @return the result of the execution
+     * @throws ExecutionException
+     *             in case of remote execution problems
+     */
+    Result execute(CAP cap) throws ExecutionException;
 }

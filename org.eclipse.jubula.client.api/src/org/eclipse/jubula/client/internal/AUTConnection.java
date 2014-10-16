@@ -122,16 +122,12 @@ public class AUTConnection extends BaseAUTConnection {
                 }
                 LOGGER.error("Connection to AUT could not be established."); //$NON-NLS-1$
             } catch (CommunicationException e) {
-                LOGGER.error(
-                    "Error occurred while establishing connection to AUT.", e); //$NON-NLS-1$
+                LOGGER.error("Error occurred while establishing connection to AUT.", e); //$NON-NLS-1$
             } catch (JBVersionException e) {
-                LOGGER
-                    .error(
-                        "Version error occurred while establishing connection to AUT.", e); //$NON-NLS-1$
+                LOGGER .error("Version error occurred while establishing connection to AUT.", e); //$NON-NLS-1$
             }
         } else {
-            LOGGER
-                .warn("Cannot establish new connection to AUT: Connection to AUT already exists."); //$NON-NLS-1$
+            LOGGER.warn("Cannot establish new connection to AUT: Connection to AUT already exists."); //$NON-NLS-1$
         }
         return false;
     }

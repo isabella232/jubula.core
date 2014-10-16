@@ -10,22 +10,26 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.exceptions;
 
+import org.eclipse.jubula.client.Result;
+
 /** @author BREDEX GmbH */
 public class CheckFailedException extends ExecutionException {
-
     /** the actualValue */
     private String m_actualValue;
 
     /**
      * Constructor
      * 
+     * @param result
+     *            the result
      * @param actualValue
      *            the actual value
      * @param message
      *            the message
      */
-    public CheckFailedException(String message, String actualValue) {
-        super(message);
+    public CheckFailedException(Result result, String message,
+        String actualValue) {
+        super(result, message);
         setActualValue(actualValue);
     }
 

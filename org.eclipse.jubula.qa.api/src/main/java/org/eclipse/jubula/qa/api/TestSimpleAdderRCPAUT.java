@@ -11,12 +11,15 @@
 package org.eclipse.jubula.qa.api;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.ObjectMapping;
+import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
@@ -72,33 +75,42 @@ public class TestSimpleAdderRCPAUT {
         
         AUTIdentifier id = m_agent.startAUT(config);
         
-        m_aut = m_agent.getAUT(id);
-        m_aut.setToolkitInformation(new SwtToolkitInfo());
+        m_aut = m_agent.getAUT(id, new SwtToolkitInfo());
         m_aut.connect();
     }
 
     /** the actual test method */
     @Test(expected = CheckFailedException.class)
     public void testAUT() throws Exception {
-        ComponentIdentifier val1 = m_om.get("value1"); //$NON-NLS-1$
-        ComponentIdentifier val2 = m_om.get("value2"); //$NON-NLS-1$
-        ComponentIdentifier button = m_om.get("equalsButton"); //$NON-NLS-1$
-        ComponentIdentifier sum = m_om.get("sum"); //$NON-NLS-1$
+        ComponentIdentifier val1Id = m_om.get("value1"); //$NON-NLS-1$
+        ComponentIdentifier val2Id = m_om.get("value2"); //$NON-NLS-1$
+        ComponentIdentifier buttonId = m_om.get("equalsButton"); //$NON-NLS-1$
+        ComponentIdentifier sumId = m_om.get("sum"); //$NON-NLS-1$
 
-        TextInputComponent value1 = SwtComponentFactory.createText(val1);
-        TextInputComponent value2 = SwtComponentFactory.createText(val2);
-        GraphicsComponent equalsButton = SwtComponentFactory
-            .createButton(button);
-        
-        TextComponent result = SwtComponentFactory.createTextComponent(sum);
+        TextInputComponent value1 = SwtComponentFactory.createText(val1Id);
+        TextInputComponent value2 = SwtComponentFactory.createText(val2Id);
+        GraphicsComponent button = SwtComponentFactory.createButton(buttonId);
+        TextComponent result = SwtComponentFactory.createTextComponent(sumId);
         
         final int firstValue = 17;
-        for (int i = 1; i < 5; i++) {
-            m_aut.execute(value1.replaceText(String.valueOf(firstValue)));
-            m_aut.execute(value2.replaceText(String.valueOf(i)));
-            m_aut.execute(equalsButton.click(1, 1));
-            m_aut.execute(result.checkText(String.valueOf(firstValue + i),
-                Operator.equals));
+        List<Result> resultList = new ArrayList<Result>();
+        try {
+            for (int i = 1; i < 5; i++) {
+                resultList
+                    .add(m_aut.execute(value1.replaceText(
+                        String.valueOf(firstValue))));
+                resultList
+                    .add(m_aut.execute(value2.replaceText(
+                        String.valueOf(i))));
+                resultList
+                    .add(m_aut.execute(button.click(
+                        1, 1)));
+                resultList
+                    .add(m_aut.execute(result.checkText(
+                        String.valueOf(firstValue + i), Operator.equals)));
+            }
+        } finally {
+            System.out.println(resultList.size());
         }
     }
 

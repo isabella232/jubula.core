@@ -8,14 +8,23 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.communication;
+package org.eclipse.jubula.client;
+
+import org.eclipse.jubula.communication.CAP;
 
 /**
- * Interface for CAPs
- * 
  * @author BREDEX GmbH
- * @created 13.10.2014
+ * @param <T>
+ *            the payload type
  */
-public interface CAP {
-
+public interface Result<T> {
+    /**
+     * @return the payload
+     */
+    T getPayload();
+    
+    /**
+     * @return the CAP
+     */
+    CAP getCAP();
 }
