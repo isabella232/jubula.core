@@ -24,6 +24,7 @@ import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.communication.internal.message.GetRegisteredAutListMessage;
 import org.eclipse.jubula.communication.internal.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.internal.message.StopAUTServerMessage;
+import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
@@ -147,7 +148,7 @@ public class AUTAgentImpl implements AUTAgent {
     }
 
     /** {@inheritDoc} */
-    public AUT getAUT(AUTIdentifier autID) {
-        return new AUTImpl((AutIdentifier) autID);
+    public AUT getAUT(AUTIdentifier autID, ToolkitInfo information) {
+        return new AUTImpl((AutIdentifier) autID, information);
     }
 }

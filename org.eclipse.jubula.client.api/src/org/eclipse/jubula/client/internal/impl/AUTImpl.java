@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.internal.impl;
 import java.util.Map;
 
 import org.eclipse.jubula.client.AUT;
+import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.client.exceptions.ActionException;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.exceptions.ComponentNotFoundException;
@@ -27,6 +28,7 @@ import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.communication.internal.message.UnknownMessageException;
 import org.eclipse.jubula.toolkit.ToolkitInfo;
+import org.eclipse.jubula.toolkit.internal.AbstractToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
@@ -46,22 +48,24 @@ public class AUTImpl implements AUT {
     /** the instance */
     private AUTConnection m_instance;
     /** the toolkit specific information */
-    private ToolkitInfo m_information;
+    private AbstractToolkitInfo m_information;
 
     /**
      * Constructor
      * 
      * @param autID
      *            the identifier to use for connection
+     * @param information 
      */
-    public AUTImpl(AutIdentifier autID) {
+    public AUTImpl(AutIdentifier autID, ToolkitInfo information) {
         m_autID = autID;
+        setToolkitInformation((AbstractToolkitInfo)information);
     }
 
     /** {@inheritDoc} */
     public void connect() throws Exception {
         final Map<ComponentClass, String> typeMapping = 
-            (Map<ComponentClass, String>) getInformation().getTypeMapping();
+            getInformation().getTypeMapping();
         Assert.verify(typeMapping != null);
         m_instance = AUTConnection.getInstance();
         m_instance.connectToAut(m_autID, typeMapping);
@@ -83,19 +87,25 @@ public class AUTImpl implements AUT {
     }
     
     /** {@inheritDoc} */
-    public void setToolkitInformation(ToolkitInfo information) {
+    public void setToolkitInformation(AbstractToolkitInfo information) {
         m_information = information;
     }
 
     /**
      * @return the information
      */
-    public ToolkitInfo getInformation() {
+    public AbstractToolkitInfo getInformation() {
         return m_information;
+    }
+    
+    /** {@inheritDoc} */
+    public Result execute(CAP cap) throws ExecutionException {
+        return execute(cap, null);
     }
 
     /** {@inheritDoc} */
-    public void execute(CAP cap) throws ExecutionException {
+    public <T> Result<T> execute(CAP cap, T payload) throws ExecutionException {
+        final ResultImpl<T> result = new ResultImpl<T>(cap, payload);
         try {
             CAPTestMessage capTestMessage = CAPTestMessageFactory
                 .getCAPTestMessage((MessageCap)cap,
@@ -107,7 +117,7 @@ public class AUTImpl implements AUT {
             if (exchange instanceof CAPTestResponseMessage) {
                 CAPTestResponseMessage response = 
                     (CAPTestResponseMessage) exchange;
-                processResponse(response);
+                processResponse(response, result);
             } else {
                 log.error("Unexpected response received: " //$NON-NLS-1$
                     + String.valueOf(exchange));
@@ -120,13 +130,17 @@ public class AUTImpl implements AUT {
         } catch (InterruptedException e) {
             log.error(e.getLocalizedMessage(), e);
         }
+        return result;
     }
 
     /**
+     * @param result
+     *            the result
      * @param response
      *            the response to process
      */
-    private void processResponse(CAPTestResponseMessage response)
+    private void processResponse(CAPTestResponseMessage response,
+        final Result result)
         throws ExecutionException {
         if (response.hasTestErrorEvent()) {
             final TestErrorEvent event = response.getTestErrorEvent();
@@ -143,15 +157,15 @@ public class AUTImpl implements AUT {
                 description = I18n.getString(key, args);
             }
             if (TestErrorEvent.ID.ACTION_ERROR.equals(eventId)) {
-                throw new ActionException(description);
+                throw new ActionException(result, description);
             } else if (TestErrorEvent.ID.COMPONENT_NOT_FOUND.equals(eventId)) {
-                throw new ComponentNotFoundException(description);
+                throw new ComponentNotFoundException(result, description);
             } else if (TestErrorEvent.ID.CONFIGURATION_ERROR.equals(eventId)) {
-                throw new ConfigurationException(description);
+                throw new ConfigurationException(result, description);
             } else if (TestErrorEvent.ID.VERIFY_FAILED.equals(eventId)) {
                 Object actualValue = event.getProps().get(
                     TestErrorEvent.Property.ACTUAL_VALUE_KEY);
-                throw new CheckFailedException(description,
+                throw new CheckFailedException(result, description,
                     String.valueOf(actualValue));
             }
         }

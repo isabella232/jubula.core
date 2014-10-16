@@ -10,16 +10,20 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.exceptions;
 
+import org.eclipse.jubula.client.Result;
+
 /** @author BREDEX GmbH */
 public class ComponentNotFoundException extends ExecutionException {
     /**
      * Constructor
      * 
+     * @param result
+     *            the result
      * @param message
      *            the message
      */
-    public ComponentNotFoundException(String message) {
-        super(message);
+    public ComponentNotFoundException(Result result, String message) {
+        super(result, message);
     }
 
 }

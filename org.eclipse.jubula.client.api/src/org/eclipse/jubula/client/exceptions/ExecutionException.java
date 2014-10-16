@@ -10,15 +10,37 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.exceptions;
 
+import org.eclipse.jubula.client.Result;
+
 /** @author BREDEX GmbH */
 public abstract class ExecutionException extends RuntimeException {
+    /** the result */
+    private Result m_result;
+
     /**
      * Constructor
      * 
+     * @param result
+     *            the result
      * @param message
      *            the message
      */
-    public ExecutionException(String message) {
+    public ExecutionException(Result result, String message) {
         super(message);
+        setResult(result);
+    }
+
+    /**
+     * @return the result
+     */
+    public Result getResult() {
+        return m_result;
+    }
+
+    /**
+     * @param result the result to set
+     */
+    private void setResult(Result result) {
+        m_result = result;
     }
 }

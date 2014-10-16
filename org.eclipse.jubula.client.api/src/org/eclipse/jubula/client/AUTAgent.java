@@ -13,6 +13,7 @@ package org.eclipse.jubula.client;
 import java.util.List;
 
 import org.eclipse.jubula.client.launch.AUTConfiguration;
+import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
 
 /** @author BREDEX GmbH */
@@ -42,9 +43,11 @@ public interface AUTAgent extends Remote {
     List<AUTIdentifier> getAllRegisteredAUTIdentifier() throws Exception;
     
     /**
-     * @param autID the autID to get an AUT for
-     * @return an AUT 
+     * @param autID
+     *            the autID to get an AUT for
+     * @param information
+     *            the information about the toolkit
+     * @return an AUT
      */
-    AUT getAUT(AUTIdentifier autID);
-
+    AUT getAUT(AUTIdentifier autID, ToolkitInfo information);
 }

@@ -28,14 +28,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jubula.toolkit.ToolkitInfo;
+import org.eclipse.jubula.toolkit.internal.AbstractToolkitInfo;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Property;
 
 /**
  * Contains information about the <%=genInfo.getToolkitName()%> toolkit and its components
  */
-public final class <%=factoryName%> implements ToolkitInfo {
+public final class <%=factoryName%> extends AbstractToolkitInfo {
 
 	private Map<ComponentClass, String> m_map = new HashMap<ComponentClass, String>();
 

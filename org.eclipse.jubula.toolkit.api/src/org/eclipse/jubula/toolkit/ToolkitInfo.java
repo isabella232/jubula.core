@@ -10,22 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.toolkit;
 
-import java.util.Map;
 
 /**
- * Contains information about a toolkit and its components
+ * Information about a toolkit and its components
+ * 
  * @author BREDEX GmbH
  * @created 15.10.2014
  */
 public interface ToolkitInfo {
-    /**
-     * @return a map containing the mappings from a component class to the name
-     *         of its tester class
-     */
-    public Map<?, ?> getTypeMapping();
-    
-    /**
-     * @return the toolkit id
-     */
-    public String getToolkitID();
+
 }

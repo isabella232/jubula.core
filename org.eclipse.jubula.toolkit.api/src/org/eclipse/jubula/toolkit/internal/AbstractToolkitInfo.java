@@ -8,21 +8,23 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.exceptions;
+package org.eclipse.jubula.toolkit.internal;
 
-import org.eclipse.jubula.client.Result;
+import java.util.Map;
+
+import org.eclipse.jubula.toolkit.ToolkitInfo;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 
 /** @author BREDEX GmbH */
-public class ConfigurationException extends ExecutionException {
+public abstract class AbstractToolkitInfo implements ToolkitInfo {
     /**
-     * Constructor
-     * 
-     * @param result
-     *            the result
-     * @param message
-     *            the message
+     * @return a map containing the mappings from a component class to the name
+     *         of its tester class
      */
-    public ConfigurationException(Result result, String message) {
-        super(result, message);
-    }
+    public abstract Map<ComponentClass, String> getTypeMapping();
+
+    /**
+     * @return the toolkit id
+     */
+    public abstract String getToolkitID();
 }
