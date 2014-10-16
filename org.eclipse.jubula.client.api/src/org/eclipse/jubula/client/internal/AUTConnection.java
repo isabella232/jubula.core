@@ -148,8 +148,9 @@ public class AUTConnection extends BaseAUTConnection {
         throws NotConnectedException, ConnectionException,
         CommunicationException {
         sendKeyboardLayoutToAut();
-        // TODO workaround for racing condition
+        // FIXME MT: workaround for racing condition
         TimeUtil.delay(1000);
+        // The ITEs delay is - afaics - by default big enough to cover this
         sendComponentSupportToAUT(technicalTypeMapping);
     }
 

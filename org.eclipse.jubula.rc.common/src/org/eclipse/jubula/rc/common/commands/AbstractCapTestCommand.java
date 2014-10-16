@@ -116,7 +116,6 @@ public abstract class AbstractCapTestCommand implements ICommand {
             }
             // FIXME : Extra handling for waitForComponent and verifyExists
             int timeout = TimingConstantsServer.DEFAULT_FIND_COMPONENT_TIMEOUT;
-            
             boolean isWaitForComponent = 
                     WidgetTester.RC_METHOD_NAME_WAIT_FOR_COMPONENT
                         .equals(messageCap.getMethod());
@@ -130,15 +129,15 @@ public abstract class AbstractCapTestCommand implements ICommand {
                         + "Using default value.", e); //$NON-NLS-1$
                 }
             }
+            final AUTServerConfiguration rcConfig = AUTServerConfiguration
+                .getInstance();
             if (!messageCap.hasDefaultMapping()) {
                 Object component = findComponent(ci, timeout);
-                implClass = AUTServerConfiguration.getInstance()
-                        .prepareImplementationClass(component,
-                                component.getClass());
-
+                implClass = rcConfig.prepareImplementationClass(component,
+                    component.getClass());
             } else {
-                implClass = AUTServerConfiguration.getInstance()
-                     .getImplementationClass(ci.getComponentClassName());
+                implClass = rcConfig.getImplementationClass(ci
+                    .getComponentClassName());
             }
             if (isWaitForComponent) {
                 MessageParam delayParam = (MessageParam)messageCap.

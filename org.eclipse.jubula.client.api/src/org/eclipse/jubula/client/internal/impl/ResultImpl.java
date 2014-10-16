@@ -23,6 +23,8 @@ public class ResultImpl<T> implements Result<T> {
     private T m_payload;
     /** the cap */
     private CAP m_cap;
+    /** the result flag */
+    private boolean m_isOK = false;
 
     /**
      * Constructor
@@ -45,5 +47,17 @@ public class ResultImpl<T> implements Result<T> {
     /** {@inheritDoc} */
     public CAP getCAP() {
         return m_cap;
+    }
+
+    /** {@inheritDoc} */
+    public boolean isOK() {
+        return m_isOK;
+    }
+
+    /**
+     * @param isOK the isOK to set
+     */
+    void setOK(boolean isOK) {
+        m_isOK = isOK;
     }
 }

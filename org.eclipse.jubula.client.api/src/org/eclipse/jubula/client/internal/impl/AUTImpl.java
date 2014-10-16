@@ -118,6 +118,7 @@ public class AUTImpl implements AUT {
                 CAPTestResponseMessage response = 
                     (CAPTestResponseMessage) exchange;
                 processResponse(response, result);
+                result.setOK(true);
             } else {
                 log.error("Unexpected response received: " //$NON-NLS-1$
                     + String.valueOf(exchange));

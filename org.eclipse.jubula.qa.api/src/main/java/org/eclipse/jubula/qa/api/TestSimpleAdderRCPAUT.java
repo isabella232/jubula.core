@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import junit.framework.Assert;
+
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.MakeR;
@@ -22,9 +24,11 @@ import org.eclipse.jubula.client.ObjectMapping;
 import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
-import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
+import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.toolkit.base.components.TextComponent;
 import org.eclipse.jubula.toolkit.base.components.TextInputComponent;
+import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
+import org.eclipse.jubula.toolkit.concrete.components.MenuBarComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
 import org.eclipse.jubula.toolkit.swt.SwtComponentFactory;
@@ -45,16 +49,32 @@ public class TestSimpleAdderRCPAUT {
     private AUTAgent m_agent;
     /** the AUT */
     private AUT m_aut;
-    /** the object mapping */
-    private ObjectMapping m_om;
+    /** the value1 */
+    private TextInputComponent m_value1;
+    /** the value2 */
+    private TextInputComponent m_value2;
+    /** the button */
+    private ButtonComponent m_button;
+    /** the result */
+    private TextComponent m_result;
 
     /** prepare */
     @Before
     public void setUp() throws Exception {
         URL input = this.getClass().getClassLoader()
                 .getResource("objectMapping_SimpleAdderRCP.properties"); //$NON-NLS-1$
-        m_om = MakeR.createObjectMapping(input.openStream());
+        ObjectMapping om = MakeR.createObjectMapping(input.openStream());
 
+        ComponentIdentifier val1Id = om.get("value1"); //$NON-NLS-1$
+        ComponentIdentifier val2Id = om.get("value2"); //$NON-NLS-1$
+        ComponentIdentifier buttonId = om.get("equalsButton"); //$NON-NLS-1$
+        ComponentIdentifier sumId = om.get("sum"); //$NON-NLS-1$
+
+        m_value1 = SwtComponentFactory.createText(val1Id);
+        m_value2 = SwtComponentFactory.createText(val2Id);
+        m_button = SwtComponentFactory.createButton(buttonId);
+        m_result = SwtComponentFactory.createTextComponent(sumId);
+        
         m_agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
         m_agent.connect();
         
@@ -81,37 +101,50 @@ public class TestSimpleAdderRCPAUT {
 
     /** the actual test method */
     @Test(expected = CheckFailedException.class)
-    public void testAUT() throws Exception {
-        ComponentIdentifier val1Id = m_om.get("value1"); //$NON-NLS-1$
-        ComponentIdentifier val2Id = m_om.get("value2"); //$NON-NLS-1$
-        ComponentIdentifier buttonId = m_om.get("equalsButton"); //$NON-NLS-1$
-        ComponentIdentifier sumId = m_om.get("sum"); //$NON-NLS-1$
-
-        TextInputComponent value1 = SwtComponentFactory.createText(val1Id);
-        TextInputComponent value2 = SwtComponentFactory.createText(val2Id);
-        GraphicsComponent button = SwtComponentFactory.createButton(buttonId);
-        TextComponent result = SwtComponentFactory.createTextComponent(sumId);
+    public void testTestFirstSimpleAdderSteps() throws Exception {
         
         final int firstValue = 17;
-        List<Result> resultList = new ArrayList<Result>();
+        List<Result> results = new ArrayList<Result>();
         try {
             for (int i = 1; i < 5; i++) {
-                resultList
-                    .add(m_aut.execute(value1.replaceText(
-                        String.valueOf(firstValue))));
-                resultList
-                    .add(m_aut.execute(value2.replaceText(
-                        String.valueOf(i))));
-                resultList
-                    .add(m_aut.execute(button.click(
-                        1, 1)));
-                resultList
-                    .add(m_aut.execute(result.checkText(
-                        String.valueOf(firstValue + i), Operator.equals)));
+                exec(m_value1.replaceText(String.valueOf(firstValue)), results);
+                exec(m_value2.replaceText(String.valueOf(i)), results);
+                exec(m_button.click(1, 1), results);
+                exec(m_result.checkText(String.valueOf(firstValue + i),
+                    Operator.equals), results);
             }
         } finally {
-            System.out.println(resultList.size());
+            Assert.assertTrue(results.size() == 15);
         }
+    }
+    
+    /** the actual test method */
+    @Test
+    public void testMenubar() throws Exception {
+        MenuBarComponent menu = SwtComponentFactory.createMenu();
+        exec(menu.checkEnablementOfEntryByIndexpath("1", true));
+        
+    }
+    
+    /**
+     * @param cap
+     *            the cap
+     * @param r
+     *            the result
+     */
+    private void exec(CAP cap, List<Result> r) {
+        Result execute = m_aut.execute(cap);
+        if (r != null) {
+            r.add(execute);
+        }
+    }
+    
+    /**
+     * @param cap
+     *            the cap
+     */
+    private void exec(CAP cap) {
+        exec(cap, null);
     }
 
     /** cleanup */
