@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.handlers;
+package org.eclipse.jubula.client.api.ui.handlers;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -86,8 +86,8 @@ public class ExportObjectMappingHandler extends AbstractHandler {
                         }
                     } catch (IOException e) {
                         ErrorHandlingUtil.createMessageDialog(
-                                new JBException(e.getMessage(), e,
-                                        MessageIDs.E_FILE_NO_PERMISSION));
+                            new JBException(e.getMessage(), e,
+                                    MessageIDs.E_FILE_NO_PERMISSION));
                     }
                 }
             }

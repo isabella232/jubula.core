@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?><!--
+    Copyright (c) 2014 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<plugin>
+    <extension point="org.eclipse.ui.commands">
+        <command
+          categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+          id="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand"
+          name="Export Object Mapping for use in API" />
+    </extension>
+      
+    <extension
+      id="jubula.ComponentNameBrowserHandler"
+      name="ComponentNameBrowserHandler"
+      point="org.eclipse.ui.handlers">
+        <handler
+          class="org.eclipse.jubula.client.api.ui.handlers.ExportObjectMappingHandler"
+          commandId="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand">
+          <enabledWhen>
+            <with variable="activeEditorId">
+              <equals value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor" />
+            </with>
+          </enabledWhen>
+        </handler>
+    </extension>
+    
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+          <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar">
+            <command
+              commandId="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand"
+              style="push">
+              <visibleWhen checkEnabled="false">
+                <reference
+                  definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
+              </visibleWhen>
+            </command>
+          </toolbar>
+        </menuContribution>
+    </extension>
+    
+    <extension point="org.eclipse.ui.commandImages">
+        <image
+          commandId="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand"
+          disabledIcon="platform:/plugin/org.eclipse.jubula.client.api.ui/icons/exportOM_disabled.gif"
+          icon="platform:/plugin/org.eclipse.jubula.client.api.ui/icons/exportOM.gif" />
+    </extension>
+</plugin>

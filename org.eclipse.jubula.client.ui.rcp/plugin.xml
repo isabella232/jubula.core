@@ -579,10 +579,6 @@
       name="Stop Object Mapping Mode" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
-      id="org.eclipse.jubula.client.ui.rcp.commands.OMExportMappingCommand"
-      name="Export Object Mapping for use in API" />
-    <command
-      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.RecordTestCaseCommand"
       name="Observe Test Case" />
     <command
@@ -1421,14 +1417,6 @@
         </command>
         <command
           commandId="org.eclipse.jubula.client.ui.rcp.commands.OMStopMappingModeCommand"
-          style="push">
-          <visibleWhen checkEnabled="false">
-            <reference
-              definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
-          </visibleWhen>
-        </command>
-        <command
-          commandId="org.eclipse.jubula.client.ui.rcp.commands.OMExportMappingCommand"
           style="push">
           <visibleWhen checkEnabled="false">
             <reference
@@ -3044,10 +3032,6 @@
       disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/stopOM_disabled.gif"
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/stopOM.gif" />
     <image
-      commandId="org.eclipse.jubula.client.ui.rcp.commands.OMExportMappingCommand"
-      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/exportOM_disabled.gif"
-      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/exportOM.gif" />
-    <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ReplaceWithTestCase"
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/replaceWithTestCase.gif" />
     <image
@@ -3792,15 +3776,6 @@
       <enabledWhen>
         <with variable="org.eclipse.jubula.client.ui.rcp.variable.isObjectMappingRunning">
           <equals value="true" />
-        </with>
-      </enabledWhen>
-    </handler>
-    <handler
-      class="org.eclipse.jubula.client.ui.rcp.handlers.ExportObjectMappingHandler"
-      commandId="org.eclipse.jubula.client.ui.rcp.commands.OMExportMappingCommand">
-      <enabledWhen>
-        <with variable="activeEditorId">
-          <equals value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor" />
         </with>
       </enabledWhen>
     </handler>
