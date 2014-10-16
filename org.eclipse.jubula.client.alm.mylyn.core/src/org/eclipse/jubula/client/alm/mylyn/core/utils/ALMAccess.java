@@ -311,6 +311,12 @@ public final class ALMAccess {
         } catch (CoreException e) {
             status = new Status(IStatus.ERROR, Activator.ID,
                     e.getLocalizedMessage());
+        } catch (IllegalArgumentException e) {
+            LOG.error("IllegalArgumentException occured", e); //$NON-NLS-1$
+            // This is necessary due to an IllegalArgumentException which might be
+            // thrown in the TaskDataHandler
+            status = new Status(IStatus.ERROR, Activator.ID,
+                    e.getLocalizedMessage(), e);
         }
         return status;
     }
