@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
-import java.net.URL;
-
 import org.eclipse.jubula.tools.ComponentIdentifier;
 
 /**
@@ -20,14 +18,7 @@ import org.eclipse.jubula.tools.ComponentIdentifier;
  * @author BREDEX GmbH
  * @created Oct 13, 2014
  */
-public interface OM {
-    /**
-     * Initializes the object mapping associations
-     * 
-     * @param resourceURL
-     *            the URL to the resource properties file
-     */
-    public void init(URL resourceURL);
+public interface ObjectMapping {
 
     /**
      * Returns the component identifier for a component name from the cache

@@ -15,7 +15,7 @@ import java.util.Map;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.toolkit.mobile.provider.i18n.Messages;
 import org.eclipse.jubula.toolkit.mobile.provider.ui.MobileAutConfigComponent;
-import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -62,24 +62,24 @@ public class IOSAutConfigComponent extends MobileAutConfigComponent {
         // AUT hostname property
         Label autHostnameLabel = UIComponentHelper.createLabelWithText(
                 basicAreaComposite, PLATFORM + " " + Messages.autHostnameLabel);
-        autHostnameLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME,
+        autHostnameLabel.setData(SwtToolkitConstants.WIDGET_NAME,
                 TECHNICAL_NAME_PREFIX + "autHostnameLabel"); //$NON-NLS-1$
 
         Text autHostTextField = UIComponentHelper.createTextField(
                 basicAreaComposite, 2);
-        autHostTextField.setData(SwtAUTHierarchyConstants.WIDGET_NAME,
+        autHostTextField.setData(SwtToolkitConstants.WIDGET_NAME,
                 TECHNICAL_NAME_PREFIX + "autHostnameTextField"); //$NON-NLS-1$
         setAutHostTextField(autHostTextField);
 
         // AUT port property
         Label autPortLabel = UIComponentHelper.createLabelWithText(
                 basicAreaComposite, PLATFORM + " " + Messages.autPortLabel); //$NON-NLS-1$
-        autPortLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME,
+        autPortLabel.setData(SwtToolkitConstants.WIDGET_NAME,
                 TECHNICAL_NAME_PREFIX + "autPortLabel"); //$NON-NLS-1$
 
         Text autPortTextField = UIComponentHelper.createTextField(
                 basicAreaComposite, 2);
-        autPortTextField.setData(SwtAUTHierarchyConstants.WIDGET_NAME,
+        autPortTextField.setData(SwtToolkitConstants.WIDGET_NAME,
                 TECHNICAL_NAME_PREFIX + "autPortTextField"); //$NON-NLS-1$
         setAutPortTextField(autPortTextField);
     }

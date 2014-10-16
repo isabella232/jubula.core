@@ -3,7 +3,6 @@ package org.eclipse.jubula.toolkit.api.gen.internal;
 import java.util.List;
 
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
-import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
@@ -32,6 +31,9 @@ public class GenerationInfo {
     /** the toolkit name */
     private String m_toolkitName;
 
+    /** the toolkit id */
+    private String m_toolkitID;
+    
     /** Whether an interface should be generated */
     private Boolean m_genInterface;
     
@@ -41,9 +43,12 @@ public class GenerationInfo {
     /** only used for generating factories 
      *  list of components which have to be generated in factory */
     private List<FactoryInfo> m_componentList;
-
+    
     /** the most specific visible super type of a component */
     private String m_mostSpecificVisibleSuperTypeName;
+
+    /** the class name for the toolkit component info class */
+    private String m_toolkitInfoClassName;
     
     /**
      * Contains all necessary information for API generation of a component
@@ -56,12 +61,13 @@ public class GenerationInfo {
         m_component = component;
         m_genInterface = generateInterface;
         NameLoader nameLoader = NameLoader.getInstance();
-        m_toolkitName = nameLoader.getToolkitName(
-                component.getToolkitDesriptor());
+        ToolkitDescriptor toolkitDesriptor = component.getToolkitDesriptor();
+        m_toolkitName = nameLoader.getToolkitName(toolkitDesriptor);
         m_className = nameLoader.getClassName(component.getType());
         m_classPackageName = nameLoader.getClassPackageName(m_toolkitName);
         m_interfacePackageName = nameLoader.getInterfacePackageName(
                 m_toolkitName);
+        m_toolkitID = toolkitDesriptor.getToolkitID();
         
         // Use package name as directory path name, replace "." by "/" later
         m_directoryPath = generateInterface
@@ -90,24 +96,26 @@ public class GenerationInfo {
      * Supposed to be used for factory generation.
      * @param tkDescriptor the toolkit descriptor
      * @param componentList the list of components to generate in factory
-     * @param compsystem the comp system
      */
     public GenerationInfo(ToolkitDescriptor tkDescriptor,
-            List<FactoryInfo> componentList, CompSystem compsystem) {
+            List<FactoryInfo> componentList) {
         m_component = null;
         m_genInterface = false;
         NameLoader nameLoader = NameLoader.getInstance();
         m_toolkitName = nameLoader.getToolkitName(tkDescriptor);
         m_className = nameLoader.getFactoryName(m_toolkitName);
+        m_toolkitInfoClassName = nameLoader.getToolkitComponentClassName(
+                m_toolkitName);
+        m_toolkitID = tkDescriptor.getToolkitID();
         m_classPackageName = nameLoader.getToolkitPackageName(m_toolkitName);
         m_componentList = componentList;
-        // Use package name as directory path name, replace "." by "/" later
-        m_directoryPath = m_classPackageName;
+        // Use package name as directory path name, replace "." by "/"
+        m_directoryPath = m_classPackageName
+                .replace(StringConstants.DOT, StringConstants.SLASH);
         
         // Check for exceptions in naming
         m_classPackageName = nameLoader.executeExceptions(m_classPackageName);
-        m_directoryPath = nameLoader.executeExceptions(m_directoryPath
-                .replace(StringConstants.DOT, StringConstants.SLASH));
+        m_directoryPath = nameLoader.executeExceptions(m_directoryPath);
         m_toolkitName = nameLoader.executeExceptions(m_toolkitName);
     }
 
@@ -162,6 +170,14 @@ public class GenerationInfo {
     }
     
     /**
+     * Returns the toolkit id
+     * @return the toolkit id
+     */
+    public String getToolkitID() {
+        return m_toolkitID;
+    }
+    
+    /**
      * Returns true if and only if an interface should be generated
      * and false if and only if a implementation class should be generated
      * @return the toolkit name
@@ -200,6 +216,14 @@ public class GenerationInfo {
      */
     public List<FactoryInfo> getComponentList() {
         return m_componentList;
+    }
+    
+    /**
+     * Returns the class name for the toolkit component info class
+     * @return the class name for the toolkit component info class
+     */
+    public String getToolkitInfoClassName() {
+        return m_toolkitInfoClassName;
     }
     
     /**

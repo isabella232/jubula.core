@@ -18,8 +18,6 @@ import java.util.Vector;
 
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
-import org.eclipse.jubula.tools.internal.constants.RcpAccessorConstants;
-import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 
 
@@ -29,20 +27,12 @@ import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
  * 
  */
 public class StartSwtAutServerCommand extends StartSwingAutServerCommand {
-
-    /** 
-     * the prefix to use when generating connection properties to add to 
-     * the system environment variables 
-     */
-    public static final String ENV_VAR_PREFIX = StringConstants.EMPTY;
-    
     /** 
      * the separator to use when generating connection properties to add to 
      * the system environment variables 
      */
     public static final String ENV_VALUE_SEP = IStartAut.PROPERTY_DELIMITER;
     
-
     /**
      * {@inheritDoc}
      */
@@ -62,8 +52,7 @@ public class StartSwtAutServerCommand extends StartSwingAutServerCommand {
                     IStartAut.PROPERTY_DELIMITER);
         }
         Vector<String> envList = new Vector<String>(Arrays.asList(envArray));
-        envList.addAll(getConnectionProperties(
-                parameters, ENV_VAR_PREFIX, ENV_VALUE_SEP));
+        envList.addAll(getConnectionProperties(parameters, ENV_VALUE_SEP));
         envArray = envList.toArray(new String [envList.size()]);
         return envArray;
     }
@@ -71,22 +60,21 @@ public class StartSwtAutServerCommand extends StartSwingAutServerCommand {
     /**
      * 
      * @param parameters The AUT Configuration parameters.
-     * @param propPrefix The string to prepend to all generated property names.
      * @param valueSeparator The string to use to separate property names from
      *                       property values.
      * @return the list of properties.
      */
-    private List<String> getConnectionProperties(Map parameters, 
-            String propPrefix, String valueSeparator) {
-        
+    private List<String> getConnectionProperties(Map parameters,
+        String valueSeparator) {
+
         List<String> props = new ArrayList<String>();
         StringBuffer sb = new StringBuffer();
         sb = new StringBuffer();
-        sb.append(propPrefix).append(RcpAccessorConstants.KEYBOARD_LAYOUT)
-            .append(valueSeparator)
-            .append((String)parameters.get(AutConfigConstants.KEYBOARD_LAYOUT));
+        sb.append(AutConfigConstants.KEYBOARD_LAYOUT).append(valueSeparator)
+            .append((String) parameters.get(
+                AutConfigConstants.KEYBOARD_LAYOUT));
         props.add(sb.toString());
-        
+
         return props;
     }
 

@@ -53,6 +53,10 @@ public class NameLoader {
     /** specific path for implementation classes */
     private static final String FACTORY_NAME_EXTENSION =
         "ComponentFactory"; //$NON-NLS-1$
+
+    /** specific path for implementation classes */
+    private static final String TOOLKITINFO_NAME_EXTENSION =
+        "ToolkitInfo"; //$NON-NLS-1$
     
     /**
      * <code>instance</code> the singleton instance
@@ -209,6 +213,16 @@ public class NameLoader {
     public String getFactoryName(String toolkitName) {
         String tkName = WordUtils.capitalizeFully(toolkitName);
         return tkName + FACTORY_NAME_EXTENSION;
+    }
+    
+    /**
+     * Returns the name for a component factory for a toolkit
+     * @param toolkitName the toolkit name
+     * @return the name for a component factory for a toolkit
+     */
+    public String getToolkitComponentClassName(String toolkitName) {
+        String tkName = WordUtils.capitalizeFully(toolkitName);
+        return tkName + TOOLKITINFO_NAME_EXTENSION;
     }
     
     /**

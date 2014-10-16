@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
+import java.io.InputStream;
+
 import org.eclipse.jubula.client.internal.impl.AUTAgentImpl;
-import org.eclipse.jubula.client.internal.impl.ObjectMappingLoader;
+import org.eclipse.jubula.client.internal.impl.ObjectMappingImpl;
 
 /** @author BREDEX GmbH */
 public final class MakeR {
@@ -33,8 +35,9 @@ public final class MakeR {
     
     /**
      * @return a new Object Mapping instance
+     * @param input the input stream containing the encoded object mapping
      */
-    public static OM createOM() {
-        return new ObjectMappingLoader();
+    public static ObjectMapping createObjectMapping(InputStream input) {
+        return new ObjectMappingImpl(input);
     }
 }

@@ -26,7 +26,7 @@ import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
 import org.eclipse.jubula.tools.internal.constants.AutEnvironmentConstants;
-import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -55,7 +55,7 @@ public abstract class RcpSwtComponentNamer implements Listener {
 
     /** Key for RCP partId in component data */
     private static final String TEST_RCP_DATA_KEY =
-            SwtAUTHierarchyConstants.RCP_NAME;
+            SwtToolkitConstants.RCP_NAME;
 
     /** map for naming dialog buttons */
     private static Map componentNAMES = new HashMap();

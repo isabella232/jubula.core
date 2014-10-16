@@ -1,0 +1,84 @@
+<%@ jet 
+package="org.eclipse.jubula.toolkit.api.gen" 
+imports="java.util.*
+			org.eclipse.jubula.toolkit.api.gen.internal.FactoryInfo
+			org.eclipse.jubula.toolkit.api.gen.internal.GenerationInfo
+			org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass
+			org.eclipse.jubula.tools.internal.xml.businessmodell.Property"
+class="ToolkitInfoGenerator"%>
+<%
+	GenerationInfo genInfo = (GenerationInfo)argument;
+	String factoryName = genInfo.getToolkitInfoClassName();
+	String packageName = genInfo.getClassPackageName();
+%>
+/*******************************************************************************
+ * Copyright (c) 2014 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+package <%=packageName%>;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.jubula.toolkit.ToolkitInfo;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Property;
+
+/**
+ * Contains information about the <%=genInfo.getToolkitName()%> toolkit and its components
+ */
+public final class <%=factoryName%> implements ToolkitInfo {
+
+	private Map<ComponentClass, String> m_map = new HashMap<ComponentClass, String>();
+
+	/**
+	 * Constructor
+	 */
+	public <%=factoryName%>() {
+		<%int i = 1;%>
+		<%for (FactoryInfo factoryInfo : genInfo.getComponentList()) {
+			ComponentClass componentClass = factoryInfo.getComponentClass();
+			String testerClass = factoryInfo.getTesterClass();
+			if (componentClass != null && testerClass != null) {%>
+		ComponentClass newComponentClass<%=i%> = new ComponentClass("<%=componentClass.getName()%>");
+				<%List properties = componentClass.getProperties();%>
+				<%if (!properties.isEmpty()) {%>
+		List<Property> newProperties<%=i%> = new ArrayList<Property>();
+					<%int j = 1;%>
+					<%for (Object obj : properties) {%>
+						<%if (obj instanceof Property) {
+							Property property = (Property) obj;%>
+		Property newProperty<%=i%>_<%=j%> = new Property();
+		newProperty<%=i%>_<%=j%>.setName("<%=property.getName()%>");
+		newProperty<%=i%>_<%=j%>.setValue("<%=property.getValue()%>");
+		newProperties<%=i%>.add(newProperty<%=i%>_<%=j%>);
+						<%}%>
+						<%j++;%>
+					<%}%>
+		newComponentClass<%=i%>.setProperties(newProperties<%=i%>);
+				<%}%>
+		m_map.put(newComponentClass<%=i%>,"<%=testerClass%>");
+			<%}%>
+			<%i++;%>
+		<%}%>
+	}
+	
+	/** {@inheritDoc} */
+	public Map<ComponentClass, String> getTypeMapping() {
+		return m_map;
+	}
+	
+	/** {@inheritDoc} */
+	public String getToolkitID() {
+		return "<%=genInfo.getToolkitID()%>";
+	}
+
+}

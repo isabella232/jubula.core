@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2014 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,19 +8,24 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.tools.internal.constants;
+package org.eclipse.jubula.toolkit;
 
+import java.util.Map;
 
 /**
+ * Contains information about a toolkit and its components
  * @author BREDEX GmbH
- * @created 19.12.2006
+ * @created 15.10.2014
  */
-public abstract class RcpAccessorConstants {
-    /** constant to set/get system property "GD_KEYBOARD_LAYOUT" */
-    public static final String KEYBOARD_LAYOUT = "GD_KEYBOARD_LAYOUT";  //$NON-NLS-1$
+public interface ToolkitInfo {
+    /**
+     * @return a map containing the mappings from a component class to the name
+     *         of its tester class
+     */
+    public Map<?, ?> getTypeMapping();
     
-    /** to prevent instantiation */
-    private RcpAccessorConstants() {
-        // do nothing
-    }
+    /**
+     * @return the toolkit id
+     */
+    public String getToolkitID();
 }

@@ -25,7 +25,7 @@ import org.eclipse.jubula.client.ui.widgets.I18nEnumCombo;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
-import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.swt.SWT;
@@ -86,21 +86,21 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         // URL property
         Label urlLabel = UIComponentHelper.createLabel(
                 basicAreaComposite, "WebAutConfigComponent.URL"); //$NON-NLS-1$
-        urlLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.urlLabel"); //$NON-NLS-1$
+        urlLabel.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.urlLabel"); //$NON-NLS-1$
         
         m_autUrlTextField = UIComponentHelper.createTextField(
                 basicAreaComposite, 2);
-        m_autUrlTextField.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.autUrlTextField"); //$NON-NLS-1$
+        m_autUrlTextField.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.autUrlTextField"); //$NON-NLS-1$
         
         // browser
         Label browserLabel = UIComponentHelper.createLabel(
                 basicAreaComposite, "WebAutConfigComponent.browser"); //$NON-NLS-1$
-        browserLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserLabel"); //$NON-NLS-1$
+        browserLabel.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserLabel"); //$NON-NLS-1$
         
         m_browserCombo = UIComponentHelper.createEnumCombo(
                 basicAreaComposite, 2, "WebAutConfigComponent.Browser", //$NON-NLS-1$
                     Browser.class);
-        m_browserCombo.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserCombo"); //$NON-NLS-1$
+        m_browserCombo.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserCombo"); //$NON-NLS-1$
     }
     
     /**
@@ -126,21 +126,21 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         // activation method editor
         Label activationMethodLabel = UIComponentHelper.createLabel(
                 expertAreaComposite, "AUTConfigComponent.activationMethod"); //$NON-NLS-1$
-        activationMethodLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.activationMethodLabel"); //$NON-NLS-1$
+        activationMethodLabel.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.activationMethodLabel"); //$NON-NLS-1$
         
         m_activationMethodCombo = UIComponentHelper.createEnumCombo(
                 expertAreaComposite, 2, "AUTConfigComponent.ActivationMethod", //$NON-NLS-1$
                     ActivationMethod.class);
-        m_activationMethodCombo.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.activationMethodCombo"); //$NON-NLS-1$
+        m_activationMethodCombo.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.activationMethodCombo"); //$NON-NLS-1$
         
         // AUT ID Attribute property
         Label autIdAttibuteLabel = UIComponentHelper.createLabel(
                 expertAreaComposite, "HTMLAutConfigComponent.AutIdAttibuteLabel"); //$NON-NLS-1$
-        autIdAttibuteLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.autIdAttibuteLabel"); //$NON-NLS-1$
+        autIdAttibuteLabel.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.autIdAttibuteLabel"); //$NON-NLS-1$
         
         m_autIdAttibuteTextField = UIComponentHelper.createTextField(
                 expertAreaComposite, 2);
-        m_autIdAttibuteTextField.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.autIdAttibuteTextField"); //$NON-NLS-1$
+        m_autIdAttibuteTextField.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.autIdAttibuteTextField"); //$NON-NLS-1$
     }
     
     /**
@@ -151,19 +151,19 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
     protected void createBrowserPathEditor(Composite parent) {
         
         Label browserPathLabel = UIComponentHelper.createLabel(parent, "WebAutConfigComponent.browserPath"); //$NON-NLS-1$ 
-        browserPathLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserPathLabel"); //$NON-NLS-1$
+        browserPathLabel.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserPathLabel"); //$NON-NLS-1$
         ControlDecorator.decorateInfo(browserPathLabel,  
                 "ControlDecorator.WebBrowserPath", false); //$NON-NLS-1$
         
         m_browserTextField = UIComponentHelper.createTextField(
             parent, 1);
-        m_browserTextField.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.BrowserTextField"); //$NON-NLS-1$
+        m_browserTextField.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.BrowserTextField"); //$NON-NLS-1$
         
         m_browserPathButton = new Button(UIComponentHelper
                 .createLayoutComposite(parent), SWT.PUSH);
         m_browserPathButton.setText(I18n.getString("AUTConfigComponent.browse"));  //$NON-NLS-1$
         m_browserPathButton.setLayoutData(BUTTON_LAYOUT);
-        m_browserPathButton.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserPathButton"); //$NON-NLS-1$
+        m_browserPathButton.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserPathButton"); //$NON-NLS-1$
     }
 
     /**
@@ -544,12 +544,12 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      */
     protected void createSingleModeCheckBox(Composite parent) {
         Label singleWindowModeLabel = UIComponentHelper.createLabel(parent, "WebAutConfigComponent.singleWindowMode"); //$NON-NLS-1$ 
-        singleWindowModeLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.singleWindowModeLabel"); //$NON-NLS-1$
+        singleWindowModeLabel.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.singleWindowModeLabel"); //$NON-NLS-1$
         ControlDecorator.decorateInfo(singleWindowModeLabel,  
                 "ControlDecorator.SingleWindowMode", false); //$NON-NLS-1$
         m_singleWindowCheckBox = UIComponentHelper
                 .createToggleButton(parent, 1);
-        m_singleWindowCheckBox.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.SingleWindowCheckBox"); //$NON-NLS-1$ 
+        m_singleWindowCheckBox.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.SingleWindowCheckBox"); //$NON-NLS-1$ 
         
     }
     

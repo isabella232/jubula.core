@@ -77,7 +77,6 @@ import org.eclipse.jubula.client.core.model.MonitoringReportPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
@@ -456,8 +455,6 @@ public class ClientTestImpl implements IClientTest {
             message.setRecordDialogOpen(dialogOpen);
             message.setSingleLineTrigger(singleLineTrigger);
             message.setMultiLineTrigger(multiLineTrigger);
-            message.setToolkit(GeneralStorage.getInstance().getProject()
-                    .getToolkit());
             ObjectMappingEventDispatcher.setCategoryToCreateIn(null);
                             
             AUTConnection.getInstance().send(message);

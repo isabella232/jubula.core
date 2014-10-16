@@ -37,7 +37,7 @@ import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
-import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -211,9 +211,9 @@ public class DBLoginDialog extends TitleAreaDialog {
             GridData.CENTER, false, false, HORIZONTAL_SPAN + 1, 1));
         m_userLabel = new Label(area, SWT.NONE);
         m_userLabel.setText(Messages.DBLoginDialogUserLabel);
-        m_userLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DBLoginDialog.userLabel"); //$NON-NLS-1$
+        m_userLabel.setData(SwtToolkitConstants.WIDGET_NAME, "DBLoginDialog.userLabel"); //$NON-NLS-1$
         m_userText = new Text(area, SWT.BORDER);
-        m_userText.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DBLoginDialog.userTxf"); //$NON-NLS-1$
+        m_userText.setData(SwtToolkitConstants.WIDGET_NAME, "DBLoginDialog.userTxf"); //$NON-NLS-1$
         GridData gridData = newGridData();
         LayoutUtil.addToolTipAndMaxWidth(gridData, m_userText);
         m_userText.setLayoutData(gridData);
@@ -239,9 +239,9 @@ public class DBLoginDialog extends TitleAreaDialog {
             GridData.CENTER, false, false, HORIZONTAL_SPAN + 1, 1));
         m_pwdLabel = new Label(area, SWT.NONE);
         m_pwdLabel.setText(Messages.DBLoginDialogPwdLabel);
-        m_pwdLabel.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DBLoginDialog.pwdLabel"); //$NON-NLS-1$
+        m_pwdLabel.setData(SwtToolkitConstants.WIDGET_NAME, "DBLoginDialog.pwdLabel"); //$NON-NLS-1$
         m_pwdText = new Text(area, SWT.PASSWORD | SWT.BORDER);
-        m_pwdText.setData(SwtAUTHierarchyConstants.WIDGET_NAME, "DBLoginDialog.pwdTxf"); //$NON-NLS-1$
+        m_pwdText.setData(SwtToolkitConstants.WIDGET_NAME, "DBLoginDialog.pwdTxf"); //$NON-NLS-1$
         GridData gridData = newGridData();
         m_pwdText.setLayoutData(gridData);
         LayoutUtil.setMaxChar(m_pwdText);

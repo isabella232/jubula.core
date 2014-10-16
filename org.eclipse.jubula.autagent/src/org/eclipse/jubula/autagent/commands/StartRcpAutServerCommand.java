@@ -21,7 +21,6 @@ import java.util.Vector;
 import org.apache.commons.lang.LocaleUtils;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
-import org.eclipse.jubula.tools.internal.constants.RcpAccessorConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.jubula.tools.internal.utils.MonitoringUtil;
@@ -200,9 +199,8 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
                     IStartAut.PROPERTY_DELIMITER);
         }
         Vector<String> envList = new Vector<String>(Arrays.asList(envArray));
-        envList.addAll(getConnectionProperties(
-                parameters, StartSwtAutServerCommand.ENV_VAR_PREFIX, 
-                StartSwtAutServerCommand.ENV_VALUE_SEP));
+        envList.addAll(getConnectionProperties(parameters,
+            StartSwtAutServerCommand.ENV_VALUE_SEP));
         
         if (MonitoringUtil.shouldAndCanRunWithMonitoring(parameters)) {
             String monAgent = this.getMonitoringAgent(parameters);
@@ -223,41 +221,34 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
      * 
      * @param parameters
      *            The AUT Configuration parameters.
-     * @param propPrefix
-     *            The string to prepend to all generated property names.
      * @param valueSeparator
      *            The string to use to separate property names from property
      *            values.
      * @return the list of properties.
      */
     private List<String> getConnectionProperties(
-        Map<String, String> parameters, String propPrefix, 
-        String valueSeparator) {
+        Map<String, String> parameters, String valueSeparator) {
 
         List<String> props = new ArrayList<String>();
         StringBuffer sb = new StringBuffer();
 
         sb = new StringBuffer();
-        sb.append(propPrefix).append(RcpAccessorConstants.KEYBOARD_LAYOUT)
-            .append(valueSeparator)
+        sb.append(AutConfigConstants.KEYBOARD_LAYOUT).append(valueSeparator)
             .append(parameters.get(AutConfigConstants.KEYBOARD_LAYOUT));
         props.add(sb.toString());
-        
+
         sb = new StringBuffer();
-        sb.append(propPrefix).append(AutConfigConstants.AUT_AGENT_HOST)
-            .append(valueSeparator)
+        sb.append(AutConfigConstants.AUT_AGENT_HOST).append(valueSeparator)
             .append(parameters.get(AutConfigConstants.AUT_AGENT_HOST));
         props.add(sb.toString());
 
         sb = new StringBuffer();
-        sb.append(propPrefix).append(AutConfigConstants.AUT_AGENT_PORT)
-            .append(valueSeparator)
+        sb.append(AutConfigConstants.AUT_AGENT_PORT).append(valueSeparator)
             .append(parameters.get(AutConfigConstants.AUT_AGENT_PORT));
         props.add(sb.toString());
 
         sb = new StringBuffer();
-        sb.append(propPrefix).append(AutConfigConstants.AUT_NAME)
-            .append(valueSeparator)
+        sb.append(AutConfigConstants.AUT_NAME).append(valueSeparator)
             .append(parameters.get(AutConfigConstants.AUT_NAME));
         props.add(sb.toString());
 

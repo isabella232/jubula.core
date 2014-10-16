@@ -10,10 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
-import java.util.Map;
-
 import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.communication.CAP;
+import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
 
 /** @author BREDEX GmbH */
@@ -24,10 +23,10 @@ public interface AUT extends Remote {
     AUTIdentifier getIdentifier();
 
     /**
-     * @param typeMapping
-     *            the type mapping to set
+     * @param information
+     *            the information about the AUTs toolkit
      */
-    void setTypeMapping(Map<?, ?> typeMapping);
+    void setToolkitInformation(ToolkitInfo information);
 
     /**
      * @param cap

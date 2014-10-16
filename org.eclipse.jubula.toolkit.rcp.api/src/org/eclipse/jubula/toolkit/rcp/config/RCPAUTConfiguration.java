@@ -18,7 +18,6 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.toolkit.swt.config.SWTAUTConfiguration;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
-import org.eclipse.jubula.tools.internal.constants.RcpAccessorConstants;
 import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
 
 /** @author BREDEX GmbH */
@@ -51,13 +50,15 @@ public class RCPAUTConfiguration extends SWTAUTConfiguration {
     public Map<String, String> getLaunchInformation() {
         Map<String, String> launchInformation = new HashMap<String, String>();
 
-        launchInformation.put(AutConfigConstants.AUT_ID, getAutID()
-            .getExecutableName());
-        launchInformation.put(AutConfigConstants.EXECUTABLE, getCommand());
-        launchInformation.put(AutConfigConstants.WORKING_DIR, getWorkingDir());
+        launchInformation.put(AutConfigConstants.AUT_ID, 
+            getAutID().getExecutableName());
+        launchInformation.put(AutConfigConstants.EXECUTABLE, 
+            getCommand());
+        launchInformation.put(AutConfigConstants.WORKING_DIR, 
+            getWorkingDir());
         launchInformation.put(AutConfigConstants.AUT_ARGUMENTS,
             StringUtils.join(getArgs()));
-        launchInformation.put(RcpAccessorConstants.KEYBOARD_LAYOUT,
+        launchInformation.put(AutConfigConstants.KEYBOARD_LAYOUT,
             getKeyboardLayout().toString());
 
         launchInformation.put(AutConfigConstants.AUT_LOCALE,

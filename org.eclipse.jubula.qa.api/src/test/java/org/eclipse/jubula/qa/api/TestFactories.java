@@ -1,5 +1,6 @@
 package org.eclipse.jubula.qa.api;
 
+import java.io.IOException;
 import java.net.URL;
 
 import junit.framework.Assert;
@@ -11,7 +12,7 @@ import org.eclipse.jubula.toolkit.concrete.components.TextComponent;
 import org.eclipse.jubula.toolkit.concrete.components.TextInputComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.client.MakeR;
-import org.eclipse.jubula.client.OM;
+import org.eclipse.jubula.client.ObjectMapping;
 import org.eclipse.jubula.tools.ComponentIdentifier;
 import org.junit.Test;
 
@@ -20,19 +21,24 @@ import org.junit.Test;
  */
 public class TestFactories {
     
+    /** the resource url */
+    private URL m_resourceURL = TestFactories.class.getClassLoader()
+            .getResource("objectMapping_SimpleAdder.properties"); //$NON-NLS-1$
+    
     /** object mapping loader */
-    private OM m_omLoader = MakeR.createOM();
+    private ObjectMapping m_omLoader;
     
     /**
      * test method
      */
     @Test
     public void testFactories() {
-
-        URL resourceURL = TestFactories.class.getClassLoader()
-            .getResource("objectMapping_SimpleAdder.properties"); //$NON-NLS-1$
         
-        m_omLoader.init(resourceURL);
+        try {
+            m_omLoader = MakeR.createObjectMapping(m_resourceURL.openStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Assert.assertNotNull(m_omLoader);
         
         /** The first text field */

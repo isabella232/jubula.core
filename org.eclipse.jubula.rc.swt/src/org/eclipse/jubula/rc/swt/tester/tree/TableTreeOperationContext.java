@@ -21,7 +21,7 @@ import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
-import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Tree;
@@ -102,7 +102,7 @@ public class TableTreeOperationContext extends TreeOperationContext {
 
                 public Object run() {
                     return CAPUtil.getWidgetText(item,
-                            SwtAUTHierarchyConstants.WIDGET_TEXT_KEY_PREFIX
+                            SwtToolkitConstants.WIDGET_TEXT_KEY_PREFIX
                             + m_column, item.getText(m_column));
 
                 }

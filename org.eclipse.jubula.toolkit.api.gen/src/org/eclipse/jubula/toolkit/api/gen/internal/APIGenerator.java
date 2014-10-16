@@ -21,12 +21,15 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jubula.toolkit.api.gen.ClassGenerator;
 import org.eclipse.jubula.toolkit.api.gen.FactoryGenerator;
+import org.eclipse.jubula.toolkit.api.gen.ToolkitInfoGenerator;
 import org.eclipse.jubula.tools.internal.utils.generator.CompSystemProcessor;
 import org.eclipse.jubula.tools.internal.utils.generator.ComponentInfo;
 import org.eclipse.jubula.tools.internal.utils.generator.ToolkitConfig;
 import org.eclipse.jubula.tools.internal.utils.generator.ToolkitInfo;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 
 /**
@@ -41,11 +44,18 @@ public class APIGenerator {
     /** factory generator */
     private static FactoryGenerator factoryGenerator =
             new FactoryGenerator();
+
+    /** factory generator */
+    private static ToolkitInfoGenerator toolkitInfoGenerator =
+            new ToolkitInfoGenerator();
     
     /** list containing all components with information for factory generation.
      *  will be reseted for each toolkit */
     private static List<FactoryInfo> componentList =
             new ArrayList<FactoryInfo>();
+    
+    /** whether a class containing information about a toolkit needs to be generated */
+    private static boolean toolkitNeedsInfoClass = false;
     
     /**
      * Constructor
@@ -74,6 +84,7 @@ public class APIGenerator {
         // Generate classes and interfaces toolkit by toolkit
         for (ToolkitInfo tkInfo : toolkitInfos) {
             componentList.clear();
+            toolkitNeedsInfoClass = false;
             List<ComponentInfo> compInfos = processor.getCompInfos(
                     tkInfo.getType(), tkInfo.getShortType(), false);
             for (ComponentInfo compInfo : compInfos) {
@@ -87,9 +98,12 @@ public class APIGenerator {
             CompSystem compSystem = processor.getCompSystem();
             ToolkitDescriptor toolkitDesriptor = compSystem
                     .getToolkitDescriptor(tkInfo.getType());
-            GenerationInfo tkGenInfo = new GenerationInfo(toolkitDesriptor,
-                    componentList, compSystem);
+            GenerationInfo tkGenInfo = new GenerationInfo(
+                    toolkitDesriptor, componentList);
             createFactory(tkGenInfo, generationBaseDir);
+            if (toolkitNeedsInfoClass) {
+                createToolkitInfo(tkGenInfo, generationBaseDir);
+            }
         }
     }
 
@@ -151,12 +165,26 @@ public class APIGenerator {
         createFile(dir, file, content);
         
         if (!generateInterface) {
+            ComponentClass componentClass = null;
+            String testerClass = null;
+            if (component instanceof ConcreteComponent) {
+                ConcreteComponent concreteComponent =
+                        (ConcreteComponent) component;
+                componentClass = concreteComponent.getComponentClass();
+                testerClass = concreteComponent.getTesterClass();
+                if (componentClass != null && testerClass != null) {
+                    toolkitNeedsInfoClass = true;
+                }
+            }
+            
             componentList.add(new FactoryInfo(
                     genInfo.getClassName(),
                     genInfo.getFqClassName(),
                     genInfo.getFqInterfaceName(),
                     genInfo.hasDefaultMapping(),
-                    genInfo.getMostSpecificVisibleSuperTypeName()));
+                    genInfo.getMostSpecificVisibleSuperTypeName(),
+                    componentClass,
+                    testerClass));
         }
     }
 
@@ -175,6 +203,25 @@ public class APIGenerator {
         File dir = new File(generationBaseDir + path);
         File file = new File(dir, className + ".java"); //$NON-NLS-1$
         String content = factoryGenerator.generate(tkGenInfo);
+
+        createFile(dir, file, content); 
+    }
+    
+    /** 
+     * creates factory for toolkit
+     * @param tkGenInfo the generation information for the toolkit
+     * @param generationBaseDirTemplate directory for generation
+     */
+    private static void createToolkitInfo(GenerationInfo tkGenInfo,
+            String generationBaseDirTemplate) {
+        String path = tkGenInfo.getDirectoryPath();
+        String className = tkGenInfo.getToolkitInfoClassName();
+        String generationBaseDir = MessageFormat.format(
+                generationBaseDirTemplate,
+                new Object[] {tkGenInfo.getToolkitName()});
+        File dir = new File(generationBaseDir + path);
+        File file = new File(dir, className + ".java"); //$NON-NLS-1$
+        String content = toolkitInfoGenerator.generate(tkGenInfo);
 
         createFile(dir, file, content); 
     }

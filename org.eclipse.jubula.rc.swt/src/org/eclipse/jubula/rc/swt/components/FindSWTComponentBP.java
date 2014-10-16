@@ -14,7 +14,7 @@ import org.eclipse.jubula.rc.common.components.FindComponentBP;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
-import org.eclipse.jubula.tools.internal.constants.SwtAUTHierarchyConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Widget;
@@ -88,11 +88,11 @@ public class FindSWTComponentBP extends FindComponentBP {
      */
     public static String getComponentName(Widget w) {
         String compName = null;
-        Object o = w.getData(SwtAUTHierarchyConstants.WIDGET_NAME);
+        Object o = w.getData(SwtToolkitConstants.WIDGET_NAME);
         if (o != null) {
             compName = o.toString();
         } else {
-            o = w.getData(SwtAUTHierarchyConstants.WIDGET_NAME_FALLBACK);
+            o = w.getData(SwtToolkitConstants.WIDGET_NAME_FALLBACK);
             if (o != null) {
                 compName = o.toString();
             }

@@ -75,7 +75,6 @@ public class ChangeAUTModeCommand implements ICommand {
                         .getSingleLineTrigger());
                 autServerConfig.setMultiLineTrigger(m_message
                         .getMultiLineTrigger());
-                autServerConfig.setProjectToolkit(m_message.getToolkit());
             default :
         }
     }

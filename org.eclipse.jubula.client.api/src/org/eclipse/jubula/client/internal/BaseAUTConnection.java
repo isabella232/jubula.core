@@ -12,8 +12,11 @@ package org.eclipse.jubula.client.internal;
 
 import java.io.IOException;
 
+import org.eclipse.jubula.client.core.commands.GetKeyboardLayoutNameResponseCommand;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.internal.Communicator;
+import org.eclipse.jubula.communication.internal.message.GetKeyboardLayoutNameMessage;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.slf4j.Logger;
@@ -113,5 +116,27 @@ public class BaseAUTConnection extends BaseConnection {
             communicator.clearListeners();
             communicator.close();
         }
+    }
+    
+    /**
+     * Sets the keyboard layout for the currently connected AUT.
+     * 
+     * @throws NotConnectedException if there is no connection to an AUT.
+     * @throws ConnectionException if no connection to an AUT could be 
+     *                             initialized.
+     * @throws CommunicationException if an error occurs while communicating
+     *                                with the AUT.
+     */
+    protected void sendKeyboardLayoutToAut() 
+        throws NotConnectedException, ConnectionException, 
+               CommunicationException {
+
+        final int timeoutToUse = CONNECT_TO_AUT_TIMEOUT; 
+        
+        GetKeyboardLayoutNameMessage request = 
+            new GetKeyboardLayoutNameMessage();
+        GetKeyboardLayoutNameResponseCommand response =
+            new GetKeyboardLayoutNameResponseCommand(this);
+        request(request, response, timeoutToUse);
     }
 }
