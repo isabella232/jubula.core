@@ -10,12 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.qa.api;
 
+import java.net.URL;
 import java.util.Locale;
 
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.MakeR;
-import org.eclipse.jubula.client.OM;
+import org.eclipse.jubula.client.ObjectMapping;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
@@ -42,14 +43,14 @@ public class TestSimpleAdderRCPAUT {
     /** the AUT */
     private AUT m_aut;
     /** the object mapping */
-    private OM m_om;
+    private ObjectMapping m_om;
 
     /** prepare */
     @Before
     public void setUp() throws Exception {
-        m_om = MakeR.createOM();
-        m_om.init(this.getClass().getClassLoader()
-            .getResource("objectMapping_SimpleAdderRCP.properties")); //$NON-NLS-1$
+        URL input = this.getClass().getClassLoader()
+                .getResource("objectMapping_SimpleAdderRCP.properties"); //$NON-NLS-1$
+        m_om = MakeR.createObjectMapping(input.openStream());
 
         m_agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
         m_agent.connect();

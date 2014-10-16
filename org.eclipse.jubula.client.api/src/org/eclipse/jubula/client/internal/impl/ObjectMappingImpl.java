@@ -11,12 +11,12 @@
 package org.eclipse.jubula.client.internal.impl;
 
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import org.eclipse.jubula.client.OM;
+import org.eclipse.jubula.client.ObjectMapping;
 import org.eclipse.jubula.client.exceptions.LoadResourceException;
 import org.eclipse.jubula.client.internal.utils.SerilizationUtils;
 import org.eclipse.jubula.tools.ComponentIdentifier;
@@ -28,10 +28,10 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created Oct 09, 2014
  */
-public class ObjectMappingLoader implements OM {
+public class ObjectMappingImpl implements ObjectMapping {
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(
-            ObjectMappingLoader.class);
+            ObjectMappingImpl.class);
     
     /** object mapping associations */
     private Properties m_objectMappingAssociations = new Properties();
@@ -42,15 +42,12 @@ public class ObjectMappingLoader implements OM {
     
     /**
      * Utility class for loading object mapping association
+     * @param input the input stream containing the encoded object mapping
      */
-    public ObjectMappingLoader() {
+    public ObjectMappingImpl(InputStream input) {
         super();
-    }
-    
-    /** {@inheritDoc} */
-    public void init (URL resourceURL) {
         try {
-            m_objectMappingAssociations.load(resourceURL.openStream());
+            m_objectMappingAssociations.load(input);
             for (Object obj : m_objectMappingAssociations.keySet()) {
                 if (obj instanceof String) {
                     String compName = (String) obj;
