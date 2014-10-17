@@ -119,6 +119,9 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 	Iterator<Action> actionsIterator = actions.iterator();
 	while (actionsIterator.hasNext()) {	
 		Action action = actionsIterator.next();
+		if (action.isClientAction()) {
+			continue;
+		}
 		String methodName = nameLoader.translateFromCompSystem(action.getName());
 		List<Param> params = action.getParams();
 		%>
