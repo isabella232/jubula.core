@@ -21,7 +21,16 @@ public class Messages extends NLS {
     public static String TaskTitle;
     public static String TaskDescription;
     public static String BatchALMReporting;
-
+    
+    public static String InspectorTitle;
+    public static String InspectorMessage;
+    public static String InspectorTableAttributeID;
+    public static String InspectorTableValue;
+    public static String InspecotrTableOptions;
+    public static String InspectorTableProperties;
+    public static String InspectorTablePropertieDisabled;
+    public static String InspectorTablePropertieReadOnly;
+    
     static {
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
     }

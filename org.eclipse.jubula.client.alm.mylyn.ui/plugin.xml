@@ -34,6 +34,11 @@
             id="org.eclipse.jubula.client.alm.ui.commands.discardPendingResults"
             name="Discard pending report">
       </command>
+      <command
+            categoryId="org.eclipse.jubula.client.alm.ui.commands.category"
+            id="org.eclipse.jubula.client.alm.ui.commands.inspectMylynAttributes"
+            name="Inspect attributes">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -54,6 +59,19 @@
 	          </iterate>
 	        </and>
 	      </enabledWhen>
+      </handler>
+            <handler
+            class="org.eclipse.jubula.client.alm.mylyn.ui.handler.InspectAlmAttributes"
+            commandId="org.eclipse.jubula.client.alm.ui.commands.inspectMylynAttributes">
+            <enabledWhen>
+            <and>
+              <iterate ifEmpty="false" operator="or">
+                <and>
+                    <instanceof value="org.eclipse.mylyn.tasks.core.ITask" />
+               </and>
+              </iterate>
+            </and>
+          </enabledWhen>
       </handler>
       <handler
             class="org.eclipse.jubula.client.alm.mylyn.ui.handler.DiscardPendingReportHandler"
@@ -137,6 +155,12 @@
 	        commandId="org.eclipse.jubula.client.alm.ui.commands.discardPendingResults"
 	        style="push" />
 		</menuContribution>
+		<menuContribution
+          locationURI="popup:org.eclipse.mylyn.tasks.ui.views.tasks?after=additions">
+          <command
+            commandId="org.eclipse.jubula.client.alm.ui.commands.inspectMylynAttributes"
+            style="push" />
+        </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commandImages">
