@@ -1,10 +1,7 @@
 package org.eclipse.jubula.toolkit.api.gen.internal;
 
-import java.util.List;
-
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 
 /**
@@ -13,20 +10,14 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
  */
 public class GenerationInfo {
     
-    /** the component */
-    private Component m_component;
-    
     /** the class name */
     private String m_className;
     
     /** the package for the class */
     private String m_classPackageName;
-    
-    /** the package for the interface */
-    private String m_interfacePackageName;
 
     /** the directory path (either for class or interface) */
-    private String m_directoryPath;
+    private String m_classDirectoryPath;
 
     /** the toolkit name */
     private String m_toolkitName;
@@ -34,98 +25,60 @@ public class GenerationInfo {
     /** the toolkit id */
     private String m_toolkitID;
     
-    /** Whether an interface should be generated */
-    private Boolean m_genInterface;
-    
-    /** Whether an the component has a default mapping */
-    private Boolean m_hasDefaultMapping = false;
-
-    /** only used for generating factories 
-     *  list of components which have to be generated in factory */
-    private List<FactoryInfo> m_componentList;
-    
-    /** the most specific visible super type of a component */
-    private String m_mostSpecificVisibleSuperTypeName;
-
-    /** the class name for the toolkit component info class */
-    private String m_toolkitInfoClassName;
+    /** generation dependent information */
+    private Object m_specificInformation;
     
     /**
      * Contains all necessary information for API generation of a component
      * Supposed to be used for class/interface generation.
      * @param component the component
-     * @param generateInterface whether an interface should be generated
-     *          (else an impl class)
      */
-    public GenerationInfo(Component component, boolean generateInterface) {
-        m_component = component;
-        m_genInterface = generateInterface;
+    public GenerationInfo(Component component) {
         NameLoader nameLoader = NameLoader.getInstance();
         ToolkitDescriptor toolkitDesriptor = component.getToolkitDesriptor();
         m_toolkitName = nameLoader.getToolkitName(toolkitDesriptor);
         m_className = nameLoader.getClassName(component.getType());
         m_classPackageName = nameLoader.getClassPackageName(m_toolkitName);
-        m_interfacePackageName = nameLoader.getInterfacePackageName(
-                m_toolkitName);
         m_toolkitID = toolkitDesriptor.getToolkitID();
         
-        // Use package name as directory path name, replace "." by "/" later
-        m_directoryPath = generateInterface
-                ? m_interfacePackageName : m_classPackageName;
-        
-        // Check for exceptions in naming
-        m_classPackageName = nameLoader.executeExceptions(m_classPackageName);
-        m_interfacePackageName = nameLoader.executeExceptions(
-                m_interfacePackageName);
-        m_directoryPath = nameLoader.executeExceptions(m_directoryPath
-                .replace(StringConstants.DOT, StringConstants.SLASH));
-        m_toolkitName = nameLoader.executeExceptions(m_toolkitName);
-        
-        m_mostSpecificVisibleSuperTypeName =
-                findMostSpecificVisibleSuperTypeName(component);
-        
-        if (component instanceof ConcreteComponent) {
-            m_hasDefaultMapping = 
-                    ((ConcreteComponent)component).hasDefaultMapping();
-        }
-    }
-
-    
-    /**
-     * Contains all necessary information for API generation for a toolkit.
-     * Supposed to be used for factory generation.
-     * @param tkDescriptor the toolkit descriptor
-     * @param componentList the list of components to generate in factory
-     */
-    public GenerationInfo(ToolkitDescriptor tkDescriptor,
-            List<FactoryInfo> componentList) {
-        m_component = null;
-        m_genInterface = false;
-        NameLoader nameLoader = NameLoader.getInstance();
-        m_toolkitName = nameLoader.getToolkitName(tkDescriptor);
-        m_className = nameLoader.getFactoryName(m_toolkitName);
-        m_toolkitInfoClassName = nameLoader.getToolkitComponentClassName(
-                m_toolkitName);
-        m_toolkitID = tkDescriptor.getToolkitID();
-        m_classPackageName = nameLoader.getToolkitPackageName(m_toolkitName);
-        m_componentList = componentList;
         // Use package name as directory path name, replace "." by "/"
-        m_directoryPath = m_classPackageName
+        m_classDirectoryPath = m_classPackageName
                 .replace(StringConstants.DOT, StringConstants.SLASH);
         
         // Check for exceptions in naming
         m_classPackageName = nameLoader.executeExceptions(m_classPackageName);
-        m_directoryPath = nameLoader.executeExceptions(m_directoryPath);
+        m_classDirectoryPath = nameLoader.executeExceptions(
+                m_classDirectoryPath);
         m_toolkitName = nameLoader.executeExceptions(m_toolkitName);
     }
-
+    
     /**
-     * Returns the component.
-     * <code>null</code> if constructor for factories was used.
-     * @return the component
+     * Contains all necessary information for API generation of a component
+     * Supposed to be used for toolkit info or factory generation
+     * @param tkDescriptor the toolkit descriptor
+     * @param genFactory whether generation info is for creating factories
      */
-    public Component getComponent() {
-        return m_component;
+    public GenerationInfo(ToolkitDescriptor tkDescriptor,
+            boolean genFactory) {
+        NameLoader nameLoader = NameLoader.getInstance();
+        m_toolkitName = nameLoader.getToolkitName(tkDescriptor);
+        if (genFactory) {
+            m_className = nameLoader.getFactoryName(m_toolkitName);
+        } else {
+            m_className = nameLoader.getToolkitComponentClassName(
+                    m_toolkitName);
+        }
+        m_classPackageName = nameLoader.getToolkitPackageName(m_toolkitName);
+        m_toolkitID = tkDescriptor.getToolkitID();
+        
+        m_classDirectoryPath = m_classPackageName
+                .replace(StringConstants.DOT, StringConstants.SLASH);
+        
+        // Check for exceptions in naming
+        m_classPackageName = nameLoader.executeExceptions(m_classPackageName);
+        m_classDirectoryPath = nameLoader.executeExceptions(
+                m_classDirectoryPath);
+        m_toolkitName = nameLoader.executeExceptions(m_toolkitName);
     }
     
     /**
@@ -146,19 +99,11 @@ public class GenerationInfo {
     }
     
     /**
-     * Returns the interface package name
-     * @return the interface package name
-     */
-    public String getInterfacePackageName() {
-        return m_interfacePackageName;
-    }
-    
-    /**
      * Returns the directory path
      * @return the directory path
      */
-    public String getDirectoryPath() {
-        return m_directoryPath;
+    public String getClassDirectoryPath() {
+        return m_classDirectoryPath;
     }
 
     /**
@@ -178,15 +123,6 @@ public class GenerationInfo {
     }
     
     /**
-     * Returns true if and only if an interface should be generated
-     * and false if and only if a implementation class should be generated
-     * @return the toolkit name
-     */
-    public Boolean generatesInterface() {
-        return m_genInterface;
-    }
-    
-    /**
      * Returns the fully qualified class name
      * @return the fully qualified class name
      */
@@ -195,60 +131,18 @@ public class GenerationInfo {
     }
     
     /**
-     * Returns the fully qualified interface name
-     * @return the fully qualified interface name
+     * Returns the generation dependent information 
+     * @return the generation dependent information 
      */
-    public String getFqInterfaceName() {
-        return getInterfacePackageName() + StringConstants.DOT + getClassName();
-    }
-
-    /**
-     * Returns true if and only if the component has a default mapping
-     * @return true if and only if the component has a default mapping
-     */
-    public boolean hasDefaultMapping() {
-        return m_hasDefaultMapping;
-    }
-
-    /** Returns the list of components to generate in factory.
-     * <code>null</code> if constructor for classes/interfaces was used.
-     * @return the component list
-     */
-    public List<FactoryInfo> getComponentList() {
-        return m_componentList;
+    public Object getSpecificInformation() {
+        return m_specificInformation;
     }
     
     /**
-     * Returns the class name for the toolkit component info class
-     * @return the class name for the toolkit component info class
+     * Sets the generation dependent information 
+     * @param specificInformation generation dependent information
      */
-    public String getToolkitInfoClassName() {
-        return m_toolkitInfoClassName;
-    }
-    
-    /**
-     * Returns the name of the most specific visible super type of a component
-     * @return the name of the most specific visible super type of a component
-     */
-    public String getMostSpecificVisibleSuperTypeName() {
-        return m_mostSpecificVisibleSuperTypeName;
-    }
-    
-    /**
-     * Finds the name of the most specific visible super type of a component
-     * @param component the component
-     * @return the name of the most specific visible super type
-     */
-    private String findMostSpecificVisibleSuperTypeName(Component component) {
-        if (component.isVisible()) {
-            return getFqInterfaceName();
-        }
-        // search for the most specific visible super type of the component
-        Component tmp = component;
-        while (tmp != null && !tmp.isVisible()) {
-            tmp = tmp.getRealized().get(0);
-        }
-        GenerationInfo visibleSuperType = new GenerationInfo(tmp, true);
-        return visibleSuperType.getFqInterfaceName();
+    public void setSpecificInformation(Object specificInformation) {
+        m_specificInformation = specificInformation;
     }
 }

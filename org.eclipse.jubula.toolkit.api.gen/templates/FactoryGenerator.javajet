@@ -1,13 +1,16 @@
 <%@ jet 
 package="org.eclipse.jubula.toolkit.api.gen" 
 imports="java.util.*
-			org.eclipse.jubula.toolkit.api.gen.internal.FactoryInfo
+			org.eclipse.jubula.toolkit.api.gen.internal.FactoryGenInfo
 			org.eclipse.jubula.toolkit.api.gen.internal.GenerationInfo" 
 class="FactoryGenerator"%>
 <%
-	GenerationInfo genInfo = (GenerationInfo)argument;
-	String factoryName = genInfo.getClassName();
-	String packageName = genInfo.getClassPackageName();
+GenerationInfo genInfo = (GenerationInfo)argument;
+String factoryName = genInfo.getClassName();
+String packageName = genInfo.getClassPackageName();
+Object specInfo = genInfo.getSpecificInformation();
+if (specInfo instanceof List) {
+	List<FactoryGenInfo> factoryInfoList = (List<FactoryGenInfo>) specInfo;
 %>
 /*******************************************************************************
  * Copyright (c) 2014 BREDEX GmbH.
@@ -33,17 +36,18 @@ public final class <%=factoryName%> {
 		super();
 	}
 
-<%for (FactoryInfo factoryInfo : genInfo.getComponentList()) {
+<%for (FactoryGenInfo factoryInfo : factoryInfoList) {
 	String componentName = factoryInfo.getComponentName();
-	String className = factoryInfo.getClassName();
-	String interfaceName = factoryInfo.getMostSpecificVisibleSuperTypeName();
+	String implClassName = factoryInfo.getClassName();
+	String returnType = factoryInfo.getMostSpecificVisibleSuperTypeName();
 	Boolean hasDefaultMapping = factoryInfo.hasDefaultMapping();%>
 	<%if (hasDefaultMapping) {%>
-	public static <%=interfaceName%> create<%=componentName%> () {
-		return new <%=className%>();
+	public static <%=returnType%> create<%=componentName%> () {
+		return new <%=implClassName%>();
 	}<%} else {%>
-	public static <%=interfaceName%> create<%=componentName%> (ComponentIdentifier componentIdentifier) {
-		return new <%=className%>(componentIdentifier);
+	public static <%=returnType%> create<%=componentName%> (ComponentIdentifier componentIdentifier) {
+		return new <%=implClassName%>(componentIdentifier);
 	}<%}%>
 <%}%>
 }
+<%}%>

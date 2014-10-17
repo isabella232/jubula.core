@@ -1,15 +1,18 @@
 <%@ jet 
 package="org.eclipse.jubula.toolkit.api.gen" 
 imports="java.util.*
-			org.eclipse.jubula.toolkit.api.gen.internal.FactoryInfo
+			org.eclipse.jubula.toolkit.api.gen.internal.ToolkitGenInfo
 			org.eclipse.jubula.toolkit.api.gen.internal.GenerationInfo
 			org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass
 			org.eclipse.jubula.tools.internal.xml.businessmodell.Property"
 class="ToolkitInfoGenerator"%>
 <%
-	GenerationInfo genInfo = (GenerationInfo)argument;
-	String factoryName = genInfo.getToolkitInfoClassName();
-	String packageName = genInfo.getClassPackageName();
+GenerationInfo genInfo = (GenerationInfo)argument;
+String className = genInfo.getClassName();
+String packageName = genInfo.getClassPackageName();
+Object specInfo = genInfo.getSpecificInformation();
+if (specInfo instanceof List) {
+	List<ToolkitGenInfo> toolkitInfoList = (List<ToolkitGenInfo>) specInfo;
 %>
 /*******************************************************************************
  * Copyright (c) 2014 BREDEX GmbH.
@@ -35,18 +38,18 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.Property;
 /**
  * Contains information about the <%=genInfo.getToolkitName()%> toolkit and its components
  */
-public final class <%=factoryName%> extends AbstractToolkitInfo {
+public final class <%=className%> extends AbstractToolkitInfo {
 
 	private Map<ComponentClass, String> m_map = new HashMap<ComponentClass, String>();
 
 	/**
 	 * Constructor
 	 */
-	public <%=factoryName%>() {
+	public <%=className%>() {
 		<%int i = 1;%>
-		<%for (FactoryInfo factoryInfo : genInfo.getComponentList()) {
-			ComponentClass componentClass = factoryInfo.getComponentClass();
-			String testerClass = factoryInfo.getTesterClass();
+		<%for (ToolkitGenInfo toolkitInfo : toolkitInfoList) {
+			ComponentClass componentClass = toolkitInfo.getComponentClass();
+			String testerClass = toolkitInfo.getTesterClass();
 			if (componentClass != null && testerClass != null) {%>
 		ComponentClass newComponentClass<%=i%> = new ComponentClass("<%=componentClass.getName()%>");
 				<%List properties = componentClass.getProperties();%>
@@ -80,5 +83,5 @@ public final class <%=factoryName%> extends AbstractToolkitInfo {
 	public String getToolkitID() {
 		return "<%=genInfo.getToolkitID()%>";
 	}
-
 }
+<%}%>

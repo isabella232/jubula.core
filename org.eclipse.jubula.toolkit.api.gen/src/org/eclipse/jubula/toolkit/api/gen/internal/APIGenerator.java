@@ -22,6 +22,7 @@ import org.apache.commons.io.IOUtils;
 import org.eclipse.jubula.toolkit.api.gen.ClassGenerator;
 import org.eclipse.jubula.toolkit.api.gen.FactoryGenerator;
 import org.eclipse.jubula.toolkit.api.gen.ToolkitInfoGenerator;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.utils.generator.CompSystemProcessor;
 import org.eclipse.jubula.tools.internal.utils.generator.ComponentInfo;
 import org.eclipse.jubula.tools.internal.utils.generator.ToolkitConfig;
@@ -51,8 +52,13 @@ public class APIGenerator {
     
     /** list containing all components with information for factory generation.
      *  will be reseted for each toolkit */
-    private static List<FactoryInfo> componentList =
-            new ArrayList<FactoryInfo>();
+    private static List<FactoryGenInfo> factoryGenInfoList =
+            new ArrayList<FactoryGenInfo>();
+    
+    /** list containing all components with information for toolkit information generation.
+     *  will be reseted for each toolkit */
+    private static List<ToolkitGenInfo> toolkitGenInfoList =
+            new ArrayList<ToolkitGenInfo>();
     
     /** whether a class containing information about a toolkit needs to be generated */
     private static boolean toolkitNeedsInfoClass = false;
@@ -83,7 +89,8 @@ public class APIGenerator {
         
         // Generate classes and interfaces toolkit by toolkit
         for (ToolkitInfo tkInfo : toolkitInfos) {
-            componentList.clear();
+            factoryGenInfoList.clear();
+            toolkitGenInfoList.clear();
             toolkitNeedsInfoClass = false;
             List<ComponentInfo> compInfos = processor.getCompInfos(
                     tkInfo.getType(), tkInfo.getShortType(), false);
@@ -94,14 +101,16 @@ public class APIGenerator {
                 //generate implementation class
                 createClass(component, generationBaseDir, false);
             }
-            // Generate a component factory for each toolkit
+            // Generate a component factory and an information class for each toolkit
             CompSystem compSystem = processor.getCompSystem();
             ToolkitDescriptor toolkitDesriptor = compSystem
                     .getToolkitDescriptor(tkInfo.getType());
-            GenerationInfo tkGenInfo = new GenerationInfo(
-                    toolkitDesriptor, componentList);
-            createFactory(tkGenInfo, generationBaseDir);
+            GenerationInfo factoryGenInfo =
+                    new GenerationInfo(toolkitDesriptor, true);
+            createFactory(factoryGenInfo, generationBaseDir);
             if (toolkitNeedsInfoClass) {
+                GenerationInfo tkGenInfo =
+                        new GenerationInfo(toolkitDesriptor, false);
                 createToolkitInfo(tkGenInfo, generationBaseDir);
             }
         }
@@ -151,9 +160,17 @@ public class APIGenerator {
      */
     private static void createClass(Component component,
             String generationBaseDirTemplate, Boolean generateInterface) {
-        GenerationInfo genInfo = new GenerationInfo(component,
-                generateInterface);
-        String path = genInfo.getDirectoryPath();
+        GenerationInfo genInfo = new GenerationInfo(component);
+        ComponentGenInfo compInfo = new ComponentGenInfo(component,
+                generateInterface, genInfo.getToolkitName(),
+                genInfo.getClassName());
+        genInfo.setSpecificInformation(compInfo);
+        String path = StringConstants.EMPTY;
+        if (generateInterface) {
+            path = compInfo.getInterfaceDirectoryPath();
+        } else {
+            path = genInfo.getClassDirectoryPath();            
+        }
         String className = genInfo.getClassName();
         String generationBaseDir = MessageFormat.format(
                 generationBaseDirTemplate,
@@ -177,14 +194,14 @@ public class APIGenerator {
                 }
             }
             
-            componentList.add(new FactoryInfo(
+            factoryGenInfoList.add(new FactoryGenInfo(
                     genInfo.getClassName(),
                     genInfo.getFqClassName(),
-                    genInfo.getFqInterfaceName(),
-                    genInfo.hasDefaultMapping(),
-                    genInfo.getMostSpecificVisibleSuperTypeName(),
-                    componentClass,
-                    testerClass));
+                    compInfo.hasDefaultMapping(),
+                    compInfo.getMostSpecificVisibleSuperTypeName()));
+            
+            toolkitGenInfoList.add(new ToolkitGenInfo(
+                    componentClass, testerClass));
         }
     }
 
@@ -195,7 +212,8 @@ public class APIGenerator {
      */
     private static void createFactory(GenerationInfo tkGenInfo,
             String generationBaseDirTemplate) {
-        String path = tkGenInfo.getDirectoryPath();
+        tkGenInfo.setSpecificInformation(factoryGenInfoList);
+        String path = tkGenInfo.getClassDirectoryPath();
         String className = tkGenInfo.getClassName();
         String generationBaseDir = MessageFormat.format(
                 generationBaseDirTemplate,
@@ -214,8 +232,9 @@ public class APIGenerator {
      */
     private static void createToolkitInfo(GenerationInfo tkGenInfo,
             String generationBaseDirTemplate) {
-        String path = tkGenInfo.getDirectoryPath();
-        String className = tkGenInfo.getToolkitInfoClassName();
+        tkGenInfo.setSpecificInformation(toolkitGenInfoList);
+        String path = tkGenInfo.getClassDirectoryPath();
+        String className = tkGenInfo.getClassName();
         String generationBaseDir = MessageFormat.format(
                 generationBaseDirTemplate,
                 new Object[] {tkGenInfo.getToolkitName()});

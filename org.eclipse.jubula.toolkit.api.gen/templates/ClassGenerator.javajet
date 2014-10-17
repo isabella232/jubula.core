@@ -1,6 +1,7 @@
 <%@ jet 
 package="org.eclipse.jubula.toolkit.api.gen" 
 imports="java.util.*
+			org.eclipse.jubula.toolkit.api.gen.internal.ComponentGenInfo
 			org.eclipse.jubula.toolkit.api.gen.internal.GenerationInfo 
 			org.eclipse.jubula.toolkit.api.gen.internal.NameLoader
 			org.eclipse.jubula.toolkit.enums.LiteralProvider
@@ -10,19 +11,22 @@ imports="java.util.*
 		   org.eclipse.jubula.tools.internal.xml.businessmodell.Param" 
 class="ClassGenerator"%>
 <%
-	GenerationInfo genInfo = (GenerationInfo)argument;
-	Component component = genInfo.getComponent();
+GenerationInfo genInfo = (GenerationInfo)argument;
+Object specInfo = genInfo.getSpecificInformation();
+if (specInfo instanceof ComponentGenInfo) {
+	ComponentGenInfo compGenInfo = (ComponentGenInfo) specInfo;
 	String toolkitName = genInfo.getToolkitName();
 	String className = genInfo.getClassName();
-	Boolean genInterface = genInfo.generatesInterface();
-	Boolean hasDefaultMapping = genInfo.hasDefaultMapping();
+	Component component = compGenInfo.getComponent();
+	Boolean genInterface = compGenInfo.generatesInterface();
+	Boolean hasDefaultMapping = compGenInfo.hasDefaultMapping();
 	String packageName = null;
 	if (genInterface) {
-		packageName = genInfo.getInterfacePackageName();
+		packageName = compGenInfo.getInterfacePackageName();
 	} else {
 		packageName = genInfo.getClassPackageName();
 	}
-	String implementedTypeFqn = genInfo.getFqInterfaceName();
+	String implementedTypeFqn = compGenInfo.getFqInterfaceName();
 	
 	NameLoader nameLoader = NameLoader.getInstance();
 	List<Action> actions = new ArrayList<>(component.getActions());
@@ -35,10 +39,13 @@ class="ClassGenerator"%>
 	String realizedTypeFqn = null;
 	if (hasRealizedType) {
 		realizedType = realizedComponent.getType();
-		superInfo = new GenerationInfo(realizedComponent, genInterface);
+		superInfo = new GenerationInfo(realizedComponent);
 		superActions = realizedComponent.getActions();
 		if (genInterface) {
-			realizedTypeFqn = superInfo.getFqInterfaceName();
+			ComponentGenInfo superCompGenInfo = new ComponentGenInfo(
+				realizedComponent, true, superInfo.getToolkitName(),
+				superInfo.getClassName());
+			realizedTypeFqn = superCompGenInfo.getFqInterfaceName();
 		} else {
 			realizedTypeFqn = superInfo.getFqClassName();
 		}
@@ -160,5 +167,6 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			<%}%>
 			return messageCap;
 		}<%}%>
-	<%}%> 
+	<%}%>
 }
+<%}%> 
