@@ -12,7 +12,11 @@ package org.eclipse.jubula.client.launch;
 
 import java.util.Map;
 
-/** @author BREDEX GmbH */
+/** 
+ * @author BREDEX GmbH
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
+ */
 public interface AUTConfiguration {
     /**
      * @return a map of launch information

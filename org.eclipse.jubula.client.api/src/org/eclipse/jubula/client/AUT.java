@@ -16,10 +16,12 @@ import org.eclipse.jubula.tools.AUTIdentifier;
 
 /**
  * @author BREDEX GmbH
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface AUT extends Remote {
     /**
-     * @return the identifier of this AUT
+     * @return the AUTIdentifier of this AUT
      */
     AUTIdentifier getIdentifier();
 
@@ -35,7 +37,7 @@ public interface AUT extends Remote {
      *             in case of remote execution problems
      */
     <T> Result<T> execute(CAP cap, T payload) throws ExecutionException;
-    
+
     /**
      * @param cap
      *            the CAP to execute on the AUT

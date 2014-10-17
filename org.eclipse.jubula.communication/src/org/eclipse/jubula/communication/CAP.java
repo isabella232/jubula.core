@@ -11,10 +11,15 @@
 package org.eclipse.jubula.communication;
 
 /**
- * Interface for CAPs
+ * CAPs are remotely being executed <br>
+ * <b>C</b>: {@link org.eclipse.jubula.tools.ComponentIdentifier} <br>
+ * <b>A</b>: Action <br>
+ * <b>P</b>: Parameter <br>
  * 
  * @author BREDEX GmbH
  * @created 13.10.2014
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CAP {
 

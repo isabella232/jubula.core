@@ -15,7 +15,11 @@ import java.io.InputStream;
 import org.eclipse.jubula.client.internal.impl.AUTAgentImpl;
 import org.eclipse.jubula.client.internal.impl.ObjectMappingImpl;
 
-/** @author BREDEX GmbH */
+/**
+ * @author BREDEX GmbH
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
+ */
 public final class MakeR {
     /** Constructor */
     private MakeR() {
@@ -32,10 +36,12 @@ public final class MakeR {
     public static AUTAgent createAUTAgent(final String hostname, int port) {
         return new AUTAgentImpl(hostname, port);
     }
-    
+
     /**
      * @return a new Object Mapping instance
-     * @param input the input stream containing the encoded object mapping
+     * @param input
+     *            an input stream providing the exported object mapping
+     *            properties
      */
     public static ObjectMapping createObjectMapping(InputStream input) {
         return new ObjectMappingImpl(input);

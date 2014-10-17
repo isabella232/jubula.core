@@ -13,9 +13,13 @@ package org.eclipse.jubula.client;
 import org.eclipse.jubula.communication.CAP;
 
 /**
+ * Representing the result of a remotely executed CAP
+ * 
  * @author BREDEX GmbH
  * @param <T>
  *            the payload type
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface Result<T> {
     /**

@@ -11,11 +11,12 @@
 package org.eclipse.jubula.tools;
 
 /**
- * Classes implementing this interface hold the information for identifying a
- * component in the AUT.
+ * Information for identifying a component in the AUT.
  * 
  * @author BREDEX GmbH
  * @created 13.10.2014
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ComponentIdentifier {
 

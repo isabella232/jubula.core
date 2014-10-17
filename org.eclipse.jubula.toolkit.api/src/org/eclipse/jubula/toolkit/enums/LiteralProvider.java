@@ -10,7 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.toolkit.enums;
 
-/** @author BREDEX GmbH */
+/** 
+ * @author BREDEX GmbH
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
+ */
 public interface LiteralProvider {
     /**
      * @return the value to use at the remote controlling side

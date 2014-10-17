@@ -16,14 +16,18 @@ import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
 
-/** @author BREDEX GmbH */
+/** 
+ * @author BREDEX GmbH
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
+ */
 public interface AUTAgent extends Remote {
     /**
      * start an AUT
      * 
      * @param configuration
      *            an AUT configuration to launch the AUT
-     * @return a reference to the running AUT
+     * @return an identifier for the running AUT
      */
     AUTIdentifier startAUT(AUTConfiguration configuration) throws Exception;
 

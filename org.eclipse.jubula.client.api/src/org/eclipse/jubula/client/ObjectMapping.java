@@ -13,15 +13,17 @@ package org.eclipse.jubula.client;
 import org.eclipse.jubula.tools.ComponentIdentifier;
 
 /**
- * Utility class for loading object mapping associations
+ * Class for retrieving component identifier
  * 
  * @author BREDEX GmbH
  * @created Oct 13, 2014
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ObjectMapping {
 
     /**
-     * Returns the component identifier for a component name from the cache
+     * Returns a component identifier for the given component name
      * 
      * @param compName
      *            the component name

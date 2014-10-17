@@ -10,12 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.toolkit;
 
-
 /**
  * Information about a toolkit and its components
  * 
  * @author BREDEX GmbH
  * @created 15.10.2014
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ToolkitInfo {
 
