@@ -15,6 +15,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.toolkit.swt.config.SWTAUTConfiguration;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
@@ -47,7 +48,7 @@ public class RCPAUTConfiguration extends SWTAUTConfiguration {
     }
 
     /** {@inheritDoc} */
-    public Map<String, String> getLaunchInformation() {
+    @NonNull public Map<String, String> getLaunchInformation() {
         Map<String, String> launchInformation = new HashMap<String, String>();
 
         launchInformation.put(AutConfigConstants.AUT_ID, 

@@ -12,6 +12,7 @@ package org.eclipse.jubula.client;
 
 import java.io.InputStream;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.client.internal.impl.AUTAgentImpl;
 import org.eclipse.jubula.client.internal.impl.ObjectMappingImpl;
 
@@ -33,7 +34,9 @@ public final class MakeR {
      *            the port number the remote AUT-Agent is running on
      * @return a new AUTAgent instance
      */
-    public static AUTAgent createAUTAgent(final String hostname, int port) {
+    @NonNull public static AUTAgent createAUTAgent(
+        @NonNull String hostname, 
+        int port) {
         return new AUTAgentImpl(hostname, port);
     }
 
@@ -43,7 +46,8 @@ public final class MakeR {
      *            an input stream providing the exported object mapping
      *            properties
      */
-    public static ObjectMapping createObjectMapping(InputStream input) {
+    @NonNull public static ObjectMapping createObjectMapping(
+        @NonNull InputStream input) {
         return new ObjectMappingImpl(input);
     }
 }

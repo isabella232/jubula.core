@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.exceptions;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.Result;
 
 /** @author BREDEX GmbH */
@@ -22,7 +24,9 @@ public class ConfigurationException extends ExecutionException {
      * @param message
      *            the message
      */
-    public ConfigurationException(Result result, String message) {
+    public ConfigurationException(
+        @NonNull Result result, 
+        @Nullable String message) {
         super(result, message);
     }
 }

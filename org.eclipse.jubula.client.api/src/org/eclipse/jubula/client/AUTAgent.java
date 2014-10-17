@@ -12,6 +12,8 @@ package org.eclipse.jubula.client;
 
 import java.util.List;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
@@ -29,7 +31,9 @@ public interface AUTAgent extends Remote {
      *            an AUT configuration to launch the AUT
      * @return an identifier for the running AUT
      */
-    AUTIdentifier startAUT(AUTConfiguration configuration) throws Exception;
+    @Nullable AUTIdentifier startAUT(
+        @NonNull AUTConfiguration configuration) 
+        throws Exception;
 
     /**
      * stop an AUT
@@ -37,14 +41,17 @@ public interface AUTAgent extends Remote {
      * @param aut
      *            a reference to the AUT to stop
      */
-    void stopAUT(AUTIdentifier aut) throws Exception;
+    void stopAUT(
+        @NonNull AUTIdentifier aut) 
+        throws Exception;
     
     /**
      * @return an unmodifiable list of currently known / registered AUT IDs
      * @throws Exception
      *             in case of a communication problem
      */
-    List<AUTIdentifier> getAllRegisteredAUTIdentifier() throws Exception;
+    @NonNull List<AUTIdentifier> getAllRegisteredAUTIdentifier() 
+        throws Exception;
     
     /**
      * @param autID
@@ -53,5 +60,7 @@ public interface AUTAgent extends Remote {
      *            the information about the toolkit
      * @return an AUT
      */
-    AUT getAUT(AUTIdentifier autID, ToolkitInfo information);
+    @NonNull AUT getAUT(
+        @NonNull AUTIdentifier autID, 
+        @NonNull ToolkitInfo information);
 }

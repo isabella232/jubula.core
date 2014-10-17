@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.communication.CAP;
 
 /**
@@ -25,12 +27,12 @@ public interface Result<T> {
     /**
      * @return the payload
      */
-    T getPayload();
+    @Nullable T getPayload();
     
     /**
      * @return the CAP
      */
-    CAP getCAP();
+    @NonNull CAP getCAP();
     
     /**
      * @return wheter the CAP has been executed successfully or not

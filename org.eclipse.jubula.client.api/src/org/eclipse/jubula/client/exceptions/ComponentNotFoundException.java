@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.exceptions;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.Result;
 
 /** @author BREDEX GmbH */
@@ -22,8 +24,9 @@ public class ComponentNotFoundException extends ExecutionException {
      * @param message
      *            the message
      */
-    public ComponentNotFoundException(Result result, String message) {
+    public ComponentNotFoundException(
+        @NonNull Result result, 
+        @Nullable String message) {
         super(result, message);
     }
-
 }

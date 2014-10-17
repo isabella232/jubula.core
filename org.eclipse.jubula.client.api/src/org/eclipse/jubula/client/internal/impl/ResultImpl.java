@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.internal.impl;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.communication.CAP;
 
@@ -22,7 +24,7 @@ public class ResultImpl<T> implements Result<T> {
     /** the payload */
     private T m_payload;
     /** the cap */
-    private CAP m_cap;
+    @NonNull private CAP m_cap;
     /** the result flag */
     private boolean m_isOK = false;
 
@@ -34,18 +36,18 @@ public class ResultImpl<T> implements Result<T> {
      * @param payload
      *            the payload to use
      */
-    public ResultImpl(CAP cap, T payload) {
+    public ResultImpl(@NonNull CAP cap, @Nullable T payload) {
         m_cap = cap;
         m_payload = payload;
     }
 
     /** {@inheritDoc} */
-    public T getPayload() {
+    @Nullable public T getPayload() {
         return m_payload;
     }
 
     /** {@inheritDoc} */
-    public CAP getCAP() {
+    @NonNull public CAP getCAP() {
         return m_cap;
     }
 

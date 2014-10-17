@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.exceptions;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.Result;
 
 /** @author BREDEX GmbH */
@@ -17,12 +19,15 @@ public class ActionException extends ExecutionException {
 
     /**
      * Constructor
+     * 
      * @param result
      *            the result
      * @param message
      *            the message
      */
-    public ActionException(Result result, String message) {
+    public ActionException(
+        @NonNull Result result, 
+        @Nullable String message) {
         super(result, message);
     }
 }

@@ -10,11 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.internal.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
@@ -76,7 +78,8 @@ public class AUTAgentImpl implements AUTAgent {
     }
 
     /** {@inheritDoc} */
-    public AUTIdentifier startAUT(AUTConfiguration configuration)
+    public AUTIdentifier startAUT(
+        @NonNull AUTConfiguration configuration)
         throws Exception {
         Map<String, String> autConfigMap = configuration.getLaunchInformation();
 
@@ -126,29 +129,37 @@ public class AUTAgentImpl implements AUTAgent {
     
 
     /** {@inheritDoc} */
-    public void stopAUT(final AUTIdentifier aut) throws Exception {
+    public void stopAUT(
+        @NonNull AUTIdentifier aut) throws Exception {
         m_agent.send(new StopAUTServerMessage(
                 (AutIdentifier)aut));
     }
 
     /** {@inheritDoc} */
-    public List<AUTIdentifier> getAllRegisteredAUTIdentifier() 
+    @NonNull public List<AUTIdentifier> getAllRegisteredAUTIdentifier() 
         throws Exception {
         m_agent.send(new GetRegisteredAutListMessage());
-
+        
         Object arrayOfAutIdentifier = Synchronizer.instance().exchange(null);
         if (arrayOfAutIdentifier instanceof AutIdentifier[]) {
-            return Collections.unmodifiableList(Arrays
-                .asList((AUTIdentifier[]) arrayOfAutIdentifier));
+            final List<AUTIdentifier> unmodifiableList = 
+                Collections.unmodifiableList(Arrays
+                    .asList((AUTIdentifier[]) arrayOfAutIdentifier));
+            if (unmodifiableList != null) {
+                return unmodifiableList;
+            }
         }
+        
         log.error("Unexpected AUT identifiers received: " //$NON-NLS-1$
             + String.valueOf(arrayOfAutIdentifier));
         
-        return null;
+        return new ArrayList<AUTIdentifier>(0);
     }
 
     /** {@inheritDoc} */
-    public AUT getAUT(AUTIdentifier autID, ToolkitInfo information) {
+    @NonNull public AUT getAUT(
+        @NonNull AUTIdentifier autID, 
+        @NonNull ToolkitInfo information) {
         return new AUTImpl((AutIdentifier) autID, information);
     }
 }

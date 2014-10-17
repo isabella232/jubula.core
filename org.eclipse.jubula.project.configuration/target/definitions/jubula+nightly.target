@@ -49,6 +49,10 @@
 <repository id="eclipse-juno" location="http://download.eclipse.org/releases/juno"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.jdt.annotation" version="0.0.0"/>
+<repository id="eclipse-kepler" location="http://download.eclipse.org/releases/kepler"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jubula.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.jubula.feature.api.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.jubula.feature.api.source.feature.group" version="0.0.0"/>

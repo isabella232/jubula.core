@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.tools.AUTIdentifier;
@@ -23,7 +25,7 @@ public interface AUT extends Remote {
     /**
      * @return the AUTIdentifier of this AUT
      */
-    AUTIdentifier getIdentifier();
+    @NonNull AUTIdentifier getIdentifier();
 
     /**
      * @param cap
@@ -36,7 +38,10 @@ public interface AUT extends Remote {
      * @throws ExecutionException
      *             in case of remote execution problems
      */
-    <T> Result<T> execute(CAP cap, T payload) throws ExecutionException;
+    @NonNull <T> Result<T> execute(
+        @NonNull CAP cap, 
+        @Nullable T payload) 
+        throws ExecutionException;
 
     /**
      * @param cap
@@ -45,5 +50,7 @@ public interface AUT extends Remote {
      * @throws ExecutionException
      *             in case of remote execution problems
      */
-    Result execute(CAP cap) throws ExecutionException;
+    @NonNull Result execute(
+        @NonNull CAP cap) 
+        throws ExecutionException;
 }

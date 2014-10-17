@@ -12,6 +12,8 @@ package org.eclipse.jubula.client.internal.impl;
 
 import java.util.Map;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.client.exceptions.ActionException;
@@ -30,7 +32,6 @@ import org.eclipse.jubula.communication.internal.message.UnknownMessageException
 import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.toolkit.internal.AbstractToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
-import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -44,7 +45,7 @@ public class AUTImpl implements AUT {
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(AUTImpl.class);
     /** the AUT identifier */
-    private AutIdentifier m_autID;
+    @NonNull private AutIdentifier m_autID;
     /** the instance */
     private AUTConnection m_instance;
     /** the toolkit specific information */
@@ -57,7 +58,10 @@ public class AUTImpl implements AUT {
      *            the identifier to use for connection
      * @param information 
      */
-    public AUTImpl(AutIdentifier autID, ToolkitInfo information) {
+    public AUTImpl(
+        @NonNull AutIdentifier autID, 
+        @NonNull ToolkitInfo information) {
+        
         m_autID = autID;
         setToolkitInformation((AbstractToolkitInfo)information);
     }
@@ -66,7 +70,6 @@ public class AUTImpl implements AUT {
     public void connect() throws Exception {
         final Map<ComponentClass, String> typeMapping = 
             getInformation().getTypeMapping();
-        Assert.verify(typeMapping != null);
         m_instance = AUTConnection.getInstance();
         m_instance.connectToAut(m_autID, typeMapping);
     }
@@ -82,7 +85,7 @@ public class AUTImpl implements AUT {
     }
 
     /** {@inheritDoc} */
-    public AUTIdentifier getIdentifier() {
+    @NonNull public AUTIdentifier getIdentifier() {
         return m_autID;
     }
     
@@ -99,12 +102,19 @@ public class AUTImpl implements AUT {
     }
     
     /** {@inheritDoc} */
-    public Result execute(CAP cap) throws ExecutionException {
+    @NonNull public Result execute(
+        @NonNull CAP cap) throws 
+        ExecutionException {
+        
         return execute(cap, null);
     }
 
     /** {@inheritDoc} */
-    public <T> Result<T> execute(CAP cap, T payload) throws ExecutionException {
+    @NonNull public <T> Result<T> execute(
+        @NonNull CAP cap, 
+        @Nullable T payload) 
+        throws ExecutionException {
+        
         final ResultImpl<T> result = new ResultImpl<T>(cap, payload);
         try {
             CAPTestMessage capTestMessage = CAPTestMessageFactory
@@ -141,7 +151,7 @@ public class AUTImpl implements AUT {
      *            the response to process
      */
     private void processResponse(CAPTestResponseMessage response,
-        final Result result)
+        @NonNull final Result result)
         throws ExecutionException {
         if (response.hasTestErrorEvent()) {
             final TestErrorEvent event = response.getTestErrorEvent();
@@ -164,10 +174,14 @@ public class AUTImpl implements AUT {
             } else if (TestErrorEvent.ID.CONFIGURATION_ERROR.equals(eventId)) {
                 throw new ConfigurationException(result, description);
             } else if (TestErrorEvent.ID.VERIFY_FAILED.equals(eventId)) {
-                Object actualValue = event.getProps().get(
+                Object actualValueObject = event.getProps().get(
                     TestErrorEvent.Property.ACTUAL_VALUE_KEY);
-                throw new CheckFailedException(result, description,
-                    String.valueOf(actualValue));
+                @NonNull String actualValue = "n/a"; //$NON-NLS-1$
+                if (actualValueObject instanceof String) {
+                    actualValue = (String)actualValueObject;
+                }
+                throw new CheckFailedException(
+                    result, description, actualValue);
             }
         }
     }
