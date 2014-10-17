@@ -1,0 +1,42 @@
+<%@ jet 
+package="org.eclipse.jubula.toolkit.client.api.ui.internal" 
+imports="java.util.*
+			org.eclipse.jubula.client.api.ui.utils.OMAssociation
+			org.eclipse.jubula.tools.internal.constants.StringConstants" 
+class="OMClassGenerator"%>
+<%
+OMAssociation omAssociation = (OMAssociation) argument;
+%>
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+
+import org.eclipse.jubula.client.MakeR;
+import org.eclipse.jubula.client.ObjectMapping;
+import org.eclipse.jubula.tools.ComponentIdentifier;
+
+public class OM {
+    private static InputStream stream;
+    private static ObjectMapping om = MakeR.createObjectMapping(stream);
+<%
+Map<String, String> map = omAssociation.getIdentifierMap();
+for (String componentIdentifier : map.keySet()) {%>
+    <%String javaQualifier = map.get(componentIdentifier);%>
+    public static final ComponentIdentifier <%=javaQualifier%> = om.get("<%=componentIdentifier%>");
+<%}%>
+    static {
+<%String encodedAssociations = omAssociation.getEncodedAssociations().toString().replace(StringConstants.NEWLINE, StringConstants.EMPTY);%>
+        String contentOfPropertyFile = "<%=encodedAssociations%>";
+        try {
+            stream = new ByteArrayInputStream(
+                    contentOfPropertyFile.getBytes("ISO 8859-1"));
+        } catch (UnsupportedEncodingException e) {
+            // handle
+        }
+    }
+    
+    private OM() {
+        // private
+    }
+}

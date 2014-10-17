@@ -13,12 +13,15 @@ package org.eclipse.jubula.client.api.ui.handlers;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jubula.client.api.ui.utils.OMAssociation;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
@@ -30,6 +33,7 @@ import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.toolkit.client.api.ui.internal.OMClassGenerator;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
@@ -50,6 +54,9 @@ public class ExportObjectMappingHandler extends AbstractHandler {
     
     /** the component name mapper to use */
     private IComponentNameMapper m_compMapper;
+    
+    /** the class generator for the OM class */
+    private OMClassGenerator m_omClassGenerator = new OMClassGenerator();
 
     /**
      * {@inheritDoc}
@@ -69,17 +76,18 @@ public class ExportObjectMappingHandler extends AbstractHandler {
                     Utils.storeLastDirPath(saveDialog.getFilterPath());
                     fillMap(omEditor, aut);
                     // map is filled and can be written to class or file
-                    StringBuffer encodedAssociations =
+                    OMAssociation omAssociations =
                             generateEncodedAssociations();
                     try (BufferedWriter writer = new BufferedWriter(
                             new FileWriter(path))) {
                         switch (exportType) {
                             case 0: // Write Java Class
-                                writer.append(
-                                        generateJavaClass(encodedAssociations));
+                                writer.append(m_omClassGenerator
+                                        .generate(omAssociations));
                                 break;
                             case 1: // Write Properties File
-                                writer.append(encodedAssociations);
+                                writer.append(omAssociations
+                                        .getEncodedAssociations());
                                 break;
                             default: // Nothing
                                 break;
@@ -93,15 +101,6 @@ public class ExportObjectMappingHandler extends AbstractHandler {
             }
         }
         return null;
-    }
-
-    /**
-     * Generates a Java Class which allows access to all mapped components
-     * @param encodedAssociations the map containing the encoded associations
-     * @return the Java Class
-     */
-    private StringBuffer generateJavaClass(StringBuffer encodedAssociations) {
-        return new StringBuffer("This will be a pretty cool Java Class."); //$NON-NLS-1$
     }
 
     /**
@@ -174,14 +173,16 @@ public class ExportObjectMappingHandler extends AbstractHandler {
     /**
      * @return StringBuffer containing the map with the encoded object mappings
      */
-    private StringBuffer generateEncodedAssociations() {
-        StringBuffer content = new StringBuffer();
+    private OMAssociation generateEncodedAssociations() {
+        StringBuffer encodedAssociations = new StringBuffer();
+        Map<String, String> identifierMap = new HashMap<String, String>();
         for (String key : m_map.keySet()) {
             String value = m_map.get(key);
-            content.append(key + StringConstants.EQUALS_SIGN + value
+            encodedAssociations.append(key + StringConstants.EQUALS_SIGN + value
                     + StringConstants.NEWLINE);
+            identifierMap.put(key, key);
         }
-        return content;
+        return new OMAssociation(encodedAssociations, identifierMap);
     }
 
     /**
