@@ -102,14 +102,6 @@ public class AUTImpl implements AUT {
     }
     
     /** {@inheritDoc} */
-    @NonNull public Result execute(
-        @NonNull CAP cap) throws 
-        ExecutionException {
-        
-        return execute(cap, null);
-    }
-
-    /** {@inheritDoc} */
     @NonNull public <T> Result<T> execute(
         @NonNull CAP cap, 
         @Nullable T payload) 

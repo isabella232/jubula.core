@@ -95,8 +95,12 @@ public class TestSimpleAdderRCPAUT {
         
         AUTIdentifier id = m_agent.startAUT(config);
         
-        m_aut = m_agent.getAUT(id, new SwtToolkitInfo());
-        m_aut.connect();
+        if (id != null) {
+            m_aut = m_agent.getAUT(id, new SwtToolkitInfo());
+            m_aut.connect();
+        } else {
+            Assert.fail("AUT start has failed!"); //$NON-NLS-1$
+        }
     }
 
     /** the actual test method */
@@ -133,7 +137,7 @@ public class TestSimpleAdderRCPAUT {
      *            the result
      */
     private void exec(CAP cap, List<Result> r) {
-        Result execute = m_aut.execute(cap);
+        Result execute = m_aut.execute(cap, null);
         if (r != null) {
             r.add(execute);
         }

@@ -33,7 +33,7 @@ public interface AUT extends Remote {
      * @param <T>
      *            the payload type
      * @param payload
-     *            the payload for the execution
+     *            the additional payload for the execution
      * @return the result of the execution
      * @throws ExecutionException
      *             in case of remote execution problems
@@ -41,16 +41,5 @@ public interface AUT extends Remote {
     @NonNull <T> Result<T> execute(
         @NonNull CAP cap, 
         @Nullable T payload) 
-        throws ExecutionException;
-
-    /**
-     * @param cap
-     *            the CAP to execute on the AUT
-     * @return the result of the execution
-     * @throws ExecutionException
-     *             in case of remote execution problems
-     */
-    @NonNull Result execute(
-        @NonNull CAP cap) 
         throws ExecutionException;
 }
