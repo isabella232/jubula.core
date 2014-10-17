@@ -185,13 +185,15 @@ public class InspectALMAttributesDialog extends TitleAreaDialog {
                 return p.getKey();
             }
         });
-        new ColumnViewerSorter(tableViewer, colAttributeID) {
+        ColumnViewerSorter sorter = new ColumnViewerSorter(tableViewer,
+                colAttributeID) {
             protected int doCompare(Viewer viewer, Object e1, Object e2) {
                 return getCommonsComparator().compare(
                         ((KeyValue<TaskAttribute>) e1).getKey(),
                         ((KeyValue<TaskAttribute>) e2).getKey());
             }
         };
+        sorter.setSorter(ColumnViewerSorter.ASC);
     }
 
     /**
