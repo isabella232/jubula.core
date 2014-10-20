@@ -1,5 +1,6 @@
-package org.eclipse.jubula.toolkit.api.gen.internal;
+package org.eclipse.jubula.toolkit.api.gen.internal.genmodel;
 
+import org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
@@ -8,7 +9,7 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
  * Contains all necessary information for API generation of a component
  * @author BREDEX GmbH
  */
-public class GenerationInfo {
+public class CommonGenInfo {
     
     /** the class name */
     private String m_className;
@@ -33,7 +34,7 @@ public class GenerationInfo {
      * Supposed to be used for class/interface generation.
      * @param component the component
      */
-    public GenerationInfo(Component component) {
+    public CommonGenInfo(Component component) {
         NameLoader nameLoader = NameLoader.getInstance();
         ToolkitDescriptor toolkitDesriptor = component.getToolkitDesriptor();
         m_toolkitName = nameLoader.getToolkitName(toolkitDesriptor);
@@ -56,19 +57,20 @@ public class GenerationInfo {
      * Contains all necessary information for API generation of a component
      * Supposed to be used for toolkit info or factory generation
      * @param tkDescriptor the toolkit descriptor
-     * @param genFactory whether generation info is for creating factories
+     * @param genToolkitInfo whether generation info is for creating toolkit information
      */
-    public GenerationInfo(ToolkitDescriptor tkDescriptor,
-            boolean genFactory) {
+    public CommonGenInfo(ToolkitDescriptor tkDescriptor,
+            boolean genToolkitInfo) {
         NameLoader nameLoader = NameLoader.getInstance();
         m_toolkitName = nameLoader.getToolkitName(tkDescriptor);
-        if (genFactory) {
-            m_className = nameLoader.getFactoryName(m_toolkitName);
-        } else {
+        if (genToolkitInfo) {
             m_className = nameLoader.getToolkitComponentClassName(
                     m_toolkitName);
+        } else {
+            m_className = nameLoader.getFactoryName(m_toolkitName);
         }
-        m_classPackageName = nameLoader.getToolkitPackageName(m_toolkitName);
+        m_classPackageName = nameLoader.getToolkitPackageName(m_toolkitName,
+                genToolkitInfo);
         m_toolkitID = tkDescriptor.getToolkitID();
         
         m_classDirectoryPath = m_classPackageName

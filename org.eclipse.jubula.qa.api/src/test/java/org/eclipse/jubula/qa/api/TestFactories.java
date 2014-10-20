@@ -6,7 +6,7 @@ import java.net.URL;
 import junit.framework.Assert;
 
 import org.eclipse.jubula.communication.CAP;
-import org.eclipse.jubula.toolkit.concrete.ConcreteComponentFactory;
+import org.eclipse.jubula.toolkit.concrete.ConcreteComponents;
 import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
 import org.eclipse.jubula.toolkit.concrete.components.TextComponent;
 import org.eclipse.jubula.toolkit.concrete.components.TextInputComponent;
@@ -61,19 +61,19 @@ public class TestFactories {
                 m_omLoader.get("bound_SimpleAdder_resultField_txf"); //$NON-NLS-1$
         Assert.assertNotNull(identifierResultField);
         
-        TextInputComponent textField1 = ConcreteComponentFactory
+        TextInputComponent textField1 = ConcreteComponents
                 .createTextInputComponent(identifierTextField1);
         Assert.assertNotNull(textField1);
         
-        TextInputComponent textField2 = ConcreteComponentFactory
+        TextInputComponent textField2 = ConcreteComponents
                 .createTextInputComponent(identifierTextField2);
         Assert.assertNotNull(textField2);
         
-        ButtonComponent equalsButton = ConcreteComponentFactory
+        ButtonComponent equalsButton = ConcreteComponents
                 .createButtonComponent(identifierEqualsButton);
         Assert.assertNotNull(equalsButton);
         
-        TextComponent resultField = ConcreteComponentFactory
+        TextComponent resultField = ConcreteComponents
                 .createTextComponent(identifierResultField);
         Assert.assertNotNull(resultField);
 

@@ -1,16 +1,20 @@
 <%@ jet 
 package="org.eclipse.jubula.toolkit.api.gen" 
 imports="java.util.*
-			org.eclipse.jubula.toolkit.api.gen.internal.FactoryGenInfo
-			org.eclipse.jubula.toolkit.api.gen.internal.GenerationInfo" 
+			org.eclipse.jubula.toolkit.api.gen.internal.genmodel.FactoryGenInfo
+			org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CompInfoForFactoryGen
+			org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo" 
 class="FactoryGenerator"%>
 <%
-GenerationInfo genInfo = (GenerationInfo)argument;
+CommonGenInfo genInfo = (CommonGenInfo)argument;
 String factoryName = genInfo.getClassName();
 String packageName = genInfo.getClassPackageName();
 Object specInfo = genInfo.getSpecificInformation();
-if (specInfo instanceof List) {
-	List<FactoryGenInfo> factoryInfoList = (List<FactoryGenInfo>) specInfo;
+if (specInfo instanceof FactoryGenInfo) {
+	FactoryGenInfo factoryInfo = (FactoryGenInfo) specInfo;
+	List<CompInfoForFactoryGen> compInfoList = factoryInfo.getCompInformation();
+	String toolkitInfoName = factoryInfo.getToolkitInfoName();
+	String toolkitInfoFqName = factoryInfo.getToolkitInfoFqName();
 %>
 /*******************************************************************************
  * Copyright (c) 2014 BREDEX GmbH.
@@ -25,6 +29,9 @@ if (specInfo instanceof List) {
 package <%=packageName%>;
 
 import org.eclipse.jubula.tools.ComponentIdentifier;
+import org.eclipse.jubula.toolkit.ToolkitInfo;
+
+<%if (toolkitInfoFqName != null) {%>import <%=toolkitInfoFqName%>;<%}%>
 
 /**
  * Generated factory for creating components from the <%=genInfo.getToolkitName()%> toolkit.
@@ -32,15 +39,23 @@ import org.eclipse.jubula.tools.ComponentIdentifier;
  */
 public final class <%=factoryName%> {
 
+	private static ToolkitInfo m_toolkitInformation = 
+		<%if (toolkitInfoName != null) {%>new <%=toolkitInfoName%>();
+		<%} else {%>null;<%}%>
+
 	private <%=factoryName%>() {
 		super();
 	}
+	
+	public static ToolkitInfo getToolkitInformation() {
+		return m_toolkitInformation;
+	}
 
-<%for (FactoryGenInfo factoryInfo : factoryInfoList) {
-	String componentName = factoryInfo.getComponentName();
-	String implClassName = factoryInfo.getClassName();
-	String returnType = factoryInfo.getMostSpecificVisibleSuperTypeName();
-	Boolean hasDefaultMapping = factoryInfo.hasDefaultMapping();%>
+<%for (CompInfoForFactoryGen compInfo : compInfoList) {
+	String componentName = compInfo.getComponentName();
+	String implClassName = compInfo.getClassName();
+	String returnType = compInfo.getMostSpecificVisibleSuperTypeName();
+	Boolean hasDefaultMapping = compInfo.hasDefaultMapping();%>
 	<%if (hasDefaultMapping) {%>
 	public static <%=returnType%> create<%=componentName%> () {
 		return new <%=implClassName%>();

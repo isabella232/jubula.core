@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.api.gen.internal;
+package org.eclipse.jubula.toolkit.api.gen.internal.utils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,6 +41,10 @@ public class NameLoader {
     /** package base path */
     private static final String PACKAGE_BASE_PATH =
         "org.eclipse.jubula.toolkit."; //$NON-NLS-1$
+
+    /** package base path */
+    private static final String INTERNAL =
+        ".internal"; //$NON-NLS-1$
     
     /** specific path for interfaces */
     private static final String PACKAGE_SPECIFIC_INTERFACE =
@@ -52,7 +56,7 @@ public class NameLoader {
 
     /** specific path for implementation classes */
     private static final String FACTORY_NAME_EXTENSION =
-        "ComponentFactory"; //$NON-NLS-1$
+        "Components"; //$NON-NLS-1$
 
     /** specific path for implementation classes */
     private static final String TOOLKITINFO_NAME_EXTENSION =
@@ -145,7 +149,8 @@ public class NameLoader {
      * @return the name extension of the api package name for the component
      */
     public String getClassPackageName(String toolkitName) {
-        return getToolkitPackageName(toolkitName) + PACKAGE_SPECIFIC_IMPLCLASS;
+        return getToolkitPackageName(toolkitName, false)
+                + PACKAGE_SPECIFIC_IMPLCLASS;
     }
     
     /**
@@ -153,15 +158,21 @@ public class NameLoader {
      * @return the name extension of the api package name for the component
      */
     public String getInterfacePackageName(String toolkitName) {
-        return getToolkitPackageName(toolkitName) + PACKAGE_SPECIFIC_INTERFACE;
+        return getToolkitPackageName(toolkitName, false)
+                + PACKAGE_SPECIFIC_INTERFACE;
     }
     
     /**
      * @param toolkitName the toolkit name
+     * @param internal whether the package should be internal
      * @return the toolkit package base name
      */
-    public String getToolkitPackageName(String toolkitName) {
-        return PACKAGE_BASE_PATH + toolkitName;
+    public String getToolkitPackageName(String toolkitName, boolean internal) {
+        String basePackageName = PACKAGE_BASE_PATH + toolkitName;
+        if (internal) {
+            basePackageName += INTERNAL;
+        }
+        return basePackageName;
     }
     
     /**

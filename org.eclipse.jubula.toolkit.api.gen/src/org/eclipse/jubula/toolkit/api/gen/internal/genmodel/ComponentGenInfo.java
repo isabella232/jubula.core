@@ -1,5 +1,6 @@
-package org.eclipse.jubula.toolkit.api.gen.internal;
+package org.eclipse.jubula.toolkit.api.gen.internal.genmodel;
 
+import org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
@@ -145,7 +146,7 @@ public class ComponentGenInfo {
         while (tmp != null && !tmp.isVisible()) {
             tmp = tmp.getRealized().get(0);
         }
-        GenerationInfo visibleSuperType = new GenerationInfo(tmp);
+        CommonGenInfo visibleSuperType = new CommonGenInfo(tmp);
         ComponentGenInfo specificInformation = new ComponentGenInfo(tmp, true,
                 visibleSuperType.getToolkitName(),
                 visibleSuperType.getClassName());

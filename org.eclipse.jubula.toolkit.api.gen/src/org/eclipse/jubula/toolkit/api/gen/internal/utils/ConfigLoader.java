@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.api.gen.internal;
+package org.eclipse.jubula.toolkit.api.gen.internal.utils;
 
 import java.io.IOException;
 import java.net.URL;

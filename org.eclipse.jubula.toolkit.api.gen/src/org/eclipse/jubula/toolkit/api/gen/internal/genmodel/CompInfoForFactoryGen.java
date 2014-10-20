@@ -1,12 +1,13 @@
-package org.eclipse.jubula.toolkit.api.gen.internal;
+package org.eclipse.jubula.toolkit.api.gen.internal.genmodel;
 
 
 
 /**
  * Contains all necessary information of a component for factory generation
  * @author BREDEX GmbH
+ * @created 20.10.2014
  */
-public class FactoryGenInfo {
+public class CompInfoForFactoryGen {
     
     /** the class name */
     private String m_fqClassName;
@@ -16,7 +17,7 @@ public class FactoryGenInfo {
 
     /** name of the component */
     private String m_componentName;
-
+    
     /** the most specific visible super type of a component */
     private String m_mostSpecificVisibleSuperTypeName;
     
@@ -27,7 +28,7 @@ public class FactoryGenInfo {
      * @param hasDefaultMapping true if and only if component has default mapping
      * @param mostSpecificVisibleSuperTypeName most specific visible super type of a component
      */
-    public FactoryGenInfo(String componentName, String fqClassName,
+    public CompInfoForFactoryGen(String componentName, String fqClassName,
             boolean hasDefaultMapping,
             String mostSpecificVisibleSuperTypeName) {
         m_componentName = componentName;
@@ -51,7 +52,6 @@ public class FactoryGenInfo {
     public String getComponentName() {
         return m_componentName;
     }
-    
     
     /**
      * Returns true if and only if component has a default mapping

@@ -1,9 +1,9 @@
 <%@ jet 
 package="org.eclipse.jubula.toolkit.api.gen" 
 imports="java.util.*
-			org.eclipse.jubula.toolkit.api.gen.internal.ComponentGenInfo
-			org.eclipse.jubula.toolkit.api.gen.internal.GenerationInfo 
-			org.eclipse.jubula.toolkit.api.gen.internal.NameLoader
+			org.eclipse.jubula.toolkit.api.gen.internal.genmodel.ComponentGenInfo
+			org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo 
+			org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader
 			org.eclipse.jubula.toolkit.enums.LiteralProvider
 		   org.eclipse.jubula.tools.internal.xml.businessmodell.Action
 		   org.eclipse.jubula.tools.internal.xml.businessmodell.Component
@@ -11,7 +11,7 @@ imports="java.util.*
 		   org.eclipse.jubula.tools.internal.xml.businessmodell.Param" 
 class="ClassGenerator"%>
 <%
-GenerationInfo genInfo = (GenerationInfo)argument;
+CommonGenInfo genInfo = (CommonGenInfo)argument;
 Object specInfo = genInfo.getSpecificInformation();
 if (specInfo instanceof ComponentGenInfo) {
 	ComponentGenInfo compGenInfo = (ComponentGenInfo) specInfo;
@@ -34,12 +34,12 @@ if (specInfo instanceof ComponentGenInfo) {
 	Component realizedComponent = realized.size() > 0 ? realized.get(0) : null;
 	Boolean hasRealizedType = (realizedComponent != null);
 	String realizedType = null;
-	GenerationInfo superInfo = null;
+	CommonGenInfo superInfo = null;
 	List<Action> superActions = null;
 	String realizedTypeFqn = null;
 	if (hasRealizedType) {
 		realizedType = realizedComponent.getType();
-		superInfo = new GenerationInfo(realizedComponent);
+		superInfo = new CommonGenInfo(realizedComponent);
 		superActions = realizedComponent.getActions();
 		if (genInterface) {
 			ComponentGenInfo superCompGenInfo = new ComponentGenInfo(

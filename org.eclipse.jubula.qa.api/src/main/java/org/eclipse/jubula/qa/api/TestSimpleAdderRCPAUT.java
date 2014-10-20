@@ -31,8 +31,7 @@ import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
 import org.eclipse.jubula.toolkit.concrete.components.MenuBarComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
-import org.eclipse.jubula.toolkit.swt.SwtComponentFactory;
-import org.eclipse.jubula.toolkit.swt.SwtToolkitInfo;
+import org.eclipse.jubula.toolkit.swt.SwtComponents;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.ComponentIdentifier;
 import org.junit.After;
@@ -70,10 +69,10 @@ public class TestSimpleAdderRCPAUT {
         ComponentIdentifier buttonId = om.get("equalsButton"); //$NON-NLS-1$
         ComponentIdentifier sumId = om.get("sum"); //$NON-NLS-1$
 
-        m_value1 = SwtComponentFactory.createText(val1Id);
-        m_value2 = SwtComponentFactory.createText(val2Id);
-        m_button = SwtComponentFactory.createButton(buttonId);
-        m_result = SwtComponentFactory.createTextComponent(sumId);
+        m_value1 = SwtComponents.createText(val1Id);
+        m_value2 = SwtComponents.createText(val2Id);
+        m_button = SwtComponents.createButton(buttonId);
+        m_result = SwtComponents.createTextComponent(sumId);
         
         m_agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
         m_agent.connect();
@@ -96,7 +95,7 @@ public class TestSimpleAdderRCPAUT {
         AUTIdentifier id = m_agent.startAUT(config);
         
         if (id != null) {
-            m_aut = m_agent.getAUT(id, new SwtToolkitInfo());
+            m_aut = m_agent.getAUT(id, SwtComponents.getToolkitInformation());
             m_aut.connect();
         } else {
             Assert.fail("AUT start has failed!"); //$NON-NLS-1$
@@ -125,7 +124,7 @@ public class TestSimpleAdderRCPAUT {
     /** the actual test method */
     @Test
     public void testMenubar() throws Exception {
-        MenuBarComponent menu = SwtComponentFactory.createMenu();
+        MenuBarComponent menu = SwtComponents.createMenu();
         exec(menu.checkEnablementOfEntryByIndexpath("1", true));
         
     }

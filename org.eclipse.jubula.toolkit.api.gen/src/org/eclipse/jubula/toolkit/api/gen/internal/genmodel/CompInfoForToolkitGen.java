@@ -1,4 +1,4 @@
-package org.eclipse.jubula.toolkit.api.gen.internal;
+package org.eclipse.jubula.toolkit.api.gen.internal.genmodel;
 
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 
@@ -7,7 +7,7 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
  * Contains all necessary information of a component for toolkit info generation
  * @author BREDEX GmbH
  */
-public class ToolkitGenInfo {
+public class CompInfoForToolkitGen {
     
     /** the most specific visible super type of a component */
     private ComponentClass m_componentClass;
@@ -20,7 +20,7 @@ public class ToolkitGenInfo {
      * @param componentClass the component class
      * @param testerClass the tester class
      */
-    public ToolkitGenInfo(ComponentClass componentClass,
+    public CompInfoForToolkitGen(ComponentClass componentClass,
             String testerClass) {
         m_componentClass = componentClass;
         m_testerClass = testerClass;
