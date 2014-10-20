@@ -125,7 +125,7 @@ public class TestSimpleAdderRCPAUT {
     @Test
     public void testMenubar() throws Exception {
         MenuBarComponent menu = SwtComponents.createMenu();
-        exec(menu.checkEnablementOfEntryByIndexpath("1", true));
+        exec(menu.checkEnablementOfEntryByIndexpath("1/1", true)); //$NON-NLS-1$
         
     }
     

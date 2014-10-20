@@ -51,9 +51,15 @@ if (specInfo instanceof ComponentGenInfo) {
 		}
 	}
 	String testerClass = "";
+	String componentClassName = "";
+	Boolean hasComponentClass = false;
 	if (component instanceof ConcreteComponent) {
 		ConcreteComponent concreteComponent = (ConcreteComponent)component;
 		testerClass = concreteComponent.getTesterClass();
+		componentClassName = concreteComponent.getComponentClass().getName();
+		if (!componentClassName.isEmpty()) {
+			hasComponentClass = true;
+		}
 	}
 	%>
 /*******************************************************************************
@@ -117,6 +123,19 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			}<%}%>
 		<%}%>
 	<%}%>
+	
+	<%if (!genInterface) {%>
+	protected IComponentIdentifier getPseudoComponentIdentifier() {
+		<%if (hasComponentClass) {%>
+		org.eclipse.jubula.tools.internal.objects.ComponentIdentifier pseudoIdentifier =
+			new org.eclipse.jubula.tools.internal.objects.ComponentIdentifier();
+		pseudoIdentifier.setComponentClassName("<%=componentClassName%>");
+		return pseudoIdentifier;
+		<%} else {%>
+		return null;
+		<%}%>
+	}<%}%>
+	
 	<%
 	if (superActions != null) {
 		// generate only methods for non-inherited actions
@@ -153,7 +172,9 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			messageCap.setMethod("<%=action.getMethod()%>");
 			messageCap.sethasDefaultMapping(<%=hasDefaultMapping%>);
 			<%if (!hasDefaultMapping) {%>
-			messageCap.setCi(m_componentIdentifier);<%}%>
+			messageCap.setCi(m_componentIdentifier);
+			<%} else {%>
+			messageCap.setCi(getPseudoComponentIdentifier());<%}%>
 			<%for (Param parameter : params) {
 			String paramName = parameter.getName();%>
 			<%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
