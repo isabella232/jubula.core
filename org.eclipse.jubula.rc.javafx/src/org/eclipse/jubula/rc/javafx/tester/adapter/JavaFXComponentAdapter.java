@@ -183,7 +183,7 @@ public class JavaFXComponentAdapter<T extends Node> extends
      *            the Node
      * @return a MenuTester instance which references the context menu
      */
-    private AbstractMenuTester openContextMenu(int xPos, String xUnits,
+    protected AbstractMenuTester openContextMenu(int xPos, String xUnits,
             int yPos, String yUnits, int button, Node n) {
         boolean isAbsoluteUnitsX = ValueSets.Unit.pixel.rcValue()
                 .equalsIgnoreCase(xUnits);

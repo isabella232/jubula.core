@@ -18,6 +18,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
@@ -43,6 +44,7 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.JavaFXComponentAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.LabeledAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ListViewAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.MenuBarAdapter;
+import org.eclipse.jubula.rc.javafx.tester.adapter.MenuButtonAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ScrollPaneAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.SplitPaneAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TabPaneAdapter;
@@ -77,7 +79,7 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
         ContextMenu.class, ImageView.class, Text.class, TitledPane.class,
         ListView.class, ComboBox.class, TabPane.class, ChoiceBox.class,
         Accordion.class, ScrollPane.class, TitledPane.class,
-        SplitPane.class, ToolBar.class, TreeTableView.class};
+        SplitPane.class, ToolBar.class, TreeTableView.class, MenuButton.class};
 
     @Override
     public Class[] getSupportedClasses() {
@@ -88,7 +90,9 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
     public Object getAdapter(Class targetAdapterClass, Object objectToAdapt) {
         IComponent returnvalue = null;
         if (targetAdapterClass.isAssignableFrom(IComponent.class)) {
-            if (objectToAdapt instanceof ButtonBase) {
+            if (objectToAdapt instanceof MenuButton) {
+                returnvalue = new MenuButtonAdapter((MenuButton) objectToAdapt);
+            } else if (objectToAdapt instanceof ButtonBase) {
                 returnvalue = new ButtonBaseAdapter((ButtonBase) objectToAdapt);
             } else if (objectToAdapt instanceof Label) {
                 returnvalue = new LabeledAdapter<Label>((Label) objectToAdapt);
