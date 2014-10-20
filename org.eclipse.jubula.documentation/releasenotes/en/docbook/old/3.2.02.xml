@@ -1,0 +1,41 @@
+<section id="release-notes-for-version-3.2.02004" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Release Notes for version 3.2.02004</title>
+  <para>
+    This release is a patch for version 3.2.01081 which
+    contains updates to the documentation.
+  </para>
+  <section id="information-3.2.02004">
+    <title>Information</title>
+    <para>
+      <emphasis role="strong">New software license version</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The software license has been updated.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can read the new license in the installation directory in
+          the <emphasis>guidancer</emphasis> folder.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New object mapping shortcut</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The standard shortcut to collect objects from an AUT in the
+          Object Mapping Mode is now:
+          <emphasis role="input">»Ctrl+Shift+Q</emphasis>. You can see and
+          change this shortcut in the preferences.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>

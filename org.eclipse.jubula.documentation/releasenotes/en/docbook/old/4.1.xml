@@ -1,0 +1,276 @@
+<section id="release-notes-for-version-4.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                          xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Release Notes for version 4.1.01039</title>
+  <section id="new-features-and-developments-4.1">
+    <title>New features and developments</title>
+    <para>
+      <emphasis role="strong">New option in delete Project
+      dialog</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          When you delete a Project, you can now decide whether you want
+          to keep the test results for the Project or delete them as
+          well.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Performance improvements</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have further improved the performance for the saving and
+          loading of Projects. The validation of Test Suites now runs as
+          a background job so that test specification can continue while
+          the tests are being validated.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Test Suites must be validated before they can be executed.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Generated names penalty removed</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The generated names penalty has been removed from the object
+          mapping configuration area and from the object recognition
+          calculation.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Optional automatic screenshots when errors
+      occur</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can now define whether or not screenshots should
+          automatically be taken when an error occurs.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Screenshots taken in this manner are saved into the database
+          and can be viewed in the Image View by clicking on the failed
+          Test Step.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can alter this preference in the Test Result preference
+          page.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the command line client, screenshots are automatically
+          taken unless you include the parameter <emphasis role="input">-s</emphasis>.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New relevance flag for test
+      results</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can now specify at the beginning of each test execution
+          whether the test results are relevant for your test reports.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can alter this preference in the Test Results preference
+          page.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the command line client, test executions are automatically
+          relevant unless you include the parameter <emphasis role="input">-r</emphasis>.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">MAC OSX no longer in BETA</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have now removed the BETA status of our MAC support.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Please be aware that pure SWT tests are not supported on MAC
+          systems.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Testing RCP AUTs also has some limitations on MAC, e.g. the
+          action to select a value from a combo box does not work, and
+          there are problems with the selection of tabs by their values.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The license server will now run on MAC machines, as long as
+          the development kit for the environment is installed.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="other-information-4.1">
+    <title>Other information</title>
+    <para>
+      <emphasis role="strong">Compatibility with 4.0</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The database is compatible with version 4.0, so your 4.0
+          database can continue to be used with 4.1.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The server and client components have been changed, so these
+          will need to be reinstalled for 4.1.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          There have been no changes to the license mechnism or license
+          administrator - you do not need to reinstall your license
+          server.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Eclipse plugin removed</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The functionality to run the ITE as an Eclipse plugin has been
+          removed.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">HTML actions deprecated</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The action <emphasis>follow link</emphasis> in HTML is
+          deprecated. Use the action <emphasis>click</emphasis> on
+          <emphasis>Graphics Component</emphasis> instead to follow
+          links.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The action <emphasis>select window</emphasis> is also
+          deprecated, and has not yet been replaced with a new action in
+          this release.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New database configurations in DB
+      Configuration</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have added separate database configurations in the DB
+          Configuration Tool for Oracle 8,9 and 10 as well as the
+          embedded database and Oracle XE.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          There are also two new options: MySQl and Postgresql. These
+          are shown as unsupported: we have tested that the ITE can
+          connect to them and open Projects, but do not let our full
+          tests run on them at this time.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New colors for Test Cases</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The unbound modules are now colored blue to make them easier
+          to distinguish from other Test Cases.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          We have also made Test Cases that cannot be directly edited
+          slightly grayer to make it easier to see which Test Cases are
+          editable.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="known-issues-4.1">
+    <title>Known issues</title>
+    <para>
+      <emphasis role="strong">Console output for DBTool</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The DBTool does not yet produce an output when parameters are
+          false or when errors occur.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Edit parameters dialog</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          When editing parameters via the edit parameters dialog, it is
+          currently necessary to save the Test Case and reopen it to see
+          the changes in the Properties View.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Merging component names in the Object
+      Mapping Editor</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          At the moment, the merging of component names does not work in
+          the Object Mapping Editor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can use the Component Names Browser to merge component
+          names instead.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>

@@ -1,0 +1,505 @@
+<section id="new-features-and-developments-5.2" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New Features and Developments</title>
+  <para>
+    <emphasis role="strong">Embedded gdagent</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        If you are starting your AUT and running your tests on your
+        local machine, you can now connect to an embedded AUT Agent
+        directly from the ITE.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This saves you having to start an AUT Agent on localhost.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This is also useful for testers working with Jubula as a
+        feature in an Eclipse installation.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The embedded AUT Agent is started on port 60000 by default;
+        this number can be changed in the preferences.
+      </para>
+      <figure id="RNEmbeddedAgent">
+        <title>Embedded AUT Agent</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/EmbeddedAgent.png" />
+          </imageobject>
+          <textobject><phrase>Embedded AUT Agent</phrase></textobject>
+        </mediaobject>
+      </figure>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Refactor: Replace with Test
+    Case</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In the Test Case Editor and Test Suite Editor, there is a new
+        option to replace one or more selected Test Cases with another
+        Test Case from the library.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A new wizard takes you step-by-step through the replacement
+        process, letting you transfer component names, match
+        parameters and add further information for the new Test Case.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This feature should help testers who want to restructure their
+        tests after creating a reusable module to replace one or more
+        Test Cases.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Object Mapping Editor: Cleanup unused
+    component names</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In the Object Mapping Editor, there is a new option in the
+        context-sensitive menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Via <emphasis role="menuPath">Cleanup</emphasis>--&gt;<emphasis role="menuPath">unused component names</emphasis><?linebreak?>
+        you can start a search for any component names that are no longer used in Test Suites for this AUT.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Once the search is finished, you can delete all of these
+        unused names from the Object Mapping Editor. If they are then
+        no longer used in the entire Project, they can be deleted from
+        the Component Names Browser.
+      </para>
+      <figure id="RNDeleteUnusedCN">
+        <title>Deleting unused Component Names</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/DeleteUnusedCompNames.png" />
+          </imageobject>
+          <textobject><phrase>Deleting unused Component
+          Names</phrase></textobject>
+        </mediaobject>
+      </figure>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">HTML Test Result Reports can be expanded
+    again</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Following changes made for the initial contribution to
+        Eclipse, the HTML Test Result Reports could not be viewed
+        properly in the previous version.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In this release, the nodes in the HTML reports can be expanded
+        and collapsed to view the whole test progress.
+      </para>
+      <figure id="RNHTMLReport">
+        <title>HTML Reports</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/HTMLReport.png" />
+          </imageobject>
+          <textobject><phrase>HTML Reports</phrase></textobject>
+        </mediaobject>
+      </figure>
+    </listitem>
+  </itemizedlist>
+  <para id="RNCompRec">
+    <emphasis role="strong">State of component recognition displayed
+    when collecting technical names</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When a component (technical name) is collected from an AUT, it
+        receives a colored dot corresponding to the accuracy of the
+        object recognition for this component <emphasis>at the time of
+        collecting</emphasis>.
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            A green dot
+          </term>
+          <listitem>
+            <para>
+              signifies that the component could be found with an
+              exact match, and was the only component above the
+              threshold.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            A yellow dot
+          </term>
+          <listitem>
+            <para>
+              means that the component is an exact match, but that
+              multiple other components were also above the threshold.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            A red dot
+          </term>
+          <listitem>
+            <para>
+               means that this component cannot be relocated in the
+              current state of the AUT
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </listitem>
+    <listitem>
+      <para>
+        As a side effect, the colors on the component names (green)
+        and technical names (red) that were displayed in previous
+        versions are now no longer shown. Once the Object Mapping
+        Editor has been saved, all names are shown with plain black
+        icons.
+      </para>
+      <figure id="RNColorDot">
+        <title>Colored Dots for Object Mapping</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/ColorDot.png"/>
+          </imageobject>
+          <textobject><phrase>Colored Dots for Object
+          Mapping</phrase></textobject>
+        </mediaobject>
+      </figure>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Migration wizard re-enabled</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When migrating to the new version of Jubula, the migration
+        assistant will automatically notify you that your database
+        scheme is out-of-date.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can then select which Projects to import (these must have
+        been exported from the database prior to migrating!).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The assistant will drop the tables in the database, recreate
+        the necessary tables and import the Projects you specified.
+      </para>
+      <figure id="RNMigration">
+        <title>Migration Wizard</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="../images/Migration.png" />
+          </imageobject>
+          <textobject><phrase>Migration Wizard</phrase></textobject>
+        </mediaobject>
+      </figure>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Copy ID to Clipboard also for Test
+    Suites</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The ability to copy a unique ID to the clipboard to reference
+        a Jubula element in external systems has also been implemented
+        for Test Suites.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can now copy the ID of a Test Case or a Test Suite to the
+        clipboard, and also open an element based on its ID in the
+        clipboard using <emphasis role="input">»Shift+F9«</emphasis>
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">The DBTool is more verbose</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The command line tool to import, export and delete Projects in
+        the database, the DBTool, has been updated so that it is more
+        verbose.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Progress View</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The ITE now uses the progress view to show longer-running
+        activities such as test execution, connecting to AUTs etc.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Edit Parameters Dialog in Central Test
+    Data Editor can be opened via double-click</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In the Central Test Data Editor it is no longer necessary to
+        open the Edit Parameters Dialog via context-menu, as it can
+        now also be opened via double-click on the data set you wish
+        to edit.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Mac keyboards now supported, new mechanism
+    for adding keyboard layout files</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In the AUT configuration dialog for SWT and RCP AUTs, the
+        <emphasis>Keyboard Layout</emphasis> combo box now only offers
+        layouts that have been defined for Jubula. German (DE) and
+        English (US) are defined as standard.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        As well as being able to add keyboard layouts for other
+        keyboards, you can also define platform-specific keyboard
+        layouts (e.g. for Mac)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The documentation has been updated to describe the new
+        mechanism for adding keyboard layouts.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Object mapping: Degree of recognition
+    accuracy for a test run can be viewed</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The Object Mapping Editor has been extended so that the
+        accuracy of component recognition is persisted and can be
+        displayed.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        As well as displaying the state of component recognition when
+        a technical name is collected from the AUT <xref linkend="RNCompRec"/>,
+        the degree of recognition accuracy is also noted for each test
+        run.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can see the values for the recognition accuracy in two new
+        BIRT reports in Jubula.
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            OMNameQuality
+          </term>
+          <listitem>
+            <para>
+              shows a breakdown of the component names used in your
+              test, and displays the degree of accuracy they were
+              located during the test. You can use this report to see
+              whether there are any component names that may need to
+              be remapped (i.e. who are close to the threshold of not
+              being found) before the test encounters a
+              <emphasis>Component Not Found</emphasis> error. 
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            OMNameQualityChart
+          </term>
+          <listitem>
+            <para>
+              This report is a visual (graph) representation of the
+              accuracy with which components were located during the
+              test run. You can use the report to help you decide
+              which components may need to be remapped, as they may
+              soon result in a <emphasis>Component Not
+              Found</emphasis> error during the test.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Mylyn: Refactored Test Cases are added to
+    context</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When working on a Mylyn task in app, Test Cases you create
+        using the <emphasis>refactor</emphasis> function are now
+        automatically added to the context.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Mylyn: Test Cases opened via
+    <emphasis role="input">»Ctrl+Shift+T«</emphasis> are added to
+    context</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When working on a Mylyn task in Jubula, Test Cases opened
+        using the key combination
+        <emphasis role="input">»Ctrl+Shift+T«</emphasis> are now
+        automatically added to the context.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Mylyn: Test Cases added via Test Case
+    reference dialog are added to context</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When working on a Mylyn task in Jubula, Test Cases added using
+        the <emphasis>Add Test Case reference</emphasis> dialog are
+        now automatically added to the context.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Teststyle: Rules can now be viewed via the
+    Properties View</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When working with Teststyle, you can now open the Project properties dialog to see the rule that has been flouted via:<?linebreak?>
+        <emphasis role="menuPath">Show Teststyle Rule</emphasis><?linebreak?>
+        from the Problems View.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Changes to BIRT reports</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The BIRT report GUIdancerFULL has been removed.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        There are new BIRT reports:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis>GUIdancerComments</emphasis> shows a table of
+            all failed relevant tests for the time specified,
+            including the comment title that can be entered in the
+            Test Result Summary View. This report is useful for
+            delivering daily status reports of the tests.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis>GUIdancerDuration</emphasis> shows the duration
+            of the chosen tests.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis>GUIdancerExecutionHistogram</emphasis> shows the
+            proportion of executed, failed and non-executed Test Steps
+            for a test. This report is most useful when one specific
+            Test Suite is compared to see its progress over time.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis>TestresultSummary</emphasis> shows a table of
+            the Test Result Summary View for the dates and tests
+            chosen.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+    <listitem>
+      <para>
+        You can now also enter the Test Job as a parameter for the
+        report. The Test Suites in the Test Job are still displayed
+        individually, however.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">License Dialog: Restart prompt</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Once a license has been added via the Preferences, a dialog is
+        shown to remind you to restart Jubula before continuing.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        From the dialog you can choose to restart Jubula
+        automatically.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

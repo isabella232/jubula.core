@@ -1,0 +1,59 @@
+<section id="known-issues-and-other-information-7.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                   xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Known issues and other information</title>
+  <para>
+    <emphasis role="strong">Mapping key combination for e4
+    AUTs</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In some e4 AUTs, a key-binding clash may result in the
+        shortcut for the Object Mapping Mode not working on certain
+        components.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you notice that you cannot map any / certain components,
+        please alter the Object Mapping shortcut to an unused
+        shortcut.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Multi-window mode much slower on
+    IE</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The multi-window mode for HTML AUTs is considerably slower on
+        IE than on Firefox.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This is a known issue that is registered at Selenium.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Embedded Chronon support
+    removed</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The embedded Chronon support for the standalone versions has
+        been removed.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can still configure your AUT to run with Chronon.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

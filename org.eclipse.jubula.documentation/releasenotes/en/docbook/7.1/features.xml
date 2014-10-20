@@ -1,0 +1,337 @@
+<section id="new-features-and-developments-7.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New Features and Developments</title>
+  <para>
+    <emphasis role="strong">Jubula and GUIdancer standalones
+    functionally identical</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The standalone versions for Jubula and GUIdancer have been
+        unified so that they are functionally identical.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This means that features such as Code Coverage and iOS testing
+        that were previously only available in GUIdancer are now
+        available in both tools.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Both standalone tools continue to exist. The only difference
+        between them is their branding.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Jubula is downloadable by anyone from the BREDEX Testing
+        Resources Portal at:
+        <link xl:href="http://testing.bredex.de">http://testing.bredex.de</link>.
+        GUIdancer can be downloaded after purchasing a support
+        package.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Search scopes supported</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The search dialog now lets you choose whether you want to
+        search the whole Project, or just the node(s) you have
+        selected.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you choose to just search within the nodes you have
+        selected, then you can specify whether you want to use the
+        selected node in the Test Suite Browser, the Test Case
+        Browser, or both.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New mass replace operation for Test
+    Cases</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        From the Search Result View, you can now perform a mass
+        replace of Test Cases.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you have searched, e.g. for all places where a Test Case is
+        reused, and want to replace some or all of those places with a
+        new Test Case, then you can select the option to replace the
+        current Test Case references with a new Test Case reference.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Any comments, Test Case reference names and the commented-out
+        state of each replaced Test Case are transferred onto the new
+        Test Case reference.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can also match any propagated component names and
+        referenced parameters from the old Test Case to propagated
+        component names and parameters from the new Test Case.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New function for accessing node
+    attribute</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        A new function has been added to the set of pre-defined
+        functions in the ITE.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The function is: <emphasis>?getNodeAttribute()</emphasis> and
+        it can have either <emphasis>name</emphasis> or
+        <emphasis>comment</emphasis> as arguments.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        When <emphasis>name</emphasis> is chosen, the function reads
+        the name of the node (e.g. Test Case, Test Step) on which it
+        is resolved and uses this for the test.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        When <emphasis>comment</emphasis> is chosen, the function
+        reads the comment of the node (e.g. Test Case, Test Step) on
+        which it is resolved and uses this for the test.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New function for accessing values in
+    central data sets</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There is a new function available in the pre-defined functions
+        in the ITE.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The name of the new function is:
+        <emphasis>?getCentralTestDataSetValue()</emphasis>, and it
+        requires four arguments:
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            dataSetName:
+          </term>
+          <listitem>
+            <para>
+              The name of the central data set to search in.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            keyColumnName:
+          </term>
+          <listitem>
+            <para>
+              The column that is used to find the correct line of the
+              data set.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            entryKey:
+          </term>
+          <listitem>
+            <para>
+              The value to locate in the key column that will provide
+              the correct line.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            columnName:
+          </term>
+          <listitem>
+            <para>
+              The name of the column in which the value to be chosen
+              can be found.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </listitem>
+    <listitem>
+      <para>
+        Within the specified data set, the required value is located
+        based on the line found using the key column and entry key, as
+        well as the column name for the actual value.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New option to change the column in a
+    central test data set used by Test Cases</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        If you have used a central test data set in multiple Test
+        Cases and later realize that you have two columns in the
+        central test data set that contain the same information, then
+        you can change all Test Cases that use this central test data
+        set to just use one column. Once you have done this, you can
+        remove the unnecessary column from the central test data set.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you have searched, e.g. for all places where a central test
+        data set is reused, and want to alter Test Cases that use this
+        central test data set to use a different column in the central
+        test data set, then you can select the option to change the
+        central test data set column usage.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can change an existing parameter present in the selected
+        Test Cases to target a different column in the central data
+        set using the dialog that appears.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Multi-window support for HTML
+    AUTs</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        If your HTML AUT uses multi windows (e.g. pop-ups), then you
+        can now specify this in the AUT configuration.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        AUTs that are running in multi-window mode show the Selenium
+        console as well as the AUT when the AUT is started.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Object Mapping Editor has a new button to allow switching
+        between multiple open windows for mapping components, and
+        there are new actions in the HTML unbound modules to allow you
+        to switch between windows during the test.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">On-click expansion for pictures in HTML
+    reports</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In HTML reports, you can now click on any screenshots taken on
+        errors and they will be expanded to make the details more
+        visible.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Clicking the image again will reduce it to its original size
+        in the test result report.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Kepler AUTs can now be tested</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        It is now possible to test AUTs that are based on Kepler.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Due to improvements in the object recognition, some components
+        for RCP AUTs may need to be remapped.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New actions to correctly shutdown and
+    restart an AUT</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Users testing Swing and RCP AUTs now have two new actions to
+        <emphasis>Prepare an AUT for Termination</emphasis> and to
+        <emphasis>Synchronize the termination and re-start</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        These actions can be used instead of the
+        <emphasis>restart</emphasis> action for cases where the AUT
+        cannot be restarted using this action, or when an AUT needs to
+        be correctly shutdown and restarted as part of a test (e.g. to
+        save a workspace, settings etc.).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The actions must be placed on either side of any action that
+        will cause the AUT to terminate (not to restart). The
+        <emphasis>prepare for termination</emphasis> action must come
+        first, followed (not necessarily directly) by an action to
+        close the AUT (e.g. selecting ”<emphasis>Exit</emphasis>”).
+        Directly after this action, the <emphasis>synchronize
+        termination and re-start</emphasis> action must be used.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The action to close the AUT must be an action that causes the
+        AUT to run through the JVM shutdown hooks to properly
+        terminate. Do not use the <emphasis>restart</emphasis> action
+        to shut your AUT down.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The combination of these three actions allows the AUT to be
+        shutdown correctly and restarted.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

@@ -1,0 +1,426 @@
+<section id="new-features-and-developments-8.0" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New Features and Developments</title>
+  <para>
+    <emphasis role="strong">Support for JavaFX AUTs</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We have added support for testing JavaFX AUTs.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        There is an example Simple Adder AUT in the
+        <emphasis>&lt;installation-directory&gt;/examples/AUTs</emphasis>
+        folder. You can use this to perform example tests as described
+        in the cheat sheets.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can see the overview of the support via
+        <link xl:href="http://eclip.se/421595">http://eclip.se/421595</link>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The toolkit is extensible, and we welcome feedback and
+        contributions.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">ALM integration: Support for commenting on
+    HP ALM tasks after a test run</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now connect your ITE to a HP ALM repository (version
+        11+) to view tasks from the repository in the ITE.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can also add comments to tasks in a HP ALM repository when
+        a test has run.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To use the HP ALM integration, you must use a separate
+        connector for HP ALM which may incur license costs. Visit the
+        Tasktop website for more details
+        <link xl:href="http://www.tasktop.com">http://www.tasktop.com</link>.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">ALM integration: Reporting to ALM systems
+    after headless execution now supported</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When a test has run via testexec, you can now trigger the
+        reporting to ALM tools manually from the Test Result Summary
+        View.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This allows you to add the test results from your continuous
+        integration tests to your issues, bugs and features in your
+        ALM system.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">ALM integration: Amount of reported items
+    shown</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When reporting to ALM systems takes place, you can now see how
+        many tasks were reported to, how many results were written to
+        each task, and a total amount of tasks written to in the
+        console.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Support for embedded AUT Agent in
+    testexec</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When executing tests via the command line using the
+        <emphasis>testexec</emphasis> tool, you can now choose to use
+        an embedded AUT Agent for the test.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This means that you do not have to start a separate AUT Agent
+        on the machine you are testing on.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To use an embedded AUT Agent, don’t enter the
+        <emphasis>-server</emphasis> parameter. You can either enter a
+        port number for the embedded AUT Agent to be started on, or
+        you can also leave out the <emphasis>-port</emphasis>
+        parameter to start the AUT Agent on a dynamically chosen port.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Create New Version is now available in the
+    dbtool</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now create new versions of a Project using the dbtool.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Use
+        <emphasis role="input">-createVersion &lt;project-name&gt; &lt;old-version&gt; &lt;new-version&gt;</emphasis>
+        to create a new version of an existing Project.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Change tracking in Projects</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now configure in the Project properties that changes
+        to Test Cases, Test Suites and Test Jobs in the Project are
+        tracked. You can configure a system / environment property
+        that is shown alongside the timestamp of the change to track
+        e.g. who made the changes.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        When change tracking is activated, when you save an editor for
+        a Test Case, Test Suite or Test Job, the timestamp of the save
+        as well as the property will be saved and displayed in the
+        properties view.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can specify the amount of changes to track per node, or
+        the length of time that change tracking information should be
+        kept. Once the time has passed or the amount of changes has
+        been reached, the next saving of the node will result in
+        invalid change information being discarded.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can remove all change tracking information from the
+        Project via the Project properties.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Support for iOS 7</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now also test AUTs written with iOS 7.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New information in Object Mapping Mode :
+    property information</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When you collect a component in the Object Mapping Mode in a
+        Swing or SWT/RCP AUT, you can now see information on the
+        properties of that component in the Properties View.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The information is shown as a list of properties with their
+        values. If a value cannot be accessed, this is communicated.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The information is not saved - to see the properties again,
+        you must re-collect the component in the Object Mapping Mode.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This can be used to help you write tests that use the actions
+        <emphasis>check property</emphasis> or <emphasis>store
+        property</emphasis>.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Component match heuristic shown for each
+    component in test results</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In the HTML and XML test result reports, and in the result
+        reports in the ITE, you can now see the value with which the
+        component was found when the test was executed.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This lets you see whether a component is ”easily” found, or
+        whether a small change may lead to it no longer being found,
+        so that a preventative remapping may be worthwhile.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Graphics component support for
+    Canvas</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now map org.eclipse.ui.forms.widgets that inherit
+        directly or indirectly from canvas.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This includes, e.f. org.eclipse.ui.forms.widgets.Hyperlink.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can use actions such as click and check existence (and
+        other actions on the graphics component level) on these
+        components.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Show where used also available for Test
+    Suites</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now use ”show where used” on Test Suites to find out
+        which Test Jobs they have been reused in.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong"><emphasis role="input">»F3«</emphasis> always
+    opens selected item</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now press <emphasis role="input">»F3«</emphasis> on any
+        Test Case, Test Suite, or Test Job to open the specification
+        of that item.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This now includes the actual original specification of the
+        item itself, to avoid confusion in larger Projects.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Luna AUTs supported</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        AUTs that use the Eclipse Luna platform can also be tested
+        with the ITE. This was also possible in version 7.2.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Export improved</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The export mechanism has been improved to use less memory,
+        allowing larger Projects to be exported.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Toggling relevance of test runs</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now toggle the relevance of multiple test runs at
+        once.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New option for content assist in the
+    Component Names View</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now configure a delay for the content assist in the
+        Component Names View.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the Preferences (in the <emphasis>Test</emphasis> section,
+        you can enter a delay in milliseconds. This amount of time
+        will be waited after each character entry before opening the
+        content assist.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you have many component names, and / or don’t require the
+        content assist as often, then you can increase this value to
+        be able to type more of your name before seeing content
+        assist.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        We have also adapted the behaviour of the content assist to
+        not appear if you remove all of the content of the
+        <emphasis>new name</emphasis> field in the Component Names
+        View.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can press <emphasis role="input">»ctrl+space«</emphasis> at
+        any time to open the content assist.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Log files now split after 10MB</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Log files that get larger than 10MB are now automatically
+        split and zipped.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Closing HTML AUTs via the close
+    button</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        If you close a HTML AUT by closing the browser, the ITE will
+        correctly notice the closure after 5 seconds (configurable)
+        and will remove the AUT from the running AUTs view.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The mechanism works by polling the AUT, and if it is no longer
+        there after the configured time, the AUT is considered to be
+        stopped.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If your AUT may sometimes be unreachable for longer than the default 5 seconds, you can change this time by using a process or system property:<?linebreak?>
+        <emphasis role="input">TEST_MAX_AUT_RESPONSE_TIME=&lt;timeInMs&gt;</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Further information on this is available in this issue:<?linebreak?>
+        <link xl:href="http://bugzilla.bredex.de/1391">http://bugzilla.bredex.de/1391</link>.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">p2 update site for IDE integration
+    available in installer</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In the <emphasis>development</emphasis> folder of the
+        installation, you can now find a p2 update site containing the
+        Jubula Feature and Launch Integration.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

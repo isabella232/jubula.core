@@ -1,0 +1,62 @@
+<section id="new-features-and-developments-6.0.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New Features and Developments</title>
+  <para>
+    <emphasis role="strong">Chronon support</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Jubula now allows the use of an embedded Chronon recorder and
+        also the production of Chronon recording files during
+        automated tests (Jubula Feature users: this feature is
+        currently only available in the standalone version).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Activating the embedded Chronon recorder in Jubula will result
+        in your actions being recorded in a monitoring file which can
+        be used for analysis purposes should you encounter any errors.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can also configure your AUT to use Chronon as a
+        monitoring agent so that you can generate recording files from
+        your automated tests.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The currently used version of Chronon is 2.0. There are some
+        performance issues still in this version that may lead to test
+        runs and performance being affected, particularly in larger
+        AUTs and Projects. Please follow the instructions in
+        the documentation for increasing heap size and ensuring the
+        capability of your test machines.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        We do not recommend having Chronon running at all times, due
+        to possible performance degradations through the monitoring.
+        Instead, we recommend that you activate the Chronon recorder
+        when you are trying to reproduce an error.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Tests updated to newer versions of IE and
+    Firefox</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The tested versions for web AUTs now include IE 9 and
+        Firefox 10
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

@@ -12,6 +12,10 @@
         <condition property="standalone">
             <equals arg1="${output}" arg2="html"/>
         </condition>
+        
+        <condition property="releaseNotes">
+            <equals arg1="${dir}" arg2="releasenotes"/>
+        </condition>
     </target>
     
     <target name="clean" depends="checkParam">
@@ -26,7 +30,7 @@
         <mkdir dir="${html.path}/images"/>
     </target>
     
-    <target name="build" depends="buildOnlineHelp, buildHTML">
+    <target name="build" depends="buildOnlineHelp, buildHTML, buildReleaseNotes">
         <echo>Build done!</echo>
     </target>
     
@@ -66,7 +70,7 @@
         <exec executable="xsltproc" failonerror="true">
             <arg line="--xinclude"/>
             <arg line="--stringparam base.dir ${html.path}"/>
-            <arg line="--stringparam html.stylesheet ../../css/style.css"/>
+            <arg line="--stringparam html.stylesheet ../css/style.css"/>
             <arg line="--stringparam docbook.css.source ''"/>
             <arg line="--stringparam section.autolabel 1"/>
             <arg line="--stringparam section.label.includes.component.label 1"/>
@@ -100,7 +104,7 @@
         <antcall target="moveGeneratedFiles"/>
     </target>
 
-    <target name="buildHTML" if="standalone" depends="checkParam, buildHtmlImageLister">
+    <target name="buildHTML" if="standalone" unless="releaseNotes" depends="checkParam, buildHtmlImageLister">
         <copy todir="${build.path}/images">
             <fileset dir="${dir}/en/docbook/images">
                 <include name="*.jpg" />
@@ -137,6 +141,49 @@
         </exec>
         
         <antcall target="checkForErrors"/>
+        <antcall target="checkImages"/>
+        
+        <antcall target="moveGeneratedFilesStandalone"/>
+    </target>
+    
+    <target name="buildReleaseNotes" if="releaseNotes" depends="checkParam, buildHtmlImageLister">
+        <copy todir="${build.path}/images">
+            <fileset dir="${dir}/en/docbook/images">
+                <include name="*.jpg" />
+                <include name="*.png" />
+            </fileset>
+        </copy>
+        
+        <copy todir="${build.path}/css">
+            <fileset dir="${dir}/en/docbook/css">
+                <include name="*.css" />
+            </fileset>
+        </copy>
+        
+        <exec executable="xsltproc" failonerror="true" output="output.log">
+            <arg line="--xinclude"/>
+            <arg line="-o ${build.path}/html/index.html"/>
+            <arg line="--stringparam base.dir ${html.path}"/>
+            <arg line="--stringparam html.stylesheet ../css/style.css"/>
+            <arg line="--stringparam docbook.css.source ''"/>
+            <arg line="--stringparam make.clean.html 1"/>
+            <arg line="--stringparam generate.toc 'chapter nop
+                                                   book    nop'"/>
+            <arg line="--stringparam chapter.autolabel 0"/>
+            <arg line="--stringparam formal.title.placement 'figure    after
+                                                             example   after
+                                                             equation  after
+                                                             table     after
+                                                             procedure after'"/>
+            <arg line="--stringparam current.docid ${manual.name}"/>
+            <arg line="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates_html.xsl"/>
+            <arg line="${dir}/en/docbook/book.xml"/>
+        </exec>
+        
+        <antcall target="checkForErrors"/>
+        <antcall target="checkImages"/>
+        
+        <antcall target="moveGeneratedFilesStandalone"/>
     </target>
     
     <target name="checkForErrors">
@@ -225,5 +272,11 @@
         </copy>
         
         <antcall target="checkImages"/>
+    </target>
+    
+    <target name="moveGeneratedFilesStandalone">
+        <copy todir="${client.ua.help.path}/${html.path}">
+            <fileset dir="${build.path}" excludes="css/"/>
+        </copy>
     </target>
 </project>

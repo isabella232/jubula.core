@@ -1,0 +1,78 @@
+<section id="known-issues-and-other-information-6.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                   xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Known issues and other information</title>
+  <para>
+    <emphasis role="strong">Mac OSX Mountain Lion gatekeeper prevents
+    install4j generated installer from starting</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        This is caused by a too-restrictive setting on the Mountain
+        Lion gatekeeper security feature.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Setting the security level to Mac OSX Lion compatible level
+        resolves the issue.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Actions: Check selection of entry by
+    index/value only checks one entry</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The actions for checking whether an item in a list is selected
+        have been adapted so that they only accept one piece of data,
+        and not comma-separated values as was previously the case.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To check whether multiple items are selected, use a data set
+        which contains a list of the items to check.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Announcement for next release: removal of
+    deprecated unbound modules and major API change to RC
+    code</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In the next release, we will remove the unbound modules in all
+        toolkits that are marked as deprecated. Please ensure that you
+        have replaced any modules marked as deprecated before updating
+        to the first released version in 2013.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Due to changes we will be making to our implementation classes
+        for the RC components (actions on components), there will also
+        be major API changes which will affect extensions that have
+        been written.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Removed BIRT Reports for Object Mapping
+    Quality</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The BIRT reports for monitoring object name quality
+        (<emphasis>OMNameQuality</emphasis> and
+        <emphasis>OMNameQualityChart</emphasis>) have been removed.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

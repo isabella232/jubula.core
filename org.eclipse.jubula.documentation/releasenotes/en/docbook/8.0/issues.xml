@@ -1,0 +1,286 @@
+<section id="known-issues-and-other-information-8.0" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                   xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Known issues and other information</title>
+  <para>
+    <emphasis role="strong">Problem displaying component names from
+    browsers</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In some siutations, when viewing the Component Names View from
+        a browser, you may see GUIDs (a long number/character string)
+        instead of the component name.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This is a problem displaying the component name at the moment
+        and can be considered a display error, albeit a serious one.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The component names themselves are correct, and can be seen
+        either by opening the editor, or by refreshing the Project.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Issue with incorrect handling of
+    <emphasis role="input">null</emphasis> in renderers fixed</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Renderers in Swing that return <emphasis role="input">null</emphasis> can now be
+        correctly handled.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        See
+        <link xl:href="http://eclip.se/426978">http://eclip.se/426978</link>
+        for more details.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Selenium update</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We have updated the version of Selenium used for HTML tests to
+        2.39.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Port number for embedded AUT Agent
+    changed</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The default port number for the embedded AUT Agent is now
+        60001.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can change the default port number in the preferences.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Table view has been removed from the
+    Object Mapping Editor</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The table view has been removed from the Object Mapping
+        Editor.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Problems opening BIRT reports when using
+    IE11</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There is a known issue with BIRT reporting that occurs when
+        using Internet Explorer 11.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        There is a ticket open in the GUIdancer Bugzilla
+        (<link xl:href="https://bugzilla.bredex.de/show_bug.cgi?id=1281">https://bugzilla.bredex.de/show_bug.cgi?id=1281</link>)
+        and in the Eclipse Bugzilla
+        (<link xl:href="http://eclip.se/422056">http://eclip.se/422056</link>)
+        for this. The ticket in the Eclipse Bugzilla documents
+        workarounds.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Java 1.4 AUTs no longer
+    testable</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        As of this version, Java 1.4 AUTs are no longer testable with
+        the ITE.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Changes to the launcher for the AUT
+    Agent</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The AUT Agent is no longer available under the name
+        <emphasis role="input">autagent-lin</emphasis> or <emphasis role="input">autagent-sol</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Use the launcher <emphasis role="input">autagent</emphasis> instead.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Java 7 tests on Mac</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There are still some issues running tests on Mac machines with
+        Java 7. We suggest using Java 6 on Mac machines for the
+        moment.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Working directory for ITE and AUT Agent on
+    Linux</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The AUT Agent and the ITE now use the current directory as
+        their working directory on Linux systems.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">The ITE now uses Java 7</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We have updated the version of Java installed with the ITE to
+        version 7.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">The installer requires Java 7</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You will need Java 7 installed to be able to run the
+        installer.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">iOS 5.0 no longer supported</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We no longer support testing on iOS 5.0 AUTs.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Working with RDP connections on Windows
+    8</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Windows 8 users working with RDP connections for test
+        execution should ensure that they have installed all updates
+        for Windows.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Updated the version of EclipseLink
+    used</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In this version, we have switched to EclipseLink 2.5.1 and JPA
+        2.1.0.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Vista support removed</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We no longer execute tests on Vista: the support for Vista has
+        been removed for this version.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Multi-window mode for HTML testing on Mac
+    OSX</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There are known issues with starting AUTs that are using the
+        multi-window mode on Mac OSX, both in Firefox and Safari.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        We have removed these combinations from our tests.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Pure SWT AUTs no longer tested</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We no longer execute regression tests on pure SWT AUTs. We do,
+        however, perform various tests on RCP, which uses SWT
+        components.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">AUT Agent started without console per
+    default</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The standalone AUT Agent is now started without a console per
+        default.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you would like to see the console when starting the AUT
+        Agent, you must adapt the <emphasis>autagent.ini</emphasis>
+        file.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the -vm parameter, use <emphasis>java</emphasis> instead of
+        <emphasis>javaw</emphasis>.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

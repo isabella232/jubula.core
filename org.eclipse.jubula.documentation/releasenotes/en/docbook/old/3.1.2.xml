@@ -1,0 +1,95 @@
+<section id="release-notes-for-version-3.1.2003" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                               xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Release Notes for version 3.1.2003</title>
+  <para>
+    This release is a patch for the previous 3.1.01019 version. For more
+    information about the 3.1 version, see the previous release notes.
+  </para>
+  <section id="new-features-and-developments-3.1.2003">
+    <title>New features and developments</title>
+    <para>
+      <emphasis role="strong">New timer actions</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <emphasis>Application - Start Timer</emphasis> - This action
+          allows you to start a timer with a given name. In addition to
+          the timer name this action requires a variable in which to
+          store the start time.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis>Application - Read Timer</emphasis> - Use this
+          action to read the current value of a timer you have started
+          and store this value in a given variable.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis>Application - Check Numeric Values</emphasis> - With
+          this action two numeric values can be compared. Valid
+          comparison methods are e.g. <quote>less-than</quote> or
+          <quote>greater-or-equal-than</quote>.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="other-information-3.1.2003">
+    <title>Other information</title>
+    <para>
+      <emphasis role="strong">Fix for GEF figure recognition</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The figure recognition in the GEF toolkit has been corrected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Figure positions will now be correctly calculated regardless
+          of which side the palette is on.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Connect to AUT Agent</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The issue in the previous release with connecting to the AUT
+          Agent and then disconnecting before a Project was open has now
+          been fixed.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Wait for Window actions</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The Swing implementation for the <emphasis>Application - Wait
+          for Window...</emphasis> actions has been modified.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The modification fixes an issue with the occasional incorrect
+          evaluation of the window status.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Affected actions are: <emphasis>Wait for Window</emphasis>,
+          <emphasis>Wait for Window to Close</emphasis> and
+          <emphasis>Wait for Window Activation</emphasis>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>

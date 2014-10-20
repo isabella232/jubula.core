@@ -1,0 +1,550 @@
+<section id="release-notes-for-version-4.0" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                          xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Release Notes for version 4.0.01205</title>
+  <section id="new-features-and-developments-4.0">
+    <title>New features and developments</title>
+    <para>
+      <emphasis role="strong">New implementation for HTML
+      testing</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have a new implementation for the testing of HTML AUTs.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The new HTML toolkit is multi-browser compatible and has been
+          tested for Windows (for IE6 and higher and for Firefox 2 and
+          higher), Linux (Firefox 2 and higher) and Mac (Firefox 2 and
+          higher and Safari 3 and higher).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Firefox 3.6 is not yet supported.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The new implementation also supports the testing of dynamic
+          components.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Please be aware that Frames and IFrames are not yet supported
+          in this new implementation.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New handling for starting AUTs</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          It is now possible to start multiple AUTs.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Each AUT now receives an ID which can be used to differentiate
+          between various AUTs (or instances of the same AUT) for object
+          mapping, observation, and test execution.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Some buttons that were previously on the toolbar have been
+          moved to the Test Suite Browser and the new Running AUTs View.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New gdrun option to start AUTs
+      independently of the ITE</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          AUTs can now be started in one of two ways.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          They can be started as in previous versions via an AUT
+          configuration. There is also a new option to start an AUT
+          without an AUT configiration, independently of the ITE.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For this, you can use the command <emphasis>gdrun</emphasis>
+          with parameters for toolkit, AUT ID etc.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This option is not currently available for HTML or SWT AUTs.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New running AUTs view</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There is a new view in the specification perspective which
+          shows a list of running AUTs.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The AUTs are shown using their ID.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Via this view, you can start Test Suites and stop AUTs.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Testing different AUTs in one
+      test</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Being able to start multiple AUTs and the new
+          <emphasis>gdrun</emphasis> command mean that it is now
+          possible to test multiple AUTs (or instances of the same AUT)
+          in one test.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Test Suites can now be combined to Test Jobs. A Test Job
+          executes each Test Suite on the specified AUT.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This feature is currently only available for AUTs that are
+          written with the same toolkit (e.g. Swing) or when the Project
+          toolkit is set to concrete (i.e. no specific actions for
+          particular toolkits are used in the test).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          All AUTs to be tested in a Test Job must have been started
+          using the <emphasis>gdrun</emphasis> command.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New reporting perspective</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The ITE has a new reporting perspective. After every test run,
+          the test results are now stored in the database. Both detailed
+          results and a test result summary are saved.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The test result summaries are shown in the new Test Result
+          Summary View. You can use this view to sort and filter your
+          test results.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The test result details can be automatically removed from the
+          database after a specified number of days. This feature can be
+          activated and configured in the preferences.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Generation of test result
+      statistics</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          From the Test Result Summary View, you can create BIRT reports
+          of your test runs.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          There is a selection of example reports available in the Test
+          Result Summary View.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can also use a BIRT designer to create your own reports.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The built-in BIRT reports can currently only be used with an
+          Oracle Database.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Duplicate AUT configuration</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          To ease the configuration of multiple AUTs, there is now the
+          option to duplicate an existing AUT configuration.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New action: take screenshot of active
+      window</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There is a new action in the concrete toolkit to take a
+          screenshot not of the whole screen, but of the currently
+          active window.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New action: check property on
+      figure</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          For the RCP toolkit, there is a new action to check the
+          property of a figure in GEF editors.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Timestamps in test result
+      reports</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The HTML and XML test reports have been extended so that
+          timestamps for each step are documented.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Mac BETA Support</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The Mac Version is still in beta status.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Pure SWT AUTs cannot be started by on Mac systems. RCP AUTs,
+          however, can be.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New options for the DBTool</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The DBTool has two new options: <emphasis role="input">-deleteall</emphasis>
+          deletes all Projects (and test results) in the database.
+          <emphasis role="input">-keepsummary</emphasis> leaves the test result summaries
+          in the database when a Project is deleted.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="information-4.0">
+    <title>Information</title>
+    <para>
+      <emphasis role="strong">Altered XML Scheme for
+      extensions</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have made a small change to the XML scheme for extensions.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the <emphasis>ComponentConfiguration.xml</emphasis> the tag
+          <emphasis role="input">componentClass</emphasis> has changed.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Instead of specifying your component class as:
+        </para>
+        <blockquote>
+          <para>
+            <literal>&lt;componentClass&gt;javax.swing.JComboBox</literal>
+          </para>
+          <para>
+            <literal>&lt;/componentClass&gt;</literal>
+          </para>
+        </blockquote>
+        <para>
+          Use the following:
+        </para>
+        <blockquote>
+          <para>
+            <literal>&lt;componentClass name=&quot;javax.swing.JComboBox&quot;/&gt;</literal>
+          </para>
+        </blockquote>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">AUT Starter renamed AUT Agent</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          To reflect the change in behavior of the server component, we
+          have renamed the AUT Starter to AUT Agent.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The commands to start and stop the Agent have also changed.
+          See the user manual for more details.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Fix for GEF Editor figure
+      recognition</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have fixed an error for figure recognition in multi-page
+          GEF editors.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Figures are now correctly found if an editor has multiple
+          tabs.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New licenses</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Version 4.0 requires new licenses. You can request your new
+          license from the support team.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New support service available</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have updated our support service so that customers can also
+          purchase premium support for questions relating to test
+          environment, process etc.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Full details about the new support service are in the license
+          agreement and in the shop.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Alternative classloading</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have made some changes to the classloading for AUTs.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Should you notice any problems when starting your AUTs with
+          the new version, you can switch to the old classloading
+          mechanism by performing one of the following:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              Setting an environment variable
+              <emphasis role="input">GD_USE_CLASSIC_CL=true</emphasis>
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Setting the Java property
+              <emphasis role="input">-DGD_USE_CLASSIC_CL=true</emphasis>
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Running the License Server on Windows
+      7</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          When starting the License Server as a Service (for example,
+          after installing GUIdancer with administrator access rights),
+          the firewall must be explicitly configured to allow incoming
+          traffic for the License Server process.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="known-issues-4.0">
+    <title>Known issues</title>
+    <para>
+      <emphasis role="strong">Refresh problem in the Component Names
+      Browser when renaming components in the Object Mapping
+      Editor</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          After renaming a component name in the Object Mapping Editor,
+          the Component Names Browser is not refreshed until the Project
+          is re-opened.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          We recommend renaming component names in the Component Names
+          Browser until this issue is resolved.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Incorrect display of technical component
+      name</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          In some cases, a technical name may be collected from the AUT
+          in the form <emphasis>guidancer.concrete.button</emphasis>
+          instead of <emphasis>Button/Radio Button/Checkbox</emphasis>,
+          for example.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is a problem with the display of the component name and
+          does not in any way affect the object recognition or mapping.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Pausing and stopping test execution during
+      restart AUT</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There is a known issue which occurs when a test is paused or
+          stopped while the action <emphasis>restart AUT</emphasis> is
+          being executed.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Doing this leads to the buttons on the toolbar being
+          incorrectly disabled. Please wait until the action is finished
+          before stopping or pausing the test, to avoid this problem.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Start Incomplete Test Suite is no longer
+      supported</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The action to start an incomplete Test Suite is no longer
+          supported.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Closing an AUT in the observation
+      mode</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          AUTs cannot currently be stopped during a test.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the observation mode is running, and you close the AUT
+          (e.g. via File-Close), this leads to the object mapping for
+          the Test Case being falsely marked as incomplete.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Default Event Handlers in Test Suites:
+      RETURN</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The <emphasis>return</emphasis> default Event Handler in Test
+          Suites does not yet exist, although this is documented.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Automatically ending Check Mode</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          When recording a verification step in Observation Mode, the
+          button <emphasis>Ok, but stop Checking</emphasis> does not end
+          the Check Mode. The mode must be ended manually.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>
