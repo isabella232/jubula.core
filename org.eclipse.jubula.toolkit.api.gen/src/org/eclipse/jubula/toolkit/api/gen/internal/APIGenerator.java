@@ -188,6 +188,8 @@ public class APIGenerator {
 
         createFile(dir, file, content);
         
+        /* After generating an impl class, add component information
+         *  to factory and toolkit generation information */
         if (!generateInterface) {
             ComponentClass componentClass = null;
             String testerClass = null;
@@ -201,11 +203,15 @@ public class APIGenerator {
                 }
             }
             
-            factoryGenInfo.addCompInformation(new CompInfoForFactoryGen(
-                    genInfo.getClassName(),
-                    genInfo.getFqClassName(),
-                    compInfo.hasDefaultMapping(),
-                    compInfo.getMostSpecificVisibleSuperTypeName()));
+            if (!compInfo.hasDefaultMapping()
+                    || (componentClass != null 
+                        && !componentClass.getName().isEmpty())) {
+                factoryGenInfo.addCompInformation(new CompInfoForFactoryGen(
+                        genInfo.getClassName(),
+                        genInfo.getFqClassName(),
+                        compInfo.hasDefaultMapping(),
+                        compInfo.getMostSpecificVisibleSuperTypeName()));
+            }
             
             tookitGenInfo.addCompInformation(new CompInfoForToolkitGen(
                     componentClass, testerClass));
