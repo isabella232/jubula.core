@@ -124,7 +124,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 		<%}%>
 	<%}%>
 	
-	<%if (!genInterface) {%>
+	<%if (!genInterface && hasDefaultMapping) {%>
 	protected IComponentIdentifier getPseudoComponentIdentifier() {
 		<%if (hasComponentClass) {%>
 		org.eclipse.jubula.tools.internal.objects.ComponentIdentifier pseudoIdentifier =
