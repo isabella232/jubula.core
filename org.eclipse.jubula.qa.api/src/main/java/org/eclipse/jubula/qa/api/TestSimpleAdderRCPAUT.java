@@ -25,9 +25,9 @@ import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.communication.CAP;
+import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
 import org.eclipse.jubula.toolkit.base.components.TextComponent;
 import org.eclipse.jubula.toolkit.base.components.TextInputComponent;
-import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
 import org.eclipse.jubula.toolkit.concrete.components.MenuBarComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
@@ -36,6 +36,7 @@ import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.ComponentIdentifier;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /** @author BREDEX GmbH */
@@ -44,36 +45,43 @@ public class TestSimpleAdderRCPAUT {
     public static final String AGENT_HOST = "g8.dev.bredex.local"; //$NON-NLS-1$
     /** AUT-Agent port to use */
     public static final int AGENT_PORT = 11022;
+    /** the value1 */
+    private static TextInputComponent value1;
+    /** the value2 */
+    private static TextInputComponent value2;
+    /** the button */
+    private static GraphicsComponent button;
+    /** the result */
+    private static TextComponent result;
     /** the AUT-Agent */
     private AUTAgent m_agent;
     /** the AUT */
     private AUT m_aut;
-    /** the value1 */
-    private TextInputComponent m_value1;
-    /** the value2 */
-    private TextInputComponent m_value2;
-    /** the button */
-    private ButtonComponent m_button;
-    /** the result */
-    private TextComponent m_result;
 
-    /** prepare */
-    @Before
-    public void setUp() throws Exception {
-        URL input = this.getClass().getClassLoader()
-                .getResource("objectMapping_SimpleAdderRCP.properties"); //$NON-NLS-1$
-        ObjectMapping om = MakeR.createObjectMapping(input.openStream());
-
+    /** global prepare */
+    @BeforeClass
+    public static void loadObjectMapping() throws Exception {
+        URL input = TestSimpleAdderRCPAUT.class
+            .getClassLoader().getResource(
+                "objectMapping_SimpleAdderRCP.properties"); //$NON-NLS-1$
+        
+        ObjectMapping om = MakeR.createObjectMapping(
+                input.openStream());
+        
         ComponentIdentifier val1Id = om.get("value1"); //$NON-NLS-1$
         ComponentIdentifier val2Id = om.get("value2"); //$NON-NLS-1$
         ComponentIdentifier buttonId = om.get("equalsButton"); //$NON-NLS-1$
         ComponentIdentifier sumId = om.get("sum"); //$NON-NLS-1$
-
-        m_value1 = SwtComponents.createText(val1Id);
-        m_value2 = SwtComponents.createText(val2Id);
-        m_button = SwtComponents.createButton(buttonId);
-        m_result = SwtComponents.createTextComponent(sumId);
         
+        value1 = SwtComponents.createText(val1Id);
+        value2 = SwtComponents.createText(val2Id);
+        button = SwtComponents.createButton(buttonId);
+        result = SwtComponents.createTextComponent(sumId);
+    }
+    
+    /** prepare */
+    @Before
+    public void setUp() throws Exception {
         m_agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
         m_agent.connect();
         
@@ -82,7 +90,7 @@ public class TestSimpleAdderRCPAUT {
             "api.aut.conf.simple.adder.rcp",  //$NON-NLS-1$
             autID,
             "SimpleAdder.exe", //$NON-NLS-1$
-            "k:\\guidancer\\Workspace\\hu_snapshot\\current\\platforms\\win32.win32.x86\\examples\\AUTs\\SimpleAdder\\rcp\\win32\\win32\\x86\\", //$NON-NLS-1$ 
+            "..\\examples\\AUTs\\SimpleAdder\\rcp\\win32\\win32\\x86\\", //$NON-NLS-1$ 
             new String[]{
                 "-clean" , //$NON-NLS-1$
                 "-configuration", //$NON-NLS-1$
@@ -95,13 +103,31 @@ public class TestSimpleAdderRCPAUT {
         AUTIdentifier id = m_agent.startAUT(config);
         
         if (id != null) {
-            m_aut = m_agent.getAUT(id, SwtComponents.getToolkitInformation());
+            m_aut = m_agent.getAUT(id, SwtComponents
+                    .getToolkitInformation());
             m_aut.connect();
         } else {
             Assert.fail("AUT start has failed!"); //$NON-NLS-1$
         }
     }
 
+    /** cleanup */
+    @After
+    public void tearDown() throws Exception {
+        m_aut.disconnect();
+        m_agent.stopAUT(m_aut.getIdentifier());
+        m_agent.disconnect();
+    }
+    
+    /** the actual test method */
+    @Test
+    public void testMenubar() throws Exception {
+        MenuBarComponent menu = SwtComponents.createMenu();
+        exec(menu.checkEnablementOfEntryByIndexpath(
+                "1/1", true)); //$NON-NLS-1$
+        
+    }
+    
     /** the actual test method */
     @Test(expected = CheckFailedException.class)
     public void testTestFirstSimpleAdderSteps() throws Exception {
@@ -110,25 +136,21 @@ public class TestSimpleAdderRCPAUT {
         List<Result> results = new ArrayList<Result>();
         try {
             for (int i = 1; i < 5; i++) {
-                exec(m_value1.replaceText(String.valueOf(firstValue)), results);
-                exec(m_value2.replaceText(String.valueOf(i)), results);
-                exec(m_button.click(1, 1), results);
-                exec(m_result.checkText(String.valueOf(firstValue + i),
-                    Operator.equals), results);
+                exec(value1.replaceText(
+                    String.valueOf(firstValue)), results);
+                exec(value2.replaceText(
+                    String.valueOf(i)), results);
+                exec(button.click(
+                    1, 1), results);
+                exec(result.checkText(
+                    String.valueOf(firstValue + i),
+                        Operator.equals), results);
             }
         } finally {
             Assert.assertTrue(results.size() == 15);
         }
     }
-    
-    /** the actual test method */
-    @Test
-    public void testMenubar() throws Exception {
-        MenuBarComponent menu = SwtComponents.createMenu();
-        exec(menu.checkEnablementOfEntryByIndexpath("1/1", true)); //$NON-NLS-1$
-        
-    }
-    
+
     /**
      * @param cap
      *            the cap
@@ -136,9 +158,12 @@ public class TestSimpleAdderRCPAUT {
      *            the result
      */
     private void exec(CAP cap, List<Result> r) {
-        Result execute = m_aut.execute(cap, null);
+        Result<String> execute = m_aut.execute(cap, 
+                "some additional information"); //$NON-NLS-1$
         if (r != null) {
             r.add(execute);
+        } else {
+            System.out.println(execute.getPayload());
         }
     }
     
@@ -148,13 +173,5 @@ public class TestSimpleAdderRCPAUT {
      */
     private void exec(CAP cap) {
         exec(cap, null);
-    }
-
-    /** cleanup */
-    @After
-    public void tearDown() throws Exception {
-        m_aut.disconnect();
-        m_agent.stopAUT(m_aut.getIdentifier());
-        m_agent.disconnect();
     }
 }
