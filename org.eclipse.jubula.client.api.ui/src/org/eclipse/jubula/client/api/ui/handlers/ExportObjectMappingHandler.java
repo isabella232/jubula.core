@@ -78,6 +78,8 @@ public class ExportObjectMappingHandler extends AbstractHandler {
                     // map is filled and can be written to class or file
                     OMAssociation omAssociations =
                             generateEncodedAssociations();
+                    omAssociations.setTargetClassName(
+                            saveDialog.getFileName());
                     try (BufferedWriter writer = new BufferedWriter(
                             new FileWriter(path))) {
                         switch (exportType) {
@@ -135,15 +137,16 @@ public class ExportObjectMappingHandler extends AbstractHandler {
         switch (exportType) {
             case 0: // Write Java Class
                 fileExtension = ".java"; //$NON-NLS-1$
+                fileName = "OM" + fileExtension; //$NON-NLS-1$
                 break;
             case 1: // Write Properties File
                 fileExtension = ".properties"; //$NON-NLS-1$
+                fileName = "objectMapping" + StringConstants.UNDERSCORE //$NON-NLS-1$
+                        + aut.getName() + fileExtension;
                 break;
             default: // Nothing
                 break;
         }
-        fileName = "objectMapping" + StringConstants.UNDERSCORE //$NON-NLS-1$
-                + aut.getName() + fileExtension;
         
         FileDialog saveDialog = new FileDialog(getActiveShell(), SWT.SAVE);
         saveDialog.setFileName(fileName);

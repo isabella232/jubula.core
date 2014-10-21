@@ -1,11 +1,14 @@
 <%@ jet 
 package="org.eclipse.jubula.toolkit.client.api.ui.internal" 
 imports="java.util.*
+			org.apache.commons.lang.StringUtils
 			org.eclipse.jubula.client.api.ui.utils.OMAssociation
 			org.eclipse.jubula.tools.internal.constants.StringConstants" 
 class="OMClassGenerator"%>
 <%
 OMAssociation omAssociation = (OMAssociation) argument;
+String className = StringUtils.substringBefore(
+								omAssociation.getTargetClassName(), StringConstants.DOT);
 %>
 
 import java.io.ByteArrayInputStream;
@@ -15,28 +18,40 @@ import java.io.UnsupportedEncodingException;
 import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.ObjectMapping;
 import org.eclipse.jubula.tools.ComponentIdentifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class OM {
+public class <%=className%> {
+	/** the logger */
+    private static Logger log = LoggerFactory.getLogger(<%=className%>.class);
+    
+    /** the input stream */
     private static InputStream stream;
-    private static ObjectMapping om = MakeR.createObjectMapping(stream);
+    
+    /** load input stream */
+    static {
+<%String encodedAssociations = omAssociation.getEncodedAssociations().toString().replace(StringConstants.NEWLINE, "\\n");%>
+        String contentOfPropertyFile = "<%=encodedAssociations%>"; //$NON-NLS-1$
+        try {
+            stream = new ByteArrayInputStream(
+                    contentOfPropertyFile.getBytes("ISO-8859-1")); //$NON-NLS-1$
+        } catch (UnsupportedEncodingException e) {
+            log.error(e.getLocalizedMessage(), e);
+        }
+    }
+    
+    /** the object mapping */
+    private static ObjectMapping objectMapping = MakeR.createObjectMapping(stream);
+    
 <%
 Map<String, String> map = omAssociation.getIdentifierMap();
 for (String componentIdentifier : map.keySet()) {%>
     <%String javaQualifier = map.get(componentIdentifier);%>
-    public static final ComponentIdentifier <%=javaQualifier%> = om.get("<%=componentIdentifier%>");
+    /** The component identifier for "<%=componentIdentifier%>"*/
+    public static final ComponentIdentifier <%=javaQualifier%> = objectMapping.get("<%=componentIdentifier%>"); //$NON-NLS-1$
 <%}%>
-    static {
-<%String encodedAssociations = omAssociation.getEncodedAssociations().toString().replace(StringConstants.NEWLINE, StringConstants.EMPTY);%>
-        String contentOfPropertyFile = "<%=encodedAssociations%>";
-        try {
-            stream = new ByteArrayInputStream(
-                    contentOfPropertyFile.getBytes("ISO 8859-1"));
-        } catch (UnsupportedEncodingException e) {
-            // handle
-        }
-    }
     
-    private OM() {
+    private <%=className%>() {
         // private
     }
 }

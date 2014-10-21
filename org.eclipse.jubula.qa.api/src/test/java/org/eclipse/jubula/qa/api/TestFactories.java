@@ -6,6 +6,7 @@ import java.net.URL;
 import junit.framework.Assert;
 
 import org.eclipse.jubula.communication.CAP;
+import org.eclipse.jubula.qa.api.om.OM;
 import org.eclipse.jubula.toolkit.concrete.ConcreteComponents;
 import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
 import org.eclipse.jubula.toolkit.concrete.components.TextComponent;
@@ -32,7 +33,7 @@ public class TestFactories {
      * test method
      */
     @Test
-    public void testFactories() {
+    public void testFactoriesViaPropertiesFile() {
         
         try {
             m_omLoader = MakeR.createObjectMapping(m_resourceURL.openStream());
@@ -59,6 +60,58 @@ public class TestFactories {
         /** The result text field */
         ComponentIdentifier identifierResultField =
                 m_omLoader.get("bound_SimpleAdder_resultField_txf"); //$NON-NLS-1$
+        Assert.assertNotNull(identifierResultField);
+        
+        TextInputComponent textField1 = ConcreteComponents
+                .createTextInputComponent(identifierTextField1);
+        Assert.assertNotNull(textField1);
+        
+        TextInputComponent textField2 = ConcreteComponents
+                .createTextInputComponent(identifierTextField2);
+        Assert.assertNotNull(textField2);
+        
+        ButtonComponent equalsButton = ConcreteComponents
+                .createButtonComponent(identifierEqualsButton);
+        Assert.assertNotNull(equalsButton);
+        
+        TextComponent resultField = ConcreteComponents
+                .createTextComponent(identifierResultField);
+        Assert.assertNotNull(resultField);
+
+        CAP cap1 = textField1.replaceText("17"); //$NON-NLS-1$
+        Assert.assertNotNull(cap1);
+        CAP cap2 = textField2.replaceText("4"); //$NON-NLS-1$
+        Assert.assertNotNull(cap2);
+        CAP cap3 = equalsButton.click(1, 1);
+        Assert.assertNotNull(cap3);
+        CAP cap4 = resultField.checkText("21", Operator.equals); //$NON-NLS-1$
+        Assert.assertNotNull(cap4);
+    }
+    
+    /**
+     * test method
+     */
+    @Test
+    public void testFactoriesViaPropertiesClass() {
+        
+        /** The first text field */
+        ComponentIdentifier identifierTextField1 =
+                OM.bound_SimpleAdder_inputField1_txf;
+        Assert.assertNotNull(identifierTextField1);
+        
+        /** The second text field */
+        ComponentIdentifier identifierTextField2 =
+                OM.bound_SimpleAdder_inputField2_txf;
+        Assert.assertNotNull(identifierTextField2);
+        
+        /** The equals button */
+        ComponentIdentifier identifierEqualsButton =
+                OM.bound_SimpleAdder_equals_btn;
+        Assert.assertNotNull(identifierEqualsButton);
+        
+        /** The result text field */
+        ComponentIdentifier identifierResultField =
+                OM.bound_SimpleAdder_resultField_txf;
         Assert.assertNotNull(identifierResultField);
         
         TextInputComponent textField1 = ConcreteComponents
