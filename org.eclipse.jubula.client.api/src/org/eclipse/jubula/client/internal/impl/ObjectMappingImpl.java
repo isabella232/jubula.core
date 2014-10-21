@@ -16,6 +16,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
+import org.apache.commons.lang.Validate;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.ObjectMapping;
 import org.eclipse.jubula.client.exceptions.LoadResourceException;
 import org.eclipse.jubula.client.internal.utils.SerilizationUtils;
@@ -46,6 +49,8 @@ public class ObjectMappingImpl implements ObjectMapping {
      */
     public ObjectMappingImpl(InputStream input) {
         super();
+        Validate.notNull(input, "The input stream must not be null."); //$NON-NLS-1$
+        
         try {
             m_objectMappingAssociations.load(input);
             for (Object obj : m_objectMappingAssociations.keySet()) {
@@ -69,7 +74,9 @@ public class ObjectMappingImpl implements ObjectMapping {
     }
     
     /** {@inheritDoc} */
-    public ComponentIdentifier get(String compName) {
+    @Nullable public ComponentIdentifier get(@NonNull String compName) {
+        Validate.notNull(compName, "The component name must not be null."); //$NON-NLS-1$
+        
         return m_map.get(compName);
     }
     

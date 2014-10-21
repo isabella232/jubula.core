@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.internal.impl;
 
+import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.Result;
@@ -37,6 +38,8 @@ public class ResultImpl<T> implements Result<T> {
      *            the payload to use
      */
     public ResultImpl(@NonNull CAP cap, @Nullable T payload) {
+        Validate.notNull(cap, "The CAP must not be null."); //$NON-NLS-1$
+        
         m_cap = cap;
         m_payload = payload;
     }

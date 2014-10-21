@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
@@ -32,6 +33,7 @@ import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.utils.NetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,36 +41,46 @@ import org.slf4j.LoggerFactory;
 public class AUTAgentImpl implements AUTAgent {
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(AUTAgentImpl.class);
-    
     /** the hosts name */
     private String m_hostname;
     /** the port */
-    private int m_port;
+    private String m_port;
     /** the connection to the AUT-Agent */
     private AutAgentConnection m_agent;
 
     /**
      * @param hostname
      *            the hosts name
-     * @param port
+     * @param iPort
      *            the port
      */
-    public AUTAgentImpl(String hostname, int port) {
+    public AUTAgentImpl(String hostname, int iPort) {
+        Validate.notEmpty(hostname, "The hostname must not be empty."); //$NON-NLS-1$
+        final String port = String.valueOf(iPort);
+        String portNumberMessage = NetUtil.isPortNumberValid(port);
+        Validate.isTrue(portNumberMessage == null, portNumberMessage);
+        
         m_hostname = hostname;
         m_port = port;
     }
 
     /** {@inheritDoc} */
     public void connect() throws Exception {
-        AutAgentConnection.createInstance(m_hostname, String.valueOf(m_port));
-        m_agent = AutAgentConnection.getInstance();
-        m_agent.run();
+        if (!isConnected()) {
+            AutAgentConnection.createInstance(m_hostname, m_port);
+            m_agent = AutAgentConnection.getInstance();
+            m_agent.run();
+        } else {
+            throw new IllegalStateException("AUT-Agent connection is already made"); //$NON-NLS-1$
+        }
     }
 
     /** {@inheritDoc} */
     public void disconnect() {
-        if (m_agent != null) {
+        if (isConnected()) {
             m_agent.close();
+        } else {
+            throw new IllegalStateException("AUT-Agent connection is already disconnected"); //$NON-NLS-1$
         }
     }
 
@@ -81,6 +93,8 @@ public class AUTAgentImpl implements AUTAgent {
     public AUTIdentifier startAUT(
         @NonNull AUTConfiguration configuration)
         throws Exception {
+        Validate.notNull(configuration, "The configuration must not be null."); //$NON-NLS-1$
+        
         Map<String, String> autConfigMap = configuration.getLaunchInformation();
 
         // add relevant information for the AUT-Agent
@@ -131,8 +145,9 @@ public class AUTAgentImpl implements AUTAgent {
     /** {@inheritDoc} */
     public void stopAUT(
         @NonNull AUTIdentifier aut) throws Exception {
-        m_agent.send(new StopAUTServerMessage(
-                (AutIdentifier)aut));
+        Validate.notNull(aut, "The AUT-Identifier must not be null."); //$NON-NLS-1$
+        
+        m_agent.send(new StopAUTServerMessage((AutIdentifier)aut));
     }
 
     /** {@inheritDoc} */
@@ -160,6 +175,9 @@ public class AUTAgentImpl implements AUTAgent {
     @NonNull public AUT getAUT(
         @NonNull AUTIdentifier autID, 
         @NonNull ToolkitInfo information) {
+        Validate.notNull(autID, "The AUT-Identifier must not be null."); //$NON-NLS-1$
+        Validate.notNull(information, "The toolkit information must not be null."); //$NON-NLS-1$
+        
         return new AUTImpl((AutIdentifier) autID, information);
     }
 }

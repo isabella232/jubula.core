@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.internal.impl;
 
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.AUT;
@@ -61,6 +62,8 @@ public class AUTImpl implements AUT {
     public AUTImpl(
         @NonNull AutIdentifier autID, 
         @NonNull ToolkitInfo information) {
+        Validate.notNull(autID, "The AUT-Identifier must not be null."); //$NON-NLS-1$
+        Validate.notNull(information, "The toolkit information must not be null."); //$NON-NLS-1$
         
         m_autID = autID;
         setToolkitInformation((AbstractToolkitInfo)information);
@@ -68,15 +71,23 @@ public class AUTImpl implements AUT {
 
     /** {@inheritDoc} */
     public void connect() throws Exception {
-        final Map<ComponentClass, String> typeMapping = 
-            getInformation().getTypeMapping();
-        m_instance = AUTConnection.getInstance();
-        m_instance.connectToAut(m_autID, typeMapping);
+        if (!isConnected()) {
+            final Map<ComponentClass, String> typeMapping = 
+                getInformation().getTypeMapping();
+            m_instance = AUTConnection.getInstance();
+            m_instance.connectToAut(m_autID, typeMapping);
+        } else {
+            throw new IllegalStateException("AUT connection is already made"); //$NON-NLS-1$
+        }
     }
 
     /** {@inheritDoc} */
     public void disconnect() throws Exception {
-        m_instance.close();
+        if (isConnected()) {
+            m_instance.close();
+        } else {
+            throw new IllegalStateException("AUT connection is already disconnected"); //$NON-NLS-1$
+        }
     }
 
     /** {@inheritDoc} */
@@ -89,8 +100,8 @@ public class AUTImpl implements AUT {
         return m_autID;
     }
     
-    /** {@inheritDoc} */
-    public void setToolkitInformation(AbstractToolkitInfo information) {
+    /** @param information the toolkit information to set */
+    private void setToolkitInformation(AbstractToolkitInfo information) {
         m_information = information;
     }
 
@@ -106,6 +117,7 @@ public class AUTImpl implements AUT {
         @NonNull CAP cap, 
         @Nullable T payload) 
         throws ExecutionException {
+        Validate.notNull(cap, "The CAP must not be null."); //$NON-NLS-1$
         
         final ResultImpl<T> result = new ResultImpl<T>(cap, payload);
         try {
