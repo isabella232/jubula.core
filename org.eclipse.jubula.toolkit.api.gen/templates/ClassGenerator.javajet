@@ -87,8 +87,11 @@ import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
 <%}%>
 
 /**
- * Generated <%if (genInterface) {%>interface<%} else {%>class<%}%> representing the <%=className%> component from the <%=toolkitName%> toolkit.
- * <%if (genInterface) {%>This interface is not intended to be implemented by any other than the automatically generated classes.<%}%>
+ * <%if (genInterface) {%>Interface<%} else {%>Class<%}%> representing the <%=className%> component from the <%=toolkitName%> toolkit.
+<%if (genInterface) {%> 
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
+<%}%>
  */
 <%if (!genInterface) {%>
 <%if (realizedType != null && !realizedType.isEmpty()) {%>

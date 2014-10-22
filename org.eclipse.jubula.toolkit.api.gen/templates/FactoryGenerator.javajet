@@ -36,8 +36,8 @@ import org.eclipse.jubula.toolkit.ToolkitInfo;
 <%if (toolkitInfoFqName != null) {%>import <%=toolkitInfoFqName%>;<%}%>
 
 /**
- * Generated factory for creating components from the <%=genInfo.getToolkitName()%> toolkit.
- * This class is not intended to be sub-classed.
+ * Factory for creating components from the <%=genInfo.getToolkitName()%> toolkit.
+ * @noextend This class is not intended to be extended by clients.
  */
 public final class <%=factoryName%> {
 	
