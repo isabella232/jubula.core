@@ -76,10 +76,10 @@ package <%=packageName%>;
 
 import org.eclipse.jubula.communication.CAP;
 <%if (!genInterface) {%>
+import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.communication.internal.message.MessageParam;
 import org.eclipse.jubula.tools.ComponentIdentifier;
-import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.toolkit.internal.annotations.RealizedType;
 import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
@@ -118,7 +118,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			protected IComponentIdentifier m_componentIdentifier;
 			public <%=className%>(ComponentIdentifier componentIdentifier) {
 				super();
-				Assert.verify(componentIdentifier instanceof IComponentIdentifier);
+				Validate.isTrue(componentIdentifier instanceof IComponentIdentifier);
 				m_componentIdentifier = (IComponentIdentifier) componentIdentifier;
 			}<%}%>
 		<%}%>
@@ -178,7 +178,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			<%for (Param parameter : params) {
 			String paramName = parameter.getName();%>
 			<%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
-			Assert.verify(<%=translatedParamName%> != null, "Argument '<%=translatedParamName%>' must not be null");
+			Validate.notNull(<%=translatedParamName%>, "Argument '<%=translatedParamName%>' must not be null");
 				<%String paramType = paramMap.get(paramName);%>
 				<%if (nameLoader.isInEnumMap(paramType)) {%>
 			messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.rcValue(), "java.lang.String"));
