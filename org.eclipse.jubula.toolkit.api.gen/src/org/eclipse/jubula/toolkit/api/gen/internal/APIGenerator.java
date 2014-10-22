@@ -239,7 +239,7 @@ public class APIGenerator {
     }
     
     /** 
-     * creates factory for toolkit
+     * creates toolkit information class
      * @param tkGenInfo the generation information for the toolkit
      * @param generationBaseDirTemplate directory for generation
      */
