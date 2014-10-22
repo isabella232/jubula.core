@@ -116,7 +116,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			public <%=className%>() {
 				super();
 			}<%} else {%>
-			protected IComponentIdentifier m_componentIdentifier;
+			@NonNull protected IComponentIdentifier m_componentIdentifier;
 			public <%=className%>(@NonNull ComponentIdentifier componentIdentifier) {
 				super();
 				Validate.isTrue(componentIdentifier instanceof IComponentIdentifier);
@@ -168,7 +168,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			%>
 			@NonNull <%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
 		<%}%>
-		) <%if (genInterface) {%>;<%} else {%>{
+		) throws IllegalArgumentException<%if (genInterface) {%>;<%} else {%> {
 			MessageCap messageCap = new MessageCap();
 			messageCap.setMethod("<%=action.getMethod()%>"); //$NON-NLS-1$
 			messageCap.sethasDefaultMapping(<%=hasDefaultMapping%>);
