@@ -16,9 +16,11 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.toolkit.swt.config.SWTAUTConfiguration;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
 
 /** @author BREDEX GmbH */
@@ -41,9 +43,14 @@ public class RCPAUTConfiguration extends SWTAUTConfiguration {
      * @param keyboardLayout
      *            the keyboard layout to use
      */
-    public RCPAUTConfiguration(String name, String autID,
-        String command, String workingDir, String[] args,
-        Locale locale, Locale keyboardLayout) {
+    public RCPAUTConfiguration(
+        @Nullable String name, 
+        @NonNull String autID,
+        @NonNull String command, 
+        @NonNull String workingDir, 
+        @Nullable String[] args,
+        @NonNull Locale locale, 
+        @NonNull Locale keyboardLayout) {
         super(name, autID, command, workingDir, args, locale, keyboardLayout);
     }
 
@@ -52,13 +59,14 @@ public class RCPAUTConfiguration extends SWTAUTConfiguration {
         Map<String, String> launchInformation = new HashMap<String, String>();
 
         launchInformation.put(AutConfigConstants.AUT_ID, 
-            getAutID().getExecutableName());
+            getAutID().getID());
         launchInformation.put(AutConfigConstants.EXECUTABLE, 
             getCommand());
         launchInformation.put(AutConfigConstants.WORKING_DIR, 
             getWorkingDir());
         launchInformation.put(AutConfigConstants.AUT_ARGUMENTS,
-            StringUtils.join(getArgs()));
+            StringUtils.defaultString(
+                StringUtils.join(getArgs(), StringConstants.SPACE)));
         launchInformation.put(AutConfigConstants.KEYBOARD_LAYOUT,
             getKeyboardLayout().toString());
 

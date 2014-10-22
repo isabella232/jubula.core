@@ -12,13 +12,16 @@ package org.eclipse.jubula.toolkit.swt.config;
 
 import java.util.Locale;
 
+import org.apache.commons.lang.Validate;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.toolkit.base.config.AbstractOSProcessAUTConfiguration;
 
 /** @author BREDEX GmbH */
 public abstract class SWTAUTConfiguration extends
     AbstractOSProcessAUTConfiguration {
     /** the keyboardLayout */
-    private Locale m_keyboardLayout;
+    @NonNull private Locale m_keyboardLayout;
 
     /**
      * Constructor
@@ -38,25 +41,24 @@ public abstract class SWTAUTConfiguration extends
      * @param keyboardLayout
      *            the keyboard layout to use
      */
-    public SWTAUTConfiguration(String name, String autID,
-        String command, String workingDir, String[] args, Locale locale,
-        Locale keyboardLayout) {
+    public SWTAUTConfiguration(
+        @Nullable String name, 
+        @NonNull String autID,
+        @NonNull String command, 
+        @NonNull String workingDir, 
+        @Nullable String[] args, 
+        @NonNull Locale locale,
+        @NonNull Locale keyboardLayout) {
         super(name, autID, command, workingDir, args, locale);
-        setKeyboardLayout(keyboardLayout);
+        
+        Validate.notNull(keyboardLayout, "The keyboard layout must not be null"); //$NON-NLS-1$
+        m_keyboardLayout = keyboardLayout;
     }
 
     /**
      * @return the keyboardLayout
      */
-    public Locale getKeyboardLayout() {
+    @NonNull public Locale getKeyboardLayout() {
         return m_keyboardLayout;
-    }
-
-    /**
-     * @param keyboardLayout
-     *            the keyboardLayout to set
-     */
-    private void setKeyboardLayout(Locale keyboardLayout) {
-        m_keyboardLayout = keyboardLayout;
     }
 }

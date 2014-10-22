@@ -12,17 +12,21 @@ package org.eclipse.jubula.toolkit.base.config;
 
 import java.util.Locale;
 
+import org.apache.commons.lang.Validate;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 /** @author BREDEX GmbH */
 public abstract class AbstractOSProcessAUTConfiguration extends
     AbstractAUTConfiguration {
     /** the command */
-    private String m_command;
+    @NonNull private String m_command;
     /** the dir */
-    private String m_workingDir;
+    @NonNull private String m_workingDir;
     /** the args */
-    private String[] m_args;
+    @Nullable private String[] m_args;
     /** the locale */
-    private Locale m_locale;
+    @NonNull private Locale m_locale;
 
     /**
      * Constructor
@@ -40,68 +44,52 @@ public abstract class AbstractOSProcessAUTConfiguration extends
      * @param locale
      *            the locale to use for the AUT process
      */
-    public AbstractOSProcessAUTConfiguration(String name, String autID,
-        String command, String workingDir, String[] args, Locale locale) {
+    public AbstractOSProcessAUTConfiguration(
+        @Nullable String name, 
+        @NonNull String autID,
+        @NonNull String command, 
+        @NonNull String workingDir, 
+        @Nullable String[] args, 
+        @NonNull Locale locale) {
         super(name, autID);
-        setLocale(locale);
-        setCommand(command);
-        setWorkingDir(workingDir);
-        setArgs(args);
+        
+        Validate.notEmpty(command, "The given command must not be empty"); //$NON-NLS-1$
+        m_command = command;
+        
+        Validate.notEmpty(workingDir, "The working directory must not be empty"); //$NON-NLS-1$
+        m_workingDir = workingDir;
+        
+        m_args = args;
+
+        Validate.notNull(locale, "The locale must not be null"); //$NON-NLS-1$
+        m_locale = locale;
     }
 
     /**
      * @return the command
      */
-    public String getCommand() {
+    @NonNull public String getCommand() {
         return m_command;
-    }
-
-    /**
-     * @param command the command to set
-     */
-    private void setCommand(String command) {
-        m_command = command;
     }
 
     /**
      * @return the workingDir
      */
-    public String getWorkingDir() {
+    @NonNull public String getWorkingDir() {
         return m_workingDir;
-    }
-
-    /**
-     * @param workingDir the workingDir to set
-     */
-    private void setWorkingDir(String workingDir) {
-        m_workingDir = workingDir;
     }
 
     /**
      * @return the args
      */
-    public String[] getArgs() {
+    @Nullable public String[] getArgs() {
         return m_args;
-    }
-
-    /**
-     * @param args the args to set
-     */
-    private void setArgs(String[] args) {
-        m_args = args;
     }
 
     /**
      * @return the locale
      */
-    public Locale getLocale() {
+    @NonNull public Locale getLocale() {
         return m_locale;
-    }
-
-    /**
-     * @param locale the locale to set
-     */
-    private void setLocale(Locale locale) {
-        m_locale = locale;
     }
 }

@@ -73,8 +73,10 @@ public class TestSimpleAdderRCPAUT {
         ComponentIdentifier buttonId = om.get("equalsButton"); //$NON-NLS-1$
         ComponentIdentifier sumId = om.get("sum"); //$NON-NLS-1$
         
-        if (val1Id != null && val2Id != null && buttonId != null
-                && sumId != null) {
+        if (val1Id != null 
+            && val2Id != null 
+            && buttonId != null
+            && sumId != null) {
             value1 = SwtComponents.createText(val1Id);
             value2 = SwtComponents.createText(val2Id);
             button = SwtComponents.createButton(buttonId);
@@ -132,6 +134,7 @@ public class TestSimpleAdderRCPAUT {
     }
     
     /** the actual test method */
+    @SuppressWarnings("null")
     @Test(expected = CheckFailedException.class)
     public void testTestFirstSimpleAdderSteps() throws Exception {
         

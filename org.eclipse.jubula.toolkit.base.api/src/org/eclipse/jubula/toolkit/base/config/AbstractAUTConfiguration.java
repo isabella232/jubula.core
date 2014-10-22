@@ -10,15 +10,19 @@
  *******************************************************************************/
 package org.eclipse.jubula.toolkit.base.config;
 
+import org.apache.commons.lang.Validate;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
+import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /** @author BREDEX GmbH */
 public abstract class AbstractAUTConfiguration implements AUTConfiguration {
     /** the name */
-    private String m_name;
+    @Nullable private String m_name;
     /** the autID */
-    private AutIdentifier m_autID;
+    @NonNull private AUTIdentifier m_autID;
 
     /**
      * Constructor
@@ -28,38 +32,26 @@ public abstract class AbstractAUTConfiguration implements AUTConfiguration {
      * @param autID
      *            the AUT ID
      */
-    public AbstractAUTConfiguration(String name, String autID) {
-        setName(name);
-        setAutID(autID);
+    public AbstractAUTConfiguration(
+        @Nullable String name, 
+        @NonNull String autID) {
+        m_name = name;
+        
+        Validate.notEmpty(autID, "The AUT-Identifier must not be empty"); //$NON-NLS-1$
+        m_autID = new AutIdentifier(autID);
     }
 
     /**
      * @return the name
      */
-    public String getName() {
+    @Nullable public String getName() {
         return m_name;
-    }
-
-    /**
-     * @param name
-     *            the name to set
-     */
-    private void setName(String name) {
-        m_name = name;
     }
 
     /**
      * @return the autID
      */
-    public AutIdentifier getAutID() {
+    @NonNull public AUTIdentifier getAutID() {
         return m_autID;
-    }
-
-    /**
-     * @param autID
-     *            the autID to set
-     */
-    private void setAutID(String autID) {
-        m_autID = new AutIdentifier(autID);
     }
 }
