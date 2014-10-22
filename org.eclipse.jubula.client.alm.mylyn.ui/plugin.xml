@@ -37,7 +37,7 @@
       <command
             categoryId="org.eclipse.jubula.client.alm.ui.commands.category"
             id="org.eclipse.jubula.client.alm.ui.commands.inspectMylynAttributes"
-            name="Inspect attributes">
+            name="Show attributes...">
       </command>
    </extension>
    <extension

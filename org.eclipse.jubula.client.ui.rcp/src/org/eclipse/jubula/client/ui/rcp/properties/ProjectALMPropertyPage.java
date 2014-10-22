@@ -312,7 +312,7 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
     private void createRuleGroup(Composite leftPart, Group group,
             Button report, Label rulesLabel, final TableViewer tableViewer,
             String groupTitle, Button addButton, Button removeButton) {
-        GridData groupGridData = new GridData(SWT.LEFT, SWT.TOP, false, false);
+        GridData groupGridData = new GridData(SWT.FILL, SWT.TOP, true, false);
         groupGridData.horizontalSpan = 2;
         group.setLayout(new GridLayout(2, false));
         group.setLayoutData(groupGridData);
@@ -351,7 +351,9 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         final Table table = tableViewer.getTable();
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
-        GridData layoutData = new GridData(600, 150);
+        GridData layoutData = new GridData(600, 150, true, false);
+        layoutData.horizontalAlignment = SWT.FILL;
+        layoutData.heightHint = 150;
         table.setLayoutData(layoutData);
         
         Composite rightPart = new Composite(group, SWT.NONE);
@@ -360,8 +362,6 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
         rightPart.setLayout(compositeLayout);
         GridData compositeData = new GridData(
                 SWT.RIGHT, SWT.BOTTOM, false, false);
-        compositeData.horizontalAlignment = GridData.FILL;
-        compositeData.grabExcessHorizontalSpace = true;
         rightPart.setLayoutData(compositeData);
         
         WidgetSelectionListener selectionListener =
