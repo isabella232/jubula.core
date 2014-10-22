@@ -74,6 +74,7 @@ if (specInfo instanceof ComponentGenInfo) {
  *******************************************************************************/
 package <%=packageName%>;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.communication.CAP;
 <%if (!genInterface) {%>
 import org.apache.commons.lang.Validate;
@@ -107,7 +108,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			public <%=className%>() {
 				super();
 			}<%} else {%>
-			public <%=className%>(ComponentIdentifier componentIdentifier) {
+			public <%=className%>(@NonNull ComponentIdentifier componentIdentifier) {
 				super(componentIdentifier);
 			}<%}%>
 		<%} else {%>
@@ -116,7 +117,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 				super();
 			}<%} else {%>
 			protected IComponentIdentifier m_componentIdentifier;
-			public <%=className%>(ComponentIdentifier componentIdentifier) {
+			public <%=className%>(@NonNull ComponentIdentifier componentIdentifier) {
 				super();
 				Validate.isTrue(componentIdentifier instanceof IComponentIdentifier);
 				m_componentIdentifier = (IComponentIdentifier) componentIdentifier;
@@ -129,7 +130,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 		<%if (hasComponentClass) {%>
 		org.eclipse.jubula.tools.internal.objects.ComponentIdentifier pseudoIdentifier =
 			new org.eclipse.jubula.tools.internal.objects.ComponentIdentifier();
-		pseudoIdentifier.setComponentClassName("<%=componentClassName%>");
+		pseudoIdentifier.setComponentClassName("<%=componentClassName%>"); //$NON-NLS-1$
 		return pseudoIdentifier;
 		<%} else {%>
 		return null;
@@ -152,7 +153,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 		List<Param> params = action.getParams();
 		%>
 		<%if (action.isDeprecated()) {%>@Deprecated<%}%>
-		public CAP <%=methodName%>(
+		@NonNull public CAP <%=methodName%>(
 		<%	
 		// add parameters to method
 		Map<String, String> paramMap = new HashMap<String, String>();
@@ -165,11 +166,11 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			String paramName = nameLoader.translateFromCompSystem(name);
 			paramMap.put(name, paramType);
 			%>
-			<%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
+			@NonNull <%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
 		<%}%>
 		) <%if (genInterface) {%>;<%} else {%>{
 			MessageCap messageCap = new MessageCap();
-			messageCap.setMethod("<%=action.getMethod()%>");
+			messageCap.setMethod("<%=action.getMethod()%>"); //$NON-NLS-1$
 			messageCap.sethasDefaultMapping(<%=hasDefaultMapping%>);
 			<%if (!hasDefaultMapping) {%>
 			messageCap.setCi(m_componentIdentifier);
@@ -178,12 +179,12 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			<%for (Param parameter : params) {
 			String paramName = parameter.getName();%>
 			<%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
-			Validate.notNull(<%=translatedParamName%>, "Argument '<%=translatedParamName%>' must not be null");
+			Validate.notNull(<%=translatedParamName%>, "Argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
 				<%String paramType = paramMap.get(paramName);%>
 				<%if (nameLoader.isInEnumMap(paramType)) {%>
-			messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.rcValue(), "java.lang.String"));
+			messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.rcValue(), "java.lang.String")); //$NON-NLS-1$
 				<%} else {%>
-			messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.toString(), "<%=paramType%>"));
+			messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.toString(), "<%=paramType%>")); //$NON-NLS-1$
 				<%}%>
 			<%}%>
 			return messageCap;

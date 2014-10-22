@@ -28,6 +28,8 @@ if (specInfo instanceof FactoryGenInfo) {
  *******************************************************************************/
 package <%=packageName%>;
 
+import org.apache.commons.lang.Validate;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.tools.ComponentIdentifier;
 import org.eclipse.jubula.toolkit.ToolkitInfo;
 
@@ -38,18 +40,18 @@ import org.eclipse.jubula.toolkit.ToolkitInfo;
  * This class is not intended to be sub-classed.
  */
 public final class <%=factoryName%> {
-
-	private static ToolkitInfo m_toolkitInformation = 
-		<%if (toolkitInfoName != null) {%>new <%=toolkitInfoName%>();
-		<%} else {%>null;<%}%>
+	
+	<%if (toolkitInfoName != null) {%>
+	@NonNull private final static ToolkitInfo m_toolkitInformation = new <%=toolkitInfoName%>();<%}%>
 
 	private <%=factoryName%>() {
 		super();
 	}
 	
-	public static ToolkitInfo getToolkitInformation() {
+	<%if (toolkitInfoName != null) {%>
+	@NonNull public static ToolkitInfo getToolkitInformation() {
 		return m_toolkitInformation;
-	}
+	}<%}%>
 
 <%for (CompInfoForFactoryGen compInfo : compInfoList) {
 	String componentName = compInfo.getComponentName();
@@ -57,10 +59,11 @@ public final class <%=factoryName%> {
 	String returnType = compInfo.getMostSpecificVisibleSuperTypeName();
 	Boolean hasDefaultMapping = compInfo.hasDefaultMapping();%>
 	<%if (hasDefaultMapping) {%>
-	public static <%=returnType%> create<%=componentName%> () {
+	@NonNull public static <%=returnType%> create<%=componentName%> () {
 		return new <%=implClassName%>();
 	}<%} else {%>
-	public static <%=returnType%> create<%=componentName%> (ComponentIdentifier componentIdentifier) {
+	@NonNull public static <%=returnType%> create<%=componentName%> (@NonNull ComponentIdentifier componentIdentifier) {
+		Validate.notNull(componentIdentifier);
 		return new <%=implClassName%>(componentIdentifier);
 	}<%}%>
 <%}%>

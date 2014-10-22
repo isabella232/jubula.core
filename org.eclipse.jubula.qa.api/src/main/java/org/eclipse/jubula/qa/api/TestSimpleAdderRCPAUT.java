@@ -73,10 +73,13 @@ public class TestSimpleAdderRCPAUT {
         ComponentIdentifier buttonId = om.get("equalsButton"); //$NON-NLS-1$
         ComponentIdentifier sumId = om.get("sum"); //$NON-NLS-1$
         
-        value1 = SwtComponents.createText(val1Id);
-        value2 = SwtComponents.createText(val2Id);
-        button = SwtComponents.createButton(buttonId);
-        result = SwtComponents.createTextComponent(sumId);
+        if (val1Id != null && val2Id != null && buttonId != null
+                && sumId != null) {
+            value1 = SwtComponents.createText(val1Id);
+            value2 = SwtComponents.createText(val2Id);
+            button = SwtComponents.createButton(buttonId);
+            result = SwtComponents.createTextComponent(sumId);            
+        }
     }
     
     /** prepare */

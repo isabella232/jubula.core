@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.toolkit.internal.AbstractToolkitInfo;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Property;
@@ -42,7 +43,7 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.Property;
  */
 public final class <%=className%> extends AbstractToolkitInfo {
 
-	private Map<ComponentClass, String> m_map = new HashMap<ComponentClass, String>();
+	@NonNull private Map<ComponentClass, String> m_map = new HashMap<ComponentClass, String>();
 
 	/**
 	 * Constructor
@@ -53,7 +54,7 @@ public final class <%=className%> extends AbstractToolkitInfo {
 			ComponentClass componentClass = compInfo.getComponentClass();
 			String testerClass = compInfo.getTesterClass();
 			if (componentClass != null && testerClass != null) {%>
-		ComponentClass newComponentClass<%=i%> = new ComponentClass("<%=componentClass.getName()%>");
+		ComponentClass newComponentClass<%=i%> = new ComponentClass("<%=componentClass.getName()%>"); //$NON-NLS-1$
 				<%List properties = componentClass.getProperties();%>
 				<%if (!properties.isEmpty()) {%>
 		List<Property> newProperties<%=i%> = new ArrayList<Property>();
@@ -62,28 +63,28 @@ public final class <%=className%> extends AbstractToolkitInfo {
 						<%if (obj instanceof Property) {
 							Property property = (Property) obj;%>
 		Property newProperty<%=i%>_<%=j%> = new Property();
-		newProperty<%=i%>_<%=j%>.setName("<%=property.getName()%>");
-		newProperty<%=i%>_<%=j%>.setValue("<%=property.getValue()%>");
+		newProperty<%=i%>_<%=j%>.setName("<%=property.getName()%>"); //$NON-NLS-1$
+		newProperty<%=i%>_<%=j%>.setValue("<%=property.getValue()%>"); //$NON-NLS-1$
 		newProperties<%=i%>.add(newProperty<%=i%>_<%=j%>);
 						<%}%>
 						<%j++;%>
 					<%}%>
 		newComponentClass<%=i%>.setProperties(newProperties<%=i%>);
 				<%}%>
-		m_map.put(newComponentClass<%=i%>,"<%=testerClass%>");
+		m_map.put(newComponentClass<%=i%>,"<%=testerClass%>"); //$NON-NLS-1$
 			<%}%>
 			<%i++;%>
 		<%}%>
 	}
 	
 	/** {@inheritDoc} */
-	public Map<ComponentClass, String> getTypeMapping() {
+	@NonNull public Map<ComponentClass, String> getTypeMapping() {
 		return m_map;
 	}
 	
 	/** {@inheritDoc} */
-	public String getToolkitID() {
-		return "<%=genInfo.getToolkitID()%>";
+	@NonNull public String getToolkitID() {
+		return "<%=genInfo.getToolkitID()%>"; //$NON-NLS-1$
 	}
 }
 <%}%>
