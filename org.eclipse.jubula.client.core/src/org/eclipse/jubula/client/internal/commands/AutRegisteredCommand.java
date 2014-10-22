@@ -8,11 +8,11 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core.commands;
+package org.eclipse.jubula.client.internal.commands;
 
-import java.util.concurrent.Exchanger;
-
-import org.eclipse.jubula.client.internal.Synchronizer;
+import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
+import org.eclipse.jubula.client.core.agent.AutRegistrationEvent;
+import org.eclipse.jubula.client.core.agent.AutRegistrationEvent.RegistrationStatus;
 import org.eclipse.jubula.communication.internal.APICommand;
 import org.eclipse.jubula.communication.internal.message.AutRegisteredMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
@@ -40,15 +40,10 @@ public class AutRegisteredCommand implements APICommand {
      * {@inheritDoc}
      */
     public Message execute() {
-        if (m_message.isRegistered()) {
-            Exchanger<Object> exchanger = Synchronizer.instance();
-            try {
-                exchanger.exchange(m_message.getAutId());
-            } catch (InterruptedException e) {
-                log.error(e.getLocalizedMessage(), e);
-            }
-        }
-        
+        AutAgentRegistration.getInstance().fireAutRegistration(
+            new AutRegistrationEvent(m_message.getAutId(), 
+                m_message.isRegistered() ? RegistrationStatus.Register 
+                        : RegistrationStatus.Deregister));
         return null;
     }
 

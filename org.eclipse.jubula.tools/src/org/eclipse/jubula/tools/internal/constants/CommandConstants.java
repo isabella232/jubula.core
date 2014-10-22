@@ -133,7 +133,7 @@ public abstract class CommandConstants {
     /** constant: "org.eclipse.jubula.autagent.commands.ShowObservInfoCommand" */
     public static final String SHOW_OBSERVE_INFO_COMMAND = "org.eclipse.jubula.autagent.commands.ShowObservInfoCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.CAPTestResponseCommand" */
-    public static final String CAP_TEST_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.CAPTestResponseCommand"; //$NON-NLS-1$
+    public static final String CAP_TEST_RESPONSE_COMMAND = "org.eclipse.jubula.client.internal.commands.CAPTestResponseCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.RcpAccessorStartedCommand" */
     public static final String RCP_STARTED_COMMAND = "org.eclipse.jubula.client.core.commands.RcpAccessorStartedCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.NullCommand" */
@@ -155,7 +155,7 @@ public abstract class CommandConstants {
     /** constant: "org.eclipse.jubula.autagent.commands.StartAUTServerCommand" */
     public static final String START_AUT_SERVER_COMMAND = "org.eclipse.jubula.autagent.commands.StartAUTServerCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.StartAUTServerStateCommand" */
-    public static final String START_AUT_SERVER_STATE_COMMAND = "org.eclipse.jubula.client.core.commands.StartAUTServerStateCommand"; //$NON-NLS-1$
+    public static final String START_AUT_SERVER_STATE_COMMAND = "org.eclipse.jubula.client.internal.commands.StartAUTServerStateCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.autagent.commands.StopAUTServerCommand" */
     public static final String STOP_AUT_SERVER_COMMAND = "org.eclipse.jubula.autagent.commands.StopAUTServerCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.StopAUTServerStateCommand" */
@@ -195,14 +195,14 @@ public abstract class CommandConstants {
     public static final String PROCESS_DIR_COMMAND = "org.eclipse.jubula.client.ui.rcp.businessprocess.HandleRemoteFileBrowsing"; //$NON-NLS-1$
 
     /** client-side handling for AUT registration with the AUT Agent */
-    public static final String AUT_REGISTERED_COMMAND = "org.eclipse.jubula.client.core.commands.AutRegisteredCommand"; //$NON-NLS-1$
+    public static final String AUT_REGISTERED_COMMAND = "org.eclipse.jubula.client.internal.commands.AutRegisteredCommand"; //$NON-NLS-1$
     /** client-side handling for AUT deregistration with the AUT Agent */
     public static final String AUT_DEREGISTERED_COMMAND = "org.eclipse.jubula.client.core.commands.AutDeregisteredCommand"; //$NON-NLS-1$
 
     /** server-side handling to gather a list of AUTs currently registered with the AUT Agent */
     public static final String GET_REGISTERED_AUTS_COMMAND = "org.eclipse.jubula.autagent.commands.GetRegisteredAutListCommand"; //$NON-NLS-1$
     /** client-side handling to gather a list of AUTs currently registered with the AUT Agent */
-    public static final String REGISTERED_AUTS_COMMAND = "org.eclipse.jubula.client.core.commands.RegisteredAutListCommand"; //$NON-NLS-1$
+    public static final String REGISTERED_AUTS_COMMAND = "org.eclipse.jubula.client.internal.commands.RegisteredAutListCommand"; //$NON-NLS-1$
 
     /** sends a message for a Running AUT to connect to a Client */
     public static final String CONNECT_TO_AUT_COMMAND = "org.eclipse.jubula.autagent.commands.ConnectToAutCommand"; //$NON-NLS-1$
@@ -246,7 +246,7 @@ public abstract class CommandConstants {
     /** AUT Agent - returns the keyboard layout name */
     public static final String GET_KEYBOARD_LAYOUT_NAME_COMMAND = "org.eclipse.jubula.rc.common.commands.GetKeyboardLayoutNameCommand"; //$NON-NLS-1$
     /** Client - handling of the returned keyboard layout name */
-    public static final String GET_KEYBOARD_LAYOUT_NAME_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.GetKeyboardLayoutNameResponseCommand"; //$NON-NLS-1$
+    public static final String GET_KEYBOARD_LAYOUT_NAME_RESPONSE_COMMAND = "org.eclipse.jubula.client.internal.commands.GetKeyboardLayoutNameResponseCommand"; //$NON-NLS-1$
     /** AUT Server (SWT) - sets the keyboard layout */
     public static final String SET_KEYBOARD_LAYOUT_COMMAND = "org.eclipse.jubula.rc.swt.commands.SetKeyboardLayoutCommand"; //$NON-NLS-1$
     /** Client - handling of the send window titles from the browser */

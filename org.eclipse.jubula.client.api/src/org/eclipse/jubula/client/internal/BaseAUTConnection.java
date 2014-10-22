@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.internal;
 
 import java.io.IOException;
 
-import org.eclipse.jubula.client.core.commands.GetKeyboardLayoutNameResponseCommand;
+import org.eclipse.jubula.client.internal.commands.GetKeyboardLayoutNameResponseCommand;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.communication.internal.message.GetKeyboardLayoutNameMessage;
