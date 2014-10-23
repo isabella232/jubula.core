@@ -22,26 +22,17 @@
         <handler
           class="org.eclipse.jubula.client.api.ui.handlers.ExportObjectMappingHandler"
           commandId="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand">
-          <enabledWhen>
-            <with variable="activeEditorId">
-              <equals value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor" />
-            </with>
-          </enabledWhen>
         </handler>
     </extension>
     
     <extension point="org.eclipse.ui.menus">
-        <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-          <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar">
+        <menuContribution
+          allPopups="false"
+          locationURI="popup:org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor?before=additions">
             <command
               commandId="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand"
               style="push">
-              <visibleWhen checkEnabled="false">
-                <reference
-                  definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
-              </visibleWhen>
             </command>
-          </toolbar>
         </menuContribution>
     </extension>
     
