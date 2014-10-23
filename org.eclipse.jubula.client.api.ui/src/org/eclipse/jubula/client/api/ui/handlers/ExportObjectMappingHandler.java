@@ -183,9 +183,38 @@ public class ExportObjectMappingHandler extends AbstractHandler {
             String value = m_map.get(key);
             encodedAssociations.append(key + StringConstants.EQUALS_SIGN + value
                     + StringConstants.NEWLINE);
-            identifierMap.put(key, key);
+            identifierMap.put(key, translateToJavaIdentifier(key));
         }
         return new OMAssociation(encodedAssociations, identifierMap);
+    }
+
+    /**
+     * Translates a string to a valid java identifier
+     * @param key the string
+     * @return a valid java identifier
+     */
+    private String translateToJavaIdentifier(String key) {
+        String modifiedKey = key;
+        String [] exceptions = new String[] {
+            StringConstants.DOT,
+            StringConstants.SPACE,
+            StringConstants.BACKSLASH,
+            StringConstants.SLASH,
+            StringConstants.STAR,
+            StringConstants.COLON,
+            StringConstants.LEFT_BRACKET,
+            StringConstants.RIGHT_BRACKET,
+            StringConstants.LEFT_PARENTHESES,
+            StringConstants.RIGHT_PARENTHESES,
+            StringConstants.EQUALS_SIGN,
+            StringConstants.PLUS,
+            StringConstants.MINUS,
+            StringConstants.PIPE};
+        for (String exception : exceptions) {
+            modifiedKey = modifiedKey.replace(
+                    exception, StringConstants.UNDERSCORE);
+        }
+        return modifiedKey;
     }
 
     /**

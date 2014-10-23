@@ -28,7 +28,11 @@
     <extension point="org.eclipse.ui.menus">
         <menuContribution
           allPopups="false"
-          locationURI="popup:org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor?before=additions">
+          locationURI="popup:org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor?after=additions">
+            <separator
+                name="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor.separatorExport"
+                visible="true">
+            </separator>
             <command
               commandId="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand"
               style="push">
