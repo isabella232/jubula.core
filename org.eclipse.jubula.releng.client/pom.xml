@@ -19,9 +19,13 @@
 		<module>../org.eclipse.jubula.app.dbtool</module>
 		<module>../org.eclipse.jubula.feature</module>
         <module>../org.eclipse.jubula.feature.api</module>
+        <module>../org.eclipse.jubula.feature.api.converter</module>
 		<module>../org.eclipse.jubula.client.api</module>
 		<module>../org.eclipse.jubula.client.api.commands</module>
         <module>../org.eclipse.jubula.client.api.ui</module>
+        <module>../org.eclipse.jubula.client.api.converter</module>
+        <module>../org.eclipse.jubula.client.api.converter.ui</module>
+        <module>../org.eclipse.jubula.client.api.converter.annotations</module>
 		<module>../org.eclipse.jubula.client.core</module>
         <module>../org.eclipse.jubula.client.ui</module>
         <module>../org.eclipse.jubula.client.alm.mylyn.core</module>
