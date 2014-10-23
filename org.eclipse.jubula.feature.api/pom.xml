@@ -18,6 +18,21 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>lib</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>lib</outputDirectory>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<excludeTransitive>false</excludeTransitive>
+							<stripVersion>true</stripVersion>
+						</configuration>
+					</execution>
+					<execution>
 						<id>m2-repo</id>
 						<phase>process-sources</phase>
 						<goals>
@@ -38,12 +53,16 @@
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>2.4.1</version>
 				<configuration>
-					<filesets>
-						<fileset>
-							<directory>m2-repo</directory>
-							<followSymlinks>false</followSymlinks>
-						</fileset>
-					</filesets>
+                    <filesets>
+                        <fileset>
+                            <directory>lib</directory>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                        <fileset>
+                            <directory>m2-repo</directory>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
 				</configuration>
 			</plugin>
 			<plugin>
