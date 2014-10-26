@@ -572,4 +572,14 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
     public String getTitleToolTip() {
         return StringUtils.EMPTY;
     }
+    
+    /**
+     * Sets all necessary global action handlers for this editor. This
+     * ensures that the editor's actions control the enablement of the 
+     * corresponding actions in the main menu.
+     */
+    protected void setActionHandlers() {
+        getSite().setSelectionProvider(this);
+        getEditorSite().getActionBars().updateActionBars();
+    }
 }
