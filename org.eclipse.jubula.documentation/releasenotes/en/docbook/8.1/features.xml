@@ -1,0 +1,234 @@
+<section id="new-features-and-developments-8.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New Features and Developments</title>
+  <para>
+    <emphasis role="strong">New option for reporting to ALM systems:
+    update fields</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now specify in the Project properties that you want to
+        update fields on tasks in ALM repositories after a test has
+        run.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This allows you to automatically change e.g. the status of
+        tasks based on test results.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">-datadir and -resultdir parameters are now
+    optional for testexec</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The parameters to enter a result directory (where HTML and XML
+        reports are created) and to enter the place where any external
+        data files reside are now optional in the testexec.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This reduces the amount of parameters you have to enter for a
+        simple configuration.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New optional parameter for testexec
+    -resultname</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now specify a name for the HTML and XML files that
+        testexec can produce using the parameter -resultname.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you do not use this parameter, then a default name
+        consisting of the Test Suite name will be used.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Improved no-run option in
+    testexec</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The no-run option in the testexec now has a number of
+        parameters so that you can define how far the test should be
+        checked.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can use this option to perform all steps up to the actual
+        test execution to ensure that e.g. AUTs can be started, object
+        mapping is complete etc.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Composite components in JavaFX can now be
+    mapped</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        It is now easier / possible to map composite components such
+        as accordeons and choice boxes in JavaFX AUTs.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Support for derived components in
+    JavaFX</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now test components in JavaFX AUTs that are derived
+        from currently supported JavaFX components.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Support for nested columns in tables in
+    JavaFX</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now test tables in JavaFX that have nested columns
+        (i.e. where one column contains multiple child columns).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Enter the path to the column you require using a forward slash
+        as a path separator, e.g. <emphasis role="input">Address/Street</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can address the columns using indexpath and textpath.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New actions supported in iOS</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now use the following actions in iOS tests:
+        Application Input Text, Click in Component.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Default columns changed in the Test Result
+    Summary View</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The columns that are shown by default in a new workspace for
+        the Test Result Summary View have been reduced.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can still add other columns to the view using the context
+        menu in the view.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        There is also a new button in the top right hand corner of the
+        view to reset the standard column width.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        There is a new column for the version number of the Project.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New actions in the iOS toolkit</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The action <emphasis>input text</emphasis> is now available
+        for iOS. You can use this action to enter text to a component
+        that currently has focus.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The action <emphasis>click in component</emphasis> is now
+        available for iOS.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The action <emphasis>take screenshot</emphasis> is now
+        available for iOS. It takes a screenshot of the App screen.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        There is a new action just for iOS <emphasis>check badge
+        value</emphasis>. Use this action to check the text on a badge
+        based on the index of that badge within a tab bar.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Dashboard as a deployable web
+    application</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now use the testresults.war found in the
+        <emphasis>dashboard/webapp</emphasis> folder to deploy the
+        dashboard into your own server.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The URL for the standalone and deployable dashboard has
+        changed to unify it. You must update any links to the
+        dashboard to use this new URL.
+      </para>
+      <programlisting>
+http://HOSTNAME:SERVERPORT/testresults/dashboard
+</programlisting>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New searching options</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In the Search Dialog, you can now search for nodes in the
+        Project based on their name, their comment and/or their Task
+        ID.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

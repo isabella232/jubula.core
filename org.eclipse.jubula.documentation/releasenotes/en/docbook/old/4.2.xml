@@ -1,0 +1,345 @@
+<section id="release-notes-for-version-4.2" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                          xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Release Notes for version 4.2.01053</title>
+  <section id="new-features-and-developments-4.2">
+    <title>New features and developments</title>
+    <para>
+      <emphasis role="strong">Eclipse 3.6 supported</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Tests can be written for Eclipse applications that are written
+          in 3.6
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Viewing test results</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Full test result details that are still in the database can
+          now be opened in the Test Result View from the Test Result
+          Summary View.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This lets you review tests that ran overnight directly in the
+          ITE.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Automatic database migration</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The ITE now contains a database migration wizard.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When a connection to a database is made in a new version, the
+          ITE automatically recognizes whether the database version is
+          incompatile.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If so, you can start the migration wizard. You specify which
+          Projects should be imported into the new database (the
+          Projects must have been exported from the previous version).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The migration wizard converts the database automatically to
+          the new version.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Commenting out Test Cases</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can now comment out Test Cases and Test Steps in editors.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Items that have been commented out are inactive and are
+          neither validated for Test Suite completeness, nor executed.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New parameters for table
+      actions</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Actions on tables now have new parameters for <emphasis>row
+          operator</emphasis> and <emphasis>column operator</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can now select rows and columns based on their title and
+          also determine how you want the selection to occur (equals,
+          matches, simple match, not equals).
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New parameter for select
+      actions</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Actions that select items from tables, lists and trees have a
+          new parameter for <emphasis>mouse button</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can now define which mouse button should be used to select
+          the item.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Number of failed Test Steps
+      shown</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The Test Result Summary View now also has the information
+          about how many Test Steps failed in a test run.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Information about whether test result
+      details are available</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The Test Result Summary View now also has the information
+          about whether the details for a test run are still in the
+          database.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the results are still available, then the Test Result View
+          can be reopened.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Spring to next/previous error</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          In the Test Result View which opens when you open the results
+          for a test run from the Test Result Summary View, you can use
+          two new toolbar buttons to spring to the next/previous error.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Showing comments for Test Cases</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Any comments you write on Test Cases are now visible as a
+          tooltip when you hover over the Test Case in the browsers or
+          in the search result view.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Pause on error</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There is a new button on the toolbar to pause the test
+          execution if an error occurs.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This can be switched on and off during a test run and allows
+          you to easily stop the test to see what went wrong.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The test can be continued by clicking the <emphasis>pause test
+          execution</emphasis> button on the toolbar.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Using running AUT details to define an
+      AUT</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          AUTs that have been started using the
+          <emphasis>gdrun</emphasis> command can now be automatically
+          defined in the ITE.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can select the option to create an AUT definition from the
+          running AUTs view for any AUT that is currently unknown.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Show referenced children</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There is a new option in the preferences to show referenced
+          children in Test Cases in the Test Case Browser.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This preference is activated by default.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Deactivating the preference means that any children of
+          referenced Test Cases are not displayed in the Test Case
+          Browser.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This can help in particularly large Projects to inprove
+          performance.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New action</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There is a new action to wait for the menu component.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="other-information-4.2">
+    <title>Other information</title>
+    <para>
+      <emphasis role="strong">XML and HTML reports scheduled for
+      removal</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The XML and HTML reports that can be generated by the ITE
+          (configurable in the preferences) are scheduled for removal in
+          the next versions.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          There will be an alternative feature to create a HTML report
+          from the test result report, as long as the test details are
+          still in the database.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For queries about this plan, please contact the support team.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Deprecated unbound modules earlier than
+      3.0 scheduled for removal</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The unbound modules that have been deprecated in versions
+          earlier than 3.0 are also scheduled for removal in the
+          upcoming version.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          We always recommend updating to the latest version of the
+          unbound modules and removing any references to deprecated
+          modules in your tests.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New unbound modules for tables and for
+      select actions on lists, trees and tree-tables</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Because we have added new parameters to actions on these
+          components, there are new unbound modules for the actions.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The old unbound modules have been set to deprecated.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          We recommend updating any deprecated modules in your tests
+          with the new modules.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can see what the new module is by looking in the
+          deprecated module - these now contain the new actions.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Merging in the Object Mapping
+      Editor</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The option to merge components in the Object Mapping Editor
+          has been temporarily deactivated for this release.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>

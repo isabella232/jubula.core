@@ -1,0 +1,547 @@
+<section id="new-features-and-developments-6.0" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New Features and Developments</title>
+  <para>
+    <emphasis role="strong">Test Execution Duration now shown for each node in Test Result View</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The amount of time taken to execute each Test Step, Test Case
+        and Test Suite is now shown in the Test Result View.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can use this information to see whether your tests or
+        parts of your tests are taking longer than you expected them
+        to, without having to set timers or manually check timestamps.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The HTML and XML reports generated or exported for the test
+        results also show the execution times.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can switch off the decoration in the Jubula client in the
+        <emphasis>label decoration</emphasis> preferences.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Parameter values now shown for each node in Test Result View</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The parameter values entered or used at a specific level (Test
+        Case, Test Step) are now shown in the Test Result View.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can use this information to see which data were used for
+        your Test Cases, without having to click through each
+        individual node in the Test Result View. This can be
+        especially useful if you have one Test Case that runs multiple
+        times with different datasets.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can switch off the decoration in the Jubula client in the
+        <emphasis>label decoration</emphasis> preferences.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Missing data decoration now shown in the
+    Test Case Editor and Test Suite Editor</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When working on a Test Case or Test Suite in their respective
+        editors, you will now see small red crosses on any referenced
+        Test Cases or Test Steps in that editor which have missing
+        data <emphasis>at this level</emphasis> (i.e. data that should
+        be entered in this editor).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This will help avoid problems with forgetting to enter data in
+        the Properties View.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Functions can be entered as parameter
+    values</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Alongside concrete values (<emphasis role="input">abc</emphasis>}}), references
+        (<emphasis role="input">=P1</emphasis>) and variables (<emphasis role="input">$VAR</emphasis>),
+        you can now enter functions as data, or as parts of your data.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The sign to introduce a function is the question mark:
+        <emphasis role="input">?</emphasis>
+        <para role="warning">
+          Any question marks used as test data
+          will have to be escaped using one or more backslashes as of
+          this new version. A warning in the console view will appear
+          after importing your Project if you have any unescaped
+          question marks in your data. You can then use the search
+          function to find them and mask them.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        There are functions available out of the box for various
+        mathematical calculations and for working with dates.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Functions can be embedded in other functions, e.g.
+        <emphasis role="input">?add(?sub(3,2),4)</emphasis> to add the result of (3-2)
+        to 4.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Functions can also make use of other data entry options in
+        Jubula such as variables (<emphasis role="input">?add($VAR1,=P1)</emphasis> adds
+        the number in the variable VAR1 to the number in the reference
+        P1).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can add your own functions via an extension point.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Categories now supported in the Test Suite Browser and Central Test Data Editor</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        It is now possible to create categories for Test Suites and
+        Test Jobs in the Test Suite Browser, as well as for central
+        data sets in the Central Test Data Editor.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Existing Projects will be shown as having two categories
+        (<emphasis>Test Suites</emphasis> and <emphasis>Test
+        Jobs</emphasis>) in the Test Suite Browser as was previously
+        the case. However, you can now rename, delete and rearrange
+        categories in the Test Suite Browser.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Teststyle framework and some guidelines
+    now also in Jubula</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There is a new properties page in the Project properties for
+        Teststyle.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Teststyle framework is a feature that allows Projects to
+        be analyzed for their adherence to standards, best practices
+        and rules for test specification.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The framework was previously a part of GUIdancer and has now
+        been migrated to Jubula.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Jubula contains a small set of standard rules for test
+        specification. Teststyle in GUIdancer contains more guidelines
+        and rules for naming conventions, test specification and test
+        structure.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Analysis framework in Jubula</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        A new analysis framework has been added to Jubula to gain
+        information on the size, ratios and details of a Project.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The analysis framework currently contains three example
+        metrics that can be run on existing or new Projects.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Save As New Test Case</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There is a new option in the Test Case Editor and Test Suite
+        Editor to save selected items as a new Test Case.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The selected nodes are added to a new Test Case whose name you
+        define.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The nodes are not copied, but their references are: the effect
+        is the same as if you had manually created a new Test Case and
+        added the Test Cases to it.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New action: Store Property Value</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The <emphasis>abstract</emphasis> toolkit contains a new
+        action on the <emphasis>Graphics Component</emphasis>
+        component to store the value of a property.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The action works in a similar way to the <emphasis>Check
+        Property</emphasis> action, except that the expected value
+        must not be entered. Instead, the actual value is saved into a
+        variable you define.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can use this value later on in the test, or you can
+        compare various values using the actions to compare string
+        values or compare numeric values.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        One example use case for this new action is to test table
+        filters. The rowCount of the table can be saved into a
+        variable before filtering, and the rowCount after filtering
+        into a different variable. The variables can then be compared
+        with each other to ensure that the second value is less than
+        the first, for example.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New extensible adapter mechanism for Swing components</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Jubula now allows you to add support for renderers for Swing
+        components without the getText() method.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        An example of the adapter mechanism can be found here:<?linebreak?>
+        <emphasis>http://git.eclipse.org/c/jubula/org.eclipse.jubula.core.git/</emphasis><?linebreak?>
+        <emphasis>tree/org.eclipse.jubula.examples.extension.swing.rc.adapter</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This does not replace the support for custom Swing renderers
+        that can be changed directly by your developers.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you are able to change the renderers yourself, you can
+        still implement one of the following in your renderer:
+      </para>
+      <blockquote>
+        <para>
+          public String getTestableText(); public String getText();
+        </para>
+      </blockquote>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Completeness check shown as progress window</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        After saving in the ITE, the completeness check which
+        validates the state of the Project (test data, object mapping,
+        missing Test Cases etc) is now shown explicitly as a progress
+        window.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This results from performance improvements made to the
+        completeness check.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Eclipse Marketplace Client now accessible
+    from within the ITE</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now open the Eclipse Marketplace Client from the
+        <emphasis role="menuPath">Help</emphasis> menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can use the Marketplace Client to search for new software
+        to install.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Please be aware that we do not test Jubula for compatibility
+        with plugins installed via the Marketplace that are not
+        provided by BREDEX GmbH or the Eclipse Jubula project and
+        therefore recommend caution when installing new software.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Changes to layout of properties view for test results</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The properties view for test results now shows all test data
+        as two columns: the parameter name and the value.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This reduces the amount of space required to see test data for
+        test results.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">GD_AUT_STARTUP_DELAY renamed to TEST_AUT_STARTUP_DELAY</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There is an undocumented variable that can be set as an
+        environment variable to increase the delay between starting an
+        AUT and checking that it is there.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This delay was named <emphasis role="input">GD_AUT_STARTUP_DELAY</emphasis>
+        and has now been updated to
+        <emphasis role="input">TEST_AUT_STARTUP_DELAY</emphasis>. Any customers using
+        this variable should update it in their test environment.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Selenium update</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The version of Selenium used by Jubula has been updated to
+        2.12.0.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New Dashboard application to view test
+    result reports in the browser</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Jubula contains a new web application which displays the
+        Reporting Perspective.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Using this Dashboard, you can open and analyze Test Result
+        Reports in a web browser without having to start Jubula, and
+        over the network.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Dashboard consists of a server for the Dashboard (
+        <emphasis role="input">dashboardserver.exe</emphasis>) can be found in
+        <emphasis>&lt;INSTALLATION_DIR&gt;/dashboard</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can start the application in the browser by entering:<?linebreak?>
+        <emphasis>http://&lt;HOSTNAME&gt;:&lt;PORTNUMBER&gt;/dashboard</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Dashboard can also be started in a default mode which
+        starts the <emphasis>dashboardserver</emphasis> with default
+        parameters (for the embedded database) and opens the browser
+        on your machine.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New JaCoCo Version allows large reports to
+    be sent to ITE</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Jubula now uses the latest version of JaCoCo, 0.5.5
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the new version, large reports must not be created as
+        zipped files on the AUT Agent machine, but can be sent to the
+        ITE as well. We have successfully performed code coverage
+        analysis with JaCoCo in Jubula on an AUT with 72,000 classes.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Any increase to heap space must now be done for the ITE, no
+        longer for the AUT Agent, as the handling for reports is now
+        in the client code.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The documentation has been updated, and now also includes tips
+        on using JaCoCo to see the Lines of Code executed by the test
+        (Class files must be compiled with Debug information) and
+        warns against using JaCoCo at the same time as other byte-code
+        manipulations.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        JaCoCo can now be used if you are using the embedded AUT
+        Agent.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Mylyn tasks can be created from the
+    Reporting Perspective</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In the Reporting Perspective, you can now create a Mylyn
+        report from within an open Test Result View for a test run.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Mylyn task is created with the information available in
+        the node you select from the test result.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This can be used to make entering e.g. issues in bug-tracking
+        systems about failed tests more comfortable.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Mylyn connectors for Bugzilla and Trac
+    available with Jubula</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In addition to local tasks, there are now Mylyn connectors for
+        Bugzilla and Trac available with Jubula.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The connectors must be configured to your system and are
+        available from <emphasis>Add Task Repository</emphasis> in the
+        New Task Dialog.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The connector for Bugzilla supports 3.0 and later, the
+        connector for Trac supports 0.10 to 0.12 through Web and
+        XML-RPC.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Altered license terms for maintenance
+    contracts</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The license terms for maintenance contracts have changed.
+        Maintenance contracts are no longer automatically renewed, but
+        customers are reminded two months in advance of their
+        expiration.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        New maintenance contracts can be purchased before the
+        expiration of the old contract for a discount, or for the full
+        price if they are purchased after the expiration of the old
+        maintenance contract.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

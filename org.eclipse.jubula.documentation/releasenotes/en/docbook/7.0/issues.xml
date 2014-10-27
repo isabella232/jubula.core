@@ -1,0 +1,350 @@
+<section id="known-issues-and-other-information-7.0" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                   xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Known issues and other information</title>
+  <para>
+    <emphasis role="strong">Migration of existing toolkit
+    extensions</emphasis>
+  </para>
+  <para>
+    Due to major refactoring in the remote control code of Jubula you
+    must migrate any toolkit extensions you have written. Theses
+    changes only affect the remote control extension. The ITE
+    extensions must not be changed. As a first step, we recommend
+    reading the Extension Manual. Most information about the new
+    implementation and a simple example can be found there.
+  </para>
+  <para>
+    To migrate any existing extensions, the following steps must be
+    performed:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Define a target platform for the remote control enviroment as
+        mentioned in the <emphasis role="strong">Extension Manual
+        2.3.1</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Alter your remote control extension project to be an
+        OSGi-fragment and set the appropiate host bundle. See
+        <emphasis role="strong">Extension Manual 2.3.1</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Adapt your current implementation as described below.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Deploy your fragment as described in
+        <emphasis role="strong">Extension Manual 2.3.2</emphasis>
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    All ’old’ implementation classes (*ImplClass) have been removed
+    and rewritten. If you previously used the Jubula implementation
+    classes you will have to change the class you are extending:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        <emphasis role="input">org.eclipse.jubula.rc.common.tester</emphasis><?linebreak?>
+        in this package the base classes for most of the TesterClasses are located. Some toolkit-specific implementations are in the toolkit bundles named below.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <emphasis role="input">org.eclipse.jubula.rc.swt.tester</emphasis><?linebreak?>
+        SWT-specific implementation for <emphasis role="input">List</emphasis>, <emphasis role="input">Table</emphasis>,
+        <emphasis role="input">Tree</emphasis>, <emphasis role="input">Application</emphasis> and <emphasis role="input">Menus</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <emphasis role="input">org.eclipse.jubula.rc.swing.tester</emphasis>
+        Swing-specific implementation for <emphasis role="input">JList</emphasis>, <emphasis role="input">JTable</emphasis>,
+        <emphasis role="input">JTree</emphasis>, <emphasis role="input">Application</emphasis> and <emphasis role="input">Menus</emphasis>
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    You must also write your own adapter factory
+    (<emphasis role="strong">Extension Manual 2.3.1 Create an
+    Adapter</emphasis>), which must be in the package
+    <emphasis role="input">org.eclipse.jubula.rc.common.adapter</emphasis>.
+  </para>
+  <para>
+    This adapter factory manages adapters that are needed for the
+    tester classes. The adapters are necessary for the tester classes
+    because the tester classes are toolkit-independent.
+  </para>
+  <para>
+    In the adapter factory you write, you must define which component
+    (<emphasis>widget</emphasis>) is adapted by which class. For
+    example, a <emphasis>JTable</emphasis> is adapted by the
+    <emphasis>JTableAdapter</emphasis>. For this you can reuse
+    existing SWT or Swing adapters or you can write your own. If you
+    want to write your own adapter it is important that you use the
+    Jubula interfaces of the adapter, because the tester classes
+    require this information.
+  </para>
+  <para>
+    The following packages are important for adapters:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        <emphasis role="input">org.eclipse.jubula.rc.swt.tester.adapter</emphasis><?linebreak?>
+        SWT adapter.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <emphasis role="input">org.eclipse.jubula.rc.swing.tester.adapter</emphasis><?linebreak?>
+        Swing adapter.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <emphasis role="input">org.eclipse.jubular.rc.common.tester.adapter.interfaces</emphasis><?linebreak?>
+        Interfaces for all adapters.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Migration of GEF accessibility
+    identifer</emphasis>
+  </para>
+  <para>
+    Due to changes in the structure of our RCP accessor we have changed the location of the GEF implementation.
+    The bundle has changed to <emphasis role="input">org.eclipse.jubula.rc.rcp.e3</emphasis> and also the packages
+    now begin with <emphasis role="input">org.eclipse.jubula.rc.rcp.e3</emphasis>. To migrate your existing plugin
+    you have to do take the following steps:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Change the target definition as described in the
+        <emphasis role="strong">Extension Manual 3.1.1</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Change the bundle in the MANIFEST.MF from <emphasis role="input">org.eclipse.jubula.rc.rcp</emphasis>
+        to <emphasis role="input">org.eclipse.jubula.rc.rcp.e3</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Change the adapter type in the plugin.xml to <emphasis> role="input">org.eclipse.jubula.rc.rcp.e3.gef.</emphasis>
+        <emphasis role="input">identifier.IEditPartIdentifier</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Change all packages in your classes to the new appropriate
+        packages
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Changes to resolving of referenced parameters</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In previous versions, there was an error in the way referenced
+        parameters were resolved, which lead to the data for the
+        parameter being read each time the parameter was referenced.
+        This could lead to problems with e.g. time-sensitive
+        functions. If a Test Case was structured to enter the date
+        using the ?now() function and then check the entered text
+        (where the data for the text entry and the check were
+        referenced and ?now() entered at the parent Test Case), then
+        the entered value and checked value would not be the same.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This has been changed for this version, so that references are
+        resolved at the place where the parameter is defined.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Any users who have Test Cases whose parameters define
+        variables which are declared within the Test Case itself will
+        have to restructure such Test Cases so that the variable is
+        not set before it is called, e.g.
+      </para>
+      <blockquote>
+        <para>
+          -TC1 [VARIABLE_SET=VAR1;VARIABLE_CHECK=$VAR1]<?linebreak?>
+          – Set variable =VARIABLE_SET<?linebreak?>
+          – Check variable =VARIABLE_CHECK
+        </para>
+      </blockquote>
+    </listitem>
+    <listitem>
+      <para>
+        The correct way to structure such Test Cases is as follows:
+      </para>
+      <blockquote>
+        <para>
+          -TC1<?linebreak?>
+          – Set variable: VAR1<?linebreak?>
+          – Check variable:$VAR1
+        </para>
+      </blockquote>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Removal of option ”<emphasis>Create
+    support information package</emphasis>”</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The menu option:<?linebreak?>
+        <emphasis role="menupath">Help</emphasis>--&gt;<emphasis role="menupath">Create support information package</emphasis><?linebreak?>
+        has been removed.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Chronon support for AUTs now with separate
+    installation</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now only use a separate installation of Chronon as a
+        monitoring agent for your AUT.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The support for the embedded Chronon recording in AUTs has
+        been removed.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Some categories, component names and
+    unbound modules renamed</emphasis> The following items have been
+    renamed in the unbound modules:
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        Combo boxes
+      </term>
+      <listitem>
+        <para>
+           have been renamed to <emphasis>Combo Components</emphasis>.
+          This is also evident in the abbreviation used for the
+          unbound modules and the component names. It has changed from
+          <emphasis>cbx</emphasis> to <emphasis>cbc</emphasis>.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Tabbed panes
+      </term>
+      <listitem>
+        <para>
+           have been renamed to <emphasis>Tabbed
+          Components</emphasis>. This is also evident in the
+          abbreviation used for the unbound modules and the component
+          names. It has changed from <emphasis>tpn</emphasis> to
+          <emphasis>tbc</emphasis>.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Text field / text area / text pane
+      </term>
+      <listitem>
+        <para>
+           has been renamed to <emphasis>Text Component</emphasis>.
+          This is also evident in the abbreviation used for the
+          unbound modules and the component names. It has changed from
+          <emphasis>txf</emphasis> to <emphasis>txc</emphasis>.
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+  <para>
+    <emphasis role="strong">Known issue with using observation mode on
+    Gnome</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When using the observation mode on Gnome, Jubula may close
+        unexpectedly.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This is documented in issue
+        <link xl:href="http://bugzilla.bredex.de/729">http://bugzilla.bredex.de/729</link>.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Deprecated modules and Test Steps
+    removed</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        All unbound modules that were preceded with
+        <emphasis>DEPRECATED</emphasis> have been removed. These
+        modules should be removed from use in your Projects before
+        switching to the new version.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        All Test Steps that had the status
+        <emphasis>deprecated</emphasis> have also been removed. You
+        should ensure that you no longer use deprecated Test Steps
+        before switching to the new version.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Updated migration information</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The information on migrating to new versions has been updated.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Installation Manual contains the migration information.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Modelling removed</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The Modelling Perspective and the generation of Test Cases
+        from UML diagrams has been removed from this version.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

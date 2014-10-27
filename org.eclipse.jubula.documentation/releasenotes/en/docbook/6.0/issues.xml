@@ -1,0 +1,86 @@
+<section id="known-issues-and-other-information-6.0" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                   xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Known issues and other information</title>
+  <para>
+    <emphasis role="strong">Text input problems on Mac systems for RCP (Indigo)</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Due to an issue in SWT, text input of characters involving the
+        <emphasis role="input">»SHIFT«</emphasis> key (upper case letters,
+        some special characters) on Mac for RCP AUTs that use Indigo
+        as a target platform does not work in this version.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The issue has been fixed in SWT and will be available in
+        Eclipse Juno.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New workspaces required</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Due to changes to internal IDs, a new workspace is required
+        for this version.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can export your database preferences from your old
+        workspace and import them into your new one.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Other preferences must be noted and manually updated in the
+        new workspace.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">AUT Agent takes longer to start</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In the current version, the AUT Agent takes longer to start
+        than in previous versions.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you try to connect to an AUT Agent before it is running,
+        you will receive an information message that the connection
+        could not be established.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You may need to bear this in mind for automated tests in a
+        continuous build and test environment.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">License Agreement changes</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There have been changes to the way maintenance contracts work.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Please check the license agreement for more details.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

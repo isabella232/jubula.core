@@ -1,0 +1,161 @@
+<style type="text/css">
+/********************************/
+/* start of styles in block.xsl */
+
+.formalpara-title {
+  font-weight: bold;
+}
+
+div.blockquote-title {
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+span.msgmain-title {
+  font-weight: bold;
+}
+
+span.msgsub-title {
+  font-weight: bold;
+}
+
+span.msgrel-title {
+  font-weight: bold;
+}
+
+div.msglevel, div.msgorig, div.msgaud {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+span.msglevel-title, span.msgorig-title, span.msgaud-title {
+  font-weight: bold;
+}
+
+div.msgexplan {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+span.msgexplan-title {
+  font-weight: bold;
+}
+
+/* end of styles in block.xsl */
+/********************************/
+
+/********************************/
+/* start of styles in autotoc.xsl */
+
+
+/* end of styles in autotoc.xsl */
+/********************************/
+
+/********************************/
+/* start of styles in formal.xsl */
+
+div.figure-title {
+  font-weight: bold;
+}
+
+div.example-title {
+  font-weight: bold;
+}
+
+div.equation-title {
+  font-weight: bold;
+}
+
+div.table-title {
+  font-weight: bold;
+}
+
+div.sidebar-title {
+  font-weight: bold;
+}
+
+/* end of styles in formal.xsl */
+/********************************/
+
+/********************************/
+/* start of styles in verbatim.xsl */
+
+div.programlisting {
+  white-space: pre;
+  font-family: monospace;
+}
+
+div.screen {
+  white-space: pre;
+  font-family: monospace;
+}
+
+div.synopsis {
+  white-space: pre;
+  font-family: monospace;
+}
+
+/* end of styles in verbatim.xsl */
+/********************************/
+
+/* footnote rule */
+hr.footnote-hr {
+  width: 100;
+}
+
+.informaltable table {
+    border-collapse: collapse;
+    width: 90%;
+}
+
+.table table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table td:last-child, .table th:last-child {
+    border-left: 0;
+}
+
+.table td:first-child, .table th:first-child {
+    border-right: 0;
+}
+
+.table th {
+    border-bottom-width: 2px;
+}
+
+.topbotline {
+    border-top: 5px #CCC solid;
+    border-bottom: 5px #CCC solid;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.menuPath {
+    background-color: #DDD;
+    padding: 1px;
+}
+
+.input {
+    font-family: 'Lucida Console', monospace;
+}
+
+.imagefloat {
+    float: right;
+}
+
+.inlinemediaobject img {
+    height: 2ex;
+}
+
+.term {
+    font-weight: bold;
+}
+
+.table-title, .figure-title {
+    margin-top: 5px;
+}
+</style>

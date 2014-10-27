@@ -1,0 +1,403 @@
+<section id="release-notes-for-version-3.1.01019" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Release Notes for version 3.1.01019</title>
+  <section id="new-features-and-developments-3.1.01019">
+    <title>New features and developments</title>
+    <para>
+      <emphasis role="strong">GEF support</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have added support for the figure canvas and figure testing
+          for RCP applications.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          See the section in the user manual on GEF testing and the
+          reference manual for details on testing applications with GEF
+          components.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          GEF actions can not be recorded using the observation mode.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Eclipse 3.5 compatibility - important
+      information</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can now test applications written with Eclipse 3.5.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Existing customers wishing to test Eclipse applications on
+          more than one platform should activate the new
+          <emphasis>generate names</emphasis> option in the AUT
+          settings.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This option improves the generated names and object
+          recognition for buttons in RCP wizards and dialogs. It is
+          deactivated in existing Projects and activated in new ones.
+          Activating this option will mean remapping affected components
+          from the AUT.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The affected components can easily be found by filtering the Object Mapping Editor using this text:<?linebreak?>
+          <emphasis role="input">*swt.widgets.button</emphasis>.<?linebreak?>
+          Delete the affected components and then refresh the Object Mapping Editor. You will then see the component names which need to be remapped.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Mac OSX BETA support</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Testers wishing to try out the BETA for Mac support are
+          invited to do so.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The license manager cannot run on a Mac system; it must be
+          installed on a Windows or Linux system.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New actions</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The action <emphasis>Copy to clipboard</emphasis> has been
+          added to the <emphasis>Application</emphasis> component. This
+          can be used on native dialogs during the test, to enter
+          filepaths etc.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          We have updated the actions on tables to allow selection and
+          checking of cells by the header value as well as the column
+          index. Entering an integer will result in the column being
+          found based on its position. Entering a string will mean that
+          the column is found based on its header text. Header texts
+          currently only support the <emphasis>equals</emphasis>
+          operator. Old table actions are now deprecated and should be
+          exchanged for the new actions.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          It is now possible to select and check the selection of
+          checkboxes on SWT Trees.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">RCP component name generation</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          In the AUT settings, there is a new option for RCP AUTs to
+          generate unique names for buttons in dialogs and wizards.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This option is automatically on for new Projects and
+          deactivated in existing Projects.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If your tests must be platform independent, we recommend
+          activating this option for your existing Projects. Information
+          on how to easily remap the affected components is available
+          above in the section on Eclipse 3.5.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Filter in Object Mapping Editor</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The Object Mapping Editor now has a text filter like the
+          browsers.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Unlike the browsers, the Object Mapping Editor filter searches
+          based on both the text and the technical component type in the
+          editor.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Control decoration</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have added control decoration to various components in the
+          user interface to help new users understand some of the more
+          advanced options.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New cheat sheet</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          A new cheat sheet on using Event Handlers is available in the
+          help menu.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Show unused Test Cases</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There is a new filter in the Test Case Browser – show unused
+          Test Cases.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Use this filter to refactor and clean up your tests by
+          identifying which Test Cases are no longer referenced.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Show where used on Test Cases</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action now also works on Test Cases from reused Projects.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This means that you can easily search for references to
+          deprecated unbound modules from our Test Case library in your
+          Project to switch them.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New preferences</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          In the preferences, you can choose to hide the information
+          behind Test Step names.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can also deactivate the option to show the original Test
+          Case name behind a new name when you rename a reused Test
+          Case.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="other-information-3.1.01019">
+    <title>Other Information</title>
+    <para>
+      <emphasis role="strong">Coolbars and Toolbars in
+      Eclipse</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          To fix an issue with the recognition of coolbars in Eclipse,
+          we have introduced better component recognition for coolbars
+          and toolbars.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Customers testing RCP applications will have to remap their
+          toolbar and coolbar buttons unless these have been given names
+          by the development team.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Whitespaces in commands</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The action <emphasis>execute external command</emphasis> has
+          been changed to allow whitespaces in commands and in
+          parameters.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Relative paths can be written simply with the white spaces
+          included. You will need to use quotes (&quot;) around the path
+          or command if you are using path fragments (e.g.
+          <emphasis role="input">./</emphasis> or <emphasis role="input">../</emphasis>) for the relative
+          path.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When using absolute paths, use quotes (&quot;) around the
+          command or parameter containing the whitespaces.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      For example, instead of:<?linebreak?>
+      <literal>C:\Program Files\guidancer\guidancer.exe </literal><?linebreak?>
+      <literal>-data C:\Program Files\guidancer\ws </literal><?linebreak?>
+      enter:
+      <literal>&quot;C:\Program Files\guidancer\guidancer.exe&quot; </literal><?linebreak?>
+      <literal> -data &quot;C:\Program Files\guidancer\ws&quot; </literal>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          In Linux, quotes may be placed around the command and the
+          parameter. Windows cmd.exe can only accept quotes in either
+          the parameter or the command.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Please bear in mind that strings within the quotes are not
+          checked for validity.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Absolute and relative searches in
+      tables</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The relative search in tables now searches starting from the
+          next item after the selected item.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Move actions in the table search relative to the mouse
+          position.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Keyboard mappings</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have added documentation how to add keyboard mapping files
+          to the RCP accessor.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New parameters for the keyboard
+      modifiers</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The parameters <emphasis role="input">»Cmd«</emphasis> and
+          <emphasis role="input">»Mod«</emphasis> have been added to actions
+          for key combinations to allow testing on MAC systems, and to
+          ensure platform-independent testing across Windows, Unix and
+          MAC systems.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="known-issues-3.1.01019">
+    <title>Known issues</title>
+    <para>
+      <emphasis role="strong">Connecting to the AUT Agent</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          When no Project is open, connecting to the AUT Agent and
+          disconnecting again results in no longer being able to connect
+          to the AUT Agent until the ITE is restarted.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Exit Code 11</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Restarting an RCP AUT may cause an error in Eclipse which
+          displays an error code 11.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This can be hindered by updating the launcher to Eclipse
+          version 3.3 and using the parameter
+          <literal> --launcher.supressErrors (Executable) </literal>.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Click in component</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We do not recommend using the percentages 0 and 100 for click
+          in component when scrollbars surround the component.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">GIJ and OpenJDK</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          These are not supported.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>

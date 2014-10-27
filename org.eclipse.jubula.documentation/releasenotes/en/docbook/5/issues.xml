@@ -1,0 +1,28 @@
+<section id="known-issues-5" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                           xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Known issues</title>
+  <para>
+    <emphasis role="strong">OS X: Green borders in AUT
+    <quote>flicker</quote> in Object Mapping Mode</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        This issue occurs when collecting components from an SWT or
+        RCP AUT running with the Cocoa implementation of SWT. As such,
+        this problem may affect AUTs running on OS X.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        When the mouse is moved over components in the AUT, the green
+        border alternately disappears and reappears with each
+        movement. A component cannot be collected when the green
+        border is not visible. In order to work around this issue, it
+        may be necessary to move the mouse within the component until
+        the green border (re)appears.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

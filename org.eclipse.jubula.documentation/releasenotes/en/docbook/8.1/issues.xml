@@ -1,0 +1,78 @@
+<section id="known-issues-and-other-information-8.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                   xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Known issues and other information</title>
+  <para>
+    <emphasis role="strong">Support for Java 8 as a runtime
+    environment</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We now run our regression tests for RCP AUTs on all platforms
+        with Java 8 as a runtime environment.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Our tests for Swing with Java 8 as a runtime environment have
+        shown that Linux and Windows 8 appear to function correctly –
+        there are still problems with Mac and Windows 7 when testing
+        Swing AUTs with Java 8 as a JRE.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Support for iOS 6 dropped</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We no longer support iOS 6 for testing. The iOS support is now
+        for 7 applications.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Relevance now a property of Test
+    Suites</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Whether or not a test run is relevant is now determined by a
+        property on each Test Suite. This better reflects the
+        situation that specific Test Suites will always be relevant
+        and others never.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The meaning of relevance has not changed. However, the entry
+        from the preferences has been removed and the parameter for
+        the testexec is no longer accepted.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        All Test Suites in newly imported Projects are automatically
+        set to true for relevance.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Newly created Test Suites are created as being relevant.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Dashboard URL has been changed</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The dashboard URL has been changed due to
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

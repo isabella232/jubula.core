@@ -1,0 +1,258 @@
+<section id="release-notes-for-version-3.2.01081" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Release Notes for version 3.2.01081</title>
+  <section id="new-features-and-developments-3.2.01081">
+    <title>New features and developments</title>
+    <para>
+      <emphasis role="strong">New actions</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          This version contains a variety of new actions to:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              Check enablement, existence and selection of items in
+              context-menus.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Open context menus with any button (right, left or
+              middle).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Check the existence of tabs.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Check the value of a specific tab.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Check the existence of a value in a row or column in a
+              table.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Check the editability of a selected cell in a table.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Check the editability of a cell at a specific mouse
+              position.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Refresh components in a web application.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Collecting components using
+      clicks</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Customers whose AUTs cannot accept keystrokes can now set the
+          object mapping preferences to collect components using clicks.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Improvement for dynamic web
+      testing</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There is now a new option in the object mapping preferences to
+          refresh components in a web application. This can be used
+          during object mapping to recognize newly added components
+          since the last refresh.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action is also available as a Test Step to achieve the
+          same effect during a test.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Switching database and database
+      configurations</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There is a new database configuration tool to select, add and
+          configure databases for use with the ITE. More information on
+          this is available in the Installation Manual.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          It is now possible to switch between databases or database
+          users in the ITE. This saves having to restart the client to
+          switch the database.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Windows 7 supported</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Version 3.2 has been tested with Windows 7 as well as XP and
+          Vista.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="other-information-3.2.01081">
+    <title>Other information</title>
+    <para>
+      <emphasis role="strong">Administrator privileges required for
+      configuration tools and license administrator</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The configuration tool, the database configuration tool and
+          the license administrator may require administrative
+          privileges.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Run these tools as an administrator to be able to configure
+          your installation.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New AUT Agent commands under
+      Linux</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The AUT Agent commands under Linux have changed.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To start the AUT Agent, enter:
+          <emphasis role="input">./AutStarter (-p &lt;port number&gt;)</emphasis>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To stop the AUT Agent, enter:
+          <emphasis role="input">stopAutStarter.sh</emphasis>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Fixed issue with a component
+      name</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have fixed a falsely calculated component name in the
+          unbound modules for dragging and dropping list items.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The affected component names are:
+          <emphasis>nn_dragSource_lst</emphasis> and
+          <emphasis>nn_dropTarget_lst</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Customers who have used unbound modules containing these
+          component names should take the following steps to update
+          their Projects:
+        </para>
+        <orderedlist>
+          <listitem>
+            <para>
+              Open the Project and switch the version of the unbound
+              modules from 3.1 to 3.2.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Find the places where the affected component names were
+              used in the test by using F7 on the unbound modules for
+              dragging and dropping in lists.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Any affected places will display a message in the
+              Component Names View: <emphasis>no component type
+              exists!</emphasis>.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Make a note of the component name that you used here.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Make a small change in the Test Case Editor to make the
+              editor ”dirty” and save the editor.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Add the component name that you previously used in this
+              Test Case and save the editor again.
+            </para>
+          </listitem>
+        </orderedlist>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="known-issues-3.2.01081">
+    <title>Known issues</title>
+    <para>
+      <emphasis role="strong">Selection of multiple SWT list items under
+      Linux</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There is an issue in some versions of GTK and the selection of
+          multiple list items.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Items further down in the list may be clicked falsely. This is
+          a known error in GTK.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>

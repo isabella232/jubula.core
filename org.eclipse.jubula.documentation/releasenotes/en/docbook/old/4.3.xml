@@ -1,0 +1,633 @@
+<section id="release-notes-for-version-4.3" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                          xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Release Notes for version 4.3.01105</title>
+  <section id="information-4.3">
+    <title>Information</title>
+    <para>
+      This release is a patch to fix a problem that occurred in the
+      <emphasis>unbound modules concrete</emphasis> whereby the
+      <emphasis>tree</emphasis> component had a false component type.
+      The database and license are the same as in version 4.3.01105.
+    </para>
+  </section>
+  <section id="new-features-and-developments-4.3">
+    <title>New features and developments</title>
+    <para>
+      <emphasis role="strong">Mylyn integration</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The Mylyn plugin is now available for use within the ITE.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can connect to repositories (e.g. bug-tracking systems) to
+          work on testing tasks directly in the ITE.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can also create your own local tasks, and reduce the
+          amount of Test Cases visible to only those required for the
+          current task.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Central test data</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The ITE has a new editor for managing data centrally for a
+          Project
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Central Test Data Editor can be opened via a button on the
+          toolbar.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Within the editor, you can add data sets which can then be
+          referenced in Test Cases.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New data option and display in Properties
+      View</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The Properties View now shows what type of data is currently
+          being used for a Test Case.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The possible data sources are:
+        </para>
+        <variablelist>
+          <varlistentry>
+            <term>
+              Referenced Test Case
+            </term>
+            <listitem>
+              <para>
+                the data being used have come directly from the original
+                specification of this Test Case. 
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              Local Test Case
+            </term>
+            <listitem>
+              <para>
+                the data being used were entered for this Test Case. You
+                can change from <emphasis>local</emphasis> to
+                <emphasis>referenced</emphasis> test data using the
+                combo box to reset the default value from the referenced
+                Test Case.
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              Central test data set
+            </term>
+            <listitem>
+              <para>
+                the data have come from a central test data set.
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              Excel data file
+            </term>
+            <listitem>
+              <para>
+                an Excel file has been entered as the data source.
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New search dialog and options</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There are new options to search for items and test data within
+          a Project.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The search dialog can be opened from the toolbar and offers
+          searches for:
+        </para>
+        <variablelist>
+          <varlistentry>
+            <term>
+              Keywords
+            </term>
+            <listitem>
+              <para>
+                Names of Test Steps, Test Cases, Test Suites, Test Jobs
+                and categories in the Project
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              Test data
+            </term>
+            <listitem>
+              <para>
+                Data contained in Test Cases, Test Steps and central
+                data sets
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              Files
+            </term>
+            <listitem>
+              <para>
+                File types and contents in the workspace
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              Tasks
+            </term>
+            <listitem>
+              <para>
+                Tasks from repositories
+              </para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </listitem>
+      <listitem>
+        <para>
+          Search results are shown in the Search Result View. Items can
+          be opened in their editors by double-clicking the specific
+          search result.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Manual Test Steps</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can now define manual Test Cases
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          There is a new module for a manual Test Step.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Manual Test Cases can be combined into Test Suites and
+          executed.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          During execution, a dialog appears to inform the manual tester
+          which steps to perform.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The tester can mark the action as <emphasis>passed</emphasis>
+          or <emphasis>failed</emphasis> and can write comments about
+          the Test Step.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The result reports from manual tests can be examined and
+          analyzed just like result reports for automated tests.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Testing AUTs started by other
+      AUTs</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          It is now possible to test an AUT that was started by another
+          AUT.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          There is a new mode for the AUT Agent to allow this, the
+          <emphasis>lenient mode</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          AUTs started in this way must be of the same toolkit as the
+          original AUT.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For each newly started AUT, a new AUT ID is generated with a
+          running number.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Test results</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Test results that are reopened from the Test Result Summary
+          View now contain complete information about each Test Step.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Test results can also be exported from the Test Result Summary
+          View in HTML and XML format.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The option to automatically clean up test result details is
+          now part of the Project properties, and no longer a user
+          preference.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the Test Result Summary View, you can now enter comments
+          about each test run to document the reason for failing or
+          passing.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New split pane view for the Object Mapping
+      Editor</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The Object Mapping Editor has a new view – the split view.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the split view, each category (<emphasis>assigned names,
+          unassigned component names</emphasis> and <emphasis>unassigned
+          technical names</emphasis>) has a different pane.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This allows you to navigate to the place you require in each
+          category separately to make mapping in large Projects more
+          comfortable.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New actions</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Check existence of window by title
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Check text at mouse position in trees
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Store value at mouse position on trees
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Store value on selected node in trees
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Store value at mouse position in tables
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">New parameters for existing
+      actions</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The action for selecting a node from a tree now also has the
+          parameter <emphasis>extend selection</emphasis> so that
+          multiple nodes can be selected in trees.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The parameters for actions requiring modifiers (control, alt
+          etc.) have been changed so that a space-separated list of
+          modifiers can be entered. Content assist is available for the
+          modifier parameters.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Protection for reused Projects</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There is a new option in the Project wizard and Project
+          properties to <emphasis>protect</emphasis> a Project.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          We recommend marking a Project as protected if you are using
+          it as a library (referenced) Project for another Project.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In protected Projects, Test Cases cannot be deleted, and the
+          <emphasis>edit parameters</emphasis> dialog cannot be opened.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is to stop any irrevocable changes being made that would
+          affect the Projects that reuse the protected Project.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The protected status of Projects can be altered in the Project
+          properties.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Viewing BIRT reports in embedded
+      database</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          BIRT reports generated from the Test Result Summary View can
+          now be viewed when using the embedded database.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Show where used on Test Suite</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The action <emphasis>Show where used</emphasis>
+          (<emphasis role="input">»F6«</emphasis>) is now also possible on
+          Test Suites that have been reused in Test Jobs.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Open specification action</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There is a new action available on Test Cases and Test Suites
+          which have been reused (in other Test Cases or in Test Jobs).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Use <emphasis role="input">»Ctrl+F6«</emphasis> to open the
+          specification of the selected Test Case or Test Suite in the
+          relevant editor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action is possible even if the Test Case or Test Suite to
+          open is hidden due to an active filter.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Open Test Case action</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          There is a new dialog to open an existing Test Case or
+          multiple Test Cases in their editors.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Use <emphasis role="input">»Ctrl+Shift+T«</emphasis> to open the
+          dialog and select the Test Cases to be opened.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action is possible even if the Test Case or Test Suite to
+          open is hidden due to an active filter.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Show corresponding specification in Object
+      Mapping Editor</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          In the Object Mapping Editor there is a new option to show the
+          corresponding specification of a component name.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can use this option when a component name appears in the
+          Object Mapping Editor that you should have overwritten.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Search Result View only shows places which could have lead
+          to this component name appearing in the Object Mapping Editor,
+          not all places in the test where it has been used.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Key combination to switch views in the
+      client</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have introduced shortcuts to switch to specific views in
+          the specification perspective.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To switch to the Test Suite Browser, use
+          <emphasis role="input">»Alt+Shift+1«</emphasis>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To switch to the Test Case Browser, use
+          <emphasis role="input">»Alt+Shift+2«</emphasis>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To switch to the Properties View, use
+          <emphasis role="input">»Alt+1«</emphasis>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To switch to the Data Sets View, use
+          <emphasis role="input">»Alt+2«</emphasis>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To switch to the Component Names View, use
+          <emphasis role="input">»Alt+3«</emphasis>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To switch to editor, use <emphasis role="input">»F12«</emphasis>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      The key combinations can be changed in the preferences.
+    </para>
+    <para>
+      <emphasis role="strong">Support for custom renderers in
+      Swing</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Custom renderers in Swing AUTs can now be tested as long as
+          the renderer implements either getText() or getTestableText().
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The method signatures you implement must be:
+        </para>
+        <blockquote>
+          <para>
+            public String getTestableText(); public String getText();
+          </para>
+        </blockquote>
+      </listitem>
+      <listitem>
+        <para>
+          If you don’t have a getText() method, then we recommend using
+          the getTestableText() option to avoid conflicts.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Dropping Test Cases directly into the
+      editor area</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can now drop Test Cases directly into the editor, without
+          having to place the Test Case before or after another Test
+          Case in the editor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Test Case is placed at the bottom of the tree in the
+          editor.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="other-information-4.3">
+    <title>Other information</title>
+    <para>
+      <emphasis role="strong">New workspace recommended for
+      4.3</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We recommend setting up a new workspace for version 4.3.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Object mapping in RCP AUTs that do not use
+      GEF</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          We have fixed an issue with automatic component naming in RCP
+          AUTs.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Customers testing RCP AUTs where
+          <emphasis role="strong">no</emphasis> GEF bundles are present
+          are advised to remap their components.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>

@@ -1,0 +1,302 @@
+<section id="new-features-and-developments-7.0" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New Features and Developments</title>
+  <para>
+    <emphasis role="strong">Support for testing AUTs written with
+    e4</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        AUTs that are written with e4 can now also be tested.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        As a result of this, the starting of RCP AUTs has changed
+        slightly – please read the documentation in the section on
+        <emphasis>Toolkits</emphasis> in the User Manual for more
+        details.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Currently, GEF figures can only be tested in AUTs written with
+        Eclipse 3.x versions.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Testing of iOS AUTs now
+    supported</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There is a new toolkit in Jubula for testing iOS AUTs.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can write tests for iOS apps and run them on the device or
+        simulator.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For more information on the prerequisites for iOS testing, as
+        well as the information on working with the actions, please
+        refer to the section on iOS in the
+        <emphasis>Toolkit</emphasis> section of the documentation.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Addition of Turkish as supported language
+    for the unbound modules</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Turkish is now supported in the unbound modules.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Jubula is now 64-bit compliant</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The installation of Jubula is now architecture-dependent.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Jubula.ini now contains different JVM-arguments defining
+        the allocated heapsize:
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            1024 mb
+          </term>
+          <listitem>
+            <para>
+              for 32 bit installations
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            2048 mb
+          </term>
+          <listitem>
+            <para>
+              for 64 bit installations
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">HTML Test Result Reports now include
+    screenshots on error</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Any screenshots taken automatically during a test (i.e. when
+        an error occurs) are now also displayed in the HTML Test
+        Result Reports that can be exported from the Reporting
+        Perspective or that are generated automatically after the
+        test.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Properties View and HTML reports parameter visualization updated</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The layout of the properties view and the HTML reports has
+        been updated so that each parameter (test data) now only takes
+        up one line.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The name and type of the parameter are in the first column,
+        and the value (which can usually be edited in the Properties
+        View is in the second column.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This makes the Properties View easier to read and to use.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Properties View easier to recognize as uneditable</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When selecting an item from a Browser, the Properties View is
+        now more recognizable as non-editable.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The background for the whole table is gray, and the color of
+        the text has been changed from black to gray.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Double-clicking on any item in a browser
+    opens the relevant editor</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        If you double-click on an item in a browser that is, at the
+        place where you double-click it, actually reused in another
+        element, then the editor for the item’s direct parent will be
+        opened, and the item you double-clicked will be selected.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For example, if you double-click a Test Case in the Test Suite
+        Browser that is reused in a Test Suite, then the Test Suite
+        Editor for the Test Suite will open, and the Test Case you
+        clicked will be selected.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The same behavior applies to Test Cases reused in other Test
+        Cases, Test Suites reused in Test Jobs, and Event Handlers
+        reused in Test Cases.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If the parent comes from a reused Project, then the editor
+        will not open.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This behaviour makes it easier to navigate around your
+        Project.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Double-clicking on any item in an editor
+    opens the item in its own editor</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        If you double-click on an item in an editor, then the editor
+        for the item you clicked will be opened (i.e. as if you had
+        pressed <emphasis role="input">»F3«</emphasis> - open
+        specification).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For example, if you double-click a Test Case in the Test Suite
+        Browser then the Test Case Editor for the Test Case you
+        clicked will be opened.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The same behavior applies to Test Cases reused in other Test
+        Cases, Test Suites reused in Test Jobs, and Event Handlers
+        reused in Test Cases.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If the item comes from a reused Project, then the editor will
+        not open.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Using <emphasis role="input">»ENTER«</emphasis> to open the
+        <emphasis>Add new Test Case reference</emphasis> dialog has
+        not changed.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This behaviour makes it easier to navigate around your
+        Project.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Selenium version updated</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The version of Selenium used by Jubula to execute HTML tests
+        has been updated to version 2.30.0.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Chronon version in Jubula
+    updated</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Jubula now uses version 3.2.129 of Chronon for the embedded
+        support.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Support for testing on Windows
+    8</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Windows 8 is now supported for testing AUTs.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Support for own text renderers in
+    SWT</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        If you have components with text that cannot be read due to it
+        being rendered differently, you can now allow the text to be
+        read.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Use <emphasis role="input">setData(TEST_TESTABLE_TEXT), text</emphasis> on the
+        instance of the item or component whose text you want to read
+        in your test.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

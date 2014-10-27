@@ -1,0 +1,586 @@
+<section id="new-features-and-developments-5" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                            xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New features and developments</title>
+  <para>
+    <emphasis role="strong">Code coverage</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Jubula now lets you run code coverage for Java applications
+        written in Java 1.5 or higher.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The code coverage tool <emphasis>JaCoCo</emphasis> is
+        supported out-of-the-box and can be added to your AUT
+        configuration in the AUT configuration dialog.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can view the results of the code coverage monitoring from
+        the Test Result Summary View.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Teststyle</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Jubula has a new feature to improve the quality and structure
+        of the tests you write.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The <emphasis>Teststyle</emphasis> plugin lets you define
+        guidelines for your Project and informs you when a guideline
+        is not upheld.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can set the message level (information, warning, error)
+        for the guidelines as well as the context they should be valid
+        for.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <emphasis>Teststyle</emphasis> is added by default to all
+        Projects. You can alter the Teststyle settings via the Project
+        properties.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New license mechanism</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The license mechanism in Jubula has been changed.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Jubula no longer uses a license server to manage floating
+        licenses. The new individual user licenses can be requested
+        from the Jubula team as part of your maintenance contract.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The licenses can be entered in the Preferences, under:
+        <emphasis>Jubula - Licenses</emphasis>.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">ID Attribute Name for HTML AUTs</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Each supported component in HTML AUTs can have its own
+        attribute used to identify it during test execution.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In your AUT configuration, you can define an attribute name
+        which should be used as an identifier for components.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For example if your attribute name is: <emphasis role="input">testid</emphasis><?linebreak?>
+        (e.g. <emphasis role="input">&lt;div testid=''Username''&gt;&lt;/div&gt;</emphasis>)<?linebreak?>
+        then you would enter <emphasis>testid</emphasis> in the AUT configuration.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Test debugging - continue without Event
+    Handler</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There is a new option in Jubula to make running interactive
+        tests more comfortable.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        On the toolbar, there is a new button to ”<emphasis>Continue
+        without Event Handler</emphasis>”. You can use this button in
+        combination with the ”<emphasis>Pause on Error</emphasis>”
+        option.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If a test you are running encounters an error, the test is
+        paused die to the <emphasis>Pause on Error</emphasis> option.
+        You can then click ”<emphasis>Continue without Event
+        Handler</emphasis>” to ignore the error and continue as if no
+        error had occurred.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Copy ID to clipboard and open Test Case
+    via its ID</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There is a new option in the Test Case Browser to copy the
+        unique ID for a Test Case to the clipboard.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can use this ID to refer to the Test Case from external
+        systems such as bug-tracking systems or requirements
+        management systems.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can open a Test Case based on its ID by pressing
+        <emphasis role="input">»Shift+F9«</emphasis>.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Support information package</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        To reflect the changes to the support system, the option to
+        send a support email has been updated to create a .zip file as
+        a support information package.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Should you find an error, you can upload the information
+        package to Bugzilla as a part of the error description.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New database configuration</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The configuration tool and database configuration tool are no
+        longer a part of the installation package.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The configuration options for the database connections are now
+        in the preferences under: <emphasis>Test - Database
+        Connections</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The embedded database is configured as the default. You can
+        add other database configurations using the buttons and the
+        dialog to add database connection details.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can export and import your database preferences using the
+        <emphasis role="menuPath">File</emphasis>--&gt;<emphasis role="menuPath">Export</emphasis> menu.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New -data parameter in the test executor
+    and dbtool</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        As the database configurations are now in the preferences, you
+        must enter a workspace (where the correct preferences are
+        saved) for test execution via the test executor and for
+        working with the dbtool.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The workspace parameter is
+        <emphasis role="input">»-data &lt;path to workspace&gt;«</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The workspace parameter cannot currently be entered in the
+        configuration file for the test executor, it must be entered
+        directly into the command line interface.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Project migration to the new
+    version</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We have changed our database abstraction layer from Hibernate
+        to JPA/Eclipse Link.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For this reason, the migration of your Projects to the new
+        version cannot be carried out automatically by the database
+        migration tool.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Instructions on migrating your Projects and clearing your
+        database scheme are in the Installation Manual.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Amount of results shown in the Test Result
+    Summary View is now configurable</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now configure how many results should be shown in the
+        Test Result Summary View based on how old they are.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the <emphasis>Test result</emphasis> preferences, you can
+        specify how many days’ worth of test result summaries should
+        be shown. The default is set to 30 days.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can see the current setting in the Test Result Summary
+        View.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Results not displayed are not removed from the database and
+        are still considered for report generation. They are simply
+        not visible to make filtering and sorting over more recent
+        results more comfortable.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Two new BIRT reports</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There are two new reports that can be generated from the Test
+        Result Summary View.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The first is a report that shows code coverage for the chosen
+        Test Suites.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The second is a report that shows any comments written for
+        unsuccessful Test Suites which can be used as a daily summary
+        of the test status.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">BIRT reports show comment title for
+    executed Test Steps</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        If you have a BIRT report which shows the executed Test Steps
+        for a Test Suite, you can hover over the point on the graph
+        marking the number of executed Test Steps to see the title of
+        any comment you wrote for the test run.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If the expected Test Steps and executed Test Steps are the
+        same (i.e. the whole test ran), you will not see the comment.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Test execution speed increased</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We have significantly increased the speed at which tests are
+        executed.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Should you want to slow a test down to watch it, then you can
+        set a <emphasis>step delay</emphasis> in the Properties View
+        for the Test Suite.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You may notice that some tests require explicit
+        synchronization (e.g. waiting for windows to appear or to
+        close) to ”keep up” with the increased speed. If you prefer,
+        then adding a <emphasis>step delay</emphasis> of 1000(ms)
+        should produce the test execution speed from previous
+        versions.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Extensions must be adapted</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        As there have been changes to our API, any extensions you are
+        using in your Projects must be adapted to the new changes.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The largest change is that package prefixes have been changed.
+        Instead of <emphasis role="input">com.bredexsw.guidancer</emphasis>, the new
+        name is <emphasis role="input">org.eclipse.jubula</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Other changes include modified class names (the GD prefix has
+        been removed or replaced by JB).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Your client and RC (server) extensions must be adjusted and
+        recompiled with the new Jar files.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Support for div containers in
+    HTML</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We now support components created using
+        &lt;div&gt;&lt;/div&gt; containers on the level of
+        <emphasis>Graphics Component</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This means you will be able to perform certain checks on such
+        components and also send clicks to them.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Support for lists in HTML</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now check the existence of entries in lists created in
+        HTML using the &lt;ol&gt; and &lt;ul&gt; tags.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Support for sliders, date and time,
+    spinner and scale components in SWT</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The SWT components <emphasis>slider, date and time,
+        spinner</emphasis> and <emphasis>scale</emphasis> components
+        in SWT are now supported as <emphasis>Graphics
+        Components</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This means you will be able to perform certain checks on the
+        components as well as click them or in them.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New names for various Jubula
+    components</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We have renamed various parts of Jubula:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            What we previously referred to as the client (the
+            application where tests are written) is now known as the
+            Integrated Test Environment (ITE).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            The <emphasis>gdrun</emphasis> command for starting AUTs
+            is now called <emphasis>autrun</emphasis>. The command is
+            also now called <emphasis role="input">autrun</emphasis> and must be changed
+            in any scripts that use it.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            The command line client for test execution is now called
+            the <emphasis>test executor</emphasis>. The command is
+            called <emphasis role="input">testexec</emphasis> and must be changed in any
+            scripts that use it.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            The RCP Accessor is now called the RCP Remote Control
+            Plugin.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            The environment variables that can be used in Jubula have
+            also been renamed:
+          </para>
+          <itemizedlist>
+            <listitem>
+              <para>
+                <emphasis>GD_COMP_NAME</emphasis> (used for setting a
+                unique name for RCP components) is now called
+                <emphasis>TEST_COMP_NAME</emphasis>.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <emphasis>GDAutStarterPort</emphasis> (used to set a
+                default port number for the system) is now called
+                <emphasis>TEST_AUT_AGENT_PORT</emphasis>.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <emphasis>GDUDV_</emphasis> (used to set your own
+                environment variables is now called
+                <emphasis>TEST_UDV</emphasis>.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                The pre-defined test execution variables are now
+                preceded with <emphasis>TEST_</emphasis> instead of
+                <emphasis>GD_</emphasis>.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New perspective names</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The perspectives have been renamed. Each perspective type
+        (specification, reporting, execution) is preceded by
+        <emphasis>Functional Testing</emphasis>.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New and moved menu options</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The ITE now contains a menu point:<emphasis role="menuPath">File</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This menu allows you to import and export database preferences
+        to Jubula, to save, rename, refresh and exit the ITE.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The previous <emphasis role="menuPath">Project</emphasis> menu is now called
+        <emphasis role="menuPath">Test</emphasis>. Here you will find the menu options that
+        used to be under <emphasis role="menuPath">Project</emphasis>, including creating,
+        deleting, importing and exporting Projects.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Moved preferences</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The preferences for the test can now be found in the
+        preference dialog under the option <emphasis>Test</emphasis>.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New BIRT version</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        If you create your own reports for Jubula from this version,
+        then you must use version 2.6.1 of the BIRT viewer and engine.
+        Our reports are created with this version of BIRT and Eclipse
+        version 3.6.1.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

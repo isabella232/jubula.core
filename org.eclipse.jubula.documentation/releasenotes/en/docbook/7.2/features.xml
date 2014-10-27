@@ -1,0 +1,222 @@
+<section id="new-features-and-developments-7.2" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New Features and Developments</title>
+  <para>
+    <emphasis role="strong">Support for linking tests to application
+    lifecycle management (ALM) repositories</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now integrate your automated tests with external
+        repositories which you have configured in your workspace and
+        your Project.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The integration lets you specify a task ID on items in your
+        Project – most usually the task from an external system for
+        which this test is relevant.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can open the task for a node from the browsers.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        When a test runs via the ITE, the test results from the test
+        are attached to the relevant tasks in the external repository
+        as a comment with a link which can be opened in the Dashboard.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        It is not currently possible to decide on a per-test basis
+        whether or not to report. If you do not want to report for a
+        test, then you should remove the checkboxes for reporting from
+        the Project properties.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Test Jobs currently do not report to external systems.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The integration can be used with Bugzilla 3.6+, JIRA 5.0+ and
+        Trac 0.12+. An integration with HP ALM is not possible in
+        version 7.2, but was made available in 8.0.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New option in the testexec</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The testexec has a new option in the command line (not in the
+        configuration file).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Use the parameter <emphasis role="input">-sx</emphasis> to not write any
+        screenshots to the HTML or XML files.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Comments can be added to the Project and
+    to categories</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now add comments to the Project and to categories in
+        the Test Suite Browser and Test Case Browser.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New actions for testing checkboxes in SWT
+    tables</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Tables in SWT/RCP AUTs that have a checkbox in the first
+        column can now be tested.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        There are actions to toggle the state of the checkbox, and to
+        check the state of the checkbox.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The row to be checked is defined either by its selection or by
+        the mouse position.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Save As... option in image view</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now save images from errors in the test directly to
+        your file system using a new button and the context menu in
+        the image view.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">JProgress bar now supported as graphics
+    component</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now map JProgressBar components in Swing and SWT AUTs.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The component is supported as a graphics component – you can
+        check its existence, wait for it etc.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">HTML: the &lt;div&gt; tag is supported as
+    a component with text</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now perform check text actions on components in HTML
+        AUTs that use the &lt;div&gt; tag.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Changes to dashboard</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The URL for the Dashboard has been shortened.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The dashboard URL is now:
+      </para>
+      <programlisting>
+http://HOSTNAME:PORTNUMBER/dashboard
+</programlisting>
+    </listitem>
+    <listitem>
+      <para>
+        The properties for the dashboard have also been renamed from
+        <emphasis>com.bredexsw.guidancer</emphasis> to
+        <emphasis>org.eclipse.jubula</emphasis>. Please ensure you
+        update any properties files you use for the dashboard server.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Next and previous error buttons in Test
+    Result View that appears during test execution</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now also use the next and previous error buttons for
+        the Test Result View that appears during test execution.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New test data functions</emphasis> There
+    are new functions available in the ITE:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        randomInt(exclusive maximum value) – to generate a random
+        integer.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        replaceAll(string,regular expression,replacement) – to replace
+        parts of a string with something else.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        uuid() – to generate a universal unique ID.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        base64Encode(string) – to encode a string to base64.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        base64Decode(string) – to decode a string from base64.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

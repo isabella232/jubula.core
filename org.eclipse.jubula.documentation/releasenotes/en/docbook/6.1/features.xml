@@ -1,0 +1,347 @@
+<section id="new-features-and-developments-6.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New Features and Developments</title>
+  <para>
+    <emphasis role="strong">Multiple Test Case Browser instances now
+    supported</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now open the Test Case Browser multiple times.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can designate one Test Case Browser as the main browser.
+        This browser will be used for actions such as show
+        specification etc.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Workspace dialog now allows remembering of
+    workspace</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now select the option to remember your default
+        workspace in the workspace chooser.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Remember password and auto-login for
+    database</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In the database login dialog, you can select the option to
+        remember your password.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you have selected this option, you can also specify that
+        the database should be used as the default database you will
+        be automatically logged in when a database connection is
+        required.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The above options are not available for the embedded database.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To change the database you are connected to, or to change your default database login, use:<?linebreak?>
+        <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Select Database</emphasis>
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Auto-load for default Project</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In the <emphasis>Open Project</emphasis> dialog, you can now
+        identify the selected Project and version number as your
+        default Project.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can have one default Project per workspace.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        When you have a default Project set, then selecting:<?linebreak?>
+        <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis><?linebreak?>
+        will automatically load this Project.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can remove the default loading in the
+        <emphasis>Test</emphasis> preferences.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Testexec and DBTool can use -dburl instead
+    of workspace (-data) parameter</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        To make working with the testexec and dbtool easier, you can
+        now use the dburl parameter to specify which database to
+        connect to during the process.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This removes the need to specify which workspace to use (via
+        <emphasis role="input">-data</emphasis>) when working with the testexec and
+        dbtool.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can still enter the workspace and the -dbscheme
+        information if you prefer not to use the -dburl parameter.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Selenium version and tested browsers
+    updated</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Jubula now uses a newer version of Selenium that supports
+        newer versions of Firefox.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        We have updated our tests to run on Firefox version 15.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Frames and iFrames now supported for Web
+    Testing</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        AUTs that contain Frames and iFrames can now be tested by
+        Jubula
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">HTML:<emphasis>pre</emphasis> tags now
+    supported as component with text</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In HTML AUTs, you can now map components that use the
+        <literal>&lt;pre&gt;</literal> tag and perform e.g. check text
+        actions on them.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Chronon: Embedded recorder no longer needs
+    to be commented in</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now start the embedded Chronon recording in Jubula
+        without having to comment it in in the .ini file.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The only exception to this is on Linux systems, where you must
+        comment Chronon in for the ITE in the .ini file by removing
+        the hash signs from the two lines in the .ini file, and then
+        restart Jubula. If you are starting Jubula from the command
+        line with Chronon on Linux, please ensure that your current
+        directory is the Jubula directory, otherwise Jubula will not
+        start.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Chronon: New preference page and options
+    for ITE Chronon</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        In the preferences dialog, there is now a Chronon category. In
+        this category, you can select the <emphasis>ITE
+        Chronon</emphasis> page.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        On this page, you can configure options for the embedded
+        Chronon in the ITE. You can configure the output directory for
+        the Chronon recording, as well as any include or exclude
+        patterns that should be included and / or ignored for the
+        recording.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Chronon: Support for Chronon server
+    installation for use with AUTs</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        When you use Chronon with your AUT, you now have two choices –
+        you can use the integrated Chronon to record your AUT or you
+        can specify where your Chronon installation is, thus allowing
+        you to use the Chronon Recording Server. This is the
+        recommended choice for working in continuous integration
+        processes.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Chronon: Support for exclude patterns in
+    AUT configurations</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        If you are using the integrated Chronon support for testing
+        your AUT, then you now have the option to specify exclude
+        patterns for the recording as well as include patterns.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Chronon: Jubula now uses Chronon
+    3</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Jubula now uses Chronon version 3 to perform embedded
+        recording (in Jubula itself) and also for the integrated
+        recording in AUTs.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">JRE version updated</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Jubula now uses version 1.6.0_33 of the Java runtime
+        environment.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Jubula supports the testing of .NET
+    AUTs</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now also test .NET AUTs with Jubula.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Currently, WinForms AUTs can be tested.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Further information is available in the section on Toolkits in
+        the User Manual.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New metric in Jubula: Waits and Delays</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There is a new metric in Jubula that analyzes the waits and
+        delays used in a test that has run.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can start the metric from a Test Result Report and enter a
+        parameter for the minimum amount of waited time (in
+        milliseconds) that should be considered.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Search Result View displays all the static waits within
+        the node you selected. They are sorted according to the action
+        they belong to, and you can see how much time each type of
+        wait accumulates to over the test.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New BIRT Report: Test Execution
+    Overview</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There is a new BIRT report available to give an overview of
+        the test execution.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This report shows a list of executed, relevant Test Suites
+        over the time period selected. For each day in the time
+        period, there is a colored block for the Test Suite to display
+        its status. Green means that the test ran without any errors.
+        Red means that the test ran, but with errors. Yellow means
+        that the test ran more than once on that day. White means that
+        the Test Suite did not run on this day. This report is useful
+        for teams with large amounts of Test Suites who need to ensure
+        on a daily basis that all Test Suites were started.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">New JaCoCo version used</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Jubula now uses JaCoCo version 0.5.9 for code coverage.
+        Further information on the changes in the new JaCoCo version
+        can be found in the JaCoCo release notes.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

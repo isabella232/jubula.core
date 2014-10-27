@@ -1,39 +1,22 @@
 <?xml version="1.0"?>
 <project name="org.eclipse.jubula.documentation">
 	<property name="buildRoot" value="${basedir}" />
-	<property name="buildLogDir" value="${buildRoot}/buildLog" />
-
-	<target name="setupBuildDocumentation">
-		<mkdir dir="${buildLogDir}" />
-		<loadproperties srcFile="${buildRoot}/build.properties" />
-		<fail unless="build.version" />
-		<echo message="Using build.version: ${build.version}" />
-		<exec executable="make" failonerror="true" dir="${buildRoot}">
-			<arg line="setversion TAG=V${build.version}" />
-		</exec>
-		<exec executable="make" failonerror="true" dir="${buildRoot}">
-			<arg line="convert" />
-		</exec>
-		<exec executable="make" failonerror="true" dir="${buildRoot}">
-			<arg line="checksplash" />
-		</exec>
-	</target>
 	
 	<target name="buildDocumentationDocbook" depends="
 		buildInstallationManual,
 		buildUserManual,
-		buildExtensionManual">
+		buildExtensionManual,
+		buildReleaseNotes">
 	</target>
 	
-	<target name="buildDocumentation" depends="
-		buildReleaseNotes">
+	<target name="buildDocumentation">
 		<exec executable="make" failonerror="true" dir="${buildRoot}">
 			<arg line="remove" />
 		</exec>
 	</target>
 
 	<target name="buildInstallationManual">
-		<ant antfile="buildManual.xml">
+		<ant antfile="buildManual.xml" target="buildHTML">
 			<property name="name" value="InstallationManual"/>
 			<property name="dir" value="install"/>
 			<property name="output" value="html"/>
@@ -41,23 +24,24 @@
 	</target>
 
 	<target name="buildUserManual">
-		<ant antfile="buildManual.xml">
+		<ant antfile="buildManual.xml" target="buildOnlineHelp">
 			<property name="name" value="UserManual"/>
 			<property name="dir" value="manual"/>
 		</ant>
 	</target>
 
 	<target name="buildExtensionManual">
-		<ant antfile="buildManual.xml">
+		<ant antfile="buildManual.xml" target="buildOnlineHelp">
 			<property name="name" value="ExtensionManual"/>
 			<property name="dir" value="extensionapi"/>
 		</ant>
 	</target>
 
-	<target name="buildReleaseNotes" depends="setupBuildDocumentation">
-		<exec executable="/bin/sh" failonerror="true" dir="${buildRoot}">
-			<arg value="-c" />
-			<arg value="make releaseNotes &gt; ${buildLogDir}/releaseNotes.log 2&gt;&amp;1" />
-		</exec>
+	<target name="buildReleaseNotes">
+		<ant antfile="buildManual.xml" target="buildReleaseNotes">
+			<property name="name" value="ReleaseNotes"/>
+			<property name="dir" value="releasenotes"/>
+			<property name="output" value="html"/>
+		</ant>
 	</target>
 </project>
