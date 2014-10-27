@@ -4,4 +4,7 @@
   <fileset name="all" enabled="true" check-config-name="Jubula" local="false">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
+  <filter name="FilesFromPackage" enabled="true">
+    <filter-data value="src/org/eclipse/jubula/client/api/converter/ui/i18n"/>
+  </filter>
 </fileset-config>

@@ -36,6 +36,10 @@
             <command
               commandId="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand"
               style="push">
+              <visibleWhen checkEnabled="false">
+                <reference
+                  definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
+              </visibleWhen>
             </command>
         </menuContribution>
     </extension>
