@@ -119,7 +119,7 @@ public class NameLoader {
                 StringConstants.RIGHT_PARENTHESES, StringConstants.SPACE)
                     .replace(
                 StringConstants.SLASH, StringConstants.SPACE);
-        desiredName = WordUtils.capitalizeFully(desiredName);
+        desiredName = WordUtils.capitalize(desiredName);
         desiredName = StringUtils.deleteWhitespace(desiredName);
         desiredName = WordUtils.uncapitalize(desiredName);
         return desiredName;
@@ -193,7 +193,7 @@ public class NameLoader {
                         StringConstants.SPACE)
                 .replace(StringConstants.RIGHT_PARENTHESES,
                         StringConstants.SPACE);
-        desiredName = WordUtils.capitalizeFully(desiredName);
+        desiredName = WordUtils.capitalize(desiredName);
         desiredName = StringUtils.deleteWhitespace(desiredName);
         return desiredName;
     }
@@ -222,7 +222,7 @@ public class NameLoader {
      * @return the name for a component factory for a toolkit
      */
     public String getFactoryName(String toolkitName) {
-        String tkName = WordUtils.capitalizeFully(toolkitName);
+        String tkName = WordUtils.capitalize(toolkitName);
         return tkName + FACTORY_NAME_EXTENSION;
     }
     
@@ -232,7 +232,7 @@ public class NameLoader {
      * @return the name for a component factory for a toolkit
      */
     public String getToolkitComponentClassName(String toolkitName) {
-        String tkName = WordUtils.capitalizeFully(toolkitName);
+        String tkName = WordUtils.capitalize(toolkitName);
         return tkName + TOOLKITINFO_NAME_EXTENSION;
     }
     
