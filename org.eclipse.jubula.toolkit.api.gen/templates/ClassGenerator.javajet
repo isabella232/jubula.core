@@ -154,7 +154,11 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 		}
 		String methodName = nameLoader.translateFromCompSystem(action.getName());
 		List<Param> params = action.getParams();
+		if (!params.isEmpty()) {
 		%>
+		/**
+		 * @throws IllegalArgumentException Throws an IllegalArgumentException if one of the parameters is null.
+		 */<%}%>
 		<%if (action.isDeprecated()) {%>@Deprecated<%}%>
 		@NonNull public CAP <%=methodName%>(
 		<%	
@@ -171,7 +175,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			%>
 			@NonNull <%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
 		<%}%>
-		) throws IllegalArgumentException<%if (genInterface) {%>;<%} else {%> {
+		) <%if (!params.isEmpty()) {%>throws IllegalArgumentException<%} if (genInterface) {%>;<%} else {%> {
 			MessageCap messageCap = new MessageCap();
 			messageCap.setMethod("<%=action.getMethod()%>"); //$NON-NLS-1$
 			messageCap.sethasDefaultMapping(<%=hasDefaultMapping%>);
