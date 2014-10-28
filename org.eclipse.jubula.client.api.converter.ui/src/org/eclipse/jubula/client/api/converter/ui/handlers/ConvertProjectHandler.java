@@ -11,10 +11,13 @@
 package org.eclipse.jubula.client.api.converter.ui.handlers;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -26,9 +29,14 @@ import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IReusedProjectPO;
+import org.eclipse.jubula.client.core.model.ITestCasePO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
+import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -66,7 +74,7 @@ public class ConvertProjectHandler extends AbstractHandler {
     private static String genPackage;
     
     /** the project */
-    private static IProjectPO project;
+    private static IProgressMonitor progressMonitor;
 
     /**
      * {@inheritDoc}
@@ -120,67 +128,179 @@ public class ConvertProjectHandler extends AbstractHandler {
         
         /** {@inheritDoc} */
         public void run(IProgressMonitor monitor) {
-            project = GeneralStorage.getInstance().getProject();
-            monitor.beginTask(NLS.bind(Messages.ConvertProjectTaskName,
+            progressMonitor = monitor;
+            IProjectPO project = GeneralStorage.getInstance().getProject();
+            progressMonitor.beginTask(NLS.bind(Messages.ConvertProjectTaskName,
                     project.getName()), IProgressMonitor.UNKNOWN);
             String basePath = genPath + StringConstants.SLASH
                     + genPackage.replace(StringConstants.DOT, 
                             StringConstants.SLASH);
             
             if (project != null) {
-                for (IExecPersistable node : project.getExecObjCont()
-                        .getExecObjList()) {
-                    String path = basePath + StringConstants.SLASH
-                            + EXEC_PATH + StringConstants.SLASH;
-                    createFileOrDir(monitor, node, new File(path));
+                // Handle the reused projects
+                Iterator iterator = project.getUsedProjects().iterator();
+                while (iterator.hasNext()) {
+                    IReusedProjectPO reusedProject =
+                            (IReusedProjectPO) iterator.next();
+                    IProjectPO usedProject;
+                    try {
+                        usedProject = ProjectPM.loadProject(reusedProject);
+                        handleProject(usedProject, basePath);
+                    } catch (JBException e) {
+                        ErrorHandlingUtil.createMessageDialog(
+                                new JBException(e.getMessage(), e,
+                                        MessageIDs.E_LOAD_PROJECT));
+                    }
                 }
-                for (ISpecPersistable node : project.getSpecObjCont()
-                        .getSpecObjList()) {
-                    String path = basePath + StringConstants.SLASH
-                            + SPEC_PATH + StringConstants.SLASH;
-                    createFileOrDir(monitor, node, new File(path));
-                }
+                // Handle the project itself
+                handleProject(project, basePath);
             }
-            monitor.done();
+            progressMonitor.done();
+        }
+
+        /**
+         * Traverses a project and creates files and directories for its content.
+         * @param project the project
+         * @param basePath the base path
+         */
+        private void handleProject(IProjectPO project, String basePath) {
+            String projectPath = basePath + StringConstants.SLASH
+                    + project.getName().toLowerCase();
+            for (IExecPersistable node : project.getExecObjCont()
+                    .getExecObjList()) {
+                String path = projectPath + StringConstants.SLASH
+                        + EXEC_PATH + StringConstants.SLASH;
+                handleNode(node, new File(path));
+            }
+            for (ISpecPersistable node : project.getSpecObjCont()
+                    .getSpecObjList()) {
+                String path = projectPath + StringConstants.SLASH
+                        + SPEC_PATH + StringConstants.SLASH;
+                handleNode(node, new File(path));
+            }
         }
         
         /**
          * Creates a file for a node and a folder with its content for a category
-         * @param monitor the monitor
          * @param node the node
          * @param parentDir the parent directory
          */
-        private void createFileOrDir(IProgressMonitor monitor,
-                INodePO node, File parentDir) {
-            if (monitor.isCanceled()) {
+        private void handleNode(INodePO node, File parentDir) {
+            if (progressMonitor.isCanceled()) {
                 return;
             }
             if (node instanceof ICategoryPO) {
                 ICategoryPO category = (ICategoryPO) node;
-                File dir = createDir(parentDir, category);
-                if (dir.exists()) {
-                    String fqCategoryName = getFullyQualifiedName(category);
-                    ErrorMessagePresenter.getPresenter().showErrorMessage(
-                            new JBException(
-                                NLS.bind(Messages.DuplicateCategory, 
-                                    new String[] {fqCategoryName, 
-                                        project.getName()}), 
-                                MessageIDs.E_DUPLICATE_CATEGORY),
-                            new String [] {fqCategoryName},
-                            null);
-                    monitor.setCanceled(true);
-                    return;
-                }
-                dir.mkdirs();
-                
-                Iterator iterator = category.getNodeListIterator();
-                while (iterator.hasNext()) {
-                    INodePO child = (INodePO) iterator.next();
-                    if (child instanceof IExecPersistable) {
-                        createFileOrDir(monitor, child, dir);
-                    }
-                }
+                handleCategory(parentDir, category);
             }
+            if (node instanceof ITestCasePO) {
+                ITestCasePO testcase = (ITestCasePO) node;
+                handleTestCase(parentDir, testcase);
+            }
+            if (node instanceof ITestSuitePO) {
+                ITestSuitePO testsuite = (ITestSuitePO) node;
+                handleTestSuite(parentDir, testsuite);
+            }
+            if (node instanceof ITestJobPO) {
+                ITestJobPO testjob = (ITestJobPO) node;
+                handleTestJob(parentDir, testjob);
+            }
+        }
+
+        /**
+         * Handles the conversion for a category.
+         * @param parentDir the parent directory
+         * @param category the category
+         */
+        private void handleCategory(File parentDir, ICategoryPO category) {
+            File dir = createDir(parentDir, category);
+            if (dir.exists()) {
+                displayErrorForDuplicate(category);
+                return;
+            }
+            dir.mkdirs();
+            
+            Iterator iterator = category.getNodeListIterator();
+            while (iterator.hasNext()) {
+                INodePO child = (INodePO) iterator.next();
+                handleNode(child, dir);
+            }
+        }
+        
+        /**
+         * Handles the conversion for a test case.
+         * @param parentDir the parent directory
+         * @param testcase the test case
+         */
+        private void handleTestCase(File parentDir, ITestCasePO testcase) {
+            File file = createFile(parentDir, testcase);
+            if (file.exists()) {
+                displayErrorForDuplicate(testcase);
+                return;
+            }
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                ErrorHandlingUtil.createMessageDialog(
+                        new JBException(e.getMessage(), e,
+                                MessageIDs.E_FILE_NO_PERMISSION));
+            }
+        }
+        
+        /**
+         * Handles the conversion for a test suite.
+         * @param parentDir the parent directory
+         * @param testsuite the test suite
+         */
+        private void handleTestSuite(File parentDir, ITestSuitePO testsuite) {
+            File file = createFile(parentDir, testsuite);
+            if (file.exists()) {
+                displayErrorForDuplicate(testsuite);
+                return;
+            }
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                ErrorHandlingUtil.createMessageDialog(
+                        new JBException(e.getMessage(), e,
+                                MessageIDs.E_FILE_NO_PERMISSION));
+            }
+        }
+        
+        /**
+         * Handles the conversion for a test job.
+         * @param parentDir the parent directory
+         * @param testjob the test job
+         */
+        private void handleTestJob(File parentDir, ITestJobPO testjob) {
+            File file = createFile(parentDir, testjob);
+            if (file.exists()) {
+                displayErrorForDuplicate(testjob);
+                return;
+            }
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                ErrorHandlingUtil.createMessageDialog(
+                        new JBException(e.getMessage(), e,
+                                MessageIDs.E_FILE_NO_PERMISSION));
+            }
+        }
+
+        /**
+         * Displays an error message in the case that a node occurs multiple times
+         * @param node the duplicate node
+         */
+        private void displayErrorForDuplicate(INodePO node) {
+            String fqNodeName = getFullyQualifiedName(node);
+            ErrorMessagePresenter.getPresenter().showErrorMessage(
+                    new JBException(
+                        NLS.bind(Messages.DuplicateNode, 
+                            new String[] {fqNodeName}), 
+                        MessageIDs.E_DUPLICATE_NODE),
+                    new String [] {fqNodeName},
+                    null);
+            progressMonitor.setCanceled(true);
         }
         
         /**
@@ -194,6 +314,81 @@ public class ConvertProjectHandler extends AbstractHandler {
                     + category.getName();
             File dir = new File(dirPath);
             return dir;
+        }
+        
+        /**
+         * Creates a directory for a category with given parent directory
+         * @param parentDir the parent directory
+         * @param node the category
+         * @return the directory
+         */
+        private File createFile(File parentDir, INodePO node) {
+            String extension = ".java"; //$NON-NLS-1$
+            String fileName = parentDir.getAbsolutePath()
+                    + StringConstants.SLASH
+                    + determineClassName(node)
+                    + extension;
+            File file = new File(fileName);
+            while (file.exists()) {
+                String oldName = StringUtils.substringBeforeLast(
+                        file.getAbsolutePath(), extension);
+                file = new File(oldName + StringConstants.UNDERSCORE
+                        + extension);
+            }
+            return file;
+        }
+
+        /**
+         * Determines a valid Java class name for a given node
+         * @param node the node
+         * @return the class name
+         */
+        private String determineClassName(INodePO node) {
+            String name = node.getName();
+            String [] invalidChars = new String [] {
+                StringConstants.AMPERSAND,
+                StringConstants.APOSTROPHE,
+                StringConstants.BACKSLASH,
+                StringConstants.COLON,
+                StringConstants.COMMA,
+                StringConstants.DOT,
+                StringConstants.EQUALS_SIGN,
+                StringConstants.EXCLAMATION_MARK,
+                StringConstants.LEFT_BRACKET,
+                StringConstants.LEFT_INEQUALITY_SING,
+                StringConstants.LEFT_PARENTHESES,
+                StringConstants.MINUS,
+                StringConstants.PIPE,
+                StringConstants.PLUS,
+                StringConstants.QUESTION_MARK,
+                StringConstants.QUOTE,
+                StringConstants.RIGHT_BRACKET,
+                StringConstants.RIGHT_INEQUALITY_SING,
+                StringConstants.RIGHT_PARENTHESES,
+                StringConstants.SEMICOLON,
+                StringConstants.SLASH,
+                StringConstants.STAR,
+                StringConstants.UNDERSCORE
+            };
+            for (String c : invalidChars) {
+                name = name.replace(c, StringConstants.SPACE);
+            }
+            name = WordUtils.capitalize(name);
+            name = StringUtils.deleteWhitespace(name);
+            name = name.replaceAll("^[0-9]*", StringConstants.EMPTY); //$NON-NLS-1$
+            Pattern p = Pattern.compile("^[A-Z][\\w]*$"); //$NON-NLS-1$
+            if (!p.matcher(name).matches()) {
+                String fqNodeName = getFullyQualifiedName(node);
+                ErrorMessagePresenter.getPresenter().showErrorMessage(
+                        new JBException(
+                            NLS.bind(Messages.InvalidNodeName, 
+                                new String[] {fqNodeName}), 
+                            MessageIDs.E_INVALID_NODE_NAME),
+                        new String [] {fqNodeName},
+                        null);
+                progressMonitor.setCanceled(true);
+            }
+            return name;
         }
         
         /** 

@@ -20,10 +20,11 @@ public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.api.converter.ui.i18n.messages"; //$NON-NLS-1$
 
     public static String ConvertProjectTaskName;
-    public static String DuplicateCategory;
+    public static String DuplicateNode;
     public static String ErrorWhileConverting;
     public static String InputDialogName;
     public static String InputDialogMessage;
+    public static String InvalidNodeName;
     public static String InvalidPackageName;
     public static String NoPackageNameSpecified;
 
