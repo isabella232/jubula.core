@@ -64,9 +64,15 @@ public class AccordionAdapter extends JavaFXComponentAdapter<Accordion>
      * {@inheritDoc}
      */
     public Rectangle getBoundsAt(final int index) {
+        try {
+            Thread.sleep(400);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getBoundsAt", new Callable<Rectangle>() { //$NON-NLS-1$
                     public Rectangle call() {
+                        getRealComponent().requestLayout();
                         getRealComponent().layout();    
                         return NodeBounds.getRelativeBounds(
                                 getRealComponent().getPanes().get(index), 
