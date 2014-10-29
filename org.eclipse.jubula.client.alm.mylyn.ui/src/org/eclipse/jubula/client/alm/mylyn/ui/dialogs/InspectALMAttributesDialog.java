@@ -28,10 +28,16 @@ import org.eclipse.jubula.client.ui.views.ColumnViewerSorter;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.mylyn.tasks.core.data.TaskAttribute;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 
@@ -100,22 +106,44 @@ public class InspectALMAttributesDialog extends TitleAreaDialog {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     protected Control createDialogArea(Composite parent) {
         setTitle(Messages.InspectorTitle);
         setMessage(Messages.InspectorMessage);
         getShell().setText(Messages.InspectorTitle);
         parent.setLayout(new GridLayout());
-        Composite comp = new Composite(parent, SWT.None);
-        comp.setLayout(new GridLayout());
+        Composite content = new Composite(parent, SWT.None);
+        content.setLayout(new GridLayout());
 
-        TableViewer tableViewer = new TableViewer(comp, SWT.H_SCROLL
+        TableViewer tableViewer = createTableViewer(content);
+
+        createAttributeIDColumn(tableViewer);
+        createValueColumn(tableViewer);
+        createOptionsColumn(tableViewer);
+        createPropertiesColumn(tableViewer);
+        tableViewer.setInput(m_taskAttribute.getAttributes());
+        GridData tableViewerGD = new GridData(GridData.FILL, GridData.FILL,
+                true, true);
+        tableViewerGD.horizontalSpan = 2;
+        tableViewer.getControl().setLayoutData(tableViewerGD);
+
+        GridData contentGD = new GridData(GridData.FILL, GridData.FILL,
+                true, true);
+        contentGD.heightHint = 600;
+        content.setLayoutData(contentGD);
+
+        return parent;
+    }
+    /**
+     * creates the table viewer 
+     * @param parent the parent
+     * @return the created table viewer
+     */
+    @SuppressWarnings("unchecked")
+    private TableViewer createTableViewer(Composite parent) {
+        TableViewer tableViewer = new TableViewer(parent, SWT.H_SCROLL
                 | SWT.V_SCROLL | SWT.BORDER);
-        // make lines and header visible
-        final Table table = tableViewer.getTable();
-        table.setHeaderVisible(true);
-        table.setLinesVisible(true);
-
+        
+        changeTableOptions(tableViewer);
         tableViewer.setContentProvider(new IStructuredContentProvider() {
 
             public void inputChanged(Viewer viewer, Object oldInput,
@@ -143,29 +171,41 @@ public class InspectALMAttributesDialog extends TitleAreaDialog {
                 return null;
             }
         });
+        return tableViewer;
+    }
 
-        createAttributeIDColumn(tableViewer);
-        createValueColumn(tableViewer);
-        createOptionsColumn(tableViewer);
-        createPropertiesColumn(tableViewer);
-        tableViewer.setInput(m_taskAttribute.getAttributes());
-        GridData gridData2 = new GridData();
-        gridData2.verticalAlignment = GridData.FILL;
-        gridData2.horizontalSpan = 2;
-        gridData2.grabExcessHorizontalSpace = true;
-        gridData2.grabExcessVerticalSpace = true;
-        gridData2.horizontalAlignment = GridData.FILL;
-        tableViewer.getControl().setLayoutData(gridData2);
+    /**
+     * Changes some options of the table inside the tableviewer and adds a key
+     * listener for copy
+     * 
+     * @param tableViewer
+     *            the tableviewer
+     */
+    private void changeTableOptions(TableViewer tableViewer) {
+        // make lines and header visible
+        final Table table = tableViewer.getTable();
+        table.setHeaderVisible(true);
+        table.setLinesVisible(true);
+        table.addKeyListener(new KeyListener() {
 
-        final GridData gridData = new GridData();
-        gridData.grabExcessVerticalSpace = true;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.horizontalAlignment = GridData.FILL;
-        gridData.verticalAlignment = GridData.FILL;
-        gridData.heightHint = 600;
-        comp.setLayoutData(gridData);
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (((e.stateMask & SWT.MOD1) == SWT.MOD1) 
+                        && e.keyCode == 'c') {
+                    if (table.getSelectionCount() > 0) {
+                        Clipboard cb = new Clipboard(Display.getDefault());
+                        Transfer textTransfer = TextTransfer.getInstance();
+                        cb.setContents(new Object[] { table.getSelection()[0]
+                                .getText() }, new Transfer[] { textTransfer });
+                    }
+                }
 
-        return parent;
+            }
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // Nothing happens here
+            }
+        });
     }
 
     /**
