@@ -488,8 +488,9 @@ public class MessageIDs {
     public static final Integer E_WRONG_NUM_FUNCTION_ARGS = new Integer (9521);
     /** incorrect function parameter value */
     public static final Integer E_WRONG_PARAMETER_VALUE = new Integer(9522);
-    
-    
+    /** problems viewing task attributes */
+    public static final Integer E_ERROR_VIEW_TASK_ATTRIBUTES = 
+            new Integer(9523);
     
     
     // ---------------------------------------------------------------------
@@ -725,6 +726,7 @@ public class MessageIDs {
         messageMap.put(E_COMP_TYPE_INCOMPATIBLE, e, "ErrorMessage.COMP_TYPE_INCOMPATIBLE", null); //$NON-NLS-1$
         messageMap.put(E_MOVE_TC_COMP_NAME_EXISTS, e, "ErrorMessage.MOVE_TC_COMP_NAME_EXISTS", new String [] {"ErrorDetail.MOVE_TC_COMP_NAME_EXISTS"}); //$NON-NLS-1$ //$NON-NLS-2$
         messageMap.put(E_MOVE_TC_COMP_TYPE_INCOMPATIBLE, e, "ErrorMessage.MOVE_TC_COMP_TYPE_INCOMPATIBLE", new String [] {"ErrorDetail.MOVE_TC_COMP_TYPE_INCOMPATIBLE"}); //$NON-NLS-1$ //$NON-NLS-2$
+        messageMap.put(E_ERROR_VIEW_TASK_ATTRIBUTES, e, "ErrorMessage.VIEW_TASK_ATTRIBUTES", null); //$NON-NLS-1$
     }
     
     /**

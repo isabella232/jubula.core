@@ -65,6 +65,7 @@
             commandId="org.eclipse.jubula.client.alm.ui.commands.inspectMylynAttributes">
             <enabledWhen>
             <and>
+              <count value="1" />
               <iterate ifEmpty="false" operator="or">
                 <and>
                     <instanceof value="org.eclipse.mylyn.tasks.core.ITask" />
