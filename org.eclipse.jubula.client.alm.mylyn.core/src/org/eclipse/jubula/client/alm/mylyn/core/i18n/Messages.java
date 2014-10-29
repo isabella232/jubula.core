@@ -37,6 +37,7 @@ public class Messages extends NLS {
     public static String ReportingFieldUpdate;
     public static String ReportingFieldUpdates;
     public static String ReportingTaskFailed;
+    public static String ReportingAbortedDueVariables;
     public static String NotAvailable;
     public static String TaskRepositoryConnectionTest;
     public static String TaskRepositoryConnectionTestFailed;

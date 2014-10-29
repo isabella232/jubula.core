@@ -99,7 +99,22 @@ public final class ALMAccess {
             return m_values.get(TaskAttribute.TASK_KIND);
         }
     }
-    
+    /**
+     * Exception for Problems with resolving a variable
+     * @author BREDEX GmbH
+     */
+    public static class CouldNotResolveException extends Exception {
+        /** Could not not resolve a variable or similar */
+        public CouldNotResolveException() {
+            super();
+        }
+        /** Could not not resolve a variable or similar
+         * @param message the message or the value
+         */
+        public CouldNotResolveException(String message) {
+            super(message);
+        }
+    }
     /** the logger */
     private static final Logger LOG = LoggerFactory.getLogger(ALMAccess.class);
 
@@ -308,6 +323,9 @@ public final class ALMAccess {
         } catch (InvalidALMAttributeException e) {
             status = new Status(IStatus.ERROR, Activator.ID,
                     e.getMessage());
+        } catch (CouldNotResolveException e) {
+            status = new Status(IStatus.CANCEL, Activator.ID,
+                    "Could not resolve variable"); //$NON-NLS-1$
         } catch (CoreException e) {
             status = new Status(IStatus.ERROR, Activator.ID,
                     e.getLocalizedMessage());
@@ -327,12 +345,14 @@ public final class ALMAccess {
      * @param rootAttr root attribute
      * @return list of task attributes to change
      * @throws InvalidALMAttributeException 
+     * @throws CouldNotResolveException
      */
     private static List<TaskAttribute> defaultFieldUpdateHandling(
             List<FieldUpdate> fieldUpdates, TaskAttribute rootAttr)
-        throws InvalidALMAttributeException {
+        throws InvalidALMAttributeException, CouldNotResolveException {
         List<TaskAttribute> changes = new ArrayList<TaskAttribute>();
 
+        boolean failed = false;
         for (FieldUpdate u : fieldUpdates) {
             Map<String, Object> attributesToChange = u.getAttributesToChange();
             for (String key : attributesToChange.keySet()) {
@@ -347,7 +367,12 @@ public final class ALMAccess {
                 }
                 Object value = attributesToChange.get(key);
                 if (value instanceof String) {
-                    value = getVariableValues((String)value, u);
+                    try {
+                        value = getVariableValues((String)value, u);
+                    } catch (CouldNotResolveException ce) {
+                        // First validating all attributes and values before ending
+                        failed = true;
+                    }
                     Map<String, String> options = fieldUpdate.getOptions();
                     if (options != null && !options.isEmpty()) {
                         if (!options.containsKey(value)) {
@@ -359,10 +384,13 @@ public final class ALMAccess {
                 } else {
                     fieldUpdate.setValue(value.toString());
                 }
+
                 changes.add(fieldUpdate);
             }
         }
-
+        if (failed) {
+            throw new CouldNotResolveException();
+        }
         return changes;
     }
 
@@ -371,16 +399,19 @@ public final class ALMAccess {
      * @param value the string value which variables of it should be resolved (using our parser)
      * @param fieldUpdate the {@link FieldUpdate} of the corresponding value
      * @return a string whith all variables resolved
+     * @throws CouldNotResolveException 
      */
     private static String getVariableValues(String value,
-            FieldUpdate fieldUpdate) {
+            FieldUpdate fieldUpdate) throws CouldNotResolveException {
+        boolean isFailing = false;
         if (StringUtils.isNotBlank(value)) {
             ParamValueConverter converter = new SimpleStringConverter(value);
             if (converter.containsErrors()) {
                 CommentReporter.getInstance().getConsole()
-                    .writeWarningLine(NLS.bind(
+                    .writeErrorLine(NLS.bind(
                             Messages.ParsingReportingRuledFailed, value));
-                return value;
+                throw new CouldNotResolveException(NLS.bind(
+                        Messages.ParsingReportingRuledFailed, value));
             }
             List<IParamValueToken> liste = converter.getTokens();
             String result = StringConstants.EMPTY;
@@ -388,11 +419,18 @@ public final class ALMAccess {
                 IParamValueToken iParamValueToken = (IParamValueToken) iterator
                         .next();
                 if (iParamValueToken instanceof VariableToken) {
-                    result += getBeanString(fieldUpdate,
-                            (VariableToken) iParamValueToken);
+                    try {
+                        result += getBeanString(fieldUpdate,
+                                (VariableToken) iParamValueToken); 
+                    } catch (CouldNotResolveException ce) {
+                        isFailing = true;
+                    }
                 } else {
                     result += iParamValueToken.getGuiString();
                 }
+            }
+            if (isFailing) {
+                throw new CouldNotResolveException();
             }
             return result;
         }
@@ -559,7 +597,7 @@ public final class ALMAccess {
      * @return the String representation the resolved variable
      */
     private static String getBeanString(FieldUpdate fieldUpdate,
-            VariableToken variable) {
+            VariableToken variable) throws CouldNotResolveException {
         String returnValue = variable.getVariableString();
         if (StringUtils.contains(returnValue, '_')) {
             String[] strings = StringUtils.split(returnValue, "_", 2); //$NON-NLS-1$
@@ -589,15 +627,16 @@ public final class ALMAccess {
             } catch (IllegalAccessException | InvocationTargetException 
                     | NoSuchMethodException e) {
                 CommentReporter.getInstance().getConsole()
-                    .writeWarningLine(NLS.bind(Messages.UnresolvableVariable,
+                    .writeErrorLine(NLS.bind(Messages.UnresolvableVariable,
                             variable.getGuiString()));
-                returnValue = variable.getGuiString();
+                throw new CouldNotResolveException(variable.getGuiString());
             }
         } else {
             returnValue = variable.getGuiString();
             CommentReporter.getInstance().getConsole()
-            .writeWarningLine(NLS.bind(Messages.UnresolvableVariable,
+            .writeErrorLine(NLS.bind(Messages.UnresolvableVariable,
                     variable.getGuiString()));
+            throw new CouldNotResolveException(variable.getGuiString());
         }
         return returnValue;
     }

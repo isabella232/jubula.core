@@ -298,6 +298,9 @@ public class CommentReporter implements ITestresultSummaryEventListener {
                         c.writeErrorLine(fieldUpdateStatus.getMessage());
                         c.writeErrorLine(
                                 NLS.bind(Messages.ReportingTaskFailed, taskId));
+                        if (fieldUpdateStatus.getSeverity() == IStatus.CANCEL) {
+                            break;
+                        }
                     } else {
                         overallFieldUpdateCount += fieldUpdateAmount;
                     }
