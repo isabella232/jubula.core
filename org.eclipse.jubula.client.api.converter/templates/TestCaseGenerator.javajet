@@ -1,0 +1,67 @@
+<%@ jet 
+package="org.eclipse.jubula.client.api.converter" 
+imports="java.util.*
+			org.apache.commons.lang.StringUtils
+			org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException
+			org.eclipse.jubula.client.api.converter.utils.Utils
+			org.eclipse.jubula.client.core.model.ICapPO
+		   org.eclipse.jubula.client.core.model.IExecTestCasePO
+			org.eclipse.jubula.client.core.model.INodePO
+			org.eclipse.jubula.client.core.model.IProjectPO
+		   org.eclipse.jubula.client.core.model.ISpecTestCasePO
+		   org.eclipse.jubula.client.core.model.ITestCasePO
+		   org.eclipse.jubula.client.core.persistence.NodePM
+		   org.eclipse.jubula.client.core.persistence.ProjectPM
+		   org.eclipse.jubula.tools.internal.constants.StringConstants
+		   org.eclipse.jubula.tools.internal.exception.JBException" 
+class="TestCaseGenerator"%>
+<%
+TestCaseInfo info = (TestCaseInfo)argument;
+String className = info.getClassName();
+ITestCasePO testCase = info.getTestCase();
+Iterator<INodePO> iterator = testCase.getNodeListIterator();
+String packageBase = info.getPackageBasePath();
+IProjectPO project = null;
+try {
+    project = ProjectPM.loadProjectById(testCase.getParentProjectId());
+} catch (JBException e) {
+    e.printStackTrace();
+}
+String projectName = null;
+try {
+    projectName = Utils.translateToPackageName(project);
+} catch (InvalidNodeNameException e) {
+    e.printStackTrace();
+}
+String fqName = Utils.getFullyQualifiedTranslatedName(testCase, packageBase, projectName);
+String packageName = StringUtils.substringBeforeLast(fqName, StringConstants.DOT);
+%>
+package <%=packageName%>;
+
+public class <%=className%> {
+	
+	public static void execute() {
+		<%while (iterator.hasNext()) {
+			INodePO node = iterator.next();
+			if (node instanceof ICapPO) {%>
+			// CAP <%=node.getName()%>
+			<%} else if (node instanceof IExecTestCasePO) {
+				IExecTestCasePO exec = (IExecTestCasePO)node;
+				ISpecTestCasePO spec = exec.getSpecTestCase();
+				String testCaseName = StringConstants.EMPTY;
+				try {
+				    project = ProjectPM.loadProjectById(spec.getParentProjectId());
+				} catch (JBException e) {
+				    e.printStackTrace();
+				}
+				try {
+				    projectName = Utils.translateToPackageName(project);
+				} catch (InvalidNodeNameException e) {
+				    e.printStackTrace();
+				}
+				testCaseName = Utils.getFullyQualifiedTranslatedName(spec, packageBase, projectName);%>
+			<%=testCaseName%>.execute();
+			<%}%>
+		<%}%>
+	}
+}

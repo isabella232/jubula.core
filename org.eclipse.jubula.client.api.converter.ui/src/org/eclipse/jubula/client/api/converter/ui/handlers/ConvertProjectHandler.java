@@ -10,21 +10,29 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.api.converter.ui.handlers;
 
+import static org.eclipse.jubula.client.api.converter.utils.Utils.EXEC_PATH;
+import static org.eclipse.jubula.client.api.converter.utils.Utils.SPEC_PATH;
+
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.api.converter.TestCaseGenerator;
+import org.eclipse.jubula.client.api.converter.TestCaseInfo;
+import org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException;
 import org.eclipse.jubula.client.api.converter.ui.i18n.Messages;
+import org.eclipse.jubula.client.api.converter.utils.Utils;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -38,7 +46,6 @@ import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
-import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
@@ -61,20 +68,11 @@ public class ConvertProjectHandler extends AbstractHandler {
     private static final Logger LOG = LoggerFactory
             .getLogger(ConvertProjectHandler.class);
     
-    /** specific path for executables */
-    private static final String EXEC_PATH = "testsuites"; //$NON-NLS-1$
-    
-    /** specific path for specifications */
-    private static final String SPEC_PATH = "testcases"; //$NON-NLS-1$
-    
     /** target path of conversion */
     private static String genPath;
     
     /** target package name space */
     private static String genPackage;
-    
-    /** the project */
-    private static IProgressMonitor progressMonitor;
 
     /**
      * {@inheritDoc}
@@ -84,7 +82,8 @@ public class ConvertProjectHandler extends AbstractHandler {
         DirectoryDialog directoryDialog = createDirectoryDialog();
         genPath = directoryDialog.open();
         if (genPath != null) {
-            Utils.storeLastDirPath(directoryDialog.getFilterPath());
+            org.eclipse.jubula.client.ui.rcp.utils.Utils.storeLastDirPath(
+                    directoryDialog.getFilterPath());
             File directory = new File(genPath);
             if (directory.list().length == 0) {
                 InputDialog inputDialog = new InputDialog(getActiveShell(),
@@ -115,7 +114,8 @@ public class ConvertProjectHandler extends AbstractHandler {
     private DirectoryDialog createDirectoryDialog() {
         DirectoryDialog directoryDialog = 
                 new DirectoryDialog(getActiveShell(), SWT.SAVE);
-        String filterPath = Utils.getLastDirPath();
+        String filterPath =
+                org.eclipse.jubula.client.ui.rcp.utils.Utils.getLastDirPath();
         directoryDialog.setFilterPath(filterPath);
         return directoryDialog;
     }
@@ -125,6 +125,9 @@ public class ConvertProjectHandler extends AbstractHandler {
      */
     private static class ConvertProjectOperation implements
         IRunnableWithProgress {
+        
+        /** the project */
+        private static IProgressMonitor progressMonitor;
         
         /** {@inheritDoc} */
         public void run(IProgressMonitor monitor) {
@@ -164,28 +167,33 @@ public class ConvertProjectHandler extends AbstractHandler {
          * @param basePath the base path
          */
         private void handleProject(IProjectPO project, String basePath) {
-            String projectPath = basePath + StringConstants.SLASH
-                    + project.getName().toLowerCase();
+            String projectName = StringConstants.EMPTY;
+            try {
+                projectName = Utils.translateToPackageName(project);
+            } catch (InvalidNodeNameException e) {
+                displayErrorForInvalidName(project);
+            }
+            String projectPath = basePath + StringConstants.SLASH + projectName;
             for (IExecPersistable node : project.getExecObjCont()
                     .getExecObjList()) {
                 String path = projectPath + StringConstants.SLASH
                         + EXEC_PATH + StringConstants.SLASH;
-                handleNode(node, new File(path));
+                handleNode(new File(path), node);
             }
             for (ISpecPersistable node : project.getSpecObjCont()
                     .getSpecObjList()) {
                 String path = projectPath + StringConstants.SLASH
                         + SPEC_PATH + StringConstants.SLASH;
-                handleNode(node, new File(path));
+                handleNode(new File(path), node);
             }
         }
         
         /**
          * Creates a file for a node and a folder with its content for a category
-         * @param node the node
          * @param parentDir the parent directory
+         * @param node the node
          */
-        private void handleNode(INodePO node, File parentDir) {
+        private void handleNode(File parentDir, INodePO node) {
             if (progressMonitor.isCanceled()) {
                 return;
             }
@@ -223,7 +231,7 @@ public class ConvertProjectHandler extends AbstractHandler {
             Iterator iterator = category.getNodeListIterator();
             while (iterator.hasNext()) {
                 INodePO child = (INodePO) iterator.next();
-                handleNode(child, dir);
+                handleNode(dir, child);
             }
         }
         
@@ -240,6 +248,11 @@ public class ConvertProjectHandler extends AbstractHandler {
             }
             try {
                 file.createNewFile();
+                TestCaseGenerator gen = new TestCaseGenerator();
+                TestCaseInfo info = new TestCaseInfo(file.getName(), testcase,
+                        genPackage);
+                String content = gen.generate(info);
+                writeContentToFile(file, content);
             } catch (IOException e) {
                 ErrorHandlingUtil.createMessageDialog(
                         new JBException(e.getMessage(), e,
@@ -286,13 +299,25 @@ public class ConvertProjectHandler extends AbstractHandler {
                                 MessageIDs.E_FILE_NO_PERMISSION));
             }
         }
+        
+        /**
+         * Writes a string into a given file.
+         * @param file the file
+         * @param content the content
+         */
+        private void writeContentToFile(File file, String content)
+            throws IOException {
+            FileOutputStream fop = new FileOutputStream(file);
+            byte[] contentInBytes = content.getBytes();
+            IOUtils.write(contentInBytes, fop);
+        }
 
         /**
          * Displays an error message in the case that a node occurs multiple times
          * @param node the duplicate node
          */
         private void displayErrorForDuplicate(INodePO node) {
-            String fqNodeName = getFullyQualifiedName(node);
+            String fqNodeName = Utils.getFullyQualifiedName(node);
             ErrorMessagePresenter.getPresenter().showErrorMessage(
                     new JBException(
                         NLS.bind(Messages.DuplicateNode, 
@@ -310,9 +335,15 @@ public class ConvertProjectHandler extends AbstractHandler {
          * @return the directory
          */
         private File createDir(File parentDir, ICategoryPO category) {
-            String dirPath = parentDir.getAbsolutePath() + StringConstants.SLASH
-                    + category.getName();
-            File dir = new File(dirPath);
+            String dirPath;
+            File dir = null;
+            try {
+                dirPath = parentDir.getAbsolutePath() + StringConstants.SLASH
+                        + Utils.translateToPackageName(category);
+                dir = new File(dirPath);
+            } catch (InvalidNodeNameException e) {
+                displayErrorForInvalidName(category);
+            }
             return dir;
         }
         
@@ -324,9 +355,15 @@ public class ConvertProjectHandler extends AbstractHandler {
          */
         private File createFile(File parentDir, INodePO node) {
             String extension = ".java"; //$NON-NLS-1$
+            String className = StringConstants.EMPTY;
+            try {
+                className = Utils.determineClassName(node);
+            } catch (InvalidNodeNameException e) {
+                displayErrorForInvalidName(node);
+            }
             String fileName = parentDir.getAbsolutePath()
                     + StringConstants.SLASH
-                    + determineClassName(node)
+                    + className
                     + extension;
             File file = new File(fileName);
             while (file.exists()) {
@@ -339,72 +376,19 @@ public class ConvertProjectHandler extends AbstractHandler {
         }
 
         /**
-         * Determines a valid Java class name for a given node
+         * Displays an error for the case of an invalid node name
          * @param node the node
-         * @return the class name
          */
-        private String determineClassName(INodePO node) {
-            String name = node.getName();
-            String [] invalidChars = new String [] {
-                StringConstants.AMPERSAND,
-                StringConstants.APOSTROPHE,
-                StringConstants.BACKSLASH,
-                StringConstants.COLON,
-                StringConstants.COMMA,
-                StringConstants.DOT,
-                StringConstants.EQUALS_SIGN,
-                StringConstants.EXCLAMATION_MARK,
-                StringConstants.LEFT_BRACKET,
-                StringConstants.LEFT_INEQUALITY_SING,
-                StringConstants.LEFT_PARENTHESES,
-                StringConstants.MINUS,
-                StringConstants.PIPE,
-                StringConstants.PLUS,
-                StringConstants.QUESTION_MARK,
-                StringConstants.QUOTE,
-                StringConstants.RIGHT_BRACKET,
-                StringConstants.RIGHT_INEQUALITY_SING,
-                StringConstants.RIGHT_PARENTHESES,
-                StringConstants.SEMICOLON,
-                StringConstants.SLASH,
-                StringConstants.STAR,
-                StringConstants.UNDERSCORE
-            };
-            for (String c : invalidChars) {
-                name = name.replace(c, StringConstants.SPACE);
-            }
-            name = WordUtils.capitalize(name);
-            name = StringUtils.deleteWhitespace(name);
-            name = name.replaceAll("^[0-9]*", StringConstants.EMPTY); //$NON-NLS-1$
-            Pattern p = Pattern.compile("^[A-Z][\\w]*$"); //$NON-NLS-1$
-            if (!p.matcher(name).matches()) {
-                String fqNodeName = getFullyQualifiedName(node);
-                ErrorMessagePresenter.getPresenter().showErrorMessage(
-                        new JBException(
-                            NLS.bind(Messages.InvalidNodeName, 
-                                new String[] {fqNodeName}), 
-                            MessageIDs.E_INVALID_NODE_NAME),
-                        new String [] {fqNodeName},
-                        null);
-                progressMonitor.setCanceled(true);
-            }
-            return name;
-        }
-        
-        /** 
-         * Returns the fully qualified name of a node involving
-         * all of its super category names
-         * @param node the node
-         * @return the fully qualified name
-         */
-        private String getFullyQualifiedName(INodePO node) {
-            String name = node.getName();
-            INodePO parentNode = node.getParentNode();
-            if (parentNode != null) {
-                name = getFullyQualifiedName(parentNode)
-                        + StringConstants.SLASH + name;
-            }
-            return name;
+        private void displayErrorForInvalidName(INodePO node) {
+            String fqNodeName = Utils.getFullyQualifiedName(node);
+            ErrorMessagePresenter.getPresenter().showErrorMessage(
+                    new JBException(
+                        NLS.bind(Messages.InvalidNodeName, 
+                            new String[] {fqNodeName}), 
+                        MessageIDs.E_INVALID_NODE_NAME),
+                    new String [] {fqNodeName},
+                    null);
+            progressMonitor.setCanceled(true);
         }
     }
     
