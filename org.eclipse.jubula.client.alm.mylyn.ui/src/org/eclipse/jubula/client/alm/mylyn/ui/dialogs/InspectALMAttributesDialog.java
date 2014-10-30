@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
@@ -330,5 +331,13 @@ public class InspectALMAttributesDialog extends TitleAreaDialog {
     private Comparator getCommonsComparator() {
         return ComparatorUtils.nullHighComparator(ComparatorUtils
                 .naturalComparator());
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    protected void createButtonsForButtonBar(Composite parent) {
+        createButton(parent, IDialogConstants.OK_ID,
+                IDialogConstants.CLOSE_LABEL, true);
     }
 }
