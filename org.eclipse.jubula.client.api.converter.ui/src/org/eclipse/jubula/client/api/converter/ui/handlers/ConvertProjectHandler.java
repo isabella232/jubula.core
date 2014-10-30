@@ -28,8 +28,8 @@ import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jubula.client.api.converter.TestCaseGenerator;
-import org.eclipse.jubula.client.api.converter.TestCaseInfo;
+import org.eclipse.jubula.client.api.converter.NodeGenerator;
+import org.eclipse.jubula.client.api.converter.NodeInfo;
 import org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException;
 import org.eclipse.jubula.client.api.converter.ui.i18n.Messages;
 import org.eclipse.jubula.client.api.converter.utils.Utils;
@@ -38,9 +38,6 @@ import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
-import org.eclipse.jubula.client.core.model.ITestCasePO;
-import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
@@ -200,18 +197,8 @@ public class ConvertProjectHandler extends AbstractHandler {
             if (node instanceof ICategoryPO) {
                 ICategoryPO category = (ICategoryPO) node;
                 handleCategory(parentDir, category);
-            }
-            if (node instanceof ITestCasePO) {
-                ITestCasePO testcase = (ITestCasePO) node;
-                handleTestCase(parentDir, testcase);
-            }
-            if (node instanceof ITestSuitePO) {
-                ITestSuitePO testsuite = (ITestSuitePO) node;
-                handleTestSuite(parentDir, testsuite);
-            }
-            if (node instanceof ITestJobPO) {
-                ITestJobPO testjob = (ITestJobPO) node;
-                handleTestJob(parentDir, testjob);
+            } else {
+                handleTestCaseSuiteOrJob(parentDir, node);
             }
         }
 
@@ -238,61 +225,21 @@ public class ConvertProjectHandler extends AbstractHandler {
         /**
          * Handles the conversion for a test case.
          * @param parentDir the parent directory
-         * @param testcase the test case
+         * @param node the test case
          */
-        private void handleTestCase(File parentDir, ITestCasePO testcase) {
-            File file = createFile(parentDir, testcase);
+        private void handleTestCaseSuiteOrJob(File parentDir, INodePO node) {
+            File file = createFile(parentDir, node);
             if (file.exists()) {
-                displayErrorForDuplicate(testcase);
+                displayErrorForDuplicate(node);
                 return;
             }
             try {
                 file.createNewFile();
-                TestCaseGenerator gen = new TestCaseGenerator();
-                TestCaseInfo info = new TestCaseInfo(file.getName(), testcase,
+                NodeGenerator gen = new NodeGenerator();
+                NodeInfo info = new NodeInfo(file.getName(), node,
                         genPackage);
                 String content = gen.generate(info);
                 writeContentToFile(file, content);
-            } catch (IOException e) {
-                ErrorHandlingUtil.createMessageDialog(
-                        new JBException(e.getMessage(), e,
-                                MessageIDs.E_FILE_NO_PERMISSION));
-            }
-        }
-        
-        /**
-         * Handles the conversion for a test suite.
-         * @param parentDir the parent directory
-         * @param testsuite the test suite
-         */
-        private void handleTestSuite(File parentDir, ITestSuitePO testsuite) {
-            File file = createFile(parentDir, testsuite);
-            if (file.exists()) {
-                displayErrorForDuplicate(testsuite);
-                return;
-            }
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                ErrorHandlingUtil.createMessageDialog(
-                        new JBException(e.getMessage(), e,
-                                MessageIDs.E_FILE_NO_PERMISSION));
-            }
-        }
-        
-        /**
-         * Handles the conversion for a test job.
-         * @param parentDir the parent directory
-         * @param testjob the test job
-         */
-        private void handleTestJob(File parentDir, ITestJobPO testjob) {
-            File file = createFile(parentDir, testjob);
-            if (file.exists()) {
-                displayErrorForDuplicate(testjob);
-                return;
-            }
-            try {
-                file.createNewFile();
             } catch (IOException e) {
                 ErrorHandlingUtil.createMessageDialog(
                         new JBException(e.getMessage(), e,

@@ -7,7 +7,7 @@
  -->
 <project name="org.eclipse.jubula.toolkit.api.gen" default="generateGenerators">
     <target name="generateGenerators">
-        <emf.JETCompiler templateFile="./templates/TestCaseGenerator.javajet"
+        <emf.JETCompiler templateFile="./templates/NodeGenerator.javajet"
           sourceDirectory="src-gen"/>
     </target>
 </project>

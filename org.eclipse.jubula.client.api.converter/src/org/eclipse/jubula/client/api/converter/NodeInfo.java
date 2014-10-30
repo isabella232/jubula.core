@@ -11,13 +11,13 @@
 package org.eclipse.jubula.client.api.converter;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.client.core.model.ITestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
 
 /**
- *  Information for Creating a Java Class corresponding to a Test Case
+ *  Information for Creating a Java Class corresponding to a Node
  *  @created 28.10.2014
  */
-public class TestCaseInfo {
+public class NodeInfo {
     
     /** The class name of the test case */
     private String m_className;
@@ -25,18 +25,18 @@ public class TestCaseInfo {
     /** The base path of the package */
     private String m_packageBasePath;
     
-    /** The test case */
-    private ITestCasePO m_testCase;
+    /** The node */
+    private INodePO m_node;
     
     /**
      * @param className the class name
-     * @param testCase the test case
+     * @param node the node
      * @param packageBasePath the base path of the package
      */
-    public TestCaseInfo (String className, ITestCasePO testCase,
+    public NodeInfo (String className, INodePO node,
             String packageBasePath) {
         m_className = StringUtils.substringBeforeLast(className, ".java"); //$NON-NLS-1$
-        m_testCase = testCase;
+        m_node = node;
         m_packageBasePath = packageBasePath;
     }
     
@@ -55,9 +55,9 @@ public class TestCaseInfo {
     }
     
     /**
-     * @return The test case
+     * @return The node
      */
-    public ITestCasePO getTestCase() {
-        return m_testCase;
+    public INodePO getNode() {
+        return m_node;
     }
 }
