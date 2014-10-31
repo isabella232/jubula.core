@@ -42,9 +42,9 @@ import org.junit.Test;
 /** @author BREDEX GmbH */
 public class TestSimpleAdderRCPAUT {
     /** AUT-Agent host name to use */
-    public static final String AGENT_HOST = "g8.dev.bredex.local"; //$NON-NLS-1$
+    public static final String AGENT_HOST = "localhost"; //$NON-NLS-1$
     /** AUT-Agent port to use */
-    public static final int AGENT_PORT = 11022;
+    public static final int AGENT_PORT = 5051;
     /** the value1 */
     private static TextInputComponent value1;
     /** the value2 */
@@ -90,7 +90,7 @@ public class TestSimpleAdderRCPAUT {
         m_agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
         m_agent.connect();
         
-        final String autID = "SimpleAdder";  //$NON-NLS-1$
+        final String autID = "SimpleAdder_rcp";  //$NON-NLS-1$
         AUTConfiguration config = new RCPAUTConfiguration(
             "api.aut.conf.simple.adder.rcp",  //$NON-NLS-1$
             autID,
@@ -104,9 +104,7 @@ public class TestSimpleAdderRCPAUT {
                 "@none"}, //$NON-NLS-1$
             Locale.getDefault(), 
             Locale.getDefault());
-        
         AUTIdentifier id = m_agent.startAUT(config);
-        
         if (id != null) {
             m_aut = m_agent.getAUT(id, SwtComponents
                     .getToolkitInformation());

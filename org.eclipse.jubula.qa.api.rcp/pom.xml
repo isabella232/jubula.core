@@ -8,7 +8,7 @@
 		<relativePath>../org.eclipse.jubula.releng</relativePath>
 	</parent>
 	<groupId>org.eclipse.jubula.qa</groupId>
-	<artifactId>org.eclipse.jubula.qa.api</artifactId>
+	<artifactId>org.eclipse.jubula.qa.rcp.api</artifactId>
 
 	<repositories>
 		<repository>
@@ -66,6 +66,18 @@
             <version>2.4.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+		<dependency>
+			<groupId>org.eclipse.jubula</groupId>
+			<artifactId>org.eclipse.jubula.toolkit.swt.api</artifactId>
+			<version>2.4.0-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jubula</groupId>
+			<artifactId>org.eclipse.jubula.toolkit.rcp.api</artifactId>
+			<version>2.4.0-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>

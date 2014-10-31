@@ -11,7 +11,70 @@
 	</parent>
 	<artifactId>org.eclipse.jubula.feature.api</artifactId>
 	<packaging>eclipse-feature</packaging>
+	<profiles>
+		<profile>
+			<id>jubula-test-build</id>
+			<dependencies>
+				<dependency>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
+					<version>4.8.1</version>
+					<scope>compile</scope>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>target-platform-configuration</artifactId>
+						<version>${tycho-version}</version>
+						<configuration>
+							<resolver>p2</resolver>
+							<includePackedArtifacts>true</includePackedArtifacts>
+							<pomDependencies>consider</pomDependencies>
+							<target>
+								<artifact>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+									<classifier>../org.eclipse.jubula.project.configuration/target/definitions/jubula+nightly</classifier>
+								</artifact>
+							</target>
+							<environments>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>win32</os>
+									<ws>win32</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86_64</arch>
+								</environment>
+								<environment>
+									<os>linux</os>
+									<ws>gtk</ws>
+									<arch>x86</arch>
+								</environment>
+								<environment>
+									<os>macosx</os>
+									<ws>cocoa</ws>
+									<arch>x86_64</arch>
+								</environment>
+							</environments>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 
+
+	</profiles>
 	<build>
 		<plugins>
 			<plugin>
@@ -53,16 +116,16 @@
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>2.4.1</version>
 				<configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>lib</directory>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                        <fileset>
-                            <directory>m2-repo</directory>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                    </filesets>
+					<filesets>
+						<fileset>
+							<directory>lib</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+						<fileset>
+							<directory>m2-repo</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
 				</configuration>
 			</plugin>
 			<plugin>
