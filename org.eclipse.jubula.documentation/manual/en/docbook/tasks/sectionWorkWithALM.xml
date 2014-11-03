@@ -518,7 +518,7 @@
         line <emphasis>testexec</emphasis>.
       </para>
       <para>
-        <para role="tip">If you run a test via the ITE which should report to
+        <para role="tip">If you run a "relevant" test via the ITE which should report to
         ALM systems, the reporting is triggered automatically once the
         test has run. If the reporting for the test run encounters an
         error, then you will be able to manually trigger the reporting
