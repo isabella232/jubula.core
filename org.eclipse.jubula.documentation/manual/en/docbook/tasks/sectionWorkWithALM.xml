@@ -552,7 +552,10 @@
             multiple items in one test run reference the same task ID,
             or if an item with a task ID is executed multiple times in
             the same test run, then each test status and result link
-            is written, but all in one comment. <para role="tip">Tests that have
+            is written, but all in one comment. 
+            In this case, you will see a warning in the console that you have multiple items in one test 
+            that are joined to one single task ID.
+            <para role="tip">Tests that have
             a status other than <emphasis>passed</emphasis> (e.g.
             failed, stopped, still testing) are considered as
             <emphasis>failed</emphasis>.</para>
