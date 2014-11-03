@@ -622,7 +622,7 @@
               <listitem>
                 <para>
                   if you have not configured ALM reporting for the
-                  Project, or if the relevance of the test run was set
+                  Project, or if the relevance of the Test Suite was set
                   to false when the test was started.
                 </para>
               </listitem>

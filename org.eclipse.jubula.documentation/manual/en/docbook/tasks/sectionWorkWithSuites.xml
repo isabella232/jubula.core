@@ -7,8 +7,7 @@
     <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
     <anchor role="helpid" id="dialogTestsuiteNewContextId">New Test Suite Dialog</anchor>
     <para>
-      Test Suites are used to organize and prepare Test Cases to be
-      executed.
+      Test Suites are used to organize and prepare Test Cases to be executed.
     </para>
     <para>
       To create a Test Suite, the Test Suite Browser must be visible. If it is not visible, change to the Specification Perspective and select:
@@ -136,13 +135,25 @@
           <listitem>
             <para>
               Enter a value in the <emphasis>step delay</emphasis>
-              field.
-            </para>
-            <para>
-              <para role="tip">The step delay is the time left between each Test
+              field. The step delay is the time left between each Test
               Step during test execution. The default is 0
-              milliseconds (<xref linkend="altering-the-speed-of-test-execution"/>).</para>
-            </para>
+              milliseconds (<xref linkend="altering-the-speed-of-test-execution"/>).
+     		</para>
+          </listitem>
+          <listitem>
+          <para>
+          Enter a Task ID to link this Test Suite to a task in an external system 
+          (<xref linkend="adding-task-id-alm"/>).
+          </para>
+          </listitem>
+          <listitem>
+          <para>
+          Set whether this Test Suite should be relevant or not. 
+          If a Test Suite is marked as non-relevant, test results for this Test Suite are created but are not 
+          exported with the Project, are not considered for any BIRT reports 
+          (<xref linkend="generating-birt-reports"/>)and do not save details to be reported to external ALM repositories 
+          (<xref linkend="automatically-reporting-to-external-repositories-after-test-runs"/>). 
+          </para>
           </listitem>
           <listitem>
             <para>

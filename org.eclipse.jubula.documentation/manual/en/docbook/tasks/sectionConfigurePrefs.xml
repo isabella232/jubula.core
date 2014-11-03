@@ -476,16 +476,6 @@
       </listitem>
       <listitem>
         <para>
-          Decide whether you want all test runs or no test runs to be
-          marked as relevant, or whether you want to be prompted each
-          time. Non-relevant test results are not exported with the
-          Project, are not considered for any BIRT reports
-          (<xref linkend="producing-reports-with-birt"/>) and do not save details to be reported to
-          external ALM repositories (<xref linkend="automatically-reporting-to-external-repositories-after-test-runs"/>).
-        </para>
-      </listitem>
-      <listitem>
-        <para>
           Enter the amount of days that test result summaries should
           be displayed for. This gives you a better overview of the
           most recent results in the Test Result Summary View.

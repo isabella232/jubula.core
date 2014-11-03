@@ -235,13 +235,6 @@
               </entry>
             </row>
             <row>
-              <entry>Test results not relevant (optional)</entry>
-              <entry>
-                <emphasis role="input">-r</emphasis><?linebreak?>
-                Flags the test results as not relevant in the test result summary (<xref linkend="test-result-preferences"/>).
-              </entry>
-            </row>
-            <row>
               <entry>Workspace</entry>
               <entry>
                 <emphasis role="input">-data &lt;path to workspace&gt;</emphasis><?linebreak?>
@@ -536,7 +529,7 @@
               This file will be used when you enter the ”<emphasis>-c
               &lt;path to file&gt;</emphasis>” parameter. <para role="tip">The
               no-run, quiet mode, no screenshot, no screenshots in
-              reports, no relevance and <emphasis>-data</emphasis>
+              reports and <emphasis>-data</emphasis>
               (for the workspace) parameters can only be entered in
               the command line interface. They cannot be entered in
               the configuration file.</para><para role="tip">Java Virtual Machine
