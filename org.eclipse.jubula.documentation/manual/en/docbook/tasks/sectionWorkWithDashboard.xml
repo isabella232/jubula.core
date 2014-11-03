@@ -343,5 +343,8 @@ http://HOSTNAME:PORTNUMBER/dashboard
 	<para>
 	http://HOSTNAME:SERVERPORT/dashboard/dashboard
   	</para>
+  	<para>
+  	The server should be started with at least 1GB of RAM.
+  	</para>
   </section>
 </section>
