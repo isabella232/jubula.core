@@ -91,6 +91,19 @@
     </listitem>
   </itemizedlist>
   <para>
+  <emphasis role="strong">Support for menu buttons in JavaFX
+  </emphasis>
+  </para>
+  <itemizedlist>
+  	<listitem>
+  	<para>
+  	You can now map menu buttons in JavaFX AUTs as Graphics Components. 
+  	You can select from the menu on such buttons using the actions to select 
+  	from context menus, using the mouse button "1" (left button).
+  	</para>
+  	</listitem>
+  </itemizedlist>
+  <para>
     <emphasis role="strong">Support for derived components in
     JavaFX</emphasis>
   </para>
