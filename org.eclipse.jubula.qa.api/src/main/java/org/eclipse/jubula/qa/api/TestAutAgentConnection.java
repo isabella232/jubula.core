@@ -24,7 +24,7 @@ public class TestAutAgentConnection {
     /** AUT-Agent port to use */
     public static final int AGENT_PORT = 5051;
     /** AUT-Agent port to use */
-    public static final int AGENT_PORT_SECOND = 50512;
+    public static final int AGENT_PORT_SECOND = 5052;
     /** the AUT-Agent */
     private AUTAgent m_agent;
     
