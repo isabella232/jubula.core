@@ -187,12 +187,28 @@
             <row>
               <entry>Result directory (optional)</entry>
               <entry>
-                <emphasis role="input">-resultdir &lt;path to directory&gt;</emphasis><?linebreak?>
+                <emphasis role="input">-resultdir &lt;path to directory&gt;</emphasis>
+                <?linebreak?>
                 e.g. <emphasis>-resultdir "&lt;pathToQADocs&gt;/results"</emphasis><?linebreak?>
                 Use when you want HTML and XML test result reports to be produced by the testexec.<?linebreak?>
                 Test results will still be written to the database.<?linebreak?>
                 You can use relative paths (relative to the platform working directory).
               </entry>
+            </row>
+            <row>
+            	<entry>Result file name (optional)</entry>
+            	<entry>
+            	<emphasis role="input">-resultname &lt;filename&gt;</emphasis>
+            	<?linebreak?>
+            	e.g. <emphasis>-resultname "&lt;PRODUCTIVE_TEST&gt;"</emphasis><?linebreak?>
+            	Use this to specify a name for the HTML and XML test result reports 
+            	that testexec writes (if you have configured this).<?linebreak?>
+				If you do not use this parameter, a default name will be used that 
+				consists of the Test Suite name.
+				Do not write a file extension - they are added automatically.
+				If a file with the same name exists, it will be overwritten.
+				You cannot write file names containing path information.
+            	</entry>
             </row>
             <row>
               <entry>No run option (optional)</entry>
