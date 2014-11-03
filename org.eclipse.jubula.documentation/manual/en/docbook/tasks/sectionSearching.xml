@@ -280,15 +280,20 @@
           Files in the workspace (<xref linkend="searching-for-files"/>).
         </para>
       </listitem>
+      <listitem>
+      <para>
+      Tasks in the repository (<xref linkend="searching-for-tasks"/>)
+      </para>
+      </listitem>
     </itemizedlist>
     <section id="searching-for-keywords">
-      <title>Searching for keywords (Test Cases, Test Steps, Test Suites, Test Jobs and categories) throughout the Project</title>
+      <title>Searching for keywords throughout the Project</title>
       <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
       <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
       <anchor role="helpid" id="com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
       <para>
         On the first tab of the search dialog, you can search for the
-        following based on their name:
+        following based on their name, a comment, or a task ID.:
       </para>
       <itemizedlist>
         <listitem>
@@ -322,7 +327,9 @@
       <para>
         Enter the term you wish to search for and select whether you
         want the search term to be case sensitive or whether you will
-        be using regular expressions. You can also specify whether you
+        be using regular expressions. Specify what aspects you want to search the node types for 
+        (name, comment, task ID) and which nodes you want to search in. 
+        You can also specify whether you
         want to search in the whole Project, or just for the selected
         nodes (<xref linkend="limiting-the-search-to-the-selected-node"/>).
       </para>
@@ -332,8 +339,8 @@
         (<xref linkend="using-the-search-result-view"/>).
       </para>
       <para>
-        <para role="tip">Only names from within the current Project and in the
-        current working language are displayed. Names from reused
+        <para role="tip">Only results from within the current Project and in the
+        current working language are displayed. Results from reused
         Projects are not found.</para>
       </para>
     </section>
@@ -464,6 +471,23 @@
         search.
       </para>
     </section>
+  </section>
+  <section id="searching-for-tasks">
+  	<title>Searching for tasks in ALM repositories</title>
+  	<anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  	<anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  	<para>
+  	On the fourth tab of the search dialog, you can search for tasks in any 
+  	repositories you have referenced in the Project.
+  	</para>
+  	<para>
+  	You can use this search if you have joined your Project to an external respository.
+  	</para>
+  	<para>
+	Click ”<emphasis>Search</emphasis>” to start the search. 
+	The results are shown in the Search Result View 
+	(<xref linkend="using-the-search-result-view"/>).
+	</para>
   </section>
   <section id="using-the-search-result-view">
     <title>Using the search result view</title>
