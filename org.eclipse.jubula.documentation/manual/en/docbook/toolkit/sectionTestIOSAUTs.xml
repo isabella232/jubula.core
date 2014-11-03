@@ -852,18 +852,6 @@ end
       <variablelist>
         <varlistentry>
           <term>
-            Take screenshot:
-          </term>
-          <listitem>
-            <para>
-              It is currently not possible to take screenshots as a
-              part of the test. Automatic screenshots on errors are,
-              however, produced.
-            </para>
-          </listitem>
-        </varlistentry>
-        <varlistentry>
-          <term>
             Restart:
           </term>
           <listitem>
@@ -895,17 +883,6 @@ end
           <listitem>
             <para>
                actions are not supported in the current version.
-            </para>
-          </listitem>
-        </varlistentry>
-        <varlistentry>
-          <term>
-            Application input text
-          </term>
-          <listitem>
-            <para>
-               is not supported. Use input text or replace text on
-              <emphasis>Component with Text Input</emphasis> instead.
             </para>
           </listitem>
         </varlistentry>
@@ -971,6 +948,16 @@ end
               disabled components. 
             </para>
           </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term>
+        Check badge value
+        </term>
+        <listitem>
+        <para>
+        There is an action in the iOS unbound modules to let you check the text on badges within a tab bar.
+        </para>
+        </listitem>
         </varlistentry>
       </variablelist>
     </section>
