@@ -71,8 +71,11 @@
   <itemizedlist>
     <listitem>
       <para>
-        The dashboard URL has been changed due to
+        The dashboard URL has been changed to:
       </para>
+      <programlisting>
+      http://HOSTNAME:SERVERPORT/testresults/dashboard
+      </programlisting>
     </listitem>
   </itemizedlist>
 </section>

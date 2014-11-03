@@ -193,7 +193,7 @@ database_password=&lt;DB_PASSWORD&gt;
       
       <para>
 <programlisting>
-http://HOSTNAME:PORTNUMBER/dashboard
+http://HOSTNAME:PORTNUMBER/testresults/dashboard
 </programlisting>
       </para>
     </para>
@@ -327,7 +327,7 @@ http://HOSTNAME:PORTNUMBER/dashboard
   <section id ="the-dashboard-web-application">
   	<title>The dashboard web application</title>
   	<para>
-  	You will find the dashboard.war file in the installation directory, in the folder <emphasis>dashboard/webapp</emphasis>.
+  	You will find the testresults.war file in the installation directory, in the folder <emphasis>dashboard/webapp</emphasis>.
   	</para>
   	<para>
   	This file is for deployment into a web server. If you want to deploy the dashboard.war into a tomcat server simply copy the file into the webapps directory of the installed tomcat. 
@@ -340,9 +340,9 @@ http://HOSTNAME:PORTNUMBER/dashboard
 	The dashboard.properties is almost the same as in the standalone dashboard, the only change is that the port is ignored.
 	Once these steps have been followed, you can open the dashboard using the following URL:
 	</para>
-	<para>
-	http://HOSTNAME:SERVERPORT/dashboard/dashboard
-  	</para>
+	<programlisting>
+	http://HOSTNAME:SERVERPORT/testresults/dashboard
+	</programlisting>
   	<para>
   	The server should be started with at least 1GB of RAM.
   	</para>

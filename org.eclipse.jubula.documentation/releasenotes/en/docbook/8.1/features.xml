@@ -215,8 +215,8 @@
         dashboard to use this new URL.
       </para>
       <programlisting>
-http://HOSTNAME:SERVERPORT/testresults/dashboard
-</programlisting>
+		http://HOSTNAME:SERVERPORT/testresults/dashboard
+		</programlisting>
     </listitem>
   </itemizedlist>
   <para>
