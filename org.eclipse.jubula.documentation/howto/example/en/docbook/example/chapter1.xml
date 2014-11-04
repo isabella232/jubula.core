@@ -1,0 +1,113 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<chapter id="example-chapter1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="example"?> <!-- determines the folder of the html output -->
+  <title>The title of the chapter</title>
+  <anchor role="helpid" id="exampleHelpContextId">Description</anchor>
+  <para>
+    This is an example chapter.<?linebreak?>
+    To do a line break use &lt;?linebreak?&gt;.
+    
+    <para><emphasis>italics</emphasis></para>
+    <para><emphasis role="strong">bold</emphasis></para>
+    <para><emphasis role="input">typewriter font</emphasis></para>
+    <para><emphasis role="menupath">grey background</emphasis>--&gt;<emphasis role="menupath">grey background</emphasis></para>
+    
+    <para><xref linkend="example-section2"/></para>
+    <para><link xl:href="http://www.bredex.de"/></para>
+    
+    <para role="tip">
+      This is a tip.
+    </para>
+    
+    <para role="warning">
+      This is a warning.
+    </para>
+    
+    <para>
+      List with bullet points:
+    </para>
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          List item #1
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          List item #2
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Nested list item
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+    
+    <para>
+      Numbered list:
+    </para>
+    
+    <orderedlist>
+      <listitem>
+        <para>
+          List item #1
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          List item #2
+          
+          <orderedlist>
+            <listitem>
+              <para>
+                Nested list item
+              </para>
+            </listitem>
+          </orderedlist>
+        </para>
+      </listitem>
+    </orderedlist>
+  </para>
+  
+  <programlisting>
+This is a programlisting so white       space and line
+breaks are significant.
+	It works like verbatim in LaTeX but with markup recognition.
+<para>
+This line is inside a para element.
+</para>
+To show markup use CDATA
+<![CDATA[
+<para>
+This line is inside a para element. The tags are not processed.
+</para>
+]]>
+</programlisting>
+  
+  <figure id="examplefigure">
+    <title>Example figure</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/autdialog.png"/>
+      </imageobject>
+    </mediaobject>
+  </figure>
+  
+  <para>
+    Icon inline <mediaobject role="icon" file="images/startOM.png"/>
+  </para>
+</chapter>

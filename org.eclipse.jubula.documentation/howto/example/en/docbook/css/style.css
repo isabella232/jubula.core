@@ -1,0 +1,64 @@
+/* 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+*/
+
+@import url("docbook.css");
+
+.informaltable table {
+    border-collapse: collapse;
+    width: 90%;
+}
+
+.table table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table td:last-child, .table th:last-child {
+    border-left: 0;
+}
+
+.table td:first-child, .table th:first-child {
+    border-right: 0;
+}
+
+.table th {
+    border-bottom-width: 2px;
+}
+
+.topbotline {
+    border-top: 5px #CCC solid;
+    border-bottom: 5px #CCC solid;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.menuPath {
+    background-color: #DDD;
+    padding: 1px;
+}
+
+.input {
+    font-family: 'Lucida Console', monospace;
+}
+
+.imagefloat {
+    float: right;
+}
+
+.inlinemediaobject img {
+    height: 2ex;
+}
+
+.term {
+    font-weight: bold;
+}
+
+.table-title, .figure-title {
+    margin-top: 5px;
+}

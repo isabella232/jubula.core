@@ -1,0 +1,314 @@
+= 1. Introduction =
+
+This document explains the structure of the '''GUI'''''dancer''/Jubula documentation. It also serves as an introduction to Docbook.
+
+= 2. Structure =
+
+== 2.1. File structure ==
+
+The files needed to build the documentation are structured like this:
+
+* org.eclipse.jubula.core
+  * org.eclipse.jubula.documentation
+    * manual
+      * en
+        * build
+        * docbook
+          * book.xml
+    * extensionapi
+    * install
+    * buildManual.xml
+    * ...
+  * org.eclipse.jubula.documentation.xsl
+    * custom
+    * docbook-xsl_reduced
+
+In the folder '''org.eclipse.jubula.core''' are the two subfolders '''org.eclipse.jubula.documentation''' and '''org.eclipse.jubula.documentation.xsl'''. The directory '''org.eclipse.jubula.documentation''' includes the source files for the different manuals in separate folders(e.g. '''manual''') and the ANT script ''buildManual.xml'', which builds the documentation.
+
+Inside the directories containing the source files is a folder '''build''', where the generated html files are moved, and a folder '''docbook''', where the Docbook xml files are saved. More information about the structure of the source files is written in [#source section 2.2].
+
+The '''org.eclipse.jubula.documentation.xsl''' consists of the folders '''custom''' and '''docbook-xsl_reduced'''. docbook-xsl_reduced contains the xsl files from Docbook which are necessary for the build of the online help. In custom are xsl files with custom templates which are explained later ([#customxsl section 4.2.]).
+
+== 2.2. Structure of the source files == #source
+
+The '''docbook''' folder consists of a ''book.xml'' file, where the chapters are included, and a directory for each chapter in this manual. There are also '''images''' and '''css''', which include image files and style sheets respectively. The chapters are further separated into sections. Each file with the prefix section contains a section and its subsections.
+
+= 3. How To Build =
+
+The manuals are built with an ANT-script. It is executed inside '''org.eclipse.jubula.documentation''' with the line:
+
+{{{ant -f buildManual.xml -Dname="<name>" -Ddir="<dir>" (-Doutput="[html|onlinehelp]")}}}
+
+The parameters name and dir are required for this script to determine which manual will be build. Here is a list of possible values for name and dir: 
+
+|| '''name'''          || '''dir'''    ||
+|| !UserManual         || manual       ||
+|| !InstallationManual || install      ||
+|| !ExtensionManual    || extensionapi ||
+
+The parameter output sets the format of the generated html files. With the value ''onlinehelp'' set Docbook will generate files suitable for the Eclipse online help. If ''html'' is set Docbook will generate a single html file. The default value is ''onlinehelp''.
+
+= 4. Docbook =
+
+== 4.1. Elements ==
+
+=== 4.1.1. Chapters and Sections ===
+
+To determine chapters and sections in the document use ''<chapter>'' or ''<section>''. A title has to be provided, which will be included in the document as a name for this chapter/section. The attribute id will be used as the filename for the generated html file.
+
+{{{
+<chapter|section id="test">
+  <title>Testchapter</title
+  ...
+</chapter|section>
+}}}
+
+There is also a special element used in Docbook to put the html output into different folders. The syntax is:
+
+{{{
+<?dbhtml dir="example"?>
+}}}
+
+It is used inside the chapter element right before the title. The attribute dir determines the name of the directory.
+
+=== 4.1.2. Paragraph ===
+
+To create a paragraph use ''<para>''. It is similar to the p-element in html.
+
+{{{
+<para>
+  ...
+</para>
+}}}
+
+=== 4.1.3. Figure ===
+
+''<figure>'' inserts an image with a title into the document. The title will be included in the document below the figure.
+
+{{{
+<figure id="test">
+  <title>Testfigure</title>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="test.png"/>
+    </imageobject>
+  </mediaobject>
+</figure>
+}}}
+
+=== 4.1.4. Lists ===
+
+There are three types of lists: ordered, itemized and variable lists. Ordered lists number the list items like this:
+
+1. Item 1
+1. Item 2
+1. Item 3
+
+Itemized lists use bullet points to list its items:
+
+* Item 1
+* Item 2
+* Item 3
+
+The syntax for ordered and itemized lists is:
+
+{{{
+<orderedlist|itemizedlist>
+  <listitem>
+    <para>
+      ...
+    </para>
+  </listitem>
+  ...
+</orderedlist|itemizedlist>
+}}}
+
+Lists can be nested inside a listitem to create a sublist like this:
+
+* Item 1
+  * Item 1a
+  * Item 1b
+
+In Docbook the following would provide a list like that:
+
+{{{
+<orderedlist|itemizedlist>
+  <listitem>
+    <para>
+      ...
+    </para>
+    <orderedlist|itemizedlist>
+      ...
+    </orderedlist|itemizedlist>
+  </listitem>
+</orderedlist|itemizedlist>
+}}}
+
+There are also the variable lists. These work like a dictonary, where a term is specified before the text like this:
+
+[[BR]]'''Term'''
+
+{{{
+  This is a text.
+  
+}}}
+
+The syntax for variable lists is:
+
+{{{
+<variablelist>
+  <varlistentry>
+    <term>
+      ...
+    </term>
+    <listitem>
+      <para>
+        ...
+      </para>
+    </listitem>
+  </varlistentry>
+  ...
+</variablelist>
+}}}
+
+=== 4.1.5. Tables ===
+
+There are two types of tables: formal and informal tables. Formal tables have a title, informal tables don't have one. The syntax is:
+
+{{{
+<table|informaltable>
+  (<title>
+    ...
+  </title>)
+  <tgroup cols="...">
+    <colspec align="(left|right|center)" colwidth="..."/>
+    <thead>
+      <row>
+        <entry>
+          ...
+        </entry>
+        ...
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>
+          ...
+        </entry>
+        ...
+      </row>
+      ...
+    </tbody>
+  </tgroup>
+</table|informaltable>
+}}}
+
+=== 4.1.6. Emphasis ===
+
+A text can be '''bold''', ''italic'' or __underlined__. To make a part of a text italic use the ''<emphasis>''-element:
+
+{{{
+<emphasis>italic</emphasis>
+}}}
+
+A bold font is also possible with the ''<emphasis>''-element. The role-attribute has to be set to '''strong''' for that:
+
+{{{
+<emphasis role="strong">bold</emphasis>
+}}}
+
+For an underlined text use the value '''underlined''' as a role in ''<emphasis>'':
+
+{{{
+<emphasis role="underlined">underlined</emphasis>
+}}}
+
+=== 4.1.7. Links ===
+
+Cross-linking to other pages can be done with the ''<xref>''-element:
+
+{{{
+<xref linkend="test"/>
+}}}
+
+xref links to the element which has the same value in id as the linkend-attribute.
+
+External links are made with the ''<link>''-element. The namespace for XLink has to be set in the topmost element of the file (book, chapter, section):
+
+{{{
+xmlns:xl="http://www.w3.org/1999/xlink
+}}}
+
+The syntax for external links is:
+
+{{{
+<link xl:href="www.bredex.de">Link Text</link>
+}}}
+
+== 4.2. Custom elements == #customxsl
+
+=== 4.2.1. Help IDs ===
+
+Help IDs are ''<anchor>''-elements with a role '''helpid'''. They are used as an anchor for the context-sensitive help.
+
+{{{
+<anchor role="helpid" id="test">Text</anchor>
+}}}
+
+The attribute id sets the context id used in the document. The text inside the element sets the description, which is shown if the help is called.
+
+Help IDs are placed between the title of a chapter or section and the text. Here is an example:
+
+{{{
+<section id="test">
+  <title>Test Section</title>
+  <anchor role="helpid" id="test">Text</anchor>
+  <para>
+    ...
+  </para>
+</section>
+}}}
+
+=== 4.2.2. Icons ===
+
+To show icons inline in the document use the ''<mediaobject>''-element with the role '''icon''' and a file-attribute, which points to an image file.
+
+{{{
+<mediaobject role="icon" file="test.png"/>
+}}}
+
+=== 4.2.3. Tips and Warnings ===
+
+Tips and warnings are created by inserting text into a ''<para>''-element with a role '''tip''' or '''warning'''. The result looks like this:
+
+[[image(tipwarn.png)]]
+
+The syntax for it is:
+
+{{{
+<para role="tip|warning">
+  ...
+</para>
+}}}
+
+=== 4.2.4. Linebreaks ===
+
+To manually do a linebreak inside a text use:
+
+{{{
+<?linebreak?>
+}}}
+
+== 4.3. XInclude ==
+
+Including xml files into another files is done with '''xinclude'''. The namespace for xinclude has to be declared in the beginning of the file in the topmost element (book, chapter, section) like this:
+
+{{{
+xmlns:xi="http://www.w3.org/2001/XInclude"
+}}}
+
+In the document the syntax for include is:
+
+{{{
+<xi:include href="test.xml"/>
+}}}
