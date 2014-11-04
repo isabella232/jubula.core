@@ -366,10 +366,11 @@
     <title>Automatically reporting to external repositories after test runs</title>
     <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
     <para>
-      You can automatically report the status of an automated test to
-      an external system. The reporting is achieved by writing a
-      comment on a task in the external repository. The comment
-      includes a link to the test result in the dasboard.
+      You can automatically update tasks in an external repository when a test has run. 
+      You can report the test results by writing a comment on a task in the external repository 
+      with a link to the test result in the dasboard. 
+      You can also update fields / attributes on tasks based on information 
+      you specify in your Project.
     </para>
     <section id="configuring-a-task-repository">
       <title>Configuring a task repository for your Project</title>
@@ -424,12 +425,6 @@
         </listitem>
         <listitem>
           <para>
-            You can then choose whether to only report failed tests,
-            only report successful tests, or both.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
             Enter the URL of the Dashboard that is configured to use
             the correct database for your test results. This is the
             Dashboard that will be opened when you click on a test
@@ -449,6 +444,67 @@
         </mediaobject>
       </figure>
     </section>
+    <section id="configuring-reporting-to-tasks-via-properties">
+    <title>Configuring reporting to tasks</title>
+    	<para>
+    	When a test has run, you can update relevant tasks in your repository with information:
+    	</para>
+    	<itemizedlist>
+    	<listitem>
+    	<para>
+    	A comment that contains the status of the test run, and a link to the results for that test.
+    	</para>
+    	</listitem>
+    	<listitem>
+    	<para>
+    	You can update fields / atrributes for a task based on whether the test succeeded or failed.
+    	</para>
+    	</listitem>
+    	<para role="tip">Tests that have a status other than <emphasis>passed</emphasis> (e.g. failed, 
+    	stopped, still testing) are considered as failed</para>
+    	</itemizedlist>
+    	<para>
+    	For each item (Test Case, Test Suite) in your test run that 
+    	is linked to a task 
+    	(<xref linkend="adding-task-id-alm"></xref>)
+    	the rules you specify in the Project properties will be carried out to report test 
+    	results to that task.
+    	</para>
+
+		<orderedlist>
+			<listitem>
+			<para>
+			In the Project Properties, select <emphasis>Mylyn ALM</emphasis> from the tree on 
+			the left.
+			</para>
+			</listitem>
+			<listitem>
+			<para>
+			In the page that appears, you can configure how to report results. 
+			You have the same options for what to do on success and on failure.
+			</para>
+			</listitem>
+				<itemizedlist>
+					<listitem>
+					<para>
+					You can activate the checkbox to add a comment to each linked task. 
+					The comment contains information about the test run (date, status) 
+					and also a link to the test results. 
+					The test results can be seen in the specified 
+					dashboard (<xref linkend="configuring-a-task-repository"/>).
+					</para>
+					</listitem>
+					<listitem>
+					<para>
+					You can add rules in the table to update fields in the task. Enter a descriptive name 
+					(this is only used for display purposes in the Properties), the ID for the field you want to 
+					update and the value that the field should be updated with.
+					</para>
+					</listitem>
+				</itemizedlist>
+		</orderedlist>
+
+    </section>
     <section id="adding-task-id-alm">
       <title>Adding task IDs to Test Suites and Test Cases</title>
       <para>
@@ -461,9 +517,7 @@
         (<xref linkend="configuring-a-task-repository"/>). Adding the task ID to an
         item in your Project means that this item is the relevant test
         for that task in your repository. You will be able to report
-        test results for this item as a comment to the task in the
-        repository. The comment will include a link to the dashboard,
-        in which the test result report can be viewed.
+        test results for this item.
       </para>
       <para>
         To add a task ID to a Test Case or Test Suite:
@@ -540,21 +594,20 @@
         <listitem>
           <para>
             The test results are then analyzed to see if any comments
-            need to be added in the external repository (commenting
-            can be (de)activated for failed nodes or successful nodes
-            in the Project properties, for example).
+            need to be added in the external repository.
           </para>
         </listitem>
         <listitem>
           <para>
-            If there are comments to be added, the ITE writes one
-            comment per task, as defined in the Project properties. If
-            multiple items in one test run reference the same task ID,
-            or if an item with a task ID is executed multiple times in
-            the same test run, then each test status and result link
-            is written, but all in one comment. 
-            In this case, you will see a warning in the console that you have multiple items in one test 
-            that are joined to one single task ID.
+             If there is reporting to be done, the ITE
+             reports to each necessary task as a batch job. The batch job contains 
+             any field updates and any comments. 
+             If multiple items in one test run reference the 
+             same task ID, or if an item with a task ID is executed multiple times in the 
+             same test run, then only one comment will be written. 
+             However, field updates will occur for each item linked to the task ID. 
+             In this case, you will see a warning in the console that you have multiple items
+             in one test that are joined to one single task ID.
             <para role="tip">Tests that have
             a status other than <emphasis>passed</emphasis> (e.g.
             failed, stopped, still testing) are considered as
@@ -569,12 +622,11 @@
         </listitem>
         <listitem>
           <para>
-            Once a comment has been written, you can see the comment
-            in the external repository. From there, you can click on
-            the link provided to open the test result report in the
-            Dashboard that you specified for your Project. The
-            Dashboard must be already running for this action to
-            succeed. The test results must also still be present in
+         	 Once reporting has been done, you can see the changes in the external repository. 
+         	 If you added a comment, you can click on the link provided to open the test result
+         	  report in the \dash{} that you specified for your Project. 
+         	  The dashboard must be already running for this action to succeed. 
+         	  The test results must also still be present in  
             the database (<xref linkend="re-opening-the-test-result-view-for-a-test-run"/>).
           </para>
         </listitem>
@@ -662,6 +714,9 @@
                   but reporting is configured for the Project. It can
                   be understood as <emphasis>any reporting that was
                   necessary has been carried out</emphasis>.
+                  If an error occurs while reporting to one of the tasks, 
+                  the status will still show <emphasis>reported</emphasis> 
+                  even though not all tasks were correctly updated
                 </para>
               </listitem>
             </varlistentry>
