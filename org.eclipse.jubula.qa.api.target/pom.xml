@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>org.eclipse.jubula.releng</artifactId>
+		<groupId>org.eclipse.jubula</groupId>
+		<version>2.4.0-SNAPSHOT</version>
+		<relativePath>../org.eclipse.jubula.releng</relativePath>
+	</parent>
+	<groupId>org.eclipse.jubula</groupId>
+	<artifactId>org.eclipse.jubula.qa.api.target</artifactId>
+	<version>2.4.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<!-- taken from http://wiki.eclipse.org/Tycho/Additional_Tools -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-p2-extras-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>mirror</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<source>
+						<!--source repositories to mirror from -->
+						<repository>
+							<url>http://download.eclipse.org/jubula/development</url>
+							<layout>p2</layout>
+						</repository>
+					</source>
+
+					<!-- starting from here all configuration parameters are optional -->
+					<!-- they are only shown here with default values for documentation 
+						purpose -->
+
+					<!-- List of IUs to mirror. If omitted, all IUs will be mirrored. -->
+					<!-- Omitted IU version element means latest version of the IU -->
+					<ius>
+						<iu>
+							<id>org.eclipse.jubula.feature.api.feature.group</id>
+						</iu>
+					</ius>
+
+					<!-- The destination directory to mirror to. -->
+					<destination>${project.build.directory}/../repository</destination>
+					<!-- Whether only strict dependencies should be followed. -->
+					<!-- "strict" means perfect version match -->
+					<followStrictOnly>false</followStrictOnly>
+					<!-- Whether or not to follow optional requirements. -->
+					<includeOptional>false</includeOptional>
+					<!-- Whether or not to follow non-greedy requirements. -->
+					<includeNonGreedy>false</includeNonGreedy>
+					<!-- include the latest version of each IU -->
+					<latestVersionOnly>true</latestVersionOnly>
+					<!-- whether to compress the content.xml/artifacts.xml -->
+					<compress>false</compress>
+					<!-- whether to append to the target repository content -->
+					<append>true</append>
+					<!-- whether to mirror pack200 artifacts also. Available since tycho-extras 
+						0.17.0 -->
+					<includePacked>false</includePacked>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>repository</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+						<fileset>
+                            <directory>lib</directory>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>lib</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>lib</outputDirectory>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<excludeTransitive>false</excludeTransitive>
+							<stripVersion>true</stripVersion>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
+</project>
