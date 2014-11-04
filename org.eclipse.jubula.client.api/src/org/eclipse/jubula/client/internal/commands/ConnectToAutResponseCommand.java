@@ -8,10 +8,9 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core.commands;
+package org.eclipse.jubula.client.internal.commands;
 
-import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.APICommand;
 import org.eclipse.jubula.communication.internal.message.ConnectToAutResponseMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.slf4j.Logger;
@@ -24,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created Mar 19, 2010
  */
-public class ConnectToAutResponseCommand implements ICommand {
+public class ConnectToAutResponseCommand implements APICommand {
 
     /** the logger */
     private static final Logger LOG = 
@@ -59,7 +58,6 @@ public class ConnectToAutResponseCommand implements ICommand {
      * {@inheritDoc}
      */
     public void timeout() {
-        LOG.warn(this.getClass().getName() + Messages.TimeoutCalled);
+        LOG.warn(this.getClass().getName() + "timeout() called"); //$NON-NLS-1$
     }
-
 }

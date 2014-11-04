@@ -207,7 +207,7 @@ public abstract class CommandConstants {
     /** sends a message for a Running AUT to connect to a Client */
     public static final String CONNECT_TO_AUT_COMMAND = "org.eclipse.jubula.autagent.commands.ConnectToAutCommand"; //$NON-NLS-1$
     /** client-side handling for the result of an attempt to connect to an AUT */
-    public static final String CONNECT_TO_AUT_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.ConnectToAutResponseCommand"; //$NON-NLS-1$
+    public static final String CONNECT_TO_AUT_RESPONSE_COMMAND = "org.eclipse.jubula.client.internal.commands.ConnectToAutResponseCommand"; //$NON-NLS-1$
 
     /** AUT Server - connects to a Client */
     public static final String CONNECT_TO_CLIENT_COMMAND = "org.eclipse.jubula.rc.common.commands.ConnectToClientCommand"; //$NON-NLS-1$
