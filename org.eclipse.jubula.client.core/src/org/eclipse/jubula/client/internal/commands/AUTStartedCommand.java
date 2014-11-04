@@ -8,13 +8,13 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core.commands;
+package org.eclipse.jubula.client.internal.commands;
 
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.events.AUTEvent;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.APICommand;
 import org.eclipse.jubula.communication.internal.message.AUTStartStateMessage;
 import org.eclipse.jubula.communication.internal.message.AUTStateMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * @created 05.10.2004
  * 
  */
-public class AUTStartedCommand implements ICommand {
+public class AUTStartedCommand implements APICommand {
     /** the logger */
     private static Logger log = 
         LoggerFactory.getLogger(AUTStartedCommand.class);

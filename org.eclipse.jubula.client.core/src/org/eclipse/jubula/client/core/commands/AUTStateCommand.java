@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.core.commands;
 
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.internal.commands.AUTStartedCommand;
 import org.eclipse.jubula.communication.internal.ICommand;
 import org.eclipse.jubula.communication.internal.message.AUTStateMessage;
 import org.eclipse.jubula.communication.internal.message.Message;

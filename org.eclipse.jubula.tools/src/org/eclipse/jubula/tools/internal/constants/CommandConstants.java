@@ -124,8 +124,8 @@ public abstract class CommandConstants {
     public static final String AUT_MODE_CHANGED_COMMAND = "org.eclipse.jubula.client.core.commands.AUTModeChangedCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.AUTServerStateCommand" */
     public static final String AUT_SERVER_STATE_COMMAND = "org.eclipse.jubula.client.core.commands.AUTServerStateCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.client.core.commands.AUTStartedCommand" */
-    public static final String AUT_STARTED_COMMAND = "org.eclipse.jubula.client.core.commands.AUTStartedCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.client.internal.commands.AUTStartedCommand" */
+    public static final String AUT_STARTED_COMMAND = "org.eclipse.jubula.client.internal.commands.AUTStartedCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.CAPRecordedCommand" */
     public static final String CAP_RECORDED_COMMAND = "org.eclipse.jubula.client.core.commands.CAPRecordedCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.autagent.commands.ShowRecordedActionCommand" */
