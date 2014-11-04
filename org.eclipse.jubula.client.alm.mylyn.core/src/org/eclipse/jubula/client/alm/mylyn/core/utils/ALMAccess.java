@@ -356,6 +356,11 @@ public final class ALMAccess {
         for (FieldUpdate u : fieldUpdates) {
             Map<String, Object> attributesToChange = u.getAttributesToChange();
             for (String key : attributesToChange.keySet()) {
+                if (StringUtils.isBlank(key)) {
+                    throw new InvalidALMAttributeException(NLS.bind(
+                            Messages.InvalidAttributeID,
+                            StringConstants.EMPTY));
+                }
                 TaskAttribute fieldUpdate = rootAttr.getAttribute(key);
                 if (fieldUpdate == null) {
                     throw new InvalidALMAttributeException(NLS.bind(
