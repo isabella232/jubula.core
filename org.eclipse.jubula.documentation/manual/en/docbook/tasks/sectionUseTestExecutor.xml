@@ -206,7 +206,8 @@
 				If you do not use this parameter, a default name will be used that 
 				consists of the Test Suite name.
 				Do not write a file extension - they are added automatically.
-				If a file with the same name exists, it will be overwritten.
+				If a file with the same name exists, it will be overwritten. 
+				If you use this option with a Test Job you will therefore only see the last result.
 				You cannot write file names containing path information.
             	</entry>
             </row>
