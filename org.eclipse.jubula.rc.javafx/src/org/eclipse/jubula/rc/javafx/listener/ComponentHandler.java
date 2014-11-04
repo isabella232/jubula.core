@@ -280,7 +280,7 @@ public class ComponentHandler implements ListChangeListener<Stage>,
                 getInstance().getAdapter(IContainerAdapter.class, parent);
         
         if (adapter != null) {
-            List<Node> content = adapter.getContent();
+            List<? extends Node> content = adapter.getContent();
             if (content.contains(n)) {
                 return true;
             }

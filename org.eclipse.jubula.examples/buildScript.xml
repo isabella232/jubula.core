@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
     Copyright (c) 2004, 2010 BREDEX GmbH.
     All rights reserved. This program and the accompanying materials
     are made available under the terms of the Eclipse Public License v1.0
@@ -13,32 +14,36 @@
 	<property name="examples.scripts.dir"			value="${build.dir}/scripts"/>
 	<property name="examples.library.dir"			value="${build.dir}/testCaseLibrary"/>
 	<property name="examples.development.dir"	    value="${build.dir}/development"/>
-	
+
 	<property name="examples.aut.simpleAdder.dir"	value="${examples.aut.dir}/SimpleAdder"/>
 
 	<property name="SimpleAdder.Swing"	value="org.eclipse.jubula.examples.aut.adder.swing"/>
-    <property name="SimpleAdder.JavaFX"	value="org.eclipse.jubula.examples.aut.adder.javafx"/>
+	<property name="SimpleAdder.JavaFX"	value="org.eclipse.jubula.examples.aut.adder.javafx"/>
 	<property name="SimpleAdder.SWT"	value="org.eclipse.jubula.examples.aut.adder.swt"/>
-    <property name="SimpleAdder.RCP"	value="org.eclipse.jubula.examples.aut.adder.rcp.releng"/>
+	<property name="SimpleAdder.RCP"	value="org.eclipse.jubula.examples.aut.adder.rcp.releng"/>
 	<property name="SimpleAdder.Web"	value="org.eclipse.jubula.examples.aut.adder.html"/>
 	<property name="DvdTool"			value="org.eclipse.jubula.examples.aut.dvdtool"/>
-	
+
+	<property name="ExampleExtensionReleng"       value="org.eclipse.jubula.examples.extension.releng"/>
+	<property name="ExampleExtensionUpdateSite"       value="org.eclipse.jubula.examples.extension.updateSite"/>
+
 	<property name="ExampleSwingExtensionAUT"       value="org.eclipse.jubula.examples.extension.swing.aut"/>
 	<property name="ExampleSwingExtensionClient"    value="org.eclipse.jubula.examples.extension.swing.toolkit"/>
 	<property name="ExampleSwingExtensionRC"        value="org.eclipse.jubula.examples.extension.swing.rc"/>
 	<property name="ExampleSwingExtensionFeature"   value="org.eclipse.jubula.examples.extension.swing.feature"/>
-    
-    <property name="ExampleJavaFXExtensionClient"    value="org.eclipse.jubula.examples.extension.javafx.toolkit"/>
-    <property name="ExampleJavaFXExtensionRC"        value="org.eclipse.jubula.examples.extension.javafx.rc"/>
-    <property name="ExampleJavaFXExtensionFeature"   value="org.eclipse.jubula.examples.extension.javafx.feature"/>
-	
+
+	<property name="ExampleJavaFXExtensionClient"    value="org.eclipse.jubula.examples.extension.javafx.toolkit"/>
+	<property name="ExampleJavaFXExtensionRC"        value="org.eclipse.jubula.examples.extension.javafx.rc"/>
+	<property name="ExampleJavaFXExtensionRCContainer"        value="org.eclipse.jubula.examples.extension.javafx.rc.container"/>
+	<property name="ExampleJavaFXExtensionFeature"   value="org.eclipse.jubula.examples.extension.javafx.feature"/>
+
 	<property name="ExampleRCPExtensionClient"      value="org.eclipse.jubula.examples.extension.rcp.toolkit"/>
 	<property name="ExampleRCPExtensionRC"          value="org.eclipse.jubula.examples.extension.rcp.rc"/>
 	<property name="ExampleRCPExtensionFeature"     value="org.eclipse.jubula.examples.extension.rcp.feature"/>
-	
+
 	<property name="ExampleSwingRendererAdapterRC"  value="org.eclipse.jubula.examples.extension.swing.rc.renderer"/>
 	<property name="ExampleGEFIdentifierExample"    value="org.eclipse.jubula.examples.extension.rcp.gef.logic.identifier"/>
-	
+
 	<target name="build"   depends="clean, 
 									createDirStructure,
 									releaseSimpleAdderSwing,
@@ -54,7 +59,7 @@
 									releaseDevelopment">
 		<antcall target="markAsExecutable" />
 	</target>
-	
+
 	<target name="createDirStructure">
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${examples.aut.dir}"/>
@@ -77,12 +82,12 @@
 	</target>
 
 	<target name="releaseSimpleAdderJavaFX">
-	    <exec dir="../${SimpleAdder.JavaFX}" executable="ant" >
-	        <env key="JAVA_HOME" value="/devapps/java64/java8"/>
-	        <arg value="-f"/>
-	        <arg value="buildScript.xml"/>
-	        <arg value="build"/>
-	    </exec>
+		<exec dir="../${SimpleAdder.JavaFX}" executable="ant" >
+			<env key="JAVA_HOME" value="/devapps/java64/java8"/>
+			<arg value="-f"/>
+			<arg value="buildScript.xml"/>
+			<arg value="build"/>
+		</exec>
 		<mkdir dir="${examples.aut.simpleAdder.dir}/javafx"/>
 		<copy todir="${examples.aut.simpleAdder.dir}/javafx">
 			<fileset dir="../${SimpleAdder.JavaFX}/build/jars/"/>
@@ -92,7 +97,7 @@
 		</copy>
 		<antcall target="markAsExecutable" />
 	</target>
-	
+
 	<target name="releaseSimpleAdderSWT">
 		<ant dir="../${SimpleAdder.SWT}" antfile="buildScript.xml" target="build" inheritAll="false" />
 		<mkdir dir="${examples.aut.simpleAdder.dir}/swt"/>
@@ -111,16 +116,16 @@
 		<copy todir="${examples.aut.simpleAdder.dir}/rcp">
 			<fileset dir="../org.eclipse.jubula.examples.aut.adder.rcp.product/target/products/org.eclipse.jubula.product.examples.aut.adder.rcp/"/>
 		</copy>
-		
+
 	</target>
-    
+
 	<target name="releaseSimpleAdderWeb">
 		<mkdir dir="${examples.aut.simpleAdder.dir}/html"/>
 		<copy todir="${examples.aut.simpleAdder.dir}/html">
 			<fileset dir="../${SimpleAdder.Web}/resources/aut"/>
 		</copy>
 	</target>
-	
+
 	<target name="releaseDvdTool">
 		<ant dir="../${DvdTool}" antfile="buildScript.xml" target="build" inheritAll="false" />
 		<mkdir dir="${examples.aut.dir}/DVDTool"/>
@@ -132,11 +137,11 @@
 		</copy>
 		<antcall target="markAsExecutable" />
 	</target>
-	
+
 	<target name="clean">
 		<delete dir="${build.dir}" />
 		<ant dir="../${SimpleAdder.Swing}" antfile="buildScript.xml" target="clean" inheritAll="false" />
-	    <ant dir="../${SimpleAdder.JavaFX}" antfile="buildScript.xml" target="clean" inheritAll="false" />
+		<ant dir="../${SimpleAdder.JavaFX}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 		<ant dir="../${SimpleAdder.SWT}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 		<ant dir="../${SimpleAdder.RCP}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 		<ant dir="../${DvdTool}" antfile="buildScript.xml" target="clean" inheritAll="false" />
@@ -145,13 +150,13 @@
 	<target name="markAsExecutable">
 		<chmod dir="${build.dir}" perm="775" includes="**/*.sh"/>
 	</target>
-	
+
 	<target name="releaseProjects">
 		<copy todir="${examples.projects.dir}">
 			<fileset dir="resources/projects/samples"/>
 		</copy>
 	</target>
-	
+
 	<target name="releaseWorkspace">
 		<copy todir="${build.dir}">
 			<fileset dir="resources/workspace"/>
@@ -165,7 +170,7 @@
 			<fileset dir="../${ExampleSwingExtensionAUT}/build/jars/"/>
 		</copy>
 	</target>
-	
+
 	<target name="releaseDevelopment" depends="releaseExampleSwingExtensionAUT">
 		<mkdir dir="${examples.development.dir}/gef"/>
 		<zip destfile="${examples.development.dir}/gef/${ExampleGEFIdentifierExample}.zip">
@@ -180,15 +185,28 @@
 			<zipfileset dir="../${ExampleSwingExtensionRC}" prefix="${ExampleSwingExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 			<zipfileset dir="../${ExampleSwingExtensionFeature}" prefix="${ExampleSwingExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 		</zip>
-	    
-	    <zip destfile="${extensionSourceDir}/JavaFXExtension.zip">
-            <zipfileset dir="../${ExampleJavaFXExtensionClient}" prefix="${ExampleJavaFXExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-            <zipfileset dir="../${ExampleJavaFXExtensionRC}" prefix="${ExampleJavaFXExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-            <zipfileset dir="../${ExampleJavaFXExtensionFeature}" prefix="${ExampleJavaFXExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-        </zip>
-		
+
+		<zip destfile="${extensionSourceDir}/JavaFXExtension.zip">
+			<zipfileset dir="../${ExampleJavaFXExtensionClient}" prefix="${ExampleJavaFXExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+			<zipfileset dir="../${ExampleJavaFXExtensionRC}" prefix="${ExampleJavaFXExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+			<zipfileset dir="../${ExampleJavaFXExtensionRCContainer}" prefix="${ExampleJavaFXExtensionRCContainer}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+			<zipfileset dir="../${ExampleJavaFXExtensionFeature}" prefix="${ExampleJavaFXExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+		</zip>
+
+		<zip destfile="${extensionSourceDir}/MavenBuildExtension.zip">
+			<zipfileset dir="../${ExampleJavaFXExtensionClient}" prefix="${ExampleJavaFXExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml" />
+			<zipfileset dir="../${ExampleJavaFXExtensionRC}" prefix="${ExampleJavaFXExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml" />
+			<zipfileset dir="../${ExampleJavaFXExtensionRCContainer}" prefix="${ExampleJavaFXExtensionRCContainer}" excludes="build, build/**, target, target/**, buildScript.xml" />
+			<zipfileset dir="../${ExampleJavaFXExtensionFeature}" prefix="${ExampleJavaFXExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml" />
+			<zipfileset dir="../${ExampleSwingExtensionClient}" prefix="${ExampleSwingExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml" />
+			<zipfileset dir="../${ExampleSwingExtensionRC}" prefix="${ExampleSwingExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml" />
+			<zipfileset dir="../${ExampleSwingExtensionFeature}" prefix="${ExampleSwingExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml" />
+			<zipfileset dir="../${ExampleExtensionUpdateSite}" prefix="${ExampleExtensionUpdateSite}" excludes="build, build/**, target, target/**, buildScript.xml" />
+			<zipfileset dir="../${ExampleExtensionReleng}" prefix="${ExampleExtensionReleng}" excludes="build, build/**, target, target/**, buildScript.xml" />
+		</zip>
+
 		<zip destfile="${extensionSourceDir}/RCPExtension.zip">
-			<zipfileset dir="../${ExampleRCPExtensionClient}" prefix="${ExampleRCPExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
+			<zipfileset dir="../${ExampleRCPExtensionClient}" prefix="${ExampleRCPExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml" />
 			<zipfileset dir="../${ExampleRCPExtensionRC}" prefix="${ExampleRCPExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 			<zipfileset dir="../${ExampleRCPExtensionFeature}" prefix="${ExampleRCPExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 		</zip>
@@ -196,7 +214,7 @@
 		<zip destfile="${extensionSourceDir}/SwingRendererExtension.zip">
 			<zipfileset dir="../${ExampleSwingRendererAdapterRC}" prefix="${ExampleSwingRendererAdapterRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
 		</zip>
-		
+
 		<zip destfile="${extensionSourceDir}/SwingAUT.zip">
 			<zipfileset dir="../${ExampleSwingExtensionAUT}" prefix="${ExampleSwingExtensionAUT}" />
 		</zip>
@@ -207,12 +225,12 @@
 			<fileset dir="../org.eclipse.jubula.client.ui.rcp/resources/library"/>
 		</copy>
 	</target>
-	
-    <target name="releaseScripts">
-    	<copy todir="${examples.scripts.dir}">
+
+	<target name="releaseScripts">
+		<copy todir="${examples.scripts.dir}">
 			<fileset dir="resources/scripts"/>
 		</copy>
-    </target>
+	</target>
 
 </project>
 

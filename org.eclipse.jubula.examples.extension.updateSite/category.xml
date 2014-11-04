@@ -3,5 +3,8 @@
    <feature url="features/org.eclipse.jubula.examples.extension.swing.feature.jar" id="org.eclipse.jubula.examples.extension.swing.feature" version="2.4.0.qualifier">
       <category name="ororg.eclipse.jubula.examples.extension.updateSite"/>
    </feature>
-   <category-def name="ororg.eclipse.jubula.examples.extension.updateSite" label="Jubula Swing extension update Site"/>
+   <feature url="features/org.eclipse.jubula.examples.extension.javafx.feature_2.4.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.javafx.feature" version="2.4.0.qualifier">
+      <category name="ororg.eclipse.jubula.examples.extension.updateSite"/>
+   </feature>
+   <category-def name="ororg.eclipse.jubula.examples.extension.updateSite" label="Jubula extension update Site"/>
 </site>

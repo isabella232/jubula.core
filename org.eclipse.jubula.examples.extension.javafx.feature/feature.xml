@@ -31,6 +31,14 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          version="0.0.0"
          fragment="true"
          unpack="false"/>
+         
+   <plugin
+         id="org.eclipse.jubula.examples.extension.javafx.rc.container"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.examples.extension.javafx.toolkit"

@@ -24,7 +24,6 @@
           Reference the zip-file<?linebreak?>
           <emphasis role="input">development/extension-toolkit-rc.zip</emphasis><?linebreak?>
           as a <emphasis role="strong">Software Site</emphasis> in your <emphasis role="strong">Target Platform</emphasis>. Verify while adding the software site, that the check box <emphasis role="strong">Include required software</emphasis> is not checked. This software site also includes the Java documention of the source code.
-          If you are writing an extension for the JavaFX toolkit, you need to clone the Jubula repository to get access to the required source code because it is not yet available in the zip-file.
         </para>
       </listitem>
       <listitem>
@@ -78,7 +77,28 @@
     </orderedlist>
     <para role="tip">If you are writing an extension for the JavaFX
       toolkit, make sure that your adapter and Tester Classes really
-      get compiled with Java 8.
+      get compiled with Java 8, but the Bundle-Required Execution Environment
+      is set to Java 7. To achieve this you should use maven to build
+      your plugins and the update site. You can find an example for
+      this in MavenBuildExtension.zip in <emphasis>/examples/development/extension/src</emphasis>.
+      Before you can build it you have to replace some placeholders:
+      <para>
+       Set the path to the directory of your Java 8 installation in the pom files of
+       <para>
+          <emphasis>org.eclipse.jubula.examples.extension.javafx.rc</emphasis>
+        </para>
+        and
+        <para>
+          <emphasis>org.eclipse.jubula.examples.extension.javafx.rc.container</emphasis>.
+        </para>
+      </para>
+      <para>
+       Additionally you have to change the target definition in
+       <para>
+          <emphasis>org.eclipse.jubula.examples.extension.releng/targetDefinition/extension.target</emphasis>.
+        </para>
+        Just substitute the placeholders with the actual path to your Jubula installation. 
+      </para>
     </para>
     <para>
       Adapters are used for all supported toolkits, i.e. Swing, SWT,
@@ -216,6 +236,24 @@
         </listitem>
       </itemizedlist>
     </section>
+	<section id="creating-an-container-adapter">
+		<title>Creating an container adapter</title>
+		<para>
+			This is a JavaFX exclusiv way to extend the funtionality of Jubula. You
+			can use this extension mechanism to make components "mappable" that are
+			normaly not, e.g. components which a part of a controls skin.
+		</para>
+		<para>
+			The approach is very similar to creating an adapter. Just create an
+			Adapter Factory and an Adapter Class like it is described there. The
+			Type you create this Adapter Class for has to be the direct parent
+			Node of the component which you want to map. For example ListCell, if
+			you want to map the graphic Node of a cell in a ListView. Your 
+			Adapter Class has to implement the interface <emphasis>IContainerAdapter</emphasis>.
+			This Interface defines the method getContent, the return value of this
+			method should be the components you wish to map.
+		</para>
+	</section>
   </section>
   <section id="deploying-the-fragment">
     <title>Deploying the fragment</title>

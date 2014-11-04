@@ -30,5 +30,5 @@ public interface IContainerAdapter extends IComponent {
      * 
      * @return the content
      */
-    public List<Node> getContent();
+    public List<? extends Node> getContent();
 }
