@@ -211,6 +211,14 @@
           </para>
         </listitem>
         <listitem>
+        <para>
+        Edit the markup language used for descriptions in the Project 
+    	(<xref linkend="adding-descriptions-to-items-in-editors"/>)
+        If you edit the markup language after you have entered descriptions, 
+        you may need to adapt the description texts to conform to the newly chosen markup language.
+        </para>
+        </listitem>
+        <listitem>
           <para>
             Edit whether the Project can be referenced (reused) in
             other Projects.

@@ -293,7 +293,7 @@
       <anchor role="helpid" id="com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
       <para>
         On the first tab of the search dialog, you can search for the
-        following based on their name, a comment, or a task ID.:
+        following based on their name, a comment, a description, or a task ID.:
       </para>
       <itemizedlist>
         <listitem>
@@ -328,7 +328,7 @@
         Enter the term you wish to search for and select whether you
         want the search term to be case sensitive or whether you will
         be using regular expressions. Specify what aspects you want to search the node types for 
-        (name, comment, task ID) and which nodes you want to search in. 
+        (name, comment, description, task ID) and which nodes you want to search in. 
         You can also specify whether you
         want to search in the whole Project, or just for the selected
         nodes (<xref linkend="limiting-the-search-to-the-selected-node"/>).
@@ -339,9 +339,8 @@
         (<xref linkend="using-the-search-result-view"/>).
       </para>
       <para>
-        <para role="tip">Only results from within the current Project and in the
-        current working language are displayed. Results from reused
-        Projects are not found.</para>
+        <para role="tip">Only results from the
+        current working language are displayed.</para>
       </para>
     </section>
     <section id="searching-for-test-data">
@@ -389,9 +388,8 @@
         (<xref linkend="using-the-search-result-view"/>).
       </para>
       <para>
-        <para role="tip">Only test data from within the current Project and in
-        the current working language is displayed. Data from reused
-        Projects is not found.</para>
+        <para role="tip">Only test data from the current working language is displayed. 
+       </para>
       </para>
     </section>
     <section id="searching-for-files">
