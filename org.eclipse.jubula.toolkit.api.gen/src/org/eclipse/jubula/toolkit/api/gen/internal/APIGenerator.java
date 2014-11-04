@@ -15,17 +15,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jubula.toolkit.api.gen.ClassGenerator;
 import org.eclipse.jubula.toolkit.api.gen.FactoryGenerator;
 import org.eclipse.jubula.toolkit.api.gen.ToolkitInfoGenerator;
+import org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo;
 import org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CompInfoForFactoryGen;
 import org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CompInfoForToolkitGen;
 import org.eclipse.jubula.toolkit.api.gen.internal.genmodel.ComponentGenInfo;
 import org.eclipse.jubula.toolkit.api.gen.internal.genmodel.FactoryGenInfo;
-import org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo;
 import org.eclipse.jubula.toolkit.api.gen.internal.genmodel.ToolkitGenInfo;
 import org.eclipse.jubula.toolkit.api.gen.internal.utils.ConfigLoader;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -67,6 +69,13 @@ public class APIGenerator {
     /** whether a class containing information about a toolkit needs to be generated */
     private static boolean toolkitNeedsInfoClass = false;
     
+    /** 
+     * map containing component name mappings
+     * will be reseted for each component
+     */
+    private static Map<String, String> compNameMap =
+            new TreeMap<String, String>();
+    
     /**
      * Constructor
      */
@@ -85,8 +94,16 @@ public class APIGenerator {
         CompSystemProcessor processor = new CompSystemProcessor(config);
                 
         List<ToolkitInfo> toolkitInfos = processor.getToolkitInfos();
+        
+        String converterInfoDir = loader.getConverterInfoDir();
 
         // Clean up
+        try {
+            FileUtils.cleanDirectory(new File(converterInfoDir));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
         for (ToolkitInfo tkInfo : toolkitInfos) {
             cleanUp(tkInfo, generationBaseDir);
         }
@@ -99,11 +116,14 @@ public class APIGenerator {
             List<ComponentInfo> compInfos = processor.getCompInfos(
                     tkInfo.getType(), tkInfo.getShortType(), false);
             for (ComponentInfo compInfo : compInfos) {
+                compNameMap.clear();
                 Component component = compInfo.getComponent();
                 // generate interface
                 createClass(component, generationBaseDir, true);
                 //generate implementation class
                 createClass(component, generationBaseDir, false);
+                createComponentNameInfoFile(component, compNameMap,
+                        converterInfoDir);
             }
             // Generate a component factory and an information class for each toolkit
             CompSystem compSystem = processor.getCompSystem();
@@ -121,6 +141,25 @@ public class APIGenerator {
             }
             createFactory(genInfoForFactory, generationBaseDir);
         }
+    }
+
+    /** 
+     * Creates the info file for a component for the converter
+     * @param component the component
+     * @param map name info map
+     * @param dirPath path where to put info file
+     */
+    private static void createComponentNameInfoFile(Component component,
+            Map<String, String> map, String dirPath) {
+        StringBuffer content = new StringBuffer();
+        for (String key : map.keySet()) {
+            content.append(key + StringConstants.EQUALS_SIGN
+                    + map.get(key) + "\n"); //$NON-NLS-1$
+        }
+        File dir = new File(dirPath);
+        File file = new File(dirPath + StringConstants.SLASH
+                + component.getType() + ".properties"); //$NON-NLS-1$
+        createFile(dir, file, content.toString());
     }
 
     /**
@@ -170,7 +209,7 @@ public class APIGenerator {
         CommonGenInfo genInfo = new CommonGenInfo(component);
         ComponentGenInfo compInfo = new ComponentGenInfo(component,
                 generateInterface, genInfo.getToolkitName(),
-                genInfo.getClassName());
+                genInfo.getClassName(), compNameMap);
         genInfo.setSpecificInformation(compInfo);
         String path = StringConstants.EMPTY;
         if (generateInterface) {

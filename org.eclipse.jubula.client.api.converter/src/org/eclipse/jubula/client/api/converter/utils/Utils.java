@@ -19,6 +19,8 @@ import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @created 28.10.2014
@@ -30,6 +32,18 @@ public class Utils {
     
     /** specific path for specifications */
     public static final String SPEC_PATH = "testcases"; //$NON-NLS-1$
+
+    /** class name pattern */
+    private static final Pattern CLASS_NAME_PATTERN =
+            Pattern.compile("^[A-Z][\\w]*$"); //$NON-NLS-1$
+
+    /** package name pattern */
+    private static final Pattern PACKAGE_NAME_PATTERN =
+            Pattern.compile("^[a-z0-9_]*$"); //$NON-NLS-1$
+    
+    /** the logger */
+    private static final Logger LOG = LoggerFactory
+            .getLogger(Utils.class);
     
     /**
      * private constructor
@@ -70,7 +84,7 @@ public class Utils {
                 name = determineClassName(node);
             }
         } catch (InvalidNodeNameException e) {
-            e.printStackTrace();
+            LOG.error(e.getLocalizedMessage());
         }
         INodePO parentNode = node.getParentNode();
         if (parentNode != null && parentNode.getParentNode() != null) {
@@ -116,8 +130,7 @@ public class Utils {
         if (name.isEmpty()) {
             name = "invalid_package_name";
         }
-        Pattern p = Pattern.compile("^[a-z0-9_]*$"); //$NON-NLS-1$
-        if (!p.matcher(name).matches()) {
+        if (!PACKAGE_NAME_PATTERN.matcher(name).matches()) {
             throw new InvalidNodeNameException();
         }
         return name;
@@ -139,8 +152,7 @@ public class Utils {
         if (name.isEmpty()) {
             name = "InvalidClassName";
         }
-        Pattern p = Pattern.compile("^[A-Z][\\w]*$"); //$NON-NLS-1$
-        if (!p.matcher(name).matches()) {
+        if (!CLASS_NAME_PATTERN.matcher(name).matches()) {
             throw new InvalidNodeNameException();
         }
         return name;

@@ -26,6 +26,7 @@ public class Messages extends NLS {
     public static String InputDialogMessage;
     public static String InvalidNodeName;
     public static String InvalidPackageName;
+    public static String NoAutInProject;
     public static String NoPackageNameSpecified;
 
     static {

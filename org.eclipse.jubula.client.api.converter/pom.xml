@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright (c) 2014 BREDEX GmbH.
-    All rights reserved. This program and the accompanying materials
-    are made available under the terms of the Eclipse Public License v1.0
-    which accompanies this distribution, and is available at
-    http://www.eclipse.org/legal/epl-v10.html
- -->
+<!-- Copyright (c) 2014 BREDEX GmbH. All rights reserved. This program and 
+	the accompanying materials are made available under the terms of the Eclipse 
+	Public License v1.0 which accompanies this distribution, and is available 
+	at http://www.eclipse.org/legal/epl-v10.html -->
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -29,87 +26,67 @@
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>
-                <groupId>org.eclipse.tycho.extras</groupId>
-                <artifactId>tycho-eclipserun-plugin</artifactId>
-                <version>${tycho-version}</version>
-                <configuration>
-                    <appArgLine>-application org.eclipse.ant.core.antRunner -buildfile generateGenerators.xml</appArgLine>
-                    <dependencies>
-                        <!-- list of bundles that we need -->
-                        <dependency>
-                            <artifactId>org.eclipse.ant.core</artifactId>
-                            <type>eclipse-plugin</type>
-                        </dependency>
-                        <dependency>
-                            <artifactId>org.apache.ant</artifactId>
-                            <type>eclipse-plugin</type>
-                        </dependency>
-                        <dependency>
-                            <artifactId>org.eclipse.pde.api.tools</artifactId>
-                            <type>eclipse-plugin</type>
-                        </dependency>
-                        <dependency>
-                            <artifactId>org.eclipse.pde.build</artifactId>
-                            <type>eclipse-plugin</type>
-                        </dependency>
-                        <dependency>
-                            <artifactId>org.eclipse.pde.core</artifactId>
-                            <type>eclipse-plugin</type>
-                        </dependency>
-                        <dependency>
-                            <artifactId>org.eclipse.equinox.launcher</artifactId>
-                            <type>eclipse-plugin</type>
-                        </dependency>
-                        <dependency>
-                            <artifactId>org.eclipse.emf.ant</artifactId>
-                            <type>eclipse-plugin</type>
-                        </dependency>
-                    </dependencies>
-                    <repositories>
-                        <repository>
-                            <id>eclipse-juno</id>
-                            <layout>p2</layout>
-                            <url>http://download.eclipse.org/releases/juno</url>
-                        </repository>
-                    </repositories>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>eclipse-run</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                    </execution>
-                </executions>
-            </plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>target-platform-configuration</artifactId>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-eclipserun-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-					<dependency-resolution>
-						<optionalDependencies>ignore</optionalDependencies>
-						<extraRequirements>
-							<!-- prefer RCP to RAP for compilation -->
-							<requirement>
-								<type>eclipse-plugin</type>
-								<id>org.eclipse.swt</id>
-								<versionRange>[3.6,4.0)</versionRange>
-							</requirement>
-							<requirement>
-								<type>eclipse-plugin</type>
-								<id>org.eclipse.jface</id>
-								<versionRange>[3.6,4.0)</versionRange>
-							</requirement>
-							<requirement>
-								<type>eclipse-plugin</type>
-								<id>org.eclipse.jubula.client.ui.rcp</id>
-								<versionRange>[2.4.0,2.5.0)</versionRange>
-							</requirement>
-						</extraRequirements>
-					</dependency-resolution>
+					<appArgLine>-application org.eclipse.ant.core.antRunner -buildfile generateGenerators.xml</appArgLine>
+					<dependencies>
+						<!-- list of bundles that we need -->
+						<dependency>
+							<artifactId>org.eclipse.ant.core</artifactId>
+							<type>eclipse-plugin</type>
+						</dependency>
+						<dependency>
+							<artifactId>org.apache.ant</artifactId>
+							<type>eclipse-plugin</type>
+						</dependency>
+						<dependency>
+							<artifactId>org.eclipse.pde.api.tools</artifactId>
+							<type>eclipse-plugin</type>
+						</dependency>
+						<dependency>
+							<artifactId>org.eclipse.pde.build</artifactId>
+							<type>eclipse-plugin</type>
+						</dependency>
+						<dependency>
+							<artifactId>org.eclipse.pde.core</artifactId>
+							<type>eclipse-plugin</type>
+						</dependency>
+						<dependency>
+							<artifactId>org.eclipse.equinox.launcher</artifactId>
+							<type>eclipse-plugin</type>
+						</dependency>
+						<dependency>
+							<artifactId>org.eclipse.emf.ant</artifactId>
+							<type>eclipse-plugin</type>
+						</dependency>
+					</dependencies>
+					<repositories>
+						<repository>
+							<id>eclipse-juno</id>
+							<layout>p2</layout>
+							<url>http://download.eclipse.org/releases/juno</url>
+						</repository>
+					</repositories>
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>eclipse-run</goal>
+						</goals>
+						<phase>generate-sources</phase>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
+
+	<dependencies>
+		<dependency>
+			<artifactId>org.eclipse.jubula.toolkit.api.gen</artifactId>
+			<groupId>org.eclipse.jubula</groupId>
+			<version>2.4.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 </project>

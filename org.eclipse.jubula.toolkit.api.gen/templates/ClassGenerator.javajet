@@ -20,11 +20,19 @@ if (specInfo instanceof ComponentGenInfo) {
 	Component component = compGenInfo.getComponent();
 	Boolean genInterface = compGenInfo.generatesInterface();
 	Boolean hasDefaultMapping = compGenInfo.hasDefaultMapping();
+	Map<String, String> compNameMap = compGenInfo.getCompNameMap();
 	String packageName = null;
 	if (genInterface) {
 		packageName = compGenInfo.getInterfacePackageName();
+		compNameMap.put("interfacePackageName", packageName);
+		compNameMap.put("componentTypeName", className);
+      compNameMap.put("hasDefaultMapping", hasDefaultMapping.toString());
+		CommonGenInfo faketory =
+                    new CommonGenInfo(component.getToolkitDesriptor(), false);
+      compNameMap.put("factoryName", faketory.getFqClassName());
 	} else {
 		packageName = genInfo.getClassPackageName();
+		compNameMap.put("implClassPackageName", packageName);
 	}
 	String implementedTypeFqn = compGenInfo.getFqInterfaceName();
 	
@@ -44,8 +52,9 @@ if (specInfo instanceof ComponentGenInfo) {
 		if (genInterface) {
 			ComponentGenInfo superCompGenInfo = new ComponentGenInfo(
 				realizedComponent, true, superInfo.getToolkitName(),
-				superInfo.getClassName());
+				superInfo.getClassName(), null);
 			realizedTypeFqn = superCompGenInfo.getFqInterfaceName();
+			compNameMap.put("superComp", realizedComponent.getType());
 		} else {
 			realizedTypeFqn = superInfo.getFqClassName();
 		}
@@ -153,6 +162,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			continue;
 		}
 		String methodName = nameLoader.translateFromCompSystem(action.getName());
+		compNameMap.put(action.getName(), methodName);
 		List<Param> params = action.getParams();
 		if (!params.isEmpty()) {
 		%>

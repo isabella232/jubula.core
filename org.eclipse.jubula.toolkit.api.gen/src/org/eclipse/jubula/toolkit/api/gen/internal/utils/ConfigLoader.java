@@ -68,6 +68,10 @@ public class ConfigLoader {
      */
     private static final String GENERATIONDIR = "api.gen.toolkit.generation.dir"; //$NON-NLS-1$
     /**
+     * <code>OUTPUTDIR</code>
+     */
+    private static final String CONVERTER_INFO_DIR = "api.gen.converter.info.dir"; //$NON-NLS-1$
+    /**
      * <code>instance</code> the singleton instance
      */
     private static ConfigLoader instance = null;
@@ -79,6 +83,10 @@ public class ConfigLoader {
      * directory for the generation
      */
     private String m_generationDir;
+    /**
+     * directory for information for converter
+     */
+    private String m_converterInfoDir;
     /**
      * The constructor.
      */
@@ -105,6 +113,8 @@ public class ConfigLoader {
                     toolkitIDList);
             
             m_generationDir = p.getProperty(GENERATIONDIR);
+            
+            m_converterInfoDir = p.getProperty(CONVERTER_INFO_DIR);
             
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
@@ -134,5 +144,12 @@ public class ConfigLoader {
      */
     public String getGenerationDir() {
         return m_generationDir;
+    }
+
+    /**
+     * @return the generationDir
+     */
+    public String getConverterInfoDir() {
+        return m_converterInfoDir;
     }
 }

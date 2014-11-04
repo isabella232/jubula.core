@@ -3,21 +3,28 @@ package="org.eclipse.jubula.client.api.converter"
 imports="java.util.*
 			org.apache.commons.lang.StringUtils
 			org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException
+			org.eclipse.jubula.client.api.converter.utils.CompNameLoader
+			org.eclipse.jubula.client.api.converter.utils.ProjectCache
 			org.eclipse.jubula.client.api.converter.utils.Utils
 			org.eclipse.jubula.client.core.model.ICapPO
 		   org.eclipse.jubula.client.core.model.IExecTestCasePO
 			org.eclipse.jubula.client.core.model.INodePO
+			org.eclipse.jubula.client.core.model.IParamDescriptionPO
 			org.eclipse.jubula.client.core.model.IProjectPO
 			org.eclipse.jubula.client.core.model.IRefTestSuitePO
 		   org.eclipse.jubula.client.core.model.ISpecTestCasePO
 		   org.eclipse.jubula.client.core.model.ITestCasePO
 			org.eclipse.jubula.client.core.model.ITestSuitePO
 		   org.eclipse.jubula.client.core.persistence.NodePM
-		   org.eclipse.jubula.client.core.persistence.ProjectPM
+		   org.eclipse.jubula.client.ui.rcp.Plugin
 		   org.eclipse.jubula.tools.internal.constants.StringConstants
-		   org.eclipse.jubula.tools.internal.exception.JBException" 
+		   org.eclipse.jubula.tools.internal.exception.JBException
+		   org.slf4j.Logger
+			org.slf4j.LoggerFactory"
 class="NodeGenerator"%>
 <%
+Logger log = LoggerFactory.getLogger(NodeGenerator.class);
+
 NodeInfo info = (NodeInfo)argument;
 String className = info.getClassName();
 INodePO node = info.getNode();
@@ -25,60 +32,91 @@ Iterator<INodePO> iterator = node.getNodeListIterator();
 String packageBase = info.getPackageBasePath();
 IProjectPO project = null;
 try {
-    project = ProjectPM.loadProjectById(node.getParentProjectId());
+	project = ProjectCache.get(node.getParentProjectId());
 } catch (JBException e) {
-    e.printStackTrace();
+	Plugin.getDefault().writeErrorLineToConsole(
+                        "Error while loading project.", true);
+   return StringConstants.EMPTY;
 }
 String projectName = null;
 try {
     projectName = Utils.translateToPackageName(project);
 } catch (InvalidNodeNameException e) {
-    e.printStackTrace();
+    log.error(e.getLocalizedMessage());
 }
 String fqName = Utils.getFullyQualifiedTranslatedName(node, packageBase, projectName);
 String packageName = StringUtils.substringBeforeLast(fqName, StringConstants.DOT);
 %>
 package <%=packageName%>;
 
+import org.eclipse.jubula.client.AUT;
+
 public class <%=className%> {
 	
 	public static void execute() {
+		AUT aut = null;
+	
 		<%while (iterator.hasNext()) {
 			INodePO child = iterator.next();
-			if (child instanceof ICapPO) {%>
-			// CAP <%=child.getName()%>
+			if (child instanceof ICapPO) {
+				ICapPO cap = (ICapPO) child;
+				CompNameLoader loader = new CompNameLoader(cap.getComponentType());
+				String componentTypeName = loader.get("componentTypeName");
+				String actionName = loader.get(cap.getActionName());
+				boolean hasDefaultMapping = loader.get("hasDefaultMapping").equals("true");
+				String factoryName = hasDefaultMapping
+												? info.getDefaultFactory()
+												: loader.get("factoryName");
+				if (actionName != null) {%>
+		aut.execute(
+			<%=factoryName%>.create<%=componentTypeName%>(<%if (!hasDefaultMapping) {%>null<%}%>)
+				.<%=actionName%>(
+				<%Iterator<IParamDescriptionPO> paramIterator = cap.getParameterList().iterator();
+					while (paramIterator.hasNext()) {
+						IParamDescriptionPO param = paramIterator.next();%>
+					null<%if(paramIterator.hasNext()){%>,<%}%>
+					<%}%>
+				),
+			null);
+				<%} else {%>
+		// TODO: You tried to convert the client action <%=cap.getActionName()%> for the component <%=cap.getComponentType()%>.
+				<%}%>
 			<%} else if (child instanceof IExecTestCasePO) {
 				IExecTestCasePO exec = (IExecTestCasePO)child;
 				ISpecTestCasePO spec = exec.getSpecTestCase();
 				String testCaseName = StringConstants.EMPTY;
 				try {
-				    project = ProjectPM.loadProjectById(spec.getParentProjectId());
+					project = ProjectCache.get(spec.getParentProjectId());
 				} catch (JBException e) {
-				    e.printStackTrace();
+					Plugin.getDefault().writeErrorLineToConsole(
+				                        "Error while loading project.", true);
+				   return StringConstants.EMPTY;
 				}
 				try {
 				    projectName = Utils.translateToPackageName(project);
 				} catch (InvalidNodeNameException e) {
-				    e.printStackTrace();
+				    log.error(e.getLocalizedMessage());
 				}
 				testCaseName = Utils.getFullyQualifiedTranslatedName(spec, packageBase, projectName);%>
-			<%=testCaseName%>.execute();
+		<%=testCaseName%>.execute();
 			<%} else if (child instanceof IRefTestSuitePO) {
 				IRefTestSuitePO ref = (IRefTestSuitePO)child;
 				ITestSuitePO testSuite = ref.getTestSuite();
 				String testSuiteName = StringConstants.EMPTY;
 				try {
-				    project = ProjectPM.loadProjectById(testSuite.getParentProjectId());
+				project = ProjectCache.get(testSuite.getParentProjectId());
 				} catch (JBException e) {
-				    e.printStackTrace();
+					Plugin.getDefault().writeErrorLineToConsole(
+				                        "Error while loading project.", true);
+				   return StringConstants.EMPTY;
 				}
 				try {
 				    projectName = Utils.translateToPackageName(project);
 				} catch (InvalidNodeNameException e) {
-				    e.printStackTrace();
+				    log.error(e.getLocalizedMessage());
 				}
 				testSuiteName = Utils.getFullyQualifiedTranslatedName(testSuite, packageBase, projectName);%>
-			<%=testSuiteName%>.execute();
+		<%=testSuiteName%>.execute();
 			<%}%>
 		<%}%>
 	}

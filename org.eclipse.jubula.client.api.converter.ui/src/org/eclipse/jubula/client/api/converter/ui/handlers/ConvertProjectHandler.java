@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
@@ -34,6 +35,7 @@ import org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameExcepti
 import org.eclipse.jubula.client.api.converter.ui.i18n.Messages;
 import org.eclipse.jubula.client.api.converter.utils.Utils;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
+import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -43,10 +45,14 @@ import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo;
+import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DirectoryDialog;
@@ -125,6 +131,8 @@ public class ConvertProjectHandler extends AbstractHandler {
         
         /** the project */
         private static IProgressMonitor progressMonitor;
+        /** the default factory */
+        private static String defaultFactory;
         
         /** {@inheritDoc} */
         public void run(IProgressMonitor monitor) {
@@ -137,6 +145,8 @@ public class ConvertProjectHandler extends AbstractHandler {
                             StringConstants.SLASH);
             
             if (project != null) {
+                defaultFactory = determineDefaultFactory(project);
+                                
                 // Handle the reused projects
                 Iterator iterator = project.getUsedProjects().iterator();
                 while (iterator.hasNext()) {
@@ -144,7 +154,8 @@ public class ConvertProjectHandler extends AbstractHandler {
                             (IReusedProjectPO) iterator.next();
                     IProjectPO usedProject;
                     try {
-                        usedProject = ProjectPM.loadProject(reusedProject);
+                        usedProject = ProjectPM
+                            .loadReusedProjectInMasterSession(reusedProject);
                         handleProject(usedProject, basePath);
                     } catch (JBException e) {
                         ErrorHandlingUtil.createMessageDialog(
@@ -156,6 +167,37 @@ public class ConvertProjectHandler extends AbstractHandler {
                 handleProject(project, basePath);
             }
             progressMonitor.done();
+        }
+
+        /**
+         * Returns the default factory name for a project
+         * by inspecting its first AUT
+         * @param project the project
+         * @return the name of the default factory
+         */
+        private String determineDefaultFactory(IProjectPO project) {
+            String name = null;
+            IAUTMainPO firstAUT = null;
+            try {
+                firstAUT = project.getAutCont()
+                        .getAutMainList().iterator().next();
+            } catch (NoSuchElementException e) {
+                ErrorMessagePresenter.getPresenter().showErrorMessage(
+                        new JBException(
+                            Messages.NoAutInProject, 
+                            MessageIDs.E_NO_AUT_IN_PROJECT),
+                        null, null);
+                progressMonitor.setCanceled(true);
+            }
+            if (firstAUT != null) {
+                ToolkitDescriptor toolkitDescriptor =
+                        ComponentBuilder.getInstance().getCompSystem()
+                        .getToolkitDescriptor(firstAUT.getToolkit());
+                CommonGenInfo defaultFactoryInfo =
+                        new CommonGenInfo(toolkitDescriptor, false);
+                name = defaultFactoryInfo.getFqClassName();
+            }
+            return name;
         }
 
         /**
@@ -237,7 +279,7 @@ public class ConvertProjectHandler extends AbstractHandler {
                 file.createNewFile();
                 NodeGenerator gen = new NodeGenerator();
                 NodeInfo info = new NodeInfo(file.getName(), node,
-                        genPackage);
+                        genPackage, defaultFactory);
                 String content = gen.generate(info);
                 writeContentToFile(file, content);
             } catch (IOException e) {
@@ -318,6 +360,9 @@ public class ConvertProjectHandler extends AbstractHandler {
                         file.getAbsolutePath(), extension);
                 file = new File(oldName + StringConstants.UNDERSCORE
                         + extension);
+                
+                Plugin.getDefault().writeErrorLineToConsole(
+                        "Duplicate filename error:" + fileName, true); //$NON-NLS-1$
             }
             return file;
         }

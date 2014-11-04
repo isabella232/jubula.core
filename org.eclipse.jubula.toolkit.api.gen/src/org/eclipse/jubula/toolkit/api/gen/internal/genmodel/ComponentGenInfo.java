@@ -1,5 +1,7 @@
 package org.eclipse.jubula.toolkit.api.gen.internal.genmodel;
 
+import java.util.Map;
+
 import org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
@@ -32,6 +34,9 @@ public class ComponentGenInfo {
     /** the most specific visible super type of a component */
     private String m_mostSpecificVisibleSuperTypeName;
     
+    /** map containing component name mappings */
+    private Map<String, String> m_compNameMap;
+    
     /**
      * Contains all necessary information for API generation of a component
      * Supposed to be used for class/interface generation.
@@ -40,9 +45,11 @@ public class ComponentGenInfo {
      * @param toolkitName the toolkitName
      * @param className the className
      *          (else an impl class)
+     * @param compNameMap map containing component name mappings
      */
     public ComponentGenInfo(Component component, boolean generateInterface,
-            String toolkitName, String className) {
+            String toolkitName, String className,
+            Map<String, String> compNameMap) {
         m_component = component;
         m_genInterface = generateInterface;
         NameLoader nameLoader = NameLoader.getInstance();
@@ -64,6 +71,7 @@ public class ComponentGenInfo {
             m_hasDefaultMapping = 
                     ((ConcreteComponent)component).hasDefaultMapping();
         }
+        m_compNameMap = compNameMap;
     }
 
     /**
@@ -149,7 +157,14 @@ public class ComponentGenInfo {
         CommonGenInfo visibleSuperType = new CommonGenInfo(tmp);
         ComponentGenInfo specificInformation = new ComponentGenInfo(tmp, true,
                 visibleSuperType.getToolkitName(),
-                visibleSuperType.getClassName());
+                visibleSuperType.getClassName(), null);
         return specificInformation.getFqInterfaceName();
+    }
+
+    /**
+     * @return the component name map
+     */
+    public Map<String, String> getCompNameMap() {
+        return m_compNameMap;
     }
 }

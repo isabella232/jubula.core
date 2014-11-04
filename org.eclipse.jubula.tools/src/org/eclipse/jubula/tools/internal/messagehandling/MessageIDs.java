@@ -199,6 +199,8 @@ public class MessageIDs {
     public static final Integer E_DUPLICATE_NODE = new Integer(3020);
     /** if a node name cannot be translated into a valid Java class name */
     public static final Integer E_INVALID_NODE_NAME = new Integer(3021);
+    /** if no aut was specified in project */
+    public static final Integer E_NO_AUT_IN_PROJECT = new Integer(3022);
     // -- DATAMODEL ERROR IDs ----------------------------------------------   
     /** if a parameter does not exist */
     public static final Integer E_NO_PARAMETER = new Integer(4000);
@@ -755,6 +757,7 @@ public class MessageIDs {
         messageMap.put(E_NON_EMPTY_DIRECTORY, e, "ErrorMessage.NON_EMPTY_DIRECTORY", null); //$NON-NLS-1$
         messageMap.put(E_DUPLICATE_NODE, e, "ErrorMessage.DUPLICATE_NODE", null); //$NON-NLS-1$
         messageMap.put(E_INVALID_NODE_NAME, e, "ErrorMessage.INVALID_NODE_NAME", null); //$NON-NLS-1$
+        messageMap.put(E_NO_AUT_IN_PROJECT, e, "ErrorMessage.NO_AUT_IN_PROJECT", null); //$NON-NLS-1$
     }
     
     /**
