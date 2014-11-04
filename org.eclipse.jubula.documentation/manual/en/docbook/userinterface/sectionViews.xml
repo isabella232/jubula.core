@@ -388,6 +388,16 @@
       </mediaobject>
     </figure>
   </section>
+  <section id="the-description-view">
+  <title>The Description View</title>
+  <anchor role="helpid" id="editDescriptionDialogContextId">The Description View</anchor>
+ 	 <para>
+ 	 The description view is placed in the lower right hand corner of the 
+  	Specification Perspective when it is opened. The description 
+	view displays the text of any descriptions you have added for 
+	Test Cases, Test Suites and Test Jobs. 
+  	</para>
+  </section>
   <section id="the-navigation-view">
     <title>The Navigator View</title>
     <anchor role="helpid" id="org.eclipse.ui.resource_view_context">Navigator View</anchor>
