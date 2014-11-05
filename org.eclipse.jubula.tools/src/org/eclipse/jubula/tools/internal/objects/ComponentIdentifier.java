@@ -20,6 +20,7 @@ import java.util.Map;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
@@ -174,10 +175,12 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
      * {@inheritDoc}
      */
     public String toString() {
-        return new ToStringBuilder(this)
-            .append("component type", m_componentClassName) //$NON-NLS-1$
-            .append("alternative name", m_alternativeDisplayName) //$NON-NLS-1$
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+            .append("component class", m_componentClassName) //$NON-NLS-1$
+            .append("supported class", m_supportedClassName) //$NON-NLS-1$
             .append("hierarchy", m_hierarchyNames) //$NON-NLS-1$
+            .append("neigbours", m_neighbours) //$NON-NLS-1$
+            .append("alternative name", m_alternativeDisplayName) //$NON-NLS-1$
             .toString();    
     }
     
