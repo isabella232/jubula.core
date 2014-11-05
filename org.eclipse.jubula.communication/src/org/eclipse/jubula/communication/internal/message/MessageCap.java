@@ -11,6 +11,7 @@
 package org.eclipse.jubula.communication.internal.message;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jubula.communication.CAP;
@@ -190,5 +191,26 @@ public class MessageCap implements CAP {
      */
     public void sethasDefaultMapping(boolean hasDefaultMapping) {
         this.m_hasDefaultMapping = hasDefaultMapping;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Methodname:" + getMethod()); //$NON-NLS-1$
+        builder.append(" CI: " + getCi()); //$NON-NLS-1$
+        builder.append(" Parameter: "); //$NON-NLS-1$
+        for (Iterator iterator = getMessageParams().iterator();
+                iterator.hasNext();) {
+            MessageParam parameter = (MessageParam) iterator.next();
+            builder.append(parameter.getValue() + " | "); //$NON-NLS-1$
+        }
+        if (getPostExecutionCommand() != null) {
+            builder.append("Command: "); //$NON-NLS-1$
+            builder.append(getPostExecutionCommand()
+                    .getClass().getCanonicalName());
+        }
+        return builder.toString();
     }
 }
