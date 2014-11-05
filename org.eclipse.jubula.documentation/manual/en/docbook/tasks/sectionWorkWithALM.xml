@@ -69,7 +69,7 @@
           <emphasis>Task Repositories</emphasis> and click
           ”<emphasis>OK</emphasis>”. The <emphasis>Task
           Repositories</emphasis> View will appear. The Bugzilla
-          Repositories for <emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> and Jubula are pre-configured.
+          Repositories for Jubula are pre-configured.
         </para>
       </listitem>
       <listitem>
@@ -498,12 +498,56 @@
 					<para>
 					You can add rules in the table to update fields in the task. Enter a descriptive name 
 					(this is only used for display purposes in the Properties), the ID for the field you want to 
-					update and the value that the field should be updated with.
+					update and the value that the field should be updated with.<?linebreak?>
+					To see which IDs are available in your ALM repository, you can use view the information for 
+					individual tasks from the Task View (<xref linkend="viewing-task-attributes"/>)
 					</para>
 					</listitem>
 				</itemizedlist>
 		</orderedlist>
-
+			<section id="viewing-task-attributes">
+			<title>Viewing task attributes</title>
+			<para>
+			In order to define rules for reporting to ALM systems, you will need to enter the ID 
+			for any fields you wish to update (<xref linkend="configuring-reporting-to-tasks-via-properties"/>).
+			</para>
+			<para>
+			You can see which attributes a task has by using the <emphasis role="menuPath">Show attributes</emphasis>
+			option from the Task View.
+			</para>
+			<orderedlist>
+				<listitem>
+				<para>Open the Task View if it is not already open by selecting:</para>
+				<para>
+				<emphasis role="menuPath">Window</emphasis> --&gt; <emphasis role="menuPath">Show View</emphasis> --&gt; 
+				<emphasis role="menuPath">Task View</emphasis>.
+				</para>
+				</listitem>
+				<listitem>
+				<para>
+				If you have not already configured your repository for your workspace, do so in the 
+				Task Repositories View
+				(<xref linkend="configuring-task-repositories"></xref>).
+				</para>
+				</listitem>
+				<listitem>
+				<para>
+				Navigate to the task whose attributes you want to see and select:
+				</para>
+				<para>
+				<emphasis role="menuPath">Show attributes</emphasis> from the context menu.
+				</para>
+				</listitem>
+				<listitem>
+				<para>
+				The Task Attribute Viewer will appear. In this dialog, you can see the IDs 
+				for this task, which you can use to define rules for test result reporting in the
+				Project Properties (<xref linkend="configuring-reporting-to-tasks-via-properties"/>).
+				</para>
+				</listitem>
+			</orderedlist>
+			
+			</section>
     </section>
     <section id="adding-task-id-alm">
       <title>Adding task IDs to Test Suites and Test Cases</title>
