@@ -47,12 +47,9 @@ import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
-import org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo;
-import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.DirectoryDialog;
@@ -131,8 +128,8 @@ public class ConvertProjectHandler extends AbstractHandler {
         
         /** the project */
         private static IProgressMonitor progressMonitor;
-        /** the default factory */
-        private static String defaultFactory;
+        /** the default toolkit */
+        private static String defaultToolkit;
         
         /** {@inheritDoc} */
         public void run(IProgressMonitor monitor) {
@@ -145,7 +142,7 @@ public class ConvertProjectHandler extends AbstractHandler {
                             StringConstants.SLASH);
             
             if (project != null) {
-                defaultFactory = determineDefaultFactory(project);
+                defaultToolkit = determineDefaultToolkit(project);
                                 
                 // Handle the reused projects
                 Iterator iterator = project.getUsedProjects().iterator();
@@ -170,13 +167,13 @@ public class ConvertProjectHandler extends AbstractHandler {
         }
 
         /**
-         * Returns the default factory name for a project
+         * Returns the default toolkit for a project
          * by inspecting its first AUT
          * @param project the project
-         * @return the name of the default factory
+         * @return the name of the default toolkit
          */
-        private String determineDefaultFactory(IProjectPO project) {
-            String name = null;
+        private String determineDefaultToolkit(IProjectPO project) {
+            String toolkit = null;
             IAUTMainPO firstAUT = null;
             try {
                 firstAUT = project.getAutCont()
@@ -190,14 +187,9 @@ public class ConvertProjectHandler extends AbstractHandler {
                 progressMonitor.setCanceled(true);
             }
             if (firstAUT != null) {
-                ToolkitDescriptor toolkitDescriptor =
-                        ComponentBuilder.getInstance().getCompSystem()
-                        .getToolkitDescriptor(firstAUT.getToolkit());
-                CommonGenInfo defaultFactoryInfo =
-                        new CommonGenInfo(toolkitDescriptor, false);
-                name = defaultFactoryInfo.getFqClassName();
+                toolkit = firstAUT.getToolkit();
             }
-            return name;
+            return toolkit;
         }
 
         /**
@@ -279,7 +271,7 @@ public class ConvertProjectHandler extends AbstractHandler {
                 file.createNewFile();
                 NodeGenerator gen = new NodeGenerator();
                 NodeInfo info = new NodeInfo(file.getName(), node,
-                        genPackage, defaultFactory);
+                        genPackage, defaultToolkit);
                 String content = gen.generate(info);
                 writeContentToFile(file, content);
             } catch (IOException e) {

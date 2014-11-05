@@ -13,12 +13,15 @@ imports="java.util.*
 			org.eclipse.jubula.client.core.model.IProjectPO
 			org.eclipse.jubula.client.core.model.IRefTestSuitePO
 		   org.eclipse.jubula.client.core.model.ISpecTestCasePO
-		   org.eclipse.jubula.client.core.model.ITestCasePO
 			org.eclipse.jubula.client.core.model.ITestSuitePO
-		   org.eclipse.jubula.client.core.persistence.NodePM
 		   org.eclipse.jubula.client.ui.rcp.Plugin
+		   org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP
+		   org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder
 		   org.eclipse.jubula.tools.internal.constants.StringConstants
 		   org.eclipse.jubula.tools.internal.exception.JBException
+		   org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
+		   org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem
+			org.eclipse.jubula.tools.internal.xml.businessmodell.Component
 		   org.slf4j.Logger
 			org.slf4j.LoggerFactory"
 class="NodeGenerator"%>
@@ -60,16 +63,31 @@ public class <%=className%> {
 			INodePO child = iterator.next();
 			if (child instanceof ICapPO) {
 				ICapPO cap = (ICapPO) child;
-				CompNameLoader loader = new CompNameLoader(cap.getComponentType());
-				String componentTypeName = loader.get("componentTypeName");
+				String componentFromCap = cap.getComponentType();
+				CompNameLoader loader = new CompNameLoader(componentFromCap);
 				String actionName = loader.get(cap.getActionName());
 				boolean hasDefaultMapping = loader.get("hasDefaultMapping").equals("true");
-				String factoryName = hasDefaultMapping
-												? info.getDefaultFactory()
-												: loader.get("factoryName");
+				String componentNameToCreate;
+				String factoryName;
+				if (hasDefaultMapping) {
+					String toolkitID = info.getDefaultToolkit();
+					factoryName = Utils.getFactoryName(toolkitID);
+					ConcreteComponent cc = null;
+			      CompSystem compSystem = ComponentBuilder.getInstance().getCompSystem();
+			      Component c = compSystem.getComponentForType(componentFromCap);
+			      if (c instanceof ConcreteComponent) {
+			          cc = (ConcreteComponent)c;            
+			      }
+			      ConcreteComponent componentToCreate = ToolkitSupportBP.getMostConcreteRealizingComponentInToolkit(toolkitID, cc);
+					CompNameLoader newLoader = new CompNameLoader(componentToCreate.getType());
+					componentNameToCreate = newLoader.get("componentTypeName");
+				} else {
+					factoryName = loader.get("factoryName");
+					componentNameToCreate = loader.get("componentTypeName");
+				}
 				if (actionName != null) {%>
 		aut.execute(
-			<%=factoryName%>.create<%=componentTypeName%>(<%if (!hasDefaultMapping) {%>null<%}%>)
+			<%=factoryName%>.create<%=componentNameToCreate%>(<%if (!hasDefaultMapping) {%>null<%}%>)
 				.<%=actionName%>(
 				<%Iterator<IParamDescriptionPO> paramIterator = cap.getParameterList().iterator();
 					while (paramIterator.hasNext()) {

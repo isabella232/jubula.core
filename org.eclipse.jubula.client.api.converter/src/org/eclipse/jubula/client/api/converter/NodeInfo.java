@@ -28,21 +28,21 @@ public class NodeInfo {
     /** The node */
     private INodePO m_node;
     
-    /** the default factory */
-    private String m_defaultFactory;
+    /** the default toolkit */
+    private String m_defaultToolkit;
     
     /**
      * @param className the class name
      * @param node the node
      * @param packageBasePath the base path of the package
-     * @param defaultFactory the default factory
+     * @param defaultToolkit the default toolkit
      */
     public NodeInfo (String className, INodePO node,
-            String packageBasePath, String defaultFactory) {
+            String packageBasePath, String defaultToolkit) {
         m_className = StringUtils.substringBeforeLast(className, ".java"); //$NON-NLS-1$
         m_node = node;
         m_packageBasePath = packageBasePath;
-        m_defaultFactory = defaultFactory;
+        m_defaultToolkit = defaultToolkit;
     }
     
     /**
@@ -67,9 +67,9 @@ public class NodeInfo {
     }
     
     /**
-     * @return The default factory
+     * @return The default toolkit
      */
-    public String getDefaultFactory() {
-        return m_defaultFactory;
+    public String getDefaultToolkit() {
+        return m_defaultToolkit;
     }
 }

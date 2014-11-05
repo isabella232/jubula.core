@@ -18,7 +18,10 @@ import org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameExcepti
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo;
+import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -193,5 +196,21 @@ public class Utils {
             adjustedName = adjustedName.replace(c, StringConstants.SPACE);
         }
         return adjustedName;
+    }
+
+    /**
+     * Returns the factory name for a toolkit
+     * @param toolkit the toolkit
+     * @return the name of the factory
+     */
+    public static String getFactoryName(String toolkit) {
+        String name;
+        ToolkitDescriptor toolkitDescriptor =
+                ComponentBuilder.getInstance().getCompSystem()
+                .getToolkitDescriptor(toolkit);
+        CommonGenInfo defaultFactoryInfo =
+                new CommonGenInfo(toolkitDescriptor, false);
+        name = defaultFactoryInfo.getFqClassName();
+        return name;
     }
 }

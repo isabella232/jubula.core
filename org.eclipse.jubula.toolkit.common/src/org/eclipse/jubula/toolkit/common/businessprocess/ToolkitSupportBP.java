@@ -11,12 +11,18 @@
 package org.eclipse.jubula.toolkit.common.businessprocess;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.toolkit.common.IToolKitProvider;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.i18n.Messages;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.slf4j.Logger;
@@ -185,5 +191,68 @@ public class ToolkitSupportBP {
             throw new ToolkitPluginException(message);
         } 
         throw new ToolkitPluginException(message, cause);
+    }
+    
+    /**
+     * Returns a pseudo component identifier representing the most concrete
+     * realizing toolkit component for an abstract component with default mapping
+     * or <code>null</code> if none can be found
+     * 
+     * @param toolkitID
+     *            the toolkit id
+     * @param cc
+     *            the concrete component
+     * @return the component identifier
+     */
+    public static IComponentIdentifier
+    getIdentifierOfMostConcreteRealizingComponentInToolkit(
+        String toolkitID, ConcreteComponent cc) {
+        ConcreteComponent concreteComponent =
+                getMostConcreteRealizingComponentInToolkit(toolkitID, cc);
+        IComponentIdentifier technicalName = new ComponentIdentifier();
+        technicalName.setComponentClassName(
+            concreteComponent
+                .getComponentClass().getName());
+        return technicalName;
+    }
+    
+    /**
+     * Returns the most concrete realizing toolkit component 
+     * for an abstract component with default mapping
+     * or <code>null</code> if none can be found
+     * 
+     * @param toolkitID
+     *            the toolkit id
+     * @param cc
+     *            the concrete component
+     * @return the component
+     */
+    public static ConcreteComponent getMostConcreteRealizingComponentInToolkit(
+    String toolkitID, ConcreteComponent cc) {
+        String toolkitIdToSearchIn = toolkitID;        
+        Set realizers = cc.getAllRealizers();
+        ToolkitDescriptor tpd = null;
+        while (!StringUtils.isEmpty(toolkitIdToSearchIn)) {
+
+            for (Iterator iterator = realizers.iterator(); iterator
+                    .hasNext();) {
+                ConcreteComponent concreteComponent = 
+                        (ConcreteComponent) iterator.next();
+                if (toolkitIdToSearchIn.equals(concreteComponent
+                        .getToolkitDesriptor().getToolkitID())
+                        && concreteComponent
+                            .getComponentClass() != null) {
+                    return concreteComponent;
+                }
+            }
+            try {
+                tpd = getToolkitDescriptor(toolkitIdToSearchIn);
+                toolkitIdToSearchIn = tpd.getIncludes();
+            } catch (ToolkitPluginException e) {
+                log.error("No possible technical name found", e); //$NON-NLS-1$
+                return null;
+            }
+        }
+        return null;
     }
 }

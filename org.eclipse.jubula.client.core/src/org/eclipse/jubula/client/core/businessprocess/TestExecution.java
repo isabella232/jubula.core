@@ -15,11 +15,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.collections.MapUtils;
@@ -78,13 +76,13 @@ import org.eclipse.jubula.client.internal.commands.CAPTestResponseCommand;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.internal.ICommand;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
+import org.eclipse.jubula.communication.internal.message.CAPTestMessageFactory;
 import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.internal.message.DisplayManualTestStepMessage;
 import org.eclipse.jubula.communication.internal.message.EndTestExecutionMessage;
 import org.eclipse.jubula.communication.internal.message.InitTestExecutionMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
-import org.eclipse.jubula.communication.internal.message.CAPTestMessageFactory;
 import org.eclipse.jubula.communication.internal.message.MessageParam;
 import org.eclipse.jubula.communication.internal.message.NullMessage;
 import org.eclipse.jubula.communication.internal.message.PrepareForShutdownMessage;
@@ -92,7 +90,6 @@ import org.eclipse.jubula.communication.internal.message.ResetMonitoringDataMess
 import org.eclipse.jubula.communication.internal.message.RestartAutMessage;
 import org.eclipse.jubula.communication.internal.message.TakeScreenshotMessage;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
-import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
@@ -103,7 +100,6 @@ import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -117,7 +113,6 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
-import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.osgi.framework.Constants;
 import org.slf4j.Logger;
@@ -887,40 +882,16 @@ public class TestExecution {
         }
         if (technicalName == null && comp instanceof ConcreteComponent) {
             ConcreteComponent cc = ((ConcreteComponent) comp);
+            String toolkit = aut.getToolkit();
             if (cc.hasDefaultMapping() && cc.getComponentClass() != null) {
-                Set realizers = cc.getAllRealizers();
-                String toolkit = aut.getToolkit();
-                ToolkitDescriptor tpd = null;
-                while (!StringUtils.isEmpty(toolkit)) {
-
-                    for (Iterator iterator = realizers.iterator(); iterator
-                            .hasNext();) {
-                        ConcreteComponent concreteComponent = 
-                                (ConcreteComponent) iterator.next();
-                        if (toolkit.equals(concreteComponent
-                                .getToolkitDesriptor().getToolkitID())
-                                && concreteComponent
-                                    .getComponentClass() != null) {
-                            technicalName = new ComponentIdentifier();
-                            technicalName.setComponentClassName(
-                                concreteComponent
-                                    .getComponentClass().getName());
-                            return technicalName;
-                        }
-                    }
-                    try {
-                        tpd = ToolkitSupportBP.getToolkitDescriptor(toolkit);
-                        toolkit = tpd.getIncludes();
-                    } catch (ToolkitPluginException e) {
-                        LOG.error("No possible technical name found", e); //$NON-NLS-1$
-                        return null;
-                    }
-                }
+                return ToolkitSupportBP.
+                    getIdentifierOfMostConcreteRealizingComponentInToolkit(
+                        toolkit, cc);
             }
         }
         return technicalName;
     }
-
+    
     /**
      * sets the properties of messageCap
      * 

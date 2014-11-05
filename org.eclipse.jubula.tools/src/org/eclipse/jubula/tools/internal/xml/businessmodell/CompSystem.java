@@ -659,7 +659,7 @@ public class CompSystem {
      * @return The Component of the given Component Type or null if no 
      * Component was found.
      */
-    private Component getComponentForType(String type) {
+    public Component getComponentForType(String type) {
         return m_componentsByTypeLowerCase.get(type.toLowerCase());
     }
     
