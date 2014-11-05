@@ -1,9 +1,54 @@
-<project name="buildHelp" default="build">
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<project name="buildHelp" default="buildDocumentation">
     <property name="client.ua.help.path" value="../org.eclipse.jubula.client.ua.help"/>
     <property name="html.path" value="html/${dir}"/>
     <property name="output" value="onlinehelp"/>
     <property name="build.path" value="${dir}/en/build/${output}"/>
     <property name="manual.name" value="${name}"/>
+    <property name="buildRoot" value="${basedir}" />
+    
+    <target name="buildDocumentation" depends="buildInstallationManual,
+                                               buildUserManual,
+                                               buildExtensionManual,
+                                               buildReleaseNotes">
+    </target>
+    
+    <target name="buildInstallationManual">
+        <ant antfile="buildScript.xml" target="buildHTML" inheritall="false">
+            <property name="name" value="InstallationManual"/>
+            <property name="dir" value="install"/>
+            <property name="output" value="html"/>
+        </ant>
+    </target>
+    
+    <target name="buildUserManual">
+        <ant antfile="buildScript.xml" target="buildOnlineHelp" inheritall="false">
+            <property name="name" value="UserManual"/>
+            <property name="dir" value="manual"/>
+        </ant>
+    </target>
+    
+    <target name="buildExtensionManual">
+        <ant antfile="buildScript.xml" target="buildOnlineHelp" inheritall="false">
+            <property name="name" value="ExtensionManual"/>
+            <property name="dir" value="extensionapi"/>
+        </ant>
+    </target>
+    
+    <target name="buildReleaseNotes">
+        <ant antfile="buildScript.xml" target="buildReleaseNotesHtml" inheritall="false">
+            <property name="name" value="ReleaseNotes"/>
+            <property name="dir" value="releasenotes"/>
+            <property name="output" value="html"/>
+        </ant>
+    </target>
     
     <target name="checkParam">
         <fail unless="name" message="Please provide a value for the parameter 'name'!"/>
@@ -30,21 +75,16 @@
         <mkdir dir="${html.path}/images"/>
     </target>
     
-    <target name="build" depends="buildOnlineHelp, buildHTML, buildReleaseNotes">
-        <echo>Build done!</echo>
-    </target>
-    
     <target name="buildHtmlImageLister" depends="checkParam">
         <delete file="HtmlImageLister.jar"/>
-        <move file="lib/HtmlImageLister/lib/org.jsoup.jar" tofile="lib/HtmlImageLister/lib/jsoup-1.7.2.jar" failonerror="false"/>
         
         <exec executable="javac" dir="lib/HtmlImageLister" failonerror="true">
-            <arg line="-cp 'lib/jsoup-1.7.2.jar'"/>
+            <arg line="-cp 'lib/org.jsoup.jar'"/>
             <arg line="HtmlImageLister.java"/>
         </exec>
         
         <jar destfile="HtmlImageLister.jar">
-            <zipfileset src="lib/HtmlImageLister/lib/jsoup-1.7.2.jar">
+            <zipfileset src="lib/HtmlImageLister/lib/org.jsoup.jar">
                 <exclude name="**/*.SF"/>
             </zipfileset>
             
@@ -122,7 +162,7 @@
             <arg line="--xinclude"/>
             <arg line="-o ${build.path}/html/index.html"/>
             <arg line="--stringparam base.dir ${html.path}"/>
-            <arg line="--stringparam html.stylesheet ../css/style.css"/>
+            <arg line="--stringparam html.stylesheet ../../css/style.css"/>
             <arg line="--stringparam docbook.css.source ''"/>
             <arg line="--stringparam section.autolabel 1"/>
             <arg line="--stringparam section.label.includes.component.label 1"/>
@@ -146,7 +186,7 @@
         <antcall target="moveGeneratedFilesStandalone"/>
     </target>
     
-    <target name="buildReleaseNotes" if="releaseNotes" depends="checkParam, buildHtmlImageLister">
+    <target name="buildReleaseNotesHtml" if="releaseNotes" depends="checkParam, buildHtmlImageLister">
         <copy todir="${build.path}/images">
             <fileset dir="${dir}/en/docbook/images">
                 <include name="*.jpg" />
@@ -164,7 +204,7 @@
             <arg line="--xinclude"/>
             <arg line="-o ${build.path}/html/index.html"/>
             <arg line="--stringparam base.dir ${html.path}"/>
-            <arg line="--stringparam html.stylesheet ../css/style.css"/>
+            <arg line="--stringparam html.stylesheet ../../css/style.css"/>
             <arg line="--stringparam docbook.css.source ''"/>
             <arg line="--stringparam make.clean.html 1"/>
             <arg line="--stringparam generate.toc 'chapter nop
