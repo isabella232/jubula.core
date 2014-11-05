@@ -98,11 +98,16 @@ public class APIGenerator {
         String converterInfoDir = loader.getConverterInfoDir();
 
         // Clean up
-        try {
-            FileUtils.cleanDirectory(new File(converterInfoDir));
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
+        File converterDirectory = new File(converterInfoDir);
+        if (converterDirectory.exists()) {
+            try {
+                FileUtils.cleanDirectory(converterDirectory);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(1);
+            }            
+        } else {
+            converterDirectory.mkdirs();
         }
         for (ToolkitInfo tkInfo : toolkitInfos) {
             cleanUp(tkInfo, generationBaseDir);
