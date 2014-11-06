@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.util;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 
-import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -59,12 +59,8 @@ public class NodeBounds {
         if (nodePos == null) {
             return false;
         }
-        
-        BoundingBox box = new BoundingBox(nodePos.getX(),
-                                          nodePos.getY(),
-                                          n.getBoundsInParent().getWidth(),
-                                          n.getBoundsInParent().getHeight());
-        return box.contains(point);
+        return getAbsoluteBounds(n).
+                contains(new Point((int)point.getX(), (int)point.getY()));
     }
 
     /**
