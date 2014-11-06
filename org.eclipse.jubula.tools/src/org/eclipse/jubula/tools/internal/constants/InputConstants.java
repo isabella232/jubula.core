@@ -23,18 +23,6 @@ public interface InputConstants {
     /** mouse click */
     public static int TYPE_MOUSE_CLICK = 2;
 
-    
-    // Mouse button constants
-    /** Constant for the left mouse button (action) */
-    public int MOUSE_BUTTON_LEFT = 1;
-    
-    /** Constant for the middle mouse button */
-    public int MOUSE_BUTTON_MIDDLE = 2;
-
-    /** Constant for the right mouse button (context) */
-    public int MOUSE_BUTTON_RIGHT = 3;
-
-    
     /** Constant for no input (no key pressed or no button clicked) */
     public int NO_INPUT = -1;
     

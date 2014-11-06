@@ -57,7 +57,7 @@ import org.eclipse.jubula.rc.common.util.LocalScreenshotUtil;
 import org.eclipse.jubula.rc.common.util.PointUtil;
 import org.eclipse.jubula.rc.swing.utils.SwingUtils;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
-import org.eclipse.jubula.tools.internal.constants.InputConstants;
+import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
@@ -517,16 +517,17 @@ public class RobotAwtImpl implements IRobot {
      * @return the InputEvent button mask
      */
     private int getButtonMask(int button) {
-        switch (button) {
-            case InputConstants.MOUSE_BUTTON_LEFT:
-                return InputEvent.BUTTON1_MASK;
-            case InputConstants.MOUSE_BUTTON_MIDDLE:
-                return InputEvent.BUTTON2_MASK;
-            case InputConstants.MOUSE_BUTTON_RIGHT:
-                return InputEvent.BUTTON3_MASK;
-            default:
-                throw new RobotException("unsupported mouse button", null); //$NON-NLS-1$
+        if (button == InteractionMode.primary.rcIntValue()) {
+            return InputEvent.BUTTON1_MASK;
         }
+        if (button == InteractionMode.tertiary.rcIntValue()) {
+            return InputEvent.BUTTON2_MASK;
+        }
+        if (button == InteractionMode.secondary.rcIntValue()) {
+            return InputEvent.BUTTON3_MASK;
+        }
+        throw new RobotException("unsupported mouse button", null); //$NON-NLS-1$
+
     }
     
     /**

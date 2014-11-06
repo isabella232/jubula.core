@@ -19,6 +19,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.tools.internal.constants.InputConstants;
 
 
@@ -180,13 +181,13 @@ public class InputCodeHelper {
             inputStringList.toArray(new String[inputStringList.size()]);
         
         inputList.add(new UserInput(
-                InputConstants.MOUSE_BUTTON_LEFT, 
+                InteractionMode.primary.rcIntValue(),
                 InputConstants.TYPE_MOUSE_CLICK));
         inputList.add(new UserInput(
-                InputConstants.MOUSE_BUTTON_MIDDLE, 
+                InteractionMode.tertiary.rcIntValue(),
                 InputConstants.TYPE_MOUSE_CLICK));
         inputList.add(new UserInput(
-                InputConstants.MOUSE_BUTTON_RIGHT, 
+                InteractionMode.secondary.rcIntValue(),
                 InputConstants.TYPE_MOUSE_CLICK));
 
         inputStringList.add(Messages.ObjectMappingPreferencePageMouseButton1);

@@ -22,8 +22,8 @@ import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
+import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
-import org.eclipse.jubula.tools.internal.constants.InputConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
@@ -676,7 +676,7 @@ public abstract class AbstractTableTester
         rcSelectCell(row, MatchUtil.DEFAULT_OPERATOR , col, 
                 MatchUtil.DEFAULT_OPERATOR, clickCount, xPos,
                 xUnits, yPos, yUnits, extendSelection, 
-                InputConstants.MOUSE_BUTTON_LEFT);
+                InteractionMode.primary.rcIntValue());
     }
     
     /**

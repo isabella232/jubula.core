@@ -11,7 +11,7 @@
 package org.eclipse.jubula.rc.common.driver;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.eclipse.jubula.tools.internal.constants.InputConstants;
+import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 
 
 /**
@@ -157,7 +157,7 @@ public class ClickOptions {
     private boolean m_confirmClick = true; 
     
     /** which mouse button to use */
-    private int m_mouseButton = InputConstants.MOUSE_BUTTON_LEFT;
+    private int m_mouseButton = InteractionMode.primary.rcIntValue();
     
     /**
      * <code>m_clickModifier</code> specifies which modifiers should be pressed
@@ -317,7 +317,7 @@ public class ClickOptions {
      * @return The <code>ClickOptions</code> instance.
      */
     public ClickOptions left() {
-        return setMouseButton(InputConstants.MOUSE_BUTTON_LEFT);
+        return setMouseButton(InteractionMode.primary.rcIntValue());
     }
     
     /**

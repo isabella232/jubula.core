@@ -298,7 +298,7 @@ public final class ValueSets {
     }
     
     /** @author BREDEX GmbH 
-     * The InteractionMode is e.g. used to define which mouse button is pressed.
+     * The InteractionMode is e.g. used to define which mouse button is used.
      */
     public enum InteractionMode implements LiteralProvider {
         /** primary value*/
@@ -331,7 +331,7 @@ public final class ValueSets {
         /**
          * @return the real value with correct type
          */
-        public Integer rcRealValue() {
+        public Integer rcIntValue() {
             return m_rcValue;
         }
     }

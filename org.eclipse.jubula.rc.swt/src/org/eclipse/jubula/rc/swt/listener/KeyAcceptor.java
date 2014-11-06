@@ -15,7 +15,7 @@ import java.util.SortedSet;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.swt.utils.SwtKeyCodeConverter;
-import org.eclipse.jubula.tools.internal.constants.InputConstants;
+import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 
@@ -59,15 +59,15 @@ public class KeyAcceptor {
         int eventCode = 0;
         switch (event.button) {
             case 1:
-                eventCode = InputConstants.MOUSE_BUTTON_LEFT;
+                eventCode = InteractionMode.primary.rcIntValue();
                 keyMod = keyMod & (~SWT.BUTTON1);
                 break;
             case 2:
-                eventCode = InputConstants.MOUSE_BUTTON_MIDDLE;
+                eventCode = InteractionMode.tertiary.rcIntValue();
                 keyMod = keyMod & (~SWT.BUTTON2);
                 break;
             case 3:
-                eventCode = InputConstants.MOUSE_BUTTON_RIGHT;
+                eventCode = InteractionMode.secondary.rcIntValue();
                 keyMod = keyMod & (~SWT.BUTTON3);
                 break;
             default:

@@ -51,7 +51,7 @@ import org.eclipse.jubula.rc.swt.utils.SwtKeyCodeConverter;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
-import org.eclipse.jubula.tools.internal.constants.InputConstants;
+import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
@@ -1308,16 +1308,16 @@ public class RobotSwtImpl implements IRobot {
      * @return the InputEvent button mask
      */
     private int getButtonMask(int button) {
-        switch (button) {
-            case InputConstants.MOUSE_BUTTON_LEFT:
-                return SWT.BUTTON1;
-            case InputConstants.MOUSE_BUTTON_MIDDLE:
-                return SWT.BUTTON2;
-            case InputConstants.MOUSE_BUTTON_RIGHT:
-                return SWT.BUTTON3;
-            default:
-                throw new RobotException("unsupported mouse button", null); //$NON-NLS-1$
+        if (button == InteractionMode.primary.rcIntValue()) {
+            return SWT.BUTTON1;
         }
+        if (button == InteractionMode.tertiary.rcIntValue()) {
+            return SWT.BUTTON2;
+        }
+        if (button == InteractionMode.secondary.rcIntValue()) {
+            return SWT.BUTTON3;
+        }
+        throw new RobotException("unsupported mouse button", null); //$NON-NLS-1$
     }
 
     /**

@@ -17,7 +17,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
-import org.eclipse.jubula.tools.internal.constants.InputConstants;
+import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 
 /**
  * This class is responsible for accepting an InputEvent as the (combination of
@@ -83,13 +83,13 @@ public class KeyAcceptor {
 
             switch (button) {
                 case PRIMARY:
-                    inputCode = InputConstants.MOUSE_BUTTON_LEFT;
+                    inputCode = InteractionMode.primary.rcIntValue();
                     break;
                 case MIDDLE:
-                    inputCode = InputConstants.MOUSE_BUTTON_MIDDLE;
+                    inputCode = InteractionMode.tertiary.rcIntValue();
                     break;
                 case SECONDARY:
-                    inputCode = InputConstants.MOUSE_BUTTON_RIGHT;
+                    inputCode = InteractionMode.secondary.rcIntValue();
                     break;
                 default:
                     break;

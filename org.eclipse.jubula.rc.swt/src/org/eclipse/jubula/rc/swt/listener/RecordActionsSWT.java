@@ -29,7 +29,7 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtKeyCodeConverter;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
-import org.eclipse.jubula.tools.internal.constants.InputConstants;
+import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
@@ -180,7 +180,7 @@ public class RecordActionsSWT {
         treValues.add(nodepath);                
         treValues.add(Constants.REC_OPERATOR);
         treValues.add(clCount);
-        treValues.add(String.valueOf(InputConstants.MOUSE_BUTTON_LEFT));
+        treValues.add(String.valueOf(InteractionMode.primary.rcIntValue()));
         treValues.add(Constants.REC_EXT_SELECTION);
         
         String logName = createLogicalName(tre, id);
@@ -216,7 +216,7 @@ public class RecordActionsSWT {
         treValues.add(Constants.REC_OPERATOR);
         treValues.add(clCount);
         treValues.add(column);
-        treValues.add(String.valueOf(InputConstants.MOUSE_BUTTON_LEFT));
+        treValues.add(String.valueOf(InteractionMode.primary.rcIntValue()));
         
         String logName = createLogicalName(tre, id);
         

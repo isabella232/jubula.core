@@ -17,7 +17,7 @@ import java.util.Iterator;
 import java.util.SortedSet;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
-import org.eclipse.jubula.tools.internal.constants.InputConstants;
+import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 
 
 /**
@@ -77,13 +77,13 @@ public class KeyAcceptor {
             int button = ((MouseEvent)event).getButton();
             switch (button) {
                 case MouseEvent.BUTTON1:
-                    inputCode = InputConstants.MOUSE_BUTTON_LEFT;
+                    inputCode = InteractionMode.primary.rcIntValue();
                     break;
                 case MouseEvent.BUTTON2:
-                    inputCode = InputConstants.MOUSE_BUTTON_MIDDLE;
+                    inputCode = InteractionMode.tertiary.rcIntValue();
                     break;
                 case MouseEvent.BUTTON3:
-                    inputCode = InputConstants.MOUSE_BUTTON_RIGHT;
+                    inputCode = InteractionMode.secondary.rcIntValue();
                     break;
                 default:
                     break;

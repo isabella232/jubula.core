@@ -29,7 +29,7 @@ import org.eclipse.jubula.rc.swt.tester.adapter.TableAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TextComponentAdapter;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
-import org.eclipse.jubula.tools.internal.constants.InputConstants;
+import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -84,7 +84,7 @@ public class TableTester extends AbstractTableTester {
             }
             if (EnvironmentUtils.isMacOS()) {
                 getRobot().clickAtCurrentPosition(editor, 3, 
-                        InputConstants.MOUSE_BUTTON_LEFT);
+                        InteractionMode.primary.rcIntValue());
             } else {
                 getRobot().keyStroke(getRobot().getSystemModifierSpec() + " A"); //$NON-NLS-1$
             }
@@ -97,7 +97,7 @@ public class TableTester extends AbstractTableTester {
             }
         } else {
             getRobot().clickAtCurrentPosition(editor, 2, 
-                    InputConstants.MOUSE_BUTTON_LEFT);
+                    InteractionMode.primary.rcIntValue());
         }
         return editor;
     }
