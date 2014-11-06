@@ -496,20 +496,63 @@
 					</listitem>
 					<listitem>
 					<para>
-					You can add rules in the table to update fields in the task. Enter a descriptive name 
-					(this is only used for display purposes in the Properties), the ID for the field you want to 
-					update and the value that the field should be updated with.<?linebreak?>
-					To see which IDs are available in your ALM repository, you can use view the information for 
-					individual tasks from the Task View (<xref linkend="viewing-task-attributes"/>)
+					You can add rules in the table to update attributes for the task. Enter a descriptive name 
+					(this is only used for display purposes in the Properties), the ID for the attribute you want to 
+					update and the value that the attribute should be updated with. 
+					As values for the update, you can enter:
 					</para>
+						<itemizedlist>
+							<listitem>
+							<para>
+							plain text, e.g. "passed"
+							</para>
+							</listitem>
+							<listitem>
+							<para>
+							a value from a column in the Test Result Summary View for this run.
+							The value for a column is gained by entering the column name as a variable. 
+							Some examples are:  
+							</para>
+							<para>
+							$summary_autHostname, $summary_testRunState (gives e.g. "OK" or "FAILED"), $summary_testsuiteName, $summary_testJobName, 
+							$summary_testsuiteEndTime,
+							$summary_testsuiteDate (for full date format), $summary_statusString (gives e.g. "Successfully tested" or "Error in Children"),
+							 $summary_testsuiteDuration, 
+							$summary_testsuiteStartTime, $summary_date (for DD.MM.YYYY), $summary_autOS
+							</para>
+							<para>
+							but you can use any column value by entering the column name as a variable preceded by "summary_". 
+							</para>
+							</listitem>
+							<listitem>
+							<para>
+							a value from the executed node. The value is entered as a variable, e.g.
+							</para>
+							<para>
+							$node_taskId, $node_timeStamp, $node_typeOfNode (e.g. Test Case), $node_name, 
+							$node_parameterDescription, $node_date (for DD.MM.YYYY), $node_url (see below)
+							</para>
+							<para>
+							Use the $node_url parameter to receive the URL that will 
+							link to this node (Test Case or Test Suite) in the dashboard 
+							(x<xref linkend="automatically-reporting-to-external-repositories-after-test-runs"/>). 
+							</para>
+							</listitem>
+						</itemizedlist>
 					</listitem>
-				</itemizedlist>
+					</itemizedlist>
+			<listitem>
+			<para>
+			To see which attributes are available in your ALM repository, you can view the information for 
+			individual tasks from the Task View (<xref linkend="viewing-task-attributes"/>)
+			</para>
+			</listitem>	
 		</orderedlist>
 			<section id="viewing-task-attributes">
 			<title>Viewing task attributes</title>
 			<para>
 			In order to define rules for reporting to ALM systems, you will need to enter the ID 
-			for any fields you wish to update (<xref linkend="configuring-reporting-to-tasks-via-properties"/>).
+			for any attributes you wish to update (<xref linkend="configuring-reporting-to-tasks-via-properties"/>).
 			</para>
 			<para>
 			You can see which attributes a task has by using the <emphasis role="menuPath">Show attributes</emphasis>
@@ -541,8 +584,10 @@
 				<listitem>
 				<para>
 				The Task Attribute Viewer will appear. In this dialog, you can see the IDs 
-				for this task, which you can use to define rules for test result reporting in the
-				Project Properties (<xref linkend="configuring-reporting-to-tasks-via-properties"/>).
+				for the attributes for this task, which you can use to define rules for test 
+				result reporting in the Project Properties 
+				(<xref linkend="configuring-reporting-to-tasks-via-properties"/>).
+				You can copy attributes using the keyboard.
 				</para>
 				</listitem>
 			</orderedlist>
