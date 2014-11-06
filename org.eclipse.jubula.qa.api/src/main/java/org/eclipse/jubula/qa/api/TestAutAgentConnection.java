@@ -28,41 +28,35 @@ public class TestAutAgentConnection {
     /** the AUT-Agent */
     private AUTAgent m_agent;
     
-    /** the AUT-Agent */
-    private AUTAgent m_agentSecond;
-
-    
     /** prepare */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         m_agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
-        m_agentSecond = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT_SECOND);
     }
-
-    /** switches between the two autagents 
+    /** test aut agent connect and disconnect status
      * @throws Exception */
     @Test
-    public void autAgentSwitching() throws Exception {
+    public void autAgentConnection() throws Exception {
         m_agent.connect();
         Assert.assertEquals(true, m_agent.isConnected());
         m_agent.disconnect();
         Assert.assertEquals(false, m_agent.isConnected());
         m_agent.connect();
         Assert.assertEquals(true, m_agent.isConnected());
-    
+        m_agent.disconnect();
     }
-    
-    /** switches between the two autagents 
+   /** switches between two aut agents 
      * @throws Exception */
     @Test
-    public void autAgentDouble() throws Exception {
+    public void autSwitch() throws Exception {
+        m_agent.connect();
+        Assert.assertEquals(true, m_agent.isConnected());
+        m_agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT_SECOND);
+        Assert.assertEquals(false, m_agent.isConnected());
         m_agent.connect();
         Assert.assertEquals(true, m_agent.isConnected());
         m_agent.disconnect();
-        m_agentSecond.connect();
-        Assert.assertEquals(true, m_agentSecond.isConnected());
         Assert.assertEquals(false, m_agent.isConnected());
-        m_agentSecond.disconnect();
     }
     
 }
