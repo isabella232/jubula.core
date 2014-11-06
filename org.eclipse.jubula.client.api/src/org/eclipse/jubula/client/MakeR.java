@@ -32,11 +32,13 @@ public final class MakeR {
      *            the hosts name the remote AUT-Agent is running on
      * @param port
      *            the port number the remote AUT-Agent is running on
-     * @return a new AUTAgent instance
+     * @return a new AUT-Agent instance - note: currently the underlying
+     *         implementation only supports <b>ONE</b> connection at a time to a
+     *         remote running AUT-Agent; multiple connections may only be
+     *         established sequentially!
      */
-    @NonNull public static AUTAgent createAUTAgent(
-        @NonNull String hostname, 
-        int port) {
+    @NonNull
+    public static AUTAgent createAUTAgent(@NonNull String hostname, int port) {
         return new AUTAgentImpl(hostname, port);
     }
 
@@ -46,7 +48,8 @@ public final class MakeR {
      *            an input stream providing the exported object mapping
      *            properties
      */
-    @NonNull public static ObjectMapping createObjectMapping(
+    @NonNull
+    public static ObjectMapping createObjectMapping(
         @NonNull InputStream input) {
         return new ObjectMappingImpl(input);
     }

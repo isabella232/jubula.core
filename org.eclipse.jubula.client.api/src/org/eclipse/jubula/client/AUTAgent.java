@@ -14,11 +14,12 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jubula.client.exceptions.CommunicationException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
 
-/** 
+/**
  * @author BREDEX GmbH
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -30,37 +31,44 @@ public interface AUTAgent extends Remote {
      * @param configuration
      *            an AUT configuration to launch the AUT
      * @return an identifier for the running AUT
+     * @throws CommunicationException
+     *             in case of communication problems with the remote side
      */
-    @Nullable AUTIdentifier startAUT(
-        @NonNull AUTConfiguration configuration) 
-        throws Exception;
+    @Nullable
+    AUTIdentifier startAUT(@NonNull AUTConfiguration configuration)
+        throws CommunicationException;
 
     /**
      * stop an AUT
      * 
      * @param aut
      *            a reference to the AUT to stop
+     * @throws CommunicationException
+     *             in case of communication problems with the remote side
      */
-    void stopAUT(
-        @NonNull AUTIdentifier aut) 
-        throws Exception;
-    
+    void stopAUT(@NonNull AUTIdentifier aut) throws CommunicationException;
+
     /**
      * @return an unmodifiable list of currently known / registered AUT IDs
-     * @throws Exception
-     *             in case of a communication problem
+     * @throws CommunicationException
+     *             in case of communication problems with the remote side
      */
-    @NonNull List<AUTIdentifier> getAllRegisteredAUTIdentifier() 
-        throws Exception;
-    
+    @NonNull
+    List<AUTIdentifier> getAllRegisteredAUTIdentifier()
+        throws CommunicationException;
+
     /**
      * @param autID
      *            the autID to get an AUT for
      * @param information
      *            the information about the toolkit
-     * @return an AUT
+     * @return an AUT - note: currently the underlying implementation only
+     *         supports <b>ONE</b> connection at a time to a remote running AUT;
+     *         multiple connections may only be established sequentially!
+     * @throws CommunicationException
+     *             in case of communication problems with the remote side
      */
-    @NonNull AUT getAUT(
-        @NonNull AUTIdentifier autID, 
-        @NonNull ToolkitInfo information);
+    @NonNull
+    AUT getAUT(@NonNull AUTIdentifier autID, @NonNull ToolkitInfo information)
+        throws CommunicationException;
 }

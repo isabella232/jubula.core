@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.internal.impl;
 
+import java.net.ConnectException;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
@@ -19,11 +20,14 @@ import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.client.exceptions.ActionException;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
+import org.eclipse.jubula.client.exceptions.CommunicationException;
 import org.eclipse.jubula.client.exceptions.ComponentNotFoundException;
 import org.eclipse.jubula.client.exceptions.ConfigurationException;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.client.internal.AUTConnection;
+import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.Synchronizer;
+import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessageFactory;
@@ -33,7 +37,6 @@ import org.eclipse.jubula.communication.internal.message.UnknownMessageException
 import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.toolkit.internal.AbstractToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
-import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
@@ -57,7 +60,8 @@ public class AUTImpl implements AUT {
      * 
      * @param autID
      *            the identifier to use for connection
-     * @param information 
+     * @param information
+     *            the toolkit information
      */
     public AUTImpl(
         @NonNull AutIdentifier autID, 
@@ -70,19 +74,29 @@ public class AUTImpl implements AUT {
     }
 
     /** {@inheritDoc} */
-    public void connect() throws Exception {
+    public void connect() throws CommunicationException {
         if (!isConnected()) {
             final Map<ComponentClass, String> typeMapping = 
                 getInformation().getTypeMapping();
-            m_instance = AUTConnection.getInstance();
-            m_instance.connectToAut(m_autID, typeMapping);
+            try {
+                m_instance = AUTConnection.getInstance();
+                m_instance.connectToAut(m_autID, typeMapping);
+                if (!isConnected()) {
+                    throw new CommunicationException(
+                        new ConnectException(
+                            "Could not connect to AUT: " //$NON-NLS-1$
+                                + m_autID.getID() + ".")); //$NON-NLS-1$
+                }
+            } catch (ConnectionException e) {
+                throw new CommunicationException(e);
+            }
         } else {
             throw new IllegalStateException("AUT connection is already made"); //$NON-NLS-1$
         }
     }
 
     /** {@inheritDoc} */
-    public void disconnect() throws Exception {
+    public void disconnect() {
         if (isConnected()) {
             m_instance.close();
         } else {
@@ -96,7 +110,8 @@ public class AUTImpl implements AUT {
     }
 
     /** {@inheritDoc} */
-    @NonNull public AUTIdentifier getIdentifier() {
+    @NonNull 
+    public AUTIdentifier getIdentifier() {
         return m_autID;
     }
     
@@ -113,20 +128,19 @@ public class AUTImpl implements AUT {
     }
     
     /** {@inheritDoc} */
-    @NonNull public <T> Result<T> execute(
-        @NonNull CAP cap, 
-        @Nullable T payload) 
-        throws ExecutionException {
+    @NonNull
+    public <T> Result<T> execute(@NonNull CAP cap, @Nullable T payload)
+        throws ExecutionException, CommunicationException {
         Validate.notNull(cap, "The CAP must not be null."); //$NON-NLS-1$
+        AUTAgentImpl.checkConnected(this);
         
         final ResultImpl<T> result = new ResultImpl<T>(cap, payload);
         try {
             CAPTestMessage capTestMessage = CAPTestMessageFactory
-                .getCAPTestMessage((MessageCap)cap,
-                    getInformation().getToolkitID());
+                .getCAPTestMessage((MessageCap) cap, getInformation()
+                    .getToolkitID());
 
             m_instance.send(capTestMessage);
-
             Object exchange = Synchronizer.instance().exchange(null);
             if (exchange instanceof CAPTestResponseMessage) {
                 CAPTestResponseMessage response = 
@@ -137,13 +151,17 @@ public class AUTImpl implements AUT {
                 log.error("Unexpected response received: " //$NON-NLS-1$
                     + String.valueOf(exchange));
             }
-
+        } catch (NotConnectedException e) {
+            throw new CommunicationException(e);
         } catch (UnknownMessageException e) {
-            log.error(e.getLocalizedMessage(), e);
+            throw new CommunicationException(e);
+        } catch (org.eclipse.jubula.tools.internal.
+                exception.CommunicationException e) {
+            throw new CommunicationException(e);
         } catch (CommunicationException e) {
-            log.error(e.getLocalizedMessage(), e);
+            throw new CommunicationException(e);
         } catch (InterruptedException e) {
-            log.error(e.getLocalizedMessage(), e);
+            throw new CommunicationException(e);
         }
         return result;
     }

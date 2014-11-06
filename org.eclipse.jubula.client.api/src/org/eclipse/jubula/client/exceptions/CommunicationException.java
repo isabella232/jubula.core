@@ -8,21 +8,22 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.launch;
-
-import java.util.Map;
-
-import org.eclipse.jdt.annotation.NonNull;
+package org.eclipse.jubula.client.exceptions;
 
 /**
+ * Thrown in case of communication problems with the remote side
+ * 
  * @author BREDEX GmbH
- * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface AUTConfiguration {
+public class CommunicationException extends RuntimeException {
+
     /**
-     * @return a map of launch information
+     * Constructor
+     * 
+     * @param cause
+     *            the cause
      */
-    @NonNull
-    Map<String, String> getLaunchInformation();
+    public CommunicationException(Throwable cause) {
+        super(cause);
+    }
 }

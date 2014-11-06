@@ -10,21 +10,28 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
-/** 
+import org.eclipse.jubula.client.exceptions.CommunicationException;
+
+/**
  * @author BREDEX GmbH
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface Remote {
     /**
-     * connect to the remote side
+     * connect to the remote side - note: currently the underlying
+     * implementation only supports <b>ONE</b> connection at a time to the
+     * remote side; multiple connections may only be established sequentially!
+     * 
+     * @throws CommunicationException
+     *             in case of communication problems with the remote side
      */
-    void connect() throws Exception;
+    void connect() throws CommunicationException;
 
     /**
      * disconnect from the remote side
      */
-    void disconnect() throws Exception;
+    void disconnect();
 
     /**
      * @return whether a connection to the remote side is currently established

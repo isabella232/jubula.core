@@ -25,7 +25,8 @@ public class ResultImpl<T> implements Result<T> {
     /** the payload */
     private T m_payload;
     /** the cap */
-    @NonNull private CAP m_cap;
+    @NonNull
+    private CAP m_cap;
     /** the result flag */
     private boolean m_isOK = false;
 
@@ -39,18 +40,20 @@ public class ResultImpl<T> implements Result<T> {
      */
     public ResultImpl(@NonNull CAP cap, @Nullable T payload) {
         Validate.notNull(cap, "The CAP must not be null."); //$NON-NLS-1$
-        
+
         m_cap = cap;
         m_payload = payload;
     }
 
     /** {@inheritDoc} */
-    @Nullable public T getPayload() {
+    @Nullable
+    public T getPayload() {
         return m_payload;
     }
 
     /** {@inheritDoc} */
-    @NonNull public CAP getCAP() {
+    @NonNull
+    public CAP getCAP() {
         return m_cap;
     }
 
@@ -60,7 +63,8 @@ public class ResultImpl<T> implements Result<T> {
     }
 
     /**
-     * @param isOK the isOK to set
+     * @param isOK
+     *            the isOK to set
      */
     void setOK(boolean isOK) {
         m_isOK = isOK;

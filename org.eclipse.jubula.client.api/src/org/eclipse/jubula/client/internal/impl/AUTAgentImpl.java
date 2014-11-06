@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.internal.impl;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,8 +21,13 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
+import org.eclipse.jubula.client.Remote;
+import org.eclipse.jubula.client.exceptions.CommunicationException;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
+import org.eclipse.jubula.client.internal.BaseConnection.AlreadyConnectedException;
+import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.Synchronizer;
+import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.communication.internal.message.GetRegisteredAutListMessage;
@@ -32,6 +38,7 @@ import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
+import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.NetUtil;
 import org.slf4j.Logger;
@@ -65,11 +72,25 @@ public class AUTAgentImpl implements AUTAgent {
     }
 
     /** {@inheritDoc} */
-    public void connect() throws Exception {
+    public void connect() throws CommunicationException {
         if (!isConnected()) {
-            AutAgentConnection.createInstance(m_hostname, m_port);
-            m_agent = AutAgentConnection.getInstance();
-            m_agent.run();
+            try {
+                AutAgentConnection.createInstance(m_hostname, m_port);
+                m_agent = AutAgentConnection.getInstance();
+                m_agent.run();
+                if (!isConnected()) {
+                    throw new CommunicationException(
+                        new ConnectException(
+                            "Could not connect to AUT-Agent: " //$NON-NLS-1$
+                                + m_hostname + ":" + m_port)); //$NON-NLS-1$
+                }
+            } catch (ConnectionException e) {
+                throw new CommunicationException(e);
+            } catch (AlreadyConnectedException e) {
+                throw new CommunicationException(e);
+            } catch (JBVersionException e) {
+                throw new CommunicationException(e);
+            }
         } else {
             throw new IllegalStateException("AUT-Agent connection is already made"); //$NON-NLS-1$
         }
@@ -92,8 +113,9 @@ public class AUTAgentImpl implements AUTAgent {
     /** {@inheritDoc} */
     public AUTIdentifier startAUT(
         @NonNull AUTConfiguration configuration)
-        throws Exception {
+        throws CommunicationException {
         Validate.notNull(configuration, "The configuration must not be null."); //$NON-NLS-1$
+        checkConnected(this);
         
         Map<String, String> autConfigMap = configuration.getLaunchInformation();
 
@@ -110,15 +132,25 @@ public class AUTAgentImpl implements AUTAgent {
         StartAUTServerMessage startAUTMessage = new StartAUTServerMessage(
             autConfigMap, toolkitID);
 
-        m_agent.send(startAUTMessage);
-        
-        Object genericStartResponse = Synchronizer.instance().exchange(null);
-        if (genericStartResponse instanceof Integer) {
-            int startResponse = (Integer) genericStartResponse;
-            return handleResponse(startResponse);
+        try {
+            m_agent.send(startAUTMessage);
+            Object genericStartResponse = Synchronizer.instance()
+                .exchange(null);
+            if (genericStartResponse instanceof Integer) {
+                int startResponse = (Integer) genericStartResponse;
+                return handleResponse(startResponse);
+            }
+            log.error("Unexpected start response code received: " //$NON-NLS-1$
+                + String.valueOf(genericStartResponse));
+        } catch (NotConnectedException e) {
+            throw new CommunicationException(e);
+        } catch (org.eclipse.jubula.tools.internal.
+                exception.CommunicationException e) {
+            throw new CommunicationException(e);
+        } catch (InterruptedException e) {
+            throw new CommunicationException(e);
         }
-        log.error("Unexpected start response code received: " //$NON-NLS-1$
-            + String.valueOf(genericStartResponse));
+        
         return null;
     }
 
@@ -128,14 +160,19 @@ public class AUTAgentImpl implements AUTAgent {
      * @return the AUT or <code>null<code> if problem during start
      */
     private AutIdentifier handleResponse(int startResponse) 
-        throws Exception {
+        throws CommunicationException {
         if (startResponse == AUTStartResponse.OK) {
-            Object autIdentifier = Synchronizer.instance().exchange(null);
-            if (autIdentifier instanceof AutIdentifier) {
-                return (AutIdentifier) autIdentifier;
+            Object autIdentifier;
+            try {
+                autIdentifier = Synchronizer.instance().exchange(null);
+                if (autIdentifier instanceof AutIdentifier) {
+                    return (AutIdentifier) autIdentifier;
+                }
+                log.error("Unexpected AUT identifier received: " //$NON-NLS-1$
+                    + String.valueOf(autIdentifier));
+            } catch (InterruptedException e) {
+                throw new CommunicationException(e);
             }
-            log.error("Unexpected AUT identifier received: " //$NON-NLS-1$
-                + String.valueOf(autIdentifier));
         }
 
         return null;
@@ -144,40 +181,73 @@ public class AUTAgentImpl implements AUTAgent {
 
     /** {@inheritDoc} */
     public void stopAUT(
-        @NonNull AUTIdentifier aut) throws Exception {
+        @NonNull AUTIdentifier aut) 
+        throws CommunicationException {
         Validate.notNull(aut, "The AUT-Identifier must not be null."); //$NON-NLS-1$
+        checkConnected(this);
         
-        m_agent.send(new StopAUTServerMessage((AutIdentifier)aut));
+        try {
+            m_agent.send(new StopAUTServerMessage((AutIdentifier)aut));
+        } catch (NotConnectedException e) {
+            throw new CommunicationException(e);
+        } catch (org.eclipse.jubula.tools.internal.
+                exception.CommunicationException e) {
+            throw new CommunicationException(e);
+        }
     }
 
     /** {@inheritDoc} */
-    @NonNull public List<AUTIdentifier> getAllRegisteredAUTIdentifier() 
-        throws Exception {
-        m_agent.send(new GetRegisteredAutListMessage());
+    @NonNull
+    public List<AUTIdentifier> getAllRegisteredAUTIdentifier()
+        throws CommunicationException {
+        checkConnected(this);
         
-        Object arrayOfAutIdentifier = Synchronizer.instance().exchange(null);
-        if (arrayOfAutIdentifier instanceof AutIdentifier[]) {
-            final List<AUTIdentifier> unmodifiableList = 
-                Collections.unmodifiableList(Arrays
-                    .asList((AUTIdentifier[]) arrayOfAutIdentifier));
-            if (unmodifiableList != null) {
-                return unmodifiableList;
+        try {
+            m_agent.send(new GetRegisteredAutListMessage());
+            Object arrayOfAutIdentifier = Synchronizer.instance()
+                .exchange(null);
+            if (arrayOfAutIdentifier instanceof AutIdentifier[]) {
+                final List<AUTIdentifier> unmodifiableList = Collections
+                    .unmodifiableList(Arrays
+                        .asList((AUTIdentifier[]) arrayOfAutIdentifier));
+                if (unmodifiableList != null) {
+                    return unmodifiableList;
+                }
             }
+
+            log.error("Unexpected AUT identifiers received: " //$NON-NLS-1$
+                + String.valueOf(arrayOfAutIdentifier));
+        } catch (NotConnectedException e) {
+            throw new CommunicationException(e);
+        } catch (org.eclipse.jubula.tools.internal.
+                exception.CommunicationException e) {
+            throw new CommunicationException(e);
+        } catch (InterruptedException e) {
+            throw new CommunicationException(e);
         }
-        
-        log.error("Unexpected AUT identifiers received: " //$NON-NLS-1$
-            + String.valueOf(arrayOfAutIdentifier));
-        
+
         return new ArrayList<AUTIdentifier>(0);
     }
 
     /** {@inheritDoc} */
-    @NonNull public AUT getAUT(
+    @NonNull public AUT getAUT (
         @NonNull AUTIdentifier autID, 
-        @NonNull ToolkitInfo information) {
+        @NonNull ToolkitInfo information) 
+        throws CommunicationException {
         Validate.notNull(autID, "The AUT-Identifier must not be null."); //$NON-NLS-1$
         Validate.notNull(information, "The toolkit information must not be null."); //$NON-NLS-1$
+        checkConnected(this);
         
         return new AUTImpl((AutIdentifier) autID, information);
+    }
+    
+    /**
+     * @param side
+     *            the side to check the connection state for
+     */
+    static void checkConnected(Remote side) {
+        if (!side.isConnected()) {
+            throw new IllegalStateException("There is currently no connection established to the remote side - call connect() first!"); //$NON-NLS-1$
+        }
     }
 }

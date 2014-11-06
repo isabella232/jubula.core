@@ -27,13 +27,15 @@ public interface Result<T> {
     /**
      * @return the payload
      */
-    @Nullable T getPayload();
-    
+    @Nullable
+    T getPayload();
+
     /**
      * @return the CAP
      */
-    @NonNull CAP getCAP();
-    
+    @NonNull
+    CAP getCAP();
+
     /**
      * @return wheter the CAP has been executed successfully or not
      */

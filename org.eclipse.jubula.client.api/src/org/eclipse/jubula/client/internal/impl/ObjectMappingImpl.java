@@ -89,8 +89,8 @@ public class ObjectMappingImpl implements ObjectMapping {
      *         was found
      * @throws LoadResourceException 
      */
-    private ComponentIdentifier getIdentifier(String compName) throws
-                LoadResourceException {
+    private ComponentIdentifier getIdentifier(String compName) 
+        throws LoadResourceException {
         try {
             String encodedString =
                     m_objectMappingAssociations.getProperty(compName);
