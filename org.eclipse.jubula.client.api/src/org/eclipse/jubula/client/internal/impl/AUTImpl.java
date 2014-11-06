@@ -91,6 +91,7 @@ public class AUTImpl implements AUT {
                                 + m_autID.getID() + ".")); //$NON-NLS-1$
                 }
             } catch (ConnectionException e) {
+                log.error(e.getLocalizedMessage(), e);
                 throw new CommunicationException(e);
             }
         } else {
@@ -157,13 +158,14 @@ public class AUTImpl implements AUT {
         } catch (NotConnectedException e) {
             throw new CommunicationException(e);
         } catch (UnknownMessageException e) {
+            log.error(e.getLocalizedMessage(), e);
             throw new CommunicationException(e);
         } catch (org.eclipse.jubula.tools.internal.
                 exception.CommunicationException e) {
-            throw new CommunicationException(e);
-        } catch (CommunicationException e) {
+            log.error(e.getLocalizedMessage(), e);
             throw new CommunicationException(e);
         } catch (InterruptedException e) {
+            log.error(e.getLocalizedMessage(), e);
             throw new CommunicationException(e);
         }
         return result;

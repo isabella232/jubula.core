@@ -89,6 +89,7 @@ public class AUTAgentImpl implements AUTAgent {
             } catch (AlreadyConnectedException e) {
                 throw new CommunicationException(e);
             } catch (JBVersionException e) {
+                log.error(e.getLocalizedMessage(), e);
                 throw new CommunicationException(e);
             }
         } else {
@@ -146,8 +147,10 @@ public class AUTAgentImpl implements AUTAgent {
             throw new CommunicationException(e);
         } catch (org.eclipse.jubula.tools.internal.
                 exception.CommunicationException e) {
+            log.error(e.getLocalizedMessage(), e);
             throw new CommunicationException(e);
         } catch (InterruptedException e) {
+            log.error(e.getLocalizedMessage(), e);
             throw new CommunicationException(e);
         }
         
@@ -171,6 +174,7 @@ public class AUTAgentImpl implements AUTAgent {
                 log.error("Unexpected AUT identifier received: " //$NON-NLS-1$
                     + String.valueOf(autIdentifier));
             } catch (InterruptedException e) {
+                log.error(e.getLocalizedMessage(), e);
                 throw new CommunicationException(e);
             }
         }
@@ -192,6 +196,7 @@ public class AUTAgentImpl implements AUTAgent {
             throw new CommunicationException(e);
         } catch (org.eclipse.jubula.tools.internal.
                 exception.CommunicationException e) {
+            log.error(e.getLocalizedMessage(), e);
             throw new CommunicationException(e);
         }
     }
@@ -221,8 +226,10 @@ public class AUTAgentImpl implements AUTAgent {
             throw new CommunicationException(e);
         } catch (org.eclipse.jubula.tools.internal.
                 exception.CommunicationException e) {
+            log.error(e.getLocalizedMessage(), e);
             throw new CommunicationException(e);
         } catch (InterruptedException e) {
+            log.error(e.getLocalizedMessage(), e);
             throw new CommunicationException(e);
         }
 
