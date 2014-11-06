@@ -173,7 +173,8 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 		@NonNull public CAP <%=methodName%>(
 		<%	
 		// add parameters to method
-		Map<String, String> paramMap = new HashMap<String, String>();
+		Map<String, String> paramMap = new HashMap<String, String>();// with enums
+		Map<String, String> paramTypeMap = new HashMap<String, String>();// only "simple" types
 		Iterator<Param> paramIterator = params.iterator();
 		while (paramIterator.hasNext()) {
 			Param param = paramIterator.next();
@@ -181,7 +182,9 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			String name = param.getName();
 			String paramType = nameLoader.findTypeForParameter(type, name);
 			String paramName = nameLoader.translateFromCompSystem(name);
+			String fixedType = nameLoader.getRealTypeForParameter(type, name);
 			paramMap.put(name, paramType);
+			paramTypeMap.put(name, fixedType);
 			%>
 			@NonNull <%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
 		<%}%>
@@ -197,9 +200,10 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
 			String paramName = parameter.getName();%>
 			<%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
 			Validate.notNull(<%=translatedParamName%>, "Argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
-				<%String paramType = paramMap.get(paramName);%>
-				<%if (nameLoader.isInEnumMap(paramType)) {%>
-			messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.rcValue(), "java.lang.String")); //$NON-NLS-1$
+				<%String paramEnumType = paramMap.get(paramName);%>
+				<%String paramType = paramTypeMap.get(paramName);%>
+				<%if (nameLoader.isInEnumMap(paramEnumType)) {%>
+			messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.rcValue(), "<%=paramType%>")); //$NON-NLS-1$
 				<%} else {%>
 			messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.toString(), "<%=paramType%>")); //$NON-NLS-1$
 				<%}%>

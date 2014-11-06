@@ -297,6 +297,44 @@ public final class ValueSets {
         }
     }
     
+    /** @author BREDEX GmbH 
+     * The InteractionMode is e.g. used to define which mouse button is pressed.
+     */
+    public enum InteractionMode implements LiteralProvider {
+        /** primary value*/
+        primary(1),
+        /** tertiary value*/
+        tertiary(2),
+        /** secondary value*/
+        secondary(3);
+        
+        /** holds the value necessary for the RC side */
+        private final Integer m_rcValue;
+        
+        /**
+         * Constructor
+         * 
+         * @param rcValue
+         *            the remote control side value
+         */
+        private InteractionMode(Integer rcValue) {
+            m_rcValue = rcValue;
+        }
+        
+        /**
+         * @return the value
+         */
+        public String rcValue() {
+            return m_rcValue.toString();
+        }
+        
+        /**
+         * @return the real value with correct type
+         */
+        public Integer rcRealValue() {
+            return m_rcValue;
+        }
+    }
     /** Constructor */
     private ValueSets() {
         // hide

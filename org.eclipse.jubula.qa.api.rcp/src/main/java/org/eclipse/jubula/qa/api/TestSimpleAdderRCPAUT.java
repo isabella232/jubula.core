@@ -29,6 +29,7 @@ import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
 import org.eclipse.jubula.toolkit.base.components.TextComponent;
 import org.eclipse.jubula.toolkit.base.components.TextInputComponent;
 import org.eclipse.jubula.toolkit.concrete.components.MenuBarComponent;
+import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
 import org.eclipse.jubula.toolkit.swt.SwtComponents;
@@ -145,7 +146,7 @@ public class TestSimpleAdderRCPAUT {
                 exec(value2.replaceText(
                     String.valueOf(i)), results);
                 exec(button.click(
-                    1, 1), results);
+                    1, InteractionMode.primary), results);
                 exec(result.checkText(
                     String.valueOf(firstValue + i),
                         Operator.equals), results);

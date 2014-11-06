@@ -12,6 +12,7 @@ import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
 import org.eclipse.jubula.toolkit.concrete.components.TextComponent;
 import org.eclipse.jubula.toolkit.concrete.components.TextInputComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
+import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.ObjectMapping;
 import org.eclipse.jubula.tools.ComponentIdentifier;
@@ -82,7 +83,7 @@ public class TestFactories {
         Assert.assertNotNull(cap1);
         CAP cap2 = textField2.replaceText("4"); //$NON-NLS-1$
         Assert.assertNotNull(cap2);
-        CAP cap3 = equalsButton.click(1, 1);
+        CAP cap3 = equalsButton.click(1, InteractionMode.primary);
         Assert.assertNotNull(cap3);
         CAP cap4 = resultField.checkText("21", Operator.equals); //$NON-NLS-1$
         Assert.assertNotNull(cap4);
@@ -134,7 +135,7 @@ public class TestFactories {
         Assert.assertNotNull(cap1);
         CAP cap2 = textField2.replaceText("4"); //$NON-NLS-1$
         Assert.assertNotNull(cap2);
-        CAP cap3 = equalsButton.click(1, 1);
+        CAP cap3 = equalsButton.click(1, InteractionMode.primary);
         Assert.assertNotNull(cap3);
         CAP cap4 = resultField.checkText("21", Operator.equals); //$NON-NLS-1$
         Assert.assertNotNull(cap4);

@@ -137,7 +137,18 @@ public class NameLoader {
         if (mapEntry != null) {
             return mapEntry;
         }
-        mapEntry = m_mappingProperties.getProperty(type);
+        
+        return getRealTypeForParameter(type, name);
+    }
+    /**
+     * Checks in the name mappings property file whether there is a mapping for a
+     * given parameter name and returns it and if not, returns the original type
+     * @param type the type of the parameter
+     * @param name the name of the parameter
+     * @return the name which should be used if you need the real type from the parameter
+     */
+    public String getRealTypeForParameter(String type, String name) {
+        String mapEntry = m_mappingProperties.getProperty(type);
         if (mapEntry != null) {
             return mapEntry;
         }
