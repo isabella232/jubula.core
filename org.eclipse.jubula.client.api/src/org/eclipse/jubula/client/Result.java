@@ -12,6 +12,7 @@ package org.eclipse.jubula.client;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.communication.CAP;
 
 /**
@@ -29,6 +30,12 @@ public interface Result<T> {
      */
     @Nullable
     T getPayload();
+
+    /**
+     * @return the execution problem
+     */
+    @Nullable
+    ExecutionException getException();
 
     /**
      * @return the CAP

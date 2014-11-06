@@ -23,6 +23,7 @@ import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.exceptions.CommunicationException;
 import org.eclipse.jubula.client.exceptions.ComponentNotFoundException;
 import org.eclipse.jubula.client.exceptions.ConfigurationException;
+import org.eclipse.jubula.client.exceptions.ExecutionExceptionHandler;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.client.internal.AUTConnection;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
@@ -54,6 +55,8 @@ public class AUTImpl implements AUT {
     private AUTConnection m_instance;
     /** the toolkit specific information */
     private AbstractToolkitInfo m_information;
+    /** the exception handler */
+    private ExecutionExceptionHandler m_handler;
 
     /**
      * Constructor
@@ -173,8 +176,9 @@ public class AUTImpl implements AUT {
      *            the response to process
      */
     private void processResponse(CAPTestResponseMessage response,
-        @NonNull final Result result)
+        @NonNull final ResultImpl result)
         throws ExecutionException {
+        ExecutionException exception = null;
         if (response.hasTestErrorEvent()) {
             final TestErrorEvent event = response.getTestErrorEvent();
             final String eventId = event.getId();
@@ -190,11 +194,11 @@ public class AUTImpl implements AUT {
                 description = I18n.getString(key, args);
             }
             if (TestErrorEvent.ID.ACTION_ERROR.equals(eventId)) {
-                throw new ActionException(result, description);
+                exception = new ActionException(result, description);
             } else if (TestErrorEvent.ID.COMPONENT_NOT_FOUND.equals(eventId)) {
-                throw new ComponentNotFoundException(result, description);
+                exception = new ComponentNotFoundException(result, description);
             } else if (TestErrorEvent.ID.CONFIGURATION_ERROR.equals(eventId)) {
-                throw new ConfigurationException(result, description);
+                exception = new ConfigurationException(result, description);
             } else if (TestErrorEvent.ID.VERIFY_FAILED.equals(eventId)) {
                 Object actualValueObject = event.getProps().get(
                     TestErrorEvent.Property.ACTUAL_VALUE_KEY);
@@ -202,9 +206,25 @@ public class AUTImpl implements AUT {
                 if (actualValueObject instanceof String) {
                     actualValue = (String)actualValueObject;
                 }
-                throw new CheckFailedException(
+                exception = new CheckFailedException(
                     result, description, actualValue);
             }
         }
+        
+        result.setException(exception);
+        
+        if (exception != null) {
+            if (m_handler != null) {
+                m_handler.handle(exception);
+            } else {
+                throw exception;
+            }
+        }
+    }
+
+    /** {@inheritDoc} */
+    public void setHandler(
+        @Nullable ExecutionExceptionHandler handler) {
+        m_handler = handler;
     }
 }

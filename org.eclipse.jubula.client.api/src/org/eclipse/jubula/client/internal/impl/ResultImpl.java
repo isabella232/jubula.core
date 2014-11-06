@@ -14,6 +14,7 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.Result;
+import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.communication.CAP;
 
 /**
@@ -29,6 +30,8 @@ public class ResultImpl<T> implements Result<T> {
     private CAP m_cap;
     /** the result flag */
     private boolean m_isOK = false;
+    /** the exception */
+    private ExecutionException m_exception;
 
     /**
      * Constructor
@@ -68,5 +71,18 @@ public class ResultImpl<T> implements Result<T> {
      */
     void setOK(boolean isOK) {
         m_isOK = isOK;
+    }
+
+    /** {@inheritDoc} */
+    @Nullable
+    public ExecutionException getException() {
+        return m_exception;
+    }
+
+    /**
+     * @param exception the exception to set
+     */
+    void setException(ExecutionException exception) {
+        m_exception = exception;
     }
 }

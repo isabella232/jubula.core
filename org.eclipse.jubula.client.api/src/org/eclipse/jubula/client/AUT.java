@@ -13,6 +13,7 @@ package org.eclipse.jubula.client;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.exceptions.CommunicationException;
+import org.eclipse.jubula.client.exceptions.ExecutionExceptionHandler;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.tools.AUTIdentifier;
@@ -25,11 +26,9 @@ import org.eclipse.jubula.tools.AUTIdentifier;
 public interface AUT extends Remote {
     /**
      * @return the AUTIdentifier of this AUT
-     * @throws CommunicationException
-     *             in case of communication problems with the remote side
      */
     @NonNull
-    AUTIdentifier getIdentifier() throws CommunicationException;
+    AUTIdentifier getIdentifier();
 
     /**
      * @param cap
@@ -40,11 +39,18 @@ public interface AUT extends Remote {
      *            the additional payload for the execution
      * @return the result of the execution
      * @throws ExecutionException
-     *             in case of remote execution problems
+     *             in case of remote execution problems; behavior may vary if
+     *             ExecutionExceptionHandler are being used
      * @throws CommunicationException
      *             in case of communication problems with the remote side
      */
     @NonNull
     <T> Result<T> execute(@NonNull CAP cap, @Nullable T payload)
         throws ExecutionException, CommunicationException;
+
+    /**
+     * @param handler
+     *            the exception handler for this AUT; may be <code>null</code>.
+     */
+    void setHandler(@Nullable ExecutionExceptionHandler handler);
 }
