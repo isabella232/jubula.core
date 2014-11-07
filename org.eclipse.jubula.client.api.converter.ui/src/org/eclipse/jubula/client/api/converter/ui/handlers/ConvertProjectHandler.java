@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
@@ -46,6 +47,7 @@ import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
@@ -73,6 +75,10 @@ public class ConvertProjectHandler extends AbstractHandler {
     
     /** target package name space */
     private static String genPackage;
+    
+    /** the project language */
+    private static Locale language =
+            WorkingLanguageBP.getInstance().getWorkingLanguage();
 
     /**
      * {@inheritDoc}
@@ -271,7 +277,7 @@ public class ConvertProjectHandler extends AbstractHandler {
                 file.createNewFile();
                 NodeGenerator gen = new NodeGenerator();
                 NodeInfo info = new NodeInfo(file.getName(), node,
-                        genPackage, defaultToolkit);
+                        genPackage, defaultToolkit, language);
                 String content = gen.generate(info);
                 writeContentToFile(file, content);
             } catch (IOException e) {

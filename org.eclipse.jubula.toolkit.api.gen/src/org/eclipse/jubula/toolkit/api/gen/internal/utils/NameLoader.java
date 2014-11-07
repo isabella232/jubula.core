@@ -255,4 +255,13 @@ public class NameLoader {
     public boolean isInEnumMap(String name) {
         return m_enumMappingProperties.containsValue(name);
     }
+    
+    /**
+     * Returns the enum type for a param
+     * @param paramType the param
+     * @return the enum
+     */
+    public String getEnumForParam(String paramType) {
+        return m_enumMappingProperties.getProperty(paramType);
+    }
 }

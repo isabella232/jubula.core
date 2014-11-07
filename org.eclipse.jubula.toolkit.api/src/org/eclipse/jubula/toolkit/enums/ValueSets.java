@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.toolkit.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /** @author BREDEX GmbH */
 public final class ValueSets {
 
@@ -308,8 +311,18 @@ public final class ValueSets {
         /** secondary value*/
         secondary(3);
         
+        /** mapping integer values to respective enums */
+        private static Map<Integer, InteractionMode> map =
+                new HashMap<Integer, InteractionMode>();
+        
         /** holds the value necessary for the RC side */
         private final Integer m_rcValue;
+        
+        static {
+            for (InteractionMode mode : InteractionMode.values()) {
+                map.put(mode.rcIntValue(), mode);
+            }
+        }
         
         /**
          * Constructor
@@ -333,6 +346,15 @@ public final class ValueSets {
          */
         public Integer rcIntValue() {
             return m_rcValue;
+        }
+        
+        /**
+         * Returns the interaction mode corresponding to a given integer
+         * @param i the integer
+         * @return the corresponding interaction mode
+         */
+        public static InteractionMode valueOf(Integer i) {
+            return map.get(i);
         }
     }
     /** Constructor */

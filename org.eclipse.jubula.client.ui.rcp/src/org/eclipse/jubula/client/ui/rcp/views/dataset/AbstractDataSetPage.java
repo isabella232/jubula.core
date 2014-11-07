@@ -1301,8 +1301,9 @@ public abstract class AbstractDataSetPage extends Page
      *            the selected locale
      * @return a valid string for gui presentation of the given param value
      */
-    private String getGuiStringForParamValue(IParameterInterfacePO paramObj,
-            IParamDescriptionPO desc, int rowCount, Locale locale) {
+    public static String getGuiStringForParamValue(
+            IParameterInterfacePO paramObj, IParamDescriptionPO desc,
+            int rowCount, Locale locale) {
         return AbstractParamInterfaceBP.getGuiStringForParamValue(paramObj,
                 desc, rowCount, locale);
     }

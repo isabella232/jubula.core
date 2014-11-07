@@ -194,7 +194,7 @@ public class ToolkitSupportBP {
     }
     
     /**
-     * Returns a pseudo component identifier representing the most concrete
+     * Returns a pseudo component identifier representing the most abstract
      * realizing toolkit component for an abstract component with default mapping
      * or <code>null</code> if none can be found
      * 
@@ -205,10 +205,10 @@ public class ToolkitSupportBP {
      * @return the component identifier
      */
     public static IComponentIdentifier
-    getIdentifierOfMostConcreteRealizingComponentInToolkit(
+    getIdentifierOfMostAbstractRealizingComponentInToolkit(
         String toolkitID, ConcreteComponent cc) {
         ConcreteComponent concreteComponent =
-                getMostConcreteRealizingComponentInToolkit(toolkitID, cc);
+                getMostAbstractRealizingComponentInToolkit(toolkitID, cc);
         IComponentIdentifier technicalName = new ComponentIdentifier();
         technicalName.setComponentClassName(
             concreteComponent
@@ -217,7 +217,7 @@ public class ToolkitSupportBP {
     }
     
     /**
-     * Returns the most concrete realizing toolkit component 
+     * Returns the most abstract realizing toolkit component 
      * for an abstract component with default mapping
      * or <code>null</code> if none can be found
      * 
@@ -227,7 +227,7 @@ public class ToolkitSupportBP {
      *            the concrete component
      * @return the component
      */
-    public static ConcreteComponent getMostConcreteRealizingComponentInToolkit(
+    public static ConcreteComponent getMostAbstractRealizingComponentInToolkit(
     String toolkitID, ConcreteComponent cc) {
         String toolkitIdToSearchIn = toolkitID;        
         Set realizers = cc.getAllRealizers();

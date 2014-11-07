@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.api.converter;
 
+import java.util.Locale;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.INodePO;
 
@@ -31,18 +33,24 @@ public class NodeInfo {
     /** the default toolkit */
     private String m_defaultToolkit;
     
+    /** the project default language */
+    private Locale m_language;
+    
     /**
      * @param className the class name
      * @param node the node
      * @param packageBasePath the base path of the package
      * @param defaultToolkit the default toolkit
+     * @param language the project language
      */
     public NodeInfo (String className, INodePO node,
-            String packageBasePath, String defaultToolkit) {
+            String packageBasePath, String defaultToolkit,
+            Locale language) {
         m_className = StringUtils.substringBeforeLast(className, ".java"); //$NON-NLS-1$
         m_node = node;
         m_packageBasePath = packageBasePath;
         m_defaultToolkit = defaultToolkit;
+        m_language = language;
     }
     
     /**
@@ -72,4 +80,12 @@ public class NodeInfo {
     public String getDefaultToolkit() {
         return m_defaultToolkit;
     }
+    
+    /**
+     * @return The project language
+     */
+    public Locale getLanguage() {
+        return m_language;
+    }
+    
 }

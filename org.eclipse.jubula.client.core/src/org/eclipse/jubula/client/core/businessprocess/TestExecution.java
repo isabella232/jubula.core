@@ -885,7 +885,7 @@ public class TestExecution {
             String toolkit = aut.getToolkit();
             if (cc.hasDefaultMapping() && cc.getComponentClass() != null) {
                 return ToolkitSupportBP.
-                    getIdentifierOfMostConcreteRealizingComponentInToolkit(
+                    getIdentifierOfMostAbstractRealizingComponentInToolkit(
                         toolkit, cc);
             }
         }
