@@ -19,6 +19,7 @@
 	<classpathentry kind="lib" path="lib/org.eclipse.jubula.toolkit.api.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.jubula.toolkit.base.api.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.jubula.toolkit.concrete.api.jar"/>
+    <classpathentry kind="lib" path="lib/org.eclipse.jubula.toolkit.gef.api.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.jubula.toolkit.rcp.api.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.jubula.toolkit.swt.api.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.jubula.tools.jar"/>
