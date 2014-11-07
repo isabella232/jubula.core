@@ -195,6 +195,9 @@ public class ConvertProjectHandler extends AbstractHandler {
             if (firstAUT != null) {
                 toolkit = firstAUT.getToolkit();
             }
+            if (toolkit.equals("com.bredexsw.guidancer.RcpToolkitPlugin")) { //$NON-NLS-1$
+                toolkit = "com.bredexsw.guidancer.SwtToolkitPlugin"; //$NON-NLS-1$
+            }
             return toolkit;
         }
 

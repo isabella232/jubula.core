@@ -127,16 +127,37 @@ public class Utils {
         throws InvalidNodeNameException {
         String name = node.getName();
         name = removeInvalidCharacters(name);
+        name = replaceUmlauts(name);
         name = name.toLowerCase();
         name = StringUtils.deleteWhitespace(name);
         name = name.replaceAll("^[0-9]*", StringConstants.EMPTY); //$NON-NLS-1$
         if (name.isEmpty()) {
             name = "invalid_package_name";
         }
-        if (!PACKAGE_NAME_PATTERN.matcher(name).matches()) {
+        if (!PACKAGE_NAME_PATTERN.matcher(name).matches()
+                || isInvalid(name)) {
             throw new InvalidNodeNameException();
         }
         return name;
+    }
+
+    /**
+     * @param name the name
+     * @return whether a given name is a java identifier and therefore invalid
+     */
+    private static boolean isInvalid(String name) {
+        String [] invalidPhrases = new String [] {
+            "public", //$NON-NLS-1$
+            "private", //$NON-NLS-1$
+            "protected", //$NON-NLS-1$
+            "static" //$NON-NLS-1$
+        };
+        for (String phrase : invalidPhrases) {
+            if (phrase.equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -149,9 +170,10 @@ public class Utils {
         throws InvalidNodeNameException {
         String name = node.getName();
         name = removeInvalidCharacters(name);
+        name = replaceUmlauts(name);
         name = WordUtils.capitalize(name);
         name = StringUtils.deleteWhitespace(name);
-        name = name.replaceAll("^[0-9]*", StringConstants.EMPTY); //$NON-NLS-1$
+        name = name.replaceAll("^[0-9_]*", StringConstants.EMPTY); //$NON-NLS-1$
         if (name.isEmpty()) {
             name = "InvalidClassName";
         }
@@ -159,6 +181,23 @@ public class Utils {
             throw new InvalidNodeNameException();
         }
         return name;
+    }
+
+    /**
+     * replaces umlauts in a string
+     * @param name the string
+     * @return the adjusted string
+     */
+    private static String replaceUmlauts(String name) {
+        String adjustedName = name;
+        adjustedName = adjustedName.replace("ä", "ae");  //$NON-NLS-1$//$NON-NLS-2$
+        adjustedName = adjustedName.replace("ö", "oe");  //$NON-NLS-1$//$NON-NLS-2$
+        adjustedName = adjustedName.replace("ü", "ue");  //$NON-NLS-1$//$NON-NLS-2$
+        adjustedName = adjustedName.replace("Ä", "Ae");  //$NON-NLS-1$//$NON-NLS-2$
+        adjustedName = adjustedName.replace("Ö", "Oe");  //$NON-NLS-1$//$NON-NLS-2$
+        adjustedName = adjustedName.replace("Ü", "Ue");  //$NON-NLS-1$//$NON-NLS-2$
+        adjustedName = adjustedName.replace("ß", "ss");  //$NON-NLS-1$//$NON-NLS-2$
+        return adjustedName;
     }
 
     /**

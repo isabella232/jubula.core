@@ -116,7 +116,7 @@ public class <%=className%> {
 				),
 			null);
 				<%} else {%>
-		// TODO: You tried to convert the client action <%=cap.getActionName()%> for the component <%=cap.getComponentType()%>.
+		// TODO: Client action <%=cap.getActionName()%>.
 				<%}%>
 			<%} else if (child instanceof IExecTestCasePO) {
 				IExecTestCasePO exec = (IExecTestCasePO)child;

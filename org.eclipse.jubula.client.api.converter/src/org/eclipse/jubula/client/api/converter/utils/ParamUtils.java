@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.api.converter.utils;
 
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
@@ -22,6 +23,19 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
  * @created 05.11.2014
  */
 public class ParamUtils {
+    
+    /** Pattern for detecting parameters like =PARAM */
+    private static Pattern parameter = Pattern.compile("^=([a-zA-Z0-9_]+)"); //$NON-NLS-1$
+
+    /** Pattern for detecting parameters like ={PARAM} */
+    private static Pattern parameterWithBrackets = Pattern.compile(
+            "^=\\{([a-zA-Z0-9_]+)\\}"); //$NON-NLS-1$
+    
+    /** Pattern for detecting parameters like =PARAM1 =PARAM2 */
+    private static Pattern multipleParameters = Pattern.compile(".*=.*=.*"); //$NON-NLS-1$
+    
+    /** Pattern for detecting variables like $VAR */
+    private static Pattern variable = Pattern.compile(".*\\$.*"); //$NON-NLS-1$
     
     /**
      * private constructor
@@ -42,13 +56,44 @@ public class ParamUtils {
         String paramType = param.getType();
         String value = AbstractDataSetPage.getGuiStringForParamValue(
                 node, param, 0, locale);
-        if (value.startsWith(StringConstants.EQUALS_SIGN)) {
-            value = StringUtils.substringAfter(value,
-                    StringConstants.EQUALS_SIGN);
-        } else if (paramType.equals("java.lang.String")) { //$NON-NLS-1$
-            value = StringConstants.QUOTE + value + StringConstants.QUOTE;
+        //CHECKSTYLE:OFF
+        if (value == null) {
+            value = "null /*TODO: check*/"; //$NON-NLS-1$
+        } else {
+            value = executeEscapes(value);
+            if (StringUtils.isBlank(value)) {
+                value = StringConstants.QUOTE + StringConstants.QUOTE;
+            } else if (multipleParameters.matcher(value).matches()) {
+                return "null /* TODO: Parameter concatenation: \"" //$NON-NLS-1$
+                        /*+ value*/ + "\" */"; //$NON-NLS-1$
+            } else if (variable.matcher(value).matches()) {
+                return "null /* TODO: Variable: \"" //$NON-NLS-1$
+                        + value + "\" */"; //$NON-NLS-1$
+            } else if (parameterWithBrackets.matcher(value).matches()) {
+                value = value.replaceAll(parameterWithBrackets.pattern(), "$1"); //$NON-NLS-1$
+            } else if (parameter.matcher(value).matches()) {
+                value = value.replaceAll(parameter.pattern(), "$1"); //$NON-NLS-1$
+            } else if (paramType.equals("java.lang.String") //$NON-NLS-1$
+                    || paramType.equals("guidancer.datatype.Variable")) { //$NON-NLS-1$
+                value = StringConstants.QUOTE + value + StringConstants.QUOTE;
+            }
         }
         return value;
+        //CHECKSTYLE:ON
+    }
+
+    /**
+     * escapes characters in a string
+     * @param value the string
+     * @return the adjusted string
+     */
+    private static String executeEscapes(String value) {
+        String adjustedValue = value;
+        adjustedValue = adjustedValue.replace(StringConstants.BACKSLASH,
+                StringConstants.BACKSLASH + StringConstants.BACKSLASH);
+        adjustedValue = adjustedValue.replace(StringConstants.QUOTE, "\\\""); //$NON-NLS-1$
+        adjustedValue = adjustedValue.replace(StringConstants.APOSTROPHE, "\\'"); //$NON-NLS-1$
+        return adjustedValue;
     }
     
     
