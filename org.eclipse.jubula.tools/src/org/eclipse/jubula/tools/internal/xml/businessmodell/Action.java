@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -251,5 +252,13 @@ public class Action {
      */
     public void setClientAction(boolean clientAction) {
         m_clientAction = clientAction;
+    }
+    
+    /**
+     * @return whether the ITE is involved when executing this action
+     */
+    public boolean isITEInvolved() {
+        return isClientAction() 
+            || !StringUtils.isEmpty(getPostExecutionCommand());
     }
 }
