@@ -244,4 +244,22 @@
       </para>
     </listitem>
   </itemizedlist>
+  <para>
+  	<emphasis role="strong">Version numbers now allow major, minor, micro numbers and qualifiers</emphasis>
+  </para>
+  	<itemizedlist>
+  		<listitem>
+  		<para>
+  		You can now create versions of Projects that use major, minor and micro numbers as well as 
+  		qualifiers as their version number. 
+  		</para>
+  		</listitem>
+  		<listitem>
+  		<para>
+  		Version numbers can consist of just a number, just a qualifier, or a number and a qualififier,
+  		e.g. <emphasis>1.0_release</emphasis>, <emphasis>1.0</emphasis>, 
+  		<emphasis>1.0.0</emphasis>, <emphasis>1.0.0_release</emphasis>, <emphasis>version3</emphasis>
+  		</para>
+  		</listitem>
+ 	</itemizedlist>
 </section>
