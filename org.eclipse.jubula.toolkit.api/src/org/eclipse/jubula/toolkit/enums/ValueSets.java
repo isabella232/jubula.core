@@ -18,21 +18,21 @@ public final class ValueSets {
 
     /** @author BREDEX GmbH */
     public enum AUTActivationMethod implements LiteralProvider {
-        /** aut activation method */
+        /** AUT activation method */
         autDefault("AUT_DEFAULT"), //$NON-NLS-1$
-        /** aut activation method */
+        /** AUT activation method */
         none("NONE"), //$NON-NLS-1$
-        /** aut activation method */
+        /** AUT activation method */
         titlebar("TITLEBAR"), //$NON-NLS-1$
-        /** aut activation method */
+        /** AUT activation method */
         northwest("NW"), //$NON-NLS-1$
-        /** aut activation method */
+        /** AUT activation method */
         northeast("NE"), //$NON-NLS-1$
-        /** aut activation method */
+        /** AUT activation method */
         southwest("SW"), //$NON-NLS-1$
-        /** aut activation method */
+        /** AUT activation method */
         southeast("SE"), //$NON-NLS-1$
-        /** aut activation method */
+        /** AUT activation method */
         center("CENTER"); //$NON-NLS-1$
 
         /** holds the value necessary for the RC side */

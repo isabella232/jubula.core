@@ -32,6 +32,8 @@ import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.AbstractTreeVie
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.search.ui.ISearchQuery;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -200,17 +202,20 @@ public class SearchResultPage extends AbstractSearchResultPage
 
     /** {@inheritDoc} */
     public String getLabel() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Messages.SearchResultPageResultPageLabel);
+        int resultSize = 0;
+        String queryLabel = StringConstants.EMPTY;
         Object viewerInput = getTreeViewer().getInput();
         if (viewerInput != null) {
             BasicSearchResult sr = (BasicSearchResult) viewerInput;
+            resultSize = sr.getResultList().size();
             ISearchQuery query = sr.getQuery();
             if (query != null) {
-                sb.append(query.getLabel());
+                queryLabel = query.getLabel();
             }
         }
-        return sb.toString(); 
+        
+        return NLS.bind(Messages.SearchResultPageResultPageLabel, 
+            resultSize, queryLabel); 
     }
 
     /**
