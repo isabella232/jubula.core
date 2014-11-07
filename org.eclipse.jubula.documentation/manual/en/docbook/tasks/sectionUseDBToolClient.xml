@@ -82,7 +82,10 @@
               <entry>
                 <emphasis role="input">-delete &lt;project-name project-version&gt;</emphasis><?linebreak?>
                 e.g. <emphasis>-delete "ExampleProject" 1.0</emphasis><?linebreak?>
-                (<xref linkend="keeping-test-result-summaries"/>)
+                For information on keeping test result summaries, see the section later 
+                (<xref linkend="keeping-test-result-summaries"/>). <?linebreak?>
+                For information on how to enter version numbers, see the section below 
+                (<xref linkend="dbtool-working-with-versions"/>)
               </entry>
             </row>
             <row>
@@ -90,7 +93,8 @@
               <entry>
                 <emphasis role="input">-deleteall</emphasis><?linebreak?>
                 e.g. <emphasis>-deleteall</emphasis><?linebreak?>
-                (<xref linkend="keeping-test-result-summaries"/>)
+                For information on keeping test result summaries, see the section later 
+                (<xref linkend="keeping-test-result-summaries"/>).
               </entry>
             </row>
             <row>
@@ -115,7 +119,9 @@
               <entry>
                 <emphasis role="input">-export &lt;project-name project-version&gt;</emphasis><?linebreak?>
                 e.g. <emphasis>-export "ExampleProject" "1.0"</emphasis><?linebreak?>
-                Existing files with the same name will be overwritten
+                Existing files with the same name will be overwritten. <?linebreak?>
+                For information on how to enter version numbers, see the section below 
+                (<xref linkend="dbtool-working-with-versions"/>).
               </entry>
             </row>
             <row>
@@ -139,7 +145,9 @@
               <entry>
                 <emphasis role="input">-createversion &lt;project-name&gt; &lt;old-version&gt; &lt;new-version&gt;</emphasis><?linebreak?>
                 e.g. <emphasis>-createversion "MyProject" "1.0" "1.1"</emphasis><?linebreak?>
-                (<xref linkend="creating-new-versions"/>)
+                For information on versioning projects, see: <xref linkend="creating-new-versions"/><?linebreak?>
+                For information on how to enter version numbers, see the section below 
+                (<xref linkend="dbtool-working-with-versions"/>).
               </entry>
             </row>
             <row>
@@ -227,5 +235,18 @@
         <emphasis role="input">»ENTER«</emphasis>.
       </para>
     </section>
+	<section id="dbtool-working-with-versions">
+		<title>Entering version numbers in the DB Tool</title>
+		<para>
+		 You can enter version numbers such as <emphasis>"1.0.0_release"</emphasis> or 
+            <emphasis>"1.0"</emphasis>. 
+        </para> 
+        <para>
+        	If your version only uses a qualifier, you can enter it as e.g.
+        	<emphasis>"release"</emphasis>. If you are using 
+            a qualifier-only version that begins with a number, then you must use a preceding 
+            underscore (e.g. <emphasis>"_3"</emphasis>).
+		</para>
+	</section>  
   </section>
 </section>

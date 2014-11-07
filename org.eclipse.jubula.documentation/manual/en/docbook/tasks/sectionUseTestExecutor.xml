@@ -85,6 +85,18 @@
               </entry>
             </row>
             <row>
+            <entry>
+            Project version
+            </entry>
+            <emphasis role="input">-version &lt;project version&gt;</emphasis><?linebreak?>
+            e.g. <emphasis>-version "1.0.0_release"</emphasis><?linebreak?>, 
+            <emphasis>-version "1.0"</emphasis> or <emphasis>-version "release"</emphasis>.<?linebreak?>
+            If your version number consists only of a qualifier, then you enter the qualifier without 
+            the preceding underscore (e.g. <emphasis>-version "release"</emphasis>). If you are using 
+            a qualifier-only version number that begins with a number, then you must use the preceding 
+            underscore (e.g. <emphasis>-version "_3"</emphasis>).
+            </row>
+            <row>
               <entry>Configuration file</entry>
               <entry>
                 <emphasis role="input">-c &lt;path to configuration file&gt;</emphasis><?linebreak?>

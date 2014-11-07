@@ -717,6 +717,14 @@
       </listitem>
       <listitem>
         <para>
+          You can also define the version numbers for the Project that should 
+          be created or use the suggested version number. See the section on 
+          Project versions for more information on version numbers 
+          (<xref linkend="projectversion"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           This creates a new Project in the database, saved under the
           name you entered.
         </para>
@@ -926,6 +934,14 @@
         <para>
           You can accept this version number or enter a different one.
         </para>
+      </listitem>
+      <listitem>
+      <para>
+      	Project versions can have major, minor and micro versions as well as qualifiers. 
+      	You can enter just a version number, e.g. "1" or "1.0" or "1.0.0", just a qualifier, 
+      	or a version number and a qualifier, e.g. "1_release", "1.0_release" or "1.0.0_release".
+      	Project versions must be unique.
+      </para>
       </listitem>
       <listitem>
         <para>
