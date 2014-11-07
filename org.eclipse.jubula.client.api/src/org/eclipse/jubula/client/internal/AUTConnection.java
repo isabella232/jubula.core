@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.internal;
 import java.util.Map;
 
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
+import org.eclipse.jubula.client.internal.impl.AUTAgentImpl.ErrorListener;
 import org.eclipse.jubula.communication.internal.message.ConnectToAutMessage;
 import org.eclipse.jubula.communication.internal.message.SendAUTListOfSupportedComponentsMessage;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
@@ -101,6 +102,8 @@ public class AUTConnection extends BaseAUTConnection {
             try {
                 LOGGER.info("Establishing connection to AUT..."); //$NON-NLS-1$
                 run();
+                getCommunicator().addCommunicationErrorListener(
+                    new ErrorListener(Thread.currentThread()));
                 final AutAgentConnection autAgent = AutAgentConnection
                     .getInstance();
                 autAgent.getCommunicator().send(

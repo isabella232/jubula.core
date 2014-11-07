@@ -12,6 +12,7 @@ package org.eclipse.jubula.qa.api;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,6 +29,7 @@ import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
 import org.eclipse.jubula.toolkit.base.components.TextComponent;
 import org.eclipse.jubula.toolkit.base.components.TextInputComponent;
+import org.eclipse.jubula.toolkit.concrete.components.Application;
 import org.eclipse.jubula.toolkit.concrete.components.MenuBarComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
@@ -97,14 +99,10 @@ public class TestSimpleAdderRCPAUT {
             autID,
             "SimpleAdder.exe", //$NON-NLS-1$
             "..\\examples\\AUTs\\SimpleAdder\\rcp\\win32\\win32\\x86\\", //$NON-NLS-1$ 
-            new String[]{
-                "-clean" , //$NON-NLS-1$
-                "-configuration", //$NON-NLS-1$
-                "@none", //$NON-NLS-1$
-                "-data", //$NON-NLS-1$
-                "@none"}, //$NON-NLS-1$
+            null,
             Locale.getDefault(), 
             Locale.getDefault());
+        
         AUTIdentifier id = m_agent.startAUT(config);
         if (id != null) {
             m_aut = m_agent.getAUT(id, SwtComponents
@@ -130,6 +128,14 @@ public class TestSimpleAdderRCPAUT {
         exec(menu.checkEnablementOfEntryByIndexpath(
                 "1/1", true)); //$NON-NLS-1$
         
+    }
+    
+    /** the actual test method */
+    @Test
+    public void testApplication() throws Exception {
+        Application app = SwtComponents.createApplication();
+        exec(app.wait(new Integer(1000)));
+        exec(app.waitForWindow(".*", Operator.matches, 1000, 100)); //$NON-NLS-1$
     }
     
     /** the actual test method */
@@ -163,13 +169,11 @@ public class TestSimpleAdderRCPAUT {
      *            the result
      */
     private void exec(CAP cap, List<Result> r) {
-        Result<String> execute = m_aut.execute(cap, 
-                "some additional information"); //$NON-NLS-1$
+        Result<Date> execute = m_aut.execute(cap, new Date());
         if (r != null) {
             r.add(execute);
-        } else {
-            System.out.println(execute.getPayload());
         }
+        System.out.println("CAP executed: " + execute.getPayload()); //$NON-NLS-1$
     }
     
     /**

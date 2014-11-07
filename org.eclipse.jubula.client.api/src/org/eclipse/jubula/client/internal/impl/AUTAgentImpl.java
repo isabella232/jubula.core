@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.internal.impl;
 
 import java.net.ConnectException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,7 +31,9 @@ import org.eclipse.jubula.client.internal.Synchronizer;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.communication.internal.Communicator;
+import org.eclipse.jubula.communication.internal.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.internal.message.GetRegisteredAutListMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.internal.message.StopAUTServerMessage;
 import org.eclipse.jubula.toolkit.ToolkitInfo;
@@ -46,6 +49,59 @@ import org.slf4j.LoggerFactory;
 
 /** @author BREDEX GmbH */
 public class AUTAgentImpl implements AUTAgent {
+    /** @author BREDEX GmbH */
+    public static class ErrorListener implements ICommunicationErrorListener {
+        /** the logger */
+        private static Logger logger = LoggerFactory.getLogger(
+            ErrorListener.class);
+        
+        /** the thread */
+        private Thread m_thread;
+
+        /**
+         * Constructor
+         * 
+         * @param thread
+         *            the thread to interrupt on communication problems
+         */
+        public ErrorListener(Thread thread) {
+            m_thread = thread;
+        }
+
+        /** {@inheritDoc} */
+        public void connectionGained(InetAddress inetAddress, int port) {
+            // currently empty
+        }
+
+        /** {@inheritDoc} */
+        public void shutDown() {
+            logger.debug("shutdown() called. Interrupting thread: " //$NON-NLS-1$ 
+                + m_thread.getName());
+            m_thread.interrupt();
+        }
+
+        /** {@inheritDoc} */
+        public void sendFailed(Message message) {
+            logger.error("sendFailed() called. Interrupting thread: " //$NON-NLS-1$ 
+                + m_thread.getName());
+            m_thread.interrupt();
+        }
+
+        /** {@inheritDoc} */
+        public void acceptingFailed(int port) {
+            logger.error("acceptingFailed() called. Interrupting thread: " //$NON-NLS-1$ 
+                + m_thread.getName());
+            m_thread.interrupt();
+        }
+        
+        /** {@inheritDoc} */
+        public void connectingFailed(InetAddress inetAddress, int port) {
+            logger.error("connectingFailed() called. Interrupting thread: " //$NON-NLS-1$ 
+                + m_thread.getName());
+            m_thread.interrupt();
+        }
+    }
+    
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(AUTAgentImpl.class);
     /** the hosts name */
@@ -77,6 +133,9 @@ public class AUTAgentImpl implements AUTAgent {
             try {
                 AutAgentConnection.createInstance(m_hostname, m_port);
                 m_agent = AutAgentConnection.getInstance();
+                m_agent.getCommunicator()
+                    .addCommunicationErrorListener(new ErrorListener(
+                        Thread.currentThread()));
                 m_agent.run();
                 if (!isConnected()) {
                     throw new CommunicationException(
