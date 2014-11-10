@@ -96,7 +96,7 @@ import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
 <%}%>
 
 /**
- * <%if (genInterface) {%>Interface<%} else {%>Class<%}%> representing the <%=className%> component from the <%=toolkitName%> toolkit.
+ * <%if (genInterface) {%>Interface<%} else {%>Class<%}%> representing the <%if (!hasDefaultMapping && hasComponentClass) {%>{@link <%=componentClassName%>}<%} else {%><%=className%><%}%> component from the <%=toolkitName%> toolkit.
 <%if (genInterface) {%> 
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

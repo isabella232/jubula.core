@@ -1,5 +1,7 @@
 package org.eclipse.jubula.toolkit.api.gen.internal.genmodel;
 
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
+
 
 
 /**
@@ -20,19 +22,24 @@ public class CompInfoForFactoryGen {
     
     /** the most specific visible super type of a component */
     private String m_mostSpecificVisibleSuperTypeName;
+
+    /** the componentClass */
+    private ComponentClass m_componentClass;
     
     /**
      * Contains all necessary information of a component for factory generation
      * @param componentName the component name
      * @param fqClassName the class name
+     * @param componentClass the real component class
      * @param hasDefaultMapping true if and only if component has default mapping
      * @param mostSpecificVisibleSuperTypeName most specific visible super type of a component
      */
     public CompInfoForFactoryGen(String componentName, String fqClassName,
-            boolean hasDefaultMapping,
+            ComponentClass componentClass, boolean hasDefaultMapping,
             String mostSpecificVisibleSuperTypeName) {
         m_componentName = componentName;
         m_fqClassName = fqClassName;
+        setComponentClass(componentClass);
         m_hasDefaultMapping = hasDefaultMapping;
         m_mostSpecificVisibleSuperTypeName = mostSpecificVisibleSuperTypeName;
     }
@@ -67,5 +74,19 @@ public class CompInfoForFactoryGen {
      */
     public String getMostSpecificVisibleSuperTypeName() {
         return m_mostSpecificVisibleSuperTypeName;
+    }
+
+    /**
+     * @return the componentClass
+     */
+    public ComponentClass getComponentClass() {
+        return m_componentClass;
+    }
+
+    /**
+     * @param componentClass the componentClass to set
+     */
+    public void setComponentClass(ComponentClass componentClass) {
+        m_componentClass = componentClass;
     }
 }

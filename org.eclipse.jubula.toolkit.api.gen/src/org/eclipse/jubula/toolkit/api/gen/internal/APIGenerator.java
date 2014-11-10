@@ -253,6 +253,7 @@ public class APIGenerator {
                 factoryGenInfo.addCompInformation(new CompInfoForFactoryGen(
                         genInfo.getClassName(),
                         genInfo.getFqClassName(),
+                        componentClass,
                         compInfo.hasDefaultMapping(),
                         compInfo.getMostSpecificVisibleSuperTypeName()));
             }
