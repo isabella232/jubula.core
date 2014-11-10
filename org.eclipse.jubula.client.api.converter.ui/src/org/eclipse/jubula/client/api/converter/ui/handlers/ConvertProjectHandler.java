@@ -76,13 +76,14 @@ public class ConvertProjectHandler extends AbstractHandler {
     private static String genPackage;
     
     /** the project language */
-    private static Locale language =
-            WorkingLanguageBP.getInstance().getWorkingLanguage();
+    private static Locale language;
 
     /**
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
+        
+        language = WorkingLanguageBP.getInstance().getWorkingLanguage();
         
         DirectoryDialog directoryDialog = createDirectoryDialog();
         genPath = directoryDialog.open();
