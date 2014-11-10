@@ -23,7 +23,6 @@ import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -273,7 +272,8 @@ public class ConvertProjectHandler extends AbstractHandler {
         private void handleTestCaseSuiteOrJob(File parentDir, INodePO node) {
             File file = createFile(parentDir, node);
             if (file.exists()) {
-                displayErrorForDuplicate(node);
+                Plugin.getDefault().writeErrorLineToConsole(
+                        "Duplicate filename error:" + file.getAbsolutePath(), true); //$NON-NLS-1$
                 return;
             }
             try {
@@ -356,15 +356,6 @@ public class ConvertProjectHandler extends AbstractHandler {
                     + className
                     + extension;
             File file = new File(fileName);
-            while (file.exists()) {
-                String oldName = StringUtils.substringBeforeLast(
-                        file.getAbsolutePath(), extension);
-                file = new File(oldName + StringConstants.UNDERSCORE
-                        + extension);
-                
-                Plugin.getDefault().writeErrorLineToConsole(
-                        "Duplicate filename error:" + fileName, true); //$NON-NLS-1$
-            }
             return file;
         }
 

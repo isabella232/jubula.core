@@ -131,9 +131,6 @@ public class Utils {
         name = name.toLowerCase();
         name = StringUtils.deleteWhitespace(name);
         name = name.replaceAll("^[0-9]*", StringConstants.EMPTY); //$NON-NLS-1$
-        if (name.isEmpty()) {
-            name = "invalid_package_name";
-        }
         if (!PACKAGE_NAME_PATTERN.matcher(name).matches()
                 || isInvalid(name)) {
             throw new InvalidNodeNameException();
@@ -174,9 +171,6 @@ public class Utils {
         name = WordUtils.capitalize(name);
         name = StringUtils.deleteWhitespace(name);
         name = name.replaceAll("^[0-9_]*", StringConstants.EMPTY); //$NON-NLS-1$
-        if (name.isEmpty()) {
-            name = "InvalidClassName";
-        }
         if (!CLASS_NAME_PATTERN.matcher(name).matches()) {
             throw new InvalidNodeNameException();
         }
