@@ -184,13 +184,13 @@ public class Utils {
      */
     private static String replaceUmlauts(String name) {
         String adjustedName = name;
-        adjustedName = adjustedName.replace("ä", "ae");  //$NON-NLS-1$//$NON-NLS-2$
-        adjustedName = adjustedName.replace("ö", "oe");  //$NON-NLS-1$//$NON-NLS-2$
-        adjustedName = adjustedName.replace("ü", "ue");  //$NON-NLS-1$//$NON-NLS-2$
-        adjustedName = adjustedName.replace("Ä", "Ae");  //$NON-NLS-1$//$NON-NLS-2$
-        adjustedName = adjustedName.replace("Ö", "Oe");  //$NON-NLS-1$//$NON-NLS-2$
-        adjustedName = adjustedName.replace("Ü", "Ue");  //$NON-NLS-1$//$NON-NLS-2$
-        adjustedName = adjustedName.replace("ß", "ss");  //$NON-NLS-1$//$NON-NLS-2$
+        adjustedName = adjustedName.replace("\u00E4", "ae");  //$NON-NLS-1$//$NON-NLS-2$
+        adjustedName = adjustedName.replace("\u00F6", "oe");  //$NON-NLS-1$//$NON-NLS-2$
+        adjustedName = adjustedName.replace("\u00FC", "ue");  //$NON-NLS-1$//$NON-NLS-2$
+        adjustedName = adjustedName.replace("\u00C4", "Ae");  //$NON-NLS-1$//$NON-NLS-2$
+        adjustedName = adjustedName.replace("\u00D6", "Oe");  //$NON-NLS-1$//$NON-NLS-2$
+        adjustedName = adjustedName.replace("\u00DC", "Ue");  //$NON-NLS-1$//$NON-NLS-2$
+        adjustedName = adjustedName.replace("\u00DF", "ss");  //$NON-NLS-1$//$NON-NLS-2$
         return adjustedName;
     }
 
