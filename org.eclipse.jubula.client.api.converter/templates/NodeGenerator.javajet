@@ -109,7 +109,7 @@ public class <%=className%> {
 					IParamDescriptionPO param = childParamIterator.next();
 					String paramType = param.getUniqueId();
 					String enumType = nameLoader.getEnumForParam(paramType);
-					String paramValue = ParamUtils.getValueForParam(cap, param, locale);
+					String paramValue = ParamUtils.getValueForParam(cap, param, 0, locale);
 					Boolean isEnum = enumType != null;%>
 				<%if (isEnum) {%><%=enumType%>.valueOf(<%}%><%=paramValue%><%if (isEnum) {%>)<%}%><%if(childParamIterator.hasNext()){%>,<%}%>
 				<%}%>
@@ -134,15 +134,21 @@ public class <%=className%> {
 				} catch (InvalidNodeNameException e) {
 				    log.error(e.getLocalizedMessage());
 				}
-				testCaseName = Utils.getFullyQualifiedTranslatedName(spec, packageBase, projectName);%>
+				testCaseName = Utils.getFullyQualifiedTranslatedName(spec, packageBase, projectName);
+				Iterator<IParamDescriptionPO> childParamIterator;
+				int rowCount = exec.getDataManager().getDataSetCount();
+				int row = 0;
+				do {%>
 		<%=testCaseName%>.execute(
-				<%Iterator<IParamDescriptionPO> childParamIterator = exec.getParameterListIter();
-				while (childParamIterator.hasNext()) {
-					IParamDescriptionPO param = childParamIterator.next();
-					String paramValue = ParamUtils.getValueForParam(exec, param, locale);%>
+					<%childParamIterator = exec.getParameterListIter();
+					while (childParamIterator.hasNext()) {
+						IParamDescriptionPO param = childParamIterator.next();
+						String paramValue = ParamUtils.getValueForParam(exec, param, row, locale);%>
 				<%=paramValue%><%if(childParamIterator.hasNext()){%>,<%}%>
-				<%}%>
+					<%}%>
+					<%row++;%>
 				);
+				<%} while(row < rowCount);%>
 			<%} else if (child instanceof IRefTestSuitePO) {
 				IRefTestSuitePO ref = (IRefTestSuitePO)child;
 				ITestSuitePO testSuite = ref.getTestSuite();

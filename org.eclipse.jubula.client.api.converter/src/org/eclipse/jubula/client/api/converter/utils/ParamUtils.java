@@ -37,6 +37,9 @@ public class ParamUtils {
     /** Pattern for detecting variables like $VAR */
     private static Pattern variable = Pattern.compile(".*\\$.*"); //$NON-NLS-1$
     
+    /** Pattern for detecting functions like ?add(1,2) */
+    private static Pattern function = Pattern.compile(".*\\?[a-zA-Z_]+\\(.*?"); //$NON-NLS-1$
+    
     /**
      * private constructor
      */
@@ -48,14 +51,15 @@ public class ParamUtils {
      * Returns a parameter value for a node
      * @param node the node
      * @param param the parameter
+     * @param row the row
      * @param locale the language
      * @return the value
      */
     public static String getValueForParam(IParameterInterfacePO node,
-            IParamDescriptionPO param, Locale locale) {
+            IParamDescriptionPO param, int row, Locale locale) {
         String paramType = param.getType();
         String value = AbstractDataSetPage.getGuiStringForParamValue(
-                node, param, 0, locale);
+                node, param, row, locale);
         //CHECKSTYLE:OFF
         if (value == null) {
             value = "null /*TODO: check*/"; //$NON-NLS-1$
@@ -64,18 +68,23 @@ public class ParamUtils {
             if (StringUtils.isBlank(value)) {
                 value = StringConstants.QUOTE + StringConstants.QUOTE;
             } else if (multipleParameters.matcher(value).matches()) {
-                return "null /* TODO: Parameter concatenation: \"" //$NON-NLS-1$
-                        /*+ value*/ + "\" */"; //$NON-NLS-1$
+                return "null // TODO: Parameter concatenation: \"" //$NON-NLS-1$
+                        + value + "\"\n"; //$NON-NLS-1$
             } else if (variable.matcher(value).matches()) {
                 return "null /* TODO: Variable: \"" //$NON-NLS-1$
+                        + value + "\" */"; //$NON-NLS-1$
+            } else if (function.matcher(value).matches()) {
+                return "null /* TODO: Function: \"" //$NON-NLS-1$
                         + value + "\" */"; //$NON-NLS-1$
             } else if (parameterWithBrackets.matcher(value).matches()) {
                 value = value.replaceAll(parameterWithBrackets.pattern(), "$1"); //$NON-NLS-1$
             } else if (parameter.matcher(value).matches()) {
                 value = value.replaceAll(parameter.pattern(), "$1"); //$NON-NLS-1$
-            } else if (paramType.equals("java.lang.String") //$NON-NLS-1$
-                    || paramType.equals("guidancer.datatype.Variable")) { //$NON-NLS-1$
+            } else if (paramType.equals("java.lang.String") ) { //$NON-NLS-1$
                 value = StringConstants.QUOTE + value + StringConstants.QUOTE;
+            } else if (paramType.equals("guidancer.datatype.Variable") ) { //$NON-NLS-1$
+                value = "null /* TODO: Potential Variable assignment: " //$NON-NLS-1$
+                        + value + "*/"; //$NON-NLS-1$
             }
         }
         return value;
