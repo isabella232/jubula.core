@@ -562,7 +562,7 @@ public abstract class PoMaker {
      * @return the class instance of the PO
      */
     public static Class<ObjectMappingAssoziationPO> 
-    getObjectMappingAssoziationClass() {
+        getObjectMappingAssoziationClass() {
         return ObjectMappingAssoziationPO.class;
     }
 
@@ -571,7 +571,7 @@ public abstract class PoMaker {
      * @return the class instance of the PO
      */
     public static Class<ObjectMappingCategoryPO> 
-    getObjectMappingCategoryClass() {
+        getObjectMappingCategoryClass() {
         return ObjectMappingCategoryPO.class;
     }
 
@@ -724,7 +724,7 @@ public abstract class PoMaker {
      * @return the class instance of the PO
      */
     public static Class<ObjectMappingProfilePO> 
-    getObjectMappingProfileClass() {
+        getObjectMappingProfileClass() {
         return ObjectMappingProfilePO.class;
     }
 

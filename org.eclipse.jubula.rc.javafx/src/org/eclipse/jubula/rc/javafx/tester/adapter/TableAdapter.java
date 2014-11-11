@@ -113,7 +113,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
 
                                                 @Override
                                                 public Iterable<TableColumn> 
-                                                getTraversableData() {
+                                                    getTraversableData() {
                                                     return this.getObject()
                                                             .getColumns();
                                                 }

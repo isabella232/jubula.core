@@ -639,7 +639,7 @@ public final class ALMAccess {
         } else {
             returnValue = variable.getGuiString();
             CommentReporter.getInstance().getConsole()
-            .writeErrorLine(NLS.bind(Messages.UnresolvableVariable,
+                .writeErrorLine(NLS.bind(Messages.UnresolvableVariable,
                     variable.getGuiString()));
             throw new CouldNotResolveException(variable.getGuiString());
         }

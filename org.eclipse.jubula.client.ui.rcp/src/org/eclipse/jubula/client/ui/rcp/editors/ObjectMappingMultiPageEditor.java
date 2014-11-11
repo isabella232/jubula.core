@@ -1252,7 +1252,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      *      Object
      */
     private void switchEvent(int event, Object obj) {
-        switch(event) {
+        switch (event) {
             case IObjectMappingObserver.EVENT_STEP_RECORDED :
                 IAUTMainPO aut = (IAUTMainPO)obj;
                 if (getAut() == aut) {

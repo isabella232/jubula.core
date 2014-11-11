@@ -655,8 +655,8 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
             }
             
             // Prevents "unique contstraint violations"
-            Map<String, String> newAutConfigMap  = new HashMap<String, String>
-            (autConfig.getConfigMap());
+            Map<String, String> newAutConfigMap  = 
+                    new HashMap<String, String> (autConfig.getConfigMap());
             autConfig.setConfigMap(newAutConfigMap);
             
             setFocus(new String[]{autConfig.getName()});

@@ -99,7 +99,7 @@ public class JBExecutors {
      *         {@link ScheduledExecutorService}.
      */
     public static ScheduledExecutorService 
-    newSingleDaemonThreadScheduledExecutor(String poolName) {
+        newSingleDaemonThreadScheduledExecutor(String poolName) {
         
         return Executors.newSingleThreadScheduledExecutor(
                 daemonThreadFactory(poolName));

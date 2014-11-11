@@ -117,7 +117,7 @@ public class FileStorageBP {
          * mapping: projects to import => corresponding component name mapper 
          */
         private Map<IProjectPO, List<IWritableComponentNameMapper>> 
-        m_projectToCompMapperMap;
+            m_projectToCompMapperMap;
     
         /** names of the files to read */
         private List<URL> m_fileURLs;
@@ -226,7 +226,7 @@ public class FileStorageBP {
          *         corresponding component name mapper
          */
         public Map<IProjectPO, List<IWritableComponentNameMapper>> 
-        getProjectToCompCacheMap() {
+            getProjectToCompCacheMap() {
         
             return m_projectToCompMapperMap;
         }
@@ -246,7 +246,7 @@ public class FileStorageBP {
     
         /** mapping: projects to import => corresponding comp name mapper */
         private Map<IProjectPO, List<IWritableComponentNameMapper>> 
-        m_projectToCompCacheMap;
+            m_projectToCompCacheMap;
     
         /** whether a refresh is required after import */
         private boolean m_isRefreshRequired = false;
@@ -855,7 +855,7 @@ public class FileStorageBP {
     
         /** mapping: projects to import => corresponding comp name cache List */
         private Map<IProjectPO, List<IWritableComponentNameMapper>> 
-        m_projectToCompCacheMap;
+            m_projectToCompCacheMap;
 
         /** the project to open immediately after import */
         private IProjectPO m_projectToOpen = null;
@@ -957,7 +957,7 @@ public class FileStorageBP {
         
         /** mapping: projects to import => corresponding comp name cache List */
         private Map<IProjectPO, List<IWritableComponentNameMapper>> 
-        m_projectToCompCacheMap;
+            m_projectToCompCacheMap;
 
         /** the console to use for reporting progress and errors */
         private IProgressConsole m_console;

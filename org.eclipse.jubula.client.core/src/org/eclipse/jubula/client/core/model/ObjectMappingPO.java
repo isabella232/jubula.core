@@ -142,7 +142,7 @@ class ObjectMappingPO implements IObjectMappingPO {
      * @return ObjectMappingAssoziationPO
      */
     public IObjectMappingAssoziationPO 
-    addTechnicalName(IComponentIdentifier tech, IAUTMainPO aut) {
+        addTechnicalName(IComponentIdentifier tech, IAUTMainPO aut) {
         if (!existTechnicalName(tech)) {
             IObjectMappingAssoziationPO asso = PoMaker
                 .createObjectMappingAssoziationPO(tech);

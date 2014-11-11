@@ -598,7 +598,7 @@ public class ProjectPM extends PersistenceManager
      * @throws JBException ...
      */
     public static final synchronized List<IReusedProjectPO> 
-    loadReusedProjectsRO(
+        loadReusedProjectsRO(
         String projGuid, Integer projMajVers, Integer projMinVers,
         Integer projMicVers, String projQualVers) 
         throws JBException {

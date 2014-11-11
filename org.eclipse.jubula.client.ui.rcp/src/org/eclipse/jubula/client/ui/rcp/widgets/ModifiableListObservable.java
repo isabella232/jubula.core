@@ -60,7 +60,7 @@ public class ModifiableListObservable implements IModifiableListObservable {
      * optional button
      */
     private List<IOptionalButtonSelectedListener> 
-    m_optionalButtonSelectedListener = 
+        m_optionalButtonSelectedListener = 
             new ArrayList<IOptionalButtonSelectedListener>();
     
     /**
@@ -205,8 +205,8 @@ public class ModifiableListObservable implements IModifiableListObservable {
      */
     public void fireOptionalButtonSelected() {
         final Set<IOptionalButtonSelectedListener> listener = 
-            new HashSet<IOptionalButtonSelectedListener>
-            (m_optionalButtonSelectedListener);
+                new HashSet<IOptionalButtonSelectedListener>(
+                m_optionalButtonSelectedListener);
         for (IOptionalButtonSelectedListener l : listener) {
             try {
                 l.updateOptionalButtonSelected();

@@ -319,7 +319,7 @@ public class TestResultPM {
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static List<Number> 
-    computeTestresultIdsWithDetails(EntityManager session) {
+        computeTestresultIdsWithDetails(EntityManager session) {
 
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery query = builder.createQuery();

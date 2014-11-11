@@ -477,7 +477,7 @@ public class JobConfiguration {
             }
         }
         if (cmd.hasOption(ClientStrings.NORUN)) {
-            setNoRunOptMode(TestExecutionConstants.runSteps.
+            setNoRunOptMode(TestExecutionConstants.RunSteps.
                     validateRunStep(cmd.getOptionValue(ClientStrings.NORUN)));
         }
         if (cmd.hasOption(ClientStrings.RESULT_NAME)) {
@@ -565,7 +565,7 @@ public class JobConfiguration {
                     cmd.getOptionValue(ClientTestStrings.LANGUAGE))); 
         }
         if (cmd.hasOption(ClientStrings.NORUN)) {
-            setNoRunOptMode(TestExecutionConstants.runSteps.
+            setNoRunOptMode(TestExecutionConstants.RunSteps.
                     validateRunStep(cmd.getOptionValue(ClientStrings.NORUN)));
         }
 
@@ -906,7 +906,7 @@ public class JobConfiguration {
             arg1.endNode();
             
             arg1.startNode(ClientStrings.NORUN);
-            arg1.setValue(TestExecutionConstants.runSteps.validateRunStep(
+            arg1.setValue(TestExecutionConstants.RunSteps.validateRunStep(
                     job.getNoRunOptMode()));
             arg1.endNode();
             
@@ -982,7 +982,7 @@ public class JobConfiguration {
                     job.setTestJobName(arg0.getValue());
                 } else if (arg0.getNodeName().
                         equals(ClientStrings.NORUN)) {
-                    job.setNoRunOptMode(TestExecutionConstants.runSteps.
+                    job.setNoRunOptMode(TestExecutionConstants.RunSteps.
                             validateRunStep(arg0.getValue()));
                 } else if (arg0.getNodeName().equals(
                         ClientStrings.RESULT_NAME)) {

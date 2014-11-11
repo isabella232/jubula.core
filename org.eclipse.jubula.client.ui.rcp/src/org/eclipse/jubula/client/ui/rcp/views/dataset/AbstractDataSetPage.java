@@ -1579,7 +1579,7 @@ public abstract class AbstractDataSetPage extends Page
             final Locale locale = (Locale)getTable()
                 .getColumn(langIndex).getData();
             final IParamDescriptionPO desc = m_paramCombo
-            .getSelectedObject();
+                    .getSelectedObject();
             final int paramIndex = getParamInterfaceObj().getDataManager()
                 .findColumnForParam(desc.getUniqueId());
             final int dsNumber = getTable()

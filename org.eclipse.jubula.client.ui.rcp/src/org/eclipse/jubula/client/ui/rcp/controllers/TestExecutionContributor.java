@@ -607,7 +607,7 @@ public class TestExecutionContributor
         ICapPO cap = TestExecution.getInstance().getActualCap();
         String testCaseName = cap.getParentNode().getName();
         String capName = cap.getName();
-        switch(testExecEventID) {
+        switch (testExecEventID) {
             case TEST_RUN_INCOMPLETE_TESTDATA_ERROR:
                 return NLS.bind(Messages.
                     TestExecutionContributorTEST_RUN_INCOMPLETE_TESTDATA_ERROR,
@@ -751,7 +751,7 @@ public class TestExecutionContributor
         TimeUtil.delay(TimingConstantsClient.START_TEST_SUITE_DELAY);
         getClientTest().startTestSuite(ts, WorkingLanguageBP.getInstance()
             .getWorkingLanguage(), autId, autoScreenshot, null,
-            TestExecutionConstants.runSteps.NORMAL.getStepValue());
+            TestExecutionConstants.RunSteps.NORMAL.getStepValue());
     }
 
     /**

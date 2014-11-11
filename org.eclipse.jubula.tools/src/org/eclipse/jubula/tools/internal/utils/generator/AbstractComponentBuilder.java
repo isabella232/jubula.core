@@ -139,7 +139,7 @@ public class AbstractComponentBuilder {
                 e.printStackTrace();
             }
             String resourceBundleFQN = config
-            .getResourceBundleFQN(configName);
+                    .getResourceBundleFQN(configName);
             ResourceBundle bundle = ResourceBundle.getBundle(
                     resourceBundleFQN);
             CompSystemI18n.addResourceBundle(bundle);

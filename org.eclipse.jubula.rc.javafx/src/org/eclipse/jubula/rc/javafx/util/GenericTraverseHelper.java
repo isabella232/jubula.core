@@ -26,7 +26,7 @@ import java.util.List;
  *            the type of the objects which are considered to be the parents
  */
 public class GenericTraverseHelper<Type extends Object,
-ParentType extends Object> {
+    ParentType extends Object> {
     /** The result where all instances of the given type are stored */
     private List<Type> m_result = new ArrayList<Type>();
 

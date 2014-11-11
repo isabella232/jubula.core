@@ -203,7 +203,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
                                 m_checkCompKey);
                     }
                     TestExecutionContributor.getInstance().getClientTest()
-                    .startRecordTestCase(m_workCopy, m_compNamesMapper,
+                        .startRecordTestCase(m_workCopy, m_compNamesMapper,
                             m_recordCompMods, m_recordCompKey, m_recordApplMods,
                             m_recordApplKey, m_checkModeMods, m_checkModeKey,
                             m_checkCompMods, m_checkCompKey, m_dialogOpen,

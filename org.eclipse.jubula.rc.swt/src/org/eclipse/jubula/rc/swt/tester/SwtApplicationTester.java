@@ -486,16 +486,16 @@ public class SwtApplicationTester extends AbstractApplicationTester {
      */
     protected Object getActiveWindow() {
         Shell activeWindow = (Shell)getRobotFactory().getEventThreadQueuer()
-        .invokeAndWait(this.getClass().getName() + ".getActiveWindow", //$NON-NLS-1$
+                .invokeAndWait(this.getClass().getName() + ".getActiveWindow", //$NON-NLS-1$
             
             new IRunnable() {
-                public Object run() { // SYNCH THREAD START
-                    Display d = 
-                        ((SwtAUTServer)AUTServer.getInstance()).getAutDisplay();
-                    return d.getActiveShell();
-                    
-                }
-            }
+                            public Object run() { // SYNCH THREAD START
+                                Display d = ((SwtAUTServer) AUTServer
+                                        .getInstance()).getAutDisplay();
+                                return d.getActiveShell();
+
+                            }
+                        }
                     
         );
         

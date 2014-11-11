@@ -240,32 +240,32 @@ public interface ContextHelpIds {
 
     /** help context id for a wizard page */
     public static final String 
-    REFACTOR_REPLACE_ADDITIONAL_INFORMATION_WIZARD_PAGE = PRAEFIX
+        REFACTOR_REPLACE_ADDITIONAL_INFORMATION_WIZARD_PAGE = PRAEFIX
             + "refactorReplaceAdditionalInformationWizardPagePageContextId"; //$NON-NLS-1$
 
     /** help context id for a wizard page */
     public static final String 
-    REFACTOR_REPLACE_CHOOSE_TEST_CASE_WIZARD_PAGE = PRAEFIX
+        REFACTOR_REPLACE_CHOOSE_TEST_CASE_WIZARD_PAGE = PRAEFIX
             + "refactorReplaceChooseTestCaseWizardPagePageContextId"; //$NON-NLS-1$
 
     /** help context id for a wizard page */
     public static final String 
-    REFACTOR_REPLACE_MATCH_PARAMETER_WIZARD_PAGE = PRAEFIX
+        REFACTOR_REPLACE_MATCH_PARAMETER_WIZARD_PAGE = PRAEFIX
             + "refactorReplaceMatchParameterWizardPagePageContextId"; //$NON-NLS-1$
 
     /** help context id for a wizard page */
     public static final String 
-    REFACTOR_REPLACE_MATCH_COMP_NAMES_WIZARD_PAGE = PRAEFIX
+        REFACTOR_REPLACE_MATCH_COMP_NAMES_WIZARD_PAGE = PRAEFIX
             + "refactorReplaceMatchComponentNamesWizardPagePageContextId"; //$NON-NLS-1$
 
     /** help context id for a wizard */
     public static final String
-    SEARCH_REFACTOR_REPLACE_EXECUTION_TEST_CASE_WIZARD = PRAEFIX
+        SEARCH_REFACTOR_REPLACE_EXECUTION_TEST_CASE_WIZARD = PRAEFIX
             + "searchRefactorReplaceExecutionTestCaseWizardContextId"; //$NON-NLS-1$
 
     /** help context id for a wizard page */
     public static final String
-    SEARCH_REFACTOR_CHANGE_CTDS_COLUMN_USAGE_WIZARD_PAGE = PRAEFIX
+        SEARCH_REFACTOR_CHANGE_CTDS_COLUMN_USAGE_WIZARD_PAGE = PRAEFIX
             + "searchRefactorChangeCtdsColumnUsageWizardPagePageContextId"; //$NON-NLS-1$
 
     /** help context id for the nag dialog to import all required projects */

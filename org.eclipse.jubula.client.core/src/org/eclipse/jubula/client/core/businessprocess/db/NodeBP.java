@@ -95,7 +95,7 @@ public class NodeBP {
      * @return a list of nodes with the given type
      */
     public static List<? extends INodePO> 
-    getAllNodesForGivenTypeInCurrentProject(Class type) {
+        getAllNodesForGivenTypeInCurrentProject(Class type) {
         if (INodePO.class.isAssignableFrom(type)) {
             GeneralStorage gs = GeneralStorage.getInstance();
             return NodePM.computeListOfNodes(type, 

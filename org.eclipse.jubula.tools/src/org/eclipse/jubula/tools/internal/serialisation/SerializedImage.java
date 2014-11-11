@@ -54,7 +54,7 @@ public class SerializedImage {
     public static SerializedImage computeSerializeImage(BufferedImage img) {
         SerializedImage si = new SerializedImage();
         ByteArrayOutputStream imageByteOutputStream = new 
-        ByteArrayOutputStream();
+                ByteArrayOutputStream();
         try {
             ImageIO.write(img, IMAGE_FORMAT, imageByteOutputStream);
             imageByteOutputStream.flush();

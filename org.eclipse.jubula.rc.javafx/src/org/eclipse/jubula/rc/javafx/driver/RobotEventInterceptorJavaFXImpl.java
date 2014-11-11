@@ -40,8 +40,8 @@ public class RobotEventInterceptorJavaFXImpl implements IRobotEventInterceptor {
      * contextmenus
      */
     private LinkedBlockingQueue<ReadOnlyObjectProperty<? extends Window>> 
-    m_sceneGraphs = new LinkedBlockingQueue<ReadOnlyObjectProperty
-        <? extends Window>>();
+        m_sceneGraphs = 
+        new LinkedBlockingQueue<ReadOnlyObjectProperty<? extends Window>>();
 
     /**
      * {@inheritDoc}

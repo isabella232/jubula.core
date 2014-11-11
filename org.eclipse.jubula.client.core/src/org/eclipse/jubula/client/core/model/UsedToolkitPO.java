@@ -33,7 +33,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 @Table(name = "USED_TOOLKITS", 
        uniqueConstraints = 
            @UniqueConstraint(columnNames = { "NAME", "PARENT_PROJ" }))
-class UsedToolkitPO implements IUsedToolkitPO {
+    class UsedToolkitPO implements IUsedToolkitPO {
     
     
     /** Persistence (JPA / EclipseLink) OID */

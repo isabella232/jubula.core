@@ -168,7 +168,7 @@ public class ExcelImportFilter implements IDataImportFilter {
             case Cell.CELL_TYPE_NUMERIC:
                 return getDoubleString(cell.getNumericCellValue());
             case Cell.CELL_TYPE_FORMULA:
-                switch(cell.getCachedFormulaResultType()) {
+                switch (cell.getCachedFormulaResultType()) {
                     case Cell.CELL_TYPE_STRING:
                         return cell.getRichStringCellValue().getString();
                     case Cell.CELL_TYPE_NUMERIC:

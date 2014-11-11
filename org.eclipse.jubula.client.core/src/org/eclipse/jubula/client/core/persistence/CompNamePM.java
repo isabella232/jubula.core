@@ -790,7 +790,7 @@ public class CompNamePM extends AbstractNamePM {
      */
     @SuppressWarnings("unchecked")
     private static synchronized Collection<String> 
-    fillComponentNameTypeReuseCollection(
+        fillComponentNameTypeReuseCollection(
             EntityManager s, Long parentProjectId, 
             String compNameGuid, Set<Long> ignoreNamePairIds, 
             Set<Long> ignoreCapIds, Set<Long> ignoreAutIds,

@@ -33,7 +33,7 @@ public class InteractionEventDispatcher implements IDataChangedListener {
     * a set of programmable selection listener
     */
     private Set<IProgrammableSelectionListener> 
-    m_progammableSelectionListeners = 
+        m_progammableSelectionListeners = 
             new HashSet<IProgrammableSelectionListener>();
 
     /**

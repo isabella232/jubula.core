@@ -40,7 +40,7 @@ public class ToolkitSupportBP {
     
     /** Map of {@link IToolKitProvider} */
     private static Map<ToolkitDescriptor, IToolKitProvider> 
-    toolkitProvider = 
+        toolkitProvider = 
         new HashMap<ToolkitDescriptor, IToolKitProvider>();
 
     /**
@@ -205,7 +205,7 @@ public class ToolkitSupportBP {
      * @return the component identifier
      */
     public static IComponentIdentifier
-    getIdentifierOfMostAbstractRealizingComponentInToolkit(
+        getIdentifierOfMostAbstractRealizingComponentInToolkit(
         String toolkitID, ConcreteComponent cc) {
         ConcreteComponent concreteComponent =
                 getMostAbstractRealizingComponentInToolkit(toolkitID, cc);
@@ -228,7 +228,7 @@ public class ToolkitSupportBP {
      * @return the component
      */
     public static ConcreteComponent getMostAbstractRealizingComponentInToolkit(
-    String toolkitID, ConcreteComponent cc) {
+        String toolkitID, ConcreteComponent cc) {
         String toolkitIdToSearchIn = toolkitID;        
         Set realizers = cc.getAllRealizers();
         ToolkitDescriptor tpd = null;

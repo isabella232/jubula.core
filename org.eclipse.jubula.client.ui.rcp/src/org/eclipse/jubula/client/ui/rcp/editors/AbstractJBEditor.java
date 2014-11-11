@@ -322,7 +322,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      * @return the selectionChangedListenerList
      */
     protected List<ISelectionChangedListener> 
-    getSelectionChangedListenerList() {
+        getSelectionChangedListenerList() {
         return m_selectionChangedListenerList;
     }
     

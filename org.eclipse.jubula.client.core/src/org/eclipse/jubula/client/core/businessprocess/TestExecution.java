@@ -334,7 +334,7 @@ public class TestExecution {
                 testSuite.getName()));
         m_externalTestDataBP.clearExternalData();
         if (TestExecution.shouldExecutionStop (noRunOptMode, 
-              TestExecutionConstants.runSteps.PTE)) {
+              TestExecutionConstants.RunSteps.PTE)) {
             monitor.setCanceled(true);
             return;
         }
@@ -342,7 +342,7 @@ public class TestExecution {
             if (AUTConnection.getInstance().connectToAut(
                     autId, new SubProgressMonitor(monitor, 0))) {
                 if (TestExecution.shouldExecutionStop (noRunOptMode, 
-                        TestExecutionConstants.runSteps.CA)) {
+                        TestExecutionConstants.RunSteps.CA)) {
                     endTestExecution();
                     return;
                 }
@@ -358,7 +358,7 @@ public class TestExecution {
                 storePredefinedVariables(m_varStore, testSuite);
                 storeExternallyDefinedVariables(m_varStore, externalVars);
                 if (TestExecution.shouldExecutionStop (noRunOptMode,
-                        TestExecutionConstants.runSteps.RPV)) {
+                        TestExecutionConstants.RunSteps.RPV)) {
                     endTestExecution();
                     return;
                 }
@@ -546,7 +546,7 @@ public class TestExecution {
             Map<String, String> autConfigMap = getConnectedAUTsConfigMap();
             resetMonitoringData(autConfigMap, monitor);
             if (TestExecution.shouldExecutionStop(noRunOptMode,
-                    TestExecutionConstants.runSteps.BT)) {
+                    TestExecutionConstants.RunSteps.BT)) {
                 endTestExecution();
                 return;
             }
@@ -2270,7 +2270,7 @@ public class TestExecution {
      * or the last step of no run execution is not jet reached
      */
     public static boolean shouldExecutionStop(String noRunMode,
-            TestExecutionConstants.runSteps step) {
+            TestExecutionConstants.RunSteps step) {
         if (StringUtils.isEmpty(noRunMode)) {
             return false;
         }

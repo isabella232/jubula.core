@@ -519,14 +519,14 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      *  test result
      */
     private Set<ITestresultChangedListener>
-    m_testresultListeners =
+        m_testresultListeners =
         new HashSet<ITestresultChangedListener>();
     /**
      * <code>ITestresultChangedListener</code>listener for changes of
      * test result POST-Event for gui updates 
      */
     private Set<ITestresultChangedListener>
-    m_testresultListenersPost =
+        m_testresultListenersPost =
         new HashSet<ITestresultChangedListener>();
     
     /**
@@ -1393,7 +1393,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      * @return the dialogStatusListener
      */
     public ListenerManager<IDialogStatusListener> 
-    getDialogStatusListenerMgr() {
+        getDialogStatusListenerMgr() {
         return m_dialogStatusListenerMgr;
     }
     

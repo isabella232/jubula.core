@@ -28,7 +28,7 @@ public final class TestExecutionConstants {
     }
     
     /** Constants for values of the run-option modes (introductory steps before the test execution) */
-    public static enum runSteps {
+    public static enum RunSteps {
         /** Constant for a no-run mode to execute up to Connect to the database step (inclusive)*/
         CDB("cdb", "the connection to the database"), //$NON-NLS-1$ //$NON-NLS-2$
         /** Constant for a no-run mode to execute up to Load the project step (inclusive)*/
@@ -62,7 +62,7 @@ public final class TestExecutionConstants {
          * @param stepValue the value (shortcut) of the test execution step
          * @param description the description (shortcut) of the test execution step
          */
-        private runSteps (String stepValue, String description) {
+        private RunSteps (String stepValue, String description) {
             m_stepValue = stepValue;
             m_description = description;
         }
@@ -94,8 +94,8 @@ public final class TestExecutionConstants {
             if (StringUtils.isEmpty(runStepValue)) {
                 return getDefaultNoRunMode();
             }
-            for (runSteps noRunOptMode
-                    : TestExecutionConstants.runSteps.values()) {
+            for (RunSteps noRunOptMode
+                    : TestExecutionConstants.RunSteps.values()) {
                 if (noRunOptMode.getStepValue().equals(runStepValue)) {
                     return runStepValue;
                 }
@@ -108,7 +108,7 @@ public final class TestExecutionConstants {
          * @return the default no run mode
          */
         private static String getDefaultNoRunMode() {
-            final runSteps defaultMode = TestExecutionConstants.runSteps.CC;
+            final RunSteps defaultMode = TestExecutionConstants.RunSteps.CC;
             return defaultMode.getStepValue();
         }
         

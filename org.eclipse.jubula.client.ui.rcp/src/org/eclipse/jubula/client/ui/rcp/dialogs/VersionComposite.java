@@ -274,8 +274,9 @@ public abstract class VersionComposite extends Composite {
     private boolean checkIfVersionsAreCorrect() {
         boolean isCorrect = false;
         try {
-            isCorrect = (StringUtils.isNotBlank(m_majorVersionField.getText())
-            || StringUtils.isNotBlank(m_versionQualifierField.getText()));
+            isCorrect = (StringUtils.isNotBlank(m_majorVersionField.getText()) 
+                    || StringUtils
+                    .isNotBlank(m_versionQualifierField.getText()));
             if (isCorrect && StringUtils.isNotBlank(
                     m_minorVersionField.getText())) {
                 isCorrect = StringUtils.isNotBlank(

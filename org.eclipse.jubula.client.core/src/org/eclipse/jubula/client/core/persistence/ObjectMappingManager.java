@@ -35,7 +35,7 @@ public class ObjectMappingManager {
 
     /** mapping from AUTs to Object Maps */
     private Map<IAUTMainPO, Map <IComponentIdentifier, String>> 
-    m_objectMappings = 
+        m_objectMappings = 
         new HashMap<IAUTMainPO, Map<IComponentIdentifier, String>>();
 
     /**

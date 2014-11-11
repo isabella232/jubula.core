@@ -525,10 +525,10 @@ public class CheckListener extends AbstractAutSwingEventListener {
      * @param implClass IImplementationClass
      */
     protected void switchEvent(AWTEvent event, Component source, 
-       final Object implClass) {
+        final Object implClass) {
         final Color highlightColor = new Color (Constants.OBSERVING_R,
             Constants.OBSERVING_G, Constants.OBSERVING_B);
-        switch(event.getID()) {
+        switch (event.getID()) {
             case MouseEvent.MOUSE_RELEASED:
             case MouseEvent.MOUSE_PRESSED:
                 highlightClicked(implClass, highlightColor);

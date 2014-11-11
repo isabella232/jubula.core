@@ -226,7 +226,7 @@ public class TableTester extends AbstractTableTester {
                                 // Use SWT's mapping function, if possible, as it is more
                                 // multi-platform than simply adding the x and y values.
                                 org.eclipse.swt.graphics.Point
-                                convertedLocation = getConvertedLocation(
+                                    convertedLocation = getConvertedLocation(
                                         constraints);
                                 bounds.x = convertedLocation.x;
                                 bounds.y = convertedLocation.y;

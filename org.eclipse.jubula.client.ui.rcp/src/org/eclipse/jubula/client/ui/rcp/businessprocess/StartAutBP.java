@@ -291,7 +291,7 @@ public class StartAutBP {
      *         configurations for started server
      */
     private SortedMap<IAUTMainPO, SortedSet<IAUTConfigPO>> 
-    getAutsForLangAndServer(Set<IAUTMainPO> autsForLang) {
+        getAutsForLangAndServer(Set<IAUTMainPO> autsForLang) {
         SortedMap<IAUTMainPO, SortedSet<IAUTConfigPO>> autMap = 
             new TreeMap<IAUTMainPO, SortedSet<IAUTConfigPO>>();
         String agentHostname = resolveAUTAgentHostName();

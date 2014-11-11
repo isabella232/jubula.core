@@ -208,8 +208,8 @@ public class ListElementChooserComposite extends Composite {
      * @param style ListElementChooserComposite.HORIZONTAL or ListElementChooserComposite.VERTICAL 
      */
     private void createHorizontalLayout(String listOneLabel, 
-       String listTwoLabel, int lineNumber, String[] buttonToolTips, 
-       int style) {
+        String listTwoLabel, int lineNumber, String[] buttonToolTips, 
+        int style) {
         
         Composite composite = this;
         GridLayout compositeLayout = new GridLayout();

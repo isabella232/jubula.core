@@ -221,7 +221,7 @@ public final class ReentryProperty {
     * @return a String representation of this object.
     */
     public String toString() {
-        switch(m_value) {
+        switch (m_value) {
             case 1:
                 return Messages.EventExecTestCasePOCONTINUE; 
             case 2:

@@ -465,7 +465,7 @@ public class TableTester extends AbstractTableTester {
 
                                 @Override
                                 public Iterable<TableColumn> 
-                                getTraversableData() {
+                                    getTraversableData() {
                                     return this.getObject().getColumns();
                                 }
                             }, TableColumn.class));
@@ -480,7 +480,7 @@ public class TableTester extends AbstractTableTester {
 
                                     @Override
                                     public Iterable<TableColumn> 
-                                    getTraversableData() {
+                                        getTraversableData() {
                                         return this.getObject().getColumns();
                                     }
                                 }, TableColumn.class));
@@ -579,7 +579,7 @@ public class TableTester extends AbstractTableTester {
         int startingIndex = 0;
         if (searchType.equalsIgnoreCase(SearchType.relative.rcValue())) {
             Cell c = ((ITableComponent)getComponent())
-            .getSelectedCell();
+                    .getSelectedCell();
             if (c == null) {
                 throw new StepExecutionException("No selection found", //$NON-NLS-1$
                         EventFactory

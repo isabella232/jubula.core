@@ -395,7 +395,7 @@ public class ExecutionController implements IAUTServerEventListener,
         if (AbstractCmdlineClient.isNoRun()) {
             sysOut(StringConstants.TAB
                     + NLS.bind(Messages.ExecutionControllerNoRunExecutionBegin,
-                            TestExecutionConstants.runSteps.valueOf(noRun.
+                            TestExecutionConstants.RunSteps.valueOf(noRun.
                                     toUpperCase()).getDescription()));
         }
         // start the watchdog timer
@@ -409,26 +409,26 @@ public class ExecutionController implements IAUTServerEventListener,
         if (!prepareAUTAgentConnection(clientTest)) {
             return false;
         } else if (TestExecution.shouldExecutionStop(noRun,
-                TestExecutionConstants.runSteps.CAA)) {
+                TestExecutionConstants.RunSteps.CAA)) {
             return true;
         }
         clientTest.setScreenshotXMLFlag(m_job.isXMLScreenshot());
         //prepare connection to the DB
         prepareDBConnection();
         if (TestExecution.shouldExecutionStop(noRun,
-                TestExecutionConstants.runSteps.CDB)) {
+                TestExecutionConstants.RunSteps.CDB)) {
             return true;
         }
         // load project
         loadProject();
         if (TestExecution.shouldExecutionStop(noRun,
-                TestExecutionConstants.runSteps.LP)) {
+                TestExecutionConstants.RunSteps.LP)) {
             return true;
         }
         //check the completeness of the test
         checkTestCompleteness();
         if (TestExecution.shouldExecutionStop(noRun,
-                TestExecutionConstants.runSteps.CC)) {
+                TestExecutionConstants.RunSteps.CC)) {
             return true;
         }
         // start AUT, working will be set false, after AUT started
@@ -447,7 +447,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 ensureAutIsStarted(m_job.getActualTestSuite(), 
                       m_job.getAutConfig());
                 if (TestExecution.shouldExecutionStop(noRun,
-                        TestExecutionConstants.runSteps.SA)) {
+                        TestExecutionConstants.RunSteps.SA)) {
                     return true;
                 }
                 //start of the test execution

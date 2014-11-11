@@ -154,7 +154,7 @@ public class MappingListener extends AbstractAutSwingEventListener {
         final Object implClass) {
         
         final Color highlightColor = null;
-        switch(event.getID()) {
+        switch (event.getID()) {
             case MouseEvent.MOUSE_RELEASED:
             case MouseEvent.MOUSE_PRESSED:
                 highlightClicked(implClass, highlightColor);

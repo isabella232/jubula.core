@@ -860,12 +860,12 @@ public class TreeTester extends AbstractTreeTester {
      */
     protected void waitForDisplayUpdate() {
         ((Control)getComponent().getRealComponent())
-        .getDisplay().syncExec(new Runnable() {
-            public void run() {
-                ((Control)getComponent()
-                        .getRealComponent()).getDisplay().update();
-            }
-        });
+            .getDisplay().syncExec(new Runnable() {
+                    public void run() {
+                        ((Control) getComponent().getRealComponent())
+                                .getDisplay().update();
+                    }
+                });
     }
     
     /**

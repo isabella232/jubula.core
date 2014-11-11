@@ -132,13 +132,13 @@ import org.slf4j.LoggerFactory;
 class XmlExporter {
 
     /** compares locales alphabetically according to code */
-    private static final Comparator<Locale> LANG_CODE_ALPHA_COMPARATOR =
-        new Comparator<Locale>() {
-                public int compare(Locale locale1, Locale locale2) {
-                    return ObjectUtils.toString(locale1).compareTo(
-                            ObjectUtils.toString(locale2));
-                }
-            };
+    private static final Comparator<Locale> LANG_CODE_ALPHA_COMPARATOR = 
+            new Comparator<Locale>() {
+        public int compare(Locale locale1, Locale locale2) {
+            return ObjectUtils.toString(locale1).compareTo(
+                    ObjectUtils.toString(locale2));
+        }
+    };
     
     /** Table identifier to make the ID disjunct */
     private static final char TABLE_AUT = 'A';

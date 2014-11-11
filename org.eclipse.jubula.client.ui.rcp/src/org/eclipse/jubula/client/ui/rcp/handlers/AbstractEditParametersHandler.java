@@ -109,7 +109,7 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
      * @return if occurs any modification of parameters
      */
     protected static
-    <T extends IModifiableParameterInterfacePO> boolean editParameters(
+        <T extends IModifiableParameterInterfacePO> boolean editParameters(
             T paramIntObj,
             List<Parameter> parameters,
             boolean isInterfaceLocked,

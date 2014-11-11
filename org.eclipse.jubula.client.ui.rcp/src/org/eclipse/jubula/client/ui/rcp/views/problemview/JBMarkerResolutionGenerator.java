@@ -289,7 +289,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                         if (node.getId().equals(
                                 Constants.JB_PREF_PAGE_AUTAGENT)) {
                             PreferenceDialog dialog = PreferencesUtil.
-                            createPreferenceDialogOn(
+                                    createPreferenceDialogOn(
                                     null, Constants.JB_PREF_PAGE_AUTAGENT, 
                                     null, null);
                             DialogUtils.setWidgetNameForModalDialog(dialog);

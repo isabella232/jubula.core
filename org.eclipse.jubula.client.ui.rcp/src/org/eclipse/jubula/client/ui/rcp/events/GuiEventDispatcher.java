@@ -121,8 +121,8 @@ public class GuiEventDispatcher {
 
         // gui updates
         final Set<IEditorDirtyStateListener> stableListenersPost = 
-            new HashSet<IEditorDirtyStateListener>
-            (m_editorDirtyStateListenersPost);
+                new HashSet<IEditorDirtyStateListener>(
+                m_editorDirtyStateListenersPost);
         for (IEditorDirtyStateListener l : stableListenersPost) {
             try {
                 l.handleEditorDirtyStateChanged(editor, isDirty);

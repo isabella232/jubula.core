@@ -40,8 +40,7 @@ public interface IParameterInterfacePO extends IPersistentObject {
      *         <code>null</code> if the receiver does not have a Parameter with 
      *         the given name.
      */
-    public abstract
-    IParamDescriptionPO getParameterForName(String paramName);
+    public abstract IParamDescriptionPO getParameterForName(String paramName);
     
     /**
      * @return names of parameters belonging to this node
