@@ -30,7 +30,7 @@ import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
-import org.eclipse.mylyn.wikitext.core.WikiText;
+import org.eclipse.mylyn.wikitext.ui.WikiText;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
