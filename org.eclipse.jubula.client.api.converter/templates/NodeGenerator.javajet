@@ -76,6 +76,7 @@ public class <%=className%> {
 	
 		<%while (iterator.hasNext()) {
 			INodePO child = iterator.next();
+			boolean isActive = child.isActive();
 			if (child instanceof ICapPO) {
 				ICapPO cap = (ICapPO) child;
 				String componentFromCap = cap.getComponentType();
@@ -101,7 +102,7 @@ public class <%=className%> {
 					componentNameToCreate = loader.get("componentTypeName");
 				}
 				if (actionName != null) {%>
-		aut.execute(
+		<%if (!isActive) {%>/* <%}%>aut.execute(
 			<%=factoryName%>.create<%=componentNameToCreate%>(<%if (!hasDefaultMapping) {%>null<%}%>)
 				.<%=actionName%>(
 				<%Iterator<IParamDescriptionPO> childParamIterator = cap.getParameterListIter();
@@ -115,6 +116,7 @@ public class <%=className%> {
 				<%}%>
 				),
 			null);
+		<%if (!isActive) {%>*/<%}%>
 				<%} else {%>
 		// TODO: Client action <%=cap.getActionName()%>.
 				<%}%>
@@ -139,7 +141,7 @@ public class <%=className%> {
 				int rowCount = exec.getDataManager().getDataSetCount();
 				int row = 0;
 				do {%>
-		<%=testCaseName%>.execute(
+		<%if (!isActive) {%>/* <%}%><%=testCaseName%>.execute(
 					<%childParamIterator = exec.getParameterListIter();
 					while (childParamIterator.hasNext()) {
 						IParamDescriptionPO param = childParamIterator.next();
@@ -148,6 +150,7 @@ public class <%=className%> {
 					<%}%>
 					<%row++;%>
 				);
+		<%if (!isActive) {%>*/<%}%>
 				<%} while(row < rowCount);%>
 			<%} else if (child instanceof IRefTestSuitePO) {
 				IRefTestSuitePO ref = (IRefTestSuitePO)child;
@@ -166,7 +169,7 @@ public class <%=className%> {
 				    log.error(e.getLocalizedMessage());
 				}
 				testSuiteName = Utils.getFullyQualifiedTranslatedName(testSuite, packageBase, projectName);%>
-		<%=testSuiteName%>.execute();
+		<%if (!isActive) {%>/* <%}%><%=testSuiteName%>.execute();<%if (!isActive) {%>*/<%}%>
 			<%}%>
 		<%}%>
 	}

@@ -71,11 +71,11 @@ public class ParamUtils {
                 return "null // TODO: Parameter concatenation: \"" //$NON-NLS-1$
                         + value + "\"\n"; //$NON-NLS-1$
             } else if (variable.matcher(value).matches()) {
-                return "null /* TODO: Variable: \"" //$NON-NLS-1$
-                        + value + "\" */"; //$NON-NLS-1$
+                return "null // TODO: Variable: \"" //$NON-NLS-1$
+                        + value + "\" \n"; //$NON-NLS-1$
             } else if (function.matcher(value).matches()) {
-                return "null /* TODO: Function: \"" //$NON-NLS-1$
-                        + value + "\" */"; //$NON-NLS-1$
+                return "null // TODO: Function: \"" //$NON-NLS-1$
+                        + value + "\" \n"; //$NON-NLS-1$
             } else if (parameterWithBrackets.matcher(value).matches()) {
                 value = value.replaceAll(parameterWithBrackets.pattern(), "$1"); //$NON-NLS-1$
             } else if (parameter.matcher(value).matches()) {
