@@ -62,7 +62,7 @@ public class ParamUtils {
                 node, param, row, locale);
         //CHECKSTYLE:OFF
         if (value == null) {
-            value = "null /*TODO: check*/"; //$NON-NLS-1$
+            value = "null // TODO: check \n"; //$NON-NLS-1$
         } else {
             value = executeEscapes(value);
             if (StringUtils.isBlank(value)) {
@@ -83,8 +83,8 @@ public class ParamUtils {
             } else if (paramType.equals("java.lang.String") ) { //$NON-NLS-1$
                 value = StringConstants.QUOTE + value + StringConstants.QUOTE;
             } else if (paramType.equals("guidancer.datatype.Variable") ) { //$NON-NLS-1$
-                value = "null /* TODO: Potential Variable assignment: " //$NON-NLS-1$
-                        + value + "*/"; //$NON-NLS-1$
+                value = "null // TODO: Potential Variable assignment: " //$NON-NLS-1$
+                        + value + "\n"; //$NON-NLS-1$
             }
         }
         return value;
