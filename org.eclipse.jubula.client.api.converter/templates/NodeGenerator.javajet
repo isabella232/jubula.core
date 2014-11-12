@@ -1,31 +1,31 @@
 <%@ jet 
 package="org.eclipse.jubula.client.api.converter" 
 imports="java.util.*
-            org.apache.commons.lang.StringUtils
-            org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException
-            org.eclipse.jubula.client.api.converter.utils.CompNameLoader
-            org.eclipse.jubula.client.api.converter.utils.ProjectCache
-            org.eclipse.jubula.client.api.converter.utils.ParamUtils
-            org.eclipse.jubula.client.api.converter.utils.Utils
-            org.eclipse.jubula.client.core.model.ICapPO
-           org.eclipse.jubula.client.core.model.IExecTestCasePO
-            org.eclipse.jubula.client.core.model.INodePO
-            org.eclipse.jubula.client.core.model.IParamDescriptionPO
-            org.eclipse.jubula.client.core.model.IProjectPO
-            org.eclipse.jubula.client.core.model.IRefTestSuitePO
-           org.eclipse.jubula.client.core.model.ISpecTestCasePO
-            org.eclipse.jubula.client.core.model.ITestSuitePO
-           org.eclipse.jubula.client.ui.rcp.Plugin
-            org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader
-           org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP
-           org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder
-           org.eclipse.jubula.tools.internal.constants.StringConstants
-           org.eclipse.jubula.tools.internal.exception.JBException
-           org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
-           org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem
-            org.eclipse.jubula.tools.internal.xml.businessmodell.Component
-           org.slf4j.Logger
-            org.slf4j.LoggerFactory"
+         org.apache.commons.lang.StringUtils
+         org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException
+         org.eclipse.jubula.client.api.converter.utils.CompNameLoader
+         org.eclipse.jubula.client.api.converter.utils.ProjectCache
+         org.eclipse.jubula.client.api.converter.utils.ParamUtils
+         org.eclipse.jubula.client.api.converter.utils.Utils
+         org.eclipse.jubula.client.core.model.ICapPO
+         org.eclipse.jubula.client.core.model.IExecTestCasePO
+         org.eclipse.jubula.client.core.model.INodePO
+         org.eclipse.jubula.client.core.model.IParamDescriptionPO
+         org.eclipse.jubula.client.core.model.IProjectPO
+         org.eclipse.jubula.client.core.model.IRefTestSuitePO
+         org.eclipse.jubula.client.core.model.ISpecTestCasePO
+         org.eclipse.jubula.client.core.model.ITestSuitePO
+         org.eclipse.jubula.client.ui.rcp.Plugin
+         org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader
+         org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP
+         org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder
+         org.eclipse.jubula.tools.internal.constants.StringConstants
+         org.eclipse.jubula.tools.internal.exception.JBException
+         org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
+         org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem
+         org.eclipse.jubula.tools.internal.xml.businessmodell.Component
+         org.slf4j.Logger
+         org.slf4j.LoggerFactory"
 class="NodeGenerator"%>
 <%
 Logger log = LoggerFactory.getLogger(NodeGenerator.class);
@@ -33,6 +33,9 @@ Logger log = LoggerFactory.getLogger(NodeGenerator.class);
 NodeInfo info = (NodeInfo)argument;
 String className = info.getClassName();
 INodePO node = info.getNode();
+String uuid = node.getGuid();
+String comment = node.getComment();
+boolean hasComment = StringUtils.isNotBlank(comment);
 Locale locale = info.getLanguage();
 Iterator<INodePO> iterator = node.getNodeListIterator();
 String packageBase = info.getPackageBasePath();
@@ -57,7 +60,10 @@ String packageName = StringUtils.substringBeforeLast(fqName, StringConstants.DOT
 package <%=packageName%>;
 
 import org.eclipse.jubula.client.AUT;
+import org.eclipse.jubula.client.api.converter.annotations.SrcNode;
 
+<%if (hasComment) {%>/** <%=comment%> */<%}%>
+@SrcNode(UUID="<%=uuid%>")
 public class <%=className%> {
     
     public static void execute(

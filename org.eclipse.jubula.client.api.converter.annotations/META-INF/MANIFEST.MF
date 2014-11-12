@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula API - Converter Annotations
-Bundle-SymbolicName: org.eclipse.jubula.client.api.converter.annotations;singleton:=true
+Bundle-SymbolicName: org.eclipse.jubula.client.api.converter.annotations
 Bundle-Version: 2.4.0.qualifier
 Bundle-Vendor: Eclipse Jubula
-Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.jubula.client.api.converter.annotations
