@@ -109,8 +109,8 @@ import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
 @TesterClass(testerClass="<%=testerClass%>")<%}%>
 <%}%>
 public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
-    <%if (hasRealizedType) {%>extends <%=realizedTypeFqn%><%}%>
-    <%if (!genInterface) {%>implements <%=implementedTypeFqn%><%}%> {
+    <%if (hasRealizedType) {%> extends <%=realizedTypeFqn%><%}%>
+    <%if (!genInterface) {%> implements <%=implementedTypeFqn%><%}%> {
     <%// generate constructor only for implementation classes%>
     <%if (!genInterface) {%>
         <%/* check whether constructor should call super
