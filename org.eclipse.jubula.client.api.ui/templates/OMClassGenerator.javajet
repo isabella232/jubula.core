@@ -1,14 +1,14 @@
 <%@ jet 
 package="org.eclipse.jubula.toolkit.client.api.ui.internal" 
 imports="java.util.*
-			org.apache.commons.lang.StringUtils
-			org.eclipse.jubula.client.api.ui.utils.OMAssociation
-			org.eclipse.jubula.tools.internal.constants.StringConstants" 
+            org.apache.commons.lang.StringUtils
+            org.eclipse.jubula.client.api.ui.utils.OMAssociation
+            org.eclipse.jubula.tools.internal.constants.StringConstants" 
 class="OMClassGenerator"%>
 <%
 OMAssociation omAssociation = (OMAssociation) argument;
 String className = StringUtils.substringBefore(
-								omAssociation.getTargetClassName(), StringConstants.DOT);
+                                omAssociation.getTargetClassName(), StringConstants.DOT);
 %>
 
 import java.io.ByteArrayInputStream;
@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class <%=className%> {
-	/** the logger */
+    /** the logger */
     private static Logger log = LoggerFactory.getLogger(<%=className%>.class);
     
     /** the input stream */

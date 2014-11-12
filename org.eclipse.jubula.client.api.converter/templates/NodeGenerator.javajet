@@ -1,31 +1,31 @@
 <%@ jet 
 package="org.eclipse.jubula.client.api.converter" 
 imports="java.util.*
-			org.apache.commons.lang.StringUtils
-			org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException
-			org.eclipse.jubula.client.api.converter.utils.CompNameLoader
-			org.eclipse.jubula.client.api.converter.utils.ProjectCache
-			org.eclipse.jubula.client.api.converter.utils.ParamUtils
-			org.eclipse.jubula.client.api.converter.utils.Utils
-			org.eclipse.jubula.client.core.model.ICapPO
-		   org.eclipse.jubula.client.core.model.IExecTestCasePO
-			org.eclipse.jubula.client.core.model.INodePO
-			org.eclipse.jubula.client.core.model.IParamDescriptionPO
-			org.eclipse.jubula.client.core.model.IProjectPO
-			org.eclipse.jubula.client.core.model.IRefTestSuitePO
-		   org.eclipse.jubula.client.core.model.ISpecTestCasePO
-			org.eclipse.jubula.client.core.model.ITestSuitePO
-		   org.eclipse.jubula.client.ui.rcp.Plugin
-			org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader
-		   org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP
-		   org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder
-		   org.eclipse.jubula.tools.internal.constants.StringConstants
-		   org.eclipse.jubula.tools.internal.exception.JBException
-		   org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
-		   org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem
-			org.eclipse.jubula.tools.internal.xml.businessmodell.Component
-		   org.slf4j.Logger
-			org.slf4j.LoggerFactory"
+            org.apache.commons.lang.StringUtils
+            org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException
+            org.eclipse.jubula.client.api.converter.utils.CompNameLoader
+            org.eclipse.jubula.client.api.converter.utils.ProjectCache
+            org.eclipse.jubula.client.api.converter.utils.ParamUtils
+            org.eclipse.jubula.client.api.converter.utils.Utils
+            org.eclipse.jubula.client.core.model.ICapPO
+           org.eclipse.jubula.client.core.model.IExecTestCasePO
+            org.eclipse.jubula.client.core.model.INodePO
+            org.eclipse.jubula.client.core.model.IParamDescriptionPO
+            org.eclipse.jubula.client.core.model.IProjectPO
+            org.eclipse.jubula.client.core.model.IRefTestSuitePO
+           org.eclipse.jubula.client.core.model.ISpecTestCasePO
+            org.eclipse.jubula.client.core.model.ITestSuitePO
+           org.eclipse.jubula.client.ui.rcp.Plugin
+            org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader
+           org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP
+           org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder
+           org.eclipse.jubula.tools.internal.constants.StringConstants
+           org.eclipse.jubula.tools.internal.exception.JBException
+           org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
+           org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem
+            org.eclipse.jubula.tools.internal.xml.businessmodell.Component
+           org.slf4j.Logger
+            org.slf4j.LoggerFactory"
 class="NodeGenerator"%>
 <%
 Logger log = LoggerFactory.getLogger(NodeGenerator.class);
@@ -39,9 +39,9 @@ String packageBase = info.getPackageBasePath();
 NameLoader nameLoader = NameLoader.getInstance();
 IProjectPO project = null;
 try {
-	project = ProjectCache.get(node.getParentProjectId());
+    project = ProjectCache.get(node.getParentProjectId());
 } catch (JBException e) {
-	Plugin.getDefault().writeErrorLineToConsole(
+    Plugin.getDefault().writeErrorLineToConsole(
                         "Error while loading project.", true);
    return StringConstants.EMPTY;
 }
@@ -59,118 +59,118 @@ package <%=packageName%>;
 import org.eclipse.jubula.client.AUT;
 
 public class <%=className%> {
-	
-	public static void execute(
-	<%if (node instanceof ISpecTestCasePO) {
-		ISpecTestCasePO tc = (ISpecTestCasePO) node;
-		Iterator<IParamDescriptionPO> paramIterator = tc.getParameterListIter();
-		while (paramIterator.hasNext()) {
-			IParamDescriptionPO param = paramIterator.next();
-			String paramType = nameLoader.findTypeForParameter(param.getType(), StringConstants.EMPTY);
-			String paramName = param.getName();%>
-		<%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
-		<%}%>
-	<%}%>
-	) {
-		AUT aut = null;
-	
-		<%while (iterator.hasNext()) {
-			INodePO child = iterator.next();
-			boolean isActive = child.isActive();
-			if (child instanceof ICapPO) {
-				ICapPO cap = (ICapPO) child;
-				String componentFromCap = cap.getComponentType();
-				CompNameLoader loader = new CompNameLoader(componentFromCap);
-				String actionName = loader.get(cap.getActionName());
-				boolean hasDefaultMapping = loader.get("hasDefaultMapping").equals("true");
-				String componentNameToCreate;
-				String factoryName;
-				ConcreteComponent cc = null;
-		      CompSystem compSystem = ComponentBuilder.getInstance().getCompSystem();
-		      Component c = compSystem.getComponentForType(componentFromCap);
-		      if (c instanceof ConcreteComponent) {
-		          cc = (ConcreteComponent)c;            
-		      }
-				if (hasDefaultMapping) {
-					String toolkitID = info.getDefaultToolkit();
-					factoryName = Utils.getFactoryName(toolkitID);
-			      ConcreteComponent componentToCreate = ToolkitSupportBP.getMostAbstractRealizingComponentInToolkit(toolkitID, cc);
-					CompNameLoader newLoader = new CompNameLoader(componentToCreate.getType());
-					componentNameToCreate = newLoader.get("componentTypeName");
-				} else {
-					factoryName = loader.get("factoryName");
-					componentNameToCreate = loader.get("componentTypeName");
-				}
-				if (actionName != null) {%>
-		<%if (!isActive) {%>/* <%}%>aut.execute(
-			<%=factoryName%>.create<%=componentNameToCreate%>(<%if (!hasDefaultMapping) {%>null<%}%>)
-				.<%=actionName%>(
-				<%Iterator<IParamDescriptionPO> childParamIterator = cap.getParameterListIter();
-				while (childParamIterator.hasNext()) {
-					IParamDescriptionPO param = childParamIterator.next();
-					String paramType = param.getUniqueId();
-					String enumType = nameLoader.getEnumForParam(paramType);
-					String paramValue = ParamUtils.getValueForParam(cap, param, 0, locale);
-					Boolean isEnum = enumType != null;%>
-				<%if (isEnum) {%><%=enumType%>.valueOf(<%}%><%=paramValue%><%if (isEnum) {%>)<%}%><%if(childParamIterator.hasNext()){%>,<%}%>
-				<%}%>
-				),
-			null);
-		<%if (!isActive) {%>*/<%}%>
-				<%} else {%>
-		// TODO: Client action <%=cap.getActionName()%>.
-				<%}%>
-			<%} else if (child instanceof IExecTestCasePO) {
-				IExecTestCasePO exec = (IExecTestCasePO)child;
-				ISpecTestCasePO spec = exec.getSpecTestCase();
-				String testCaseName = StringConstants.EMPTY;
-				try {
-					project = ProjectCache.get(spec.getParentProjectId());
-				} catch (JBException e) {
-					Plugin.getDefault().writeErrorLineToConsole(
-				                        "Error while loading project.", true);
-				   return StringConstants.EMPTY;
-				}
-				try {
-				    projectName = Utils.translateToPackageName(project);
-				} catch (InvalidNodeNameException e) {
-				    log.error(e.getLocalizedMessage());
-				}
-				testCaseName = Utils.getFullyQualifiedTranslatedName(spec, packageBase, projectName);
-				Iterator<IParamDescriptionPO> childParamIterator;
-				int rowCount = exec.getDataManager().getDataSetCount();
-				int row = 0;
-				do {%>
-		<%if (!isActive) {%>/* <%}%><%=testCaseName%>.execute(
-					<%childParamIterator = exec.getParameterListIter();
-					while (childParamIterator.hasNext()) {
-						IParamDescriptionPO param = childParamIterator.next();
-						String paramValue = ParamUtils.getValueForParam(exec, param, row, locale);%>
-				<%=paramValue%><%if(childParamIterator.hasNext()){%>,<%}%>
-					<%}%>
-					<%row++;%>
-				);
-		<%if (!isActive) {%>*/<%}%>
-				<%} while(row < rowCount);%>
-			<%} else if (child instanceof IRefTestSuitePO) {
-				IRefTestSuitePO ref = (IRefTestSuitePO)child;
-				ITestSuitePO testSuite = ref.getTestSuite();
-				String testSuiteName = StringConstants.EMPTY;
-				try {
-				project = ProjectCache.get(testSuite.getParentProjectId());
-				} catch (JBException e) {
-					Plugin.getDefault().writeErrorLineToConsole(
-				                        "Error while loading project.", true);
-				   return StringConstants.EMPTY;
-				}
-				try {
-				    projectName = Utils.translateToPackageName(project);
-				} catch (InvalidNodeNameException e) {
-				    log.error(e.getLocalizedMessage());
-				}
-				testSuiteName = Utils.getFullyQualifiedTranslatedName(testSuite, packageBase, projectName);%>
-		<%if (!isActive) {%>/* <%}%><%=testSuiteName%>.execute();<%if (!isActive) {%>*/<%}%>
-			<%}%>
-		<%}%>
-	}
+    
+    public static void execute(
+    <%if (node instanceof ISpecTestCasePO) {
+        ISpecTestCasePO tc = (ISpecTestCasePO) node;
+        Iterator<IParamDescriptionPO> paramIterator = tc.getParameterListIter();
+        while (paramIterator.hasNext()) {
+            IParamDescriptionPO param = paramIterator.next();
+            String paramType = nameLoader.findTypeForParameter(param.getType(), StringConstants.EMPTY);
+            String paramName = param.getName();%>
+        <%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
+        <%}%>
+    <%}%>
+    ) {
+        AUT aut = null;
+    
+        <%while (iterator.hasNext()) {
+            INodePO child = iterator.next();
+            boolean isActive = child.isActive();
+            if (child instanceof ICapPO) {
+                ICapPO cap = (ICapPO) child;
+                String componentFromCap = cap.getComponentType();
+                CompNameLoader loader = new CompNameLoader(componentFromCap);
+                String actionName = loader.get(cap.getActionName());
+                boolean hasDefaultMapping = loader.get("hasDefaultMapping").equals("true");
+                String componentNameToCreate;
+                String factoryName;
+                ConcreteComponent cc = null;
+              CompSystem compSystem = ComponentBuilder.getInstance().getCompSystem();
+              Component c = compSystem.getComponentForType(componentFromCap);
+              if (c instanceof ConcreteComponent) {
+                  cc = (ConcreteComponent)c;            
+              }
+                if (hasDefaultMapping) {
+                    String toolkitID = info.getDefaultToolkit();
+                    factoryName = Utils.getFactoryName(toolkitID);
+                  ConcreteComponent componentToCreate = ToolkitSupportBP.getMostAbstractRealizingComponentInToolkit(toolkitID, cc);
+                    CompNameLoader newLoader = new CompNameLoader(componentToCreate.getType());
+                    componentNameToCreate = newLoader.get("componentTypeName");
+                } else {
+                    factoryName = loader.get("factoryName");
+                    componentNameToCreate = loader.get("componentTypeName");
+                }
+                if (actionName != null) {%>
+        <%if (!isActive) {%>/* <%}%>aut.execute(
+            <%=factoryName%>.create<%=componentNameToCreate%>(<%if (!hasDefaultMapping) {%>null<%}%>)
+                .<%=actionName%>(
+                <%Iterator<IParamDescriptionPO> childParamIterator = cap.getParameterListIter();
+                while (childParamIterator.hasNext()) {
+                    IParamDescriptionPO param = childParamIterator.next();
+                    String paramType = param.getUniqueId();
+                    String enumType = nameLoader.getEnumForParam(paramType);
+                    String paramValue = ParamUtils.getValueForParam(cap, param, 0, locale);
+                    Boolean isEnum = enumType != null;%>
+                <%if (isEnum) {%><%=enumType%>.valueOf(<%}%><%=paramValue%><%if (isEnum) {%>)<%}%><%if(childParamIterator.hasNext()){%>,<%}%>
+                <%}%>
+                ),
+            null);
+        <%if (!isActive) {%>*/<%}%>
+                <%} else {%>
+        // TODO: Client action <%=cap.getActionName()%>.
+                <%}%>
+            <%} else if (child instanceof IExecTestCasePO) {
+                IExecTestCasePO exec = (IExecTestCasePO)child;
+                ISpecTestCasePO spec = exec.getSpecTestCase();
+                String testCaseName = StringConstants.EMPTY;
+                try {
+                    project = ProjectCache.get(spec.getParentProjectId());
+                } catch (JBException e) {
+                    Plugin.getDefault().writeErrorLineToConsole(
+                                        "Error while loading project.", true);
+                   return StringConstants.EMPTY;
+                }
+                try {
+                    projectName = Utils.translateToPackageName(project);
+                } catch (InvalidNodeNameException e) {
+                    log.error(e.getLocalizedMessage());
+                }
+                testCaseName = Utils.getFullyQualifiedTranslatedName(spec, packageBase, projectName);
+                Iterator<IParamDescriptionPO> childParamIterator;
+                int rowCount = exec.getDataManager().getDataSetCount();
+                int row = 0;
+                do {%>
+        <%if (!isActive) {%>/* <%}%><%=testCaseName%>.execute(
+                    <%childParamIterator = exec.getParameterListIter();
+                    while (childParamIterator.hasNext()) {
+                        IParamDescriptionPO param = childParamIterator.next();
+                        String paramValue = ParamUtils.getValueForParam(exec, param, row, locale);%>
+                <%=paramValue%><%if(childParamIterator.hasNext()){%>,<%}%>
+                    <%}%>
+                    <%row++;%>
+                );
+        <%if (!isActive) {%>*/<%}%>
+                <%} while(row < rowCount);%>
+            <%} else if (child instanceof IRefTestSuitePO) {
+                IRefTestSuitePO ref = (IRefTestSuitePO)child;
+                ITestSuitePO testSuite = ref.getTestSuite();
+                String testSuiteName = StringConstants.EMPTY;
+                try {
+                project = ProjectCache.get(testSuite.getParentProjectId());
+                } catch (JBException e) {
+                    Plugin.getDefault().writeErrorLineToConsole(
+                                        "Error while loading project.", true);
+                   return StringConstants.EMPTY;
+                }
+                try {
+                    projectName = Utils.translateToPackageName(project);
+                } catch (InvalidNodeNameException e) {
+                    log.error(e.getLocalizedMessage());
+                }
+                testSuiteName = Utils.getFullyQualifiedTranslatedName(testSuite, packageBase, projectName);%>
+        <%if (!isActive) {%>/* <%}%><%=testSuiteName%>.execute();<%if (!isActive) {%>*/<%}%>
+            <%}%>
+        <%}%>
+    }
 }

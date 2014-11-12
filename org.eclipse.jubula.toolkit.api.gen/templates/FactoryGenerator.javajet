@@ -1,10 +1,10 @@
 <%@ jet 
 package="org.eclipse.jubula.toolkit.api.gen" 
 imports="java.util.*
-			org.eclipse.jubula.toolkit.api.gen.internal.genmodel.FactoryGenInfo
-			org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CompInfoForFactoryGen
-			org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo
-		   org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass" 
+            org.eclipse.jubula.toolkit.api.gen.internal.genmodel.FactoryGenInfo
+            org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CompInfoForFactoryGen
+            org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo
+           org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass" 
 class="FactoryGenerator"%>
 <%
 CommonGenInfo genInfo = (CommonGenInfo)argument;
@@ -12,10 +12,10 @@ String factoryName = genInfo.getClassName();
 String packageName = genInfo.getClassPackageName();
 Object specInfo = genInfo.getSpecificInformation();
 if (specInfo instanceof FactoryGenInfo) {
-	FactoryGenInfo factoryInfo = (FactoryGenInfo) specInfo;
-	List<CompInfoForFactoryGen> compInfoList = factoryInfo.getCompInformation();
-	String toolkitInfoName = factoryInfo.getToolkitInfoName();
-	String toolkitInfoFqName = factoryInfo.getToolkitInfoFqName();
+    FactoryGenInfo factoryInfo = (FactoryGenInfo) specInfo;
+    List<CompInfoForFactoryGen> compInfoList = factoryInfo.getCompInformation();
+    String toolkitInfoName = factoryInfo.getToolkitInfoName();
+    String toolkitInfoFqName = factoryInfo.getToolkitInfoFqName();
 %>
 /*******************************************************************************
  * Copyright (c) 2014 BREDEX GmbH.
@@ -41,41 +41,41 @@ import org.eclipse.jubula.toolkit.ToolkitInfo;
  * @noextend This class is not intended to be extended by clients.
  */
 public final class <%=factoryName%> {
-	
-	<%if (toolkitInfoName != null) {%>
-	@NonNull private final static ToolkitInfo m_toolkitInformation = new <%=toolkitInfoName%>();<%}%>
+    
+    <%if (toolkitInfoName != null) {%>
+    @NonNull private final static ToolkitInfo m_toolkitInformation = new <%=toolkitInfoName%>();<%}%>
 
-	private <%=factoryName%>() {
-		super();
-	}
-	
-	<%if (toolkitInfoName != null) {%>
-	@NonNull public static ToolkitInfo getToolkitInformation() {
-		return m_toolkitInformation;
-	}<%}%>
+    private <%=factoryName%>() {
+        super();
+    }
+    
+    <%if (toolkitInfoName != null) {%>
+    @NonNull public static ToolkitInfo getToolkitInformation() {
+        return m_toolkitInformation;
+    }<%}%>
 
 <%for (CompInfoForFactoryGen compInfo : compInfoList) {
-	String componentName = compInfo.getComponentName();
-	String implClassName = compInfo.getClassName();
-	ComponentClass componentClass = compInfo.getComponentClass();
-	String componentClassName = "";
-	boolean hasComponentClass = false;
-	if (componentClass != null && !componentClass.getName().isEmpty()) {
-		componentClassName = componentClass.getName();
-		hasComponentClass = true;
-	}
-	String returnType = compInfo.getMostSpecificVisibleSuperTypeName();
-	Boolean hasDefaultMapping = compInfo.hasDefaultMapping();%>
-	<%if (hasDefaultMapping) {%>
-	/** create a new representative for a {@link <%=componentName%>} component.*/
-	@NonNull public static <%=returnType%> create<%=componentName%> () {
-		return new <%=implClassName%>();
-	}<%} else {%>
-	/** create a new representative for a <%if (hasComponentClass) {%>{@link <%=componentClassName%>}<%} else {%><%=componentName%><%}%> UI component.*/
-	@NonNull public static <%=returnType%> create<%=componentName%> (@NonNull ComponentIdentifier componentIdentifier) {
-		Validate.notNull(componentIdentifier);
-		return new <%=implClassName%>(componentIdentifier);
-	}<%}%>
+    String componentName = compInfo.getComponentName();
+    String implClassName = compInfo.getClassName();
+    ComponentClass componentClass = compInfo.getComponentClass();
+    String componentClassName = "";
+    boolean hasComponentClass = false;
+    if (componentClass != null && !componentClass.getName().isEmpty()) {
+        componentClassName = componentClass.getName();
+        hasComponentClass = true;
+    }
+    String returnType = compInfo.getMostSpecificVisibleSuperTypeName();
+    Boolean hasDefaultMapping = compInfo.hasDefaultMapping();%>
+    <%if (hasDefaultMapping) {%>
+    /** create a new representative for a {@link <%=componentName%>} component.*/
+    @NonNull public static <%=returnType%> create<%=componentName%> () {
+        return new <%=implClassName%>();
+    }<%} else {%>
+    /** create a new representative for a <%if (hasComponentClass) {%>{@link <%=componentClassName%>}<%} else {%><%=componentName%><%}%> UI component.*/
+    @NonNull public static <%=returnType%> create<%=componentName%> (@NonNull ComponentIdentifier componentIdentifier) {
+        Validate.notNull(componentIdentifier);
+        return new <%=implClassName%>(componentIdentifier);
+    }<%}%>
 <%}%>
 }
 <%}%>
