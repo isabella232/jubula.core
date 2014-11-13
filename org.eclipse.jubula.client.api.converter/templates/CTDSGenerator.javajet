@@ -1,0 +1,91 @@
+<%@ jet 
+package="org.eclipse.jubula.client.api.converter" 
+imports="java.util.*
+         org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException
+         org.eclipse.jubula.client.api.converter.utils.ParamUtils
+         org.eclipse.jubula.client.api.converter.utils.Utils
+         org.eclipse.jubula.client.core.model.IParamDescriptionPO
+         org.eclipse.jubula.client.core.model.IProjectPO
+         org.eclipse.jubula.client.core.model.ITestDataCategoryPO
+         org.eclipse.jubula.client.core.model.ITestDataCubePO
+         org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader
+         org.eclipse.jubula.tools.internal.constants.StringConstants
+         org.slf4j.Logger
+         org.slf4j.LoggerFactory"
+class="CTDSGenerator"%>
+<%
+Logger log = LoggerFactory.getLogger(CTDSGenerator.class);
+
+CTDSInfo info = (CTDSInfo)argument;
+String className = info.getClassName();
+IProjectPO project = info.getProject();
+Locale language = info.getLanguage();
+String projectName = null;
+try {
+    projectName = Utils.translateToPackageName(project);
+} catch (InvalidNodeNameException e) {
+    log.error("Invalid Project Name", e);
+}
+String packageName = Utils.getProjectPath(info.getPackageBasePath(), projectName);
+
+NameLoader nameLoader = NameLoader.getInstance();
+ITestDataCategoryPO testDataRoot = project.getTestDataCubeCont();
+List<ITestDataCubePO> testCubes = new ArrayList<ITestDataCubePO>();
+Utils.fillCTDSList(testDataRoot, testCubes);
+%>
+package <%=packageName%>;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class <%=className%> {
+
+<%for (ITestDataCubePO testCube : testCubes) {%>
+    <%String testCubeName = null;
+    try {
+        testCubeName = Utils.determineClassName(testCube);
+    } catch (InvalidNodeNameException e) {
+        log.error("Invalid Data Set Name", e);
+    }%>
+    public static class <%=testCubeName%> {
+    <%for (IParamDescriptionPO param : testCube.getParameterList()) {%>
+        <%String paramName = param.getName();
+        String paramType = nameLoader.findTypeForParameter(param.getType(), StringConstants.EMPTY);%>
+        <%=paramType%> <%=paramName%>;
+    <%}%>
+    
+        public static List<<%=testCubeName%>> data = new ArrayList<<%=testCubeName%>>();
+        
+        static {
+        <%for (int row = 0; row < testCube.getDataManager().getDataSetCount(); row++) {%>
+            data.add(new <%=testCubeName%>(
+            <%Iterator <IParamDescriptionPO> paramIterator = testCube.getParameterListIter();
+            while (paramIterator.hasNext()) {%>
+                <%IParamDescriptionPO param = paramIterator.next();
+                String paramValue = ParamUtils.getValueForParam(
+                    testCube, param, row, language);%>
+                <%=paramValue%><%if (paramIterator.hasNext()) {%>, <%}%>
+                
+            <%}%>));
+        <%}%>
+        }
+    
+        public <%=testCubeName%> (
+        <%Iterator <IParamDescriptionPO> paramIterator = testCube.getParameterListIter();
+        while (paramIterator.hasNext()) {%>
+            <%IParamDescriptionPO param = paramIterator.next();
+            String paramName = param.getName();
+            String paramType = nameLoader.findTypeForParameter(param.getType(), StringConstants.EMPTY);%>
+            <%=paramType%> _<%=paramName%><%if (paramIterator.hasNext()) {%>,<%}%>
+        <%}%>
+        ) {
+        <%for (IParamDescriptionPO param : testCube.getParameterList()) {%>
+            <%String paramName = param.getName();%>
+            <%=paramName%> = _<%=paramName%>;
+        <%}%>
+        }
+    }
+    
+<%}%>
+
+}

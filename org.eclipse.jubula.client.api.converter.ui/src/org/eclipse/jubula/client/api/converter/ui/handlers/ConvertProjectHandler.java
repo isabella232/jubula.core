@@ -29,6 +29,8 @@ import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.api.converter.CTDSGenerator;
+import org.eclipse.jubula.client.api.converter.CTDSInfo;
 import org.eclipse.jubula.client.api.converter.NodeGenerator;
 import org.eclipse.jubula.client.api.converter.NodeInfo;
 import org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException;
@@ -48,6 +50,7 @@ import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
@@ -195,8 +198,8 @@ public class ConvertProjectHandler extends AbstractHandler {
             if (firstAUT != null) {
                 toolkit = firstAUT.getToolkit();
             }
-            if (toolkit.equals("com.bredexsw.guidancer.RcpToolkitPlugin")) { //$NON-NLS-1$
-                toolkit = "com.bredexsw.guidancer.SwtToolkitPlugin"; //$NON-NLS-1$
+            if (toolkit.equals(CommandConstants.RCP_TOOLKIT)) {
+                toolkit = CommandConstants.SWT_TOOLKIT;
             }
             return toolkit;
         }
@@ -214,6 +217,7 @@ public class ConvertProjectHandler extends AbstractHandler {
                 displayErrorForInvalidName(project);
             }
             String projectPath = basePath + StringConstants.SLASH + projectName;
+            createCentralTestDataClass(project, new File(projectPath));
             for (IExecPersistable node : project.getExecObjCont()
                     .getExecObjList()) {
                 String path = projectPath + StringConstants.SLASH
@@ -227,7 +231,7 @@ public class ConvertProjectHandler extends AbstractHandler {
                 handleNode(new File(path), node);
             }
         }
-        
+
         /**
          * Creates a file for a node and a folder with its content for a category
          * @param parentDir the parent directory
@@ -374,6 +378,33 @@ public class ConvertProjectHandler extends AbstractHandler {
                     new String [] {fqNodeName},
                     null);
             progressMonitor.setCanceled(true);
+        }
+        
+        /**
+         * Creates a central test data file for a project
+         * @param project the project
+         * @param basePath the base path
+         */
+        private void createCentralTestDataClass(IProjectPO project,
+                File basePath) {
+            basePath.mkdirs();
+            String className = "CTDS.java"; //$NON-NLS-1$
+            String fileName = basePath.getAbsolutePath()
+                    + StringConstants.SLASH
+                    + className;
+            File file = new File(fileName);
+            try {
+                file.createNewFile();
+                CTDSGenerator gen = new CTDSGenerator();
+                CTDSInfo info = new CTDSInfo(className,
+                        project, genPackage, language);
+                String content = gen.generate(info);
+                writeContentToFile(file, content);
+            } catch (IOException e) {
+                ErrorHandlingUtil.createMessageDialog(
+                        new JBException(e.getMessage(), e,
+                                MessageIDs.E_FILE_NO_PERMISSION));
+            }
         }
     }
     

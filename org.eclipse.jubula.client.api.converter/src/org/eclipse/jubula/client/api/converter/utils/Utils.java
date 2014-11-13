@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.api.converter.utils;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
@@ -17,7 +18,10 @@ import org.apache.commons.lang.WordUtils;
 import org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
+import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -107,8 +111,8 @@ public class Utils {
      */
     public static String getFullyQualifiedTranslatedName(
             INodePO node, String packageBasePath, String projectName) {
-        String name = packageBasePath + StringConstants.DOT
-                + projectName + StringConstants.DOT;
+        String name = getProjectPath(packageBasePath, projectName)
+                + StringConstants.DOT;
         if (node instanceof ISpecTestCasePO) {
             name = name + SPEC_PATH;
         } else {
@@ -116,6 +120,19 @@ public class Utils {
         }
         return name + StringConstants.DOT
                 + getFullyQualifiedTranslatedNameWithoutPrefix(node);
+    }
+
+    /**
+     * 
+     * @param packageBasePath base path
+     * @param projectName project name
+     * @return the project path
+     */
+    public static String getProjectPath(String packageBasePath,
+            String projectName) {
+        String name = packageBasePath + StringConstants.DOT
+                + projectName;
+        return name;
     }
 
     /**
@@ -163,7 +180,7 @@ public class Utils {
      * @return the class name
      * @throws InvalidNodeNameException if a node name cannot be translated to a Java class name
      */
-    public static String determineClassName(INodePO node)
+    public static String determineClassName(IPersistentObject node)
         throws InvalidNodeNameException {
         String name = node.getName();
         name = removeInvalidCharacters(name);
@@ -245,5 +262,18 @@ public class Utils {
                 new CommonGenInfo(toolkitDescriptor, false);
         name = defaultFactoryInfo.getFqClassName();
         return name;
+    }
+    
+    /**
+     * fills all TestDataCubes from all sub-categories of the root into the list
+     * @param root the root
+     * @param list the list
+     */
+    public static void fillCTDSList(ITestDataCategoryPO root,
+            List<ITestDataCubePO> list) {
+        list.addAll(root.getTestDataChildren());
+        for (ITestDataCategoryPO cat : root.getCategoryChildren()) {
+            fillCTDSList(cat, list);
+        }
     }
 }

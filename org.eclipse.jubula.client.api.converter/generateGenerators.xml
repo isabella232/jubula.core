@@ -9,5 +9,7 @@
     <target name="generateGenerators">
         <emf.JETCompiler templateFile="./templates/NodeGenerator.javajet"
           sourceDirectory="src-gen"/>
+    	<emf.JETCompiler templateFile="./templates/CTDSGenerator.javajet"
+    	          sourceDirectory="src-gen"/>
     </target>
 </project>
