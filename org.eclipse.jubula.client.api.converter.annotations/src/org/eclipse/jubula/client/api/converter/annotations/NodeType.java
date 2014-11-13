@@ -13,6 +13,8 @@ package org.eclipse.jubula.client.api.converter.annotations;
 /** @author BREDEX GmbH */
 public enum NodeType {
     /** */
+    UNKNOWN,
+    /** */
     TEST_JOB,
     /** */
     TEST_SUITE,

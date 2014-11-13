@@ -61,9 +61,11 @@ package <%=packageName%>;
 
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.api.converter.annotations.SrcNode;
+import org.eclipse.jubula.client.api.converter.annotations.NodeType;
 
 <%if (hasComment) {%>/** <%=comment%> */<%}%>
-@SrcNode(UUID="<%=uuid%>")
+@SrcNode(UUID = "<%=uuid%>",
+         type = NodeType.UNKNOWN)
 public class <%=className%> {
     
     public static void execute(
