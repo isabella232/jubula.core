@@ -11,6 +11,7 @@ imports="java.util.*
          org.eclipse.jubula.client.core.model.IExecTestCasePO
          org.eclipse.jubula.client.core.model.INodePO
          org.eclipse.jubula.client.core.model.IParamDescriptionPO
+         org.eclipse.jubula.client.core.model.IParameterInterfacePO
          org.eclipse.jubula.client.core.model.IProjectPO
          org.eclipse.jubula.client.core.model.IRefTestSuitePO
          org.eclipse.jubula.client.core.model.ISpecTestCasePO
@@ -56,12 +57,15 @@ try {
 }
 String fqName = Utils.getFullyQualifiedTranslatedName(node, packageBase, projectName);
 String packageName = StringUtils.substringBeforeLast(fqName, StringConstants.DOT);
+String ctdsPath = Utils.getProjectPath(info.getPackageBasePath(), projectName);
 %>
 package <%=packageName%>;
 
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.api.converter.annotations.SrcNode;
 import org.eclipse.jubula.client.api.converter.annotations.NodeType;
+
+import <%=ctdsPath%>.CTDS;
 
 <%if (hasComment) {%>/** <%=comment%> */<%}%>
 @SrcNode(UUID = "<%=uuid%>",
@@ -148,6 +152,8 @@ public class <%=className%> {
                 }
                 testCaseName = Utils.getFullyQualifiedTranslatedName(spec, packageBase, projectName);
                 Iterator<IParamDescriptionPO> childParamIterator;
+                IParameterInterfacePO dataCube = exec.getReferencedDataCube();
+              if (dataCube == null) {
                 int rowCount = exec.getDataManager().getDataSetCount();
                 int row = 0;
                 do {%>
@@ -161,7 +167,27 @@ public class <%=className%> {
                     <%row++;%>
                 <%if (!isActive) {%>//<%}%>);
         
-                <%} while(row < rowCount);%>
+                <%} while(row < rowCount);
+              } else {
+                String dataCubeName = null;
+                try {
+                    dataCubeName = Utils.determineClassName(dataCube);
+                } catch (InvalidNodeNameException e) {
+                    log.error("Invalid Data Set Name", e);
+                }%>
+        for (CTDS.<%=dataCubeName%> row : CTDS.<%=dataCubeName%>.data) {
+        
+            <%if (!isActive) {%>//<%}%><%=testCaseName%>.execute(
+                    <%childParamIterator = exec.getParameterListIter();
+                    while (childParamIterator.hasNext()) {
+                        IParamDescriptionPO param = childParamIterator.next();
+                if (!isActive) {%>//<%}%>row.<%=param.getName()%><%if(childParamIterator.hasNext()){%><%if (!isActive) {%>//<%}%>,<%}%>
+                
+                    <%}%>
+                <%if (!isActive) {%>//<%}%>);
+        }
+              <%}%>
+        
             <%} else if (child instanceof IRefTestSuitePO) {
                 IRefTestSuitePO ref = (IRefTestSuitePO)child;
                 ITestSuitePO testSuite = ref.getTestSuite();

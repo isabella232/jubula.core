@@ -51,7 +51,7 @@ public class <%=className%> {
     <%for (IParamDescriptionPO param : testCube.getParameterList()) {%>
         <%String paramName = param.getName();
         String paramType = nameLoader.findTypeForParameter(param.getType(), StringConstants.EMPTY);%>
-        <%=paramType%> <%=paramName%>;
+        public <%=paramType%> <%=paramName%>;
     <%}%>
     
         public static List<<%=testCubeName%>> data = new ArrayList<<%=testCubeName%>>();
