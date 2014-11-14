@@ -40,6 +40,8 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
 import org.eclipse.jubula.tools.internal.objects.MonitoringValue;
@@ -199,6 +201,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     private String m_almRepositoryName = null;
     /** the URL of the dashboard */
     private String m_dashboardURL = null;
+    
+    /** whether this report has test result details */
+    private Boolean m_hasDetails = null;
     
     /**
      * only for Persistence (JPA / EclipseLink)
@@ -1163,5 +1168,16 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     @OrderColumn(name = "IDX_TESTRESULT_SUM")
     public List<IALMReportingRulePO> getALMReportingRules() {
         return m_reportingRules;
+    }
+
+    /** {@inheritDoc} */
+    @Transient
+    public boolean hasTestResultDetails() {
+        if (m_hasDetails == null) {
+            m_hasDetails = TestResultPM.hasTestResultDetails(GeneralStorage
+                    .getInstance().getMasterSession(), getId());
+        }
+
+        return m_hasDetails;
     }
 }

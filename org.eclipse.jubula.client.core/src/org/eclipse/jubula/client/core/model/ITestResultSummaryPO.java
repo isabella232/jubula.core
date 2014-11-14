@@ -76,4 +76,9 @@ public interface ITestResultSummaryPO extends IArchivableTestResultSummary,
      * @return the monitoring report for this test result summary
      */
     public abstract MonitoringReportPO getMonitoringReport();
+    
+    /**
+     * @return whether this result has corresponding test result details
+     */
+    public boolean hasTestResultDetails();
 }

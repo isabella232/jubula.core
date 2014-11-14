@@ -32,9 +32,7 @@ import org.eclipse.jubula.client.core.businessprocess.FileXMLReportWriter;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.SummarizedTestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Persistor;
-import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.ui.editors.TestResultViewer.GenerateTestResultTreeOperation;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -295,16 +293,13 @@ public class ExportTestResultDetailsWizard extends Wizard
         // DB connection. Otherwise we will receive an NPE
         // while trying to initialize the Master Session.
         if (Persistor.instance() != null) {
-            List<Number> idsWithDetails = 
-                TestResultPM.computeTestresultIdsWithDetails(
-                        GeneralStorage.getInstance().getMasterSession());
             for (Object selectedElement : selection.toArray()) {
                 if (selectedElement instanceof ITestResultSummaryPO
-                        && idsWithDetails.contains(
-                            ((ITestResultSummaryPO)selectedElement).getId())) {
-                    
-                    selectedSummaryList.add(
-                            (ITestResultSummaryPO)selectedElement);
+                        && ((ITestResultSummaryPO) selectedElement)
+                                .hasTestResultDetails()) {
+
+                    selectedSummaryList
+                            .add((ITestResultSummaryPO) selectedElement);
                 }
             }
         }

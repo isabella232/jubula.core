@@ -10,12 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.propertytester;
 
-import javax.persistence.EntityManager;
-
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.propertytester.AbstractBooleanPropertyTester;
 
 /**
@@ -45,21 +41,14 @@ public class TestResultSummaryPropertyTester
 
     /** {@inheritDoc} */
     public boolean testImpl(Object receiver, String property, Object[] args) {
-        final GeneralStorage instance = GeneralStorage.getInstance();
-        if (instance != null) {
-            final EntityManager masterSession = instance.getMasterSession();
-            if (masterSession.isOpen()) {
-                ITestResultSummaryPO summary = (ITestResultSummaryPO) receiver;
-                if (property.equals(HAS_MONITORING_DATA_PROP)) {
-                    return summary.isReportWritten();
-                }
-                if (property.equals(HAS_TEST_RESULT_DETAILS_PROP)) {
-                    return TestResultPM.hasTestResultDetails(masterSession,
-                        summary.getId());
-                } else if (property.equals(HAS_PENDING_ALM_REPORT_PROP)) {
-                    return hasPendingALMReport(summary, masterSession);
-                }
-            }
+        ITestResultSummaryPO summary = (ITestResultSummaryPO) receiver;
+        if (property.equals(HAS_MONITORING_DATA_PROP)) {
+            return summary.isReportWritten();
+        }
+        if (property.equals(HAS_TEST_RESULT_DETAILS_PROP)) {
+            return summary.hasTestResultDetails();
+        } else if (property.equals(HAS_PENDING_ALM_REPORT_PROP)) {
+            return hasPendingALMReport(summary);
         }
 
         return false;
@@ -68,14 +57,11 @@ public class TestResultSummaryPropertyTester
     /**
      * @param summary
      *            the summary to check
-     * @param session
-     *            the session to use
      * @return the pending status
      */
-    public static boolean hasPendingALMReport(ITestResultSummaryPO summary,
-        final EntityManager session) {
+    public static boolean hasPendingALMReport(ITestResultSummaryPO summary) {
         return summary.isTestsuiteRelevant()
-            && TestResultPM.hasTestResultDetails(session, summary.getId())
+            && summary.hasTestResultDetails()
             && summary.getAlmReportStatus() == AlmReportStatus.NOT_YET_REPORTED;
     }
 

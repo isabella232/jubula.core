@@ -54,9 +54,6 @@ import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.Persistor;
-import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.client.core.utils.DatabaseStateDispatcher;
 import org.eclipse.jubula.client.core.utils.DatabaseStateEvent;
@@ -383,9 +380,6 @@ public class TestresultSummaryView extends ViewPart implements
     /** search string textfield for filter*/
     private Text m_searchText;
     
-    /** the list of summary ids that have details */
-    private List<Number> m_detailedSummaryIds = new ArrayList<Number>();
-
     /**
      * <code>m_filterJob</code>
      */
@@ -584,9 +578,7 @@ public class TestresultSummaryView extends ViewPart implements
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public Image getImage(Object element) {
-                String text = String.valueOf(m_detailedSummaryIds
-                        .contains(((ITestResultSummaryPO)element).getId()));
-                if (text.equals(Boolean.TRUE.toString())) {
+                if (((ITestResultSummaryPO)element).hasTestResultDetails()) {
                     return IconConstants.TRSV_DETAILS;
                 }
                 return IconConstants.TRSV_NODETAILS;
@@ -600,10 +592,8 @@ public class TestresultSummaryView extends ViewPart implements
             @Override
             protected int doCompare(Viewer viewer, Object e1, Object e2) {
                 return getCommonsComparator().compare(
-                    m_detailedSummaryIds
-                        .contains(((ITestResultSummaryPO)e1).getId()), 
-                    m_detailedSummaryIds
-                        .contains(((ITestResultSummaryPO)e2).getId()));
+                    ((ITestResultSummaryPO)e1).hasTestResultDetails(), 
+                    ((ITestResultSummaryPO)e2).hasTestResultDetails());
             }
         };
     }
@@ -889,12 +879,6 @@ public class TestresultSummaryView extends ViewPart implements
                             maxNoOfDays * -1);
                     metaList = TestResultSummaryPM
                             .findAllTestResultSummaries(startTime);
-                    if (Persistor.instance() != null) {
-                        m_detailedSummaryIds = TestResultPM
-                            .computeTestresultIdsWithDetails(
-                                GeneralStorage.getInstance()
-                                    .getMasterSession());
-                    }
                     
                     if (metaList != null) {
                         m_tableViewer.setInput(metaList.toArray());
@@ -2082,8 +2066,7 @@ public class TestresultSummaryView extends ViewPart implements
                 metaValue = String.valueOf(m.isTestsuiteRelevant());
             } else if (m_filterType
                     .equals(TESTRESULT_SUMMARY_DETAILS_AVAILABLE)) {
-                metaValue = String.valueOf(m_detailedSummaryIds.contains(m
-                        .getId()));
+                metaValue = String.valueOf(m.hasTestResultDetails());
             } else if (m_filterType
                     .equals(TESTRESULT_SUMMARY_NUMBER_OF_FAILED_CAPS)) {
                 metaValue = String.valueOf(m.getTestsuiteFailedTeststeps());

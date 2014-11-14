@@ -19,7 +19,6 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.time.DateUtils;
@@ -310,22 +309,5 @@ public class TestResultPM {
 
         return (ITestResultSummaryPO) session.createQuery(query)
             .getSingleResult();
-    }
-    
-    /**
-     * @param session
-     *            The session in which to execute the Persistence (JPA / EclipseLink) query.
-     * @return a list of test result ids that have test result details
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static List<Number> 
-        computeTestresultIdsWithDetails(EntityManager session) {
-
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery query = builder.createQuery();
-        Path from = query.from(PoMaker.getTestResultClass()).get("internalTestResultSummaryID"); //$NON-NLS-1$
-        query.select(from).distinct(true);
-        
-        return session.createQuery(query).getResultList();
     }
 }

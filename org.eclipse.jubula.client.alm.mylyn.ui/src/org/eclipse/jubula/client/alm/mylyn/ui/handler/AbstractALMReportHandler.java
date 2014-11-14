@@ -16,8 +16,6 @@ import java.util.List;
 
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 
 /**
@@ -36,10 +34,9 @@ public abstract class AbstractALMReportHandler extends
             Object o = iterator.next();
             if (o instanceof ITestResultSummaryPO) {
                 ITestResultSummaryPO summary = (ITestResultSummaryPO) o;
-                if (TestResultPM.hasTestResultDetails(GeneralStorage
-                    .getInstance().getMasterSession(), summary.getId())
-                    && AlmReportStatus.NOT_YET_REPORTED.equals(summary
-                        .getAlmReportStatus())) {
+                if (summary.hasTestResultDetails()
+                        && AlmReportStatus.NOT_YET_REPORTED.equals(summary
+                                .getAlmReportStatus())) {
                     pendingSummaries.add(summary);
                 }
             }
