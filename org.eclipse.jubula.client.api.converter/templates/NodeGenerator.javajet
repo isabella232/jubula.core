@@ -190,10 +190,12 @@ public class <%=className%> {
         for (CTDS.<%=dataCubeName%> row : CTDS.<%=dataCubeName%>.data) {
             
             <%if (!isActive) {%>//<%}%><%=testCaseName%>.execute(
+                
                     <%childParamIterator = exec.getParameterListIter();
                     while (childParamIterator.hasNext()) {
                         IParamDescriptionPO param = childParamIterator.next();
-                if (!isActive) {%>//<%}%>row.<%=param.getName()%><%if(childParamIterator.hasNext()){%><%if (!isActive) {%>//<%}%>,<%}%>
+                
+                if (!isActive) {%>//<%}%>row.<%=param.getName()%><%if(childParamIterator.hasNext()){%>,<%}%>
                 
                     <%}%>
                 <%if (!isActive) {%>//<%}%>);
