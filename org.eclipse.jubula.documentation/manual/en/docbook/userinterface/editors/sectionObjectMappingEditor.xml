@@ -1,0 +1,52 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="object-mapping-editor" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Object Mapping Editor</title>
+  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <para>
+    Each AUT in a Project has an Object Mapping Editor. You can open
+    the Object Mapping Editor by right-clicking on a Test Suite in
+    the Test Suite Browser and selecting ”<emphasis>open with Object
+    Mapping Editor</emphasis>”.
+  </para>
+  <para>
+    You can also open the Object Mapping Editor by single-clicking
+    the chosen Test Suite and clicking on the ”<emphasis>start
+    Object Mapping Mode</emphasis>” button on the toolbar. This also
+    starts the Object Mapping Mode.
+  </para>
+  <para>
+    The Object Mapping Editor has four tabs, a split view, a tree
+    view, a table view and configuration tab. In the Object Mapping
+    Editor:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can see all the component names you have used in the
+        Test Suite you selected, and any other Test Suites which use
+        the same AUT.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can see any technical names you have collected from the
+        AUT.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can see the component and technical names you have
+        assigned to each other to complete mapping.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

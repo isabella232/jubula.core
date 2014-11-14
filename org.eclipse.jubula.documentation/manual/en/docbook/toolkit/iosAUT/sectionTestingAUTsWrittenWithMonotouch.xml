@@ -1,0 +1,188 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="testing-auts-written-with-monotouch" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Testing AUTs written with Monotouch</title>
+  <section id="create-a-binding-project">
+    <title>Create a binding project</title>
+    <para>
+      First you have to create a MonoTouch Binding Project. The
+      project template can be found in the category
+      <emphasis>C#/MonoTouch</emphasis>. A binding project contains
+      a reference to the MonoTouch library as well as two C# files
+      called <emphasis>ApiDefinition.cs</emphasis> and
+      <emphasis>StructsAndEnums.cs</emphasis>.
+    </para>
+  </section>
+  <section id="add-the-library-to-the-binding-project">
+    <title>Add the library to the binding project</title>
+    <para>
+      Add the library file librc.mobile.ios.nativ.a to the new
+      binding project. The file is part of the archive
+      <emphasis>development/iOS-support.zip</emphasis> in the
+      installation directory.
+    </para>
+    <para>
+      MonoDevelop will ask either to copy, move or link the file in
+      the binding project. We recommend choosing copy because
+      MonoDevelop will place a generated C# file called
+      <emphasis>librc.mobile.ios.nativ.linkwith.cs</emphasis> next
+      to the library file.
+    </para>
+  </section>
+  <section id="setting-up-linker-options">
+    <title>Setting up linker options</title>
+    <para>
+      The file <emphasis>librc.mobile.ios.nativ.linkwith.cs</emphasis> specifies the linker options. It contains a single annotation named <emphasis>LinkWith</emphasis>. Change the annotation to:
+    </para>
+<programlisting>
+[assembly: LinkWith 
+(&quot;librc.mobile.ios.nativ.a&quot;, 
+LinkTarget.Simulator | LinkTarget.ArmV6 
+| LinkTarget.ArmV7,
+ &quot;-ObjC -all_load&quot;, ForceLoad = true, 
+Frameworks=&quot;CFNetwork&quot;)
+</programlisting>
+    <para>
+      Doing this allows your AUT to be tested on the simulator as
+      well as on iOS devices. The framework
+      <emphasis>CFNetwork</emphasis> is needed to communicate with
+      the ITE.
+    </para>
+  </section>
+  <section id="defining-the-api-contract">
+    <title>Defining the API contract</title>
+    <para>
+      An Objective-C header file is provided. To use the library
+      from within a .NET project, you have to link the library’s
+      interface parts to .NET structures.
+    </para>
+    <para>
+      Linking is done in the file
+      <emphasis>ApiDefinition.cs</emphasis>. You have to translate
+      the header file contents into some C# interfaces. Finally you
+      have to annotate the interfaces/methods/parameters that name
+      the library’s objects.
+    </para>
+    <para>
+      Detailed information about translation and annotation may be
+      found on Xamarins web site:
+      <link xl:href="http://docs.xamarin.com/ios/Guides/Advanced_Topics/Binding_Objective-C_Libraries">http://docs.xamarin.com/ios/Guides/Advanced_Topics/Binding_Objective-C_Libraries</link>.
+    </para>
+    <para>
+      To use the library, adapt the following:
+    </para>
+    <para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec align="left"/>
+          <colspec align="left"/>
+          <thead>
+            <row>
+              <entry>Library's header file content</entry>
+              <entry>Linking in ApiDefinition.cs</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>
+                @interface ObjCClass<?linebreak?>
+                ...
+              </entry>
+              <entry>
+                [BaseType (typeof (NSObject))]<?linebreak?>
+                interface ObjCClass {
+              </entry>
+            </row>
+            <row>
+              <entry>
+                @end
+              </entry>
+              <entry>
+                ...<?linebreak?>
+                }
+              </entry>
+            </row>
+            <row>
+              <entry>
+                +(void)method1:(int)parameter;
+              </entry>
+              <entry>
+                [Static, Export("method1:")]<?linebreak?>
+                void method1(int parameter);
+              </entry>
+            </row>
+            <row>
+              <entry>
+                -(NSString*)method2;
+              </entry>
+              <entry>
+                [Export("method2")]<?linebreak?>
+                NSString method2();
+              </entry>
+            </row>
+            <row>
+              <entry>
+                @protocol MyDelegate<?linebreak?>
+                -(int)method3;<?linebreak?>
+                @end
+              </entry>
+              <entry>
+                [BaseType (typeof(NSObject))]<?linebreak?>
+                [Model]<?linebreak?>
+                interface MyDelegate {<?linebreak?>
+                [Export("method3")]<?linebreak?>
+                [Abstract]<?linebreak?>
+                int method3();<?linebreak?>
+                }
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+  </section>
+  <section id="building-a-.net-library">
+    <title>Building a .NET library</title>
+    <para>
+      When linking is done, build the binding project in Release
+      mode. When it is done, you will find a DLL in the bin/Release
+      directory of the binding project.
+    </para>
+    <para>
+      Copy this DLL to your project for your AUT and add it as a
+      reference to a .NET Assembly.
+    </para>
+    <para>
+      When the library changes, we recommend to remove this
+      reference and repeat the entire process.
+    </para>
+  </section>
+  <section id="add-hook-into-aut">
+    <title>Add hook into AUT</title>
+    <para>
+      When the binding DLL is referenced by your project, you can
+      use the namespace and all interfaces defined in
+      <emphasis>ApiDefinition.cs</emphasis>. Adding the hook is the
+      same as described for native iOS Apps but using C# syntax. You
+      should omit the preprocessor macros mentioned there or
+      implement your own switch for enabling the test hook.
+    </para>
+    <para>
+      Native iOS Apps are required to provide a ”window” property in
+      the AppDelegate. Your C# AppDelegate has to provide and use
+      this property too:
+    </para>
+<programlisting>
+[Export(&quot;window&quot;)]
+UIWindow window { get; set; }
+</programlisting>
+  </section>
+</section>

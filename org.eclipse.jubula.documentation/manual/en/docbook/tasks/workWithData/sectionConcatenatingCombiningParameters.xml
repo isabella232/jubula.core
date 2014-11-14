@@ -1,0 +1,83 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="concatenating-combining-parameters" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Concatenating (combining) parameters</title>
+  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
+  <para>
+    The ITE lets you use various different types of parameter:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Concrete values (<xref linkend="entering-concrete-values-as-data-in-test-cases"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Referenced parameters (<xref linkend="using-references-for-data-in-test-cases"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Variables (<xref linkend="using-variables-as-data-for-test-cases"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Functions (<xref linkend="using-functions-as-data-for-test-cases"/>).
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    You can use these parameters separately, or you can combine them
+    to create a parameter value. This is useful if a value you want
+    to enter or check consists of parts that change and parts that
+    stay the same.
+  </para>
+  <para>
+    To combine different types of parameter to make one value, you
+    must write them in a specific way:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Referenced parameters must be written with curly brackets around the reference name:
+        
+        <para>
+          <emphasis role="input">={REF_NAME</emphasis>}
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>Variable names must also be written with curly brackets around them:
+      
+        <para>
+          <emphasis role="input">${VAR_NAME}</emphasis>
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Concrete values are written as normal.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For example, you can build a data string that contains all four types of data:
+        
+        <para>
+          <emphasis role="input">test_={PROJECTNAME}_${CUSTOMERNUMBER}_?now()</emphasis>
+        </para>
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

@@ -1,0 +1,443 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="using-central-data-sets" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Using central data sets</title>
+  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <para>
+    You can create and manage central test data sets for a
+    Project which can be reused in Test Cases.
+  </para>
+  <section id="creating-and-editing-central-test-data-sets">
+    <title>Creating and editing central test data sets</title>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" id="newTestDataCubeNameContextId">New Central Data Set</anchor>
+    <para>
+      To create a central test data set:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the Central Test Data Editor by clicking the ”<emphasis>Central Test Data Editor</emphasis>” button on the toolbar or selecting:
+          
+          <para>
+            <emphasis role="menupath">Open with</emphasis>--&gt;<emphasis role="menupath">Central Test Data Editor</emphasis>
+          </para>
+          
+          from the Test Suite Browser.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the Central Test Data Editor, select:
+          
+          <para>
+            <emphasis role="menupath">Add new Data Set</emphasis>
+          </para>
+            
+          from the context-sensitive menu or press <emphasis role="input">»Insert«</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the dialog that appears, enter a name for the new data
+          set and click ”<emphasis>OK</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The new data set appears in the Central Test Data Editor. You can
+          now add parameters to the data set
+          (<xref linkend="adding-and-modifying-parameters-for-central-test-data-sets"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can rename the data set by pressing<emphasis role="input">»F2«</emphasis> or selecting:
+          
+          <para>
+            <emphasis role="menupath">Rename</emphasis>
+          </para>
+          
+          from the context sensitive menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can categorize your central data sets using the
+          <emphasis>Add category</emphasis> function from the context-sensitive
+          menu (<xref linkend="working-with-categories-in-the-browsers-and-editors"/>).
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="deleting-central-test-data-sets">
+    <title>Deleting central test data sets</title>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <para>
+      You can delete a central test data set if the data set has not
+      yet been reused (referenced) in a Test Case
+      (<xref linkend="reusing-central-test-data-sets-in-test-cases"/>).
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select:
+          
+          <para>
+            <emphasis role="menupath">Delete</emphasis>
+          </para>
+          
+          from the context-sensitive menu or press <emphasis role="input">»DELETE«</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          A dialog will appear if the data set has been reused and
+          cannot be deleted.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can use the search (<xref linkend="searching-for-places-where-a-test-case-or-test-suite-has-been-used"/>)
+          to show where the data set has been used.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="adding-and-modifying-parameters-for-central-test-data-sets">
+    <title>Adding and modifying parameters for central test data sets</title>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <para>
+      Once you have created a central test data set
+      (<xref linkend="creating-and-editing-central-test-data-sets"/>), you can add parameters to the
+      data set using the <emphasis>Edit Parameters</emphasis> dialog.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the edit parameters dialog for the central data set
+          by double-clicking on the data set in the Central Test Data Editor.
+          You can also select <emphasis role="menupath">Edit parameters</emphasis> from the
+          context-sensitive menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the <emphasis>Edit Parameters</emphasis> dialog, you can see any
+          parameters you have already added for this data set, and
+          what type of parameters they are.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Use the ”<emphasis>Add</emphasis>” button to create a new parameter
+          for the data set.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter a name for the parameter and select the type of
+          parameter it should be (e.g. String, Integer, ...). The
+          type of parameter it should be will depend on which
+          actions are using it. A list of actions and their
+          parameters (and types) is available in the reference
+          manual.
+          <para role="tip">Names for referenced parameters may only consist of letters, numbers and underscores. You cannot use spaces.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can also change the order the parameters appear in,
+          edit their types and names, and delete them completely
+          using this dialog.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="entering-data-for-central-test-data-sets">
+    <title>Entering data for central test data sets</title>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <para>
+      Once you have created a central test data set
+      (<xref linkend="creating-and-editing-central-test-data-sets"/>) and have added parameters to
+      the central test data set (<xref linkend="adding-and-modifying-parameters-for-central-test-data-sets"/>)
+      then you can enter data for these parameters in the
+      Data Sets View.
+    </para>
+    <para>
+      To enter data sets for a central test data set:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the Central Test Data Editor by clicking the ”<emphasis>Central Test Data Editor</emphasis>” on the toolbar or selecting:
+          
+          <para>
+            <emphasis role="menupath">Open with</emphasis>--&gt;<emphasis role="menupath">Central Test Data Editor</emphasis>
+          </para>
+          
+          from the Test Suite Browser.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the editor, single-click the central test data set you
+          want to add data to.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the Data Sets View, make sure the language in the
+          combo box on the right is the right language for your
+          data.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select ”<emphasis>Add</emphasis>” to add a row.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter the values for the parameters in the row.
+          <para role="tip">You cannot add referenced parameters (i.e. reference names preceded by the equals sign) in the Data Sets View for a central test data set.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Use the buttons in the Data Sets View to add more rows,
+          delete rows and insert rows above the currently selected
+          row.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="reusing-central-test-data-sets-in-test-cases">
+    <title>Reusing central test data sets in Test Cases</title>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <para>
+      You can reuse a central test data set in a Test Case to
+      provide the concrete data for the parameters required by the
+      Test Case.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          In the Properties View for the Test Case, enter the name of
+          the central test data set you want to use in the
+          <emphasis>Central Test Data Set</emphasis> field.
+          <para role="tip">Press <emphasis role="input">»CTRL+SPACE«</emphasis> to see a list of possible data sets for this Test Case. You will only be shown data sets that contain the correct parameters with the correct types.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When you have entered a central test data set, then the
+          Properties View shows <emphasis>central test data set</emphasis> as the
+          data type. You will see the data from the central test
+          data set in read-only form in the Data Sets View.
+          <para role="tip">If data is missing from the central test data set, you will receive the error that test data is incomplete for any  Test Suites this Test Case is used in.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can delete the central test data set used by removing
+          it from the <emphasis>central test data set</emphasis> field. The data
+          type reverts to <emphasis>local data</emphasis>. For more information
+          on the data sources, see the earlier section
+          (<xref linkend="viewing-and-changing-data-sources-for-test-cases"/>).
+          <para role="tip">You can use central test data sets that contain more parameters than your Test Case. For example, if your Test Case requires the parameters <emphasis role="input">NAME, ADDRESS</emphasis> and your central test data set contains <emphasis role="input">NAME, ADDRESS, POSTCODE</emphasis>, you can still use the central test data set.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="importing-excel-files-as-central-test-data">
+    <title>Importing Excel files as central test data</title>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <para>
+      If you have existing Excel files that you want to convert into
+      central test data, then you can import them via the
+      Central Test Data Editor:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          In the Central Test Data Editor, right-click and select
+          <emphasis role="menupath">Import</emphasis> from the context-sensitive menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the dialog that appears, browse to the directory
+          containing your Excel file(s).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Either select the whole directory (if it contains all
+          Excel files) on the left, or select the individual Excel
+          files on the right.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Click ”<emphasis>Finish</emphasis>” to start the import.
+          <para role="warning">Your Excel files must contain the correct amount and type of Project languages.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="changing-the-column-used-in-a-central-test-data-set-for-multiple">
+    <title>Changing the column used in a central test data set for multiple Test Cases</title>
+    <anchor role="helpid" id="searchRefactorChangeCtdsColumnUsageWizardPagePageContextId">Changing Central Test Data Columns</anchor>
+    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
+    <para>
+      If you have used a central test data set in multiple Test Cases and later realize that you
+      have two columns in the central test data set that contain the
+      same information, then you can change all Test Cases that use
+      this central test data set to just use one column. Once you
+      have done this, you can remove the unnecessary column from the
+      central test data set.
+    </para>
+    <para>
+      <para role="warning">In order to perform this action, all Test Cases to be changed must not be in use by anyone else using the Project -- you should ensure that this is the case before performing the action, otherwise the action cannot be carried out.</para>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Search for all places where the central test data set
+          whose column usage you want to change is used. Use
+          <emphasis>Show where used</emphasis> on the central test data set to
+          see all places (<xref linkend="searching-for-places-where-a-test-case-or-test-suite-has-been-used"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the Search Result View, you will see all places
+          where the selected central test data set is reused in this
+          Project, including any original specifications of
+          Test Cases that use it, and any reused Test Cases that use
+          it (as Test Cases or as Event Handlers. We recommend
+          selecting all entries to perform the action, otherwise you
+          may have incomplete test data after only changing a
+          subset.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You will only be able to perform the changes if:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              All the selected Test Cases use the same central test
+              data set.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              All the selected Test Cases have their original
+              specification in this Project, i.e. you do not
+              have a Test Case from a reused Project that uses
+              the central test data set in this Project.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              The Project is not protected.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              The Test Cases you have selected are present (i.e.
+              they are not missing from e.g. reused Projects.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              None of the selected Test Cases uses two different
+              central test data sets (e.g. one central test data set
+              on the originally specified Test Case, and another one
+              at a place where it is reused).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              The selected Test Cases have at least one referenced
+              parameter and at least one of the referenced
+              parameters has the same type as another parameter in
+              the central test data set.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>
+          If the Project is protected, or Test Cases are
+          missing, the context-menu entry will be disabled. If any
+          of the other prerequisites are not fulfilled, you will see
+          an information dialog that lets you automatically deselect
+          any invalid Test Cases.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the context menu, select:
+          
+          <para>
+            <emphasis role="menupath">Change central test data set column usage</emphasis>
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the dialog that appears, you can select a parameter to
+          change on the left-hand side, and the column to change it
+          to on the right-hand side. You can only change the usage
+          of columns whose types are the same. If you have e.g.
+          TEXT1 (string) and TEXT2 (string) in your central test
+          data set and Test Cases, but you only require TEXT1, then
+          select TEXT2 on the left-hand side and TEXT1 on the right
+          hand side.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Click ”<emphasis>Finish</emphasis>” to perform the action.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          All selected Test Cases will be altered to use the newly
+          chosen column in place of the previously used column.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the newly chosen column was already used in one or more
+          of the selected Test Cases, then all places within the
+          Test Case that referenced the old column are changed to
+          reference the newly chosen column. Using the example from
+          above, all places where TEXT2 was referenced in the
+          selected Test Case will be changed to TEXT1. The changed
+          name remains at the interface of the Test Case; TEXT2 is
+          not deleted from the Test Case, but it is no longer used.
+          If the newly chosen column was not yet used in one or more
+          of the selected Test Cases, the old parameter name of the
+          Test Case is renamed to the newly chosen column.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

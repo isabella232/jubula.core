@@ -1,0 +1,136 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="reuseproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Reusing (referencing) whole Projects in a Project</title>
+  <anchor role="helpid" id="projectUsedPropertyPageContextId">Used Projects Properties</anchor>
+  <para>
+    You can reuse (reference) Projects as libraries of Test Cases in
+    other Projects.
+  </para>
+  <para>
+    To reuse Projects:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Make sure that the Project you want to reuse is in the
+        database.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select:
+        
+        <para>
+          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Properties</emphasis>
+        </para>
+        
+        and select <emphasis>Used Projects</emphasis> from the tree on the left of the dialog that appears (<xref linkend="reuseprojectdialog"/>).
+      </para>
+      <figure id="reuseprojectdialog">
+        <title>Reused Projects</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/reuseproject.png"/>
+          </imageobject>
+          <textobject><phrase>Reused Projects</phrase></textobject>
+        </mediaobject>
+      </figure>
+    </listitem>
+    <listitem>
+      <para>
+        A list of Projects you can reuse will be offered on the
+        left-hand side of the dialog. You can only reuse Projects
+        which support the same toolkit as your current Project (e.g.
+        Swing, Concrete). <para role="tip">To be able to reuse a Project, you
+        must have checked the <emphasis>reusable</emphasis> box in
+        the Project properties for the Project
+        (<xref linkend="editing-general-project-properties"/>).</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        From the list of reusable Projects, select a Project and its
+        version to reuse in the current Project. Use the arrows to
+        move it to the list of reused Projects.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Click ”<emphasis>OK</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Test Cases from the Project you chose to reuse will
+        appear in the Test Case Browser, under a category with the
+        same name as the reused Project. The Test Cases will be
+        colored blue to distinguish them from other Test Cases in
+        this Project.
+      </para>
+      <para>
+        <para role="tip">You cannot edit these Test Cases here – but you can
+        reuse them in your Test Cases for this Project and edit
+        certain details (referenced parameters, component names)
+        when they are reused in other Test Cases.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can change the version of the reused Project via the
+        <emphasis>Used Projects</emphasis> Properties dialog, by
+        clicking on the ”<emphasis>change used version</emphasis>”
+        button (<xref linkend="changing-the-version-of-a-reused-project"/>).
+      </para>
+    </listitem>
+  </orderedlist>
+  <section id="changing-the-version-of-a-reused-project">
+    <title>Changing the version of a reused Project</title>
+    <anchor role="helpid" id="databaseMigrationAssistantContextId">Database Migration</anchor>
+    <anchor role="helpid" id="projectUsedPropertyPageContextId">Used Projects Properties</anchor>
+    <para>
+      You can change the version of the reused Project you are using
+      in your tests. This is useful to update to a new version of
+      the unbound modules, for example.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          In the <emphasis>Used Project properties</emphasis>,
+          select the currently reused Project version from the list
+          on the right.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select the new version of this Project from the list on
+          the left. <para role="tip">In order to be able to see and select the
+          new version of the Project, it must be in your database!</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Click the ”<emphasis>Switch version</emphasis>” button,
+          marked with the opposing arrows.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The version of the reused Project will be switched.
+          <para role="tip">If changes have taken place, it may be necessary to
+          update your test. You should especially check for any
+          actions that have become deprecated since the last
+          version, and replace them with new actions.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

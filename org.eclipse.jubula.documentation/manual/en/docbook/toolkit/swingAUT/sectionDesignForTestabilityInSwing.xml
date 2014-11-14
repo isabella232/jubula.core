@@ -1,0 +1,62 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="design-for-testability-in-swing" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Design for testability in Swing</title>
+  <section id="naming-components">
+    <title>Naming components</title>
+    <para>
+      Although components in the AUT can be recognized even when
+      they are not named by the developers, using the
+      <emphasis>setName</emphasis> method for the current Swing
+      component class certainly makes it easier to test AUTs. Even
+      if a whole area of the AUT has changed, the component will
+      still be found based on this unique name.
+    </para>
+  </section>
+  <section id="adding-support-for-text-retrieval">
+    <title>Adding support for text retrieval</title>
+    <para>
+      You can add support for renderers for Swing components without
+      the getText() method in order to access text that is otherwise
+      non-readable during test execution.
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          An example of the adapter mechanism can be found here:
+          
+          <para>
+            <emphasis>http://git.eclipse.org/c/jubula/org.eclipse.jubula.core.git/</emphasis><?linebreak?>
+            <emphasis>tree/org.eclipse.jubula.examples.extension.swing.rc.renderer</emphasis>
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This does not replace the support for custom Swing
+          renderers that can be changed directly by your developers.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you are able to change the renderers yourself, you can
+          still implement one of the following in your renderer:
+        </para>
+        <blockquote>
+          <para>
+            public String getTestableText(); public String
+            getText();
+          </para>
+        </blockquote>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>

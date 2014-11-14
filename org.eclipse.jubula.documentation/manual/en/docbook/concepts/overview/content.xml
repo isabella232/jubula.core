@@ -1,0 +1,26 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="overview" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                     xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="overview"?>
+  <title>Overview</title>
+  <para>
+    The ITE is based on the <emphasis>Eclipse</emphasis> development
+    platform, a platform-independent, open-source framework for
+    developing applications.
+  </para>
+  <para>
+    With the ITE, you can specify, modify, execute and analyse tests.
+    The user interface offers various ways of working, so that you can
+    choose the way that suits you best. You can alter the way the
+    client looks, and the way it behaves. You can work using the menu
+    bar, the tool bar, context-sensitive menus and shortcuts.
+  </para>
+</section>

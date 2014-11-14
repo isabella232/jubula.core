@@ -1,0 +1,31 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="standards-conformance" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Standards conformance</title>
+  <para>
+    If components have been derived and altered such that they no
+    longer respond to actions in the same way (i.e. rewriting the
+    single-click event for a textbox, non-standard responses to
+    certain key combinations, etc.), they may no longer be testable
+    out of the box.
+  </para>
+  <para>
+    It is therefore recommended for the purposes of testing – and
+    also for the sake of conformance to usability standards – that
+    the toolkit conventions are held to.
+  </para>
+  <para>
+    There may, of course, be situations where exceptions are
+    necessary. For this reason, there is an API via which testing
+    classes can be implemented so that even changed components can
+    be tested. See the Extension Manual for more information.
+  </para>
+</section>

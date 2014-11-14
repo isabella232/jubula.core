@@ -1,0 +1,47 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="starting-win-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Starting Win AUTs (.NET, WPF)</title>
+  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <section id="aut-configuration-for-windows-desktop-auts">
+    <title>AUT configuration for Windows desktop AUTs</title>
+    <para>
+      To be able to start a Windows desktop AUT, you should select
+      the <emphasis>win</emphasis> toolkit as the AUT toolkit in the
+      AUT definition dialog.
+    </para>
+    <para>
+      You must enter the following information to be able to start a
+      <emphasis>win</emphasis> AUT:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Enter the basic configuration details as described earlier
+          (<xref linkend="basic-configuration-info"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter the executable file name in the <emphasis>Executable
+          File Name</emphasis> field. This path can be relative if
+          you define a working directory (<xref linkend="using-working-dir-aut-config"/>)).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter any necessary command-line arguments for the AUT in
+          the <emphasis>AUT Arguments</emphasis> field.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

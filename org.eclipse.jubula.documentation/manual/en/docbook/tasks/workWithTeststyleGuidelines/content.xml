@@ -1,0 +1,36 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="working-with-the-teststyle-guidelines" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="workWithTeststyleGuidelines"?>
+  <title>Working with the Teststyle guidelines</title>
+  <para>
+    Teststyle lets you perform static analysis of your tests to make
+    sure they conform to conventions and best practices. For any
+    guidelines you have set in the Project, Teststyle will inform you
+    if they are not being upheld by displaying information, warnings
+    and errors in the Problems View. Elements in the Project where
+    warnings and errors are present are decorated with the yellow
+    warning symbol and the red error cross.
+  </para>
+  <para>
+    The Teststyle guidelines available reflect best practices and
+    conventions from working in a variety of Projects. They include
+    guidelines on naming conventions to make tests easy to read, easy
+    to incorporate into build processes, structural conventions for
+    your Projects and test design guidelines to make tests
+    maintainable and understandable.
+  </para>
+  
+  <xi:include href="sectionActivatingTeststyleForAProject.xml"/>
+  <xi:include href="sectionConfiguringTeststyleForAProject.xml"/>
+  <xi:include href="sectionWorkingWithTheProblemsViewToViewAndFixTeststyleProblems.xml"/>
+  
+</section>

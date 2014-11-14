@@ -1,0 +1,20 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="intro" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                  xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Intro</title>
+  <para>
+    If you are using the the Eclipse Jubula Feature in your Eclipse
+    installation, you can start AUTs from within Eclipse, similar to
+    the way in which you would debug an application using Eclipse.
+    This section describes how to start your AUT directly from the
+    IDE.
+  </para>
+</section>

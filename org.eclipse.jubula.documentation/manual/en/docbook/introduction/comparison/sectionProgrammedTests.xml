@@ -1,0 +1,33 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="programmed-tests" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Programmed Tests</title>
+  <para>
+    Writing tests in some kind of scripting language is certainly
+    powerful, but it puts a strain on the resources of a team,
+    because the test code itself becomes a project in its own right
+    and also needs to be checked and maintained. The extra costs
+    added by programming GUI tests can be considerable.
+  </para>
+  <para>
+    Tests written in code also have the problem that they no longer
+    view the software as a black box and may miss important aspects
+    relating to the acceptance. In addition, automation experts
+    (experienced software developers) become the only people who can
+    write or maintain tests. It is generally inadvisable to test
+    your own work, but this is what can happen if testing remains
+    solely in the realm of the developers. Writing tests without
+    coding from the black box perspective not only allows test
+    experts to automate tests (and therefore brings the test
+    perspective to the forefront), but also puts developers in the
+    shoes of the users, which helps to focus and improve the test.
+  </para>
+</section>

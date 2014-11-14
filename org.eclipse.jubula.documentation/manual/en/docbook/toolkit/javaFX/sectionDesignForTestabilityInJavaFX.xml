@@ -1,0 +1,24 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="design-for-testability-in-javafx" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Design for testability in JavaFX</title>
+  <section id="naming-components-2">
+    <title>Naming components</title>
+    <para>
+      Although components can be located in the AUT even when they
+      are not named by the developers, naming components is
+      nevertheless a good idea. You can improve the testability of
+      your application by using the following method in your JavaFX
+      code for the current component class:
+      <emphasis>setId();</emphasis>.
+    </para>
+  </section>
+</section>

@@ -1,0 +1,100 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="reentry-types" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Reentry types</title>
+  <para>
+    The reentry type specifies how the test should continue once the Event Handler Test Case
+    has been executed.
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        Break
+      </term>
+      <listitem>
+        <para>
+          The test execution leaves the Test Case in which the error
+          occurred and continues at the next Test Case or Test Step.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Continue
+      </term>
+      <listitem>
+        <para>
+          The test execution carries on at the next Test Case or
+          Test Step. This is a good option when the error is
+          relatively unimportant and does not affect the following
+          Test Steps. 
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Exit
+      </term>
+      <listitem>
+        <para>
+          The test execution is stopped. Use this when the error is
+          so severe that the test cannot be continued.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Return
+      </term>
+      <listitem>
+        <para>
+          The test execution leaves the Test Case in which the
+          activated Event Handler is nested. This could be the
+          current Test Case or one higher up in the hierarchy. This
+          option is useful if you have a use case, which contains
+          Test Cases to test a particular area or function. You can
+          decide to leave this part of the test, and carry on at the
+          next use case. <emphasis>Return</emphasis> will continue
+          at the next Test Suite in a Test Job if it is activated as
+          a default Event Handler or if there are no further steps
+          in the current Test Suite.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Pause
+      </term>
+      <listitem>
+        <para>
+          The test execution is paused. To restart the test, click
+          the <emphasis>pause</emphasis> button in the toolbar in
+          the ITE.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Retry
+      </term>
+      <listitem>
+        <para>
+          The failed Test Step is repeated as many times as you
+          specify in the Properties View. If the Test Step is
+          successful on repeating, it is marked as successful after
+          retrying. If the Test Step fails on all retries, the error
+          type is passed on to the next parent Test Case and this
+          Test Step (and therefore the test) is marked as failed. 
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+</section>

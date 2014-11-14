@@ -1,0 +1,53 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="reusability" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                        xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="reusability"?>
+  <title>Reusability</title>
+  <para>
+    Test Cases are the reusable units. Test Cases can be referenced in
+    other Test Cases to create modularly built tests.
+  </para>
+  <para>
+    Being able to reuse Test Cases means that you should put some
+    thought into how to design them so that they are as specific as
+    they need to be while also being generic enough to reuse in
+    different situations.
+  </para>
+  <para>
+    You can improve the flexibility of a Test Case by:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Using references (<xref linkend="using-references-for-data-in-test-cases"/>) instead of
+        concrete data if the data can change. References allow you to
+        feed a Test Case with different data each time you reuse it.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Using the abstract components (e.g. component with text,
+        component with text input, graphics component)
+        (<xref linkend="ConceptsAbstractComps"/>) to specify your tests wherever
+        possible.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Allowing the component it tests to be defined when you reuse
+        it (<xref linkend="entering-and-reassigning-component-names-in-the-component-names-view"/>).
+      </para>
+    </listitem>
+  </itemizedlist>
+  
+  <xi:include href="sectionConceptsAbstractComps.xml"/>
+  
+</section>

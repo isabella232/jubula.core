@@ -1,0 +1,95 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="loadproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                        xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Opening Projects</title>
+  <anchor role="helpid" id="openProjectDialogContextId">Opening Projects</anchor>
+  <anchor role="helpid" id="problemViewNoProjectContextId">Project Options Dialog</anchor>
+  <orderedlist>
+    <listitem>
+      <para>
+        To open a Project from the database, select:
+        
+        <para>
+          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis>.
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you haven’t already logged into the database, a dialog
+        will appear to ask you to do so. See the previous section
+        (<xref linkend="tasksdblogin"/>) for details.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Choose the Project you want to open from the combo box in
+        the dialog which appears (<xref linkend="loadfromdb"/>).
+      </para>
+      <figure id="loadfromdb">
+        <title>Open Project from database</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/loadfromdb.png"/>
+          </imageobject>
+          <textobject><phrase>Open Project from
+          database</phrase></textobject>
+        </mediaobject>
+      </figure>
+    </listitem>
+    <listitem>
+      <para>
+        If the Project has more than one version, choose which
+        version you want to open. For more information on Project
+        versions, see the section later (<xref linkend="projectversion"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Project is opened in the ITE.
+      </para>
+    </listitem>
+  </orderedlist>
+  <section id="auto-loading-default-project">
+    <title>Auto loading a default Project</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          Use the checkbox in the <emphasis>Open Project</emphasis> Dialog to specify that you want to open this Project in this version automatically when you select:
+          
+          <para>
+            <emphasis role="menuPath">Project</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis>
+          </para>
+          
+          This is useful if you only have one Project that you work with.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Per workspace, you can have one default Project. If you
+          are connected to a database which does not contain the
+          Project, or if the Project is no longer in the database,
+          then you will be shown the <emphasis>Open
+          Project</emphasis> Dialog and can choose another Project.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the Test preferences (<xref linkend="gdprefs"/>), you can disable the auto load of the Project. Doing this will mean that you see the normal <emphasis>Open Project Dialog</emphasis> when you select
+          
+          <para>
+            <emphasis role="menuPath">Project</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis>
+          </para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

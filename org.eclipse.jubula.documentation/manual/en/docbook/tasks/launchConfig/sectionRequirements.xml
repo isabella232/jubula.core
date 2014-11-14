@@ -1,0 +1,56 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="requirements" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Requirements</title>
+  <para>
+    The following Features need to be installed in order to start
+    Swing AUTs:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Jubula Launch Support for Java / Swing
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Java Developer Tools (JDT)
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    The following Features need to be installed in order to start
+    RCP AUTs:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Jubula Launch Support for Eclipse RCP
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Java Developer Tools (JDT)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Eclipse Plug-in Development Environment (PDE)
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <para role="tip">You can find an update site containing the Jubula Feature
+    and the Launch Integration in the correct version for each
+    standalone version in the installation directory in the
+    <emphasis>development</emphasis> folder.</para>
+  </para>
+</section>

@@ -1,0 +1,66 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="troubleobjectmapping" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>I can’t map components in the Object Mapping Mode</title>
+  <para>
+    <emphasis role="strong">Green border does not appear in Java AUTs</emphasis><?linebreak?>
+    If you are in the Object Mapping Mode and cannot see a green border around components, then this could mean the following:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The border cannot be drawn – try collecting the component
+        anyway and see if the technical name appears in the Object
+        Mapping Editor.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The component is not supported – find out whether the
+        component in your AUT is a standard component or a custom
+        component. If it is a custom component, you may need to
+        write an extension to be able to test it.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Green border is shown but component cannot be mapped</emphasis><?linebreak?>
+    If you can see the green border in the Object Mapping Mode but cannot collect the component, this could mean the following:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The key combination you are using is being blocked by the
+        AUT – try changing the combination (<xref linkend="object-mapping-preferences"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The component is already mapped. Check whether a technical
+        name in the <emphasis>unassigned technical names</emphasis>
+        or <emphasis>assigned names</emphasis> category is being
+        highlighted.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The component is not supported – find out whether the
+        component in your AUT is a standard component or a custom
+        component. If it is a custom component, you may need to
+        write an extension to be able to test it.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Problems with GTK</emphasis><?linebreak?>
+    The GTK graphics toolkit (often used with Linux) can make object mapping with the default settings impossible for certain components. If the AUT that you are mapping is running under Linux, please change the object mapping shortcut key combination to anything <emphasis>other than</emphasis> <emphasis role="input">»CTRL+SHIFT+[0-9 or A-F]«</emphasis>.
+  </para>
+</section>

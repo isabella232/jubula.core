@@ -1,0 +1,54 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="understanding-the-component-hierarchy" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Understanding the component hierarchy</title>
+  <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" id="compNameViewContextId">Component Names View</anchor>
+  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <para>
+    The component hierarchy is designed to allow flexible test
+    specification and robust tests.
+  </para>
+  <para>
+    <emphasis role="strong">Abstract components</emphasis>
+  </para>
+  <para>
+    You can write tests very abstractly at the beginning, only
+    adding detail later. You will notice that the library contains
+    categories such as <emphasis>Component with Text Input</emphasis> and
+    <emphasis>Graphics Component</emphasis>.
+  </para>
+  <para>
+    These are <emphasis>abstract components</emphasis> – actions in these categories can be used on a wide range of actual components in the AUT. You can use a <emphasis>Click</emphasis> action on the <emphasis>Graphics Component</emphasis> to click any component in the AUT. You just need to enter different component names for it in the Component Names View.
+  </para>
+  <para>
+    <emphasis role="strong">Using the same component name for different component types</emphasis>
+  </para>
+  <para>
+    What happens if you want to specify a test that clicks in a
+    table and then selects a cell in the table?
+  </para>
+  <para>
+    The click action is on the <emphasis>Graphics Component</emphasis> and the
+    select cell action is on the <emphasis>Table</emphasis> component – but you
+    don’t want to have two different component names.
+  </para>
+  <para>
+    This isn’t a problem. You can use the same component name for
+    different components as long as these are compatible. So, in
+    this case, the <emphasis>Graphics Component</emphasis> and the
+    <emphasis>Table</emphasis> component can both use the component name e.g.
+    <emphasis>TableView_MainTable_tbl</emphasis>.
+  </para>
+  <para>
+    <para role="warning">You cannot use the same component name for incompatible types, for example, trees and tables.</para>
+  </para>
+</section>

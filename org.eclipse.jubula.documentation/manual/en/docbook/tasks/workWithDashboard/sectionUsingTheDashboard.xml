@@ -1,0 +1,114 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="using-the-dashboard" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Using the Dashboard</title>
+  <para>
+    Once you have started the Dashboard application in your browser
+    (<xref linkend="starting-dashboard-with-custom-parameters"/>),
+    you will see the Reporting Perspective you are familiar with
+    from the ITE (<xref linkend="working-with-the-test-result-summary-view"/>).
+  </para>
+  <section id="features-available-in-the-dashboard">
+    <title>Features available in the Dashboard</title>
+    <para>
+      Many of the features available for viewing test results in the
+      ITE are also available here:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can reopen the Test Result View for a test run whose
+          details are still in the database
+          (<xref linkend="re-opening-the-test-result-view-for-a-test-run"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can refresh the Test Result Summary View
+          (<xref linkend="refreshing-the-test-result-summary-view"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can filter and sort in the Test Result Summary View
+          (<xref linkend="filtering-and-sorting-in-the-test-result-summary-view"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When a test result is open, you can jump to the next or
+          previous error (<xref linkend="testresultview"/>) and view properties
+          details / any screenshots taken for a selected node.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can export test results as HTML and XML reports from
+          the Dashboard.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="features-unavailable-in-the-dashboard">
+    <title>Features unavailable in the Dashboard</title>
+    <variablelist>
+      <varlistentry>
+        <term>
+          database changes:
+        </term>
+        <listitem>
+          <para>
+            You cannot perform any actions in the Dashboard that
+            alter the data in the database, e.g. deleting test
+            result summaries, entering comments, toggling relevance
+            or reporting to ALM.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Preferences
+        </term>
+        <listitem>
+          <para>
+            You also cannot change the preferences via the
+            workspace, so the default period of time for which you
+            see test result summaries is 30 days, and the label
+            decoration for execution duration time and parameter
+            values are displayed (<xref linkend="label-decoration-preferences"/>).
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Code coverage
+        </term>
+        <listitem>
+          <para>
+            Code coverage reports cannot be opened in the Dashboard.
+            You can, however, see the code coverage values in the
+            Test Result Summary View.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          BIRT reports
+        </term>
+        <listitem>
+          <para>
+             are not available in the Dashboard.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </section>
+</section>

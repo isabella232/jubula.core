@@ -1,0 +1,49 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="object-mapping-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Object mapping preferences</title>
+  <anchor role="helpid" id="prefPageObjectMapContextId">Object Mapping Preferences</anchor>
+  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <figure>
+    <title>Object Mapping Preference Dialog</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/objectmappingprefs.png"/>
+      </imageobject>
+      <textobject><phrase>Object Mapping Preference
+      Dialog</phrase></textobject>
+    </mediaobject>
+  </figure>
+  <para>
+    You can access the object mapping preferences from
+    <emphasis>Test - Object Mapping</emphasis> in the preferences
+    dialog.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select whether you want the ITE to display how many nodes
+        are contained in each category in the Object Mapping Editor.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Choose which keystrokes or mouse buttons you want to use to
+        collect components in the Object Mapping Mode.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <para role="tip">If your AUT does not accept keystrokes, set the object
+    collection preference to a mouse button combined with a modifier
+    key.</para>
+  </para>
+</section>

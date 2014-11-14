@@ -1,0 +1,63 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="renaming-items-in-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Renaming items in editors</title>
+  <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <para>
+    You can rename items referenced in Test Cases, Test Suites and
+    Test Jobs.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Open the editor containing the items you want to rename.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select the item you want to rename in the editor.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the Properties View, enter the new name for the item in
+        the <emphasis>Reference Name</emphasis> field at the top of
+        the Properties View.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Save the editor.
+      </para>
+      <para>
+        The angled brackets from the item you just edited will
+        disappear from the name in the editor. This indicates that
+        the item has been renamed here. You will still see the
+        original item name behind the new name in brackets. In the
+        preferences, you can opt not to see the original name when
+        you have renamed an item (<xref linkend="gdprefs"/>).
+      </para>
+      <para>
+        The original item in the browser still has its original
+        name. The referenced item you just renamed will keep its new
+        name even if you rename the original item.
+      </para>
+      <para>
+        If you want to reset the original specification name, empty
+        the <emphasis>Reference Name</emphasis> field and save the
+        editor. The item will redisplay the angled brackets and will
+        have the same name as the specification name.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

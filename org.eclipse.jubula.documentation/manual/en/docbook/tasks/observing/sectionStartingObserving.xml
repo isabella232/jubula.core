@@ -1,0 +1,80 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="starting-observing" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                               xmlns:xi="http://www.w3.org/2001/XInclude"
+                                               xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Starting observing</title>
+  <para>
+    To be able to observe Test Steps, you must:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        define an AUT (<xref linkend="define-aut"/>) <para role="tip">Only Java AUTs can
+        use the observation mode. </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        configure an AUT (<xref linkend="configuringaut"/>) if you want to start
+        it from the ITE.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        set the working language to the language you want to observe
+        in.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        start the AUT you want to observe from (<xref linkend="starting-the-aut"/>)
+        (either via a configuration (<xref linkend="configuringaut"/>) or using
+        the <emphasis>autrun</emphasis> command (<xref linkend="starting-java-with-the-command"/>)).
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    Once you have completed these steps, you can select the
+    ”<emphasis>observe Test Case</emphasis>” button
+    <mediaobject role="icon" file="images/cam.png"/> on the main
+    toolbar.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        When asked, enter a name for the observed Test Case.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The status bar will show that you are in the observation
+        mode.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A Test Case Editor for the observed Test Case will appear.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Switch to the AUT and activate it by clicking once in the
+        title bar.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can now observe Test Steps. <para role="tip">If you have a Test
+        Case open in the Test Case Editor, the Test Steps will be
+        observed into this open Test Case. </para>
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

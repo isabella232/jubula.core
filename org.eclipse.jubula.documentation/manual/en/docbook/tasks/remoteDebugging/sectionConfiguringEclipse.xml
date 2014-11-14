@@ -1,0 +1,61 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="configuring-eclipse-for-remote-debugging" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Configuring Eclipse for remote debugging</title>
+  <para>
+    Create a new <quote>Remote Java Application</quote> in the
+    <quote>Launch configuration</quote> dialog and enter the
+    hostname for the computer on which the AUT Agent is running.
+    The specified port has to be the same which you used in the
+    AUT configuration (e.g. 4711).
+  </para>
+  <para>
+    To get your AUT running using remote debugging options you
+    have to take the following steps:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Start the AUT Agent
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Connect the ITE with the AUT Agent, load the
+        Project in the ITE and invoke the startup of the
+        AUT in the ITE.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If ”suspend=y”, you now have to run your <quote>Remote Java
+        Application</quote>-configuration in Eclipse, as the JVM is
+        waiting for the debugger to connect before starting the
+        application. As soon as you are connected you should see the
+        default debug behaviour in your debug perspective of
+        Eclipse.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Your AUT has now been launched with the ability to use
+        remote debugging.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    If you wish to debug an RCP AUT which is launched with an
+    executable file, you must pass these JRE arguments via the
+    AUT arguments and ”-vmargs”. When using this option, make
+    sure you overwrite all JRE options that are defined in the
+    ”config.ini” of your RCP launcher.
+  </para>
+</section>

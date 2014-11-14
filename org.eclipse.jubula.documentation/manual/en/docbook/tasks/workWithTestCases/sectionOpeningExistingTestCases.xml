@@ -1,0 +1,53 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="opening-existing-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Opening existing Test Cases</title>
+  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" id="testCaseOpenExistingContextId">Open Existing Test Case</anchor>
+  <para>
+    You can open an existing Test Case without having to select it
+    from the Test Case Browser using the <emphasis>Open Test
+    Case</emphasis> dialog.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        This dialog can be opened using the shortcut <emphasis role="input">»CTRL+SHIFT+T«</emphasis> or from the menu:
+        
+        <para>
+          <emphasis role="menuPath">Edit</emphasis>--&gt;<emphasis role="menuPath">Open Test Case</emphasis>
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the dialog, you can search for a Test Case or Test Cases
+        in the tree or using the filter (<xref linkend="using-filters-in-the-ite"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select the Test Cases you want to add, and click
+        ”<emphasis>OK</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The selected Test Cases will be opened in indidivual Test
+        Case editors.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <para role="tip">You can use this option to open a Test Case even if a
+    filter is active in the Test Case Browser.</para>
+  </para>
+</section>

@@ -1,0 +1,80 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="general-help" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>General help</title>
+  <para>
+    Always check in the Problems View first for any help with your
+    tests. The messages there should help you with most of the
+    problems. The ITE also highlights problems in the browsers and
+    views with red crosses. Hover the mouse over the item to see a
+    tool tip with more information.
+  </para>
+  <para>
+    In some text fields you can only enter certain characters. A red
+    background in a text field means that you have entered something
+    incorrect in that field. A yellow background means that the
+    information entered is incomplete.
+  </para>
+  <para>
+    Looking in the log files may help to resolve some problems. Logs for the client (ITE) and AUT Agent can be found via:
+    
+    <para>
+      <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">Show Client/AUT Agent Log</emphasis> <para role="tip">The ITE can only access an AUT Agent log file if it is currently connected to a AUT Agent.</para>
+    </para>
+  </para>
+  <para>
+    This section contains information on some of the more common
+    problems:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Starting the AUT Agent (<xref linkend="troublestartserver"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Connecting to the AUT Agent (<xref linkend="troubleconnectserver"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Starting the AUT (<xref linkend="troublestartaut"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Mapping components from the AUT
+        (<xref linkend="troubleobjectmapping"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Executing Test Suites (<xref linkend="troubleexecute"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Failed Test Suites (<xref linkend="troublefailed"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Locked Test Cases (<xref linkend="troublelocked"/>).
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    For other problems, look in the relevant section of the user
+    manual or the reference manual. There are also FAQs on the
+    BREDEX website.
+  </para>
+</section>

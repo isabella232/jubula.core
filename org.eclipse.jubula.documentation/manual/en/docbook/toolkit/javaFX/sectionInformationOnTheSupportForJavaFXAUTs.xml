@@ -1,0 +1,214 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="information-on-the-support-for-javafx-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Information on the support for JavaFX AUTs</title>
+  <para>
+    <emphasis role="strong">AUT modifications</emphasis><?linebreak?>
+    No modifications are necessary to ensure that the AUT can be tested. The AUT can be deployed normally: no extra steps are needed for a test deployment. <emphasis role="strong">Information on AUT types</emphasis> AUTs that are created with FXML seem to display long delays when showing screens. Object recognition and test execution are possible, but you will need to use longer waits when opening new screens in tests for these AUTs.
+  </para>
+  <para>
+    <emphasis role="strong">Supported components</emphasis><?linebreak?>
+    Below is an overview of the supported components. You can also see individual tickets for component support via the Eclipse bugzilla:
+    
+    <para>
+      <link xl:href="http://eclip.se/421595">http://eclip.se/421595</link>
+    </para>
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        Buttons
+      </term>
+      <listitem>
+        <para>
+          are supported
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Toggle buttons, radio buttons and checkboxes:
+      </term>
+      <listitem>
+        <para>
+          are supported
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Text components
+      </term>
+      <listitem>
+        <para>
+          such as labels and text are supported
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Text input components
+      </term>
+      <listitem>
+        <para>
+          such as text fields and password fields are supported
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Combo boxes:
+      </term>
+      <listitem>
+        <para>
+          are supported. You can select from combo boxes and check
+          items in them, but we have not yet implemented support for
+          text input on editable combo boxes. 
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Choice boxes
+      </term>
+      <listitem>
+        <para>
+          are supported.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Tables:
+      </term>
+      <listitem>
+        <para>
+          TableView tables are supported
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Trees:
+      </term>
+      <listitem>
+        <para>
+          TreeView trees are supported
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Lists:
+      </term>
+      <listitem>
+        <para>
+          ListView lists are supported. Drag and drop of list items
+          is not supported. 
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Tabbed components:
+      </term>
+      <listitem>
+        <para>
+          Tab Panes are supported
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Context menus:
+      </term>
+      <listitem>
+        <para>
+          are supported
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Menu bars:
+      </term>
+      <listitem>
+        <para>
+          are supported. Only single menu bars are currently
+          supported. If your AUT has multiple menu bars, an error
+          will be thrown.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Accordeons
+      </term>
+      <listitem>
+        <para>
+          are supported. If you cannot map the accordeon with all
+          tabs closed, open a tab to map the accordeon component.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Image views
+      </term>
+      <listitem>
+        <para>
+          are supported. You can perform graphics component actions
+          on them (check, click, wait for, ...)
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Dialogs from ControlsFX
+      </term>
+      <listitem>
+        <para>
+          Lightweight and heavyweight dialogs from the ControlsFX
+          library are supported
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Application actions
+      </term>
+      <listitem>
+        <para>
+          are supported. Synchronized termination and restart is not
+          implemented. The simple <emphasis>restart</emphasis> does
+          work, however.
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+  <para>
+    <emphasis role="strong">Other information</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The observation mode, <emphasis>autrun</emphasis> and code
+        coverage do not work for JavaFX AUTs.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        We do not currently support addressing components that have
+        been scaled (shrunk or enlarged).
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

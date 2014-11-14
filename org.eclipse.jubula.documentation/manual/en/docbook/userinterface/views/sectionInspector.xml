@@ -1,0 +1,21 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="the-inspector" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>The Inspector View</title>
+  <para>
+    The Inspector View can be used to help you test RCP AUTs which use
+    the GEF framework. When the inspector is activated, figures can
+    be clicked in the GEF canvas, and their textpath (used to
+    identify them in the test) is shown. The Inspector View is shown by
+    default in the bottom right-hand corner of the Functional Test Specification
+    Perspective.
+  </para>
+</section>

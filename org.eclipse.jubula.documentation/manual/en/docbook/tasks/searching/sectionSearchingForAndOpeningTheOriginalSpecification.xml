@@ -1,0 +1,67 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="searching-for-and-opening-the-original-specification-of-a-test-case-or-test-suite" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Searching for and opening the original specification of a Test Case or Test Suite</title>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <para>
+    To find the the original specification of any reused Test Case
+    or Test Suite:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Single-click the Test Case or Test Suite whose specification
+        you want to find.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Right-click on the Test Case or Test Suite and select
+        ”<emphasis>Show specification</emphasis>” from the
+        context-sensitive menu. You can also press
+        <emphasis role="input">»F6«</emphasis> to show the
+        specification.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The originally specified Test Case or Test Suite will be
+        highlighted in the Test Case Browser or Test Suite Browser.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can open the specified Test Case or Test Suite
+        automatically by selecting ”<emphasis>Open
+        specification</emphasis>” or by pressing
+        <emphasis role="input">»F3«</emphasis>. This also works on the
+        original specification of Test Cases, Test Suites and Test
+        Jobs in the brosers.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you double-click the Test Case or Test Suite while it is
+        in an editor, then this will also open the original
+        specification (as if you had pressed
+        <emphasis role="input">»F3«</emphasis>). <para role="tip">Test Cases and
+        Test Suites that are not visible due to active filters in
+        the browser are not displayed when show specification is
+        used. You can, however, use <emphasis>open
+        specification</emphasis> to directly open a filtered Test
+        Case or Test Suite.</para>
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

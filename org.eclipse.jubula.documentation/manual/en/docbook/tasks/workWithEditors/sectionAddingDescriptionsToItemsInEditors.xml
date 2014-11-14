@@ -1,0 +1,81 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="adding-descriptions-to-items-in-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Adding descriptions to items in editors</title>
+  <anchor role="helpid" id="editDescriptionDialogContextId">Description Dialog</anchor>
+  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <para>
+    Descriptions are longer pieces of text that provide information about nodes in your tests. 
+    You can add descriptions in the ITE to Test Cases, Test Suites and Test Jobs 
+    via the editor for these items. 
+    You can add descriptions to the item itself, or to other items used in it.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Open the editor containing the item you want to add a description to.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select the item you want to add, and select from the context-sensitive menu:
+      </para>
+      <para>
+        <emphasis role="menuPath">Edit description</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the dialog that opens, you can enter text in the upper field. 
+        The text you enter can use the syntax of various markup languages (e.g. TracWiki, MediaWiki). 
+        You can set the language for your Project in the Project properties 
+        (<xref linkend="projectproperties"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the lower field, you can see the preview of the text as it will appear in the description view. 
+        The preview is updated after a short pause in typing.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Click "<emphasis>OK</emphasis>" to close the dialog. 
+        You will see the description you have entered in the description view. 
+        If the description view is not open, you can open it by selecting:
+      </para>
+      <para>
+        <emphasis role="menuPath">Window</emphasis> --&gt; 
+        <emphasis role="menuPath">Show View</emphasis>--&gt; 
+        <emphasis role="menuPath">Description</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The changes to your descriptions are saved when you save the editor.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can add a description for the original specification of a Test Case or a Test Suite, and 
+        also at places where a Test Case or Test Suite has been reused. 
+        You can add a new description to overwrite an existing one when you reuse an item.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Descriptions are not displayed in test results.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

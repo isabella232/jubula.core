@@ -1,0 +1,48 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="starting-and-connecting-aut-agent" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="startAndConnectAUTAgent"?>
+  <title>Starting and connecting to the AUT Agent</title>
+  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <para>
+    The AUT Agent is the server component. It runs on the same machine
+    as the AUT and allows the ITE to communicate with the AUT and
+    control it during test execution. You must be connected to a
+    running AUT Agent in order to be able to perform object mapping,
+    to observe tests, and to execute tests.
+  </para>
+  <para>
+    There are two options for working with an AUT Agent:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can connect to an embedded AUT Agent that does not have to
+        be started in advance (<xref linkend="connect-aut-agent"/>). This option
+        is only available if you are starting your AUT on the same
+        machine as the ITE. It can also be used with the test
+        executor: the testexec can start an embedded AUT Agent for use
+        during the test.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can start an AUT Agent on a machine (local or remote) and
+        connect to it using the ITE or the Test Executor
+        (<xref linkend="start-aut-agent"/>).
+      </para>
+    </listitem>
+  </itemizedlist>
+  
+  <xi:include href="sectionStartingAUTAgent.xml"/>
+  <xi:include href="sectionConnectingToAUTAgent.xml"/>
+  
+</section>

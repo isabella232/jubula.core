@@ -1,0 +1,26 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="searching" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                      xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="searching"?>
+  <title>Searching</title>
+  
+  <xi:include href="sectionSearchingForAndOpeningTheOriginalSpecification.xml"/>
+  <xi:include href="sectionSearchingForUsedTestCaseOrSuite.xml"/>
+  <xi:include href="sectionSearchingForUsedComponentName.xml"/>
+  <xi:include href="sectionSearchingForUsedCentralTestDataSet.xml"/>
+  <xi:include href="sectionUsingTheSearchDialog.xml"/>
+  <xi:include href="sectionSearchingForTasks.xml"/>
+  <xi:include href="sectionUsingTheSearchResultView.xml"/>
+  <xi:include href="sectionSearchingForItems.xml"/>
+  <xi:include href="sectionUsingFiltersInTheITE.xml"/>
+  <xi:include href="sectionOtherFilterOptions.xml"/>
+  
+</section>

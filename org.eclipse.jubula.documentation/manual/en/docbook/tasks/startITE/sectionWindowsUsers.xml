@@ -1,0 +1,29 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="windows-users-1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Windows Users</title>
+  <orderedlist>
+    <listitem>
+      <para>
+        Start the ITE from the start menu:
+        
+        <para>
+          <emphasis role="menuPath">Start</emphasis>--&gt;<emphasis role="menuPath"><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> or Jubula</emphasis>--&gt;<emphasis role="menuPath"><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> or Jubula</emphasis>.
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can also start the ITE using a command line argument.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

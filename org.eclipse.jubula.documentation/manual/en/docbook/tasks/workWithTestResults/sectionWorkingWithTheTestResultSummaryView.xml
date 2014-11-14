@@ -1,0 +1,238 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="working-with-the-test-result-summary-view" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Working with the Test Result Summary View</title>
+  <anchor role="helpid" id="testResultViewContextId">Test Results View</anchor>
+  <anchor role="helpid" id="prefPageTestResultContextId">Test Result Preferences</anchor>
+  <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <para>
+    A test result summary and full details about the whole test are
+    stored for each test run. Individual Test Suites within a Test
+    Job are counted as one test run each.
+  </para>
+  <para>
+    You can see the test result summaries in the Reporting
+    Perspective, in the Test Result Summary View.
+  </para>
+  <section id="re-opening-the-test-result-view-for-a-test-run">
+    <title>Re-opening the test result view for a test run</title>
+    <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <orderedlist>
+      <listitem>
+        <para>
+          If the full details for a test run are still available
+          (the column <emphasis>Details</emphasis> shows
+          <emphasis>true</emphasis>), you can re-open the full test
+          result by double-clicking on the entry in the Test Result
+          Summary View or by clicking the button to open the report
+          in the top right-hand corner of the view.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the test result, you can navigate through the test
+          results using the mouse or using the toolbar buttons to
+          spring to the next or previous error. In this way, you can
+          view any screenshots in the Image View and details about
+          errors in the Properties View.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Each node in the Test Result View shows the amount of time
+          taken to execute this node and any parameter values that
+          were used at this node. You can turn these options off in
+          the preferences (<xref linkend="label-decoration-preferences"/>).
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      <para role="tip">In the Project properties, you can specify how often
+      the full reports should be automatically deleted from the
+      database (<xref linkend="editing-general-project-properties"/>). </para>
+    </para>
+  </section>
+  <section id="filtering-and-sorting-in-the-test-result-summary-view">
+    <title>Filtering and sorting in the Test Result Summary View</title>
+    <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <para>
+      The Test Result Summary View shows a summary of each Test
+      Suite that has run.
+    </para>
+    <para>
+      <emphasis role="strong">Sorting entries in the Test Result Summary View</emphasis>
+    </para>
+    <para>
+      Click on a column header to sort the table according to the
+      values in this column.
+    </para>
+    <para>
+      <emphasis role="strong">Showing and hiding columns in the Test Result Summary View</emphasis>
+    </para>
+    <para>
+      In the context-menu on the column headers in the Test Result
+      Summary View, you can select which columns you want to show in
+      the view. Your settings for this view are saved in your
+      workspace.
+    </para>
+    <para>
+      <emphasis role="strong">Filtering in the Test Result Summary View</emphasis>
+    </para>
+    <para>
+      At the top of the Test Result Summary View there is a filter.
+      Choose which column you want to filter, and enter the value
+      you want to filter by (use <emphasis role="input">*</emphasis> as a wildcard).
+    </para>
+  </section>
+  <section id="changing-the-amount-of-result-summaries-shown-in-the-test-result-summary-view">
+    <title>Changing the amount of result summaries shown in the Test Result Summary View</title>
+    <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <para>
+      In the test result preferences (<xref linkend="test-result-preferences"/>) you can
+      alter the amount of days that a test result summary is shown.
+      The top of the Test Result Summary View shows the amount of
+      days that test result summaries are being shown for. Any
+      unshown summaries are still present in the database and can be
+      shown by increasing the amount of days.
+    </para>
+  </section>
+  <section id="changing-the-relevance-of-a-test-run">
+    <title>Changing the relevance of a test run</title>
+    <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <para>
+      You can change the relevance of a test run (i.e. whether it is exported with the Project
+      or not) in the Test Result Summary View.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select the test run whose relevance you want to change.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select:
+          
+          <para>
+            <emphasis role="menuPath">Toggle relevance</emphasis>
+          </para>
+          
+          from the context-sensitive menu.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="refreshing-the-test-result-summary-view">
+    <title>Refreshing the Test Result Summary View</title>
+    <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <para>
+      Use the ”<emphasis>Refresh</emphasis>” button
+      <mediaobject role="icon" file="images/refresh.png"/> at the top
+      right hand corner of the Test Result Summary View to refresh
+      the view after tests have been run.
+    </para>
+  </section>
+  <section id="deleting-test-runs-from-the-test-result-summary-view">
+    <title>Deleting test runs from the Test Result Summary View</title>
+    <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <para>
+      Select one or more rows in the Test Result Summary View and use the
+      ”<emphasis>Delete</emphasis>” button <mediaobject role="icon" file="images/delete.png"/>
+      in the top right hand corner of the view to delete these test runs.
+    </para>
+  </section>
+  <section id="resetting-column-widths">
+    <title>Resetting the column widths in the Test Result
+    Summary View</title>
+    <para>
+      You can reset the standard column widths in the Test Result
+      Summary View using the button in the top right hand corner
+      of the view.
+    </para>
+  </section>
+  <section id="exporting-test-results-from-the-test-result-summary-view-as-html-and-xml-reports">
+    <title>Exporting test results from the Test Result Summary View as HTML and XML reports</title>
+    <anchor role="helpid" id="testResultViewContextId">Test Results View</anchor>
+    <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Select one or more test reports and select
+          <emphasis role="menuPath">Export</emphasis> from the context-sensitive menu or
+          click the ”<emphasis>Export</emphasis>” button on the
+          toolbar of the Test Result Summary View.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the dialog that opens, enter or browse to a directory
+          where the test results should be saved.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When you click ”<emphasis>Finish</emphasis>”, the result
+          reports for the selected test runs will be exported to the
+          directory you entered.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For each test run, an XML and an HTML file are created.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <para role="tip">In order to export test results from the Test Result
+      Summary View, details for these reports must still be in the
+      database. This will be shown as <emphasis>true</emphasis> in
+      the <emphasis>Details</emphasis> column in the Test Result
+      Summary View. </para>
+    </para>
+  </section>
+  <section id="entering-comments-for-test-runs-in-the-test-result-summary-view">
+    <title>Entering comments for test runs in the Test Result Summary View</title>
+    <anchor role="helpid" id="testResultViewContextId">Test Results View</anchor>
+    <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <anchor role="helpid" id="testResultSummaryAddCommentContextId">Add Comment Dialog</anchor>
+    <para>
+      You can add a comment to a test run in the Test Result Summary View by:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Selecting a test run in the Test Result Summary View and
+          then selecting <emphasis role="menuPath">Edit comment</emphasis> from the
+          context-sensitive menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the dialog that opens, enter a title for the comment
+          and a longer description in the details area.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When you click ”<emphasis>OK</emphasis>”, the title of the
+          comment is shown in the <emphasis>Comment</emphasis>
+          column.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can view the details for a comment by reselecting
+          <emphasis role="menuPath">Edit comment</emphasis> from the context-sensitive menu.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>

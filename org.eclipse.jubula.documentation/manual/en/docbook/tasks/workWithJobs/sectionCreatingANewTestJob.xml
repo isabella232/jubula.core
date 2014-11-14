@@ -1,0 +1,80 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="creating-a-new-test-job" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Creating a new Test Job</title>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="dialogTestJobNewContextId">New Test Job</anchor>
+  <para>
+    To create a Test Job, the Test Suite Browser must be visible. If it is not visible, change to the Specification Perspective and select:
+  
+    <para>
+      <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Test Suite Browser</emphasis>.
+    </para>
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select:
+        
+        <para>
+          <emphasis role="menuPath">New</emphasis>--&gt;<emphasis role="menuPath">New Test Job</emphasis>
+        </para>
+        
+        from the context-sensitive menu in the Test Suite Browser.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Name the new Test Job when prompted with a meaningful name.
+        It is a good idea to have naming conventions for Test Jobs.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Click ”<emphasis>OK</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Test Job you created will appear in the Test Suite
+        Browser under the category <emphasis>Test Jobs</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Once you have created a Test Job, you can:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Add Test Suites to it (<xref linkend="adding-items-to-editors"/>).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Specify which AUT the Test Suites should test
+            (<xref linkend="specifying-which-aut-to-test-in-a-test-job"/>).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Rename the Test Job (<xref linkend="renaming-items-in-browsers"/>).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Delete Test Suites from it (<xref linkend="deleting-items-from-editors"/>).
+          </para>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+  </orderedlist>
+</section>

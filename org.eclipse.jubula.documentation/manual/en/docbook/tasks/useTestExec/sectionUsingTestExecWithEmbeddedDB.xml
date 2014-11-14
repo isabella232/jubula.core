@@ -1,0 +1,55 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="using-test-exec-with-embedded-db" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Using the test executor with the embedded database</title>
+  <para>
+    If you are using the default embedded database, you will need to
+    enter the following information as parameters:
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        -dbscheme
+      </term>
+      <listitem>
+        <para>
+          Default Embedded (H2)
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        -dbuser
+      </term>
+      <listitem>
+        <para>
+          sa
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        -dbpw
+      </term>
+      <listitem>
+        <para>
+          &lt;empty&gt; (<emphasis role="input">''''</emphasis>)
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+  <para>
+    If you have changed the name of the default database scheme in
+    the database preferences (<xref linkend="database-preferences"/>), you should alter
+    the parameter for the <emphasis>-dbscheme</emphasis>
+    accordingly.
+  </para>
+</section>

@@ -1,0 +1,125 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="no-component-type-exists-message-in-component-names-view" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>No component type exists message in Component Names View</title>
+  <anchor role="helpid" id="compNameViewContextId">Component Names View</anchor>
+  <para>
+    This situation occurs when a component name that has been
+    propagated and then renamed at the place of reuse is no longer
+    accessible, either because:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        the name with which the component was propagated has been
+        changed, or
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        the checkbox to propagate the component name has been
+        deactivated.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    In such situations, you will see the message in the Component Names View :
+    
+    <para>
+      <emphasis>No Component Type Exists!</emphasis>.
+    </para>
+  </para>
+  <para>
+    <para role="tip">Saving the Test Case will remove the message, however,
+    you may want to take steps to transfer the component name before
+    removing the message.</para>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        An example of a situation where this occurs:
+      </para>
+      <orderedlist>
+        <listitem>
+          <para>
+            You have a Test Case <emphasis>TC1</emphasis> that has a
+            component name propagated from it:
+            <emphasis>nn_nn_grc</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            You reused the <emphasis>TC1</emphasis> Test Case in
+            another Test Case called <emphasis>TC2</emphasis>, and
+            renamed the component name to
+            <emphasis>LoginDialog_OK_btn</emphasis> at the place of
+            reuse.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            You then either:
+          </para>
+          <itemizedlist>
+            <listitem>
+              <para>
+                change the component name in the original Test Case
+                to ”<emphasis>LoginDialog_AnyButton_btn</emphasis>”,
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                or you deactivate the checkbox for propagating the
+                component name from the original Test Case.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+      </orderedlist>
+    </listitem>
+    <listitem>
+      <para>
+        In the Component Names View for the reused Test Case in
+        <emphasis>TC2</emphasis>, you will see a warning message
+        that the component name has no type. <para role="warning">The warning
+        field is not editable.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Depending on whehter you renamed the component name or
+        removed the checkbox, you can now do one of two things:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            If you renamed the component name in the original Test
+            Case (<emphasis>TC1</emphasis>, then you can locate the
+            newly propagated name in the Component Names View and
+            enter the <emphasis>new name</emphasis> for the no
+            longer existent component type in the <emphasis>new
+            name</emphasis> field for the newly propagated name.
+            This essentially points the previous component name
+            hierarchy onto the new one.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            If you deactivated the checkbox, or if you do not want
+            to transfer the name as mentioned above, you can simply
+            make any change to the Test Case and then save it. The
+            message will disappear.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+  </itemizedlist>
+</section>

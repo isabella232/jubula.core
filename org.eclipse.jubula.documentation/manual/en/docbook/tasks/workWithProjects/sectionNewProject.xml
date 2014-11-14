@@ -1,0 +1,133 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="newproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                       xmlns:xi="http://www.w3.org/2001/XInclude"
+                                       xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Creating a new Project</title>
+  <anchor role="helpid" id="projectWizardContextId">Creating a Project</anchor>
+  <anchor role="helpid" id="problemViewNoProjectContextId">Project Options Dialog</anchor>
+  <orderedlist>
+    <listitem>
+      <para>
+        From the ITE, select:
+        
+        <para>
+          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">New</emphasis>.
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you haven’t already logged into the database, a dialog will appear to ask you to do so.
+        See the previous (<xref linkend="tasksdblogin"/>) for details.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A wizard to create a new Project will appear
+        (<xref linkend="projsettings"/>).
+      </para>
+      <figure id="projsettings">
+        <title>New Project Dialog</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/newprojectdialog.png"/>
+          </imageobject>
+          <textobject><phrase>New Project
+          Dialog</phrase></textobject>
+        </mediaobject>
+      </figure>
+    </listitem>
+    <listitem>
+      <para>
+        In the <emphasis>project name</emphasis> field, enter a
+        meaningful and unique Project name. Do not use any special
+        characters in Project names.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Activate the ”<emphasis>reusable project</emphasis>”
+        checkbox if you want to be able to reference the Test Cases
+        from this Project in other Projects. This will let you use
+        the Test Cases in this Project as the basis or library for
+        other Projects (see the section later for more details on
+        this (<xref linkend="reuseproject"/>)).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Choose whether this Project should be protected. In a
+        protected Projects, you cannot delete Test Cases, edit
+        parameters for Test Cases, or make any changes to the column
+        usage of central test data sets. This is only necessary if
+        the Project is reused in another Project – the protection
+        ensures that irreversible changes cannot be made to the
+        reused Project that would adversely affect its dependent
+        Projects.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select the toolkit your Project will use from the combo box.
+        The toolkit is the library used to create the GUI.
+      </para>
+      <para>
+        <emphasis role="strong">Toolkits for Projects</emphasis><?linebreak?>
+        The default toolkit is <emphasis>concrete</emphasis>. Choose this if you want to write Test Cases that can be used for different applications (e.g. for Swing and for RCP).
+      </para>
+      <para>
+        Choose another toolkit if you want to write Test Cases just
+        for a Swing, SWT, RCP, iOS, Windows or HTML application.
+      </para>
+      <para>
+        The choice of toolkit you make here will determine what
+        actions are available to you to specify your tests. If you
+        choose <emphasis>concrete</emphasis>, you will not be able
+        to specify tests for components specific to e.g. HTML or
+        SWT.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        From the list of available languages, select the languages
+        supported by your AUT and move them into the
+        ”<emphasis>project language</emphasis>” box using the arrow
+        button. Use <emphasis role="input">»CTRL«</emphasis> to select
+        multiple languages.
+      </para>
+      <para>
+        You will be able to start the AUT in these languages, and
+        translate test data into these languages.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select a default language from the combo box. The default
+        language is the language your Project is started in.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can now click ”<emphasis>Next</emphasis>” to define an
+        AUT for this Project (<xref linkend="define-aut"/>).
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    If you want to define the AUT later, you can click
+    ”<emphasis>Finish</emphasis>” to create the Project as it is.
+    You can define an AUT later via the Project properties under
+    <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Properties</emphasis>.
+  </para>
+  <para>
+    You can also edit the Project details later in the Project
+    properties dialog (<xref linkend="projectproperties"/>). 
+  </para>
+</section>

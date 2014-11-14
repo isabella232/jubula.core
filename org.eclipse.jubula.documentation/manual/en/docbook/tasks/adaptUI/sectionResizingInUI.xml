@@ -1,0 +1,51 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="resizing-in-the-user-interface" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Resizing in the user interface</title>
+  <para>
+    To change the size of the views and browsers:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Double-click on the tab of a view, browser or editor to
+        maximize it. Double-click again to minimize it.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Use the buttons in the top right-hand corner of the view or
+        browser to minimize, maximize or restore it.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Drag the borders of the view or browser to enlarge or reduce
+        it.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Right mouse-click on the name of the view or browser and
+        select ”<emphasis>Size</emphasis>” and then the side to be adjusted.
+        The chosen side appears as a blue line which can be dragged
+        and dropped.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To turn the view or browser into a separate window, select
+        ”<emphasis>Detached</emphasis>” from the context-sensitive menu
+        of the tab area.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

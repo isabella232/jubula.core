@@ -1,0 +1,101 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="creating-a-test-suite" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Creating a Test Suite</title>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="dialogTestsuiteNewContextId">New Test Suite Dialog</anchor>
+  <para>
+    Test Suites are used to organize and prepare Test Cases to be executed.
+  </para>
+  <para>
+    To create a Test Suite, the Test Suite Browser must be visible. If it is not visible, change to the Specification Perspective and select:
+    
+    <para>
+      <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Test Suite Browser</emphasis>.
+    </para>
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select:
+        
+        <para>
+          <emphasis role="menuPath">New</emphasis>--&gt;<emphasis role="menuPath">New Test Suite</emphasis>
+        </para>
+        
+        from the context-sensitive menu in the Test Suite Browser.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Name the new Test Suite when prompted with a meaningful
+        name. It is a good idea to have naming conventions for Test
+        Suites.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Click ”<emphasis>OK</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Test Suite you created will appear in the Test Suite
+        Browser under the category <emphasis>Test Suites</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Once you have created a Test Suite, you can:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Add Test Cases to it to be executed
+            (<xref linkend="adding-items-to-editors"/>).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Configure the Test Suite in the Properties View
+            (<xref linkend="configuring-test-suites-in-the-properties-view"/>).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Rename the Test Suite (<xref linkend="renaming-items-in-browsers"/>).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Delete Test Cases from it (<xref linkend="deleting-items-from-editors"/>).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Add the Test Suite to a Test Job to be executed along
+            with other Test Suites (<xref linkend="working-with-jobs"/>).
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        <para role="tip">You can filter in the Test Suite Browser using the
+        field at the top. Use star <emphasis role="input">*</emphasis> as a wild
+        card.</para>
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <para role="tip">You can combine multiple Test Suites to create a Test Job
+    (<xref linkend="working-with-jobs"/>). This is useful for testing
+    multiple AUTs (or instances of the same AUT in one test.)</para>
+  </para>
+</section>

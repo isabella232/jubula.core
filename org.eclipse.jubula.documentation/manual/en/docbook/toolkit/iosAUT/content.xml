@@ -1,0 +1,40 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="iOSaut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                   xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="iosAUT"?>
+  <title>Testing iOS AUTs</title>
+  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+  <para>
+    You can write tests for iOS AUTs when you select the toolkit
+    <emphasis>concrete</emphasis>, <emphasis>mobile</emphasis> or <emphasis>iOS</emphasis> in the
+    Project properties.
+  </para>
+  <para>
+    When you select <emphasis>iOS</emphasis> as the Project toolkit, the
+    library Projects <emphasis>unbound_modules_concrete</emphasis>,
+    <emphasis>unbound_modules_mobile</emphasis> and
+    <emphasis>unbound_modules_iOS</emphasis> are automatically reused in your
+    Project.
+  </para>
+  <para>
+    The actions in the concrete library are described in the reference
+    manual.
+  </para>
+  
+  <xi:include href="sectionSupportedIOSAUTs.xml"/>
+  <xi:include href="sectionSettingUpIOSAUTs.xml"/>
+  <xi:include href="sectionDesignForTestabilityIOSAUTs.xml"/>
+  <xi:include href="sectionAddressingCorrectComponentIOS.xml"/>
+  <xi:include href="sectionWorkingWithIOSComponentsAndActions.xml"/>
+  <xi:include href="sectionTestingAUTsWrittenWithMonotouch.xml"/>
+  
+</section>

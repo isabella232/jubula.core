@@ -1,0 +1,79 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="database-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>database preferences</title>
+  <anchor role="helpid" id="databaseConnectionConfigurationDialogContextId">Database connection preferences</anchor>
+  <para>
+    You can find the database connection preference page under:
+    
+    <para>
+      <emphasis>Test-database Connections</emphasis>
+    </para>
+    
+    in the preferences dialog.
+  </para>
+  <para>
+    When you start the ITE for the first time, it is automatically
+    configured to use an embedded database. If this is the only
+    database configured, then the database login is performed
+    automatically.
+  </para>
+  <para>
+    In this preference page, you can configure other database
+    connections for your productive database.
+  </para>
+  <para>
+    <para role="warning">We do not recommend using the embedded database for
+    productive use.</para>
+  </para>
+  <section id="adding-editing-and-removing-database-configurations">
+    <title>Adding, editing and removing database
+    configurations</title>
+    <para>
+      To add a new database:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          In the database Connections preference page, click
+          ”<emphasis>Add</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the dialog that appears, enter a meaningful
+          configuration name.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select the type of database that this configuration is
+          for. <para role="tip">The ITE is thoroughly tested with Oracle.
+          PostGreSQL and MySQL have been successfully tried out, but
+          we cannot guarantee their usage in productive
+          environments.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Based on the database type you choose, you must enter more
+          details about the database connection. Speak to your
+          database administrator if you are unsure of the connection
+          details.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      You can edit and delete database configurations using the
+      buttons in the database Connections preference page.
+    </para>
+  </section>
+</section>

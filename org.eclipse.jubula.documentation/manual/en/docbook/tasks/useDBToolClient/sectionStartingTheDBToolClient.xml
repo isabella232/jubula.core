@@ -1,0 +1,37 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="starting-the-dbtool" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Starting the dbtool</title>
+  <orderedlist>
+    <listitem>
+      <para>
+        In a command line interface, locate the installation
+        directory and open the ITE directory within it.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Enter <emphasis role="input">dbtool.exe</emphasis>.
+      </para>
+      <para>
+        This will run the executable
+        <emphasis>dbtool.exe</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Do not press <emphasis role="input">»ENTER«</emphasis> until you
+        have entered the necessary parameters. See the next section
+        for details on the parameters.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

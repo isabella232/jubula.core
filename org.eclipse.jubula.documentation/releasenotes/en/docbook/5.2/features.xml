@@ -33,7 +33,7 @@
         <title>Embedded AUT Agent</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="../images/EmbeddedAgent.png" />
+            <imagedata fileref="images/EmbeddedAgent.png" />
           </imageobject>
           <textobject><phrase>Embedded AUT Agent</phrase></textobject>
         </mediaobject>
@@ -95,7 +95,7 @@
         <title>Deleting unused Component Names</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="../images/DeleteUnusedCompNames.png" />
+            <imagedata fileref="images/DeleteUnusedCompNames.png" />
           </imageobject>
           <textobject><phrase>Deleting unused Component
           Names</phrase></textobject>
@@ -124,7 +124,7 @@
         <title>HTML Reports</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="../images/HTMLReport.png" />
+            <imagedata fileref="images/HTMLReport.png" />
           </imageobject>
           <textobject><phrase>HTML Reports</phrase></textobject>
         </mediaobject>
@@ -192,7 +192,7 @@
         <title>Colored Dots for Object Mapping</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="../images/ColorDot.png"/>
+            <imagedata fileref="images/ColorDot.png"/>
           </imageobject>
           <textobject><phrase>Colored Dots for Object
           Mapping</phrase></textobject>
@@ -226,7 +226,7 @@
         <title>Migration Wizard</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="../images/Migration.png" />
+            <imagedata fileref="images/Migration.png" />
           </imageobject>
           <textobject><phrase>Migration Wizard</phrase></textobject>
         </mediaobject>

@@ -1,0 +1,56 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="our-approach" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Our approach</title>
+  <para>
+    Our approach lets you automate tests which follow the best
+    practices known from software development (readability,
+    modularity and reusability to ensure maintainability), but
+    without any programming effort.
+  </para>
+  <para>
+    This gives the following advantages:
+  </para>
+  <section id="early-test-creation">
+    <title>Early test creation</title>
+    <para>
+      Tests are created before the AUT is available. This is a radical advantage over capture-replay tools, which force testers to wait until an application is ready to begin with testing. The specification of modular, flexible GUI tests begins early (even as early as at the requirements stage) and continues alongside software development.
+    </para>
+    <para>
+      The benefit of this is that every version of an AUT can be tested as soon as it becomes available. Testing keeps up with development, so you waste no time in your test process. Earlier testing lets you find issues when they are cheaper and easier to fix and encourages collaboration and communication within the team.
+    </para>
+  </section>
+  <section id="code-free-automation">
+    <title>Code-free automation</title>
+    <para>
+      Tests are automated completely from the user perspective and require no programming effort.
+    </para>
+    <para>
+      This means that those who understand the user perspective best
+      are able to fully automate tests. There is no need to wait for
+      input (e.g. programmatic creation of test modules) from other
+      team members to automate a test. If developers are writing
+      tests, the black box perspective encourages them to think like a
+      user would when faced with the software. Code-free tests also
+      have the advantage that they are readable by the whole team and
+      also by users or customers.
+    </para>
+  </section>
+  <section id="manual-tester-intelligence">
+    <title>Manual tester intelligence</title>
+    <para>
+      The wide range of keywords available include high-level actions
+      which can be meaningfully used by testers. There is also a wide
+      range of check and synchronization actions to incorporate the
+      necessary robustness into a test.
+    </para>
+  </section>
+</section>

@@ -1,0 +1,124 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="working-on-tasks-in-the-ite-contexts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Working on tasks in the ITE: contexts</title>
+  <para>
+    Once you have configured a task repository for your workspace
+    (<xref linkend="configuring-task-repositories"/>), you can work on tasks from
+    that repository.
+  </para>
+  <section id="opening-and-editing-tasks-in-the-ite">
+    <title>Opening and editing tasks in the ITE</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          To be able to see tasks in a repository, select:
+          
+          <para>
+            <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis>
+          </para>
+          
+          from the menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the <emphasis>Mylyn</emphasis> section, select
+          <emphasis>Task List</emphasis> and click
+          ”<emphasis>OK</emphasis>”. The <emphasis>Task
+          List</emphasis> View will appear.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Double-click on a task to open this task in the editor
+          area.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once a task is open, you can work on it as you would in an
+          external system – add comments, change status etc.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="activate-task">
+    <title>Working on tasks in the ITE</title>
+    <para>
+      Mylyn supports context- or task-based working. When you work
+      on a task, you only see items relevant to that task, so that
+      coming back to the task later involves less context-switching.
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Mylyn supports context-based working. You can work on
+          existing tasks in a configured repository, or you can
+          create tasks to work on.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To work on a task, you must <emphasis>activate</emphasis> it. To activate a task, select the task in the <emphasis>Task List</emphasis> and select:
+          
+          <para>
+            <emphasis role="menuPath">Activate</emphasis>
+          </para>
+          
+          from the context-sensitive menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When you activate a task for the first time, the browsers
+          and editors will seem very empty. This is because nothing
+          is yet a part of the context for this task.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can navigate through the browsers by pressing
+          <emphasis role="input">»Alt+Click«</emphasis> to expand each
+          level, or you can press the <emphasis>Focus on
+          task</emphasis> button in the browsers to show the whole
+          tree (not focusing on the task), or just the items in the
+          current context (focusing on the task).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Items are automatically added to your context when you
+          select them in a browser, when you open them in an editor,
+          or when you perform other actions that cause them to be
+          made relevant (e.g. Test Case creation, showing a Test
+          Case specification etc.). Items that are used particularly
+          frequently are marked as <emphasis>landmarks</emphasis>
+          and shown in bold.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can manually alter which items are in your context
+          using the context-sensitive menu for a specific item. You
+          can manually make items landmarks, or remove them from the
+          context.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The context that is created for you will be re-created
+          when you reactivate the task at a later point.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>

@@ -1,0 +1,41 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="refreshproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                           xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Refreshing Projects</title>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <orderedlist>
+    <listitem>
+      <para>
+        To refresh a Project, first select the Project in the Test
+        Suite Browser.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select:
+        
+        <para>
+          <emphasis role="menuPath">File</emphasis>--&gt;<emphasis role="menuPath">Refresh</emphasis>.
+        </para>
+      </para>
+      <para>
+        This reloads the data for the Project from the database,
+        ensuring in a multi-user environment that all Project data
+        is current.
+      </para>
+      <para>
+        <para role="tip">If a Project which your current Project reuses has
+        been changed, then you must refresh the current Project for
+        the changes to take effect. </para>
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

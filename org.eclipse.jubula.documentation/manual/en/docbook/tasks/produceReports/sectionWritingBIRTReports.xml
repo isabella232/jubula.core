@@ -1,0 +1,165 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="writing-your-own-birt-reports" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Writing your own BIRT reports</title>
+  <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <para>
+    The BIRT reports are examples of how you could document your
+    quality over time. You can also create other reports to generate
+    depending on which details you want to see in the reports. To
+    create reports, you will need to use the BIRT designer from
+    Actuate. There is an open source version and a commerical
+    version of the designer.
+  </para>
+  <para>
+    The following information describes what information from the
+    database can be used to generate BIRT reports. For help using
+    BIRT, please see the BIRT documentation.
+  </para>
+  <para>
+    There are four database tables that contain relevant data for
+    test results:
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        testresult_summary
+      </term>
+      <listitem>
+        <para>
+          This table contains one row per executed Test Suite and
+          corresponds to the Test Result Summary View in the ITE.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        testresult
+      </term>
+      <listitem>
+        <para>
+          This table contains further information about each test
+          run (each row in the
+          <emphasis>testresult_summary</emphasis> table), including
+          all executed nodes. 
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        parameter_details
+      </term>
+      <listitem>
+        <para>
+          This table contains the name, type and value for all
+          parameters (data) in the executed test.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        parameter_list
+      </term>
+      <listitem>
+        <para>
+          This table gives a parent-child relation between the
+          executed nodes from the <emphasis>testresult</emphasis>
+          table and the parameters in the
+          <emphasis>parameter_details</emphasis> table.
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+  <section id="creating-a-birt-report">
+    <title>Creating a BIRT report</title>
+    <para>
+      Using the BIRT report designer, you can create your own
+      reports which will display specific information from these
+      tables.
+    </para>
+    <para>
+      In the installation directory, in:
+    </para>
+    <para>
+      <emphasis>plugins/com.bredexsw.guidancer.reporting.birt.viewer</emphasis>
+    </para>
+    <para>
+      there is the directory <emphasis>reports</emphasis>.
+    </para>
+    <para>
+      In this directory, the templates for the reports available in
+      the ITE are stored. There is also a library which uses the
+      database as a data source and contains data sets (SQL queries)
+      to this database. The following information is contained in
+      the library:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Datasets:
+        </term>
+        <listitem>
+          <para>
+            there are views to show details from the four tables for
+            reporting in the database.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Report parameters:
+        </term>
+        <listitem>
+          <para>
+            These are parameters for the database queries that can
+            be used to limit the scope of a report.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Report items:
+        </term>
+        <listitem>
+          <para>
+            These are examples of pre-defined tables and graphs
+            which can be used in other reports.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Master pages:
+        </term>
+        <listitem>
+          <para>
+            These define the layout of the reports
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Themes:
+        </term>
+        <listitem>
+          <para>
+            The themes contain information about colors, fonts etc.
+            The themes are in the ite.css file.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      <para role="warning">Be careful when working with the reports and themes
+      that you do not break the existing reports!</para>
+    </para>
+  </section>
+</section>

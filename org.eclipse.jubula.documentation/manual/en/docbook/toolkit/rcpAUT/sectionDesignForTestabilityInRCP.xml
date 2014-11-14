@@ -1,0 +1,62 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="design-for-testability-in-rcp" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Design for testability in RCP</title>
+  <section id="naming-components-1">
+    <title>Naming components</title>
+    <para>
+      Although components can be located in the AUT even when they
+      are not named by the developers, naming components is
+      nevertheless a good idea. In SWT and RCP there is no method
+      like the Swing <emphasis>setName</emphasis> method to name
+      components in the program code. However, you can improve the
+      testability of your application by using the following method
+      in your SWT or RCP code for the current component class:
+      <emphasis>setData(String key, String
+      ComponentName)</emphasis>. For the key, use
+      <emphasis>TEST_COMP_NAME</emphasis>.
+    </para>
+    <para>
+      Even if you do not name components, you can choose to have
+      unique names generated for your components in the AUT in the
+      AUT dialog (<xref linkend="define-aut"/>).
+    </para>
+  </section>
+  <section id="adding-support-for-text-retrieval-1">
+    <title>Adding support for text retrieval</title>
+    <para>
+      You can add support for renderers for SWT components or items
+      without the getText() method in order to access text that is
+      otherwise non-readable during test execution.
+    </para>
+    <para>
+      Use the method
+      <emphasis role="input">setData(String key, Object value)</emphasis> on the
+      instance of the component or item whose text you want to
+      access. The <emphasis>key</emphasis> is
+      <emphasis role="input">TEST_TESTABLE_TEXT</emphasis>
+    </para>
+    <para>
+      For example, to access an otherwise unreachable text on a label:
+      
+      <para>
+        <emphasis role="input">myLabel.setData(&quot;TEST_TESTABLE_TEXT&quot;, label);</emphasis>
+      </para>
+    </para>
+    <para>
+      If you are making text in e.g. a table accessible, then you will need to add a dynamic part for the column, e.g.:
+    </para>
+<programlisting>
+myTableItemInstance.setData
+(&quot;TEST_TESTABLE_TEXT_&quot; + colIdx, text);
+</programlisting>
+  </section>
+</section>

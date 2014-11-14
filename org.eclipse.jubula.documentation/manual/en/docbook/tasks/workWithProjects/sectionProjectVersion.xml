@@ -1,0 +1,63 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="projectversion" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                           xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Versioning Projects</title>
+  <anchor role="helpid" id="openProjectDialogContextId">Opening Projects</anchor>
+  <anchor role="helpid" id="dialogProjectCreateNewVersionContextId">Versioning Projects</anchor>
+  <orderedlist>
+    <listitem>
+      <para>
+        To create a different version of a Project, select:
+        
+        <para>
+          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Create new version</emphasis>.
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        An automatic suggestion for the next version number is
+        provided.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can accept this version number or enter a different one.
+      </para>
+    </listitem>
+    <listitem>
+    <para>
+    	Project versions can have major, minor and micro versions as well as qualifiers. 
+    	You can enter just a version number, e.g. "1" or "1.0" or "1.0.0", just a qualifier, 
+    	or a version number and a qualifier, e.g. "1_release", "1.0_release" or "1.0.0_release".
+    	Project versions must be unique.
+    </para>
+    </listitem>
+    <listitem>
+      <para>
+        Click ”<emphasis>OK</emphasis>” to create the new version.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The new version of the Project becomes active in the client.
+        <para role="tip">Any test result summaries for the Project are not
+        duplicated in the new version. Tests that ran for previous
+        versions of the Project are, however, still in the database
+        to be used for long term analysis.</para>
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <para role="tip">You can also create a new version using the dbtool
+    (<xref linkend="creating-new-versions"/>)</para>
+  </para>
+</section>

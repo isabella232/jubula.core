@@ -1,0 +1,56 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="the-reporting-perspective" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>The Functional Test Reporting Perspective</title>
+  <para>
+    In the Functional Test Reporting Perspective, you can see an overview of all the
+    test runs in the current database, for all Projects it contains.
+    You can reopen test runs if the details for the report are still
+    in the database (<xref linkend="re-opening-the-test-result-view-for-a-test-run"/>) and analyze the
+    test using the Properties View and the Image View.
+  </para>
+  <para>
+    The Functional Test Reporting Perspective (<xref linkend="reportingperspective"/>)
+    contains the following views:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The Test Result View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Properties View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Image View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Test Result Summary View
+      </para>
+    </listitem>
+  </itemizedlist>
+  <figure id="reportingperspective">
+    <title>Reporting Perspective</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/reportingperspective.png"/>
+      </imageobject>
+      <textobject><phrase>Reporting
+      Perspective</phrase></textobject>
+    </mediaobject>
+  </figure>
+</section>

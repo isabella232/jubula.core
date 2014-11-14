@@ -1,0 +1,161 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="setting-up-an-rcp-aut-for-testing" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Setting up an RCP AUT for testing</title>
+  <para>
+    If you want to test a <emphasis>Rich Client Platform</emphasis>
+    application, you must ensure that our ”<emphasis>RCP Remote
+    Control</emphasis>” plugin (org.eclipse.jubula.rc.rcp) is added
+    to your AUT and that it will be started when the AUT starts. If
+    you are working in a continuous build and test process, then we
+    highly recommend doing this as a part of the product build, or
+    just afterwards (<xref linkend="setting-up-an-rcp-aut"/>). For testing purposes,
+    and to get started quicker, the steps can also be done manually
+    as follows:
+  </para>
+  <para>
+    <para role="warning">Please ensure that you follow all these steps!</para>
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Locate the installation directory, and open the
+        <emphasis>development</emphasis> folder.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Extract the content of the
+        <emphasis>rcp-support.zip</emphasis> folder into the
+        <emphasis>plugins</emphasis> directory for your RCP AUT.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        RCP applications generally have a configuration/config.ini
+        file which contains the parameter
+        <emphasis>osgi.bundles</emphasis>. This parameter needs to
+        be modified to allow the RCP remote control plugin to load
+        on AUT startup. You must add
+        <emphasis>,org.eclipse.jubula.rc.rcp@start</emphasis> (the
+        comma is important to delimit this argument from the others)
+        to the end of the <emphasis>osgi.bundles</emphasis>
+        parameter.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Start your AUT <emphasis role="strong">normally</emphasis>
+        (i.e. not as an AUT. Close it, and then start it again.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In your AUT, open <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">About</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the <emphasis>plugin details</emphasis> for your AUT, you
+        should be able to see that the following plugins are
+        started:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            org.eclipse.jubula.rc.rcp
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            org.eclipse.jubula.rc.rcp.common
+          </para>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+    <listitem>
+      <para>
+        If you can see these plugins, then you can continue and
+        start your AUT via e.g. an AUT configuration
+        (<xref linkend="configuring-a-java-aut-ite-start"/>) or via
+        <emphasis>autrun</emphasis> (<xref linkend="starting-java-with-the-command"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you cannot see these plugins, then you should speak to a
+        member of the development team to implement the suggestions
+        described in the section below (<xref linkend="setting-up-an-rcp-aut"/>).
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <para role="tip">When you install a new version of the ITE, you must
+    repeat these steps with the new RCP remote control plugin. We
+    recommend starting your AUT once with <emphasis role="input">-clean</emphasis> to
+    ensure that the new remote control plugin is used. </para> If you do
+    not follow these steps, the AUT Agent will not be able to
+    communicate with your AUT!
+  </para>
+  <section id="setting-up-an-rcp-aut">
+    <title>Setting up an RCP AUT for testing as a part of the build
+    process</title>
+    <para>
+      We recommend adding the RCP accessor to your AUT automatically
+      in one of the following ways. Which way you choose will depend
+      on your AUT, build process and Eclipse version, and you should
+      check with the development team which approach is best:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          During the product build:
+        </term>
+        <listitem>
+          <para>
+            Adding the RCP Accessor as a plugin to your AUT as it is
+            being built is one way to ensure that it is present and
+            started when the AUT starts.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Via the OSGI console:
+        </term>
+        <listitem>
+          <para>
+            If adding the Accessor during the build is not an
+            option, then you can add it after the build via the OSGI
+            console. The availability of this option is dependent on
+            the version of Eclipse you use, and your AUT: It must
+            allow this type of post-hoc inclusion of plugins for
+            this to work.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Via the P2 director:
+        </term>
+        <listitem>
+          <para>
+            Alternatively, you can add it after the product build
+            using the P2 director. The availability of this option
+            is dependent on the version of Eclipse you use, and your
+            AUT: It must allow this type of post-hoc inclusion of
+            plugins for this to work.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </section>
+</section>

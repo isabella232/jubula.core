@@ -1,0 +1,28 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="customized-event-handlers" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Customized Event Handlers</title>
+  <para>
+    Customized Event Handlers are essentially Test Cases, and can be
+    empty or contain other Test Steps/Test Cases. They can be used
+    to specify particular behavior in case of an error in one part
+    of the test tree, or they can be placed so as to affect how the
+    test continues. If an Event Handler contains Test Steps/Test
+    Cases, the specified reentry will happen when the Event Handler
+    has been executed.
+  </para>
+  <para>
+    Customized Event Handlers are valid for all Test Cases under the
+    Test Case where the Event Handler is nested, unless one of these
+    child Test Cases has an Event Handler of its own for this error
+    type.
+  </para>
+</section>

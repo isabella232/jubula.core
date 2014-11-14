@@ -1,0 +1,200 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="using-an-excel-file-as-an-external-data-source" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Using an Excel file as an external data source</title>
+  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <para>
+    In the Properties View, you can add Excel files as a data source to
+    Test Cases which contain parameters referenced from the
+    Test Cases or Test Steps they contain.
+    <para role="warning">The addition of data via Excel is discouraged, because any problems with the data can only be found once the test is running. We recommend using the central test data sets in the ITE to manage data within the Project (<xref linkend="using-central-data-sets"/>).</para>
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Navigate to the Properties View for the Test Case you want to
+        add the Excel file to.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Enter the path to the Excel file in the
+        <emphasis>Excel data file</emphasis> field.
+      </para>
+      <para>
+        The path to the Excel file can be absolute or relative (if
+        you have specified a data files path (<xref linkend="gdprefs"/>)).
+      </para>
+      <para>
+        <para role="tip">The Excel file must be configured in a specific way in order it to be read (<xref linkend="configuring-the-excel-file"/>)</para>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you reuse this Test Case, the Excel file you enter will
+        be reused along with the Test Case. When you reuse the
+        Test Case, you can choose whether you leave this file or
+        change it for another one.
+        <para role="tip">If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor. </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A Test Case with an Excel file as data is marked with a
+        small Excel icon in the browsers to help you find it more
+        easily later.
+        <para role="warning">Please note that the Excel file is read at the start of the test execution. Any changes to the file after this will not affect the test data. For information on using the date function in Excel, see the section later <xref linkend="using-the-today-function-in-excel"/>.</para>
+      </para>
+    </listitem>
+  </orderedlist>
+  <section id="configuring-the-excel-file">
+    <title>Configuring the Excel file</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The worksheet in Excel must be named with the language
+          code for the language your data are in.
+        </para>
+        <para>
+          For example, if the data of your first sheet are for
+          French, then name the first sheet: <emphasis role="input">fr_FR</emphasis>
+          (<xref linkend="excel"/>).
+        </para>
+        <figure id="excel">
+          <title>Example Excel Table</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/excelexample.png"/>
+            </imageobject>
+            <textobject><phrase>Example Excel
+            Table</phrase></textobject>
+          </mediaobject>
+        </figure>
+        <para>
+          You can create sheets for every language you need. Make
+          sure that each sheet is named with the language code. The
+          ITE reads the sheet which corresponds to the working
+          language when the test is being executed.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Name the top cell of each column with a parameter name
+          from your Test Case.
+        </para>
+        <para>
+          For example, if you entered the reference
+          ”<emphasis>=VALUE1</emphasis>”, then you must enter <emphasis role="input">VALUE1</emphasis>
+          in the top cell of the column which will contain data for
+          that parameter. <para role="tip">Values are case sensitive.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Make sure that all the parameters for your Test Case have
+          a column.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Do not leave any gaps in the table.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You must have an entry for each parameter used in the
+          Test Case.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can then fill in the values or formulae you want to
+          use for these parameters. Each row in the table represents
+          one set of data for the parameters used.
+          <para role="tip">We recommend that you format cells as text <emphasis>before</emphasis> adding the test data. This ensures that Excel's number formatting won't modify the test data in unexpected and undesirable ways. Especially for the boolean values <emphasis>true</emphasis> and <emphasis>false</emphasis>, make sure you format the column as text.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If your Excel table contains data which change from
+          day-to-day, then make sure you open the file before
+          starting your test. Otherwise, the data from the
+          last-opened state will be used.
+          <para role="tip">If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor. </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          See the section later on using the <emphasis>today</emphasis> function
+          in Excel to get the current date (<xref linkend="using-the-today-function-in-excel"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Excel files may not contain autofilters in any of the
+          worksheets to be used as data sources. Remove any filters
+          from all your Excel sheets before running a test.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="using-the-today-function-in-excel">
+    <title>Using the =TODAY() function in Excel</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          Because Excel stores the ”<emphasis>=today()</emphasis>” function as
+          a six-digit number, you must use a particular process to
+          use this function to check a date as part of a test.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter the function <emphasis role="input">=today()</emphasis> in a a different
+          sheet to the one you are using for your data sets. You can
+          enter it in the same sheet if you want to, but make sure
+          that it has its own column. It must not be in one of the
+          columns you will use as a data set.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For example, your =today() function is in sheet one, cell
+          G4.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You want your date to appear as dd.mm.yyyy.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the column for your data set, enter the following
+          formula:
+        </para>
+        <blockquote>
+          <para>
+            =text(Sheet1!G4, ”dd.mm.yyyy”)
+          </para>
+        </blockquote>
+      </listitem>
+      <listitem>
+        <para>
+          This will mean that the date will be treated as it appears
+          with Excel.
+          <para role="tip">If you are using the =today() function, don't forget to open the Excel file before  starting your test. Otherwise, the data from the last-opened state will be used.</para>
+          <para role="tip">If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor. </para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

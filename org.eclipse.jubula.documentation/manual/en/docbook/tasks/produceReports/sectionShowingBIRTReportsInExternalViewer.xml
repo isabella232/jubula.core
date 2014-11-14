@@ -1,0 +1,26 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="showing-birt-reports-in-an-external-viewer" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Showing BIRT reports in an external viewer</title>
+  <para>
+    The BIRT reports are shown in an integrated BIRT report viewer.
+  </para>
+  <para>
+    If you have a BIRT report viewer elsewhere (e.g. in a Tomcat
+    server), then you can put the templates and the library into the
+    external BIRT viewer on the server and view them without
+    starting the ITE.
+  </para>
+  <para>
+    For information on viewing BIRT reports in external viewers,
+    please consult the BIRT documentation.
+  </para>
+</section>

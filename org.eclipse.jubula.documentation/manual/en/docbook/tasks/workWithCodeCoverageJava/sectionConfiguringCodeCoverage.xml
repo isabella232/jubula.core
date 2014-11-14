@@ -1,0 +1,113 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="configuring-code-coverage-for-an-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Configuring code coverage for an AUT</title>
+  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <para>
+    You can activate code coverage for an AUT configuration with the
+    following steps:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Open the AUT configuration dialog from the Project
+        properties (<xref linkend="projectproperties"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select the <emphasis>Expert</emphasis> configuration.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select the code coverage agent you wish to use
+        (<emphasis>JaCoCo</emphasis> is available out-of-the-box).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can then enter the AUT installation directory and the
+        AUT source directory for the code coverage:
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            The AUT installation directory
+          </term>
+          <listitem>
+            <para>
+               is the directory containing the class files (compiled
+              Java files) for your AUT. You must enter this
+              directory to make code coverage possible for your test
+              run.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            The AUT source directory
+          </term>
+          <listitem>
+            <para>
+               is the directory where the source files (i.e. the
+              program code) for your AUT are kept. Entering a
+              directory for the source files is optional, however,
+              if you do not enter one, then you will not be able to
+              view your code coverage results at the source file
+              level. The AUT source directory must contain the
+              source files in their Java package structure. The
+              class files must have been compiled with debug
+              information to make the lines of code executed visible
+              in the code coverage report. <para role="tip">You can enter
+              relative paths for the AUT installation and AUT source
+              directories. The paths are relative to the working
+              directory.</para>
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </listitem>
+    <listitem>
+      <para>
+        To make sure you only monitor your own code, enter a package
+        pattern to specify which packages should be monitored. The
+        pattern must be a valid regular expression. If you do not
+        enter a package pattern, all classes in the virtual machine
+        will be considered for the code coverage value. <para role="warning">Not
+        entering a package pattern can result in extremely large
+        messages being sent from the AUT Agent, which may cause
+        memory problems (<xref linkend="increasing-the-java-heap"/>).</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select whether you want the code coverage value to be reset
+        when a new Test Suite starts (<xref linkend="resetting-and-accumulating-code-coverage"/>).
+      </para>
+    </listitem>
+  </orderedlist>
+  <section id="increasing-the-java-heap">
+    <title>Increasing the Java Heap Space for code coverage</title>
+    <para>
+      Running a test with a code coverage profiler leads to an
+      increased memory requirement for the ITE. You can increase the
+      heap space for the ITE and also enter a package pattern
+      (<xref linkend="configuring-code-coverage-for-an-aut"/>) to reduce the amount of files considered
+      for code coverage.
+    </para>
+    <para>
+      <para role="tip">Users working with a MySQL database should also follow
+      the steps from the Installation Manual to increase the maximum
+      allowed packet for the database. </para>
+    </para>
+  </section>
+</section>

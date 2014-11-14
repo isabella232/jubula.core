@@ -1,0 +1,63 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="executing-and-analyzing-manual-tests" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Executing and analyzing manual tests</title>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <para>
+    Once you have created a manual Test Case
+    (<xref linkend="creating-manual-tests"/>), you can execute it.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Start the AUT (<xref linkend="starting-the-aut"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Start the Test Suite containing the manual Test Steps
+        (<xref linkend="starting-stopping-and-pausing-test-suites-and-test-jobs"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For each manual Test Step in the test, a dialog will appear
+        with the descriptions and data you entered for the
+        <emphasis>action to perform</emphasis> and the
+        <emphasis>expected behavior</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Execute the Test Step as described, enter a comment if
+        necessary, then click either ”<emphasis>passed</emphasis>”
+        or ”<emphasis>failed</emphasis>” in the dialog to move to
+        the next Test Step. <para role="tip">If the Test Step fails, then an
+        automatic screenshot will be taken
+        (<xref linkend="test-result-preferences"/>), and any Event Handlers
+        (<xref linkend="dealing-with-errors-in-tests"/>) for this Test Case will be
+        activated.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Once the dialog has been closed, the next Test Step dialog
+        will appear.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        At the end of the test, you can see the test result report
+        like any other automated test (<xref linkend="testresultview"/>).
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

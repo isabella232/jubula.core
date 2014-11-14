@@ -1,0 +1,50 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="creating-a-category" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Creating a category</title>
+  <anchor role="helpid" id="newTestDataCategoryContextId">New Category</anchor>
+  <orderedlist>
+    <listitem>
+      <para>
+        In the browser or editor, select:
+        
+        <para>
+          <emphasis role="menuPath">New</emphasis>--&gt;<emphasis role="menuPath">Category</emphasis> from the context-sensitive menu.
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Name the category when prompted.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Once you have a category, you can add items to it by drag
+        and drop, and also by double-clicking to add new items (only
+        in the browsers).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can also nest categories in other categories.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can do this either by dragging and dropping a category
+        into another category, or by right-clicking in an already
+        present category and choosing the option to create a new
+        category.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

@@ -1,0 +1,59 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="using-the-edit-parameters-dialog-to-add-edit-and-delete-references" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Using the edit parameters dialog to add, edit and delete references</title>
+  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" id="editParametersDialogContextId">Editing Parameters</anchor>
+  <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <para>
+    You can use the edit parameters dialog to add, edit and delete
+    parameters for a Test Case or a central test data set. This
+    section is concerned with using the dialog for editing
+    parameters in a Test Case. For editing parameters for a central
+    test data set, see the section later (<xref linkend="using-central-data-sets"/>).
+  </para>
+  <para>
+    To edit the parameters for a Test Case:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Open the edit parameters dialog by right-clicking on the
+        root node in the Test Case Editor and selecting <emphasis role="menuPath">Edit
+        parameters</emphasis> from the context-sensitive menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the dialog, you can see any parameters you have
+        referenced for this Test Case, and what type of parameters
+        they are.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        From the dialog, you can add new parameters to the Test
+        Case, edit existing parameters, and delete parameters. You
+        can also change the order the parameters appear in.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Use the <emphasis>lock</emphasis> option to lock the
+        parameters for this Test Case. This means that you cannot
+        delete them, rename them or remove them in this Test Case.
+        <para role="warning">In the Properties View, you can only
+        <emphasis>add</emphasis> references for parameters. To edit
+        or delete references, you must use this dialog.</para>
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

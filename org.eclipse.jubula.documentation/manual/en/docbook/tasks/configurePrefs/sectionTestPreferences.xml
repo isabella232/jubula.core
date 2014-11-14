@@ -1,0 +1,167 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="test-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Test preferences</title>
+  <anchor role="helpid" id="prefPageBasicContextId">Test Preferences</anchor>
+  <figure id="gdprefs">
+    <title>Preference Dialog</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/gdprefs.png"/>
+      </imageobject>
+      <textobject><phrase>Preference Dialog</phrase></textobject>
+    </mediaobject>
+  </figure>
+  <para>
+    In the preferences dialog, select <emphasis>Test</emphasis> from
+    the tree on the left hand side.
+  </para>
+  <para>
+    From this page, you can configure your preferences for:
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        Auto-scrolling and -expanding:
+      </term>
+      <listitem>
+        <para>
+          When the checkbox is marked, the views and browsers
+          automatically scroll in the direction you move the mouse
+          when you are dragging and dropping. Trees will also be
+          automatically expanded when you hover over them while
+          dragging items.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Minimizing the ITE:
+      </term>
+      <listitem>
+        <para>
+          When the checkbox is marked, the ITE is automatically
+          minimized when test execution begins. This is useful if
+          you are letting tests run on the same machine you are
+          specifying on.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        AUT confirmation dialog:
+      </term>
+      <listitem>
+        <para>
+          When the checkbox is marked, a dialog appears to check if
+          you are sure when you click the ”<emphasis>stop
+          AUT</emphasis>” button.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Original Test Case name:
+      </term>
+      <listitem>
+        <para>
+          When the checkbox is activated, you can see the original
+          name of a referenced Test Case in brackets behind a new
+          name you enter for the Test Case. This can help you to see
+          and search for Test Cases you have reused. 
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Test Step information:
+      </term>
+      <listitem>
+        <para>
+          When this checkbox is activated, you see the details about
+          the Test Step (the component name and type, and the
+          action) in square brackets behind the Test Step name. If
+          you do not want to see these details, you can deactivate
+          this checkbox.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Show referenced children:
+      </term>
+      <listitem>
+        <para>
+          When this option is not active, you can only see
+          referenced parent Test Cases in the Test Case Browser. The
+          referenced Test Cases contained in these Test Cases are
+          not displayed. This action can be useful if you want to
+          improve the speed of working with the ITE.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Project auto load:
+      </term>
+      <listitem>
+        <para>
+          If you have selected a Project to be automatically loaded
+          (<xref linkend="auto-loading-default-project"/>), then you can stop the
+          auto-loading by deactivating the checkbox.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Delay for content assist in the Component Names View:
+      </term>
+      <listitem>
+        <para>
+          Enter the amount of time in milliseconds you want to wait
+          after each character entry before displaying content
+          assist in the Component Names View. Increase the delay to
+          see the content assist less frequently. You can see the
+          content assist at any time by pressing
+          <emphasis role="input">»CTRL+SPACE«</emphasis>.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Switching to the Execution Perspective:
+      </term>
+      <listitem>
+        <para>
+          When the test begins, the ITE can automatically change to
+          the Execution Perspective. You can choose to always be
+          asked, to always change, or to never change. 
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Data files location:
+      </term>
+      <listitem>
+        <para>
+          You can specify a location where external data files (e.g.
+          Excel files) are held, or use the workspace directory as
+          the base location. <para role="tip">The advantage of using the
+          workspace as a location for your data files is that you
+          can view these in the navigator view directly in the ITE.
+          Windows users can even open Excel files from the ITE using
+          the In-Place editor.</para>
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+</section>

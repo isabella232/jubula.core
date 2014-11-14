@@ -1,0 +1,258 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="generating-birt-reports" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Generating BIRT reports</title>
+  <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <para>
+    From the Test Result Summary View (<xref linkend="working-with-the-test-result-summary-view"/>), you
+    can generate reports of your test runs over time using the BIRT
+    reporting engine.
+  </para>
+  <para>
+    <para role="tip">Only test runs that have been marked as relevant are
+    included in the generated BIRT reports. You can change the
+    relevance from the Test Result Summary View
+    (<xref linkend="changing-the-relevance-of-a-test-run"/>).</para>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The ITE offers a selection of example reports:
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            Test Comments:
+          </term>
+          <listitem>
+            <para>
+              This report shows a table of all failed tests for the
+              time chosen, whose relevance is set to true and whose
+              name does not include <emphasis>BROKEN</emphasis>. The
+              comment title that can be entered in the Test Result
+              Summary View (<xref linkend="entering-comments-for-test-runs-in-the-test-result-summary-view"/>) is also
+              shown. This report is useful for delivering daily
+              status reports of the tests.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Test Execution Overview:
+          </term>
+          <listitem>
+            <para>
+              This report shows a list of executed, relevant Test
+              Suites over the time period selected. For each day in
+              the time period, there is a colored block for the Test
+              Suite to display its status. Green means that the test
+              ran without any errors. Red means that the test ran,
+              but with errors. Yellow means that the test ran more
+              than once on that day. White means that the Test Suite
+              did not run on this day. This report is useful for
+              teams with large amounts of Test Suites who need to
+              ensure on a daily basis that all Test Suites were
+              started. Test Suites that were not run at all during
+              the selected time period are not displayed.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Test Duration:
+          </term>
+          <listitem>
+            <para>
+              This report shows the duration of the chosen tests.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Test Execution Histogram:
+          </term>
+          <listitem>
+            <para>
+              This report shows the proportion of executed, failed
+              and non-executed Test Steps for a test. This report is
+              most useful when one specific Test Suite is compared
+              to see its progress over time. 
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Test History:
+          </term>
+          <listitem>
+            <para>
+              This report shows a graph of the percentage completion
+              for the selected Test Suites for the dates given.
+              There is also a list of the AUTs, Test Suites and test
+              runs.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Test History Absolute:
+          </term>
+          <listitem>
+            <para>
+              This report shows the same details as the Test History
+              report, but instead of showing the test results in
+              percentages, shows the actual amount of Test Steps
+              executed. It also shows the difference between
+              expected and executed Test Steps.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Test History Absolute and Coverage:
+          </term>
+          <listitem>
+            <para>
+              This report shows the same details as the Test History
+              Absolute report with any code coverage information
+              that is available for the chosen test runs.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Testresult:
+          </term>
+          <listitem>
+            <para>
+              This report gives out the full test details up to the
+              given nesting level.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Testresult Summary:
+          </term>
+          <listitem>
+            <para>
+              This report shows a table of the Test Result Summary
+              View for the dates and tests chosen. 
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </listitem>
+    <listitem>
+      <para>
+        To start a report, click the arrow next to the
+        ”<emphasis>Create Report</emphasis>” button <mediaobject role="icon" file="images/createBirtReport.png"/>
+        and select the report you want to generate.
+      </para>
+      <para>
+        <para role="tip">If you are not already connected to the database,
+        then a dialog will appear to create the connection
+        (<xref linkend="tasksdblogin"/>). </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The BIRT report viewer starts (the first time it starts it
+        may take some time).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The parameters for the report are displayed:
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            Selection:
+          </term>
+          <listitem>
+            <para>
+              In this section, specify which time frame the report
+              should be generated for (either from a specific date,
+              or using the options <emphasis>yesterday, now, last
+              week</emphasis> etc.) as well as for which Project,
+              Test Suite, Test Job and the operating system. The
+              details in the selection section are combined using
+              <emphasis>and</emphasis>. SQL syntax can be used (e.g.
+              <literal>%</literal> is used as a wildcard for any
+              number of any characters, <literal>_</literal> is used
+              as a wildcard for one character). 
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Test run ID:
+          </term>
+          <listitem>
+            <para>
+              Some reports are generated for a specific test run.
+              The test run ID of the currently selected test summary
+              is entered by default, but you can enter a different
+              run.
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            Detail Selection:
+          </term>
+          <listitem>
+            <para>
+              For the Testresult and TestresultError reports, you
+              must also specify the nesting level (how many levels
+              in the hierarchy should be shown) and the ID of the
+              test run you want to generate the report for. The test
+              run ID for each run can be seen in the Test Result
+              Summary View.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </listitem>
+    <listitem>
+      <para>
+        Click ”<emphasis>OK</emphasis>” to start the report
+        generation.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Once the report is ready, it will be shown in the BIRT
+        viewer.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Hover over the points on the graph in a report to see any
+        additional information about the point (comment, data value
+        etc.).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can click through the report’s pages in the viewer and
+        also export the report as a PDF. <para role="warning">The option
+        <emphasis>Auto</emphasis> when exporting a report leads to
+        the right-hand side of the report being cut off.</para>
+      </para>
+      <para>
+        <para role="tip">You can also create your own reports to execute
+        (<xref linkend="writing-your-own-birt-reports"/>).</para>
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

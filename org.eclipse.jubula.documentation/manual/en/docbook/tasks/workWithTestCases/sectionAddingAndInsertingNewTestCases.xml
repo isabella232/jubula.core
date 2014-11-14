@@ -1,0 +1,67 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="adding-and-inserting-new-test-cases-to-a-test-case" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Adding and inserting new Test Cases to a Test Case</title>
+  <anchor role="helpid" id="dialogTestcaseAddNewContextId">Add New Test Case Dialog</anchor>
+  <anchor role="helpid" id="dialogTestcaseInsertNewContextId">Insert New Test Case Dialog</anchor>
+  <orderedlist>
+    <listitem>
+      <para>
+        Open the Test Case Editor by double-clicking on the Test
+        Case you want to edit in the Test Case Browser.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        From the context-sensitive menu, select:
+        
+        <para>
+          <emphasis role="menuPath">Add</emphasis>--&gt;<emphasis role="menuPath">New Test Case</emphasis>
+        </para>
+        
+        (This places the Test Case after any other items in the Test Case Editor.) or
+        
+        <para>
+          <emphasis role="menuPath">Insert</emphasis>--&gt;<emphasis role="menuPath">New Test Case</emphasis>
+        </para>
+        
+        (This places the Test Case above the currently selected item in the Test Case Editor.)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the dialog that appears, enter a meaningful name for the
+        new Test Case.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Click ”<emphasis>OK</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Test Case appears in the Test Case Editor in the parent
+        Test Case and also appears in the Test Case Browser. The
+        Test Case is marked with a small arrow to show that it is
+        reused here. The name of the Test Case is contained in
+        angled brackets (<emphasis role="input">&lt; &gt;</emphasis>) to show that it
+        is the same name that you used when you specified the Test
+        Case.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Save the changes in the editor.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

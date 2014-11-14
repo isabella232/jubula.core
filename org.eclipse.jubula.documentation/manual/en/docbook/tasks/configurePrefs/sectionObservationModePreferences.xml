@@ -1,0 +1,81 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="observation-mode-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Observation mode preferences</title>
+  <anchor role="helpid" id="prefPageObserveJavaContextId">Observation Mode Preferences</anchor>
+  <para>
+    <para role="tip">The observation mode can only be used for Java AUTs.</para>
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        Start/stop check mode:
+      </term>
+      <listitem>
+        <para>
+           Choose which keystroke you want to use to start and stop
+          the check mode when you are observing Test Cases in Java
+          AUTs.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Check component:
+      </term>
+      <listitem>
+        <para>
+          Choose which keystroke you want to use to show the check
+          dialog when you are in check mode. The check dialog lets
+          you choose what property of the selected component you
+          want to check.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Show console:
+      </term>
+      <listitem>
+        <para>
+          The console provides information on the actions that have
+          been observed. This is especially useful if your AUT is
+          running on a different machine to your client. 
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Trigger for replace text:
+      </term>
+      <listitem>
+        <para>
+          Replace text actions are observed when the focus moves
+          from the text component to another component. Depending on
+          your application, this may not happen automatically in
+          some situations. Enter triggers here which you can use to
+          signify that you wish to observe a replace text action,
+          even if the focus does not move from the text component. 
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+  <figure>
+    <title>Observation Mode Preference Dialog</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/obsprefsjava.png"/>
+      </imageobject>
+      <textobject><phrase>Observation Mode Preference
+      Dialog</phrase></textobject>
+    </mediaobject>
+  </figure>
+</section>

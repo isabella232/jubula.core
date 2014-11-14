@@ -1,0 +1,27 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="test-suites" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                        xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Test Suites</title>
+  <para>
+    Test Suites are the containers for Test Cases to be executed and
+    can contain as many Test Cases as necessary. Each Test Suite
+    must be bound to one AUT which it will test. An AUT can be bound
+    to more than one Test Suite.
+  </para>
+  <para>
+    An important concept for testing is the ability to test a
+    program modularly. Program parts can be tested as and when they
+    are delivered using the specific Test Suites for each part. Only
+    the chosen Test Suite in a project will be executed, which means
+    that testing can begin whether all program components are
+    available/functional or not.
+  </para>
+</section>

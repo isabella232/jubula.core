@@ -1,0 +1,88 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="importing-and-exporting-database-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Importing and exporting database preferences</title>
+  <anchor role="helpid" id="databaseConnectionConfigurationDialogContextId">Database connection preferences</anchor>
+  <para>
+    You can export and import your database preferences for the ITE.
+    This makes migrating to new versions easier, as you do not have
+    to reenter any database preferences.
+  </para>
+  <para>
+    To export your database preferences:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select:
+        
+        <para>
+          <emphasis role="menuPath">File</emphasis>--&gt;<emphasis role="menuPath">Export</emphasis>
+        </para>
+        
+        from the main menu in the ITE.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the dialog that appears, select:
+        <emphasis>General/Preferences</emphasis> and click
+        ”<emphasis>Next</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select the <emphasis>Database Connections</emphasis> option
+        and browse to a place in the file system where you want the
+        preferences to be saved.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Click ”<emphasis>Finish</emphasis>”.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    To import your database preferences:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select:
+        
+        <para>
+          <emphasis role="menuPath">File</emphasis>--&gt;<emphasis role="menuPath">Import</emphasis>
+        </para>
+        
+        from the main menu in the ITE.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the dialog that appears, select:
+        <emphasis>General/Preferences</emphasis> and click
+        ”<emphasis>Next</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Browse to the preference file you wish to import.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select the <emphasis>Database Connections</emphasis> option
+        and click ”<emphasis>Finish</emphasis>”.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

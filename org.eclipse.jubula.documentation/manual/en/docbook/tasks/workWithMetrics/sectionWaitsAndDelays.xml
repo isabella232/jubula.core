@@ -1,0 +1,54 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="waits-and-delays" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Waits and delays</title>
+  <para>
+    This analysis can be performed on Test Result Reports in the Execution Perspective and in the Reporting Perspective. Select a node you want to analyze and select:
+    
+    <para>
+      <emphasis role="menuPath">Analyze</emphasis>--&gt;<emphasis role="menuPath">Waits and delays</emphasis>
+    </para>
+    
+    from the context-sensitive menu.
+  </para>
+  <para>
+    The analysis examines the selected node and the nodes below it
+    in the Test Result Report for all instances where a wait is
+    performed. This can be the action ”<emphasis>Wait</emphasis>” or
+    it could also be the parameters ”<emphasis>Delay
+    after...</emphasis>” or ”<emphasis>Delay before...</emphasis>”.
+    Basically, any time a static wait (i.e. not a timeout) is
+    performed, then this is analyzed.
+  </para>
+  <para>
+    You can define a parameter for the analysis which specifies the
+    minimum value of waits to be analyzed (in milliseconds). If you
+    enter e.g. 5000, then only waits above 5000ms will be shown in
+    the results.
+  </para>
+  <para>
+    Once the results have been calculated, they are shown in the
+    Search Result View. They are organized according to the action
+    that the wait is contained in. The amount of waits corresponding
+    to each action is shown in brackets behind the action name. On
+    the right hand side of the Search Result View, the cumulative
+    values for the amount of waits for each action are shown. The
+    number on the left is the total amount of waits that correspond
+    to the parameter value entered. The number on the right shows
+    the total amount of waits for this action, regardless of the
+    parameter. In this way, it is easier to see whether your tests
+    have a few very large waits, or many smaller waits.
+  </para>
+  <para>
+    <para role="tip">Double click on one of the wait actions to jump to this
+    place in the test Result View.</para>
+  </para>
+</section>

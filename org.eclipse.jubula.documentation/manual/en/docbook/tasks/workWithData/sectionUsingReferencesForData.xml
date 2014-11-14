@@ -1,0 +1,72 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="using-references-for-data-in-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Using references for data in Test Cases</title>
+  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
+  <itemizedlist>
+    <listitem>
+      <para>
+        If there are parameters in a Test Case that you want to
+        change when you reuse it, you can enter a reference instead
+        of a concrete value. Deciding which data to parametrize is
+        an important decision in test creation. <para role="tip">Press
+        <emphasis role="input">»CTRL+SPACE«</emphasis> to get content
+        assist in the Properties View for certain parameters. </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To enter a reference for a parameter, in the Properties
+        View, enter a reference name, preceded by an equals sign:
+        <emphasis role="input">=REF_NAME</emphasis>.
+      </para>
+      <para>
+        <para role="tip">Reference names may only consist of letters, numbers
+        and underscores. You cannot use spaces in reference names.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Press <emphasis role="input">»ENTER«</emphasis>. A yellow arrow
+        <mediaobject role="icon" file="images/refArrow.png"/>
+        will appear next to the <emphasis>parameter</emphasis> field
+        in the Properties View.
+        
+        <para role="tip">It helps to choose names that are meaningful so that
+        you know what sort of data to enter later. Instead of
+        <emphasis>=TEXT</emphasis>, you could use
+        <emphasis>=CATEGORY_NAME</emphasis>, for example.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You will see that the reference becomes a parameter of the
+        parent Test Case. It appears in the Test Case Browser next
+        to the parent Test Case in square brackets.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You will be able to enter data for this parameter when you
+        reuse the Test Case. <para role="tip">You can enter data for it now if
+        you want to – this is essentially like having default data.
+        They appear when you reuse the Test Case, but you can
+        overwrite them (<xref linkend="overwriting-data-for-test-cases-and-test-suites"/>).</para>
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    For information on editing and deleting referenced parameters
+    from Test Cases, see the following 
+    <xref linkend="using-the-edit-parameters-dialog-to-add-edit-and-delete-references"/>.
+  </para>
+</section>

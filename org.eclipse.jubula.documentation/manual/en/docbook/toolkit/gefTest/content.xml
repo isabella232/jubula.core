@@ -1,0 +1,41 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="geftest" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="gefTest"?>
+  <title>Testing GEF AUTs</title>
+  <anchor role="helpid" id="projectWizardContextId">Creating a Project</anchor>
+  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+  <para>
+    The GEF toolkit is a sub-toolkit of RCP. To be able to test AUTs
+    that contain GEF components, you must select
+    <emphasis>RCP</emphasis> as the toolkit in the Project properties.
+  </para>
+  <para>
+    The same points about the RCP Remote Control plugin and the
+    keyboard files mentioned in the section on RCP AUTs (<xref linkend="rcpaut"/>)
+    are also valid for testing AUTs with GEF components.
+  </para>
+  <para>
+    Testing GEF components is a little different to testing other
+    components, because we highly recommend that the software
+    developers use our accessibility plug-in in the AUT to make the
+    testing of GEF components more robust.
+  </para>
+  <para>
+    <para role="tip">GEF testing is supported from GEF version 3.0 up to but not
+    including 4.0. We test our GEF support on GEF version 3.7.2.</para>
+  </para>
+  
+  <xi:include href="sectionTestingGEFComponents.xml"/>
+  <xi:include href="sectionUsingGEFInspector.xml"/>
+  
+</section>

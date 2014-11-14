@@ -1,0 +1,20 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="component-names" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Component names</title>
+  <para>
+    When you specify Test Steps, you specify component names for the
+    components you want to test. When you add Test Cases to a Test
+    Suite, all component names used in the Test Cases are collected
+    by the Object Mapping Editor. You can then collect the technical
+    names from the AUT.
+  </para>
+</section>

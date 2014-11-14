@@ -1,0 +1,104 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="test-steps" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                       xmlns:xi="http://www.w3.org/2001/XInclude"
+                                       xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Test Steps</title>
+  <para>
+    A Test Step is the smallest unit in the test hierarchy. Each
+    Test Step represents one action on one component (or
+    user-interface element) in the AUT.
+  </para>
+  <para>
+    The interaction is composed of three details, which we refer to
+    as ”<emphasis>CAP</emphasis>” (component, action, parameter):
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        Component:
+      </term>
+      <listitem>
+        <para>
+          a component is a user-interface object (e.g. a button, a
+          combo box).
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Action:
+      </term>
+      <listitem>
+        <para>
+          the action is the operation to be executed on the selected
+          component. Each component has a number of actions which
+          can be executed on it, for example, buttons can be
+          clicked, an input can be made into a text field. 
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Parameter:
+      </term>
+      <listitem>
+        <para>
+          the parameter(s) are the data or variables associated with
+          an action. When a button is clicked, the parameter is the
+          amount of clicks. When you are entering text into a text
+          field, the parameter is the text you want to enter. The
+          amount and type of parameters depends on the action.
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+  <para>
+    The only detail which needs to be fixed at this point in the
+    specification is the action. The actual component to be tested
+    and the parameters can be added or changed later on.
+  </para>
+  <para>
+    The specification is also separate from the AUT. You give the
+    component you specify a <emphasis>component name</emphasis>,
+    which you use to identify the component in your test. This
+    component name is assigned to the actual component in the AUT at
+    a later point. In this way, specification can begin before the
+    AUT is available.
+  </para>
+  <para>
+    An example if a Test Step could be entering text (e.g. <emphasis role="input">hello</emphasis>) into a text field:
+  </para>
+  <informaltable frame="none">
+    <tgroup cols="2">
+      <colspec align="left"/>
+      <colspec align="left"/>
+      <tbody>
+        <row>
+          <entry><emphasis role="strong">Component</emphasis></entry>
+          <entry>Text field/text area/text pane/...</entry>
+        </row>
+        <row>
+          <entry><emphasis role="strong">Action</emphasis></entry>
+          <entry>Enter text</entry>
+        </row>
+        <row>
+          <entry><emphasis role="strong">Parameter</emphasis></entry>
+          <entry>hello</entry>
+        </row>
+      </tbody>
+    </tgroup>
+  </informaltable>
+  <para>
+    <para role="tip">We recommend using the Test Cases in the library Projects
+    installed with instead of writing Test Steps. Using the Test
+    Cases from the library Projects saves time and improves the
+    flexibility of your tests.</para>
+  </para>
+</section>

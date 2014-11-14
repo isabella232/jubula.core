@@ -1,0 +1,120 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="starting-stopping-and-pausing-test-suites-and-test-jobs" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Starting, stopping and pausing Test Suites and Test Jobs</title>
+  <anchor role="helpid" id="runningAutsViewContextId">Running AUTs View</anchor>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <section id="starting-a-test-suite-or-a-test-job">
+    <title>Starting a Test Suite or a Test Job</title>
+    <para>
+      To start a Test Suite or a Test Job, you must:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          have started the AUT (<xref linkend="starting-the-aut"/>)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          have completed object mapping for the Test Suite or Test
+          Suites (<xref linkend="object-mapping-1"/>)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          have entered complete test data for your Test Suites, for
+          the language you want the test to run in.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <para role="tip">Before starting a Test Suite or a Test Job, it is a
+      good idea to review your preferences for the test results
+      (<xref linkend="test-result-preferences"/>).</para>
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Starting a Test Suite:
+        </term>
+        <listitem>
+          <para>
+            You can start a Test Suite from the Test Suite Browser
+            or from the Running AUTs View. Click on the arrow next
+            to the ”<emphasis>Start test execution</emphasis>”
+            button and select a Test Suite to start from the list.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Starting a Test Job:
+        </term>
+        <listitem>
+          <para>
+            You can start a Test Job from the Test Suite Browser.
+            Click on the arrow next to the ”<emphasis>start test
+            execution</emphasis>” button <mediaobject role="icon" file="images/startSuite.png"/>
+            and select a Test Job to start from the list.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      <para role="tip">The amount of Test Suites or Test Jobs in the list for
+      the ”<emphasis>start test</emphasis>” button depends on your
+      selection. In the Running AUTs View, only Test Suites for the
+      currently selected AUT will be shown. In the Test Suite
+      Browser, if you have selected a Test Suite or a Test Job, only
+      the selected item will be startable. </para>
+    </para>
+    <para>
+      When a test is running, you can view the progress of the test
+      in the <emphasis>Progress View</emphasis>. This is especially
+      useful if the ITE and the AUT are running on different
+      machines: you can see how much longer the test will run
+      without having to switch to the machine the AUT is running on.
+    </para>
+  </section>
+  <section id="stopping-a-test-suite-or-test-job">
+    <title>Stopping a Test Suite or Test Job</title>
+    <para>
+      To stop the test at any point, click on the ”<emphasis>stop
+      test execution</emphasis>” button <mediaobject role="icon" file="images/stop.png"/> 
+      on the toolbar. The test stops automatically when it finishes or
+      when an error occurs whose Event Handler has <emphasis>exit</emphasis>
+      as a reentry type.
+    </para>
+  </section>
+  <section id="pausing-exec">
+    <title>Pausing a Test Suite or Test Job</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          To pause a test, click on the ”<emphasis>pause test
+          execution</emphasis>” button <mediaobject role="icon" file="images/pause.png"/>
+          on the main toolbar.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To continue with the test, press the ”<emphasis>Pause test
+          execution</emphasis>” button again. <para role="tip">You can opt to
+          automatically pause the test execution when an error
+          occurs via the toolbar (<xref linkend="interactive-test-analysis"/>).</para>
+          <para role="warning">If the client and AUT Agent are installed on the
+          same machine, moving the mouse will disrupt the test. </para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

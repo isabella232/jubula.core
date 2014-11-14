@@ -1,0 +1,241 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="using-the-search-dialog" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Using the search dialog</title>
+  <para>
+    You can open the search dialog (<xref linkend="SearchDialog"/>) from the toolbar, by pressing <emphasis role="input">»CTRL+H«</emphasis> or via the menu:
+    
+    <para>
+      <emphasis role="menuPath">Search</emphasis>--&gt;<emphasis role="menuPath">Search</emphasis>
+    </para>
+  </para>
+  <figure id="SearchDialog">
+    <title>Search Dialog</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/SearchDialog.png"/>
+      </imageobject>
+      <textobject><phrase>Search Dialog</phrase></textobject>
+    </mediaobject>
+  </figure>
+  <para>
+    The search dialog allows you to search the
+    <emphasis role="strong">current Project in the current working
+    language</emphasis> for:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Keywords (<xref linkend="searching-for-keywords"/>) (Test Cases, Test
+        Steps, Test Suites, Test Jobs and categories).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Test data used in Test Cases or central test data sets
+        (<xref linkend="searching-for-test-data"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Files in the workspace (<xref linkend="searching-for-files"/>).
+      </para>
+    </listitem>
+    <listitem>
+    <para>
+    Tasks in the repository (<xref linkend="searching-for-tasks"/>)
+    </para>
+    </listitem>
+  </itemizedlist>
+  <section id="searching-for-keywords">
+    <title>Searching for keywords throughout the Project</title>
+    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" id="com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
+    <para>
+      On the first tab of the search dialog, you can search for the
+      following based on their name, a comment, a description, or a task ID.:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Test Steps
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Test Cases – either the original specification or places
+          where a Test Case has been reused (referenced)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Test Suites – either the original specification or places
+          where a Test Suite has been reused (referenced)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Test Jobs
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Categories
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      Enter the term you wish to search for and select whether you
+      want the search term to be case sensitive or whether you will
+      be using regular expressions. Specify what aspects you want to search the node types for 
+      (name, comment, description, task ID) and which nodes you want to search in. 
+      You can also specify whether you
+      want to search in the whole Project, or just for the selected
+      nodes (<xref linkend="limiting-the-search-to-the-selected-node"/>).
+    </para>
+    <para>
+      Click ”<emphasis>Search</emphasis>” to start the search. The
+      results are shown in the Search Result View
+      (<xref linkend="using-the-search-result-view"/>).
+    </para>
+    <para>
+      <para role="tip">Only results from the
+      current working language are displayed.</para>
+    </para>
+  </section>
+  <section id="searching-for-test-data">
+    <title>Searching for test data</title>
+    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" id="com.bredexsw.guidancer.doc.testDataSearchPageContextId">Test Data Search</anchor>
+    <para>
+      On the second tab of the search dialog, you can search for
+      test data in the following:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Central test data sets
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Test Cases – either either the original specification or
+          places where a Test Case has been reused (referenced)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Test Steps
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <para role="tip">The search does not consider the
+      <emphasis>name</emphasis> of the central test data set, for
+      example, only the data contained in it.</para>
+    </para>
+    <para>
+      Enter the term you wish to search for and select whether you
+      want the search term to be case sensitive or whether you will
+      be using regular expressions. You can also specify whether you
+      want to search in the whole Project, or just for the selected
+      nodes (<xref linkend="limiting-the-search-to-the-selected-node"/>).
+    </para>
+    <para>
+      Click ”<emphasis>Search</emphasis>” to start the search. The
+      results are shown in the Search Result View
+      (<xref linkend="using-the-search-result-view"/>).
+    </para>
+    <para>
+      <para role="tip">Only test data from the current working language is displayed. 
+     </para>
+    </para>
+  </section>
+  <section id="searching-for-files">
+    <title>Searching for files in the workspace</title>
+    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <para>
+      On the third tab of the search dialog, you can search for and
+      in files contained in your workspace.
+    </para>
+    <para>
+      Enter the term you wish to search for and click
+      ”<emphasis>Search</emphasis>” to start the search. The results
+      are shown in the Search Result View
+      (<xref linkend="using-the-search-result-view"/>).
+    </para>
+  </section>
+  <section id="limiting-the-search-to-the-selected-node">
+    <title>Limiting the search to the selected node</title>
+    <anchor role="helpid" id="com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
+    <anchor role="helpid" id="com.bredexsw.guidancer.doc.testDataSearchPageContextId">Test Data Search</anchor>
+    <para>
+      In the search dialog, you can specify whether the search you
+      define should be performed on the whole Project, or just on
+      the node you have selected in a browser. If you select to just
+      search within the selected node, then you can define which
+      browser or browsers to search in (you may have more than one
+      active selection in your browsers):
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Test Suite Browser
+        </term>
+        <listitem>
+          <para>
+            This search will be limited to the selected item (Test
+            Suite, Test Job, category) in the Test Suite Browser. If
+            you select the root node in the Test Suite Browser, then
+            the whole Test Suite Browser will be searched. 
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Main Test Case Browser
+        </term>
+        <listitem>
+          <para>
+            This search will be limited to the selected item (Test
+            Case, category) in the Test Case Browser. If you have
+            more than one Test Case Browser open
+            (<xref linkend="opening-the-test-case-browser-multiple-times"/>), then the one marked as
+            <emphasis>Main</emphasis> will be used. If you select
+            the root node in the Test Case Browser, then the whole
+            Test Case Browser will be searched.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          All Test Case Browsers
+        </term>
+        <listitem>
+          <para>
+            If you have more than one Test Case Browser open
+            (<xref linkend="opening-the-test-case-browser-multiple-times"/>), then the selected nodes in all
+            of them will be searched.If you select the root node in
+            the Test Case Browser, then the whole Test Case Browser
+            will be searched.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      You can select one or more of these options to perform the
+      search.
+    </para>
+  </section>
+</section>

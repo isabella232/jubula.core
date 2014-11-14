@@ -1,0 +1,127 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="starting-javafx-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Starting JavaFX AUTs</title>
+  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <para>
+    You can start JavaFX AUTs via a configuration, but not via
+    <emphasis>autrun</emphasis>.
+  </para>
+  <section id="configuring-a-java-aut-to-be-started-from-the-ite">
+    <title>Configuring a Java AUT to be started from the ITE</title>
+    <para>
+      The AUT configuration dialog for Java FX has three different
+      levels of detail: basic, advanced and expert.
+    </para>
+    <para>
+      See the sections below for information on the different
+      levels.
+    </para>
+  </section>
+  <section id="basic-javafx-aut-configuration">
+    <title>Basic JavaFX AUT configuration</title>
+    <para>
+      You can use the basic setting to configure your AUT if it can
+      be started by an executable file (e.g. .bat, .exe, .cmd, .sh
+      etc.). If your AUT is a JAR, then you can also use the
+      executable file field to enter the Java executable (i.e. java
+      or java.exe) and then enter the path to the JAR in the AUT
+      Arguments field in the advanced configuration
+      (<xref linkend="advanced-javafx-aut-config"/>).
+    </para>
+    <para>
+      <para role="tip">You must be using a Java 8 JRE to be able to start
+      JavaFX AUTs.</para>
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Enter the basic configuration details as described earlier
+          (<xref linkend="basic-configuration-info"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter the executable file name in the <emphasis>Executable
+          File Name</emphasis> field. This path can be relative if
+          you define a working directory (<xref linkend="advanced-javafx-aut-config"/>).
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      For information on the advanced properties for the AUT
+      configuration, see the next <xref linkend="advanced-javafx-aut-config"/>.
+    </para>
+  </section>
+  <section id="advanced-javafx-aut-config">
+    <title>Advanced JavaFX AUT configuration</title>
+    <para>
+      The advanced configuration dialog lets you create a working
+      directory for your AUT, and add command-line arguments needed
+      to start the AUT. If you entered a Java executable as the
+      executable file name in the basic configuration, then you can
+      enter <emphasis role="input">-jar &lt;JARFILE&gt;</emphasis> in the AUT
+      Arguments field (<xref linkend="autconfigjavafxwithjar"/>).
+    </para>
+    <figure id="autconfigjavafxwithjar">
+      <title>Example JavaFX AUT configuration</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/javafxconfigwithjar.png"/>
+        </imageobject>
+        <textobject><phrase>Example JavaFX AUT
+        configuration</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <para>
+      For information on the expert properties for the AUT
+      configuration, see the next <xref linkend="expert-javafx-aut-config"/>.
+    </para>
+  </section>
+  <section id="expert-javafx-aut-config">
+    <title>Expert JavaFX AUT configuration</title>
+    <para>
+      You can use the expert dialog to configure more detailed
+      information about how the AUT should be started.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Enter any required <emphasis>System Environment
+          Variables</emphasis>, in the format
+          ”<emphasis>&lt;VARNAME&gt;=&lt;value&gt;</emphasis>”, i.e.
+          ”<emphasis>PATH=C:∖ </emphasis>”. Separate each variable
+          with a new line by pressing
+          <emphasis role="input">»ENTER«</emphasis>.
+        </para>
+        <para>
+          <para role="warning">Please be advised that ”embedding” the
+          contents of one variable into another is not supported at
+          this time. That is, if you have a variable named
+          <literal>FOO</literal> whose value is
+          ”<emphasis>abc</emphasis>”, and set the value of a second
+          variable <literal>BAR</literal> to
+          ”<emphasis>%FOO%def</emphasis>”, the second variable will
+          <emphasis>not</emphasis> contain
+          ”<emphasis>abcdef</emphasis>”, but rather the exact text
+          ”<emphasis>%FOO%def</emphasis>”, without evaluating it.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select an activation method for your AUT. More information
+          on AUT activation is available in the previous 
+          <xref linkend="aut-activation"/>.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

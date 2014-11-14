@@ -1,0 +1,268 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="projectproperties" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Editing the Project and AUT properties</title>
+  <para>
+    You can open the Project properties dialog (<xref linkend="projectsettingsdialog"/>) via:
+    
+    <para>
+      <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Properties</emphasis>
+    </para>
+  </para>
+  <figure id="projectsettingsdialog">
+    <title>Project Properties Dialog</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/general_projproperties.png"/>
+      </imageobject>
+      <textobject><phrase>Project Properties
+      Dialog</phrase></textobject>
+    </mediaobject>
+  </figure>
+  <para>
+    The Project properties dialog lets you see and, in some cases,
+    edit information about:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        the Project in general (<xref linkend="editing-general-project-properties"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        the Project languages (<xref linkend="editing-the-languages-for-a-project"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        the AUTs (<xref linkend="editing-the-auts-in-a-project"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        the Projects that you have reused in this Project
+        (<xref linkend="reuseproject"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        the connection to application lifecycle management (ALM)
+        repositories in this Project
+        (<xref linkend="configuring-a-task-repository"/>).
+      </para>
+    </listitem>
+  </orderedlist>
+  <section id="editing-general-project-properties">
+    <title>Editing general Project properties</title>
+    <anchor role="helpid" id="projectSettingsPageContextId">Project Properties</anchor>
+    <para>
+      Select ”<emphasis>General</emphasis>” from the tree on the left-hand
+      side of the Project properties dialog. In the screen that appears, you can:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Edit the Project name.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter a comment for the Project. The comment is visible in
+          the Properties View when you select the Project node in
+          the Test Suite Browser.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Edit the toolkit used by the Project (see the following
+          (<xref linkend="changing-toolkit-settings"/>) for details
+          on this).
+        </para>
+      </listitem>
+      <listitem>
+      <para>
+      Edit the markup language used for descriptions in the Project 
+  	(<xref linkend="adding-descriptions-to-items-in-editors"/>)
+      If you edit the markup language after you have entered descriptions, 
+      you may need to adapt the description texts to conform to the newly chosen markup language.
+      </para>
+      </listitem>
+      <listitem>
+        <para>
+          Edit whether the Project can be referenced (reused) in
+          other Projects.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Edit the protected status of the Project. A protected
+          Project does not allow deletion of Test Cases or editing
+          of parameters.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          See the Project version. This is useful if you have more
+          than one version of a Project.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          See the GUID (global unit identification). This is a
+          unique ID for the Project.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Specify how often the full test result details
+          (<xref linkend="re-opening-the-test-result-view-for-a-test-run"/>) should be automatically
+          deleted from the database.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Configure the tracking of changes in this Project (see the
+          section later (<xref linkend="tracking-changes-in-a-project"/>) for details on
+          this).
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="changing-toolkit-settings">
+    <title>Changing the toolkit settings for a Project</title>
+    <para>
+      If you want to change the toolkit of a Project in the Project
+      properties dialog, the following rules apply:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          You can change at any time from the
+          <emphasis>concrete</emphasis> toolkits to a more specific
+          toolkit (e.g. RCP, HTML).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If your previous choice of toolkit was RCP, SWT or HTML,
+          you can only change to another toolkit if your Project
+          does not use any components specific to the originally
+          chosen toolkit.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="editing-the-languages-for-a-project">
+    <title>Editing the languages for a Project</title>
+    <anchor role="helpid" id="projectSettingsPageContextId">Project Properties</anchor>
+    <para>
+      To see and edit the Project languages, select ”<emphasis>Project languages</emphasis>”
+      from the tree on the left-hand side of the Project properties
+      dialog.
+    </para>
+    <para>
+      You can add and remove Project languages and change the
+      default language in this screen.
+    </para>
+    <para>
+      <para role="tip">You can’t delete a language which is being used as an
+      AUT language.</para>
+    </para>
+  </section>
+  <section id="editing-the-auts-in-a-project">
+    <title>Editing the AUTs in a Project</title>
+    <anchor role="helpid" id="autSettingsPageContextId">Adding/editing AUT's</anchor>
+    <para>
+      To see and edit your AUTs for a Project, select
+      ”<emphasis>AUTs</emphasis>” from the tree on the left-hand
+      side of the Project properties dialog.
+    </para>
+    <para>
+      In the screen that appears, you can see any AUTs you have
+      already added to the Project (<xref linkend="autsettingsdialog"/>).
+      You can choose to edit them, delete them or add a new AUT.
+    </para>
+    <figure id="autsettingsdialog">
+      <title>AUT Properties Dialog</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/autsettingsdialog.png"/>
+        </imageobject>
+        <textobject><phrase>AUT Properties
+        Dialog</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <para>
+      Defining and editing AUTs from here involves the same steps as
+      defining an AUT in the Project wizard (<xref linkend="define-aut"/>).
+    </para>
+  </section>
+  <section id="duplicating-aut-configurations">
+    <title>Duplicating AUT configurations</title>
+    <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+    <anchor role="helpid" id="autSettingsPageContextId">Adding/editing AUT's</anchor>
+    <para>
+      You can duplicate an existing AUT configuration from the
+      Project properties dialog:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select ”<emphasis>AUTs</emphasis>” from the tree on the
+          left-hand side of the Project properties dialog.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select the AUT configuration you want to duplicate.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Click ”<emphasis>Duplicate</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The AUT configuration dialog will open. The AUT
+          configuration name and the AUT ID are automatically
+          changed so that they remain unique. We recommend writing
+          more meaningful names for the configuration and the ID,
+          however.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="editing-aut-configurations">
+    <title>Editing the AUT configurations in a Project</title>
+    <anchor role="helpid" id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+    <para>
+      Select ”<emphasis>AUTs</emphasis>” from the tree on the
+      left-hand side of the Project properties dialog.
+    </para>
+    <para>
+      In the screen that appears, you can see the AUTs you have
+      added to this Project. Select the AUT you want to add a
+      configuration to, and click ”<emphasis>Edit</emphasis>”.
+    </para>
+    <para>
+      In the next screen there is a box labelled ”<emphasis>AUT
+      configurations</emphasis>”. You can choose to add, edit or
+      delete AUT configurations.
+    </para>
+    <para>
+      Adding and editing AUT configurations from here involves the
+      same steps as adding an AUT configuration in the Project
+      wizard (<xref linkend="configuringaut"/>).
+    </para>
+  </section>
+</section>

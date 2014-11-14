@@ -1,0 +1,24 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="keyboard-layouts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Keyboard Layouts</title>
+  <para>
+    For RCP AUTs, a keyboard layout must be entered in the
+    AUT configuration (<xref linkend="advanced-aut-config"/>). German (DE)
+    and English (US) are provided as standard keyboard layouts.
+  </para>
+  <para>
+    If you require a different keyboard layout, you must create a mapping file for the new language and place it in the server/resources directory. You also have to put this mapping file into the RCP Remote Control plug-in of your AUT:
+  </para>
+  <para>
+    &lt;RCPAUT&gt;/plugins/org.eclipse.jubula.rc.rcp_&lt;Version&gt;/resources
+  </para>
+</section>

@@ -1,0 +1,69 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="layout" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                   xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Layout</title>
+  <para>
+    This manual is divided into the following chapters:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        The <xref linkend="introduction"/> provides a
+        background and introduction.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The <xref linkend="samples"/> exemplifies the
+        capabilities of the tool, using Project examples. We
+        recommend this chapter if you learn best by example.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The <xref linkend="tasks"/> provides step-by-step
+        instructions for performing most of the common tasks for
+        writing and executing tests. This chapter is best suited for
+        those who learn by doing.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The <xref linkend="toolkit"/> gives advice and hints on working
+        with AUTs written in the different supported toolkits.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The <xref linkend="user-interface"/>
+        presents the user interface, describing its flexible design.
+        This chapter is useful if you are not yet familiar with the
+        GUI concept of the <emphasis>Eclipse</emphasis> platform.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The <xref linkend="concepts"/> introduces the
+        concepts behind of the tool. It will familiarize you with
+        the structure, components, and functionality of the tool.
+        This chapter is useful (and recommended) for gaining
+        in-depth knowledge of how everything works.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Finally, the <xref linkend="glossary"/> provides
+        explanations of all technical terms and abbreviations used
+        throughout this manual.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

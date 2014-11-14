@@ -1,0 +1,44 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="object-mapping-and-aut-changes" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                           xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Object mapping and AUT changes</title>
+  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <para>
+    If your AUT has changed from one version to the next, your tests may still run,
+    depending on the nature and extent of the changes.
+  </para>
+  <para>
+    <para role="tip">Please bear in mind that changing the look and feel of
+    your AUT may lead to different technical names for the
+    components in your AUT if you have not named the components.</para>
+  </para>
+  <para>
+    If your test does not run, a few simple steps will update it.
+  </para>
+  <para>
+    If you get a <emphasis>component not found</emphasis> error, or
+    the wrong component is selected during the test, remap the new
+    component from the AUT and assign it to your component name.
+  </para>
+  <para>
+    This updates this component for the whole test.
+  </para>
+  <figure id="greenborders">
+    <title>Green Border around Supported Component</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/greenborders.png"/>
+      </imageobject>
+      <textobject><phrase>Green Border around Supported
+      Component</phrase></textobject>
+    </mediaobject>
+  </figure>
+</section>

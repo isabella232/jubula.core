@@ -1,0 +1,47 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="opening-the-task-editor-for-items-in-browsers" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Opening the task editor for items in browsers</title>
+  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <para>
+    Each Test Case, Test Suite and Test Job in a Project can be
+    joined to a task in an external repository via a task ID
+    (<xref linkend="working-with-external-task-repositories"/>). You can open the task for an item from the
+    browser:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select the item whose task you want to open in the browser.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Right click and select:
+        
+        <para>
+          <emphasis role="menuPath">Open with</emphasis>--&gt;<emphasis role="menuPath">Mylyn Task Editor</emphasis>
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The task from the external repository will open in the ITE.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <para role="warning">If no repository has been defined for the Project, or the
+    task ID does not exist, or the repository is not configured in
+    the workspace, then the task will not open.</para>
+  </para>
+</section>

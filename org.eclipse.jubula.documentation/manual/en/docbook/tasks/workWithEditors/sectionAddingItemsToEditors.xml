@@ -1,0 +1,104 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="adding-items-to-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Adding items to editors</title>
+  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" id="testCaseAddExistingContextId">Existing Test Case Dialog</anchor>
+  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <para>
+    You can add (reference) Test Cases in other Test Cases and in
+    Test Suites. You can also add (reference) Test Suites in Test
+    Jobs.
+  </para>
+  <para>
+    To add items to an editor:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Open the editor by double-clicking the item you want to add
+        things to.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can now:
+      </para>
+      <orderedlist>
+        <listitem>
+          <para>
+            Add items via drag and drop from the browser into the
+            editor:
+          </para>
+          <para>
+            <emphasis role="strong">Test Cases</emphasis>:<?linebreak?>
+            Test Cases can be added to other Test Cases and Test Suites by selecting the Test Case from the Test Case Browser and dragging it into the editor.
+          </para>
+          <para>
+            <emphasis role="strong">Test Suites</emphasis>:<?linebreak?>
+            Test Suites can be referenced in Test Jobs by selecting the Test Suite to reference from the Test Suite Browser and dragging it into the Test Job Editor.
+          </para>
+          <para>
+            <para role="tip">Once you have added a Test Suite to a Test Job,
+            you must enter the AUT ID for the AUT to be tested in
+            the Properties View.</para>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            For Test Cases, you can also use the <emphasis>Reference Existing Test Case</emphasis> dialog. Using the context-sensitive menu in the editor, select:
+            
+            <para>
+              <emphasis role="menuPath">Reference Existing Test Case</emphasis>
+            </para>
+          </para>
+          <para>
+            <para role="tip">You can also press
+            <emphasis role="input">»ENTER«</emphasis> in the editor to
+            open the <emphasis>Reference Existing Test Case
+            dialog.</emphasis></para>
+          </para>
+          <para>
+            Using this dialog (<xref linkend="referencetestcasedialog"/>), you
+            can choose a Test Case or Test Cases to add to the
+            editor. You can filter in through the dialog using the
+            field at the top. Use star <emphasis role="input">*</emphasis> as a wild
+            card.
+          </para>
+          <figure id="referencetestcasedialog">
+            <title>Add Test Case reference dialog</title>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="images/referencetestcasedialog.png"/>
+              </imageobject>
+              <textobject><phrase>Add Test Case reference
+              dialog</phrase></textobject>
+            </mediaobject>
+          </figure>
+        </listitem>
+      </orderedlist>
+    </listitem>
+  </orderedlist>
+  <para>
+    Items you reference in editors are marked with a small arrow to
+    show that they are reused (referenced) here. The name of the
+    item is contained in angled brackets (<emphasis role="input">&lt; &gt;</emphasis>)
+    to show that it is the same name that you used when you
+    specified the Test Case. Items can be renamed to reflect their
+    particular use in this editor (<xref linkend="renaming-items-in-editors"/>).
+  </para>
+  <para>
+    <para role="warning">You can’t add items which would cause an infinite loop.</para>
+  </para>
+</section>

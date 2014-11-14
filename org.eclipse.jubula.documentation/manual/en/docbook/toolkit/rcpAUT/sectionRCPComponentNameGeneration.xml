@@ -1,0 +1,29 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="rcp-component-name-generation" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Component name generation in RCP</title>
+  <anchor role="helpid" id="autSettingWizardPagePageContextId">Defining an AUT</anchor>
+  <anchor role="helpid" id="autWizardPageGenerateNamesPageContextId">Name Generation in RCP</anchor>
+  <anchor role="helpid" id="autSettingsPageContextId">Adding/editing AUT's</anchor>
+  <para>
+    RCP AUTs often use wizards and standard dialogs. The components
+    in these dialogs are not often named by developers, and are in
+    different places on Windows, Linux and Mac systems.
+  </para>
+  <para>
+    You can decide if unique names should be generated for these
+    components in your AUT, if no name has been given. You can
+    configure this in the AUT settings (<xref linkend="define-aut"/>). We
+    recommend selecting this option, as it makes your tests more
+    robust to any changes and also makes platform-independent
+    testing possible in RCP AUTs.
+  </para>
+</section>

@@ -1,0 +1,34 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<chapter id="concepts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                     xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="concepts"?>
+  <title>Concepts</title>
+  <para>
+    The following sections introduce the concepts and capabilities of
+    the tool.
+  </para>
+  
+  <xi:include href="overview/content.xml"/>
+  <xi:include href="testing/content.xml"/>
+  <xi:include href="architecture/content.xml"/>
+  <xi:include href="databaseStructure/content.xml"/>
+  <xi:include href="approaches/content.xml"/>
+  <xi:include href="testHierarchy/content.xml"/>
+  <xi:include href="reusability/content.xml"/>
+  <xi:include href="multiLingualTesting/content.xml"/>
+  <xi:include href="objectMapping/content.xml"/>
+  <xi:include href="testExec/content.xml"/>
+  <xi:include href="observeUserActions/content.xml"/>
+  <xi:include href="eventHandlers/content.xml"/>
+  <xi:include href="extensibility/content.xml"/>
+  <xi:include href="summary/content.xml"/>
+  
+</chapter>

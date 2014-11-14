@@ -1,0 +1,359 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="setting-up-ios-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                               xmlns:xi="http://www.w3.org/2001/XInclude"
+                                               xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Setting up an iOS AUT for testing</title>
+  <para>
+    If you want to test an <emphasis>iOS</emphasis> application, you
+    have to prepare the AUT in order to make it testable.
+  </para>
+  <para>
+    <para role="tip">This preparation is designed to be undertaken by a
+    developer who has access to the AUT’s source code as well as
+    knowledge of developing for iOS using Objective-C and Xcode.
+    These instructions assume you are using Xcode 5. For other Xcode versions
+    please adapt the instructions accordingly.</para>
+  </para>
+  <section id="create-a-testing-target">
+    <title>Create a Testing Target</title>
+    <para>
+      We strongly recommend that you create a
+      <emphasis role="strong">separate target</emphasis> which
+      contains and uses all the necessary modifications for your AUT
+      to be testable. Once you have created a second target for the
+      testing-enabled version of your AUT to test, you can begin
+      testing simply by running this second target. Having a
+      separate target also ensures that no testing code will be
+      released into the productive version of your app.
+    </para>
+    <para>
+      The new target will start as a duplicate of your old target.
+      To create the duplicated target:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select the project file for your app in the Project
+          Navigator.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the project setting page, click on the black arrow icon
+          <emphasis>”Show project and targets list”</emphasis> in the main content area
+          in the very top left that hides/shows the project and tar-
+          gets list. To duplicate your target select it and press
+          <emphasis role="input">»COMMAND KEY+D«</emphasis>,
+          or right+click the target and choose <emphasis>”Duplicate”</emphasis>
+          entry of the context menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The new target will be created. We suggest renaming it,
+          e.g. to <emphasis><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> or Jubula Tests</emphasis>.
+          by double-clicking the target in the list of project targets and changing the value
+          to a new name.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can also (optionally) rename your <emphasis>iOS</emphasis>
+          application to something more meaningful e.g. <emphasis>MyApp</emphasis>
+          (<emphasis><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis>
+          or Jubula Tests</emphasis>) by selecting the <emphasis>”Build Settings”</emphasis>
+          tab and searching for <emphasis>”Product Name”</emphasis>, then changing the value
+          to a new name. After target name change the product name will also have this new
+          name if you give the next name to <emphasis>”Product Name”</emphasis> in build settings:
+        </para>
+        <para>
+          <emphasis role="input">${TARGET_NAME}</emphasis>
+        </para>
+        <para role="tip">
+          Making the AUT testable can be achieved more easily
+          and quickly by using a CocoaPods, however its usage is
+          not obligatory. CocoaPods is a dependency manager for
+          Objective-C, which automates and simpliﬁes the process
+          of using 3rd-party libraries in your projects. You can ﬁnd
+          more details about CocoaPods at<?linebreak?>
+          <link xl:href="http://cocoapods.org">http://cocoapods.org</link>.
+        </para>
+        <para>
+          Below, two ways to conﬁgure the Testing Target are described:
+          with and without the CocoaPods usage.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="configure-the-testing-target-without-cocoapods">
+    <title>Configure the Testing Target without CocoaPods</title>
+    <para>
+      Now that you have a target for your tests, add the tests to
+      that target.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          The ﬁrst step is to link/add the <emphasis>librc.mobile.ios.nativ</emphasis>
+          static library and <emphasis>UIRemoteControl.h</emphasis> ﬁle directly into
+          your iOS application. Locate the <emphasis>development/iOS-support.zip</emphasis>
+          ﬁle in the installation directory in Finder. Unzip it and drag all
+          of its content into the Project Navigator. In the dialog to
+          choose options for adding these ﬁles use <emphasis>”Add to target”</emphasis>
+          option by checking a checkbox of the target you want to
+          work with from the target list. This lets your project and
+          thereby your <emphasis>iOS</emphasis> application be run as a testable AUT.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          With the project settings still selected in the Project
+          Navigator, and the new integration tests target selected
+          in the project settings, select the ”<emphasis>Build
+          Phases</emphasis>” tab.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Under the ”<emphasis>Link Binary With
+          Libraries</emphasis>” section, press the
+          ”<emphasis>+</emphasis>” button.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the sheet that appears, select
+          <emphasis>CFNetwork.framework</emphasis> and
+          <emphasis>SenTestingKit.framework</emphasis> and click
+          ”<emphasis>Add</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Then click ”<emphasis>Add other...</emphasis>” in the
+          lower left corner and locate and select the library
+          <emphasis>librc.mobile.ios.nativ.a</emphasis> and click
+          ”<emphasis>Open</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Next, make sure that the
+          <emphasis>UIRemoteControl.h</emphasis> header file can be
+          accessed. To do this, add the
+          <emphasis>UIRemoteControl.h</emphasis> to the
+          ”<emphasis>Header Search Paths</emphasis>” build setting.
+          Start by selecting the ”<emphasis>Build
+          Settings</emphasis>” tab of the project settings, and from
+          there, use the filter control to find the
+          ”<emphasis>Header Search Paths</emphasis>” setting.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Double click the value, and add the file
+          <emphasis>UIRemoteControl.h</emphasis> to the list. If
+          it’s not there already, you should add the $(inherited)
+          entry as the first entry in this list.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The iOS support takes advantage of Objective C’s ability
+          to add categories to an object, but this isn’t enabled for
+          static libraries by default. To enable this, add the -ObjC
+          and -all_load flags to the ”<emphasis>Other Linker
+          Flags</emphasis>” build settings.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you build for iOS Simulator, but linking against
+          dylib built, build error with linker command failed
+          might occur. To avoid this, add to the <emphasis>”Framework
+          Search Paths”</emphasis> build setting the line
+          <emphasis>”$(SDKROOT)/Developer/Library/Frameworks”</emphasis> right after
+          the $(inherited) entry.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Finally, add a preprocessor flag to the testing target so
+          that you can conditionally include code. This will help to
+          make sure that none of the testing code makes it into the
+          production app. Call the flag
+          <emphasis role="input">RUN_FUNCTIONAL_TESTS</emphasis> and add it under
+          the ”<emphasis>Preprocessor Macros</emphasis>”. Again,
+          make sure the $(inherited) entry is first in the list.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="configure-the-testing-target-with-cocoapods">
+    <title>Configure the Testing Target</title>
+    <para role="warning">
+      You need to have CocoaPods installed on your machine
+      before you start making your AUT testable with its help.
+    </para>
+    <para>
+      To conﬁgure the Testing Target with CocoaPods, you need a
+      speciﬁcation - <emphasis>.podspec</emphasis> ﬁle. It describes a version of
+      the <emphasis>Pod</emphasis> library and includes details about where the
+      source should be fetched from, what ﬁles to use, the build settings to apply,
+      and other general metadata such as its name, version, and
+      description. We provide two types of such ﬁles. The <emphasis>rcmobile.podspec</emphasis>
+      ﬁle will add a static library, while the <emphasis>rcmobile-debug.podspec</emphasis>
+      ﬁle will import all source ﬁles to the project dynamically, which allows you
+      to change code for testing and to debug more deeply.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          In the installation directory you will ﬁnd a development
+          folder and an <emphasis>iOS-support</emphasis> zip archive inside it which you
+          have to unzip. There you will see a <emphasis>rcmobile.podspec</emphasis>.
+          <emphasis>rcmobile-debug.podspec</emphasis> is located in a 
+          <emphasis>”development/git/com.bredexsw.jubula.core/com.bredexsw.jubula.rc.mobile.ios.nativ”</emphasis>
+          folder of the installation directory.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In a directory of your AUT XCode project location create a
+          <emphasis>Podﬁle</emphasis> by running this command in a terminal:
+          
+          <para>
+            <emphasis role="input">$ pod init</emphasis>
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Open the newly created <emphasis>Podﬁle</emphasis> and add
+          <emphasis>”rcmobile”</emphasis> static library (as a local source)
+          or dynamically linked source ﬁles with help of
+          <emphasis>”rcmobile-debug”</emphasis> by entering the following line
+          inside the <emphasis>”do ... end”</emphasis> block for each target you
+          want to make testable:
+          
+<programlisting>
+target "TargetName" do
+pod ’rcmobile’, :path => ’iOS-support-path’
+end
+
+or
+
+target "TargetName" do
+pod ’rcmobile-debug’, :path => ’sources-path’
+end
+</programlisting>
+          
+          <emphasis>”iOS-support-path”</emphasis> is the path where
+          <emphasis>rcmobile.podspec</emphasis> ﬁle is located.
+          <emphasis>”sources-path”</emphasis> is the path where
+          <emphasis>rcmobile-debug.podspec</emphasis> ﬁle and folder
+          with sources are located. By default both of them are located in the
+          <emphasis>”development/git/com.bredexsw.jubula.core/com.bredexsw.jubula.rc.mobile.ios.nativ”</emphasis>
+          folder of the installation directory. Other Podﬁle content
+          may remain as it is.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Install the <emphasis>Podﬁle</emphasis> to add the library to the AUT by running
+          this command in the terminal:
+          
+          <para>
+            <emphasis role="input">$ pod install</emphasis>
+          </para>
+        </para>
+        <para role="warning">
+          You must use the <emphasis role="input">»’«</emphasis> (apostrophe) symbol
+          around the library name and the path in the <emphasis>Podﬁle</emphasis> to install it,
+          otherwise you will receive the error "Invalid ’Podﬁle’ ﬁle".
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From now on the <emphasis>project-name.xcworkspace</emphasis> ﬁle must be
+          used instead of the project ﬁle.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you have used the <emphasis>rcmobile.podspec</emphasis>, the static library
+          is now added to the project. If you used the <emphasis>rcmobile-debug.podspec</emphasis>
+          ﬁle all source ﬁles are dynamically linked to the project through the alias and you can
+          ﬁnd them under the <emphasis>Development Pods library</emphasis> in the XCode workspace of
+          your project.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="add-hook-into-the-aut">
+    <title>Add hook into the AUT</title>
+    <para>
+      Finally, the app needs a hook so that it actually allows the
+      attachment and running of the tests when executing the Tests
+      target. This is achieved by using the
+      <emphasis>RUN_FUNCTIONAL_TESTS</emphasis> macro that was
+      defined in the preceding section. This ”<emphasis>preprocessor
+      macro</emphasis>” is only defined in the testing target, so
+      the remote controlling won’t be possible in the regular
+      target. To allow your AUT to be remote controlled, add the
+      following code to your application delegate:
+    </para>
+<programlisting>
+...
+#if RUN_FUNCTIONAL_TESTS
+#import &quot;UIRemoteControl.h&quot;
+#endif
+...
+</programlisting>
+    <para>
+      and the following code to the end of its -
+      (void)applicationDidFinishLaunching[withOptions]: method
+    </para>
+<programlisting>
+...
+#if RUN_FUNCTIONAL_TESTS
+    [UIRemoteControl attach];
+    // alternatively you can
+    // allow the UIRemoteControl 
+    // to use a specific port number 
+    // on the iOS device 
+    // by using:
+    // 
+    // [UIRemoteControl attach:&lt;portNo&gt;];
+    // 
+    // this is necessary
+    // e.g. when you're running 
+    // different AUTs in parallel on 
+    // the same iOS device
+#endif
+...
+</programlisting>
+    <para>
+      Everything should now be configured. When you run the AUT
+      tests target it will launch your app and allow the ITE to
+      remotely attach (on the port specified, or on 11022 if none is
+      entered) and execute tests.
+    </para>
+    <para>
+      <para role="warning">If you do not follow the above steps, the AUT Agent
+      will not be able to communicate with your AUT!</para>
+    </para>
+    <para>
+      This documentation is derived from the KIF installation
+      documentation (http://github.com/square/KIF) as we make use of
+      KIF internally.
+    </para>
+  </section>
+</section>

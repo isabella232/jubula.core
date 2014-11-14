@@ -1,0 +1,158 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="configuring-task-repositories" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Configuring task repositories in your workspace</title>
+  <para>
+    Each repository you want to work with in your ITE must be
+    configured in the workspace you are using.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select:
+        
+        <para>
+          <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis>
+        </para>
+        
+        from the menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the <emphasis>Mylyn</emphasis> section, select
+        <emphasis>Task Repositories</emphasis> and click
+        ”<emphasis>OK</emphasis>”. The <emphasis>Task
+        Repositories</emphasis> View will appear. The Bugzilla
+        Repositories for Jubula are pre-configured.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the <emphasis>Task Repositories</emphasis> View, right
+        click and select <emphasis>Add Task Repository</emphasis>
+        from the context menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the dialog that appears, you will see the pre-defined
+        task repositories for the ITE. You can select one of these
+        or choose to install a different connector. Depending on the
+        connector you want to use, you may require additional
+        software from Tasktop, or the connector may incur license
+        fees. If you want to connect to a HP ALM repository, please
+        follow the instructions below (<xref linkend="adding-hp-alm-repository"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Once you have selected your connector, click
+        ”<emphasis>Next</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        On the following page, you will need to configure the task
+        repository. Please refer to the Mylyn documentation for
+        information on repository configuration.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Click ”<emphasis>Finish</emphasis>” once the repository is
+        configured.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To be able to see tasks in this repository, select:
+        
+        <para>
+          <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis>
+        </para>
+        
+        from the menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the <emphasis>Mylyn</emphasis> section, select
+        <emphasis>Task List</emphasis> and click
+        ”<emphasis>OK</emphasis>”. The <emphasis>Task
+        List</emphasis> View will appear.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    You will now be able to see items in this repository, open them
+    in the ITE, add queries for your workspace and work on tasks
+    from this repository. You will also be able to select this
+    repository in the Project properties as the repository for your
+    Project (<xref linkend="configuring-a-task-repository"/>).
+  </para>
+  <section id="adding-hp-alm-repository">
+    <title>Adding a HP ALM repository to your workspace</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          To add the connector for a HP ALM repository, you will
+          have to install and license software from Tasktop.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once you have a Tasktop account and a license for HP ALM,
+          you can install and use the HP ALM connector.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          On the www.tasktop.com website, select
+          <emphasis>Downloads</emphasis> and locate the
+          <emphasis>Tasktop Dev</emphasis> product.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select the option to download the plugin.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Follow the instructions on the Tasktop website to install
+          the the plugin into your ITE. You will require the Tasktop
+          Dev Enterprise for the HP ALM connector.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When prompted to restart the ITE automatically, say
+          <emphasis>No</emphasis> and then restart the ITE manually
+          via the menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When the ITE is restarted, you will be prompted to enter
+          your account details for Tasktop.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once you have entered your information, you will be able
+          to configure the repository via the <emphasis>Task
+          Repositories</emphasis> view.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

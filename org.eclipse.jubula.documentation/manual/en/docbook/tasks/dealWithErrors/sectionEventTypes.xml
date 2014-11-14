@@ -1,0 +1,69 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="event-types" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                        xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Event types</title>
+  <para>
+    The event type is the type of error the Event Handler will react
+    to. There are four event types. They correspond to common errors
+    which happen during test execution.
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        Component not found
+      </term>
+      <listitem>
+        <para>
+          If a component in the AUT cannot be found, an error
+          occurs. The component might not be found if it has been
+          changed, is not (yet) visible or has been deleted. 
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Check failed
+      </term>
+      <listitem>
+        <para>
+          For some actions, you can specify an expected value to
+          check. If the value you specify is not true, then a
+          <emphasis>check failed</emphasis> error occurs.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Action error
+      </term>
+      <listitem>
+        <para>
+          Action errors occur when an action cannot be carried out
+          on a component, when the data is invalid (e.g. an invalid
+          menu path) or when an action takes too long and there is a
+          timeout.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Configuration error
+      </term>
+      <listitem>
+        <para>
+          Configuration errors occur when there is an internal
+          problem, for example a changed implementation class in the
+          XML file. 
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+</section>

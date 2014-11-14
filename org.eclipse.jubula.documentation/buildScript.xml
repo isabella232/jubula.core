@@ -79,8 +79,9 @@
         <delete file="HtmlImageLister.jar"/>
         
         <exec executable="javac" dir="lib/HtmlImageLister" failonerror="true">
-            <arg line="-cp 'lib/org.jsoup.jar'"/>
-            <arg line="HtmlImageLister.java"/>
+            <arg value="-cp"/>
+            <arg value="lib/org.jsoup.jar"/>
+            <arg value="HtmlImageLister.java"/>
         </exec>
         
         <jar destfile="HtmlImageLister.jar">
@@ -108,30 +109,62 @@
         </copy>
         
         <exec executable="xsltproc" failonerror="true">
-            <arg line="--xinclude"/>
-            <arg line="--stringparam base.dir ${html.path}"/>
-            <arg line="--stringparam html.stylesheet ../css/style.css"/>
-            <arg line="--stringparam docbook.css.source ''"/>
-            <arg line="--stringparam section.autolabel 1"/>
-            <arg line="--stringparam section.label.includes.component.label 1"/>
-            <arg line="--stringparam make.clean.html 1"/>
-            <arg line="--stringparam use.id.as.filename 1"/>
-            <arg line="--stringparam generate.toc 'chapter nop
-                                                   book    toc,title'"/>
-            <arg line="--stringparam formal.title.placement 'figure    after
-                                                             example   after
-                                                             equation  after
-                                                             table     after
-                                                             procedure after'"/>
-            <arg line="--stringparam toc.section.depth 3"/>
-            <arg line="--stringparam collect.xref.targets yes"/>
-            <arg line="--stringparam current.docid ${manual.name}"/>
-            <arg line="--stringparam target.database.document ../../olinkdb.xml"/>
-            <arg line="--stringparam chunker.output.indent yes"/>
-            <arg line="--stringparam chunk.first.sections 1"/>
-            <arg line="--stringparam chunk.section.depth 2"/>
-            <arg line="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates.xsl"/>
-            <arg line="${dir}/en/docbook/book.xml"/>
+            <arg value="--xinclude"/>
+            <arg value="--stringparam"/>
+                <arg value="base.dir"/>
+                <arg value="${html.path}"/>
+            <arg value="--stringparam"/>
+                <arg value="html.stylesheet"/>
+                <arg value="../css/style.css"/>
+            <arg value="--stringparam"/>
+                <arg value="docbook.css.source"/>
+                <arg value=""/>
+            <arg value="--stringparam"/>
+                <arg value="section.autolabel"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="section.label.includes.component.label"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="make.clean.html"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="use.id.as.filename"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="generate.toc"/>
+                <arg value="chapter nop
+                            book    toc,title"/>
+            <arg value="--stringparam"/>
+                <arg value="formal.title.placement"/>
+                <arg value="figure    after
+                            example   after
+                            equation  after
+                            table     after
+                            procedure after"/>
+            <arg value="--stringparam"/>
+                <arg value="toc.section.depth"/>
+                <arg value="3"/>
+            <arg value="--stringparam"/>
+                <arg value="collect.xref.targets"/>
+                <arg value="yes"/>
+            <arg value="--stringparam"/>
+                <arg value="current.docid"/>
+                <arg value="${manual.name}"/>
+            <arg value="--stringparam"/>
+                <arg value="target.database.document"/>
+                <arg value="../../olinkdb.xml"/>
+            <arg value="--stringparam"/>
+                <arg value="chunker.output.indent"/>
+                <arg value="yes"/>
+            <arg value="--stringparam"/>
+                <arg value="chunk.first.sections"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="chunk.section.depth"/>
+                <arg value="2"/>
+            <arg value="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates.xsl"/>
+            <arg value="${dir}/en/docbook/book.xml"/>
             <redirector output="output.log"/>
         </exec>
         
@@ -139,12 +172,15 @@
         
         <delete file="${html.path}/index.xml"/>
         <delete file="plugin.xml"/>
+        <delete file="target.db"/>
         <delete dir="${html.path}/en"/>
         
         <antcall target="moveGeneratedFiles"/>
     </target>
 
     <target name="buildHTML" if="standalone" unless="releaseNotes" depends="checkParam, buildHtmlImageLister">
+        <antcall target="clean"/>
+        
         <copy todir="${build.path}/images">
             <fileset dir="${dir}/en/docbook/images">
                 <include name="*.jpg" />
@@ -159,25 +195,46 @@
         </copy>
         
         <exec executable="xsltproc" failonerror="true" output="output.log">
-            <arg line="--xinclude"/>
-            <arg line="-o ${build.path}/html/index.html"/>
-            <arg line="--stringparam base.dir ${html.path}"/>
-            <arg line="--stringparam html.stylesheet ../../css/style.css"/>
-            <arg line="--stringparam docbook.css.source ''"/>
-            <arg line="--stringparam section.autolabel 1"/>
-            <arg line="--stringparam section.label.includes.component.label 1"/>
-            <arg line="--stringparam make.clean.html 1"/>
-            <arg line="--stringparam generate.toc 'chapter nop
-                                                   book    toc,title'"/>
-            <arg line="--stringparam formal.title.placement 'figure    after
-                                                             example   after
-                                                             equation  after
-                                                             table     after
-                                                             procedure after'"/>
-            <arg line="--stringparam toc.section.depth 3"/>
-            <arg line="--stringparam current.docid ${manual.name}"/>
-            <arg line="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates_html.xsl"/>
-            <arg line="${dir}/en/docbook/book.xml"/>
+            <arg value="--xinclude"/>
+            <arg value="-o"/>
+                <arg value="${build.path}/index.html"/>
+            <arg value="--stringparam"/>
+                <arg value="base.dir"/>
+                <arg value="${html.path}"/>
+            <arg value="--stringparam"/>
+                <arg value="html.stylesheet"/>
+                <arg value="../css/style.css"/>
+            <arg value="--stringparam"/>
+                <arg value="docbook.css.source"/>
+                <arg value=""/>
+            <arg value="--stringparam"/>
+                <arg value="section.autolabel"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="section.label.includes.component.label"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="make.clean.html"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="generate.toc"/>
+                <arg value="chapter nop
+                            book    toc,title"/>
+            <arg value="--stringparam"/>
+                <arg value="formal.title.placement"/>
+                <arg value="figure    after
+                            example   after
+                            equation  after
+                            table     after
+                            procedure after"/>
+            <arg value="--stringparam"/>
+                <arg value="toc.section.depth"/>
+                <arg value="3"/>
+            <arg value="--stringparam"/>
+                <arg value="current.docid"/>
+                <arg value="${manual.name}"/>
+            <arg value="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates_html.xsl"/>
+            <arg value="${dir}/en/docbook/book.xml"/>
         </exec>
         
         <antcall target="checkForErrors"/>
@@ -201,23 +258,40 @@
         </copy>
         
         <exec executable="xsltproc" failonerror="true" output="output.log">
-            <arg line="--xinclude"/>
-            <arg line="-o ${build.path}/html/index.html"/>
-            <arg line="--stringparam base.dir ${html.path}"/>
-            <arg line="--stringparam html.stylesheet ../../css/style.css"/>
-            <arg line="--stringparam docbook.css.source ''"/>
-            <arg line="--stringparam make.clean.html 1"/>
-            <arg line="--stringparam generate.toc 'chapter nop
-                                                   book    nop'"/>
-            <arg line="--stringparam chapter.autolabel 0"/>
-            <arg line="--stringparam formal.title.placement 'figure    after
-                                                             example   after
-                                                             equation  after
-                                                             table     after
-                                                             procedure after'"/>
-            <arg line="--stringparam current.docid ${manual.name}"/>
-            <arg line="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates_html.xsl"/>
-            <arg line="${dir}/en/docbook/book.xml"/>
+            <arg value="--xinclude"/>
+            <arg value="-o"/>
+                <arg value="${build.path}/index.html"/>
+            <arg value="--stringparam"/>
+                <arg value="base.dir"/>
+                <arg value="${html.path}"/>
+            <arg value="--stringparam"/>
+                <arg value="html.stylesheet"/>
+                <arg value="../css/style.css"/>
+            <arg value="--stringparam"/>
+                <arg value="docbook.css.source"/>
+                <arg value=""/>
+            <arg value="--stringparam"/>
+                <arg value="make.clean.html"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="generate.toc"/>
+                <arg value="chapter nop
+                            book    nop"/>
+            <arg value="--stringparam"/>
+                <arg value="chapter.autolabel"/>
+                <arg value="0"/>
+            <arg value="--stringparam"/>
+                <arg value="formal.title.placement"/>
+                <arg value="figure    after
+                            example   after
+                            equation  after
+                            table     after
+                            procedure after'"/>
+            <arg value="--stringparam"/>
+                <arg value="current.docid"/>
+                <arg value="${manual.name}"/>
+            <arg value="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates_html.xsl"/>
+            <arg value="${dir}/en/docbook/book.xml"/>
         </exec>
         
         <antcall target="checkForErrors"/>
@@ -250,7 +324,7 @@
     
     <target name="checkImages">
         <java jar="HtmlImageLister.jar" outputProperty="imageList" failonerror="true" fork="true">
-            <arg value="./${dir}"/>
+            <arg value="${basedir}/${dir}/en/build/${output}"/>
         </java>
         
         <filelist id="files" dir="./${dir}/en/docbook" files="${imageList}" />
@@ -291,7 +365,6 @@
     <target name="moveGeneratedFiles">
         <move file="contexts.xml" tofile="context${manual.name}.xml"/>
         <move file="toc.xml" tofile="toc${manual.name}.xml"/>
-        <move todir="${html.path}" file="target.db"/>
         
         <move todir="${build.path}">
             <fileset file="toc${manual.name}.xml"/>

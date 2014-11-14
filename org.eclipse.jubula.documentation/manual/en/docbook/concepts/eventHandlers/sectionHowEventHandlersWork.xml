@@ -1,0 +1,31 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="how-event-handlers-work" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>How Event Handlers work</title>
+  <para>
+    When an error occurs in a Test Step, its parent Test Case is
+    searched for an Event Handler for this type of error. If no
+    Event Handler is found, the parent Test Case of this Test Case
+    is searched and so on. Once a corresponding Event Handler is
+    found, it is activated.
+  </para>
+  <para>
+    If no Event Handler is found in the highest Test Case in this
+    part of the tree, a default Event Handler (set in the Test Suite
+    properties) is activated.
+  </para>
+  <para>
+    Each Event Handler requires an ”<emphasis>Event Type</emphasis>”
+    and a ”<emphasis>Reentry Type</emphasis>”. For information on
+    these terms, see the section in the Tasks chapter
+    (<xref linkend="dealing-with-errors-in-tests"/>).
+  </para>
+</section>

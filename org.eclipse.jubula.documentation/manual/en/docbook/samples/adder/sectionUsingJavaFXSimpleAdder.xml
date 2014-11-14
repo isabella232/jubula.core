@@ -1,0 +1,29 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="sample-4-using-the-javafx-simple-adder" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Sample 4: using the JavaFX Simple Adder</title>
+  <para>
+    You can start the JavaFX SimpleAdder using the configurations
+    for the <emphasis>SimpleAdderJavaFX</emphasis> AUT. The
+    configurations for Windows and Mac can be used without adapting
+    them. The configuration for Linux must be adapted to use a Java
+    8 JRE. Enter the path to your Java 8 installation in the
+    Executable File Name field of the AUT configuration dialog
+    (<xref linkend="configuringaut"/>), in place of the placeholder.
+  </para>
+  <section id="sample-4-simple-adder-javafx-test-using-library">
+    <title>Sample 4: Simple Adder JavaFX test using library</title>
+    <para>
+      The test for the Simple Adder JavaFX reuses the test that uses
+      the actions from the library of unbound modules.
+    </para>
+  </section>
+</section>

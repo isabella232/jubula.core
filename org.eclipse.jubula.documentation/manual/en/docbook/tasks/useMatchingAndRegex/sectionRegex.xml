@@ -1,0 +1,314 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="regex" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                  xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Using the ’matches’ operator</title>
+  <para>
+    <emphasis role="strong">Simple matching</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        <emphasis role="input">abc</emphasis> matches ”<emphasis>abc</emphasis>” and nothing else.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Wildcards</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        <emphasis role="input">.</emphasis> represents one instance of any character.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <emphasis role="input">..</emphasis> represents two characters.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Repetition</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Instead of using <emphasis role="input">.</emphasis> for each character, you can use
+        symbols to indicate how many characters you are replacing
+        with wildcards.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <emphasis role="input">?</emphasis> matches the previous character or group 0 or 1
+        time(s). E.g. <emphasis role="input">a?</emphasis> represents ”none or one
+        <emphasis role="input">a</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <emphasis role="input">*</emphasis> matches the previous character or group 0 or
+        more time(s). E.g. <emphasis role="input">a*</emphasis> represents ”none or more
+        <emphasis role="input">a</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <emphasis role="input">+</emphasis> matches the previous character or group 1 or
+        more time(s). E.g. <emphasis role="input">a+</emphasis> represents ”one or more
+        <emphasis role="input">a</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can also use curly brackets <emphasis role="input">{}</emphasis> to specify
+        the minimum and maximum number of repetitions, e.g.
+        <emphasis role="input">{4,7}</emphasis> looks for a minimum of four and a maximum
+        of seven repetitions of the previous character.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To specify that a character must be repeated a minimum of
+        four times, use: <emphasis role="input">{4,}</emphasis>
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Combining wildcards with
+    repetition</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can specify a whole area of unknown text using
+        <emphasis role="input">.</emphasis> and one of the repetition methods.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <emphasis role="input">.*</emphasis> is an unlimited amount of any character, or
+        none at all.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <emphasis role="input">.?</emphasis> is 0 or one of any character.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <emphasis role="input">.+</emphasis> is an unlimited amount of any character, but
+        the character must appear at least once.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <para role="tip">The regular expression is applied to your entire string. To search for a match within a string, wildcards need to be placed on either side. See the examples below for more information.</para>
+  </para>
+  <para>
+    <emphasis role="strong">Ranges</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        For each individual character, you can specify a range of
+        things it is allowed to be.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A range is specified using square brackets (<emphasis role="input">[]</emphasis>)
+        and a dash <emphasis role="input">-</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For example, you can specify that a particular character can
+        be any capital letter: <emphasis role="input">[A-Z]</emphasis>.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <para role="tip">Note that there are no spaces between the ranges. </para>
+  </para>
+  <para>
+    <emphasis role="strong">Alternatives</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Use a pipe (’|’) to specify alternatives.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For example, <emphasis role="input">[a|b].*</emphasis> will match a string that
+        begins with <emphasis role="input">a</emphasis> or <emphasis role="input">b</emphasis>.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Escape character</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Backslash <emphasis role="input">\</emphasis> is used to negate the
+        effect of the character following the backslash.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The characters that are used to construct a regular
+        expression need to be escaped if they are to be matched
+        within a string.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The characters are:
+        <para>
+          <literal> [ ] \ . | ? * + ( ) { } ^ $  </literal>
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Because backslash is already used as an escape symbol, you
+        will need to use two backslashes to escape regular
+        expression characters.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For example, to check for a tree node:
+        
+        <para>
+          <emphasis role="input">x/y/z/***</emphasis>
+        </para>
+        
+        where the slashes are a part of the node, your regular expression in the ITE would look like this: 
+        
+        <para>
+          <literal> x\/y\/z\/\\*\\*\\* </literal>
+        </para>
+        
+        The backslashes before the ordinary slashes are an escape symbol to specify that the following sign is not a path separator. The extra backslash before the stars means that the second backslash is to be interpreted as a backslash in the regular expression, i.e. as an escape symbol.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        E.g. If you want to check for a star (<emphasis role="input">*</emphasis>), then you
+        have to enter <emphasis role="input">\\*</emphasis>.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Verbatim</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can avoid having to use multiple backslashes by putting
+        the whole regular expression in single quotes:
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The example above for a tree node could be entered thus:
+        
+        <para>
+          <emphasis role="input">'x/y/z/***'</emphasis>
+        </para>
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Useful examples</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        An empty field is represented by: <literal>^$</literal>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A string that starts with <emphasis role="input">a</emphasis> is represented by:
+        <emphasis role="input">a.*</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A string that ends in <emphasis role="input">a</emphasis> is represented by:
+        <emphasis role="input">.*a</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A string that starts with <emphasis role="input">a</emphasis>, ends in <emphasis role="input">b</emphasis>
+        and has unknown values (0 or more) in the middle is
+        represented by: <emphasis role="input">a.*b</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A string which contains <emphasis role="input">a</emphasis> somewhere between other
+        unknown characters (0 or more) is represented by:
+        <emphasis role="input">.*a.*</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A password which can only contain capital letters and which
+        must be between six and eight letters is represented by:
+        <emphasis role="input">[A-Z]{6,8}</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A password which can contain any alphanumerical values and
+        which must be at least six characters is represented by:
+        <emphasis role="input">[A-Za-z0-9]{6,}</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can check that a string corresponds to a minimum and maximum length using:
+        
+        <para>
+          <literal>'^.{'={MIN_COUNT}','={MAX_COUNT}'}$'</literal>
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To check for a text which begins with a <emphasis role="input">*</emphasis>, you
+        must use the escape character: <literal>\\*.*</literal>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To check that a specific string is <emphasis>not</emphasis> in a text, use:
+        
+        <para>
+          <literal>^((?!STRING)[\s\S])*$</literal>
+        </para>
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    For additional information about syntax and usage of regular
+    expressions in general, please consult one of the many textbooks
+    on the subject.
+  </para>
+</section>
