@@ -114,8 +114,11 @@ public class <%=className%> {
                     componentNameToCreate = loader.get("componentTypeName");
                 }
                 if (actionName != null) {%>
+        
         <%if (!isActive) {%>//<%}%>aut.execute(
+            
             <%if (!isActive) {%>//<%}%><%=factoryName%>.create<%=componentNameToCreate%>(<%if (!hasDefaultMapping) {%>null<%}%>)
+                
                 <%if (!isActive) {%>//<%}%>.<%=actionName%>(
                 <%Iterator<IParamDescriptionPO> childParamIterator = cap.getParameterListIter();
                 while (childParamIterator.hasNext()) {
@@ -124,13 +127,17 @@ public class <%=className%> {
                     String enumType = nameLoader.getEnumForParam(paramType);
                     String paramValue = ParamUtils.getValueForParam(cap, param, 0, locale);
                     Boolean isEnum = enumType != null;%>
-                <%if (!isActive) {%>//<%}%><%if (isEnum) {%><%=enumType%>.valueOf(<%}%><%=paramValue%><%if (isEnum) {%>)<%}%><%if(childParamIterator.hasNext()){%><%if (!isActive) {%>//<%}%>,<%}%>
-                <%}%>
-                <%if (!isActive) {%>//<%}%>),
+                    
+                <%if (!isActive) {%>//<%}%><%if (isEnum) {%><%=enumType%>.valueOf(<%}%><%=paramValue%><%if (isEnum) {%>)<%}%>
+                    
+                <%if(childParamIterator.hasNext()){%><%if (!isActive) {%>//<%}%>,<%}%>
+                <%}
+                if (!isActive) {%>//<%}%>),
+            
             <%if (!isActive) {%>//<%}%>null);
-        
+            
                 <%} else {%>
-                
+        
         // TODO: Client action <%=cap.getActionName()%>.
 
                 <%}%>
@@ -157,16 +164,21 @@ public class <%=className%> {
                 int rowCount = exec.getDataManager().getDataSetCount();
                 int row = 0;
                 do {%>
+        
         <%if (!isActive) {%>//<%}%><%=testCaseName%>.execute(
+                
                     <%childParamIterator = exec.getParameterListIter();
                     while (childParamIterator.hasNext()) {
                         IParamDescriptionPO param = childParamIterator.next();
                         String paramValue = ParamUtils.getValueForParam(exec, param, row, locale);%>
-                <%if (!isActive) {%>//<%}%><%=paramValue%><%if(childParamIterator.hasNext()){%><%if (!isActive) {%>//<%}%>,<%}%>
+                <%if (!isActive) {%>//<%}%><%=paramValue%><%if(childParamIterator.hasNext()){%>
+                
+                <%if (!isActive) {%>//<%}%>,<%}%>
+                
                     <%}%>
                     <%row++;%>
                 <%if (!isActive) {%>//<%}%>);
-        
+                
                 <%} while(row < rowCount);
               } else {
                 String dataCubeName = null;
@@ -176,7 +188,7 @@ public class <%=className%> {
                     log.error("Invalid Data Set Name", e);
                 }%>
         for (CTDS.<%=dataCubeName%> row : CTDS.<%=dataCubeName%>.data) {
-        
+            
             <%if (!isActive) {%>//<%}%><%=testCaseName%>.execute(
                     <%childParamIterator = exec.getParameterListIter();
                     while (childParamIterator.hasNext()) {
