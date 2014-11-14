@@ -62,12 +62,10 @@ public class ParamUtils {
                 node, param, row, locale);
         //CHECKSTYLE:OFF
         if (value == null) {
-            value = "null // TODO: check "; //$NON-NLS-1$
+            value = "null // TODO: check for error"; //$NON-NLS-1$
         } else {
             value = executeEscapes(value);
-            if (StringUtils.isBlank(value)) {
-                value = StringConstants.QUOTE + StringConstants.QUOTE;
-            } else if (multipleParameters.matcher(value).matches()) {
+            if (multipleParameters.matcher(value).matches()) {
                 return "null // TODO: Parameter concatenation: \"" //$NON-NLS-1$
                         + value + "\""; //$NON-NLS-1$
             } else if (variable.matcher(value).matches()) {
@@ -85,6 +83,8 @@ public class ParamUtils {
             } else if (paramType.equals("guidancer.datatype.Variable") ) { //$NON-NLS-1$
                 value = "null // TODO: Potential Variable assignment: " //$NON-NLS-1$
                         + value + ""; //$NON-NLS-1$
+            } else if (StringUtils.isBlank(value)) {
+                value = "null // TODO: check for error"; //$NON-NLS-1$
             }
         }
         return value;
