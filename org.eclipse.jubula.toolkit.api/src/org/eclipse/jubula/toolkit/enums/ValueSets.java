@@ -210,6 +210,21 @@ public final class ValueSets {
         public String rcValue() {
             return m_rcValue;
         }
+        
+        /**
+         * @param literal
+         *            the literal
+         * @return the corresponding enum
+         */
+        @Deprecated
+        public static Operator literalAsEnum(String literal) {
+            for (Operator o : values()) {
+                if (o.rcValue().equals(literal)) {
+                    return o;
+                }
+            }
+            throw new IllegalArgumentException();
+        }
     }
     
     /** @author BREDEX GmbH */
@@ -275,9 +290,9 @@ public final class ValueSets {
     /** @author BREDEX GmbH */
     public enum Unit implements LiteralProvider {
         /** unit value */
-        pixel("Pixel"), //$NON-NLS-1$
+        pixel("pixel"), //$NON-NLS-1$
         /** unit value */
-        percent("Percent"); //$NON-NLS-1$
+        percent("percent"); //$NON-NLS-1$
 
         /** holds the value necessary for the RC side */
         private final String m_rcValue;
