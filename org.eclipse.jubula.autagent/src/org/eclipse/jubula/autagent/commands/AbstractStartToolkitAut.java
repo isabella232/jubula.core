@@ -24,6 +24,7 @@ import java.util.jar.Manifest;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.adaptor.EclipseStarter;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.monitoring.MonitoringDataStore;
 import org.eclipse.jubula.autagent.monitoring.MonitoringUtil;
@@ -35,6 +36,8 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.jubula.tools.internal.utils.ZipUtil;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.Constants;
+import org.osgi.framework.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -283,38 +286,40 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      */
     public static String[] getClasspathEntriesForBundleId(String bundleId) {
         Bundle mainBundle = Platform.getBundle(bundleId);
-        
-        if (mainBundle == null) {
-            log.error("No bundle found for ID '" + bundleId + "'."); //$NON-NLS-1$//$NON-NLS-2$
-            return new String[0];
-        }
-        
         List<Bundle> bundleAndFragmentList = new ArrayList<Bundle>();
-        bundleAndFragmentList.add(mainBundle);
-        
+        if (mainBundle == null) {
+            mainBundle = bundleLookupWithInactive(bundleId);
+            if (mainBundle == null) {
+                log.error("No bundle found for ID '" + bundleId + "'."); //$NON-NLS-1$//$NON-NLS-2$
+                return new String[0];
+            }
+        }
+
+        bundleAndFragmentList.add(mainBundle);  
         Bundle[] mainBundleFragments = Platform.getFragments(mainBundle);
-        if (mainBundleFragments != null) {
+        if (mainBundleFragments == null) {
+            bundleAndFragmentList.addAll(
+                    fragmentLookupWithInactive(mainBundle));
+        } else {
             for (Bundle fragment : mainBundleFragments) {
                 bundleAndFragmentList.add(fragment);
             }
-        }
-        
+        }       
         List<String> classpathEntries = new ArrayList<String>();
         for (Bundle bundle : bundleAndFragmentList) {
             try {
                 File bundleFile = FileLocator.getBundleFile(bundle);
                 if (bundleFile.isFile()) {
                     // bundle file is not a directory, so we assume it's a JAR file
-                    classpathEntries.add(bundleFile.getAbsolutePath());
-    
+                    classpathEntries.add(bundleFile.getAbsolutePath());   
                     // since the classloader cannot handle nested JARs, we need to extract
                     // all known nested JARs and add them to the classpath
                     try {
                         // assuming that it's a JAR/ZIP file
                         File[] createdFiles = ZipUtil.unzipTempJars(bundleFile);
                         for (int i = 0; i < createdFiles.length; i++) {
-                            classpathEntries.add(
-                                    createdFiles[i].getAbsolutePath());
+                            classpathEntries.add(createdFiles[i].
+                                    getAbsolutePath());
                         }
                     } catch (IOException e) {
                         log.error("An error occurred while trying to extract nested JARs from " + bundleId, e); //$NON-NLS-1$
@@ -329,7 +334,6 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
                                 new File(bundleFile + jarUrl.getFile());
                             if (!isJarFileWithManifestAttr(
                                     jarFile, SOURCE_BUNDLE_MANIFEST_ATTR)) {
-                                
                                 classpathEntries.add(jarFile.getAbsolutePath());
                             }
                         }
@@ -340,6 +344,60 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
             }
         }
         return classpathEntries.toArray(new String[classpathEntries.size()]);
+    }
+
+    /**
+     * Looks for the fragments which belong to the given Bundle. This search 
+     * also includes non active bundles.
+     * @param mainBundle the bundle to find the fragments for
+     * @return the list with the fragments that have been found
+     */
+    private static List<Bundle> fragmentLookupWithInactive(Bundle mainBundle) {
+        Bundle[] bundles = EclipseStarter.getSystemBundleContext().
+                getBundles();
+        List<Bundle> fragments = new ArrayList<Bundle>();
+        for (Bundle bundle : bundles) {
+            String fragmentHost = bundle.getHeaders().get(Constants.
+                    FRAGMENT_HOST);
+            if (fragmentHost != null) {
+                if (fragmentHost.contains(";")) {
+                    fragmentHost = fragmentHost.split(";")[0];
+                }
+                if (fragmentHost.equals(mainBundle.getSymbolicName())) {
+                    for (Bundle fragment : fragments) {
+                        if (fragment.getSymbolicName().equals(
+                                bundle.getSymbolicName())
+                                && bundle.getVersion().compareTo(
+                                        fragment.getVersion()) > 0) {
+                            fragments.remove(fragment);
+                        }
+                    }
+                    fragments.add(bundle);
+                }
+            }
+        }
+        return fragments;
+    }
+
+    /**
+     * Looks for the bundle with the given ID and the highest Version. This search 
+     * also includes non active bundles.
+     * @param bundleId the bundle ID to look for
+     * @return the bundle
+     */
+    private static Bundle bundleLookupWithInactive(String bundleId) {
+        Bundle[] bundles = EclipseStarter.getSystemBundleContext().
+                getBundles();
+        Bundle result = null;
+        Version currVersion = Version.emptyVersion;
+        for (Bundle bundle : bundles) {
+            if (bundle.getSymbolicName().contains(bundleId) 
+                    && bundle.getVersion().compareTo(currVersion) > 0) {
+                result = bundle;
+                currVersion = bundle.getVersion();
+            }
+        }
+        return result;
     }
     
     /**
