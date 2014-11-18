@@ -134,6 +134,8 @@ public class <%=className%> {
                 }
                 if (actionName != null) {%>
         
+        <%if (!isActive) {%>// This test case was generated as commented out because its correspondent in the ITE was inactive<%}%>
+        
         <%if (!isActive) {%>//<%}%>aut.execute(
             
             <%if (!isActive) {%>//<%}%><%=factoryName%>.create<%=componentNameToCreate%>(<%if (!hasDefaultMapping) {%>null<%}%>)
@@ -224,6 +226,8 @@ public class <%=className%> {
                 int row = 0;
                 do {%>
         
+        <%if (!isActive) {%>// This test case was generated as commented out because its correspondent in the ITE was inactive<%}%>
+        
         <%if (!isActive) {%>//<%}%><%=testCaseName%>.execute(
                     <%childParamIterator = exec.getParameterListIter();
                     while (childParamIterator.hasNext()) {
@@ -245,7 +249,10 @@ public class <%=className%> {
                 } catch (InvalidNodeNameException e) {
                     log.error("Invalid Data Set Name", e);
                 }%>
-        for (CTDS.<%=dataCubeName%> row : CTDS.<%=dataCubeName%>.data) {
+        
+        <%if (!isActive) {%>// This test case was generated as commented out because its correspondent in the ITE was inactive<%}%>
+        
+        <%if (!isActive) {%>//<%}%>for (CTDS.<%=dataCubeName%> row : CTDS.<%=dataCubeName%>.data) {
             
             <%if (!isActive) {%>//<%}%><%=testCaseName%>.execute(
                 
@@ -257,7 +264,8 @@ public class <%=className%> {
                 
                     <%}%>
                 <%if (!isActive) {%>//<%}%>);
-        }
+        
+        <%if (!isActive) {%>//<%}%>}
               <%}%>
         
             <%} else if (child instanceof IRefTestSuitePO) {
@@ -277,6 +285,8 @@ public class <%=className%> {
                     log.error(e.getLocalizedMessage());
                 }
                 testSuiteName = Utils.getFullyQualifiedTranslatedName(testSuite, packageBase, projectName);%>
+        
+        <%if (!isActive) {%>// This test suite was generated as commented out because its correspondent in the ITE was inactive<%}%>
         
         <%if (!isActive) {%>/* <%}%><%=testSuiteName%>.execute();<%if (!isActive) {%>*/<%}%>
         
