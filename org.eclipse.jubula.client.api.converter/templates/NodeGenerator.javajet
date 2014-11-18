@@ -165,7 +165,7 @@ public class <%=className%> {
                 IExecTestCasePO exec = (IExecTestCasePO)child;
                 ISpecTestCasePO spec = exec.getSpecTestCase();
                 for (IEventExecTestCasePO eventTC : spec.getAllEventEventExecTC()) {
-                    String type = eventTC.getEventType();
+                    String eventType = eventTC.getEventType();
                     String reentryProp = eventTC.getReentryProp().toString();
                     String eventHandlerName = StringConstants.EMPTY;
                     ISpecTestCasePO specEventHandler = eventTC.getSpecTestCase();
@@ -184,7 +184,7 @@ public class <%=className%> {
                     Iterator<IParamDescriptionPO> childParamIterator;
                     IParameterInterfacePO dataCube = eventTC.getReferencedDataCube();%>
         // TODO: The following test case used an Event Handler which you have to replace manually:
-        //       Type: <%=type%>
+        //       Event Type: <%=eventType%>
         //       Re-Entry Property: <%=reentryProp%>
         //       Used Test Case:
                     <%if (dataCube == null) {
