@@ -26,11 +26,15 @@ import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 public class ParamUtils {
     
     /** Pattern for detecting parameters like =PARAM */
-    private static Pattern parameter = Pattern.compile("^=([a-zA-Z0-9_]+)"); //$NON-NLS-1$
+    private static Pattern simpleParameter = Pattern.compile("^=([a-zA-Z0-9_]+)"); //$NON-NLS-1$
 
     /** Pattern for detecting parameters like ={PARAM} */
     private static Pattern parameterWithBrackets = Pattern.compile(
             "^=\\{([a-zA-Z0-9_]+)\\}"); //$NON-NLS-1$
+    
+    /** Pattern for detecting parameters like C:/Users/={USER}/workspace */
+    private static Pattern oneParameter = Pattern.compile(
+            "^(.*)=\\{?([a-zA-Z0-9_]+)\\}?(.*)"); //$NON-NLS-1$
     
     /** Pattern for detecting parameters like =PARAM1 =PARAM2 */
     private static Pattern multipleParameters = Pattern.compile(".*=.*=.*"); //$NON-NLS-1$
@@ -77,8 +81,11 @@ public class ParamUtils {
                         + value + "\" "; //$NON-NLS-1$
             } else if (parameterWithBrackets.matcher(value).matches()) {
                 value = value.replaceAll(parameterWithBrackets.pattern(), "$1"); //$NON-NLS-1$
-            } else if (parameter.matcher(value).matches()) {
-                value = value.replaceAll(parameter.pattern(), "$1"); //$NON-NLS-1$
+            } else if (simpleParameter.matcher(value).matches()) {
+                value = value.replaceAll(simpleParameter.pattern(), "$1"); //$NON-NLS-1$
+            } else if (oneParameter.matcher(value).matches()) {
+                value = value.replaceAll(oneParameter.pattern(),
+                        "\"$1\" + $2 + \"$3\""); //$NON-NLS-1$
             } else if (paramType.equals(TestDataConstants.STR) ) {
                 value = StringConstants.QUOTE + value + StringConstants.QUOTE;
             } else if (paramType.equals(TestDataConstants.VARIABLE) ) {
