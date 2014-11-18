@@ -1,0 +1,52 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="test-case-editor" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Test Case Editor</title>
+  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <para>
+    You can open the Test Case Editor by double-clicking a Test Case in the Test
+    Case Browser.
+  </para>
+  <para>
+    In the Test Case Editor:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can create, modify and delete Test Steps.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can add and delete other Test Cases.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can add Event Handlers. They appear in the Event Handler
+        area below the Test Case Editor.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can alter test data and component names for the Test
+        Case.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    When you single-click items (Test Cases, Test Steps) in the Test
+    Case Editor, the support views (Properties View, Component Names
+    View and Data Sets View) show details about this item. Using
+    these views, you can edit the properties, test data and
+    component names for this item.
+  </para>
+</section>

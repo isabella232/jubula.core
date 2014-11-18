@@ -1,0 +1,58 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="renaming-items-in-browsers" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Renaming items in browsers</title>
+  <anchor role="helpid" id="dialogRenameContextId">Renaming</anchor>
+  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <para>
+    To rename an item in the Test Case Browser, Test Suite Browser
+    or Component Names Browser:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select the item you want to rename in the browser.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select:
+        
+        <para>
+          <emphasis role="menuPath">Rename</emphasis>
+        </para>
+        
+        from the context-sensitive menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the dialog which appears, enter a new name and click
+        ”<emphasis>OK</emphasis>”.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <para role="tip">You can also press <emphasis role="input">»F2«</emphasis> to
+    rename an item.</para>
+  </para>
+  <para>
+    When you rename a Test Case or Test Suite, you change its
+    specification name.
+  </para>
+  <para>
+    If you have reused this Test Case or Test Suite in other Test
+    Cases, Test Suites or Test Jobs, the name will also be changed
+    in the places where you have reused it but not renamed it.
+  </para>
+</section>

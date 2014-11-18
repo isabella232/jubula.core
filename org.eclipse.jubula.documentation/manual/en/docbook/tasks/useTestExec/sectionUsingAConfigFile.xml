@@ -1,0 +1,100 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="using-a-config-file" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Using a configuration file</title>
+  <orderedlist>
+    <listitem>
+      <para>
+        You can also enter test executor parameters in an XML
+        configuration file. <para role="tip">The workspace parameter
+        (<emphasis>-data</emphasis>) cannot currently be entered in
+        the configuration file for the test executor, it must be
+        entered directly into the command line interface.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This saves you typing in the same details each time you
+        start a test.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To enter the configuration file path, enter the following command:
+        
+        <para>
+          <emphasis role="input">-c &lt;path to file&gt;</emphasis>
+        </para>
+        <para>
+          For example: <emphasis>-c
+          ”&lt;pathToQADocs&gt;/config1.xml”</emphasis>
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can also overwrite parameters contained in the
+        configuration file by entering another parameter directly
+        into the interface.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For example, if your configuration file contains the Test
+        Suite ”<emphasis>Suite1</emphasis>”, but you enter
+        <emphasis role="input">-testsuite ''Suite2''</emphasis> in the command line
+        interface, the Test Suite called
+        ”<emphasis>Suite2</emphasis>” will be started, not
+        ”<emphasis>Suite1</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To create an XML file:
+      </para>
+      <orderedlist>
+        <listitem>
+          <para>
+            Open a text editor of your choice.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Enter the desired parameters as shown in the examples in the installation:
+            
+            <para>
+              <emphasis>InstallationDirectory/examples/scripts</emphasis>
+            </para>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Save the file as an XML file.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            This file will be used when you enter the ”<emphasis>-c
+            &lt;path to file&gt;</emphasis>” parameter. <para role="tip">The
+            no-run, quiet mode, no screenshot, no screenshots in
+            reports and <emphasis>-data</emphasis>
+            (for the workspace) parameters can only be entered in
+            the command line interface. They cannot be entered in
+            the configuration file.</para><para role="tip">Java Virtual Machine
+            parameters can only be entered in the command line
+            interface. They cannot be entered in the configuration
+            file.</para>
+          </para>
+        </listitem>
+      </orderedlist>
+    </listitem>
+  </orderedlist>
+</section>

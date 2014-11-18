@@ -1,0 +1,37 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="writing-modules-in-advance" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Writing modules in advance</title>
+  <para>
+    If you can identify which reusable modules a test will require
+    in advance, then you can specify them in a general or abstract
+    way, making them easy to adapt and reuse.
+  </para>
+  <para>
+    These small units are used to construct other modules or
+    building blocks, which are more adapted to the task at hand.
+    Concrete details can be added as needed.
+  </para>
+  <para>
+    One of the advantages of this approach is that tests are
+    flexible and easy to maintain, since a change made at a central
+    point can update many places where that Test Case has been
+    reused. Tests are also generally more efficient, because time is
+    not wasted specifying what is essentially the same Test Case
+    over and over again.
+  </para>
+  <para>
+    The difficulty with this approach testing is that it requires a
+    good knowledge of the structure of the test – you have to know
+    which Test Cases are going to be required multiple times, and
+    this is often not easy to recognize at the beginning of testing.
+  </para>
+</section>

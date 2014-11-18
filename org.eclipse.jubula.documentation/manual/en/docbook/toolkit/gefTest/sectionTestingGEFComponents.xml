@@ -1,0 +1,25 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="testing-gef-components" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Testing GEF components</title>
+  <anchor role="helpid" id="inspectorViewContextId">GEF Inspector View</anchor>
+  <para>
+    Like other tests, tests for GEF components are based on the component, action, parameter
+    principle. However, it is important to note that individual figures are not addressed
+    using component names. The only component that is mapped in GEF
+    is the <emphasis>figure canvas</emphasis>. The figures on the canvas are
+    tested by referring to their textpath. See the Reference Manual
+    for more details on the GEF actions.
+  </para>
+  <para>
+    <para role="tip">The observation mode cannot be used to record actions in the canvas.</para>
+  </para>
+</section>

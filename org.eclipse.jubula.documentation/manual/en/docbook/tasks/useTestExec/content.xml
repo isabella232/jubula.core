@@ -1,0 +1,32 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="using-the-test-executor-for-testing-from-the-command-line" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="useTestExec"?>
+  <title>Using the test executor for testing from the command line</title>
+  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <para>
+    You can also run tests using the test executor. From the command
+    line interface, you can select and start tests.
+  </para>
+  <para>
+    <para role="tip">It is especially important to ensure that your test
+    contains a suitable startup module to wait for the AUT, perform
+    the login if necessary and reset the AUT to a defined state when
+    you are running tests from the command line. </para>
+  </para>
+  
+  <xi:include href="sectionStartingTestExec.xml"/>
+  <xi:include href="sectionParametersTestExec.xml"/>
+  <xi:include href="sectionUsingTestExecWithEmbeddedDB.xml"/>
+  <xi:include href="sectionUsingAConfigFile.xml"/>
+  <xi:include href="sectionWorkingWithNoRun.xml"/>
+  
+</section>

@@ -1,0 +1,34 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="help-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Help preferences</title>
+  <orderedlist>
+    <listitem>
+      <para>
+        Choose whether you want to have help displayed in an
+        external browser. This lets you see more information at
+        once.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For context-sensitive help for windows and dialogs, choose
+        how you want the help to appear.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Choose how many search results should be shown when
+        searching through the help system.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

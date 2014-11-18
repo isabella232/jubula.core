@@ -1,0 +1,78 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="importproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Importing Projects</title>
+  <anchor role="helpid" id="problemViewNoProjectContextId">Project Options Dialog</anchor>
+  <anchor role="helpid" id="dialogProjectImportRenameContextId">Project Import Rename Dialog</anchor>
+  <anchor role="helpid" id="importProjectDialogContextId">Importing Projects</anchor>
+  <anchor role="helpid" id="openProjectImportAllRequiredProjectsContextId">Importing Dependent Projects</anchor>
+  <orderedlist>
+    <listitem>
+      <para>
+        To import Projects, select:
+        
+        <para>
+          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Import</emphasis>.
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the dialog which appears (<xref linkend="Import"/>), enter or
+        browse to the Projects you want to import.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you have entered the path to a Project, click
+        ”<emphasis>Add</emphasis>” to add it to the list of Projects
+        to be imported.
+      </para>
+      <para>
+        <para role="tip">Note that the ”<emphasis>Add</emphasis>” button will
+        only be activated if the path you have entered is correct.</para>
+      </para>
+      <para>
+        If you add multiple Projects to be imported, you can change
+        the order they are imported in using the arrows next to the
+        list of Projects. You can also remove a Project from the
+        list of Projects to be imported.
+      </para>
+      <para>
+        <para role="tip">If you are importing Projects that are dependent on
+        other Projects (i.e. they reuse other Projects), import the
+        supporting Projects first.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you only want to import one Project, you can select the
+        option to open the Project once it has been imported.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        When you have finished your selection, click
+        ”<emphasis>OK</emphasis>”. The Projects you selected will be
+        imported in the order specified.
+      </para>
+    </listitem>
+  </orderedlist>
+  <figure id="Import">
+    <title>Import Dialog</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/Import.png" />
+      </imageobject>
+      <textobject><phrase>Import Dialog</phrase></textobject>
+    </mediaobject>
+  </figure>
+</section>

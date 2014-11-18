@@ -1,0 +1,149 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="tracking-changes-in-a-project" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Tracking changes in a Project</title>
+  <anchor role="helpid" id="projectSettingsPageContextId">Project Properties</anchor>
+  <para>
+    In order to see when changes were made to a Test Case, Test
+    Suite or Test Job in a Project, you can activate the change
+    tracking option in the Project properties.
+  </para>
+  <para>
+    When this option is activated, each Test Case, Test Suite and
+    Test Job shows information on the timestamp of a change, and the
+    type of change (created or modified). You can optionally enter a
+    property which should be displayed alongside the change type to
+    track e.g. the user that made the change. The changes that lead
+    to change information being shown are:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The creation of a node.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Any time an editor is saved (renaming within an editor,
+        adding Test Cases to an editor, removing Test Cases from an
+        editor, adding data or component names, using the refactor
+        actions from within an editor.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    Project-wide refactor actions, such as those started from the
+    search result view, and any renaming in browsers, are not shown
+    in the change information.
+  </para>
+  <section id="activating-change-tracking">
+    <title>Activating change tracking</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the Project properties:
+          
+          <para>
+            <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Properties</emphasis>
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select <emphasis>General</emphasis> from the tree on the
+          left-hand side.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Activate <emphasis>Track changes</emphasis> to activate
+          change tracking for this Project.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Choose whether you want to track a certain number of
+          changes per node, or whether you want to keep changes for
+          a specific time span. Enter the amount of changes or days.
+          <para role="tip">The display for each node is updated on saving. If
+          there are too many changes, or some changes are outside of
+          the specified time span, they will be removed on saving.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can (optionally) enter a system or environment
+          property that is displayed in the Properties View as
+          additional information about the change (e.g. the user
+          that made the change).
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      When change tracking is activated, the Properties View for the
+      original specification (not places of reuse) for Test Cases,
+      Test Suites and Test Jobs displays information on the changes
+      made (<xref linkend="TasksTrackChangesPropView"/>).
+    </para>
+    <figure id="TasksTrackChangesPropView">
+      <title>Tracking Changes</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/ChangeTrackingPropView.png"/>
+        </imageobject>
+        <textobject><phrase>Tracking Changes</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <para>
+      You can deactivate change tracking via the Project properties.
+      To remove all current information about changes, use the
+      <emphasis>delete</emphasis> option
+      (<xref linkend="removing-change-tracking-information"/>).
+    </para>
+  </section>
+  <section id="removing-change-tracking-information">
+    <title>Removing change tracking information from a
+    Project</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          To remove all information on all nodes about changes made, open the Project properties:
+          
+          <para>
+            <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Properties</emphasis>
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select <emphasis>General</emphasis> from the tree on the
+          left-hand side.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Click the button ”<emphasis>Delete all tracked
+          data</emphasis>” and confirm when asked.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          All data will be removed from the Project that were
+          collected for the change tracking. <para role="warning">If a node is
+          currently locked, then the data for this node will not be
+          removed. You will see which nodes are affected in a
+          dialog. We recommend deleting change tracking data when
+          you are sure that no one else is using the Project.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

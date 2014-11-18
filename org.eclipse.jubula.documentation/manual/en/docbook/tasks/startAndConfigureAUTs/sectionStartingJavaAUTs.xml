@@ -1,0 +1,446 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="starting-java-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                               xmlns:xi="http://www.w3.org/2001/XInclude"
+                                               xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Starting Java AUTs (Swing, SWT/RCP/GEF)</title>
+  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <section id="two-options-to-start-java">
+    <title>Two options to start Java AUTs</title>
+    <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+    <anchor role="helpid" id="autSettingWizardPagePageContextId">Defining an AUT</anchor>
+    <para>
+      There are two options to start your Java AUT for testing:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Via an AUT configuration:
+        </term>
+        <listitem>
+          <para>
+            This option means that you create an AUT
+            configuration in your Project, and the AUT is
+            started from the ITE (<xref linkend="configuring-a-java-aut-ite-start"/>).
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Using the <emphasis>autrun</emphasis> command:
+        </term>
+        <listitem>
+          <para>
+            This option lets you start an AUT without creating
+            a configuration. Certain start parameters are required
+            for the AUT so that it can be located
+            (<xref linkend="starting-java-with-the-command"/>).
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </section>
+  <section id="configuring-a-java-aut-ite-start">
+    <title>Configuring a Java AUT to be started from the
+    ITE</title>
+    <para>
+      The AUT configuration dialog for Java has three different
+      levels of detail: basic, advanced and expert.
+    </para>
+    <para>
+      See the sections below for information on the different
+      levels.
+    </para>
+  </section>
+  <section id="basic-java-configuration">
+    <title>Basic Java AUT configuration</title>
+    <para>
+      You can use the basic setting (<xref linkend="autconfigbasic"/>) to
+      configure your AUT if it can be started by an executable
+      file (e.g. .bat, .exe, .cmd, .sh etc.) and if it is written in
+      Java 1.5 or above, and you are using a Java Standard Edition
+      JRE.
+      <para role="warning">If you are testing RCP or GEF AUTs, there are certain specific steps you need to take to configure them. See the sections on RCP testing (<xref linkend="rcpaut"/>), GEF testing (<xref linkend="geftest"/>) for details. </para>
+    </para>
+    <figure id="autconfigbasic">
+      <title>AUTconfiguration window: basic</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/autconfigwindow_basic.png"/>
+        </imageobject>
+        <textobject><phrase>AUTconfiguration window:
+        basic</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <orderedlist>
+      <listitem>
+        <para>
+          Enter the basic configuration details as described earlier
+          (<xref linkend="basic-configuration-info"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter the executable file name in the
+          <emphasis>Executable File Name</emphasis> field. This path can be
+          relative if you define a working directory
+          (<xref linkend="advanced-aut-config"/>).
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      For information on the advanced properties for the AUT
+      configuration, see the next section
+      (<xref linkend="advanced-aut-config"/>).
+    </para>
+  </section>
+  <section id="advanced-aut-config">
+    <title>Advanced AUT configuration</title>
+    <para>
+      You can use the advanced dialog (<xref linkend="autconfigadvanced"/>)
+      if your AUT is a Java JAR which can be started with a
+      double click, or if your application can be started using the
+      class name and the classpaths to your AUT. The advanced
+      configuration dialog also lets you create a working directory
+      for your AUT, and add command-line arguments needed to
+      start the AUT. You can select a JRE executable and, for
+      SWT/RCP AUTs, a keyboard layout.
+    </para>
+    <figure id="autconfigadvanced">
+      <title>AUTconfiguration window: advanced</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/autconfigwindowadvanced.png"/>
+        </imageobject>
+        <textobject><phrase>AUTconfiguration window:
+        advanced</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <orderedlist>
+      <listitem>
+        <para>
+          Enter the JAR path (directory and file name) into the
+          <emphasis>Executable JAR File Name</emphasis> field.
+        </para>
+        <para>
+          This path can be relative (if you define a working
+          directory (<xref linkend="using-working-dir-aut-config"/>)), or absolute. This JAR
+          file must contain a manifest file which contains the main
+          class and the classpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If your AUT must be started with the class name, add
+          the main class name and the classpaths into their relative
+          fields. The paths can be relative (if you have defined a
+          working directory), or absolute.
+          <para role="tip">Add all the necessary files and directories to start the AUT. </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter any necessary command-line arguments for the
+          AUT in the <emphasis>AUT Arguments</emphasis> field.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Browse to a JRE executable or add a new one by clicking
+          ”<emphasis>New</emphasis>”. The Java version used must be 1.5 or
+          later.
+        </para>
+        <para>
+          Java is installed with the ITE. You can find the Java file in:
+          
+          <para>
+            <emphasis role="menupath">Guidancer or Jubula</emphasis>--&gt;<emphasis role="menupath">jre</emphasis>--&gt;<emphasis role="menupath">bin</emphasis>. Use java.exe if you want to use a console, use javaw.exe if you do not want a console.
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For SWT and RCP AUTs, select which keyboard layout is
+          used on the machine on which the AUT will run.
+          <para role="tip">The keyboard layout is not the actual keyboard attached to the computer, but is based on the regional language settings for the operating system.</para>
+        </para>
+        <para>
+          English (US) and German (DE) keyboard layouts are
+          supported out-of-the box. If you want to use a different
+          keyboard layout, see the Extension Manual for information
+          on creating keyboard layouts.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      For information on the expert properties for the AUT
+      configuration, see the next <xref linkend="expert-aut-config"/>.
+    </para>
+  </section>
+  <section id="expert-aut-config">
+    <title>Expert AUT configuration</title>
+    <para>
+      You can use the expert dialog (<xref linkend="autconfigexpert"/>) to
+      configure more detailed information about how the AUT
+      should be started.
+    </para>
+    <figure id="autconfigexpert">
+      <title>AUTconfiguration window: expert</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/autconfigwindow_expert.png"/>
+        </imageobject>
+        <textobject><phrase>AUTconfiguration window:
+        expert</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <orderedlist>
+      <listitem>
+        <para>
+          Add any additional desired <emphasis>JRE Arguments</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter any required <emphasis>System Environment Variables</emphasis>,
+          in the format ”<emphasis>&lt;VARNAME&gt;=&lt;value&gt;</emphasis>”,
+          i.e. ”<emphasis>PATH=C:\</emphasis>”. Separate each
+          variable with a new line by pressing <emphasis role="input">»ENTER«</emphasis>.
+        </para>
+        <para>
+          <para role="warning">Please be advised that ''embedding'' the contents of one
+          variable into another is not supported at this time. That is,
+          if you have a variable named <emphasis role="input">FOO</emphasis> whose value is
+          ”<emphasis>abc</emphasis>”, and set the value of a second
+          variable <emphasis role="input">BAR</emphasis> to ”<emphasis>%FOO%def</emphasis>”, the second variable will
+          <emphasis>not</emphasis> contain ”<emphasis>abcdef</emphasis>”, but rather the exact text
+          ”<emphasis>%FOO%def</emphasis>”, without evaluating it.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select an activation method for your AUT. More
+          information on AUT activation is available in the
+          previous <xref linkend="aut-activation"/>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you want to perform monitoring (code coverage
+          (<xref linkend="working-with-code-coverage-with-java-tests"/>) , Chronon recording
+          (<xref linkend="using-chronon"/>)), then select this from the combo
+          box.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="starting-java-with-the-command">
+    <title>Starting Java AUTs with the <emphasis>autrun</emphasis> command</title>
+    <anchor role="helpid" id="autSettingWizardPagePageContextId">Defining an AUT</anchor>
+    <para>
+      The <emphasis>autrun</emphasis> command can be used as an
+      alternative to starting your AUT from the ITE. (i.e. with an
+      AUT configuration (<xref linkend="configuringaut"/>)). It can only be used
+      if your AUT is written in Java 1.5 or above, and you are using
+      a Java Standard Edition JRE.
+    </para>
+    <para>
+      <para role="warning">The <emphasis>autrun</emphasis> command cannot be used
+      for HTML, iOS or pure SWT AUTs.</para>
+    </para>
+    <para>
+      The command allows you to start your AUT independently, on a
+      machine where the AUT Agent is running. The ITE, when
+      connected to this AUT Agent will then recognize the running
+      AUT as a testable application.
+    </para>
+    <para>
+      To use the <emphasis>autrun</emphasis> command:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Ensure that the AUT Agent is installed on the machine
+          where you will be starting the AUT.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Navigate to the <emphasis>server</emphasis> directory in
+          the installation via the command line.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Start your AUT via the command line by entering
+          <emphasis role="input">autrun.exe</emphasis> under Windows or
+          <emphasis role="input">autrun</emphasis> under Linux then the following
+          parameters:
+        </para>
+        <table>
+          <title>
+            Parameters for autrun command
+          </title>
+          <tgroup cols="2">
+            <colspec align="left" colwidth="40%"/>
+            <colspec align="left" />
+            <thead>
+              <row>
+                <entry>
+                  <emphasis role="strong">Detail</emphasis>
+                </entry>
+                <entry>
+                  <emphasis role="strong">Parameter</emphasis>
+                </entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry>
+                  -h
+                </entry>
+                <entry>
+                  <emphasis role="input">-h</emphasis><?linebreak?>
+                  Gives parameter help
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  -w, <literal>--</literal>workingdir
+                </entry>
+                <entry>
+                  <emphasis role="input">-w &lt;directory&gt;</emphasis><?linebreak?>
+                  Enter the working directory for the AUT
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  -a, <literal>--</literal>autagenthost
+                </entry>
+                <entry>
+                  <emphasis role="input">-a &lt;hostname&gt;</emphasis><?linebreak?>
+                  Enter the hostname for the AUT Agent
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  -p, <literal>--</literal>autagentport
+                </entry>
+                <entry>
+                  <emphasis role="input">-p &lt;port number&gt;</emphasis><?linebreak?>
+                  Enter the port number for the AUT Agent
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  -swing
+                </entry>
+                <entry>
+                  If the AUT is a Swing AUT
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  -rcp
+                </entry>
+                <entry>
+                  If the AUT is an RCP AUT
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  -swt
+                </entry>
+                <entry>
+                  If the AUT is an SWT AUT
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  -k, <literal>--</literal>kblayout
+                </entry>
+                <entry>
+                  <emphasis role="input">-k &lt;en_US&gt;</emphasis><?linebreak?>
+                  Enter the keyboard layout for SWT/RCP AUTs
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  -i, <literal>--</literal>autid
+                </entry>
+                <entry>
+                  <emphasis role="input">-i &lt;ID&gt;</emphasis><?linebreak?>
+                  Enter the ID to give to this AUT
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  -e, <literal>--</literal>exec
+                </entry>
+                <entry>
+                  <emphasis role="input">-e &lt;AUT.exe&gt;</emphasis><?linebreak?>
+                  Enter the executable file for the AUT<?linebreak?>
+                  This must be the last parameter in the command line
+                </entry>
+              </row>
+              <row>
+                <entry>
+                  -g, <literal>--</literal>generatenames (optional)
+                </entry>
+                <entry>
+                  <emphasis role="input">-g &lt;true/false&gt;</emphasis><?linebreak?>
+                  For RCP AUTs, enter whether<?linebreak?>
+                  to generate technical names. (<xref linkend="define-aut"/>)
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+      </listitem>
+    </orderedlist>
+    <para>
+      <para role="tip">If your AUT is an RCP AUT, use
+      <emphasis role="input">-data'&lt;WORKSPACE&gt;'</emphasis> after the executable
+      file to specify the workspace the AUT should use.</para>
+    </para>
+  </section>
+  <section id="create-aut-def">
+    <title>Creating an AUT definition from a running AUT</title>
+    <para>
+      Once you have started an AUT using the
+      <emphasis>autrun</emphasis> command, you can automatically
+      generate an AUT definition (<xref linkend="define-aut"/>) for this AUT:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          In the Running AUTs View, select the AUT you want to
+          define (it will be marked as an unknown AUT ID).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select:
+          
+          <para>
+            <emphasis role="menuPath">Create AUT Definition</emphasis>
+          </para>
+          
+          from the context menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The AUT definition window will appear. Complete the dialog
+          (<xref linkend="define-aut"/>) and click ”<emphasis>OK</emphasis>”.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>

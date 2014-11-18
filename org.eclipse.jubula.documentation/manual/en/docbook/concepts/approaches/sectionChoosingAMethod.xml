@@ -1,0 +1,28 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="choosing-a-method" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Choosing a method</title>
+  <para>
+    Obviously, these two approaches lie on a continuum. You can
+    ”mix-and-match” so that you can choose the approach that works
+    best for you – a combination of the two or one method for one
+    Test Case and the other for another Test Case.
+  </para>
+  <para>
+    For example, if you know that a certain test procedure (e.g.
+    logging in) has to be executed frequently, you can specify a
+    Test Case to do this, and specify it to be easily reusable
+    (using references as data-placeholders, and using general
+    component names to be reassigned). For parts of the test which
+    are not likely to be carried out more than once, you can specify
+    them with data and definite component names.
+  </para>
+</section>

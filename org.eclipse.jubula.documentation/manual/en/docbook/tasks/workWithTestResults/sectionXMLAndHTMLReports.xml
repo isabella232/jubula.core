@@ -1,0 +1,40 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="xml-and-html-reports" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>XML and HTML reports</title>
+  <anchor role="helpid" id="prefPageTestResultContextId">Test Result Preferences</anchor>
+  <para>
+    You can create XML and HTML reports for your tests in one of two ways:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        In the Test Result Summary View (<xref linkend="exporting-test-results-from-the-test-result-summary-view-as-html-and-xml-reports"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can specify that XML and HTML reports should be created
+        when a test runs in the preferences (<xref linkend="test-result-preferences"/>).
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            We recommend using the option to export test results
+            from the Test Result Summary View, as this does not
+            involve defining any external files for your test
+            environment.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+  </orderedlist>
+</section>

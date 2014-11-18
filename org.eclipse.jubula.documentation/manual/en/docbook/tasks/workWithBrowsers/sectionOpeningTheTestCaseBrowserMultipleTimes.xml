@@ -1,0 +1,44 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="opening-the-test-case-browser-multiple-times" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Opening the Test Case Browser multiple times</title>
+  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <para>
+    To make navigation in larger Projects easier, you can open
+    multiple instances of the Test Case Browser. You can filter each
+    Test Case Browser separately to give you different views of your
+    Test Cases at the same time. All instances of the Test Case
+    Browser are kept up-to-date with any changes to Test Cases in
+    the Project.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        To open a new Test Case Browser, select <emphasis>New Test
+        Case Browser</emphasis> from the small arrow menu in the
+        Test Case Browser. A new Test Case Browser will open.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        When you have multiple browsers open, one of them will
+        always be marked as the main browser in its title. This is
+        the default browser for actions such as ”<emphasis>Show
+        Specification</emphasis>” and for the displaying of any
+        search results. You can switch the main browser using the
+        button in the toolbar. If you close the Test Case Browser
+        you have marked as being the main browser, another Test Case
+        Browser will automatically be marked as the new main
+        browser.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

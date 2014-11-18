@@ -1,0 +1,55 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="customizing-the-perspective" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Customizing the Perspective</title>
+  <para>
+    In most cases, the button to start AUTs is not included in the
+    main toolbar. The following steps describe how to add this
+    button to a Perspective’s toolbar:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select:
+        
+        <para>
+          <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Customize Perspective...</emphasis>
+        </para>
+        
+        from the main menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the dialog that appears, select the <emphasis>Command
+        Groups Availability</emphasis> tab.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Ensure that the entry <emphasis>Start AUT</emphasis> in the
+        section <emphasis>Available command groups:</emphasis> is
+        checked.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Close the dialog by pressing the <emphasis>OK</emphasis>
+        button.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    Once you have completed the steps listed above, the
+    <emphasis>Start AUT</emphasis> button <mediaobject role="icon" file="images/startAUT.png"/> 
+    should be visible in the main toolbar of the active Perspective.
+  </para>
+</section>

@@ -1,0 +1,76 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="using-the-simple-match-operator" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Using the ’simple match’ operator</title>
+  <para>
+    <emphasis>Simple match</emphasis> is a good option if you are sure that you
+    will only want to use the basic wildcards given below. For more
+    powerful regular expressions, use the <emphasis>matches</emphasis> parameter
+    (<xref linkend="regex"/>).
+  </para>
+  <para>
+    <emphasis role="strong">Simple matching</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        <emphasis role="input">abc</emphasis> matches ”<emphasis>abc</emphasis>” and nothing else.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Wildcards</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        <emphasis role="input">?</emphasis> represents one instance of any character.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <emphasis role="input">*</emphasis> represents any number (zero or more) of any
+        characters.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Useful examples</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        A string that starts with <emphasis role="input">a</emphasis> is represented by:
+        <emphasis role="input">a*</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A string that ends in <emphasis role="input">a</emphasis> is represented by:
+        <emphasis role="input">*a</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A string that starts with <emphasis role="input">a</emphasis>, ends in <emphasis role="input">b</emphasis>
+        and has unknown values (0 or more) in the middle is
+        represented by: <emphasis role="input">a*b</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A string which contains <emphasis role="input">a</emphasis> somewhere between other
+        unknown characters (0 or more) is represented by:
+        <emphasis role="input">*a*</emphasis>
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

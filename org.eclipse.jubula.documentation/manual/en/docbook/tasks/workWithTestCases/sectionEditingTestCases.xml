@@ -1,0 +1,66 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="editing-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                               xmlns:xi="http://www.w3.org/2001/XInclude"
+                                               xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Editing Test Cases</title>
+  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <para>
+    From the Test Case Editor, you can edit a Test Case. You can:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        add other Test Cases (<xref linkend="adding-items-to-editors"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        add and edit Test Steps (<xref linkend="specsteps"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        rename the Test Case (<xref linkend="renaming-items-in-browsers"/>) or the Test
+        Cases it contains (<xref linkend="renaming-items-in-editors"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        add a comment to the Test Case
+        (<xref linkend="adding-comments-to-items-in-editors"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        add, edit or translate data for the Test Case
+        (<xref linkend="using-the-data-sets-view"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        extract Test Cases from within this Test Case to make
+        reusable modules (<xref linkend="extracting-test-cases-from-editors-refactoring"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        deactivate specific Test Cases in this Test Case so they are
+        ignored during execution (<xref linkend="commenting-out-items-in-editors"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        replace one or more Test Cases in it with another Test Case
+        (<xref linkend="replacing-test-cases-in-editors-refactoring"/>).
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

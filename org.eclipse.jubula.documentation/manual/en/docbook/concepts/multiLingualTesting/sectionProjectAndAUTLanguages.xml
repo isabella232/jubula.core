@@ -1,0 +1,76 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="project-and-aut-languages" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Project and AUT languages</title>
+  <para>
+    You can test different language versions of your AUT with the
+    same test. All you have to do is translate the data for the
+    test.
+  </para>
+  <para>
+    To make multilingual testing possible, you have specify which
+    languages you are using:
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        Project language(s):
+      </term>
+      <listitem>
+        <para>
+          These languages are specified during Project creation and
+          are valid for all AUTs in this Project. You will be able
+          to have AUTs which support one or more of these languages.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Default language:
+      </term>
+      <listitem>
+        <para>
+          One of the Project languages is the default language. This
+          is the language which will automatically be set as the
+          working language when you open the Project. 
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        AUT language(s):
+      </term>
+      <listitem>
+        <para>
+          When you are defining an AUT, you choose one or more AUT
+          languages from the selection of Project languages. These
+          languages are the languages the AUT supports. You can
+          start the AUT in these languages and write test data for
+          these languages. 
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        The working language:
+      </term>
+      <listitem>
+        <para>
+          In the toolbar in the ITE, you can change the working
+          language to any of the Project languages. The working
+          language determines which Test Suites you can edit (only
+          those whose AUT supports this language) and the language
+          the AUT is started in. 
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+</section>

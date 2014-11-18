@@ -1,0 +1,70 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="mapping-assigning-collected-technical-names-to-component-names" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Mapping (assigning) collected technical names to component names</title>
+  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <para>
+    Once you have collected the components from the AUT that you will use during the test
+    (<xref linkend="collecting-components-technical-names-from-the-aut"/>), you can then map them to the component
+    names you used in your Test Cases.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        In the Object Mapping Editor, in the split view or the tree
+        view (<xref linkend="the-different-views-in-the-object-mapping-editor"/>), you will see the component names
+        you have created (<xref linkend="creating-new-component-names"/>) and/or used
+        in your Test Cases, as well as the names you have collected
+        from the AUT. The names are grouped into categories of
+        unassigned and assigned names (<xref linkend="working-with-categories-in-the-object-mapping-editor"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To map a component name to a technical name, you must drag
+        the <emphasis>unassigned component name</emphasis> onto the
+        corresponding <emphasis>unassigned technical name</emphasis>
+        that you want this component name to refer to.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        When a component name has been assigned to a techical name,
+        the joined names appear in the <emphasis>assigned
+        names</emphasis> category. The component type for the
+        component name is adjusted so that it reflects the type of
+        component it hasbeen mapped to (<xref linkend="understanding-the-component-hierarchy"/>).
+      </para>
+      <para>
+        <para role="tip">You can also ”unassign” component names from
+        technical names by dragging the component name back into the
+        <emphasis>unassigned component names</emphasis> category</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Save the changes in the editor. <para role="tip">You will only be able
+        to map component names to technical names if their types are
+        compatible (<xref linkend="understanding-the-component-hierarchy"/>).</para>
+      </para>
+    </listitem>
+  </orderedlist>
+  <figure id="objectmappingeditor">
+    <title>Object Mapping Editor</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/objectmappinghowto.png"/>
+      </imageobject>
+      <textobject><phrase>Object Mapping
+      Editor</phrase></textobject>
+    </mediaobject>
+  </figure>
+</section>

@@ -1,0 +1,94 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="searching-for-places-where-a-component-name-has-been-used" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Searching for places where a component name has been used</title>
+  <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
+  <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <para>
+    You can find the places where you have used a component name
+    from within the Object Mapping Editor and the Component Names
+    Browser.
+  </para>
+  <para>
+    <emphasis role="strong">In the Component Names
+    Browser</emphasis>:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select the component name you want to search for and select:
+        
+        <para>
+          <emphasis role="menuPath">Show where used</emphasis>
+        </para>
+        
+        from the context-sensitive menu. You can also press <emphasis role="input">»F7«</emphasis> to show the places where the name has been used.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        All the places where you have used this component name in
+        this Project will be shown in the Search Result View
+        (<xref linkend="using-the-search-result-view"/>). Both Test Cases and object
+        mappings where the component name was used will be shown.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <emphasis role="strong">In the Object Mapping Editor: Show where
+    used</emphasis>:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select the component name you want to search for and select:
+        
+        <para>
+          <emphasis role="menuPath">Show where used</emphasis>
+        </para>
+        
+        from the context-sensitive menu. You can also press <emphasis role="input">»F7«</emphasis> to show the places where the name has been used.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        All the places where you have used this component name in
+        this Project will be shown in the Search Result View
+        (<xref linkend="using-the-search-result-view"/>).
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <emphasis role="strong">In the Object Mapping Editor: Show corresponding specification</emphasis>:<?linebreak?>
+    Use this option when a component name appears in the Object Mapping Editor that should have been overwritten, but hasn’t been.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select the component name you want to search for and select:
+        
+        <para>
+          <emphasis role="menuPath">Show corresponding specification</emphasis>
+        </para>
+        
+        from the context-sensitive menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Search Result View only shows places which could have
+        lead to this component name appearing in the Object Mapping
+        Editor, not all places in the test where it has been used.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

@@ -1,0 +1,27 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="the-test-suite-browser" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>The Test Suite Browser</title>
+  <anchor role="helpid" id="testExecutionViewContextId">Test Suite Browser</anchor>
+  <para>
+    The Test Suite Browser is by default in the upper left-hand corner
+    of the Specification Perspective. In this browser, you can
+    create Test Suites and Test Jobs for executing tests.
+  </para>
+  <para>
+    More information on working with browsers is available in the
+    Tasks (<xref linkend="working-with-browsers"/>).
+  </para>
+  <para>
+    <para role="tip">You can filter in the Test Suite Browser using the field
+    at the top. Use star <emphasis role="input">*</emphasis> as a wild card.</para>
+  </para>
+</section>

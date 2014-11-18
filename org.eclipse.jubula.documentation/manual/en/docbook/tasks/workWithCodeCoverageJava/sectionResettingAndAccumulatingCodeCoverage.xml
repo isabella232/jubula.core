@@ -1,0 +1,70 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="resetting-and-accumulating-code-coverage" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Resetting and accumulating code coverage</title>
+  <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <para>
+    To make sure you get the correct results for your code coverage,
+    it is important to be aware of which actions will accumulate the
+    recorded code coverage and which actions will reset the value
+    back to zero.
+  </para>
+  <para>
+    <emphasis role="strong">Code coverage reset</emphasis>
+  </para>
+  <para>
+    The following result in the code coverage value being reset:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Stopping the AUT. When the AUT is started again, the code
+        coverage value is reset to zero. The test executor ensures
+        that all monitoring information is collected before stopping
+        the AUT.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <para role="warning">If you stop the AUT while code coverage is being
+    calculated, then the value will also be set to zero!</para>
+  </para>
+  <para>
+    <emphasis role="strong">Code coverage accumulation</emphasis><?linebreak?>
+    The following result in code coverage information being accumulated:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Any actions you perform manually in an AUT that has been
+        started with code coverage will contribute to the code
+        coverage result.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Code coverage is accumulated across Test Suites by default.
+        If you want to reset the code coverage at the beginning of
+        each Test Suite, then select this option in the AUT
+        configuration (<xref linkend="configuring-code-coverage-for-an-aut"/>). <para role="tip">If you are working
+        with Test Jobs, then do not opt to reset the code coverage
+        at the beginning of a Test Suite.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you use the <emphasis>restart</emphasis> action during a
+        test, this does <emphasis role="strong">not</emphasis>
+        result in the code coverage value being reset.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

@@ -1,0 +1,58 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="help-system" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                        xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Help system</title>
+  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <orderedlist>
+    <listitem>
+      <para>
+        The information contained within this manual is also
+        available in the ITE.
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            In Windows, press <emphasis role="input">»F1«</emphasis> to
+            see context-sensitive help for the current view.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            In Unix, press <emphasis role="input">»Shift+F1«</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Select:
+            
+            <para>
+              <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">Help Content</emphasis> to search the handbook.
+            </para>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+    <listitem>
+      <para>
+        The help preferences can be altered via:
+        
+        <para>
+          <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Preferences</emphasis>--&gt;<emphasis role="menuPath">Help</emphasis>.
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        See later in this chapter (<xref linkend="help-preferences"/>) for details.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

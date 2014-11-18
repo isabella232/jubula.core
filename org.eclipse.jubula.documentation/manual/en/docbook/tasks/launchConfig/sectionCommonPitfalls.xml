@@ -1,0 +1,29 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="common-pitfalls" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Common Pitfalls</title>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Breakpoints may alter the timing of tests. This can have
+        consequences such as timeouts, tests failing when they
+        should succeed, and tests succeeding when they should fail.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Actions that affect the lifecycle of the AUT such as
+        restarting it cannot be used in tests that use an AUT
+        started via a launch configuration.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

@@ -1,0 +1,37 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="working-with-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="workWithEditors"?>
+  <title>Working with editors: opening, adding/deleting/renaming
+  items, commenting, adding descriptions, extracting and replacing, reverting
+  changes</title>
+  <para>
+    The editors for Test Cases, Test Suites and Test Jobs all let you
+    work in a similar way in the ITE. When you are working in an
+    editor, the Properties View, Data Sets View and Component Names
+    View on the right hand side of the screen contain information
+    about the selected item.
+  </para>
+  
+  <xi:include href="sectionOpeningItemsInEditors.xml"/>
+  <xi:include href="sectionAddingItemsToEditors.xml"/>
+  <xi:include href="sectionDeletingItemsFromEditors.xml"/>
+  <xi:include href="sectionRenamingItemsInEditors.xml"/>
+  <xi:include href="sectionAddingCommentsToItemsInEditors.xml"/>
+  <xi:include href="sectionAddingDescriptionsToItemsInEditors.xml"/>
+  <xi:include href="sectionAddingTaskIDsToItemsInEditors.xml"/>
+  <xi:include href="sectionCommentingOutItemsInEditors.xml"/>
+  <xi:include href="sectionExtractingTestCasesFromEditors.xml"/>
+  <xi:include href="sectionReplacingTestCasesInEditors.xml"/>
+  <xi:include href="sectionSavingTestCasesFromAnEditorAsNewTestCase.xml"/>
+  <xi:include href="sectionRevertingChangesInAnEditor.xml"/>
+  
+</section>

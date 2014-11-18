@@ -1,0 +1,40 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="workspace-prefs" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Workspace preferences</title>
+  <para>
+    You can find the workspace preferences under:
+    
+    <para>
+      <emphasis>General/Startup and Shutdown/Workspaces</emphasis>
+    </para>
+    
+    in the preferences dialog (<xref linkend="WorkspacePrefs"/>).
+  </para>
+  <para>
+    Here, you can specify whether or not to see the workspace prompt
+    when starting the ITE.
+  </para>
+  <para>
+    You can also configure how many workspaces to see in your recent
+    workspaces list, and remove any you no longer wish to see.
+  </para>
+  <figure id="WorkspacePrefs">
+    <title>Workspace Preferences</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/workspaceprefs.png"/>
+      </imageobject>
+      <textobject><phrase>Workspace
+      Preferences</phrase></textobject>
+    </mediaobject>
+  </figure>
+</section>

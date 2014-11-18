@@ -1,0 +1,47 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="searching-for-places-where-a-central-test-data-set-has-been-used" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Searching for places where a central test data set has been used</title>
+  <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
+  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <para>
+    You can find the places where you have used a central test data
+    set from within the Central Test Data Editor:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select the central data set you want to search for and select:
+        
+        <para>
+          <emphasis role="menuPath">Show where used</emphasis>
+        </para>
+        
+        from the context-sensitive menu. You can also press <emphasis role="input">»F7«</emphasis> to show the places where the data set has been used.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        All the places where you have used this data set in this
+        Project will be shown in the ”<emphasis>Search Result
+        View</emphasis>” (<xref linkend="using-the-search-result-view"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you want to change the Test Cases that use this central
+        test data set so that they use a different column from the
+        data set, then you can start this action from the Search
+        Result View (<xref linkend="changing-the-column-used-in-a-central-test-data-set-for-multiple"/>).
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

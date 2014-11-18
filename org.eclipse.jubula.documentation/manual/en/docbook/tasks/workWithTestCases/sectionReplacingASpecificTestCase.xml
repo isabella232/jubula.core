@@ -1,0 +1,197 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="replacing-a-specific-test-case-at-places-where-it-has-been-reused" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Replacing a specific Test Case at places where it has been reused</title>
+  <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
+  <anchor role="helpid" id="searchRefactorReplaceExecutionTestCaseWizardContextId">Replace Test Case</anchor>
+  <para>
+    If you have reused a Test Case at multiple places in your
+    Project, and later create a new Test Case that should replace
+    it, then you can perform a mass replace via the Search Result
+    View. If you just want to replace one single place where a Test
+    Case has been reused, then you can either select that Test Case
+    in the Search Result View or use the in-editor replace
+    (<xref linkend="replacing-test-cases-in-editors-refactoring"/>).
+  </para>
+  <para>
+    <para role="warning">In order to perform a mass replace, all Test Cases to be
+    changed must not be in use by anyone else using the Project –
+    you should ensure that this is the case before performing the
+    replace, otherwise the replace cannot be carried out. You should
+    also be aware before performing this action that it cannot be
+    undone.</para>
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Search for all places where the Test Case you want to
+        replace is used e.g. <emphasis>Show where used</emphasis>
+        (<xref linkend="searching-for-places-where-a-test-case-or-test-suite-has-been-used"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the Search Result View, you will see all places where the
+        selected Test Case is reused in this Project, including in
+        other Test Cases, in Test Suites and anywhere you have used
+        the Test Case as an Event Handler. Select all entries, or
+        just the Test Case references you want to replace with a new
+        Test Case reference. <para role="warning">You will only be able to perform
+        the replace if all selected Test Case references use the
+        same original Test Case. The context-menu entry will be
+        disabled if the Project is protected, or any of the selected
+        Test Cases are missing (e.g. from reused Projects)</para>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        From the context menu, select:
+        
+        <para>
+          <emphasis role="menuPath">Replace with another Test Case</emphasis>
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The first page of a wizard will appear. Here, you can choose
+        the Test Case you want to use as a replacement at the places
+        you selected. It is a good idea to select a Test Case that
+        ”fits well” (in terms of any component names it propagates
+        and parameters it references) to the Test Case you are
+        replacing. You will be able to map any compatible components
+        and parameter names in the next steps.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Press ”<emphasis>Next</emphasis>” to continue to the next
+        page of the wizard.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        On this page, you can match any component names propagated
+        (<xref linkend="propagating-component-names"/>) from the newly selected Test
+        Case to already existing propagated component names from the
+        old Test Case. On the left-hand side, you can see names that
+        are propagated from the newly chosen Test Case. On the
+        right-hand side, you can:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            match the new names to existing names if there are
+            compatible names available in the existing Test Case.
+            The information for names you match in this way will be
+            transferred from the existing Test Case to the new Test
+            Case when the replacement occurs. Any new names entered,
+            or further propagations at the places of reuse, will
+            also be transferred. This is the best way of ensuring
+            that your Project structure is the same after the
+            replace.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            choose to leave any combo boxes empty. In this case, no
+            match for that component name will take place, and the
+            new component name will be used.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            see if there are no names available, either because
+            there is no compatible type for matching in the existing
+            Test Case, or because the existing Test Case had no
+            propagated component names. In such cases, the new
+            component name will be used.
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        <para role="warning">For any non-matched (or non-matchable) component
+        names, the new names from the new Test Case will be used.
+        This may result in incomplete object mapping for your
+        tests.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Once you have matched any component names, press
+        ”<emphasis>Next</emphasis>” to continue to the next page of
+        the wizard.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        On this page, you can match any referenced parameter names
+        (<xref linkend="using-references-for-data-in-test-cases"/>) from the newly selected Test
+        Case to already existing referenced parameter names from the
+        old Test Case. On the left-hand side, you can see parameters
+        that are referenced from the newly chosen Test Case. On the
+        right-hand side you can:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            match the new parameter to existing parameters if there
+            are compatible types available in the existing Test
+            Case. The data for any parameters you match in this way
+            will be transferred from the existing Test Case to the
+            new Test Case when the replacement occurs. Any test data
+            entered locally, any test data referenced from the
+            original specification, and any central test data sets
+            or Excel tables used, will also be transferred. This is
+            the best way of ensuring that your Project structure is
+            the same after the replace.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            choose to leave any combo boxes empty. In this case, no
+            match for that parameter will take place, and the new
+            parameter will be used.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            see if there are no names available, either because
+            there is no compatible type for matching in the existing
+            Test Case, or because the existing Test Case had no
+            referenced parameters. In such cases, the new parameter
+            will be used after the replace.
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        <para role="warning">For any non-matched (or non-matchable) parameters,
+        the new parameters from the new Test Case will be used. This
+        may result in incomplete test data for your tests.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Once you have finished matching the parameters, press
+        ”<emphasis>Finish</emphasis>” to perform the replace.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <para role="tip">The Test Case reference names and any comments that were
+    used for the original Test Case references, will be transferred
+    to each new Test Case reference. If the original Test Case
+    reference was commented out, the replacement Test Case reference
+    will be as well. If you had used the original Test Case as an
+    Event Handler, the Event Handler details will also be
+    transferred.</para>
+  </para>
+</section>

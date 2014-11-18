@@ -1,0 +1,80 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="prerequisites-for-test-execution" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Prerequisites for test execution</title>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="runningAutsViewContextId">Running AUTs View</anchor>
+  <para>
+    To be able to start a test you must:
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Create a Test Suite (<xref linkend="creating-a-test-suite"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Add Test Cases to be executed to the Test Suite
+        (<xref linkend="adding-items-to-editors"/>)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Define an AUT (<xref linkend="define-aut"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Configure an AUT (<xref linkend="configuringaut"/>) if you want to start
+        the AUT from the ITE.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Choose an AUT for the Test Suite (<xref linkend="configuring-test-suites-in-the-properties-view"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Set the working language to the language you want to execute
+        the test in.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Connect to the AUT Agent (<xref linkend="connect-aut-agent"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Start the AUT (<xref linkend="starting-the-aut"/>) (either from the ITE or using
+        the <emphasis>autrun command</emphasis>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Complete object mapping (<xref linkend="object-mapping-1"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Make sure that your test data is complete in your Test
+        Cases.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <para role="tip">It is a good idea to set your preferences for test
+    results in the preferences dialog (<xref linkend="gdprefs"/>) before
+    test execution.</para>
+  </para>
+</section>

@@ -1,0 +1,80 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="adding-event-handlers-to-a-test-case" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Adding Event Handlers to a Test Case</title>
+  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <para>
+    This section deals with adding Event Handlers to Test Cases.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Open the Test Case Editor by double-clicking on the Test
+        Case you want to edit in the Test Case Browser.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select
+        
+        <para>
+          <emphasis role="menuPath">Add</emphasis>--&gt;<emphasis role="menuPath">Test Case as Event Handler</emphasis>
+        </para>
+        
+        from the context-sensitive menu in the editor or use <emphasis role="input">»CTRL+ENTER«</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Choose a Test Case to add from the dialog that appears.
+        <para role="tip">You can also drag the Test Case you want to use
+        straight into the Event Handlers area of at the bottom of th
+        the Test Case Editor. </para> <para role="tip">You can’t add a Test Case to
+        itself as an Event Handler, because this would create an
+        infinite loop. </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can optionally add a name for the Event Handler that
+        will be used as the referenced name for this Event Handler.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select an event type from the combo box (<xref linkend="event-types"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select a reentry type from the combo box
+        (<xref linkend="reentry-types"/>). <para role="tip">For each Test Case you can only
+        add one Event Handler for each event type.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Click ”<emphasis>OK</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Event Handler <mediaobject role="icon" file="images/EventHandler.png"/> appears
+        in the lower half of the Test Case Editor.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Save the changes in the editor.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

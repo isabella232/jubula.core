@@ -1,0 +1,473 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="using-functions-as-data-for-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Using functions as data for Test Cases</title>
+  <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
+  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <para>
+    You can calculate specific values without to enter the results
+    yourself using <emphasis>functions</emphasis>. There are
+    specific functions that work out-of-the-box, and additional
+    functions can be added as well.
+  </para>
+  <section id="syntax-for-functions">
+    <title>Syntax for functions</title>
+    <para>
+      The sign used to introduce a function is the question mark: <emphasis role="input">?</emphasis>
+      (without quotes).
+    </para>
+    <para>
+      After the sign, you must enter the name of the function
+      followed by the arguments the function requires, e.g.:
+    </para>
+    <para>
+      <literal>?add(arg1,arg2)</literal>
+    </para>
+    <para>
+      The arguments are separated by commas and are placed within
+      round brackets.
+    </para>
+  </section>
+  <section id="pre-defined-functions">
+    <title>Pre-defined functions</title>
+    <para>
+      The following functions are available directly in the ITE:
+    </para>
+    <para>
+      <emphasis role="strong">Mathematical functions</emphasis><?linebreak?>
+      The following functions give their results as decimal numbers, e.g. 1.0, 1.2 etc.
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          add
+        </term>
+        <listitem>
+          <para>
+            Adds 0 or more numbers to 0, e.g.:
+            <emphasis role="input">?add(1,2)</emphasis>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          sub
+        </term>
+        <listitem>
+          <para>
+            Subtracts the second number from the first: <emphasis role="input">?sub(3,2)</emphasis>.<?linebreak?>
+            This function only accepts two numbers.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          mult
+        </term>
+        <listitem>
+          <para>
+            Multiplies 0 or more numbers by 1 e.g.:
+            <emphasis role="input">?mult(2,4)</emphasis>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          div
+        </term>
+        <listitem>
+          <para>
+            Divides the first number by the second: <emphasis role="input">?div(2,1)</emphasis>.<?linebreak?>
+            This function only accepts two numbers.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          trunc
+        </term>
+        <listitem>
+          <para>
+            Takes two arguments, the decimal to be truncated and the
+            precision (as an integer) to truncate the decimal to.
+            Use <emphasis role="input">0</emphasis> to cut off the number to no
+            decimal places (i.e. to receive a plain integer), and
+            use <emphasis role="input">1</emphasis> to cut off the decimal to one
+            decimal place etc: <emphasis role="input">?trunc(2.396,0)</emphasis> gives
+            <emphasis role="input">2</emphasis> and <emphasis role="input">?trunc(2.789,1)</emphasis>
+            gives <emphasis role="input">2.7</emphasis>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          round
+        </term>
+        <listitem>
+          <para>
+            Takes two arguments, the decimal to be rounded and the
+            precision (as an integer) to round to. This function
+            uses <emphasis>half-up</emphasis> rounding to round the
+            number so that if the final decimal place after rounding
+            is 5 or higher, the final number will be incremented by
+            1 e.g.: <emphasis role="input">?round(2.56,1)</emphasis> gives
+            <emphasis role="input">2.6</emphasis>. If the final number after rounding
+            is 4 or less, there is no incrementation, eg.
+            <emphasis role="input">?round(2.43,1)</emphasis> gives
+            <emphasis role="input">2.4</emphasis>. <para role="warning">It is currently only
+            possible to use numbers formatted with the decimal mark
+            <emphasis>period</emphasis> or
+            <emphasis>fullstop</emphasis> (<emphasis role="input">.</emphasis>).
+            Thousands separators may not be used. For example,
+            <emphasis role="input">1.5</emphasis> is accepted, but <emphasis role="input">1,5</emphasis>
+            is not. <emphasis role="input">1000</emphasis> can be entered but
+            <emphasis role="input">1,000</emphasis> cannot. Entering
+            <emphasis role="input">1.000</emphasis> is equivalent to entering
+            <emphasis role="input">1</emphasis>.</para>
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      <para role="tip">Use single quotes around negative numbers, e.g.
+      ’-0.5’.</para>
+    </para>
+    <para>
+      <emphasis role="strong">Date functions</emphasis>
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          now
+        </term>
+        <listitem>
+          <para>
+            Saves the current date in an internal format that can be
+            used as a basis for the formatDate and modifyDate
+            functions. This function takes no arguments:
+            <emphasis role="input">?now()</emphasis>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          formatDate
+        </term>
+        <listitem>
+          <para>
+            Puts a date into a specific format. The date to be
+            formatted is entered as the first argument, followed by
+            the format string e.g.
+            <emphasis role="input">?formatDate(?now(), dd-MM-yyyy)</emphasis>. The
+            formats that can used here are the formats from the
+            SimpleDateFormat class in Java.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          parseDate
+        </term>
+        <listitem>
+          <para>
+            Reads a value that is a date and parses it into an
+            internal format based on the format string given (i.e.
+            how the date should be understood). The first argument
+            is the date, and the second is the format string
+            <emphasis role="input">?parseDate(2011.06.25,yyyy.MM.dd)</emphasis>. This
+            function should be used when reading and working with
+            dates shown in the AUT. 
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          modifyDate
+        </term>
+        <listitem>
+          <para>
+            This function can add days (d), months (M), and years
+            (y) to a given date. The date must first be parsed (i.e.
+            using parseDate) so that the correct internal format is
+            used. This function takes two arguments: the first is
+            the date to modify, and the second is the modification
+            to perform, e.g. <emphasis role="input">?modifyDate(?now(),1d)</emphasis>.
+            Additions are entered as positive integers (but without
+            a plus sign, e.g. 1d, 1M, 1y) and subtractions are
+            entered as negative integers, e.g. -1d, -1M, -1y.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      <para role="tip">If you want to use the result of a date function as a
+      part of your test data (i.e. to enter or check), then you will
+      most likely need to use formatDate on any date modifications
+      you have performed.</para>
+    </para>
+    <para>
+      <emphasis role="strong">Test functions</emphasis>
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          getNodeAttribute
+        </term>
+        <listitem>
+          <para>
+            Reads the value on the node (e.g. Test Case, Test Step)
+            on which this function is resolved, and uses this as the
+            data for the Test Step. It has two possible arguments,
+            <emphasis>name</emphasis> reads the name of the node,
+            and <emphasis>comment</emphasis> reads the comment on
+            the node. If the comment is empty, the value used is
+            <emphasis>null</emphasis>. If you have overwritten
+            either the name or the comment at this place of reuse,
+            then these new details are used.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          getCentralTestDataSetValue
+        </term>
+        <listitem>
+          <para>
+            Use this function to access a value saved in a central
+            data set. This lets you combine values that you have
+            defined centrally with values that you use locally, or
+            lets you combine values from different central data sets
+            in your test. It locates a single cell in a specific
+            central data set based on a value in a column that you
+            define as a key, and a column in which to search for the
+            required value. It requires four arguments: the name of
+            the central data set to search in, the name of the
+            column which you wish to use as a ”key” (you can name
+            the column KEY if you require), the value in the key
+            column (to specify the line), and the column in which
+            the required data cell is located.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      <emphasis role="strong">Example of the getCentralTestDataSetValue function</emphasis><?linebreak?>
+      The function to retrieve data from a central data set can be exemplified using this example central data set, which is named <emphasis>Customer</emphasis>:
+    </para>
+    <para>
+      <informaltable>
+        <tgroup cols="2">
+          <colspec align="center"/>
+          <colspec align="center"/>
+          <thead>
+            <row>
+              <entry>CUSTOMER_TYPE</entry>
+              <entry>CUSTOMER_NAME</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>NormalUser</entry>
+              <entry>Bob Normal</entry>
+            </row>
+            <row>
+              <entry>SuperUser</entry>
+              <entry>Alice Super</entry>
+            </row>
+            <row>
+              <entry>SupportUser</entry>
+              <entry>John Support</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    <para>
+      To select a customer name using the customer type, you should
+      enter:
+    </para>
+    <blockquote>
+      <para>
+        <emphasis role="strong">?getCentralTestDataSetValue<?linebreak?>
+        (Customer,CUSTOMER_TYPE,SuperUser,CUSTOMER_NAME)</emphasis>
+      </para>
+    </blockquote>
+    <para>
+      This will look in the central data set called
+      <emphasis>Customer</emphasis>, locate the value
+      <emphasis>SuperUser</emphasis> in the
+      <emphasis>CUSTOMER_TYPE</emphasis> column, and use that line
+      to choose the cell in the <emphasis>CUSTOMER_NAME</emphasis>
+      column – Alice Super.
+    </para>
+    <para>
+      <emphasis role="strong">Wrapped functions from other libraries</emphasis><?linebreak?>
+      You can also use the following functions in your tests. For full documentation on them, please refer to the respective library.
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          randomInt(exclusive maximum value)
+        </term>
+        <listitem>
+          <para>
+            Use this function to generate a random integer up to but
+            not including the value you specify. The function is
+            from
+            <emphasis>org.apache.commons.lang.math.RandomUtils</emphasis>
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          replaceAll(string,regular expression,replacement)
+        </term>
+        <listitem>
+          <para>
+            Use this function to replace all of the parts of a
+            string you specify with something else. The string to
+            perform the replacement on is entered as the
+            <emphasis>string</emphasis>, the part(s) of the string
+            to replace are defined by the <emphasis>regular
+            expression</emphasis>, and the string to replace it with
+            is given as the <emphasis>replacement</emphasis>. This
+            function is from <emphasis>java.util.regex</emphasis>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          uuid()
+        </term>
+        <listitem>
+          <para>
+            This function generates a universal unique identifier.
+            The function is from
+            <emphasis>java.util.UUID</emphasis>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          base64Encode(string)
+        </term>
+        <listitem>
+          <para>
+            This function encodes a string to base 64. The function
+            is from
+            <emphasis>org.apache.commons.codec.binary.Base64</emphasis>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          base64Decode(string)
+        </term>
+        <listitem>
+          <para>
+            This function decodes a string from base 64. The
+            function is from
+            <emphasis>org.apache.commons.codec.binary.Base64</emphasis>.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </section>
+  <section id="embedding-functions-in-other-functions">
+    <title>Embedding functions in other functions</title>
+    <para>Functions can be added as arguments to other functions. If, for example, you want to use the result of a subtraction as the first argument of your addition, you could write it like this:
+    
+      <para>
+        <emphasis role="input">?add(?sub(2,1),1)</emphasis>
+      </para>
+    
+    Results in <emphasis role="input">1.0 + 1</emphasis>, i.e. <emphasis role="input">1.0</emphasis>
+    </para>
+  </section>
+  <section id="useful-examples-for-functions">
+    <title>Useful examples for functions</title>
+    <para>
+      Especially when it comes to the date functions, it is often
+      necessary to use multiple functions embedded within each
+      other.
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          ?formatDate(?now(), dd’ MMMM ’yyyy)
+        </term>
+        <listitem>
+          <para>
+            e.g. 29 February 2012
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          ?formatDate(?now(), dd’ MMM ’yyyy)
+        </term>
+        <listitem>
+          <para>
+            e.g. 29 Feb 2012
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          ?formatDate(?now(), dd-MMM-yyyy)
+        </term>
+        <listitem>
+          <para>
+            e.g. 29-Feb-2012
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          ?formatDate(?now(), dd.MM.yyyy)
+        </term>
+        <listitem>
+          <para>
+            e.g. 29.02.2012
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          ?formatDate(?now(), dd/MM/yyyy)
+        </term>
+        <listitem>
+          <para>
+            e.g. 29/02/2012
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      A more complex example involving embedded functions is e.g.:
+    </para>
+    <blockquote>
+      <para>
+        <emphasis role="strong">?formatDate(?modifyDate(?parseDate<?linebreak?>
+        (22.2.2012, dd.MM.yyyy),-1d),dd.MM.yy)</emphasis><?linebreak?>
+        This function will parse the date 22.2.2012 into an internal format, subtract one day and then format it as a dd.MM.yy, in this case: 21.2.12.
+      </para>
+    </blockquote>
+  </section>
+  <section id="adding-your-own-functions">
+    <title>Adding your own functions</title>
+    <para>
+      You can also add your own functions using an extension point.
+      This is described in the Extension Manual.
+    </para>
+  </section>
+</section>

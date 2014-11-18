@@ -1,0 +1,67 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="label-decoration-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Label decoration preferences</title>
+  <para>
+    You can open the label decoration preferences by selecting
+    <emphasis>General - Appearance - Label Decorations</emphasis>
+    from the preference dialog.
+  </para>
+  <para>
+    From this preference page, you can alter your preferences for:
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        Completeness Check Decorator:
+      </term>
+      <listitem>
+        <para>
+           We recommend leaving this decorator active, as it shows
+          you red crosses and tooltips in the Test Suite Browser
+          when Test Suites and Test Jobs are incomplete.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Test Result Duration Decorator:
+      </term>
+      <listitem>
+        <para>
+          Deactivate this option to not see the execution time
+          required for each node in the Test Result View. The times
+          shown are for the execution of each node, including its
+          children. You can use this information to see whether
+          specific Test Cases are taking longer than you expect them
+          to.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Test Result Parameter Decorator:
+      </term>
+      <listitem>
+        <para>
+          Deactivate this option to not see the parameter values
+          used at this node (i.e. either entered at this level, or
+          actually used at this place) in the Test Result View. You
+          can use this information to easily see which data were
+          used for your Test Cases, without having to click through
+          each individual node in the Test Result View. This can be
+          especially useful if you have one Test Case that runs
+          multiple times with different datasets. 
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+</section>

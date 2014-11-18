@@ -1,0 +1,55 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="configuringaut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                           xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Configuring AUTs to be started from the ITE</title>
+  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <para>
+    Once you have created a Project (<xref linkend="newproject"/>) and
+    defined an AUT (<xref linkend="define-aut"/>), you can add and edit
+    AUT configurations.
+  </para>
+  <para>
+    The details in the AUT configuration provide information on
+    how to start the AUT, e.g. on which machine.
+  </para>
+  <para>
+    An AUT can have multiple configurations (for example, for
+    local and remote testing). A configuration contains all the
+    information required to start the AUT, and may contain
+    platform- or installation-specific information such as paths to
+    working directories, AUT arguments, Java versions, browser
+    choices and activation methods.
+  </para>
+  <para>
+    <para role="tip">If you want to start your Java AUT yourself, and have the ITE connect to it, then use the <emphasis>autrun</emphasis> command to start the AUT (<xref linkend="starting-java-with-the-command"/>). In this case, you do not need to create an AUT configuration.</para>
+  </para>
+  <section id="aut-activation">
+    <title>AUT activation</title>
+    <para>
+      Activation makes sure that the AUT is in focus at the
+      beginning of test execution. This is acheived by clicking
+      somewhere in the AUT window. You can specify the
+      activation method (i.e. where to click) as part of a
+      configuration for an AUT, or you can create a Test Step
+      within a test to do the same thing.
+    </para>
+    <para>
+      The advantage of specifying an activation method here is that
+      it is central and affects each test execution started on this
+      AUT with this configuration.
+    </para>
+    <para>
+      Bear in mind that you may need to activate your AUT in
+      order for tests to work, especially if the AUT runs on
+      the same machine as the ITE.
+    </para>
+  </section>
+</section>

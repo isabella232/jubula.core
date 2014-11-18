@@ -1,0 +1,64 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<chapter id="tasks" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                  xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="tasks"?>
+  <title>Tasks</title>
+  <para>
+    This chapter provides step-by-step instructions on designing,
+    writing, executing and analyzing tests. For more details about
+    individual tasks, read the <xref linkend="concepts"/> or
+    <xref linkend="user-interface"/>.
+  </para>
+  
+  <xi:include href="startAndConnectAUTAgent/content.xml"/>
+  <xi:include href="startITE/content.xml"/>
+  <xi:include href="logInAndSwitchDB/content.xml"/>
+  <xi:include href="migrateToNewerVersion/content.xml"/>
+  <xi:include href="workWithProjects/content.xml"/>
+  <xi:include href="defineAUT/content.xml"/>
+  <xi:include href="startAndConfigureAUTs/content.xml"/>
+  <xi:include href="workWithBrowsers/content.xml"/>
+  <xi:include href="workWithEditors/content.xml"/>
+  <xi:include href="workWithCategories/content.xml"/>
+  <xi:include href="workWithTestCases/content.xml"/>
+  <xi:include href="workWithData/content.xml"/>
+  <xi:include href="workWithComponentNames/content.xml"/>
+  <xi:include href="workWithSuites/content.xml"/>
+  <xi:include href="workWithJobs/content.xml"/>
+  <xi:include href="infoTestSteps/content.xml"/>
+  <xi:include href="workWithManualTestCases/content.xml"/>
+  <xi:include href="objectMapping/content.xml"/>
+  <xi:include href="testExec/content.xml"/>
+  <xi:include href="workWithTestResults/content.xml"/>
+  <xi:include href="produceReports/content.xml"/>
+  <xi:include href="workWithALM/content.xml"/>
+  <xi:include href="workWithDashboard/content.xml"/>
+  <xi:include href="useTestExec/content.xml"/>
+  <xi:include href="useDBToolClient/content.xml"/>
+  <xi:include href="dealWithErrors/content.xml"/>
+  <xi:include href="workWithCodeCoverageJava/content.xml"/>
+  <xi:include href="configurePrefs/content.xml"/>
+  <xi:include href="searching/content.xml"/>
+  <xi:include href="observing/content.xml"/>
+  <xi:include href="workWithProblemsView/content.xml"/>
+  <xi:include href="workWithTeststyleGuidelines/content.xml"/>
+  <xi:include href="workWithMetrics/content.xml"/>
+  <xi:include href="adaptUI/content.xml"/>
+  <xi:include href="useChronon/content.xml"/>
+  <xi:include href="launchConfig/content.xml"/>
+  <xi:include href="troubleshooting/content.xml"/>
+  <xi:include href="specialCharacters/content.xml"/>
+  <xi:include href="useMatchingAndRegex/content.xml"/>
+  <xi:include href="useRelativePaths/content.xml"/>
+  <xi:include href="remoteDebugging/content.xml"/>
+  <xi:include href="finishUp/content.xml"/>
+  
+</chapter>

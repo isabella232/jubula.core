@@ -1,0 +1,227 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="parameters-for-the-dbtool" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Parameters for the dbtool</title>
+  <orderedlist>
+    <listitem>
+      <para>
+        Once you have browsed to the installation directory and
+        entered <emphasis role="input">dbtool</emphasis>, you can enter the parameters
+        for the database actions.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The dbtool uses the parameters described in the table
+        (<xref linkend="dbtoolparams"/>):
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <table id="dbtoolparams">
+      <title>dbtool parameters</title>
+      <tgroup cols="2">
+        <colspec align="left" colwidth="40%"/>
+        <colspec align="left"/>
+        <thead>
+          <row>
+            <entry>Detail</entry>
+            <entry>Parameter</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>Help</entry>
+            <entry>
+              <emphasis role="input">-h</emphasis><?linebreak?>
+              Gives parameter help
+            </entry>
+          </row>
+          <row>
+            <entry>Delete Project</entry>
+            <entry>
+              <emphasis role="input">-delete &lt;project-name project-version&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-delete "ExampleProject" 1.0</emphasis><?linebreak?>
+              For information on keeping test result summaries, see the section later 
+              (<xref linkend="keeping-test-result-summaries"/>). <?linebreak?>
+              For information on how to enter version numbers, see the section below 
+              (<xref linkend="dbtool-working-with-versions"/>)
+            </entry>
+          </row>
+          <row>
+            <entry>Delete All</entry>
+            <entry>
+              <emphasis role="input">-deleteall</emphasis><?linebreak?>
+              e.g. <emphasis>-deleteall</emphasis><?linebreak?>
+              For information on keeping test result summaries, see the section later 
+              (<xref linkend="keeping-test-result-summaries"/>).
+            </entry>
+          </row>
+          <row>
+            <entry>Keep test result summaries</entry>
+            <entry>
+              <emphasis role="input">-keepsummary</emphasis> (optional)<?linebreak?>
+              e.g. <emphasis>-keepsummary</emphasis><?linebreak?>
+              (<xref linkend="keeping-test-result-summaries"/>)
+            </entry>
+          </row>
+          <row>
+            <entry>Directory</entry>
+            <entry>
+              <emphasis role="input">-directory &lt;directory path&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-directory "&lt;pathToQADocs&gt;/projects"</emphasis><?linebreak?>
+              The directory for imports and/or exports<?linebreak?>
+              The directory must already exist
+            </entry>
+          </row>
+          <row>
+            <entry>Export Project</entry>
+            <entry>
+              <emphasis role="input">-export &lt;project-name project-version&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-export "ExampleProject" "1.0"</emphasis><?linebreak?>
+              Existing files with the same name will be overwritten. <?linebreak?>
+              For information on how to enter version numbers, see the section below 
+              (<xref linkend="dbtool-working-with-versions"/>).
+            </entry>
+          </row>
+          <row>
+            <entry>Export All</entry>
+            <entry>
+              <emphasis role="input">-exportall</emphasis><?linebreak?>
+              e.g. <emphasis>-exportall</emphasis><?linebreak?>
+              The directory for the export all must be empty<?linebreak?>
+              The directory must already exist
+            </entry>
+          </row>
+          <row>
+            <entry>Import Project</entry>
+            <entry>
+              <emphasis role="input">-import &lt;import-file&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-import &lt;ExampleProject.xml&gt;</emphasis>
+            </entry>
+          </row>
+          <row>
+            <entry>Create Version</entry>
+            <entry>
+              <emphasis role="input">-createversion &lt;project-name&gt; &lt;old-version&gt; &lt;new-version&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-createversion "MyProject" "1.0" "1.1"</emphasis><?linebreak?>
+              For information on versioning projects, see: <xref linkend="creating-new-versions"/><?linebreak?>
+              For information on how to enter version numbers, see the section below 
+              (<xref linkend="dbtool-working-with-versions"/>).
+            </entry>
+          </row>
+          <row>
+            <entry>Workspace</entry>
+            <entry>
+              <emphasis role="input">-data &lt;path to workspace&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-data "&lt;pathToQADocs&gt;/workspace"</emphasis><?linebreak?>
+              The ITE workspace with the preference settings for the database connection<?linebreak?>
+              This is optional if you enter the -dburl parameter
+            </entry>
+          </row>
+          <row>
+            <entry>Database scheme</entry>
+            <entry>
+              <emphasis role="input">-dbscheme &lt;scheme&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-dbscheme "Oracle"</emphasis><?linebreak?>
+              This is optional if you enter the -dburl parameter
+            </entry>
+          </row>
+          <row>
+            <entry>Database username</entry>
+            <entry>
+              <emphasis role="input">-dbuser &lt;username&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-dbuser "username"</emphasis><?linebreak?>
+              Use <emphasis role="input">sa</emphasis> (without quotes) for the embedded database
+            </entry>
+          </row>
+          <row>
+            <entry>Database password</entry>
+            <entry>
+              <emphasis role="input">-dbpw &lt;password&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-dbpw "password"</emphasis><?linebreak?>
+              Use &lt;empty&gt; ("") for the embedded database
+            </entry>
+          </row>
+          <row>
+            <entry>Database URL (optional)</entry>
+            <entry>
+              <emphasis role="input">-dburl &lt;URL&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-dburl "db.example.de"</emphasis><?linebreak?>
+              If no URL is given, the default will be used.<?linebreak?>
+              If you enter this, you do not need to enter the <emphasis>-data</emphasis> or <emphasis>-dbscheme</emphasis> parameter<?linebreak?>
+               You can find the dburl in the database preferences
+             </entry>
+           </row>
+         </tbody>
+       </tgroup>
+     </table>
+   </para>
+   <section id="keeping-test-result-summaries">
+     <title>Deleting Projects but keeping test result
+     summaries</title>
+     <para>
+       You can use the parameter <emphasis role="input">-keepsummary</emphasis> to
+       specify that the test result summaries should not be deleted
+       when the Project or Projects are deleted. This is useful for
+       continuous integration processes, where the test results over
+       time should be kept, but the Projects are reimported into the
+       database (for example from the version control system) each
+       night. If you do not enter this parameter, the summaries will
+       be deleted with the Projects.
+     </para>
+   </section>
+   <section id="creating-new-versions">
+     <title>Creating new versions of Projects</title>
+     <para>
+       You can use the dbtool to create a new version of a Project
+       that already exists in the database. You enter the Project
+       name, the version you want to create a copy of, and the new
+       version number that the Project should be created under. The
+       create new version command functions in the same way as the
+       create new version option in the ITE (<xref linkend="projectversion"/>).
+       If the Project is not in the database in the specified
+       version, or if the new version already exists, then the action
+       will fail. We recommend using this when you are sure that
+       no-one is working on the Project.
+     </para>
+     <para>
+       <para role="tip">If you are using the embedded database, see the section
+       on using the embedded database with the Test Executor for
+       information on which username and password to use
+       (<xref linkend="using-test-exec-with-embedded-db"/>).</para>
+       
+       Once you have entered all the necessary parameters, press
+       <emphasis role="input">»ENTER«</emphasis>.
+     </para>
+   </section>
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="dbtool-working-with-versions">
+	<title>Entering version numbers in the DB Tool</title>
+	<para>
+	 You can enter version numbers such as <emphasis>"1.0.0_release"</emphasis> or 
+           <emphasis>"1.0"</emphasis>. 
+       </para> 
+       <para>
+       	If your version only uses a qualifier, you can enter it as e.g.
+       	<emphasis>"release"</emphasis>. If you are using 
+           a qualifier-only version that begins with a number, then you must use a preceding 
+           underscore (e.g. <emphasis>"_3"</emphasis>).
+	</para>
+</section>  
+ </section>

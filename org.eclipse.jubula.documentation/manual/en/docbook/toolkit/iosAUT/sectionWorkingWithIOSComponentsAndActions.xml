@@ -1,0 +1,529 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="working-with-ios-components-and-actions" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Working with iOS components and actions</title>
+  <para>
+    When testing iOS AUTs, many of the components will be similar to
+    those found in desktop AUTs. You can use the actions from the
+    <emphasis>unbound_modules_concrete</emphasis> library to perform
+    actions such as:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Click (tap) items.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Check existence and various properties of components.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Synchronize based on component availability.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Replace text on text components.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    The following sections deal with how to use actions to address
+    specific components in iOS.
+  </para>
+  <section id="working-with-ios-switches">
+    <title>Working with iOS switches</title>
+    <para>
+      Switches in iOS AUTs (<xref linkend="Switch"/>) can be addressed using
+      the actions:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Click (to tap the switch). Depending on the AUT, this will
+          toggle the state of the switch.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Other actions on the <emphasis>Graphics
+          Component</emphasis> such as check existence, wait for
+          component etc.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Swipe. By entering a direction, you can specify whether to
+          activate or deactivate the switch.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Check selection (Button Component) - use this to check
+          whether the switch is activated or not.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <figure id="Switch">
+      <title>Switch</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/Switch.png"/>
+        </imageobject>
+        <textobject><phrase>Switch</phrase></textobject>
+      </mediaobject>
+    </figure>
+  </section>
+  <section id="working-with-ios-table-views-lists">
+    <title>Working with iOS Table Views (lists)</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          <emphasis>Table Views</emphasis> in iOS are used to
+          organize information on the screen. They may just consist
+          of items (and therefore look like a simple list
+          (<xref linkend="TableViewSimple"/>)), or they may contain various
+          sections – each section can contain other components
+          (<xref linkend="TableViewGrouped"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Both types of <emphasis>Table View</emphasis> are testable
+          using the actions available on the
+          <emphasis>List</emphasis> component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can, e.g. select items from the list, check their
+          existence etc.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the <emphasis>Table Views</emphasis> that contain other
+          components, you can also address the individual components
+          (labels, buttons etc.) in the list using the actions such
+          as check existence, check text, click etc.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When writing a test on these components, it is important
+          to decide which component you want to test
+          (<xref linkend="addressing-correct-component-ios"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you need to scroll to a certain section of a list that
+          is currently not visible, you can use the
+          <emphasis>select</emphasis> action on the
+          <emphasis>list</emphasis> component to make the correct
+          portion of the screen visible. You can also use 0 clicks
+          to simply hover over the item instead of tapping it.
+          <para role="tip">Bear in mind that many apps remember where you were
+          on a screen. You may need to add explicit scrolling (via
+          selection) to your tests in order to ensure that the
+          components you require are on screen.</para>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <figure id="TableViewSimple">
+      <title>Simple Table View (list component)</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/TableViewSimple.png"/>
+        </imageobject>
+        <textobject><phrase>Simple Table View (list
+        component)</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <figure id="TableViewGrouped">
+      <title>Grouped Table View (list component)</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/TableViewGrouped.png"/>
+        </imageobject>
+        <textobject><phrase>Grouped Table View (list
+        component)</phrase></textobject>
+      </mediaobject>
+    </figure>
+  </section>
+  <section id="working-with-ios-tabbed-controls">
+    <title>Working with iOS tabbed controls</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Many components in iOS AUTs can be addressed as
+          <emphasis>tabbed controls</emphasis> – in a similar way to
+          tabbed panes in a Swing AUT for example.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The components <emphasis>tabbed bar</emphasis> and
+          <emphasis>segmented control</emphasis>
+          (<xref linkend="SegmentedControls"/>) are examples of two
+          components that can be addressed with the actions on the
+          <emphasis>tabbed control component</emphasis>. You can
+          select a tab based on its content or its index, check the
+          selection of a specific tab, check the existence etc.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In many cases, you will also be able to map the individual
+          tabs as e.g. buttons or labels. As described earlier
+          (<xref linkend="addressing-correct-component-ios"/>), we highly recommend
+          ensuring that you are addressing the most relevant and
+          high-level control for your test.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <figure id="SegmentedControls">
+      <title>Segmented controls (tabbed controls)</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/SegmentedControls.png"/>
+        </imageobject>
+        <textobject><phrase>Segmented controls (tabbed
+        controls)</phrase></textobject>
+      </mediaobject>
+    </figure>
+  </section>
+  <section id="working-with-ios-pickers">
+    <title>Working with iOS pickers</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The iOS components <emphasis>pickers</emphasis> can be
+          addressed using actions for combo components.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can select items from pickers that have only one
+          column (<xref linkend="SinglePicker"/>) using the actions for
+          <emphasis>combo component</emphasis> in the concrete
+          toolkit. You can also check the existence of items in the
+          picker, check their selection etc.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To work with pickers that have multiple columns, you
+          should use the actions in the iOS toolkit to select from
+          the picker based on the column value. In this way, you can
+          specify which column the selection should take place in.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <figure id="SinglePicker">
+      <title>Single picker (combo component)</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/SinglePicker.png"/>
+        </imageobject>
+        <textobject><phrase>Single picker (combo
+        component)</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <figure>
+      <title>Picker with multiple columns</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/MultiPicker.png"/>
+        </imageobject>
+        <textobject><phrase>Picker with multiple
+        columns</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <para>
+      <emphasis role="strong">Hints for working with pickers</emphasis>
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Check text on multi-column pickers:
+        </term>
+        <listitem>
+          <para>
+            If you use the action <emphasis>check text</emphasis> on
+            pickers with multiple columns, the result will be a
+            concatenated value of all columns.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Grey items not addressable:
+        </term>
+        <listitem>
+          <para>
+            Items that are grey in the picker cannot be checked or
+            selected.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Index-based selection on infinite pickers:
+        </term>
+        <listitem>
+          <para>
+            Some pickers do not have a finite amount of items – they
+            scroll infinitely. We strongly advise against usin
+            index-based selection or checking on such pickers.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </section>
+  <section id="working-with-gestures">
+    <title>Working with gestures</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          In the iOS toolkit, you will find swipe actions for many
+          components. You can use these actions to perform swipes in
+          a specific direction.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="ToolkitiOSKeyboard">
+    <title>Working with the keyboard</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          To use actions such as <emphasis>replace text</emphasis>,
+          you do not need to worry about using the keyboard – the
+          test execution component does this for you.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          However, if you would like to press specific buttons on
+          the keyboard such as <emphasis role="input">»DONE«</emphasis>,
+          <emphasis role="input">»DELETE«</emphasis> and so on, then you
+          should use the action in the
+          <emphasis>unbound_modules_ios</emphasis> called
+          <emphasis>Tap View with Accessibility Label</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This allows you to press any item on the screen (on the
+          keyboard or elsewhere) based on its accessibility label:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              The accessibility label is an internal attribute for a
+              component that is designed to be used by screen
+              readers etc.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              You can find out the accessibility label for an item
+              by using the Accessibility Inspector on e.g. an iOS
+              simulator. You can activate the Inspector via the
+              General Settings.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Once you know the label, you can enter it as a
+              parameter (exactly as it is written).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Bear in mind that accessibility labels are
+              language-dependent (i.e. you will need to translate
+              the test data), and also sometimes
+              orientation-dependent. It is also not necessarily the
+              case that the accessibility label is the same as the
+              text on the item that is visible in the AUT.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <para role="tip">Many iOS devices have a setting activated to start each
+      text with a capital letter. We recommend deactivating this
+      setting for your tests, as attempts to enter lowercase text at
+      the beginning of a textfield will otherwise fail.</para>
+    </para>
+  </section>
+  <section id="working-with-unmappable-unsupported-components">
+    <title>Working with unmappable (unsupported) components</title>
+    <para>
+      If there is a component that is unsupported, then you may be
+      able to tap it using the action in the
+      <emphasis>unbound_modules_ios</emphasis> called <emphasis>Tap
+      View with Accessibility Label</emphasis>. For more information
+      on this action, see the section on working with the keyboard
+      (<xref linkend="ToolkitiOSKeyboard"/>).
+    </para>
+  </section>
+  <section id="other-important-information-for-testing-ios-auts">
+    <title>Other important information for testing iOS AUTs</title>
+    <para>
+      <emphasis role="strong">Non-supported components</emphasis><?linebreak?>
+      The following components are not a part of the iOS toolkit, and their actions from the concrete toolkit cannot be used in iOS tests:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Menus
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Tables
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Trees
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Context menus
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Non-supported actions</emphasis><?linebreak?>
+      The following actions are currently not supported:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Restart:
+        </term>
+        <listitem>
+          <para>
+            The restart action restarts the internal connection to
+            the AUT, not the AUT itself. This means that you should
+            consider how to reset your AUT to a known starting point
+            as part of your Event Handlers (to ensure that the test
+            can continue despite an error). How to do this will be
+            dependent on your AUT.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Check text on secure textfields:
+        </term>
+        <listitem>
+          <para>
+            The text on a secure textfield cannot be accessed, e.g.
+            to perform check text.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Check / store property
+        </term>
+        <listitem>
+          <para>
+             actions are not supported in the current version.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Copy to clipboard
+        </term>
+        <listitem>
+          <para>
+             is currently not supported.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      <emphasis role="strong">Other information</emphasis>
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          No detailed information on test failure:
+        </term>
+        <listitem>
+          <para>
+            When a Test Step fails, there is currently no detailed
+            information about the reason for the error.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Support characters for text input:
+        </term>
+        <listitem>
+          <para>
+            Any keys on the keyboard that are only accessible by a
+            long press, and not by switching the whole keyboard
+            (e.g. characters with umlauts) cannot currently be
+            entered.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Long taps and continuous gestures:
+        </term>
+        <listitem>
+          <para>
+            cannot currently be carried out.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Disabled components
+        </term>
+        <listitem>
+          <para>
+             cannot be mapped directly using e.g. tap. Instead, to
+            collect the technical name for a disabled component, you
+            should use the <emphasis>long tap</emphasis> gesture to
+            collect all of the visible components. This includes the
+            disabled components. 
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+      <term>
+      Check badge value
+      </term>
+      <listitem>
+      <para>
+      There is an action in the iOS unbound modules to let you check the text on badges within a tab bar.
+      </para>
+      </listitem>
+      </varlistentry>
+    </variablelist>
+  </section>
+</section>

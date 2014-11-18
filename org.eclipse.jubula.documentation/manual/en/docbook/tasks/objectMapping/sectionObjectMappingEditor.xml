@@ -1,0 +1,441 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="object-mapping-editor" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Working with the Object Mapping Editor</title>
+  <section id="opening-the-object-mapping-editor">
+    <title>Opening the Object Mapping Editor</title>
+    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the Object Mapping Editor by selecting the Test Suite whose components you want to map and selecting:
+          
+          <para>
+            <emphasis role="menuPath">Open with</emphasis>--&gt;<emphasis role="menuPath">Object Mapping Editor</emphasis>. 
+          </para>
+          
+          <para role="tip">The Object Mapping Editor also opens automatically when you start the Object Mapping Mode via the toolbar. </para>
+          The Object Mapping Editor for the AUT used by this Test Suite will appear (see (<xref linkend="objectmappingeditor"/>)).
+        </para>
+        <para>
+          <para role="tip">You can see the name of the AUT you are mapping in
+          the tab of the editor</para>.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="the-different-views-in-the-object-mapping-editor">
+    <title>The different views in the Object Mapping Editor</title>
+    <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+    <para>
+      You have two options to view the Object Mapping Editor - a
+      split view and a tree view. Each view displays the same
+      information, but in a different format. Depending on the view
+      you choose, you can carry out different actions.
+    </para>
+    <para>
+      <emphasis role="strong">The split view</emphasis><?linebreak?>
+      This view is automatically shown when the Object Mapping Editor is opened. It contains three panels for the three main categories. In the split view, you can:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Assign (map) technical names to component names
+          (<xref linkend="mapping-assigning-collected-technical-names-to-component-names"/>) by dragging component names onto
+          technical names (either assigned or unassigned).
+          <para role="tip">The split view is especially useful if you have
+          many mappings – it lets you find component names and
+          technical names separately to map them, without having to
+          scroll through the whole tree.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Create new component names for your tests
+          (<xref linkend="creating-new-component-names"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Rename component names (<xref linkend="renaming-component-names"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Create categories and map into them (<xref linkend="working-with-categories-in-the-object-mapping-editor"/>).
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">The tree view</emphasis><?linebreak?>
+      In the tree view, you can:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Assign (map) technical names to component names
+          (<xref linkend="mapping-assigning-collected-technical-names-to-component-names"/>) by dragging component names onto
+          technical names (either assigned or unassigned).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Create new component names for your tests
+          (<xref linkend="creating-new-component-names"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Rename component names (<xref linkend="renaming-component-names"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Create categories and map into them (<xref linkend="working-with-categories-in-the-object-mapping-editor"/>).
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="working-with-categories-in-the-object-mapping-editor">
+    <title>Working with categories in the Object Mapping Editor</title>
+    <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+    <anchor role="helpid" id="dialogOMCategoryNewContextId">New Object Mapping Category Dialog</anchor>
+    <para>
+      <emphasis role="strong">Default categories in the Object Mapping Editor</emphasis><?linebreak?>
+      The Object Mapping Editor tree view displays the following categories by default:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Unassigned component names:
+        </term>
+        <listitem>
+          <para>
+            these are the names you have used in your Test Cases or
+            component names that you have created
+            (<xref linkend="creating-new-component-names"/>). They are unassigned
+            because they have not yet been mapped to a technical
+            name.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Unassigned technical names:
+        </term>
+        <listitem>
+          <para>
+            these are the names that you have collected from the AUT
+            (<xref linkend="collecting-components-technical-names-from-the-aut"/>), but not yet assigned to
+            component names.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Assigned names:
+        </term>
+        <listitem>
+          <para>
+            there are pairs of names that have been mapped to each
+            other. Each technical name can be mapped to one or more
+            component names. This mapping tells the ITE which actual
+            components you are referring to in your Test Cases.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      <emphasis role="strong">Creating categories in the Object Mapping Editor</emphasis><?linebreak?>
+      We recommend creating categories in the Object Mapping Editor to make your mapping work easier.
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can create categories and subcategories in the Object
+          Mapping Editor (tree view) by:
+        </para>
+        <orderedlist>
+          <listitem>
+            <para>
+              Selecting the category you want your new category to
+              appear in (e.g. in ”<emphasis>assigned
+              names</emphasis>”).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Selecting ”<emphasis>create category</emphasis>” from
+              the context-sensitive menu.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Entering a name for the category <para role="warning">You can’t have
+              two categories with the same name at the same level.</para>
+            </para>
+          </listitem>
+        </orderedlist>
+      </listitem>
+      <listitem>
+        <para>
+          When you are mapping, you can choose which category to map
+          into. See the next <xref linkend="working-with-categories-in-the-object-mapping-editor"/> for details.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <para role="tip">It is a good idea to create categories in the Object
+      Mapping Editor.</para>
+    </para>
+    <para>
+      <emphasis role="strong">Mapping into categories in the Object Mapping Editor</emphasis><?linebreak?>
+      Once you have created categories in the Object Mapping Editor, you can choose to map technical names collected from the AUT directly into a category. This can help if you have created a category for each dialog/window, and you want to map all of the components from it into one category.
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          When you are in the Object Mapping Mode, right-click onthe category you want to map into and select:
+          
+          <para>
+            <emphasis role="menuPath">Map components into this category</emphasis>
+          </para>
+          
+          to make the technical names you collect from the AUT appear in this subcategory. <para role="tip">If you have already mapped the technical name, the name will be shown in the Object Mapping Editor, but not moved into the category.</para> <para role="tip">The status bar displays which category you are mapping into.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="the-configuration-view-in-the-object-mapping-editor">
+    <title>The configuration view in the Object Mapping Editor</title>
+    <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+    <para>
+      In the configuration view in the Object Mapping Editor you can
+      alter the object recognition for the test execution.
+    </para>
+    <para>
+      <emphasis role="strong">Understanding object recognition</emphasis><?linebreak?>
+      Object recognition during test execution is based on a calculation which takes various factors into account. For some applications, some factors may be more important than others, and you can change their weighting accordingly.
+    </para>
+    <para>
+      The object location is a <emphasis>heuristic</emphasis>
+      process. During test execution, a calculation is made for each
+      component in the AUT to see how similar it is to the
+      originally mapped component. This calculation is based
+      primarily on the component type – if you mapped a combo box,
+      only combo boxes will considered. For each component of the
+      same type, the similarity to the original is calculated using
+      weighted properties. The factors used in the calculation are:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Name:
+        </term>
+        <listitem>
+          <para>
+            The name of the object within the AUT code, as given by
+            the developer (if a name was given). 
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Path:
+        </term>
+        <listitem>
+          <para>
+            The route through the AUT hierarchy to get to this
+            component.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Context:
+        </term>
+        <listitem>
+          <para>
+            The components in the vicinity of this component.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Threshold:
+        </term>
+        <listitem>
+          <para>
+            This determines what percentage value a component in the
+            AUT must have in order to be considered as the
+            originally mapped component. Components with a value
+            under the threshold are not considered. The component
+            with the highest value above the threshold is chosen
+            during execution.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      <emphasis role="strong">Options for object
+      recognition</emphasis> You can change the profile used during
+      test execution using the combo box:
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          Standard:
+        </term>
+        <listitem>
+          <para>
+            This is the default profile. It has a high value for
+            name weight and lower values for context and path. The
+            threshold is 85%.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Strict:
+        </term>
+        <listitem>
+          <para>
+            In this profile, the values for name, path and context
+            are the same as in the standard profile. The threshold
+            is at 100%. This means that a component must exactly
+            correspond to the originally mapped component.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Given names:
+        </term>
+        <listitem>
+          <para>
+            In this profile, only the component name is considered.
+            A component will only be selected if it has the same
+            name as the originally mapped component. This profile
+            can be used when you are sure that all of the components
+            in the AUT have unique names.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Custom:
+        </term>
+        <listitem>
+          <para>
+            This profile lets you move the sliders yourself. You can
+            lock sliders to stop them being affected by other
+            sliders.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <figure>
+      <title>Object Mapping Configuration</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/objectmappingpref.png"/>
+        </imageobject>
+        <textobject><phrase>Object Mapping
+        Configuration</phrase></textobject>
+      </mediaobject>
+    </figure>
+    <para>
+      <para role="warning">Take care when manually customizing the object mapping
+      settings. You may have test execution problems if you have set
+      the values too strictly, or not strictly enough.</para>
+    </para>
+  </section>
+  <section id="refreshing-the-object-mapping-editor">
+    <title>Refreshing the Object Mapping Editor</title>
+    <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select <emphasis>refresh</emphasis> from the
+          context-sensitive menu in the Object Mapping Editor or
+          press <emphasis role="input">»F5«</emphasis> to refresh the
+          Object Mapping Editor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Confirm that you want to want to refresh the editor.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      When you refresh the Object Mapping Editor, any new component
+      names which have been added to Test Suites for this AUT are
+      collected.
+    </para>
+  </section>
+  <section id="finding-components-in-the-aut-via-the-object-mapping-editor-highlight-in-aut">
+    <title>Finding components in the AUT via the Object Mapping Editor: highlight in AUT</title>
+    <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+    <para>
+      In the Object Mapping Editor, you can search for:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          All the places where a component name has been used in the
+          test (<xref linkend="searching-for-places-where-a-component-name-has-been-used"/>)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The specific place where a particular component name comes
+          from in the test (<xref linkend="searching-for-places-where-a-component-name-has-been-used"/>)
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The technical component in the AUT (see below).
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Highlighting a component in the AUT</emphasis>
+    </para>
+    <para>
+      To search for components in the AUT, the Object Mapping Editor
+      must be open (<xref linkend="opening-the-object-mapping-editor"/>),
+      and the AUT must be running (<xref linkend="starting-the-aut"/>) in the
+      Object Mapping Mode (<xref linkend="collecting-components-technical-names-from-the-aut"/>).
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          In the Object Mapping Editor, right-click on the technical name whose component you want to find in the AUT and select:
+          
+          <para>
+            <emphasis role="menuPath">Highlight in AUT</emphasis>
+          </para>
+          
+          from the context-sensitive menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The component whose technical name you selected will be
+          highlighted with a green border in the AUT. <para role="tip">You can
+          only highlight components that are currently visible in
+          the AUT.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

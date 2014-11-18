@@ -1,0 +1,53 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="the-execution-perspective" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>The Execution Perspective</title>
+  <para>
+    In the Execution Perspective, you can see the following
+    (<xref linkend="executionclient"/>):
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The Test Suite Browser
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Test Result View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Properties View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Image View
+      </para>
+    </listitem>
+  </itemizedlist>
+  <figure id="executionclient">
+    <title>Execution Perspective</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/executionclient.png"/>
+      </imageobject>
+      <textobject><phrase>Execution
+      Perspective</phrase></textobject>
+    </mediaobject>
+  </figure>
+  <para>
+    You cannot edit in the Execution Perspective, but you can see
+    the results of tests that have been started interactively..
+  </para>
+</section>

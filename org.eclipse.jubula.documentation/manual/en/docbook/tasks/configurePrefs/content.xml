@@ -1,0 +1,36 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="configure-prefs" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="configurePrefs"?>
+  <title>Preferences</title>
+  <para>
+    Open the preferences dialog (<xref linkend="gdprefs"/>) by selecting:
+    
+    <para>
+      <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Preferences</emphasis>.
+    </para>
+  </para>
+  
+  <xi:include href="sectionTestPreferences.xml"/>
+  <xi:include href="sectionAUTAgentPreferences.xml"/>
+  <xi:include href="sectionEmbeddedAUTAgentPreferences.xml"/>
+  <xi:include href="sectionDatabasePreferences.xml"/>
+  <xi:include href="sectionEditorPreferences.xml"/>
+  <xi:include href="sectionObjectMappingPreferences.xml"/>
+  <xi:include href="sectionObservationModePreferences.xml"/>
+  <xi:include href="sectionTestResultPreferences.xml"/>
+  <xi:include href="sectionImportingAndExportingDBPreferences.xml"/>
+  <xi:include href="sectionLabelDecorationPreferences.xml"/>
+  <xi:include href="sectionWorkspacePreferences.xml"/>
+  <xi:include href="sectionGeneralKeysPreferences.xml"/>
+  <xi:include href="sectionHelpPreferences.xml"/>
+  
+</section>

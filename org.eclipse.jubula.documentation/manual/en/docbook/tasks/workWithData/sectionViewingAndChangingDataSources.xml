@@ -1,0 +1,62 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="viewing-and-changing-data-sources-for-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Viewing and changing data sources for Test Cases</title>
+  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <para>
+    The Properties View shows the currently used <emphasis>data
+    source</emphasis> for each Test Case. The following data sources
+    are available:
+  </para>
+  <para>
+    <emphasis role="strong">Referenced Test Case</emphasis><?linebreak?>
+    The data have come directly from the original specification of this Test Case. If the data in the referenced Test Case change, then the changes will also take effect here.
+  </para>
+  <para>
+    <emphasis role="strong">Local Test Case</emphasis><?linebreak?>
+    The data being used were entered for this Test Case. Any changes made in the original specifiation of the Test Case will not affect the data here.
+  </para>
+  <para>
+    You can change from <emphasis>local</emphasis> to
+    <emphasis>referenced</emphasis> test data using the combo box to
+    reset the default value from the referenced Test Case.
+  </para>
+  <para>
+    <emphasis role="strong">Central test data set</emphasis><?linebreak?>
+    The data have come from a central test data set (<xref linkend="using-central-data-sets"/>).
+  </para>
+  <para>
+    <emphasis role="strong">Excel data file</emphasis><?linebreak?>
+    An Excel file has been entered as the data source (<xref linkend="using-an-excel-file-as-an-external-data-source"/>)
+  </para>
+  <section id="changing-the-data-source-for-a-test-case">
+    <title>Changing the data source for a Test Case</title>
+    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The data source changes automatically to reflect the new
+          data source when you enter an Excel file, a Central Test
+          Data Set or when you enter new data in the Test Case.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To change the data set back to the original specification
+          data (<emphasis>referenced Test Case</emphasis>), first
+          remove all Excel files or Central Test Data Sets, then
+          change the data source in the combo box back to
+          <emphasis>referenced Test Case</emphasis>.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</section>

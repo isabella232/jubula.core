@@ -1,0 +1,115 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="using-the-data-sets-view" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Using the Data Sets View to enter data loops and to translate data</title>
+  <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
+  <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <para>
+    The Data Sets View lets you do three things:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Enter multiple data sets for a parameter from a Test Case
+        (<xref linkend="adding-multiple-data-sets"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Enter data sets for a central test data set
+        (<xref linkend="entering-data-for-central-test-data-sets"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Translate your parameter values into other languages
+        (<xref linkend="translating-test-data"/>).
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <para role="tip">You can also create central test data sets for your
+    Project to reuse in Test Cases (<xref linkend="using-central-data-sets"/>).</para>
+  </para>
+  <section id="adding-multiple-data-sets">
+    <title>Data Sets View: adding multiple data sets to a Test
+    Case</title>
+    <para>
+      If your Test Case has parameters which have been referenced
+      from the Test Cases and Test Steps it contains, you can enter
+      <emphasis>data sets</emphasis> in the Data Sets View.
+    </para>
+    <para>
+      This means that the Test Case will loop and be executed for
+      each set of data you enter.
+    </para>
+    <para>
+      To enter data sets for a Test Case:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Open the Test Case Editor or Test Suite Editor by
+          double-clicking on the Test Case or Test Suite you want to
+          edit in the browser.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the editor, single-click the Test Case you want to add
+          data to.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the Data Sets View, make sure the language in the combo
+          box on the right is the right language for your data.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select ”<emphasis>Add</emphasis>” to add a row.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter the values for the parameters in the row. <para role="tip">You
+          can also add references in the Data Sets View if you want
+          to specify the concrete values for your data sets when you
+          reuse this Test Case. </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Use the buttons in the Data Sets View to add more rows,
+          delete rows (if no row is selected, the last row is
+          deleted) and insert rows above the currently selected row.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="translating-test-data">
+    <title>Data Sets View: translating test data</title>
+    <para>
+      You can add data for other languages supported by your AUT by
+      changing the language in the combo box in the Data Sets View.
+    </para>
+    <para>
+      <para role="tip">You can add supported languages in the Project
+      properties dialog (<xref linkend="projectproperties"/>).</para>
+    </para>
+    <para>
+      The other combo boxes are there to help you see the Data Sets
+      View in different ways. You can see all the data for one
+      parameter, for one data set or for one language.
+    </para>
+  </section>
+</section>

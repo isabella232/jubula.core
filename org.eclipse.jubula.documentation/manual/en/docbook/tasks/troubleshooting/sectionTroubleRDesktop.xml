@@ -1,0 +1,37 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="troublerdesktop" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>My Test Suite failed when using
+  <emphasis>rdesktop</emphasis></title>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Under a very specific configuration involving
+        <emphasis>rdesktop 1.5</emphasis>, tests are known to
+        frequently fail with an action error: ’Timeout received
+        before confirming the posted event’.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This occurs when <emphasis>rdesktop 1.5</emphasis> is used
+        to log into a user account used for the ITE as well as a
+        separate account for the AUT Agent.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The problem does not occur under <emphasis>rdesktop
+        1.4.1</emphasis>.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

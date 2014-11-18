@@ -1,0 +1,37 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="the-component-names-browser" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>The Component Names Browser</title>
+  <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <para>
+    The Component Names Browser (<xref linkend="compnamesbrowser"/>) is by
+    default in the lower left-hand corner of the Specification
+    Perspective, behind the Test Case Browser. In this browser, you
+    can see component names used in this Project and in other
+    Projects. You can rename, add, delete and merge component names
+    and can also find where you have used component names in your
+    test.
+  </para>
+  <para>
+    <para role="tip">You can filter in the Component Names Browser using the
+    field at the top. Use star <emphasis role="input">*</emphasis> as a wild card.</para>
+  </para>
+  <figure id="compnamesbrowser">
+    <title>Component Name Browser</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/compnamesbrowser.png"/>
+      </imageobject>
+      <textobject><phrase>Component Name
+      Browser</phrase></textobject>
+    </mediaobject>
+  </figure>
+</section>

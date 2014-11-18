@@ -1,0 +1,34 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="the-search-result-view" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>The search result view</title>
+  <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
+  <para>
+    The search result view (<xref linkend="showresultview"/>)
+    is at the bottom of the Functional Test Specification Perspective, under the
+    editor area, and just behind the Problem View by default. If you perform
+    searches, the results are shown here. For most searches, if you
+    double-click on an item in the search result view, the
+    corresponding item is highlighted in the Test Case Browser or
+    Test Suite Browser. You can see a history of previous searches,
+    and re-run them directly from within the view. You can also
+    refresh the current search.
+  </para>
+  <figure id="showresultview">
+    <title>Search Result View</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/showresultview.png"/>
+      </imageobject>
+      <textobject><phrase>Search Result View</phrase></textobject>
+    </mediaobject>
+  </figure>
+</section>

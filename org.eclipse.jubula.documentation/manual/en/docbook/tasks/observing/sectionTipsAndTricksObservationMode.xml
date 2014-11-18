@@ -1,0 +1,79 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="tips-and-tricks-observation-mode" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Tips and tricks for using the observation mode</title>
+  <para>
+    We have designed the observation mode to help you get started
+    with your tests and to help you understand what sort of user
+    actions correspond to actions in the library.
+  </para>
+  <para>
+    The ITE is first and foremost a keyword-driven tool, and the
+    library of Test Cases installed means that you have various
+    benefits over simple recording:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can create tests without needing the AUT - you don’t
+        have to wait for each version of the AUT to begin test
+        specification.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Your tests aren’t so dependent on the actual implementation
+        of the AUT, so they can be a lot more general in terms of
+        data, component implementations etc. and therefore a lot
+        more robust and maintainable.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Using keywords encourages you to think about your test
+        structure a lot more, which also helps maintenance later.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    Nevertheless, we understand that you may want to observe some
+    Test Cases. Here are some tips that might help you:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Think about your test structure at the beginning: what
+        modules will you want to reuse? Start by observing small
+        Test Cases, e.g. a Test Case to login, a Test Case to open a
+        dialog etc.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Check while you are observing that the actions you carry out
+        are observed in the way you meant.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Supplement your observed Test Cases with other Test Cases
+        from the library of Test Cases installed.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Refactor as you go! If you have recorded a Test Case with
+        specific data, but you will want to use it for any type of
+        data, then add a reference for the data.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

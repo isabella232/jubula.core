@@ -1,0 +1,27 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="the-reused-projects" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>The reused Projects</title>
+  <para>
+    The Project <emphasis>unbound_modules_concrete</emphasis> is
+    reused in this Project. This Project is a library of actions
+    that are relevant cross-toolkit.
+  </para>
+  <para>
+    The Project <emphasis>bound_modules_samples</emphasis> is also
+    reused. This contains Test Cases which are reused in the samples
+    tests.
+  </para>
+  <para>
+    <para role="warning">We do not recommend making any changes in these Projects.
+    </para>
+  </para>
+</section>

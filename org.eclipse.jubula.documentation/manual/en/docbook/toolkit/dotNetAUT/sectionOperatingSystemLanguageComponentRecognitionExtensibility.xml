@@ -1,0 +1,23 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="operating-system-language-component-recognition-and-extensibility" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Operating system language, component recognition and
+  extensibility</title>
+  <para>
+    The UI automation framework does not provide
+    language-independent component types for component recognition.
+    As this would have otherwise lead to language-dependent mapping,
+    we have implemented an internal map from the component type ID
+    to our own designation of the component type. This makes object
+    mapping language-independent, but means that the Windows toolkit
+    cannot currently be extended to add support for new components.
+  </para>
+</section>

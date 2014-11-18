@@ -1,0 +1,75 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="test-result-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Test result preferences</title>
+  <anchor role="helpid" id="prefPageTestResultContextId">Test Result Preferences</anchor>
+  <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <para>
+    You can open the test result preference page by selecting
+    <emphasis>Test - Test Results</emphasis> from the preference
+    dialog.
+  </para>
+  <figure>
+    <title>Test Result Preference Dialog</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/testresultprefs.png"/>
+      </imageobject>
+      <textobject><phrase>Test Result Preference
+      Dialog</phrase></textobject>
+    </mediaobject>
+  </figure>
+  <orderedlist>
+    <listitem>
+      <para>
+        Choose whether you want the Test Result View to open when
+        testing begins.
+      </para>
+      <para>
+        The Test Result View follows the test execution and shows
+        which Test Steps were successful and which failed.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Choose whether you want to track the test execution progress
+        in the Test Result View. When this option is activated, the
+        Test Result View scrolls to follow the test progress.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Choose whether you want to automatically create a screenshot
+        when a test encounters an error. Screenshots are
+        automatically saved in the database and can be viewed using
+        the Image View when you select the failed Test Step in the
+        Test Result View. <para role="warning">Screenshots are only taken of the
+        primary monitor. Multiple monitors are not supported for
+        screenshots.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Choose whether you want to create HTML and XML reports for
+        each execution. When you activate this choice, decide
+        whether you want full reports or just the errors to be
+        shown. Enter a directory for the reports.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Enter the amount of days that test result summaries should
+        be displayed for. This gives you a better overview of the
+        most recent results in the Test Result Summary View.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

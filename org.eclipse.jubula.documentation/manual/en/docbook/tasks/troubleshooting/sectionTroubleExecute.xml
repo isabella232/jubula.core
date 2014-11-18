@@ -1,0 +1,52 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="troubleexecute" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                           xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>I can’t execute my Test Suite</title>
+  <para>
+    If you cannot start a Test Suite, check that:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The Test Suite has complete data for the current language.
+        <para role="warning">No parameter values can be empty in a Test Suite. If
+        you no longer need the parameter, delete it.</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The object mapping is complete (<xref linkend="object-mapping-1"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Object Mapping Mode and the observation mode have been
+        switched off.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You have connected to the AUT Agent
+        (<xref linkend="connect-aut-agent"/>).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You have started the AUT (<xref linkend="starting-the-aut"/>).
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <para role="tip">You can use the Test Suite Browser to click through the
+    Test Suite to see the exact places where data and object maps
+    are missing.</para>
+  </para>
+</section>

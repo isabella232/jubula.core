@@ -1,0 +1,124 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="deleting-from-the-object-mapping-editor" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Deleting from the Object Mapping Editor</title>
+  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <orderedlist>
+    <listitem>
+      <para>
+        You can delete items from the Object Mapping Editor using
+        the ”<emphasis>delete</emphasis>” option from the
+        context-sensitive menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can also select the item you want to delete and press
+        <emphasis role="input">»DELETE«</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you delete a component name that is still used in a Test
+        Case for this Test Suite it will reappear when you select
+        ”<emphasis>refresh</emphasis>” from the context-sensitive
+        menu.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <para role="tip">If you want to remove all unused mappings from the Object
+    Mapping Editor, then use the <emphasis>Cleanup</emphasis> option
+    (<xref linkend="removing-unused-component-names-from-the-object-mapping-editor"/>).</para>
+  </para>
+  <section id="removing-unused-component-names-from-the-object-mapping-editor">
+    <title>Removing unused component names from the Object Mapping Editor</title>
+    <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+    <para>
+      Over time, your Project will change, and these changes may
+      mean that component names you had previously used in Test
+      Suites, then mapped to technical names via the Object Mapping,
+      are no longer used. This results in object mappings in which
+      the component name is no longer used in the test for this AUT.
+      Such component names can be recognized by the fact that
+      <emphasis>Show corresponding specification</emphasis> in the
+      Object Mapping Editor (<xref linkend="searching-for-places-where-a-component-name-has-been-used"/>)
+      returns no search results in the search result view (i.e. the
+      component name is no longer used in the test), or if the
+      search result view shows only Test Cases that are used in
+      other AUTs. If you perform <emphasis>Show where
+      used</emphasis> in the Component Names Browser
+      (<xref linkend="searching-for-places-where-a-component-name-has-been-used"/>) and the
+      only search result is a mapping, then this is also a component
+      name that is no longer used in the test.
+    </para>
+    <para>
+      You can delete any component names from the Object Mapping
+      Editor that are unused in the Project for this AUT:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          In the Object Mapping Editor, select:
+          
+          <para>
+            <emphasis role="menuPath">Cleanup</emphasis>--&gt;<emphasis role="menuPath">unused component names</emphasis>
+          </para>
+
+          from the context-sensitive menu.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cleanup operation starts, and a progress dialog is
+          shown while unused names are being searched for. Depending
+          on the size of your Project, this search may take some
+          time.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the Object Mapping Editor contains component names that
+          are not used in any of the Test Suites for this AUT
+          (either component names that are already mapped, or are
+          still unassigned), then they are shown in a
+          <emphasis>Delete unused component names</emphasis> dialog.
+          <para role="tip">If no component names are found, then you will see
+          a message informing you of this.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the dialog to delete unused component names, you can
+          see which component names have been identified for
+          deletion. You can deselect individual component names to
+          opt not to delete them. Once you have specified which
+          component names should be deleted, click
+          ”<emphasis>OK</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The component names you specify will be deleted from the
+          Object Mapping Editor. Save the editor to save the
+          changes. <para role="warning">Removing component names from the Object
+          Mapping Editor does not mean that the component names are
+          deleted from the Project. However, if the deletion from
+          the object map means that the component name is now used
+          nowhere in the Project, then it will appear under the
+          <emphasis>Unused Component Names</emphasis> category in
+          the Component Names Browser and can be deleted from the
+          whole Project (<xref linkend="deleting-unused-component-names"/>).</para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

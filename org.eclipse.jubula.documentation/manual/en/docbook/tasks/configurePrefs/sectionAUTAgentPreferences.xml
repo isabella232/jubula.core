@@ -1,0 +1,55 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="aut-agent-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>AUT Agent preferences</title>
+  <anchor role="helpid" id="prefPageServerContextId">AUT Agent Preferences</anchor>
+  <anchor role="helpid" id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <para>
+    You can find the AUT Agent preference page under:
+    
+    <para>
+      <emphasis>Test-AUT Agent</emphasis>
+    </para>
+    
+    in the preferences dialog.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        In the AUT Agent preference page, you can add, edit and
+        delete AUT Agents and port numbers.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The hostnames and port numbers you enter here are displayed
+        in the drop-down list for the ”<emphasis>Connect to AUT
+        Agent</emphasis>” button on the toolbar. You will be able to
+        connect to these hostnames on these port numbers when you
+        have started an AUT Agent on them
+        (<xref linkend="start-aut-agent"/>). <para role="tip">The AUT Agent preference
+        page can also be accessed from the AUT configuration dialog
+        which you can open from the Project properties.</para>
+      </para>
+    </listitem>
+  </orderedlist>
+  <figure>
+    <title>AUT Agent Configuration Dialog</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="images/serverconfig.png"/>
+      </imageobject>
+      <textobject><phrase>AUT Agent Configuration
+      Dialog</phrase></textobject>
+    </mediaobject>
+  </figure>
+</section>

@@ -1,0 +1,227 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="the-properties-view" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>The Properties View</title>
+  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <para>
+    The Properties View is in the upper right-hand corner of each
+    perspective. The Properties View shows details about the
+    selected item in a browser or editor.
+  </para>
+  <para>
+    If you select something from a browser, you can see its details
+    in the Properties View, but you can’t edit them. You can only
+    edit details from within an editor. Read-only fields in the
+    Properties View have a lock icon
+    <mediaobject role="icon" file="images/readonly.png"/>
+    at their left-hand side.
+  </para>
+  <para>
+    <emphasis role="strong">Test Suite details</emphasis>
+  </para>
+  <para>
+    If you select a Test Suite, you will see the following:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The Test Suite name.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Any comments for the Test Suite.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The step delay for this Test Suite.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The name of the AUT this Test Suite uses.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The reentry properties for the default Event Handlers.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Test Case details</emphasis>
+  </para>
+  <para>
+    If you select a Test Case, the Properties View shows the
+    following:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The Test Case name.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Any comments for the Test Case.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The data source details for this Test Case
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Any parameters/parameter values if references have been used
+        in the Test Case.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Test Step details</emphasis>
+  </para>
+  <para>
+    If you select a Test Step, you will see the following:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The Test Step name.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Any comments for this Test Step.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Details about the component in the Test Step:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            The component type.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            The component name (given by you).
+          </para>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+    <listitem>
+      <para>
+        Details about the action in the Test Step.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Details about the parameters in the Test Step. For each
+        parameter you will see:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            The parameter name.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            The parameter type (e.g. if it is an integer, a string
+            etc).
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            The parameter value (either a concrete value or a
+            reference).
+          </para>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Test result details</emphasis>
+  </para>
+  <para>
+    If you select an item from the Test Result View, you will see
+    the following:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The result details:
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            The name of the item.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            What type of item it is.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Any comments for the item.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+    <listitem>
+      <para>
+        The test result – if it passed or failed.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For Test Steps, you can also see the component, action and
+        parameter details. If the Test Step failed, you can also see
+        the error details.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        For Event Handlers, you can see the type of Event Handler it
+        was, and what the reentry property was.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Icons in the Properties View</emphasis>
+  </para>
+  <para>
+    When the Properties View contains data (i.e. a filled-in
+    <emphasis>parameter value</emphasis> field), there are certain
+    icons to help you understand the data.
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Values which are the same as in the original specification
+        display a small gray diamond <mediaobject role="icon" file="images/originalData.png"/>
+        to the left of the field.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Values which have been overwritten at a place of reuse show
+        a small yellow diamond <mediaobject role="icon" file="images/overwrittenData.png"/>.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

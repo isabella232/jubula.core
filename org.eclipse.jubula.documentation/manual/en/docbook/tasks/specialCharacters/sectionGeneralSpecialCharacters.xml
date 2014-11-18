@@ -1,0 +1,152 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="general-special-characters" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>General special characters</title>
+  <table id="specialchars">
+    <title>Special symbols</title>
+    <tgroup cols="4">
+      <colspec align="left" />
+      <colspec align="left" />
+      <colspec align="left" />
+      <colspec align="left" />
+      <thead>
+        <row>
+          <entry>
+            Name
+          </entry>
+          <entry>
+            Symbol
+          </entry>
+          <entry>
+            Function
+          </entry>
+          <entry>
+            Masked version
+          </entry>
+        </row>
+      </thead>
+      <tbody>
+        <row>
+          <entry>
+            Open curly brackets
+          </entry>
+          <entry>
+            {
+          </entry>
+          <entry>
+            Delimits reference/variable names within a concatenated parameter value
+          </entry>
+          <entry>
+            <literal>\{</literal>
+          </entry>
+        </row>
+        <row>
+          <entry>
+            Close curly brackets
+          </entry>
+          <entry>
+            }
+          </entry>
+          <entry>
+            Delimits reference/variable names within a concatenated parameter value
+          </entry>
+          <entry>
+            <literal>\}</literal>
+          </entry>
+        </row>
+        <row>
+          <entry>
+            Single quote
+          </entry>
+          <entry>
+            '
+          </entry>
+          <entry>
+            Delimits a verbatim area in a parameter
+          </entry>
+          <entry>
+            <literal>\'</literal>
+          </entry>
+        </row>
+        <row>
+          <entry>
+            Two single quotes
+          </entry>
+          <entry>
+            ''
+          </entry>
+          <entry>
+            Denotes an empty string
+          </entry>
+          <entry>
+            <literal>\'\'</literal>
+          </entry>
+        </row>
+        <row>
+          <entry>
+            Dollar
+          </entry>
+          <entry>
+            $
+          </entry>
+          <entry>
+            Denotes a variable
+          </entry>
+          <entry>
+            <literal>\$</literal>
+          </entry>
+        </row>
+        <row>
+          <entry>
+            Equals
+          </entry>
+          <entry>
+            =
+          </entry>
+          <entry>
+            Denotes a referenced parameter
+          </entry>
+          <entry>
+            <literal>\=</literal>
+          </entry>
+        </row>
+        <row>
+          <entry>
+            Question mark
+          </entry>
+          <entry>
+            ?
+          </entry>
+          <entry>
+            Denotes a function
+          </entry>
+          <entry>
+            <literal>?</literal>
+          </entry>
+        </row>
+        <row>
+          <entry>
+            Backslash
+          </entry>
+          <entry>
+            \
+          </entry>
+          <entry>
+            The escape symbol
+          </entry>
+          <entry>
+            <literal>\\</literal>
+          </entry>
+        </row>
+      </tbody>
+    </tgroup>
+  </table>
+</section>

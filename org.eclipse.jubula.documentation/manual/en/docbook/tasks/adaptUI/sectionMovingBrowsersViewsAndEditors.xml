@@ -1,0 +1,31 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="moving-browsers-views-and-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Moving Browsers, Views and Editors</title>
+  <para>
+    You can move items in the user interface in two ways:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Drag-and-drop views or browsers. While the mouse button is
+        held, the target location is marked by a gray rectangle.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Right mouse-click on the tab area and select
+        ”<emphasis>Move</emphasis>” and then either ”<emphasis>View</emphasis>” or
+        ”<emphasis>Tab Group</emphasis>”. Single-click to drop the item.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

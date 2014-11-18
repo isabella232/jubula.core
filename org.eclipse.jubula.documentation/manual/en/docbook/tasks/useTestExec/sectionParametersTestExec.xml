@@ -1,0 +1,406 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="parameters-for-the-test-executor" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Parameters for the test executor</title>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Once you have browsed to the correct directory and entered
+        <emphasis role="input">testexec.exe</emphasis>, you can enter the parameters for the
+        test execution.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The test executor has various parameters
+        (<xref linkend="cmdlineparams"/>):
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <table id="cmdlineparams">
+      <title>testexec parameters</title>
+      <tgroup cols="2">
+        <colspec align="left" colwidth="40%"/>
+        <colspec align="left"/>
+        <thead>
+          <row>
+            <entry>Detail</entry>
+            <entry>Parameter</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>Help</entry>
+            <entry>
+              <emphasis role="input">-h</emphasis><?linebreak?>
+              Gives parameter help
+            </entry>
+          </row>
+          <row>
+            <entry>Project name</entry>
+            <entry>
+              <emphasis role="input">-project &lt;project name&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-project "ExampleProject"</emphasis>
+            </entry>
+          </row>
+          <row>
+          <entry>
+          Project version
+          </entry>
+          <emphasis role="input">-version &lt;project version&gt;</emphasis><?linebreak?>
+          e.g. <emphasis>-version "1.0.0_release"</emphasis><?linebreak?>, 
+          <emphasis>-version "1.0"</emphasis> or <emphasis>-version "release"</emphasis>.<?linebreak?>
+          If your version number consists only of a qualifier, then you enter the qualifier without 
+          the preceding underscore (e.g. <emphasis>-version "release"</emphasis>). If you are using 
+          a qualifier-only version number that begins with a number, then you must use the preceding 
+          underscore (e.g. <emphasis>-version "_3"</emphasis>).
+          </row>
+          <row>
+            <entry>Configuration file</entry>
+            <entry>
+              <emphasis role="input">-c &lt;path to configuration file&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-c "&lt;pathToQADocs&gt;/config.xml"</emphasis><?linebreak?>
+              Use this instead of entering arguments via the command line (<xref linkend="using-a-config-file"/>)
+            </entry>
+          </row>
+          <row>
+            <entry>Database URL (optional)</entry>
+            <entry>
+              <emphasis role="input">-dburl &lt;URL&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-dburl "db.example.de"</emphasis><?linebreak?>
+              If you enter this, you do not need to enter the <emphasis>-data</emphasis> or <emphasis>-dbscheme</emphasis> parameter (<xref linkend="using-the-dburl"/><?linebreak?>)
+              You can find the dburl in the database preferences<?linebreak?>
+              If no URL is given, the default will be used.
+            </entry>
+          </row>
+          <row>
+            <entry>Database username</entry>
+            <entry>
+              <emphasis role="input">-dbuser &lt;username&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-dbuser "username"</emphasis>
+            </entry>
+          </row>
+          <row>
+            <entry>Database password</entry>
+            <entry>
+              <emphasis role="input">-dbpw &lt;password&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-dbpw "password"</emphasis>
+            </entry>
+          </row>
+          <row>
+            <entry>Server (optional)</entry>
+            <entry>
+              <emphasis role="input">-server &lt;AUT Agent hostname&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-server "localhost"</emphasis><?linebreak?>
+              This is optional if you want to use the embedded AUT Agent (<xref linkend="using-seperate-or-embedded-agent"/>).
+            </entry>
+          </row>
+          <row>
+            <entry>Port number (optional)</entry>
+            <entry>
+              <emphasis role="input">-port &lt;port number&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-port "60000"</emphasis><?linebreak?>
+              This is optional if you are using the embedded AUT Agent and want to use a dynamically chosen port.
+              If you are using the embedded AUT Agent and want to specify the port then you should still enter a port number.
+              If you are working with a separately started AUT Agent, this argument is required (<xref linkend="using-seperate-or-embedded-agent"/>).
+            </entry>
+          </row>
+          <row>
+            <entry>Language</entry>
+            <entry>
+              <emphasis role="input">-language &lt;language code&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-language "en_US"</emphasis>
+            </entry>
+          </row>
+          <row>
+            <entry>Test Suite</entry>
+            <entry>
+              <emphasis role="input">-testsuite &lt;testsuite name&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-testsuite "suite1"</emphasis><?linebreak?>
+              Use to start a Test Suite (<xref linkend="test-exec-suite-or-job"/>)<?linebreak?>
+              Only one Test Suite or Test Job can be started
+            </entry>
+          </row>
+          <row>
+            <entry>Test Job</entry>
+            <entry>
+              <emphasis role="input">-testjob &lt;testjob name&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-testjob "job1"</emphasis><?linebreak?>
+              Use to start a Test Job (<xref linkend="test-exec-suite-or-job"/>).<?linebreak?>
+              Only one Test Suite or Test Job can be started.
+            </entry>
+          </row>
+          <row>
+            <entry>AUT configuration name</entry>
+            <entry>
+              <emphasis role="input">-autconfig &lt;configuration name&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-autconfig "localconfiguration"</emphasis><?linebreak?>
+              Use when starting an AUT via a configuration (<xref linkend="test-exec-suite-or-job"/>).
+            </entry>
+          </row>
+          <row>
+            <entry>AUT ID</entry>
+            <entry>
+              <emphasis role="input">-autid &lt;ID&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-autid "SimpleAdder1"</emphasis><?linebreak?>
+              Use when AUT was started via autrun (<xref linkend="test-exec-suite-or-job"/>).
+            </entry>
+          </row>
+          <row>
+            <entry>Data directory (optional)</entry>
+            <entry>
+              <emphasis role="input">-datadir &lt;path to external test data directory&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-datadir "&lt;pathToQADocs&gt;/data"</emphasis><?linebreak?>
+              Use when you have test data for the test. e.g. from Excel.<?linebreak?>
+              You can use relative paths (relative to the platform working directory).
+            </entry>
+          </row>
+          <row>
+            <entry>Result directory (optional)</entry>
+            <entry>
+              <emphasis role="input">-resultdir &lt;path to directory&gt;</emphasis>
+              <?linebreak?>
+              e.g. <emphasis>-resultdir "&lt;pathToQADocs&gt;/results"</emphasis><?linebreak?>
+              Use when you want HTML and XML test result reports to be produced by the testexec.<?linebreak?>
+              Test results will still be written to the database.<?linebreak?>
+              You can use relative paths (relative to the platform working directory).
+            </entry>
+          </row>
+          <row>
+          	<entry>Result file name (optional)</entry>
+          	<entry>
+          	<emphasis role="input">-resultname &lt;filename&gt;</emphasis>
+          	<?linebreak?>
+          	e.g. <emphasis>-resultname "&lt;PRODUCTIVE_TEST&gt;"</emphasis><?linebreak?>
+          	Use this to specify a name for the HTML and XML test result reports 
+          	that testexec writes (if you have configured this).<?linebreak?>
+		If you do not use this parameter, a default name will be used that 
+		consists of the Test Suite name.
+		Do not write a file extension - they are added automatically.
+		If a file with the same name exists, it will be overwritten. 
+		If you use this option with a Test Job you will therefore only see the last result.
+		You cannot write file names containing path information.
+          	</entry>
+          </row>
+          <row>
+            <entry>No run option (optional)</entry>
+            <entry>
+              <emphasis role="input">-n</emphasis><?linebreak?>
+              e.g. <emphasis>-n</emphasis><?linebreak?>
+              Performs various pre-execution checks.<?linebreak?>
+              There is a set of parameters to configure the no run (<xref linkend="working-with-no-run"/>).
+            </entry>
+          </row>
+          <row>
+            <entry>Quiet option (optional)</entry>
+            <entry>
+              <emphasis role="input">-q</emphasis><?linebreak?>
+              e.g. <emphasis>-q</emphasis><?linebreak?>
+              Does not give out test information.
+            </entry>
+          </row>
+          <row>
+            <entry>Timeout (optional)</entry>
+            <entry>
+              <emphasis role="input">-timeout &lt;timeout in seconds&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-timeout "3600"</emphasis><?linebreak?>
+              Enter an optional timeout for testexec.
+            </entry>
+          </row>
+          <row>
+            <entry>No screenshot (optional)</entry>
+            <entry>
+              <emphasis role="input">-s</emphasis><?linebreak?>
+              no screenshots will be taken on errors.
+            </entry>
+          </row>
+          <row>
+            <entry>No screenshots in HTML and XML (optional)</entry>
+            <entry>
+              <emphasis role="input">-sx</emphasis><?linebreak?>
+              screenshots will be taken on errors and written to the database but they will not appear
+              in the XML and HTML reports created if you have specified a resultdir.
+            </entry>
+          </row>
+          <row>
+            <entry>Workspace</entry>
+            <entry>
+              <emphasis role="input">-data &lt;path to workspace&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-data "&lt;pathToQADocs&gt;/workspace"</emphasis><?linebreak?>
+              The ITE workspace with the preference settings for the database connection<?linebreak?>
+              This is optional if you enter the <emphasis>-dburl</emphasis> parameter (<xref linkend="using-the-dburl"/>)
+            </entry>
+          </row>
+          <row>
+            <entry>Database scheme</entry>
+            <entry>
+              <emphasis role="input">-dbscheme &lt;scheme&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-dbscheme "embedded"</emphasis><?linebreak?>
+              This is optional if you enter the <emphasis>-dburl</emphasis> parameter (<xref linkend="using-the-dburl"/>)
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+  </para>
+  <section id="using-seperate-or-embedded-agent">
+    <title>Using a separate AUT Agent or the embedded
+    AUT Agent</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          When using testexec, you have the choice between working
+          with an AUT Agent that you start separately, or using an
+          embedded AUT Agent that is started automatically by
+          testexec.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you want to use a separately started AUT Agent, then
+          the AUT Agent must be started on the machine you are
+          testing on. Enter the parameters for the server and port
+          number to connect to this AUT Agent.
+          <para role="warning">If you are working with Test Jobs, you must use a separately started AUT Agent, because you will require the AUT Agent to start the AUT via <emphasis>autrun</emphasis>.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you want to have testexec start and connect to an
+          embedded AUT Agent automatically, then you have two
+          options:
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              You can leave out both the parameters for the server
+              and the port number. This will result in an embedded
+              AUT Agent being started on a dynamically chosen port.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              You can leave out the server parameter, but still
+              enter a port number. This will result in an embedded
+              AUT Agent being started on the port you define.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="test-exec-suite-or-job">
+    <title>Test Suites and Test Jobs</title>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can either enter a Test Suite to be executed or a
+          Test Job. Only one of these two commands is accepted for
+          the test executor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you are starting a Test Suite, your AUT will be
+          started from its configuration. You must enter the
+          configuration name using the correct parameter for the
+          testexec.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you are starting a Test Job, you must make sure that
+          the first AUT you require is already started with the
+          <emphasis>autrun</emphasis> command. You must then enter the AUT
+          ID as a parameter for the testexec. Any other AUTs
+          required during the test must either also be started
+          already, or started as a part of the test itself. When
+          working with Test Jobs, you must use a separately started
+          AUT Agent. You cannot use the embedded AUT Agent with
+          testexec when you are starting a Test Job.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="using-the-dburl">
+    <title>Using the dburl instead of workspace and dbscheme</title>
+    <para>
+      You can use the <emphasis>dburl</emphasis> parameter to specify which
+      database should be used instead of entering the dbscheme and
+      workspace parameters. This has the advantage that you do not
+      need to create a workspace on the test machine that is
+      configured for the correct database.
+    </para>
+  </section>
+  <section id="starting-the-test-execution-via-testexec">
+    <title>Starting the test execution via testexec</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          Once you have entered all the necessary parameters, press
+          <emphasis role="input">»ENTER«</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The client will connect to the AUT Agent(either the defined
+          separate AUT Agent or it will start an embedded
+          AUT Agent then connect to it), connect to the database,
+          open the Project, start the AUT (for a
+          Test Suite) or connect to it (for Test Jobs) and then
+          execute the Test Suite or Test Job you specified.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once the test has finished, the client will show an exit
+          code.
+        </para>
+        <itemizedlist>
+          <listitem>
+            <para>
+              ”<emphasis>Exit code: 0</emphasis>” indicates that the test was
+              successful.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              ”<emphasis>Exit code: 1</emphasis>” indicates that the test
+              contained an error.
+            </para>
+          </listitem>
+        </itemizedlist>
+        <para>
+          <para role="tip">To stop the test execution, use <emphasis role="input">»CTRL+C«</emphasis></para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="passing-on-arguments-to-the-jvm">
+    <title>Passing on arguments to the JVM</title>
+    <para>
+      The test executor also accepts arguments to pass on to the Java Virtual Machine. This means
+      that you can, for example, increase the initial and maximum amount of system memory allocated
+      to the JVM with the parameters <emphasis role="input">-Xms&lt;memory_size&gt;</emphasis> and
+      <emphasis role="input">-Xmx&lt;memory_size&gt;</emphasis>, respectively. For example, the
+      parameter <emphasis role="input">-Xmx128M</emphasis> would make a maximum of 128 MB of system
+      memory available to the test executor. When entering the standard parameters for the test executor,
+      you may add <emphasis role="input">-J&lt;JVM_parameter&gt;</emphasis> for each JVM parameter you
+      wish to set. For example, <emphasis role="input">-J-Xmx128M</emphasis>. Multiple parameters,
+      like standard parameters, are separated by spaces.
+    </para>
+    <para>
+      Here is an example of defining mutliple JVM parameters:<?linebreak?>
+      <emphasis role="input">-J-Xmx128M -JXms128M</emphasis>.
+    </para>
+  </section>
+</section>

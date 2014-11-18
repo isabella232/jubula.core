@@ -1,0 +1,215 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="observing-tests-in-java-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Observing tests in Java AUTs</title>
+  <para>
+    <para role="tip">If you have not already done so, we recommend reading the
+    tips section for the observation mode before beginning observing
+    (<xref linkend="tips-and-tricks-observation-mode"/>). </para>
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        In Java AUTs (Swing and SWT/RCP, but not GEF components in
+        RCP) the observation mode will automatically record your
+        actions in the user interface. Each action is created as a
+        Test Step in the Test Case Editor for this observed Test
+        Case.
+      </para>
+      <para>
+        <para role="tip">See the section later on performing check actions in
+        the observation mode (<xref linkend="performing-checks-in-observation-mode"/>).</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can also see which actions have been recorded in the
+        console (<xref linkend="obsconsole"/>).
+      </para>
+      <figure id="obsconsole">
+        <title>The observation console</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/obsconsole.png"/>
+          </imageobject>
+          <textobject><phrase>The observation
+          console</phrase></textobject>
+        </mediaobject>
+      </figure>
+      <para>
+        <para role="tip">If you are creating tests for SWT and RCP AUTs, check
+        that you have set the keyboard layout correctly in the
+        Project properties (<xref linkend="advanced-aut-config"/>) and that
+        you have defined the right toolkit for the Project
+        (<xref linkend="changing-toolkit-settings"/>).</para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Component names for your components are automatically
+        generated and assigned to the technical names from the AUT
+        when you observe Test Steps. If you have already created and
+        mapped a component name for a technical component, this name
+        will be used instead of creating a new one.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Once you have recorded the actions you need, stop the
+        observation mode by clicking on the ”<emphasis>stop
+        observing Test Case</emphasis>” button
+        <mediaobject role="icon" file="images/stopcam.png"/> on the
+        main toolbar.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Save the Test Case editor containing the Test Steps you have
+        just observed.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Check the Test Steps and their parameter values which have
+        been recorded. You will notice that any text that contains
+        non-alphanumeric characters is enclosed in single quotes.
+        Single quotes are used to cancel any meaning of the
+        characters within the quotes. <para role="tip">Run the test that you
+        have just recorded to see if it works as you intended. If
+        not, you may need to make some changes to the parameter
+        values, or you may have to supplement the Test Case with
+        Test Cases from the library (<xref linkend="using-the-library"/>). </para>
+      </para>
+    </listitem>
+  </orderedlist>
+  <section id="actions-that-cannot-be-recorded">
+    <title>Actions that cannot be recorded</title>
+    <para>
+      A few actions cannot be recorded in the current version. These
+      include:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Key combinations that are used as shortcuts in SWT
+          applications.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Click counts on trees. The select actions are correctly
+          recorded, but the click count is set to 0 and must be
+          manually adjusted.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Components that contain texts that are too long (more than
+          3999 characters).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Actions on native dialogs e.g. file choosers.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Actions in the figure canvas for GEF components.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section id="performing-checks-in-observation-mode">
+    <title>Performing checks in the Java observation mode</title>
+    <para>
+      You can perform checks in the observation mode by taking the
+      following steps:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          Start the check mode by pressing
+          <emphasis role="input">»CTRL+SHIFT+F11«</emphasis>. This key
+          combination can be changed in the preferences
+          (<xref linkend="observation-mode-preferences"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the observation console, the check mode will be marked
+          as <emphasis>on</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the AUT, components will be highlighted with a red
+          border (<xref linkend="redborders"/>).
+        </para>
+        <figure id="redborders">
+          <title>Red borders in the check mode</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/redborders.png"/>
+            </imageobject>
+            <textobject><phrase>Red borders in the check
+            mode</phrase></textobject>
+          </mediaobject>
+        </figure>
+        <para>
+          <para role="tip">While the check mode is active, no other actions
+          will be recorded.</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Hover over the component you want to execute a check on
+          and press <emphasis role="input">»CTRL+SHIFT+F12«</emphasis>.
+          This key combination can be changed in the preferences
+          (<xref linkend="observation-mode-preferences"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          A dialog will appear showing the type of component you are
+          performing the check on.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          From the dialog, select the check action you want to
+          perform and enter any parameters the check action needs.
+          Many check actions have predefined parameters based on the
+          state of the AUT.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When you have specified your check action, choose whether
+          you want to close the dialog and continue in the check
+          mode (<emphasis>check on</emphasis>) or whether you want
+          to stop the check mode when the dialog closes
+          (<emphasis>stop checking</emphasis>). <para role="tip">You can
+          manually stop the check mode using the same key
+          combination as you used to start the check mode
+          (<emphasis role="input">»CTRL+SHIFT+F11«</emphasis> by
+          default).</para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The check action you specify will be added to the Test
+          Case Editor.
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

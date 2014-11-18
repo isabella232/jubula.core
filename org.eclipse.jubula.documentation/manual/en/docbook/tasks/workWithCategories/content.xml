@@ -1,0 +1,30 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="working-with-categories-in-the-browsers-and-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="workWithCategories"?>
+  <title>Working with categories in the browsers and editors</title>
+  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="dialogNewCategoryContextId">New Category Dialog</anchor>
+  <para>
+    Categories let you group items together to be able to keep an
+    overview of your data and find things more easily. You can use
+    categories in the Test Case Browser, in the Test Suite Browser, in
+    the Central Test Data Editor and in the Object Mapping Editor (see
+    the section on object mapping for information on categories in the
+    Object Mapping Editor (<xref linkend="working-with-categories-in-the-object-mapping-editor"/>)).
+  </para>
+  
+  <xi:include href="sectionCreatingACategory.xml"/>
+  <xi:include href="sectionCreatingTestCasesSuitesAndJobsInExistingCategory.xml"/>
+  <xi:include href="sectionAddingCommentsToCategories.xml"/>
+  
+</section>

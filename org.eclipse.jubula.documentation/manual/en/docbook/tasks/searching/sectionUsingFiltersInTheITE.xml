@@ -1,0 +1,37 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="using-filters-in-the-ite" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Using filters in the ITE</title>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <section id="text-filters">
+    <title>Text filters</title>
+    <para>
+      The Test Case Browser, the Test Suite Browser, the Component
+      Names Browser and the Object Mapping Editor (in the tree view)
+      all contain a filter area at the top. You can enter a filter
+      text into this area to show matches to the text in the browser
+      or editor. Use star (*) as a wildcard.
+    </para>
+    <para>
+      In the Test Case Browser, the Component Names Browser and the
+      Test Suite Browser, the names of the items in the browser are
+      considered for the filter.
+    </para>
+    <para>
+      In the Object Mapping Editor, the names and
+      <emphasis>types</emphasis> of the components are considered
+      for the filter.
+    </para>
+  </section>
+</section>

@@ -1,0 +1,118 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="creating-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Creating Test Cases</title>
+  <anchor role="helpid" id="testcaseNewContextId">New Test Case Dialog</anchor>
+  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <para>
+    Most of the time spent writing tests will involve creating and
+    editing Test Cases.
+  </para>
+  <para>
+    To create a Test Case, you must have created or opened a Project
+    (<xref linkend="working-with-projects"/>).
+  </para>
+  <para>
+    The Test Case Browser must also be visible. If it is not visible, change to the Specification Perspective perspective and select:
+    
+    <para>
+      <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Test Case Browser</emphasis>.
+    </para>
+  </para>
+  <para>
+    <para role="tip">You can also have multiple instances of the Test Case
+    Browser open (<xref linkend="opening-the-test-case-browser-multiple-times"/>).</para>
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Create a Test Case by using the context-sensitive menu in the Test Case Browser:
+        
+        <para>
+          <emphasis role="menuPath">New</emphasis>--&gt;<emphasis role="menuPath">New Test Case</emphasis>. <para role="tip">You can also create Test Cases with a double-click on the ”<emphasis>Test Cases:</emphasis>” root entry or on a category in the Test Case Browser.</para>
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        A dialog to name the Test Case will appear
+        (<xref linkend="newtestcasedialog"/>). Because the testing approach
+        is keyword-driven, it is important to name Test Cases
+        meaningfully – you will be able to read your tests easily
+        and quickly choose which Test Case you need.
+      </para>
+      <figure id="newtestcasedialog">
+        <title>New Test Case Dialog</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/newtestcasedialog.png"/>
+          </imageobject>
+          <textobject><phrase>New Test Case
+          Dialog</phrase></textobject>
+        </mediaobject>
+      </figure>
+    </listitem>
+    <listitem>
+      <para>
+        Click ”<emphasis>OK</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        This creates a new Test Case with that name in the Test Case
+        Browser (<xref linkend="newtestcaseinbrowser"/>).
+      </para>
+      <figure id="newtestcaseinbrowser">
+        <title>Test Case in Test Case Browser</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/newtestcaseinbrowser.png"/>
+          </imageobject>
+          <textobject><phrase>Test Case in Test Case
+          Browser</phrase></textobject>
+        </mediaobject>
+      </figure>
+    </listitem>
+  </orderedlist>
+  <para><emphasis role="strong">Next steps</emphasis><?linebreak?>
+    The next step is to add Test Cases from the library of Test Cases to this Test Case (<xref linkend="creating-tests-from-the-library-of-pre-defined-test-cases"/>).
+  </para>
+  <para>
+    You can also:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Reuse this Test Case to form other Test Cases
+        (<xref linkend="adding-items-to-editors"/>)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Edit its content in the Test Case Editor
+        (<xref linkend="working-with-editors"/>)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Add this Test Case to a Test Suite to be executed
+        (<xref linkend="adding-items-to-editors"/>)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Use this Test Case as an Event Handler
+        (<xref linkend="dealing-with-errors-in-tests"/>).
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

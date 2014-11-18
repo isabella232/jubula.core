@@ -1,0 +1,100 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="creating-a-support-information-package" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Creating a support information package</title>
+  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" id="supportRequestDialogContextId">Support Information Package</anchor>
+  <para>
+    If you have found a problem with the ITE itself, you can create
+    a support information package from within the ITE. You can
+    choose which information to include in the package, which can be
+    uploaded to a bug-tracking system as a .zip file.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Select:
+        
+        <para>
+          <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">Create Support Information Package</emphasis>
+        </para>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the dialog which appears, select what to add to the
+        package:
+      </para>
+      <variablelist>
+        <varlistentry>
+          <term>
+            Configuration information:
+          </term>
+          <listitem>
+            <para>
+              This includes information about how you have
+              configured the ITE, which other plugins you are using,
+              and information about your environment. 
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            The AUT Agent log
+          </term>
+          <listitem>
+            <para>
+              This lets us see the messages from the AUT Agent. If
+              you are not connected to the AUT Agent, this option
+              will be grayed out. 
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            The client log
+          </term>
+          <listitem>
+            <para>
+              This lets us see the messages from the ITE. 
+            </para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>
+            The Project and depending Projects
+          </term>
+          <listitem>
+            <para>
+              The currently open Project and any Projects it reuses.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </listitem>
+    <listitem>
+      <para>
+        Browse to the destination to save the .zip file.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Click ”<emphasis>OK</emphasis>”.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The prepared package will be saved to the destination you
+        specified.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

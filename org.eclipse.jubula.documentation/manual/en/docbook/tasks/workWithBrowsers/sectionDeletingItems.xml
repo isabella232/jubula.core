@@ -1,0 +1,41 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="deleting-items-from-browsers" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Deleting items from browsers</title>
+  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <orderedlist>
+    <listitem>
+      <para>
+        To delete a Test Case, Test Suite, Test Job or component
+        name, select it in the browser.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select ”<emphasis>delete</emphasis>” from the
+        context-sensitive menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can also delete items by pressing
+        <emphasis role="input">»DELETE«</emphasis>
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <para role="warning">If the item you want to delete is referenced somewhere in
+    your test, you must first remove it from the place where it is
+    reused before deleting it.</para>
+  </para>
+</section>

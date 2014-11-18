@@ -1,0 +1,77 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="starting-the-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Starting the AUT</title>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" id="runningAutsViewContextId">Running AUTs View</anchor>
+  <para>
+    To start the AUT, you must:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        have defined an AUT (<xref linkend="define-aut"/>)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        have connected to the AUT Agent (<xref linkend="connect-aut-agent"/>)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        if you want to start your AUT from the ITE, and not using
+        the <emphasis>autrun</emphasis> option, then you must have
+        configured an AUT (<xref linkend="configuringaut"/>)
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <para role="tip">You can only start AUTs from the ITE which support the
+    current working language. Change the working language if
+    necessary by selecting a language from the list next to the
+    language button on the toolbar.</para>
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        On the toolbar, click on the arrow next to the
+        ”<emphasis>Start AUT</emphasis>” button
+        <mediaobject role="icon" file="images/startAUT.png"/>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select an AUT and the configuration to start it with from
+        the list.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The AUT will be started in the current working language.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Clicking directly on the ”<emphasis>Start AUT</emphasis>”
+        button will start the most recently started AUT (marked with
+        a tick in the list of AUTs and configurations).
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    Once the AUT has been started, it will appear in the running
+    AUTs view. <para role="tip">Further information on starting specific types
+    of AUT is available in the toolkit-specific details
+    (<xref linkend="toolkit"/>).</para>
+  </para>
+</section>

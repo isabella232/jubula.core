@@ -1,0 +1,30 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                       xmlns:xi="http://www.w3.org/2001/XInclude"
+                                       xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Test Cases</title>
+  <para>
+    Test Cases are a level up from Test Steps in the test hierarchy.
+    They are the building blocks or keywords from which other Test
+    Cases and Test Suites are made. They are the reusable elements
+    of your tests.
+  </para>
+  <para>
+    A Test Case can contain any number of Test Steps and other Test
+    Cases nested to any depth. Test Cases are given user-defined
+    names.
+  </para>
+  <para>
+    Test Cases can be reused – in other Test Cases and in Test
+    Suites. There are no limits on how often a Test Case can be
+    reused, as long as no circular dependencies (infinite loops) are
+    created.
+  </para>
+</section>

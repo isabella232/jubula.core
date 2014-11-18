@@ -1,0 +1,70 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="moving-test-cases-to-external-projects" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Moving Test Cases to external Projects</title>
+  <anchor role="helpid" id="testCaseMoveExternalContextId">Move Test Cases to an External Project</anchor>
+  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <para>
+    If you are reusing a Project or Projects in your currently
+    opened Project (<xref linkend="reuseproject"/>), you can move Test Cases you
+    create to these reused Projects to make them a part of that
+    Project.
+  </para>
+  <para>
+    This lets you add useful Test Cases to external libraries to be
+    reused in other Projects.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        In the Test Case Browser, select the Test Case, Test Cases
+        or categories you want to move to an external Project that
+        you are currently reusing in the open Project.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Right click on the selected items and select:
+        
+        <para>
+          <emphasis role="menuPath">Move to external Project</emphasis>
+        </para>
+        
+        from the context-sensitive menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        From the dialog which appears, select which reused Project
+        to move them to.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The items you selected will appear in the blue colored
+        category of the reused Project you selected and will
+        disappear from their original place.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The structure of your Project stays the same – the moved
+        Test Cases are not deleted from places where you have reused
+        them, for example.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    <para role="warning">If you move Test Cases containing referenced Test Cases
+    from other Projects, make sure that the Project the Test Cases
+    are dependent on is also reused in your external Project.</para>
+  </para>
+</section>

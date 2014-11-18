@@ -1,0 +1,173 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="testing-different-auts-in-one-test-run" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Testing different AUTs in one test run</title>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="runningAutsViewContextId">Running AUTs View</anchor>
+  <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <para>
+    You can test multiple AUTs in one test run.
+  </para>
+  <para>
+    The AUTs can be the same actual AUT which has been started
+    multiple times (to test refresh aspects, for example).
+  </para>
+  <para>
+    You can test AUTs that were started independently, or AUTs that
+    are launched by other AUTs.
+  </para>
+  <section id="testing-independently-started-auts">
+    <title>Testing independently started AUTs</title>
+    <para>
+      To be able to test multiple AUTs that are
+      <emphasis>not</emphasis> started by each other, the following
+      criteria must be met:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The AUTs are either written with the same toolkit (e.g.
+          Swing) or,
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          you have specified your Project at the
+          <emphasis>concrete</emphasis> level, and will only be
+          testing areas of the AUTs that can be tested with the
+          actions that are valid for all AUT types (i.e. no
+          RCP-specific components are involved in the test)
+          (<xref linkend="newproject"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The AUTs are all defined in the same Project.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The first AUT can either be started using the
+          <emphasis>autrun</emphasis> command (<xref linkend="starting-java-with-the-command"/>) or via
+          an AUT configuration (<xref linkend="configuringaut"/>). Any other
+          AUTs required for the Test Job must have been started with
+          the <emphasis>autrun command</emphasis>.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <para role="tip">To run Test Jobs from the test executor, all AUTs for
+      the test run must already be started when the test execution
+      begins. For unattended build and test processes, this will
+      mean that the AUTs must be started with the
+      <emphasis>autrun</emphasis> command.</para>
+    </para>
+  </section>
+  <section id="testing-aut-launched-by-other">
+    <title>Testing AUTs that are launched by other AUTs</title>
+    <para>
+      If your AUT starts other AUTs which you also want to test,
+      then the following criteria must be met:
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The AUT Agent must be running in
+          <emphasis>lenient</emphasis> or
+          <emphasis>non-strict</emphasis> mode
+          (<xref linkend="starting-the-aut-agent-from-the-command-line"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The AUTs must be written with the same toolkit (e.g.
+          Swing) (<xref linkend="newproject"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The AUTs have all been defined for this Project
+          (<xref linkend="define-aut"/>).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The order in which the launched AUTs will appear and be
+          tested must be known. <para role="tip">When an AUT is launched by
+          another AUT, the AUT ID for the new AUT is formed as
+          <emphasis role="input">AUT ID + 1</emphasis>. The next AUT to be started
+          receives the ID <emphasis role="input">AUT ID + 2</emphasis>, and so on. You
+          can enter these AUT IDs in the Test Suites in the Test
+          Job. </para>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Behavior of AUTs when being started by other AUTs</emphasis>
+    </para>
+    <variablelist>
+      <varlistentry>
+        <term>
+          RCP starting RCP:
+        </term>
+        <listitem>
+          <para>
+            The newly started RCP AUT receives the ID <emphasis role="input">ID+1</emphasis>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Swing Jar or main class starting Swing Jar or main class:
+        </term>
+        <listitem>
+          <para>
+            This is currently not possible.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Swing Jar or main class starting Swing executable:
+        </term>
+        <listitem>
+          <para>
+            This is currently not possible.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Swing executable starting Swing Jar or main class:
+        </term>
+        <listitem>
+          <para>
+            The newly started Swing AUT receives the ID <emphasis role="input">ID+1</emphasis>.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          Swing executable starting Swing executable:
+        </term>
+        <listitem>
+          <para>
+            The newly started Swing AUT receives the ID <emphasis role="input">ID+1</emphasis>.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+      <para role="warning">If the AUT Agent is not running in lenient mode, then
+      the newly started AUT will shut down.</para>
+    </para>
+  </section>
+</section>

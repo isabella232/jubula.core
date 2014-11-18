@@ -1,0 +1,51 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="working-with-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="workWithTestCases"?>
+  <title>Working with Test Cases</title>
+  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <para>
+    Test Cases are the ”building blocks” (keywords) for testing. They
+    can:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        contain other (referenced) Test Cases (<xref linkend="adding-items-to-editors"/>)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        contain Test Steps (<xref linkend="specsteps"/>)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        be used in Test Suites (<xref linkend="adding-items-to-editors"/>)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        be used as Event Handlers (<xref linkend="dealing-with-errors-in-tests"/>)
+      </para>
+    </listitem>
+  </itemizedlist>
+  
+  <xi:include href="sectionCreatingTestCases.xml"/>
+  <xi:include href="sectionCreatingTestsFromPreDefinedTestCases.xml"/>
+  <xi:include href="sectionOpeningExistingTestCases.xml"/>
+  <xi:include href="sectionEditingTestCases.xml"/>
+  <xi:include href="sectionAddingAndInsertingNewTestCases.xml"/>
+  <xi:include href="sectionMovingTestCasesToExternalProjects.xml"/>
+  <xi:include href="sectionReplacingASpecificTestCase.xml"/>
+  
+</section>

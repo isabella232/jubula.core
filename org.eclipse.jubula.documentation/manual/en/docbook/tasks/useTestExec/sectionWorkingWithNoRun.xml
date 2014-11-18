@@ -1,0 +1,124 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="working-with-no-run" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Working with the no-run option</title>
+  <para>
+    The no run option lets you perform steps that are required for
+    test execution without actually executing the test. This is
+    useful to find out whether there are any problems in the test or
+    in the environment that would hinder the test starting.
+  </para>
+  <para>
+    You can use the no run option with one of the following values.
+    If no value is entered, then ”cc” is used (up to and including
+    the completeness check step).
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        caa
+      </term>
+      <listitem>
+        <para>
+          the test runs up to and including the step to connect to
+          the AUT agent
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        cdb
+      </term>
+      <listitem>
+        <para>
+          the test runs up to and including the step to connect to
+          the database
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        lp
+      </term>
+      <listitem>
+        <para>
+          the test runs up to and including the step to load the
+          Project
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        cc
+      </term>
+      <listitem>
+        <para>
+          the test runs up to and including the completeness check
+          step
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        sa
+      </term>
+      <listitem>
+        <para>
+          the test runs up to and including the step to start the
+          AUT
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        pte
+      </term>
+      <listitem>
+        <para>
+          the test runs up to and including the step to prepare the
+          test execution
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        ca
+      </term>
+      <listitem>
+        <para>
+          the test runs up to and including the connect to AUT step
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        rpv
+      </term>
+      <listitem>
+        <para>
+          the test runs up to and including the step to resolve
+          predefined variables
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        bt
+      </term>
+      <listitem>
+        <para>
+          the test runs up to and including the step to build the
+          execution tree
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+</section>

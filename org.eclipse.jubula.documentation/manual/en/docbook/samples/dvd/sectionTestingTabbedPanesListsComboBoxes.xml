@@ -1,0 +1,37 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="sample-2.4-testing-tabbed-panes-lists-combo-boxes" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Sample 2.4: testing tabbed panes, lists, combo
+  boxes</title>
+  <para>
+    This category contains four Test Cases. The first two,
+    <emphasis>Fill in the Content Tab</emphasis> and <emphasis>Fill
+    in the Technics Tab</emphasis> contain Test Cases reused from
+    the <emphasis>unbound_modules_concrete</emphasis> Project and
+    the <emphasis>bound_modules_samples</emphasis> Project. These
+    Test Cases execute various actions on the tabbed panes in the
+    DVD Tool. There is a lot of reuse of Test Cases, especially on
+    different components. The <emphasis>Enter a Text
+    Detail</emphasis> Test Case, for example, is reused three times,
+    with a different component name each time. The <emphasis>Fill in
+    the Technics Tab</emphasis> Test Case also contains an Event
+    Handler to check a checkbox if it isn’t already done so. Many of
+    the parameters in these Test Cases have been referenced so that
+    values can be entered for them later.
+  </para>
+  <para>
+    The last two Test Cases each contain a Test Case to select a
+    DVD, and then contain the <emphasis>Fill in the Content
+    Tab</emphasis> and <emphasis>Fill in the Technics Tab</emphasis>
+    Test Cases. Because the values in these Test Cases were left
+    empty, different data can be entered for each Test Case.
+  </para>
+</section>

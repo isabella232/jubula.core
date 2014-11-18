@@ -1,0 +1,50 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="test-suite-editor" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Test Suite Editor</title>
+  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <para>
+    You can open the Test Suite Editor by double-clicking a Test
+    Suite in the Test Suite Browser.
+  </para>
+  <para>
+    In the Test Suite Editor:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can add Test Cases to Test Suites.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can alter the Test Suite properties (e.g. the AUT it
+        uses, the default Event Handlers).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can alter test data for the Test Cases shown.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <para role="tip">In the Test Suite Editor, you can only alter details for
+    the top-level Test Cases for each subtree.</para>
+  </para>
+  <para>
+    When you single-click Test Cases in the Test Suite Editor, the
+    support views (Properties View, Component Names View and Data
+    Sets View) show details about this Test Case. Using these views,
+    you can edit the properties, test data and component names for
+    this item.
+  </para>
+</section>

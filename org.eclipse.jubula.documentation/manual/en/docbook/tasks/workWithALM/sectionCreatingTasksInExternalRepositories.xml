@@ -1,0 +1,65 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="creating-tasks-in-external-repositories-from-test-result-reports" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Creating tasks in external repositories from test result reports</title>
+  <anchor role="helpid" id="testResultViewContextId">Test Results View</anchor>
+  <para>
+    You can create a new task with pre-filled information directly
+    from an open test result report in the Test Result View. This is
+    useful if a test has failed and you want to create e.g. an issue
+    in your bug-tracking system for the failure.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        In an open test result report, select the node that best describes the test failure (e.g. a Test Case or Test Step that has failed, or the whole Test Suite, then right-click and select:
+        
+        <para>
+          <emphasis role="menuPath">Create a Mylyn Task</emphasis>
+        </para>
+        
+        from the context-sensitive menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        In the dialog that appears, select a repository in which to
+        create the task. A <emphasis>local</emphasis> repository is
+        available by default, but you can also add connections to
+        Bugzilla and Trac repositories by clicking ”<emphasis>Add
+        Task Repository</emphasis>” in the New Task Dialog.
+        Connectors to other repositories can also be added. See the
+        Mylyn documentation for more details on adding repositories.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Click ”<emphasis>Finish</emphasis>” once you have selected
+        your repository.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The editor for a new task will appear. It is pre-filled with
+        information relevant to the node that you selected. Edit the
+        task to make it descriptive enough for a bug report and save
+        the editor.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Once you have created a task, you can activate it to start
+        saving your context for this task. See the later section
+        (<xref linkend="activate-task"/>) for details.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

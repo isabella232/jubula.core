@@ -1,0 +1,28 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="specifying-which-aut-to-test-in-a-test-job" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Specifying which AUT to test in a Test Job</title>
+  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <para>
+    Once you have added a Test Suite to a Test Job
+    (<xref linkend="adding-items-to-editors"/>), you must select the AUT ID that you wish
+    to run this Test Suite on from the Properties View.
+  </para>
+  <para>
+    This enables you to differentiate between multiple AUTs (or
+    instances of the same AUT in your tests).
+  </para>
+  <para>
+    <para role="tip">You must have defined all AUTs to be tested during a Test
+    Job in the AUT definition dialog (<xref linkend="define-aut"/>).</para>
+  </para>
+</section>

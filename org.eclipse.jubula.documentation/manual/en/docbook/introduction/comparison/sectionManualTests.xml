@@ -1,0 +1,18 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="manual-tests" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Manual Tests</title>
+  <para>
+    Manual testing, although thorough, cannot keep up with the pace
+    of development. It is impossible to carry out complete
+    continuous integration and regression tests manually.
+  </para>
+</section>

@@ -1,0 +1,43 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="deleting-items-from-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Deleting items from editors</title>
+  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <orderedlist>
+    <listitem>
+      <para>
+        Open the item from which you want to delete other items in
+        the editor
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Right-click on the item(s) to be deleted (use
+        <emphasis role="input">»CTRL«</emphasis> to select multiple
+        items) and select ”<emphasis>Delete</emphasis>” from the
+        context-sensitive menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can also use <emphasis role="input">»DELETE«</emphasis> to
+        delete items.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Save the changes in the editor.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>

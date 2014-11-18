@@ -1,0 +1,40 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="working-with-browsers" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="workWithBrowsers"?>
+  <title>Working with browsers: renaming, deleting, using IDs,
+  multiple browsers</title>
+  <para>
+    Select an item in a browser to see read-only details in the
+    Properties View, Data Sets View and Component Names View for this
+    item.
+  </para>
+  <para>
+    You can rename items from the Test Case Browser, Test Suite
+    Browser or Component Names Browser.
+  </para>
+  <para>
+    You can open editors for items in certain browsers. See the later
+    <xref linkend="working-with-editors"/> for more details.
+  </para>
+  <para>
+    You can also save the ID of Test Cases and Test Suites in browsers
+    to the clipboard, in order to link these elements with external
+    systems.
+  </para>
+  
+  <xi:include href="sectionRenamingItems.xml"/>
+  <xi:include href="sectionDeletingItems.xml"/>
+  <xi:include href="sectionWorkingWithIDsForTestCasesAndSuites.xml"/>
+  <xi:include href="sectionOpeningTheTestCaseBrowserMultipleTimes.xml"/>
+  <xi:include href="sectionOpeningTheTaskEditorForItems.xml"/>
+  
+</section>

@@ -1,0 +1,98 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="exportproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Exporting Projects</title>
+  <para>
+    You can choose to export the currently opened Project
+    (<xref linkend="exportsingle"/>) or all of the Projects in the database
+    (<xref linkend="exportall"/>). Projects are exported in .xml format so that
+    they can be added to e.g. version control systems.
+  </para>
+  <para>
+    <para role="tip">Projects are exported along with all their test result
+    summaries.</para>
+  </para>
+  <section id="exportsingle">
+    <title>Exporting the currently opened Project</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          To export a single Project from the database, the Project
+          you want to export must be open.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Select:
+          
+          <para>
+            <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Export</emphasis>.
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Choose the location to save your Project, and the name you
+          want to save it under.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Click ”<emphasis>OK</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Project (including the test result summaries
+          (<xref linkend="working-with-the-test-result-summary-view"/>)) will first be refreshed and then
+          exported. It is saved as an .xml file.
+        </para>
+        <para>
+          <para role="tip">When you export a single Project, only the
+          currently opened version is exported.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+  <section id="exportall">
+    <title>Exporting all of the Projects from the database</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          Select:
+          
+          <para>
+            <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Export all</emphasis>.
+          </para>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Choose or create a folder where you want the Projects to
+          be stored.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Click ”<emphasis>OK</emphasis>”.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The Projects (including the test result summaries
+          (<xref linkend="working-with-the-test-result-summary-view"/>)) will be saved as .xml files.
+          <para role="tip">When you export all Projects, all versions of each
+          Project are exported.</para>
+        </para>
+      </listitem>
+    </orderedlist>
+  </section>
+</section>

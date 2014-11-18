@@ -1,0 +1,70 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="troubleshooting-code-coverage" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Troubleshooting code coverage</title>
+  <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <para>
+    When using code coverage, please bear the following in mind:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Code Coverage is only possible with AUTs started via an AUT
+        configuration (<xref linkend="configuringaut"/>) (i.e. not using the
+        <emphasis>autrun command</emphasis>), and which use Java 1.5
+        or higher.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        JaCoCo manipulates the byte code of your AUT at runtime to
+        be able to measure code coverage. It is therefore highly
+        sensitive to other byte code manipulations that take place
+        at the same time (e.g. cglib).
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you wish to analyze the Code Coverage at the source code
+        level, as well as entering the <emphasis>Source
+        Directory</emphasis> in the AUT configuration, you must also
+        ensure that your class files have been compiled with debug
+        information.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Running Code Coverage analyses can become memory-intensive
+        for larger AUTs. A pattern can be used to reduce the code
+        analyzed. You can also increase the heap space for the ITE
+        to ensure that enough memory is available. We have
+        successfully performed code coverage analysis with JaCoCo on
+        an AUT with 72,000 classes.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Users working with the embedded database may run into memory
+        problems sooner than users working with an Oracle database.
+        Please remember that we do not recommend working with the
+        embedded database for productive use.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">The AUT does not start when Code Coverage is enabled</emphasis><?linebreak?>
+    If the AUT starts normally without Code Coverage but does not when Code Coverage is activated, ensure that you are not using the embedded AUT Agent.
+  </para>
+  <para>
+    <emphasis role="strong">The Test Result Summary View displays the monitoring agent as <emphasis>JaCoCo</emphasis>, but the coverage value is 0</emphasis><?linebreak?>
+    If you can open the HTML report for the Code Coverage, but it shows ”<emphasis>NaN</emphasis>”, then this could mean that the class files for the analysis were not found. Check the path to the <emphasis>Installation Directory</emphasis> in the AUT configuration. It could also be the case that other byte code manipulations were running at the same time as JaCoCo.
+  </para>
+</section>
