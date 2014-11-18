@@ -8,6 +8,7 @@ imports="java.util.*
          org.eclipse.jubula.client.api.converter.utils.ParamUtils
          org.eclipse.jubula.client.api.converter.utils.Utils
          org.eclipse.jubula.client.core.model.ICapPO
+         org.eclipse.jubula.client.core.model.IEventExecTestCasePO
          org.eclipse.jubula.client.core.model.IExecTestCasePO
          org.eclipse.jubula.client.core.model.INodePO
          org.eclipse.jubula.client.core.model.IParamDescriptionPO
@@ -85,7 +86,7 @@ public class <%=className%> {
     <%}%>
     ) {
         AUT aut = null;
-    
+        
         <%while (iterator.hasNext()) {
             INodePO child = iterator.next();
             boolean isActive = child.isActive();
@@ -145,6 +146,45 @@ public class <%=className%> {
             <%} else if (child instanceof IExecTestCasePO) {
                 IExecTestCasePO exec = (IExecTestCasePO)child;
                 ISpecTestCasePO spec = exec.getSpecTestCase();
+                for (IEventExecTestCasePO eventTC : spec.getAllEventEventExecTC()) {
+                    String type = eventTC.getEventType();
+                    String reentryProp = eventTC.getReentryProp().toString();
+                    String eventHandlerName = StringConstants.EMPTY;
+                    ISpecTestCasePO specEventHandler = eventTC.getSpecTestCase();
+                    try {
+                        project = ProjectCache.get(specEventHandler.getParentProjectId());
+                    } catch (JBException e) {
+                        Plugin.getDefault().writeErrorLineToConsole(
+                                            "Error while loading project.", true);
+                    }
+                    try {
+                        projectName = Utils.translateToPackageName(project);
+                    } catch (InvalidNodeNameException e) {
+                        log.error(e.getLocalizedMessage());
+                    }
+                    eventHandlerName = Utils.getFullyQualifiedTranslatedName(specEventHandler, packageBase, projectName);
+                    Iterator<IParamDescriptionPO> childParamIterator;
+                    IParameterInterfacePO dataCube = eventTC.getReferencedDataCube();%>
+        // TODO: The following test case used an Event Handler which you have to replace manually:
+        //       Type: <%=type%>
+        //       Re-Entry Property: <%=reentryProp%>
+        //       Used Test Case:
+                    <%if (dataCube == null) {
+                      int rowCount = eventTC.getDataManager().getDataSetCount();
+                      int row = 0;
+                      do {%>
+        //            <%=eventHandlerName%>.execute(
+                          <%childParamIterator = eventTC.getParameterListIter();
+                          while (childParamIterator.hasNext()) {
+                              IParamDescriptionPO param = childParamIterator.next();
+                              String paramValue = ParamUtils.getValueForParam(eventTC, param, row, locale);%>
+        //                <%=paramValue%><%if(childParamIterator.hasNext()){%>,<%}%>
+                          <%}%>
+                          <%row++;%>
+        //            );
+                      <%} while(row < rowCount);
+                    }
+                }
                 String testCaseName = StringConstants.EMPTY;
                 try {
                     project = ProjectCache.get(spec.getParentProjectId());
@@ -167,19 +207,18 @@ public class <%=className%> {
                 do {%>
         
         <%if (!isActive) {%>//<%}%><%=testCaseName%>.execute(
-                
                     <%childParamIterator = exec.getParameterListIter();
                     while (childParamIterator.hasNext()) {
                         IParamDescriptionPO param = childParamIterator.next();
                         String paramValue = ParamUtils.getValueForParam(exec, param, row, locale);%>
-                <%if (!isActive) {%>//<%}%><%=paramValue%><%if(childParamIterator.hasNext()){%>
-                
-                <%if (!isActive) {%>//<%}%>,<%}%>
-                
+            
+            <%if (!isActive) {%>//<%}%><%=paramValue%><%if(childParamIterator.hasNext()){%>
+            
+            <%if (!isActive) {%>//<%}%>,<%}%>
                     <%}%>
                     <%row++;%>
-                <%if (!isActive) {%>//<%}%>);
-                
+        
+        <%if (!isActive) {%>//<%}%>);
                 <%} while(row < rowCount);
               } else {
                 String dataCubeName = null;
