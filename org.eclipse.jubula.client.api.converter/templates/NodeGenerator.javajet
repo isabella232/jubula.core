@@ -158,7 +158,7 @@ public class <%=className%> {
             
                 <%} else {%>
         
-        // TODO: Client action <%=cap.getActionName()%>.
+        // TODO: Usage of unsupported client / ITE-side action <%=cap.getActionName()%>.
 
                 <%}%>
             <%} else if (child instanceof IExecTestCasePO) {

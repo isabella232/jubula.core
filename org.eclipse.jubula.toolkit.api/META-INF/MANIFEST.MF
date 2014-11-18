@@ -8,7 +8,6 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: org.eclipse.jubula.toolkit,
- org.eclipse.jubula.toolkit.datatype,
  org.eclipse.jubula.toolkit.enums,
  org.eclipse.jubula.toolkit.internal,
  org.eclipse.jubula.toolkit.internal.annotations

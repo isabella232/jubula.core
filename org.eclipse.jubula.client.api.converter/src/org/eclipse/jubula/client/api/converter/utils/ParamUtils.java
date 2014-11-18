@@ -18,6 +18,7 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.ui.rcp.views.dataset.AbstractDataSetPage;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 
 /**
  * @created 05.11.2014
@@ -62,29 +63,29 @@ public class ParamUtils {
                 node, param, row, locale);
         //CHECKSTYLE:OFF
         if (value == null) {
-            value = "null // TODO: check for error"; //$NON-NLS-1$
+            value = "null // TODO: <code>null</code> found as test data - check and fix in ITE"; //$NON-NLS-1$
         } else {
             value = executeEscapes(value);
             if (multipleParameters.matcher(value).matches()) {
-                return "null // TODO: Parameter concatenation: \"" //$NON-NLS-1$
+                return "null // TODO: Avoid / replace parameter / literal concatenation: \"" //$NON-NLS-1$
                         + value + "\""; //$NON-NLS-1$
             } else if (variable.matcher(value).matches()) {
-                return "null // TODO: Variable: \"" //$NON-NLS-1$
+                return "null // TODO: Avoid / replace variable value usage: \"" //$NON-NLS-1$
                         + value + "\" "; //$NON-NLS-1$
             } else if (function.matcher(value).matches()) {
-                return "null // TODO: Function: \"" //$NON-NLS-1$
+                return "null // TODO: Function usage - call a corresponding method instead of this ITE function: \"" //$NON-NLS-1$
                         + value + "\" "; //$NON-NLS-1$
             } else if (parameterWithBrackets.matcher(value).matches()) {
                 value = value.replaceAll(parameterWithBrackets.pattern(), "$1"); //$NON-NLS-1$
             } else if (parameter.matcher(value).matches()) {
                 value = value.replaceAll(parameter.pattern(), "$1"); //$NON-NLS-1$
-            } else if (paramType.equals("java.lang.String") ) { //$NON-NLS-1$
+            } else if (paramType.equals(TestDataConstants.STR) ) {
                 value = StringConstants.QUOTE + value + StringConstants.QUOTE;
-            } else if (paramType.equals("guidancer.datatype.Variable") ) { //$NON-NLS-1$
-                value = "null // TODO: Potential Variable assignment: " //$NON-NLS-1$
+            } else if (paramType.equals(TestDataConstants.VARIABLE) ) {
+                value = "null // TODO: Potential variable assignment: " //$NON-NLS-1$
                         + value + ""; //$NON-NLS-1$
             } else if (StringUtils.isBlank(value)) {
-                value = "null // TODO: check for error"; //$NON-NLS-1$
+                value = "null // TODO: no test data found - check and fix in ITE"; //$NON-NLS-1$
             }
         }
         return value;
