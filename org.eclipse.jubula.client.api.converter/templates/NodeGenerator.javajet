@@ -189,8 +189,7 @@ public class <%=className%> {
         //       Event Type: <%=eventType%>
         //       Re-Entry Property: <%=reentryProp%>
         //       Used Test Case:
-                    <%if (dataCube == null) {
-                      int rowCount = eventTC.getDataManager().getDataSetCount();
+                    <%int rowCount = eventTC.getDataManager().getDataSetCount();
                       int row = 0;
                       do {%>
         //            <%=eventHandlerName%>.execute(
@@ -203,7 +202,6 @@ public class <%=className%> {
                           <%row++;%>
         //            );
                       <%} while(row < rowCount);
-                    }
                 }
                 String testCaseName = StringConstants.EMPTY;
                 try {
