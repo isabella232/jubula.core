@@ -27,4 +27,6 @@ public @interface SrcNode {
     String UUID();
     /** returns the node type */
     NodeType type();
+    /** returns the task ID */
+    String taskId() default "";
 }
