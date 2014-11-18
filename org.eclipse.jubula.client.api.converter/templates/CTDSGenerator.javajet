@@ -71,7 +71,7 @@ public class <%=className%> {
         <%}%>
         }
     
-        public <%=testCubeName%> (
+        private <%=testCubeName%> (
         <%Iterator <IParamDescriptionPO> paramIterator = testCube.getParameterListIter();
         while (paramIterator.hasNext()) {%>
             <%IParamDescriptionPO param = paramIterator.next();
