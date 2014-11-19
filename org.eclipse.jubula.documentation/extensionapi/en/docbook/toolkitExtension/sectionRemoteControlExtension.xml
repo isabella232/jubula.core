@@ -77,28 +77,8 @@
     </orderedlist>
     <para role="tip">If you are writing an extension for the JavaFX
       toolkit, make sure that your adapter and Tester Classes really
-      get compiled with Java 8, but the Bundle-Required Execution Environment
-      is set to Java 7. To achieve this you should use maven to build
-      your plugins and the update site. You can find an example for
-      this in MavenBuildExtension.zip in <emphasis>/examples/development/extension/src</emphasis>.
-      Before you can build it you have to replace some placeholders:
-      <para>
-       Set the path to the directory of your Java 8 installation in the pom files of
-       <para>
-          <emphasis>org.eclipse.jubula.examples.extension.javafx.rc</emphasis>
-        </para>
-        and
-        <para>
-          <emphasis>org.eclipse.jubula.examples.extension.javafx.rc.container</emphasis>.
-        </para>
-      </para>
-      <para>
-       Additionally you have to change the target definition in
-       <para>
-          <emphasis>org.eclipse.jubula.examples.extension.releng/targetDefinition/extension.target</emphasis>.
-        </para>
-        Just substitute the placeholders with the actual path to your Jubula installation. 
-      </para>
+      get compiled with Java 8 and the Bundle-Required Execution Environment
+      is also set to Java 8.
     </para>
     <para>
       Adapters are used for all supported toolkits, i.e. Swing, SWT,
@@ -343,6 +323,14 @@
       when deploying a new version with the same fragment ID. Apart from the deploying methods mentioned, it is also possible to install
       your fragment using a p2 repository or the OSGi console.
     </para>
+	<para role="tip">If you have deployed fragments for the JavaFX RC
+		bundle, you have to keep in mind that if you are executing the ITE
+		with Java 7 the RC bundle is not active and therefore the wiring for
+		the fragments has not been done by the OSGI framework. The current
+		workaround in Jubula is that all the fragments for the JavaFX RC
+		bundle are added, without taking any version ranges from the fragments
+		into account.
+	</para>
     <para>
       You should be able to test your new component once you have
       installed the toolkit feature into the ITE and the fragment as
