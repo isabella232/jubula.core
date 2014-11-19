@@ -8,7 +8,7 @@
  -->
 <?pde version="3.5"?>
 
-<product name="Jubula" uid="org.eclipse.jubula.product" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="2.4.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="Jubula" uid="org.eclipse.jubula.product" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="3.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="icons/about.png"/>

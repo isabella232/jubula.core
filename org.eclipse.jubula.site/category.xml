@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.jubula.feature_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature" version="2.4.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature_3.0.0.qualifier.jar" id="org.eclipse.jubula.feature" version="3.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.launch.java_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.java" version="2.4.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.launch.java_3.0.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.java" version="3.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.launch.rcp_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.rcp" version="2.4.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.launch.rcp_3.0.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.rcp" version="3.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.api_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature.api" version="2.4.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.api_3.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api" version="3.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.api.source_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature.api.source" version="2.4.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.api.source_3.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.source" version="3.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.api.converter_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature.api.converter" version="2.4.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.api.converter_3.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.converter" version="3.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
    <category-def name="org.eclipse.test" label="Testing"/>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.jubula.examples.extension.swing.feature.jar" id="org.eclipse.jubula.examples.extension.swing.feature" version="2.4.0.qualifier">
+   <feature url="features/org.eclipse.jubula.examples.extension.swing.feature.jar" id="org.eclipse.jubula.examples.extension.swing.feature" version="3.0.0.qualifier">
       <category name="ororg.eclipse.jubula.examples.extension.updateSite"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.examples.extension.javafx.feature_2.4.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.javafx.feature" version="2.4.0.qualifier">
+   <feature url="features/org.eclipse.jubula.examples.extension.javafx.feature_3.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.javafx.feature" version="3.0.0.qualifier">
       <category name="ororg.eclipse.jubula.examples.extension.updateSite"/>
    </feature>
    <category-def name="ororg.eclipse.jubula.examples.extension.updateSite" label="Jubula extension update Site"/>

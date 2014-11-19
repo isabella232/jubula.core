@@ -6,7 +6,7 @@
 -->
 <site>
    <category-def name="org.eclipse.test" label="Testing"/>
-   <feature url="features/org.eclipse.jubula.feature.rc_2.4.0.qualifier.jar" id="org.eclipse.jubula.feature.rc" version="2.4.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.rc_3.0.0.qualifier.jar" id="org.eclipse.jubula.feature.rc" version="3.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
 </site>

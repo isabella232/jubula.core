@@ -7,7 +7,7 @@
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
  -->
-<product name="dashboard" uid="org.eclipse.jubula.product.dashboard" id="org.eclipse.jubula.app.dashboard.product" application="org.eclipse.jubula.app.dashboard.dashboardHttpServer" version="2.4.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="dashboard" uid="org.eclipse.jubula.product.dashboard" id="org.eclipse.jubula.app.dashboard.product" application="org.eclipse.jubula.app.dashboard.dashboardHttpServer" version="3.0.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
