@@ -66,6 +66,21 @@ public class AUTServerExitConstants {
     /** exit state in case of an error while starting the AUT */
     public static final int AUT_START_ERROR = 25;
     
+    /** exit state in case of an ClassNotFoundException while starting the AUT */
+    public static final int AUT_START_ERROR_CNFE = 27;
+
+    /** exit state in case of an IllegalAccessException while starting the AUT */
+    public static final int AUT_START_ERROR_IACCE = 28;
+
+    /** exit state in case of an NoSuchMethodException while starting the AUT */
+    public static final int AUT_START_ERROR_NSME = 29;
+
+    /** exit state in case of an IllegalArgumentException while starting the AUT */
+    public static final int AUT_START_ERROR_IARGE = 30;
+
+    /**exit state in case of an InvocationTargetException while starting the AUT */
+    public static final int AUT_START_ERROR_INVTE = 31;
+    
     /** exit state in case that the started AUT is not supported
      * through the UI automation framework */
     public static final int AUT_NOT_UIA_SUPPORTED = 26;

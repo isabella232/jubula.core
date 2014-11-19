@@ -16,8 +16,10 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
+import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
 
 
@@ -32,6 +34,10 @@ public class AutServerLauncher {
      */
     private static final String ENV_VAR_USE_CLASSIC_CLASSLOADER = 
         "TEST_USE_CLASSIC_CL"; //$NON-NLS-1$
+    
+    /** the logger */
+    private static AutServerLogger log = new AutServerLogger(
+            AutServerLauncher.class);
 
     /**
      * hidden constructor
@@ -66,14 +72,12 @@ public class AutServerLauncher {
         } catch (Throwable t) {
             // OK, looks like we won't be able to access environment variables.
             // We'll just assume that the variable wasn't set.
-        }
-        
+        }       
         if (useClassicClassLoaderValue == null) {
             // Use JVM property as fallback
             useClassicClassLoaderValue = 
                 System.getProperty(ENV_VAR_USE_CLASSIC_CLASSLOADER);
-        }
-        
+        }     
         if (useClassicClassLoaderValue != null) {
             // Use the old class loading
             autServerClassLoader = new UrlClassicClassLoader(urls, 
@@ -82,10 +86,8 @@ public class AutServerLauncher {
             // Use the new class loading
             autServerClassLoader = new UrlDefaultClassLoader(urls, 
                     ClassLoader.getSystemClassLoader());
-        }
-        
+        }        
         Thread.currentThread().setContextClassLoader(autServerClassLoader);
-        
         try {
             // the AUTServer is loaded with a separate ClassLoader because
             // the AUT MUST NOT know the classpath of the AUTServer!!!
@@ -93,27 +95,32 @@ public class AutServerLauncher {
                 .loadClass(Constants.AUTSERVER_CLASSNAME);
             Method mainMethod = autServerClass.getMethod("main",  //$NON-NLS-1$
                 new Class[] {args.getClass()});
-            mainMethod.invoke(null, new Object[] {args});
-            
+            mainMethod.invoke(null, new Object[] {args});            
         } catch (ClassNotFoundException e) {
-            /** FIXME Andreas Handling */
-            System.exit(AUTServerExitConstants.AUT_START_ERROR);
+            e.printStackTrace();
+            log.error(e.toString() + " " + Arrays.toString(e.getStackTrace()));
+            System.exit(AUTServerExitConstants.AUT_START_ERROR_CNFE);
         } catch (IllegalAccessException e) {
-            /** FIXME Andreas Handling */
-            System.exit(AUTServerExitConstants.AUT_START_ERROR);
+            e.printStackTrace();
+            log.error(e.toString() + " " + Arrays.toString(e.getStackTrace()));
+            System.exit(AUTServerExitConstants.AUT_START_ERROR_IACCE);
         } catch (SecurityException e) {
-            /** FIXME Andreas Handling */
+            e.printStackTrace();
+            log.error(e.toString() + " " + Arrays.toString(e.getStackTrace()));
             System.exit(AUTServerExitConstants
                 .EXIT_SECURITY_VIOLATION_REFLECTION);
         } catch (NoSuchMethodException e) {
-            /** FIXME Andreas Handling */
-            System.exit(AUTServerExitConstants.AUT_START_ERROR);
+            e.printStackTrace();
+            log.error(e.toString() + " " + Arrays.toString(e.getStackTrace()));
+            System.exit(AUTServerExitConstants.AUT_START_ERROR_NSME);
         } catch (IllegalArgumentException e) {
-            /** FIXME Andreas Handling */
-            System.exit(AUTServerExitConstants.AUT_START_ERROR);
+            e.printStackTrace();
+            log.error(e.toString() + " " + Arrays.toString(e.getStackTrace()));
+            System.exit(AUTServerExitConstants.AUT_START_ERROR_IARGE);
         } catch (InvocationTargetException e) {
-            /** FIXME Andreas Handling */
-            System.exit(AUTServerExitConstants.AUT_START_ERROR);
+            e.printStackTrace();
+            log.error(e.toString() + " " + Arrays.toString(e.getStackTrace()));
+            System.exit(AUTServerExitConstants.AUT_START_ERROR_INVTE);
         } 
     }
     
