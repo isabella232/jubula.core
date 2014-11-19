@@ -100,6 +100,46 @@ public class <%=className%> {
     <%}%>
     ) {
         AUT aut = null;
+        <%if (node instanceof ISpecTestCasePO) {
+            ISpecTestCasePO tc = (ISpecTestCasePO) node;
+            for (IEventExecTestCasePO eventTC : tc.getAllEventEventExecTC()) {
+                    String eventType = eventTC.getEventType();
+                    String reentryProp = eventTC.getReentryProp().toString();
+                    String eventHandlerName = StringConstants.EMPTY;
+                    ISpecTestCasePO specEventHandler = eventTC.getSpecTestCase();
+                    try {
+                        project = ProjectCache.get(specEventHandler.getParentProjectId());
+                    } catch (JBException e) {
+                        Plugin.getDefault().writeErrorLineToConsole(
+                                            "Error while loading project.", true);
+                    }
+                    try {
+                        projectName = Utils.translateToPackageName(project);
+                    } catch (InvalidNodeNameException e) {
+                        log.error(e.getLocalizedMessage());
+                    }
+                    eventHandlerName = Utils.getFullyQualifiedTranslatedName(specEventHandler, packageBase, projectName);
+                    Iterator<IParamDescriptionPO> childParamIterator;
+                    IParameterInterfacePO dataCube = eventTC.getReferencedDataCube();%>
+        // TODO: This test case used an Event Handler which you have to replace manually:
+        //       Event Type: <%=eventType%>
+        //       Re-Entry Property: <%=reentryProp%>
+        //       Used Test Case:
+                    <%int rowCount = eventTC.getDataManager().getDataSetCount();
+                      int row = 0;
+                      do {%>
+        //            <%=eventHandlerName%>.execute(
+                          <%childParamIterator = eventTC.getParameterListIter();
+                          while (childParamIterator.hasNext()) {
+                              IParamDescriptionPO param = childParamIterator.next();
+                              String paramValue = ParamUtils.getValueForParam(eventTC, param, row, locale);%>
+        //                <%=paramValue%><%if(childParamIterator.hasNext()){%>,<%}%>
+                          <%}%>
+                          <%row++;%>
+        //            );
+                      <%} while(row < rowCount);
+            }
+        }%>
         
         <%while (iterator.hasNext()) {
             INodePO child = iterator.next();
@@ -166,43 +206,6 @@ public class <%=className%> {
             <%} else if (child instanceof IExecTestCasePO) {
                 IExecTestCasePO exec = (IExecTestCasePO)child;
                 ISpecTestCasePO spec = exec.getSpecTestCase();
-                for (IEventExecTestCasePO eventTC : spec.getAllEventEventExecTC()) {
-                    String eventType = eventTC.getEventType();
-                    String reentryProp = eventTC.getReentryProp().toString();
-                    String eventHandlerName = StringConstants.EMPTY;
-                    ISpecTestCasePO specEventHandler = eventTC.getSpecTestCase();
-                    try {
-                        project = ProjectCache.get(specEventHandler.getParentProjectId());
-                    } catch (JBException e) {
-                        Plugin.getDefault().writeErrorLineToConsole(
-                                            "Error while loading project.", true);
-                    }
-                    try {
-                        projectName = Utils.translateToPackageName(project);
-                    } catch (InvalidNodeNameException e) {
-                        log.error(e.getLocalizedMessage());
-                    }
-                    eventHandlerName = Utils.getFullyQualifiedTranslatedName(specEventHandler, packageBase, projectName);
-                    Iterator<IParamDescriptionPO> childParamIterator;
-                    IParameterInterfacePO dataCube = eventTC.getReferencedDataCube();%>
-        // TODO: The following test case used an Event Handler which you have to replace manually:
-        //       Event Type: <%=eventType%>
-        //       Re-Entry Property: <%=reentryProp%>
-        //       Used Test Case:
-                    <%int rowCount = eventTC.getDataManager().getDataSetCount();
-                      int row = 0;
-                      do {%>
-        //            <%=eventHandlerName%>.execute(
-                          <%childParamIterator = eventTC.getParameterListIter();
-                          while (childParamIterator.hasNext()) {
-                              IParamDescriptionPO param = childParamIterator.next();
-                              String paramValue = ParamUtils.getValueForParam(eventTC, param, row, locale);%>
-        //                <%=paramValue%><%if(childParamIterator.hasNext()){%>,<%}%>
-                          <%}%>
-                          <%row++;%>
-        //            );
-                      <%} while(row < rowCount);
-                }
                 String testCaseName = StringConstants.EMPTY;
                 try {
                     project = ProjectCache.get(spec.getParentProjectId());
