@@ -94,9 +94,10 @@ public class <%=className%> {
         rtc = _rtc;
     }
     <%} else if (node instanceof ITestSuitePO){%>
-    AUT aut;
+    RuntimeContext rtc;
+    
     public <%=className%> (AUT _aut) {
-        aut = _aut;;
+        RuntimeContext rtc = new RuntimeContext(_aut);
     }
     <%} else {%>
     public <%=className%> () {
@@ -119,50 +120,8 @@ public class <%=className%> {
     ) {
         <%if (node instanceof ISpecTestCasePO) {%>
         AUT aut = rtc.getAUT();
-        <%} else if (node instanceof ITestSuitePO) {%>
-        RuntimeContext rtc = new RuntimeContext(aut);
         <%}%>
         <%List<String> autList = new ArrayList<String>();%>
-        <%if (node instanceof ISpecTestCasePO) {
-            ISpecTestCasePO tc = (ISpecTestCasePO) node;
-            for (IEventExecTestCasePO eventTC : tc.getAllEventEventExecTC()) {
-                    String eventType = eventTC.getEventType();
-                    String reentryProp = eventTC.getReentryProp().toString();
-                    String eventHandlerName = StringConstants.EMPTY;
-                    ISpecTestCasePO specEventHandler = eventTC.getSpecTestCase();
-                    try {
-                        project = ProjectCache.get(specEventHandler.getParentProjectId());
-                    } catch (JBException e) {
-                        Plugin.getDefault().writeErrorLineToConsole(
-                                            "Error while loading project.", true);
-                    }
-                    try {
-                        projectName = Utils.translateToPackageName(project);
-                    } catch (InvalidNodeNameException e) {
-                        log.error(e.getLocalizedMessage());
-                    }
-                    eventHandlerName = Utils.getFullyQualifiedTranslatedName(specEventHandler, packageBase, projectName);
-                    Iterator<IParamDescriptionPO> childParamIterator;
-                    IParameterInterfacePO dataCube = eventTC.getReferencedDataCube();%>
-        // TODO: This test case used an Event Handler which you have to replace manually:
-        //       Event Type: <%=eventType%>
-        //       Re-Entry Property: <%=reentryProp%>
-        //       Used Test Case:
-                    <%int rowCount = eventTC.getDataManager().getDataSetCount();
-                      int row = 0;
-                      do {%>
-        //            new <%=eventHandlerName%>(rtc).execute(
-                          <%childParamIterator = eventTC.getParameterListIter();
-                          while (childParamIterator.hasNext()) {
-                              IParamDescriptionPO param = childParamIterator.next();
-                              String paramValue = ParamUtils.getValueForParam(eventTC, param, row, locale);%>
-        //                <%=paramValue%><%if(childParamIterator.hasNext()){%>,<%}%>
-                          <%}%>
-                          <%row++;%>
-        //            );
-                      <%} while(row < rowCount);
-            }
-        }%>
         
         <%while (iterator.hasNext()) {
             INodePO child = iterator.next();
@@ -329,5 +288,46 @@ public class <%=className%> {
         
             <%}%>
         <%}%>
+        
+        <%if (node instanceof ISpecTestCasePO) {
+            ISpecTestCasePO tc = (ISpecTestCasePO) node;
+            for (IEventExecTestCasePO eventTC : tc.getAllEventEventExecTC()) {
+                    String eventType = eventTC.getEventType();
+                    String reentryProp = eventTC.getReentryProp().toString();
+                    String eventHandlerName = StringConstants.EMPTY;
+                    ISpecTestCasePO specEventHandler = eventTC.getSpecTestCase();
+                    try {
+                        project = ProjectCache.get(specEventHandler.getParentProjectId());
+                    } catch (JBException e) {
+                        Plugin.getDefault().writeErrorLineToConsole(
+                                            "Error while loading project.", true);
+                    }
+                    try {
+                        projectName = Utils.translateToPackageName(project);
+                    } catch (InvalidNodeNameException e) {
+                        log.error(e.getLocalizedMessage());
+                    }
+                    eventHandlerName = Utils.getFullyQualifiedTranslatedName(specEventHandler, packageBase, projectName);
+                    Iterator<IParamDescriptionPO> childParamIterator;
+                    IParameterInterfacePO dataCube = eventTC.getReferencedDataCube();%>
+        // TODO: This test case used an Event Handler which you have to replace manually:
+        //       Event Type: <%=eventType%>
+        //       Re-Entry Property: <%=reentryProp%>
+        //       Used Test Case:
+                    <%int rowCount = eventTC.getDataManager().getDataSetCount();
+                      int row = 0;
+                      do {%>
+        //            new <%=eventHandlerName%>(rtc).execute(
+                          <%childParamIterator = eventTC.getParameterListIter();
+                          while (childParamIterator.hasNext()) {
+                              IParamDescriptionPO param = childParamIterator.next();
+                              String paramValue = ParamUtils.getValueForParam(eventTC, param, row, locale);%>
+        //                <%=paramValue%><%if(childParamIterator.hasNext()){%>,<%}%>
+                          <%}%>
+                          <%row++;%>
+        //            );
+                      <%} while(row < rowCount);
+            }
+        }%>
     }
 }
