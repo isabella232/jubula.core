@@ -79,15 +79,33 @@ package <%=packageName%>;
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.api.converter.annotations.SrcNode;
 import org.eclipse.jubula.client.api.converter.annotations.NodeType;
+import org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext;
 
 import <%=ctdsPath%>.CTDS;
 
 @SrcNode(UUID = "<%=uuid%>",
          type = NodeType.<%=type%><%if (hasTaskId) {%>, taskId = "<%=taskId%>"<%}%>)
 public class <%=className%> {
+
+    <%if (node instanceof ISpecTestCasePO) {%>
+    RuntimeContext rtc;
+    
+    public <%=className%> (RuntimeContext _rtc) {
+        rtc = _rtc;
+    }
+    <%} else if (node instanceof ITestSuitePO){%>
+    AUT aut;
+    public <%=className%> (AUT _aut) {
+        aut = _aut;;
+    }
+    <%} else {%>
+    public <%=className%> () {
+        super();
+    }
+    <%}%>
     
     <%if (hasComment) {%>/** <%=comment%> */<%}%>
-    public static void execute(
+    public void execute(
     <%if (node instanceof ISpecTestCasePO) {
         ISpecTestCasePO tc = (ISpecTestCasePO) node;
         Iterator<IParamDescriptionPO> paramIterator = tc.getParameterListIter();
@@ -99,7 +117,12 @@ public class <%=className%> {
         <%}%>
     <%}%>
     ) {
-        AUT aut = null;
+        <%if (node instanceof ISpecTestCasePO) {%>
+        AUT aut = rtc.getAUT();
+        <%} else if (node instanceof ITestSuitePO) {%>
+        RuntimeContext rtc = new RuntimeContext(aut);
+        <%}%>
+        <%List<String> autList = new ArrayList<String>();%>
         <%if (node instanceof ISpecTestCasePO) {
             ISpecTestCasePO tc = (ISpecTestCasePO) node;
             for (IEventExecTestCasePO eventTC : tc.getAllEventEventExecTC()) {
@@ -128,7 +151,7 @@ public class <%=className%> {
                     <%int rowCount = eventTC.getDataManager().getDataSetCount();
                       int row = 0;
                       do {%>
-        //            <%=eventHandlerName%>.execute(
+        //            new <%=eventHandlerName%>(rtc).execute(
                           <%childParamIterator = eventTC.getParameterListIter();
                           while (childParamIterator.hasNext()) {
                               IParamDescriptionPO param = childParamIterator.next();
@@ -147,8 +170,8 @@ public class <%=className%> {
             comment = child.getComment();
             hasComment = StringUtils.isNotBlank(comment);
         
-        if (hasComment) {%>// <%=comment%><%}
-            if (child instanceof ICapPO) {
+        if (hasComment) {%>// <%=comment%><%}%>
+            <%if (child instanceof ICapPO) {
                 ICapPO cap = (ICapPO) child;
                 String componentFromCap = cap.getComponentType();
                 CompNameLoader loader = new CompNameLoader(componentFromCap);
@@ -229,7 +252,7 @@ public class <%=className%> {
         
         <%if (!isActive) {%>// This test case was generated as commented out because its correspondent in the ITE was inactive<%}%>
         
-        <%if (!isActive) {%>//<%}%><%=testCaseName%>.execute(
+        <%if (!isActive) {%>//<%}%>new <%=testCaseName%>(rtc).execute(
                     <%childParamIterator = exec.getParameterListIter();
                     while (childParamIterator.hasNext()) {
                         IParamDescriptionPO param = childParamIterator.next();
@@ -255,7 +278,7 @@ public class <%=className%> {
         
         <%if (!isActive) {%>//<%}%>for (CTDS.<%=dataCubeName%> row : CTDS.<%=dataCubeName%>.data) {
             
-            <%if (!isActive) {%>//<%}%><%=testCaseName%>.execute(
+            <%if (!isActive) {%>//<%}%>new <%=testCaseName%>(rtc).execute(
                 
                     <%childParamIterator = exec.getParameterListIter();
                     while (childParamIterator.hasNext()) {
@@ -285,11 +308,24 @@ public class <%=className%> {
                 } catch (InvalidNodeNameException e) {
                     log.error(e.getLocalizedMessage());
                 }
-                testSuiteName = Utils.getFullyQualifiedTranslatedName(testSuite, packageBase, projectName);%>
+                testSuiteName = Utils.getFullyQualifiedTranslatedName(testSuite, packageBase, projectName);
+                String autName = StringUtils.deleteWhitespace(testSuite.getAut().getName());
+                Boolean newAUT = false;
+                if (!autList.contains(autName) && isActive) {
+                    newAUT = true;
+                    autList.add(autName);
+                }%>
         
         <%if (!isActive) {%>// This test suite was generated as commented out because its correspondent in the ITE was inactive<%}%>
         
-        <%if (!isActive) {%>/* <%}%><%=testSuiteName%>.execute();<%if (!isActive) {%>*/<%}%>
+        <%if (newAUT) {%><%if (!isActive) {%>// <%}%>AUT <%=autName%> = null; // TODO: Define AUT manually
+        
+        <%}%>
+        <%if (!isActive) {%>// <%}%><%=autName%>.connect();
+        
+        <%if (!isActive) {%>// <%}%>new <%=testSuiteName%>(<%=autName%>).execute();
+        
+        <%if (!isActive) {%>// <%}%><%=autName%>.disconnect();
         
             <%}%>
         <%}%>
