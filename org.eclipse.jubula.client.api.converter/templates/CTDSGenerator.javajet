@@ -46,18 +46,22 @@ public class <%=className%> {
         testCubeName = Utils.determineClassName(testCube);
     } catch (InvalidNodeNameException e) {
         log.error("Invalid Data Set Name", e);
-    }%>
+    }
+    int parameterCount = 0;%>
     public static class <%=testCubeName%> {
     <%for (IParamDescriptionPO param : testCube.getParameterList()) {%>
-        <%String paramName = param.getName();
+        <%parameterCount++;
+        String paramName = param.getName();
         String paramType = nameLoader.findTypeForParameter(param.getType(), StringConstants.EMPTY);%>
         public <%=paramType%> <%=paramName%>;
-    <%}%>
+    <%}
+    Boolean testCubeSizeOkay = parameterCount < 256;%>
     
         public static List<<%=testCubeName%>> data = new ArrayList<<%=testCubeName%>>();
         
         static {
         <%for (int row = 0; row < testCube.getDataManager().getDataSetCount(); row++) {%>
+          <%if (testCubeSizeOkay) {%>
             data.add(new <%=testCubeName%>(
             <%Iterator <IParamDescriptionPO> paramIterator = testCube.getParameterListIter();
             while (paramIterator.hasNext()) {%>
@@ -68,9 +72,24 @@ public class <%=className%> {
                 
                 <%if (paramIterator.hasNext()) {%>, <%}%>
             <%}%>));
+          <%} else {%>
+            <%String objName = "entry_" + row;%>
+            <%=testCubeName%> <%=objName%> = new <%=testCubeName%>();
+            <%Iterator <IParamDescriptionPO> paramIterator = testCube.getParameterListIter();
+            while (paramIterator.hasNext()) {%>
+                <%IParamDescriptionPO param = paramIterator.next();
+                String paramValue = ParamUtils.getValueForParam(
+                    testCube, param, row, language);
+                String paramName = param.getName();%>
+                <%=objName%>.<%=paramName%> = <%=paramValue%>
+                    ;
+            <%}%>
+            data.add(<%=objName%>);
+          <%}%>
         <%}%>
         }
     
+      <%if (testCubeSizeOkay) {%>
         private <%=testCubeName%> (
         <%Iterator <IParamDescriptionPO> paramIterator = testCube.getParameterListIter();
         while (paramIterator.hasNext()) {%>
@@ -85,6 +104,11 @@ public class <%=className%> {
             <%=paramName%> = _<%=paramName%>;
         <%}%>
         }
+      <%} else {%>
+        private <%=testCubeName%> () {
+            super();
+        }
+      <%}%>
     }
     
 <%}%>
