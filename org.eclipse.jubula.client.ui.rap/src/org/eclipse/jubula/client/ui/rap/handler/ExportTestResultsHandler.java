@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.dom4j.Document;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -50,10 +49,8 @@ import org.eclipse.jubula.client.ui.editors.TestResultViewer.GenerateTestResultT
 import org.eclipse.jubula.client.ui.rap.constants.IdConstants;
 import org.eclipse.jubula.client.ui.rap.servicehandler.DownloadTestResultsServiceHandler;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
-import org.eclipse.rwt.RWT;
-import org.eclipse.rwt.service.IServiceHandler;
-import org.eclipse.rwt.widgets.ExternalBrowser;
-import org.eclipse.swt.SWT;
+import org.eclipse.rap.rwt.RWT;
+import org.eclipse.rap.rwt.client.service.UrlLauncher;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.slf4j.Logger;
@@ -83,7 +80,7 @@ public class ExportTestResultsHandler extends AbstractHandler {
         /** the display to use for UI operations */
         private Display m_display;
         
-        /** the base Dashboard URL */
+        /** the base URL including service url */
         private String m_baseUrl;
         
         /** the response to use for encoding the download link */
@@ -94,7 +91,7 @@ public class ExportTestResultsHandler extends AbstractHandler {
          * 
          * @param summariesToExport The Test Result Summaries for which to 
          *                          export Test Results.
-         * @param baseUrl The display to use for UI operations.
+         * @param baseUrl The base URL including service url
          * @param display The base Dashboard URL.
          * @param response The response to use for encoding the download link.
          */
@@ -115,10 +112,9 @@ public class ExportTestResultsHandler extends AbstractHandler {
             try {
                 URI downloadFileUri = 
                         performExport(m_summariesToExport, monitor).toURI();
-                
+
                 final StringBuilder urlBuilder = new StringBuilder();
-                urlBuilder.append(m_baseUrl).append("?").append(IServiceHandler.REQUEST_PARAM) //$NON-NLS-1$
-                    .append("=").append(DownloadTestResultsServiceHandler.SERVICE_HANDLER_ID) //$NON-NLS-1$
+                urlBuilder.append(m_baseUrl)
                     .append("&").append(DownloadTestResultsServiceHandler.PARAM_FILENAME) //$NON-NLS-1$
                     .append("="); //$NON-NLS-1$
                 urlBuilder.append(URLEncoder.encode(downloadFileUri.toString(), 
@@ -129,10 +125,10 @@ public class ExportTestResultsHandler extends AbstractHandler {
                     m_display.asyncExec(new Runnable() {
                         
                         public void run() {
-                            ExternalBrowser.open("_blank",  //$NON-NLS-1$
-                                    m_response.encodeURL(
-                                            uri.toASCIIString()), 
-                                    SWT.NONE);
+                            UrlLauncher launcher = RWT.getClient()
+                                    .getService(UrlLauncher.class);
+                            launcher.openURL(m_response.encodeURL(
+                                    uri.toASCIIString()));
                         }
                     });
                 } else {
@@ -235,7 +231,7 @@ public class ExportTestResultsHandler extends AbstractHandler {
      * 
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object execute(ExecutionEvent event) {
         ISelection selection = HandlerUtil.getCurrentSelection(event);
         IStructuredSelection structuredSelection = null;
         if (selection instanceof IStructuredSelection) {
@@ -269,10 +265,10 @@ public class ExportTestResultsHandler extends AbstractHandler {
                     "No Test Results were selected for export."); //$NON-NLS-1$
             return null;
         }
-
+        String url = RWT.getServiceManager().getServiceHandlerUrl(
+                        DownloadTestResultsServiceHandler.SERVICE_HANDLER_ID);
         Job exportJob = new ExportTestResultsJob(selectedSummaries, 
-                RWT.getRequest().getContextPath() 
-                    + RWT.getRequest().getServletPath(),
+                url,
                 Display.getCurrent(),
                 RWT.getResponse());
         exportJob.setUser(true);

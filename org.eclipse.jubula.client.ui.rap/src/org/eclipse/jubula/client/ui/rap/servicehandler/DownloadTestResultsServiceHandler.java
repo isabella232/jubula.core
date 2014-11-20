@@ -18,11 +18,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.rwt.RWT;
-import org.eclipse.rwt.service.IServiceHandler;
+import org.eclipse.rap.rwt.service.ServiceHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * @author BREDEX GmbH
  */
-public class DownloadTestResultsServiceHandler implements IServiceHandler {
+public class DownloadTestResultsServiceHandler implements ServiceHandler {
 
     /** service handler ID */
     public static final String SERVICE_HANDLER_ID = 
@@ -46,27 +45,26 @@ public class DownloadTestResultsServiceHandler implements IServiceHandler {
     /** the logger */
     private static final Logger LOG = 
             LoggerFactory.getLogger(DownloadTestResultsServiceHandler.class);
-    
+
     /**
-     * 
      * {@inheritDoc}
      */
-    public void service() throws IOException, ServletException {
+    public void service(HttpServletRequest request, 
+            HttpServletResponse response)
+            throws IOException {
         File downloadFile;
         try {
-            downloadFile = new File(
-                    new URI(RWT.getRequest().getParameter(PARAM_FILENAME))
-                        .toURL().getFile());
-            HttpServletResponse response = RWT.getResponse();
+            downloadFile = new File(new URI(request.getParameter(
+                    PARAM_FILENAME)).toURL().getFile());
             response.setContentType("application/octet-stream"); //$NON-NLS-1$
-            response.setContentLength((int)downloadFile.length());
-            response.setHeader("Content-Disposition",  //$NON-NLS-1$
+            response.setContentLength((int) downloadFile.length());
+            response.setHeader("Content-Disposition", //$NON-NLS-1$
                     "attachment; filename=\"" + downloadFile.getName() + "\""); //$NON-NLS-1$ //$NON-NLS-2$
-            BufferedOutputStream outputStream = 
-                    new BufferedOutputStream(response.getOutputStream());
-            BufferedInputStream inputStream = 
-                    new BufferedInputStream(new FileInputStream(downloadFile));
-            
+            BufferedOutputStream outputStream = new BufferedOutputStream(
+                    response.getOutputStream());
+            BufferedInputStream inputStream = new BufferedInputStream(
+                    new FileInputStream(downloadFile));
+
             try {
                 int b;
                 while ((b = inputStream.read()) != -1) {

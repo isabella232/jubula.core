@@ -34,8 +34,8 @@ import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.perspective.ReportPerspective;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.rwt.RWT;
-import org.eclipse.rwt.lifecycle.UICallBack;
+import org.eclipse.rap.rwt.RWT;
+import org.eclipse.rap.rwt.service.UISession;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
@@ -218,7 +218,8 @@ public class DashboardApp implements IApplication {
 
         @Override
         protected IStatus run(IProgressMonitor monitor) {
-            UICallBack.runNonUIThreadWithFakeContext(m_display, new Runnable() {
+            UISession uiSession = RWT.getUISession(m_display);
+            uiSession.exec(new Runnable() {
                 public void run() {
                     final Command projectPropertiesCommand = CommandHelper
                         .getCommandService().getCommand(
@@ -272,7 +273,7 @@ public class DashboardApp implements IApplication {
                 String path = System
                         .getenv("TEST_DASHBOARD_PROPERTIES"); //$NON-NLS-1$
                 if (StringUtils.isBlank(path)) {
-                    String home = System.getProperty(
+                    path = System.getProperty(
                             "TEST_DASHBOARD_PROPERTIES");  //$NON-NLS-1$
                 }
                 if (StringUtils.isBlank(path)) {

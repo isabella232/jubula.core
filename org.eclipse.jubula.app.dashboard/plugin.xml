@@ -49,9 +49,7 @@
  <extension
          point="org.eclipse.rap.ui.branding">
       <branding
-            servletName="dashboard"
             themeId="org.eclipse.rap.design.example.business.theme"
-            defaultEntrypointId="org.eclipse.jubula.app.dashboard.dashboard"
             title="ITE - Functional Testing Dashboard"
             id="org.eclipse.jubula.app.dashboard.branding">
          <presentationFactory
@@ -101,4 +99,15 @@
          </with>
       </definition>
    </extension>
+   <extension point="org.eclipse.rap.ui.entrypoint">
+        <entrypoint id="example.application.entrypoint"
+         applicationId="org.eclipse.jubula.app.dashboard.dashboard"
+         brandingId="org.eclipse.jubula.app.dashboard.branding"
+         path="/dashboard" />
+        <entrypoint id="example.application.entrypoint"
+         applicationId="org.eclipse.jubula.app.dashboard.dashboard"
+         brandingId="org.eclipse.jubula.app.dashboard.branding"
+         path="/" />
+   </extension>
+
 </plugin>

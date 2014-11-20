@@ -26,16 +26,16 @@ public class BusinessLogoInitializer implements ILayoutSetInitializer {
      * the logo path property
      */
 
-    public static final String LOGO = "header.logo";
+    public static final String LOGO = "header.logo"; //$NON-NLS-1$
     /**
      * the logo position property
      */
     
-    public static final String LOGO_POSITION = "header.logo.position";
+    public static final String LOGO_POSITION = "header.logo.position"; //$NON-NLS-1$
 
     /** {@inheritDoc} */
     public void initializeLayoutSet(final LayoutSet layoutSet) {
-        layoutSet.addImagePath(LOGO, "resources/logo.png");
+        layoutSet.addImagePath(LOGO, "resources/logo.png"); //$NON-NLS-1$
 
         // positions
         FormData fdLogo = new FormData();
