@@ -16,10 +16,8 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
-import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
 
 
@@ -34,10 +32,6 @@ public class AutServerLauncher {
      */
     private static final String ENV_VAR_USE_CLASSIC_CLASSLOADER = 
         "TEST_USE_CLASSIC_CL"; //$NON-NLS-1$
-    
-    /** the logger */
-    private static AutServerLogger log = new AutServerLogger(
-            AutServerLauncher.class);
 
     /**
      * hidden constructor
@@ -98,28 +92,22 @@ public class AutServerLauncher {
             mainMethod.invoke(null, new Object[] {args});            
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            log.error(e.toString() + " " + Arrays.toString(e.getStackTrace()));
             System.exit(AUTServerExitConstants.AUT_START_ERROR_CNFE);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-            log.error(e.toString() + " " + Arrays.toString(e.getStackTrace()));
             System.exit(AUTServerExitConstants.AUT_START_ERROR_IACCE);
         } catch (SecurityException e) {
             e.printStackTrace();
-            log.error(e.toString() + " " + Arrays.toString(e.getStackTrace()));
             System.exit(AUTServerExitConstants
                 .EXIT_SECURITY_VIOLATION_REFLECTION);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
-            log.error(e.toString() + " " + Arrays.toString(e.getStackTrace()));
             System.exit(AUTServerExitConstants.AUT_START_ERROR_NSME);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            log.error(e.toString() + " " + Arrays.toString(e.getStackTrace()));
             System.exit(AUTServerExitConstants.AUT_START_ERROR_IARGE);
         } catch (InvocationTargetException e) {
             e.printStackTrace();
-            log.error(e.toString() + " " + Arrays.toString(e.getStackTrace()));
             System.exit(AUTServerExitConstants.AUT_START_ERROR_INVTE);
         } 
     }
