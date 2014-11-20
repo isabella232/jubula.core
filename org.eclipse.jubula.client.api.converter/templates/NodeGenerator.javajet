@@ -97,7 +97,7 @@ public class <%=className%> {
     RuntimeContext rtc;
     
     public <%=className%> (AUT _aut) {
-        RuntimeContext rtc = new RuntimeContext(_aut);
+        rtc = new RuntimeContext(_aut);
     }
     <%} else {%>
     public <%=className%> () {
