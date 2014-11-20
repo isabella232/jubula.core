@@ -64,13 +64,13 @@ String fqName = Utils.getFullyQualifiedTranslatedName(node, packageBase, project
 String packageName = StringUtils.substringBeforeLast(fqName, StringConstants.DOT);
 String ctdsPath = Utils.getProjectPath(info.getPackageBasePath(), projectName);
 
-NodeType type = NodeType.UNKNOWN;
+NodeType nodeType = NodeType.UNKNOWN;
 if (node instanceof ISpecTestCasePO) {
-    type = NodeType.TEST_CASE;
+    nodeType = NodeType.TEST_CASE;
 } else if (node instanceof ITestJobPO) {
-    type = NodeType.TEST_JOB;
+    nodeType = NodeType.TEST_JOB;
 } else if (node instanceof ITestSuitePO) {
-    type = NodeType.TEST_SUITE;
+    nodeType = NodeType.TEST_SUITE;
 }
 
 %>
@@ -84,7 +84,7 @@ import org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext;
 import <%=ctdsPath%>.CTDS;
 
 @SrcNode(UUID = "<%=uuid%>",
-         type = NodeType.<%=type%><%if (hasTaskId) {%>, taskId = "<%=taskId%>"<%}%>)
+         type = NodeType.<%=nodeType%><%if (hasTaskId) {%>, taskId = "<%=taskId%>"<%}%>)
 public class <%=className%> {
 
     <%if (node instanceof ISpecTestCasePO) {%>
@@ -129,7 +129,7 @@ public class <%=className%> {
             comment = child.getComment();
             hasComment = StringUtils.isNotBlank(comment);
         
-        if (hasComment) {%>// <%=comment%><%}%>
+        if (hasComment) {%>// Comment: <%=comment%><%}%>
             <%if (child instanceof ICapPO) {
                 ICapPO cap = (ICapPO) child;
                 String componentFromCap = cap.getComponentType();
@@ -156,7 +156,7 @@ public class <%=className%> {
                 }
                 if (actionName != null) {%>
         
-        <%if (!isActive) {%>// This test case was generated as commented out because its correspondent in the ITE was inactive<%}%>
+        <%if (!isActive) {%>// Hint: this line is commented out because its correspondent node in the ITE was inactive<%}%>
         
         <%if (!isActive) {%>//<%}%>aut.execute(
             
@@ -188,6 +188,8 @@ public class <%=className%> {
             <%} else if (child instanceof IExecTestCasePO) {
                 IExecTestCasePO exec = (IExecTestCasePO)child;
                 ISpecTestCasePO spec = exec.getSpecTestCase();
+                String referenceName = exec.getRealName();
+                boolean hasReferenceName = StringUtils.isNotBlank(referenceName);
                 String testCaseName = StringConstants.EMPTY;
                 try {
                     project = ProjectCache.get(spec.getParentProjectId());
@@ -209,7 +211,8 @@ public class <%=className%> {
                 int row = 0;
                 do {%>
         
-        <%if (!isActive) {%>// This test case was generated as commented out because its correspondent in the ITE was inactive<%}%>
+        <%if (!isActive) {%>// Hint: this line is commented out because its correspondent node in the ITE was inactive<%}%>
+        <%if (hasReferenceName) {%>// <%=referenceName%><%}%>
         
         <%if (!isActive) {%>//<%}%>new <%=testCaseName%>(rtc).execute(
                     <%childParamIterator = exec.getParameterListIter();
@@ -233,10 +236,11 @@ public class <%=className%> {
                     log.error("Invalid Data Set Name", e);
                 }%>
         
-        <%if (!isActive) {%>// This test case was generated as commented out because its correspondent in the ITE was inactive<%}%>
+        <%if (!isActive) {%>// Hint: this line is commented out because its correspondent node in the ITE was inactive<%}%>
         
         <%if (!isActive) {%>//<%}%>for (CTDS.<%=dataCubeName%> row : CTDS.<%=dataCubeName%>.data) {
-            
+            <%if (hasReferenceName) {%>// <%=referenceName%><%}%>
+        
             <%if (!isActive) {%>//<%}%>new <%=testCaseName%>(rtc).execute(
                 
                     <%childParamIterator = exec.getParameterListIter();
@@ -254,6 +258,11 @@ public class <%=className%> {
             <%} else if (child instanceof IRefTestSuitePO) {
                 IRefTestSuitePO ref = (IRefTestSuitePO)child;
                 ITestSuitePO testSuite = ref.getTestSuite();
+                
+                String referenceName = ref.getName();
+                boolean hasReferenceName = StringUtils.isNotBlank(referenceName) 
+                	&& !referenceName.equals(testSuite.getName());
+                
                 String testSuiteName = StringConstants.EMPTY;
                 try {
                 project = ProjectCache.get(testSuite.getParentProjectId());
@@ -275,12 +284,13 @@ public class <%=className%> {
                     autList.add(autName);
                 }%>
         
-        <%if (!isActive) {%>// This test suite was generated as commented out because its correspondent in the ITE was inactive<%}%>
+        <%if (!isActive) {%>// Hint: this line is commented out because its correspondent node in the ITE was inactive<%}%>
         
         <%if (newAUT) {%><%if (!isActive) {%>// <%}%>AUT <%=autName%> = null; // TODO: Define AUT manually
         
         <%}%>
         <%if (!isActive) {%>// <%}%><%=autName%>.connect();
+        <%if (hasReferenceName) {%>// <%=referenceName%><%}%>
         
         <%if (!isActive) {%>// <%}%>new <%=testSuiteName%>(<%=autName%>).execute();
         
@@ -295,6 +305,8 @@ public class <%=className%> {
                     String eventType = eventTC.getEventType();
                     String reentryProp = eventTC.getReentryProp().toString();
                     String eventHandlerName = StringConstants.EMPTY;
+                    String referenceName = eventTC.getRealName();
+                    boolean hasReferenceName = StringUtils.isNotBlank(referenceName);
                     ISpecTestCasePO specEventHandler = eventTC.getSpecTestCase();
                     try {
                         project = ProjectCache.get(specEventHandler.getParentProjectId());
@@ -310,10 +322,10 @@ public class <%=className%> {
                     eventHandlerName = Utils.getFullyQualifiedTranslatedName(specEventHandler, packageBase, projectName);
                     Iterator<IParamDescriptionPO> childParamIterator;
                     IParameterInterfacePO dataCube = eventTC.getReferencedDataCube();%>
-        // TODO: This test case used an Event Handler which you have to replace manually:
+        // Hint: This test case used Event Handler which you have to replace manually:
         //       Event Type: <%=eventType%>
         //       Re-Entry Property: <%=reentryProp%>
-        //       Used Test Case:
+        //       Used Test Case: <%if (hasReferenceName) {%><%=referenceName%><%}%>
                     <%int rowCount = eventTC.getDataManager().getDataSetCount();
                       int row = 0;
                       do {%>
