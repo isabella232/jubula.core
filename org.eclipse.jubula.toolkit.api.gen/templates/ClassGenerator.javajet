@@ -87,9 +87,12 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.communication.CAP;
 <%if (!genInterface) {%>
 import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.StringUtils;
+
 import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.communication.internal.message.MessageParam;
 import org.eclipse.jubula.tools.ComponentIdentifier;
+import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.toolkit.internal.annotations.RealizedType;
 import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
@@ -178,6 +181,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
         Iterator<Param> paramIterator = params.iterator();
         while (paramIterator.hasNext()) {
             Param param = paramIterator.next();
+            boolean hasCombineableValueSet = param.hasValueSet() && param.getValueSet().isCombinable();
             String type = param.getType();
             String name = param.getName();
             String paramType = nameLoader.findTypeForParameter(type, name);
@@ -186,7 +190,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             paramMap.put(name, paramType);
             paramTypeMap.put(name, fixedType);
             %>
-            @NonNull <%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
+            @NonNull <%=paramType%><%if (hasCombineableValueSet) {%>[]<%}%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
         <%}%>
         ) <%if (!params.isEmpty()) {%>throws IllegalArgumentException<%} if (genInterface) {%>;<%} else {%> {
             MessageCap messageCap = new MessageCap();
@@ -197,13 +201,19 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             <%} else {%>
             messageCap.setCi(getPseudoComponentIdentifier());<%}%>
             <%for (Param parameter : params) {
+            boolean hasCombineableValueSet = parameter.hasValueSet() && parameter.getValueSet().isCombinable();
             String paramName = parameter.getName();%>
             <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
             Validate.notNull(<%=translatedParamName%>, "Argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
                 <%String paramEnumType = paramMap.get(paramName);%>
                 <%String paramType = paramTypeMap.get(paramName);%>
                 <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
+                    <%if (!hasCombineableValueSet) {%>
             messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.rcValue(), "<%=paramType%>")); //$NON-NLS-1$
+                    <%} else {%>
+            Validate.noNullElements(<%=translatedParamName%>, "Elements of argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
+            messageCap.addMessageParam(new MessageParam(StringUtils.join(<%=translatedParamName%>, TestDataConstants.COMBI_VALUE_SEPARATOR), "<%=paramType%>")); //$NON-NLS-1$
+                    <%}%>
                 <%} else {%>
             messageCap.addMessageParam(new MessageParam(String.valueOf(<%=translatedParamName%>), "<%=paramType%>")); //$NON-NLS-1$
                 <%}%>

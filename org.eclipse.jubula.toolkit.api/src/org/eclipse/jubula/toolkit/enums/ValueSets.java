@@ -158,7 +158,7 @@ public final class ValueSets {
     }
     
     /** @author BREDEX GmbH */
-    public enum Modifier implements LiteralProvider {
+    public enum Modifier implements CombinableLiteralProvider {
         /** modifier value */
         none("none"), //$NON-NLS-1$
         /** modifier value */
@@ -192,6 +192,11 @@ public final class ValueSets {
          */
         public String rcValue() {
             return m_rcValue;
+        }
+        
+        @Override
+        public String toString() {
+            return rcValue();
         }
     }
     
