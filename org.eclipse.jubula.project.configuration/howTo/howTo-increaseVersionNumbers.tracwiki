@@ -14,7 +14,6 @@
  * replace {{{<version>2.3.0-SNAPSHOT</version>}}} with e.g. {{{<version>2.4.0-SNAPSHOT</version>}}} 
  * adjust version ranges for target-platform-configuration requirements (toolkit provider)
   * {{{<versionRange>[2.3.0,2.4.0)</versionRange>}}} to {{{<versionRange>[2.4.0,2.5.0)</versionRange>}}}
-* adjust texgen.sh documentation build script in line 44 - increase version number accordingly 
 * adjust feature.xml versions
  * replace {{{version="2.3.0.qualifier"}}} with {{{version="2.4.0.qualifier"}}} 
  * and '''manually check''' feature 
