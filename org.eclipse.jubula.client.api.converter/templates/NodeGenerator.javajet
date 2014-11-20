@@ -2,11 +2,13 @@
 package="org.eclipse.jubula.client.api.converter" 
 imports="java.util.*
          org.apache.commons.lang.StringUtils
+         org.eclipse.jubula.client.api.converter.annotations.NodeType
          org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException
          org.eclipse.jubula.client.api.converter.utils.CompNameLoader
          org.eclipse.jubula.client.api.converter.utils.ProjectCache
          org.eclipse.jubula.client.api.converter.utils.ParamUtils
          org.eclipse.jubula.client.api.converter.utils.Utils
+         org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP
          org.eclipse.jubula.client.core.model.ICapPO
          org.eclipse.jubula.client.core.model.IEventExecTestCasePO
          org.eclipse.jubula.client.core.model.IExecTestCasePO
@@ -27,7 +29,6 @@ imports="java.util.*
          org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
          org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem
          org.eclipse.jubula.tools.internal.xml.businessmodell.Component
-         org.eclipse.jubula.client.api.converter.annotations.NodeType
          org.slf4j.Logger
          org.slf4j.LoggerFactory"
 class="NodeGenerator"%>
@@ -43,9 +44,11 @@ boolean hasComment = StringUtils.isNotBlank(comment);
 String taskId = node.getTaskId();
 boolean hasTaskId = StringUtils.isNotBlank(taskId);
 Locale locale = info.getLanguage();
-Iterator<INodePO> iterator = node.getNodeListIterator();
+Iterator<INodePO> childIterator = node.getNodeListIterator();
 String packageBase = info.getPackageBasePath();
 NameLoader nameLoader = NameLoader.getInstance();
+ComponentNamesBP compNamesBP = ComponentNamesBP.getInstance();
+List<String> compIdentifierNames = new ArrayList<String>();
 IProjectPO project = null;
 try {
     project = ProjectCache.get(node.getParentProjectId());
@@ -80,21 +83,51 @@ import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.api.converter.annotations.SrcNode;
 import org.eclipse.jubula.client.api.converter.annotations.NodeType;
 import org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext;
+import org.eclipse.jubula.tools.ComponentIdentifier;
 
 import <%=ctdsPath%>.CTDS;
 
 @SrcNode(UUID = "<%=uuid%>",
          type = NodeType.<%=nodeType%><%if (hasTaskId) {%>, taskId = "<%=taskId%>"<%}%>)
 public class <%=className%> {
-
-    <%if (node instanceof ISpecTestCasePO) {%>
-    RuntimeContext rtc;
     
-    public <%=className%> (RuntimeContext _rtc) {
+    <%if (node instanceof ISpecTestCasePO) {%>
+    private RuntimeContext rtc;
+    
+        <%while (childIterator.hasNext()) {
+            INodePO child = childIterator.next();
+            String compIdentifierName = StringConstants.EMPTY;
+            if (child instanceof ICapPO) {
+                ICapPO cap = (ICapPO) child;
+                compIdentifierName = compNamesBP.getName(cap.getComponentName());
+                if (compIdentifierName == null || StringUtils.isBlank(compIdentifierName)
+                      || compIdentifierNames.contains(compIdentifierName)) {
+                  continue;
+                }
+                compIdentifierNames.add(compIdentifierName);%>
+    private ComponentIdentifier <%=compIdentifierName%>;
+    
+            <%}%>
+        <%}%>
+    <%Iterator<String> compIdentifierIterator = compIdentifierNames.iterator();%>
+    
+    public <%=className%> (RuntimeContext _rtc<%if (compIdentifierIterator.hasNext()) {%>,<%}%>
+        <%while (compIdentifierIterator.hasNext()) {
+            String compIdentifierName = compIdentifierIterator.next();%>
+        
+        ComponentIdentifier _<%=compIdentifierName%><%if (compIdentifierIterator.hasNext()) {%>,<%}%>
+        <%}%>
+    ) {
         rtc = _rtc;
+        <%compIdentifierIterator = compIdentifierNames.iterator();
+        while (compIdentifierIterator.hasNext()) {
+            String compIdentifierName = compIdentifierIterator.next();%>
+        
+        <%=compIdentifierName%> = _<%=compIdentifierName%>;
+        <%}%>
     }
     <%} else if (node instanceof ITestSuitePO){%>
-    RuntimeContext rtc;
+    private RuntimeContext rtc;
     
     public <%=className%> (AUT _aut) {
         rtc = new RuntimeContext(_aut);
@@ -123,8 +156,9 @@ public class <%=className%> {
         <%}%>
         <%List<String> autList = new ArrayList<String>();%>
         
-        <%while (iterator.hasNext()) {
-            INodePO child = iterator.next();
+        <%childIterator = node.getNodeListIterator();
+        while (childIterator.hasNext()) {
+            INodePO child = childIterator.next();
             boolean isActive = child.isActive();
             comment = child.getComment();
             hasComment = StringUtils.isNotBlank(comment);
@@ -146,6 +180,7 @@ public class <%=className%> {
                 if (c instanceof ConcreteComponent) {
                     cc = (ConcreteComponent)c;            
                 }
+                String compIdentifierName = StringConstants.EMPTY;
                 if (hasDefaultMapping) {
                     String toolkitID = info.getDefaultToolkit();
                     factoryName = Utils.getFactoryName(toolkitID);
@@ -155,6 +190,7 @@ public class <%=className%> {
                 } else {
                     factoryName = loader.get("factoryName");
                     componentNameToCreate = loader.get("componentTypeName");
+                    compIdentifierName = compNamesBP.getName(cap.getComponentName());
                 }
                 if (actionName != null) {%>
         
@@ -163,7 +199,7 @@ public class <%=className%> {
         <%}%>
         <%if (!isActive) {%>//<%}%>aut.execute(
             
-            <%if (!isActive) {%>//<%}%><%=factoryName%>.create<%=componentNameToCreate%>(<%if (!hasDefaultMapping) {%>null<%}%>)
+            <%if (!isActive) {%>//<%}%><%=factoryName%>.create<%=componentNameToCreate%>(<%if (!hasDefaultMapping && StringUtils.isNotBlank(compIdentifierName)) {%><%=compIdentifierName%><%}%>)
                 
                 <%if (!isActive) {%>//<%}%>.<%=actionName%>(
                 <%Iterator<IParamDescriptionPO> childParamIterator = cap.getParameterListIter();
@@ -210,12 +246,30 @@ public class <%=className%> {
                     log.error(e.getLocalizedMessage());
                 }
                 testCaseName = Utils.getFullyQualifiedTranslatedName(spec, packageBase, projectName);
+                List<String> childCompIdentifierNames = new ArrayList<String>();
+                Iterator<INodePO> grandchildIterator = spec.getNodeListIterator();
+                while (grandchildIterator.hasNext()) {
+                    INodePO grandchild = grandchildIterator.next();
+                    String childCompIdentifierName = StringConstants.EMPTY;
+                    if (grandchild instanceof ICapPO) {
+                        ICapPO cap = (ICapPO) grandchild;
+                        childCompIdentifierName = compNamesBP.getName(cap.getComponentName());
+                        if (childCompIdentifierName == null || StringUtils.isBlank(childCompIdentifierName)
+                              || childCompIdentifierNames.contains(childCompIdentifierName)) {
+                          continue;
+                        }
+                        childCompIdentifierNames.add(childCompIdentifierName);
+                    }
+                }
+                Iterator<String> childCompIdentifierNamesIterator = childCompIdentifierNames.iterator();                
                 Iterator<IParamDescriptionPO> childParamIterator;
                 IParameterInterfacePO dataCube = exec.getReferencedDataCube();
               if (dataCube == null) {
                 int rowCount = exec.getDataManager().getDataSetCount();
                 int row = 0;
-                do {%>
+                do {
+                    childCompIdentifierNamesIterator = childCompIdentifierNames.iterator();
+                    %>
         
         <%if (!isActive) {%>// Hint: this line is commented out because its correspondent node in the ITE was inactive
         
@@ -223,19 +277,28 @@ public class <%=className%> {
         <%if (hasReferenceName) {%>// <%=referenceName%>
         
         <%}%>
-        <%if (!isActive) {%>//<%}%>new <%=testCaseName%>(rtc).execute(
+        <%if (!isActive) {%>//<%}%>new <%=testCaseName%>(
+                
+                <%if (!isActive) {%>//<%}%>rtc<%if (childCompIdentifierNamesIterator.hasNext()) {%>,<%}%>
+            <%while (childCompIdentifierNamesIterator.hasNext()) {
+                String childCompIdentifierName = childCompIdentifierNamesIterator.next();%>
+                
+                <%if (!isActive) {%>//<%}%>null<%if (childCompIdentifierNamesIterator.hasNext()) {%>,<%}%>
+            <%}%>
+            
+            <%if (!isActive) {%>//<%}%>).execute(
                     <%childParamIterator = exec.getParameterListIter();
                     while (childParamIterator.hasNext()) {
                         IParamDescriptionPO param = childParamIterator.next();
                         String paramValue = ParamUtils.getValueForParam(exec, param, row, locale);%>
-            
-            <%if (!isActive) {%>//<%}%><%=paramValue%><%if(childParamIterator.hasNext()){%>
-            
-            <%if (!isActive) {%>//<%}%>,<%}%>
+                
+                <%if (!isActive) {%>//<%}%><%=paramValue%><%if(childParamIterator.hasNext()){%>
+                
+                <%if (!isActive) {%>//<%}%>,<%}%>
                     <%}%>
                     <%row++;%>
-        
-        <%if (!isActive) {%>//<%}%>);
+            
+            <%if (!isActive) {%>//<%}%>);
                 <%} while(row < rowCount);
               } else {
                 String dataCubeName = null;
@@ -253,7 +316,16 @@ public class <%=className%> {
             <%if (hasReferenceName) {%>// <%=referenceName%>
             
             <%}%>
-            <%if (!isActive) {%>//<%}%>new <%=testCaseName%>(rtc).execute(
+            <%if (!isActive) {%>//<%}%>new <%=testCaseName%>(
+                
+                <%if (!isActive) {%>//<%}%>rtc<%if (childCompIdentifierNamesIterator.hasNext()) {%>,<%}%>
+            <%while (childCompIdentifierNamesIterator.hasNext()) {
+                String childCompIdentifierName = childCompIdentifierNamesIterator.next();%>
+                
+                <%if (!isActive) {%>//<%}%>null<%if (childCompIdentifierNamesIterator.hasNext()) {%>,<%}%>
+            <%}%>
+            
+            <%if (!isActive) {%>//<%}%>).execute(
                 
                     <%childParamIterator = exec.getParameterListIter();
                     while (childParamIterator.hasNext()) {
