@@ -205,7 +205,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
                 <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
             messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.rcValue(), "<%=paramType%>")); //$NON-NLS-1$
                 <%} else {%>
-            messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.toString(), "<%=paramType%>")); //$NON-NLS-1$
+            messageCap.addMessageParam(new MessageParam(String.valueOf(<%=translatedParamName%>), "<%=paramType%>")); //$NON-NLS-1$
                 <%}%>
             <%}%>
             return messageCap;

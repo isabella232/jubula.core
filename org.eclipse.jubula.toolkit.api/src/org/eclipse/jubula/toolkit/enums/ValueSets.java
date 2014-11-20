@@ -54,6 +54,21 @@ public final class ValueSets {
         public String rcValue() {
             return m_rcValue;
         }
+        
+        /**
+         * @param literal
+         *            the literal
+         * @return the corresponding enum
+         */
+        @Deprecated
+        public static AUTActivationMethod literalAsEnum(String literal) {
+            for (AUTActivationMethod method : values()) {
+                if (method.rcValue().equals(literal)) {
+                    return method;
+                }
+            }
+            throw new IllegalArgumentException();
+        }
     }
     
     /** @author BREDEX GmbH */

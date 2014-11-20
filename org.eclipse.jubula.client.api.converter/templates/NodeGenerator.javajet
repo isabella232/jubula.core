@@ -173,7 +173,10 @@ public class <%=className%> {
                     String enumType = nameLoader.getEnumForParam(paramType);
                     String paramValue = ParamUtils.getValueForParam(cap, param, 0, locale);
                     Boolean isEnum = enumType != null;
-                    String enumLookupMethodName = isEnum && (!enumType.endsWith(".Operator")) ? "valueOf": "literalAsEnum";%>
+                    String enumLookupMethodName = isEnum && (enumType.endsWith(".Operator")
+                                                          || enumType.endsWith(".AUTActivationMethod")) 
+                                                      ? "literalAsEnum" 
+                                                      : "valueOf";%>
                     
                 <%if (!isActive) {%>//<%}%><%if (isEnum) {%><%=enumType%>.<%=enumLookupMethodName%>(<%}%><%=paramValue%><%if (isEnum) {%>)<%}%>
                     
