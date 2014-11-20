@@ -712,7 +712,7 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
     }
     
     /**
-     * removes recusivly all containers from <code>container</code><br><p>
+     * removes recursively all containers from <code>container</code><br><p>
      * deregisters this from the container from AUT. <br>
      * updates also the internal hierarchy map. 
      * @param container the container to start

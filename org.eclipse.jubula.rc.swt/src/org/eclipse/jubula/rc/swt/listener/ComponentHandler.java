@@ -210,7 +210,7 @@ public class ComponentHandler extends BaseSwtEventListener
                 case SWT.Activate:
                 case SWT.Show:
                 case SWT.Paint:
-                    // add recursivly all components to AUTSWTHierarchy 
+                    // add recursively all components to AUTSWTHierarchy 
                     // and create names for unnamed components
                     if (event.widget instanceof Shell) {
                         Shell window = (Shell)event.widget;
