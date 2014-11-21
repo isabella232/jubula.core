@@ -10,19 +10,29 @@
  *******************************************************************************/
 package org.eclipse.jubula.toolkit.base.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.tools.AUTIdentifier;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
-/** @author BREDEX GmbH */
+/** 
+ *  @author BREDEX GmbH 
+ *  @noextend This class is not intended to be extended by clients.
+ */
 public abstract class AbstractAUTConfiguration implements AUTConfiguration {
     /** the name */
     @Nullable private String m_name;
     /** the autID */
     @NonNull private AUTIdentifier m_autID;
+    /** the information used to launch the AUT */
+    @NonNull private Map<String, String> m_launchInformation = 
+            new HashMap<String, String>();
 
     /**
      * Constructor
@@ -39,6 +49,9 @@ public abstract class AbstractAUTConfiguration implements AUTConfiguration {
         
         Validate.notEmpty(autID, "The AUT-Identifier must not be empty"); //$NON-NLS-1$
         m_autID = new AutIdentifier(autID);
+        
+        getLaunchInformation().put(AutConfigConstants.AUT_ID, 
+                getAutID().getID());
     }
 
     /**
@@ -53,5 +66,12 @@ public abstract class AbstractAUTConfiguration implements AUTConfiguration {
      */
     @NonNull public AUTIdentifier getAutID() {
         return m_autID;
+    }
+
+    /**
+     * @return the launchInformation
+     */
+    @NonNull public Map<String, String> getLaunchInformation() {
+        return m_launchInformation;
     }
 }

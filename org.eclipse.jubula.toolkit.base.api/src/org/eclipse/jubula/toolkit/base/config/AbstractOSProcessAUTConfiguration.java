@@ -12,11 +12,17 @@ package org.eclipse.jubula.toolkit.base.config;
 
 import java.util.Locale;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
-/** @author BREDEX GmbH */
+/** 
+ *  @author BREDEX GmbH 
+ *  @noextend This class is not intended to be extended by clients.
+ */
 public abstract class AbstractOSProcessAUTConfiguration extends
     AbstractAUTConfiguration {
     /** the command */
@@ -63,6 +69,17 @@ public abstract class AbstractOSProcessAUTConfiguration extends
 
         Validate.notNull(locale, "The locale must not be null"); //$NON-NLS-1$
         m_locale = locale;
+
+        getLaunchInformation().put(AutConfigConstants.EXECUTABLE, 
+                getCommand());
+        getLaunchInformation().put(AutConfigConstants.WORKING_DIR,
+                getWorkingDir());
+        getLaunchInformation().put(
+                AutConfigConstants.AUT_ARGUMENTS,
+                StringUtils.defaultString(StringUtils.join(getArgs(),
+                        StringConstants.SPACE)));
+        getLaunchInformation().put(AutConfigConstants.AUT_LOCALE,
+                getLocale().toString());
     }
 
     /**

@@ -8,15 +8,13 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.swt.config;
+package org.eclipse.jubula.toolkit.swing.config;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.toolkit.base.config.AbstractOSProcessAUTConfiguration;
-import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
 
@@ -24,11 +22,7 @@ import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
  *  @author BREDEX GmbH 
  *  @noextend This class is not intended to be extended by clients.
  */
-public abstract class SWTAUTConfiguration extends
-    AbstractOSProcessAUTConfiguration {
-    /** the keyboardLayout */
-    @NonNull private Locale m_keyboardLayout;
-
+public class SwingAUTConfiguration extends AbstractOSProcessAUTConfiguration {
     /**
      * Constructor
      * 
@@ -44,35 +38,19 @@ public abstract class SWTAUTConfiguration extends
      *            the arguments
      * @param locale
      *            the AUT locale to use
-     * @param keyboardLayout
-     *            the keyboard layout to use
      */
-    public SWTAUTConfiguration(
-        @Nullable String name, 
-        @NonNull String autID,
-        @NonNull String command, 
-        @NonNull String workingDir, 
-        @Nullable String[] args, 
-        @NonNull Locale locale,
-        @NonNull Locale keyboardLayout) {
+    public SwingAUTConfiguration(
+            @Nullable String name, 
+            @NonNull String autID,
+            @NonNull String command, 
+            @NonNull String workingDir,
+            @Nullable String[] args, 
+            @NonNull Locale locale) {
         super(name, autID, command, workingDir, args, locale);
         
-        Validate.notNull(keyboardLayout, "The keyboard layout must not be null"); //$NON-NLS-1$
-        m_keyboardLayout = keyboardLayout;
-        
-        getLaunchInformation().put(AutConfigConstants.KEYBOARD_LAYOUT,
-            getKeyboardLayout().toString());
-
         // Toolkit specific information
         getLaunchInformation().put(
                 ToolkitConstants.ATTR_TOOLKITID,
-            CommandConstants.SWT_TOOLKIT);
-    }
-
-    /**
-     * @return the keyboardLayout
-     */
-    @NonNull public Locale getKeyboardLayout() {
-        return m_keyboardLayout;
+            CommandConstants.SWING_TOOLKIT);
     }
 }
