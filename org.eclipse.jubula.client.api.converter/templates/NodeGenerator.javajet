@@ -8,11 +8,14 @@ imports="java.util.*
          org.eclipse.jubula.client.api.converter.utils.ProjectCache
          org.eclipse.jubula.client.api.converter.utils.ParamUtils
          org.eclipse.jubula.client.api.converter.utils.Utils
+         org.eclipse.jubula.client.core.businessprocess.CompNamesBP
          org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP
          org.eclipse.jubula.client.core.model.ICapPO
+         org.eclipse.jubula.client.core.model.ICompNamesPairPO
          org.eclipse.jubula.client.core.model.IEventExecTestCasePO
          org.eclipse.jubula.client.core.model.IExecTestCasePO
          org.eclipse.jubula.client.core.model.INodePO
+         org.eclipse.jubula.client.core.model.NodeMaker
          org.eclipse.jubula.client.core.model.IParamDescriptionPO
          org.eclipse.jubula.client.core.model.IParameterInterfacePO
          org.eclipse.jubula.client.core.model.IProjectPO
@@ -47,7 +50,8 @@ Locale locale = info.getLanguage();
 Iterator<INodePO> childIterator = node.getNodeListIterator();
 String packageBase = info.getPackageBasePath();
 NameLoader nameLoader = NameLoader.getInstance();
-ComponentNamesBP compNamesBP = ComponentNamesBP.getInstance();
+ComponentNamesBP componentNamesBP = ComponentNamesBP.getInstance();
+CompNamesBP compNamesBP = new CompNamesBP();
 List<String> compIdentifierNames = new ArrayList<String>();
 IProjectPO project = null;
 try {
@@ -94,20 +98,21 @@ public class <%=className%> {
     <%if (node instanceof ISpecTestCasePO) {%>
     private RuntimeContext rtc;
     
-        <%while (childIterator.hasNext()) {
-            INodePO child = childIterator.next();
+        <%
+        IExecTestCasePO fakeExec = NodeMaker.createExecTestCasePO((ISpecTestCasePO)node);
+        List<ICompNamesPairPO> compNamePairs = compNamesBP.getAllCompNamesPairs(fakeExec);
+        Iterator<ICompNamesPairPO> compNamePairsIterator = compNamePairs.iterator();
+        while (compNamePairsIterator.hasNext()) {
+            ICompNamesPairPO pair = compNamePairsIterator.next();
             String compIdentifierName = StringConstants.EMPTY;
-            if (child instanceof ICapPO) {
-                ICapPO cap = (ICapPO) child;
-                compIdentifierName = compNamesBP.getName(cap.getComponentName());
-                if (compIdentifierName == null || StringUtils.isBlank(compIdentifierName)
-                      || compIdentifierNames.contains(compIdentifierName)) {
-                  continue;
-                }
-                compIdentifierNames.add(compIdentifierName);%>
+            compIdentifierName = componentNamesBP.getName(pair.getSecondName());
+            if (StringUtils.isBlank(compIdentifierName)
+                  || compIdentifierNames.contains(compIdentifierName)) {
+                continue;
+            }
+            compIdentifierNames.add(compIdentifierName);%>
     private ComponentIdentifier <%=compIdentifierName%>;
     
-            <%}%>
         <%}%>
     <%Iterator<String> compIdentifierIterator = compIdentifierNames.iterator();%>
     
@@ -190,7 +195,7 @@ public class <%=className%> {
                 } else {
                     factoryName = loader.get("factoryName");
                     componentNameToCreate = loader.get("componentTypeName");
-                    compIdentifierName = compNamesBP.getName(cap.getComponentName());
+                    compIdentifierName = componentNamesBP.getName(cap.getComponentName());
                 }
                 if (actionName != null) {%>
         
@@ -246,19 +251,20 @@ public class <%=className%> {
                     log.error(e.getLocalizedMessage());
                 }
                 testCaseName = Utils.getFullyQualifiedTranslatedName(spec, packageBase, projectName);
+                
+                List<ICompNamesPairPO> childCompNamePairs = compNamesBP.getAllCompNamesPairs(exec);
+                Iterator<ICompNamesPairPO> childCompNamePairsIterator = childCompNamePairs.iterator();
                 List<String> childCompIdentifierNames = new ArrayList<String>();
-                Iterator<INodePO> grandchildIterator = spec.getNodeListIterator();
-                while (grandchildIterator.hasNext()) {
-                    INodePO grandchild = grandchildIterator.next();
-                    String childCompIdentifierName = StringConstants.EMPTY;
-                    if (grandchild instanceof ICapPO) {
-                        ICapPO cap = (ICapPO) grandchild;
-                        childCompIdentifierName = compNamesBP.getName(cap.getComponentName());
-                        if (childCompIdentifierName == null || StringUtils.isBlank(childCompIdentifierName)
-                              || childCompIdentifierNames.contains(childCompIdentifierName)) {
-                          continue;
-                        }
-                        childCompIdentifierNames.add(childCompIdentifierName);
+                while (childCompNamePairsIterator.hasNext()) {
+                    ICompNamesPairPO pair = childCompNamePairsIterator.next();
+                    String compIdentifierName = componentNamesBP.getName(pair.getSecondName());
+                    if (StringUtils.isBlank(compIdentifierName)) {
+                        continue;
+                    }
+                    if (pair.isPropagated()) {
+                        childCompIdentifierNames.add(compIdentifierName);
+                    } else {
+                        childCompIdentifierNames.add("null /*TODO: Find object mapping for component name: " + compIdentifierName + "*/");
                     }
                 }
                 Iterator<String> childCompIdentifierNamesIterator = childCompIdentifierNames.iterator();                
@@ -283,7 +289,7 @@ public class <%=className%> {
             <%while (childCompIdentifierNamesIterator.hasNext()) {
                 String childCompIdentifierName = childCompIdentifierNamesIterator.next();%>
                 
-                <%if (!isActive) {%>//<%}%>null<%if (childCompIdentifierNamesIterator.hasNext()) {%>,<%}%>
+                <%if (!isActive) {%>//<%}%><%=childCompIdentifierName%><%if (childCompIdentifierNamesIterator.hasNext()) {%>,<%}%>
             <%}%>
             
             <%if (!isActive) {%>//<%}%>).execute(
