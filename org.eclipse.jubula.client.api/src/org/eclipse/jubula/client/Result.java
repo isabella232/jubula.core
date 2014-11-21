@@ -42,7 +42,7 @@ public interface Result<T> {
     CAP getCAP();
 
     /**
-     * @return wheter the CAP has been executed successfully or not
+     * @return whether the CAP has been executed successfully or not
      */
     boolean isOK();
 }
