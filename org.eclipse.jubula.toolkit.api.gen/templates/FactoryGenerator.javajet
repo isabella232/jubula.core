@@ -1,16 +1,18 @@
 <%@ jet 
 package="org.eclipse.jubula.toolkit.api.gen" 
 imports="java.util.*
-            org.eclipse.jubula.toolkit.api.gen.internal.genmodel.FactoryGenInfo
-            org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CompInfoForFactoryGen
-            org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo
-           org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass" 
+         org.eclipse.jubula.toolkit.api.gen.internal.utils.GenerateUtil
+         org.eclipse.jubula.toolkit.api.gen.internal.genmodel.FactoryGenInfo
+         org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CompInfoForFactoryGen
+         org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo
+         org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass" 
 class="FactoryGenerator"%>
 <%
 CommonGenInfo genInfo = (CommonGenInfo)argument;
 String factoryName = genInfo.getClassName();
 String packageName = genInfo.getClassPackageName();
 Object specInfo = genInfo.getSpecificInformation();
+String fqnGeneratorClassName = this.getClass().getName();
 if (specInfo instanceof FactoryGenInfo) {
     FactoryGenInfo factoryInfo = (FactoryGenInfo) specInfo;
     List<CompInfoForFactoryGen> compInfoList = factoryInfo.getCompInformation();
@@ -29,6 +31,8 @@ if (specInfo instanceof FactoryGenInfo) {
  *******************************************************************************/
 package <%=packageName%>;
 
+import javax.annotation.Generated;
+
 import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.tools.ComponentIdentifier;
@@ -40,6 +44,8 @@ import org.eclipse.jubula.toolkit.ToolkitInfo;
  * Factory for creating components from the <%=genInfo.getToolkitName()%> toolkit.
  * @noextend This class is not intended to be extended by clients.
  */
+@Generated(value = "<%=fqnGeneratorClassName%>", 
+           date =  "<%=GenerateUtil.getISO8601Timestamp()%>")
 public final class <%=factoryName%> {
     
     <%if (toolkitInfoName != null) {%>

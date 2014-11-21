@@ -1,17 +1,19 @@
 <%@ jet 
 package="org.eclipse.jubula.toolkit.api.gen" 
 imports="java.util.*
-            org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CompInfoForToolkitGen
-            org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo
-            org.eclipse.jubula.toolkit.api.gen.internal.genmodel.ToolkitGenInfo
-            org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass
-            org.eclipse.jubula.tools.internal.xml.businessmodell.Property"
+         org.eclipse.jubula.toolkit.api.gen.internal.utils.GenerateUtil
+         org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CompInfoForToolkitGen
+         org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo
+         org.eclipse.jubula.toolkit.api.gen.internal.genmodel.ToolkitGenInfo
+         org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass
+         org.eclipse.jubula.tools.internal.xml.businessmodell.Property"
 class="ToolkitInfoGenerator"%>
 <%
 CommonGenInfo genInfo = (CommonGenInfo)argument;
 String className = genInfo.getClassName();
 String packageName = genInfo.getClassPackageName();
 Object specInfo = genInfo.getSpecificInformation();
+String fqnGeneratorClassName = this.getClass().getName();
 if (specInfo instanceof ToolkitGenInfo) {
     ToolkitGenInfo toolkitInfo = (ToolkitGenInfo) specInfo;
     List<CompInfoForToolkitGen> compInfoList = toolkitInfo.getCompInformation();
@@ -32,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Generated;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.toolkit.internal.AbstractToolkitInfo;
@@ -41,6 +44,8 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.Property;
 /**
  * Contains information about the <%=genInfo.getToolkitName()%> toolkit and its components
  */
+@Generated(value = "<%=fqnGeneratorClassName%>", 
+           date =  "<%=GenerateUtil.getISO8601Timestamp()%>")
 public final class <%=className%> extends AbstractToolkitInfo {
 
     @NonNull private Map<ComponentClass, String> m_map = new HashMap<ComponentClass, String>();

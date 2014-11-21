@@ -1,18 +1,20 @@
 <%@ jet 
 package="org.eclipse.jubula.toolkit.api.gen" 
 imports="java.util.*
-            org.eclipse.jubula.toolkit.api.gen.internal.genmodel.ComponentGenInfo
-            org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo 
-            org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader
-            org.eclipse.jubula.toolkit.enums.LiteralProvider
-           org.eclipse.jubula.tools.internal.xml.businessmodell.Action
-           org.eclipse.jubula.tools.internal.xml.businessmodell.Component
-           org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
-           org.eclipse.jubula.tools.internal.xml.businessmodell.Param" 
+         org.eclipse.jubula.toolkit.api.gen.internal.genmodel.ComponentGenInfo
+         org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo 
+         org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader
+         org.eclipse.jubula.toolkit.api.gen.internal.utils.GenerateUtil
+         org.eclipse.jubula.toolkit.enums.LiteralProvider
+         org.eclipse.jubula.tools.internal.xml.businessmodell.Action
+         org.eclipse.jubula.tools.internal.xml.businessmodell.Component
+         org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
+         org.eclipse.jubula.tools.internal.xml.businessmodell.Param" 
 class="ClassGenerator"%>
 <%
 CommonGenInfo genInfo = (CommonGenInfo)argument;
 Object specInfo = genInfo.getSpecificInformation();
+String fqnGeneratorClassName = this.getClass().getName();
 if (specInfo instanceof ComponentGenInfo) {
     ComponentGenInfo compGenInfo = (ComponentGenInfo) specInfo;
     String toolkitName = genInfo.getToolkitName();
@@ -85,6 +87,8 @@ package <%=packageName%>;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.communication.CAP;
+import javax.annotation.Generated;
+
 <%if (!genInterface) {%>
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.StringUtils;
@@ -111,6 +115,8 @@ import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
 <%if (testerClass != null && !testerClass.isEmpty()) {%>
 @TesterClass(testerClass="<%=testerClass%>")<%}%>
 <%}%>
+@Generated(value = "<%=fqnGeneratorClassName%>", 
+           date =  "<%=GenerateUtil.getISO8601Timestamp()%>")
 public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
     <%if (hasRealizedType) {%> extends <%=realizedTypeFqn%><%}%>
     <%if (!genInterface) {%> implements <%=implementedTypeFqn%><%}%> {
