@@ -10,14 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.exceptions;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.Result;
 
 /** @author BREDEX GmbH */
 public abstract class ExecutionException extends RuntimeException {
     /** the result */
-    @NonNull private Result m_result;
+    private Result m_result;
 
     /**
      * Constructor
@@ -27,8 +26,7 @@ public abstract class ExecutionException extends RuntimeException {
      * @param message
      *            the message
      */
-    public ExecutionException(
-        @NonNull Result result, 
+    public ExecutionException(Result result, 
         @Nullable String message) {
         super(message);
         m_result = result;
@@ -37,7 +35,7 @@ public abstract class ExecutionException extends RuntimeException {
     /**
      * @return the result
      */
-    @NonNull public Result getResult() {
+    public Result getResult() {
         return m_result;
     }
 }

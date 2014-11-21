@@ -10,11 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.exceptions.CommunicationException;
-import org.eclipse.jubula.client.exceptions.ExecutionExceptionHandler;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
+import org.eclipse.jubula.client.exceptions.ExecutionExceptionHandler;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.tools.AUTIdentifier;
 
@@ -27,7 +26,6 @@ public interface AUT extends Remote {
     /**
      * @return the AUTIdentifier of this AUT
      */
-    @NonNull
     AUTIdentifier getIdentifier();
 
     /**
@@ -44,8 +42,7 @@ public interface AUT extends Remote {
      * @throws CommunicationException
      *             in case of communication problems with the remote side
      */
-    @NonNull
-    <T> Result<T> execute(@NonNull CAP cap, @Nullable T payload)
+    <T> Result<T> execute(CAP cap, @Nullable T payload)
         throws ExecutionException, CommunicationException;
 
     /**

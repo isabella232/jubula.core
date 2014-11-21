@@ -10,14 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.exceptions;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.Result;
 
 /** @author BREDEX GmbH */
 public class CheckFailedException extends ExecutionException {
     /** the actualValue */
-    @NonNull private String m_actualValue;
+    private String m_actualValue;
 
     /**
      * Constructor
@@ -29,10 +28,9 @@ public class CheckFailedException extends ExecutionException {
      * @param message
      *            the message
      */
-    public CheckFailedException(
-        @NonNull Result result, 
+    public CheckFailedException(Result result, 
         @Nullable String message,
-        @NonNull String actualValue) {
+        String actualValue) {
         super(result, message);
         m_actualValue = actualValue;
     }
@@ -40,7 +38,7 @@ public class CheckFailedException extends ExecutionException {
     /**
      * @return the actualValue
      */
-    @NonNull public String getActualValue() {
+    public String getActualValue() {
         return m_actualValue;
     }
 }

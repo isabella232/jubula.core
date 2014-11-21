@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.exceptions;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -23,8 +22,7 @@ public class LoadResourceException extends Exception {
     /**
      * @param message The detailed message for this exception.
      */
-    public LoadResourceException(
-        @NonNull String message) {
+    public LoadResourceException(String message) {
         super(message);
     }
     
@@ -32,8 +30,7 @@ public class LoadResourceException extends Exception {
      * @param message The detailed message for this exception.
      * @param cause The cause for the exception.
      */
-    public LoadResourceException(
-        @NonNull String message, 
+    public LoadResourceException(String message, 
         @Nullable Throwable cause) {
         super(message, cause);
     }

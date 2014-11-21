@@ -10,16 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.exceptions;
 
-import org.eclipse.jdt.annotation.NonNull;
 
 /** @author BREDEX GmbH */
 public interface ExecutionExceptionHandler {
-
     /**
      * @param ee
      *            the execution exception to handle
      * @throws ExecutionException
      *             in case of e.g. no handling
      */
-    void handle(@NonNull ExecutionException ee) throws ExecutionException;
+    void handle(ExecutionException ee) throws ExecutionException;
 }

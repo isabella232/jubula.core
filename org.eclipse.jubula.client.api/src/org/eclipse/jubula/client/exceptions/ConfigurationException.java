@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.exceptions;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.Result;
 
@@ -24,8 +23,7 @@ public class ConfigurationException extends ExecutionException {
      * @param message
      *            the message
      */
-    public ConfigurationException(
-        @NonNull Result result, 
+    public ConfigurationException(Result result, 
         @Nullable String message) {
         super(result, message);
     }

@@ -12,7 +12,6 @@ package org.eclipse.jubula.client;
 
 import java.util.List;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.exceptions.CommunicationException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
@@ -35,7 +34,7 @@ public interface AUTAgent extends Remote {
      *             in case of communication problems with the remote side
      */
     @Nullable
-    AUTIdentifier startAUT(@NonNull AUTConfiguration configuration)
+    AUTIdentifier startAUT(AUTConfiguration configuration)
         throws CommunicationException;
 
     /**
@@ -46,14 +45,13 @@ public interface AUTAgent extends Remote {
      * @throws CommunicationException
      *             in case of communication problems with the remote side
      */
-    void stopAUT(@NonNull AUTIdentifier aut) throws CommunicationException;
+    void stopAUT(AUTIdentifier aut) throws CommunicationException;
 
     /**
      * @return an unmodifiable list of currently known / registered AUT IDs
      * @throws CommunicationException
      *             in case of communication problems with the remote side
      */
-    @NonNull
     List<AUTIdentifier> getAllRegisteredAUTIdentifier()
         throws CommunicationException;
 
@@ -68,7 +66,6 @@ public interface AUTAgent extends Remote {
      * @throws CommunicationException
      *             in case of communication problems with the remote side
      */
-    @NonNull
-    AUT getAUT(@NonNull AUTIdentifier autID, @NonNull ToolkitInfo information)
+    AUT getAUT(AUTIdentifier autID, ToolkitInfo information)
         throws CommunicationException;
 }

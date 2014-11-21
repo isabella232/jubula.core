@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.tools.ComponentIdentifier;
 
@@ -32,5 +31,5 @@ public interface ObjectMapping {
      * @return the component identifier or <code>null</code> if no identifier
      *         was found
      */
-    @Nullable public ComponentIdentifier get(@NonNull String compName);
+    @Nullable public ComponentIdentifier get(String compName);
 }

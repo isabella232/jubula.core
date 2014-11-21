@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.communication.CAP;
@@ -40,7 +39,6 @@ public interface Result<T> {
     /**
      * @return the CAP
      */
-    @NonNull
     CAP getCAP();
 
     /**

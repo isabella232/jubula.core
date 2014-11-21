@@ -8,25 +8,5 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.exceptions;
-
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.jubula.client.Result;
-
-/** @author BREDEX GmbH */
-public class ActionException extends ExecutionException {
-
-    /**
-     * Constructor
-     * 
-     * @param result
-     *            the result
-     * @param message
-     *            the message
-     */
-    public ActionException(
-        Result result, 
-        @Nullable String message) {
-        super(result, message);
-    }
-}
+@org.eclipse.jdt.annotation.NonNullByDefault
+package org.eclipse.jubula.client;
