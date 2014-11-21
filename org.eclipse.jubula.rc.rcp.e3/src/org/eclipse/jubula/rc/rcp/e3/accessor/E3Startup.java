@@ -326,11 +326,11 @@ public abstract class E3Startup implements IStartup {
      * @param mainShell The shell to search for Coolbars and Toolbars.
      */
     public static void repaintToolbars(Shell mainShell) {
-        List toolbarList = new ArrayList();
+        List<Control> toolbarList = new ArrayList<Control>();
         getToolbars(mainShell, toolbarList);
-        Iterator iter = toolbarList.iterator();
+        Iterator<Control> iter = toolbarList.iterator();
         while (iter.hasNext()) {
-            Control toolbar = (Control)iter.next();
+            Control toolbar = iter.next();
             toolbar.update();
             toolbar.redraw();
             toolbar.update();
@@ -347,7 +347,7 @@ public abstract class E3Startup implements IStartup {
      * be added.
      */
     public static void getToolbars(Composite composite,
-        List toolbarList) {
+        List<Control> toolbarList) {
 
         if (composite != null && !composite.isDisposed()) {
             Control [] children = composite.getChildren();

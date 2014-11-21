@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.gef.EditPart;
 
 /**
@@ -66,8 +67,7 @@ public class ClassCountEditPartIdentifier implements IEditPartIdentifier {
     /**
      * {@inheritDoc}
      */
-    public Map getConnectionAnchors() {
-        return new HashMap();
+    public Map<String, ConnectionAnchor> getConnectionAnchors() {
+        return new HashMap<String, ConnectionAnchor>();
     }
-
 }

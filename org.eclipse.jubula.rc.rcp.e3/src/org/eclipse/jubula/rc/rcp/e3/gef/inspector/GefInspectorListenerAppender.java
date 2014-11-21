@@ -74,7 +74,8 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
     private static class FigureHighlightAppender implements Listener {
 
         /** mapping from control to figure highlighter */
-        private Map m_canvasToListener = new HashMap();
+        private Map<FigureCanvas, FigureHighlighter> m_canvasToListener =
+            new HashMap<FigureCanvas, FigureHighlighter>();
 
         /**
          * {@inheritDoc}
@@ -92,12 +93,13 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
          * Removes all listeners added by this appender.
          */
         public void removeAddedListeners() {
-            Iterator iter = m_canvasToListener.keySet().iterator();
+            Iterator<FigureCanvas> iter = m_canvasToListener
+                    .keySet().iterator();
             while (iter.hasNext()) {
-                Control control = (Control)iter.next();
+                Control control = iter.next();
                 if (!control.isDisposed()) {
                     FigureHighlighter highlighter =
-                        (FigureHighlighter)m_canvasToListener.get(control);
+                        m_canvasToListener.get(control);
                     highlighter.removeAddedListeners();
                     control.removeMouseMoveListener(highlighter);
                 }
@@ -169,10 +171,10 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
                 IEditPartIdentifier editPartIdentifier, Point cursorLocation) {
 
             if (editPartIdentifier != null) {
-                Map anchorMap =
+                Map<?, ?> anchorMap =
                     editPartIdentifier.getConnectionAnchors();
                 if (anchorMap != null) {
-                    Iterator iter = anchorMap.keySet().iterator();
+                    Iterator<?> iter = anchorMap.keySet().iterator();
                     while (iter.hasNext()) {
                         Object key = iter.next();
                         Object value = anchorMap.get(key);
@@ -242,7 +244,7 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
                 EditPart editPart = viewer.findObjectAt(cursorLocation);
                 EditPart primaryEditPart = FigureCanvasUtil.getPrimaryEditPart(
                         editPart, viewer.getRootEditPart());
-                List idStringList = Collections.EMPTY_LIST;
+                List<String> idStringList = Collections.EMPTY_LIST;
 
                 if (primaryEditPart != null) {
                     idStringList = getPathToRoot(viewer.getRootEditPart(),
@@ -287,10 +289,10 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
          *         list will be the identifier for a connection anchor if
          *         <code>cursorLocation</code> is near such an anchor.
          */
-        private List getPathToRoot(RootEditPart root, Point cursorLocation,
-                EditPart editPart) {
+        private List<String> getPathToRoot(RootEditPart root,
+                Point cursorLocation, EditPart editPart) {
 
-            List idStringList = new ArrayList();
+            List<String> idStringList = new ArrayList<String>();
             EditPart currentEditPart = editPart;
 
             // Check for connection anchor
@@ -351,9 +353,10 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
          * @return a list containing the identifier of each edit part between
          *         <code>editPart</code> and its root.
          */
-        private List getToolPathToRoot(RootEditPart root, EditPart editPart) {
+        private List<String> getToolPathToRoot(RootEditPart root,
+                EditPart editPart) {
 
-            List idStringList = new ArrayList();
+            List<String> idStringList = new ArrayList<String>();
             EditPart currentEditPart = editPart;
 
             if (currentEditPart != null) {
@@ -395,7 +398,7 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
          *         <code>null</code> if no valid component identifier can be
          *         generated.
          */
-        private IComponentIdentifier createCompId(List idStringList) {
+        private IComponentIdentifier createCompId(List<String> idStringList) {
             IComponentIdentifier compId = null;
             if (!idStringList.isEmpty()) {
                 Collections.reverse(idStringList);

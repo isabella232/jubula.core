@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.rcp.e3.gef.identifier;
 
 import java.util.Map;
 
-
+import org.eclipse.draw2d.ConnectionAnchor;
 
 /**
  * Encapsulates the ability to generate unique IDs for a given
@@ -34,6 +34,5 @@ public interface IEditPartIdentifier {
      * @return a map that correlates identifiers (<code>String</code>s) with
      *         <code>ConnectionAnchor</code>s.
      */
-    public Map getConnectionAnchors();
-
+    public Map<String, ConnectionAnchor> getConnectionAnchors();
 }

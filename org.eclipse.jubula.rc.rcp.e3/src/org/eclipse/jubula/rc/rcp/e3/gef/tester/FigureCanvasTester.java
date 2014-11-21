@@ -114,11 +114,11 @@ public class FigureCanvasTester extends WidgetTester {
         EditPart currentEditPart = getPaletteRoot().getContents();
 
         for (int i = 0; i < pathItems.length && currentEditPart != null; i++) {
-            List effectiveChildren = currentEditPart.getChildren();
+            List<?> effectiveChildren = currentEditPart.getChildren();
 
             EditPart [] children =
-                (EditPart [])effectiveChildren.toArray(
-                        new EditPart[effectiveChildren.size()]);
+                effectiveChildren.toArray(
+                    new EditPart[effectiveChildren.size()]);
             boolean itemFound = false;
             for (int j = 0; j < children.length && !itemFound; j++) {
                 Object model = children[j].getModel();
@@ -310,10 +310,11 @@ public class FigureCanvasTester extends WidgetTester {
         ConnectionEditPart connectionEditPart = null;
 
         if (sourceEditPart != null) {
-            List sourceConnectionList = sourceEditPart.getSourceConnections();
+            List<?> sourceConnectionList = sourceEditPart
+                    .getSourceConnections();
             ConnectionEditPart [] sourceConnections =
-                (ConnectionEditPart [])sourceConnectionList.toArray(
-                        new ConnectionEditPart[sourceConnectionList.size()]);
+                sourceConnectionList.toArray(
+                    new ConnectionEditPart[sourceConnectionList.size()]);
             for (int i = 0; i < sourceConnections.length
                     && connectionEditPart == null; i++) {
                 if (sourceConnections[i].getTarget() == targetEditPart) {
@@ -321,10 +322,11 @@ public class FigureCanvasTester extends WidgetTester {
                 }
             }
         } else if (targetEditPart != null) {
-            List targetConnectionList = targetEditPart.getTargetConnections();
+            List<?> targetConnectionList = targetEditPart
+                    .getTargetConnections();
             ConnectionEditPart [] targetConnections =
-                (ConnectionEditPart [])targetConnectionList.toArray(
-                        new ConnectionEditPart[targetConnectionList.size()]);
+                targetConnectionList.toArray(
+                    new ConnectionEditPart[targetConnectionList.size()]);
             for (int i = 0; i < targetConnections.length
                     && connectionEditPart == null; i++) {
                 if (targetConnections[i].getSource() == targetEditPart) {
@@ -606,10 +608,10 @@ public class FigureCanvasTester extends WidgetTester {
         EditPart currentEditPart = getRootEditPart().getContents();
 
         for (int i = 0; i < pathItems.length && currentEditPart != null; i++) {
-            List effectiveChildren = currentEditPart.getChildren();
+            List<?> effectiveChildren = currentEditPart.getChildren();
             EditPart [] children =
-                (EditPart [])effectiveChildren.toArray(
-                        new EditPart[effectiveChildren.size()]);
+                effectiveChildren.toArray(
+                    new EditPart[effectiveChildren.size()]);
             boolean itemFound = false;
             for (int j = 0; j < children.length && !itemFound; j++) {
                 IEditPartIdentifier childFigureIdentifier =
@@ -713,10 +715,10 @@ public class FigureCanvasTester extends WidgetTester {
             IEditPartIdentifier editPartIdentifier =
                 DefaultEditPartAdapterFactory.loadFigureIdentifier(editPart);
             if (editPartIdentifier != null) {
-                Map anchorMap =
+                Map<String, ConnectionAnchor> anchorMap =
                     editPartIdentifier.getConnectionAnchors();
                 if (anchorMap != null) {
-                    Iterator anchorMapIter =
+                    Iterator<String> anchorMapIter =
                         anchorMap.keySet().iterator();
                     while (anchorMapIter.hasNext()) {
                         Object anchorMapKey = anchorMapIter.next();

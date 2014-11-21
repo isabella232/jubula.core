@@ -155,25 +155,21 @@ public class FigureHighlighter implements MouseMoveListener {
             IEditPartIdentifier editPartIdentifier, Point cursorLocation) {
 
         if (editPartIdentifier != null) {
-            Map anchorMap =
+            Map<String, ConnectionAnchor> anchorMap =
                 editPartIdentifier.getConnectionAnchors();
             if (anchorMap != null) {
-                Iterator iter = anchorMap.keySet().iterator();
+                Iterator<String> iter = anchorMap.keySet().iterator();
                 while (iter.hasNext()) {
-                    Object key = iter.next();
-                    Object value = anchorMap.get(key);
-                    if (key instanceof String
-                            && value instanceof ConnectionAnchor) {
-                        Point refPoint =
-                            ((ConnectionAnchor)value).getReferencePoint();
+                    String key = iter.next();
+                    ConnectionAnchor value = anchorMap.get(key);
+                    Point refPoint = value.getReferencePoint();
 
-                        // The "bounds" of an anchor is considered to be
-                        // 3 pixels in all directions.
-                        Rectangle refBounds = new Rectangle(
-                                refPoint.x - 3, refPoint.y - 3, 7, 7);
-                        if (refBounds.contains(cursorLocation.getSWTPoint())) {
-                            return refBounds;
-                        }
+                    // The "bounds" of an anchor is considered to be
+                    // 3 pixels in all directions.
+                    Rectangle refBounds = new Rectangle(
+                            refPoint.x - 3, refPoint.y - 3, 7, 7);
+                    if (refBounds.contains(cursorLocation.getSWTPoint())) {
+                        return refBounds;
                     }
                 }
             }

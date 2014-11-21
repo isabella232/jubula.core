@@ -13,6 +13,8 @@ package org.eclipse.jubula.rc.rcp.e3.gef.identifier;
 import java.util.Collections;
 import java.util.Map;
 
+import org.eclipse.draw2d.ConnectionAnchor;
+
 
 /**
  * Provides a static String as an identifier. This class does not take the
@@ -46,8 +48,7 @@ public class StaticEditPartIdentifier implements IEditPartIdentifier {
     /**
      * {@inheritDoc}
      */
-    public Map getConnectionAnchors() {
+    public Map<String, ConnectionAnchor> getConnectionAnchors() {
         return Collections.EMPTY_MAP;
     }
-
 }
