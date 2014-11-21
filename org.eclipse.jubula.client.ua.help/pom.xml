@@ -37,11 +37,11 @@
           <execution>
             <phase>generate-resources</phase>
             <configuration>
-              <tasks>
+              <target>
                 <ant dir="../org.eclipse.jubula.documentation"
                      antfile="buildScript.xml"
                      target="buildDocumentation" />
-              </tasks>
+              </target>
             </configuration>
             <goals>
               <goal>run</goal>
