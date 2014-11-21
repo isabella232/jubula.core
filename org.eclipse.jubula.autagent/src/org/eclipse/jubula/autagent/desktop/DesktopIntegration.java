@@ -46,7 +46,7 @@ public class DesktopIntegration implements PropertyChangeListener {
     private static final Logger LOG = 
         LoggerFactory.getLogger(DesktopIntegration.class);
     
-    /** is the system tryy supported on this platform */
+    /** is the system tray supported on this platform */
     private boolean m_isSystraySupported;
     
     /** access to system tray */
