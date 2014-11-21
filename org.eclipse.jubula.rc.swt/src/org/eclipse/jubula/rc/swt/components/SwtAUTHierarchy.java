@@ -577,24 +577,13 @@ public class SwtAUTHierarchy  extends AUTHierarchy {
             }
 
             // remove the child from hash table
-            final Object childToRemove = getRealMap().get(toRemove);
-            SwtHierarchyContainer hierarchyChild = null;
-            if (childToRemove != null) {
-                hierarchyChild = (SwtHierarchyContainer)getHierarchyMap()
-                    .remove(childToRemove);
-            }
-            // update the hierarchy
-            if (hierarchyChild != null) {
-                SwtHierarchyContainer hierarchyParent = hierarchyChild
-                    .getParent();
-                if (hierarchyParent != null) {
-                    hierarchyParent.remove(hierarchyChild);
-                } else {
-                    // child was not in the hierarchy 
-                    // -> log this is an error
-                    log.error("hierarchy structure corrupted, child has no parent: "  //$NON-NLS-1$
-                        + hierarchyChild);
-                }
+            final Object componentToRemove = getRealMap().get(toRemove);
+            if (componentToRemove != null) {
+                SwtHierarchyContainer hierarchyContainer = 
+                        (SwtHierarchyContainer) getHierarchyMap()
+                        .remove(componentToRemove);
+                // update the hierarchy and deletes the container and component from maps
+                removeFromHierarchy(hierarchyContainer);
             } else {
                 // child was not in the hierarchy map
                 // -> log this
