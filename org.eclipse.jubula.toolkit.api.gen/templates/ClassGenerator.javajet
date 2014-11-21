@@ -176,7 +176,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
         if (!params.isEmpty()) {
         %>
         /**
-         * @throws IllegalArgumentException Throws an IllegalArgumentException if one of the parameters is null.
+         * @throws IllegalArgumentException if one of the passed parameters is <code>null</code>.
          */<%}%>
         <%if (action.isDeprecated()) {%>@Deprecated<%}%>
         @NonNull public CAP <%=methodName%>(
