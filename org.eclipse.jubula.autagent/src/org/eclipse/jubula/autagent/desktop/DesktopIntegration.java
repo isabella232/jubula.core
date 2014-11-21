@@ -64,6 +64,11 @@ public class DesktopIntegration implements PropertyChangeListener {
      * @param autAgent The AUT Agent monitored by the created object.
      */
     public DesktopIntegration(final AutAgent autAgent) {
+        if (EnvironmentUtils.isMacOS()) {
+            // WORKAROUND for hanging SystemTray.isSupported()
+            m_isSystraySupported = false;
+            return;
+        }
         m_isSystraySupported = SystemTray.isSupported();
         if (m_isSystraySupported) {
 
