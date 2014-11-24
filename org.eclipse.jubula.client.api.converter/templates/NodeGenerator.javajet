@@ -23,12 +23,15 @@ imports="java.util.*
          org.eclipse.jubula.client.core.model.ISpecTestCasePO
          org.eclipse.jubula.client.core.model.ITestJobPO
          org.eclipse.jubula.client.core.model.ITestSuitePO
+         org.eclipse.jubula.client.core.model.ReentryProperty
          org.eclipse.jubula.client.ui.rcp.Plugin
          org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader
          org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP
          org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder
          org.eclipse.jubula.tools.internal.constants.StringConstants
+         org.eclipse.jubula.tools.internal.exception.InvalidDataException
          org.eclipse.jubula.tools.internal.exception.JBException
+         org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent
          org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
          org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem
          org.eclipse.jubula.tools.internal.xml.businessmodell.Component
@@ -131,11 +134,27 @@ public class <%=className%> {
         <%=compIdentifierName%> = _<%=compIdentifierName%>;
         <%}%>
     }
-    <%} else if (node instanceof ITestSuitePO){%>
+    <%} else if (node instanceof ITestSuitePO){
+        ITestSuitePO ts = (ITestSuitePO)node;
+        Map<String, Integer> defaultEventHandlers = ts.getDefaultEventHandler();
+        boolean suppressCheckFailedDefault = false;
+        for (String handler : defaultEventHandlers.keySet()) {
+            try {
+                if (handler.contains(TestErrorEvent.ID.VERIFY_FAILED)
+                        && ReentryProperty.getProperty(defaultEventHandlers.get(handler))
+                            == ReentryProperty.CONTINUE) {
+                    suppressCheckFailedDefault = true;
+                }
+            } catch (InvalidDataException e) {
+                Plugin.getDefault().writeErrorLineToConsole(
+                        "Error while creating default event handler.", true);
+            }
+        }
+        %>
     private RuntimeContext rtc;
     
     public <%=className%> (AUT _aut) {
-        rtc = new RuntimeContext(_aut);
+        rtc = new RuntimeContext(_aut, <%=suppressCheckFailedDefault%>);
     }
     <%} else {%>
     public <%=className%> () {

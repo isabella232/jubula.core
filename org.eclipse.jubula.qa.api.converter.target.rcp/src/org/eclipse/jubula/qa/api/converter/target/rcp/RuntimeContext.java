@@ -64,10 +64,13 @@ public class RuntimeContext {
     /**
      * @param aut
      *            the AUT
+     * @param suppressCheckFailedDefault
+     *            whether to suppress CheckFailedExceptions by default
      */
-    public RuntimeContext(AUT aut, boolean defaultHandling) {
+    public RuntimeContext(AUT aut, boolean suppressCheckFailedDefault) {
         setAUT(aut);
-        m_eventHandler = new CheckFailedExecutionHandler(defaultHandling);
+        m_eventHandler = new CheckFailedExecutionHandler(
+                suppressCheckFailedDefault);
         aut.setHandler(m_eventHandler);
         // TODO: load OM for the AUT
     }
