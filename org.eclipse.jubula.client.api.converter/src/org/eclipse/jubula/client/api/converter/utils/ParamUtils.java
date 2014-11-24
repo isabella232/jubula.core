@@ -91,7 +91,7 @@ public class ParamUtils {
             } else if (paramType.equals(TestDataConstants.VARIABLE) ) {
                 value = "null // TODO: Potential variable assignment: " //$NON-NLS-1$
                         + value + ""; //$NON-NLS-1$
-            } else if (StringUtils.isBlank(value)) {
+            } else if (StringUtils.isEmpty(value)) {
                 value = "null // TODO: no test data found - check and fix in ITE"; //$NON-NLS-1$
             }
         }
