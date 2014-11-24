@@ -45,6 +45,9 @@ public class ParamUtils {
     /** Pattern for detecting functions like ?add(1,2) */
     private static Pattern function = Pattern.compile(".*\\?[a-zA-Z_]+\\(.*?"); //$NON-NLS-1$
     
+    /** Pattern for detecting bulk masked characters by using single quotes e.g. 'string2mask' */
+    private static Pattern bulkMask = Pattern.compile("^(.*?)'(.*?)'(.*?)"); //$NON-NLS-1$
+    
     /**
      * private constructor
      */
@@ -106,6 +109,7 @@ public class ParamUtils {
      */
     private static String executeEscapes(String value) {
         String adjustedValue = value;
+        adjustedValue = adjustedValue.replaceAll(bulkMask.pattern(), "$1$2$3"); //$NON-NLS-1$
         adjustedValue = adjustedValue.replace(StringConstants.BACKSLASH,
                 StringConstants.BACKSLASH + StringConstants.BACKSLASH);
         adjustedValue = adjustedValue.replace(StringConstants.QUOTE, "\\\""); //$NON-NLS-1$
