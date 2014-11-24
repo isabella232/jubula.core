@@ -11,7 +11,7 @@
 package org.eclipse.jubula.communication;
 
 /**
- * CAPs are remotely being executed <br>
+ * CAPs are executed remotely on the {@link org.eclipse.jubula.client.AUT}<br>
  * <b>C</b>: {@link org.eclipse.jubula.tools.ComponentIdentifier} <br>
  * <b>A</b>: Action <br>
  * <b>P</b>: Parameter <br>
