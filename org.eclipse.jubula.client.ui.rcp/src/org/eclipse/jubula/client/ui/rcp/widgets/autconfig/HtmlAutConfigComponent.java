@@ -16,13 +16,13 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
-import org.eclipse.jubula.client.core.model.IAUTConfigPO.Browser;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.RemoteFileBrowserBP;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.widgets.I18nEnumCombo;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
+import org.eclipse.jubula.toolkit.html.Browser;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;

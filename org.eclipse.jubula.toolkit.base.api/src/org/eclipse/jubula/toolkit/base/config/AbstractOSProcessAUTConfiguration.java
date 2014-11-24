@@ -24,11 +24,9 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
  *  @noextend This class is not intended to be extended by clients.
  */
 public abstract class AbstractOSProcessAUTConfiguration extends
-    AbstractAUTConfiguration {
+    AbstractOSAUTConfiguration {
     /** the command */
     @NonNull private String m_command;
-    /** the dir */
-    @NonNull private String m_workingDir;
     /** the args */
     @Nullable private String[] m_args;
     /** the locale */
@@ -57,29 +55,22 @@ public abstract class AbstractOSProcessAUTConfiguration extends
         @NonNull String workingDir, 
         @Nullable String[] args, 
         @NonNull Locale locale) {
-        super(name, autID);
+        super(name, autID, workingDir);
         
         Validate.notEmpty(command, "The given command must not be empty"); //$NON-NLS-1$
         m_command = command;
-        
-        Validate.notEmpty(workingDir, "The working directory must not be empty"); //$NON-NLS-1$
-        m_workingDir = workingDir;
         
         m_args = args;
 
         Validate.notNull(locale, "The locale must not be null"); //$NON-NLS-1$
         m_locale = locale;
 
-        getLaunchInformation().put(AutConfigConstants.EXECUTABLE, 
-                getCommand());
-        getLaunchInformation().put(AutConfigConstants.WORKING_DIR,
-                getWorkingDir());
-        getLaunchInformation().put(
-                AutConfigConstants.AUT_ARGUMENTS,
+        add(AutConfigConstants.EXECUTABLE, getCommand());
+        add(AutConfigConstants.WORKING_DIR, getWorkingDir());
+        add(AutConfigConstants.AUT_ARGUMENTS,
                 StringUtils.defaultString(StringUtils.join(getArgs(),
                         StringConstants.SPACE)));
-        getLaunchInformation().put(AutConfigConstants.AUT_LOCALE,
-                getLocale().toString());
+        add(AutConfigConstants.AUT_LOCALE, getLocale().toString());
     }
 
     /**
@@ -87,13 +78,6 @@ public abstract class AbstractOSProcessAUTConfiguration extends
      */
     @NonNull public String getCommand() {
         return m_command;
-    }
-
-    /**
-     * @return the workingDir
-     */
-    @NonNull public String getWorkingDir() {
-        return m_workingDir;
     }
 
     /**

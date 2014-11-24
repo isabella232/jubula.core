@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.toolkit.base.config;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,10 +51,23 @@ public abstract class AbstractAUTConfiguration implements AUTConfiguration {
         Validate.notEmpty(autID, "The AUT-Identifier must not be empty"); //$NON-NLS-1$
         m_autID = new AutIdentifier(autID);
         
-        getLaunchInformation().put(AutConfigConstants.AUT_ID, 
-                getAutID().getID());
+        add(AutConfigConstants.AUT_ID, getAutID().getID());
     }
 
+    /**
+     * @param option
+     *            the option to add
+     * @param value
+     *            the value to set
+     */
+    protected void add(String option, String value) {
+        if (m_launchInformation.containsKey(option)) {
+            throw new IllegalStateException(
+                    "Option has already been configured: " + option); //$NON-NLS-1$
+        }
+        m_launchInformation.put(option, value);
+    }
+    
     /**
      * @return the name
      */
@@ -72,6 +86,6 @@ public abstract class AbstractAUTConfiguration implements AUTConfiguration {
      * @return the launchInformation
      */
     @NonNull public Map<String, String> getLaunchInformation() {
-        return m_launchInformation;
+        return Collections.unmodifiableMap(m_launchInformation);
     }
 }

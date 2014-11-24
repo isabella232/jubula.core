@@ -49,8 +49,6 @@ public class JavaFXAUTConfiguration extends AbstractOSProcessAUTConfiguration {
         super(name, autID, command, workingDir, args, locale);
         
         // Toolkit specific information
-        getLaunchInformation().put(
-                ToolkitConstants.ATTR_TOOLKITID,
-            CommandConstants.JAVAFX_TOOLKIT);
+        add(ToolkitConstants.ATTR_TOOLKITID, CommandConstants.JAVAFX_TOOLKIT);
     }
 }

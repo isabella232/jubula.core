@@ -13,7 +13,7 @@ package org.eclipse.jubula.communication.internal.message;
 import java.io.Serializable;
 
 /**
- * This class is the parameter of the component action paramter tripel.
+ * This class is the parameter of the component action parameter triple.
  * 
  * @author BREDEX GmbH
  * @created 14.10.2004

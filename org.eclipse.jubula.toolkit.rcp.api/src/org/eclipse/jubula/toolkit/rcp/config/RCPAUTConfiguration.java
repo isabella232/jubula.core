@@ -53,12 +53,9 @@ public class RCPAUTConfiguration extends SWTAUTConfiguration {
         super(name, autID, command, workingDir, args, locale, keyboardLayout);
         
         // Toolkit specific information
-        getLaunchInformation().put(
-                ToolkitConstants.ATTR_TOOLKITID,
-            CommandConstants.RCP_TOOLKIT);
-        
-        getLaunchInformation().put(
-                AutConfigConstants.NAME_TECHNICAL_COMPONENTS,
-            Boolean.TRUE.toString());
+        add(ToolkitConstants.ATTR_TOOLKITID, CommandConstants.RCP_TOOLKIT);
+
+        add(AutConfigConstants.NAME_TECHNICAL_COMPONENTS,
+                Boolean.TRUE.toString());
     }
 }

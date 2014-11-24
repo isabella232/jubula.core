@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula Toolkit - HTML
+Bundle-SymbolicName: org.eclipse.jubula.toolkit.html
+Bundle-Version: 3.0.0.qualifier
+Bundle-Vendor: Eclipse Jubula
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Export-Package: org.eclipse.jubula.toolkit.html

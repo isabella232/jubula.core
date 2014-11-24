@@ -15,6 +15,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -176,8 +177,9 @@ public class AUTAgentImpl implements AUTAgent {
         throws CommunicationException {
         Validate.notNull(configuration, "The configuration must not be null."); //$NON-NLS-1$
         checkConnected(this);
-        
-        Map<String, String> autConfigMap = configuration.getLaunchInformation();
+
+        Map<String, String> autConfigMap = new HashMap<String, String>(
+                configuration.getLaunchInformation());
 
         // add relevant information for the AUT-Agent
         final Communicator communicator = m_agent.getCommunicator();

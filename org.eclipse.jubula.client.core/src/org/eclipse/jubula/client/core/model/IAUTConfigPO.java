@@ -81,18 +81,6 @@ public interface IAUTConfigPO extends IPersistentObject, Comparable {
         }
     }
     
-    /** Browser for Html-Test */
-    public static enum Browser {
-        /** InternetExplorer */
-        InternetExplorer, 
-        /** Firefox */
-        Firefox, 
-        /** Safari */
-        Safari,
-        /** Chrome */
-        Chrome
-    }
-    
     /**
      * Gets a value of this AutConfig.
      * Keys are defined in {@link IAutConfigKeys}.

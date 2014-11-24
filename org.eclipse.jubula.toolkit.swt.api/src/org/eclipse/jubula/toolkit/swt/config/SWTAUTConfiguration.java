@@ -59,14 +59,10 @@ public abstract class SWTAUTConfiguration extends
         
         Validate.notNull(keyboardLayout, "The keyboard layout must not be null"); //$NON-NLS-1$
         m_keyboardLayout = keyboardLayout;
-        
-        getLaunchInformation().put(AutConfigConstants.KEYBOARD_LAYOUT,
-            getKeyboardLayout().toString());
 
+        add(AutConfigConstants.KEYBOARD_LAYOUT, getKeyboardLayout().toString());
         // Toolkit specific information
-        getLaunchInformation().put(
-                ToolkitConstants.ATTR_TOOLKITID,
-            CommandConstants.SWT_TOOLKIT);
+        add(ToolkitConstants.ATTR_TOOLKITID, CommandConstants.SWT_TOOLKIT);
     }
 
     /**
