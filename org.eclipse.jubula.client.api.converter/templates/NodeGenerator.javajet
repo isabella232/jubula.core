@@ -215,7 +215,8 @@ public class <%=className%> {
                     String paramValue = ParamUtils.getValueForParam(cap, param, 0, locale);
                     Boolean isEnum = enumType != null;
                     String enumLookupMethodName = isEnum && (enumType.endsWith(".Operator")
-                                                          || enumType.endsWith(".AUTActivationMethod")) 
+                                                          || enumType.endsWith(".AUTActivationMethod")
+                                                          || enumType.endsWith(".Modifier")) 
                                                       ? "literalAsEnum" 
                                                       : "valueOf";%>
                     

@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.toolkit.enums;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 
 /** @author BREDEX GmbH */
 public final class ValueSets {
@@ -197,6 +200,34 @@ public final class ValueSets {
         @Override
         public String toString() {
             return rcValue();
+        }
+        
+        /**
+         * @param literal
+         *            the literal
+         * @return the corresponding enum
+         */
+        @Deprecated
+        public static Modifier[] literalAsEnum(String literal) {
+            ArrayList<Modifier> modifiers = new ArrayList<ValueSets.Modifier>();
+            if (literal != null) {
+                String[] split = literal.split(
+                        TestDataConstants.COMBI_VALUE_SEPARATOR);
+                for (String s : split) {
+                    boolean found = false;
+                    for (Modifier modifier : values()) {
+                        if (modifier.rcValue().equals(s)) {
+                            modifiers.add(modifier);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        throw new IllegalArgumentException("Unkown modifier: " + s); //$NON-NLS-1$
+                    }
+                }
+            }
+            return modifiers.toArray(new Modifier[modifiers.size()]);
         }
     }
     
