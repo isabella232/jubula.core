@@ -265,7 +265,7 @@ public class <%=className%> {
                     if (pair.isPropagated()) {
                         childCompIdentifierNames.add(compIdentifierName);
                     } else {
-                        childCompIdentifierNames.add("null /*TODO: Find object mapping for component name: " + compIdentifierName + "*/");
+                        childCompIdentifierNames.add("rtc.getIdentifier(\"" + compIdentifierName + "\")");
                     }
                 }
                 Iterator<String> childCompIdentifierNamesIterator = childCompIdentifierNames.iterator();                
@@ -382,6 +382,7 @@ public class <%=className%> {
         
         <%}%>
         <%if (!isActive) {%>// <%}%><%=autName%>.connect();
+        
         <%if (hasReferenceName) {%>// <%=referenceName%>
         
         <%}%>
