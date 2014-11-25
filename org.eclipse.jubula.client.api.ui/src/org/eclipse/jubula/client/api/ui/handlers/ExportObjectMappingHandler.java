@@ -241,11 +241,13 @@ public class ExportObjectMappingHandler extends AbstractHandler {
         }
         for (IObjectMappingAssoziationPO assoziation
                 : category.getUnmodifiableAssociationList()) {
-            String compUUID = assoziation.getLogicalNames().get(0);
-            String compName = m_compMapper.getCompNameCache().getName(compUUID);
-            ComponentIdentifier identifier = (ComponentIdentifier) objMap
-                    .getTechnicalName(compUUID);
-            m_map.put(compName, SerilizationUtils.encode(identifier));
+            for (String compUUID : assoziation.getLogicalNames()) {
+                String compName = m_compMapper.getCompNameCache()
+                        .getName(compUUID);
+                ComponentIdentifier identifier = (ComponentIdentifier) objMap
+                        .getTechnicalName(compUUID);
+                m_map.put(compName, SerilizationUtils.encode(identifier));
+            }
         }
     }
     
