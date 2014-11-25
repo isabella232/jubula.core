@@ -28,15 +28,15 @@ import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
  */
 public class HTMLAUTConfiguration extends AbstractOSAUTConfiguration {
     /** the URL to open */
-    private URL m_url;
+    @NonNull private URL m_url;
     /** the browser to use */
-    private Browser m_browser;
+    @NonNull private Browser m_browser;
     /** the browser path to use */
-    private String m_browserPath;
+    @Nullable private String m_browserPath;
     /** the AUT window mode */
     private boolean m_singleWindow = true;
     /** the name of the attribute used to retrieve a unique identifier */
-    private String m_idAttributeName;
+    @Nullable private String m_idAttributeName;
 
     /**
      * Constructor
@@ -72,18 +72,18 @@ public class HTMLAUTConfiguration extends AbstractOSAUTConfiguration {
         super(name, autID, workingDir);
         
         Validate.notNull(sURL, "The URL must not be null"); //$NON-NLS-1$
-        setUrl(new URL(sURL));
+        m_url = new URL(sURL);
 
         Validate.notNull(browser, "The Browser must not be null"); //$NON-NLS-1$
-        setBrowser(browser);
+        m_browser = browser;
         
         if (browserPath != null && Browser.InternetExplorer.equals(browser)) {
             throw new IllegalArgumentException("Setting of browser path is not supported for " + browser); //$NON-NLS-1$
         }
         
-        setBrowserPath(browserPath);
-        setSingleWindow(singleWindow);
-        setIdAttributeName(idAttributeName);
+        m_browserPath = browserPath;
+        m_singleWindow = singleWindow;
+        m_idAttributeName = idAttributeName;
 
         // Toolkit specific information
         add(AutConfigConstants.AUT_URL, sURL);
@@ -98,43 +98,25 @@ public class HTMLAUTConfiguration extends AbstractOSAUTConfiguration {
     /**
      * @return the URL
      */
+    @NonNull
     public URL getUrl() {
         return m_url;
     }
 
     /**
-     * @param url the URL to set
-     */
-    private void setUrl(URL url) {
-        m_url = url;
-    }
-
-    /**
      * @return the browser
      */
+    @NonNull
     public Browser getBrowser() {
         return m_browser;
     }
 
     /**
-     * @param browser the browser to set
-     */
-    private void setBrowser(Browser browser) {
-        m_browser = browser;
-    }
-
-    /**
      * @return the browserPath
      */
+    @Nullable
     public String getBrowserPath() {
         return m_browserPath;
-    }
-
-    /**
-     * @param browserPath the browserPath to set
-     */
-    private void setBrowserPath(String browserPath) {
-        m_browserPath = browserPath;
     }
 
     /**
@@ -145,23 +127,10 @@ public class HTMLAUTConfiguration extends AbstractOSAUTConfiguration {
     }
 
     /**
-     * @param singleWindow the singleWindow to set
-     */
-    private void setSingleWindow(boolean singleWindow) {
-        m_singleWindow = singleWindow;
-    }
-
-    /**
      * @return the idAttributeName
      */
+    @Nullable
     public String getIdAttributeName() {
         return m_idAttributeName;
-    }
-
-    /**
-     * @param idAttributeName the idAttributeName to set
-     */
-    private void setIdAttributeName(String idAttributeName) {
-        m_idAttributeName = idAttributeName;
     }
 }
