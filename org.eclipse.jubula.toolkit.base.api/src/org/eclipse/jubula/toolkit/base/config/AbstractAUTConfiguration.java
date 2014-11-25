@@ -21,12 +21,18 @@ import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** 
  *  @author BREDEX GmbH 
  *  @noextend This class is not intended to be extended by clients.
  */
 public abstract class AbstractAUTConfiguration implements AUTConfiguration {
+    /** the logger */
+    private static Logger log = LoggerFactory.getLogger(
+            AbstractAUTConfiguration.class);
+    
     /** the name */
     @Nullable private String m_name;
     /** the autID */
@@ -62,8 +68,7 @@ public abstract class AbstractAUTConfiguration implements AUTConfiguration {
      */
     protected void add(String option, String value) {
         if (m_launchInformation.containsKey(option)) {
-            throw new IllegalStateException(
-                    "Option has already been configured: " + option); //$NON-NLS-1$
+            log.warn("Option has already been configured: " + option); //$NON-NLS-1$
         }
         m_launchInformation.put(option, value);
     }
