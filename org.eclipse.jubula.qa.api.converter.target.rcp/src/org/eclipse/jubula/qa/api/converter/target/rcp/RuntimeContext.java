@@ -30,7 +30,7 @@ public class RuntimeContext {
 
         /**
          * @param defaultHandling
-         *            the default handling
+         *            whether to suppress CheckFailedExceptions by default
          */
         public CheckFailedExecutionHandler(Boolean defaultHandling) {
             getStack().push(defaultHandling);
@@ -100,8 +100,11 @@ public class RuntimeContext {
     }
     
     /**
-     * activate ignoring of
-     * {@link org.eclipse.jubula.client.exceptions.CheckFailedException}
+     * Begins local ignoring of
+     * {@link org.eclipse.jubula.client.exceptions.CheckFailedException}.
+     * 
+     * Call {@link org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext.endLocalEventHandling()}
+     * to end the scope.
      */
     public void beginIgnoreCheckFailed() {
         getEventStack().push(true);
@@ -115,15 +118,18 @@ public class RuntimeContext {
     }
 
     /**
-     * end local event handling and restore previous state 
+     * Ends the scope of local event handling and restores previous state.
      */
     public void endLocalEventHandling() {
         getEventStack().pop();
     }
     
     /**
-     * deactivate ignoring of
-     * {@link org.eclipse.jubula.client.exceptions.CheckFailedException}
+     * Begins local respecting of
+     * {@link org.eclipse.jubula.client.exceptions.CheckFailedException}.
+     * 
+     * Call {@link org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext.endLocalEventHandling()}
+     * to end the scope.
      */
     public void doNotIgnoreCheckFailed() {
         getEventStack().push(false);
