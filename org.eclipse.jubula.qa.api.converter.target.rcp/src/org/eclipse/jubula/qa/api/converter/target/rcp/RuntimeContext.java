@@ -10,19 +10,28 @@
  *******************************************************************************/
 package org.eclipse.jubula.qa.api.converter.target.rcp;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Stack;
 
 import org.eclipse.jubula.client.AUT;
+import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.ObjectMapping;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.client.exceptions.ExecutionExceptionHandler;
 import org.eclipse.jubula.tools.ComponentIdentifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @created 19.11.2014
  */
 public class RuntimeContext {
+    /** the logger */
+    private static Logger log = LoggerFactory
+            .getLogger(RuntimeContext.class);
+    
     private static class CheckFailedExecutionHandler 
         implements ExecutionExceptionHandler {
         /** nesting level counter */
@@ -72,7 +81,15 @@ public class RuntimeContext {
         m_eventHandler = new CheckFailedExecutionHandler(
                 suppressCheckFailedDefault);
         aut.setHandler(m_eventHandler);
-        // TODO: load OM for the AUT
+        
+        // load object mapping - hint: feel free to adjust
+        URL resource = RuntimeContext.class.getClassLoader().getResource(
+                "om.properties"); //$NON-NLS-1$
+        try {
+            om = MakeR.createObjectMapping(resource.openStream());
+        } catch (IOException e) {
+            log.error(e.getLocalizedMessage(), e);
+        }
     }
 
     /**
