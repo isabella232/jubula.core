@@ -167,6 +167,10 @@ public class Messages extends NLS {
     public static String ExecutingClientAction;
     public static String ExecutingDirectoryListCommand;
     public static String ExecutionLog;
+    public static String ExportObjectMappingDialogChoiceJavaClass;
+    public static String ExportObjectMappingDialogChoicePropertiesFile;
+    public static String ExportObjectMappingDialogMessage;
+    public static String ExportObjectMappingDialogTitle;
     public static String FailedToUpdateApplicationTimestamp;
     public static String Failure;
     public static String FiringAUTStateChanged;

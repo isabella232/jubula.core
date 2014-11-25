@@ -23,6 +23,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jubula.client.api.ui.utils.OMAssociation;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
@@ -165,11 +166,14 @@ public class ExportObjectMappingHandler extends AbstractHandler {
      *      <code>1</code> for a Properties File
      */
     private int determineExportType() {
-        String dialogTitle = "Choose Export Type"; //$NON-NLS-1$
-        String dialogMessage = "What do you prefer?"; //$NON-NLS-1$
+        String dialogTitle = Messages.ExportObjectMappingDialogTitle;
+        String dialogMessage = Messages.ExportObjectMappingDialogMessage;
         MessageDialog dialog = new MessageDialog(getActiveShell(), dialogTitle,
-                null, dialogMessage, MessageDialog.QUESTION, new String[] {
-                    "Java Class", "Properties File" }, 0); //$NON-NLS-1$ //$NON-NLS-2$
+                null, dialogMessage, MessageDialog.QUESTION,
+                new String[] {
+                    Messages.ExportObjectMappingDialogChoiceJavaClass,
+                    Messages.ExportObjectMappingDialogChoicePropertiesFile },
+                0);
         return dialog.open();
     }
 
