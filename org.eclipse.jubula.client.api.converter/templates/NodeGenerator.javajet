@@ -56,6 +56,7 @@ NameLoader nameLoader = NameLoader.getInstance();
 ComponentNamesBP componentNamesBP = ComponentNamesBP.getInstance();
 CompNamesBP compNamesBP = new CompNamesBP();
 List<String> compIdentifierNames = new ArrayList<String>();
+boolean definesLocalCheckFailedHandling = false;
 IProjectPO project = null;
 try {
     project = ProjectCache.get(node.getParentProjectId());
@@ -140,7 +141,7 @@ public class <%=className%> {
         boolean suppressCheckFailedDefault = false;
         for (String handler : defaultEventHandlers.keySet()) {
             try {
-                if (handler.contains(TestErrorEvent.ID.VERIFY_FAILED)
+                if (handler.equals(TestErrorEvent.ID.VERIFY_FAILED)
                         && ReentryProperty.getProperty(defaultEventHandlers.get(handler))
                             == ReentryProperty.CONTINUE) {
                     suppressCheckFailedDefault = true;
@@ -178,6 +179,27 @@ public class <%=className%> {
         <%if (node instanceof ISpecTestCasePO) {%>
         AUT aut = rtc.getAUT();
         <%}%>
+        
+        <%if (node instanceof ISpecTestCasePO) {
+            ISpecTestCasePO tc = (ISpecTestCasePO) node;
+            for (IEventExecTestCasePO eventTC : tc.getAllEventEventExecTC()) {
+                String eventType = eventTC.getEventType();
+                String reentryProp = eventTC.getReentryProp().toString();
+                if (eventType.equals(TestErrorEvent.ID.VERIFY_FAILED)) {
+                    if (reentryProp.equals(ReentryProperty.CONTINUE.toString())) {%>
+        
+        rtc.beginIgnoreCheckFailed();
+                    <%} else {%>
+        
+        rtc.doNotIgnoreCheckFailed();
+                    <%}
+                    definesLocalCheckFailedHandling = true;%>
+        
+        try {
+                <%}
+            }
+        }%>
+        
         <%List<String> autList = new ArrayList<String>();%>
         
         <%childIterator = node.getNodeListIterator();
@@ -410,6 +432,13 @@ public class <%=className%> {
         <%if (!isActive) {%>// <%}%><%=autName%>.disconnect();
         
             <%}%>
+        <%}%>
+        
+        <%if (definesLocalCheckFailedHandling) {%>
+        
+        } finally {
+          rtc.endLocalEventHandling();
+        }
         <%}%>
         
         <%if (node instanceof ISpecTestCasePO) {
