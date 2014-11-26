@@ -28,6 +28,7 @@ public class Messages extends NLS {
     public static String InvalidPackageName;
     public static String NoAutInProject;
     public static String NoPackageNameSpecified;
+    public static String PreparingConvertProjectTaskName;
 
     static {
         // initialize resource bundle

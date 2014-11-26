@@ -17,9 +17,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
@@ -34,6 +38,7 @@ import org.eclipse.jubula.client.api.converter.CTDSInfo;
 import org.eclipse.jubula.client.api.converter.NodeGenerator;
 import org.eclipse.jubula.client.api.converter.NodeInfo;
 import org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException;
+import org.eclipse.jubula.client.api.converter.ui.exceptions.StopConversionException;
 import org.eclipse.jubula.client.api.converter.ui.i18n.Messages;
 import org.eclipse.jubula.client.api.converter.utils.Utils;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
@@ -137,42 +142,158 @@ public class ConvertProjectHandler extends AbstractHandler {
         
         /** the project */
         private static IProgressMonitor progressMonitor;
+        
         /** the default toolkit */
         private static String defaultToolkit;
+        
+        /** maps a UUID from a test case/suite/job to the name of its
+          * corresponding class which will be generated */
+        private static Map<String, String> uuidToClassNameMap;
+        
+        /** set of projects to convert */
+        private static Set<IProjectPO> projects;
+
+        /** counting absolute work units */
+        private static int workUnits;
         
         /** {@inheritDoc} */
         public void run(IProgressMonitor monitor) {
             progressMonitor = monitor;
             IProjectPO project = GeneralStorage.getInstance().getProject();
-            progressMonitor.beginTask(NLS.bind(Messages.ConvertProjectTaskName,
-                    project.getName()), IProgressMonitor.UNKNOWN);
+            progressMonitor.setTaskName(
+                    Messages.PreparingConvertProjectTaskName);
             String basePath = genPath + StringConstants.SLASH
                     + genPackage.replace(StringConstants.DOT, 
                             StringConstants.SLASH);
+            uuidToClassNameMap = new HashMap<String, String>();
+            projects = new HashSet<IProjectPO>();
+            workUnits = 0;
             
             if (project != null) {
                 defaultToolkit = determineDefaultToolkit(project);
-                                
-                // Handle the reused projects
-                Iterator iterator = project.getUsedProjects().iterator();
-                while (iterator.hasNext()) {
-                    IReusedProjectPO reusedProject =
-                            (IReusedProjectPO) iterator.next();
-                    IProjectPO usedProject;
-                    try {
-                        usedProject = ProjectPM
-                            .loadReusedProjectInMasterSession(reusedProject);
-                        handleProject(usedProject, basePath);
-                    } catch (JBException e) {
-                        ErrorHandlingUtil.createMessageDialog(
-                                new JBException(e.getMessage(), e,
-                                        MessageIDs.E_LOAD_PROJECT));
+                addProjectsToConvert(project);
+                
+                try {
+                    for (IProjectPO p : projects) {
+                        determineClassNamesForProject(p, basePath);
                     }
+                    progressMonitor.beginTask(
+                            Messages.PreparingConvertProjectTaskName,
+                            workUnits);
+                    for (IProjectPO p : projects) {
+                        progressMonitor.setTaskName(NLS.bind(
+                                Messages.ConvertProjectTaskName, p.getName()));
+                        handleProject(p, basePath);
+                    }
+                } catch (StopConversionException e) {
+                    progressMonitor.setCanceled(true);
+                    return;
                 }
-                // Handle the project itself
-                handleProject(project, basePath);
             }
             progressMonitor.done();
+        }
+
+        /**
+         * Adds a project and its reused projects to the set of projects to convert
+         * @param project the project
+         */
+        private void addProjectsToConvert(IProjectPO project) {
+            projects.add(project);
+            Iterator iterator = project.getUsedProjects().iterator();
+            while (iterator.hasNext()) {
+                IReusedProjectPO reusedProject =
+                        (IReusedProjectPO) iterator.next();
+                IProjectPO usedProject;
+                try {
+                    usedProject = ProjectPM
+                        .loadReusedProjectInMasterSession(reusedProject);
+                    addProjectsToConvert(usedProject);
+                } catch (JBException e) {
+                    ErrorHandlingUtil.createMessageDialog(
+                            new JBException(e.getMessage(), e,
+                                    MessageIDs.E_LOAD_PROJECT));
+                }
+            }
+        }
+
+        /**
+         * Maps for all nodes from a project their UUIDs to the name 
+         * of its corresponding class to generate 
+         * @param project the project
+         * @param basePath the base path
+         * @throws StopConversionException 
+         */
+        private void determineClassNamesForProject(IProjectPO project,
+                String basePath) throws StopConversionException {
+            String projectName = StringConstants.EMPTY;
+            try {
+                projectName = Utils.translateToPackageName(project);
+            } catch (InvalidNodeNameException e) {
+                displayErrorForInvalidName(project);
+                throw new StopConversionException();
+            }
+            String projectPath = basePath + StringConstants.SLASH + projectName;
+            for (INodePO node : project.getExecObjCont().getExecObjList()) {
+                if (progressMonitor.isCanceled()) {
+                    throw new StopConversionException();
+                }
+                String path = projectPath + StringConstants.SLASH + EXEC_PATH;
+                determineClassNamesForNode(node, path);
+            }
+            for (INodePO node : project.getSpecObjCont().getSpecObjList()) {
+                if (progressMonitor.isCanceled()) {
+                    throw new StopConversionException();
+                }
+                String path = projectPath + StringConstants.SLASH + SPEC_PATH;
+                determineClassNamesForNode(node, path);
+            }
+        }
+
+        /**
+         * Maps a node's UUID to the name of its corresponding class to generate 
+         * @param node the node
+         * @param basePath the base path
+         * @throws StopConversionException 
+         */
+        private void determineClassNamesForNode(INodePO node, String basePath)
+                throws StopConversionException {
+            workUnits++;
+            if (node instanceof ICategoryPO) {
+                ICategoryPO category = (ICategoryPO) node;
+                String path = StringConstants.EMPTY;
+                try {
+                    path = basePath + StringConstants.SLASH
+                            + Utils.translateToPackageName(category);
+                } catch (InvalidNodeNameException e) {
+                    displayErrorForInvalidName(category);
+                    throw new StopConversionException();
+                }
+                if (uuidToClassNameMap.values().contains(path)) {
+                    displayErrorForDuplicate(node);
+                    throw new StopConversionException();
+                }
+                uuidToClassNameMap.put(node.getGuid(), path);
+                for (INodePO child : node.getUnmodifiableNodeList()) {
+                    determineClassNamesForNode(child, path);
+                }
+            } else {
+                String className = StringConstants.EMPTY;
+                try {
+                    className = Utils.determineClassName(node);
+                } catch (InvalidNodeNameException e) {
+                    displayErrorForInvalidName(node);
+                    throw new StopConversionException();
+                }
+                String fileName = basePath
+                        + StringConstants.SLASH
+                        + className
+                        + ".java"; //$NON-NLS-1$
+                if (uuidToClassNameMap.values().contains(fileName)) {
+                    Plugin.getDefault().writeErrorLineToConsole(
+                            "Duplicate filename error:" + fileName, true); //$NON-NLS-1$
+                }
+                uuidToClassNameMap.put(node.getGuid(), fileName);
+            }
         }
 
         /**
@@ -208,90 +329,51 @@ public class ConvertProjectHandler extends AbstractHandler {
          * Traverses a project and creates files and directories for its content.
          * @param project the project
          * @param basePath the base path
+         * @throws StopConversionException 
          */
-        private void handleProject(IProjectPO project, String basePath) {
-            String projectName = StringConstants.EMPTY;
-            try {
-                projectName = Utils.translateToPackageName(project);
-            } catch (InvalidNodeNameException e) {
-                displayErrorForInvalidName(project);
-            }
-            String projectPath = basePath + StringConstants.SLASH + projectName;
-            createCentralTestDataClass(project, new File(projectPath));
+        private void handleProject(IProjectPO project, String basePath)
+                throws StopConversionException {
+            createCentralTestDataClass(project, basePath);
             for (IExecPersistable node : project.getExecObjCont()
                     .getExecObjList()) {
-                String path = projectPath + StringConstants.SLASH
-                        + EXEC_PATH + StringConstants.SLASH;
-                handleNode(new File(path), node);
+                handleNode(node);
             }
             for (ISpecPersistable node : project.getSpecObjCont()
                     .getSpecObjList()) {
-                String path = projectPath + StringConstants.SLASH
-                        + SPEC_PATH + StringConstants.SLASH;
-                handleNode(new File(path), node);
-            }
-        }
-
-        /**
-         * Creates a file for a node and a folder with its content for a category
-         * @param parentDir the parent directory
-         * @param node the node
-         */
-        private void handleNode(File parentDir, INodePO node) {
-            if (progressMonitor.isCanceled()) {
-                return;
-            }
-            if (node instanceof ICategoryPO) {
-                ICategoryPO category = (ICategoryPO) node;
-                handleCategory(parentDir, category);
-            } else {
-                handleTestCaseSuiteOrJob(parentDir, node);
-            }
-        }
-
-        /**
-         * Handles the conversion for a category.
-         * @param parentDir the parent directory
-         * @param category the category
-         */
-        private void handleCategory(File parentDir, ICategoryPO category) {
-            File dir = createDir(parentDir, category);
-            if (dir.exists()) {
-                displayErrorForDuplicate(category);
-                return;
-            }
-            dir.mkdirs();
-            
-            Iterator iterator = category.getNodeListIterator();
-            while (iterator.hasNext()) {
-                INodePO child = (INodePO) iterator.next();
-                handleNode(dir, child);
+                handleNode(node);
             }
         }
         
         /**
-         * Handles the conversion for a test case.
-         * @param parentDir the parent directory
+         * Handles the conversion for a node.
          * @param node the test case
+         * @throws StopConversionException 
          */
-        private void handleTestCaseSuiteOrJob(File parentDir, INodePO node) {
-            File file = createFile(parentDir, node);
-            if (file.exists()) {
-                Plugin.getDefault().writeErrorLineToConsole(
-                        "Duplicate filename error:" + file.getAbsolutePath(), true); //$NON-NLS-1$
-                return;
+        private void handleNode(INodePO node) throws StopConversionException {
+            if (progressMonitor.isCanceled()) {
+                throw new StopConversionException();
             }
-            try {
-                file.createNewFile();
-                NodeGenerator gen = new NodeGenerator();
-                NodeInfo info = new NodeInfo(file.getName(), node,
-                        genPackage, defaultToolkit, language);
-                String content = gen.generate(info);
-                writeContentToFile(file, content);
-            } catch (IOException e) {
-                ErrorHandlingUtil.createMessageDialog(
-                        new JBException(e.getMessage(), e,
-                                MessageIDs.E_FILE_NO_PERMISSION));
+            progressMonitor.worked(1);
+            File file = createFile(node);
+            if (node instanceof ICategoryPO) {
+                file.mkdirs();
+                for (INodePO child : node.getUnmodifiableNodeList()) {
+                    handleNode(child);
+                }
+            } else {
+                try {
+                    file.createNewFile();
+                    NodeGenerator gen = new NodeGenerator();
+                    NodeInfo info = new NodeInfo(file.getName(), node,
+                            genPackage, defaultToolkit, language);
+                    String content = gen.generate(info);
+                    writeContentToFile(file, content);
+                } catch (IOException e) {
+                    ErrorHandlingUtil.createMessageDialog(
+                            new JBException(e.getMessage(), e,
+                                    MessageIDs.E_FILE_NO_PERMISSION));
+                    throw new StopConversionException();
+                }
             }
         }
         
@@ -324,44 +406,13 @@ public class ConvertProjectHandler extends AbstractHandler {
         }
         
         /**
-         * Creates a directory for a category with given parent directory
-         * @param parentDir the parent directory
-         * @param category the category
-         * @return the directory
+         * Creates a file for a node
+         * @param node the node
+         * @return the file
          */
-        private File createDir(File parentDir, ICategoryPO category) {
-            String dirPath;
-            File dir = null;
-            try {
-                dirPath = parentDir.getAbsolutePath() + StringConstants.SLASH
-                        + Utils.translateToPackageName(category);
-                dir = new File(dirPath);
-            } catch (InvalidNodeNameException e) {
-                displayErrorForInvalidName(category);
-            }
-            return dir;
-        }
-        
-        /**
-         * Creates a directory for a category with given parent directory
-         * @param parentDir the parent directory
-         * @param node the category
-         * @return the directory
-         */
-        private File createFile(File parentDir, INodePO node) {
-            String extension = ".java"; //$NON-NLS-1$
-            String className = StringConstants.EMPTY;
-            try {
-                className = Utils.determineClassName(node);
-            } catch (InvalidNodeNameException e) {
-                displayErrorForInvalidName(node);
-            }
-            String fileName = parentDir.getAbsolutePath()
-                    + StringConstants.SLASH
-                    + className
-                    + extension;
-            File file = new File(fileName);
-            return file;
+        private File createFile(INodePO node) {
+            String fileName = uuidToClassNameMap.get(node.getGuid());
+            return new File(fileName);
         }
 
         /**
@@ -386,12 +437,18 @@ public class ConvertProjectHandler extends AbstractHandler {
          * @param basePath the base path
          */
         private void createCentralTestDataClass(IProjectPO project,
-                File basePath) {
-            basePath.mkdirs();
+                String basePath) {
+            String projectName = StringConstants.EMPTY;
+            try {
+                projectName = Utils.translateToPackageName(project);
+            } catch (InvalidNodeNameException e) {
+                displayErrorForInvalidName(project);
+            }
             String className = "CTDS.java"; //$NON-NLS-1$
-            String fileName = basePath.getAbsolutePath()
-                    + StringConstants.SLASH
-                    + className;
+            String projectPath = basePath + StringConstants.SLASH + projectName;
+            File projectDir = new File(projectPath);
+            projectDir.mkdirs();
+            String fileName = projectPath + StringConstants.SLASH + className;
             File file = new File(fileName);
             try {
                 file.createNewFile();
