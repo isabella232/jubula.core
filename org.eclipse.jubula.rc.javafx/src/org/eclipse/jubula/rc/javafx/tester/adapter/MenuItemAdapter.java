@@ -257,6 +257,12 @@ public class MenuItemAdapter<M extends MenuItem>
                                 break;
                             }
                         }
+                        if (mBox == null) {
+                            throw new StepExecutionException("No Menu was found", //$NON-NLS-1$
+                                    EventFactory
+                                            .createActionError(TestErrorEvent.
+                                                    POPUP_NOT_FOUND));
+                        }
                         int itemIndex = item.getParentPopup().getItems().
                                 indexOf(item);
                          /* item.getParentMenu().getItems()
