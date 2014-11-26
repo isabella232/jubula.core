@@ -41,6 +41,7 @@ class="NodeGenerator"%>
 <%
 Logger log = LoggerFactory.getLogger(NodeGenerator.class);
 
+Map<String, NodeInfo> uuidToNodeInfoMap = NodeInfo.getUuidToNodeInfoMap();
 NodeInfo info = (NodeInfo)argument;
 String className = info.getClassName();
 INodePO node = info.getNode();
@@ -57,23 +58,10 @@ ComponentNamesBP componentNamesBP = ComponentNamesBP.getInstance();
 CompNamesBP compNamesBP = new CompNamesBP();
 List<String> compIdentifierNames = new ArrayList<String>();
 boolean definesLocalCheckFailedHandling = false;
-IProjectPO project = null;
-try {
-    project = ProjectCache.get(node.getParentProjectId());
-} catch (JBException e) {
-    Plugin.getDefault().writeErrorLineToConsole(
-                        "Error while loading project.", true);
-   return StringConstants.EMPTY;
-}
-String projectName = null;
-try {
-    projectName = Utils.translateToPackageName(project);
-} catch (InvalidNodeNameException e) {
-    log.error(e.getLocalizedMessage());
-}
-String fqName = Utils.getFullyQualifiedTranslatedName(node, packageBase, projectName);
-String packageName = StringUtils.substringBeforeLast(fqName, StringConstants.DOT);
-String ctdsPath = Utils.getProjectPath(info.getPackageBasePath(), projectName);
+
+String fqName = info.getFqName();
+String packageName = info.getPackageName();
+String ctdsPath = Utils.getProjectPath(info.getPackageBasePath(), info.getProjectName());
 
 NodeType nodeType = NodeType.UNKNOWN;
 if (node instanceof ISpecTestCasePO) {
@@ -94,6 +82,46 @@ import org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext;
 import org.eclipse.jubula.tools.ComponentIdentifier;
 
 import <%=ctdsPath%>.CTDS;
+
+<%childIterator = node.getNodeListIterator();
+List<NodeInfo> classesToImport = new ArrayList<NodeInfo>();
+List<NodeInfo> duplicateClasses = new ArrayList<NodeInfo>();
+childInspection: while (childIterator.hasNext()) {
+    INodePO child = childIterator.next();
+    NodeInfo childInfo = null;
+    if (child instanceof ICapPO) {
+        continue;
+    } else if (child instanceof IExecTestCasePO) {
+        IExecTestCasePO exec = (IExecTestCasePO)child;
+        ISpecTestCasePO spec = exec.getSpecTestCase();
+        childInfo = uuidToNodeInfoMap.get(spec.getGuid());
+    } else if (child instanceof IRefTestSuitePO) {
+        IRefTestSuitePO ref = (IRefTestSuitePO)child;
+        ITestSuitePO testSuite = ref.getTestSuite();
+        childInfo = uuidToNodeInfoMap.get(testSuite.getGuid());
+    }
+    for (NodeInfo duplicate : duplicateClasses) {
+        if (duplicate.getClassName().equals(childInfo.getClassName())) {
+            continue childInspection;
+        }
+    }
+    for (NodeInfo classToImport : classesToImport) {
+        if (classToImport.getClassName().equals(childInfo.getClassName())) {
+            if (classToImport == childInfo) {
+                continue childInspection;
+            } else {
+                classesToImport.remove(classToImport);
+                duplicateClasses.add(classToImport);
+                continue childInspection;
+            }
+        }
+    }
+    classesToImport.add(childInfo);
+}
+for (NodeInfo nodeInfo : classesToImport) {
+    String fqChildName = nodeInfo.getFqName();%>
+import <%=fqChildName%>;
+<%}%>
 
 @SrcNode(UUID = "<%=uuid%>",
          type = NodeType.<%=nodeType%><%if (hasTaskId) {%>, taskId = "<%=taskId%>"<%}%>)
@@ -209,7 +237,7 @@ public class <%=className%> {
             comment = child.getComment();
             hasComment = StringUtils.isNotBlank(comment);
         
-        if (hasComment) {%>// Comment: <%=comment%>
+        if (hasComment) {%><%if (!isActive) {%>//<%}%>// Comment: <%=comment%>
         
         <%}%>
             <%if (child instanceof ICapPO) {
@@ -280,20 +308,8 @@ public class <%=className%> {
                 String referenceName = exec.getRealName();
                 boolean hasReferenceName = StringUtils.isNotBlank(referenceName);
                 String testCaseName = StringConstants.EMPTY;
-                try {
-                    project = ProjectCache.get(spec.getParentProjectId());
-                } catch (JBException e) {
-                    Plugin.getDefault().writeErrorLineToConsole(
-                                        "Error while loading project.", true);
-                   return StringConstants.EMPTY;
-                }
-                try {
-                    projectName = Utils.translateToPackageName(project);
-                } catch (InvalidNodeNameException e) {
-                    log.error(e.getLocalizedMessage());
-                }
-                testCaseName = Utils.getFullyQualifiedTranslatedName(spec, packageBase, projectName);
-                
+                NodeInfo specInfo = uuidToNodeInfoMap.get(spec.getGuid());
+                testCaseName = classesToImport.contains(specInfo) ? specInfo.getClassName() : specInfo.getFqName();
                 List<ICompNamesPairPO> childCompNamePairs = compNamesBP.getAllCompNamesPairs(exec);
                 Iterator<ICompNamesPairPO> childCompNamePairsIterator = childCompNamePairs.iterator();
                 List<String> childCompIdentifierNames = new ArrayList<String>();
@@ -322,7 +338,7 @@ public class <%=className%> {
         <%if (!isActive) {%>// Hint: this line is commented out because its correspondent node in the ITE was inactive
         
         <%}%>
-        <%if (hasReferenceName) {%>// <%=referenceName%>
+        <%if (hasReferenceName) {%><%if (!isActive) {%>//<%}%>// <%=referenceName%>
         
         <%}%>
         <%if (!isActive) {%>//<%}%>new <%=testCaseName%>(
@@ -361,7 +377,7 @@ public class <%=className%> {
         <%}%>
         <%if (!isActive) {%>//<%}%>for (CTDS.<%=dataCubeName%> row : CTDS.<%=dataCubeName%>.data) {
             
-            <%if (hasReferenceName) {%>// <%=referenceName%>
+            <%if (hasReferenceName) {%><%if (!isActive) {%>//<%}%>// <%=referenceName%>
             
             <%}%>
             <%if (!isActive) {%>//<%}%>new <%=testCaseName%>(
@@ -395,20 +411,8 @@ public class <%=className%> {
                 boolean hasReferenceName = StringUtils.isNotBlank(referenceName) 
                 	&& !referenceName.equals(testSuite.getName());
                 
-                String testSuiteName = StringConstants.EMPTY;
-                try {
-                project = ProjectCache.get(testSuite.getParentProjectId());
-                } catch (JBException e) {
-                    Plugin.getDefault().writeErrorLineToConsole(
-                                        "Error while loading project.", true);
-                   return StringConstants.EMPTY;
-                }
-                try {
-                    projectName = Utils.translateToPackageName(project);
-                } catch (InvalidNodeNameException e) {
-                    log.error(e.getLocalizedMessage());
-                }
-                testSuiteName = Utils.getFullyQualifiedTranslatedName(testSuite, packageBase, projectName);
+                NodeInfo testSuiteInfo = uuidToNodeInfoMap.get(testSuite.getGuid());
+                String testSuiteName = classesToImport.contains(testSuiteInfo) ? testSuiteInfo.getClassName() : testSuiteInfo.getFqName();
                 String autName = StringUtils.deleteWhitespace(testSuite.getAut().getName());
                 Boolean newAUT = false;
                 if (!autList.contains(autName) && isActive) {
@@ -424,7 +428,7 @@ public class <%=className%> {
         <%}%>
         <%if (!isActive) {%>// <%}%><%=autName%>.connect();
         
-        <%if (hasReferenceName) {%>// <%=referenceName%>
+        <%if (hasReferenceName) {%><%if (!isActive) {%>//<%}%>// <%=referenceName%>
         
         <%}%>
         <%if (!isActive) {%>// <%}%>new <%=testSuiteName%>(<%=autName%>).execute();
@@ -450,18 +454,8 @@ public class <%=className%> {
                     String referenceName = eventTC.getRealName();
                     boolean hasReferenceName = StringUtils.isNotBlank(referenceName);
                     ISpecTestCasePO specEventHandler = eventTC.getSpecTestCase();
-                    try {
-                        project = ProjectCache.get(specEventHandler.getParentProjectId());
-                    } catch (JBException e) {
-                        Plugin.getDefault().writeErrorLineToConsole(
-                                            "Error while loading project.", true);
-                    }
-                    try {
-                        projectName = Utils.translateToPackageName(project);
-                    } catch (InvalidNodeNameException e) {
-                        log.error(e.getLocalizedMessage());
-                    }
-                    eventHandlerName = Utils.getFullyQualifiedTranslatedName(specEventHandler, packageBase, projectName);
+                    NodeInfo ehInfo = uuidToNodeInfoMap.get(specEventHandler.getGuid());
+                    eventHandlerName = Utils.getFullyQualifiedTranslatedName(specEventHandler, packageBase, ehInfo.getProjectName());
                     Iterator<IParamDescriptionPO> childParamIterator;
                     IParameterInterfacePO dataCube = eventTC.getReferencedDataCube();%>
         // Hint: This test case used Event Handler which you have to replace manually:

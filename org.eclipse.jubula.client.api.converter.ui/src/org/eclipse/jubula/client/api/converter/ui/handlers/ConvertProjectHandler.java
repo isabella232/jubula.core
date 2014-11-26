@@ -139,7 +139,7 @@ public class ConvertProjectHandler extends AbstractHandler {
      */
     private static class ConvertProjectOperation implements
         IRunnableWithProgress {
-        
+
         /** the project */
         private static IProgressMonitor progressMonitor;
         
@@ -147,8 +147,8 @@ public class ConvertProjectHandler extends AbstractHandler {
         private static String defaultToolkit;
         
         /** maps a UUID from a test case/suite/job to the name of its
-          * corresponding class which will be generated */
-        private static Map<String, String> uuidToClassNameMap;
+         * corresponding node info for generation */
+        private static Map<String, NodeInfo> uuidToNodeInfoMap;
         
         /** set of projects to convert */
         private static Set<IProjectPO> projects;
@@ -165,7 +165,8 @@ public class ConvertProjectHandler extends AbstractHandler {
             String basePath = genPath + StringConstants.SLASH
                     + genPackage.replace(StringConstants.DOT, 
                             StringConstants.SLASH);
-            uuidToClassNameMap = new HashMap<String, String>();
+            uuidToNodeInfoMap = new HashMap<String, NodeInfo>();
+            NodeInfo.setUuidToNodeInfoMap(uuidToNodeInfoMap);
             projects = new HashSet<IProjectPO>();
             workUnits = 0;
             
@@ -268,11 +269,15 @@ public class ConvertProjectHandler extends AbstractHandler {
                     displayErrorForInvalidName(category);
                     throw new StopConversionException();
                 }
-                if (uuidToClassNameMap.values().contains(path)) {
-                    displayErrorForDuplicate(node);
-                    throw new StopConversionException();
+                for (NodeInfo nodeInfo : uuidToNodeInfoMap.values()) {
+                    if (nodeInfo.getFqFileName().equals(path)) {
+                        displayErrorForDuplicate(node);
+                        throw new StopConversionException();
+                    }
                 }
-                uuidToClassNameMap.put(node.getGuid(), path);
+                NodeInfo nodeInfo = new NodeInfo(path, node,
+                        genPackage, defaultToolkit, language);
+                uuidToNodeInfoMap.put(node.getGuid(), nodeInfo);
                 for (INodePO child : node.getUnmodifiableNodeList()) {
                     determineClassNamesForNode(child, path);
                 }
@@ -284,18 +289,20 @@ public class ConvertProjectHandler extends AbstractHandler {
                     displayErrorForInvalidName(node);
                     throw new StopConversionException();
                 }
-                String fileName = basePath
-                        + StringConstants.SLASH
-                        + className
-                        + ".java"; //$NON-NLS-1$
-                if (uuidToClassNameMap.values().contains(fileName)) {
-                    Plugin.getDefault().writeErrorLineToConsole(
-                            "Duplicate filename error:" + fileName, true); //$NON-NLS-1$
+                String fileName = basePath + StringConstants.SLASH
+                        + className + ".java"; //$NON-NLS-1$
+                for (NodeInfo nodeInfo : uuidToNodeInfoMap.values()) {
+                    if (nodeInfo.getFqFileName().equals(fileName)) {
+                        Plugin.getDefault().writeErrorLineToConsole(
+                                "Duplicate filename error:" + fileName, true); //$NON-NLS-1$
+                    }
                 }
-                uuidToClassNameMap.put(node.getGuid(), fileName);
+                NodeInfo nodeInfo = new NodeInfo(fileName, node,
+                        genPackage, defaultToolkit, language);
+                uuidToNodeInfoMap.put(node.getGuid(), nodeInfo);
             }
         }
-
+        
         /**
          * Returns the default toolkit for a project
          * by inspecting its first AUT
@@ -354,7 +361,8 @@ public class ConvertProjectHandler extends AbstractHandler {
                 throw new StopConversionException();
             }
             progressMonitor.worked(1);
-            File file = createFile(node);
+            NodeInfo info = uuidToNodeInfoMap.get(node.getGuid());
+            File file = new File(info.getFqFileName());
             if (node instanceof ICategoryPO) {
                 file.mkdirs();
                 for (INodePO child : node.getUnmodifiableNodeList()) {
@@ -364,8 +372,6 @@ public class ConvertProjectHandler extends AbstractHandler {
                 try {
                     file.createNewFile();
                     NodeGenerator gen = new NodeGenerator();
-                    NodeInfo info = new NodeInfo(file.getName(), node,
-                            genPackage, defaultToolkit, language);
                     String content = gen.generate(info);
                     writeContentToFile(file, content);
                 } catch (IOException e) {
@@ -403,16 +409,6 @@ public class ConvertProjectHandler extends AbstractHandler {
                     new String [] {fqNodeName},
                     null);
             progressMonitor.setCanceled(true);
-        }
-        
-        /**
-         * Creates a file for a node
-         * @param node the node
-         * @return the file
-         */
-        private File createFile(INodePO node) {
-            String fileName = uuidToClassNameMap.get(node.getGuid());
-            return new File(fileName);
         }
 
         /**
