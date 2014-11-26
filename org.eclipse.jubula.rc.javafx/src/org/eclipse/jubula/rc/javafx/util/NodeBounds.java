@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.util;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 
 import javafx.geometry.Bounds;
@@ -59,8 +58,7 @@ public class NodeBounds {
         if (nodePos == null) {
             return false;
         }
-        return getAbsoluteBounds(n).
-                contains(new Point((int)point.getX(), (int)point.getY()));
+        return n.contains(n.screenToLocal(point.getX(), point.getY()));
     }
 
     /**

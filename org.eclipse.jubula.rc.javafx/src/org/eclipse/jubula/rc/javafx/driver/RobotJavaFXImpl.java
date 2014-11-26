@@ -503,6 +503,23 @@ public class RobotJavaFXImpl implements IRobot {
         }
         Point p = PointUtil.calculateAwtPointToGo(xPos, xAbsolute, yPos,
                 yAbsolute, bounds);
+        boolean isInside = true;
+        if (graphicsComponent instanceof Node) {
+            isInside = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "CheckIfContains", new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        return NodeBounds.checkIfContains(new Point2D(
+                                    p.x, p.y), (Node) graphicsComponent);
+                    }
+                });
+        }
+        if (!isInside) {
+            throw new StepExecutionException(
+                    TestErrorEvent.CLICKPOINT_INVALID,
+                    EventFactory.createActionError(
+                            TestErrorEvent.CLICKPOINT_INVALID));
+        }
         // Move if necessary
         if (isMouseMoveRequired(p)) {
             if (log.isDebugEnabled()) {
@@ -536,19 +553,16 @@ public class RobotJavaFXImpl implements IRobot {
             final Point[] mouseMove = MouseMovementStrategy.getMovementPath(
                     startpoint, p, clickOptions.getStepMovement(),
                     clickOptions.getFirstHorizontal());
-            for (int i = 0; i < mouseMove.length - 1; i++) {
-                
+            for (int i = 0; i < mouseMove.length - 1; i++) {                
                 m_robot.mouseMove(mouseMove[i].x, mouseMove[i].y);
                 m_robot.waitForIdle();
             }
             if (!DragAndDropHelper.getInstance().isDragMode()) {
                 confirmer = m_interceptor.intercept(options); 
-            }
-            
+            }           
             Point endPoint = mouseMove[mouseMove.length - 1];
             m_robot.mouseMove(endPoint.x, endPoint.y);
             m_robot.waitForIdle();
-
             if (confirmer != null) {
                 confirmMove(confirmer, graphicsComponent);
             }
@@ -631,12 +645,7 @@ public class RobotJavaFXImpl implements IRobot {
 
                         @Override
                         public Rectangle call() throws Exception {
-                            Rectangle bs = new Rectangle(getLocation(node,
-                                    new Point(0, 0)));
-                            Bounds b = node.getBoundsInParent();
-                            bs.width = Rounding.round(b.getWidth());
-                            bs.height = Rounding.round(b.getHeight());
-                            return bs;
+                            return NodeBounds.getAbsoluteBounds(node);
                         }
                     });
 
