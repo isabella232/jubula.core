@@ -68,6 +68,7 @@ public class <%=className%> {
                 <%IParamDescriptionPO param = paramIterator.next();
                 String paramValue = ParamUtils.getValueForParam(
                     testCube, param, row, language);%>
+                // Initializing parameter "<%=param.getName()%>"
                 <%=paramValue%>
                 
                 <%if (paramIterator.hasNext()) {%>, <%}%>
