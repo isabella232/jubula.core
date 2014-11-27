@@ -100,6 +100,10 @@ childInspection: while (childIterator.hasNext()) {
         ITestSuitePO testSuite = ref.getTestSuite();
         childInfo = uuidToNodeInfoMap.get(testSuite.getGuid());
     }
+    if (childInfo.getClassName().equals(className)) {
+        duplicateClasses.add(childInfo);
+        continue childInspection;
+    }
     for (NodeInfo duplicate : duplicateClasses) {
         if (duplicate.getClassName().equals(childInfo.getClassName())) {
             continue childInspection;
