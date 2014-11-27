@@ -87,6 +87,7 @@ package <%=packageName%>;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.communication.CAP;
+import org.eclipse.jubula.toolkit.enums.ValueSets.*;
 import javax.annotation.Generated;
 
 <%if (!genInterface) {%>
@@ -191,6 +192,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             String type = param.getType();
             String name = param.getName();
             String paramType = nameLoader.findTypeForParameter(type, name);
+            paramType = NameLoader.beautifyParamType(paramType);
             String paramName = nameLoader.translateFromCompSystem(name);
             String fixedType = nameLoader.getRealTypeForParameter(type, name);
             paramMap.put(name, paramType);
@@ -226,6 +228,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             <%}%>
             return messageCap;
         }<%}%>
+        
     <%}%>
 }
 <%}%> 

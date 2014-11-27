@@ -79,6 +79,7 @@ import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.api.converter.annotations.SrcNode;
 import org.eclipse.jubula.client.api.converter.annotations.NodeType;
 import org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext;
+import org.eclipse.jubula.toolkit.enums.ValueSets.*;
 import org.eclipse.jubula.tools.ComponentIdentifier;
 
 import <%=ctdsPath%>.CTDS;
@@ -203,6 +204,7 @@ public class <%=className%> {
         while (paramIterator.hasNext()) {
             IParamDescriptionPO param = paramIterator.next();
             String paramType = nameLoader.findTypeForParameter(param.getType(), StringConstants.EMPTY);
+            paramType = NameLoader.beautifyParamType(paramType);
             String paramName = param.getName();%>
         <%=paramType%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
         <%}%>
@@ -287,6 +289,9 @@ public class <%=className%> {
                     String enumType = nameLoader.getEnumForParam(paramType);
                     String paramValue = ParamUtils.getValueForParam(cap, param, 0, locale);
                     Boolean isEnum = enumType != null;
+                    if (isEnum) {
+                        enumType = NameLoader.beautifyParamType(enumType);
+                    }
                     String enumLookupMethodName = isEnum && (enumType.endsWith(".Operator")
                                                           || enumType.endsWith(".AUTActivationMethod")
                                                           || enumType.endsWith(".Modifier")) 

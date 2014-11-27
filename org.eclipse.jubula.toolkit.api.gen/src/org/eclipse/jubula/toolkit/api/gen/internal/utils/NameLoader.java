@@ -13,6 +13,7 @@ package org.eclipse.jubula.toolkit.api.gen.internal.utils;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
@@ -61,6 +62,14 @@ public class NameLoader {
     /** specific path for implementation classes */
     private static final String TOOLKITINFO_NAME_EXTENSION =
         "ToolkitInfo"; //$NON-NLS-1$
+
+    /** Pattern for detecting types in java.lang */
+    private static Pattern javaLang = Pattern.compile(
+            "java\\.lang\\.([A-Z][a-zA-Z]*)"); //$NON-NLS-1$
+    
+    /** Pattern for detecting types in org.eclipse.jubula.toolkit.enums.ValueSets */
+    private static Pattern jubulaEnum = Pattern.compile(
+            "org\\.eclipse\\.jubula\\.toolkit\\.enums\\.ValueSets\\.([A-Z][a-zA-Z]*)"); //$NON-NLS-1$
     
     /**
      * <code>instance</code> the singleton instance
@@ -73,7 +82,6 @@ public class NameLoader {
     /** the enum mapping properties */
     private Properties m_enumMappingProperties;
     
-
     /**
      * The constructor.
      */
@@ -263,5 +271,20 @@ public class NameLoader {
      */
     public String getEnumForParam(String paramType) {
         return m_enumMappingProperties.getProperty(paramType);
+    }
+    
+    /**
+     * Cuts the path of a type name if it is from the java.lang package or
+     * from org.eclipse.jubula.toolkit.enums.ValueSets or leaves it as it is
+     * @param paramType the type name
+     * @return the shortened type name
+     */
+    public static String beautifyParamType(String paramType) {
+        if (javaLang.matcher(paramType).matches()) {
+            return paramType.replaceAll(javaLang.pattern(), "$1"); //$NON-NLS-1$
+        } else if (jubulaEnum.matcher(paramType).matches()) {
+            return paramType.replaceAll(jubulaEnum.pattern(), "$1"); //$NON-NLS-1$
+        }
+        return paramType;
     }
 }
