@@ -24,7 +24,7 @@ import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
  *  @author BREDEX GmbH 
  *  @noextend This class is not intended to be extended by clients.
  */
-public abstract class SWTAUTConfiguration extends
+public class SWTAUTConfiguration extends
     AbstractOSProcessAUTConfiguration {
     /** the keyboardLayout */
     @NonNull private Locale m_keyboardLayout;
