@@ -131,7 +131,7 @@ public class AutServerLauncher {
 
         /**
          * Tries to load the given class first.<br>
-         * <b>This method is the first of the ClassLoader hiearchy to load the class.
+         * <b>This method is the first of the ClassLoader hierarchy to load the class.
          * It overrides the parent-delegation!</b><br>
          * If this method fails to load the class, it calls super.loadClass(...).
          * {@inheritDoc}
@@ -156,7 +156,7 @@ public class AutServerLauncher {
                     // overriding parent delegation!
                     c = findClass(name);
                 }  catch (ClassNotFoundException e) {
-                    // if not found, normal behaviour of class loading
+                    // if not found, normal behavior of class loading
                     return super.loadClass(name, resolve);
                 } catch (SecurityException e) {
                     return super.loadClass(name, resolve);

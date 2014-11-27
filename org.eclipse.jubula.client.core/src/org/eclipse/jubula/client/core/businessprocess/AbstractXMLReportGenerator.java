@@ -295,7 +295,7 @@ public abstract class AbstractXMLReportGenerator {
             TestErrorEvent event = resultNode.getEvent();
             if (event != null) {
                 errorType.addText(I18n.getString(event.getId(), true));
-                Map<Object, Object> eventProps = event.getProps();
+                Map<String, Object> eventProps = event.getProps();
                 if (eventProps.containsKey(
                         TestErrorEvent.Property.DESCRIPTION_KEY)) {
                     String key = (String) eventProps.get(
@@ -309,12 +309,12 @@ public abstract class AbstractXMLReportGenerator {
                                 .valueOf(I18n.getString(key, args)) : key);
                     }
                 } else {
-                    for (Map.Entry<Object, Object> entry 
+                    for (Map.Entry<String, Object> entry 
                             : eventProps.entrySet()) {
                         if (!TestErrorEvent.Property.DESCRIPTION_KEY.equals(
                                 entry.getKey())) {
                             Element mapEntry = 
-                                    error.addElement((String) entry.getKey());
+                                    error.addElement(entry.getKey());
                             mapEntry.addText(String.valueOf(entry.getValue()));
                         }
                     }

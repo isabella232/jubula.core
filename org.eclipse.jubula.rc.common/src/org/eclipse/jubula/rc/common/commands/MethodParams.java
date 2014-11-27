@@ -26,10 +26,10 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
  */
 public class MethodParams {
     /** The parameter types as <code>Class</code> objects. */
-    private List m_types = new ArrayList();
+    private List<Object> m_types = new ArrayList<Object>();
     
     /** The parameter values. */
-    private List m_objectValues = new ArrayList();
+    private List<Object> m_objectValues = new ArrayList<Object>();
     
     /**
      * Adds the type and value of a method parameter to the internal lists.
@@ -68,7 +68,7 @@ public class MethodParams {
      * @param source The list
      * @return The <code>dest</code> array.
      */
-    private Object[] createArray(Object[] dest, List source) {
+    private Object[] createArray(Object[] dest, List<Object> source) {
         source.toArray(dest);
         return dest;
     }
@@ -76,7 +76,7 @@ public class MethodParams {
     /**
      * @return The list of parameter types as <code>Class</code> objects.
      */
-    public List getTypesAsList() {
+    public List<Object> getTypesAsList() {
         return m_types;
     }
     
@@ -91,7 +91,7 @@ public class MethodParams {
     /**
      * @return The list of parameter values.
      */
-    public List getValuesAsList() {
+    public List<Object> getValuesAsList() {
         return m_objectValues;
     }
     

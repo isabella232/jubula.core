@@ -43,7 +43,7 @@ public class ActionInfo extends Info implements Comparable {
     /** The associated help id for online help */
     private String m_helpid;
     /** The list of action parameter infos. */
-    private List m_params = new ArrayList();
+    private List<ParamInfo> m_params = new ArrayList<ParamInfo>();
     /**
      * The short internal name of the action, i.e. "KeyCombination"
      * instead of "CompSystem.KeyCombination"
@@ -93,7 +93,7 @@ public class ActionInfo extends Info implements Comparable {
     /**
      * @return Returns the list of parameter infos of this action.
      */
-    public List getParams() {
+    public List<ParamInfo> getParams() {
         return m_params;
     }
     

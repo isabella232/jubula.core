@@ -452,7 +452,7 @@ public class SwtUtils {
      */
     private static Widget[] getWidgetChildrenImpl(final Widget widget, 
         final boolean recurse) {
-        List<Object> objT = new LinkedList<Object>();
+        List<Widget> objT = new LinkedList<Widget>();
         if (widget == null || widget.isDisposed()) {
             return new Widget[0];
         }
@@ -460,11 +460,12 @@ public class SwtUtils {
             objT.add(((Control)widget).getMenu());
         }
         if (widget instanceof Scrollable) {
-            if (((Scrollable)widget).getVerticalBar() != null) {
-                objT.add(((Scrollable)widget).getVerticalBar());
+            Scrollable scrollable = (Scrollable) widget;
+            if (scrollable.getVerticalBar() != null) {
+                objT.add(scrollable.getVerticalBar());
             }
-            if (((Scrollable)widget).getHorizontalBar() != null) {
-                objT.add(((Scrollable)widget).getHorizontalBar());
+            if (scrollable.getHorizontalBar() != null) {
+                objT.add(scrollable.getHorizontalBar());
             }
         }
         if (widget instanceof Decorations 
@@ -491,11 +492,12 @@ public class SwtUtils {
             }
         }
         if (widget instanceof Table) {
-            Widget[] widgets = ((Table)widget).getItems();
+            Table table = (Table) widget;
+            Widget[] widgets = table.getItems();
             if (widgets.length != 0) {
                 objT.addAll(Arrays.asList(widgets));
             }
-            widgets = ((Table)widget).getColumns();
+            widgets = table.getColumns();
             if (widgets.length != 0) {
                 objT.addAll(Arrays.asList(widgets));
             }
@@ -514,7 +516,7 @@ public class SwtUtils {
         }
         addNonControlChildren(widget, objT);
         if (recurse && objT.size() > 0) {
-            List extendedFamily = new LinkedList();
+            List<Widget> extendedFamily = new LinkedList<Widget>();
             for (int i = 0; i < objT.size(); i++) {
                 Widget w = (Widget)objT.get(i);
                 extendedFamily.addAll(Arrays.asList(getWidgetChildrenImpl(
@@ -529,23 +531,24 @@ public class SwtUtils {
      * @param widget the non-Control-widget to get the children for
      * @param objT linkedList to put the children in
      */
-    private static void addNonControlChildren(final Widget widget, List objT) {
+    private static void addNonControlChildren(final Widget widget, 
+        List<Widget> objT) {
         if (widget instanceof TreeItem) {
             Widget[] widgets = ((TreeItem)widget).getItems();
             if (widgets.length != 0) {
-                ((LinkedList)objT).addAll(Arrays.asList(widgets));
+                objT.addAll(Arrays.asList(widgets));
             }
         }
         if (widget instanceof Menu) {
             Widget[] widgets = ((Menu)widget).getItems();
             if (widgets.length != 0) {
-                ((LinkedList)objT).addAll(Arrays.asList(widgets));
+                objT.addAll(Arrays.asList(widgets));
             }
         }
         if (widget instanceof MenuItem) {
             Widget childMenu = ((MenuItem)widget).getMenu();
             if (childMenu != null) {
-                ((LinkedList)objT).add(childMenu);
+                objT.add(childMenu);
             }
         }
     }

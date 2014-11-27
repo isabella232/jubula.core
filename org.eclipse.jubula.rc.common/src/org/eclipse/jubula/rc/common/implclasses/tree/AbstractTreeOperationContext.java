@@ -13,7 +13,6 @@ package org.eclipse.jubula.rc.common.implclasses.tree;
 import java.awt.Rectangle;
 import java.util.Collection;
 
-
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
@@ -88,7 +87,7 @@ public abstract class AbstractTreeOperationContext {
     //              may already rely on this "bug". As a result, we cannot 
     //              change this method (or calls to this method) without 
     //              breaking backwards compatibility for tests.
-    public abstract Collection getNodeTextList(Object node);
+    public abstract Collection<String> getNodeTextList(Object node);
     
     /**
      * Returns the rendered text for the given node.

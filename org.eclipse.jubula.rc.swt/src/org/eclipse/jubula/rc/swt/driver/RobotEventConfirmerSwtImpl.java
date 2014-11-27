@@ -72,7 +72,7 @@ class RobotEventConfirmerSwtImpl implements IRobotEventConfirmer,
     private IEventMatcher m_eventMatcher;
     
     /** Stores all events of a given class after the confirmer has been enabled. */
-    private List m_eventList = new LinkedList();
+    private List<Event> m_eventList = new LinkedList<Event>();
     
     /**
      * Creates a new confirmer for a class of events defined by <code>options</code>. 
@@ -87,10 +87,10 @@ class RobotEventConfirmerSwtImpl implements IRobotEventConfirmer,
      * Logs a list. 
      * @param list The list.
      */
-    private void logList(List list) {
+    private void logList(List<Event> list) {
         log.debug("Stored SWTEvents["); //$NON-NLS-1$
-        List copy = (List)((LinkedList)list).clone();
-        for (Iterator it = copy.iterator(); it.hasNext();) {
+        List<Event> copy = (List<Event>)((LinkedList<Event>)list).clone();
+        for (Iterator<Event> it = copy.iterator(); it.hasNext();) {
             Object element = it.next();
             log.debug(element);
         }
@@ -229,9 +229,9 @@ class RobotEventConfirmerSwtImpl implements IRobotEventConfirmer,
      * @param eventList The list of events
      * @return <code>true</code> if one or more of the event matches, otherwise <code>false</code>.
      */
-    private boolean isEventMatching(List eventList) {
-        for (Iterator it = eventList.iterator(); it.hasNext();) {
-            Event event = (Event)it.next();
+    private boolean isEventMatching(List<Event> eventList) {
+        for (Iterator<Event> it = eventList.iterator(); it.hasNext();) {
+            Event event = it.next();
             if (isEventMatching(event)) {
                 return true;
             }
@@ -245,7 +245,7 @@ class RobotEventConfirmerSwtImpl implements IRobotEventConfirmer,
      */
     private void addEventToList(Event event) {
         synchronized (m_eventList) {
-            ((LinkedList)m_eventList).addFirst(event);
+            ((LinkedList<Event>)m_eventList).addFirst(event);
         }
     }
     

@@ -53,13 +53,6 @@ public class SwtHierarchyContainer extends HierarchyContainer {
     /**
      * {@inheritDoc}
      */
-    public SwtComponent getComponent(int index) {
-        return (SwtComponent)super.getComp(index);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public SwtHierarchyContainer[] getComponents() {
         if (super.getComps().length == 0) {
             return new SwtHierarchyContainer[0];

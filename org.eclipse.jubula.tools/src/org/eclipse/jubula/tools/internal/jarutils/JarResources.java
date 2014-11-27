@@ -26,7 +26,7 @@ import java.util.zip.ZipInputStream;
 
 /**
  * JarResources: JarResources maps all resources included in a ZIP or JAR file.
- * Additionaly, it provides a method to extract one as a blob.
+ * Additionally, it provides a method to extract one as a blob.
  * 
  * !!! this class is needed by MainCassLocator !!!
  */
@@ -37,12 +37,13 @@ public final class JarResources {
     /**
      * jar resource mapping tables
      */ 
-    private Map m_htSizes = new Hashtable();
+    private Map<String, Integer> m_htSizes = new Hashtable<String, Integer>();
 
     /**
      * jar resource mapping tables
      */ 
-    private Map m_htJarContents = new Hashtable();
+    private Map<String, byte[]> m_htJarContents = 
+            new Hashtable<String, byte[]>();
 
     /**
      * a jar file
@@ -69,7 +70,7 @@ public final class JarResources {
      * @return byte[]
      */
     public byte[] getResource(String name) {
-        return (byte[]) m_htJarContents.get(name);
+        return m_htJarContents.get(name);
     }
 
     /** initializes internal hash tables with Jar file resources. */
@@ -102,7 +103,7 @@ public final class JarResources {
                 int size = (int) ze.getSize();
                 // -1 means unknown size.
                 if (size == -1) {
-                    size = ((Integer) m_htSizes.get(ze.getName())).intValue();
+                    size = m_htSizes.get(ze.getName()).intValue();
                 }
 
                 byte[] b = new byte[size];
@@ -122,7 +123,7 @@ public final class JarResources {
         // (AL, 2007-03-21) Analysis of this code:
         // The following catch statements provide worst case fallbacks:
         // all information gathered until an exception happens are returned,
-        // further processing is aborted. Therefor the calling methods may
+        // further processing is aborted. Therefore the calling methods may
         // not find all the data which is available in the jar, but this
         // should only happen if the jar is in some way corrupt.
         // Since it's not clear where this class may be used (i.e.

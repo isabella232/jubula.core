@@ -57,7 +57,7 @@ public class JBUrlClassLoader extends URLClassLoader {
                 // overriding parent delegation!
                 c = findClass(name);
             }  catch (ClassNotFoundException e) {
-                // if not found, normal behaviour of class loading
+                // if not found, normal behavior of class loading
                 return super.loadClass(name, resolve);
             } catch (SecurityException e) {
                 return super.loadClass(name, resolve);

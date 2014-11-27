@@ -25,7 +25,7 @@ public class WorkerRunnable implements Runnable {
      * queue of work to be be performed. 
      * contains only instances of {@link Runnable}
      */
-    private LinkedList m_workQueue = new LinkedList();
+    private LinkedList<Runnable> m_workQueue = new LinkedList<Runnable>();
     
     /**
      * Add a {@link Runnable} to the work queue.
@@ -61,6 +61,6 @@ public class WorkerRunnable implements Runnable {
         while (m_workQueue.isEmpty()) {
             wait();
         }
-        return (Runnable)m_workQueue.removeFirst();
+        return m_workQueue.removeFirst();
     }
 }

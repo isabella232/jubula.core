@@ -519,7 +519,8 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @return the next IMenuItemAdapter from the next cascade
      */
     private IMenuItemComponent findMenu(IMenuComponent menu, int idx) {
-        List visibleSubMenus = new ArrayList();
+        List<IMenuItemComponent> visibleSubMenus = 
+                new ArrayList<IMenuItemComponent>();
         IMenuItemComponent[] subElements = menu.getItems();
         
         for (int i = 0; i < subElements.length; ++i) {
@@ -534,7 +535,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
         if (idx >= visibleSubMenus.size() || idx < 0) {
             return newMenuItemAdapter(null);
         }        
-        return (IMenuItemComponent) visibleSubMenus.get(idx);        
+        return visibleSubMenus.get(idx);        
     }    
     
     /**

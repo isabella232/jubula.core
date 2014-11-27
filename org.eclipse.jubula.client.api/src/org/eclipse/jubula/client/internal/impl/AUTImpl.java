@@ -184,7 +184,7 @@ public class AUTImpl implements AUT {
         if (response.hasTestErrorEvent()) {
             final TestErrorEvent event = response.getTestErrorEvent();
             final String eventId = event.getId();
-            Map<Object, Object> eventProps = event.getProps();
+            Map<String, Object> eventProps = event.getProps();
             String description = null;
             if (eventProps.containsKey(
                 TestErrorEvent.Property.DESCRIPTION_KEY)) {

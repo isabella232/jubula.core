@@ -52,14 +52,6 @@ public class SwingHierarchyContainer extends HierarchyContainer {
     }
 
     /**
-     * @param index int
-     * @return SwingComponent
-     */
-    public SwingComponent getComponent(int index) {
-        return (SwingComponent)super.getComp(index);
-    }
-
-    /**
      * @return SwingHierarchyContainer[]
      */
     public SwingHierarchyContainer[] getComponents() {

@@ -622,16 +622,16 @@ public abstract class AbstractTreeTester extends WidgetTester {
      */
     protected void checkNodeText(Object[] node, String pattern, String operator)
         throws StepVerifyFailedException {
-        Collection nodeTextList = new ArrayList();
+        Collection<String> nodeTextList = new ArrayList<String>();
         AbstractTreeOperationContext context = getTreeAdapter().getContext();
         for (int i = 0; i < node.length; i++) {
             nodeTextList.addAll(context.getNodeTextList(node[i])); 
         }
-        Iterator it = nodeTextList.iterator();
+        Iterator<String> it = nodeTextList.iterator();
         boolean isMatched = false;
         while (it.hasNext() && !isMatched) {
             try {
-                Verifier.match((String)it.next(), pattern, operator);
+                Verifier.match(it.next(), pattern, operator);
                 isMatched = true;
             } catch (StepVerifyFailedException svfe) {
                 if (!it.hasNext()) {

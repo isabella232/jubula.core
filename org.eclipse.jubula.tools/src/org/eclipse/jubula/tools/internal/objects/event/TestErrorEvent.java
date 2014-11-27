@@ -301,7 +301,7 @@ public class TestErrorEvent {
     private String m_id;
     
     /** Additional event properties. */
-    private Map m_properties = new HashMap();
+    private Map<String, Object> m_properties = new HashMap<String, Object>();
     
     /** Default constructor (required by Betwixt). */
     public TestErrorEvent() {
@@ -318,7 +318,7 @@ public class TestErrorEvent {
     /**
      * @return The event properties. Both keys and values are strings.
      */
-    public Map getProps() {
+    public Map<String, Object> getProps() {
         return m_properties;
     }
     /**

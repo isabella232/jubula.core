@@ -18,7 +18,7 @@ import java.util.List;
 /**
 * This class manages a container from the AUT. <br>
  * 
- * It holds a reference to the instace of the display in the AUT. The names 
+ * It holds a reference to the instance of the display in the AUT. The names 
  * for the widgets are also stored in instances of this class.<br>
  * @author BREDEX GmbH
  * @created 02.05.2006
@@ -38,7 +38,7 @@ public abstract class HierarchyContainer {
     private List m_containerList = new ArrayList();
     
     /** list of HierarchyContainers */
-    private List m_listenerList = new ArrayList();
+    private List<EventListener> m_listenerList = new ArrayList<EventListener>();
     
     /** the name of the component */
     private String m_name;
@@ -126,14 +126,6 @@ public abstract class HierarchyContainer {
     }
     
     /**
-     * @param index the index of the component list.
-     * @return a component with the given index.
-     */
-    protected AUTComponent getComp(int index) {
-        return (AUTComponent)getContainerList().get(index);
-    }
-    
-    /**
      * Adds container listener to listener list.
      * 
      * @param listener
@@ -160,7 +152,7 @@ public abstract class HierarchyContainer {
         if (m_listenerList.isEmpty()) {
             return new EventListener[0];
         }
-        return (EventListener[])m_listenerList
+        return m_listenerList
             .toArray(new EventListener[m_listenerList.size()]);
     }
     

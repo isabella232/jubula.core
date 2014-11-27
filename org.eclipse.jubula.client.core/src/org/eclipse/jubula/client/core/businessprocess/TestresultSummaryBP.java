@@ -348,7 +348,7 @@ public class TestresultSummaryBP {
             keyword.setStatusType(I18n.getString(event.getId(),
                     true));
             
-            Map<Object, Object> eventProps = event.getProps();
+            Map<String, Object> eventProps = event.getProps();
             String descriptionKey = (String) eventProps
                     .get(TestErrorEvent.Property.DESCRIPTION_KEY);
             if (descriptionKey != null) {

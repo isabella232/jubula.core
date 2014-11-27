@@ -630,7 +630,7 @@ public class MessageIDs {
     
     // ---------------------------------------------------------------------
     /** key = message id, message object */
-    private static MessageMap messageMap = null;
+    private static MessageMap<Integer, Message> messageMap = null;
     
     /**
      * Private constructor.
@@ -656,7 +656,7 @@ public class MessageIDs {
      */
     private static void initErrorMap() {
         if (messageMap == null) {
-            messageMap = new MessageMap();
+            messageMap = new MessageMap<Integer, Message>();
             createIOErrorMessages(); 
             createDatabaseErrorMessages(); 
             createGeneralErrorMessages();            
@@ -1056,7 +1056,7 @@ public class MessageIDs {
      * @author BREDEX GmbH
      * @created 10.05.2006
      */
-    private static class MessageMap extends HashMap {
+    private static class MessageMap<K, V> extends HashMap {
 
         /**
          * @param id The id of the message.

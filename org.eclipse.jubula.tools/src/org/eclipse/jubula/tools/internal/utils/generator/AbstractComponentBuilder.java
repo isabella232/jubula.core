@@ -176,8 +176,9 @@ public class AbstractComponentBuilder {
     protected void setToolkitDescriptorToComponents(CompSystem compSystem, 
         ToolkitDescriptor pluginDescr) {
         
-        List components = new ArrayList();
-        List tmpComponents = compSystem.getAbstractComponents();
+        List<Component> components = new ArrayList<Component>();
+        List<? extends Component> tmpComponents = 
+                compSystem.getAbstractComponents();
         if (tmpComponents != null) {
             components.addAll(tmpComponents);
         }
@@ -185,8 +186,8 @@ public class AbstractComponentBuilder {
         if (tmpComponents != null) {
             components.addAll(tmpComponents);
         }
-        for (Iterator i = components.iterator(); i.hasNext();) {
-            Component comp = (Component)i.next();
+        for (Iterator<Component> i = components.iterator(); i.hasNext();) {
+            Component comp = i.next();
             comp.setToolkitDesriptor(pluginDescr);
         }
     }

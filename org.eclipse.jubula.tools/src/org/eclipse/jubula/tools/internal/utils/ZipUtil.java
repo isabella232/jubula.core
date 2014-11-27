@@ -27,7 +27,7 @@ import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.lang.StringUtils;
 /**
- * This Util class contains methods to zip and unzip directories 
+ * This Util class contains methods to ZIP and unzip directories 
  *
  * @author BREDEX GmbH
  * @created 13.08.2010
@@ -38,7 +38,8 @@ public class ZipUtil {
     private static final String JAR_FILE_EXT = ".jar"; //$NON-NLS-1$
     
     /** mapping from a ZIP file to its extracted temporary JAR files */
-    private static Map zipToTempJars = new HashMap();
+    private static Map<File, File[]> zipToTempJars = 
+            new HashMap<File, File[]>();
     
     /**
      * 
@@ -49,8 +50,8 @@ public class ZipUtil {
 
         /**
          * 
-         * @param entry The zip entry to filter.
-         * @return <code>true</code> if the zip entry should be accepted.
+         * @param entry The ZIP entry to filter.
+         * @return <code>true</code> if the ZIP entry should be accepted.
          *         Otherwise, <code>false</code>.
          */
         public boolean accept(ZipEntry entry);
@@ -133,7 +134,7 @@ public class ZipUtil {
         throws IOException {
 
         if (zipToTempJars.containsKey(srcZip)) {
-            return (File[])zipToTempJars.get(srcZip);
+            return zipToTempJars.get(srcZip);
         }
         
         IZipEntryFilter filter = new IZipEntryFilter() {
@@ -143,7 +144,7 @@ public class ZipUtil {
         };
         ZipFile archive = new ZipFile(srcZip);
         Enumeration e = archive.entries();
-        List extractedFiles = new ArrayList();
+        List<File> extractedFiles = new ArrayList<File>();
         while (e.hasMoreElements()) {
             ZipEntry entry = (ZipEntry)e.nextElement();
             if (filter.accept(entry)) {
@@ -162,7 +163,7 @@ public class ZipUtil {
             }
         }
 
-        File [] files = (File[])extractedFiles.toArray(
+        File [] files = extractedFiles.toArray(
                 new File[extractedFiles.size()]);
         zipToTempJars.put(srcZip, files);
         return files;
@@ -182,7 +183,7 @@ public class ZipUtil {
         
         ZipFile archive = new ZipFile(srcZip);
         Enumeration e = archive.entries();
-        List extractedFiles = new ArrayList();
+        List<File> extractedFiles = new ArrayList<File>();
         while (e.hasMoreElements()) {
             ZipEntry entry = (ZipEntry)e.nextElement();
             if (filter.accept(entry)) {

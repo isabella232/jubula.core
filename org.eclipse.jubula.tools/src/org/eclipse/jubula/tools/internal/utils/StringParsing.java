@@ -51,7 +51,7 @@ public class StringParsing {
     }
     
     /**
-     * Method to split a text with a given delimeter and escapeChar into
+     * Method to split a text with a given delimiter and escapeChar into
      * a List of Strings
      * @param string
      *      String
@@ -62,12 +62,11 @@ public class StringParsing {
      * @param includeEmptyToken should empty tokens (i.e. <del><del>) 
      * be returned
      * @return String[]
-     *      Splitted text
+     *      split text
      */    
-    
-    public static List splitToList(String string, char delimeter, char escape,
-            boolean includeEmptyToken) {
-        List list = new ArrayList();
+    public static List<String> splitToList(String string, char delimeter,
+            char escape, boolean includeEmptyToken) {
+        List<String> list = new ArrayList<String>();
         if (string == null) {
             return list;
         }
@@ -92,7 +91,7 @@ public class StringParsing {
                 && !escapeNextChar) {
                 delimWasLastChar = false;
                 escapeNextChar = true; 
-            // Delimeter Recognition
+            // Delimiter Recognition
             } else  if (string.charAt(index) == delimeter
                 && !escapeNextChar) {
                 if ((word.length() > 0) || includeEmptyToken) {
@@ -116,7 +115,7 @@ public class StringParsing {
     }
 
     /**
-     * Method to split a text with a given delimeter and escapeChar into
+     * Method to split a text with a given delimiter and escapeChar into
      * a String Array
      * @param string
      *      String
@@ -125,7 +124,7 @@ public class StringParsing {
      * @param escape
      *      char
      * @return String[]
-     *      Splitted text
+     *      split text
      */
     public static String[] splitToArray(
             String string, 
@@ -135,7 +134,7 @@ public class StringParsing {
     }
     
     /**
-     * Method to split a text with a given delimeter and escapeChar into
+     * Method to split a text with a given delimiter and escapeChar into
      * a String Array
      * @param string
      *      String
@@ -146,15 +145,16 @@ public class StringParsing {
      * @param includeEmptyToken should empty tokens (i.e. <del><del>) 
      * be returned
      * @return String[]
-     *      Splitted text
+     *      split text
      */
     public static String[] splitToArray(
             String string, 
             char delimeter, 
             char escape,
             boolean includeEmptyToken) {
-        List list = splitToList(string, delimeter, escape, includeEmptyToken);
-        return (String[]) list.toArray(new String[list.size()]);
+        List<String> list = splitToList(string, delimeter, 
+                escape, includeEmptyToken);
+        return list.toArray(new String[list.size()]);
     }
     
     /**

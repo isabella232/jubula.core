@@ -24,9 +24,8 @@ import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
  * @created 28.08.2007
  */
 public class ListSelectionVerifier {
-
     /**
-     * Storage for slection items
+     * Storage for selection items
      */
     private class SelectionItem {
         /** display value of item */
@@ -60,13 +59,13 @@ public class ListSelectionVerifier {
     }
     
     /** list of selection items */
-    private List m_itemList = new ArrayList();
+    private List<SelectionItem> m_itemList = new ArrayList<SelectionItem>();
     
     /**
      * Add an item to the list of selection items
      * @param index position in the list
      * @param value text value of item
-     * @param isSelected slection state of item
+     * @param isSelected selection state of item
      */
     public void addItem(int index, String value, boolean isSelected) {
         m_itemList.add(index, new SelectionItem(value, isSelected));
@@ -90,9 +89,9 @@ public class ListSelectionVerifier {
             boolean isSelected) throws StepExecutionException {
 
         String hit = null;
-        for (Iterator iter = m_itemList.iterator(); 
+        for (Iterator<SelectionItem> iter = m_itemList.iterator(); 
                 hit == null && iter.hasNext();) {
-            SelectionItem item = (SelectionItem)iter.next();
+            SelectionItem item = iter.next();
             String itemValue = item.getValue();
             if (MatchUtil.getInstance().match(itemValue, patternString, op)) {
                 hit = itemValue;
@@ -116,8 +115,9 @@ public class ListSelectionVerifier {
      */
     public String toString() {
         StringBuffer res = new StringBuffer();
-        for (Iterator iter = m_itemList.iterator(); iter.hasNext();) {
-            SelectionItem element = (SelectionItem)iter.next();
+        for (Iterator<SelectionItem> iter = m_itemList.iterator(); iter
+                .hasNext();) {
+            SelectionItem element = iter.next();
             if (element.isSelected()) {
                 res.append(element.getValue());
                 res.append(TestDataConstants.VALUE_CHAR_DEFAULT);

@@ -45,7 +45,7 @@ public class MainClassLocator {
      * @throws IOException
      *             error
      */
-    public static List getMainClass(File file) throws IOException {
+    public static List<String> getMainClass(File file) throws IOException {
         MainClassLocator t = new MainClassLocator();
         return t.getMainClassName(file);
     }
@@ -57,13 +57,13 @@ public class MainClassLocator {
      * @return List
      * @throws IOException error
      */
-    private List getMainClassName(File url) throws IOException {
+    private List<String> getMainClassName(File url) throws IOException {
         URL u = new URL("jar", //$NON-NLS-1$
                 StringConstants.EMPTY, url.toURL()
                 + "!/"); //$NON-NLS-1$
         JarURLConnection uc = (JarURLConnection) u.openConnection();
         Attributes attr = uc.getMainAttributes();
-        List returnValue = new Vector();
+        List<String> returnValue = new Vector<String>();
         try {
             if ((attr != null)
                     && (attr.getValue(Attributes.Name.MAIN_CLASS) != null)) {
@@ -86,9 +86,9 @@ public class MainClassLocator {
      * @return List 
      * @throws IOException error
      */
-    private List getMainClassNameParse(URL url) throws IOException {
+    private List<String> getMainClassNameParse(URL url) throws IOException {
         MyClassLoader cl = new MyClassLoader(url);
-        List main = cl.getMainMethod();
+        List<String> main = cl.getMainMethod();
         cl.close();
         return main;
     }
@@ -140,8 +140,8 @@ public class MainClassLocator {
          * returns the Main Method of a class
          * @return List
          */
-        public List getMainMethod() {
-            List returnValue = new Vector();
+        public List<String> getMainMethod() {
+            List<String> returnValue = new Vector<String>();
             Enumeration entries = m_jar.entries();
             while (entries.hasMoreElements()) {
                 JarEntry entry = (JarEntry) entries.nextElement();
