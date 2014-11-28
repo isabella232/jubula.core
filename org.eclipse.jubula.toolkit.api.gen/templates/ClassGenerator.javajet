@@ -225,7 +225,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
             Validate.notNull(<%=translatedParamName%>, "Argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
                 <%String paramEnumType = paramMap.get(paramName);
-                String fqParamType = paramTypeMap.get(paramName);
+                String fqParamType = paramTypeMap.get(paramName);%>
                 <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
                     <%if (!hasCombineableValueSet) {%>
             messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.rcValue(), "<%=fqParamType%>")); //$NON-NLS-1$
