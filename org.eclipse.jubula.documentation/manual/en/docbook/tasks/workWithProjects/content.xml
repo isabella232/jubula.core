@@ -11,12 +11,8 @@
                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="workWithProjects"?>
   <title>Working with Projects</title>
-  <para>
-    The first step once the ITE has been started is to create, open or
-    import a Project. Once you have done this, you can specify Test
-    Suites, Test Cases and Test Steps.
-  </para>
   
+  <xi:include href="sectionIntroProjects.xml"/>
   <xi:include href="sectionNewProject.xml"/>
   <xi:include href="sectionProjectProperties.xml"/>
   <xi:include href="sectionReusingProjects.xml"/>

@@ -12,7 +12,7 @@
   <?dbhtml dir="launchConfig"?>
   <title>Launch Configurations</title>
   
-  <xi:include href="sectionIntro.xml"/>
+  <xi:include href="sectionIntroLaunchConfig.xml"/>
   <xi:include href="sectionRequirements.xml"/>
   <xi:include href="sectionCustomizingThePerspective.xml"/>
   <xi:include href="sectionStartingTheAUT.xml"/>

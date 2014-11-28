@@ -16,24 +16,8 @@
   <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
   <anchor role="helpid" id="supportRCPAUTStartDelayContextId">Starting RCP AUTs</anchor>
   <anchor role="helpid" id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
-  <para>
-    You can write tests for RCP AUTs by selecting the toolkit
-    <emphasis>concrete</emphasis> or <emphasis>RCP</emphasis> from the Project
-    properties. If you will need to test RCP-specific components (such
-    as toolbars with drop-down menus, or tree-tables), you will need
-    to select <emphasis>RCP</emphasis> as the toolkit for the Project.
-  </para>
-  <para>
-    When you select RCP as the Project toolkit, the library
-    Projects <emphasis>unbound_modules_concrete</emphasis>,
-    <emphasis>unbound_modules_swt</emphasis> and <emphasis>unbound_modules_rcp</emphasis>
-    are automatically reused in your Project. The actions in
-    these libraries are described in the reference manual.
-  </para>
-  <para>
-    <para role="tip">The GEF toolkit is a subset of the <emphasis>RCP</emphasis> toolkit and is described in a later <xref linkend="geftest"/>. </para>
-  </para>
   
+  <xi:include href="sectionIntroRCPAUT.xml"/>
   <xi:include href="sectionSupportedRCPAUTs.xml"/>
   <xi:include href="sectionSettingUpRCPAUTs.xml"/>
   <xi:include href="sectionKeyboardLayouts.xml"/>

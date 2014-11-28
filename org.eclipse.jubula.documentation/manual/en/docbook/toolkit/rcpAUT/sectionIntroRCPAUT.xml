@@ -1,0 +1,30 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="intro-rcp-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                   xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Introduction to writing tests for RCP AUTs</title>
+  <para>
+    You can write tests for RCP AUTs by selecting the toolkit
+    <emphasis>concrete</emphasis> or <emphasis>RCP</emphasis> from the Project
+    properties. If you will need to test RCP-specific components (such
+    as toolbars with drop-down menus, or tree-tables), you will need
+    to select <emphasis>RCP</emphasis> as the toolkit for the Project.
+  </para>
+  <para>
+    When you select RCP as the Project toolkit, the library
+    Projects <emphasis>unbound_modules_concrete</emphasis>,
+    <emphasis>unbound_modules_swt</emphasis> and <emphasis>unbound_modules_rcp</emphasis>
+    are automatically reused in your Project. The actions in
+    these libraries are described in the reference manual.
+  </para>
+  <para>
+    <para role="tip">The GEF toolkit is a subset of the <emphasis>RCP</emphasis> toolkit and is described in a later <xref linkend="geftest"/>. </para>
+  </para>
+</section>

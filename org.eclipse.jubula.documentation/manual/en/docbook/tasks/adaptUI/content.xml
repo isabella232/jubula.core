@@ -12,10 +12,8 @@
   <?dbhtml dir="adaptUI"?>
   <title>Adapting the user interface</title>
   <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
-  <para>
-    You can individualize the user interface in various ways.
-  </para>
   
+  <xi:include href="sectionIntroUI.xml"/>
   <xi:include href="sectionMovingBrowsersViewsAndEditors.xml"/>
   <xi:include href="sectionResizingInUI.xml"/>
   <xi:include href="sectionRestoringUIDefaults.xml"/>

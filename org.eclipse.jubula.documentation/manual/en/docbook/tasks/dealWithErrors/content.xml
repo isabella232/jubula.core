@@ -14,49 +14,8 @@
   <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
   <anchor role="helpid" id="eventHandlerAddContextId">Event Handlers</anchor>
   <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
-  <para>
-    Event Handlers are Test Cases used to deal with deviations during
-    test execution. When an error occurs, the current Test Case is
-    searched for an Event Handler for that error type. If none is
-    found, the parent Test Case is searched, and so on. If no Event
-    Handler for the test is found, then a default Event Handler is
-    activated. Default Event Handlers are specified in the Test Suite
-    properties (<xref linkend="configuring-test-suites-in-the-properties-view"/>).
-  </para>
-  <para>
-    The advantage of adding your own Event Handlers is that you can
-    define specific behavior for certain errors in each Test Case. An
-    Event Handler can be an empty Test Case, or can contain Test Cases
-    to be executed when the error occurs.
-  </para>
-  <para>
-    For each Event Handler, you must specify:
-  </para>
-  <variablelist>
-    <varlistentry>
-      <term>
-        an event type
-      </term>
-      <listitem>
-        <para>
-          to define what sort of error should activate this Test Case
-          (<xref linkend="event-types"/>).
-        </para>
-      </listitem>
-    </varlistentry>
-    <varlistentry>
-      <term>
-        a reentry type
-      </term>
-      <listitem>
-        <para>
-          to define how the test should continue once the Event
-          Handler has been executed (<xref linkend="reentry-types"/>).
-        </para>
-      </listitem>
-    </varlistentry>
-  </variablelist>
   
+  <xi:include href="sectionIntroEventHandlers.xml"/>
   <xi:include href="sectionAddingEventHandlersToTestCase.xml"/>
   <xi:include href="sectionEventTypes.xml"/>
   <xi:include href="sectionReentryTypes.xml"/>

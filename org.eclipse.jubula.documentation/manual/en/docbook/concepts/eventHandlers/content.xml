@@ -13,26 +13,8 @@
   <title>Event Handlers</title>
   <anchor role="helpid" id="eventHandlerAddContextId">Event Handlers</anchor>
   <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <para>
-    Event Handlers are a way of reacting to errors during test
-    execution and to continue the test in a way you define.
-  </para>
-  <para>
-    An Event Handler <mediaobject role="icon" file="images/EventHandler.png"/>
-    is a Test Case used with a special function. It is only
-    executed when a certain type of error occurs. There are four
-    different types of error, and each Test Case can have an Event
-    Handler for each error type. You can specify different reactions
-    to each different error type, so that serious errors can stop the
-    test, but unimportant errors will not affect the execution.
-  </para>
-  <para>
-    Because Event Handlers are normal Test Cases, they can also
-    contain Event Handlers, can do any of the things that a normal
-    Test Case can do. The only restriction is that you cannot add a
-    Test Case to itself as an Event Handler.
-  </para>
   
+  <xi:include href="sectionIntroEventHandlers.xml"/>
   <xi:include href="sectionHowEventHandlersWork.xml"/>
   <xi:include href="sectionDefaultEventHandlers.xml"/>
   <xi:include href="sectionCustomizedEventHandlers.xml"/>

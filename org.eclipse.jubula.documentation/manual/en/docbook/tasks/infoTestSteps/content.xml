@@ -12,18 +12,8 @@
   <?dbhtml dir="infoTestSteps"?>
   <title>Information on Test Steps</title>
   <anchor role="helpid" id="capContextId">Test Steps</anchor>
-  <para>
-    Test Steps are the smallest unit in a test. They correspond to one
-    action on one component.
-  </para>
-  <para>
-    <para role="tip">Instead of creating Test Steps, we recommend using the
-    library of Test Cases (<xref linkend="creating-tests-from-the-library-of-pre-defined-test-cases"/>). Each Test Case
-    in the library contains one Test Step, with all the parameters
-    already referenced. Using the library makes test creation much
-    easier!</para>
-  </para>
   
+  <xi:include href="sectionIntroTestSteps.xml"/>
   <xi:include href="sectionSpecifyingTestSteps.xml"/>
   <xi:include href="sectionEditingTestSteps.xml"/>
   

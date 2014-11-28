@@ -11,13 +11,8 @@
                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="tasks"?>
   <title>Tasks</title>
-  <para>
-    This chapter provides step-by-step instructions on designing,
-    writing, executing and analyzing tests. For more details about
-    individual tasks, read the <xref linkend="concepts"/> or
-    <xref linkend="user-interface"/>.
-  </para>
   
+  <xi:include href="chapterIntro/content.xml"/>
   <xi:include href="startAndConnectAUTAgent/content.xml"/>
   <xi:include href="startITE/content.xml"/>
   <xi:include href="logInAndSwitchDB/content.xml"/>

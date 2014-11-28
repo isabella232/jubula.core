@@ -12,17 +12,8 @@
   <?dbhtml dir="useDBToolClient"?>
   <title>Using the dbtool client to import, delete and export from the command line</title>
   <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
-  <para>
-    You can use the dbtool to import, export and delete Projects from
-    the database in without using the ITE. You can also use it to
-    create a new version of a Project in the database.
-  </para>
-  <para>
-    This is particularly useful for automated build and test
-    processes, where you may want to automatically export and import
-    Projects out of and into version control to run your tests.
-  </para>
   
+  <xi:include href="sectionIntroDBTool.xml"/>
   <xi:include href="sectionStartingTheDBToolClient.xml"/>
   <xi:include href="sectionParametersForTheDBTool.xml"/>
   

@@ -1,0 +1,43 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="intro-matching-and-regex" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Introduction to regular expressions and matching</title>
+  <itemizedlist>
+    <listitem>
+      <para>
+        For many search and selection actions, you can use regular
+        expressions (using the <emphasis>matches</emphasis> operator) or simple
+        matching (using the <emphasis>simple match</emphasis> operator) to avoid
+        having to enter strings as exactly as they appear in the user
+        interface.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Using regular expressions lets you verify or select text even
+        if you do not know exactly what the text is.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Using a system of placeholders for characters and some
+        function symbols, you can enter a regular expression to find
+        or check a text.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Actions which support regular expressions have an additional
+        parameter, ”<emphasis>Operator</emphasis>”.
+      </para>
+    </listitem>
+  </itemizedlist>
+</section>

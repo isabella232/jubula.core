@@ -1,0 +1,23 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="intro-observation-mode" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                      xmlns:xi="http://www.w3.org/2001/XInclude"
+                                      xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Introduction to the observation mode</title>
+  <para>
+    The ITE offers an <emphasis>Observation Mode</emphasis> to help
+    you get started with your tests. For more information on using the
+    Observation Mode and best practices for writing tests, please read
+    the following sections.
+  </para>
+  <para>
+    <para role="tip">The Observation Mode only supports Java (Swing, SWT/RCP)
+    AUTs. GEF components in RCP AUTs cannot be observed.</para>
+  </para>
+</section>

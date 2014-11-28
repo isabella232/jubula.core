@@ -14,18 +14,8 @@
   <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
   <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
   <anchor role="helpid" id="org.eclipse.ui.resource_view_context">Navigator View</anchor>
-  <para>
-    The ITE is integrated with the <emphasis>JaCoCo</emphasis> code
-    coverage tool for Java applications to let you run and analyze
-    code coverage for your tests.
-  </para>
-  <para>
-    <para role="warning">Code coverage is only available for AUTs started via an AUT
-    configuration (<xref linkend="configuringaut"/>) (i.e. not using the
-    <emphasis>autrun</emphasis> command), and which use Java 1.5 or
-    higher.</para>
-  </para>
   
+  <xi:include href="sectionIntroCodeCoverage.xml"/>
   <xi:include href="sectionConfiguringCodeCoverage.xml"/>
   <xi:include href="sectionResettingAndAccumulatingCodeCoverage.xml"/>
   <xi:include href="sectionViewingTheCodeCoverage.xml"/>

@@ -11,11 +11,8 @@
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="testExec"?>
   <title>Test execution</title>
-  <para>
-    The prerequisites for test execution are covered in the previous
-    <xref linkend="testexec"/>.
-  </para>
   
+  <xi:include href="sectionIntroTestExec.xml"/>
   <xi:include href="sectionTestStepExecution.xml"/>
   
 </section>

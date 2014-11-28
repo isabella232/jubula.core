@@ -11,48 +11,8 @@
                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="editors"?>
   <title>Editors</title>
-  <para>
-    Editors appear in the editor area in the middle of the perspective
-    when you double-click an item in one of the browsers or in the
-    Navigation View.
-  </para>
-  <para>
-    You can tell what sort of editor it is in two ways:
-  </para>
-  <orderedlist>
-    <listitem>
-      <para>
-        The tab for each editor shows an ID-code for what type of
-        editor it is:
-      </para>
-      <itemizedlist>
-        <listitem>
-          <para>
-            ”<emphasis>TC</emphasis>” for the Test Case Editor
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            ”<emphasis>TS</emphasis>” for the Test Suite Editor
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            ”<emphasis>OM</emphasis>” for the Object Mapping Editor
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            ”<emphasis>TD</emphasis>” for the Central Test Data Editor
-          </para>
-        </listitem>
-      </itemizedlist>
-      <para>
-        The tab also shows the name of the item the editor is for.
-      </para>
-    </listitem>
-  </orderedlist>
   
+  <xi:include href="sectionIntroEditors.xml"/>
   <xi:include href="sectionTestCaseEditor.xml"/>
   <xi:include href="sectionTestSuiteEditor.xml"/>
   <xi:include href="sectionObjectMappingEditor.xml"/>
