@@ -1,0 +1,34 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="actionSelectContextMenus" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Context Menus</title>
+  
+  <para><emphasis>Select Context Menu by Indexpath</emphasis></para>
+  <para>
+    Lorem ipsum dolor sit amed
+  </para>
+  
+  <para><emphasis>Select Context Menu by Indexpath (Specify Position)</emphasis></para>
+  <para>
+    Lorem ipsum dolor sit amed
+  </para>
+  
+  <para><emphasis>Select Context Menu by Textpath</emphasis></para>
+  <para>
+    Lorem ipsum dolor sit amed
+  </para>
+  
+  <para><emphasis>Select Context Menu by Textpath (Specify Position)</emphasis></para>
+  <para>
+    Lorem ipsum dolor sit amed
+  </para>
+  
+</section>
