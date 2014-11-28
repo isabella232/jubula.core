@@ -12,6 +12,12 @@ imports="java.util.*
          org.eclipse.jubula.tools.internal.xml.businessmodell.Param" 
 class="ClassGenerator"%>
 <%
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// Gathering information whether to generate an implementation class or an interface
+// and what super class to inherit from
+// 
+/////////////////////////////////////////////////////////////////////////////////////////////////
 CommonGenInfo genInfo = (CommonGenInfo)argument;
 Object specInfo = genInfo.getSpecificInformation();
 String fqnGeneratorClassName = this.getClass().getName();
@@ -147,7 +153,8 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
         <%}%>
     <%}%>
     
-    <%if (!genInterface && hasDefaultMapping) {%>
+    <%if (!genInterface && hasDefaultMapping) {
+    // Generate pseudo component identifiers for implemenation classes with default mapping%>
     protected IComponentIdentifier getPseudoComponentIdentifier() {
         <%if (hasComponentClass) {%>
         org.eclipse.jubula.tools.internal.objects.ComponentIdentifier pseudoIdentifier =
@@ -159,12 +166,16 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
         <%}%>
     }<%}%>
     
-    <%
+<%
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// // generate method for each of the components non-inherited actions
+// 
+/////////////////////////////////////////////////////////////////////////////////////////////////
     if (superActions != null) {
         // generate only methods for non-inherited actions
         actions.removeAll(superActions);
     }
-    // generate method for each action
     Iterator<Action> actionsIterator = actions.iterator();
     while (actionsIterator.hasNext()) {    
         Action action = actionsIterator.next();
@@ -191,11 +202,11 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             boolean hasCombineableValueSet = param.hasValueSet() && param.getValueSet().isCombinable();
             String type = param.getType();
             String name = param.getName();
-            String paramType = nameLoader.findTypeForParameter(type, name);
-            paramType = NameLoader.beautifyParamType(paramType);
+            String fqParamType = nameLoader.findTypeForParameter(type, name);
+            String paramType = NameLoader.beautifyParamType(fqParamType);
             String paramName = nameLoader.translateFromCompSystem(name);
             String fixedType = nameLoader.getRealTypeForParameter(type, name);
-            paramMap.put(name, paramType);
+            paramMap.put(name, fqParamType);
             paramTypeMap.put(name, fixedType);
             %>
             @NonNull <%=paramType%><%if (hasCombineableValueSet) {%>[]<%}%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
@@ -213,8 +224,9 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             String paramName = parameter.getName();%>
             <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
             Validate.notNull(<%=translatedParamName%>, "Argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
-                <%String paramEnumType = paramMap.get(paramName);%>
-                <%String paramType = paramTypeMap.get(paramName);%>
+                <%String paramEnumType = paramMap.get(paramName);
+                String fqParamType = paramTypeMap.get(paramName);
+                String paramType = NameLoader.beautifyParamType(fqParamType);%>
                 <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
                     <%if (!hasCombineableValueSet) {%>
             messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.rcValue(), "<%=paramType%>")); //$NON-NLS-1$

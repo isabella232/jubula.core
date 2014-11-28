@@ -5,7 +5,6 @@ imports="java.util.*
          org.eclipse.jubula.client.api.converter.annotations.NodeType
          org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException
          org.eclipse.jubula.client.api.converter.utils.CompNameLoader
-         org.eclipse.jubula.client.api.converter.utils.ProjectCache
          org.eclipse.jubula.client.api.converter.utils.ParamUtils
          org.eclipse.jubula.client.api.converter.utils.Utils
          org.eclipse.jubula.client.core.businessprocess.CompNamesBP
@@ -15,14 +14,13 @@ imports="java.util.*
          org.eclipse.jubula.client.core.model.IEventExecTestCasePO
          org.eclipse.jubula.client.core.model.IExecTestCasePO
          org.eclipse.jubula.client.core.model.INodePO
-         org.eclipse.jubula.client.core.model.NodeMaker
          org.eclipse.jubula.client.core.model.IParamDescriptionPO
          org.eclipse.jubula.client.core.model.IParameterInterfacePO
-         org.eclipse.jubula.client.core.model.IProjectPO
          org.eclipse.jubula.client.core.model.IRefTestSuitePO
          org.eclipse.jubula.client.core.model.ISpecTestCasePO
          org.eclipse.jubula.client.core.model.ITestJobPO
          org.eclipse.jubula.client.core.model.ITestSuitePO
+         org.eclipse.jubula.client.core.model.NodeMaker
          org.eclipse.jubula.client.core.model.ReentryProperty
          org.eclipse.jubula.client.ui.rcp.Plugin
          org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader
@@ -30,7 +28,6 @@ imports="java.util.*
          org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder
          org.eclipse.jubula.tools.internal.constants.StringConstants
          org.eclipse.jubula.tools.internal.exception.InvalidDataException
-         org.eclipse.jubula.tools.internal.exception.JBException
          org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent
          org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
          org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem
@@ -39,8 +36,12 @@ imports="java.util.*
          org.slf4j.LoggerFactory"
 class="NodeGenerator"%>
 <%
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// Initialzising variables which will be used during entire conversion process
+// 
+/////////////////////////////////////////////////////////////////////////////////////////////////
 Logger log = LoggerFactory.getLogger(NodeGenerator.class);
-
 Map<String, NodeInfo> uuidToNodeInfoMap = NodeInfo.getUuidToNodeInfoMap();
 NodeInfo info = (NodeInfo)argument;
 String className = info.getClassName();
@@ -72,6 +73,14 @@ if (node instanceof ISpecTestCasePO) {
     nodeType = NodeType.TEST_SUITE;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// Package declarartion
+// Import statements
+//     - going over children of the node and check whether they can be
+//       imported without name conflicts
+// 
+/////////////////////////////////////////////////////////////////////////////////////////////////
 %>
 package <%=packageName%>;
 
@@ -127,6 +136,17 @@ for (NodeInfo nodeInfo : classesToImport) {
     String fqChildName = nodeInfo.getFqName();%>
 import <%=fqChildName%>;
 <%}%>
+<%
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// Start of class
+//    - initializing members and constructor
+//        - for test cases: runtime context and component identifiers are needed
+//        - for test suites: AUT is needed and used to create runtime context
+//        - for test jobs: nothing is needed
+// 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+%>
 
 @SrcNode(UUID = "<%=uuid%>",
          type = NodeType.<%=nodeType%><%if (hasTaskId) {%>, taskId = "<%=taskId%>"<%}%>)
@@ -136,6 +156,9 @@ public class <%=className%> {
     private RuntimeContext rtc;
     
         <%
+        // Create list of component identifiers which are needed for constructing this test case.
+        // This component identifiers will be members of this class.
+        
         IExecTestCasePO fakeExec = NodeMaker.createExecTestCasePO((ISpecTestCasePO)node);
         List<ICompNamesPairPO> compNamePairs = compNamesBP.getAllCompNamesPairs(fakeExec);
         Iterator<ICompNamesPairPO> compNamePairsIterator = compNamePairs.iterator();
@@ -196,6 +219,15 @@ public class <%=className%> {
     }
     <%}%>
     
+<%
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// Start of execute method
+//    - initializing parameters for test cases
+//    - creating of event handling
+// 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+%>
     <%if (hasComment) {%>/** <%=comment%> */<%}%>
     public void execute(
     <%if (node instanceof ISpecTestCasePO) {
@@ -233,6 +265,13 @@ public class <%=className%> {
                 <%}
             }
         }%>
+<%
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// Start of calling execute methods of children
+// 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+%>
         
         <%List<String> autList = new ArrayList<String>();%>
         
@@ -246,9 +285,20 @@ public class <%=className%> {
         if (hasComment) {%><%if (!isActive) {%>//<%}%>// Comment: <%=comment%>
         
         <%}%>
+<%
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// Case: Child is a CAP
+// 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+%>
             <%if (child instanceof ICapPO) {
                 ICapPO cap = (ICapPO) child;
                 String componentFromCap = cap.getComponentType();
+                
+                // Gather information about generated component for cap from generated properies file
+                // Use it to get factory to create instance of component
+                
                 CompNameLoader loader = new CompNameLoader(componentFromCap);
                 String actionName = loader.get(cap.getActionName());
                 boolean hasDefaultMapping = loader.get("hasDefaultMapping").equals("true");
@@ -283,6 +333,9 @@ public class <%=className%> {
                 
                 <%if (!isActive) {%>//<%}%>.<%=actionName%>(
                 <%Iterator<IParamDescriptionPO> childParamIterator = cap.getParameterListIter();
+                
+                // Determine parameter values for call of cap method
+                
                 while (childParamIterator.hasNext()) {
                     IParamDescriptionPO param = childParamIterator.next();
                     String paramType = param.getUniqueId();
@@ -292,9 +345,9 @@ public class <%=className%> {
                     if (isEnum) {
                         enumType = NameLoader.beautifyParamType(enumType);
                     }
-                    String enumLookupMethodName = isEnum && (enumType.endsWith(".Operator")
-                                                          || enumType.endsWith(".AUTActivationMethod")
-                                                          || enumType.endsWith(".Modifier")) 
+                    String enumLookupMethodName = isEnum && (enumType.equals("Operator")
+                                                          || enumType.equals("AUTActivationMethod")
+                                                          || enumType.equals("Modifier")) 
                                                       ? "literalAsEnum" 
                                                       : "valueOf";%>
                     
@@ -311,17 +364,28 @@ public class <%=className%> {
         // TODO: Usage of unsupported client / ITE-side action <%=cap.getActionName()%>.
 
                 <%}%>
+<%
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// Case: Child is an ExecTestCase
+// 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+%>
             <%} else if (child instanceof IExecTestCasePO) {
                 IExecTestCasePO exec = (IExecTestCasePO)child;
+                // spec is needed to get all necessary information
                 ISpecTestCasePO spec = exec.getSpecTestCase();
                 String referenceName = exec.getRealName();
                 boolean hasReferenceName = StringUtils.isNotBlank(referenceName);
                 String testCaseName = StringConstants.EMPTY;
+                // get node information (which are used for creating a class for it)
+                // about spec from global map containing all such information                
                 NodeInfo specInfo = uuidToNodeInfoMap.get(spec.getGuid());
                 testCaseName = classesToImport.contains(specInfo) ? specInfo.getClassName() : specInfo.getFqName();
                 List<ICompNamesPairPO> childCompNamePairs = compNamesBP.getAllCompNamesPairs(exec);
                 Iterator<ICompNamesPairPO> childCompNamePairsIterator = childCompNamePairs.iterator();
                 List<String> childCompIdentifierNames = new ArrayList<String>();
+                // Determine which component identifiers the child needs to be instanciated
                 while (childCompNamePairsIterator.hasNext()) {
                     ICompNamesPairPO pair = childCompNamePairsIterator.next();
                     String compIdentifierName = componentNamesBP.getName(pair.getSecondName());
@@ -336,8 +400,13 @@ public class <%=className%> {
                 }
                 Iterator<String> childCompIdentifierNamesIterator = childCompIdentifierNames.iterator();                
                 Iterator<IParamDescriptionPO> childParamIterator;
+                // Determine whether the child uses central test data
                 IParameterInterfacePO dataCube = exec.getReferencedDataCube();
               if (dataCube == null) {
+              
+                // If there is no central test data used, execute the childs execute method for each data set.
+                // The do-loop is for the case that just one set of data is defined
+                
                 int rowCount = exec.getDataManager().getDataSetCount();
                 int row = 0;
                 do {
@@ -374,6 +443,9 @@ public class <%=className%> {
             <%if (!isActive) {%>//<%}%>);
                 <%} while(row < rowCount);
               } else {
+              
+              // If there is central test data used, generate a for-loop that iterates over all data
+              
                 String dataCubeName = null;
                 try {
                     dataCubeName = Utils.determineClassName(dataCube);
@@ -412,6 +484,13 @@ public class <%=className%> {
         <%if (!isActive) {%>//<%}%>}
               <%}%>
         
+<%
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// Case: Child is a RefTestSuite
+// 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+%>
             <%} else if (child instanceof IRefTestSuitePO) {
                 IRefTestSuitePO ref = (IRefTestSuitePO)child;
                 ITestSuitePO testSuite = ref.getTestSuite();
@@ -454,6 +533,13 @@ public class <%=className%> {
         }
         <%}%>
         
+<%
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// Generate markers for event handling
+// 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+%>
         <%if (node instanceof ISpecTestCasePO) {
             ISpecTestCasePO tc = (ISpecTestCasePO) node;
             for (IEventExecTestCasePO eventTC : tc.getAllEventEventExecTC()) {
