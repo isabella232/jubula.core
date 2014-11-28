@@ -38,7 +38,6 @@
    </vm>
 
    <plugins>
-      <plugin id="org.eclipse.osgi"/>
    </plugins>
 
 </product>
