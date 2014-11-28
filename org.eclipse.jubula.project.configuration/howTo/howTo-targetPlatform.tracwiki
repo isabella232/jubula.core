@@ -1,0 +1,32 @@
+= Target platform informations =
+
+* Editing the .target files with the target file editor is removing comments. Please use a text editor, or re add the comments.
+* We must have a CQ for everything we get from the orbit repository (in the jubula targets)
+= Target platform locations =
+
+* org.eclipse.jubula.project.configuration/src/target/definitions
+ * jubula+nightly.target, jubula.target (local) - jubula build
+ * e3.target,e3e4.target  -rc.accessor  build
+ * dashboard.target, dashboard-local.target - dashboard build
+
+* com.bredexsw.guidancer.project.configuration/src/target/defintions
+ * ite-standalone.target and ite-standalone-local.target
+
+
+the non local targets are fetching jubula plugins from our development update site: http://download.eclipse.org/jubula/development
+
+= Updating target platform =
+
+* start with the jubula.target and update to the new update site.
+  * distinguish between needed core features or other which we can disable(for the meantime) if there is no other way(e.g. BIRT).
+  * if there are erros/missing features you either remove it from the target platform or/and search for it(maybe the feature has been renamed).
+* after finished with the jubula.target migrate the changes to jubula+nightly.target ite-standalone.target and ite-standalone-local.target and do the same for these targets to get them running
+* the dashoard targets should be updated on its own since you must have a close look at the changes in rap(also it is independent from the other targets)
+* fix problems in code
+
+
+* changes in other parts
+  * update the p2.inf in the com.bredexsw.jubula.feature
+  * update the new equinox launcher version in the ite.install4j(if it has changed) located in com.bredexsw.guidancer.releng/Installation 
+ 
+ 
