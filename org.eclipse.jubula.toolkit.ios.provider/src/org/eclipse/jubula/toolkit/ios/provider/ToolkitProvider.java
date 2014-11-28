@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 import org.eclipse.jubula.toolkit.common.IToolKitProvider;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
+import org.eclipse.jubula.toolkit.ios.provider.ui.IOSAutConfigComponent;
 import org.eclipse.swt.widgets.Composite;
 
 
@@ -33,7 +34,7 @@ public class ToolkitProvider implements IToolKitProvider {
         Map<String, String> autConfig, String autName) 
         throws ToolkitPluginException {
         return ToolkitUtils.createAutConfigComponent(
-                        "org.eclipse.jubula.toolkit.mobile.provider.ios.ui.IOSAutConfigComponent", //$NON-NLS-1$
+                    IOSAutConfigComponent.class.getName(),
                         this.getClass().getClassLoader(), parent, style,
                         autConfig, autName);
     }
