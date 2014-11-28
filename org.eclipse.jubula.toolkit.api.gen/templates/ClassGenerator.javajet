@@ -226,16 +226,15 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             Validate.notNull(<%=translatedParamName%>, "Argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
                 <%String paramEnumType = paramMap.get(paramName);
                 String fqParamType = paramTypeMap.get(paramName);
-                String paramType = NameLoader.beautifyParamType(fqParamType);%>
                 <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
                     <%if (!hasCombineableValueSet) {%>
-            messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.rcValue(), "<%=paramType%>")); //$NON-NLS-1$
+            messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.rcValue(), "<%=fqParamType%>")); //$NON-NLS-1$
                     <%} else {%>
             Validate.noNullElements(<%=translatedParamName%>, "Elements of argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
-            messageCap.addMessageParam(new MessageParam(StringUtils.join(<%=translatedParamName%>, TestDataConstants.COMBI_VALUE_SEPARATOR), "<%=paramType%>")); //$NON-NLS-1$
+            messageCap.addMessageParam(new MessageParam(StringUtils.join(<%=translatedParamName%>, TestDataConstants.COMBI_VALUE_SEPARATOR), "<%=fqParamType%>")); //$NON-NLS-1$
                     <%}%>
                 <%} else {%>
-            messageCap.addMessageParam(new MessageParam(String.valueOf(<%=translatedParamName%>), "<%=paramType%>")); //$NON-NLS-1$
+            messageCap.addMessageParam(new MessageParam(String.valueOf(<%=translatedParamName%>), "<%=fqParamType%>")); //$NON-NLS-1$
                 <%}%>
             <%}%>
             return messageCap;
