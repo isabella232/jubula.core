@@ -3,7 +3,7 @@
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jubula.feature.rc.feature.group" />
-<repository location="jar:file:/path/to/Jubula/development/extension-toolkit-rc.zip!/"/>
+<repository location="jar:file:/path/to/Jubula/development/org.eclipse.jubula.site.zip!/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.platform.ide" version="4.2.2.M20130204-1200"/>

@@ -21,5 +21,8 @@
    <feature url="features/org.eclipse.jubula.feature.sdk_3.0.0.qualifier.jar" id="org.eclipse.jubula.feature.sdk" version="3.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
+   <feature url="features/org.eclipse.jubula.feature.rc_3.0.0.qualifier.jar" id="org.eclipse.jubula.feature.rc" version="3.0.0.qualifier">
+      <category name="org.eclipse.test"/>
+   </feature>
    <category-def name="org.eclipse.test" label="Testing"/>
 </site>
