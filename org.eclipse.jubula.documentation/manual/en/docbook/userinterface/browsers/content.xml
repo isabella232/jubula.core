@@ -10,6 +10,7 @@
                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="browsers"?>
+  <title>Browsers</title>
   
   <xi:include href="sectionIntroBrowsers.xml"/>
   <xi:include href="sectionTestSuiteBrowser.xml"/>
