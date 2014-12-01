@@ -1,35 +1,43 @@
-package org.eclipse.jubula.qa.api;
+/*******************************************************************************
+ * Copyright (c) 2014 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+package org.eclipse.jubula.qa.api.factories;
 
 import java.io.IOException;
 import java.net.URL;
 
 import junit.framework.Assert;
 
+import org.eclipse.jubula.client.MakeR;
+import org.eclipse.jubula.client.ObjectMapping;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.qa.api.om.OM;
 import org.eclipse.jubula.toolkit.concrete.ConcreteComponents;
 import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
 import org.eclipse.jubula.toolkit.concrete.components.TextComponent;
 import org.eclipse.jubula.toolkit.concrete.components.TextInputComponent;
-import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
-import org.eclipse.jubula.client.MakeR;
-import org.eclipse.jubula.client.ObjectMapping;
+import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.tools.ComponentIdentifier;
 import org.junit.Test;
-
 /**
- * Class for testing the factories
+ * Class for testing the OM factory
  */
-public class TestFactories {
-    
+public class TestOMFactories {
+
     /** the resource url */
-    private URL m_resourceURL = TestFactories.class.getClassLoader()
+    private URL m_resourceURL = TestComponentFactories.class.getClassLoader()
             .getResource("objectMapping_SimpleAdder.properties"); //$NON-NLS-1$
-    
     /** object mapping loader */
     private ObjectMapping m_omLoader;
-    
+
     /**
      * test method
      */
@@ -78,7 +86,7 @@ public class TestFactories {
         TextComponent resultField = ConcreteComponents
                 .createTextComponent(identifierResultField);
         Assert.assertNotNull(resultField);
-
+    
         CAP cap1 = textField1.replaceText("17"); //$NON-NLS-1$
         Assert.assertNotNull(cap1);
         CAP cap2 = textField2.replaceText("4"); //$NON-NLS-1$
@@ -88,7 +96,7 @@ public class TestFactories {
         CAP cap4 = resultField.checkText("21", Operator.equals); //$NON-NLS-1$
         Assert.assertNotNull(cap4);
     }
-    
+
     /**
      * test method
      */
@@ -130,7 +138,7 @@ public class TestFactories {
         TextComponent resultField = ConcreteComponents
                 .createTextComponent(identifierResultField);
         Assert.assertNotNull(resultField);
-
+    
         CAP cap1 = textField1.replaceText("17"); //$NON-NLS-1$
         Assert.assertNotNull(cap1);
         CAP cap2 = textField2.replaceText("4"); //$NON-NLS-1$
@@ -140,4 +148,5 @@ public class TestFactories {
         CAP cap4 = resultField.checkText("21", Operator.equals); //$NON-NLS-1$
         Assert.assertNotNull(cap4);
     }
+
 }
