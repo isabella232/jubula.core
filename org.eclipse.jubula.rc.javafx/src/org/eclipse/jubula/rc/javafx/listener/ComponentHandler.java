@@ -209,7 +209,7 @@ public class ComponentHandler implements ListChangeListener<Stage>,
             boolean add = true;
             Parent parent = n.getParent();
             while (parent != null) {
-                if (parent instanceof Skinnable) {
+                if (parent instanceof Skinnable || isContainer(parent)) {
                     if (isContentNode(n, parent)) {
                         break;
                     }
@@ -239,6 +239,17 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         }
         // multiple matches, try filtering
         return filterMatches(result);
+    }
+    
+    /**
+     * Checks if the given node is a container.
+     * @param n the possible container
+     * @return true if the node is a container false otherwise
+     */
+    private static boolean isContainer(Node n) {
+        IContainerAdapter adapter = (IContainerAdapter) AdapterFactoryRegistry.
+                getInstance().getAdapter(IContainerAdapter.class, n);
+        return adapter != null;
     }
     
     /**
