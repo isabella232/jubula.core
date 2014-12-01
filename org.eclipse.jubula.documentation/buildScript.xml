@@ -50,6 +50,13 @@
         </ant>
     </target>
     
+    <target name="buildReferenceManual">
+        <ant antfile="buildScript.xml" target="buildReferenceManualOnlineHelp" inheritall="false">
+            <property name="name" value="ReferenceNotes"/>
+            <property name="dir" value="reference"/>
+        </ant>
+    </target>
+    
     <target name="checkParam">
         <fail unless="name" message="Please provide a value for the parameter 'name'!"/>
         <fail unless="dir" message="Please provide a value for the parameter 'dir'!"/>
@@ -133,7 +140,8 @@
                 <arg value="1"/>
             <arg value="--stringparam"/>
                 <arg value="generate.toc"/>
-                <arg value="chapter nop
+                <arg value="chapter toc
+                            section toc
                             book    toc,title"/>
             <arg value="--stringparam"/>
                 <arg value="formal.title.placement"/>
@@ -145,6 +153,9 @@
             <arg value="--stringparam"/>
                 <arg value="toc.section.depth"/>
                 <arg value="3"/>
+            <arg value="--stringparam"/>
+                <arg value="generate.section.toc.level"/>
+                <arg value="1"/>
             <arg value="--stringparam"/>
                 <arg value="collect.xref.targets"/>
                 <arg value="yes"/>
@@ -298,6 +309,90 @@
         <antcall target="checkImages"/>
         
         <antcall target="moveGeneratedFilesStandalone"/>
+    </target>
+    
+    <target name="buildReferenceManualOnlineHelp" unless="standalone" depends="checkParam, buildHtmlImageLister">
+        <antcall target="makeDir"/>
+        
+        <copy todir="${html.path}/images">
+            <fileset dir="${dir}/en/docbook/images">
+                <include name="*.jpg" />
+                <include name="*.png" />
+            </fileset>
+        </copy>
+        
+        <exec executable="xsltproc" failonerror="true">
+            <arg value="--xinclude"/>
+            <arg value="--stringparam"/>
+                <arg value="base.dir"/>
+                <arg value="${html.path}"/>
+            <arg value="--stringparam"/>
+                <arg value="html.stylesheet"/>
+                <arg value="../css/style.css"/>
+            <arg value="--stringparam"/>
+                <arg value="docbook.css.source"/>
+                <arg value=""/>
+            <arg value="--stringparam"/>
+                <arg value="section.autolabel"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="section.label.includes.component.label"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="make.clean.html"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="use.id.as.filename"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="generate.toc"/>
+                <arg value="chapter toc
+                            section toc
+                            book    toc,title"/>
+            <arg value="--stringparam"/>
+                <arg value="formal.title.placement"/>
+                <arg value="figure    after
+                            example   after
+                            equation  after
+                            table     after
+                            procedure after"/>
+            <arg value="--stringparam"/>
+                <arg value="toc.section.depth"/>
+                <arg value="3"/>
+            <arg value="--stringparam"/>
+                <arg value="generate.section.toc.level"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="collect.xref.targets"/>
+                <arg value="yes"/>
+            <arg value="--stringparam"/>
+                <arg value="current.docid"/>
+                <arg value="${manual.name}"/>
+            <arg value="--stringparam"/>
+                <arg value="target.database.document"/>
+                <arg value="../../olinkdb.xml"/>
+            <arg value="--stringparam"/>
+                <arg value="chunker.output.indent"/>
+                <arg value="yes"/>
+            <arg value="--stringparam"/>
+                <arg value="chunk.first.sections"/>
+                <arg value="1"/>
+            <arg value="--stringparam"/>
+                <arg value="chunk.section.depth"/>
+                <arg value="5"/>
+            <arg value="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates.xsl"/>
+            <arg value="${dir}/en/docbook/book.xml"/>
+            <redirector output="output.log"/>
+        </exec>
+        
+        <antcall target="checkForErrors"/>
+        
+        <delete file="${html.path}/index.xml"/>
+        <delete file="plugin.xml"/>
+        <delete file="target.db"/>
+        <delete dir="${html.path}/en"/>
+        
+        <antcall target="moveGeneratedFiles"/>
     </target>
     
     <target name="checkForErrors">
