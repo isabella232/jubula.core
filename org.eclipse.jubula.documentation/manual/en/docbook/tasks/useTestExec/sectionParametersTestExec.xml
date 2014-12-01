@@ -180,7 +180,7 @@
           	<entry>
           	<emphasis role="input">-resultname &lt;filename&gt;</emphasis>
           	<?linebreak?>
-          	e.g. <emphasis>-resultname "&lt;PRODUCTIVE_TEST&gt;"</emphasis><?linebreak?>
+          	e.g. <emphasis>-resultname "PRODUCTIVE_TEST"</emphasis><?linebreak?>
           	Use this to specify a name for the HTML and XML test result reports 
           	that testexec writes (if you have configured this).<?linebreak?>
 		If you do not use this parameter, a default name will be used that 
