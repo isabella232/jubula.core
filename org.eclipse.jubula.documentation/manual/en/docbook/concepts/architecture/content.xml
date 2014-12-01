@@ -11,41 +11,8 @@
                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="architecture"?>
   <title>Architecture</title>
-  <para>
-    This is a client-server application. We refer to the client part
-    as the Integrated Test Environment or ITE, and the server
-    component as the AUT Agent.:
-  </para>
-  <variablelist>
-    <varlistentry>
-      <term>
-        The ITE
-      </term>
-      <listitem>
-        <para>
-          is where tests are specified and evaluated.
-        </para>
-      </listitem>
-    </varlistentry>
-    <varlistentry>
-      <term>
-        The AUT Agent
-      </term>
-      <listitem>
-        <para>
-          controls the application under test (AUT) and executes the
-          specified tests. 
-        </para>
-      </listitem>
-    </varlistentry>
-  </variablelist>
-  <para>
-    You can install the ITE and AUT Agent on different machines; even
-    on different platforms. This lets you specify and run your tests
-    on different machines, and means that you can run the same test on
-    different platforms.
-  </para>
   
+  <xi:include href="sectionIntroArchitecture.xml"/>
   <xi:include href="sectionITE.xml"/>
   <xi:include href="sectionAUTAgent.xml"/>
   <xi:include href="sectionWorkingWithITEAndAUTAgentOnDifferentMachines.xml"/>

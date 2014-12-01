@@ -11,27 +11,8 @@
                                            xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="testHierarchy"?>
   <title>Test hierarchy</title>
-  <para>
-    The following sections describe the test hierarchy in the ITE.
-    Basically, you can think of the test hierarchy as a tree structure
-    which can be of any size, complexity and depth
-    (<xref linkend="treestructure"/>).
-  </para>
-  <figure id="treestructure">
-    <title>Test Hierarchy</title>
-    <mediaobject>
-      <imageobject>
-        <imagedata fileref="images/treestructure.png"/>
-      </imageobject>
-      <textobject><phrase>Test Hierarchy</phrase></textobject>
-    </mediaobject>
-  </figure>
-  <para>
-    The hierarchical structure gives you flexibility in your tests to
-    make changes and keep the test in touch with current software
-    development.
-  </para>
   
+  <xi:include href="sectionIntroTestHierarchy.xml"/>
   <xi:include href="sectionTestSteps.xml"/>
   <xi:include href="sectionTestCases.xml"/>
   <xi:include href="sectionTestSuites.xml"/>

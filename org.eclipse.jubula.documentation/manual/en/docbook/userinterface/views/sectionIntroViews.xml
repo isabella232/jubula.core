@@ -1,0 +1,92 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="intro-views" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                  xmlns:xi="http://www.w3.org/2001/XInclude"
+                                  xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Introduction to views</title>
+  <para>
+    The ITE has the following views:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Properties View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Data Sets View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Component Names View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Test Result View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Problem View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Search result view
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Navigator View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Console
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Inspector View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Test Result Summary View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Running AUTs View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Image View
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Progress View
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    The first three views are <emphasis>support views</emphasis>.
+    Their content changes depending on the current selection – they
+    show details corresponding to the currently selected item.
+  </para>
+  <para>
+    Use <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis> to see a full list of views
+    that can be opened in the ITE.
+  </para>
+</section>

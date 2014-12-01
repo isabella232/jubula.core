@@ -11,14 +11,8 @@
                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="configurePrefs"?>
   <title>Preferences</title>
-  <para>
-    Open the preferences dialog (<xref linkend="gdprefs"/>) by selecting:
-    
-    <para>
-      <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Preferences</emphasis>.
-    </para>
-  </para>
   
+  <xi:include href="sectionIntroPreferences.xml"/>
   <xi:include href="sectionTestPreferences.xml"/>
   <xi:include href="sectionAUTAgentPreferences.xml"/>
   <xi:include href="sectionEmbeddedAUTAgentPreferences.xml"/>

@@ -11,11 +11,8 @@
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="databaseStructure"?>
   <title>Database structure</title>
-  <para>
-    You can store your Projects in a single-user database or in a
-    multi-user database (recommended).
-  </para>
   
+  <xi:include href="sectionIntroDBStructure.xml"/>
   <xi:include href="sectionSupportedSystems.xml"/>
   <xi:include href="sectionSingleUser.xml"/>
   <xi:include href="sectionMultiUser.xml"/>

@@ -11,18 +11,11 @@
                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="comparison"?>
   <title>Comparison to other testing approaches</title>
-  <para>
-    Testing is critical to the success of software projects. It is
-    especially important to acceptance test software which is designed
-    for end users.
-  </para>
-  <para>
-    There are various ways to go about performing acceptance testing,
-    each with their advantages and disadvantages.
-  </para>
   
+  <xi:include href="sectionIntroApproach.xml"/>
   <xi:include href="sectionManualTests.xml"/>
   <xi:include href="sectionProgrammedTests.xml"/>
   <xi:include href="sectionRecordedTests.xml"/>
   <xi:include href="sectionOurApproach.xml"/>
+  
 </section>

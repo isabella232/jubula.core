@@ -1,0 +1,25 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="intro-javafx-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Introduction to writing tests for GEF AUTs</title>
+  <para>
+    You can write tests for JavaFX AUTs when you select the
+    toolkit <emphasis>concrete</emphasis> or <emphasis>JavaFX</emphasis> in the Project
+    properties. The JavaFX and concrete toolkits actually contain the
+    same actions as each other.
+  </para>
+  <para>
+    When you select JavaFX as the Project toolkit, the library
+    Project <emphasis>unbound_modules_concrete</emphasis> is automatically
+    reused in your Project. The actions in this library are
+    described in the reference manual.
+  </para>
+</section>

@@ -13,33 +13,8 @@
   <title>Working with Test Cases</title>
   <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
   <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
-  <para>
-    Test Cases are the ”building blocks” (keywords) for testing. They
-    can:
-  </para>
-  <itemizedlist>
-    <listitem>
-      <para>
-        contain other (referenced) Test Cases (<xref linkend="adding-items-to-editors"/>)
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        contain Test Steps (<xref linkend="specsteps"/>)
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        be used in Test Suites (<xref linkend="adding-items-to-editors"/>)
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        be used as Event Handlers (<xref linkend="dealing-with-errors-in-tests"/>)
-      </para>
-    </listitem>
-  </itemizedlist>
   
+  <xi:include href="sectionIntroTestCases.xml"/>
   <xi:include href="sectionCreatingTestCases.xml"/>
   <xi:include href="sectionCreatingTestsFromPreDefinedTestCases.xml"/>
   <xi:include href="sectionOpeningExistingTestCases.xml"/>

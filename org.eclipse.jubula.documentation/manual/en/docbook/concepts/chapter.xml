@@ -11,11 +11,8 @@
                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="concepts"?>
   <title>Concepts</title>
-  <para>
-    The following sections introduce the concepts and capabilities of
-    the tool.
-  </para>
   
+  <xi:include href="chapterIntro/content.xml"/>
   <xi:include href="overview/content.xml"/>
   <xi:include href="testing/content.xml"/>
   <xi:include href="architecture/content.xml"/>

@@ -9,58 +9,10 @@
 <chapter id="user-interface" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                            xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="user-interface"?>
+  <?dbhtml dir="userInterface"?>
   <title>User interface</title>
-  <para>
-    There are four types of area in the user interface: 
-  </para>
-  <para>
-    <emphasis role="strong">Perspectives</emphasis>
-  </para>
-  <para>
-    A perspective is a collection of views, editors and browsers on the
-    screen.
-  </para>
-  <para>
-    <emphasis role="strong">Browsers</emphasis>
-  </para>
-  <para>
-    Browsers let you see the Test Cases and Test Suites you have created
-    in their hierarchical structures. There is also a browser for
-    component names.
-  </para>
-  <para>
-    <emphasis role="strong">Editors</emphasis>
-  </para>
-  <para>
-    Editors let you modify, add and delete items. You can open editors
-    by double-clicking on a node (e.g. Test Suite or Test Case) in a
-    browser.
-  </para>
-  <para>
-    <emphasis role="strong">Views</emphasis>
-  </para>
-  <para>
-    Views show details about the currently selected item. If you
-    single-click an item in a browser, the details in the views are
-    read-only. If you select an item from within an editor, you can edit
-    some of the values in the views.
-  </para>
-  <para>
-    
-  </para>
-  <para>
-    You can change the way your user interface looks by moving areas,
-    changing the colors, and hiding/showing views (<xref linkend="adapting-the-user-interface"/>).
-  </para>
-  <para>
-    To reset the default layout at any time, select:
-    
-    <para>
-      <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Reset Perspective</emphasis>.
-    </para>
-  </para>
   
+  <xi:include href="overviewUI/content.xml"/>
   <xi:include href="perspectives/content.xml"/>
   <xi:include href="browsers/content.xml"/>
   <xi:include href="editors/content.xml"/>

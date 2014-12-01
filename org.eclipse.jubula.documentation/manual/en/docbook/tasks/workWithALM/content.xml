@@ -12,49 +12,8 @@
   <?dbhtml dir="workWithALM"?>
   <title>Working with external task repositories (ALM
   Integration)</title>
-  <para>
-    The ITE is integrated with the Eclipse Mylyn Project to allow you
-    to:
-  </para>
-  <itemizedlist>
-    <listitem>
-      <para>
-        Connect your ITE (via the workspace) to external task
-        repositories.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        View, work on and edit tasks directly in the ITE.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        Create tasks directly in the ITE.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        Integrate your tests with application lifecycle management
-        (ALM) tools to provide information on the automated tests
-        performed for specfic features or releases. We have tested the
-        integration with Jira, Bugzilla and HP ALM.
-      </para>
-    </listitem>
-  </itemizedlist>
-  <para>
-    The Mylyn online help is included in the installation.
-  </para>
-  <para>
-    Select:
-    
-    <para>
-      <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">Help Contents</emphasis>
-    </para>
-    
-    in the ITE to see the Mylyn help.
-  </para>
   
+  <xi:include href="sectionIntroALM.xml"/>
   <xi:include href="sectionConfiguringTaskRepositories.xml"/>
   <xi:include href="sectionWorkingOnTasksInTheITEContexts.xml"/>
   <xi:include href="sectionCreatingTasksInExternalRepositories.xml"/>

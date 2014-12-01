@@ -11,21 +11,8 @@
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="howTo"?>
   <title>How to read this manual</title>
-  <para>
-    We have designed this tool to make testing easier and faster.
-    However, it is a powerful application, and some of its features
-    are quite sophisticated. We therefore recommend having a look at
-    this manual. You can also access the manual from within the ITE by
-    pressing <emphasis role="input">»F1«</emphasis>.
-  </para>
-  <para>
-    In the reference manual, you will find information on more
-    technical aspects, such as a description of the supported
-    components and actions. The reference manual is also shown in the
-    context-sensitive help when you press
-    <emphasis role="input">»F1«</emphasis>.
-  </para>
   
+  <xi:include href="sectionAboutTheHelp.xml"/>
   <xi:include href="sectionLayout.xml"/>
   <xi:include href="sectionConventionsUsed.xml"/>
   

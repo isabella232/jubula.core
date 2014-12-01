@@ -11,37 +11,8 @@
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="objectMapping"?>
   <title>Object mapping</title>
-  <para>
-    Object mapping is the process which joins your <emphasis>component
-    names</emphasis> from your Test Steps to the actual
-    <emphasis>technical names</emphasis> for the components in the
-    AUT. Because object mapping can be the last step before execution,
-    you can start specifying tests before the software is even
-    available.
-  </para>
-  <para>
-    Object mapping consists of two steps:
-  </para>
-  <orderedlist>
-    <listitem>
-      <para>
-        Collecting the technical names for the components from the
-        AUT.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        Assigning these technical names to the component names you
-        used in your Test Steps.
-      </para>
-    </listitem>
-  </orderedlist>
-  <para>
-    <para role="tip">Object mapping is bound to the AUT, not to a Test
-    Suite. All Test Suites which use the same AUT share an object map.
-    </para>
-  </para>
   
+  <xi:include href="sectionIntroObjectMapping.xml"/>
   <xi:include href="sectionComponentNames.xml"/>
   <xi:include href="sectionTechnicalNames.xml"/>
   <xi:include href="sectionAssigningTechnicalNamesToComponentNames.xml"/>

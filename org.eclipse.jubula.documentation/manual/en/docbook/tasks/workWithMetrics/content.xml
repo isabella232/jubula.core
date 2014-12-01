@@ -11,36 +11,8 @@
                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="workWithMetrics"?>
   <title>Working with Metrics</title>
-  <para>
-    The Analysis framework lets you run metrics on your Project. In
-    the current version, three example metrics are included which can
-    be run on the whole Project or on parts of it.
-  </para>
-  <para>
-    The analyses and metrics can either be run for the whole Project,
-    or for specific contexts within the Project.
-  </para>
-  <para>
-    To run a metric or analysis for the whole Project, select the
-    metric or analysis you want to perform from the toolbar button.
-  </para>
-  <para>
-    To run a metric or analysis for a specific context, select the context you require (e.g. the top node in the Test Case Browser to perform the metric or analysis just for items within this browser) and then select:
-    
-    <para>
-      <emphasis role="menuPath">Analyze</emphasis>
-    </para>
-      
-    from the context menu, selecting the required option to run.
-  </para>
-  <para>
-    Once a metric or analysis has run, the results are shown in the
-    Search Result View.
-  </para>
-  <para>
-    The following metrics and analyses are available:
-  </para>
   
+  <xi:include href="sectionIntroMetrics.xml"/>
   <xi:include href="sectionNumericProjectElementCounter.xml"/>
   <xi:include href="sectionRatioGeneralSpecific.xml"/>
   <xi:include href="sectionEmptyChainsAnalysis.xml"/>

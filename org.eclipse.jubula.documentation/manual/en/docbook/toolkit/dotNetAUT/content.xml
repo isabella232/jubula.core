@@ -14,19 +14,8 @@
   <anchor role="helpid" id="projectWizardContextId">Creating a Project</anchor>
   <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
   <anchor role="helpid" id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
-  <para>
-    You can write tests for Windows AUTs that use the .NET
-    framework when you select the toolkit <emphasis>concrete</emphasis> or
-    <emphasis>win</emphasis> in the Project properties. The win and concrete
-    toolkits actually contain the same actions as each other.
-  </para>
-  <para>
-    When you select <emphasis>win</emphasis> as the Project toolkit, the
-    library Project <emphasis>unbound_modules_concrete</emphasis> is
-    automatically reused in your Project. The actions in this
-    library are described in the reference manual.
-  </para>
   
+  <xi:include href="sectionIntroDotNetAUT.xml"/>
   <xi:include href="sectionSupportedWindowsAUTs.xml"/>
   <xi:include href="sectionInformationSupportWindowsAUTs.xml"/>
   <xi:include href="sectionInformationWinFormsAUTs.xml"/>

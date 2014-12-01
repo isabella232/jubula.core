@@ -14,19 +14,8 @@
   <anchor role="helpid" id="projectWizardContextId">Creating a Project</anchor>
   <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
   <anchor role="helpid" id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
-  <para>
-    You can write tests for JavaFX AUTs when you select the
-    toolkit <emphasis>concrete</emphasis> or <emphasis>JavaFX</emphasis> in the Project
-    properties. The JavaFX and concrete toolkits actually contain the
-    same actions as each other.
-  </para>
-  <para>
-    When you select JavaFX as the Project toolkit, the library
-    Project <emphasis>unbound_modules_concrete</emphasis> is automatically
-    reused in your Project. The actions in this library are
-    described in the reference manual.
-  </para>
   
+  <xi:include href="sectionIntroJavaFXAUT.xml"/>
   <xi:include href="sectionDesignForTestabilityInJavaFX.xml"/>
   <xi:include href="sectionInformationOnTheSupportForJavaFXAUTs.xml"/>
   

@@ -1,0 +1,42 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section id="intro-metrics" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Introduction to metrics</title>
+  <para>
+    The Analysis framework lets you run metrics on your Project. In
+    the current version, three example metrics are included which can
+    be run on the whole Project or on parts of it.
+  </para>
+  <para>
+    The analyses and metrics can either be run for the whole Project,
+    or for specific contexts within the Project.
+  </para>
+  <para>
+    To run a metric or analysis for the whole Project, select the
+    metric or analysis you want to perform from the toolbar button.
+  </para>
+  <para>
+    To run a metric or analysis for a specific context, select the context you require (e.g. the top node in the Test Case Browser to perform the metric or analysis just for items within this browser) and then select:
+    
+    <para>
+      <emphasis role="menuPath">Analyze</emphasis>
+    </para>
+      
+    from the context menu, selecting the required option to run.
+  </para>
+  <para>
+    Once a metric or analysis has run, the results are shown in the
+    Search Result View.
+  </para>
+  <para>
+    The following metrics and analyses are available:
+  </para>
+</section>

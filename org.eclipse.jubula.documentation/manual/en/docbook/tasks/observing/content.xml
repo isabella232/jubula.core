@@ -13,17 +13,8 @@
   <title>Observing Test Cases</title>
   <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
   <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
-  <para>
-    The ITE offers an <emphasis>Observation Mode</emphasis> to help
-    you get started with your tests. For more information on using the
-    Observation Mode and best practices for writing tests, please read
-    the following sections.
-  </para>
-  <para>
-    <para role="tip">The Observation Mode only supports Java (Swing, SWT/RCP)
-    AUTs. GEF components in RCP AUTs cannot be observed.</para>
-  </para>
   
+  <xi:include href="sectionIntroObservationMode.xml"/>
   <xi:include href="sectionTipsAndTricksObservationMode.xml"/>
   <xi:include href="sectionStartingObserving.xml"/>
   <xi:include href="sectionObservingTestsInJavaAUTs.xml"/>

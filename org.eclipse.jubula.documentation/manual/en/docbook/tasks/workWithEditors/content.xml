@@ -13,14 +13,8 @@
   <title>Working with editors: opening, adding/deleting/renaming
   items, commenting, adding descriptions, extracting and replacing, reverting
   changes</title>
-  <para>
-    The editors for Test Cases, Test Suites and Test Jobs all let you
-    work in a similar way in the ITE. When you are working in an
-    editor, the Properties View, Data Sets View and Component Names
-    View on the right hand side of the screen contain information
-    about the selected item.
-  </para>
   
+  <xi:include href="sectionIntroEditors.xml"/>
   <xi:include href="sectionOpeningItemsInEditors.xml"/>
   <xi:include href="sectionAddingItemsToEditors.xml"/>
   <xi:include href="sectionDeletingItemsFromEditors.xml"/>

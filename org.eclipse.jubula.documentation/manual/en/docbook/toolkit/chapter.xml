@@ -11,11 +11,8 @@
                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="toolkit"?>
   <title>Toolkit-specific information</title>
-  <para>
-    This chapter contains information testing AUTs written in the
-    various supported toolkits.
-  </para>
   
+  <xi:include href="chapterIntro/content.xml"/>
   <xi:include href="swingAUT/content.xml"/>
   <xi:include href="rcpAUT/content.xml"/>
   <xi:include href="gefTest/content.xml"/>

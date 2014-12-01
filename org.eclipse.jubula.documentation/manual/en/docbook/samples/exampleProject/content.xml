@@ -11,13 +11,8 @@
                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="exapleProject"?>
   <title>The structure of the example Project</title>
-  <para>
-    The Project contains a variety of Test Cases and Test Suites. The
-    Test Cases are grouped according to which AUT they test, and are
-    also further grouped into categories corresponding to individual
-    tests.
-  </para>
   
+  <xi:include href="sectionIntroExampleProject.xml"/>
   <xi:include href="sectionReusedProjects.xml"/>
   <xi:include href="sectionCategories.xml"/>
   

@@ -11,43 +11,8 @@
                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="samples"?>
   <title>Samples: example tests</title>
-  <para>
-    The aim of this chapter is to present several tests highlighting
-    some features. The following applications under test (AUTs) will be
-    used:
-  </para>
-  <variablelist>
-    <varlistentry>
-      <term>
-        SimpleAdder
-      </term>
-      <listitem>
-        <para>
-           A simple calculator tool, <emphasis>Adder</emphasis>. This
-          tool is available as a Swing AUT, a JavaFX AUT, an SWT AUT and
-          as a HTML AUT. 
-        </para>
-      </listitem>
-    </varlistentry>
-    <varlistentry>
-      <term>
-        DVDTool
-      </term>
-      <listitem>
-        <para>
-          A DVD organization tool, <emphasis>DVD Manager</emphasis>.
-          With this Swing tool, film categories can be added and
-          browsed, and DVD’s and various details about each DVD can be
-          entered.
-        </para>
-      </listitem>
-    </varlistentry>
-  </variablelist>
-  <para>
-    <para role="tip">If you want to use these AUTs to try out your own tests, you
-    can find them under <emphasis>jubula/examples/AUTs</emphasis>.</para>
-  </para>
   
+  <xi:include href="chapterIntro/content.xml"/>
   <xi:include href="preparedProject/content.xml"/>
   <xi:include href="exampleProject/content.xml"/>
   <xi:include href="adder/content.xml"/>
