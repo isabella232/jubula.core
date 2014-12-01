@@ -262,7 +262,8 @@ public class WidgetTester extends AbstractUITester {
     public void rcPopupSelectByIndexPath(
             int xPos, String xUnits, int yPos, String yUnits, 
             String indexPath, int button) throws StepExecutionException {
-        AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
+        AbstractMenuTester popup = getWidgetAdapter()
+                .showPopup(xPos, xUnits, yPos, yUnits, button);
         popup.selectMenuItemByIndexpath(indexPath);
     }
     
