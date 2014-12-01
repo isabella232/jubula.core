@@ -219,19 +219,23 @@
 	<section id="creating-an-container-adapter">
 		<title>Creating an container adapter</title>
 		<para>
-			This is a JavaFX exclusiv way to extend the funtionality of Jubula. You
-			can use this extension mechanism to make components "mappable" that are
-			normaly not, e.g. components which a part of a controls skin.
+			This is a JavaFX exclusive way to extend the functionality of Jubula. You
+            can use this extension mechanism to make components "mappable" that are
+            normally not, e.g. components which are part of the skin of a control.
 		</para>
 		<para>
 			The approach is very similar to creating an adapter. Just create an
-			Adapter Factory and an Adapter Class like it is described there. The
-			Type you create this Adapter Class for has to be the direct parent
-			Node of the component which you want to map. For example ListCell, if
-			you want to map the graphic Node of a cell in a ListView. Your 
-			Adapter Class has to implement the interface <emphasis>IContainerAdapter</emphasis>.
-			This Interface defines the method getContent, the return value of this
-			method should be the components you wish to map.
+            Adapter Factory and an Adapter Class like it is described in the 
+            corresponding chapter. You have to create this adapter class for the type
+            of the direct parent node from the component which you wish to map. For 
+            example, if you want to map the graphic node of a cell in a ListView, the
+            type would be ListCell.
+			</para>
+			<para>
+            Additionally, your Adapter Class has to implement the interface 
+            <emphasis>IContainerAdapter</emphasis>. This Interface defines the method 
+            getContent, the return value of this method should be a list of the 
+            components you wish to map.
 		</para>
 	</section>
   </section>
