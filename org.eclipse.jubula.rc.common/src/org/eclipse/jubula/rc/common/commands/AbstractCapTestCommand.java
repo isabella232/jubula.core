@@ -221,22 +221,23 @@ public abstract class AbstractCapTestCommand implements ICommand {
      * {@inheritDoc}
      */
     public Message execute() {
-        final int oldMode = AUTServer.getInstance().getMode();
+        AUTServer autServer = AUTServer.getInstance();
+        final int oldMode = autServer.getMode();
         TestErrorEvent event = null;
         CAPTestResponseMessage response = new CAPTestResponseMessage();
         if (oldMode != ChangeAUTModeMessage.TESTING) {
-            AUTServer.getInstance().setMode(ChangeAUTModeMessage.TESTING);
+            autServer.setMode(ChangeAUTModeMessage.TESTING);
         } 
         try {
-            response.setMessageCap(m_capTestMessage.getMessageCap());
+            MessageCap messageCap = m_capTestMessage.getMessageCap();
+            response.setMessageCap(messageCap);
         
             // get the implementation class
             Object implClass = getImplClass(response);
             if (implClass == null) {
                 return response;
             }
-            MethodInvoker invoker = new MethodInvoker(m_capTestMessage
-                .getMessageCap());
+            MethodInvoker invoker = new MethodInvoker(messageCap);
             Object returnValue = invoker.invoke(implClass);
             response.setReturnValue((String)returnValue);
         } catch (NoSuchMethodException nsme) {
@@ -271,8 +272,8 @@ public abstract class AbstractCapTestCommand implements ICommand {
         } catch (MethodParamException e) {
             LOG.error(e.getLocalizedMessage(), e);
         } finally {
-            if (AUTServer.getInstance().getMode() != oldMode) {
-                AUTServer.getInstance().setMode(oldMode);
+            if (autServer.getMode() != oldMode) {
+                autServer.setMode(oldMode);
             }
         }
         if (event != null) {
