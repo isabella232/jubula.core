@@ -63,6 +63,7 @@ public class ExportObjectMappingHandler extends AbstractHandler {
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
+        m_map.clear();
         IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
         if (activePart instanceof ObjectMappingMultiPageEditor) {
             final ObjectMappingMultiPageEditor omEditor = 
