@@ -32,7 +32,6 @@ import javax.swing.CellRendererPane;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.Validate;
@@ -63,6 +62,7 @@ import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 
 
 /**
@@ -474,7 +474,10 @@ public class RobotAwtImpl implements IRobot {
                 m_robot.mouseMove(mouseMove[i].x, mouseMove[i].y);
                 m_eventFlusher.flush();
             }
-
+            if (EnvironmentUtils.isMacOS()) {
+                // Workaround for bug http://bugs.eclipse.org/444471
+                RobotTiming.sleepPostMouseDownDelay(); 
+            }
             if (confirmer != null) {
                 confirmer.waitToConfirm(component, 
                         new MouseMovedAwtEventMatcher());
