@@ -15,6 +15,12 @@
    <feature url="features/org.eclipse.jubula.feature.api.source_3.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.source" version="3.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
+   <feature url="features/org.eclipse.jubula.feature.api.core_3.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.core" version="3.0.0.qualifier">
+      <category name="org.eclipse.test"/>
+   </feature>
+   <feature url="features/org.eclipse.jubula.feature.api.core.source_3.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.core.source" version="3.0.0.qualifier">
+      <category name="org.eclipse.test"/>
+   </feature>
    <feature url="features/org.eclipse.jubula.feature.api.converter_3.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.converter" version="3.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>

@@ -9,61 +9,10 @@
 		<version>3.0.0-SNAPSHOT</version>
 		<relativePath>../org.eclipse.jubula.releng.client</relativePath>
 	</parent>
-	<artifactId>org.eclipse.jubula.feature.api</artifactId>
+	<artifactId>org.eclipse.jubula.feature.api.core</artifactId>
 	<packaging>eclipse-feature</packaging>
 	<build>
 		<plugins>
-			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>lib</id>
-						<phase>process-sources</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>lib</outputDirectory>
-							<overWriteReleases>true</overWriteReleases>
-							<overWriteSnapshots>false</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-							<excludeTransitive>false</excludeTransitive>
-							<stripVersion>true</stripVersion>
-						</configuration>
-					</execution>
-					<execution>
-						<id>m2-repo</id>
-						<phase>process-sources</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>m2-repo</outputDirectory>
-							<overWriteReleases>true</overWriteReleases>
-							<overWriteSnapshots>false</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-							<excludeTransitive>false</excludeTransitive>
-							<useRepositoryLayout>true</useRepositoryLayout>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.4.1</version>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>lib</directory>
-							<followSymlinks>false</followSymlinks>
-						</fileset>
-						<fileset>
-							<directory>m2-repo</directory>
-							<followSymlinks>false</followSymlinks>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-source-feature-plugin</artifactId>
@@ -79,11 +28,9 @@
 							<excludes>
 								<!-- ID of the non-source bundle(s) to exclude from the generated 
 									source feature -->
-								<plugin id="javax.xml" />
-								<plugin id="javax.xml.stream" />
-								<plugin id="org.xmlpull" />
-								<plugin id="org.eclipse.osgi" />
-								<plugin id="com.thoughtworks.xstream" />
+								<plugin id="org.apache.commons.lang" />
+								<plugin id="org.apache.commons.codec" />
+								<plugin id="org.slf4j.api" />
 							</excludes>
 						</configuration>
 					</execution>
