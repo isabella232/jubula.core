@@ -109,8 +109,8 @@ public class ClickSwtEventMatcher extends DefaultSwtEventMatcher {
                     return true;
                 }
             }
-            // checks if the component is visible (= in hierarchy conatiner)
-            // and if the key-released event occured
+            // checks if the component is visible (= in hierarchy container)
+            // and if the key-released event occurred
             if ((ComponentHandler.getAutHierarchy().getHierarchyContainer(
                     (Widget)graphicsComponent) == null)
                 && (m_clickOptions.getClickType() == ClickOptions.ClickType
