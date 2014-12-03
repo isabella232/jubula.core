@@ -79,10 +79,8 @@
 							<excludes>
 								<!-- ID of the non-source bundle(s) to exclude from the generated 
 									source feature -->
-								<plugin id="javax.xml" />
 								<plugin id="javax.xml.stream" />
 								<plugin id="org.xmlpull" />
-								<plugin id="org.eclipse.osgi" />
 								<plugin id="com.thoughtworks.xstream" />
 							</excludes>
 						</configuration>
