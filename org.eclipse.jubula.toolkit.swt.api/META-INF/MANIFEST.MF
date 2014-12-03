@@ -7,10 +7,10 @@ Bundle-Vendor: Eclipse Jubula
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
-Export-Package: org.eclipse.jubula.toolkit.swt.config,
+Export-Package: org.eclipse.jubula.toolkit.swt,
  org.eclipse.jubula.toolkit.swt.components,
- org.eclipse.jubula.toolkit.swt.internal.impl,
- org.eclipse.jubula.toolkit.swt
+ org.eclipse.jubula.toolkit.swt.config,
+ org.eclipse.jubula.toolkit.swt.internal.impl;x-friends:="org.eclipse.jubula.toolkit.rcp.api"
 Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
  org.eclipse.jdt.annotation;bundle-version="[1.1.0,2.0.0)",
  org.eclipse.jubula.toolkit.api;bundle-version="[3.0.0,3.1.0)",
