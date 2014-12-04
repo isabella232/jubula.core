@@ -29,8 +29,6 @@ import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
 import org.eclipse.jubula.toolkit.base.components.TextComponent;
 import org.eclipse.jubula.toolkit.base.components.TextInputComponent;
-import org.eclipse.jubula.toolkit.concrete.components.Application;
-import org.eclipse.jubula.toolkit.concrete.components.MenuBarComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
@@ -47,7 +45,7 @@ public class SimpleAdder {
     /** AUT-Agent host name to use */
     public static final String AGENT_HOST = "localhost"; //$NON-NLS-1$
     /** AUT-Agent port to use */
-    public static final int AGENT_PORT = 5051;
+    public static final int AGENT_PORT = 60000;
     /** the value1 */
     private static TextInputComponent value1;
     /** the value2 */
