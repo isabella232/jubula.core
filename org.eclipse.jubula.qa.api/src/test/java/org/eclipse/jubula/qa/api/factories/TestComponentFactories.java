@@ -225,13 +225,13 @@ public class TestComponentFactories {
         CAP cap2 = table.checkEditabilityOfSelectedCell(true);
         Assert.assertNotNull(cap2);
         CAP cap3 = table.checkEditabilitySpecifyCell(
-                true, "2", TEST, "1", TEST); //$NON-NLS-1$ //$NON-NLS-2$
+                true, "2", Operator.equals, "1", Operator.equals); //$NON-NLS-1$ //$NON-NLS-2$
         Assert.assertNotNull(cap3);
         CAP cap4 = table.checkExistenceOfValueInColumn(
-                "2", TEST, "2", TEST, SearchType.absolute, false);  //$NON-NLS-1$//$NON-NLS-2$
+                "2", Operator.equals, "2", Operator.equals, SearchType.absolute, false);  //$NON-NLS-1$//$NON-NLS-2$
         Assert.assertNotNull(cap4);
         CAP cap5 = table.checkExistenceOfValueInRow(
-                "1", TEST, "3", TEST, SearchType.absolute, true);    //$NON-NLS-1$//$NON-NLS-2$
+                "1", Operator.equals, "3", Operator.equals, SearchType.absolute, true);    //$NON-NLS-1$//$NON-NLS-2$
         Assert.assertNotNull(cap5);
         CAP cap6 = table.checkSelectionOfCheckboxAtMousePosition(true);
         Assert.assertNotNull(cap6);
@@ -254,7 +254,6 @@ public class TestComponentFactories {
      */
     @Test
     public void testTableActions() {
-        String operator = "equals"; //$NON-NLS-1$
         String column = "1"; //$NON-NLS-1$
         String row = "2"; //$NON-NLS-1$
         ComponentIdentifier identifier = 
@@ -263,30 +262,34 @@ public class TestComponentFactories {
                 .createTableComponent(identifier);
         Assert.assertNotNull(table);
         CAP cap9 = table.checkTextSpecifyCell(
-                TEST, operator, row, operator, column, operator);
+                TEST, Operator.equals, row, Operator.equals, column,
+                Operator.equals);
         Assert.assertNotNull(cap9);
         CAP cap15 = table.dropOnCellFromRow(
-                row, operator, TEST, operator, SearchType.relative, 1000);
+                row, Operator.equals, TEST, Operator.equals,
+                SearchType.relative, 1000);
         Assert.assertNotNull(cap15);
         CAP cap16 = table.inputTextSpecifyCell(
-                TEST, row, operator, column, operator);
+                TEST, row, Operator.equals, column, Operator.equals);
         Assert.assertNotNull(cap16);
         CAP cap17 = table.move(
                 Direction.down, 2, 2, 50, Unit.percent, 
                 50, Unit.percent, BinaryChoice.yes);
         Assert.assertNotNull(cap17);
         CAP cap18 = table.selectCell(
-                row, operator, column, operator, 3,
+                row, Operator.equals, column, Operator.equals, 3,
                 50, Unit.percent, 50, Unit.percent, 
                 BinaryChoice.yes, InteractionMode.secondary);
         Assert.assertNotNull(cap18);
         CAP cap19 = table.selectValueFromColumn(
-                column, operator, TEST, operator, 1, BinaryChoice.yes,
-                SearchType.relative, InteractionMode.secondary);
+                column, Operator.equals, TEST, Operator.equals, 1,
+                BinaryChoice.yes, SearchType.relative,
+                InteractionMode.secondary);
         Assert.assertNotNull(cap19);
         CAP cap20 = table.selectValueFromRow(
-                row, operator, TEST, operator, 4, BinaryChoice.yes,
-                SearchType.relative, InteractionMode.secondary);
+                row, Operator.equals, TEST, Operator.equals, 4,
+                BinaryChoice.yes, SearchType.relative,
+                InteractionMode.secondary);
         Assert.assertNotNull(cap20);
         CAP cap21 = table.toggleCheckboxAtMousePosition();
         Assert.assertNotNull(cap21);
@@ -297,7 +300,6 @@ public class TestComponentFactories {
      * test table drag and drop
      */
     public void testTableDragAndDrop() {
-        String operator = "equals"; //$NON-NLS-1$
         String column = "1"; //$NON-NLS-1$
         String row = "2"; //$NON-NLS-1$
         ComponentIdentifier identifier = 
@@ -307,23 +309,26 @@ public class TestComponentFactories {
         Assert.assertNotNull(table);
         CAP cap10 = table.dragCell(
                 InteractionMode.secondary, Modifier.values(), 
-                row, operator, row, operator, 50,
+                row, Operator.equals, row, Operator.equals, 50,
                 Unit.percent, 50, Unit.percent);
         Assert.assertNotNull(cap10);
         CAP cap11 = table.dragCellFromColumn(
                 InteractionMode.secondary, Modifier.values(), 
-                column, operator, TEST, operator, SearchType.relative);
+                column, Operator.equals, TEST, Operator.equals,
+                SearchType.relative);
         Assert.assertNotNull(cap11);
         CAP cap12 = table.dragCellFromRow(
                 InteractionMode.secondary, Modifier.values(), 
-                row, operator, TEST, operator, SearchType.relative);
+                row, Operator.equals, TEST, Operator.equals,
+                SearchType.relative);
         Assert.assertNotNull(cap12);
         CAP cap13 = table.dropOnCell(
-                row, operator, column, operator, 50,
+                row, Operator.equals, column, Operator.equals, 50,
                 Unit.percent, 50, Unit.percent, 1000);
         Assert.assertNotNull(cap13);
         CAP cap14 = table.dropOnCellFromColumn(
-                column, operator, TEST, operator, SearchType.relative, 1000);
+                column, Operator.equals, TEST, Operator.equals,
+                SearchType.relative, 1000);
         Assert.assertNotNull(cap14);
     }
     /**
