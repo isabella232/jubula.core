@@ -59,6 +59,9 @@ ComponentNamesBP componentNamesBP = ComponentNamesBP.getInstance();
 CompNamesBP compNamesBP = new CompNamesBP();
 List<String> compIdentifierNames = new ArrayList<String>();
 boolean definesLocalCheckFailedHandling = false;
+boolean definesLocalActionErrorHandling = false;
+boolean definesLocalCompNotFoundHandling = false;
+boolean definesLocalConfigurationErrorHandling = false;
 
 String fqName = info.getFqName();
 String packageName = info.getPackageName();
@@ -195,12 +198,27 @@ public class <%=className%> {
         ITestSuitePO ts = (ITestSuitePO)node;
         Map<String, Integer> defaultEventHandlers = ts.getDefaultEventHandler();
         boolean suppressCheckFailedDefault = false;
+        boolean suppressActionErrorDefault = false;
+        boolean suppressCompNotFoundDefault = false;
+        boolean suppressConfigurationErrorDefault = false;
         for (String handler : defaultEventHandlers.keySet()) {
             try {
                 if (handler.equals(TestErrorEvent.ID.VERIFY_FAILED)
                         && ReentryProperty.getProperty(defaultEventHandlers.get(handler))
                             == ReentryProperty.CONTINUE) {
                     suppressCheckFailedDefault = true;
+                } else if (handler.equals(TestErrorEvent.ID.ACTION_ERROR)
+                        && ReentryProperty.getProperty(defaultEventHandlers.get(handler))
+                            == ReentryProperty.CONTINUE) {
+                    suppressActionErrorDefault = true;
+                } else if (handler.equals(TestErrorEvent.ID.COMPONENT_NOT_FOUND)
+                        && ReentryProperty.getProperty(defaultEventHandlers.get(handler))
+                            == ReentryProperty.CONTINUE) {
+                    suppressCompNotFoundDefault = true;
+                } else if (handler.equals(TestErrorEvent.ID.CONFIGURATION_ERROR)
+                        && ReentryProperty.getProperty(defaultEventHandlers.get(handler))
+                            == ReentryProperty.CONTINUE) {
+                    suppressConfigurationErrorDefault = true;
                 }
             } catch (InvalidDataException e) {
                 Plugin.getDefault().writeErrorLineToConsole(
@@ -211,7 +229,7 @@ public class <%=className%> {
     private RuntimeContext rtc;
     
     public <%=className%> (AUT _aut) {
-        rtc = new RuntimeContext(_aut, <%=suppressCheckFailedDefault%>);
+        rtc = new RuntimeContext(_aut, <%=suppressCheckFailedDefault%>, <%=suppressActionErrorDefault%>, <%=suppressCompNotFoundDefault%>, <%=suppressConfigurationErrorDefault%>);
     }
     <%} else {%>
     public <%=className%> () {
@@ -259,12 +277,41 @@ public class <%=className%> {
         
         rtc.doNotIgnoreCheckFailed();
                     <%}
-                    definesLocalCheckFailedHandling = true;%>
+                    definesLocalCheckFailedHandling = true;
+                } else if (eventType.equals(TestErrorEvent.ID.ACTION_ERROR)) {
+                    if (reentryProp.equals(ReentryProperty.CONTINUE.toString())) {%>
         
-        try {
-                <%}
+        rtc.beginIgnoreActionError();
+                    <%} else {%>
+        
+        rtc.doNotIgnoreActionError();
+                    <%}
+                    definesLocalActionErrorHandling = true;
+                } else if (eventType.equals(TestErrorEvent.ID.COMPONENT_NOT_FOUND)) {
+                    if (reentryProp.equals(ReentryProperty.CONTINUE.toString())) {%>
+        
+        rtc.beginIgnoreCompNotFound();
+                    <%} else {%>
+        
+        rtc.doNotIgnoreCompNotFound();
+                    <%}
+                    definesLocalCompNotFoundHandling = true;
+                } else if (eventType.equals(TestErrorEvent.ID.CONFIGURATION_ERROR)) {
+                    if (reentryProp.equals(ReentryProperty.CONTINUE.toString())) {%>
+        
+        rtc.beginIgnoreConfigurationError();
+                    <%} else {%>
+        
+        rtc.doNotIgnoreConfigurationError();
+                    <%}
+                    definesLocalConfigurationErrorHandling = true;
+                }
             }
         }%>
+        
+        <%if (node instanceof ISpecTestCasePO) {%>
+        try {
+        <%}%>
 <%
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // 
@@ -526,10 +573,9 @@ public class <%=className%> {
             <%}%>
         <%}%>
         
-        <%if (definesLocalCheckFailedHandling) {%>
-        
+        <%if (node instanceof ISpecTestCasePO) {%>
         } finally {
-          rtc.endLocalEventHandling();
+          rtc.endLocalEventHandling(<%=definesLocalCheckFailedHandling%>, <%=definesLocalActionErrorHandling%>, <%=definesLocalCompNotFoundHandling%>, <%=definesLocalConfigurationErrorHandling%>);
         }
         <%}%>
         

@@ -17,7 +17,10 @@ import java.util.Stack;
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.ObjectMapping;
+import org.eclipse.jubula.client.exceptions.ActionException;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
+import org.eclipse.jubula.client.exceptions.ComponentNotFoundException;
+import org.eclipse.jubula.client.exceptions.ConfigurationException;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.client.exceptions.ExecutionExceptionHandler;
 import org.eclipse.jubula.tools.ComponentIdentifier;
@@ -32,32 +35,82 @@ public class RuntimeContext {
     private static Logger log = LoggerFactory
             .getLogger(RuntimeContext.class);
     
-    private static class CheckFailedExecutionHandler 
+    private static class ContinueExecutionHandler 
         implements ExecutionExceptionHandler {
         /** nesting level counter */
-        private Stack<Boolean> m_stack = new Stack<Boolean>();
+        private Stack<Boolean> m_checkFailedStack = new Stack<Boolean>();
+        /** nesting level counter */
+        private Stack<Boolean> m_actionErrorStack = new Stack<Boolean>();
+        /** nesting level counter */
+        private Stack<Boolean> m_compNotFoundStack = new Stack<Boolean>();
+        /** nesting level counter */
+        private Stack<Boolean> m_configurationErrorStack = new Stack<Boolean>();
 
         /**
-         * @param defaultHandling
+         * @param suppressCheckFailedDefault
          *            whether to suppress CheckFailedExceptions by default
+         * @param suppressActionErrorDefault
+         *            whether to suppress ActionErrorsExceptions by default
+         * @param suppressCompNotFoundDefault
+         *            whether to suppress CompNotFoundsExceptions by default
+         * @param suppressConfigurationErrorDefault
+         *            whether to suppress ConfigurationErrors by default
          */
-        public CheckFailedExecutionHandler(Boolean defaultHandling) {
-            getStack().push(defaultHandling);
+        public ContinueExecutionHandler(Boolean suppressCheckFailedDefault,
+                boolean suppressActionErrorDefault,
+                boolean suppressCompNotFoundDefault,
+                boolean suppressConfigurationErrorDefault) {
+            getCheckFailedStack().push(suppressCheckFailedDefault);
+            getActionErrorStack().push(suppressActionErrorDefault);
+            getCompNotFoundStack().push(suppressCompNotFoundDefault);
+            getConfigurationErrorStack().push(suppressConfigurationErrorDefault);
         }    
         
         /** special handling supports ignoring of check failed exceptions */
         public void handle(ExecutionException arg0) throws ExecutionException {
-            if ((arg0 instanceof CheckFailedException) && getStack().peek()) {
+            if ((arg0 instanceof CheckFailedException)
+                    && getCheckFailedStack().peek()) {
+                return;
+            } else if ((arg0 instanceof ActionException)
+                    && getActionErrorStack().peek()) {
+                return;
+            } else if ((arg0 instanceof ComponentNotFoundException)
+                    && getCompNotFoundStack().peek()) {
+                return;
+            }
+            if ((arg0 instanceof ConfigurationException)
+                    && getConfigurationErrorStack().peek()) {
                 return;
             }
             throw arg0;
         }
 
         /**
-         * @return the stack
+         * @return the checkFailedStack
          */
-        public Stack<Boolean> getStack() {
-            return m_stack;
+        public Stack<Boolean> getCheckFailedStack() {
+            return m_checkFailedStack;
+        }
+
+        /**
+         * @return the actionErrorStack
+         */
+        public Stack<Boolean> getActionErrorStack() {
+            return m_actionErrorStack;
+        }
+
+        /**
+         * @return the compNotFoundStack
+         */
+        public Stack<Boolean> getCompNotFoundStack() {
+            return m_compNotFoundStack;
+        }
+
+        /**
+         * @return the configurationErrorStack
+         */
+        public Stack<Boolean> getConfigurationErrorStack() {
+            return m_configurationErrorStack;
         }
     }
     
@@ -68,18 +121,28 @@ public class RuntimeContext {
     private ObjectMapping om;
 
     /** the event handler for this runtime context */
-    private CheckFailedExecutionHandler m_eventHandler;
+    private ContinueExecutionHandler m_eventHandler;
 
     /**
      * @param aut
      *            the AUT
      * @param suppressCheckFailedDefault
      *            whether to suppress CheckFailedExceptions by default
+     * @param suppressActionErrorDefault
+     *            whether to suppress ActionErrorsExceptions by default
+     * @param suppressCompNotFoundDefault
+     *            whether to suppress CompNotFoundsExceptions by default
+     * @param suppressConfigurationErrorDefault
+     *            whether to suppress ConfigurationErrors by default
      */
-    public RuntimeContext(AUT aut, boolean suppressCheckFailedDefault) {
+    public RuntimeContext(AUT aut, boolean suppressCheckFailedDefault,
+            boolean suppressActionErrorDefault,
+            boolean suppressCompNotFoundDefault,
+            boolean suppressConfigurationErrorDefault) {
         setAUT(aut);
-        m_eventHandler = new CheckFailedExecutionHandler(
-                suppressCheckFailedDefault);
+        m_eventHandler = new ContinueExecutionHandler(
+                suppressCheckFailedDefault, suppressActionErrorDefault,
+                suppressCompNotFoundDefault, suppressConfigurationErrorDefault);
         aut.setHandler(m_eventHandler);
         
         // load object mapping - hint: feel free to adjust
@@ -116,39 +179,158 @@ public class RuntimeContext {
         return om.get(name);
     }
     
+    /* **************************************************
+     * Handling of CheckFailedExceptions
+     * ************************************************** */
+    
+    /**
+     * @return the current event stack
+     */
+    private Stack<Boolean> getCheckFailedStack() {
+        return m_eventHandler.getCheckFailedStack();
+    }
+    
     /**
      * Begins local ignoring of
      * {@link org.eclipse.jubula.client.exceptions.CheckFailedException}.
      * 
-     * Call {@link org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext.endLocalEventHandling()}
+     * Call {@link org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext.endLocalEventHandling(true, ?, ?, ?)}
      * to end the scope.
      */
     public void beginIgnoreCheckFailed() {
-        getEventStack().push(true);
-    }
-
-    /**
-     * @return the current event stack
-     */
-    private Stack<Boolean> getEventStack() {
-        return m_eventHandler.getStack();
-    }
-
-    /**
-     * Ends the scope of local event handling and restores previous state.
-     */
-    public void endLocalEventHandling() {
-        getEventStack().pop();
+        getCheckFailedStack().push(true);
     }
     
     /**
      * Begins local respecting of
      * {@link org.eclipse.jubula.client.exceptions.CheckFailedException}.
      * 
-     * Call {@link org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext.endLocalEventHandling()}
+     * Call {@link org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext.endLocalEventHandling(true, ?, ?, ?)}
      * to end the scope.
      */
     public void doNotIgnoreCheckFailed() {
-        getEventStack().push(false);
+        getCheckFailedStack().push(false);
+    }
+    
+    /* **************************************************
+     * Handling of ActionErrors
+     * ************************************************** */
+    
+    /**
+     * @return the current event stack for handling action errors
+     */
+    private Stack<Boolean> getActionErrorStack() {
+        return m_eventHandler.getActionErrorStack();
+    }
+    
+    /**
+     * Begins local ignoring of
+     * {@link org.eclipse.jubula.client.exceptions.ActionException}.
+     * 
+     * Call {@link org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext.endLocalEventHandling(?, true, ?, ?)}
+     * to end the scope.
+     */
+    public void beginIgnoreActionError() {
+        getActionErrorStack().push(true);
+    }
+    
+    /**
+     * Begins local respecting of
+     * {@link org.eclipse.jubula.client.exceptions.ActionException}.
+     * 
+     * Call {@link org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext.endLocalEventHandling(?, true, ?, ?)}
+     * to end the scope.
+     */
+    public void doNotIgnoreActionError() {
+        getActionErrorStack().push(false);
+    }
+    
+    /* **************************************************
+     * Handling of ComponentNotFoundExceptions
+     * ************************************************** */
+    
+    /**
+     * @return the current event stack
+     */
+    private Stack<Boolean> getCompNotFoundStack() {
+        return m_eventHandler.getCompNotFoundStack();
+    }
+    
+    /**
+     * Begins local ignoring of
+     * {@link org.eclipse.jubula.client.exceptions.ComponentNotFoundException}.
+     * 
+     * Call {@link org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext.endLocalEventHandling(?, ?, true, ?)}
+     * to end the scope.
+     */
+    public void beginIgnoreCompNotFound() {
+        getCompNotFoundStack().push(true);
+    }
+    
+    /**
+     * Begins local respecting of
+     * {@link org.eclipse.jubula.client.exceptions.ComponentNotFoundException}.
+     * 
+     * Call {@link org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext.endLocalEventHandling(?, ?, true, ?)}
+     * to end the scope.
+     */
+    public void doNotIgnoreCompNotFound() {
+        getCompNotFoundStack().push(false);
+    }
+    
+    /* **************************************************
+     * Handling of CheckFailedExceptions
+     * ************************************************** */
+    
+    /**
+     * @return the current event stack
+     */
+    private Stack<Boolean> getConfigurationErrorStack() {
+        return m_eventHandler.getConfigurationErrorStack();
+    }
+    
+    /**
+     * Begins local ignoring of
+     * {@link org.eclipse.jubula.client.exceptions.ComponentNotFoundException}.
+     * 
+     * Call {@link org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext.endLocalEventHandling(?, ?, ?, true)}
+     * to end the scope.
+     */
+    public void beginIgnoreConfigurationError() {
+        getConfigurationErrorStack().push(true);
+    }
+    
+    /**
+     * Begins local respecting of
+     * {@link org.eclipse.jubula.client.exceptions.ComponentNotFoundException}.
+     * 
+     * Call {@link org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext.endLocalEventHandling(?, ?, ?, true)}
+     * to end the scope.
+     */
+    public void doNotIgnoreConfigurationError() {
+        getConfigurationErrorStack().push(false);
+    }
+
+    /* **************************************************
+     * Handling of ending of local event handling
+     * ************************************************** */
+    
+    /**
+     * Ends the scope of local event handling and restores previous state.
+     */
+    public void endLocalEventHandling(boolean checkFailed, boolean actionError,
+            boolean compNotFound, boolean configurationError) {
+        if (checkFailed) {
+            getCheckFailedStack().pop();
+        }
+        if (actionError) {
+            getActionErrorStack().pop();
+        }
+        if (compNotFound) {
+            getCompNotFoundStack().pop();
+        }
+        if (configurationError) {
+            getConfigurationErrorStack().pop();
+        }
     }
 }
