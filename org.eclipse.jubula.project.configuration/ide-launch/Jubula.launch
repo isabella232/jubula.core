@@ -28,7 +28,6 @@
 <setEntry value="org.eclipse.e4.rcp:default"/>
 <setEntry value="org.eclipse.emf.common:default"/>
 <setEntry value="org.eclipse.emf.ecore:default"/>
-<setEntry value="org.eclipse.epp.mpc:default"/>
 <setEntry value="org.eclipse.help:default"/>
 <setEntry value="org.eclipse.jubula.feature:default"/>
 <setEntry value="org.eclipse.mylyn.bugzilla_feature:default"/>
