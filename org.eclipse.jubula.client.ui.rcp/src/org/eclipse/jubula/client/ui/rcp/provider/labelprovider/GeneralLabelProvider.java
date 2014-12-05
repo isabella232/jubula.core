@@ -220,7 +220,9 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                 prefix = INACTIVE_PREFIX;
             }
             
-            if (node.getName() == null) {
+            if (node instanceof IRefTestSuitePO) {
+                name = getText((IRefTestSuitePO)node);
+            } else if (node.getName() == null) {
                 name = UNNAMED_NODE;
             } else if (node instanceof ICapPO) {
                 name = getText((ICapPO)node);
@@ -228,9 +230,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                 name = getText((IExecTestCasePO)node);
             } else if (node instanceof ISpecTestCasePO) {
                 name = getText((ISpecTestCasePO)node);
-            } else if (node instanceof IRefTestSuitePO) {
-                name = getText((IRefTestSuitePO)node);
-            } else {
+            }  else {
                 name = node.getName();
             }
             
@@ -420,10 +420,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                 String testCaseName = testCase != null 
                         ? testCase.getName() 
                         : StringUtils.EMPTY;
-                nameBuilder.append(StringConstants.SPACE)
-                    .append(StringConstants.LEFT_PARENTHESES)
-                    .append(testCaseName)
-                    .append(StringConstants.RIGHT_PARENTHESES);
+                appendSpecName(nameBuilder, testCaseName);
             }
             
         } else {
@@ -431,9 +428,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             String testCaseName = testCase != null 
                     ? testCase.getName() 
                     : StringUtils.EMPTY;
-            nameBuilder.append(StringConstants.LEFT_INEQUALITY_SING)
-                .append(testCaseName)
-                .append(StringConstants.RIGHT_INEQUALITY_SING); 
+            createSpecName(nameBuilder, testCaseName); 
         }
 
         nameBuilder.append(getParameterString(testCaseRef));
@@ -511,13 +506,50 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     private static String getText(IRefTestSuitePO testSuitRef) {
         StringBuilder nameBuilder = new StringBuilder();
         
-        String testSuitRefName = testSuitRef != null 
-                ? testSuitRef.getName() 
-                : StringUtils.EMPTY;
-        nameBuilder.append(StringConstants.LEFT_INEQUALITY_SING)
-            .append(testSuitRefName)
-            .append(StringConstants.RIGHT_INEQUALITY_SING); 
-    
+        String refName = testSuitRef.getName();
+
+        if (!StringUtils.isBlank(refName)) {
+            nameBuilder.append(refName);
+            if (Plugin.getDefault().getPreferenceStore().getBoolean(
+                    Constants.SHOWORIGINALNAME_KEY)) {
+                ITestSuitePO testSuite = testSuitRef.getTestSuite();
+                String testSuiteName = testSuite != null
+                        ? testSuite.getName()
+                        : StringUtils.EMPTY;
+                appendSpecName(nameBuilder, testSuiteName);
+            }
+
+        } else {
+            String testSuiteRefName = testSuitRef != null ? testSuitRef
+                    .getTestSuite().getName() : UNNAMED_NODE;
+            createSpecName(nameBuilder, testSuiteRefName);
+
+        }
         return nameBuilder.toString();
+    }
+
+    /**
+     * helper method to have same appearance for TS and TC
+     * @param nameBuilder {@link StringBuilder} where the name should be appended
+     * @param refName ref TC or TS string
+     */
+    private static void createSpecName(StringBuilder nameBuilder,
+            String refName) {
+        nameBuilder.append(StringConstants.LEFT_INEQUALITY_SING)
+                .append(refName)
+                .append(StringConstants.RIGHT_INEQUALITY_SING);
+    }
+
+    /**
+     * helper method to have same appearance for TS and TC
+     * @param nameBuilder {@link StringBuilder} where the name should be appended
+     * @param specName spec TC or TS string
+     */
+    private static void appendSpecName(StringBuilder nameBuilder,
+            String specName) {
+        nameBuilder.append(StringConstants.SPACE)
+            .append(StringConstants.LEFT_PARENTHESES)
+            .append(specName)
+            .append(StringConstants.RIGHT_PARENTHESES);
     }
 }

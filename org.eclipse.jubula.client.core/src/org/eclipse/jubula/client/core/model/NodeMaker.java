@@ -350,7 +350,7 @@ public abstract class NodeMaker {
      * @return a reference to the TS
      */
     public static IRefTestSuitePO createRefTestSuitePO(ITestSuitePO ts) {
-        return new RefTestSuitePO(ts.getName(), ts.getGuid(), null);
+        return new RefTestSuitePO(null, ts.getGuid(), null);
     }
 
      /**

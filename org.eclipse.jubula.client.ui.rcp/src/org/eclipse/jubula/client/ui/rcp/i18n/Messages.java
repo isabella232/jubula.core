@@ -631,6 +631,7 @@ public class Messages extends NLS {
     public static String RefreshTSBrowserActionProgressMessage;
     public static String RefTestSuiteGUIPropertySourceAutIdName;
     public static String RefTestSuiteGUIPropertySourceRefTSName;
+    public static String RefTestSuiteGUIPropertySourceSpecTSName;
     public static String ReplaceTestCasesActionDialog;
     public static String ReplaceMultiTCRWizardActionDialog;
     public static String ReplaceMultiTCRWizardQuestionDeselect;

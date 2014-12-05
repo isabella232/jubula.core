@@ -40,9 +40,13 @@ import org.eclipse.ui.views.properties.TextPropertyDescriptor;
  */
 public class RefTestSuiteGUIPropertySource 
         extends AbstractNodePropertySource {
-    /** Constant for the String Specification Name */
+    /** Constant for the String reference Name */
     private static final String P_REF_TS_DISPLAY_NAME = 
         Messages.RefTestSuiteGUIPropertySourceRefTSName;
+
+    /** Constant for the String Specification Name */
+    private static final String P_SPEC_TS_DISPLAY_NAME =
+            Messages.RefTestSuiteGUIPropertySourceSpecTSName;
 
     /**
      * <code>P_AUT_ID_DISPLAY_NAME</code>
@@ -58,6 +62,9 @@ public class RefTestSuiteGUIPropertySource
 
     /** cached property descriptor for name */
     private IPropertyDescriptor m_namePropDesc = null;
+
+    /** cached property descriptor for name */
+    private IPropertyDescriptor m_specNameDesc = null;
 
     /**
      * @param reftestsuiteGui
@@ -101,6 +108,14 @@ public class RefTestSuiteGUIPropertySource
                     new ElementNameController(), P_REF_TS_DISPLAY_NAME);
         }
         addPropertyDescriptor(m_namePropDesc);
+        
+        if (m_specNameDesc == null) {
+            JBPropertyDescriptor specNameDesc = new JBPropertyDescriptor(
+                    new SpecNameController(), P_SPEC_TS_DISPLAY_NAME);
+            specNameDesc.setLabelProvider(new DisabledLabelProvider());
+            m_specNameDesc = specNameDesc;
+        }
+        addPropertyDescriptor(m_specNameDesc);
         super.initPropDescriptor();
         
         // Task ID
@@ -193,6 +208,39 @@ public class RefTestSuiteGUIPropertySource
          */
         public Image getImage() {
             return DEFAULT_IMAGE;
+        }
+    }
+    
+    /**
+     * Class to control the name of the depending SpecTestCasePO.
+     * @author BREDEX GmbH
+     * @created 23.02.2005
+     */
+    protected class SpecNameController extends AbstractPropertyController {
+
+        /**
+         * {@inheritDoc}
+         */
+        public boolean setProperty(Object value) {
+            // do nothing, read only
+            return true;
+        }                
+        /**
+         * {@inheritDoc}
+         */
+        public Object getProperty() {
+            IRefTestSuitePO exTc = (IRefTestSuitePO) getPoNode();
+            if (exTc.getTestSuite() != null) {
+                return exTc.getTestSuite().getName();
+            }
+            return StringConstants.EMPTY;
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public Image getImage() {
+            return READONLY_IMAGE;
         }
     }
 }
