@@ -8,7 +8,7 @@
 		<relativePath>../org.eclipse.jubula.releng</relativePath>
 	</parent>
 	<groupId>org.eclipse.jubula.qa</groupId>
-	<artifactId>org.eclipse.jubula.qa.rcp.api</artifactId>
+	<artifactId>org.eclipse.jubula.qa.api.rcp</artifactId>
 
 	<repositories>
 		<repository>
