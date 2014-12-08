@@ -114,6 +114,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
                     @Override
                     public String call() throws Exception {
+                        scrollNodeToVisible(node);
                         List<? extends TreeCell> tCells = ComponentHandler
                                 .getAssignableFrom(TreeCell.class);
                         for (TreeCell<?> cell : tCells) {
@@ -137,8 +138,12 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                     @Override
                     public Boolean call() throws Exception {
                         TreeItem<?> item = (TreeItem<?>) node;
-                        return item.isExpanded()
-                                && ((TreeView<?>) getTree()).isVisible();
+                        TreeItem<?> parent = item.getParent();
+                        if (parent != null) {
+                            return parent.isExpanded()
+                                    && ((TreeView<?>) getTree()).isVisible();
+                        }
+                        return ((TreeView<?>) getTree()).isVisible();
                     }
                 });
 
