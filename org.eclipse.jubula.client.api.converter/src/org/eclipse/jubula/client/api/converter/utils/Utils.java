@@ -10,13 +10,20 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.api.converter.utils;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
+import org.eclipse.jubula.client.api.converter.NodeInfo;
 import org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException;
+import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
@@ -275,5 +282,70 @@ public class Utils {
         for (ITestDataCategoryPO cat : root.getCategoryChildren()) {
             fillCTDSList(cat, list);
         }
+    }
+    
+    /**
+     * Returns a list of component identifier names needed for instantiation
+     * of an exec test case
+     * @param componentNamesBP component names business process
+     * @param compNamesBP comp names business process
+     * @param exec the exec test case
+     * @return the list
+     */
+    public static List<String> determineCompIdentifierList(
+            ComponentNamesBP componentNamesBP, CompNamesBP compNamesBP,
+            IExecTestCasePO exec) {
+        List<ICompNamesPairPO> childCompNamePairs = compNamesBP
+                .getAllCompNamesPairs(exec);
+        Iterator<ICompNamesPairPO> childCompNamePairsIterator =
+                childCompNamePairs.iterator();
+        List<String> childCompIdentifierNames = new ArrayList<String>();
+        while (childCompNamePairsIterator.hasNext()) {
+            ICompNamesPairPO pair = childCompNamePairsIterator.next();
+            String compIdentifierName = componentNamesBP.getName(
+                    pair.getSecondName());
+            if (StringUtils.isBlank(compIdentifierName)) {
+                continue;
+            }
+            if (pair.isPropagated()) {
+                childCompIdentifierNames.add(compIdentifierName);
+            } else {
+                childCompIdentifierNames.add("rtc.getIdentifier(\"" + compIdentifierName + "\")"); //$NON-NLS-1$ //$NON-NLS-2$
+            }
+        }
+        return childCompIdentifierNames;
+    }
+    
+    /**
+     * Classifies whether a child belonging to a given NodeInfo object
+     * can be imported into its using class
+     * @param className the class' name
+     * @param classesToImport list of classes to import
+     * @param duplicateClasses list of classes which cannot be imported
+     * @param childInfo the NodeInfo object for the child
+     */
+    public static void classifyImport(String className,
+            List<NodeInfo> classesToImport, List<NodeInfo> duplicateClasses,
+            NodeInfo childInfo) {
+        if (childInfo.getClassName().equals(className)) {
+            duplicateClasses.add(childInfo);
+            return;
+        }
+        for (NodeInfo duplicate : duplicateClasses) {
+            if (duplicate.getClassName().equals(childInfo.getClassName())) {
+                return;
+            }
+        }
+        for (NodeInfo classToImport : classesToImport) {
+            if (classToImport.getClassName().equals(childInfo.getClassName())) {
+                if (classToImport == childInfo) {
+                    return;
+                }
+                classesToImport.remove(classToImport);
+                duplicateClasses.add(classToImport);
+                return;
+            }
+        }
+        classesToImport.add(childInfo);
     }
 }

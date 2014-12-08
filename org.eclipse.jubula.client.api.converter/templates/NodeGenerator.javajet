@@ -90,6 +90,10 @@ package <%=packageName%>;
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.api.converter.annotations.SrcNode;
 import org.eclipse.jubula.client.api.converter.annotations.NodeType;
+import org.eclipse.jubula.client.exceptions.ActionException;
+import org.eclipse.jubula.client.exceptions.CheckFailedException;
+import org.eclipse.jubula.client.exceptions.ComponentNotFoundException;
+import org.eclipse.jubula.client.exceptions.ConfigurationException;
 import org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext;
 import org.eclipse.jubula.toolkit.enums.ValueSets.*;
 import org.eclipse.jubula.tools.ComponentIdentifier;
@@ -113,27 +117,18 @@ childInspection: while (childIterator.hasNext()) {
         ITestSuitePO testSuite = ref.getTestSuite();
         childInfo = uuidToNodeInfoMap.get(testSuite.getGuid());
     }
-    if (childInfo.getClassName().equals(className)) {
-        duplicateClasses.add(childInfo);
-        continue childInspection;
-    }
-    for (NodeInfo duplicate : duplicateClasses) {
-        if (duplicate.getClassName().equals(childInfo.getClassName())) {
-            continue childInspection;
+    Utils.classifyImport(className, classesToImport, duplicateClasses, childInfo);
+}
+if (node instanceof ISpecTestCasePO) {
+    ISpecTestCasePO tc = (ISpecTestCasePO) node;
+    for (IEventExecTestCasePO eventTC : tc.getAllEventEventExecTC()) {
+        String eventType = eventTC.getEventType();
+        ReentryProperty reentryProp = eventTC.getReentryProp();
+        if (reentryProp.equals(ReentryProperty.RETURN)) {
+            NodeInfo childInfo = uuidToNodeInfoMap.get(eventTC.getSpecTestCase().getGuid());
+            Utils.classifyImport(className, classesToImport, duplicateClasses, childInfo);
         }
     }
-    for (NodeInfo classToImport : classesToImport) {
-        if (classToImport.getClassName().equals(childInfo.getClassName())) {
-            if (classToImport == childInfo) {
-                continue childInspection;
-            } else {
-                classesToImport.remove(classToImport);
-                duplicateClasses.add(classToImport);
-                continue childInspection;
-            }
-        }
-    }
-    classesToImport.add(childInfo);
 }
 for (NodeInfo nodeInfo : classesToImport) {
     String fqChildName = nodeInfo.getFqName();%>
@@ -429,22 +424,9 @@ public class <%=className%> {
                 // about spec from global map containing all such information                
                 NodeInfo specInfo = uuidToNodeInfoMap.get(spec.getGuid());
                 testCaseName = classesToImport.contains(specInfo) ? specInfo.getClassName() : specInfo.getFqName();
-                List<ICompNamesPairPO> childCompNamePairs = compNamesBP.getAllCompNamesPairs(exec);
-                Iterator<ICompNamesPairPO> childCompNamePairsIterator = childCompNamePairs.iterator();
-                List<String> childCompIdentifierNames = new ArrayList<String>();
-                // Determine which component identifiers the child needs to be instanciated
-                while (childCompNamePairsIterator.hasNext()) {
-                    ICompNamesPairPO pair = childCompNamePairsIterator.next();
-                    String compIdentifierName = componentNamesBP.getName(pair.getSecondName());
-                    if (StringUtils.isBlank(compIdentifierName)) {
-                        continue;
-                    }
-                    if (pair.isPropagated()) {
-                        childCompIdentifierNames.add(compIdentifierName);
-                    } else {
-                        childCompIdentifierNames.add("rtc.getIdentifier(\"" + compIdentifierName + "\")");
-                    }
-                }
+                // Determine which component identifiers of the child need to be instanciated
+                List<String> childCompIdentifierNames = Utils.determineCompIdentifierList(
+                        componentNamesBP, compNamesBP, exec);
                 Iterator<String> childCompIdentifierNamesIterator = childCompIdentifierNames.iterator();                
                 Iterator<IParamDescriptionPO> childParamIterator;
                 // Determine whether the child uses central test data
@@ -572,13 +554,6 @@ public class <%=className%> {
         
             <%}%>
         <%}%>
-        
-        <%if (node instanceof ISpecTestCasePO) {%>
-        } finally {
-          rtc.endLocalEventHandling(<%=definesLocalCheckFailedHandling%>, <%=definesLocalActionErrorHandling%>, <%=definesLocalCompNotFoundHandling%>, <%=definesLocalConfigurationErrorHandling%>);
-        }
-        <%}%>
-        
 <%
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // 
@@ -586,20 +561,63 @@ public class <%=className%> {
 // 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 %>
-        <%if (node instanceof ISpecTestCasePO) {
+        
+        <%if (node instanceof ISpecTestCasePO) {%>
+        
+        }
+        
+        <%
             ISpecTestCasePO tc = (ISpecTestCasePO) node;
+            Map<String, String> reentryPropertyToException = new HashMap<String, String>();
+            reentryPropertyToException.put(TestErrorEvent.ID.VERIFY_FAILED, "CheckFailedException");
+            reentryPropertyToException.put(TestErrorEvent.ID.ACTION_ERROR, "ActionException");
+            reentryPropertyToException.put(TestErrorEvent.ID.COMPONENT_NOT_FOUND, "ComponentNotFoundException");
+            reentryPropertyToException.put(TestErrorEvent.ID.CONFIGURATION_ERROR, "ConfigurationException");
             for (IEventExecTestCasePO eventTC : tc.getAllEventEventExecTC()) {
-                    String eventType = eventTC.getEventType();
-                    String reentryProp = eventTC.getReentryProp().toString();
-                    String eventHandlerName = StringConstants.EMPTY;
-                    String referenceName = eventTC.getRealName();
-                    boolean hasReferenceName = StringUtils.isNotBlank(referenceName);
-                    ISpecTestCasePO specEventHandler = eventTC.getSpecTestCase();
-                    NodeInfo ehInfo = uuidToNodeInfoMap.get(specEventHandler.getGuid());
-                    eventHandlerName = Utils.getFullyQualifiedTranslatedName(specEventHandler, packageBase, ehInfo.getProjectName());
-                    Iterator<IParamDescriptionPO> childParamIterator;
-                    IParameterInterfacePO dataCube = eventTC.getReferencedDataCube();%>
-        // Hint: This test case used Event Handler which you have to replace manually:
+                String eventType = eventTC.getEventType();
+                String reentryProp = eventTC.getReentryProp().toString();
+                String referenceName = eventTC.getRealName();
+                boolean hasReferenceName = StringUtils.isNotBlank(referenceName);
+                NodeInfo ehInfo = uuidToNodeInfoMap.get(eventTC.getSpecTestCase().getGuid());
+                String eventHandlerName = classesToImport.contains(ehInfo) ? ehInfo.getClassName() : ehInfo.getFqName();
+                Iterator<IParamDescriptionPO> childParamIterator;
+                IParameterInterfacePO dataCube = eventTC.getReferencedDataCube();
+                
+                if (eventTC.getReentryProp().equals(ReentryProperty.RETURN)) {
+                    // Determine which component identifiers of the child need to be instanciated
+                    List<String> childCompIdentifierNames = Utils.determineCompIdentifierList(
+                        componentNamesBP, compNamesBP, eventTC);
+                    Iterator<String> childCompIdentifierNamesIterator = childCompIdentifierNames.iterator();                
+                %>
+        
+        catch (<%=reentryPropertyToException.get(eventType)%> e) {
+                    <%
+                    int rowCount = eventTC.getDataManager().getDataSetCount();
+                        int row = 0;
+                        do {%>
+            new <%=eventHandlerName%>(rtc<%if (childCompIdentifierNamesIterator.hasNext()) {%>,<%}%>
+            <%while (childCompIdentifierNamesIterator.hasNext()) {
+                String childCompIdentifierName = childCompIdentifierNamesIterator.next();%>
+                    <%=childCompIdentifierName%><%if (childCompIdentifierNamesIterator.hasNext()) {%>,<%}%>
+            <%}%>
+                ).execute(
+                            <%childParamIterator = eventTC.getParameterListIter();
+                            while (childParamIterator.hasNext()) {
+                                IParamDescriptionPO param = childParamIterator.next();
+                                String paramValue = ParamUtils.getValueForParam(eventTC, param, row, locale);%>
+                        <%=paramValue%>
+                        
+                        <%if(childParamIterator.hasNext()){%>,<%}%>
+                            <%}%>
+                            <%row++;%>
+                        );
+                        <%} while(row < rowCount);%>
+            return;
+        }
+                <%} else if (eventTC.getReentryProp().equals(ReentryProperty.CONTINUE)) {
+                    continue;
+                } else {%>
+        // TODO: This test case used Event Handler which you have to replace manually:
         //       Event Type: <%=eventType%>
         //       Re-Entry Property: <%=reentryProp%>
         //       Used Test Case: <%if (hasReferenceName) {%><%=referenceName%><%}%>
@@ -616,7 +634,14 @@ public class <%=className%> {
                           <%row++;%>
         //            );
                       <%} while(row < rowCount);
+                }
             }
         }%>
+        
+        <%if (node instanceof ISpecTestCasePO) {%>
+        finally {
+          rtc.endLocalEventHandling(<%=definesLocalCheckFailedHandling%>, <%=definesLocalActionErrorHandling%>, <%=definesLocalCompNotFoundHandling%>, <%=definesLocalConfigurationErrorHandling%>);
+        }
+        <%}%>
     }
 }
