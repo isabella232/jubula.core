@@ -404,17 +404,13 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     protected void name(JavaFXHierarchyContainer hierarchyContainer) {
         final JavaFXComponent comp = hierarchyContainer.getComponent();
         String compName;
-        Object component;
         Object realComponent = comp.getRealComponent();
         if (realComponent instanceof Node) {
-            component = realComponent;
-            compName = ((Node) component).getId();
+            compName = ((Node) realComponent).getId();
         } else if (realComponent instanceof MenuItem) {
-            component = realComponent;
-            compName = ((MenuItem) component).getId();
+            compName = ((MenuItem) realComponent).getId();
         } else {
             compName = null;
-            component = realComponent;
         }
         // Because stages don't have a list of children we can't include the
         // relationship between stages in the hierarchy. Therefore this
@@ -440,10 +436,9 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
         }
         JavaFXHierarchyContainer hierParent = (JavaFXHierarchyContainer) 
                 hierarchyContainer.getPrnt();
-
         if (hierarchyContainer.getName() != null
                 && hierarchyContainer.getName().length() != 0
-                && !(hierarchyContainer.getName().equals("null"))) { //$NON-NLS-1$
+                && !(hierarchyContainer.getName().trim().isEmpty())) {
             // In extra if, for logging purposes
             if (isUniqueName(hierParent, hierarchyContainer.getName(),
                     hierarchyContainer)) {
@@ -453,19 +448,20 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
                         + "even though there was already a name!"); //$NON-NLS-1$
             }
         }
-        // isUniqueName is null safe, see description there
         int count = 0;
         String originalName = null;
         String newName = null;
         boolean newNameGenerated = (compName == null);
-        if (compName != null) {
+        if (compName != null 
+                && !(compName.isEmpty())
+                && !(compName.trim().isEmpty())) {
             originalName = compName;
             newName = compName;
         }
         if (newName == null) {
             while (!isUniqueName(hierParent, newName, hierarchyContainer)) {
                 count++;
-                newName = createName(component, count);
+                newName = createName(realComponent, count);
             }
         } else {
             while (!isUniqueName(hierParent, newName, hierarchyContainer)) {
