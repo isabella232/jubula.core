@@ -221,21 +221,25 @@
 		<para>
 			This is a JavaFX exclusive way to extend the functionality of Jubula. You
             can use this extension mechanism to make components "mappable" that are
-            normally not, e.g. components which are part of the skin of a control.
+            normally not, e.g. components which are part of the skin of a control. 
+            With the container extension mechanism you are able to add the possibility
+            of mapping such components. But to keep the user experience in the 
+            object mapping like it is designed, such an extension has to be very 
+            specific.
 		</para>
 		<para>
 			The approach is very similar to creating an adapter. Just create an
             Adapter Factory and an Adapter Class like it is described in the 
-            corresponding chapter. You have to create this adapter class for the type
-            of the direct parent node from the component which you wish to map. For 
-            example, if you want to map the graphic node of a cell in a ListView, the
-            type would be ListCell.
+            corresponding chapter. You have to create this Adapter Class for the type
+            of the direct parent node from the component which you wish to map to declare 
+            it to be a container. For example, if you want to map some content of a cell
+            in a ListView, the type would be ListCell. 
 			</para>
 			<para>
             Additionally, your Adapter Class has to implement the interface 
-            <emphasis>IContainerAdapter</emphasis>. This Interface defines the method 
-            getContent, the return value of this method should be a list of the 
-            components you wish to map.
+            <emphasis>IContainerAdapter</emphasis>. You have to implement the method 
+            <emphasis>getContent</emphasis> and return a list of the components which 
+            you wish to map.
 		</para>
 	</section>
   </section>
