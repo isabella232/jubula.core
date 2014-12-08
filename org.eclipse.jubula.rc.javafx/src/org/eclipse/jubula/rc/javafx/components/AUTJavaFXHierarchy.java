@@ -22,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.components.AUTComponent;
@@ -452,9 +453,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
         String originalName = null;
         String newName = null;
         boolean newNameGenerated = (compName == null);
-        if (compName != null 
-                && !(compName.isEmpty())
-                && !(compName.trim().isEmpty())) {
+        if (!StringUtils.isBlank(compName)) {
             originalName = compName;
             newName = compName;
         }
