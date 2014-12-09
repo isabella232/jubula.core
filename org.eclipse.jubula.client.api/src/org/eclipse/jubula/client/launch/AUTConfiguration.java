@@ -15,13 +15,17 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
+ * Representing the configuration information used to launch an
+ * {@link org.eclipse.jubula.client.AUT AUT}.
+ * 
  * @author BREDEX GmbH
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface AUTConfiguration {
     /**
-     * @return a map of launch information
+     * @return a unmodifiable map of information used to launch the
+     *         {@link org.eclipse.jubula.client.AUT AUT}
      */
     @NonNull
     Map<String, String> getLaunchInformation();
