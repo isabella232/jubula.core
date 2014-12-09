@@ -46,7 +46,10 @@ public class HTMLAUTConfiguration extends AbstractOSAUTConfiguration {
      * @param autID
      *            the AUT ID
      * @param workingDir
-     *            the working directory
+     *            the working directory for the AUT process. If a relative path
+     *            is given the base path is relative to the process working
+     *            directory of the connected
+     *            {@link org.eclipse.jubula.client.AUTAgent AUTAgent}
      * @param sURL
      *            the URL to open
      * @param browser

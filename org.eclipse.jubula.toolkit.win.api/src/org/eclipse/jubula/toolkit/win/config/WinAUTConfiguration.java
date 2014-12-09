@@ -18,9 +18,9 @@ import org.eclipse.jubula.toolkit.base.config.AbstractOSProcessAUTConfiguration;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
 
-/** 
- *  @author BREDEX GmbH 
- *  @noextend This class is not intended to be extended by clients.
+/**
+ * @author BREDEX GmbH
+ * @noextend This class is not intended to be extended by clients.
  */
 public class WinAUTConfiguration extends AbstractOSProcessAUTConfiguration {
     /**
@@ -33,18 +33,18 @@ public class WinAUTConfiguration extends AbstractOSProcessAUTConfiguration {
      * @param command
      *            the command
      * @param workingDir
-     *            the working directory
+     *            the working directory for the AUT process. If a relative path
+     *            is given the base path is relative to the process working
+     *            directory of the connected
+     *            {@link org.eclipse.jubula.client.AUTAgent AUTAgent}
      * @param args
      *            the arguments
      */
-    public WinAUTConfiguration(
-            @Nullable String name, 
-            @NonNull String autID,
-            @NonNull String command, 
-            @NonNull String workingDir,
+    public WinAUTConfiguration(@Nullable String name, @NonNull String autID,
+            @NonNull String command, @NonNull String workingDir,
             @Nullable String[] args) {
         super(name, autID, command, workingDir, args, Locale.getDefault());
-        
+
         // Toolkit specific information
         add(ToolkitConstants.ATTR_TOOLKITID, CommandConstants.WIN_TOOLKIT);
     }

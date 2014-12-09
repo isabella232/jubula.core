@@ -33,7 +33,10 @@ public class JavaFXAUTConfiguration extends AbstractOSProcessAUTConfiguration {
      * @param command
      *            the command
      * @param workingDir
-     *            the working directory
+     *            the working directory for the AUT process. If a relative path
+     *            is given the base path is relative to the process working
+     *            directory of the connected
+     *            {@link org.eclipse.jubula.client.AUTAgent AUTAgent}
      * @param args
      *            the arguments
      * @param locale

@@ -21,8 +21,9 @@ import org.eclipse.jdt.annotation.Nullable;
 public abstract class AbstractOSAUTConfiguration extends
         AbstractAUTConfiguration {
     /** the dir */
-    @NonNull private String m_workingDir;
-    
+    @NonNull
+    private String m_workingDir;
+
     /**
      * Constructor
      * 
@@ -31,12 +32,15 @@ public abstract class AbstractOSAUTConfiguration extends
      * @param autID
      *            the AUT ID
      * @param workingDir
-     *            the working directory
+     *            the working directory for the AUT process. If a relative path
+     *            is given the base path is relative to the process working
+     *            directory of the connected
+     *            {@link org.eclipse.jubula.client.AUTAgent AUTAgent}
      */
     public AbstractOSAUTConfiguration(@Nullable String name,
             @NonNull String autID, @NonNull String workingDir) {
         super(name, autID);
-        
+
         Validate.notEmpty(workingDir, "The working directory must not be empty"); //$NON-NLS-1$
         m_workingDir = workingDir;
     }
