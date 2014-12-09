@@ -38,6 +38,8 @@ package <%=packageName%>;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jubula.qa.api.converter.target.rcp.VariableStore;
+
 public class <%=className%> {
 
 <%for (ITestDataCubePO testCube : testCubes) {%>

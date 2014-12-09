@@ -35,12 +35,9 @@ public class ParamUtils {
     /** Pattern for detecting parameters like C:/Users/={USER}/workspace */
     private static Pattern oneParameter = Pattern.compile(
             "^(.*)=\\{?([a-zA-Z0-9_]+)\\}?(.*)"); //$NON-NLS-1$
-    
-    /** Pattern for detecting parameters like =PARAM1 =PARAM2 */
-    private static Pattern multipleParameters = Pattern.compile(".*=.*=.*"); //$NON-NLS-1$
-    
-    /** Pattern for detecting variables like $VAR */
-    private static Pattern variable = Pattern.compile(".*\\$.*"); //$NON-NLS-1$
+
+    /** Pattern for detecting multiple variables like /dir/$USER/workspace */
+    private static Pattern variable = Pattern.compile("(.*)\\$\\{?([a-zA-Z0-9_]+)\\}?(.*)"); //$NON-NLS-1$
     
     /** Pattern for detecting functions like ?add(1,2) */
     private static Pattern function = Pattern.compile(".*\\?[a-zA-Z_]+\\(.*?"); //$NON-NLS-1$
@@ -73,12 +70,12 @@ public class ParamUtils {
             value = "null // TODO: <code>null</code> found as test data - check and fix in ITE"; //$NON-NLS-1$
         } else {
             value = executeEscapes(value);
-            if (multipleParameters.matcher(value).matches()) {
-                return "null // TODO: Avoid / replace parameter / literal concatenation: \"" //$NON-NLS-1$
-                        + value + "\""; //$NON-NLS-1$
-            } else if (variable.matcher(value).matches()) {
-                return "null // TODO: Avoid / replace variable value usage: \"" //$NON-NLS-1$
-                        + value + "\" "; //$NON-NLS-1$
+            if (variable.matcher(value).matches()) {
+                while (variable.matcher(value).matches()) {
+                    value = value.replaceAll(variable.pattern(),
+                            "$1\" + VariableStore.getInstance().getValue(\"$2\") + \"$3"); //$NON-NLS-1$
+                }
+                value = "\"" + value + "\""; //$NON-NLS-1$ //$NON-NLS-2$
             } else if (function.matcher(value).matches()) {
                 return "null // TODO: Function usage - call a corresponding method instead of this ITE function: \"" //$NON-NLS-1$
                         + value + "\" "; //$NON-NLS-1$
@@ -87,13 +84,14 @@ public class ParamUtils {
             } else if (simpleParameter.matcher(value).matches()) {
                 value = value.replaceAll(simpleParameter.pattern(), "$1"); //$NON-NLS-1$
             } else if (oneParameter.matcher(value).matches()) {
-                value = value.replaceAll(oneParameter.pattern(),
-                        "\"$1\" + $2 + \"$3\""); //$NON-NLS-1$
-            } else if (paramType.equals(TestDataConstants.STR) ) {
+                while (oneParameter.matcher(value).matches()) {
+                    value = value.replaceAll(oneParameter.pattern(),
+                            "$1\" + $2 + \"$3"); //$NON-NLS-1$
+                }
+                value = "\"" + value + "\""; //$NON-NLS-1$ //$NON-NLS-2$
+            } else if (paramType.equals(TestDataConstants.STR)
+                    || paramType.equals(TestDataConstants.VARIABLE)) {
                 value = StringConstants.QUOTE + value + StringConstants.QUOTE;
-            } else if (paramType.equals(TestDataConstants.VARIABLE) ) {
-                value = "null // TODO: Potential variable assignment: " //$NON-NLS-1$
-                        + value + ""; //$NON-NLS-1$
             } else if (StringUtils.isEmpty(value)) {
                 value = "null // TODO: no test data found - check and fix in ITE"; //$NON-NLS-1$
             }

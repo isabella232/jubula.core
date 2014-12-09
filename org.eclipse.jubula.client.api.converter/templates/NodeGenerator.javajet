@@ -62,7 +62,7 @@ boolean definesLocalCheckFailedHandling = false;
 boolean definesLocalActionErrorHandling = false;
 boolean definesLocalCompNotFoundHandling = false;
 boolean definesLocalConfigurationErrorHandling = false;
-
+boolean definesLocalEventHandling = false;
 String fqName = info.getFqName();
 String packageName = info.getPackageName();
 String ctdsPath = Utils.getProjectPath(info.getPackageBasePath(), info.getProjectName());
@@ -95,8 +95,11 @@ import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.exceptions.ComponentNotFoundException;
 import org.eclipse.jubula.client.exceptions.ConfigurationException;
 import org.eclipse.jubula.qa.api.converter.target.rcp.RuntimeContext;
+import org.eclipse.jubula.qa.api.converter.target.rcp.VariableStore;
 import org.eclipse.jubula.toolkit.enums.ValueSets.*;
 import org.eclipse.jubula.tools.ComponentIdentifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import <%=ctdsPath%>.CTDS;
 
@@ -149,10 +152,12 @@ import <%=fqChildName%>;
 @SrcNode(UUID = "<%=uuid%>",
          type = NodeType.<%=nodeType%><%if (hasTaskId) {%>, taskId = "<%=taskId%>"<%}%>)
 public class <%=className%> {
+
+    /** the logger */
+    private static Logger log = LoggerFactory.getLogger(<%=className%>.class);
     
     <%if (node instanceof ISpecTestCasePO) {%>
     private RuntimeContext rtc;
-    
         <%
         // Create list of component identifiers which are needed for constructing this test case.
         // This component identifiers will be members of this class.
@@ -302,9 +307,13 @@ public class <%=className%> {
                     definesLocalConfigurationErrorHandling = true;
                 }
             }
-        }%>
+        }
+        definesLocalEventHandling =
+                definesLocalCheckFailedHandling | definesLocalActionErrorHandling |
+                definesLocalCompNotFoundHandling | definesLocalConfigurationErrorHandling;
+        %>
         
-        <%if (node instanceof ISpecTestCasePO) {%>
+        <%if (definesLocalEventHandling) {%>
         try {
         <%}%>
 <%
@@ -562,9 +571,11 @@ public class <%=className%> {
 /////////////////////////////////////////////////////////////////////////////////////////////////
 %>
         
-        <%if (node instanceof ISpecTestCasePO) {%>
+        <%if (definesLocalEventHandling) {%>
         
         }
+        <%}%>
+        <%if (node instanceof ISpecTestCasePO) {%>
         
         <%
             ISpecTestCasePO tc = (ISpecTestCasePO) node;
@@ -591,6 +602,7 @@ public class <%=className%> {
                 %>
         
         catch (<%=reentryPropertyToException.get(eventType)%> e) {
+            log.debug("Exception during test execution", e);
                     <%
                     int rowCount = eventTC.getDataManager().getDataSetCount();
                         int row = 0;
@@ -612,7 +624,6 @@ public class <%=className%> {
                             <%row++;%>
                         );
                         <%} while(row < rowCount);%>
-            return;
         }
                 <%} else if (eventTC.getReentryProp().equals(ReentryProperty.CONTINUE)) {
                     continue;
@@ -638,7 +649,7 @@ public class <%=className%> {
             }
         }%>
         
-        <%if (node instanceof ISpecTestCasePO) {%>
+        <%if (definesLocalEventHandling) {%>
         finally {
           rtc.endLocalEventHandling(<%=definesLocalCheckFailedHandling%>, <%=definesLocalActionErrorHandling%>, <%=definesLocalCompNotFoundHandling%>, <%=definesLocalConfigurationErrorHandling%>);
         }
