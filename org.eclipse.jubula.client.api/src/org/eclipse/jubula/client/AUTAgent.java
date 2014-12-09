@@ -61,7 +61,7 @@ public interface AUTAgent extends Remote {
      * @param information
      *            the information about the toolkit
      * @return an AUT - note: currently the underlying implementation only
-     *         supports <b>ONE</b> connection at a time to a remote running AUT;
+     *         supports <b>ONE</b> connection at a time to a remotely running AUT;
      *         multiple connections may only be established sequentially!
      * @throws CommunicationException
      *             in case of communication problems with the remote side

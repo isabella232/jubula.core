@@ -13,7 +13,10 @@ package org.eclipse.jubula.client.exceptions;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.Result;
 
-/** @author BREDEX GmbH */
+/**
+ * Base class for all exceptions happening when executing {@link org.eclipse.jubula.communication.CAP CAPs} 
+ * @author BREDEX GmbH 
+ */
 public abstract class ExecutionException extends RuntimeException {
     /** the result */
     private Result m_result;

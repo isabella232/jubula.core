@@ -11,10 +11,10 @@
 package org.eclipse.jubula.communication;
 
 /**
- * CAPs are executed remotely on the {@link org.eclipse.jubula.client.AUT}<br>
- * <b>C</b>: {@link org.eclipse.jubula.tools.ComponentIdentifier} <br>
- * <b>A</b>: Action <br>
- * <b>P</b>: Parameter <br>
+ * CAPs are executed remotely on the {@link org.eclipse.jubula.client.AUT AUT}<br>
+ * <b>C</b>: {@link org.eclipse.jubula.tools.ComponentIdentifier Component} to address <br>
+ * <b>A</b>: Action to perform<br>
+ * <b>P</b>: Parameter to use <br>
  * 
  * @author BREDEX GmbH
  * @created 13.10.2014

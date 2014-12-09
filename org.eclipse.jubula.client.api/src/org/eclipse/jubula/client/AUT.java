@@ -18,13 +18,18 @@ import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.tools.AUTIdentifier;
 
 /**
+ * Instances of this class represent a (remotely) running instance of an AUT.
+ * This <b>A</b>pplication <b>U</b>nder <b>T</b>est may either be started internally via an
+ * {@link org.eclipse.jubula.client.launch.AUTConfiguration AUTConfiguration} or
+ * externally by using autrun.
+ * 
  * @author BREDEX GmbH
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface AUT extends Remote {
     /**
-     * @return the AUTIdentifier of this AUT
+     * @return the identifier for this AUT
      */
     AUTIdentifier getIdentifier();
 

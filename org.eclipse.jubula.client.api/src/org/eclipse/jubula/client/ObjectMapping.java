@@ -14,7 +14,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.tools.ComponentIdentifier;
 
 /**
- * Class for retrieving component identifier
+ * Responsible for retrieving
+ * {@link org.eclipse.jubula.tools.ComponentIdentifier ComponentIdentifier}
  * 
  * @author BREDEX GmbH
  * @created Oct 13, 2014
@@ -28,8 +29,8 @@ public interface ObjectMapping {
      * 
      * @param compName
      *            the component name
-     * @return the component identifier or <code>null</code> if no identifier
-     *         was found
+     * @return the identifier or <code>null</code> if no identifier was found
      */
-    @Nullable public ComponentIdentifier get(String compName);
+    @Nullable
+    public ComponentIdentifier get(String compName);
 }

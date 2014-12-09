@@ -21,7 +21,8 @@ public interface Remote {
     /**
      * connect to the remote side - note: currently the underlying
      * implementation only supports <b>ONE</b> connection at a time to the
-     * remote side; multiple connections may only be established sequentially!
+     * remote side; multiple connections may only be established sequentially by
+     * calling {@link #disconnect()} on this instance first!
      * 
      * @throws CommunicationException
      *             in case of communication problems with the remote side
@@ -29,7 +30,8 @@ public interface Remote {
     void connect() throws CommunicationException;
 
     /**
-     * disconnect from the remote side
+     * Disconnects from the remote side. Make sure to disconnect one instance
+     * before calling {@link #connect()} on other instances
      */
     void disconnect();
 

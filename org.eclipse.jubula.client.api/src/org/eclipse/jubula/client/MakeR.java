@@ -17,8 +17,7 @@ import org.eclipse.jubula.client.internal.impl.ObjectMappingImpl;
 
 /**
  * @author BREDEX GmbH
- * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This class is not intended to be extended by clients.
  */
 public final class MakeR {
     /** Constructor */
@@ -33,7 +32,7 @@ public final class MakeR {
      *            the port number the remote AUT-Agent is running on
      * @return a new AUT-Agent instance - note: currently the underlying
      *         implementation only supports <b>ONE</b> connection at a time to a
-     *         remote running AUT-Agent; multiple connections may only be
+     *         remotely running AUT-Agent; multiple connections may only be
      *         established sequentially!
      */
     public static AUTAgent createAUTAgent(String hostname, int port) {

@@ -15,7 +15,7 @@ import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.communication.CAP;
 
 /**
- * Representing the result of a remotely executed CAP
+ * Representing the result of a remotely executed {@link org.eclipse.jubula.communication.CAP CAP}
  * 
  * @author BREDEX GmbH
  * @param <T>
@@ -42,7 +42,7 @@ public interface Result<T> {
     CAP getCAP();
 
     /**
-     * @return whether the CAP has been executed successfully or not
+     * @return whether the {@link org.eclipse.jubula.communication.CAP CAP} has been executed successfully or not
      */
     boolean isOK();
 }
