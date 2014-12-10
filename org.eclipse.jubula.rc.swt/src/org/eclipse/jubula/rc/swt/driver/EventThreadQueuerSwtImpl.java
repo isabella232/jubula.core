@@ -20,6 +20,7 @@ import org.eclipse.jubula.rc.common.driver.RunnableWrapper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Display;
 
 
@@ -49,7 +50,17 @@ public class EventThreadQueuerSwtImpl implements IEventThreadQueuer {
                 log.warn("Display has already been disposed - skipping IRunnable invocation!"); //$NON-NLS-1$
                 return null;
             }
-            display.syncExec(wrapper);
+            try {
+                display.syncExec(wrapper);
+            } catch (SWTException e) {
+                if (display.isDisposed()) {
+                    // this may happen e.g. during the shutdown process of the AUT
+                    // see http://bugzilla.bredex.de/1591
+                    log.warn("Display has disposed while waiting for IRunnable execution!"); //$NON-NLS-1$
+                    return null;
+                }
+                log.warn("SWTException while waiting for IRunnable execution!", e); //$NON-NLS-1$
+            }
             StepExecutionException exception = wrapper.getException();
             if (exception != null) {
                 throw new InvocationTargetException(exception);
