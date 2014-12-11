@@ -44,6 +44,9 @@ public class Action {
     /** Method name */
     private String m_method;
     
+    /** a description key for this action */
+    private String m_descriptionKey;
+    
     /** 
      * full qualified name of the command class to execute after
      * test execution in TestExecution 
@@ -260,5 +263,19 @@ public class Action {
     public boolean isITEInvolved() {
         return isClientAction() 
             || !StringUtils.isEmpty(getPostExecutionCommand());
+    }
+
+    /**
+     * @return the descriptionKey
+     */
+    public String getDescriptionKey() {
+        return m_descriptionKey;
+    }
+
+    /**
+     * @param descriptionKey the descriptionKey to set
+     */
+    public void setDescriptionKey(String descriptionKey) {
+        m_descriptionKey = descriptionKey;
     }
 }

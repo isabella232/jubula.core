@@ -14,9 +14,8 @@
 		<minorVersion>6</minorVersion>
 	</configVersion>
 	
-	<concreteComponent type="guidancer.concrete.GraphicApplication" hasDefaultMapping="true">
-		<action name="CompSystem.ClickInActiveWindow" changed="1.27">
-			<method>rcClickDirect</method>
+	<concreteComponent type="guidancer.concrete.GraphicApplication" hasDefaultMapping="true" descriptionKey="guidancer.concrete.GraphicApplication.descr">
+		<action name="CompSystem.ClickInActiveWindow" changed="1.27" descriptionKey="CompSystem.ClickInActiveWindow.descr">			<method>rcClickDirect</method>
 			<param name="CompSystem.ClickCount">
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>

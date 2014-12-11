@@ -81,10 +81,19 @@ public class ToolkitOverView extends ViewPart {
                         sb.append(componentClass);
                     }
                 }
+
+                String description = component.getDescriptionKey();
+                if (description != null) {
+                    sb.append(" (" + CompSystemI18n.getString(description) + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+                }
                 return sb.toString();
-                
             } else if (element instanceof Action) {
                 Action action = (Action) element;
+                String description = action.getDescriptionKey();
+                if (description != null) {
+                    return sh.get(action.getName(), true) + " (" //$NON-NLS-1$
+                            + CompSystemI18n.getString(description) + ")"; //$NON-NLS-1$
+                }
                 return sh.get(action.getName(), true);
             } else if (element instanceof Param) {
                 Param param = (Param) element;

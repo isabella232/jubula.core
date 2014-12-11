@@ -64,6 +64,7 @@ public class XStreamGenerator {
         stream.addImplicitCollection(Component.class, "m_realizedTypes", "realizes", String.class); //$NON-NLS-1$ //$NON-NLS-2$
         stream.addImplicitCollection(Component.class, "m_extendedTypes", "extends", String.class); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("type", Component.class, "m_type"); //$NON-NLS-1$ //$NON-NLS-2$
+        stream.aliasField("descriptionKey", Component.class, "m_descriptionKey"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.addImplicitCollection(Component.class, "m_actions", "action", Action.class); //$NON-NLS-1$ //$NON-NLS-2$
                 
         stream.alias("abstractComponent", AbstractComponent.class); //$NON-NLS-1$
@@ -116,16 +117,16 @@ public class XStreamGenerator {
     private static void registerConverter(XStream stream) {
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
             Component.class, 
-            new String[] {"m_type", "m_visible", "m_observable", "m_changed", "m_deprecated"})); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+            new String[] {"m_type", "m_descriptionKey", "m_visible", "m_observable", "m_changed", "m_deprecated"})); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
             AbstractComponent.class, 
-            new String[] {"m_type", "m_visible", "m_observable", "m_changed", "m_deprecated"}));  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+            new String[] {"m_type", "m_descriptionKey", "m_visible", "m_observable", "m_changed", "m_deprecated"}));  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
             ConcreteComponent.class, 
-            new String[] {"m_type", "m_visible", "m_observable", "m_changed", "m_deprecated", "m_hasDefaultMapping"}));  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+            new String[] {"m_type", "m_descriptionKey", "m_visible", "m_observable", "m_changed", "m_deprecated", "m_hasDefaultMapping"}));  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
             Action.class, 
-            new String[] {"m_name", "m_clientAction", "m_deprecated", "m_changed"})); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ 
+            new String[] {"m_name", "m_descriptionKey", "m_clientAction", "m_deprecated", "m_changed"})); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ 
         
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
             Param.class, "m_name")); //$NON-NLS-1$
@@ -148,6 +149,7 @@ public class XStreamGenerator {
      */
     private static void aliasActionClass(XStream stream) {
         stream.aliasField("name", Action.class, "m_name"); //$NON-NLS-1$ //$NON-NLS-2$
+        stream.aliasField("descriptionKey", Action.class, "m_descriptionKey"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("method", Action.class, "m_method"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("deprecated", Action.class, "m_deprecated"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("changed", Action.class, "m_changed"); //$NON-NLS-1$ //$NON-NLS-2$

@@ -75,6 +75,9 @@ public abstract class Component {
     /** The name of the component. */
     private String m_type;
     
+    /** a description key for this component */
+    private String m_descriptionKey;
+    
     /** The descriptor of the ToolkitPlugin of this Component */
     private ToolkitDescriptor m_toolkitDesriptor;
     
@@ -562,5 +565,17 @@ public abstract class Component {
      */
     public boolean isExtender() {
         return !m_extendedTypes.isEmpty();
+    }
+    /**
+     * @return the descriptionKey
+     */
+    public String getDescriptionKey() {
+        return m_descriptionKey;
+    }
+    /**
+     * @param descriptionKey the descriptionKey to set
+     */
+    public void setDescriptionKey(String descriptionKey) {
+        m_descriptionKey = descriptionKey;
     }
 }

@@ -9,7 +9,8 @@ imports="java.util.*
          org.eclipse.jubula.tools.internal.xml.businessmodell.Action
          org.eclipse.jubula.tools.internal.xml.businessmodell.Component
          org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
-         org.eclipse.jubula.tools.internal.xml.businessmodell.Param" 
+         org.eclipse.jubula.tools.internal.xml.businessmodell.Param
+         org.eclipse.jubula.tools.internal.i18n.CompSystemI18n" 
 class="ClassGenerator"%>
 <%
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -154,7 +155,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
     <%}%>
     
     <%if (!genInterface && hasDefaultMapping) {
-    // Generate pseudo component identifiers for implemenation classes with default mapping%>
+    // Generate pseudo component identifiers for implementation classes with default mapping%>
     protected IComponentIdentifier getPseudoComponentIdentifier() {
         <%if (hasComponentClass) {%>
         org.eclipse.jubula.tools.internal.objects.ComponentIdentifier pseudoIdentifier =
@@ -183,11 +184,17 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             continue;
         }
         String methodName = nameLoader.translateFromCompSystem(action.getName());
+        String actionDescription = "";
+        String actionDescrKey = action.getDescriptionKey();
+        if (actionDescrKey != null) {
+        	actionDescription = CompSystemI18n.getString(actionDescrKey);
+        }
         compNameMap.put(action.getName(), methodName);
         List<Param> params = action.getParams();
         if (!params.isEmpty()) {
         %>
         /**
+         * <%=actionDescription%>
          * @throws IllegalArgumentException if one of the passed parameters is <code>null</code>.
          */<%}%>
         <%if (action.isDeprecated()) {%>@Deprecated<%}%>

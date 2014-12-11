@@ -43,6 +43,7 @@
 				<xs:element minOccurs="0" ref="postExecutionCommand" />
 			</xs:sequence>
 			<xs:attribute name="name" use="required" />
+			<xs:attribute name="descriptionKey" use="optional" type="xs:string" />
 			<xs:attribute name="clientAction">
 				<xs:simpleType>
 					<xs:restriction base="xs:token">
