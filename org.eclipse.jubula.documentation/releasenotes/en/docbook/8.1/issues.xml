@@ -9,16 +9,8 @@
   <itemizedlist>
     <listitem>
       <para>
-        We now run our regression tests for RCP AUTs on all platforms
+        We now run our regression tests for RCP and Swing AUTs on all platforms
         with Java 8 as a runtime environment.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        Our tests for Swing with Java 8 as a runtime environment have
-        shown that Linux and Windows 8 appear to function correctly –
-        there are still problems with Mac and Windows 7 when testing
-        Swing AUTs with Java 8 as a JRE.
       </para>
     </listitem>
   </itemizedlist>
