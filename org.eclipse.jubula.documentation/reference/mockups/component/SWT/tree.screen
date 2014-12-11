@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Tree" id="1" x="176" y="80" text="[x] Folder One&#xA;-[x] Folder Two&#xA;--[x] File One&#xA;--[] File Two&#xA;-[] Folder Three&#xA;--[] File Three&#xA;--[] File Four&#xA;" measuredWidth="132" measuredHeight="157">
+    <items x="0" y="5" width="132" height="21" text="[x] Folder One"/>
+    <items x="0" y="26" width="132" height="21" text="-[x] Folder Two"/>
+    <items x="0" y="47" width="132" height="21" text="--[x] File One"/>
+    <items x="0" y="68" width="132" height="21" text="--[] File Two"/>
+    <items x="0" y="89" width="132" height="21" text="-[] Folder Three"/>
+    <items x="0" y="110" width="132" height="21" text="--[] File Three"/>
+    <items x="0" y="131" width="132" height="21" text="--[] File Four"/>
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

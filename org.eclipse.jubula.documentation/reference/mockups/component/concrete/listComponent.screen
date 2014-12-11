@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:List" id="1" x="48" y="40" width="121" height="145" text="Item One&#xA;Item Two&#xA;|Item Three&#xA;Item Four&#xA;Item Five&#xA;Item Six&#xA;Item Seven&#xA;" measuredWidth="121" measuredHeight="145">
+    <font/>
+    <items x="0" y="2" width="121" height="21" text="Item One"/>
+    <items x="0" y="23" width="121" height="21" text="Item Two"/>
+    <items x="0" y="44" width="121" height="21" text="|Item Three"/>
+    <items x="0" y="65" width="121" height="21" text="Item Four"/>
+    <items x="0" y="86" width="121" height="21" text="Item Five"/>
+    <items x="0" y="107" width="121" height="21" text="Item Six"/>
+    <items x="0" y="128" width="121" height="21" text="Item Seven"/>
+  </widgets>
+  <widgets xsi:type="model:VScrollbar" id="2" x="152" y="40" height="145" measuredWidth="17" measuredHeight="145"/>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

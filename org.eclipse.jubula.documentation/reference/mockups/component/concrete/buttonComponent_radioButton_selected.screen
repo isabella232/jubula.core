@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:List" id="1" x="64" y="48" text="(o) Yes (selected)" measuredWidth="118" measuredHeight="26" border="false" alpha="0">
+    <font/>
+    <items x="0" y="2" width="118" height="22" text="(o) Yes (selected)"/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

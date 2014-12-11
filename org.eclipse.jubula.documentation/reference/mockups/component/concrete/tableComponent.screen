@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Table" id="1" x="40" y="32" text="Name, Last Name, Age&#xA;Max,Mustermann,37&#xA;Heinrich,Hof,47&#xA;Lisa,Lieblich,62" measuredWidth="179" measuredHeight="88" alternative="#eeeeee">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>
