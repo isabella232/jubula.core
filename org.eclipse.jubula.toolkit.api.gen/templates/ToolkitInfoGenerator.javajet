@@ -86,10 +86,5 @@ public final class <%=className%> extends AbstractToolkitInfo {
     @NonNull public Map<ComponentClass, String> getTypeMapping() {
         return m_map;
     }
-    
-    /** {@inheritDoc} */
-    @NonNull public String getToolkitID() {
-        return "<%=genInfo.getToolkitID()%>"; //$NON-NLS-1$
-    }
 }
 <%}%>

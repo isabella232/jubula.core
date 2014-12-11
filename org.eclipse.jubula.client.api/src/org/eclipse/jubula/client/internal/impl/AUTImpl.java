@@ -23,15 +23,14 @@ import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.exceptions.CommunicationException;
 import org.eclipse.jubula.client.exceptions.ComponentNotFoundException;
 import org.eclipse.jubula.client.exceptions.ConfigurationException;
-import org.eclipse.jubula.client.exceptions.ExecutionExceptionHandler;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
+import org.eclipse.jubula.client.exceptions.ExecutionExceptionHandler;
 import org.eclipse.jubula.client.internal.AUTConnection;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.Synchronizer;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
-import org.eclipse.jubula.communication.internal.message.CAPTestMessageFactory;
 import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.communication.internal.message.UnknownMessageException;
@@ -140,9 +139,8 @@ public class AUTImpl implements AUT {
         
         final ResultImpl<T> result = new ResultImpl<T>(cap, payload);
         try {
-            CAPTestMessage capTestMessage = CAPTestMessageFactory
-                .getCAPTestMessage((MessageCap) cap, getInformation()
-                    .getToolkitID());
+            CAPTestMessage capTestMessage = new CAPTestMessage(
+                    (MessageCap) cap); 
 
             m_instance.send(capTestMessage);
             Object exchange = Synchronizer.instance().exchange(null);

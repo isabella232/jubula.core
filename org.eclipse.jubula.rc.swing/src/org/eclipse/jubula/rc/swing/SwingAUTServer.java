@@ -21,6 +21,7 @@ import java.util.regex.PatternSyntaxException;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
+import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swing.listener.CheckListener;
@@ -29,6 +30,7 @@ import org.eclipse.jubula.rc.swing.listener.FocusTracker;
 import org.eclipse.jubula.rc.swing.listener.MappingListener;
 import org.eclipse.jubula.rc.swing.listener.RecordListener;
 import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -253,5 +255,12 @@ public class SwingAUTServer extends AUTServer {
         return returnArray;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    public Object findComponent(IComponentIdentifier ci, int timeout) 
+        throws ComponentNotFoundException, IllegalArgumentException {
+        
+        return ComponentHandler.findComponent(ci, true, timeout);
+    }
 }

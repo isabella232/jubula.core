@@ -10,13 +10,15 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.internal.message;
 
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+
 /**
  * This class sends a component-action-param-triple to the server.
  * 
  * @author BREDEX GmbH
  * @created 27.08.2004
  */
-public abstract class CAPTestMessage extends Message {
+public class CAPTestMessage extends Message {
     /** The CAP message data. */
     private MessageCap m_messageCap;
 
@@ -60,9 +62,6 @@ public abstract class CAPTestMessage extends Message {
         m_messageCap = messageCap;
     }
 
-    /** @return the command class */
-    public abstract String getCommandClass();
-
     /** @return Returns the requestAnswer. */
     public boolean isRequestAnswer() {
         return m_requestAnswer;
@@ -74,5 +73,12 @@ public abstract class CAPTestMessage extends Message {
      */
     public void setRequestAnswer(boolean requestAnswer) {
         m_requestAnswer = requestAnswer;
+    }
+    
+    /**
+     * @return the command class
+     */
+    public final String getCommandClass() {
+        return CommandConstants.CAP_TEST_COMMAND;
     }
 }

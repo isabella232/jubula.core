@@ -14,6 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
+import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swt.driver.RobotFactorySwtImpl;
@@ -26,6 +27,7 @@ import org.eclipse.jubula.rc.swt.listener.MappingListener;
 import org.eclipse.jubula.rc.swt.listener.RecordListener;
 import org.eclipse.jubula.rc.swt.listener.TableSelectionTracker;
 import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
 import org.slf4j.Logger;
@@ -169,7 +171,7 @@ public class SwtAUTServer extends AUTServer {
         } catch (NullPointerException se) {
             // no permission to remove an SWTEventListener,
             // should not occur, because addSWTEventListener() should be called 
-            // first. But just in case, close the vm
+            // first. But just in case, close the VM
             LOG.error(se.getLocalizedMessage(), se);
             System.exit(AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_AWT_EVENT_LISTENER);
@@ -242,5 +244,13 @@ public class SwtAUTServer extends AUTServer {
     public void setDisplay(Display display) {
         m_display = display;
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    public Object findComponent(final IComponentIdentifier ci, 
+        final int timeout) throws ComponentNotFoundException, 
+        IllegalArgumentException {
+        return ComponentHandler.findComponent(ci, true, timeout);
+    }
 }

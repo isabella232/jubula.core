@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
+import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.javafx.components.CurrentStages;
 import org.eclipse.jubula.rc.javafx.driver.RobotFactoryJavaFXImpl;
@@ -25,6 +26,7 @@ import org.eclipse.jubula.rc.javafx.listener.CheckListener;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.listener.MappingListener;
 import org.eclipse.jubula.rc.javafx.listener.RecordListener;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 /**
  * The AutServer controlling the AUT. <br>
@@ -119,5 +121,13 @@ public class JavaFXAUTServer extends AUTServer {
     @Override
     public IRobot getRobot() {
         return RobotFactoryJavaFXImpl.INSTANCE.getRobot();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public Object findComponent(IComponentIdentifier ci, int timeout)
+        throws ComponentNotFoundException, IllegalArgumentException {
+        return ComponentHandler.findComponent(ci, true, timeout);
     }
 }

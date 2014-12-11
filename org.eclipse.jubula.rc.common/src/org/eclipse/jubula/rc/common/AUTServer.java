@@ -30,6 +30,7 @@ import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.commands.AUTStartCommand;
 import org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand;
 import org.eclipse.jubula.rc.common.driver.IRobot;
+import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.listener.AUTEventListener;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.common.listener.IAutListenerAppender;
@@ -941,6 +942,21 @@ public abstract class AUTServer {
      */
     public abstract IRobot getRobot();
 
+    /**
+     * @param ci
+     *            the component identifier
+     * @param timeout
+     *            the timeout
+     * @return the found component
+     * @throws IllegalArgumentException
+     *             if error occurred
+     * @throws ComponentNotFoundException
+     *             if component could not found in compHierarchy
+     */
+    public abstract Object findComponent(IComponentIdentifier ci, 
+        int timeout) throws ComponentNotFoundException, 
+        IllegalArgumentException;
+    
     /**
      * Starts an Inspector that allows data for the next component clicked to 
      * be sent to the client.

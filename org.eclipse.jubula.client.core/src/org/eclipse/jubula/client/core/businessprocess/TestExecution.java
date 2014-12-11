@@ -76,7 +76,6 @@ import org.eclipse.jubula.client.internal.commands.CAPTestResponseCommand;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.internal.ICommand;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
-import org.eclipse.jubula.communication.internal.message.CAPTestMessageFactory;
 import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.internal.message.DisplayManualTestStepMessage;
 import org.eclipse.jubula.communication.internal.message.EndTestExecutionMessage;
@@ -633,8 +632,7 @@ public class TestExecution {
             }
             messageCap = buildMessageCap(currCap, false);
             if (!m_stopped) {
-                CAPTestMessage capTestMessage = CAPTestMessageFactory
-                        .getCAPTestMessage(messageCap, getAutToolkit());
+                CAPTestMessage capTestMessage = new CAPTestMessage(messageCap);
                 // StepSpeed
                 TimeUtil.delay(m_stepSpeed);
                 while (isPaused()) {

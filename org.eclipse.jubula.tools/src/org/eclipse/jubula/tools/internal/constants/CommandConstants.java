@@ -104,16 +104,8 @@ public abstract class CommandConstants {
     public static final String AUT_HIGHLIGHT_COMMAND = "org.eclipse.jubula.rc.common.commands.AUTHighlightComponentCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.AUTStartCommand" */
     public static final String AUT_START_COMMAND = "org.eclipse.jubula.rc.common.commands.AUTStartCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.rc.swt.commands.AUTStartCommand" */
-    public static final String SWING_CAP_TEST_COMMAND = "org.eclipse.jubula.rc.swing.commands.CAPTestCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.rc.swt.commands.CAPTestCommand" */
-    public static final String SWT_CAP_TEST_COMMAND = "org.eclipse.jubula.rc.swt.commands.CAPTestCommand"; //$NON-NLS-1$
-    /** constant: "com.bredexsw.jubula.rc.html.commands.CAPTestCommand" */
-    public static final String HTML_CAP_TEST_COMMAND = "com.bredexsw.jubula.rc.html.commands.CAPTestCommand"; //$NON-NLS-1$
-    /** constant: "com.bredexsw.guidancer.rc.win.commands.CAPTestCommand" */
-    public static final String WIN_CAP_TEST_COMMAND = "com.bredexsw.guidancer.rc.win.commands.CAPTestCommand"; //$NON-NLS-1$
-    /** constant: "com.bredexsw.jubula.rc.win.apps.commands.CAPTestCommand" */
-    public static final String WIN_APP_CAP_TEST_COMMAND = "com.bredexsw.guidancer.rc.win.commands.CAPTestCommand"; //$NON-NLS-1$
+    /** constant */
+    public static final String CAP_TEST_COMMAND = "org.eclipse.jubula.rc.common.commands.CapTestCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand" */
     public static final String CHANGE_AUT_MODE_COMMAND = "org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.swing.commands.ChangeAUTModeCommand" */
@@ -257,8 +249,6 @@ public abstract class CommandConstants {
     public static final String AUT_JAVAFX_SERVER = "org.eclipse.jubula.rc.javafx.JavaFXAUTServer"; //$NON-NLS-1$
     /** ID of the JavaFX RC bundle */
     public static final String RC_JAVAFX_BUNDLE_ID = "org.eclipse.jubula.rc.javafx"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.rc.swt.commands.CAPTestCommand" */
-    public static final String JAVAFX_CAP_TEST_COMMAND = "org.eclipse.jubula.rc.javafx.commands.CAPTestCommand"; //$NON-NLS-1$
     /** constant: "JavaFX" */
     public static final String JAVAFX_TOOLKIT = "org.eclipse.jubula.JavaFXToolkitPlugin"; //$NON-NLS-1$
    

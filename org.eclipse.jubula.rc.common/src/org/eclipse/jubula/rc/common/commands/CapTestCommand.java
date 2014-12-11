@@ -51,10 +51,10 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 02.01.2007
  */
-public abstract class AbstractCapTestCommand implements ICommand {
+public class CapTestCommand implements ICommand {
     /** The logger */
     private static final Logger LOG = LoggerFactory.getLogger(
-        AbstractCapTestCommand.class);
+        CapTestCommand.class);
     
     /** The message. */
     private CAPTestMessage m_capTestMessage;
@@ -132,7 +132,8 @@ public abstract class AbstractCapTestCommand implements ICommand {
             final AUTServerConfiguration rcConfig = AUTServerConfiguration
                 .getInstance();
             if (!messageCap.hasDefaultMapping()) {
-                Object component = findComponent(ci, timeout);
+                Object component = AUTServer.getInstance().findComponent(ci,
+                        timeout);
                 implClass = rcConfig.prepareImplementationClass(component,
                     component.getClass());
             } else {
@@ -201,21 +202,6 @@ public abstract class AbstractCapTestCommand implements ICommand {
         }
     }
 
-    /**
-     * @param ci
-     *            the component identifier
-     * @param timeout
-     *            the timeout
-     * @return the found component
-     * @throws IllegalArgumentException
-     *             if error occurred
-     * @throws ComponentNotFoundException
-     *             if component could not found in compHierarchy
-     */
-    protected abstract Object findComponent(IComponentIdentifier ci, 
-        int timeout) throws ComponentNotFoundException, 
-        IllegalArgumentException;
-    
     /**
      * calls the method of the implementation class per reflection
      * {@inheritDoc}

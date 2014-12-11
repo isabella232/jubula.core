@@ -12,8 +12,6 @@ Export-Package: org.eclipse.jubula.communication.internal,
  org.eclipse.jubula.communication.internal.listener,
  org.eclipse.jubula.communication.internal.message,
  org.eclipse.jubula.communication.internal.message.html,
- org.eclipse.jubula.communication.internal.message.swing,
- org.eclipse.jubula.communication.internal.message.swt,
  org.eclipse.jubula.communication.internal.parser,
  org.eclipse.jubula.communication.internal.writer,
  org.eclipse.jubula.communication

@@ -22,9 +22,4 @@ public abstract class AbstractToolkitInfo implements ToolkitInfo {
      *         of its tester class
      */
     public abstract Map<ComponentClass, String> getTypeMapping();
-
-    /**
-     * @return the toolkit id
-     */
-    public abstract String getToolkitID();
 }

@@ -289,16 +289,16 @@ public class MessageIDs {
     /** if a project version is already in use in db */
     public static final Integer E_PROJECTVERSION_ALREADY_EXISTS = 
         new Integer(4043);
-    /** if a name conflict exists between imported and existing projects (same guid, different name) */
+    /** if a name conflict exists between imported and existing projects (same UUID, different name) */
     public static final Integer E_PROJ_NAME_CONFLICT = 
         new Integer(4045);
-    /** if a guid conflict exists between imported and existing projects (same name, different guid) */
+    /** if a UUID conflict exists between imported and existing projects (same name, different guid) */
     public static final Integer E_PROJ_GUID_CONFLICT = 
         new Integer(4046);
     /** if a project to load has a different major version */
     public static final Integer E_LOAD_PROJECT_TOOLKIT_MAJOR_VERSION_ERROR = 
         new Integer(4047);
-    /** if a project xml to load is too old for converters */
+    /** if a project XML to load is too old for converters */
     public static final Integer E_LOAD_PROJECT_XML_VERSION_ERROR = 
         new Integer(4048);
     /** Move to external project error because of toolkit levels do not match */
@@ -320,7 +320,7 @@ public class MessageIDs {
     /** if a Function is not available */
     public static final Integer E_NO_FUNCTION = new Integer(4056);
     // -- CONNECTION ERROR IDs ---------------------------------------------
-    /** if problem occurres, during AUT connection initialization */
+    /** if problem occurred, during AUT connection initialization */
     public static final Integer E_AUT_CONNECTION_INIT = new Integer(5000);
     /** if sth. was called on an connected connection */
     public static final Integer E_CONNECTED_CONNECTION = new Integer(5001);
@@ -338,9 +338,9 @@ public class MessageIDs {
     public static final Integer E_INTERRUPTED_CONNECTION = new Integer(5007);
     /** if a version error between AutStarter and Client occurs */
     public static final Integer E_VERSION_ERROR = new Integer(5008);
-    /** if an error occured while trying to start the AUT */
+    /** if an error occurred while trying to start the AUT */
     public static final Integer E_AUT_START = new Integer(5009);
-    /** if an error occured while trying to start the AutStarter */
+    /** if an error occurred while trying to start the AutStarter */
     public static final Integer E_SERVER_ERROR = new Integer(5010);
     /** 
      * if an operation was attempted that requires a connection to the 
@@ -369,7 +369,7 @@ public class MessageIDs {
         new Integer(6008);
     /** if creating a command failed */
     public static final Integer E_COMMAND_NOT_CREATED = new Integer(6009);
-    /** if command is not asignable */
+    /** if command is not assignable */
     public static final Integer E_COMMAND_NOT_ASSIGNABLE = new Integer(6010);
     /** if a message could not send as request */
     public static final Integer E_MESSAGE_NOT_TO_REQUEST = new Integer(6011);
@@ -377,18 +377,14 @@ public class MessageIDs {
     public static final Integer E_NO_MESSAGE_TO_SEND = new Integer(6012);
     /** if a message could not send */
     public static final Integer E_MESSAGE_NOT_SEND = new Integer(6013);
-    /** if an error occurres while sending a message */
+    /** if an error occurred while sending a message */
     public static final Integer E_MESSAGE_SEND = new Integer(6014);
-    /** if an error occurres while message was requested */
+    /** if an error occurred while message was requested */
     public static final Integer E_MESSAGE_REQUEST = new Integer(6015);
-    /** if an error occurres while communicator connection */
+    /** if an error occurred while communicator connection */
     public static final Integer E_COMMUNICATOR_CONNECTION = new Integer(6016);
     /** if there is no command for receiving response */
     public static final Integer E_NO_RECEIVING_COMMAND = new Integer(6017);
-    /** if creating a message failed */
-    public static final Integer E_MESSAGE_NOT_CREATED = new Integer(6018);
-    /** if message is not asignable */
-    public static final Integer E_MESSAGE_NOT_ASSIGNABLE = new Integer(6019);
     // -- RUNTIME ERROR IDs -------------------------------------------------
     /** if an editor cannot openend */
     public static final Integer E_CANNOT_OPEN_EDITOR = new Integer(7000);
@@ -400,7 +396,7 @@ public class MessageIDs {
     public static final Integer E_CANNOT_OPEN_PERSPECTIVE = new Integer(7003);
     /** if an unlocked workversion cannot be saved */
     public static final Integer E_CANNOT_SAVE_UNLOCKED = new Integer(7004);
-    /** if an inavlid workversion cannot be saved */
+    /** if an invalid workversion cannot be saved */
     public static final Integer E_CANNOT_SAVE_INVALID = new Integer(7005);
     /** if you are not allowed to get a transaction because of a null session */
     public static final Integer E_NULL_SESSION = new Integer(7006);
@@ -408,7 +404,7 @@ public class MessageIDs {
     public static final Integer E_NON_RECOVERABLE = new Integer(7007);
     /** if an opened session failed */
     public static final Integer E_SESSION_FAILED = new Integer(7008);
-    /** if an error occured while trying to start the AutStarter */
+    /** if an error occurred while trying to start the AutStarter */
     public static final Integer E_TEST_EXECUTION_ERROR = new Integer(7009);
     /** variable could not be resolved because no saving before */
     public static final Integer E_UNRESOLV_VAR_ERROR = new Integer(7010);
@@ -802,8 +798,6 @@ public class MessageIDs {
         messageMap.put(E_MESSAGE_REQUEST, e, "ErrorMessage.MESSAGE_REQUEST", null); //$NON-NLS-1$
         messageMap.put(E_COMMUNICATOR_CONNECTION, e, "ErrorMessage.COMMUNICATOR_CONNECTION", null); //$NON-NLS-1$
         messageMap.put(E_NO_RECEIVING_COMMAND, e, "ErrorMessage.NO_RECEIVING_COMMAND", null); //$NON-NLS-1$
-        messageMap.put(E_MESSAGE_NOT_CREATED, e, "ErrorMessage.MESSAGE_NOT_CREATED", new String[]{"ErrorDetail.SUPPORT"});  //$NON-NLS-1$ //$NON-NLS-2$
-        messageMap.put(E_MESSAGE_NOT_ASSIGNABLE, e, "ErrorMessage.MESSAGE_NOT_ASSIGNABLE", new String[]{"ErrorDetail.SUPPORT"});  //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
