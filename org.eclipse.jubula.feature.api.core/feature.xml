@@ -15,7 +15,7 @@
       license-feature-version="0.0.0">
 
    <description url="http://www.eclipse.org/jubula">
-      Eclipse functional UI testing environment - API.  The components in this feature are intended to be added to your Target Platform, rather than your IDE.
+      Eclipse functional UI testing environment - API Core.  The components in this feature are intended to be added to your Target Platform, rather than your IDE.
    </description>
 
    <copyright url="http://www.eclipse.org/jubula">

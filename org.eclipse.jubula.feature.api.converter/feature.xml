@@ -8,14 +8,14 @@
  -->
 <feature
       id="org.eclipse.jubula.feature.api.converter"
-      label="Jubula Functional Testing - API Converter"
+      label="Jubula Functional Testing - API Converter (experimental)"
       version="3.0.0.qualifier"
       provider-name="Eclipse Jubula"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
 
    <description url="http://www.eclipse.org/jubula">
-      Eclipse functional UI testing environment - API
+      Eclipse functional UI testing environment - API Converter (experimental)
    </description>
 
    <copyright url="http://www.eclipse.org/jubula">
