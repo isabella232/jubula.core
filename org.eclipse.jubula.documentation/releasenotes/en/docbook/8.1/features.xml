@@ -264,11 +264,14 @@
  	</itemizedlist>
  	<para>
  		<emphasis role="strong">Support for Eclipse Mars AUTs</emphasis>
+ 	 </para>
  			<itemizedlist>
  				<listitem>
+ 				<para>
  				You can now test AUTs that are based on the Eclipse Mars platform. 
+ 				</para>
  				</listitem>
  			
  			</itemizedlist>
- 	</para>
+
 </section>
