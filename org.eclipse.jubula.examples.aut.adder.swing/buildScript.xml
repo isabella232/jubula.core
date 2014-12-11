@@ -33,6 +33,7 @@
 				target="1.4"
 				debug="${javac.debug}"
 				fork="true"
+                includeantruntime="false"
 		   		executable="${javac}"/>
 	</target>
 

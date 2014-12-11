@@ -80,7 +80,13 @@
 		<mkdir dir="${build}" />
 		<mkdir dir="${classes}"/>
 		<mkdir dir="${jars}"/>
-		<javac srcdir="${src}" destdir="${classes}" debug="${javac.debug}" fork="true" executable="${javac}">
+		<javac 
+		    srcdir="${src}" 
+		    destdir="${classes}" 
+		    debug="${javac.debug}" 
+		    fork="true" 
+            includeantruntime="false"
+		    executable="${javac}">
 			<classpath>
 				<pathelement path="${swtLibCompile}"/>
 			</classpath>
