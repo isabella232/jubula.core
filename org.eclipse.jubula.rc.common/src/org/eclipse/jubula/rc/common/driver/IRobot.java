@@ -103,15 +103,6 @@ public interface IRobot {
         ClickOptions clickOptions) throws RobotException;
 
     /**
-     * Convenience method to perform a double mouse click with the first mouse button.
-     * @param graphicsComponent The graphics component to click on
-     * @param constraints A constraints object used by the Robot implementation, may be <code>null</code>.
-     * @throws RobotException If the mouse click fails
-     */
-    public void doubleClick(Object graphicsComponent, Object constraints)
-        throws RobotException;
-
-    /**
      * Moves the mouse pointer onto the graphics component. The mouse move is
      * confirmed by waiting for a <code>MOVED</code> event. 
      * @param graphicsComponent The graphics component to move to

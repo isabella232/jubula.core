@@ -705,16 +705,6 @@ public class RobotJavaFXImpl implements IRobot {
     }
 
     /**
-     * {@inheritDoc} java.lang.Object)
-     */
-    public void doubleClick(Object graphicsComponent, Object constraints)
-        throws RobotException {
-
-        click(graphicsComponent, constraints, ClickOptions.create()
-                .setClickCount(2));
-    }
-
-    /**
      * {@inheritDoc}
      *
      */
