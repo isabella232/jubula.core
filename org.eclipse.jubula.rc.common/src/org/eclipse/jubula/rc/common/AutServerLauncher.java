@@ -200,7 +200,7 @@ public class AutServerLauncher {
 
         /**
          * Tries to load the given class first.<br>
-         * <b>This method is the first of the ClassLoader hiearchy to load the class.
+         * <b>This method is the first of the ClassLoader hierarchy to load the class.
          * It overrides the parent-delegation!</b><br>
          * If this method fails to load the class, it calls super.loadClass(...).
          * {@inheritDoc}
@@ -270,10 +270,10 @@ public class AutServerLauncher {
         }
 
         /**
-         * Splits the given String with pathes seperated with 
+         * Splits the given String with paths separated with 
          * Operating-System-Path-Separators into an Array of Strings
          * @param paths the paths to split
-         * @return an Array of splitted paths
+         * @return an Array of split paths
          */
         private static String[] split(String paths) {
             String pathSeparator = System.getProperty("path.separator"); //$NON-NLS-1$

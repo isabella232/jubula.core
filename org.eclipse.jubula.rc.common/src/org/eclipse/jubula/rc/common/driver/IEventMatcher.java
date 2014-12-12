@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.common.driver;
 import java.util.List;
 
 /**
- * Implementing classes check wether a Graphics API specific event object
+ * Implementing classes check whether a Graphics API specific event object
  * matches the expected event conditions and properties. The event matcher
  * is used by the {@link org.eclipse.jubula.rc.common.driver.IRobotEventConfirmer}
  * to confirm an intercepted event which has been caused by a Robot

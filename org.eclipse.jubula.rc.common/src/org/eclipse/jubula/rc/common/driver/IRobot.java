@@ -87,7 +87,7 @@ public interface IRobot {
     
     /**
      * Performs a mouse click with the first mouse button on the graphics 
-     * component. The click is configuered by <code>clickOptions</code>. If
+     * component. The click is configured by <code>clickOptions</code>. If
      * <code>constraints</code> is not <code>null</code>, the click will occur
      * in the center of the <code>constraints</code>. Otherwise, the click will
      * occur in the center of <code>graphicsComponent</code>.
@@ -170,7 +170,7 @@ public interface IRobot {
     
     /**
      * Performs the passed key stroke specification. The key stroke
-     * sepcification is a widget set dependent specification of a combination of
+     * specification is a widget set dependent specification of a combination of
      * modifier keys and a primary keycode. Regardless if an additional
      * "pressed", "typed" or "released" eventtype is specified, the key
      * combination is always first pressed and then released. 
