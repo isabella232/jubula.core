@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -350,9 +351,8 @@ public class ObjectMappingConfigComponent {
         /** Add layer to parent widget */
         final ScrolledComposite scrollComposite = 
             new ScrolledComposite(parent, SWT.V_SCROLL | SWT.H_SCROLL);
-        GridData gridData = 
-            new GridData (GridData.HORIZONTAL_ALIGN_FILL | GridData.FILL_BOTH);
-        scrollComposite.setLayoutData(gridData);
+        scrollComposite.setLayoutData(GridDataFactory.fillDefaults()
+                .grab(true, true).create());
         final Composite composite = new Composite(scrollComposite, SWT.NONE);
 
         m_bindingContext = new DataBindingContext();
@@ -413,14 +413,11 @@ public class ObjectMappingConfigComponent {
         Composite sliderComposite = new Composite(composite, SWT.BORDER);
         GridLayout compositeLayout = new GridLayout();
         compositeLayout.numColumns = 4;
-        GridData compositeData = new GridData(GridData.GRAB_HORIZONTAL 
-            | GridData.FILL_BOTH
-            | GridData.GRAB_VERTICAL);
         compositeLayout.horizontalSpacing = 5;
         compositeLayout.verticalSpacing = 5;
-        compositeData.grabExcessHorizontalSpace = true;
         sliderComposite.setLayout(compositeLayout);
-        sliderComposite.setLayoutData(compositeData);
+        sliderComposite.setLayoutData(GridDataFactory.fillDefaults()
+                .grab(true, true).create());
       
         Label label = new Label(sliderComposite, SWT.CENTER);
         label = new Label(sliderComposite, SWT.CENTER);
@@ -491,6 +488,8 @@ public class ObjectMappingConfigComponent {
         factorScale.setMaximum(HUNDRED_PERCENT);
         factorScale.setIncrement(STEP);
         factorScale.setPageIncrement(STEP);
+        factorScale.setLayoutData(GridDataFactory.fillDefaults()
+                .grab(true, false).create());
         Label factorText = new Label(parent, SWT.NONE);
         setLabelWidth(factorText);
         Button lockCheckbox = new Button(parent, SWT.CHECK);
@@ -588,9 +587,8 @@ public class ObjectMappingConfigComponent {
         compositeLayout.marginHeight = 0;
         compositeLayout.marginWidth = 0;
         composite.setLayout(compositeLayout);
-        GridData compositeData = new GridData(GridData.FILL_BOTH);
-        compositeData.grabExcessHorizontalSpace = false;
-        composite.setLayoutData(compositeData);
+        composite.setLayoutData(GridDataFactory.fillDefaults()
+                .grab(true, true).create());
     }
 
     /**
@@ -686,6 +684,8 @@ public class ObjectMappingConfigComponent {
         m_threshold.setMaximum(HUNDRED_PERCENT);
         m_threshold.setIncrement(STEP);
         m_threshold.setPageIncrement(STEP);
+        m_threshold.setLayoutData(GridDataFactory.fillDefaults()
+                .grab(true, false).create());
         m_thresholdText = new Label(parent, SWT.NONE);
         setLabelWidth(m_thresholdText);
         new Label(parent, SWT.NONE);
