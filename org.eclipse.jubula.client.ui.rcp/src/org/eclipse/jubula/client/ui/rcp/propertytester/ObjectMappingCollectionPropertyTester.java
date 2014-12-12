@@ -61,7 +61,6 @@ public class ObjectMappingCollectionPropertyTester extends
      * @return <code>true</code> if the paste command should be enabled for
      *         the given selection contents. Otherwise <code>false</code>.
      */
-    @SuppressWarnings("unchecked")
     private boolean testIsPasteAllowed(
             Collection<? extends Object> selectionContents) {
 

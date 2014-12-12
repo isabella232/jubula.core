@@ -82,7 +82,6 @@ import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.ComponentNameTreeViewerUpdater;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
-import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.LimitingDragSourceListener;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.OMDropTargetListener;
 import org.eclipse.jubula.client.ui.rcp.dialogs.NagDialog;
@@ -114,7 +113,6 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -150,19 +148,18 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     implements IJBPart, IJBEditor, IObjectMappingObserver, 
                IEditorDirtyStateListener, IMultiTreeViewerContainer, 
                IPropertyListener {
-
     /** Show-menu */
     public static final String CLEANUP_ID = PlatformUI.PLUGIN_ID + ".CleanupSubMenu"; //$NON-NLS-1$
     
+    /** default sash weights */
+    private static final int[] DEFAULT_SASH_WEIGHTS = new int[] { 25, 100 };
+
     /** the logger */
     private static final Logger LOG = 
         LoggerFactory.getLogger(ObjectMappingMultiPageEditor.class);
     
     /** page index of the split view */
     private static final int SPLIT_PAGE_IDX = 0;
-
-    /** page index of the tree view */
-    private static final int TREE_PAGE_IDX = 1;
 
     /** the object responsible for handling JBEditor-related tasks */
     private JBEditorHelper m_editorHelper;
@@ -178,9 +175,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     
     /** the tree viewer for mapped Component Names in the Split Pane view */
     private TreeViewer m_mappedComponentTreeViewer;
-    
-    /** the viewer for presenting the tree view within this editor */
-    private TreeViewer m_treeViewer;
     
     /** 
      * the component responsible for handling the profile 
@@ -380,23 +374,17 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         
         int splitPaneViewIndex = addPage(
                 createSplitPanePageControl(getContainer(), menuMgr));
-        int treeViewIndex = addPage(createTreePageControl(getContainer(), 
-                menuMgr));
         int configViewIndex = addPage(createConfigPageControl(getContainer()));
 
         setPageText(
                 splitPaneViewIndex, 
                 Messages.ObjectMappingEditorSplitPaneView);
         setPageText(
-                treeViewIndex, 
-                Messages.ObjectMappingEditorTreeView);
-        setPageText(
                 configViewIndex, 
                 Messages.ObjectMappingEditorConfigView);
         
         m_pageToSelectionProvider.put(splitPaneViewIndex, 
                 m_splitPaneSelectionProvider);
-        m_pageToSelectionProvider.put(treeViewIndex, m_treeViewer);
         m_pageToSelectionProvider.put(
                 configViewIndex, new NullSelectionProvider());
         
@@ -408,11 +396,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
         ObjectMappingEventDispatcher.addObserver(this);
 
-        m_treeViewerUpdater = 
-            new ComponentNameTreeViewerUpdater(m_treeViewer);
-
         checkAndFixInconsistentData();
-        m_treeViewer.expandToLevel(2);
     }
 
     /**
@@ -535,67 +519,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     }
     
     /**
-     * Creates the tree page of the editor.
-     * 
-     * @param parent The parent composite.
-     * @param contextMenuMgr The manager for the context menu for the created
-     *                       tree.
-     * @return the base control of the tree view.
-     */
-    private Control createTreePageControl(Composite parent,
-            MenuManager contextMenuMgr) {
-        GridLayout layout = new GridLayout();
-        layout.numColumns = 1;
-        layout.verticalSpacing = 3;
-        layout.marginWidth = LayoutUtil.MARGIN_WIDTH;
-        layout.marginHeight = LayoutUtil.MARGIN_HEIGHT;
-        parent.setLayout(layout);
-        SashForm treeComp = new SashForm(parent, SWT.MULTI);
-        GridLayout compLayout = new GridLayout(1, false);
-        compLayout.marginWidth = 0;
-        compLayout.marginHeight = 0;
-        treeComp.setLayout(compLayout);
-        GridData gridData = 
-            new GridData (GridData.HORIZONTAL_ALIGN_FILL | GridData.FILL_BOTH);
-        treeComp.setLayoutData(gridData); 
-        final FilteredTree ft = new JBFilteredTree(treeComp, SWT.MULTI
-                | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER, 
-                new ObjectMappingEditorPatternFilter(), true);
-        m_treeViewer = ft.getViewer();
-        setTreeFilterText(ft.getFilterControl());
-        setProviders(m_treeViewer, getCompMapper());
-        m_treeViewer.setUseHashlookup(true);
-        m_treeViewer.setSorter(new ObjectMappingTreeSorter());
-        m_treeViewer.setComparer(new PersistentObjectComparer());
-        // setup drag&drop support
-        int ops = DND.DROP_MOVE;
-        Transfer[] transfers = 
-            new Transfer[] { 
-                LocalSelectionTransfer.getInstance()};
-        m_treeViewer.addDragSupport(ops, transfers,
-            new LimitingDragSourceListener(m_treeViewer, getAut()));
-        m_treeViewer.addDropSupport(ops, transfers, 
-            new OMDropTargetListener(this, m_treeViewer));
-        m_omEditorBP = new OMEditorBP(this);
-        m_treeViewer.setAutoExpandLevel(2);
-        m_treeViewer.setInput(getAut().getObjMap());
-        createTreeContextMenu(m_treeViewer, contextMenuMgr);
-        Plugin.getHelpSystem().setHelp(parent,
-            ContextHelpIds.OBJECT_MAP_EDITOR);
-        
-        FocusListener activeTreeListener = new FocusAdapter() {
-            public void focusGained(FocusEvent e) {
-                m_activeTreeViewer = m_treeViewer;
-            }
-        };
-        
-        m_treeViewer.getTree().addFocusListener(activeTreeListener);
-        ft.getFilterControl().addFocusListener(activeTreeListener);
-        
-        return treeComp;
-    }
-    
-    /**
      * Creates the split pane page of the editor.
      * 
      * @param parent The parent composite.
@@ -609,13 +532,13 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         m_splitPaneSelectionProvider = new SelectionProviderIntermediate();
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
-        layout.verticalSpacing = 3;
-        layout.marginWidth = LayoutUtil.MARGIN_WIDTH;
-        layout.marginHeight = LayoutUtil.MARGIN_HEIGHT;
+        layout.verticalSpacing = 1;
+        layout.marginWidth = 1;
+        layout.marginHeight = 1;
         parent.setLayout(layout);
         SashForm mainSash = new SashForm(parent, SWT.VERTICAL);
         SashForm topSash = new SashForm(mainSash, SWT.HORIZONTAL);
-
+        
         m_compNameTreeViewer = createSplitPaneViewer(topSash, 
                 "ObjectMappingEditor.UnAssignedLogic", //$NON-NLS-1$
                 getAut().getObjMap().getUnmappedLogicalCategory(),
@@ -629,7 +552,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 getAut().getObjMap().getUnmappedTechnicalCategory(),
                 contextMenuMgr);
 
-        m_mappedComponentTreeViewer = createSplitPaneViewer(mainSash,
+        m_mappedComponentTreeViewer = createMappedSplitPaneViewer(mainSash,
                 "ObjectMappingEditor.Assigned", //$NON-NLS-1$
                 getAut().getObjMap().getMappedCategory(),
                 contextMenuMgr);
@@ -640,7 +563,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         
         Plugin.getHelpSystem().setHelp(parent,
             ContextHelpIds.OBJECT_MAP_EDITOR);
-        
+        mainSash.setWeights(DEFAULT_SASH_WEIGHTS);
         return mainSash;
     }
 
@@ -699,6 +622,70 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 GridDataFactory.defaultsFor(titleLabel).create());
 
         final TreeViewer viewer = new TreeViewer(composite);
+        
+        viewer.getTree().setLayoutData(
+                GridDataFactory.fillDefaults().grab(true, true).create());
+        setProviders(viewer, getCompMapper());
+        viewer.setUseHashlookup(true);
+        viewer.setSorter(new ObjectMappingTreeSorter());
+        viewer.setComparer(new PersistentObjectComparer());
+        viewer.setInput(topLevelCategory);
+
+        Transfer[] transfers = 
+            new Transfer[] { 
+                org.eclipse.jface.util.LocalSelectionTransfer.getTransfer()};
+        viewer.addDragSupport(DND.DROP_MOVE, transfers,
+                new LimitingDragSourceListener(viewer, getAut()));
+        viewer.addDropSupport(DND.DROP_MOVE, transfers, 
+            new OMDropTargetListener(this, viewer));
+
+        createTreeContextMenu(viewer, contextMenuMgr);
+
+        DialogUtils.setWidgetName(viewer.getTree(), title);
+        
+        IFocusService focusService = 
+            (IFocusService)getSite().getService(IFocusService.class);
+        
+        focusService.addFocusTracker(viewer.getTree(), title);
+        viewer.getTree().addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                m_activeTreeViewer = viewer;
+            }
+        });
+        
+        return viewer;
+    }
+    
+    /**
+     * Creates and returns a tree viewer suitable for use in the split pane 
+     * view.
+     * 
+     * @param parent The parent composite for the viewer.
+     * @param title the title to display for the viewer.
+     * @param topLevelCategory The input for the viewer.
+     * @param contextMenuMgr The manager for the context menu for the created
+     *                       tree.
+     * @return the created viewer.
+     */
+    private TreeViewer createMappedSplitPaneViewer(
+            Composite parent,
+            String title,
+            IObjectMappingCategoryPO topLevelCategory,
+            MenuManager contextMenuMgr) {
+
+        Composite composite = new Composite(parent, SWT.NONE);
+        composite.setLayout(new GridLayout());
+        Label titleLabel = new Label(composite, SWT.NONE);
+        titleLabel.setText(I18n.getString(title));
+        titleLabel.setLayoutData(
+                GridDataFactory.defaultsFor(titleLabel).create());
+        
+        final FilteredTree ft = new JBFilteredTree(composite, SWT.MULTI
+                | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER, 
+                new ObjectMappingEditorPatternFilter(), true);
+        setTreeFilterText(ft.getFilterControl());
+        
+        final TreeViewer viewer = ft.getViewer();
         
         viewer.getTree().setLayoutData(
                 GridDataFactory.fillDefaults().grab(true, true).create());
@@ -825,7 +812,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
                 IWritableComponentNameCache compNameCache = 
                     editSupport.getCompMapper().getCompNameCache();
-                Set<IComponentNamePO> renamedCompNames = 
+                Set<IComponentNamePO> renamedCompNames =  
                     new HashSet<IComponentNamePO>(
                             compNameCache.getRenamedNames());
                 Set<IComponentNamePO> reuseChangedCompNames = 
@@ -1018,7 +1005,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     public void reOpenEditor(IPersistentObject obj) throws PMException {
         getEditorHelper().setDirty(false);
-        Object [] expandedElements = m_treeViewer.getExpandedElements();
         getEditorHelper().getEditSupport().close();
         PersistableEditorInput input = new PersistableEditorInput(obj);
         try {
@@ -1030,15 +1016,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                     m_pageToSelectionProvider.get(getActivePage()));
             getSite().setSelectionProvider(m_selectionProvider);
             m_treeViewerUpdater =  new ComponentNameTreeViewerUpdater(
-                    m_treeViewer);
-            setProviders(m_treeViewer, getCompMapper());
+                    getActiveTreeViewer());
             final IObjectMappingPO om = getAut().getObjMap();
-            m_treeViewer.setInput(om);
-            // Clearing the selection seems to help prevent the behavior 
-            // noted in bug 334269
-            m_treeViewer.setSelection(StructuredSelection.EMPTY);
-            m_treeViewer.setExpandedElements(expandedElements);
-            m_treeViewer.expandToLevel(2);
 
             m_mappingConfigComponent.setInput(om);
             Map<TreeViewer, IObjectMappingCategoryPO> viewerToInput = 
@@ -1102,18 +1081,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * {@inheritDoc}
      */
     public void fireDirtyProperty(boolean isDirty) {
-        for (int i = 0; i < getPageCount(); i++) {
-            if (i != getActivePage()) {
-                // Perform refresh
-                if (i == TREE_PAGE_IDX) {
-                    Object [] expandedElements = 
-                        m_treeViewer.getExpandedElements();
-                    m_treeViewer.setInput(getAut().getObjMap());
-                    m_treeViewer.refresh();
-                    m_treeViewer.setExpandedElements(expandedElements);
-                }
-            }
-        }
         // fire property for change of dirty state
         firePropertyChange(IEditorPart.PROP_DIRTY);
         if (!isDirty) {
@@ -1121,21 +1088,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         }
     }
 
-    /**
-     * Signals the editor that a logical name has been added. The editor will
-     * react to this message such that the newly added name is contained in the
-     * editor's viewers.
-     */
-    public void logicalNameAdded() {
-        for (int i = 0; i < getPageCount(); i++) {
-            if (i == getActivePage()) {
-                if (i == TREE_PAGE_IDX) {
-                    m_treeViewer.refresh();
-                }
-            }
-        }
-    }
-    
     /**
      * {@inheritDoc}
      */
@@ -1223,7 +1175,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             
             IStructuredSelection techNameSelection = 
                     new StructuredSelection(alteredOMA);
-            m_treeViewer.setSelection(techNameSelection);
             m_uiElementTreeViewer.setSelection(techNameSelection);
             m_mappedComponentTreeViewer.setSelection(techNameSelection);
         }
@@ -1239,7 +1190,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * call refresh() for all the different viewers in this editor
      */
     private void refreshAllViewer() {
-        m_treeViewer.refresh();
         m_uiElementTreeViewer.refresh();
         m_mappedComponentTreeViewer.refresh();
     }
@@ -1285,17 +1235,17 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public TreeViewer getTreeViewer() {
-        return m_treeViewer;
-    }
-    
-    /**
      * @return Returns the omEditorBP.
      */
     public OMEditorBP getOmEditorBP() {
         return m_omEditorBP;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public TreeViewer getTreeViewer() {
+        return getActiveTreeViewer();
     }
 
     /**
@@ -1320,10 +1270,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         }
         if (addedItems > 0) {
             getEditorHelper().setDirty(true);
-            if (getTreeViewer() != null) {
-                getTreeViewer().setSelection(
-                    new StructuredSelection(addedNodes.toArray()));
-            }
         }
         if (!isDirty()) {
             try {
@@ -1455,8 +1401,10 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * {@inheritDoc}
      */
     public TreeViewer[] getTreeViewers() {
-        return new TreeViewer[] {m_treeViewer, m_compNameTreeViewer, 
-            m_uiElementTreeViewer, m_mappedComponentTreeViewer};
+        return new TreeViewer[] { 
+            m_compNameTreeViewer, 
+            m_uiElementTreeViewer,
+            m_mappedComponentTreeViewer };
     }
 
     /**

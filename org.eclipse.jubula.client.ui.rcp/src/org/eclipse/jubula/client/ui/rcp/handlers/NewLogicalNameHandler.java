@@ -85,7 +85,6 @@ public class NewLogicalNameHandler extends AbstractNewComponentNameHandler {
             mapper.changeReuse(assoc, null, 
                     performOperation(newName, mapper).getGuid());
             objMap.getUnmappedLogicalCategory().addAssociation(assoc);
-            omEditor.logicalNameAdded();
             omEditor.getEditorHelper().setDirty(true);
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     objMap.getUnmappedLogicalCategory(), 

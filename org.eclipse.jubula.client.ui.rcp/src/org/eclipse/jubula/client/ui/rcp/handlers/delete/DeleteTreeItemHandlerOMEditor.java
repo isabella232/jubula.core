@@ -195,7 +195,7 @@ public class DeleteTreeItemHandlerOMEditor
 
     /**
      * @param editor The editor containing the viewer to refresh
-     * @param newSelection The elemented that should be selected after the
+     * @param newSelection The element that should be selected after the
      *                     refresh. 
      */
     private void refreshViewer(ObjectMappingMultiPageEditor editor,
