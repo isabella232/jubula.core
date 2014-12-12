@@ -74,7 +74,6 @@ import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.commands.CAPTestResponseCommand;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
-import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.communication.internal.ICommand;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessageFactory;
@@ -1874,7 +1873,12 @@ public class TestExecution {
                 if (LOG.isDebugEnabled()) {
                     LOG.debug(Messages.RequestingAUTAgentToCloseAUTConnection);
                 }
-                removeResetAndCloseConnection();
+                AUTConnection.getInstance().getCommunicator().
+                    getConnectionManager().remove(
+                        AUTConnection.getInstance()
+                            .getCommunicator().getConnection());
+                AUTConnection.getInstance().reset();
+                AUTConnection.getInstance().close();
                 boolean wasInterrupted = Thread.interrupted();
                 AutAgentRegistration.getInstance().addListener(
                         registrationListener);
@@ -1895,11 +1899,6 @@ public class TestExecution {
                         if (endTime == 0 && registrationListener
                                 .hasAutTerminated()) {
                             endTime = System.currentTimeMillis();
-                        }
-                        if (System.currentTimeMillis()
-                                > (startTime + terminationTimeout)) {
-                            throw new JBException("Timeout occured while waiting for AUT to terminate", //$NON-NLS-1$
-                                    MessageIDs.E_TIMEOUT_CONNECTION);
                         }
                         Thread.sleep(250);
                     } catch (InterruptedException e) {
@@ -1938,19 +1937,6 @@ public class TestExecution {
                     }
                 }
             }
-        }
-        /**
-         * removes the connection from the connection manager, resets it and closes it.
-         * @throws ConnectionException could be thrown from {@link AUTConnection}
-         */
-        private void removeResetAndCloseConnection()
-                throws ConnectionException {
-            AUTConnection autConnection = AUTConnection.getInstance();
-            Communicator communicator = autConnection.getCommunicator();
-            communicator.getConnectionManager().remove(
-                    communicator.getConnection());
-            autConnection.reset();
-            autConnection.close();
         }
 
         /**
