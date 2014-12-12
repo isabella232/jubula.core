@@ -661,7 +661,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * view.
      * 
      * @param parent The parent composite for the viewer.
-     * @param title the title to display for the viewer.
+     * @param i18nTitleKey the title to display for the viewer.
      * @param topLevelCategory The input for the viewer.
      * @param contextMenuMgr The manager for the context menu for the created
      *                       tree.
@@ -669,16 +669,12 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     private TreeViewer createMappedSplitPaneViewer(
             Composite parent,
-            String title,
+            String i18nTitleKey,
             IObjectMappingCategoryPO topLevelCategory,
             MenuManager contextMenuMgr) {
 
         Composite composite = new Composite(parent, SWT.NONE);
         composite.setLayout(new GridLayout());
-        Label titleLabel = new Label(composite, SWT.NONE);
-        titleLabel.setText(I18n.getString(title));
-        titleLabel.setLayoutData(
-                GridDataFactory.defaultsFor(titleLabel).create());
         
         final FilteredTree ft = new JBFilteredTree(composite, SWT.MULTI
                 | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER, 
@@ -705,12 +701,12 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
         createTreeContextMenu(viewer, contextMenuMgr);
 
-        DialogUtils.setWidgetName(viewer.getTree(), title);
+        DialogUtils.setWidgetName(viewer.getTree(), i18nTitleKey);
         
         IFocusService focusService = 
             (IFocusService)getSite().getService(IFocusService.class);
         
-        focusService.addFocusTracker(viewer.getTree(), title);
+        focusService.addFocusTracker(viewer.getTree(), i18nTitleKey);
         viewer.getTree().addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {
                 m_activeTreeViewer = viewer;
