@@ -839,7 +839,7 @@ public class Communicator {
                 try {
                     response = command.execute();
                 } catch (Throwable t) {
-                    log.error("catched exception from '" //$NON-NLS-1$
+                    log.error("caught exception from '" //$NON-NLS-1$
                             + command.getClass().getName()
                             + ".execute()'", t); //$NON-NLS-1$
                 }
