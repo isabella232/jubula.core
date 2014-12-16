@@ -25,12 +25,8 @@ import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
  */
 public class ParamUtils {
     
-    /** Pattern for detecting parameters like =PARAM */
-    private static Pattern simpleParameter = Pattern.compile("^=([a-zA-Z0-9_]+)"); //$NON-NLS-1$
-
     /** Pattern for detecting parameters like ={PARAM} */
-    private static Pattern parameterWithBrackets = Pattern.compile(
-            "^=\\{([a-zA-Z0-9_]+)\\}"); //$NON-NLS-1$
+    private static Pattern simpleParameter = Pattern.compile("^=\\{?([a-zA-Z0-9_]+)\\}?"); //$NON-NLS-1$
     
     /** Pattern for detecting parameters like C:/Users/={USER}/workspace */
     private static Pattern oneParameter = Pattern.compile(
@@ -70,25 +66,22 @@ public class ParamUtils {
             value = "null // TODO: <code>null</code> found as test data - check and fix in ITE"; //$NON-NLS-1$
         } else {
             value = executeEscapes(value);
-            if (variable.matcher(value).matches()) {
+            if (function.matcher(value).matches()) {
+                return "null // TODO: Function usage - call a corresponding method instead of this ITE function: \"" //$NON-NLS-1$
+                        + value + "\" "; //$NON-NLS-1$
+            } else if (simpleParameter.matcher(value).matches()) {
+                value = value.replaceAll(simpleParameter.pattern(), "$1"); //$NON-NLS-1$
+            } else if (variable.matcher(value).matches()
+                    || oneParameter.matcher(value).matches()) {
                 while (variable.matcher(value).matches()) {
                     value = value.replaceAll(variable.pattern(),
                             "$1\" + VariableStore.getInstance().getValue(\"$2\") + \"$3"); //$NON-NLS-1$
                 }
-                value = "\"" + value + "\""; //$NON-NLS-1$ //$NON-NLS-2$
-            } else if (function.matcher(value).matches()) {
-                return "null // TODO: Function usage - call a corresponding method instead of this ITE function: \"" //$NON-NLS-1$
-                        + value + "\" "; //$NON-NLS-1$
-            } else if (parameterWithBrackets.matcher(value).matches()) {
-                value = value.replaceAll(parameterWithBrackets.pattern(), "$1"); //$NON-NLS-1$
-            } else if (simpleParameter.matcher(value).matches()) {
-                value = value.replaceAll(simpleParameter.pattern(), "$1"); //$NON-NLS-1$
-            } else if (oneParameter.matcher(value).matches()) {
                 while (oneParameter.matcher(value).matches()) {
                     value = value.replaceAll(oneParameter.pattern(),
                             "$1\" + $2 + \"$3"); //$NON-NLS-1$
                 }
-                value = "\"" + value + "\""; //$NON-NLS-1$ //$NON-NLS-2$
+                value = StringConstants.QUOTE + value + StringConstants.QUOTE;
             } else if (paramType.equals(TestDataConstants.STR)
                     || paramType.equals(TestDataConstants.VARIABLE)) {
                 value = StringConstants.QUOTE + value + StringConstants.QUOTE;
