@@ -84,46 +84,11 @@ public class MouseMovementStrategy {
         }
 
 
-        int totalSteps = path.size();
-        if (path.isEmpty() || !to.equals(path.get(totalSteps - 1))) {
+        if (path.isEmpty() || !to.equals(path.get(path.size() - 1))) {
             path.add(new Point(to));
         }
-
-        List<Point> optimizedPath = new ArrayList<Point>();
         
-        int stepFactor = 10;
-        int amountOfSteps = 1 + Math.round(totalSteps / stepFactor);
-        boolean turningPointInserted = false;
-        
-        for (int i = 1; i < amountOfSteps; i++) {
-            double distance = (-2d / Math.pow(amountOfSteps, 3))
-                    * Math.pow(i, 3) + (3d / Math.pow(amountOfSteps, 2))
-                    * Math.pow(i, 2);
-            int index = Math.min((int) Math.round((distance * totalSteps)),
-                    totalSteps - 1);
-            Point nextPoint = path.get(index);
-            if (!turningPointInserted) {
-                if (firstHorizontal) {
-                    float turningPointDistance = ((float) xCoords.length)
-                            / totalSteps;
-                    if (distance > turningPointDistance) {
-                        optimizedPath.add(new Point(to.x, from.y));
-                        turningPointInserted = true;
-                    }
-                } else {
-                    float turningPointDistance = ((float) yCoords.length)
-                            / totalSteps;
-                    if (distance > turningPointDistance) {
-                        optimizedPath.add(new Point(from.x, to.y));
-                        turningPointInserted = true;
-                    }
-                }
-            }
-            optimizedPath.add(nextPoint);
-        }
-        optimizedPath.add(new Point(to.x, to.y));
-        
-        return optimizedPath.toArray(new Point [optimizedPath.size()]);
+        return path.toArray(new Point [path.size()]);
     }
 
     /**
