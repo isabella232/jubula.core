@@ -70,4 +70,15 @@
       </programlisting>
     </listitem>
   </itemizedlist>
+  <para>
+  	<emphasis role="Strong">Updated JRE in the Windows and Linux installers</emphasis>
+  </para>
+  <itemizedlist>
+  	<listitem>
+  		<para>
+  		The Windows and Linux installers now use JRE 1.7.0_72. The ITE is executed with this
+  		version on Windows and Linux.
+  		</para>
+  	</listitem>
+  </itemizedlist>
 </section>
