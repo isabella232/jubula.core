@@ -603,26 +603,27 @@ public class <%=className%> {
         
         catch (<%=reentryPropertyToException.get(eventType)%> e) {
             log.debug("Exception during test execution", e);
+            // TODO: Commented out event handler. (Commenting in does not necessarily lead to same test execution as in ITE)
                     <%
                     int rowCount = eventTC.getDataManager().getDataSetCount();
                         int row = 0;
                         do {%>
-            new <%=eventHandlerName%>(rtc<%if (childCompIdentifierNamesIterator.hasNext()) {%>,<%}%>
+            //new <%=eventHandlerName%>(rtc<%if (childCompIdentifierNamesIterator.hasNext()) {%>,<%}%>
             <%while (childCompIdentifierNamesIterator.hasNext()) {
                 String childCompIdentifierName = childCompIdentifierNamesIterator.next();%>
-                    <%=childCompIdentifierName%><%if (childCompIdentifierNamesIterator.hasNext()) {%>,<%}%>
+                    //<%=childCompIdentifierName%><%if (childCompIdentifierNamesIterator.hasNext()) {%>,<%}%>
             <%}%>
-                ).execute(
+                //).execute(
                             <%childParamIterator = eventTC.getParameterListIter();
                             while (childParamIterator.hasNext()) {
                                 IParamDescriptionPO param = childParamIterator.next();
                                 String paramValue = ParamUtils.getValueForParam(eventTC, param, row, locale);%>
-                        <%=paramValue%>
+                        //<%=paramValue%>
                         
-                        <%if(childParamIterator.hasNext()){%>,<%}%>
+                        <%if(childParamIterator.hasNext()){%>//,<%}%>
                             <%}%>
                             <%row++;%>
-                        );
+                        //);
                         <%} while(row < rowCount);%>
         }
                 <%} else if (eventTC.getReentryProp().equals(ReentryProperty.CONTINUE)) {
