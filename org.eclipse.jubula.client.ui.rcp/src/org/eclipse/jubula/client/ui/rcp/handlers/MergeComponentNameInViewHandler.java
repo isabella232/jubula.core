@@ -41,36 +41,39 @@ public class MergeComponentNameInViewHandler
 
         // Dialog
         IComponentNamePO selectedCompNamePo = openDialog(compNames);
-        
+
         if (selectedCompNamePo == null) {
             // cancel operation
             return null;
         }
 
-        EntityManager masterSession = 
-            GeneralStorage.getInstance().getMasterSession();
-        EntityTransaction tx = 
-            Persistor.instance().getTransaction(masterSession);
-        
+        EntityManager masterSession = GeneralStorage.getInstance()
+                .getMasterSession();
+        Persistor persistor = Persistor.instance();
+        EntityTransaction tx = persistor.getTransaction(masterSession);
+
         // Make sure that we're using Component Names from the Master Session
         Set<IComponentNamePO> inSessionCompNames = 
-            new HashSet<IComponentNamePO>();
-        for (IComponentNamePO cn : compNames) {
-            inSessionCompNames.add(masterSession.find(
-                            cn.getClass(), cn.getId()));
-        }
-        
-        performOperation(inSessionCompNames, selectedCompNamePo);
+                new HashSet<IComponentNamePO>();
 
         try {
-            Persistor.instance().commitTransaction(masterSession, tx);
+            for (IComponentNamePO cn : compNames) {
+                IComponentNamePO compName = masterSession
+                        .find(cn.getClass(), cn.getId());
+                masterSession.refresh(compName);
+                persistor.lockPO(masterSession, compName);
+                inSessionCompNames.add(compName);
+            }
+            
+            performOperation(inSessionCompNames, selectedCompNamePo);
+            persistor.commitTransaction(masterSession, tx);
             fireChangeEvents(inSessionCompNames);
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
         } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleProjectDeletedException();
         }
-        
+
         return null;
     }
 
