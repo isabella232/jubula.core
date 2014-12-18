@@ -36,7 +36,9 @@ import org.eclipse.jubula.client.core.constants.TestExecutionConstants;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ProjectVersion;
@@ -285,7 +287,7 @@ public class JobConfiguration {
 
     /**
      * initializes the job configuration object after loading project
-     * validates if choosen configuration is valid
+     * validates if chosen configuration is valid
      */
     public void initAndValidate() {
         // searching for testsuites with the given names
@@ -300,10 +302,16 @@ public class JobConfiguration {
         Validate.isTrue((m_testSuiteNames.size() == m_testSuites.size()), 
             Messages.JobConfigurationValidateTestSuiteExist);
 
-        if (m_testJobName != null && !StringUtils.isEmpty(m_testJobName)) {
+        if (StringUtils.isNotEmpty(m_testJobName)) {
             for (ITestJobPO tj : TestJobBP.getListOfTestJobs()) {
                 if (tj.getName().equals(m_testJobName)) {
                     m_testJob = tj;
+                    List<INodePO> refTestSuiteList = tj
+                            .getUnmodifiableNodeList();
+                    for (INodePO node : refTestSuiteList) {
+                        IRefTestSuitePO refTestSuite = (IRefTestSuitePO) node;
+                        m_testSuites.add(refTestSuite.getTestSuite());
+                    }
                 }
             }
             Validate.notNull(m_testJob, 

@@ -54,6 +54,8 @@ public class Messages extends NLS {
     public static String ExecutionControllerServerNotInstantiated;
     public static String ExecutionControllerTestJobBegin;
     public static String ExecutionControllerTestSuiteCompleteness;
+    public static String ExecutionControllerTestSuiteCompletenessOk;
+    public static String ExecutionControllerTestSuiteCompletenessNOk;
     public static String ExecutionControllerTestSuiteBegin;
     public static String ExecutionControllerTestSuiteEnd;
     public static String ReceivedShutdownCommand;

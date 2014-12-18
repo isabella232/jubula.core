@@ -511,22 +511,20 @@ public class ExecutionController implements IAUTServerEventListener,
             while (m_idle && !m_stopProcessing) {
                 TimeUtil.delay(50);
             }
-            if (m_job.getActualTestSuite() != null 
-                    && !m_stopProcessing
+            if (m_job.getActualTestSuite() != null && !m_stopProcessing
                     && !m_idle && !m_isFirstAutStart) {
-   
+                ITestSuitePO ts = m_job.getActualTestSuite();
                 m_idle = true;
                 sysOut(StringConstants.TAB
-                    + NLS.bind(Messages.ExecutionControllerTestSuiteBegin,
-                        m_job.getActualTestSuite().getName()));
+                        + NLS.bind(Messages.ExecutionControllerTestSuiteBegin,
+                                ts.getName()));
                 ClientTest.instance().startTestSuite(
-                    m_job.getActualTestSuite(),
-                    m_job.getLanguage(),
-                    m_startedAutId != null ? m_startedAutId : m_job.getAutId(), 
-                    m_job.isAutoScreenshot(),
-                    null,
-                    m_job.getNoRunOptMode());
-            } 
+                        ts,
+                        m_job.getLanguage(),
+                        m_startedAutId != null ? m_startedAutId : m_job
+                                .getAutId(), m_job.isAutoScreenshot(), null,
+                        m_job.getNoRunOptMode());
+            }
         }
     }
 
@@ -874,7 +872,10 @@ public class ExecutionController implements IAUTServerEventListener,
         sysOut(Messages.ExecutionControllerProjectCompleteness);
         m_job.initAndValidate();
         boolean noErrors = true;
-        for (ITestSuitePO ts : m_job.getTestSuites()) {
+        Set<ITestSuitePO> distinctListOfTs = new HashSet<ITestSuitePO>();
+        distinctListOfTs.addAll(m_job.getTestSuites());
+        for (ITestSuitePO ts : distinctListOfTs) {
+            boolean noError = true;
             CompletenessGuard.checkAll(m_job.getLanguage(), ts);
             sysOut(NLS.bind(Messages.ExecutionControllerTestSuiteCompleteness,
                     ts.getName()));
@@ -886,6 +887,12 @@ public class ExecutionController implements IAUTServerEventListener,
                 if (problem.hasUserMessage()) {
                     sysOut(problem.getUserMessage());
                 }
+                noError = false;
+            }
+            if (noError) {
+                sysOut(Messages.ExecutionControllerTestSuiteCompletenessOk);
+            } else {
+                sysOut(Messages.ExecutionControllerTestSuiteCompletenessNOk);
                 noErrors = false;
             }
         }
