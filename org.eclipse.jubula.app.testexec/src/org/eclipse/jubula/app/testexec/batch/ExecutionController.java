@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
@@ -535,9 +537,30 @@ public class ExecutionController implements IAUTServerEventListener,
         sysOut(StringConstants.TAB
                 + NLS.bind(Messages.ExecutionControllerTestJobBegin, m_job
                         .getTestJob().getName()));
-        ClientTest.instance().startTestJob(
+        sysOut(StringConstants.TAB
+                + NLS.bind(
+                        Messages.ExecutionControllerTestJobExpectedTestSuites,
+                new Object[] { m_job.getTestJob().getName(),
+                                m_job.getTestJob().getNodeListSize()}));
+        List<INodePO> executedTestSuites = ClientTest.instance().startTestJob(
                 m_job.getTestJob(), m_job.getLanguage(),
                 m_job.isAutoScreenshot(), m_job.getNoRunOptMode());
+        sysOut(StringConstants.TAB
+                + NLS.bind(
+                        Messages.ExecutionControllerTestJobExecutedTestSuites,
+                        new Object[] { m_job.getTestJob().getName(),
+                                executedTestSuites.size()}));
+        Iterator<INodePO> tsIterator = m_job.getTestJob().getNodeListIterator();
+        while (tsIterator.hasNext()) {
+            INodePO testsuite = tsIterator.next();
+            if (!executedTestSuites.contains(testsuite)) {
+                sysErr(StringConstants.TAB
+                        + NLS.bind(Messages.
+                            ExecutionControllerTestJobUnsuccessfulTestSuites,
+                            new Object[] { m_job.getTestJob().getName(),
+                                    testsuite.getName()}));
+            }
+        }
     }
 
     /**

@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.SortedSet;
@@ -27,6 +28,7 @@ import org.eclipse.jubula.client.core.events.IAUTServerEventListener;
 import org.eclipse.jubula.client.core.events.IServerEventListener;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -151,9 +153,10 @@ public interface IClientTest {
      *            whether screenshots should be automatically taken in case of
      *            test execution errors
      * @param noRunOptMode The mode of no run-option if it was specified or null otherwise
+     * @return list of actually executed test suites
      */
-    public abstract void startTestJob(ITestJobPO testJob, Locale locale,
-            boolean autoScreenshot, String noRunOptMode);
+    public abstract List<INodePO> startTestJob(ITestJobPO testJob,
+            Locale locale, boolean autoScreenshot, String noRunOptMode);
     
     /**
      * Stops test execution.

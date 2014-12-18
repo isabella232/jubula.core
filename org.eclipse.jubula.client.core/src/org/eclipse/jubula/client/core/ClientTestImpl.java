@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.core;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -544,9 +545,10 @@ public class ClientTestImpl implements IClientTest {
     }
 
     /** {@inheritDoc} */
-    public void startTestJob(ITestJobPO testJob, Locale locale,
+    public List<INodePO> startTestJob(ITestJobPO testJob, Locale locale,
             boolean autoScreenshot, String noRunOptMode) {
         TestExecution.getInstance().setStartedTestJob(testJob);
+        List<INodePO> executedTestSuites = new ArrayList<INodePO>();
         m_testjobStartTime = new Date();
         try {
             final AtomicBoolean isTestExecutionFailed = 
@@ -585,6 +587,7 @@ public class ClientTestImpl implements IClientTest {
                 };
             List<INodePO> refTestSuiteList = 
                 testJob.getUnmodifiableNodeList();
+            
             for (INodePO node : refTestSuiteList) {
                 IRefTestSuitePO refTestSuite = (IRefTestSuitePO)node;
                 isTestExecutionFailed.set(false);
@@ -597,6 +600,9 @@ public class ClientTestImpl implements IClientTest {
                 while (!isTestExecutionFinished.get()) {
                     TimeUtil.delay(500);
                 }
+                if (!isTestExecutionFailed.get()) {
+                    executedTestSuites.add(refTestSuite);
+                }                
                 if (!continueTestJobExecution(testExecutionState, 
                         testExecutionMessageId)) {
                     break;
@@ -605,6 +611,7 @@ public class ClientTestImpl implements IClientTest {
         } finally {
             TestExecution.getInstance().setStartedTestJob(null);
         }
+        return executedTestSuites;
     }
 
 
