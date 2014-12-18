@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.eclipse.jubula.toolkit.common.IToolKitProvider;
+import org.eclipse.jubula.toolkit.common.AbstractToolkitProvider;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.swt.widgets.Composite;
@@ -24,9 +24,9 @@ import org.eclipse.swt.widgets.Composite;
  * @author BREDEX GmbH
  * @created 24.04.2007
  */
-public class SWTToolkitProvider implements IToolKitProvider {
+public class SWTToolkitProvider extends AbstractToolkitProvider {
     /** <code>I18N_PROPERTIES</code> */
-    private static final String I18N_PROPERTIES = 
+    private static final String BUNDLE = 
         "org.eclipse.jubula.toolkit.swt.provider.I18nStrings"; //$NON-NLS-1$
 
     /** {@inheritDoc} */
@@ -41,11 +41,12 @@ public class SWTToolkitProvider implements IToolKitProvider {
 
     /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {
-        return ToolkitUtils.getURL(Activator.getDefault(), COMP_CONFIG_PATH);
+        return ToolkitUtils.getURL(Activator.getDefault().getBundle(),
+                COMP_CONFIG_PATH);
     }
-
+    
     /** {@inheritDoc} */
-    public ResourceBundle getI18nResourceBundle() {
-        return ResourceBundle.getBundle(I18N_PROPERTIES);
+    public ResourceBundle getResourceBundle() {
+        return ResourceBundle.getBundle(BUNDLE);
     }
 }

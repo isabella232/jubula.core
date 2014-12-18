@@ -17,18 +17,18 @@ import org.eclipse.jubula.examples.extension.javafx.toolkit.Activator;
 import org.eclipse.jubula.toolkit.common.AbstractToolkitProvider;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 
-public class MyToolKitProvider extends AbstractToolkitProvider {
+public class MyToolkitProvider extends AbstractToolkitProvider {
 	/** the bundle location */
     public static final String BUNDLE = "org.eclipse.jubula.examples.extension.javafx.toolkit.i18n.i18n"; //$NON-NLS-1$
 
     /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {
-        return ToolkitUtils.getURL(Activator.getDefault(),
-                "resources/xml/ComponentConfiguration.xml"); //$NON-NLS-1$
+        return ToolkitUtils.getURL(Activator.getDefault().getBundle(),
+                COMP_CONFIG_PATH);
     }
-
+    
     /** {@inheritDoc} */
-    public ResourceBundle getI18nResourceBundle() {
+    public ResourceBundle getResourceBundle() {
         return ResourceBundle.getBundle(BUNDLE);
     }
 }

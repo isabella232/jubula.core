@@ -21,10 +21,12 @@
 		<componentClass name="org.eclipse.draw2d.FigureCanvas" />
 		<action name="CompSystem.CheckFigureExists" changed="4.0">
 			<method>rcCheckFigureExists</method>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -34,7 +36,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>	
-			<param name="CompSystem.Exists">
+			<param name="CompSystem.Exists"
+                   descriptionKey="CompSystem.Exists.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -45,10 +48,12 @@
 		</action>
 		<action name="CompSystem.CheckToolExists" changed="4.0">
 			<method>rcCheckToolExists</method>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -58,7 +63,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>	
-			<param name="CompSystem.Exists">
+			<param name="CompSystem.Exists"
+                   descriptionKey="CompSystem.Exists.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -69,10 +75,12 @@
 		</action>
 		<action name="CompSystem.ClickFigure" changed="4.0">
 			<method>rcClickFigure</method>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -82,11 +90,13 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.ClickCount">
+			<param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 				<valueSet>
@@ -98,10 +108,12 @@
 		</action>
 		<action name="CompSystem.ClickInFigure" changed="1.4">
 			<method>rcClickInFigure</method>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -111,11 +123,13 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.ClickCount">
+			<param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 				<valueSet>
@@ -124,11 +138,13 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.XPos">
+			<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -136,11 +152,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -151,10 +169,12 @@
 		</action>
 		<action name="CompSystem.SelectToolByTextPath" changed="4.0">
 			<method>rcSelectTool</method>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -164,30 +184,20 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.ClickCount">
+			<param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 			</param>
 		</action>
 		<action name="CompSystem.ClickConnection" changed="4.0">
 			<method>rcClickConnection</method>
-			<param name="CompSystem.SourceTextPath">
+			<param name="CompSystem.SourceTextPath"
+                   descriptionKey="CompSystem.SourceTextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.SourceOperator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
-				<valueSet>
-					<element name="CompSystem.Equals" value="equals"/>
-					<element name="CompSystem.NotEquals" value="not equals"/>
-					<element name="CompSystem.MatchesRegExp" value="matches"/>
-					<element name="CompSystem.SimpleMatch" value="simple match"/>
-				</valueSet>
-			</param>
-			<param name="CompSystem.TargetTextPath">
-				<type>java.lang.String</type>
-			</param>
-			<param name="CompSystem.TargetOperator">
+			<param name="CompSystem.SourceOperator"
+                   descriptionKey="CompSystem.SourceOperator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -197,11 +207,28 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.ClickCount">
+			<param name="CompSystem.TargetTextPath"
+                   descriptionKey="CompSystem.TargetTextPath.descr" >
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.TargetOperator"
+                   descriptionKey="CompSystem.TargetOperator.descr" >
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 				<valueSet>
@@ -213,10 +240,12 @@
 		</action>
 		<action name="CompSystem.DragFigure" changed="4.0">
 			<method>rcDragFigure</method>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -226,7 +255,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>	
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 				<valueSet>
@@ -235,7 +265,8 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.ModifierSpecification">
+			<param name="CompSystem.ModifierSpecification"
+                   descriptionKey="CompSystem.ModifierSpecification.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>none</defaultValue>
 				<valueSet combinable="true">
@@ -248,11 +279,13 @@
 					<element name="CompSystem.Mod" value="mod"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.XPos">
+			<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -260,11 +293,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -276,10 +311,12 @@
 		
 		<action name="CompSystem.DropOnFigure" changed="4.0">
 			<method>rcDropOnFigure</method>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -289,11 +326,13 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>	
-			<param name="CompSystem.XPos">
+			<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -301,11 +340,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -313,17 +354,20 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.DelayBeforeDrop">
+			<param name="CompSystem.DelayBeforeDrop"
+                   descriptionKey="CompSystem.DelayBeforeDrop.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>100</defaultValue>
 			</param>
 		</action>
 		<action name="CompSystem.VerifyFigureProperty" changed="4.1">
 			<method>rcVerifyFigureProperty</method>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.TextOperator">
+			<param name="CompSystem.TextOperator"
+                   descriptionKey="CompSystem.TextOperator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -333,13 +377,16 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>	
-			<param name="CompSystem.PropertyName">
+			<param name="CompSystem.PropertyName"
+                   descriptionKey="CompSystem.PropertyName.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.PropertyValue">
+			<param name="CompSystem.PropertyValue"
+                   descriptionKey="CompSystem.PropertyValue.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.ValueOperator">
+			<param name="CompSystem.ValueOperator"
+                   descriptionKey="CompSystem.ValueOperator.descr" >
                 <type>java.lang.String</type>
                 <defaultValue>equals</defaultValue>
                 <valueSet>

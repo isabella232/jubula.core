@@ -650,7 +650,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
             
                 });
         final Set<String> paramTypes = ComponentBuilder.getInstance()
-            .getCompSystem().getDataTypes();
+            .getCompSystem().getAllDataTypes();
         
         final I18nComboBoxCellEditor i18nParamTypesComboBoxEditor = 
             new I18nComboBoxCellEditor(table, 

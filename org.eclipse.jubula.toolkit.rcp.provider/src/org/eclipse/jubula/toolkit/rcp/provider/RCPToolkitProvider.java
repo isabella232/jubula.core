@@ -27,11 +27,13 @@ public class RCPToolkitProvider extends SWTToolkitProvider {
 
     /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {
-        return ToolkitUtils.getURL(Activator.getDefault(), COMP_CONFIG_PATH);
+        return ToolkitUtils.getURL(Activator.getDefault().getBundle(),
+                COMP_CONFIG_PATH);
     }
-
+    
     /** {@inheritDoc} */
-    public ResourceBundle getI18nResourceBundle() {
-        return ResourceBundle.getBundle(I18N_PROPERTIES);
+    public ResourceBundle[] getResourceBundles() {
+        return new ResourceBundle[] { ResourceBundle
+                .getBundle(I18N_PROPERTIES) };
     }
 }

@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
-import org.eclipse.jubula.toolkit.common.IToolKitProvider;
+import org.eclipse.jubula.toolkit.common.IToolkitProvider;
 import org.eclipse.jubula.toolkit.common.PluginStarter;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
@@ -73,9 +73,9 @@ public class ComponentBuilder extends AbstractComponentBuilder {
             IConfigurationElement[] elements = extension
                 .getConfigurationElements();
             for (IConfigurationElement element : elements) {
-                IToolKitProvider provider;
+                IToolkitProvider provider;
                 try {
-                    provider = (IToolKitProvider) element
+                    provider = (IToolkitProvider) element
                          .createExecutableExtension(
                              ToolkitConstants.ATTR_ITOOLKITPROVIDER);
                     URL componentConfigurationURL = provider
@@ -86,12 +86,13 @@ public class ComponentBuilder extends AbstractComponentBuilder {
                     ToolkitDescriptor descr = 
                         createToolkitDescriptor(element, compSystem);
                     final ResourceBundle resourceBundle = provider
-                        .getI18nResourceBundle();
+                        .getResourceBundle();
                     if (resourceBundle == null) {
                         log.error(Messages.NoI18n + StringConstants.MINUS
-                            + Messages.ResourceBundleAvailable 
-                            + StringConstants.COLON + StringConstants.SPACE
-                            + String.valueOf(descr.getName())); 
+                                + Messages.ResourceBundleAvailable
+                                + StringConstants.COLON
+                                + StringConstants.SPACE
+                                + String.valueOf(descr.getName()));
                     }
                     CompSystemI18n.addResourceBundle(resourceBundle);
                     setToolkitDescriptorToComponents(compSystem, descr);

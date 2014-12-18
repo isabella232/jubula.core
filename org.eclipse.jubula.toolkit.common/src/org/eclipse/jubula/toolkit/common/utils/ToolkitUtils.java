@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.i18n.Messages;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -29,6 +28,7 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Composite;
+import org.osgi.framework.Bundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,19 +58,18 @@ public class ToolkitUtils {
     }
 
     /**
-     * Returns a (resolved) URL of the given Plugin and the given
-     * Plugin-relative path.
+     * Returns a (resolved) URL of the given bundle and the given
+     * bundle-relative path.
      * 
-     * @param plugin
-     *            the Plugin
-     * @param pluginRelPath
+     * @param bundle
+     *            the bundle
+     * @param bundleRelPath
      *            the relative path
-     * @return a (resolved) URL or null if the path could not be
-     *         resolved.
+     * @return a (resolved) URL or null if the path could not be resolved.
      */
-    public static URL getURL(Plugin plugin, String pluginRelPath) {
+    public static URL getURL(Bundle bundle, String bundleRelPath) {
         
-        URL unresolvedUrl = plugin.getBundle().getEntry(pluginRelPath);
+        URL unresolvedUrl = bundle.getEntry(bundleRelPath);
         URL fileURL = null;
         try {
             fileURL = FileLocator.resolve(unresolvedUrl);
@@ -79,7 +78,7 @@ public class ToolkitUtils {
             logMsg.append(Messages.CouldNotResolvePath);
             logMsg.append(StringConstants.COLON);
             logMsg.append(StringConstants.SPACE);
-            logMsg.append(pluginRelPath);
+            logMsg.append(bundleRelPath);
             logMsg.append(StringConstants.SPACE);
             logMsg.append(Messages.OfPlugin);
             logMsg.append(StringConstants.COLON);

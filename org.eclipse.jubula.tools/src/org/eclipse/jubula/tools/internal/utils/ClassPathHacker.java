@@ -30,22 +30,13 @@ public class ClassPathHacker {
     private static final Class[] PARAMETERS = new Class[]{URL.class};
 
     /**
-     * invis contructor
+     * hide contructor
      *
      */
     private ClassPathHacker() {
         //nothing
     }
     
-    /**
-     * AddFile
-     * @param s filename
-     * @throws IOException Error
-     */
-    public static void addFile(String s) throws IOException {
-        File f = new File(s);
-        addFile(f);
-    }
 
     /**
      * AddFile
@@ -58,7 +49,7 @@ public class ClassPathHacker {
 
     /**
      * AddFile
-     * @param u url
+     * @param u URL
      * @throws IOException Error
      */
     public static void addURL(URL u) throws IOException {

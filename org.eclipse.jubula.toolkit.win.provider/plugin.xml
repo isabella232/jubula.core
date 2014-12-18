@@ -12,7 +12,7 @@
    <extension
          point="org.eclipse.jubula.toolkit.common.toolkitsupport">
       <toolkit
-            IToolkitProvider="org.eclipse.jubula.toolkit.win.provider.ToolKitProvider"
+            IToolkitProvider="org.eclipse.jubula.toolkit.win.provider.ToolkitProvider"
             includes="com.bredexsw.guidancer.ConcreteToolkitPlugin"
             isUserToolkit="false"
             level="toolkit"

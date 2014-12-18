@@ -79,6 +79,9 @@ public class CompSystem {
 
     /** A List of all DataTypes */
     private Set<String> m_dataTypes = null;
+
+    /** Set of all parameter */
+    private Set<Param> m_parameter = null;
     
     /** Default constructor */
     public CompSystem() {
@@ -398,7 +401,7 @@ public class CompSystem {
     /**
      * @return A List of all DataTypes of the Actions.
      */
-    public Set<String> getDataTypes() {
+    public Set<String> getAllDataTypes() {
         if (m_dataTypes != null && !m_dataTypes.isEmpty()) {
             return m_dataTypes;
         }
@@ -412,6 +415,25 @@ public class CompSystem {
             }
         }
         return m_dataTypes;
+    }
+    
+    /**
+     * @return a set of all action parameters.
+     */
+    public Set<Param> getAllParameter() {
+        if (m_parameter != null && !m_parameter.isEmpty()) {
+            return m_parameter;
+        }
+        m_parameter = new HashSet<Param>();
+        final List<Component> components = getComponents();
+        for (Component component : components) {
+            for (Action action : component.getActions()) {
+                for (Param param : action.getParams()) {
+                    m_parameter.add(param);
+                }
+            }
+        }
+        return m_parameter;
     }
     
     /**

@@ -16,31 +16,19 @@ import java.util.ResourceBundle;
 import org.eclipse.jubula.toolkit.common.AbstractToolkitProvider;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 
-
 /**
  * @author BREDEX GmbH
  * @created 26.04.2007
  */
 public class ToolkitProvider extends AbstractToolkitProvider {
-
-    /**
-     * <code>I18N_PROPERTIES</code>
-     */
-    private static final String I18N_PROPERTIES = 
-        "org.eclipse.jubula.toolkit.base.provider.I18nStrings"; //$NON-NLS-1$
-
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {
-        return ToolkitUtils.getURL(Activator.getDefault(), COMP_CONFIG_PATH);
+        return ToolkitUtils.getURL(Activator.getDefault().getBundle(),
+                COMP_CONFIG_PATH);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public ResourceBundle getI18nResourceBundle() {
-        return ResourceBundle.getBundle(I18N_PROPERTIES);
+    /** {@inheritDoc} */
+    public ResourceBundle getResourceBundle() {
+        return ResourceBundle.getBundle("org.eclipse.jubula.toolkit.base.provider.I18nStrings"); //$NON-NLS-1$
     }
-
 }

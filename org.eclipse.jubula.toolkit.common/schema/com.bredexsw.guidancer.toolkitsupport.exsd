@@ -69,7 +69,7 @@
                   The Toolkit-Provider class must implement &apos;org.eclipse.jubula.toolkit.common.IToolKitProvider&apos;.
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.jubula.toolkit.common.IToolKitProvider"/>
+                  <meta.attribute kind="java" basedOn="org.eclipse.jubula.toolkit.common.IToolkitProvider"/>
                </appInfo>
             </annotation>
          </attribute>

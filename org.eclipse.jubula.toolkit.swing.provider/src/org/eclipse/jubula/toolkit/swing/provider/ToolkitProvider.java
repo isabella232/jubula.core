@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.eclipse.jubula.toolkit.common.IToolKitProvider;
+import org.eclipse.jubula.toolkit.common.IToolkitProvider;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.swt.widgets.Composite;
@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Composite;
  * @author BREDEX GmbH
  * @created 23.04.2007
  */
-public class ToolkitProvider implements IToolKitProvider {
+public class ToolkitProvider implements IToolkitProvider {
     /** <code>I18N_PROPERTIES</code> */
     private static final String I18N_PROPERTIES = 
         "org.eclipse.jubula.toolkit.swing.provider.I18nStrings"; //$NON-NLS-1$
@@ -40,11 +40,12 @@ public class ToolkitProvider implements IToolKitProvider {
 
     /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {
-        return ToolkitUtils.getURL(Activator.getDefault(), COMP_CONFIG_PATH);
+        return ToolkitUtils.getURL(Activator.getDefault().getBundle(),
+                COMP_CONFIG_PATH);
     }
-
+    
     /** {@inheritDoc} */
-    public ResourceBundle getI18nResourceBundle() {
+    public ResourceBundle getResourceBundle() {
         return ResourceBundle.getBundle(I18N_PROPERTIES);
     }
 }

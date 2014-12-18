@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Composite;
  * @author BREDEX GmbH
  * @created 19.04.2007
  */
-public interface IToolKitProvider {
+public interface IToolkitProvider {
     /** The default path to the ComponentConfiguration.xml */
     public static final String COMP_CONFIG_PATH = "resources/xml/ComponentConfiguration.xml"; //$NON-NLS-1$
     
@@ -47,7 +47,7 @@ public interface IToolKitProvider {
         throws ToolkitPluginException;
 
     /**
-     * @return the RecourceBundle for internationalization.
+     * @return the resource bundle for internationalization.
      */
-    public ResourceBundle getI18nResourceBundle();
+    public ResourceBundle getResourceBundle();
 }

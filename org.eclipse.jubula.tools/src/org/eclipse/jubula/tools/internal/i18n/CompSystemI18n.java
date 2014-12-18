@@ -64,8 +64,6 @@ public class CompSystemI18n {
         PLUGIN_BUNDLES.add(bundle);
     }
     
-    
-    
     /**
      * Gets the internationalized String by a given key.
      * 

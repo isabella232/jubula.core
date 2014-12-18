@@ -19,10 +19,12 @@
 		<componentClass name="org.eclipse.swt.widgets.ToolItem" />
 		<action name="CompSystem.SelectMenuItem" changed="1.12">
 			<method>rcSelectContextMenuItem</method>
-			<param name="CompSystem.MenuPath">
+			<param name="CompSystem.MenuPath"
+                   descriptionKey="CompSystem.MenuPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -35,16 +37,19 @@
 		</action>
 		<action name="CompSystem.SelectMenuItemByIndexpath" changed="1.11">
 			<method>rcSelectContextMenuItemByIndexpath</method>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.VerifyEnabledByTextpath" changed="1.12">
 			<method>rcVerifyContextMenuEnabled</method>
-			<param name="CompSystem.MenuPath">
+			<param name="CompSystem.MenuPath"
+                   descriptionKey="CompSystem.MenuPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -54,7 +59,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.IsEnabled">
+			<param name="CompSystem.IsEnabled"
+                   descriptionKey="CompSystem.IsEnabled.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -65,10 +71,12 @@
 		</action>
 		<action name="CompSystem.VerifyEnabledByIndexpath" changed="1.14">
 			<method>rcVerifyContextMenuEnabledByIndexpath</method>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.IsEnabled">
+			<param name="CompSystem.IsEnabled"
+                   descriptionKey="CompSystem.IsEnabled.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -79,10 +87,12 @@
 		</action>
 		<action name="CompSystem.VerifyExistsByTextpath" changed="1.12">
 			<method>rcVerifyContextMenuExists</method>
-			<param name="CompSystem.MenuPath">
+			<param name="CompSystem.MenuPath"
+                   descriptionKey="CompSystem.MenuPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -92,7 +102,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.IsExisting">
+			<param name="CompSystem.IsExisting"
+                   descriptionKey="CompSystem.IsExisting.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -103,10 +114,12 @@
 		</action>
 		<action name="CompSystem.VerifyExistsByIndexpath" changed="1.14">
 			<method>rcVerifyContextMenuExistsByIndexpath</method>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.IsExisting">
+			<param name="CompSystem.IsExisting"
+                   descriptionKey="CompSystem.IsExisting.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -117,10 +130,12 @@
 		</action>
 		<action name="CompSystem.VerifySelectedByTextpath" changed="1.12">
 			<method>rcVerifyContextMenuSelected</method>
-			<param name="CompSystem.MenuPath">
+			<param name="CompSystem.MenuPath"
+                   descriptionKey="CompSystem.MenuPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -130,7 +145,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.IsSelected">
+			<param name="CompSystem.IsSelected"
+                   descriptionKey="CompSystem.IsSelected.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -141,10 +157,12 @@
 		</action>
 		<action name="CompSystem.VerifySelectedByIndexpath" changed="1.14">
 			<method>rcVerifyContextMenuSelectedByIndexpath</method>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.IsSelected">
+			<param name="CompSystem.IsSelected"
+                   descriptionKey="CompSystem.IsSelected.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -239,7 +257,8 @@
 		<componentClass name="org.eclipse.swt.widgets.Tree" />
 		<action name="CompSystem.VerifyCheckboxOfSelectedEntry" changed="4.1">
 			<method>rcVerifySelectedCheckbox</method>
-			<param name="CompSystem.Checked">
+			<param name="CompSystem.Checked"
+                   descriptionKey="CompSystem.Checked.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -250,7 +269,8 @@
 		</action>
 		<action name="CompSystem.ToggleCheckboxByTextpath" changed="4.1">
 			<method>rcToggleCheckbox</method>
-			<param name="CompSystem.PathType">
+			<param name="CompSystem.PathType"
+                   descriptionKey="CompSystem.PathType.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
 				<valueSet>
@@ -258,14 +278,17 @@
 					<element name="CompSystem.Relative" value="relative"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.PreAscend">
+			<param name="CompSystem.PreAscend"
+                   descriptionKey="CompSystem.PreAscend.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>0</defaultValue>
 			</param>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -278,7 +301,8 @@
 		</action>
 		<action name="CompSystem.ToggleCheckboxByIndexpath" changed="4.1">
 			<method>rcToggleCheckboxByIndices</method>
-			<param name="CompSystem.PathType">
+			<param name="CompSystem.PathType"
+                   descriptionKey="CompSystem.PathType.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
 				<valueSet>
@@ -286,17 +310,20 @@
 					<element name="CompSystem.Relative" value="relative"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.PreAscend">
+			<param name="CompSystem.PreAscend"
+                   descriptionKey="CompSystem.PreAscend.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>0</defaultValue>
 			</param>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.VerifyCheckboxOfNodeByTextpath" changed="4.1">
 			<method>rcVerifyCheckbox</method>
-			<param name="CompSystem.PathType">
+			<param name="CompSystem.PathType"
+                   descriptionKey="CompSystem.PathType.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
 				<valueSet>
@@ -304,14 +331,17 @@
 					<element name="CompSystem.Relative" value="relative"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.PreAscend">
+			<param name="CompSystem.PreAscend"
+                   descriptionKey="CompSystem.PreAscend.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>0</defaultValue>
 			</param>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -321,7 +351,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.Checked">
+			<param name="CompSystem.Checked"
+                   descriptionKey="CompSystem.Checked.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -332,7 +363,8 @@
 		</action>
 		<action name="CompSystem.VerifyCheckboxOfNodeByIndexpath" changed="4.1">
 			<method>rcVerifyCheckboxByIndices</method>
-			<param name="CompSystem.PathType">
+			<param name="CompSystem.PathType"
+                   descriptionKey="CompSystem.PathType.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
 				<valueSet>
@@ -340,14 +372,17 @@
 					<element name="CompSystem.Relative" value="relative"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.PreAscend">
+			<param name="CompSystem.PreAscend"
+                   descriptionKey="CompSystem.PreAscend.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>0</defaultValue>
 			</param>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Checked">
+			<param name="CompSystem.Checked"
+                   descriptionKey="CompSystem.Checked.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -364,7 +399,8 @@
 		<componentClass name="org.eclipse.swt.widgets.Tree" />
 		<action name="CompSystem.SelectByTextPathAtColumn" changed="1.22">
 			<method>rcSelect</method>
-			<param name="CompSystem.PathType">
+			<param name="CompSystem.PathType"
+                   descriptionKey="CompSystem.PathType.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
 				<valueSet>
@@ -372,14 +408,17 @@
 					<element name="CompSystem.Relative" value="relative"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.PreAscend">
+			<param name="CompSystem.PreAscend"
+                   descriptionKey="CompSystem.PreAscend.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>0</defaultValue>
 			</param>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -389,15 +428,18 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.ClickCount">
+			<param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 			</param>	
-			<param name="CompSystem.Column">
+			<param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 				<valueSet>
@@ -409,7 +451,8 @@
 		</action>
 		<action name="CompSystem.SelectByIndexPathAtColumn" changed="1.22">
 			<method>rcSelectByIndices</method>
-			<param name="CompSystem.PathType">
+			<param name="CompSystem.PathType"
+                   descriptionKey="CompSystem.PathType.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>absolute</defaultValue>
 				<valueSet>
@@ -417,22 +460,27 @@
 					<element name="CompSystem.Relative" value="relative"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.PreAscend">
+			<param name="CompSystem.PreAscend"
+                   descriptionKey="CompSystem.PreAscend.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>0</defaultValue>
 			</param>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.ClickCount">
+			<param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 			</param>
-			<param name="CompSystem.Column">
+			<param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 				<valueSet>
@@ -444,10 +492,12 @@
 		</action>
 		<action name="CompSystem.VerifySelectedValueAtColumn" changed="1.24">
 			<method>rcVerifySelectedValue</method>
-			<param name="CompSystem.Text">
+			<param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -457,7 +507,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>	
-			<param name="CompSystem.Column">
+			<param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 			</param>

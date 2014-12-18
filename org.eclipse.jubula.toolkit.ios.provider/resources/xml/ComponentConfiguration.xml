@@ -22,7 +22,8 @@
     <realizes>guidancer.concrete.Button</realizes>
     <action name="CompSystem.Swipe" changed="1.00">
       <method>rcSwipe</method>
-      <param name="CompSystem.Direction">
+      <param name="CompSystem.Direction"
+             descriptionKey="CompSystem.Direction.descr" >
 		<type>java.lang.String</type>
 		<defaultValue>right</defaultValue>
 		<valueSet>
@@ -50,7 +51,8 @@
     <realizes>guidancer.concrete.TextComponent</realizes>
     <action name="CompSystem.Swipe" changed="1.00">
       <method>rcSwipe</method>
-      <param name="CompSystem.Direction">
+      <param name="CompSystem.Direction"
+             descriptionKey="CompSystem.Direction.descr" >
 		<type>java.lang.String</type>
 		<defaultValue>right</defaultValue>
 		<valueSet>
@@ -78,7 +80,8 @@
     <realizes>guidancer.concrete.Label</realizes>
     <action name="CompSystem.Swipe" changed="1.00">
       <method>rcSwipe</method>
-      <param name="CompSystem.Direction">
+      <param name="CompSystem.Direction"
+             descriptionKey="CompSystem.Direction.descr" >
 		<type>java.lang.String</type>
 		<defaultValue>right</defaultValue>
 		<valueSet>
@@ -126,7 +129,8 @@
     <realizes>guidancer.concrete.List</realizes>
     <action name="CompSystem.Swipe" changed="1.00">
       <method>rcSwipe</method>
-      <param name="CompSystem.Direction">
+      <param name="CompSystem.Direction"
+             descriptionKey="CompSystem.Direction.descr" >
 		<type>java.lang.String</type>
 		<defaultValue>right</defaultValue>
 		<valueSet>
@@ -149,7 +153,8 @@
     <realizes>guidancer.concrete.TabbedPane</realizes>
     <action name="CompSystem.Swipe" changed="1.00">
       <method>rcSwipe</method>
-      <param name="CompSystem.Direction">
+      <param name="CompSystem.Direction"
+             descriptionKey="CompSystem.Direction.descr" >
 		<type>java.lang.String</type>
 		<defaultValue>right</defaultValue>
 		<valueSet>
@@ -173,13 +178,16 @@
     <componentClass name="ios.UITabBar" />
     <action name="CompSystem.CheckBadgeValue" changed="1.0">
       <method>rcCheckBadgeValue</method>
-      <param name="CompSystem.Text">
+      <param name="CompSystem.Text"
+             descriptionKey="CompSystem.Text.descr" >
       	<type>java.lang.String</type>
       </param>
-      <param name="CompSystem.TabIndex">
+      <param name="CompSystem.TabIndex"
+             descriptionKey="CompSystem.TabIndex.descr" >
       	<type>java.lang.Integer</type>
       </param>    
-      <param name="CompSystem.Operator">
+      <param name="CompSystem.Operator"
+             descriptionKey="CompSystem.Operator.descr" >
         <type>java.lang.String</type>
         <defaultValue>equals</defaultValue>
         <valueSet>
@@ -198,7 +206,8 @@
     
     <action name="CompSystem.Swipe" changed="1.00">
       <method>rcSwipe</method>
-      <param name="CompSystem.Direction">
+      <param name="CompSystem.Direction"
+             descriptionKey="CompSystem.Direction.descr" >
 		<type>java.lang.String</type>
 		<defaultValue>right</defaultValue>
 		<valueSet>
@@ -212,10 +221,12 @@
     
     <action name="CompSystem.VerifyContainsValueInColumn" changed="2.2">
       <method>rcVerifyContainsValue</method>
-      <param name="CompSystem.Text">
+      <param name="CompSystem.Text"
+             descriptionKey="CompSystem.Text.descr" >
         <type>java.lang.String</type>
       </param>
-      <param name="CompSystem.Operator">
+      <param name="CompSystem.Operator"
+             descriptionKey="CompSystem.Operator.descr" >
         <type>java.lang.String</type>
         <defaultValue>equals</defaultValue>
         <valueSet>
@@ -225,7 +236,8 @@
           <element name="CompSystem.SimpleMatch" value="simple match"/>
         </valueSet>
       </param>
-      <param name="CompSystem.Exists">
+      <param name="CompSystem.Exists"
+             descriptionKey="CompSystem.Exists.descr" >
           <type>java.lang.Boolean</type>
           <defaultValue>true</defaultValue>
           <valueSet>
@@ -233,7 +245,8 @@
               <element name="CompSystem.False" value="false"/>
           </valueSet>
       </param>
-      <param name="CompSystem.Column">
+      <param name="CompSystem.Column"
+             descriptionKey="CompSystem.Column.descr" >
         <type>java.lang.Integer</type>
 		<defaultValue>1</defaultValue>
       </param>
@@ -241,10 +254,12 @@
     
     <action name="CompSystem.VerifySelectedIndexInColumn" changed="2.2">
       <method>rcVerifySelectedIndex</method>
-      <param name="CompSystem.OneIndex">
+      <param name="CompSystem.OneIndex"
+             descriptionKey="CompSystem.OneIndex.descr" >
         <type>java.lang.String</type>
       </param>
-      <param name="CompSystem.IsSelected">
+      <param name="CompSystem.IsSelected"
+             descriptionKey="CompSystem.IsSelected.descr" >
           <type>java.lang.Boolean</type>
           <defaultValue>true</defaultValue>
           <valueSet>
@@ -252,27 +267,32 @@
               <element name="CompSystem.False" value="false"/>
           </valueSet>
       </param>
-      <param name="CompSystem.Column">
+      <param name="CompSystem.Column"
+             descriptionKey="CompSystem.Column.descr" >
         <type>java.lang.Integer</type>
         <defaultValue>1</defaultValue>
       </param>
     </action>
     <action name="CompSystem.SelectIndexInColumn" changed="1.3">
       <method>rcSelectIndex</method>
-      <param name="CompSystem.OneIndex">
+      <param name="CompSystem.OneIndex"
+             descriptionKey="CompSystem.OneIndex.descr" >
         <type>java.lang.String</type>
       </param>
-      <param name="CompSystem.Column">
+      <param name="CompSystem.Column"
+             descriptionKey="CompSystem.Column.descr" >
         <type>java.lang.Integer</type>
       <defaultValue>1</defaultValue>
       </param>
     </action>
     <action name="CompSystem.SelectValueInColumn" changed="1.20">
       <method>rcSelectValue</method>
-      <param name="CompSystem.Text">
+      <param name="CompSystem.Text"
+             descriptionKey="CompSystem.Text.descr" >
         <type>java.lang.String</type>
       </param>
-      <param name="CompSystem.Operator">
+      <param name="CompSystem.Operator"
+             descriptionKey="CompSystem.Operator.descr" >
         <type>java.lang.String</type>
         <defaultValue>equals</defaultValue>
         <valueSet>
@@ -282,7 +302,8 @@
           <element name="CompSystem.SimpleMatch" value="simple match"/>
         </valueSet>
       </param>
-      <param name="CompSystem.SearchType">
+      <param name="CompSystem.SearchType"
+             descriptionKey="CompSystem.SearchType.descr" >
         <type>java.lang.String</type>
         <defaultValue>absolute</defaultValue>
         <valueSet>
@@ -290,7 +311,8 @@
           <element name="CompSystem.Relative" value="relative"/>
         </valueSet>
       </param>
-      <param name="CompSystem.Column">
+      <param name="CompSystem.Column"
+             descriptionKey="CompSystem.Column.descr" >
         <type>java.lang.Integer</type>
         <defaultValue>1</defaultValue>
       </param>
@@ -309,7 +331,8 @@
     <componentClass name="ios.UIApplication" />
     <action name="CompSystem.TapViewWithAccessibilityLabel" changed="1.0">
       <method>rcTapViewWithAccessibilityLabel</method>
-      <param name="CompSystem.Label">
+      <param name="CompSystem.Label"
+             descriptionKey="CompSystem.Label.descr" >
         <type>java.lang.String</type>
       </param>    
     </action>

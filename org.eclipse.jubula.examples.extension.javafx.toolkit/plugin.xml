@@ -12,7 +12,7 @@
    <extension
          point="org.eclipse.jubula.toolkit.common.toolkitsupport">
       <toolkit
-            IToolkitProvider="org.eclipse.jubula.examples.extension.javafx.toolkit.provider.MyToolKitProvider"
+            IToolkitProvider="org.eclipse.jubula.examples.extension.javafx.toolkit.provider.MyToolkitProvider"
             depends="org.eclipse.jubula.JavaFXToolkitPlugin"
             includes="null"
             isUserToolkit="true"

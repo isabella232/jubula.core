@@ -17,25 +17,30 @@
 	<abstractComponent type="guidancer.abstract.Widget">
 		<action name="CompSystem.ShowText" changed="1.36">
 			<method>rcShowText</method>
-			<param name="CompSystem.Text" 			       descriptionKey="CompSystem.Text.descr">
+			<param name="CompSystem.Text"
+			       descriptionKey="CompSystem.Text.descr">
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.TextSize">
+			<param name="CompSystem.TextSize"
+                   descriptionKey="CompSystem.TextSize.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>14</defaultValue>
 			</param>
-			<param name="CompSystem.TimePerWord">
+			<param name="CompSystem.TimePerWord"
+                   descriptionKey="CompSystem.TimePerWord.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>500</defaultValue>
 			</param>
-			<param name="CompSystem.WindowWidth">
+			<param name="CompSystem.WindowWidth"
+                   descriptionKey="CompSystem.WindowWidth.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>250</defaultValue>
 			</param>
 		</action>
 		<action name="CompSystem.VerifyExists" changed="1.23">
 			<method>rcVerifyExists</method>
-			<param name="CompSystem.IsExisting">
+			<param name="CompSystem.IsExisting"
+                   descriptionKey="CompSystem.IsExisting.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -46,7 +51,8 @@
 		</action>
 		<action name="CompSystem.VerifyEnabled" changed="1.3">
 			<method>rcVerifyEnabled</method>
-			<param name="CompSystem.IsEnabled">
+			<param name="CompSystem.IsEnabled"
+                   descriptionKey="CompSystem.IsEnabled.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -57,13 +63,16 @@
 		</action>
 		<action name="CompSystem.VerifyProperty" changed="1.3">
 			<method>rcVerifyProperty</method>
-			<param name="CompSystem.PropertyName">
+			<param name="CompSystem.PropertyName"
+                   descriptionKey="CompSystem.PropertyName.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.PropertyValue">
+			<param name="CompSystem.PropertyValue"
+                   descriptionKey="CompSystem.PropertyValue.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
                 <type>java.lang.String</type>
                 <defaultValue>equals</defaultValue>
                 <valueSet>
@@ -73,10 +82,13 @@
                     <element name="CompSystem.SimpleMatch" value="simple match"/>
                 </valueSet>
             </param>
-		</action>		<action name="CompSystem.StorePropertyValue" changed="1.3">			<method>rcStorePropertyValue</method>			<param name="CompSystem.Variable">				<type>guidancer.datatype.Variable</type>			</param>			<param name="CompSystem.PropertyName">				<type>java.lang.String</type>			</param>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>		</action>
+		</action>		<action name="CompSystem.StorePropertyValue" changed="1.3">			<method>rcStorePropertyValue</method>			<param name="CompSystem.Variable"
+                   descriptionKey="CompSystem.Variable.descr" >				<type>guidancer.datatype.Variable</type>			</param>			<param name="CompSystem.PropertyName"
+                   descriptionKey="CompSystem.PropertyName.descr" >				<type>java.lang.String</type>			</param>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>		</action>
 		<action name="CompSystem.VerifyFocus" changed="1.3">
 			<method>rcVerifyFocus</method>
-			<param name="CompSystem.HasFocus">
+			<param name="CompSystem.HasFocus"
+                   descriptionKey="CompSystem.HasFocus.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -87,22 +99,26 @@
 		</action>
 		<action name="CompSystem.WaitForComponent" changed="1.18">
 			<method>rcWaitForComponent</method>
-			<param name="CompSystem.Timeout">
+			<param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1000</defaultValue>
 			</param>
-			<param name="CompSystem.DelayAfterVisibility">
+			<param name="CompSystem.DelayAfterVisibility"
+                   descriptionKey="CompSystem.DelayAfterVisibility.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>200</defaultValue>
 			</param>
 		</action>
 		<action name="CompSystem.Click" changed="1.26">
 			<method>rcClick</method>
-			<param name="CompSystem.ClickCount">
+			<param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 				<valueSet>
@@ -114,11 +130,13 @@
 		</action>
 		<action name="CompSystem.ClickDirect" changed="1.4">
 			<method>rcClickDirect</method>
-			<param name="CompSystem.ClickCount">
+			<param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 				<valueSet>
@@ -127,11 +145,13 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.XPos">
+			<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -139,11 +159,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -154,11 +176,13 @@
 		</action>
 		<action name="CompSystem.PopupSelectByTextPathPositionNew" changed="2.1">
 			<method>rcPopupSelectByTextPath</method>
-			<param name="CompSystem.XPos">
+			<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -166,11 +190,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -178,10 +204,12 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MenuPath">
+			<param name="CompSystem.MenuPath"
+                   descriptionKey="CompSystem.MenuPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -191,7 +219,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -203,10 +232,12 @@
 		</action>
 		<action name="CompSystem.PopupSelectByIndexPathNew" changed="2.1">
 			<method>rcPopupSelectByIndexPath</method>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -218,10 +249,12 @@
 		</action>
 		<action name="CompSystem.PopupSelectByTextPathNew" changed="2.1">
 			<method>rcPopupSelectByTextPath</method>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -231,7 +264,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -243,11 +277,13 @@
 		</action>
 		<action name="CompSystem.PopupSelectByIndexPathPositionNew" changed="2.1">
 			<method>rcPopupSelectByIndexPath</method>
-			<param name="CompSystem.XPos">
+			<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -255,11 +291,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -267,10 +305,12 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -282,10 +322,12 @@
 		</action>
 		<action name="CompSystem.PopupVerifyEnabledByIndexpath" changed="2.1">
 			<method>rcPopupVerifyEnabledByIndexPath</method>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.IsEnabled">
+			<param name="CompSystem.IsEnabled"
+                   descriptionKey="CompSystem.IsEnabled.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -293,7 +335,8 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -305,11 +348,13 @@
 		</action>
 		<action name="CompSystem.PopupVerifyEnabledByIndexpathPosition" changed="2.1">
 			<method>rcPopupVerifyEnabledByIndexPath</method>
-			<param name="CompSystem.XPos">
+			<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -317,11 +362,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -329,10 +376,12 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.IsEnabled">
+			<param name="CompSystem.IsEnabled"
+                   descriptionKey="CompSystem.IsEnabled.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -340,7 +389,8 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -352,10 +402,12 @@
 		</action>
 		<action name="CompSystem.PopupVerifyEnabledByTextpath" changed="2.1">
 			<method>rcPopupVerifyEnabledByTextPath</method>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -365,7 +417,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.IsEnabled">
+			<param name="CompSystem.IsEnabled"
+                   descriptionKey="CompSystem.IsEnabled.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -373,7 +426,8 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -385,11 +439,13 @@
 		</action>
 		<action name="CompSystem.PopupVerifyEnabledByTextpathPosition" changed="2.1">
 			<method>rcPopupVerifyEnabledByTextPath</method>
-			<param name="CompSystem.XPos">
+			<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -397,11 +453,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -409,10 +467,12 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -422,7 +482,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.IsEnabled">
+			<param name="CompSystem.IsEnabled"
+                   descriptionKey="CompSystem.IsEnabled.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -430,7 +491,8 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -442,10 +504,12 @@
 		</action>
 		<action name="CompSystem.PopupVerifyExistsByIndexpath" changed="2.1">
 			<method>rcPopupVerifyExistsByIndexPath</method>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.IsExisting">
+			<param name="CompSystem.IsExisting"
+                   descriptionKey="CompSystem.IsExisting.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -453,7 +517,8 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -465,11 +530,13 @@
 		</action>
 		<action name="CompSystem.PopupVerifyExistsByIndexpathPosition" changed="2.1">
 			<method>rcPopupVerifyExistsByIndexPath</method>
-			<param name="CompSystem.XPos">
+			<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -477,11 +544,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -489,10 +558,12 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.IsExisting">
+			<param name="CompSystem.IsExisting"
+                   descriptionKey="CompSystem.IsExisting.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -500,7 +571,8 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -512,10 +584,12 @@
 		</action>
 		<action name="CompSystem.PopupVerifyExistsByTextpath" changed="2.1">
 			<method>rcPopupVerifyExistsByTextPath</method>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -525,7 +599,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.IsExisting">
+			<param name="CompSystem.IsExisting"
+                   descriptionKey="CompSystem.IsExisting.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -533,7 +608,8 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -545,11 +621,13 @@
 		</action>
 		<action name="CompSystem.PopupVerifyExistsByTextpathPosition" changed="2.1">
 			<method>rcPopupVerifyExistsByTextPath</method>
-			<param name="CompSystem.XPos">
+			<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -557,11 +635,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -569,10 +649,12 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -582,7 +664,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.IsExisting">
+			<param name="CompSystem.IsExisting"
+                   descriptionKey="CompSystem.IsExisting.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -590,7 +673,8 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -602,10 +686,12 @@
 		</action>
 		<action name="CompSystem.PopupVerifySelectedByIndexpath" changed="2.1">
 			<method>rcPopupVerifySelectedByIndexPath</method>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.IsSelected">
+			<param name="CompSystem.IsSelected"
+                   descriptionKey="CompSystem.IsSelected.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -613,7 +699,8 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -625,11 +712,13 @@
 		</action>
 		<action name="CompSystem.PopupVerifySelectedByIndexpathPosition" changed="2.1">
 			<method>rcPopupVerifySelectedByIndexPath</method>
-			<param name="CompSystem.XPos">
+			<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -637,11 +726,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -649,10 +740,12 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.IndexPath">
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.IsSelected">
+			<param name="CompSystem.IsSelected"
+                   descriptionKey="CompSystem.IsSelected.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -660,7 +753,8 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -672,10 +766,12 @@
 		</action>
 		<action name="CompSystem.PopupVerifySelectedByTextpath" changed="2.1">
 			<method>rcPopupVerifySelectedByTextPath</method>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -685,7 +781,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.IsSelected">
+			<param name="CompSystem.IsSelected"
+                   descriptionKey="CompSystem.IsSelected.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -693,7 +790,8 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -705,11 +803,13 @@
 		</action>
 		<action name="CompSystem.PopupVerifySelectedByTextpathPosition" changed="2.1">
 			<method>rcPopupVerifySelectedByTextPath</method>
-			<param name="CompSystem.XPos">
+			<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -717,11 +817,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -729,10 +831,12 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.TextPath">
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -742,7 +846,8 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.IsSelected">
+			<param name="CompSystem.IsSelected"
+                   descriptionKey="CompSystem.IsSelected.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -750,7 +855,8 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>3</defaultValue>
 				<valueSet>
@@ -763,7 +869,8 @@
 		
 		<action name="CompSystem.Drag" changed="2.0">
 			<method>rcDrag</method>
-			<param name="CompSystem.MouseButton">
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 				<valueSet>
@@ -772,7 +879,8 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.ModifierSpecification">
+			<param name="CompSystem.ModifierSpecification"
+                   descriptionKey="CompSystem.ModifierSpecification.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>none</defaultValue>
 				<valueSet combinable="true">
@@ -785,11 +893,13 @@
 					<element name="CompSystem.Mod" value="mod"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.XPos">
+			<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -797,11 +907,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -813,11 +925,13 @@
 		
 		<action name="CompSystem.Drop" changed="2.0">
 			<method>rcDrop</method>
-						<param name="CompSystem.XPos">
+						<param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.XUnits">
+			<param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -825,11 +939,13 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.YPos">
+			<param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>50</defaultValue>
 			</param>
-			<param name="CompSystem.YUnits">
+			<param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>percent</defaultValue>
 				<valueSet>
@@ -837,7 +953,8 @@
 					<element name="CompSystem.Pixel" value="pixel"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.DelayBeforeDrop">
+			<param name="CompSystem.DelayBeforeDrop"
+                   descriptionKey="CompSystem.DelayBeforeDrop.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>100</defaultValue>
 			</param>
@@ -848,7 +965,8 @@
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
 		<action name="CompSystem.VerifyEditable" changed="1.26">
 			<method>rcVerifyEditable</method>
-			<param name="CompSystem.IsEditable">
+			<param name="CompSystem.IsEditable"
+                   descriptionKey="CompSystem.IsEditable.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -859,13 +977,15 @@
 		</action>
 		<action name="CompSystem.InputText" changed="1.3">
 			<method>rcReplaceText</method>
-			<param name="CompSystem.Text">
+			<param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
 				<type>java.lang.String</type>
 			</param>
 		</action>
 		<action name="CompSystem.InputTextDirect" changed="1.3">
 			<method>rcInputText</method>
-			<param name="CompSystem.Text">
+			<param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
 				<type>java.lang.String</type>
 			</param>
 		</action>
@@ -875,10 +995,12 @@
 		<realizes>guidancer.abstract.Widget</realizes>
 		<action name="CompSystem.VerifyText" changed="1.11">
 			<method>rcVerifyText</method>
-			<param name="CompSystem.Text">
+			<param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -891,7 +1013,8 @@
 		</action>
 		<action name="CompSystem.ReadValue" changed="1.3">
 			<method>rcReadValue</method>
-			<param name="CompSystem.Variable">
+			<param name="CompSystem.Variable"
+                   descriptionKey="CompSystem.Variable.descr" >
 				<type>guidancer.datatype.Variable</type>
 			</param>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
@@ -902,7 +1025,8 @@
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
 		<action name="CompSystem.VerifySelected" changed="1.26">
 			<method>rcVerifySelected</method>
-			<param name="CompSystem.IsSelected">
+			<param name="CompSystem.IsSelected"
+                   descriptionKey="CompSystem.IsSelected.descr" >
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>

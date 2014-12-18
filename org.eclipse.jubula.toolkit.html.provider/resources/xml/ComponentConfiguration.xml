@@ -208,10 +208,12 @@
         </componentClass>
 		<action name="html.VerifyURL" changed="1.0">
 			<method>rcVerifyURL</method>
-			<param name="CompSystem.Text">
+			<param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.Operator">
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
 				<type>java.lang.String</type>
 				<defaultValue>equals</defaultValue>
 				<valueSet>
@@ -247,7 +249,8 @@
 		<componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.WebBrowser" />
 		<action name="html.BrowserGotoAction" changed="1.0">
 			<method>rcGotoUrl</method>
-			<param name="html.BrowserGotoUrl">
+			<param name="html.BrowserGotoUrl"
+                   descriptionKey="html.BrowserGotoUrl.descr" >
 				<type>java.lang.String</type>
 			</param>		
 		</action>
@@ -259,10 +262,12 @@
 		</action>
         <action name="html.BrowserSelectWindow" changed="1.0">
             <method>rcSelectWindowByIdentifier</method>
-            <param name="html.BrowserIdentifier">
+            <param name="html.BrowserIdentifier"
+                   descriptionKey="html.BrowserIdentifier.descr" >
                 <type>java.lang.String</type>
             </param>
-            <param name="html.BrowserIdentifierType">
+            <param name="html.BrowserIdentifierType"
+                   descriptionKey="html.BrowserIdentifierType.descr" >
                 <type>java.lang.String</type>
                 <valueSet>
                     <element name="CompSystem.BrowserTitle" value="title"/>
@@ -273,10 +278,12 @@
         </action>
         <action name="html.BrowserSelectWindowWithTitle" changed="1.0">
             <method>rcSelectWindow</method>
-            <param name="html.BrowserTitle">
+            <param name="html.BrowserTitle"
+                   descriptionKey="html.BrowserTitle.descr" >
                 <type>java.lang.String</type>
             </param>
-            <param name="CompSystem.Operator">
+            <param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
                 <type>java.lang.String</type>
                 <defaultValue>equals</defaultValue>
                 <valueSet>

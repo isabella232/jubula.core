@@ -16,13 +16,13 @@ import java.util.ResourceBundle;
 
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
-import org.eclipse.jubula.toolkit.win.provider.ToolKitProvider;
+import org.eclipse.jubula.toolkit.win.provider.ToolkitProvider;
 import org.eclipse.swt.widgets.Composite;
 
 /**
  * @author BREDEX GmbH
  */
-public class WinAppsToolkitProvider extends ToolKitProvider {
+public class WinAppsToolkitProvider extends ToolkitProvider {
     
     /** <code>I18N_PROPERTIES</code> */
     private static final String I18N_PROPERTIES = 
@@ -40,7 +40,8 @@ public class WinAppsToolkitProvider extends ToolKitProvider {
     
     /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {
-        return ToolkitUtils.getURL(Activator.getDefault(), COMP_CONFIG_PATH);
+        return ToolkitUtils.getURL(Activator.getDefault().getBundle(),
+                COMP_CONFIG_PATH);
     }
 
     /** {@inheritDoc} */

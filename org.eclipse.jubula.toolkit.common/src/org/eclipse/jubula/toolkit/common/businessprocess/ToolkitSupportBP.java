@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.toolkit.common.IToolKitProvider;
+import org.eclipse.jubula.toolkit.common.IToolkitProvider;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.i18n.Messages;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -38,10 +38,10 @@ public class ToolkitSupportBP {
     /** The logger */
     private static Logger log = LoggerFactory.getLogger(ToolkitSupportBP.class);
     
-    /** Map of {@link IToolKitProvider} */
-    private static Map<ToolkitDescriptor, IToolKitProvider> 
+    /** Map of {@link IToolkitProvider} */
+    private static Map<ToolkitDescriptor, IToolkitProvider> 
         toolkitProvider = 
-        new HashMap<ToolkitDescriptor, IToolKitProvider>();
+        new HashMap<ToolkitDescriptor, IToolkitProvider>();
 
     /**
      * Utility Constructor.
@@ -63,7 +63,7 @@ public class ToolkitSupportBP {
         Composite parent, int style, Map<String, String> autConfig,
         String autName) throws ToolkitPluginException {
         
-        IToolKitProvider provider = getToolkitProvider(toolkit);
+        IToolkitProvider provider = getToolkitProvider(toolkit);
         Composite autConf = provider.getAutConfigDialog(parent, style, 
             autConfig, autName);
         String toolkitName = toolkit;
@@ -102,9 +102,9 @@ public class ToolkitSupportBP {
     /**
      * Gets the ToolkitProvider with the given name.
      * @param name the name of the Toolkit
-     * @return the {@link IToolKitProvider}.
+     * @return the {@link IToolkitProvider}.
      */
-    private static IToolKitProvider getToolkitProvider(String name) 
+    private static IToolkitProvider getToolkitProvider(String name) 
         throws ToolkitPluginException {
         
         if (name == null) {    
@@ -118,12 +118,12 @@ public class ToolkitSupportBP {
     }
     
     /**
-     * Gets the {@link IToolKitProvider} of the included (extended) toolkit
+     * Gets the {@link IToolkitProvider} of the included (extended) toolkit
      * of the toolkit with the given name.
      * @param name the name of the extending toolkit
-     * @return the {@link IToolKitProvider} of the super toolkit.
+     * @return the {@link IToolkitProvider} of the super toolkit.
      */
-    private static IToolKitProvider getSuperToolkitProvider(String name) 
+    private static IToolkitProvider getSuperToolkitProvider(String name) 
         throws ToolkitPluginException {
         
         if (name == null) {
@@ -134,7 +134,7 @@ public class ToolkitSupportBP {
         }
         final ToolkitDescriptor descr = getToolkitDescriptor(name);
         final String superId = descr.getIncludes();
-        final IToolKitProvider superToolkitProv = getToolkitProvider(superId);
+        final IToolkitProvider superToolkitProv = getToolkitProvider(superId);
         return toolkitProvider.get(superToolkitProv);
     }
     
@@ -167,13 +167,13 @@ public class ToolkitSupportBP {
     }
     
     /**
-     * Adds a new {@link IToolKitProvider} with the dependent 
+     * Adds a new {@link IToolkitProvider} with the dependent 
      * {@link ToolkitDescriptor} as key.
      * @param descr a ToolkitDescriptor (key)
      * @param provider a IToolKitProvider (value)
      */
     public static void addToolkitProvider(ToolkitDescriptor descr, 
-        IToolKitProvider provider) {
+        IToolkitProvider provider) {
         
         toolkitProvider.put(descr, provider);
     }

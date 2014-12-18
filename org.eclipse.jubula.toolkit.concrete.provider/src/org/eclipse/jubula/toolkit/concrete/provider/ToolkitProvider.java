@@ -28,11 +28,12 @@ public class ToolkitProvider extends AbstractToolkitProvider {
 
     /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {
-        return ToolkitUtils.getURL(Activator.getDefault(), COMP_CONFIG_PATH);
+        return ToolkitUtils.getURL(Activator.getDefault().getBundle(),
+                COMP_CONFIG_PATH);
     }
-
+    
     /** {@inheritDoc} */
-    public ResourceBundle getI18nResourceBundle() {
+    public ResourceBundle getResourceBundle() {
         return ResourceBundle.getBundle(I18N_PROPERTIES);
     }
 }
