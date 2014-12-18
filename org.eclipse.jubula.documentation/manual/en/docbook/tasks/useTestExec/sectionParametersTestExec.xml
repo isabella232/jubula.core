@@ -318,15 +318,18 @@
       </listitem>
       <listitem>
         <para>
-          If you are starting a Test Job, you must make sure that
+          If you are starting a Test Job, testexec will start the 
+          first AUT required if you configure testexec to 
+          use an AUT configuration. If you configure testexec to 
+          use autrun, then you must make sure that
           the first AUT you require is already started with the
           <emphasis>autrun</emphasis> command. You must then enter the AUT
           ID as a parameter for the testexec. Any other AUTs
-          required during the test must either also be started
-          already, or started as a part of the test itself. When
-          working with Test Jobs, you must use a separately started
-          AUT Agent. You cannot use the embedded AUT Agent with
-          testexec when you are starting a Test Job.
+          required during the test must be started by autrun
+          separately, or started as a part of the test itself. When
+          working with Test Jobs that use autrun applications only, 
+          you must use a separately started
+          AUT Agent, and not the embedded agent.
         </para>
       </listitem>
     </itemizedlist>

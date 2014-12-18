@@ -273,5 +273,29 @@
  				</listitem>
  			
  			</itemizedlist>
-
+ 	<para>
+ 		<emphasis role="strong">Testexec now includes completeness check for Test Jobs</emphasis>
+ 	 </para>
+ 			<itemizedlist>
+ 				<listitem>
+ 				<para>
+ 				The testexec tool now checks whether a Test Job is complete before 
+ 				attempting to start test execution. If the Test Job contains one 
+ 				or more incomplete Test Suites, it will not start and an error message 
+ 				will be shown.
+ 				</para>
+ 				</listitem>
+ 			</itemizedlist>
+ 	<para>
+ 		<emphasis role="strong">Testexec will start the first AUT in a Test Job</emphasis>
+ 	 </para>
+ 			<itemizedlist>
+ 				<listitem>
+ 				<para>
+ 				When using Test Jobs, testexec will start the first AUT in the Test Job
+ 				if this AUT is startable via an AUT configuration. You can continue to use 
+ 				autrun for all of your Test Suites in a Test Job if you prefer. 
+ 				</para>
+ 				</listitem>
+ 			</itemizedlist>
 </section>
