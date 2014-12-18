@@ -35,6 +35,9 @@ public class Param {
     
     /** A set of predefined values. */
     private ParamValueSet m_valueSet;
+    
+    /** a description key for this parameter */
+    private String m_descriptionKey;
 
     /**
      * Default constructor of param. Do nothing.
@@ -159,5 +162,19 @@ public class Param {
     public int hashCode() {
         return new HashCodeBuilder().append(m_name).append(m_type)
             .toHashCode();
+    }
+
+    /**
+     * @return the descriptionKey
+     */
+    public String getDescriptionKey() {
+        return m_descriptionKey;
+    }
+
+    /**
+     * @param descriptionKey the descriptionKey to set
+     */
+    public void setDescriptionKey(String descriptionKey) {
+        m_descriptionKey = descriptionKey;
     }
 }

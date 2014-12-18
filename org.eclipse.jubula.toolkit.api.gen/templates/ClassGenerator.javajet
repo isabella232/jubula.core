@@ -191,18 +191,35 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
         }
         compNameMap.put(action.getName(), methodName);
         List<Param> params = action.getParams();
+        Map<String, String> paramMap = new HashMap<String, String>();// with enums
+        Map<String, String> paramTypeMap = new HashMap<String, String>();// only "simple" types
         if (!params.isEmpty()) {
+            Iterator<Param> paramIterator = params.iterator();
+            // add parameters description to javadoc
         %>
         /**
          * <%=actionDescription%>
-         * @throws IllegalArgumentException if one of the passed parameters is <code>null</code>.
+         
+        <%
+        while (paramIterator.hasNext()) {
+            Param param = paramIterator.next();
+            String paramName = nameLoader.translateFromCompSystem(param.getName());
+            String paramDescription = "";
+            String paramDescrKey = param.getDescriptionKey();
+            if (paramDescrKey != null) {
+                paramDescription = CompSystemI18n.getString(paramDescrKey);
+            }
+       %>* @param <%=paramName%> 
+         *        <%=paramDescription%>
+         
+       <%
+         }
+         %>* @throws IllegalArgumentException if one of the passed parameters is <code>null</code>.
          */<%}%>
         <%if (action.isDeprecated()) {%>@Deprecated<%}%>
         @NonNull public CAP <%=methodName%>(
         <%    
-        // add parameters to method
-        Map<String, String> paramMap = new HashMap<String, String>();// with enums
-        Map<String, String> paramTypeMap = new HashMap<String, String>();// only "simple" types
+        // add parameters to method signature
         Iterator<Param> paramIterator = params.iterator();
         while (paramIterator.hasNext()) {
             Param param = paramIterator.next();

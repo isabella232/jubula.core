@@ -17,7 +17,7 @@
 	<abstractComponent type="guidancer.abstract.Widget">
 		<action name="CompSystem.ShowText" changed="1.36">
 			<method>rcShowText</method>
-			<param name="CompSystem.Text">
+			<param name="CompSystem.Text" 			       descriptionKey="CompSystem.Text.descr">
 				<type>java.lang.String</type>
 			</param>
 			<param name="CompSystem.TextSize">

@@ -114,6 +114,10 @@ public class ToolkitOverView extends ViewPart {
                     }
                     sb.append("]");
                 }
+                String description = param.getDescriptionKey();
+                if (description != null) {
+                    sb.append(" (" + CompSystemI18n.getString(description) + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+                }
                 return sb.toString();
                 
             }

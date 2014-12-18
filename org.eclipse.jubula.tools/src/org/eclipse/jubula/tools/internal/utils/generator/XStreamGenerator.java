@@ -96,6 +96,7 @@ public class XStreamGenerator {
         aliasActionClass(stream);
         stream.addImplicitCollection(Action.class, "m_params", "param", Param.class); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("name", Param.class, "m_name"); //$NON-NLS-1$ //$NON-NLS-2$
+        stream.aliasField("descriptionKey", Param.class, "m_descriptionKey"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("type", Param.class, "m_type"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("defaultValue", Param.class, "m_defaultValue"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("valueSet", Param.class, "m_valueSet"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -129,7 +130,8 @@ public class XStreamGenerator {
             new String[] {"m_name", "m_descriptionKey", "m_clientAction", "m_deprecated", "m_changed"})); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ 
         
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
-            Param.class, "m_name")); //$NON-NLS-1$
+            Param.class, 
+            new String[] {"m_name", "m_descriptionKey"})); //$NON-NLS-1$ //$NON-NLS-2$
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
                 ParamValueSet.class, "m_isCombinable")); //$NON-NLS-1$
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
