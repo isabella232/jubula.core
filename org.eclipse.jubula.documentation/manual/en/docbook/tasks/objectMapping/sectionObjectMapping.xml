@@ -13,7 +13,7 @@
   <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
   <para>
     Object mapping is the joining of the component names you have
-    specified in Test Steps to the real components in the AUT. Each
+    specified in your tests to the real components in the AUT. Each
     component name you have specified in your Test Cases and used in
     a Test Suite will be shown in the Object Mapping Editor to be
     mapped.
@@ -34,7 +34,7 @@
     </listitem>
     <listitem>
       <para>
-        created a Test Case containing Test Steps
+        created a Test Case containing actions with component names
         (<xref linkend="creating-test-cases"/>)
       </para>
     </listitem>

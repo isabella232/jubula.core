@@ -19,12 +19,11 @@
   <orderedlist>
     <listitem>
       <para>
-        In the Object Mapping Editor, in the split view or the tree
-        view (<xref linkend="the-different-views-in-the-object-mapping-editor"/>), you will see the component names
+        In the Object Mapping Editor, you will see the component names
         you have created (<xref linkend="creating-new-component-names"/>) and/or used
         in your Test Cases, as well as the names you have collected
-        from the AUT. The names are grouped into categories of
-        unassigned and assigned names (<xref linkend="working-with-categories-in-the-object-mapping-editor"/>).
+        from the AUT. The names are shown in the 
+        unassigned and assigned names areas (<xref linkend="working-with-categories-in-the-object-mapping-editor"/>).
       </para>
     </listitem>
     <listitem>
@@ -37,16 +36,16 @@
     </listitem>
     <listitem>
       <para>
-        When a component name has been assigned to a techical name,
+        When a component name has been assigned to a technical name,
         the joined names appear in the <emphasis>assigned
-        names</emphasis> category. The component type for the
+        names</emphasis> area. The component type for the
         component name is adjusted so that it reflects the type of
-        component it hasbeen mapped to (<xref linkend="understanding-the-component-hierarchy"/>).
+        component it has been mapped to (<xref linkend="understanding-the-component-hierarchy"/>).
       </para>
       <para>
         <para role="tip">You can also ”unassign” component names from
         technical names by dragging the component name back into the
-        <emphasis>unassigned component names</emphasis> category</para>
+        <emphasis>unassigned component names</emphasis> area</para>
       </para>
     </listitem>
     <listitem>

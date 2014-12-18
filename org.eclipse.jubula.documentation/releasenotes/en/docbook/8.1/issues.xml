@@ -81,4 +81,16 @@
   		</para>
   	</listitem>
   </itemizedlist>
+  <para>
+    <emphasis role="strong">Tree view removed from object mapping editor</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We have removed the tree view from the object mapping editor and 
+        improved the layout of the split view and added a filter for assigned names
+        to replace the functionality in the tree view.
+      </para>
+    </listitem>
+  </itemizedlist>
 </section>
