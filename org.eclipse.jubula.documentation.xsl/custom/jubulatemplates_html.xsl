@@ -92,7 +92,7 @@
   <br/>
   <hr/>
 
-  <address>Copyright BREDEX GmbH 2014. Made available under the Eclipse Public License v1.0.</address>
+  <address>Copyright BREDEX GmbH 2015. Made available under the Eclipse Public License v1.0.</address>
   <br/>
 </xsl:template>
 
