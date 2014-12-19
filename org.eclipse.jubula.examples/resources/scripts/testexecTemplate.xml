@@ -7,34 +7,50 @@
  -->
 <configuration>
     <project>YourProjectName</project>
-    <version>1.0</version>
+    <version>1.0.0.qualifier</version>
     <autconfig>YourAUTConfiguration</autconfig>
     <!-- or, if you're using autrun
-    <autid>YourAUTID</autid> -->
+    <autid>YourAUTID</autid> 
+    -->
+    
     <dburl>YourDatabaseURL (visible via the preferences)</dburl>
     <!-- or, if you want to use the DBScheme and workspace (-data) to access the database
-    <dbscheme>YourDBScheme</dbscheme> -->
+    <dbscheme>YourDBScheme</dbscheme> 
+    -->
+    
     <dbuser>YourDatabaseUsername (use sa for the embedded database)</dbuser>
     <dbpw>YourDatabasePassword (leave empty for the embedded database)</dbpw>
     <language>en_US</language>
-    <testsuite>TestSuite</testsuite>
+    <testsuite>YourTestSuiteName</testsuite>
+    
     <!-- or, if you're using Test Jobs
-    <testjob>TestJob</testjob> -->
-    <!-- <server>YourAUTAgentHostname</server>
+    <testjob>YourTestJobName</testjob> 
+    -->
+    
+    <!-- 
+    <server>YourAUTAgentHostname</server>
     The server argument is optional. If you enter it, you must have started a separate AUT Agent. You must then enter the hostname of the AUT Agent in the server 
      parameter and you must also enter the port number for the AUT Agent in the port parameter. 
      If you do not enter a server parameter, then an embedded AUT Agent will be started.-->
-    <!-- <port>PortNumberForAUTAgent</port> 
+     
+    <!-- 
+    <port>YourAUTAgentPortNumber</port> 
     The port parameter is optional if you do not enter a server parameter. 
     In this case, you can choose whether to enter a port number or not. 
     If you enter a port number, the embedded AUT Agent will be started on this port. 
     If you enter neither a port number nor a server parameter, the embedded AUT Agent will be started on a dynamically chosen port number. 
     You must enter a port number if you are using the server parameter.-->
-    <!--  <datadir></datadir> 
+    
+    <!--  
+    <datadir></datadir> 
     If you are using e.g. Excel documents as data for your test, enter the path to them using the datadir parameter, e.g. <pathToQADocs>/data -->
-    <!-- <resultdir></resultdir> 
+    
+    <!-- 
+    <resultdir></resultdir> 
 	If you want the testexec to produce HTML and XML reports after a test run, then enter the path to where they should be saved, e.g.<pathToQADocs>/results  -->
-	<!-- <resultname></resultname> 
+	
+	<!-- 
+	<resultname></resultname> 
 	If you have specified that testexec should write HTML and XML reports after a test run, you can use this parameter to specify a file name 
 	that should be used instead of the default name. Enter the name without a file extension. -->
 </configuration>
