@@ -51,7 +51,6 @@ public class MouseMovementStrategy {
      */
     public static Point [] getMovementPath(Point from, Point to, 
             boolean isMoveInSteps, boolean firstHorizontal) {
-        
         Validate.notNull(from, "Initial point must not be null."); //$NON-NLS-1$
         Validate.notNull(to, "End point must not be null."); //$NON-NLS-1$
         Validate.isTrue(to.x >= 0, "End x-coordinate must not be negative."); //$NON-NLS-1$
@@ -87,8 +86,70 @@ public class MouseMovementStrategy {
         if (path.isEmpty() || !to.equals(path.get(path.size() - 1))) {
             path.add(new Point(to));
         }
+
+        List<Point> optimizedPath = optimizePath(from, to, firstHorizontal,
+                path, xCoords, yCoords);
         
-        return path.toArray(new Point [path.size()]);
+        return optimizedPath.toArray(new Point [optimizedPath.size()]);
+    }
+
+    /**
+     * @param from mouse move start point
+     * @param to from mouse move end point
+     * @param firstHorizontal whether to move horizontal first
+     * @param path the path from start to end
+     * @param xCoords x-coordinates from start to end
+     * @param yCoords y-coordinates from start to end
+     * @return optimized path containing not all points (more accurate near start and end).
+     */
+    private static List<Point> optimizePath(Point from, Point to,
+            boolean firstHorizontal, List<Point> path, int[] xCoords,
+            int[] yCoords) {
+        List<Point> optimizedPath = new ArrayList<Point>();
+        int totalSteps = path.size();
+        int stepFactor = 10;
+        int amountOfSteps = 1 + Math.round(totalSteps / stepFactor);
+        boolean turningPointInserted = false;
+        
+        for (int i = 1; i < amountOfSteps; i++) {
+            double distance = (-2d / Math.pow(amountOfSteps, 3))
+                    * Math.pow(i, 3) + (3d / Math.pow(amountOfSteps, 2))
+                    * Math.pow(i, 2);
+            int index = Math.min((int) Math.round((distance * totalSteps)),
+                    totalSteps - 1);
+            Point nextPoint = path.get(index);
+            if (!turningPointInserted) {
+                if (firstHorizontal) {
+                    float turningPointDistance = ((float) xCoords.length)
+                            / totalSteps;
+                    if (distance > turningPointDistance) {
+                        optimizedPath.add(new Point(to.x, from.y));
+                        turningPointInserted = true;
+                    }
+                } else {
+                    float turningPointDistance = ((float) yCoords.length)
+                            / totalSteps;
+                    if (distance > turningPointDistance) {
+                        optimizedPath.add(new Point(from.x, to.y));
+                        turningPointInserted = true;
+                    }
+                }
+            }
+            // Make sure that next point is not already in optimized path
+            if (!optimizedPath.isEmpty()
+                    && !(optimizedPath.get(optimizedPath.size() - 1)
+                    .equals(nextPoint))) {
+                optimizedPath.add(nextPoint);
+            }
+        }
+        // Make sure that end point is not already in optimized path
+        Point end = new Point(to.x, to.y);
+        if (!optimizedPath.isEmpty()
+                && !(optimizedPath.get(optimizedPath.size() - 1)
+                .equals(end))) {
+            optimizedPath.add(end);
+        }
+        return optimizedPath;
     }
 
     /**
