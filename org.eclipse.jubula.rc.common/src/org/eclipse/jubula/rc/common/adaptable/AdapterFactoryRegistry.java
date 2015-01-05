@@ -17,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -35,11 +36,12 @@ import org.slf4j.LoggerFactory;
  * Singleton to register adapter factories
  */
 public class AdapterFactoryRegistry {
-    /**
-     * the name of the package to search for adapters
-     */
-    private static final String ADAPTER_PACKAGE_NAME = "org.eclipse.jubula.rc.common.adapter"; //$NON-NLS-1$
+    /** the name of the package to search for adapters */
+    public static final String ADAPTER_PACKAGE_NAME = "org.eclipse.jubula.rc.common.adapter"; //$NON-NLS-1$
 
+    /** the name of the package to search for extension adapters */
+    private static final String EXT_ADAPTER_PACKAGE_NAME = "org.eclipse.jubula.ext.rc.common.adapter"; //$NON-NLS-1$
+    
     /** the logger */
     private static Logger log = LoggerFactory
             .getLogger(AdapterFactoryRegistry.class);
@@ -155,12 +157,17 @@ public class AdapterFactoryRegistry {
     public static void initRegistration(IUrlLocator urlLocator) {
         Class[] adapterFactories = findClassesOfType(urlLocator,
                 ADAPTER_PACKAGE_NAME, IAdapterFactory.class);
-
+        Class[] externalAdapterFactories = findClassesOfType(urlLocator,
+                EXT_ADAPTER_PACKAGE_NAME, IAdapterFactory.class);
+        
+        List<Class> allFactories = new ArrayList<Class>(
+                Arrays.asList(adapterFactories));
+        allFactories.addAll(Arrays.asList(externalAdapterFactories));
+        
         // Register all found factories
-        for (int i = 0; i < adapterFactories.length; i++) {
+        for (Class c : allFactories) {
             try {
-                IAdapterFactory factory = (IAdapterFactory) adapterFactories[i]
-                        .newInstance();
+                IAdapterFactory factory = (IAdapterFactory) c.newInstance();
                 getInstance().registerFactory(factory);
             } catch (IllegalAccessException e) {
                 log.error(e.getLocalizedMessage(), e);
