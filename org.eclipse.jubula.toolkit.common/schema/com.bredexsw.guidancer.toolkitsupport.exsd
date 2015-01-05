@@ -66,7 +66,7 @@
          <attribute name="IToolkitProvider" type="string" use="required">
             <annotation>
                <documentation>
-                  The Toolkit-Provider class must implement &apos;org.eclipse.jubula.toolkit.common.IToolKitProvider&apos;.
+                  The Toolkit-Provider class must implement &apos;org.eclipse.jubula.toolkit.common.IToolkitProvider&apos;.
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn="org.eclipse.jubula.toolkit.common.IToolkitProvider"/>

@@ -94,14 +94,27 @@
     </listitem>
   </itemizedlist>
   <para>
-    <emphasis role="strong">Incompatible changes regarding custom toolkit extensions</emphasis>
+    <emphasis role="strong">Incompatible and recommended changes regarding custom toolkit extensions</emphasis>
   </para>
   <itemizedlist>
+    <listitem>
+      There has been a minor but incompatible change in the <programlisting>org.eclipse.jubula.toolkit.common.IToolkitProvider</programlisting> interface regarding the name 
+      of the interface itself (lower k instead of upper K) as well as a method renaming: <programlisting>public ResourceBundle getI18nResourceBundle();</programlisting> is now 
+      <programlisting>public ResourceBundle getResourceBundle();</programlisting>.
+    </listitem>
     <listitem>
       <para>
         With addressing <link xl:href="http://eclip.se/454545" /> we've adjusted our recommended namespace for custom toolkit remote control extensions.
         Though this change is backwards compatible and using the old namespace for AdapterFactories, adapter and tester classes will still work we do strongly
-        recommend to re-locate those custom written remote control classes to e.g. the <emphasis role="strong">org.eclipse.jubula.ext.*</emphasis> namespace to avoid collisions with signed classes of the ITE.
+        recommend to re-locate those custom written remote control classes. 
+        Use e.g. the <emphasis role="strong">org.eclipse.jubula.ext.*</emphasis> namespace to avoid collisions with signed classes of the ITE in the future.
+      </para>
+    </listitem>
+    <listitem>
+      <para>With the provisioning of an API for all toolkits we've altered the <programlisting>Bundle-SymbolicName</programlisting> of all of our toolkit provider.
+      As this should not affect any custom written ITE toolkit extension (as no explicit bundle dependency to our bundles is necessary) you can easily adjust your bundle 
+      dependencies by replacing the old ID <programlisting>org.eclipse.jubula.toolkit.provider.&lt;toolkitName&gt;</programlisting> with the new 
+      one <programlisting>org.eclipse.jubula.toolkit.&lt;toolkitName&gt;.provider</programlisting>.
       </para>
     </listitem>
   </itemizedlist>
