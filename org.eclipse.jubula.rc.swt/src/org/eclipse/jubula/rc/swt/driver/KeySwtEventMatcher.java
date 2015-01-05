@@ -44,8 +44,8 @@ public class KeySwtEventMatcher extends DefaultSwtEventMatcher {
             Object graphicsComponent) {
         
         try {
-            // checks if the component is visible (= in hierarchy conatiner)
-            // and if the key-released event occured
+            // checks if the component is visible (= in hierarchy container)
+            // and if the key-released event occurred
             if (graphicsComponent instanceof Combo) {
                 // FIXME zeb Need some way of confirming keypresses on Combo Box with opened list
                 return true;

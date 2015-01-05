@@ -48,7 +48,7 @@ public class ComboAdapter extends AbstractComboBoxAdapter {
     public void selectAll() {
         click(new Integer(1));
         
-        // fix for https://bxapps.bredex.de/bugzilla/show_bug.cgi?id=201
+        // fix for https://bugzilla.bredex.de/201
         // The keystroke "command + a" sometimes causes an "a" to be entered
         // into the text field instead of selecting all text (or having no 
         // effect).

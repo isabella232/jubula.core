@@ -1006,7 +1006,7 @@ public abstract class AbstractTableTester
     /**
      * inputs/replaces the given text
      * @param text the text to input
-     * @param replace wheter to replace or not
+     * @param replace whether to replace or not
      * @throws StepExecutionException If there is no selected cell,
      * or if the cell is not editable, or if the table cell editor permits
      * the text to be written.

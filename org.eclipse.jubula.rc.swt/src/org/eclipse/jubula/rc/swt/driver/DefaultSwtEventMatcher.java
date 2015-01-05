@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Event;
 
 
 /**
- * This matcher checks wether the SWT event has a given event ID.
+ * This matcher checks whether the SWT event has a given event ID.
  *
  * @author BREDEX GmbH
  * @created 25.07.2006
