@@ -17,7 +17,7 @@
 
 	<toolkitComponent type="org.eclipse.swt.widgets.Group" visible="true">
 		<realizes>guidancer.abstract.Widget</realizes>
-		<testerClass>org.eclipse.jubula.rc.swt.tester.GroupTester</testerClass>
+		<testerClass>org.eclipse.jubula.ext.rc.swt.tester.GroupTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Group" />
         <action name="CompSystem.VerifyText" changed="1.11">
           <method>rcVerifyText</method>

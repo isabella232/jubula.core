@@ -259,7 +259,7 @@ public class MappingListener extends AbstractAutSwingEventListener {
     /**
      * highlights a component
      * @param compId Component
-     * @return boolean succsessful?
+     * @return boolean successful
      */
     public boolean highlightComponent(IComponentIdentifier compId) {
         final Color highlightColor = null;

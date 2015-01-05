@@ -105,7 +105,7 @@
         It is necessary that the implementation of this interface resists in a package named
         
         <para>
-          <emphasis>org.eclipse.jubula.rc.common.adapter</emphasis>.
+          <emphasis>org.eclipse.jubula.ext.rc.common.adapter</emphasis>.
         </para>
         
         The package naming is important for the remote control extension, because adapters can only be found if they are located in a package with the mentioned name.
@@ -169,24 +169,29 @@
       <itemizedlist>
         <listitem>
           <para>
-            The class must be compatible with <emphasis>Java
-            1.4</emphasis>.
+            The class must not reside within the namespace / package of other classes of the ITE / RC part. If however this should be necessary you can safely use the package prefix <emphasis>org.eclipse.jubula.ext.</emphasis>. 
           </para>
         </listitem>
         <listitem>
           <para>
-            It must either implement
+            The class must be compatible with <emphasis>Java
+            1.5</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            It must either 
           </para>
           <itemizedlist>
             <listitem>
               <para>
-                the interface <emphasis role="input">ITester</emphasis> defined in the package named<?linebreak?>
+                implement the interface <emphasis role="input">ITester</emphasis> defined in the package named<?linebreak?>
                 <emphasis>org.eclipse.jubula.rc.common.tester.interfaces</emphasis>,
               </para>
             </listitem>
             <listitem>
               <para>
-                or the abstract class <emphasis role="input">AbstractUITester</emphasis> defined in the package named<?linebreak?>
+                or extend the abstract class <emphasis role="input">AbstractUITester</emphasis> defined in the package named<?linebreak?>
                 <emphasis>org.eclipse.jubula.rc.common.tester</emphasis>.
               </para>
             </listitem>

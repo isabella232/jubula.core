@@ -16,15 +16,14 @@
 		<minorVersion>36</minorVersion>
 	</configVersion>
 	<!-- new Component example using realizes. The string which is in the type 
-		is the name visible in the ite, this name is resolve via i18n <realizes> 
+		is the name visible in the ITE, this name is resolve via i18n <realizes> 
 		Tag defines which actions it should inherit. They are defined in the projects 
 		org.eclipse.jubula.toolkit.provider.base/concrete <testerClass> defines the 
 		class which should be called <componentClass> defines the class of the component, 
 		this is the full qualified class name of the component. -->
 	<toolkitComponent type="javax.swing.JSlider" visible="true">
 		<realizes>guidancer.abstract.Widget</realizes>
-		<testerClass>org.eclipse.jubula.rc.swing.tester.JSliderTester
-		</testerClass>
+		<testerClass>org.eclipse.jubula.ext.rc.swing.tester.JSliderTester</testerClass>
 		<componentClass name="javax.swing.JSlider" />
 	<!-- <action> tag defines the action name, method and parameter -->
 		<action name="CompSystem.VerifyLabelsExists" changed="2.0.0">
@@ -32,7 +31,7 @@
 			<method>rcVerifyLabelsExists</method>
 			<!-- <param> tag defines the parameter, name is name of the Parameters -->
 			<param name="CompSystem.IsExisting">
-				<!-- <type> java class primitive types (the objekt ) -->
+				<!-- <type> java class primitive types (the object ) -->
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<!-- <ValueSet> defines a value set which data could only be inserted 
@@ -49,8 +48,7 @@
 			is no need to define a ComponentClass since this is defined by the extended 
 			component -->
 		<extends>javax.swing.text.JTextComponent</extends>
-		<testerClass>org.eclipse.jubula.rc.swing.tester.JTextComponentExtensionTester
-		</testerClass>
+		<testerClass>org.eclipse.jubula.ext.rc.swing.tester.JTextComponentExtensionTester</testerClass>
 		<action name="CompSystem.VerifyTooltipText" changed="1.0.0">
 			<method>rcVerifyToolTip</method>
 			<param name="CompSystem.Text">
