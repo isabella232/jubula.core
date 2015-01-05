@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -42,7 +41,6 @@ import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.util.AbstractTraverser;
 import org.eclipse.jubula.rc.javafx.util.GenericTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.Rounding;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
@@ -140,11 +138,7 @@ public class TableTester extends AbstractTableTester {
                         List<? extends TableCell> tCells = ComponentHandler
                                 .getAssignableFrom(TableCell.class);
                         for (TableCell<?, ?> cell : tCells) {
-                            Rectangle rec = getCellRect(cell);
-                            Point2D tablePos = table.localToScreen(0, 0);
-                            rec.x = rec.x + Rounding.round(tablePos.getX());
-                            rec.y = rec.y + Rounding.round(tablePos.getY());
-                            if (rec.contains(p)
+                            if (NodeBounds.getAbsoluteBounds(cell).contains(p)
                                     && cell.getTableView().equals(table)) {
                                 TableColumn cellColumn = cell
                                         .getTableColumn();
@@ -178,37 +172,6 @@ public class TableTester extends AbstractTableTester {
         colPath = (table.getColumns()
                 .indexOf(nxtColumn) + 1) + colPath;
         return colPath;
-    }
-
-    /**
-     * Get a rectangle with the Bounds of a cell in its parent.
-     *
-     * @param cell
-     *            the cell to get the rectangle from
-     * @return the rectangle
-     */
-    private Rectangle getCellRect(final TableCell<?, ?> cell) {
-        Rectangle result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getCellRect", new Callable<Rectangle>() { //$NON-NLS-1$
-
-                    @Override
-                    public Rectangle call() throws Exception {
-                        TableView<?> table = (TableView<?>) getRealComponent();
-                        // Update the layout coordinates otherwise
-                        // we would get old position values
-                        table.layout();
-                        Bounds b = cell.getBoundsInParent();
-                        Point2D pos = cell.localToScreen(0, 0);
-                        Point2D parentPos = table.localToScreen(0, 0);
-                        return new Rectangle(Rounding.round(
-                                pos.getX() - parentPos.getX()),
-                                Rounding.round(pos.getY() - parentPos.getY()),
-                                Rounding.round(b.getWidth()),
-                                Rounding.round(b.getHeight()));
-                    }
-
-                });
-        return result;
     }
 
     @Override

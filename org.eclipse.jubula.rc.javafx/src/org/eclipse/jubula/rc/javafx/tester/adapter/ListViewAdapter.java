@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import javafx.collections.ObservableList;
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 
@@ -26,6 +24,7 @@ import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
@@ -104,14 +103,13 @@ public class ListViewAdapter<T extends ListView<?>> extends
                         if (cell.getIndex() == index.intValue()
                                 && cell.getListView() == listView) {
     
-                            Bounds b = cell.getBoundsInParent();
-                            Point2D pos = cell.localToScreen(0, 0);
-                            Point2D parentPos = listView.localToScreen(0, 0);
+                            Rectangle b = NodeBounds
+                                    .getAbsoluteBounds(cell);
+                            Rectangle tableB = NodeBounds
+                                    .getAbsoluteBounds(listView);
                             return new Rectangle(
-                                    Rounding.round(pos.getX()
-                                    - parentPos.getX()),
-                                    Rounding.round(pos.getY()
-                                    - parentPos.getY()),
+                                    Math.abs(tableB.x - b.x),
+                                    Math.abs(tableB.y - b.y),
                                     Rounding.round(b.getWidth()),
                                     Rounding.round(b.getHeight()));
                         }

@@ -18,7 +18,6 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import javafx.collections.ObservableList;
-import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -39,6 +38,7 @@ import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.util.AbstractTraverser;
 import org.eclipse.jubula.rc.javafx.util.GenericTraverseHelper;
+import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
@@ -350,15 +350,15 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                             //DEPENDENCY TO INTERNAL API
                             TableColumnHeader colH = (TableColumnHeader) n;
                             if (colH.getTableColumn().equals(col)) {
-                                Bounds b = n.getBoundsInParent();
-                                Point2D pos = n.localToScreen(0, 0);
-    
-                                return new Rectangle(Rounding
-                                        .round(pos.getX() - parentPos.getX()),
-                                        Rounding.round(pos.getY()
-                                                - parentPos.getY()), Rounding
-                                                .round(b.getWidth()), Rounding
-                                                .round(b.getHeight()));
+                                Rectangle b = NodeBounds
+                                        .getAbsoluteBounds(n);
+                                Rectangle tableB = NodeBounds
+                                        .getAbsoluteBounds(table);
+                                return new Rectangle(
+                                        Math.abs(tableB.x - b.x),
+                                        Math.abs(tableB.y - b.y),
+                                        Rounding.round(b.getWidth()),
+                                        Rounding.round(b.getHeight()));
                             }
                         }
                         return null;
@@ -501,14 +501,13 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                                     && cell.getTableColumn() == col
                                     && cell.getTableView() == table) {
 
-                                Bounds b = cell.getBoundsInParent();
-                                Point2D pos = cell.localToScreen(0, 0);
-                                Point2D parentPos = table.localToScreen(0, 0);
+                                Rectangle b = NodeBounds
+                                        .getAbsoluteBounds(cell);
+                                Rectangle tableB = NodeBounds
+                                        .getAbsoluteBounds(table);
                                 return new Rectangle(
-                                        Rounding.round(pos.getX()
-                                        - parentPos.getX()),
-                                        Rounding.round(pos.getY()
-                                        - parentPos.getY()),
+                                        Math.abs(tableB.x - b.x),
+                                        Math.abs(tableB.y - b.y),
                                         Rounding.round(b.getWidth()),
                                         Rounding.round(b.getHeight()));
                             }

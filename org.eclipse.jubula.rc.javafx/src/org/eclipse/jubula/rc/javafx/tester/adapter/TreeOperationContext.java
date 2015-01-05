@@ -16,8 +16,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -33,6 +31,7 @@ import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
+import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
 
 /**
@@ -454,17 +453,15 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                                 // we would get old position values
                                 tree.layout();
 
-                                Point2D posTree = tree.localToScreen(0, 0);
-                                Point2D posCell = cell.localToScreen(0, 0);
-                                Bounds b = cell.getBoundsInParent();
-                                Rectangle cBounds = new Rectangle(
-                                        Math.abs(Rounding.round((posCell.getX()
-                                                - posTree.getX()))),
-                                        Math.abs(Rounding.round((posCell.getY()
-                                                - posTree.getY()))),
-                                                Rounding.round(b.getWidth()),
-                                                Rounding.round(b.getHeight()));
-                                return cBounds;
+                                Rectangle b = NodeBounds
+                                        .getAbsoluteBounds(cell);
+                                Rectangle treeB = NodeBounds
+                                        .getAbsoluteBounds(tree);
+                                return new Rectangle(
+                                        Math.abs(treeB.x - b.x),
+                                        Math.abs(treeB.y - b.y),
+                                        Rounding.round(b.getWidth()),
+                                        Rounding.round(b.getHeight()));
                             }
                         }
                         return null;

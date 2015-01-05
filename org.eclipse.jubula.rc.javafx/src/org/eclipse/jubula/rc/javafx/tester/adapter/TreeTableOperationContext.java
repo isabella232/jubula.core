@@ -16,8 +16,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableRow;
@@ -32,6 +30,7 @@ import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContex
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
 /**
@@ -542,19 +541,15 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                                     && treeTable.getColumns().indexOf(
                                             cell.getTableColumn()) 
                                             == m_column) {
-                                Point2D posTree = treeTable.localToScreen(0, 0);
-                                Point2D posCell = cell.localToScreen(0, 0);
-                                Bounds b = cell.getBoundsInParent();
-                                Rectangle cBounds = new Rectangle(
-                                        Math.abs(Rounding.round(
-                                                (posCell.getX() - posTree
-                                                .getX()))),
-                                        Math.abs(Rounding.round(
-                                                (posCell.getY() - posTree
-                                                .getY()))), 
-                                                Rounding.round(b.getWidth()),
-                                                Rounding.round(b.getHeight()));
-                                return cBounds;
+                                Rectangle b = NodeBounds
+                                        .getAbsoluteBounds(cell);
+                                Rectangle treeB = NodeBounds
+                                        .getAbsoluteBounds(treeTable);
+                                return new Rectangle(
+                                        Math.abs(treeB.x - b.x),
+                                        Math.abs(treeB.y - b.y),
+                                        Rounding.round(b.getWidth()),
+                                        Rounding.round(b.getHeight()));
                             }
                         }
                         return null;
