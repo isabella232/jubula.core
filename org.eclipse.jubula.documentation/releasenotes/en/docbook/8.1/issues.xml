@@ -93,4 +93,16 @@
       </para>
     </listitem>
   </itemizedlist>
+  <para>
+    <emphasis role="strong">Incompatible changes regarding custom toolkit extensions</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        With addressing <link xl:href="http://eclip.se/454545" /> we've adjusted our recommended namespace for custom toolkit remote control extensions.
+        Though this change is backwards compatible and using the old namespace for AdapterFactories, adapter and tester classes will still work we do strongly
+        recommend to re-locate those custom written remote control classes to e.g. the <emphasis role="strong">org.eclipse.jubula.ext.*</emphasis> namespace to avoid collisions with signed classes of the ITE.
+      </para>
+    </listitem>
+  </itemizedlist>
 </section>

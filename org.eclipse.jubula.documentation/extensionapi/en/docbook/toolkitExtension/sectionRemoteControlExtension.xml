@@ -52,13 +52,13 @@
           <listitem>
             <para>
               <emphasis role="input">org.eclipse.jubula.rc.rcp.swt</emphasis><?linebreak?>
-              for extending SWT support in Eclipse 3.x and 4.x (including compat layer).
+              for extending SWT support in Eclipse 3.x and 4.x (including compatibility layer).
             </para>
           </listitem>
           <listitem>
             <para>
               <emphasis role="input">org.eclipse.jubula.rc.rcp.e3.swt</emphasis><?linebreak?>
-              for extending GEF support in Eclipse 3.x (without compat layer).
+              for extending GEF support in Eclipse 3.x (without compatibility layer).
             </para>
           </listitem>
           <listitem>
